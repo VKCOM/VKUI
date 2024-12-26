@@ -16,25 +16,16 @@ dotenv.config({
   override: true,
 });
 
-const GENERATE_SCOPED_NAME = 'vkui[local]';
-const SWC_LOADER_BASE_OPTIONS = {
-  target: 'es2016',
-  externalHelpers: true,
-  parser: { syntax: 'typescript', tsx: true },
-  transform: { react: { runtime: 'automatic' } },
-};
-
-const workspaceRoot = path.resolve(import.meta.dirname, '../..');
 const sourceRoot = path.resolve(import.meta.dirname, 'src');
-
-const cases = fs.readdirSync(sourceRoot);
+const testCases = fs.readdirSync(sourceRoot);
 
 /** @type { import('webpack').Configuration } */
 const webpackConfig = {
-  context: workspaceRoot,
+  context: path.resolve(import.meta.dirname, '../..'),
   mode: 'production',
   target: 'web',
-  entry: cases.reduce(
+  // devtool: false,
+  entry: testCases.reduce(
     (entries, caseName) => {
       entries[caseName] = {
         import: path.join(sourceRoot, caseName, 'index.tsx'),
@@ -53,22 +44,20 @@ const webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        loader: 'swc-loader',
-        options: { jsc: SWC_LOADER_BASE_OPTIONS },
-      },
-      {
-        test: /\.jsx?$/,
-        include: /node_modules\/@vkontakte\/vkui/,
+        test: /\.[jt]sx?$/,
         loader: 'swc-loader',
         options: {
           jsc: {
-            ...SWC_LOADER_BASE_OPTIONS,
+            target: 'es2016',
+            externalHelpers: true,
+            parser: { syntax: 'typescript', tsx: true },
+            transform: { react: { runtime: 'automatic' } },
             experimental: {
               plugins: [
-                ['swc-plugin-css-modules', { generate_scoped_name: GENERATE_SCOPED_NAME }],
-                ['swc-plugin-transform-remove-imports', { test: '\\.css$' }],
+                [
+                  'swc-plugin-css-modules',
+                  { generate_scoped_name: process.env.GENERATE_SCOPED_NAME },
+                ],
               ],
             },
           },
@@ -76,28 +65,24 @@ const webpackConfig = {
       },
       {
         test: /\.css$/i,
-        exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, { loader: 'css-loader', options: { modules: false } }],
+        exclude: /\.module\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
       {
-        test: /\.module.css$/,
-        include: /node_modules\/@vkontakte\/vkui/,
+        test: /\.module\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: { modules: false, importLoaders: 1 },
-          },
-          {
-            loader: 'postcss-loader',
             options: {
-              postcssOptions: {
-                plugins: [
-                  cssModules({ generateScopedName: GENERATE_SCOPED_NAME, getJSON: () => void 0 }),
-                ],
+              modules: {
+                namedExport: false,
+                exportLocalsConvention: 'as-is',
+                localIdentName: process.env.GENERATE_SCOPED_NAME,
               },
             },
           },
+          'postcss-loader',
         ],
       },
     ],
@@ -110,7 +95,7 @@ const webpackConfig = {
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-    ...cases.map(
+    ...testCases.map(
       (caseName) =>
         new HtmlWebpackPlugin({
           filename: `${caseName}.html`,

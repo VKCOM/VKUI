@@ -10,3 +10,6 @@ playwright-report/
 blob-report/
 all-blob-reports/
 tmp/
+out/
+.next/
+next-env.d.ts
