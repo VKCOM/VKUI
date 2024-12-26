@@ -1033,6 +1033,49 @@ const SomeWrapper = ({ id }) => (
 
 </details>
 
+<details>
+<summary>Миграция (бизнес-логика в обёртках)</summary>
+
+```diff
++ const FetchData = () => {
++   const [data, setData] = useState({});
++   useEffect(() => {
++     fetch('...').then((r) => r.json()).then(setData);
++   }, []);
++   return <div>{data}</div>;
++ };
+
+const SomeWrapper = ({ id, ...restProps }) => {
+-  const [data, setData] = useState({});
+-  useEffect(() => {
+-    fetch('...').then((r) => r.json()).then(setData);
+-  }, []);
+
++  const { activeModal } = useModalRootContext();
+  useEffect(function enableSomeEffect() {
++    if (id === activeModal) {
+      /* ... */
++    }
+  }, [id, activeModal];
+
+  return (
+    <ModalPage id={id} {...restProps}>
+-     <div>{data}</div>
++     <FetchData>
+    </ModalPage>
+  );
+};
+
+<ModalRoot activeModal="m">
+  <SomeWrapper
+    id="m"
+    settlingHeight={100} // или dynamicContentHeight
+  />
+</ModalRoot>
+```
+
+</details>
+
 <hr/>
 
 ### [OnboardingTooltip](https://vkcom.github.io/VKUI/7.0.0/#/OnboardingTooltip)

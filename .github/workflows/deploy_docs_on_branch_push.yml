@@ -29,6 +29,7 @@ jobs:
     outputs:
       docs_styleguide: ${{ steps.changes.outputs.docs_styleguide }}
       docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
+      docs_beta: ${{ steps.changes.outputs.docs_beta }}
 
     steps:
       - name: Checkout
@@ -104,3 +105,40 @@ jobs:
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
         run: echo "${{ env.AWS_S3_URL }}/next/storybook/index.html"
+
+  build_and_deploy_docs_beta:
+    if: ${{ !cancelled() && needs.changed_files.outputs.docs_beta == 'true' }}
+    runs-on: ubuntu-latest
+    name: Deploy docs (beta)
+    needs: changed_files
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Build VKUI
+        run: yarn build:vkui
+
+      - name: Build
+        run: yarn docs:beta:build
+        env:
+          VKUI_DOCS_BASE_PATH: /next/docs-beta
+
+      - name: Upload to S3
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: website/out
+          commandUploadDist: next/docs-beta
+
+      - name: Create doc url
+        if: ${{ steps.deploy.outcome == 'success' }}
+        id: url
+        run: echo "${{ env.AWS_S3_URL }}/next/docs-beta/index.html"
