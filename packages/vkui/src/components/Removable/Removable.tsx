@@ -93,7 +93,7 @@ const RemovableIos = ({
   };
 
   const style: CSSCustomProperties = {
-    '--vkui--internal_Removable_remove_offset': String(removeOffset ?? 0),
+    '--vkui_internal_Removable_remove_offset': String(removeOffset ?? 0),
   };
 
   return (
