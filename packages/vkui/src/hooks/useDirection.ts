@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
-type Direction = 'ltr' | 'rtl';
+export type Direction = 'ltr' | 'rtl';
 type WritingMode = 'horizontal-tb' | 'vertical-rl' | 'vertical-lr';
 
 /**

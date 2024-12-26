@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES6",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "preserve",
+    "allowJs": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/_app.tsx"
+  ]
+}

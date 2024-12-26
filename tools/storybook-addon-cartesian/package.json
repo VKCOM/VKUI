@@ -15,7 +15,7 @@
     "@storybook/addon-essentials": "8.4.7",
     "@storybook/addon-interactions": "8.4.7",
     "@storybook/addon-links": "8.4.7",
-    "@storybook/addon-webpack5-compiler-swc": "1.0.5",
+    "@storybook/addon-webpack5-compiler-swc": "patch:@storybook/addon-webpack5-compiler-swc@npm%3A1.0.5#~/.yarn/patches/@storybook-addon-webpack5-compiler-swc-npm-1.0.5-dbab81c473.patch",
     "@storybook/blocks": "8.4.7",
     "@storybook/components": "8.4.7",
     "@storybook/core-events": "^8.4.7",

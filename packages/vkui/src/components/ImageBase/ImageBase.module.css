@@ -97,11 +97,11 @@
  * PanelHeader
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader__before) .host {
+:global(.vkuiInternalPanelHeader__before) > .host {
   margin-inline-start: 8px;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader__after) .host {
+:global(.vkuiInternalPanelHeader__after) > .host {
   margin-inline-end: 8px;
 }

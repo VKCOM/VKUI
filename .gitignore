@@ -4,6 +4,10 @@ PUBLISHING.md
 # Builds
 dist/
 storybook-static/
+out/
+
+# Next
+.next/
 
 # Dependency directory
 node_modules/

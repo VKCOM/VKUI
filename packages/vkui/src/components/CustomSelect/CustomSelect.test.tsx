@@ -3,7 +3,12 @@ import { useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { Placement, useFloating } from '../../lib/floating';
-import { baselineComponent, userEvent, waitForFloatingPosition } from '../../testing/utils';
+import {
+  baselineComponent,
+  setNodeEnv,
+  userEvent,
+  waitForFloatingPosition,
+} from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
@@ -1416,25 +1421,27 @@ describe('CustomSelect', () => {
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 
-  it('check dev error when use different type of values', () => {
-    process.env.NODE_ENV = 'development';
-    const errorStub = jest.spyOn(global.console, 'error').mockImplementationOnce(noop);
+  describe('DEV errors', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
 
-    render(
-      <CustomSelect
-        options={[
-          { value: 0, label: 'Mike' },
-          { value: '1', label: 'Josh' },
-        ]}
-      />,
-    );
+    it('check error when use different type of values', () => {
+      const errorStub = jest.spyOn(global.console, 'error').mockImplementationOnce(noop);
 
-    expect(errorStub).toHaveBeenCalledWith(
-      '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
-      undefined,
-    );
+      render(
+        <CustomSelect
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: '1', label: 'Josh' },
+          ]}
+        />,
+      );
 
-    process.env.NODE_ENV = 'test';
+      expect(errorStub).toHaveBeenCalledWith(
+        '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
+        undefined,
+      );
+    });
   });
 
   it('checks CustomSelect placement class for borders when dropdown is opened and closed during  placement change', async () => {

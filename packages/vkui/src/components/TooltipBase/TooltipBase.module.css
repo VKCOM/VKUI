@@ -25,6 +25,11 @@
   background: none;
 }
 
+.title,
+.description {
+  word-break: break-word;
+}
+
 .arrow {
   color: var(--vkui--color_background_contrast_themed);
 }

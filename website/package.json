@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "@project-docs/website",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "15.1.0",
+    "@vkontakte/vkui": "workspace:^",
+    "@vkontakte/vkui-docs-theme": "workspace:^",
+    "next": "^15.1.0",
+    "nextra": "^3.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "*"
+  }
+}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../CarouselBase/constants';
 import { revertRtlValue } from '../CarouselBase/helpers';
@@ -600,26 +600,29 @@ describe('Gallery', () => {
       checkActiveSlide(0);
     });
 
-    it('check dev error when slides width incorrect', () => {
-      process.env.NODE_ENV = 'development';
-      const onChange = jest.fn();
-      const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+    describe('DEV errors', () => {
+      beforeEach(() => setNodeEnv('development'));
+      afterEach(() => setNodeEnv('test'));
 
-      setup({
-        looped: true,
-        defaultSlideIndex: 0,
-        slideWidth: 40,
-        containerWidth: 200,
-        viewPortWidth: 200,
-        onChange,
+      it('check dev error when slides width incorrect', () => {
+        const onChange = jest.fn();
+        const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+
+        setup({
+          looped: true,
+          defaultSlideIndex: 0,
+          slideWidth: 40,
+          containerWidth: 200,
+          viewPortWidth: 200,
+          onChange,
+        });
+
+        expect(warn).toHaveBeenCalledWith(
+          '%c[VKUI/Gallery] Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше.',
+          undefined,
+        );
+        warn.mockRestore();
       });
-
-      expect(warn).toHaveBeenCalledWith(
-        '%c[VKUI/Gallery] Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше.',
-        undefined,
-      );
-      warn.mockRestore();
-      process.env.NODE_ENV = 'test';
     });
   });
 
