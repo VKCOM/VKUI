@@ -118,11 +118,11 @@ export const SliderThumb = ({
         <TooltipBase
           appearance="neutral"
           getRootRef={refs.setFloating}
-          style={convertFloatingDataToReactCSSProperties(
-            floatingPositionStrategy,
-            floatingDataX,
-            floatingDataY,
-          )}
+          style={convertFloatingDataToReactCSSProperties({
+            strategy: floatingPositionStrategy,
+            x: floatingDataX,
+            y: floatingDataY,
+          })}
           arrowProps={{
             coords: arrowCoords,
             placement: resolvedPlacement,

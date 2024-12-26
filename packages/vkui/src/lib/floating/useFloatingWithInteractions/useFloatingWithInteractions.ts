@@ -37,6 +37,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   middlewares,
   hoverDelay = 0,
   closeAfterClick = false,
+  getFloatingElementHiddenStyles,
 
   // disables
   disabled = false,
@@ -329,13 +330,13 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
 
   if (shownFinalState) {
-    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(
+    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties({
       strategy,
       x,
       y,
-      undefined,
       middlewareData,
-    );
+      getFloatingElementHiddenStyles,
+    });
 
     if (disableInteractive) {
       floatingPropsRef.current.style.pointerEvents = 'none';
