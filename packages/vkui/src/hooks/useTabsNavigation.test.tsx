@@ -124,4 +124,18 @@ describe('useTabsNavigation', () => {
     expect(document.activeElement).toBe(tab1);
     expect(document.activeElement).not.toBe(tab2);
   });
+
+  it('should change active tab in rtl', () => {
+    const { tabs, tab2, tab1 } = setupTabs();
+    const { result } = renderHook(() => useTabsNavigation(true, true));
+
+    (result.current.tabsRef as React.MutableRefObject<HTMLDivElement>).current = tabs;
+    tab1.focus();
+
+    fireEvent.keyDown(document, { key: 'ArrowLeft' });
+    expect(document.activeElement).toBe(tab2);
+
+    fireEvent.keyDown(document, { key: 'ArrowRight' });
+    expect(document.activeElement).toBe(tab1);
+  });
 });

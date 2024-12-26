@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, mockRtlDirection } from '../../testing/utils';
 import {
   SegmentedControl,
   type SegmentedControlOptionInterface,
@@ -174,23 +174,7 @@ describe('SegmentedControl', () => {
   });
 
   describe('check rtl', () => {
-    const originalGetComputedStyle = window.getComputedStyle;
-
-    let getComputedStyleMock: ReturnType<typeof jest.spyOn> | null = null;
-    beforeEach(() => {
-      /**
-       * Мокаем получение direction
-       */
-      getComputedStyleMock = jest.spyOn(window, 'getComputedStyle').mockImplementation((e) => {
-        return {
-          ...originalGetComputedStyle(e),
-          direction: 'rtl',
-        };
-      });
-    });
-    afterEach(() => {
-      getComputedStyleMock.mockRestore();
-    });
+    mockRtlDirection();
 
     it('check rtl', () => {
       const options: SegmentedControlOptionInterface[] = [

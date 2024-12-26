@@ -75,7 +75,7 @@ export const SegmentedControl = ({
 
   const { sizeY = 'none' } = useAdaptivity();
 
-  const { tabsRef } = useTabsNavigation(role === 'tablist');
+  const { tabsRef } = useTabsNavigation(role === 'tablist', isRtl);
 
   const actualIndex = options.findIndex((option) => option.value === value);
 
