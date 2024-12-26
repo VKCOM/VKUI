@@ -15,10 +15,16 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
           min: [-10],
           max: [10],
           value: [0],
+          dir: ['ltr', 'rtl'],
         },
         {
           multiple: [true],
           defaultValue: [[20, 80]],
+        },
+        {
+          multiple: [true],
+          defaultValue: [[30, 90]],
+          dir: ['rtl'],
         },
         {
           defaultValue: [50],
