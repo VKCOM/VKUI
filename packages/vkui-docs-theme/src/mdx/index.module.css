@@ -15,6 +15,11 @@
   padding-inline: var(--vkui--spacing_size_3xl) 0;
 }
 
+.ol {
+  padding-block: var(--vkui--spacing_size_2xl) 0;
+  padding-inline: var(--vkui--spacing_size_3xl) 0;
+}
+
 .li:not(:first-child) {
   margin-block-start: var(--vkui--spacing_size_xl);
 }

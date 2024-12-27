@@ -1,0 +1,106 @@
+<Overview>
+# CSS Modules
+
+VKUI позволяет подключить специальную версию c [**CSS Modules**](https://github.com/css-modules/css-modules) и **ESNext**.
+Сборка позволяет уменьшить размер приложения, однако для её использования необходимо дополнительно настроить сборщики.
+
+</Overview>
+
+## Инструкция
+
+## Шаг 1. Подключение стилей
+
+Удалите импорт `vkui.css` и подключите дефолтные темы:
+
+```diff
+- import "@vkontakte/vkui/dist/vkui.css";
++ import "@vkontakte/vkui/dist/cssm/styles/themes.css";
+```
+
+Если вы используете [кастомные темы](#/Customize), то необходимо просто удалить `components.css`:
+
+```diff
+- import '@vkontakte/vkui/dist/components.css';
+import '@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css';
+```
+
+## Шаг 2. Конфигурация сборщиков
+
+Дальше необходимо трансформировать импорт, включить транспиляцию и подключить CSS modules.
+
+### Next.js
+
+```js filename="next.config.js"
+module.exports = {
+  // ...
+
+  // Включаем транспиляцию
+  transpilePackages: ['@vkontakte/vkui'],
+
+  // Трансформируем импорты
+  modularizeImports: {
+    '@vkontakte/vkui': {
+      transform: '@vkontakte/vkui/dist/cssm',
+      skipDefaultConversion: true,
+    },
+  },
+};
+```
+
+[Пример приложения](https://codesandbox.io/p/sandbox/vkui-next-js-cssm-el0g7c) на Next.js
+
+### Vite
+
+```js filename="vite.config.js"
+export default defineConfig({
+  // ...
+  resolve: {
+    alias: [{ find: /^@vkontakte\/vkui$/, replacement: '@vkontakte/vkui/dist/cssm' }],
+  },
+});
+```
+
+[Пример приложения](https://codesandbox.io/p/sandbox/vkui-vite-cssm-4iikku) на Vite
+
+### webpack
+
+```js filename="webpack.config.js"
+module.exports = {
+  //...
+
+  module: {
+    rules: [
+      // Включаем транспиляцию
+      {
+        test: /\.js$/,
+        include: /node_modules\/@vkontakte\/vkui/,
+        use: ['babel-loader'],
+      },
+
+      // Обрабатываем css modules
+      {
+        test: /\.css$/,
+        include: /node_modules\/@vkontakte\/vkui/,
+        use: [
+          {
+            loader: 'css-loader',
+            /* Используем следующие опции в случае использования `css-loader >= 7.0.0` (см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md) */
+            // options: {
+            //   namedExport: false,
+            //   exportLocalsConvention: 'as-is',
+            // }
+          },
+        ],
+      },
+    ],
+  },
+
+  // Трансформируем импорты
+  resolve: {
+    alias: {
+      '@vkontakte/vkui$': '@vkontakte/vkui/dist/cssm',
+    },
+  },
+};
+```

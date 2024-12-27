@@ -4,6 +4,7 @@
   overflow: auto;
   border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
   border-radius: 8px;
+  inline-size: 100%;
 
   --vkui_docs--code-background: transparent;
   --vkui_docs--code-inline-padding: 0px;
@@ -21,9 +22,6 @@
 }
 
 .buttons {
-  position: absolute;
-  inset-inline-end: var(--vkui--spacing_size_m);
-  inset-block-start: var(--vkui--spacing_size_m);
   display: flex;
   color: var(--vkui--color_icon_tertiary);
 }
@@ -31,4 +29,16 @@
 /* stylelint-disable-next-line selector-max-universal */
 .buttons > *:not(:last-child) {
   margin-inline-end: var(--vkui--spacing_size_xs);
+}
+
+.buttonsAbsolute {
+  position: absolute;
+  inset-inline-end: var(--vkui--spacing_size_m);
+  inset-block-start: var(--vkui--spacing_size_m);
+}
+
+.header {
+  background-color: var(--vkui--color_background_modal);
+  padding-inline: var(--vkui--spacing_size_4xl) var(--vkui--spacing_size_m);
+  border-block-end: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
 }
