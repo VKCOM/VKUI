@@ -9,8 +9,7 @@
 
 </Overview>
 
-<Steps>
-## Обертка [`AdaptivityProvider`](#/AdaptivityProvider)
+## Шаг 1. Обертка [`AdaptivityProvider`](#/AdaptivityProvider)
 
 Для начала убедитесь, что ваше приложение обернуто в обязательный провайдер [`AdaptivityProvider`](#/AdaptivityProvider):
 
@@ -19,14 +18,14 @@ function App() {
   return (
     <ConfigProvider>
       <AdaptivityProvider>
-        <AppRoot>...</AppRoot>
+        <AppRoot>{/* ... */}</AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
   );
 }
 ```
 
-## Добавление контента
+## Шаг 2. Добавление контента
 
 Добавьте [`SplitLayout`](#/SplitLayout) и хотя бы один [`SplitCol`](#/SplitCol).
 
@@ -67,7 +66,7 @@ function App() {
 }
 ```
 
-## Применение хука для адаптивности
+## Шаг 3. Применение хука для адаптивности
 
 Теперь необходимо уведомить приложение о том, что левая колонка нужна только на больших экранах.
 Для этого мы должны использовать хук `useAdaptivityConditionalRender` в наших компонентах.
@@ -84,11 +83,11 @@ function App() {
   <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
     {viewWidth.tabletPlus && (
       <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
-        {// ...}
+        {/* ... */}
       </SplitCol>
     )}
     <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
-      {// ...}
+      {/* ... */}
     </SplitCol>
   </SplitLayout>;
   // ...
@@ -114,8 +113,6 @@ function App() {
 что элемент будет всегда рендерится как в **Virtual DOM**, так и в **DOM**.
 
 </Callout>
-
-</Steps>
 
 ## Требования для адаптивности
 

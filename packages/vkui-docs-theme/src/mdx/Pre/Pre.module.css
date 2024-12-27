@@ -4,6 +4,7 @@
   overflow: auto;
   border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
   border-radius: 8px;
+  inline-size: 100%;
 
   --vkui_docs--code-background: transparent;
   --vkui_docs--code-inline-padding: 0px;

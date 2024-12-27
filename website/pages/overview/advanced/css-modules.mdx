@@ -8,9 +8,7 @@ VKUI позволяет подключить специальную версию
 
 ## Инструкция
 
-<Steps>
-
-## Подключение стилей
+## Шаг 1. Подключение стилей
 
 Удалите импорт `vkui.css` и подключите дефолтные темы:
 
@@ -27,7 +25,7 @@ import '@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariables.c
 import '@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css';
 ```
 
-## Конфигурация сборщиков
+## Шаг 2. Конфигурация сборщиков
 
 Дальше необходимо трансформировать импорт, включить транспиляцию и подключить CSS modules.
 
@@ -84,13 +82,15 @@ module.exports = {
       {
         test: /\.css$/,
         include: /node_modules\/@vkontakte\/vkui/,
-        use: [{
-          loader: 'css-loader',
-          /* Используем следующие опции в случае использования `css-loader >= 7.0.0` (см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md) */
-          // options: {
-          //   namedExport: false,
-          //   exportLocalsConvention: 'as-is',
-          // }
+        use: [
+          {
+            loader: 'css-loader',
+            /* Используем следующие опции в случае использования `css-loader >= 7.0.0` (см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md) */
+            // options: {
+            //   namedExport: false,
+            //   exportLocalsConvention: 'as-is',
+            // }
+          },
         ],
       },
     ],
@@ -104,5 +104,3 @@ module.exports = {
   },
 };
 ```
-
-</Steps>
