@@ -459,6 +459,7 @@ export const CarouselBase = ({
       {...restProps}
       baseClassName={classNames(
         styles.host,
+        isCenterAlign && styles.alignCenter,
         slideWidth === 'custom' && styles.customWidth,
         isDraggable && styles.draggable,
       )}
