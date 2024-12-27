@@ -114,7 +114,7 @@ export interface ImageBaseProps
   /**
    * см. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming
    */
-  elementtiming?: string;
+  elementTiming?: string;
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -179,7 +179,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   objectPosition,
   keepAspectRatio = false,
   getRootRef,
-  elementtiming,
+  elementTiming,
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
@@ -307,7 +307,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             onLoad={handleImageLoad}
             onError={handleImageError}
             // @ts-expect-error: TS2322 отсутствует в @types/react
-            elementtiming={elementtiming} // eslint-disable-line react/no-unknown-property
+            elementtiming={elementTiming} // eslint-disable-line react/no-unknown-property
             {...getFetchPriorityProp(fetchPriority)}
           />
         )}
