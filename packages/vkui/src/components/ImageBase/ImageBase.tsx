@@ -111,6 +111,10 @@ export interface ImageBaseProps
    * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки
    */
   keepAspectRatio?: boolean;
+  /**
+   * см. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming
+   */
+  elementTiming?: string;
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -175,6 +179,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   objectPosition,
   keepAspectRatio = false,
   getRootRef,
+  elementTiming,
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
@@ -301,6 +306,8 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             height={heightImg}
             onLoad={handleImageLoad}
             onError={handleImageError}
+            // @ts-expect-error: TS2322 отсутствует в @types/react
+            elementtiming={elementTiming} // eslint-disable-line react/no-unknown-property
             {...getFetchPriorityProp(fetchPriority)}
           />
         )}
