@@ -36,6 +36,7 @@ export interface TabsItemProps
     AnchorHTMLAttributesOnly,
     Pick<
       TappableProps,
+      | 'Component'
       | 'activeMode'
       | 'hoverMode'
       | 'hovered'
