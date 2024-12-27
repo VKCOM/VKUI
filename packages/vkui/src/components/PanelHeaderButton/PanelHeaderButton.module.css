@@ -21,6 +21,10 @@
   padding-inline: 10px;
 }
 
+.rtl svg {
+  transform: scaleX(-1);
+}
+
 /*
  * iOS
  */
