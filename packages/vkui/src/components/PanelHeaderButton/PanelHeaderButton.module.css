@@ -21,9 +21,11 @@
   padding-inline: 10px;
 }
 
+/* stylelint-disable selector-max-type */
 .rtl svg {
   transform: scaleX(-1);
 }
+/* stylelint-enable selector-max-type */
 
 /*
  * iOS
