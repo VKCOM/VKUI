@@ -11,12 +11,11 @@
   сразу к [шагу 3](#step3).
 </Callout>
 
-<Steps>
-## Подготовьте [SPA React приложение](https://ru.reactjs.org/docs/create-a-new-react-app.html) [#step1]
+## Шаг 1. Подготовьте [SPA React приложение](https://ru.reactjs.org/docs/create-a-new-react-app.html) [#step1]
 
 Вы можете использовать любые шаблоны и сборщики, в том числе [Next.js](https://nextjs.org/) или [Vite](https://vite.dev/). Обратите внимание, что **VKUI** поддерживает Typescript.
 
-## Подключите @vkontakte/vkui [#step2]
+## Шаг 2. Подключите @vkontakte/vkui [#step2]
 
 Установите библиотеку, воспользовавшись нужной командой в соответствии с вашим пакетным менеджером:
 
@@ -29,7 +28,7 @@ yarn add @vkontakte/vkui
 pnpm add @vkontakte/vkui
 ```
 
-## Настройте meta-тэг [#step3]
+## Шаг 3. Настройте meta-тэг [#step3]
 
 Для корректного отображения интерфейса на безрамочных смартфонах (подробнее см. в статье ["The Notch" and CSS](https://css-tricks.com/the-notch-and-css/)),
 необходимо добавить [meta-тэг](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag) в корневой `html`:
@@ -45,7 +44,7 @@ pnpm add @vkontakte/vkui
 - если вы используете Vite, воспользуйтесь [этой инструкцией](https://vite.dev/guide/#index-html-and-project-root)
 - если вы используете Next.js, то ориентируйтесь на [эту страницу](https://nextjs.org/docs/app/building-your-application/optimizing/metadata)
 
-## Соберите базовое приложение [#step4]
+## Шаг 4. Соберите базовое приложение [#step4]
 
 Найдите корневой файл, в котором инициализируется ваше приложение. Обычно это `App.tsx` (`pages/_app.tsx` для Next.js),
 ориентируйтесь на выбранный шаблон или сборщик.
@@ -116,8 +115,6 @@ root.render(<App />);
 остальная структура остается на ваше усмотрение.
 
 </Callout>
-
-</Steps>
 
 ## Ваше приложение готово!
 

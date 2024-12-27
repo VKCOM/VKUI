@@ -7,7 +7,6 @@ import { HeadingLink } from './HeadingLink/HeadingLink';
 import { Main } from './Main/Main';
 import { Overview } from './Overview/Overview';
 import { Pre } from './Pre/Pre';
-import { Steps } from './Steps/Steps';
 import styles from './index.module.css';
 
 const DEFAULT_COMPONENTS: MDXComponents = {
@@ -29,7 +28,6 @@ const DEFAULT_COMPONENTS: MDXComponents = {
   strong: (props) => <strong className={styles.strong} {...props} />,
   wrapper: Main,
   Overview,
-  Steps,
   Callout,
 };
 
