@@ -35,7 +35,7 @@ export default {
     icon: Icon20Rectangle2HorizontalOutline,
   },
   'integrations': {
-    title: 'Интерграции',
+    title: 'Интеграции',
     icon: Icon20Square4PlusOutline,
   },
   'advanced': {

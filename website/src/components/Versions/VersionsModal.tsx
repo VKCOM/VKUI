@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Div, ModalPage, ModalPageHeader, PanelSpinner, SimpleCell } from '@vkontakte/vkui';
 import { useFetch } from '@vkontakte/vkui-docs-theme';
-import Semver from 'semver';
+import semverRcompare from 'semver/functions/rcompare';
 
 interface VersionsProps {
   error?: boolean;
@@ -24,7 +24,7 @@ function processData(data?: PackageInfoProps) {
   }
   const allVersions = Object.keys(data.versions);
   const fromIndex = allVersions.indexOf(MINIMUM_VERSION);
-  return allVersions.slice(fromIndex).filter(filterPrereleaseVersion).sort(Semver.rcompare);
+  return allVersions.slice(fromIndex).filter(filterPrereleaseVersion).sort(semverRcompare);
 }
 
 interface VersionsModalProps extends VersionsProps {
