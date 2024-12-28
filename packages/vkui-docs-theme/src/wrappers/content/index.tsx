@@ -4,7 +4,7 @@ import { Sidebar } from '../../components';
 import { useConfig } from '../../contexts';
 import styles from './index.module.css';
 
-export function ContentWrapper({ children }: { children: React.ReactNode }) {
+export function ContentWrapper({ children }: React.PropsWithChildren) {
   const config = useConfig();
   const {
     activeThemeContext: themeContext,

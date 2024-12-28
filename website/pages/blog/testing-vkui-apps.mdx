@@ -44,13 +44,17 @@ image: /blog/vkui-testing.png
 ```jsx
 import { render, screen } from '@testing-library/react';
 
-// ✅ - используем функциональную роль
-render(<Checkbox>Text</Checkbox>);
-const checkbox = screen.getByRole('checkbox');
+test('best practices of element accesing', () => {
+  // ✅ - используем функциональную роль
+  render(<Checkbox>Text</Checkbox>);
+  const checkbox = screen.getByRole('checkbox');
 
-// ❌ - завязываемся на класс, который может измениться
-render(<Checkbox>Text</Checkbox>);
-const checkbox = document.querySelector('.CheckboxInput__input');
+  // ❌ - завязываемся на класс, который может измениться
+  render(<Checkbox>Text</Checkbox>);
+  const checkbox = document.querySelector('.CheckboxInput__input');
+
+  // write your test...
+});
 ```
 
 Обратите внимание, что в случае, если компонент представляет собой композицию более мелких компонентов,
@@ -60,10 +64,12 @@ const checkbox = document.querySelector('.CheckboxInput__input');
 ```jsx
 import { render, screen } from '@testing-library/react';
 
-render(<Pagination prevButtonTestId="prevButton" currentPage={1} totalPages={10} />);
+test('check if prevButton disabled', () => {
+  render(<Pagination prevButtonTestId="prevButton" currentPage={1} totalPages={10} />);
 
-const prevButton = screen.getByTestId('prevButton');
-expect(prevButton).toBeDisabled();
+  const prevButton = screen.getByTestId('prevButton');
+  expect(prevButton).toBeDisabled();
+});
 ```
 
 Если вы все-таки не можете протестировать нужную часть без необходимости завязываться на, например,
@@ -92,19 +98,25 @@ expect(prevButton).toBeDisabled();
 import { render } from '@testing-library/react';
 import { PlatformProvider, Select } from '@vkontakte/vkui';
 
-// тестируем web-представление
-render(
-  <PlatformProvider value="vkcom">
-    <Select id="select-id" options={[]} {...props} />
-  </PlatformProvider>,
-);
+test('test web view', () => {
+  render(
+    <PlatformProvider value="vkcom">
+      <Select id="select-id" options={[]} {...props} />
+    </PlatformProvider>,
+  );
 
-// тестируем мобильную платформу
-render(
-  <PlatformProvider value="android">
-    <Select id="select-id" options={[]} {...props} />
-  </PlatformProvider>,
-);
+  // write your test...
+});
+
+test('test mobile view', () => {
+  render(
+    <PlatformProvider value="android">
+      <Select id="select-id" options={[]} {...props} />
+    </PlatformProvider>,
+  );
+
+  // write your test...
+});
 ```
 
 Для тестирования мобильного представления, вы можете воспользоваться стандартным API от `React Testing Library` и `Testing Library`:
@@ -114,21 +126,23 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from './testing/helpers';
 import { PlatformProvider, Select } from '@vkontakte/vkui';
 
-render(
-  <PlatformProvider value="android">
-    <Select
-      data-testid="target"
-      defaultValue="1"
-      options={[
-        { value: '0', label: 'Mike' },
-        { value: '1', label: 'Josh' },
-      ]}
-    />
-  </PlatformProvider>,
-);
+test('test is value selected on mobile', () => {
+  render(
+    <PlatformProvider value="android">
+      <Select
+        data-testid="target"
+        defaultValue="1"
+        options={[
+          { value: '0', label: 'Mike' },
+          { value: '1', label: 'Josh' },
+        ]}
+      />
+    </PlatformProvider>,
+  );
 
-await userEvent.selectOptions(screen.getByTestId('target'), ['0']);
-expect(screen.getByTestId('target')).toHaveValue('0');
+  await userEvent.selectOptions(screen.getByTestId('target'), ['0']);
+  expect(screen.getByTestId('target')).toHaveValue('0');
+});
 ```
 
 <Callout>
@@ -153,25 +167,27 @@ export const userEvent = userEventLib.setup({ advanceTimers: jest.advanceTimersB
 import { render, fireEvent, screen } from '@testing-library/react';
 import { PlatformProvider, Select } from '@vkontakte/vkui';
 
-render(
-  <PlatformProvider value="vkcom">
-    <Select
-      labelTextTestId="labelTextTestId"
-      defaultValue="0"
-      options={[
-        { value: '0', label: 'Mike' },
-        { value: '1', label: 'Josh' },
-      ]}
-    />
-  </PlatformProvider>,
-);
+test('test is value selected on web', () => {
+  render(
+    <PlatformProvider value="vkcom">
+      <Select
+        labelTextTestId="labelTextTestId"
+        defaultValue="0"
+        options={[
+          { value: '0', label: 'Mike' },
+          { value: '1', label: 'Josh' },
+        ]}
+      />
+    </PlatformProvider>,
+  );
 
-fireEvent.click(screen.getByTestId('labelTextTestId'));
-const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
-fireEvent.mouseEnter(unselectedOption);
-fireEvent.click(unselectedOption);
+  fireEvent.click(screen.getByTestId('labelTextTestId'));
+  const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+  fireEvent.mouseEnter(unselectedOption);
+  fireEvent.click(unselectedOption);
 
-expect(screen.getByTestId('labelTextTestId').textContent).toEqual('Josh');
+  expect(screen.getByTestId('labelTextTestId').textContent).toEqual('Josh');
+});
 ```
 
 <Callout>
