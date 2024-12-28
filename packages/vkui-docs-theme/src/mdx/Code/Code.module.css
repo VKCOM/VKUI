@@ -10,6 +10,12 @@
 }
 
 /* stylelint-disable-next-line selector-max-type */
+pre .root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* stylelint-disable-next-line selector-max-type */
 .root span {
   /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
   background-color: var(--shiki-light-bg);

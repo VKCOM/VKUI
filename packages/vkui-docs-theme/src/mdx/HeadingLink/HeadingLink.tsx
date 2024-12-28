@@ -3,13 +3,13 @@ import { classNames } from '@vkontakte/vkjs';
 import styles from './HeadingLink.module.css';
 
 export function HeadingLink({
-  tag: Tag,
+  Tag,
   children,
   id,
   className,
   ...props
 }: React.ComponentProps<'h2'> & {
-  tag: `h${2 | 3 | 4 | 5 | 6}`;
+  Tag: `h${2 | 3 | 4 | 5 | 6}`;
 }): React.ReactElement {
   return (
     <Tag

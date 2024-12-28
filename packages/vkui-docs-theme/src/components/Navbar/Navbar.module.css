@@ -3,23 +3,22 @@
   inset-block-start: 0;
   z-index: 20;
   inline-size: 100%;
-  background-color: transparent;
   color: var(--vkui--color_text_primary);
   border-block-end: var(--vkui--size_border--regular) solid
     var(--vkui_docs--color_stroke_separator_secondary);
   box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.04);
+  block-size: var(--vkui_docs--navbar-height);
+  background-color: var(--vkui--color_background_content);
 }
 
 .navbar {
   display: flex;
   margin-inline: auto;
   align-items: center;
-  block-size: var(--vkui_docs--navbar-height);
   max-inline-size: var(--vkui_docs--max-width);
   justify-content: space-between;
   padding-block: var(--vkui--spacing_size_xl);
   padding-inline: var(--vkui--spacing_size_2xl);
-  background-color: var(--vkui--color_background_content);
 }
 
 @media (--viewWidth-desktopPlus) {
@@ -47,8 +46,8 @@
 
 .navbarLink {
   color: var(--vkui--color_text_primary);
-  padding-block: 8px;
-  padding-inline: 16px;
+  padding-block: var(--vkui--spacing_size_m);
+  padding-inline: var(--vkui--spacing_size_l);
   text-decoration: none;
 }
 

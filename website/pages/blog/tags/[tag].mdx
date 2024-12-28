@@ -1,0 +1,23 @@
+---
+type: tag
+---
+
+import { TagName, TagTitle } from '@vkontakte/vkui-docs-theme';
+
+<TagTitle />
+<Overview>
+# Посты по теме “<TagName />”
+
+</Overview>
+
+export { getStaticPathsTags as getStaticPaths } from '@vkontakte/vkui-docs-theme';
+
+export function getStaticProps({ params }) {
+  return {
+    props: {
+      ssg: {
+        tag: params?.tag,
+      },
+    },
+  };
+}
