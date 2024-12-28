@@ -1,10 +1,7 @@
 export default {
-  index: {
+  overview: {
     type: 'page',
-    title: 'Главная',
-    theme: {
-      layout: 'raw',
-    },
+    title: 'О системе',
   },
   components: {
     type: 'page',
@@ -22,8 +19,12 @@ export default {
     href: 'https://vkcom.github.io/vkui-tokens/',
     newWindow: true,
   },
-  overview: {
+  blog: {
     type: 'page',
-    title: 'О системе',
+    title: 'Блог',
+    theme: {
+      breadcrumb: false,
+      layout: 'full',
+    },
   },
 };

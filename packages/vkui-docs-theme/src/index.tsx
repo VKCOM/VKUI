@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
+import { PostHeader, PostsLayout } from './blog';
 import { Head } from './components';
 import {
   ColorSchemeProvider,
@@ -12,7 +13,7 @@ import {
 } from './contexts';
 import { renderComponent } from './helpers/render';
 import { getMdxComponents } from './mdx';
-import { VKUIWrapper } from './wrappers';
+import { ContentWrapper, VKUIWrapper } from './wrappers';
 
 export default function Layout({ children, themeConfig, pageOpts }: NextraThemeLayoutProps) {
   return (
@@ -41,9 +42,19 @@ function InnerLayout({ children }: { children: React.ReactNode }) {
           renderComponent(themeConfig.navbar.component, {
             items: topLevelNavbarItems,
           })}
-        <MDXProvider disableParentContext components={getMdxComponents(themeConfig.components)}>
-          {children}
-        </MDXProvider>
+        <ContentWrapper>
+          {config.frontMatter.type === 'post' && <PostHeader />}
+          <MDXProvider
+            disableParentContext
+            components={getMdxComponents(
+              config.isBlog ? { wrapper: undefined } : themeConfig.components,
+            )}
+          >
+            {children}
+          </MDXProvider>
+          {config.frontMatter.type === 'posts' && <PostsLayout />}
+          {config.frontMatter.type === 'tag' && <PostsLayout />}
+        </ContentWrapper>
       </VKUIWrapper>
     </ColorSchemeProvider>
   );

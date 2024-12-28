@@ -2,6 +2,7 @@
 :root {
   --vkui_docs--navbar-height: 60px;
   --vkui_docs--max-width: 1440px;
+  --vkui_docs_blog--max-width: 1024px;
 }
 
 @media (--viewWidth-desktopPlus) {

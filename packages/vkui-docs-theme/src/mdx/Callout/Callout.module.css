@@ -13,6 +13,11 @@
 
 .content {
   margin-inline-start: var(--vkui--spacing_size_xl);
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
 }
 
 .root:not(:last-child) {
