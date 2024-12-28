@@ -66,6 +66,7 @@ export const ModalCardInternal = ({
   dismissButtonMode,
   dismissLabel,
   noFocusToDialog,
+  restoreFocus,
   onOpen,
   onOpened,
   onClose = noop,
@@ -136,7 +137,11 @@ export const ModalCardInternal = ({
   );
 
   useScrollLock(!hidden);
-  useFocusTrap(ref, { autoFocus: !noFocusToDialog, disabled: !opened || hidden });
+  useFocusTrap(ref, {
+    autoFocus: !noFocusToDialog,
+    disabled: !opened || hidden,
+    restoreFocus,
+  });
 
   return (
     <ModalOutlet hidden={hidden} onKeyDown={handleEscKeyDown}>
