@@ -3,7 +3,7 @@ import { pressedKey } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
-export function useTabsNavigation(enabled = true) {
+export function useTabsNavigation(enabled = true, isRtl = false) {
   const { document } = useDOM();
   const tabsRef = React.useRef<HTMLDivElement>(null);
   const getTabEls = () => {
@@ -41,7 +41,7 @@ export function useTabsNavigation(enabled = true) {
         } else if (key === 'End') {
           nextIndex = tabEls.length - 1;
         } else {
-          const offset = key === 'ArrowRight' ? 1 : -1;
+          const offset = (key === 'ArrowRight' ? 1 : -1) * (isRtl ? -1 : 1);
           nextIndex = currentFocusedElIndex + offset;
         }
 
