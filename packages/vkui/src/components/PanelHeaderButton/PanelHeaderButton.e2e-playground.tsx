@@ -60,6 +60,7 @@ export const PanelHeaderBackPlayground = (props: ComponentPlaygroundProps) => {
         {
           primary: [true, false],
           label: [undefined, 'label'],
+          dir: ['ltr', 'rtl'],
         },
         {
           hideLabelOnIOS: [true, false],
