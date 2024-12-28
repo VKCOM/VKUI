@@ -41,10 +41,6 @@
   display: none;
 }
 
-.el:disabled {
-  opacity: var(--vkui--opacity_disable_accessibility);
-}
-
 .el::placeholder {
   color: var(--vkui--color_text_secondary);
   /* Для Firefox */

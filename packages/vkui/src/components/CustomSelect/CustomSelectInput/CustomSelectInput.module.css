@@ -44,10 +44,6 @@
   padding-inline-end: 0;
 }
 
-.el:disabled {
-  opacity: var(--vkui--opacity_disable_accessibility);
-}
-
 .container {
   z-index: var(--vkui_internal--z_index_form_field_element);
   inline-size: 100%;
