@@ -46,6 +46,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'onShownChange'
   | 'defaultShown'
   | 'hideWhenReferenceHidden'
+  | 'getFloatingElementHiddenStyles'
   | 'sameWidth'
   | 'zIndex'
   | 'usePortal'
@@ -100,6 +101,7 @@ export const Popper = ({
   arrowPadding = DEFAULT_ARROW_PADDING,
   customMiddlewares,
   disableFlipMiddleware = false,
+  getFloatingElementHiddenStyles,
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
@@ -175,13 +177,14 @@ export const Popper = ({
       style={mergeStyle(dropdownStyle, style)}
       baseClassName={styles.host}
       getRootRef={handleRootRef}
-      baseStyle={convertFloatingDataToReactCSSProperties(
-        floatingPositionStrategy,
-        floatingDataX,
-        floatingDataY,
-        sameWidth ? null : undefined,
+      baseStyle={convertFloatingDataToReactCSSProperties({
+        strategy: floatingPositionStrategy,
+        x: floatingDataX,
+        y: floatingDataY,
+        initialWidth: sameWidth ? null : undefined,
         middlewareData,
-      )}
+        getFloatingElementHiddenStyles,
+      })}
     >
       {arrow && (
         <FloatingArrow

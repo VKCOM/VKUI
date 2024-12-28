@@ -29,6 +29,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'defaultShown'
   | 'onShownChange'
   | 'hideWhenReferenceHidden'
+  | 'getFloatingElementHiddenStyles'
   | 'children'
   | 'zIndex'
   | 'usePortal'
@@ -99,6 +100,7 @@ export const Tooltip = ({
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
   disableTriggerOnFocus = false,
+  getFloatingElementHiddenStyles,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -168,6 +170,7 @@ export const Tooltip = ({
     disableInteractive: !enableInteractive,
     middlewares,
     strategy,
+    getFloatingElementHiddenStyles,
   });
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
 
