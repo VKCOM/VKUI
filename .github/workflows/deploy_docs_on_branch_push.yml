@@ -141,4 +141,4 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "${{ env.AWS_S3_URL }}/next/docs-beta/index.html"
+        run: echo "${{ env.AWS_S3_URL }}/next/docs-beta/overview/about.html"
