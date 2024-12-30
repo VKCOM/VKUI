@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { isEqual } from '@vkontakte/vkjs';
 import { type SimulateReactInputTargetState } from '../../lib/react';
-import { defaultFilterFn, type FilterFn } from '../../lib/select';
+import { defaultFilterFn, type FilterFn, type SortFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {
   transformValue,
@@ -39,6 +39,7 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
    */
   selectedBehavior?: 'hide' | 'highlight';
   filterFn?: false | FilterFn<O>;
+  sortFn?: false | SortFn<O>;
   /**
    * Будет вызвано в момент скрытия выпадающего списка
    */
@@ -70,6 +71,7 @@ export const useChipsSelect = <O extends ChipOption>({
   creatable = false,
   emptyText = DEFAULT_EMPTY_TEXT,
   filterFn = defaultFilterFn,
+  sortFn = false,
   selectedBehavior = DEFAULT_SELECTED_BEHAVIOR,
   options: optionsProp = DEFAULT_VALUE,
   onClose,
@@ -130,6 +132,7 @@ export const useChipsSelect = <O extends ChipOption>({
           emptyText,
           creatable,
           filterFn,
+          sortFn,
           options: optionsProp,
           selectedBehavior,
         })
@@ -173,6 +176,7 @@ export const useChipsSelect = <O extends ChipOption>({
           emptyText,
           creatable,
           filterFn,
+          sortFn,
           options: optionsProp,
           selectedBehavior,
         });
@@ -194,6 +198,7 @@ export const useChipsSelect = <O extends ChipOption>({
       creatable,
       selectedBehavior,
       filterFn,
+      sortFn,
     ],
   );
 
@@ -225,6 +230,7 @@ function transformOptions<O extends ChipOption>({
   inputValue = DEFAULT_INPUT_VALUE,
   emptyText = DEFAULT_EMPTY_TEXT,
   creatable = false,
+  sortFn = false,
   filterFn = defaultFilterFn,
   options: optionsProp = DEFAULT_VALUE,
   selectedBehavior = DEFAULT_SELECTED_BEHAVIOR,
@@ -237,6 +243,7 @@ function transformOptions<O extends ChipOption>({
     | 'emptyText'
     | 'creatable'
     | 'filterFn'
+    | 'sortFn'
     | 'options'
     | 'selectedBehavior'
   >) {
@@ -251,7 +258,13 @@ function transformOptions<O extends ChipOption>({
     return [{ placeholder: emptyText }];
   }
 
-  const parsedOptions = transformValue(filteredOptionsProp, getOptionValue, getOptionLabel);
+  const sortedOptions = sortFn
+    ? [...filteredOptionsProp].sort((optionA, optionB) => {
+        return sortFn(optionA, optionB, inputValue);
+      })
+    : filteredOptionsProp;
+
+  const parsedOptions = transformValue(sortedOptions, getOptionValue, getOptionLabel);
 
   if (selectedBehavior === 'hide') {
     const selected = value.map((item) => item.value);
