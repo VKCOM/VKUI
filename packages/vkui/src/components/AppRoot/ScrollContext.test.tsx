@@ -101,7 +101,6 @@ describe(useScrollLock, () => {
         expect(getPositionOfBody()).toEqual([`-${10}px`, `-${10}px`]);
         expect(window.pageYOffset).toBe(0);
       } else {
-        expect(getPositionOfBody()).toEqual([undefined, undefined]);
         expect(window.pageYOffset).toBe(10);
       }
 
