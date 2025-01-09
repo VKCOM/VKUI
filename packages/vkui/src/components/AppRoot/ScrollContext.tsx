@@ -130,14 +130,12 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
       const clampY = (value: number) =>
         value ? clamp(value, 0, document.body.scrollHeight - window.innerHeight) : 0;
 
-      const [left, top] = scrollLockEnabledRef.current
-        ? [-clampX(x), -clampY(y)]
-        : [clampX(x), clampY(y)];
+      const [left, top] = [clampX(x), clampY(y)];
 
       if (scrollLockEnabledRef.current) {
         Object.assign(document.body.style, {
-          left: `${left}px`,
-          top: `${top}px`,
+          left: `-${left}px`,
+          top: `-${top}px`,
         });
       } else {
         window.scrollTo({

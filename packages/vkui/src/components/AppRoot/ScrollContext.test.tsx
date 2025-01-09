@@ -70,18 +70,24 @@ describe(useScrollLock, () => {
 
       clearWindowMeasuresMock();
     });
-
-    test('context api', () => {
+    test.each([true, false])('context api with locked=%s', (locked) => {
       const contextRef = createRef<ScrollContextInterface>();
-      render(
+      const Fixture = () => (
         <GlobalScrollController elRef={createRef<HTMLElement>()}>
           <ChildWithContext contextRef={contextRef} />
-        </GlobalScrollController>,
+        </GlobalScrollController>
       );
+
+      const { rerender } = render(<Fixture />);
 
       const clearWindowMeasuresMock = mockWindowMeasures(50, 50);
       const clearElementScrollMock = mockElementScroll(document.body, 100, 100);
       const clearMockWindowScrollToMock = mockWindowScrollTo();
+
+      if (locked) {
+        contextRef.current?.incrementScrollLockCounter();
+        rerender(<Fixture />);
+      }
 
       expect(contextRef.current?.getScroll()).toEqual({ x: 0, y: 50 });
       expect(contextRef.current?.getScroll({ compensateKeyboardHeight: false })).toEqual({
@@ -90,6 +96,15 @@ describe(useScrollLock, () => {
       });
       contextRef.current?.scrollTo(10, 10);
       expect(contextRef.current?.getScroll()).toEqual({ x: 10, y: 60 });
+
+      if (locked) {
+        expect(getPositionOfBody()).toEqual([`-${10}px`, `-${10}px`]);
+        expect(window.pageYOffset).toBe(0);
+      } else {
+        expect(getPositionOfBody()).toEqual([undefined, undefined]);
+        expect(window.pageYOffset).toBe(10);
+      }
+
       contextRef.current?.scrollTo();
       expect(contextRef.current?.getScroll()).toEqual({ x: 0, y: 50 });
 
@@ -222,6 +237,11 @@ function getStyleAttributeObject(el: HTMLElement | null) {
   );
 }
 
+function getPositionOfBody() {
+  const styles = getStyleAttributeObject(document.body);
+  return styles && [styles.left, styles.top];
+}
+
 function mockWindowMeasures(width: number, height: number) {
   const originalW = window.innerWidth;
   const originalH = window.innerHeight;
@@ -237,9 +257,9 @@ function mockWindowScrollTo() {
   const original = window.scrollTo;
   Object.defineProperty(window, 'scrollTo', {
     configurable: true,
-    value: (x: number, y: number) => {
-      Object.defineProperty(window, 'pageXOffset', { configurable: true, value: x });
-      Object.defineProperty(window, 'pageYOffset', { configurable: true, value: y });
+    value: ({ left, top }: { left: number; top: number }) => {
+      Object.defineProperty(window, 'pageXOffset', { configurable: true, value: left });
+      Object.defineProperty(window, 'pageYOffset', { configurable: true, value: top });
     },
   });
   return function clearMock() {
