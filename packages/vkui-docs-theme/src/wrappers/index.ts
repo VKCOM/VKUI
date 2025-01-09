@@ -1,0 +1,1 @@
+export { VKUIWrapper } from './vkui';
