@@ -242,7 +242,7 @@ export const CarouselBase = ({
 
     slidesManager.current.snaps = snaps;
     slidesManager.current.contentSize = contentSize;
-    if (looped) {
+    if (looped && slidesManager.current.snaps.length > 1) {
       slidesManager.current.loopPoints = getLoopPoints(slidesManager.current, containerWidth);
     }
 

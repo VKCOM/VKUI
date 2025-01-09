@@ -29,7 +29,7 @@ export function calculateIndent(
   isCenter: boolean,
   looped = false,
 ): number {
-  if (slidesManager.isFullyVisible || !slidesManager.slides.length) {
+  if (!slidesManager.slides.length) {
     return 0;
   }
 
