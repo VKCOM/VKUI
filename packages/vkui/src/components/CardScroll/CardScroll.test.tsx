@@ -89,7 +89,14 @@ const setup = ({ defaultScrollLeft = 50, cardsCount = 6 }: PrepareDataParams) =>
 
 describe('CardScroll', () => {
   baselineComponent(CardScroll, {
-    a11y: false,
+    a11yConfig: {
+      rules: {
+        // TODO [a11y]: "<ul> and <ol> must only directly contain <li>, <script> or <template> elements (list)"
+        // https://dequeuniversity.com/rules/axe/4.5/aria-required-parent?application=axeAPI
+        // see https://github.com/VKCOM/VKUI/issues/8135
+        list: { enabled: false },
+      },
+    },
   });
 
   it('check scroll by click arrow left', async () => {
