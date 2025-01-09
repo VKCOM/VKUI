@@ -50,7 +50,7 @@ export interface AlertActionInterface
 
 export interface AlertProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
-    Omit<UseFocusTrapProps, 'onClose' | 'autoFocus'>,
+    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actionsAlign?: AlignType;
