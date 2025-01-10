@@ -171,12 +171,19 @@ export const calcMin = ({
   layerWidth = 0,
   slides = [],
   viewportOffsetWidth = 0,
+  isFullyVisible,
   align,
 }: CalcMin): number => {
   switch (align) {
     case 'left':
+      if (isFullyVisible) {
+        return 0;
+      }
       return containerWidth - layerWidth;
     case 'right':
+      if (isFullyVisible) {
+        return 0;
+      }
       return viewportOffsetWidth - layerWidth;
     case 'center':
       const { coordX, width } = slides[slides.length - 1];

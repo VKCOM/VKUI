@@ -232,6 +232,7 @@ export const CarouselBase = ({
               layerWidth,
               slides: localSlides,
               viewportOffsetWidth,
+              isFullyVisible,
               align,
             }),
     };
@@ -247,7 +248,7 @@ export const CarouselBase = ({
     slidesManager.current.snaps = snaps;
     slidesManager.current.contentSize = contentSize;
     // Если галерея не зациклена и слайд всего один, то рассчитывать loopPoints тоже не надо
-    if (looped && !onlyOneSlide) {
+    if (looped && !onlyOneSlide && !isFullyVisible) {
       slidesManager.current.loopPoints = getLoopPoints(slidesManager.current, containerWidth);
     }
 
