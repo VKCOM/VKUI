@@ -16,7 +16,7 @@ const waitCSSTransitionEndConditionally = async (el: HTMLElement, displayName: s
     : await waitModalCardCSSTransitionEnd(el);
 
 describe(ModalRoot, () => {
-  baselineComponent(ModalRoot, { forward: false, a11y: false, getRootRef: false });
+  baselineComponent(ModalRoot);
 
   describe.each([
     { displayName: 'ModalPage', Component: ModalPage },
