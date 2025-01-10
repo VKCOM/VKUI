@@ -119,10 +119,11 @@ export const CardScroll = ({
         showArrows={showArrows}
         prevButtonTestId={prevButtonTestId}
         nextButtonTestId={nextButtonTestId}
+        ContentWrapperComponent={CardsListComponent}
+        contentWrapperRef={refContainer}
+        contentWrapperClassName={styles.in}
       >
-        <CardsListComponent className={styles.in} ref={refContainer}>
-          {children}
-        </CardsListComponent>
+        {children}
       </HorizontalScroll>
     </RootComponent>
   );
