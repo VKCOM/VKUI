@@ -1,0 +1,24 @@
+.root {
+  padding-block: var(--vkui--spacing_size_xl);
+  padding-inline: var(--vkui--spacing_size_xl);
+  background: var(--vkui--color_background_warning);
+  border-radius: 8px;
+  margin: 0;
+  display: flex;
+}
+
+.icon {
+  color: #edb055;
+}
+
+.content {
+  margin-inline-start: var(--vkui--spacing_size_xl);
+}
+
+.root:not(:last-child) {
+  margin-block-end: 16px;
+}
+
+.root:not(:first-child) {
+  margin-block-start: 16px;
+}

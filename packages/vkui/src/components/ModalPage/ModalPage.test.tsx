@@ -1,8 +1,12 @@
+import { act } from 'react';
+import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent, waitCSSTransitionEnd } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { type ModalCardProps } from '../ModalCard/types';
 import { ModalPage } from './ModalPage';
 
 export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
@@ -132,5 +136,57 @@ describe(ModalPage, () => {
     fireEvent.click(h.getByTestId('dismiss-button'));
     expect(onClose).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledWith('click-close-button', expect.any(Object));
+  });
+
+  describe('check restoreFocus prop', () => {
+    const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
+      const [open, setOpen] = React.useState(false);
+      return (
+        <>
+          <ConfigProvider platform="vkcom">
+            <ModalPage
+              key="host"
+              id="host"
+              open={open}
+              restoreFocus={restoreFocus}
+              modalDismissButtonTestId="dismiss-button"
+              data-testid="host"
+            />
+            <Button onClick={() => setOpen((v) => !v)} data-testid="open-modal">
+              Открыть
+            </Button>
+          </ConfigProvider>
+        </>
+      );
+    };
+
+    it.each([true, false])('check restoreFocus=%s', async (restoreFocus) => {
+      jest.useFakeTimers();
+      const h = render(<Fixture restoreFocus={restoreFocus} />);
+      expect(h.queryByTestId('host')).toBeFalsy();
+
+      const openButton = h.getByTestId('open-modal');
+      await act(async () => {
+        openButton.focus();
+      });
+      fireEvent.click(openButton);
+      expect(openButton).toHaveFocus();
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.queryByTestId('host')).toBeTruthy();
+      jest.runAllTimers();
+      expect(h.getByTestId('dismiss-button')).toHaveFocus();
+
+      fireEvent.click(openButton);
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.queryByTestId('host')).toBeFalsy();
+      jest.runAllTimers();
+
+      if (restoreFocus) {
+        expect(openButton).toHaveFocus();
+      } else {
+        expect(openButton).not.toHaveFocus();
+      }
+    });
   });
 });
