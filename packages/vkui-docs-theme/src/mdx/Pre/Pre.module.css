@@ -1,0 +1,34 @@
+.root {
+  position: relative;
+  margin-block: var(--vkui--spacing_size_3xl);
+  overflow: auto;
+  border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+  border-radius: 8px;
+
+  --vkui_docs--code-background: transparent;
+  --vkui_docs--code-inline-padding: 0px;
+  --vkui_docs--code-block-padding: 0px;
+}
+
+.pre {
+  contain: paint;
+  overflow-x: auto;
+  background-color: var(--vkui_docs--color_background_content);
+  padding-block: var(--vkui--spacing_size_3xl);
+  padding-inline: var(--vkui--spacing_size_4xl);
+  font-size: 14px;
+  -webkit-font-smoothing: auto;
+}
+
+.buttons {
+  position: absolute;
+  inset-inline-end: var(--vkui--spacing_size_m);
+  inset-block-start: var(--vkui--spacing_size_m);
+  display: flex;
+  color: var(--vkui--color_icon_tertiary);
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.buttons > *:not(:last-child) {
+  margin-inline-end: var(--vkui--spacing_size_xs);
+}

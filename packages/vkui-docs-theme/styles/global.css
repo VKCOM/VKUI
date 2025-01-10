@@ -1,0 +1,30 @@
+/* stylelint-disable selector-max-type, selector-max-universal */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+}
+
+html {
+  scroll-padding-block-start: var(--vkui_docs--navbar-height);
+}
+
+body {
+  background-color: var(--vkui--color_background_content);
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  font-weight: var(--vkui--font_weight_base3);
+  font-family: var(--vkui--font_family_base);
+}
