@@ -207,6 +207,8 @@ export const CarouselBase = ({
         ? layerWidth + currentSlideOffsetOnCenterAlignment <= containerWidth
         : layerWidth <= containerWidth;
 
+    const onlyOneSlide = localSlides.length === 1;
+
     slidesManager.current = {
       ...slidesManager.current,
       layerWidth,
@@ -214,22 +216,24 @@ export const CarouselBase = ({
       viewportOffsetWidth,
       slides: localSlides,
       isFullyVisible,
-      max: looped
-        ? null
-        : calcMax({
-            slides: localSlides,
-            containerWidth,
-            isCenterAlign,
-          }),
-      min: looped
-        ? null
-        : calcMin({
-            containerWidth,
-            layerWidth,
-            slides: localSlides,
-            viewportOffsetWidth,
-            align,
-          }),
+      max:
+        looped || onlyOneSlide
+          ? null
+          : calcMax({
+              slides: localSlides,
+              containerWidth,
+              isCenterAlign,
+            }),
+      min:
+        looped || onlyOneSlide
+          ? null
+          : calcMin({
+              containerWidth,
+              layerWidth,
+              slides: localSlides,
+              viewportOffsetWidth,
+              align,
+            }),
     };
     const snaps = localSlides.map((_, index) =>
       calculateIndent(index, slidesManager.current, isCenterAlign, looped),
@@ -242,7 +246,8 @@ export const CarouselBase = ({
 
     slidesManager.current.snaps = snaps;
     slidesManager.current.contentSize = contentSize;
-    if (looped && slidesManager.current.snaps.length > 1) {
+    // Если галерея не зациклена и слайд всего один, то рассчитывать loopPoints тоже не надо
+    if (looped && !onlyOneSlide) {
       slidesManager.current.loopPoints = getLoopPoints(slidesManager.current, containerWidth);
     }
 
