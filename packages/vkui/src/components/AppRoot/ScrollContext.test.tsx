@@ -111,6 +111,52 @@ describe(useScrollLock, () => {
       clearElementScrollMock();
       clearMockWindowScrollToMock();
     });
+
+    test('scroll when not locked and then when locked', () => {
+      const contextRef = createRef<ScrollContextInterface>();
+      const Fixture = () => (
+        <GlobalScrollController elRef={createRef<HTMLElement>()}>
+          <ChildWithContext contextRef={contextRef} />
+        </GlobalScrollController>
+      );
+
+      const { rerender } = render(<Fixture />);
+
+      const clearWindowMeasuresMock = mockWindowMeasures(50, 50);
+      const clearElementScrollMock = mockElementScroll(document.body, 100, 100);
+      const clearMockWindowScrollToMock = mockWindowScrollTo();
+
+      // Скролим не залоченный скролл
+      contextRef.current?.scrollTo(10, 10);
+      expect(window.pageYOffset).toBe(10);
+      expect(window.pageXOffset).toBe(10);
+
+      // Блокируем скролл
+      contextRef.current?.incrementScrollLockCounter();
+      rerender(<Fixture />);
+
+      // Блокируем скролл - отступы остаются те же
+      expect(window.pageYOffset).toBe(10);
+      expect(window.pageXOffset).toBe(10);
+      expect(getPositionOfBody()).toEqual([`-${10}px`, `-${10}px`]);
+
+      // Скролим залоченный скролл
+      contextRef.current?.scrollTo(25, 25);
+
+      expect(getPositionOfBody()).toEqual([`-${25}px`, `-${25}px`]);
+
+      // Выключаем блокировку скролла
+      contextRef.current?.decrementScrollLockCounter();
+      rerender(<Fixture />);
+
+      // Отступы window должны пересчитаться
+      expect(window.pageYOffset).toBe(25);
+      expect(window.pageXOffset).toBe(25);
+
+      clearWindowMeasuresMock();
+      clearElementScrollMock();
+      clearMockWindowScrollToMock();
+    });
   });
 
   describe(ElementScrollController, () => {
