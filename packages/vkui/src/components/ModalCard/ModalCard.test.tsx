@@ -15,9 +15,13 @@ export const waitModalCardCSSTransitionEnd = async (el: HTMLElement) =>
  */
 describe(ModalCard, () => {
   baselineComponent((p) => <ModalCard open nav="id" {...p} />, {
-    // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
-    //              https://dequeuniversity.com/rules/axe/4.5/aria-dialog-name?application=axeAPI
-    a11y: false,
+    a11yConfig: {
+      rules: {
+        // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
+        //      https://dequeuniversity.com/rules/axe/4.5/aria-dialog-name?application=axeAPI
+        'aria-dialog-name': { enabled: false },
+      },
+    },
   });
 
   test('mount and unmount', async () => {
