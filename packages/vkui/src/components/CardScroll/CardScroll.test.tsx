@@ -46,7 +46,7 @@ const mockCardScrollData = (container: HTMLElement, cardsCount: number, defaultS
         ...originalGetComputedStyle(e),
         marginRight: '8px',
         getPropertyValue: (property: string) => {
-          if (property === '--vkui_internal--CardScroll_gap') {
+          if (property === '--vkui_internal--CardScroll_horizontal_padding') {
             return '12px';
           }
           return '';

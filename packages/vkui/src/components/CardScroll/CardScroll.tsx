@@ -51,7 +51,9 @@ export const CardScroll = ({
 
   const getPadding = (container: HTMLElement) => {
     return parseFloat(
-      window!.getComputedStyle(container).getPropertyValue('--vkui_internal--CardScroll_gap'),
+      window!
+        .getComputedStyle(container)
+        .getPropertyValue('--vkui_internal--CardScroll_horizontal_padding'),
     );
   };
 
