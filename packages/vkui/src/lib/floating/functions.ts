@@ -6,6 +6,7 @@ import type {
   PlacementWithAuto,
   UseFloatingData,
 } from './types/common';
+import { type FloatingComponentProps } from './types/component';
 
 export function checkIsNotAutoPlacement(placement: PlacementWithAuto): placement is Placement {
   return !placement.startsWith('auto');
@@ -16,18 +17,39 @@ export function getAutoPlacementAlign(placement: AutoPlacementType): 'start' | '
   return align === 'start' || align === 'end' ? align : null;
 }
 
+const defaultGetFloatingElementHiddenStyles: Exclude<
+  FloatingComponentProps['getFloatingElementHiddenStyles'],
+  undefined
+> = (hidden: boolean) => {
+  return hidden
+    ? {
+        visibility: 'hidden',
+      }
+    : {};
+};
+
+export type ConvertFloatingDataArgs = {
+  strategy: FloatingPositionStrategy;
+  x: UseFloatingData['x'];
+  y: UseFloatingData['y'];
+  initialWidth?: React.CSSProperties['width'] | null;
+  middlewareData?: UseFloatingData['middlewareData'];
+  getFloatingElementHiddenStyles?: FloatingComponentProps['getFloatingElementHiddenStyles'];
+};
+
 /**
  * Note: не используем `translate3d`, чтобы в лишний раз не выносить в отдельный слой и не занимать память в GPU.
  *
  * см. https://floating-ui.com/docs/react#positioning
  */
-export function convertFloatingDataToReactCSSProperties(
-  strategy: FloatingPositionStrategy,
-  x: UseFloatingData['x'],
-  y: UseFloatingData['y'],
-  initialWidth: React.CSSProperties['width'] | null = 'max-content',
-  middlewareData?: UseFloatingData['middlewareData'],
-): React.CSSProperties {
+export function convertFloatingDataToReactCSSProperties({
+  strategy,
+  x,
+  y,
+  initialWidth = 'max-content',
+  middlewareData,
+  getFloatingElementHiddenStyles = defaultGetFloatingElementHiddenStyles,
+}: ConvertFloatingDataArgs): React.CSSProperties {
   const styles: React.CSSProperties = {
     position: strategy,
     top: y,
@@ -40,8 +62,9 @@ export function convertFloatingDataToReactCSSProperties(
   }
   if (middlewareData) {
     const hide = middlewareData.hide;
-    if (hide && hide.referenceHidden) {
-      styles['visibility'] = 'hidden';
+    if (hide) {
+      const hiddenStyles = getFloatingElementHiddenStyles(hide.referenceHidden || false);
+      hiddenStyles && Object.assign(styles, hiddenStyles);
     }
   }
   return styles;

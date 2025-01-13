@@ -132,11 +132,11 @@ export const OnboardingTooltip = ({
 
   let tooltip: React.ReactPortal | null = null;
   if (shown) {
-    const floatingStyle = convertFloatingDataToReactCSSProperties(
-      positionStrategy,
-      floatingDataX,
-      floatingDataY,
-    );
+    const floatingStyle = convertFloatingDataToReactCSSProperties({
+      strategy: positionStrategy,
+      x: floatingDataX,
+      y: floatingDataY,
+    });
 
     tooltip = createPortal(
       <>
