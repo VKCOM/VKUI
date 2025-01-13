@@ -4,7 +4,7 @@ import { classNames, copyTextToClipboard } from '@vkontakte/vkjs';
 import { IconButton } from '@vkontakte/vkui';
 import styles from './CopyToClipboard.module.css';
 
-interface CopyToClipboardProps extends React.ComponentProps<'button'> {
+export interface CopyToClipboardProps extends React.ComponentProps<'button'> {
   getValue: () => string;
 }
 
