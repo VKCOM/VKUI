@@ -67,7 +67,6 @@
 .contentMultiline {
   white-space: initial;
   word-break: break-word;
-  flex-grow: 1;
 }
 
 .subtitle {
