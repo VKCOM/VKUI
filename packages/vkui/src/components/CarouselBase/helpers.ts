@@ -29,7 +29,7 @@ export function calculateIndent(
   isCenter: boolean,
   looped = false,
 ): number {
-  if (slidesManager.isFullyVisible || !slidesManager.slides.length) {
+  if (!slidesManager.slides.length) {
     return 0;
   }
 
@@ -123,14 +123,22 @@ export function getLoopPoints(
 /*
  * Получает индекс слайда, к которому будет осуществлен переход
  */
-export function getTargetIndex(
-  slides: GallerySlidesState[],
-  slideIndex: number,
-  currentShiftX: number,
-  currentShiftXDelta: number,
+export function getTargetIndex({
+  slides,
+  slideIndex,
+  currentShiftX,
+  currentShiftXDelta,
   looped = false,
-): number {
-  const shift = currentShiftX + currentShiftXDelta;
+  max = null,
+}: {
+  slides: GallerySlidesState[];
+  slideIndex: number;
+  currentShiftX: number;
+  currentShiftXDelta: number;
+  looped: boolean;
+  max?: number | null;
+}): number {
+  const shift = currentShiftX + currentShiftXDelta - (max ?? 0);
   const direction = currentShiftXDelta < 0 ? 1 : -1;
 
   // Находим ближайшую границу слайда к текущему отступу
@@ -171,12 +179,19 @@ export const calcMin = ({
   layerWidth = 0,
   slides = [],
   viewportOffsetWidth = 0,
+  isFullyVisible,
   align,
 }: CalcMin): number => {
   switch (align) {
     case 'left':
+      if (isFullyVisible) {
+        return 0;
+      }
       return containerWidth - layerWidth;
     case 'right':
+      if (isFullyVisible) {
+        return 0;
+      }
       return viewportOffsetWidth - layerWidth;
     case 'center':
       const { coordX, width } = slides[slides.length - 1];
