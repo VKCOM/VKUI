@@ -434,13 +434,14 @@ export const CarouselBase = ({
       isDragging.current = false;
       let targetIndex = slideIndex;
       if (e.isSlide) {
-        targetIndex = getTargetIndex(
-          slidesManager.current.slides,
+        targetIndex = getTargetIndex({
+          slides: slidesManager.current.slides,
           slideIndex,
-          shiftXCurrentRef.current,
-          shiftXDeltaRef.current,
+          currentShiftX: shiftXCurrentRef.current,
+          currentShiftXDelta: shiftXDeltaRef.current,
+          max: slidesManager.current.max,
           looped,
-        );
+        });
       }
       onDragEnd?.(e, targetIndex);
 

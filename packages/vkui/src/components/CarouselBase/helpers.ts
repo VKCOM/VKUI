@@ -123,14 +123,22 @@ export function getLoopPoints(
 /*
  * Получает индекс слайда, к которому будет осуществлен переход
  */
-export function getTargetIndex(
-  slides: GallerySlidesState[],
-  slideIndex: number,
-  currentShiftX: number,
-  currentShiftXDelta: number,
+export function getTargetIndex({
+  slides,
+  slideIndex,
+  currentShiftX,
+  currentShiftXDelta,
   looped = false,
-): number {
-  const shift = currentShiftX + currentShiftXDelta;
+  max = null,
+}: {
+  slides: GallerySlidesState[];
+  slideIndex: number;
+  currentShiftX: number;
+  currentShiftXDelta: number;
+  looped: boolean;
+  max?: number | null;
+}): number {
+  const shift = currentShiftX + currentShiftXDelta - (max ?? 0);
   const direction = currentShiftXDelta < 0 ? 1 : -1;
 
   // Находим ближайшую границу слайда к текущему отступу
