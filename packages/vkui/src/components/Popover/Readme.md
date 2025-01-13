@@ -207,7 +207,7 @@ const Playground = () => {
 
 ## Использование хука usePopover
 
-Вы можете использовать хук usePopover, который позволяет устанавливать якорных элемент для Popover, не прокидывая его в качестве children
+Вы можете использовать хук `usePopover`, который позволяет устанавливать якорных элемент для `Popover`, не прокидывая его в качестве `children`
 
 ```jsx { "props": { "layout": false, "iframe": true } }
 const Example = () => {

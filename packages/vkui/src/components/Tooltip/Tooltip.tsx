@@ -1,22 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
-import { usePatchChildren } from '../../hooks/usePatchChildren';
-import { animationFadeClassNames } from '../../lib/animation';
-import {
-  type FloatingComponentProps,
-  getArrowCoordsByMiddlewareData,
-  type OnShownChange,
-  useFloatingMiddlewaresBootstrap,
-  useFloatingWithInteractions,
-  usePlacementChangeCallback,
-} from '../../lib/floating';
-import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { useReferenceElement } from '../../hooks/useReferenceElement';
+import { type FloatingComponentProps, type OnShownChange } from '../../lib/floating';
 import { type FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
-import { TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
+import { type TooltipBaseProps } from '../TooltipBase/TooltipBase';
+import { useTooltip } from './useTooltip';
 
 type AllowedFloatingComponentProps = Pick<
   FloatingComponentProps,
@@ -89,137 +78,14 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
 /**
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
-export const Tooltip = ({
-  // UseFloatingMiddlewaresBootstrapOptions
-  placement: placementProp = 'bottom',
-  arrowPadding = 10,
-  arrowHeight = 8,
-  offsetByMainAxis = 8,
-  offsetByCrossAxis = 0,
-  hideWhenReferenceHidden,
-  disableFlipMiddleware = false,
-  disableTriggerOnFocus = false,
+export const Tooltip = ({ children, ...restProps }: TooltipProps): React.ReactNode => {
+  const { anchorRef, anchorProps, tooltip } = useTooltip(restProps);
 
-  // useFloatingWithInteractions
-  defaultShown,
-  shown: shownProp,
-  onShownChange,
-  hoverDelay = 150,
-  strategy,
-
-  // инверсированные св-ва для useFloatingWithInteractions
-  enableInteractive = false,
-  disableArrow = false,
-  disableCloseAfterClick = false,
-
-  // Reference
-  children,
-
-  // AppRootProps
-  usePortal,
-
-  // TooltipBaseProps
-  id: idProp,
-  getRootRef,
-  appearance = 'neutral',
-  style: styleProp,
-  className,
-  zIndex = 'var(--vkui--z_index_popout)',
-  closable,
-  onPlacementChange,
-  ...popperProps
-}: TooltipProps): React.ReactNode => {
-  const generatedId = React.useId();
-  const tooltipId = idProp || generatedId;
-
-  const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
-  const { middlewares, strictPlacement } = useFloatingMiddlewaresBootstrap({
-    placement: placementProp,
-
-    offsetByMainAxis,
-    offsetByCrossAxis,
-
-    hideWhenReferenceHidden,
-
-    arrow: !disableArrow,
-    arrowRef,
-    arrowPadding,
-    arrowHeight,
-    disableFlipMiddleware,
-  });
-  const {
-    shown,
-    willBeHide,
-    placement,
-    refs,
-    referenceProps,
-    floatingProps,
-    middlewareData,
-    onClose,
-    onEscapeKeyDown,
-  } = useFloatingWithInteractions({
-    defaultShown,
-    shown: shownProp,
-    onShownChange,
-    placement: strictPlacement,
-    trigger: disableTriggerOnFocus ? 'hover' : ['hover', 'focus'],
-    hoverDelay,
-    closeAfterClick: !disableCloseAfterClick,
-    disableInteractive: !enableInteractive,
-    middlewares,
-    strategy,
-  });
-  const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
-
-  usePlacementChangeCallback(placementProp, placement, onPlacementChange);
-
-  let tooltip: React.ReactNode = null;
-  if (shown) {
-    tooltip = (
-      <AppRootPortal usePortal={usePortal}>
-        <TooltipBase
-          {...popperProps}
-          {...floatingProps}
-          style={{
-            ...floatingProps.style,
-            zIndex,
-            ...styleProp,
-          }}
-          id={tooltipId}
-          getRootRef={tooltipRef}
-          appearance={appearance}
-          arrowProps={
-            disableArrow
-              ? undefined
-              : {
-                  placement,
-                  coords: getArrowCoordsByMiddlewareData(middlewareData),
-                  getRootRef: setArrowRef,
-                }
-          }
-          className={classNames(
-            willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
-            className,
-          )}
-          onCloseIconClick={closable ? onClose : undefined}
-        />
-      </AppRootPortal>
-    );
-  }
-  const [, child] = usePatchChildren(
-    children,
-    {
-      ...referenceProps,
-      ...(shown && { 'aria-describedby': tooltipId }),
-    },
-    refs.setReference,
-  );
-
-  useGlobalEscKeyDown(shown, onEscapeKeyDown);
+  const anchor = useReferenceElement(children, anchorProps, anchorRef);
 
   return (
     <React.Fragment>
-      {child}
+      {anchor}
       {tooltip}
     </React.Fragment>
   );
