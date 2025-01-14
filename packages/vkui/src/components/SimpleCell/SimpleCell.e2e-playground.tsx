@@ -79,7 +79,19 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           ],
           badgeBeforeTitle: [<Icon20AddCircleFillBlue key="leftBadge" />],
           badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
-          multiline: [true, false],
+        },
+        {
+          children: [
+            'Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children',
+          ],
+          subtitle: [
+            'Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long children Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle',
+          ],
+          badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
+          badgeAfterSubtitle: [
+            <Icon12Fire key="iconFire" fill="var(--vkui--color_icon_negative)" />,
+          ],
+          multiline: [false, true],
         },
         {
           children: ['Title'],
