@@ -1,6 +1,8 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { Tooltip, type TooltipProps } from './Tooltip';
+import { useTooltip } from './useTooltip';
 
 describe(Tooltip, () => {
   baselineComponent((props) => (
@@ -39,5 +41,34 @@ describe(Tooltip, () => {
     await waitForFloatingPosition();
 
     expect(result.getByTestId('tooltip')).toHaveStyle('position: absolute');
+  });
+
+  it('check working with useTooltip hook', async () => {
+    const onShownChange = jest.fn();
+    const Fixture = () => {
+      const { anchorRef, anchorProps, tooltip } = useTooltip({
+        'description': 'Some tooltip',
+        'data-testid': 'tooltip',
+        onShownChange,
+        'hoverDelay': 0,
+      });
+      return (
+        <>
+          {tooltip}
+          <Button {...anchorProps} data-testid="target" getRootRef={anchorRef}>
+            Hover me
+          </Button>
+        </>
+      );
+    };
+
+    const result = render(<Fixture />);
+    await waitForFloatingPosition();
+    expect(result.queryByTestId('tooltip')).toBeFalsy();
+
+    fireEvent.focus(screen.getByTestId('target'));
+    await waitForFloatingPosition();
+    expect(result.queryByTestId('tooltip')).toBeTruthy();
+    expect(onShownChange).toHaveBeenCalledTimes(1);
   });
 });

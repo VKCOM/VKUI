@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { stopPropagation } from '../../lib/utils';
@@ -49,6 +50,7 @@ export interface AlertActionInterface
 
 export interface AlertProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
+    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actionsAlign?: AlignType;

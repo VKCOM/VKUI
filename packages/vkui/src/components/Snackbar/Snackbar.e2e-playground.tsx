@@ -5,6 +5,7 @@ import {
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
+import { type Direction } from '../../hooks/useDirection';
 import { Snackbar, type SnackbarProps } from './Snackbar';
 
 const BASE_OFFSET_Y = 64;
@@ -24,13 +25,17 @@ const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
   </AppDefaultWrapper>
 );
 
-export const SnackbarPlayground = ({ platform, ...restProps }: ComponentPlaygroundProps) => {
+const SnackBarCommon = ({
+  platform,
+  dir,
+  ...restProps
+}: ComponentPlaygroundProps & { dir: Direction }) => {
   return (
     <ComponentPlayground
       {...restProps}
       platform={platform}
       isFixedComponent
-      AppWrapper={AppWrapper}
+      AppWrapper={(wrapperProps) => <AppWrapper {...wrapperProps} dir={dir} />}
       propSets={[
         {
           placement: ['top-start', 'top', 'top-end', 'bottom-start', 'bottom', 'bottom-end'],
@@ -48,6 +53,14 @@ export const SnackbarPlayground = ({ platform, ...restProps }: ComponentPlaygrou
       }}
     </ComponentPlayground>
   );
+};
+
+export const SnackbarPlayground = (props: ComponentPlaygroundProps) => {
+  return <SnackBarCommon {...props} dir="ltr" />;
+};
+
+export const SnackbarRtlPlayground = (props: ComponentPlaygroundProps) => {
+  return <SnackBarCommon {...props} dir="rtl" />;
 };
 
 export const SnackbarModePlayground = (props: ComponentPlaygroundProps) => {

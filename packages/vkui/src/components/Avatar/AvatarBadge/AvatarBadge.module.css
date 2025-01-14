@@ -16,6 +16,11 @@
   transform: translate(50%, 50%);
 }
 
+.rtl.presetOnline,
+.rtl.presetOnlineMobile {
+  transform: translate(-50%, 50%);
+}
+
 /**
  * Перебиваем свойства `ImageBaseBadge` для этих кейсов
  */

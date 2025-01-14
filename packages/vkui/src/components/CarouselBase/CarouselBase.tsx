@@ -248,6 +248,8 @@ export const CarouselBase = ({
         ? layerWidth + currentSlideOffsetOnCenterAlignment <= containerWidth
         : layerWidth <= containerWidth;
 
+    const onlyOneSlide = localSlides.length === 1;
+
     slidesManager.current = {
       ...slidesManager.current,
       layerWidth,
@@ -255,7 +257,8 @@ export const CarouselBase = ({
       viewportOffsetWidth,
       slides: localSlides,
       isFullyVisible,
-      max: looped
+      max:
+        looped || onlyOneSlide
         ? null
         : calcMax({
             slides: localSlides,
@@ -263,13 +266,14 @@ export const CarouselBase = ({
             isCenterAlign,
             isRtl,
           }),
-      min: looped
-        ? null
-        : calcMin({
-            containerWidth,
-            layerWidth,
-            slides: localSlides,
-            viewportOffsetWidth,
+      min: looped|| onlyOneSlide
+          ? null
+          : calcMin({
+              containerWidth,
+              layerWidth,
+              slides: localSlides,
+              viewportOffsetWidth,
+              isFullyVisible,
             align,
             isRtl,
           }),
@@ -286,7 +290,8 @@ export const CarouselBase = ({
 
     slidesManager.current.snaps = snaps;
     slidesManager.current.contentSize = contentSize;
-    if (looped) {
+    // Если галерея не зациклена и слайд всего один, то рассчитывать loopPoints тоже не надо
+    if (looped && !onlyOneSlide && !isFullyVisible) {
       slidesManager.current.loopPoints = getLoopPoints(
         slidesManager.current,
         containerWidth,
@@ -482,14 +487,15 @@ export const CarouselBase = ({
       isDragging.current = false;
       let targetIndex = slideIndex;
       if (e.isSlide) {
-        targetIndex = getTargetIndex(
-          slidesManager.current.slides,
+        targetIndex = getTargetIndex({
+          slides: slidesManager.current.slides,
           slideIndex,
-          shiftXCurrentRef.current,
-          shiftXDeltaRef.current,
+          currentShiftX: shiftXCurrentRef.current,
+          currentShiftXDelta: shiftXDeltaRef.current,
+          max: slidesManager.current.max,
           looped,
           isRtl,
-        );
+        });
       }
       onDragEnd?.(e, targetIndex);
 

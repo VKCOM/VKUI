@@ -38,7 +38,7 @@ export function calculateIndent(
   looped = false,
   isRtl = false,
 ): number {
-  if (slidesManager.isFullyVisible || !slidesManager.slides.length) {
+  if (!slidesManager.slides.length) {
     return 0;
   }
 
@@ -148,19 +148,25 @@ export function getLoopPoints(
 /*
  * Получает индекс слайда, к которому будет осуществлен переход
  */
-export function getTargetIndex(
-  slides: GallerySlidesState[],
-  slideIndex: number,
-  currentShiftX: number,
-  currentShiftXDelta: number,
+export function getTargetIndex({
+  slides,
+  slideIndex,
+  currentShiftX,
+  currentShiftXDelta,
   looped = false,
-  isRtl = false,
-): number {
-  // Инвертируем значения смещения для RTL режима
-  const shift = isRtl ? -(currentShiftX + currentShiftXDelta) : currentShiftX + currentShiftXDelta;
-
-  // Инвертируем направление для RTL режима
-  const direction = isRtl ? (currentShiftXDelta > 0 ? 1 : -1) : currentShiftXDelta < 0 ? 1 : -1;
+  max = null,
+                                 isRtl = false,
+}: {
+  slides: GallerySlidesState[];
+  slideIndex: number;
+  currentShiftX: number;
+  currentShiftXDelta: number;
+  looped: boolean;
+  max?: number | null;
+  isRtl?: boolean;
+}): number {
+  const shift = currentShiftX + currentShiftXDelta - (max ?? 0);
+  const direction = currentShiftXDelta < 0 ? 1 : -1;
 
   // Находим ближайшую границу слайда к текущему отступу
   let targetIndex = slides.reduce((val: number, item: GallerySlidesState, index: number) => {
@@ -205,9 +211,13 @@ export const calcMin = ({
   layerWidth = 0,
   slides = [],
   viewportOffsetWidth = 0,
+  isFullyVisible,
   align,
   isRtl = false,
 }: CalcMin): number => {
+  if (align !== 'center' && isFullyVisible) {
+    return 0
+  }
   const result = getValueByCheckedKey(align, {
     left: () => containerWidth - layerWidth,
     right: () => viewportOffsetWidth - layerWidth,

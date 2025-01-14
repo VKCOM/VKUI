@@ -96,7 +96,7 @@ const setup = ({
   numberOfSlides?: number;
   resizeSource?: BaseGalleryProps['resizeSource'];
   align?: AlignType;
-  onChange: VoidFunction;
+  onChange?: VoidFunction;
   onNext?: VoidFunction;
   onPrev?: VoidFunction;
   onDragStart?: VoidFunction;
@@ -286,6 +286,21 @@ describe('Gallery', () => {
   });
 
   describe.each([true, false])('check correct working gallery with lopped %s', (looped) => {
+    it('check rendering one slide correct', () => {
+      const mockedData = setup({
+        looped,
+        numberOfSlides: 1,
+        defaultSlideIndex: 0,
+        slideWidth: 180,
+        align: 'center',
+        containerWidth: 200,
+        viewPortWidth: 180,
+      });
+
+      expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
+      expect(mockedData.getSlideMockData(0).transform).toBeFalsy();
+    });
+
     it('check correct navigation by arrows clicks', () => {
       const onNext = jest.fn();
       const onPrev = jest.fn();

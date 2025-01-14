@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  margin-inline: auto;
+  color: var(--vkui--color_text_subhead);
+  background-color: var(--vkui--color_background_content);
+}
+
+.maxWidth {
+  max-inline-size: var(--vkui_docs--max-width);
+}
+
+.blog {
+  max-inline-size: var(--vkui_docs_blog--max-width);
+  padding-block-start: var(--vkui--spacing_size_4xl);
+  padding-block-end: 60px;
+  padding-inline: 40px;
+  flex-direction: column;
+}
+
+@media (--viewWidth-smallTabletMinus) {
+  .blog {
+    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+  }
+}

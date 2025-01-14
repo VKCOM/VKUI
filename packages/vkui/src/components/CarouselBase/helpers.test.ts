@@ -231,9 +231,9 @@ describe(getTargetIndex, () => {
   ])(
     'should return $resultIndex with slideIndex $slideIndex, currentShiftX $currentShiftX, currentShiftXDelta $currentShiftXDelta',
     ({ slides, slideIndex, currentShiftX, currentShiftXDelta, resultIndex }) => {
-      expect(getTargetIndex(slides, slideIndex, currentShiftX, currentShiftXDelta, true)).toBe(
-        resultIndex,
-      );
+      expect(
+        getTargetIndex({ slides, slideIndex, currentShiftX, currentShiftXDelta, looped: true }),
+      ).toBe(resultIndex);
     },
   );
 });
