@@ -10,7 +10,7 @@ import {
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
-import { configureAxe, toHaveNoViolations } from 'jest-axe';
+import { configureAxe, type JestAxeConfigureOptions, toHaveNoViolations } from 'jest-axe';
 import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
@@ -20,7 +20,7 @@ import type { HasChildren } from '../types';
 
 export const testIf = (condition: boolean) => (condition ? it : it.skip);
 
-export const axe = configureAxe({
+export const defaultAxe = configureAxe({
   /**
    * @see https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
    */
@@ -32,7 +32,9 @@ expect.extend(toHaveNoViolations);
  *
  * https://github.com/testing-library/user-event/issues/833
  */
-export const userEvent = userEventLib.setup({ advanceTimers: jest.advanceTimersByTime });
+export const userEvent = userEventLib.setup({
+  advanceTimers: jest.advanceTimersByTime,
+});
 
 export function fakeTimers() {
   beforeEach(() => jest.useFakeTimers());
@@ -85,6 +87,7 @@ export type ComponentTestOptions = {
   style?: boolean;
   adaptivity?: AdaptivityProps;
   a11y?: boolean;
+  a11Config?: JestAxeConfigureOptions;
   getRootRef?: boolean;
 };
 
@@ -118,12 +121,15 @@ export function mountTest(Component: React.ComponentType<any>) {
   });
 }
 
-export function a11yTest(Component: React.ComponentType<any>) {
+export function a11yTest(Component: React.ComponentType<any>, axeConfig?: JestAxeConfigureOptions) {
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
     await waitForFloatingPosition();
     jest.useRealTimers();
-    const results = await axe(container, {});
+
+    const jestAxe = axeConfig ? configureAxe(axeConfig) : defaultAxe;
+    const results = await jestAxe(container, {});
+
     jest.useFakeTimers();
     expect(results).toHaveNoViolations();
   });
@@ -158,6 +164,7 @@ export function baselineComponent<Props extends object>(
     className = true,
     domAttr = true,
     a11y = true,
+    a11Config,
     getRootRef = true,
     adaptivity,
   }: ComponentTestOptions = {},
@@ -180,7 +187,7 @@ export function baselineComponent<Props extends object>(
     mountTest(Component);
 
     if (a11y) {
-      a11yTest(Component);
+      a11yTest(Component, a11Config);
     }
 
     if (forward) {
@@ -485,7 +492,9 @@ export function touchEventMock({ target = new EventTarget(), ...dataRaw }: Parti
 export function mouseEventMock({
   target = new EventTarget(),
   ...dataRaw
-}: Partial<MouseEventInit & { target: any }>): MouseEventInit & { target: any } {
+}: Partial<MouseEventInit & { target: any }>): MouseEventInit & {
+  target: any;
+} {
   return {
     screenX: 0,
     screenY: 0,
