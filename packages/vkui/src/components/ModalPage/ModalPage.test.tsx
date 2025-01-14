@@ -7,6 +7,7 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { type ModalCardProps } from '../ModalCard/types';
+import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalPage } from './ModalPage';
 
 export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
@@ -18,15 +19,11 @@ export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
  * Большинство логики покрыто в `ModalRoot.test.tsx`
  */
 describe(ModalPage, () => {
-  baselineComponent((props) => <ModalPage open nav="id" {...props} />, {
-    a11yConfig: {
-      rules: {
-        // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
-        //      https://dequeuniversity.com/rules/axe/4.5/aria-dialog-name?application=axeAPI
-        'aria-dialog-name': { enabled: false },
-      },
-    },
-  });
+  baselineComponent((props) => (
+    <ModalPage open nav="id" {...props}>
+      <ModalPageHeader>Title</ModalPageHeader>
+    </ModalPage>
+  ));
 
   test('mount and unmount', async () => {
     const result = render(<ModalPage id="host" data-testid="host" />);
