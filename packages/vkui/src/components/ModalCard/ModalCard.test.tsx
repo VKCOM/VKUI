@@ -4,6 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitCSSTransitionEnd } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalCard } from './ModalCard';
 import { type ModalCardProps } from './types';
 
@@ -14,11 +15,11 @@ export const waitModalCardCSSTransitionEnd = async (el: HTMLElement) =>
  * Большинство логики покрыто в `ModalRoot.test.tsx`
  */
 describe(ModalCard, () => {
-  baselineComponent((p) => <ModalCard open nav="id" {...p} />, {
-    // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
-    //              https://dequeuniversity.com/rules/axe/4.5/aria-dialog-name?application=axeAPI
-    a11y: false,
-  });
+  baselineComponent((p) => (
+    <ModalCard open nav="id" {...p}>
+      <ModalPageHeader>Title</ModalPageHeader>
+    </ModalCard>
+  ));
 
   test('mount and unmount', async () => {
     const result = render(<ModalCard id="host" data-testid="host" />);

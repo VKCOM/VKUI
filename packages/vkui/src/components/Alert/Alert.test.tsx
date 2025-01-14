@@ -7,6 +7,7 @@ import { Platform } from '../../lib/platform';
 import {
   baselineComponent,
   fakeTimers,
+  setNodeEnv,
   userEvent,
   waitCSSKeyframesAnimation,
 } from '../../testing/utils';
@@ -25,9 +26,28 @@ import typographyStyles from '../Typography/Typography.module.css';
 describe('Alert', () => {
   fakeTimers();
 
-  baselineComponent(Alert, {
-    // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
-    a11y: false,
+  baselineComponent((props) => <Alert {...props} title="Alert title" onClose={noop} />, {});
+
+  it('shows warning if title and area attributes are not provided', () => {
+    setNodeEnv('development');
+    const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+
+    const component = render(<Alert onClose={noop} title="Alert title" />);
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(<Alert onClose={noop} aria-label="Alert title" />);
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(<Alert onClose={noop} aria-labelledby="labelId" />);
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(<Alert onClose={noop} />);
+
+    expect(warn.mock.calls[0][0]).toBe(
+      '%c[VKUI/Alert] Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+
+    setNodeEnv('test');
   });
 
   describe('closes', () => {

@@ -1,10 +1,19 @@
 import { fireEvent, render } from '@testing-library/react';
-import { baselineComponent, waitCSSKeyframesAnimation } from '../../testing/utils';
+import { a11yTest, baselineComponent, waitCSSKeyframesAnimation } from '../../testing/utils';
 import { Accordion } from './Accordion';
 
 describe(Accordion, () => {
+  a11yTest(() => (
+    <Accordion>
+      <Accordion.Summary iconPosition="before" data-testid="summary">
+        Title
+      </Accordion.Summary>
+      <Accordion.Content data-testid="content">Content</Accordion.Content>
+    </Accordion>
+  ));
+
   baselineComponent(Accordion.Content);
-  baselineComponent(Accordion.Summary, { a11y: false });
+  baselineComponent((props) => <Accordion.Summary {...props}>Title</Accordion.Summary>);
 
   it('toggles on click', async () => {
     const result = render(
