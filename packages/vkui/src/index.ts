@@ -446,7 +446,7 @@ export { usePagination } from './hooks/usePagination';
 export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
 export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
-export { useScrollLock } from './components/AppRoot/ScrollContext';
+export { useScrollLock, useScrollingLockedScroll } from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
