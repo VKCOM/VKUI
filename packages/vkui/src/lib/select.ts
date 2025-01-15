@@ -16,6 +16,8 @@ export type FilterFn<O extends Option> = (
   getOptionsLabel?: GetOptionLabel<O>,
 ) => boolean;
 
+export type SortFn<O extends Option> = (optionA: O, optionB: O, inputValue: string) => number;
+
 function getOptionLabelDefault<O extends Option>(option: O): O['label'] {
   return option.label;
 }
