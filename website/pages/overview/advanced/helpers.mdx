@@ -1,0 +1,47 @@
+<Overview>
+# Утилиты
+
+VKUI предоставляет дополнительные функции, позволяющие получить информацию об окружении приложения.
+
+</Overview>
+
+## usePlatform
+
+Как уже было сказано ранее, компоненты библиотеки имеют разный внешний вид в зависимости от платформы – iOS или Android.
+Вам может понадобиться определить платформу в коде приложения, для этого используйте хук `usePlatform`.
+
+```jsx {1,4}
+import { usePlatform, Platform } from '@vkontakte/vkui';
+
+const MyComponent = () => {
+  const platform = usePlatform(); // android или ios
+  return '...';
+};
+```
+
+## calcInitialsAvatarColor
+
+Используется для определения цвета в [Avatar](#!/Avatar) по переданному идентификатору объекта.
+
+```jsx {1,5}
+import { calcInitialsAvatarColor } from '@vkontakte/vkui';
+
+const conversation = { peer: { id: 480 }, name: 'Библиотека компонентов VKUI' };
+
+<Avatar size={48} gradientColor={calcInitialsAvatarColor(conversation.peer.id)}>
+  {conversation.name[0]}
+</Avatar>;
+```
+
+## useColorScheme
+
+С помощью этого хука можно определить цветовую схему приложения.
+
+```jsx {1,4}
+import { useColorScheme, Platform } from '@vkontakte/vkui';
+
+const MyComponent = () => {
+  const colorScheme = useColorScheme(); // dark или light
+  return '...';
+};
+```

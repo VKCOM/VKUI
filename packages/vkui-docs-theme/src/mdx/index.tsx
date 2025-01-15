@@ -17,7 +17,7 @@ const DEFAULT_COMPONENTS: MDXComponents = {
   h5: (props) => <HeadingLink Tag="h5" {...props} />,
   h6: (props) => <HeadingLink Tag="h6" {...props} />,
   ul: (props) => <ul className={styles.ul} {...props} />,
-  ol: (props) => <ol {...props} />,
+  ol: (props) => <ol className={styles.ol} {...props} />,
   li: (props) => <li className={styles.li} {...props} />,
   blockquote: (props) => <blockquote {...props} />,
   hr: (props) => <hr className={styles.hr} {...props} />,
