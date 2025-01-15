@@ -125,7 +125,7 @@ export const CarouselBase = ({
       !slidesManager.current.isFullyVisible &&
       // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
       ((align === 'left' &&
-        slidesManager.current.containerWidth + shiftXCurrentRef.current <
+        slidesManager.current.containerWidth - revertRtlValue(shiftXCurrentRef.current, isRtl) <
           (slidesManager.current.layerWidth ?? 0)) ||
         // otherwise we need to check current slide index (align = right or align = center)
         (align !== 'left' && slideIndex < slidesManager.current.slides.length - 1))
@@ -172,11 +172,11 @@ export const CarouselBase = ({
       align === 'center'
         ? (slidesManager.current.containerWidth - slidesManager.current.slides[0].width) / 2
         : 0;
-    const lastPoint = isRtl
-      ? slides[slides.length - 1].coordX - slides[slides.length - 1].width + firstSlideShift
-      : slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
 
-    return (isRtl && shiftX >= -lastPoint) || (!isRtl && shiftX <= -lastPoint);
+    const lastPoint =
+      slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
+
+    return (isRtl && shiftX >= lastPoint) || (!isRtl && shiftX <= -lastPoint);
   };
 
   const requestTransform = (shiftX: number, animation = false) => {
@@ -208,13 +208,25 @@ export const CarouselBase = ({
   };
 
   const initializeSlides = () => {
-    if (!rootRef.current || !viewportRef.current) {
+    if (!rootRef.current || !viewportRef.current || !layerRef.current) {
       return;
     }
+    const layerOffsetWidth = layerRef.current.offsetWidth;
+
+    const calcRtlCoord = (element: HTMLDivElement) => {
+      const offsetLeft = element.offsetLeft;
+      const offsetWidth = element.offsetWidth;
+      return layerOffsetWidth - offsetLeft - offsetWidth;
+    };
+
     let localSlides =
       React.Children.map(children, (_item, i): GallerySlidesState => {
-        const elem = slidesStore.current[i] || { offsetLeft: 0, offsetWidth: 0 };
-        return { coordX: elem.offsetLeft, width: elem.offsetWidth };
+        const elem = slidesStore.current[i];
+        if (!elem) {
+          return { coordX: 0, width: 0 };
+        }
+        const coordX = isRtl ? calcRtlCoord(elem) : elem.offsetLeft;
+        return { coordX, width: elem.offsetWidth };
       }) || [];
 
     if (localSlides.length === 0) {
@@ -259,14 +271,15 @@ export const CarouselBase = ({
       isFullyVisible,
       max:
         looped || onlyOneSlide
-        ? null
-        : calcMax({
-            slides: localSlides,
-            containerWidth,
-            isCenterAlign,
-            isRtl,
-          }),
-      min: looped|| onlyOneSlide
+          ? null
+          : calcMax({
+              slides: localSlides,
+              containerWidth,
+              isCenterAlign,
+              isRtl,
+            }),
+      min:
+        looped || onlyOneSlide
           ? null
           : calcMin({
               containerWidth,
@@ -274,16 +287,21 @@ export const CarouselBase = ({
               slides: localSlides,
               viewportOffsetWidth,
               isFullyVisible,
-            align,
-            isRtl,
-          }),
+              align,
+              isRtl,
+            }),
     };
     const snaps = localSlides.map((_, index) =>
-      calculateIndent(index, slidesManager.current, isCenterAlign, looped, isRtl),
+      calculateIndent({
+        targetIndex: index,
+        slidesManager: slidesManager.current,
+        isCenter: isCenterAlign,
+        looped,
+        isRtl,
+      }),
     );
 
-    let contentSize =
-      revertRtlValue(-snaps[snaps.length - 1], isRtl) + localSlides[localSlides.length - 1].width;
+    let contentSize = Math.abs(snaps[snaps.length - 1]) + localSlides[localSlides.length - 1].width;
     if (align === 'center') {
       contentSize += revertRtlValue(snaps[0], isRtl);
     }

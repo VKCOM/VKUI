@@ -31,13 +31,19 @@ const validateIndent = (slidesManager: SlidesManagerState, value: number, isRtl:
 /*
  * Считает отступ слоя галереи
  */
-export function calculateIndent(
-  targetIndex: number,
-  slidesManager: SlidesManagerState,
-  isCenter: boolean,
+export function calculateIndent({
+  targetIndex,
+  slidesManager,
+  isCenter,
   looped = false,
   isRtl = false,
-): number {
+}: {
+  targetIndex: number;
+  slidesManager: SlidesManagerState;
+  isCenter: boolean;
+  looped: boolean;
+  isRtl: boolean;
+}): number {
   if (!slidesManager.slides.length) {
     return 0;
   }
@@ -48,11 +54,9 @@ export function calculateIndent(
     const { coordX, width } = targetSlide;
 
     if (isCenter) {
-      const adjustedCoordX = isRtl ? -1 * coordX : coordX;
-      const result = slidesManager.containerWidth / 2 - adjustedCoordX - width / 2;
-      return revertRtlValue(result, isRtl);
+      return revertRtlValue(slidesManager.containerWidth / 2 - coordX - width / 2, isRtl);
     }
-    const indent = -1 * coordX;
+    const indent = revertRtlValue(-1 * coordX, isRtl);
     return looped ? indent : validateIndent(slidesManager, indent, isRtl);
   }
 
@@ -155,7 +159,7 @@ export function getTargetIndex({
   currentShiftXDelta,
   looped = false,
   max = null,
-                                 isRtl = false,
+  isRtl = false,
 }: {
   slides: GallerySlidesState[];
   slideIndex: number;
@@ -165,14 +169,18 @@ export function getTargetIndex({
   max?: number | null;
   isRtl?: boolean;
 }): number {
-  const shift = currentShiftX + currentShiftXDelta - (max ?? 0);
-  const direction = currentShiftXDelta < 0 ? 1 : -1;
+  max = max ?? 0;
+  // Инвертируем значения смещения для RTL режима
+  const shift = revertRtlValue(currentShiftX + currentShiftXDelta - max, isRtl);
+
+  // Инвертируем направление для RTL режима
+  const direction = isRtl ? (currentShiftXDelta > 0 ? 1 : -1) : currentShiftXDelta < 0 ? 1 : -1;
 
   // Находим ближайшую границу слайда к текущему отступу
   let targetIndex = slides.reduce((val: number, item: GallerySlidesState, index: number) => {
     // Инвертируем координаты для RTL режима
-    const previousCoordX = revertRtlValue(slides[val].coordX, isRtl);
-    const currentCoordX = revertRtlValue(item.coordX, isRtl);
+    const previousCoordX = slides[val].coordX;
+    const currentCoordX = item.coordX;
 
     const previousValue = Math.abs(previousCoordX + shift);
     const currentValue = Math.abs(currentCoordX + shift);
@@ -216,15 +224,14 @@ export const calcMin = ({
   isRtl = false,
 }: CalcMin): number => {
   if (align !== 'center' && isFullyVisible) {
-    return 0
+    return 0;
   }
   const result = getValueByCheckedKey(align, {
     left: () => containerWidth - layerWidth,
     right: () => viewportOffsetWidth - layerWidth,
     center: () => {
       const { coordX, width } = slides[slides.length - 1];
-      const adjustedCoordX = isRtl ? -coordX : coordX;
-      return containerWidth / 2 - adjustedCoordX - width / 2;
+      return containerWidth / 2 - coordX - width / 2;
     },
   })();
   return revertRtlValue(result, isRtl);

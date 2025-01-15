@@ -124,6 +124,8 @@ const setup = ({
     jest
       .spyOn(element.style, 'transform', 'set')
       .mockImplementation((newTransform) => (layerTransform = newTransform));
+
+    jest.spyOn(element, 'offsetWidth', 'get').mockReturnValue(viewPortWidth);
   };
 
   const mockViewportData = (element: HTMLDivElement) => {
@@ -819,6 +821,7 @@ describe('Gallery', () => {
       const { rerender } = mockedData;
 
       checkActiveSlide(1);
+      checkTransformX(mockedData.layerTransform, 200);
 
       const [prevArrow, nextArrow] = getArrows();
       fireEvent.click(nextArrow);

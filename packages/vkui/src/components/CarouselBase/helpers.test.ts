@@ -110,12 +110,20 @@ describe(calculateIndent, () => {
       targetIndex: 4,
       isCenterAlign: false,
       isRtl: true,
-      result: 800,
+      result: -800,
     },
   ])(
     'should return $result when targetIndex $targetIndex and isCenterWithCustomWidth $isCenterWithCustomWidth',
     ({ slidesManager, result, isCenterAlign, targetIndex, isRtl }) => {
-      expect(calculateIndent(targetIndex, slidesManager, isCenterAlign, true, isRtl)).toBe(result);
+      expect(
+        calculateIndent({
+          targetIndex,
+          slidesManager,
+          isCenter: isCenterAlign,
+          looped: true,
+          isRtl,
+        }),
+      ).toBe(result);
     },
   );
 });
