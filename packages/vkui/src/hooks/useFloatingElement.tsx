@@ -81,6 +81,7 @@ export const useFloatingElement = <
   onShownChange,
   onShownChanged,
   strategy,
+  getFloatingElementHiddenStyles,
 
   onPlacementChange,
 
@@ -133,6 +134,7 @@ export const useFloatingElement = <
     shown: shownProp,
     onShownChange,
     onShownChanged,
+    getFloatingElementHiddenStyles,
   });
 
   const resultRef = useExternRef<FloatingElement>(externalFloatingElementRef, refs.setFloating);
