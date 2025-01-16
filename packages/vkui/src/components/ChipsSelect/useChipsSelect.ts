@@ -258,13 +258,11 @@ function transformOptions<O extends ChipOption>({
     return [{ placeholder: emptyText }];
   }
 
-  const sortedOptions = sortFn
-    ? [...filteredOptionsProp].sort((optionA, optionB) => {
-        return sortFn(optionA, optionB, inputValue);
-      })
-    : filteredOptionsProp;
+  if (sortFn) {
+    filteredOptionsProp.sort((optionA, optionB) => sortFn(optionA, optionB, inputValue));
+  }
 
-  const parsedOptions = transformValue(sortedOptions, getOptionValue, getOptionLabel);
+  const parsedOptions = transformValue(filteredOptionsProp, getOptionValue, getOptionLabel);
 
   if (selectedBehavior === 'hide') {
     const selected = value.map((item) => item.value);
