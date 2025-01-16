@@ -32,6 +32,15 @@
     inset 0 0 0 0.5px var(--vkui--color_image_border_alpha),
     0 3px 8px rgba(0, 0, 0, 0.12),
     0 3px 1px rgba(0, 0, 0, 0.04);
+  inline-size: calc(100% / var(--vkui_internal--SegmentedControl_options));
+  transform: translateX(calc(var(--vkui_internal--SegmentedControl_actual_index) * 100%));
+
+  --vkui_internal--SegmentedControl_actual_index: 0;
+  --vkui_internal--SegmentedControl_options: 0;
+}
+
+.rtl .slider {
+  transform: translateX(calc(-1 * var(--vkui_internal--SegmentedControl_actual_index) * 100%));
 }
 
 /**

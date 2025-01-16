@@ -3,6 +3,19 @@
   display: flex;
   align-items: center;
   padding-inline-start: var(--vkui--size_base_padding_horizontal--regular);
+  transform: translateX(
+    calc(
+      -1px * var(--vkui_internal_Removable_remove_offset) *
+        var(--vkui_internal_Removable_remove_offset_direction)
+    )
+  );
+
+  --vkui_internal_Removable_remove_offset: 0;
+  --vkui_internal_Removable_remove_offset_direction: 1;
+}
+
+.rtl {
+  --vkui_internal_Removable_remove_offset_direction: -1;
 }
 
 .action {

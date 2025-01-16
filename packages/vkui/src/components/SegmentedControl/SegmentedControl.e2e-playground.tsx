@@ -38,6 +38,8 @@ export const SegmentedControlPlayground = (props: ComponentPlaygroundProps) => {
               { label: 'google', before: <Icon24LogoGoogle />, value: 'google' },
             ],
           ],
+          defaultValue: ['fb'],
+          dir: ['ltr', 'rtl'],
         },
       ]}
     >

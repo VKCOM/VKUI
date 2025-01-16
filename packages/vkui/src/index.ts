@@ -136,6 +136,7 @@ export type { ScreenSpinnerContextProps } from './components/ScreenSpinner/conte
 export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
+export { useTooltip } from './components/Tooltip/useTooltip';
 export type {
   TooltipProps,
   TooltipOnShownChange,

@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -58,17 +60,21 @@ export const Tabs = ({
   withScrollToSelectedTab,
   scrollBehaviorToSelectedTab = 'nearest',
   layoutFillMode = 'auto',
+  getRootRef,
   ...restProps
 }: TabsProps): React.ReactNode => {
   const platform = usePlatform();
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(getRootRef, directionRef);
   const isTabFlow = role === 'tablist';
   const withGaps = mode === 'accent' || mode === 'secondary';
 
-  const { tabsRef } = useTabsNavigation(isTabFlow);
+  const { tabsRef } = useTabsNavigation(isTabFlow, textDirection === 'rtl');
 
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalTabs',
