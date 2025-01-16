@@ -8,8 +8,7 @@ import {
   type CalendarDirectionContextProps,
 } from '../../context/CalendarDirectionContext';
 import { useCalendar } from '../../hooks/useCalendar';
-import { useDirection } from '../../hooks/useDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -174,8 +173,7 @@ export const Calendar = ({
     minDateTime,
     maxDateTime,
   });
-  const [directionRef, textDirection = 'ltr'] = useDirection();
-  const rootRef = useExternRef(directionRef, getRootRef);
+  const direction = useConfigDirection();
 
   useIsomorphicLayoutEffect(() => {
     if (value) {
@@ -225,9 +223,9 @@ export const Calendar = ({
 
   const directionContextValue = React.useMemo<CalendarDirectionContextProps>(
     () => ({
-      direction: textDirection,
+      direction,
     }),
-    [textDirection],
+    [direction],
   );
 
   return (
@@ -235,7 +233,7 @@ export const Calendar = ({
       <RootComponent
         {...props}
         baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
-        getRootRef={rootRef}
+        getRootRef={getRootRef}
       >
         <CalendarHeader
           viewDate={externalViewDate || viewDate}

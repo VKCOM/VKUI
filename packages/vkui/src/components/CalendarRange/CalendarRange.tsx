@@ -17,8 +17,7 @@ import {
   type CalendarDirectionContextProps,
 } from '../../context/CalendarDirectionContext';
 import { useCalendar } from '../../hooks/useCalendar';
-import { useDirection } from '../../hooks/useDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
@@ -120,8 +119,7 @@ export const CalendarRange = ({
     isYearDisabled,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
 
-  const [directionRef, textDirection = 'ltr'] = useDirection();
-  const rootRef = useExternRef(directionRef, getRootRef);
+  const direction = useConfigDirection();
 
   const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
@@ -226,14 +224,14 @@ export const CalendarRange = ({
 
   const directionContextValue = React.useMemo<CalendarDirectionContextProps>(
     () => ({
-      direction: textDirection,
+      direction,
     }),
-    [textDirection],
+    [direction],
   );
 
   return (
     <CalendarDirectionContext.Provider value={directionContextValue}>
-      <RootComponent {...props} baseClassName={styles.host} getRootRef={rootRef}>
+      <RootComponent {...props} baseClassName={styles.host} getRootRef={getRootRef}>
         <div className={styles.inner}>
           <CalendarHeader
             viewDate={viewDate}

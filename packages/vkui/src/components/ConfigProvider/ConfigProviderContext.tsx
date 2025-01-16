@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import type { ColorSchemeType } from '../../lib/colorScheme';
+import { type Direction } from '../../lib/direction';
 import { platform, type PlatformType } from '../../lib/platform';
 import { DEFAULT_TOKENS_CLASS_NAMES, type TokensClassNames } from '../../lib/tokens';
 
@@ -72,6 +73,8 @@ export interface ConfigProviderContextInterface {
    * Строка с языковой меткой BCP 47
    */
   locale: string;
+
+  direction: Direction;
 }
 
 export const ConfigProviderContext: React.Context<ConfigProviderContextInterface> =
@@ -84,6 +87,7 @@ export const ConfigProviderContext: React.Context<ConfigProviderContextInterface
     colorScheme: undefined, // undefined обозначает что тема должна определиться автоматически
     tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
     locale: 'ru',
+    direction: 'ltr',
   });
 
 export const useConfigProvider = (): ConfigProviderContextInterface =>
@@ -99,10 +103,11 @@ export function useConfigProviderContextMemo(config: ConfigProviderContextInterf
     platform,
     tokensClassNames,
     locale,
+    direction,
   } = config;
 
-  return React.useMemo<ConfigProviderContextInterface>(
-    () => ({
+  return React.useMemo<ConfigProviderContextInterface>(() => {
+    return {
       isWebView,
       hasCustomPanelHeaderAfter,
       customPanelHeaderAfterMinWidth,
@@ -111,16 +116,17 @@ export function useConfigProviderContextMemo(config: ConfigProviderContextInterf
       platform,
       tokensClassNames,
       locale,
-    }),
-    [
-      isWebView,
-      hasCustomPanelHeaderAfter,
-      customPanelHeaderAfterMinWidth,
-      colorScheme,
-      transitionMotionEnabled,
-      platform,
-      tokensClassNames,
-      locale,
-    ],
-  );
+      direction,
+    };
+  }, [
+    isWebView,
+    hasCustomPanelHeaderAfter,
+    customPanelHeaderAfterMinWidth,
+    colorScheme,
+    transitionMotionEnabled,
+    platform,
+    tokensClassNames,
+    locale,
+    direction,
+  ]);
 }

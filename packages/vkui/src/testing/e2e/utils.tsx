@@ -37,7 +37,7 @@ function getAdaptivity(adaptivity?: AdaptivityFlag) {
   return extra;
 }
 
-type TestProps<Props> = Array<Props & SizeProps>;
+type TestProps<Props> = Array<Props & SizeProps & { dir: string }>;
 type CartesianOptions = { adaptive: boolean };
 
 function cartesian<Props>(

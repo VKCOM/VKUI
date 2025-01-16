@@ -2,8 +2,10 @@ import * as React from 'react';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
+import { DirectionProvider } from '../../components/DirectionProvider/DirectionProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { ColorSchemeType } from '../../lib/colorScheme';
+import { type Direction } from '../../lib/direction';
 import type { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppDefaultWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
@@ -69,7 +71,7 @@ export const ComponentPlayground = <
           }
           {...restProps}
         >
-          {multiCartesian(propSets, { adaptive: !isVKCOM }).map((props, i) => {
+          {multiCartesian<Props>(propSets, { adaptive: !isVKCOM }).map((props, i) => {
             const clonedAdaptivityProviderProps = { ...adaptivityProviderProps };
 
             if (props.sizeX) {
@@ -80,15 +82,18 @@ export const ComponentPlayground = <
               clonedAdaptivityProviderProps.sizeY = props.sizeY;
             }
 
+            const dir = props.dir as Direction;
             return (
               <React.Fragment key={i}>
                 {isFixedComponent ? null : (
                   <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(props)}</div>
                 )}
-                <div>
-                  <AdaptivityProvider {...clonedAdaptivityProviderProps}>
-                    {children(props)}
-                  </AdaptivityProvider>
+                <div dir={dir}>
+                  <DirectionProvider value={dir}>
+                    <AdaptivityProvider {...clonedAdaptivityProviderProps}>
+                      {children(props)}
+                    </AdaptivityProvider>
+                  </DirectionProvider>
                 </div>
               </React.Fragment>
             );

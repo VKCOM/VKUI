@@ -5,7 +5,7 @@ import {
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
-import { type Direction } from '../../hooks/useDirection';
+import { type Direction } from '../../lib/direction';
 import { Snackbar, type SnackbarProps } from './Snackbar';
 
 const BASE_OFFSET_Y = 64;

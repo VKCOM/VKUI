@@ -7,7 +7,7 @@ import { Calendar, type CalendarProps } from './Calendar';
 
 export const CalendarPlayground = (props: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground
+    <ComponentPlayground<CalendarProps>
       {...props}
       propSets={[
         {
