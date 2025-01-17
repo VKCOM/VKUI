@@ -1,4 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { GridAvatar, type GridAvatarProps } from './GridAvatar';
 
@@ -9,6 +10,11 @@ const base64Image =
   'gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA' +
   'SUVORK5CYII=';
 
+const oneImage = withLabel([base64Image], 'One image');
+const twoImage = withLabel([base64Image, base64Image], 'Two image');
+const threeImage = withLabel([base64Image], 'Three image');
+const fourImage = withLabel([base64Image], 'Four image');
+
 export const GridAvatarPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
@@ -16,13 +22,7 @@ export const GridAvatarPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           size: [96, 28],
-          src: [
-            [],
-            [base64Image],
-            [base64Image, base64Image],
-            [base64Image, base64Image, base64Image],
-            [base64Image, base64Image, base64Image, base64Image],
-          ],
+          src: [[], oneImage, twoImage, threeImage, fourImage],
           children: [
             <GridAvatar.Badge key="badge">
               <IconExampleForBadgeBasedOnImageBaseSize />
