@@ -1,13 +1,44 @@
+.wrapper {
+  display: flex;
+  min-height: inherit;
+  min-width: inherit;
+  position: relative;
+  flex-grow: 1;
+
+  --vkui_internal--DateInput_input_margin_inline_start: 10px;
+  --vkui_internal--DateInput_input_margin_inline_end: 14px;
+}
+
 .input {
   display: block;
   flex-grow: 1;
   align-self: center;
-  margin-inline: 10px 14px;
+  margin-inline: var(--vkui_internal--DateInput_input_margin_inline_start)
+    var(--vkui_internal--DateInput_input_margin_inline_end);
   z-index: var(--vkui_internal--z_index_form_field_element);
   cursor: text;
   white-space: nowrap;
   user-select: text;
   font-variant-numeric: tabular-nums;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.placeholder {
+  position: absolute;
+  margin-inline: var(--vkui_internal--DateInput_input_margin_inline_start) var(--vkui_internal--DateInput_input_margin_inline_end);
+  width: calc(100% - var(--vkui_internal--DateInput_input_margin_inline_start) - var(--vkui_internal--DateInput_input_margin_inline_end));
+  align-self: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .inputTimeDivider {
@@ -21,6 +52,6 @@
 
 @media (--sizeY-compact) {
   .sizeYNone .input {
-    margin-inline-end: 22px;
+    --vkui_internal--DateInput_input_margin_inline_end: 22px
   }
 }

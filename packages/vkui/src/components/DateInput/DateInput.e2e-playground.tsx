@@ -13,6 +13,10 @@ export const DateInputPlayground = (props: ComponentPlaygroundProps) => {
         {
           status: ['error', 'valid'],
         },
+        {
+          value: [new Date('1970-05-05'), undefined],
+          placeholder: ['Placeholder'],
+        },
       ]}
     >
       {(props: DateInputProps) => <DateInput {...props} />}

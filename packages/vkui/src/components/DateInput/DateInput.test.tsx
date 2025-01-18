@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { format, subDays } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20, 0, 0);
@@ -260,5 +263,44 @@ describe('DateInput', () => {
     ]);
 
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('check placeholder visibility', async () => {
+    const PLACEHOLDER_TEXT = 'Плейсхолдер';
+    const Fixture = () => {
+      const [showValue, setShowValue] = useState(false);
+      return (
+        <>
+          <DateInput
+            value={showValue ? new Date() : undefined}
+            placeholder={PLACEHOLDER_TEXT}
+            onChange={noop}
+            {...testIds}
+          />
+          <Button data-testid="add-date" onClick={() => setShowValue((v) => !v)}>
+            Добавить дату
+          </Button>
+        </>
+      );
+    };
+
+    render(<Fixture />);
+    expect(screen.queryByPlaceholderText(PLACEHOLDER_TEXT)).toBeTruthy();
+    expect(screen.queryByText(PLACEHOLDER_TEXT)).toBeTruthy();
+
+    // Добавляем значение в input - placeholder появляется
+    fireEvent.click(screen.getByTestId('add-date'));
+    expect(screen.queryByText(PLACEHOLDER_TEXT)).toBeFalsy();
+
+    // Убираем значение из input - placeholder исчезает
+    fireEvent.click(screen.getByTestId('add-date'));
+    expect(screen.queryByText(PLACEHOLDER_TEXT)).toBeTruthy();
+
+    // Ставим фокус в input - placeholder повляется
+    const inputLikes = getInputsLike();
+    const [dates] = inputLikes;
+    await userEvent.click(dates);
+
+    expect(screen.queryByText(PLACEHOLDER_TEXT)).toBeFalsy();
   });
 });
