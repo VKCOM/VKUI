@@ -301,79 +301,81 @@ export const DateRangeInput = ({
       onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
-      <VisuallyHidden
-        id={id}
-        Component="input"
-        name={name}
-        value={
-          value
-            ? `${value[0] ? format(value[0], 'dd.MM.yyyy') : ''} - ${
-                value[1] ? format(value[1], 'dd.MM.yyyy') : ''
-              }`
-            : ''
-        }
-      />
-      <Text className={dateInputStyles.input} onKeyDown={handleKeyDown}>
-        <InputLike
-          length={2}
-          getRootRef={daysStartRef}
-          index={0}
-          onElementSelect={setFocusedElement}
-          value={internalValue[0]}
-          label={changeStartDayLabel}
-          data-testid={startDateTestsProps?.day}
+      <div className={dateInputStyles.wrapper}>
+        <VisuallyHidden
+          id={id}
+          Component="input"
+          name={name}
+          value={
+            value
+              ? `${value[0] ? format(value[0], 'dd.MM.yyyy') : ''} - ${
+                  value[1] ? format(value[1], 'dd.MM.yyyy') : ''
+                }`
+              : ''
+          }
         />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={2}
-          getRootRef={monthsStartRef}
-          index={1}
-          onElementSelect={setFocusedElement}
-          value={internalValue[1]}
-          label={changeStartMonthLabel}
-          data-testid={startDateTestsProps?.month}
-        />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={4}
-          getRootRef={yearsStartRef}
-          index={2}
-          onElementSelect={setFocusedElement}
-          value={internalValue[2]}
-          label={changeStartYearLabel}
-          data-testid={startDateTestsProps?.year}
-        />
-        <InputLikeDivider>{' — '}</InputLikeDivider>
-        <InputLike
-          length={2}
-          getRootRef={daysEndRef}
-          index={3}
-          onElementSelect={setFocusedElement}
-          value={internalValue[3]}
-          label={changeEndDayLabel}
-          data-testid={endDateTestsProps?.day}
-        />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={2}
-          getRootRef={monthsEndRef}
-          index={4}
-          onElementSelect={setFocusedElement}
-          value={internalValue[4]}
-          label={changeEndMonthLabel}
-          data-testid={endDateTestsProps?.month}
-        />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={4}
-          getRootRef={yearsEndRef}
-          index={5}
-          onElementSelect={setFocusedElement}
-          value={internalValue[5]}
-          label={changeEndYearLabel}
-          data-testid={endDateTestsProps?.year}
-        />
-      </Text>
+        <Text className={dateInputStyles.input} onKeyDown={handleKeyDown}>
+          <InputLike
+            length={2}
+            getRootRef={daysStartRef}
+            index={0}
+            onElementSelect={setFocusedElement}
+            value={internalValue[0]}
+            label={changeStartDayLabel}
+            data-testid={startDateTestsProps?.day}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={2}
+            getRootRef={monthsStartRef}
+            index={1}
+            onElementSelect={setFocusedElement}
+            value={internalValue[1]}
+            label={changeStartMonthLabel}
+            data-testid={startDateTestsProps?.month}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={4}
+            getRootRef={yearsStartRef}
+            index={2}
+            onElementSelect={setFocusedElement}
+            value={internalValue[2]}
+            label={changeStartYearLabel}
+            data-testid={startDateTestsProps?.year}
+          />
+          <InputLikeDivider>{' — '}</InputLikeDivider>
+          <InputLike
+            length={2}
+            getRootRef={daysEndRef}
+            index={3}
+            onElementSelect={setFocusedElement}
+            value={internalValue[3]}
+            label={changeEndDayLabel}
+            data-testid={endDateTestsProps?.day}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={2}
+            getRootRef={monthsEndRef}
+            index={4}
+            onElementSelect={setFocusedElement}
+            value={internalValue[4]}
+            label={changeEndMonthLabel}
+            data-testid={endDateTestsProps?.month}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={4}
+            getRootRef={yearsEndRef}
+            index={5}
+            onElementSelect={setFocusedElement}
+            value={internalValue[5]}
+            label={changeEndYearLabel}
+            data-testid={endDateTestsProps?.year}
+          />
+        </Text>
+      </div>
       {open && !disableCalendar && (
         <Popper targetRef={rootRef} offsetByMainAxis={8} placement={calendarPlacement}>
           <CalendarRange
