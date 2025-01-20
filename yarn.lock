@@ -5543,7 +5543,7 @@ __metadata:
     jest-axe: "npm:^9.0.0"
     jest-environment-jsdom: "npm:^29.7.0"
     jest-environment-node: "npm:^29.7.0"
-    jest-preset-stylelint: "npm:^7.1.0"
+    jest-preset-stylelint: "npm:^7.1.1"
     lint-staged: "npm:^15.2.11"
     mini-css-extract-plugin: "npm:^2.9.2"
     postcss: "npm:^8.4.49"
@@ -13169,12 +13169,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-preset-stylelint@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "jest-preset-stylelint@npm:7.1.0"
+"jest-preset-stylelint@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "jest-preset-stylelint@npm:7.1.1"
   peerDependencies:
     jest: ^29.0.2
-  checksum: 10/b0ec9b68f756ed89a8e50c9a58cdfabd6298314d1b12e1d3f10a7b6cca76799e88671c266fb70bc8c180e4c8f3c4dba4e6f15f57e90655ad34582720b5112d7c
+  checksum: 10/8cb52a46f39399731bb4c5422477945c30bf1b2ce4f150595bfd620a2ec660df9261782ac2fb5648278c62b0fe15ae881182f385fa809dfe0f71b1d399007e5b
   languageName: node
   linkType: hard
 
