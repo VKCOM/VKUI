@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
-  min-height: inherit;
-  min-width: inherit;
+  min-block-size: inherit;
+  min-inline-size: inherit;
   position: relative;
   flex-grow: 1;
 
@@ -28,8 +28,12 @@
 
 .placeholder {
   position: absolute;
-  margin-inline: var(--vkui_internal--DateInput_input_margin_inline_start) var(--vkui_internal--DateInput_input_margin_inline_end);
-  width: calc(100% - var(--vkui_internal--DateInput_input_margin_inline_start) - var(--vkui_internal--DateInput_input_margin_inline_end));
+  margin-inline: var(--vkui_internal--DateInput_input_margin_inline_start)
+    var(--vkui_internal--DateInput_input_margin_inline_end);
+  inline-size: calc(
+    100% - var(--vkui_internal--DateInput_input_margin_inline_start) -
+      var(--vkui_internal--DateInput_input_margin_inline_end)
+  );
   align-self: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -52,6 +56,6 @@
 
 @media (--sizeY-compact) {
   .sizeYNone .input {
-    --vkui_internal--DateInput_input_margin_inline_end: 22px
+    --vkui_internal--DateInput_input_margin_inline_end: 22px;
   }
 }
