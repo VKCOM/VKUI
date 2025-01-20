@@ -12,7 +12,7 @@
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-docs-theme": "workspace:^",
     "next": "^15.1.2",
-    "nextra": "^3.2.5",
+    "nextra": "^4.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "*"
