@@ -2,22 +2,33 @@
   border-radius: 1px;
   background: var(--vkui--color_track_background);
   block-size: 2px;
+
+  --vkui_internal_Progress_background_color: var(--vkui--color_stroke_accent);
+  --vkui_internal_Progress_progress: 0;
 }
 
-.in {
+.trackDisable {
+  background: transparent;
+}
+
+.host:after {
+  content: '';
+  display: block;
   block-size: 100%;
   border-radius: inherit;
   transition: width 0.2s ease;
+  inline-size: calc(var(--vkui_internal_Progress_progress) * 1%);
+  background: var(--vkui_internal_Progress_background_color);
 }
 
-.appearanceAccent .in {
-  background: var(--vkui--color_stroke_accent);
+.appearanceAccent {
+  --vkui_internal_Progress_background_color: var(--vkui--color_stroke_accent);
 }
 
-.appearancePositive .in {
-  background: var(--vkui--color_stroke_positive);
+.appearancePositive {
+  --vkui_internal_Progress_background_color: var(--vkui--color_stroke_positive);
 }
 
-.appearanceNegative .in {
-  background: var(--vkui--color_stroke_negative);
+.appearanceNegative {
+  --vkui_internal_Progress_background_color: var(--vkui--color_stroke_negative);
 }

@@ -14,6 +14,16 @@ export const ProgressPlayground = (props: ComponentPlaygroundProps): React.React
           height: [10],
           value: [30],
         },
+        {
+          appearance: ['custom', 'accent'],
+          value: [30],
+          color: ['#c805f5'],
+        },
+        {
+          appearance: ['accent'],
+          value: [30],
+          trackDisable: [true],
+        },
       ]}
     >
       {Progress}
