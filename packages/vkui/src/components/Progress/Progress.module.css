@@ -11,7 +11,7 @@
   background: transparent;
 }
 
-.host:after {
+.host::after {
   content: '';
   display: block;
   block-size: 100%;
