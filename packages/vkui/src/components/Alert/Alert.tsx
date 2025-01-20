@@ -7,6 +7,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { mergeCalls } from '../../lib/mergeCalls';
 import { stopPropagation } from '../../lib/utils';
 import type {
   AlignType,
@@ -73,6 +74,10 @@ export interface AlertProps
    */
   dismissButtonTestId?: string;
   usePortal?: AppRootPortalProps['usePortal'];
+  /**
+   * По умолчанию событие onClick не всплывает
+   */
+  allowClickPropagation?: boolean;
 }
 
 /**
@@ -94,6 +99,8 @@ export const Alert = ({
   dismissButtonTestId,
   getRootRef,
   usePortal,
+  onClick,
+  allowClickPropagation = false,
   ...restProps
 }: AlertProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -139,6 +146,14 @@ export const Alert = ({
     [close],
   );
 
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!allowClickPropagation) {
+      stopPropagation(event);
+    }
+  };
+
+  const clickHandlers = mergeCalls({ onClick: handleClick }, { onClick });
+
   useScrollLock();
 
   return (
@@ -153,8 +168,8 @@ export const Alert = ({
         <FocusTrap
           {...restProps}
           {...animationHandlers}
+          {...clickHandlers}
           getRootRef={elementRef}
-          onClick={stopPropagation}
           onClose={close}
           autoFocus={animationState === 'entered'}
           className={classNames(
