@@ -5486,7 +5486,7 @@ __metadata:
     commander: "npm:^12.1.0"
     cross-spawn: "npm:^7.0.5"
     jest: "npm:^29.7.0"
-    jscodeshift: "npm:^17.1.1"
+    jscodeshift: "npm:^17.1.2"
     prompts: "npm:^2.4.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.3"
@@ -13505,9 +13505,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jscodeshift@npm:^17.1.1":
-  version: 17.1.1
-  resolution: "jscodeshift@npm:17.1.1"
+"jscodeshift@npm:^17.1.2":
+  version: 17.1.2
+  resolution: "jscodeshift@npm:17.1.2"
   dependencies:
     "@babel/core": "npm:^7.24.7"
     "@babel/parser": "npm:^7.24.7"
@@ -13534,7 +13534,7 @@ __metadata:
       optional: true
   bin:
     jscodeshift: bin/jscodeshift.js
-  checksum: 10/89a92203e2653c68ae2f12332332ca014aeec8c6cd5ab6947ba53334abd97005b94c0c670c47f2878880d01b89775490ca8efe58494d71137c1f6abae630a53d
+  checksum: 10/5adfee6025a7e609c9079f7d7b83e605822b50757d1d4d4fec60c09175bec02301dce0ae6e32be530bc0a227da03749d331270619fb963c98cb57d6ce612567f
   languageName: node
   linkType: hard
 
