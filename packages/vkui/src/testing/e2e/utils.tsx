@@ -98,10 +98,12 @@ function stringify(prop: string, value: any): string {
   if (value === true) {
     return prop;
   }
+  if (typeof value === 'undefined') {
+    return `${prop}?`;
+  }
   const valueMapper = getValueByKey(
     typeof value,
     {
-      undefined: () => 'undefined',
       function: () => '[function]',
       object: () => {
         if (isCustomValueWithLabel(value)) {

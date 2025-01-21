@@ -9,10 +9,10 @@ const base64Image =
   'gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA' +
   'SUVORK5CYII=';
 
-const oneImage = withLabel([base64Image], 'One image');
-const twoImage = withLabel([base64Image, base64Image], 'Two image');
-const threeImage = withLabel([base64Image, base64Image, base64Image], 'Three image');
-const fourImage = withLabel([base64Image, base64Image, base64Image, base64Image], 'Four image');
+const oneImage = withLabel([base64Image], '1 image');
+const twoImage = withLabel([base64Image, base64Image], '2 images');
+const threeImage = withLabel([base64Image, base64Image, base64Image], '3 images');
+const fourImage = withLabel([base64Image, base64Image, base64Image, base64Image], '4 images');
 
 export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
   return (
