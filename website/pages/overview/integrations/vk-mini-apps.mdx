@@ -1,7 +1,25 @@
+<Overview>
+# VK Mini Apps
+
+[VK Mini Apps](https://vk.com/miniapps) – это кроссплатформенные мини-приложения в экосистеме социальной сети [ВКонтакте](https://vk.com/).
+При создании VKUI изначально задумывался как набор компонентов для таких приложений. Несмотря на то,
+что с течением времени VKUI стал использоваться не только для мини-приложений, но по-прежнему отлично подходит и для них.
+Ниже приведены рекомендации по интеграции с VK Mini Apps.
+
+</Overview>
+
+<Callout>
+  Про саму разработку **VK Mini Apps** читайте [статью "Мини-приложения" на портале VK для
+  разработчиков](https://dev.vk.com/mini-apps/overview).
+</Callout>
+
 ## Конфигурация VKUI
 
-> Советуем использовать шаблон [`@vkontakte/create-vk-mini-app`](https://github.com/VKCOM/create-vk-mini-app).
-> В нем конфигурация, описанная ниже, есть по умолчанию.
+<Callout>
+  Советуем использовать шаблон
+  [`@vkontakte/create-vk-mini-app`](https://github.com/VKCOM/create-vk-mini-app). В нем
+  конфигурация, описанная ниже, есть по умолчанию.
+</Callout>
 
 Для начала устанавливаем библиотеки:
 
@@ -14,9 +32,9 @@ yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
 ```
 
 Далее подписываемся на изменения из **VK Bridge**. Для этого используем готовые хуки из
-[`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
+[`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge):
 
-```tsx static
+```tsx filename="App.tsx"
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import vkBridge, { parseURLSearchParamsForGetLaunchParams } from '@vkontakte/vk-bridge';
@@ -29,14 +47,14 @@ import { App } from './App';
 vkBridge.send('VKWebAppInit');
 
 const Root = () => {
-  const vkBridgeAppearance = useAppearance() || undefined; // Вместо undefined можно задать значение по умолчанию
+  const vkBridgeColorScheme = useAppearance() || undefined; // Вместо undefined можно задать значение по умолчанию
   const vkBridgeInsets = useInsets() || undefined; // Вместо undefined можно задать значение по умолчанию
   const vkBridgeAdaptivityProps = transformVKBridgeAdaptivity(useAdaptivity()); // Конвертируем значения из VK Bridge в параметры AdaptivityProvider
   const { vk_platform } = parseURLSearchParamsForGetLaunchParams(window.location.search); // [опционально] Платформа может передаваться через URL (см. https://dev.vk.com/mini-apps/development/launch-params#vk_platform)
 
   return (
     <ConfigProvider
-      appearance={vkBridgeAppearance}
+      colorScheme={vkBridgeColorScheme}
       platform={vk_platform === 'desktop_web' ? 'vkcom' : undefined}
       isWebView={vkBridge.isWebView()}
       hasCustomPanelHeaderAfter={true} // Резервируем правую часть PanelHeader под кнопки управления VK Mini Apps. Через параметр customPanelHeaderAfterMinWidth можно регулировать ширину этой области (по умолчанию, используется 90)
@@ -56,9 +74,7 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(<Root />);
 ```
 
-Файл `./transformers/transformVKBridgeAdaptivity.ts`
-
-```ts static
+```ts filename="./transformers/transformVKBridgeAdaptivity.ts"
 import {
   type AdaptivityProps,
   getViewWidthByViewportWidth,
@@ -104,13 +120,13 @@ export const transformVKBridgeAdaptivity = ({
 [`PanelHeaderBack`](#/PanelHeaderBack)) на тех экранах, где тот
 требуется.
 
-> _Правый верхний угол_ [`PanelHeader`](#/PanelHeader) зарезервирован для
-> нативного бара с кнопками управления мини-приложением, поэтому не рекомендуем использовать
-> параметр `after`.
->
-> Чтобы автоматически скрывать `after` у [`PanelHeader`](#/PanelHeader),
-> в [`ConfigProvider`](#/ConfigProvider) есть параметр
-> `hasCustomPanelHeaderAfter`.
+<Callout>
+_Правый верхний угол_ [`PanelHeader`](#/PanelHeader) зарезервирован для нативного бара с кнопками управления мини-приложением, 
+поэтому не рекомендуем использовать параметр `after`.
+
+Чтобы автоматически скрывать `after` у [`PanelHeader`](#/PanelHeader), в [`ConfigProvider`](#/ConfigProvider) есть параметр `hasCustomPanelHeaderAfter`.
+
+</Callout>
 
 ### [`View`](#/View)
 
@@ -126,7 +142,7 @@ export const transformVKBridgeAdaptivity = ({
   первую панель и событие [`VKWebAppDisableSwipeBack`](https://dev.vk.com/bridge/VKWebAppDisableSwipeBack)
   при переходе на любую другую.
 
-```tsx static
+```tsx {15,17}
 import vkBridge from '@vkontakte/vk-bridge';
 
 const SomeViews = () => {
@@ -159,11 +175,14 @@ const SomeViews = () => {
 };
 ```
 
+<Callout>
 На устройствах с Android нажатие кнопки **Назад** вызывает в WebView событие [history.back](https://developer.mozilla.org/ru/docs/Web/API/Window/history).
 По нажатию этой кнопки официальное приложение сделает возврат на предыдущую страницу вашего
 приложения или закроет его, если вернуться невозможно. Поэтому для корректной навигации вы должны
 обрабатывать нажатие аппаратной клавиши в мини-приложении и реализовывать роутинг. Сделать это
 можно, например, при помощи библиотеки `react-router`.
+
+</Callout>
 
 ## Виброотклик (Taptic Engine)
 
@@ -177,7 +196,7 @@ const SomeViews = () => {
 Виброотликом можно воспользоваться, например, при использовании компонента [`PullToRefresh`](#/PullToRefresh)
 на `onRefresh`.
 
-```tsx static
+```tsx {2,13}
 import * as React from 'react';
 import { runTapticImpactOccurred } from '@vkontakte/vk-bridge-react';
 

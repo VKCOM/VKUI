@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Cell } from '../Cell/Cell';
 import { CellButton } from '../CellButton/CellButton';
 import { Checkbox } from '../Checkbox/Checkbox';
@@ -25,7 +26,10 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           top: [
-            'Сверху будет находиться достаточно длинное название текста с очень большим количеством однотипных слов для переполнения текста',
+            withLabel(
+              'Сверху будет находиться достаточно длинное название текста с очень большим количеством однотипных слов для переполнения текста',
+              'Long top text',
+            ),
           ],
           topMultiline: [undefined, true],
           children: [<Input key={0} placeholder="Введите ваше значение" />],

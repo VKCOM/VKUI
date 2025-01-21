@@ -2,7 +2,7 @@
 # Платформы и темы
 
 Одна из особенностей VKUI — это способность мимикрировать под дизайны и поведение разных платформ.
-Она позволяет создавать интерфейсы, которые неотличимы от нативных.
+Благодаря ей вы можете расширять функционал интерфейсами, которые неотличимы от нативных.
 
 </Overview>
 
@@ -14,10 +14,10 @@
 Передавать платформу в `ConfigProvider` необязательно, т.к. она по умолчанию определяется
 автоматически.
 
-Для ручного определения вы можете передать в компонент [`ConfigProvider`](#/ConfigProvider) свойство
-`platform` с нужной платформой. Пример:
+Для ручного определения или форсирования платформы вы можете передать в компонент [`ConfigProvider`](#/ConfigProvider) свойство
+`platform` с нужным значением:
 
-```jsx
+```jsx {1}
 <ConfigProvider platform="ios">
   <AdaptivityProvider>
     <AppRoot>
@@ -30,13 +30,13 @@
 Или, если вам необходимо переопределить платформу точечно для отдельных компонентов приложения, то
 вы можете сделать это с помощью `PlatformProvider`.
 
-```jsx static
+```jsx {1,3}
 <PlatformProvider value="ios">
   <Snackbar action="Поделиться">Поделиться</Snackbar>
 </PlatformProvider>
 ```
 
-Чтобы получить значение текущей платформы, используйте хук `usePlatform` или HOC `withPlatform`.
+Чтобы получить значение текущей платформы, используйте хук `usePlatform`.
 Подробнее об этих инструментах можно прочитать на странице [Утилиты](#/Utils).
 
 ### О `vkcom` [#vkcom]
@@ -62,17 +62,17 @@
 ### Режимы [#modes]
 
 Каждая тема обычно поддерживает как <i>светлый (англ. `light`)</i>, так и <i>тёмный (англ. `dark`)</i> режим.
-За его определение отвечает свойство `appearance`, и также как `platform`, по умолчанию, определяется
+За его определение отвечает свойство `colorScheme`, и также как `platform`, по умолчанию, определяется
 автоматически за счёт CSS медиа выражения [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
 
 Ручное определение будет выглядеть так:
 
-```jsx static
+```jsx {5}
 import { ConfigProvider, AdaptivityProvider, AppRoot, SimpleCell } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 ReactDOM.render(
-  <ConfigProvider appearance="dark">
+  <ConfigProvider colorScheme="dark">
     <AdaptivityProvider>
       <AppRoot>
         <SimpleCell>Темным-темно</SimpleCell>
@@ -84,21 +84,54 @@ ReactDOM.render(
 ```
 
 Если вы хотите переопределить режим для отдельных компонентов приложения, воспользуйтесь
-`AppearanceProvider`.
+`ColorSchemeProvider`. Убедитесь, что потомок `AppearanceProvider` принимает свойство `className`,
+иначе переопределить тему не получится.
 
-```jsx static
-<AppearanceProvider value="dark">
+```jsx {1}
+<ColorSchemeProvider value="dark">
   <Snackbar action="Поделиться">Поделиться</Snackbar>
-</AppearanceProvider>
+</ColorSchemeProvider>
 ```
 
-Чтобы получить значение текущего режима, используйте хук `useAppearance`. Может пригодиться для
-замены изображений на инвертированную версию в темных темах. Пример:
+Чтобы получить значение текущего режима, используйте хук `useColorScheme`.
+Это может пригодиться для замены изображений на инвертированную версию в темных темах. Пример:
 
-```jsx static
-const appearance = useAppearance();
-<Div>{appearance === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
+```jsx
+const colorScheme = useColorScheme();
+<Div>{colorScheme === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
 ```
+
+<Callout>
+
+Стоит иметь ввиду, что некоторые компоненты делегируют цвет фона родителю выше.
+Например, это компонент [Cell](#/Cell) и его производные.
+
+На примере [SimpleCell](#/SimpleCell) рассмотрим решение проблемы через допустимое определение
+фона посредством `className` или `style`:
+
+```jsx
+<Group header={<Header>Настройка тем</Header>}>
+  <SimpleCell before={<Icon20PalleteOutline />}>Системная тема</SimpleCell>
+  <ColorSchemeProvider value="dark">
+    <SimpleCell
+      before={<Icon20MoonOutline />}
+      style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+    >
+      Тёмная тема
+    </SimpleCell>
+  </ColorSchemeProvider>
+  <ColorSchemeProvider value="light">
+    <SimpleCell
+      before={<Icon20SunOutline />}
+      style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+    >
+      Светлая тема
+    </SimpleCell>
+  </ColorSchemeProvider>
+</Group>
+```
+
+</Callout>
 
 ### [@vkontakte/vkui-tokens](https://github.com/VKCOM/vkui-tokens)
 
@@ -123,4 +156,4 @@ const appearance = useAppearance();
 
 ### Переопределение темы
 
-См. страницу [Кастомизация](#/Customize).
+См. страницу [Кастомизация](/overview/advanced/customize).

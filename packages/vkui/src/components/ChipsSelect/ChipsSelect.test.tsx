@@ -70,6 +70,38 @@ describe('ChipsSelect', () => {
     expect(within(dropdownLocator).getByRole('option', { name: 'Синий' })).toBeTruthy();
   });
 
+  it('should sort options by sortFn prop', async () => {
+    type Option = { label: string; value: number };
+    const options: Option[] = [
+      { label: '1', value: 1 },
+      { label: '3', value: 3 },
+      { label: '2', value: 2 },
+    ];
+    const byAsc = (a: Option, b: Option) => a.label.localeCompare(b.label);
+    const byDesc = (a: Option, b: Option) => b.label.localeCompare(a.label);
+
+    const checkOptionsOrder = async (order: string[]) => {
+      await userEvent.click(screen.getByRole('combobox'));
+      const dropdownLocator = screen.getByTestId('dropdown');
+      const optionsValues = within(dropdownLocator)
+        .getAllByRole('option')
+        .map((element) => element.textContent);
+      expect(optionsValues).toEqual(order);
+    };
+
+    // Сортируем по возрастанию
+    const { rerender } = render(
+      <ChipsSelect options={options} defaultValue={[]} sortFn={byAsc} dropdownTestId="dropdown" />,
+    );
+    await checkOptionsOrder(['1', '2', '3']);
+
+    // Сортируем по убыванию
+    rerender(
+      <ChipsSelect options={options} defaultValue={[]} sortFn={byDesc} dropdownTestId="dropdown" />,
+    );
+    await checkOptionsOrder(['3', '2', '1']);
+  });
+
   it('shows spinner if fetching', async () => {
     const result = render(<ChipsSelect fetching defaultValue={[]} dropdownTestId="dropdown" />);
     await userEvent.click(result.getByRole('combobox'));

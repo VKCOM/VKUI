@@ -8,6 +8,12 @@ const story: Meta<SegmentedControlProps> = {
   component: SegmentedControl,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   args: { onChange: fn() },
+  argTypes: {
+    role: {
+      control: 'select',
+      options: ['radiogroup', 'tablist'],
+    },
+  },
 };
 
 export default story;
@@ -30,6 +36,7 @@ export const Playground: Story = {
         value: 'other',
       },
     ],
+    role: 'radiogroup',
   },
   decorators: [
     (Component) => (

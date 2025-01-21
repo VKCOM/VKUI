@@ -64,9 +64,13 @@ function Folder({ item, icon }: FolderProps) {
     ),
     icon: icon && <MenuItemIcon active={activeRouteInside} Component={icon} />,
     expanded: open,
-    onChange: () => {
+    onChange: (e, toggle) => {
+      if (toggle) {
+        e?.preventDefault();
+        e?.stopPropagation();
+      }
       if (isLink) {
-        if (active) {
+        if (active || toggle) {
           // eslint-disable-next-line react-compiler/react-compiler
           TreeState[item.route] = !open;
         } else {

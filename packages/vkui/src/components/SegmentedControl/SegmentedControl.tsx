@@ -3,11 +3,13 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useDirection } from '../../hooks/useDirection';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import {
   SegmentedControlOption,
@@ -57,9 +59,13 @@ export const SegmentedControl = ({
   onChange: onChangeProp,
   value: valueProp,
   role = 'radiogroup',
+  getRootRef,
   ...restProps
 }: SegmentedControlProps): React.ReactNode => {
   const id = React.useId();
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(getRootRef, directionRef);
+  const isRtl = textDirection === 'rtl';
 
   const [value, onChange] = useCustomEnsuredControl({
     onChange: onChangeProp,
@@ -69,7 +75,7 @@ export const SegmentedControl = ({
 
   const { sizeY = 'none' } = useAdaptivity();
 
-  const { tabsRef } = useTabsNavigation(role === 'tablist');
+  const { tabsRef } = useTabsNavigation(role === 'tablist', isRtl);
 
   const actualIndex = options.findIndex((option) => option.value === value);
 
@@ -79,28 +85,24 @@ export const SegmentedControl = ({
     }
   }, [actualIndex]);
 
-  const translateX = `translateX(${100 * actualIndex}%)`;
+  const sliderStyle: CSSCustomProperties = {
+    '--vkui_internal--SegmentedControl_actual_index': String(actualIndex),
+    '--vkui_internal--SegmentedControl_options': String(options.length),
+  };
 
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         sizeY !== 'compact' && sizeYClassNames[sizeY],
         size === 'l' && styles.sizeL,
+        isRtl && styles.rtl,
       )}
     >
       <div role={role} ref={tabsRef} className={styles.in}>
-        {actualIndex > -1 && (
-          <div
-            aria-hidden
-            className={styles.slider}
-            style={{
-              width: `${100 / options.length}%`,
-              transform: translateX,
-            }}
-          />
-        )}
+        {actualIndex > -1 && <div aria-hidden className={styles.slider} style={sliderStyle} />}
         {options.map(({ label, before, ...optionProps }) => {
           const selected = value === optionProps.value;
           const onSelect = () => onChange(optionProps.value);
