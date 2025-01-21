@@ -1,9 +1,15 @@
 import { Icon20ArticleOutline, Icon20PlaceOutline, Icon20WorkOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { Link } from '../Link/Link';
 import { MiniInfoCell, type MiniInfoCellProps } from './MiniInfoCell';
+
+const longChildrenValue = withLabel(
+  'ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.',
+  'Long children',
+);
 
 export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -27,9 +33,7 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
         {
           before: [<Icon20ArticleOutline key="icon" />],
           textWrap: ['nowrap', 'short', 'full'],
-          children: [
-            'ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.',
-          ],
+          children: [longChildrenValue],
         },
         {
           before: [<Icon20WorkOutline key="icon" />],
