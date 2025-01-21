@@ -5,6 +5,7 @@ import {
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -27,7 +28,10 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           value: [
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis ultrices purus id tempor',
+            withLabel(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis ultrices purus id tempor',
+              'Long value',
+            ),
           ],
         },
         {
