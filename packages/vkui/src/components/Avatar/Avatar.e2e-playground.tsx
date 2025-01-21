@@ -5,6 +5,7 @@ import {
   type ComponentPlaygroundProps,
   testImage,
 } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
@@ -18,7 +19,7 @@ export const AvatarPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          src: [undefined, testImage],
+          src: [undefined, withLabel(testImage, 'image')],
           initials: [undefined, 'AB'],
           fallbackIcon: [
             <IconExampleForFallbackBasedOnImageBaseSize key="icon-fallback" />,
@@ -42,7 +43,12 @@ export const AvatarPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           gradientColor: ['custom'],
-          style: [{ backgroundImage: 'linear-gradient(#e66465, #9198e5)' }],
+          style: [
+            withLabel(
+              { backgroundImage: 'linear-gradient(#e66465, #9198e5)' },
+              'With linear-gradient background',
+            ),
+          ],
         },
         {
           size: [96, 24],
