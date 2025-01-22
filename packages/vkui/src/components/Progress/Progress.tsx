@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import {
+  type CSSCustomProperties,
+  type HTMLAttributesWithRootRef,
+  type LiteralUnion,
+} from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Progress.module.css';
 
-const stylesAppearance = {
+const stylesAppearance: Record<string, string> = {
   accent: styles.appearanceAccent,
   positive: styles.appearancePositive,
   negative: styles.appearanceNegative,
-  custom: undefined,
 };
 
 function progressCustomHeightStyle(height: number | undefined): React.CSSProperties | undefined {
@@ -21,18 +24,11 @@ function progressCustomHeightStyle(height: number | undefined): React.CSSPropert
     : undefined;
 }
 
-type Appearance = 'accent' | 'positive' | 'negative' | 'custom';
-
-export interface ProgressProps<AppearanceType extends Appearance = 'accent'>
-  extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface ProgressProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Стиль отображения прогрессбара
    */
-  appearance?: AppearanceType;
-  /**
-   * Кастомный цвет прогрессбара. Используется только с `appearance="custom"`
-   */
-  color?: AppearanceType extends 'custom' ? string : never;
+  appearance?: LiteralUnion<'accent' | 'positive' | 'negative' | `--${string}`, string>;
   value?: number;
   /**
    * Высота элемента.
@@ -47,30 +43,39 @@ export interface ProgressProps<AppearanceType extends Appearance = 'accent'>
 const PROGRESS_MIN_VALUE = 0;
 const PROGRESS_MAX_VALUE = 100;
 
+const resolveAppearance = (
+  appearance: Exclude<ProgressProps['appearance'], undefined>,
+): [CSSCustomProperties | undefined, string | undefined] => {
+  switch (appearance) {
+    case 'accent':
+    case 'positive':
+    case 'negative':
+      return [undefined, stylesAppearance[appearance]];
+    default: {
+      return [{ '--vkui_internal_Progress_background_color': appearance }, undefined];
+    }
+  }
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/Progress
  */
-export const Progress = <AppearanceType extends Appearance = 'accent'>({
+export const Progress = ({
   value = 0,
   height,
   trackDisable = false,
-  appearance: appearanceProp,
-  color: colorProp,
+  appearance = 'accent',
   ...restProps
-}: ProgressProps<AppearanceType>): React.ReactNode => {
+}: ProgressProps): React.ReactNode => {
   const progress = clamp(value, PROGRESS_MIN_VALUE, PROGRESS_MAX_VALUE);
   const title = `${progress} / ${PROGRESS_MAX_VALUE}`;
   const styleHeight = progressCustomHeightStyle(height);
-  const appearance: Appearance = appearanceProp || 'accent';
-  const color: string | undefined = appearance === 'custom' ? colorProp : undefined;
 
-  const backgroundColorStyle = color
-    ? { '--vkui_internal_Progress_background_color': color }
-    : undefined;
+  const [appearanceStyles, appearanceClassName] = resolveAppearance(appearance);
 
   const style = {
     ...styleHeight,
-    ...backgroundColorStyle,
+    ...appearanceStyles,
     '--vkui_internal_Progress_progress': progress,
   };
 
@@ -85,7 +90,7 @@ export const Progress = <AppearanceType extends Appearance = 'accent'>({
       baseClassName={classNames(
         styles.host,
         trackDisable && styles.trackDisable,
-        stylesAppearance[appearance],
+        appearanceClassName,
       )}
       baseStyle={style}
     />
