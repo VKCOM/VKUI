@@ -8,6 +8,11 @@ export const CellButtonPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
+      platformToHeight={{
+        android: 125,
+        ios: 125,
+        vkcom: 110,
+      }}
       propSets={[
         {
           centered: [undefined, true],

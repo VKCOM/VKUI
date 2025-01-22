@@ -5,6 +5,7 @@ import type {
 } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { getValueByKey } from '../../helpers/getValueByKey';
 import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
+import { type PlatformType } from '../../lib/platform';
 
 export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {
@@ -33,6 +34,7 @@ type DecoratedPropValue<T> = T | CustomValueWithLabel<T>;
 type AdaptivityFlag = boolean | 'x' | 'y';
 type PropDesc<Props> = { [K in keyof Props]?: Array<DecoratedPropValue<Props[K]>> } & {
   $adaptivity?: AdaptivityFlag;
+  $platformToHeight?: Partial<Record<PlatformType, number>>;
 };
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
@@ -46,11 +48,13 @@ function getAdaptivity(adaptivity?: AdaptivityFlag) {
   return extra;
 }
 
-type TestProps<Props> = Array<Props & SizeProps>;
+type TestProps<Props> = Array<
+  Props & SizeProps & { $platformToHeight?: Partial<Record<PlatformType, number>> }
+>;
 type CartesianOptions = { adaptive: boolean };
 
 function cartesian<Props>(
-  { $adaptivity, ...propDesc }: PropDesc<Props>,
+  { $adaptivity, $platformToHeight, ...propDesc }: PropDesc<Props>,
   ops: CartesianOptions,
 ): TestProps<Props> {
   propDesc = {
@@ -62,7 +66,7 @@ function cartesian<Props>(
       const res: any[] = [];
       acc.forEach((props) => {
         values.forEach((value: any) => {
-          res.push({ ...props, [prop]: value });
+          res.push({ ...props, [prop]: value, $platformToHeight });
         });
       });
       return res;

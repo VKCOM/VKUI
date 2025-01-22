@@ -15,6 +15,11 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
+      platformToHeight={{
+        android: 100,
+        ios: 100,
+        vkcom: 60,
+      }}
       propSets={[
         {
           before: [<Icon20PlaceOutline key="icon" />],
@@ -34,6 +39,10 @@ export const MiniInfoCellPlayground = (props: ComponentPlaygroundProps) => {
           before: [<Icon20ArticleOutline key="icon" />],
           textWrap: ['nowrap', 'short', 'full'],
           children: [longChildrenValue],
+          $platformToHeight: {
+            android: 175,
+            ios: 175,
+          },
         },
         {
           before: [<Icon20WorkOutline key="icon" />],

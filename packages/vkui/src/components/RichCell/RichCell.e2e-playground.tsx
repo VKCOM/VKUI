@@ -7,10 +7,13 @@ import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
 
-const longOverTitle = withLabel('Subhead subhead subhead subhead', 'Long overTitle');
-const longChildren = withLabel('Subhead subhead subhead subhead', 'Long children');
-const longSubtitle = withLabel('Subhead subhead subhead subhead', 'Long subtitle');
-const longExtraSubtitle = withLabel('Subhead subhead subhead subhead', 'Long extraSubtitle');
+const longOverTitle = withLabel('Over Title Over Title Over Title', 'Long overTitle');
+const longChildren = withLabel('Children children children children', 'Long children');
+const longSubtitle = withLabel('Subtitle subtitle subtitle subtitle', 'Long subtitle');
+const longExtraSubtitle = withLabel(
+  'Extra subtitle extra subtitle extra subtitle',
+  'Long extraSubtitle',
+);
 
 export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -38,6 +41,38 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </ButtonGroup>,
           ],
           $adaptivity: 'y',
+          $platformToHeight: {
+            android: 290,
+            ios: 290,
+            vkcom: 210,
+          },
+        },
+        {
+          before: [<Avatar size={48} key="48" />],
+          children: ['Михаил Лихачев'],
+          overTitle: ['Команда ВКонтакте, Санкт-Петербург'],
+          after: [
+            <RichCell.Icon key="icon">
+              <Icon24UserAddOutline />
+            </RichCell.Icon>,
+          ],
+          $platformToHeight: {
+            android: 140,
+            ios: 140,
+            vkcom: 100,
+          },
+        },
+        {
+          before: [<Avatar size={24} key="24" />],
+          children: ['Михаил'],
+          after: [withLabel('Very very very very very very very long after', 'Very long after')],
+          beforeAlign: ['center', 'end'],
+          contentAlign: ['center', 'end'],
+          $platformToHeight: {
+            android: 140,
+            ios: 140,
+            vkcom: 100,
+          },
         },
         {
           before: [<Avatar size={72} key="72" />],
@@ -59,23 +94,6 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </ButtonGroup>,
           ],
           multiline: [true],
-        },
-        {
-          before: [<Avatar size={48} key="48" />],
-          children: ['Михаил Лихачев'],
-          overTitle: ['Команда ВКонтакте, Санкт-Петербург'],
-          after: [
-            <RichCell.Icon key="icon">
-              <Icon24UserAddOutline />
-            </RichCell.Icon>,
-          ],
-        },
-        {
-          before: [<Avatar size={24} key="24" />],
-          children: ['Михаил'],
-          after: [withLabel('Very very very very very very very long after', 'Very long after')],
-          beforeAlign: ['center', 'end'],
-          contentAlign: ['center', 'end'],
         },
       ]}
     >

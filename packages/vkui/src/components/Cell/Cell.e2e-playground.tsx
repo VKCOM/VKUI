@@ -6,6 +6,11 @@ export const CellPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
+      platformToHeight={{
+        android: 155,
+        ios: 155,
+        vkcom: 100,
+      }}
       propSets={[
         {
           mode: ['selectable'],

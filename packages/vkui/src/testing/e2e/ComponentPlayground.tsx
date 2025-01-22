@@ -18,6 +18,7 @@ export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
   children: (props: Props) => React.ReactNode;
   AppWrapper?: React.ComponentType<AppDefaultWrapperProps>;
+  platformToHeight?: Partial<Record<PlatformType, number>>;
 }
 
 export type ComponentPlaygroundProps = Pick<
@@ -38,6 +39,7 @@ export const ComponentPlayground = <
   propSets = [],
   children,
   AppWrapper = AppDefaultWrapper,
+  platformToHeight: globalPlatformToHeight,
   ...restProps
 }: InternalComponentPlaygroundProps<Props>): React.ReactNode => {
   const isVKCOM = platform === 'vkcom';
@@ -80,20 +82,21 @@ export const ComponentPlayground = <
             if (props.sizeY) {
               clonedAdaptivityProviderProps.sizeY = props.sizeY;
             }
-
+            const { $platformToHeight, ...showedProps } = props;
             const mappedProps = mapObject(props, (v) => (isCustomValueWithLabel(v) ? v.value : v));
+            const height = $platformToHeight?.[platform] || globalPlatformToHeight?.[platform];
 
             return (
-              <React.Fragment key={i}>
+              <div key={i} style={{ height }}>
                 {isFixedComponent ? null : (
-                  <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(props)}</div>
+                  <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(showedProps)}</div>
                 )}
                 <div>
                   <AdaptivityProvider {...clonedAdaptivityProviderProps}>
                     {children(mappedProps)}
                   </AdaptivityProvider>
                 </div>
-              </React.Fragment>
+              </div>
             );
           })}
         </AppWrapper>
