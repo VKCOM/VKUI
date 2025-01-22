@@ -14,18 +14,9 @@ describe('Progress', () => {
   });
 
   it('Custom color', () => {
-    const { rerender } = render(
-      <Progress data-testid="progress" appearance="custom" color="#f3f405" />,
-    );
+    render(<Progress data-testid="progress" appearance="#f3f405" />);
 
     expect(screen.getByTestId('progress')).toHaveStyle(
-      '--vkui_internal_Progress_background_color: #f3f405',
-    );
-
-    // @ts-expect-error: TS2322 специально проверяем кесй, который не проходит по типам
-    rerender(<Progress data-testid="progress" appearance="accent" color="#f3f405" />);
-
-    expect(screen.getByTestId('progress')).not.toHaveStyle(
       '--vkui_internal_Progress_background_color: #f3f405',
     );
   });
