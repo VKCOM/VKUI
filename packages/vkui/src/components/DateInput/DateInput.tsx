@@ -102,9 +102,10 @@ export interface DateInputProps
    */
   onApply?: (value?: Date) => void;
   /**
-   * Текст, который будет отображаться в пустом поле ввода
+   * Функция для кастомного форматирования отображаемого значения даты.
+   * Позволяет переопределить стандартное отображение даты и вернуть собственное представление.
    */
-  placeholder?: string;
+  renderCustomValue?: (date: Date | undefined) => React.ReactNode;
 }
 
 const elementsConfig = (index: number) => {
@@ -200,7 +201,7 @@ export const DateInput = ({
   minuteFieldTestId,
   id,
   onApply,
-  placeholder,
+  renderCustomValue,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -306,7 +307,10 @@ export const DateInput = ({
     removeFocusFromField();
   }, [onApply, onChange, removeFocusFromField, value]);
 
-  const showPlaceholder = !open && !value && !!placeholder;
+  const customValue = React.useMemo(
+    () => !open && renderCustomValue?.(value),
+    [open, renderCustomValue, value],
+  );
 
   return (
     <FormField
@@ -333,12 +337,11 @@ export const DateInput = ({
         <VisuallyHidden
           id={id}
           Component="input"
-          placeholder={placeholder}
           name={name}
           value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
         />
         <Text
-          className={classNames(styles.input, showPlaceholder && styles.hidden)}
+          className={classNames(styles.input, customValue && styles.hidden)}
           onKeyDown={handleKeyDown}
           // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
           // из-за чего `.Typography--normalize` перебивает стили.
@@ -399,9 +402,9 @@ export const DateInput = ({
             </React.Fragment>
           )}
         </Text>
-        {showPlaceholder && (
-          <Text className={styles.placeholder} aria-hidden>
-            {placeholder}
+        {customValue && (
+          <Text className={styles.customValue} aria-hidden>
+            {customValue}
           </Text>
         )}
       </div>

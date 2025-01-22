@@ -26,7 +26,7 @@
   opacity: 0;
 }
 
-.placeholder {
+.customValue {
   position: absolute;
   margin-inline: var(--vkui_internal--DateInput_input_margin_inline_start)
     var(--vkui_internal--DateInput_input_margin_inline_end);
@@ -40,8 +40,6 @@
   white-space: nowrap;
   box-sizing: border-box;
   pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
   user-select: none;
 }
 
