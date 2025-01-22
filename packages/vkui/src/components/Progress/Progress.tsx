@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import {
-  type CSSCustomProperties,
-  type HTMLAttributesWithRootRef,
-  type LiteralUnion,
-} from '../../types';
+import { type CSSCustomProperties, type HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Progress.module.css';
 
@@ -28,7 +24,7 @@ export interface ProgressProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Стиль отображения прогрессбара
    */
-  appearance?: LiteralUnion<'accent' | 'positive' | 'negative' | `--${string}`, string>;
+  appearance?: 'accent' | 'positive' | 'negative' | `--${string}` | `#${string}`;
   value?: number;
   /**
    * Высота элемента.
