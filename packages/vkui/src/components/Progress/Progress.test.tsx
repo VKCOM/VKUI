@@ -22,6 +22,7 @@ describe('Progress', () => {
       '--vkui_internal_Progress_background_color: #f3f405',
     );
 
+    // @ts-expect-error: TS2322 специально проверяем кесй, который не проходит по типам
     rerender(<Progress data-testid="progress" appearance="accent" color="#f3f405" />);
 
     expect(screen.getByTestId('progress')).not.toHaveStyle(
