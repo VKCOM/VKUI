@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useDirection } from '../../hooks/useDirection';
+import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
@@ -177,6 +178,7 @@ export const HorizontalScroll = ({
   scrollOnAnyWheel = false,
   prevButtonTestId,
   nextButtonTestId,
+  getRootRef,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -189,6 +191,8 @@ export const HorizontalScroll = ({
   const isCustomScrollingRef = React.useRef(false);
 
   const scrollerRef = useExternRef(getRef, directionRef);
+
+  const rootRef = useExternRef(getRootRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
@@ -244,36 +248,36 @@ export const HorizontalScroll = ({
 
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
-  const _onWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
-    },
-    [scrollerRef],
-  );
-
   /**
    * Прокрутка с помощью любого колеса мыши
    */
-  const onScrollWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      _onWheel(e);
-      e.preventDefault();
-    },
-    [_onWheel],
-  );
-
-  const onArrowWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      if (e.deltaX || (e.deltaY && scrollOnAnyWheel)) {
-        _onWheel(e);
+  const onWheel = React.useCallback(
+    (e: WheelEvent) => {
+      const left = e.deltaX + (scrollOnAnyWheel ? e.deltaY : 0);
+      scrollerRef.current!.scrollBy({ left, behavior: 'auto' });
+      if (e.deltaY && scrollOnAnyWheel) {
+        e.preventDefault();
       }
     },
-    [_onWheel, scrollOnAnyWheel],
+    [scrollOnAnyWheel, scrollerRef],
+  );
+
+  const wheelEvent = useEventListener('wheel', onWheel);
+  React.useEffect(
+    function addScrollerRefToWheelEvent() {
+      if (!rootRef.current) {
+        return noop;
+      }
+      wheelEvent.add(rootRef.current);
+      return wheelEvent.remove;
+    },
+    [wheelEvent, scrollOnAnyWheel, rootRef],
   );
 
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalHorizontalScroll',
@@ -291,7 +295,6 @@ export const HorizontalScroll = ({
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowLeft)}
           onClick={scrollToLeft}
-          onWheel={onArrowWheel}
         />
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
@@ -304,15 +307,9 @@ export const HorizontalScroll = ({
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowRight)}
           onClick={scrollToRight}
-          onWheel={onArrowWheel}
         />
       )}
-      <div
-        className={styles.in}
-        ref={scrollerRef}
-        onScroll={calculateArrowsVisibility}
-        onWheel={scrollOnAnyWheel ? onScrollWheel : undefined}
-      >
+      <div className={styles.in} ref={scrollerRef} onScroll={calculateArrowsVisibility}>
         <div className={styles.inWrapper}>{children}</div>
       </div>
     </RootComponent>
