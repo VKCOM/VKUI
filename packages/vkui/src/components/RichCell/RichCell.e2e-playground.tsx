@@ -8,9 +8,11 @@ import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
 
 const longOverTitle = withLabel('Subhead subhead subhead subhead', 'Long overTitle');
-const longChildren = withLabel('Subhead subhead subhead subhead', 'Long children');
-const longSubtitle = withLabel('Subhead subhead subhead subhead', 'Long subtitle');
-const longExtraSubtitle = withLabel('Subhead subhead subhead subhead', 'Long extraSubtitle');
+const longChildren = withLabel('Children children children children', 'Long children');
+const longSubtitle = withLabel('Subtitle subtitle subtitle subtitle', 'Long subtitle');
+const longExtraSubtitle = withLabel('Extra subtitle Extra subtitle', 'Long extraSubtitle');
+
+const TextAfter = () => <div style={{ minWidth: 100, textAlign: 'right' }}>After</div>;
 
 export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -23,7 +25,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           children: [longChildren],
           subtitle: [longSubtitle],
           extraSubtitle: [longExtraSubtitle],
-          after: ['After'],
+          after: [<TextAfter key="after" />],
           afterAlign: ['start', 'center', 'end'],
           afterCaption: ['After Caption'],
           bottom: [
@@ -45,7 +47,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           children: [longChildren],
           subtitle: [longSubtitle],
           extraSubtitle: [longExtraSubtitle],
-          after: ['After'],
+          after: [<TextAfter key="after" />],
           afterCaption: ['After Caption'],
           bottom: [
             <UsersStack key="stack" photos={['', '', '']}>
@@ -59,6 +61,14 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </ButtonGroup>,
           ],
           multiline: [true],
+        },
+        {
+          before: [<Avatar size={48} key="48" />],
+          children: [longChildren],
+          subtitle: [longSubtitle],
+          extraSubtitle: [longExtraSubtitle],
+          after: [<Button key="After">Подписаться</Button>],
+          afterAlign: ['start', 'center'],
         },
         {
           before: [<Avatar size={48} key="48" />],

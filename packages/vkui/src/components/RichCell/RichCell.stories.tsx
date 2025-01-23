@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
@@ -15,6 +15,10 @@ const story: Meta<RichCellProps> = {
   component: RichCell,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
+    overTitle: StringArg,
+    subtitle: StringArg,
+    extraSubtitle: StringArg,
+    children: StringArg,
     before: createFieldWithPresets({
       additionalPresets: {
         Avatar40: <Avatar size={40} src={getAvatarUrl()} />,

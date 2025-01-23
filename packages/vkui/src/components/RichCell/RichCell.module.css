@@ -72,7 +72,8 @@
   flex-shrink: 0;
   min-inline-size: 0;
   flex-grow: 1;
-  flex-basis: 100px;
+  flex-basis: auto;
+  width: min-content;
 }
 
 .alignSelfStart {
