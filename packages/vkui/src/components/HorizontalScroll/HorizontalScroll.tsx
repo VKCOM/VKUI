@@ -4,9 +4,9 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useDirection } from '../../hooks/useDirection';
-import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
@@ -248,30 +248,25 @@ export const HorizontalScroll = ({
 
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
-  /**
-   * Прокрутка с помощью любого колеса мыши
-   */
-  const onWheel = React.useCallback(
-    (e: WheelEvent) => {
-      const left = e.deltaX + (scrollOnAnyWheel ? e.deltaY : 0);
-      scrollerRef.current!.scrollBy({ left, behavior: 'auto' });
-      if (e.deltaY && scrollOnAnyWheel) {
-        e.preventDefault();
-      }
-    },
-    [scrollOnAnyWheel, scrollerRef],
-  );
-
-  const wheelEvent = useEventListener('wheel', onWheel);
-  React.useEffect(
-    function addScrollerRefToWheelEvent() {
+  useIsomorphicLayoutEffect(
+    function addWheelEventHandler() {
       if (!rootRef.current) {
         return noop;
       }
-      wheelEvent.add(rootRef.current);
-      return wheelEvent.remove;
+      /**
+       * Прокрутка с помощью любого колеса мыши
+       */
+      const onWheel = (e: WheelEvent) => {
+        const left = e.deltaX + (scrollOnAnyWheel ? e.deltaY : 0);
+        scrollerRef.current!.scrollBy({ left, behavior: 'auto' });
+        if (e.deltaY && scrollOnAnyWheel) {
+          e.preventDefault();
+        }
+      };
+      rootRef.current?.addEventListener('wheel', onWheel, { passive: false });
+      return () => rootRef.current?.removeEventListener('wheel', onWheel);
     },
-    [wheelEvent, scrollOnAnyWheel, rootRef],
+    [rootRef, scrollOnAnyWheel, scrollerRef],
   );
 
   return (
