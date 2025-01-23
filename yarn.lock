@@ -1953,39 +1953,49 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@module-federation/runtime-tools@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@module-federation/runtime-tools@npm:0.5.1"
-  dependencies:
-    "@module-federation/runtime": "npm:0.5.1"
-    "@module-federation/webpack-bundler-runtime": "npm:0.5.1"
-  checksum: 10/3c88a7ac45b369e82ccea104db952ab81709a11733b602cf5f1d35b299d1d2f0ce679afc0fd4105386345e727a8f67e141480f708f244fa8c40f898a917c694b
+"@module-federation/error-codes@npm:0.8.4":
+  version: 0.8.4
+  resolution: "@module-federation/error-codes@npm:0.8.4"
+  checksum: 10/1550fccd7ff88f0e23b83717ff45784298b65300482c234a1347aefc4bc6761e222abb81eb0f8a0369d84e032ecdbc2d742811916ed0146489391802cba877bb
   languageName: node
   linkType: hard
 
-"@module-federation/runtime@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@module-federation/runtime@npm:0.5.1"
+"@module-federation/runtime-tools@npm:0.8.4":
+  version: 0.8.4
+  resolution: "@module-federation/runtime-tools@npm:0.8.4"
   dependencies:
-    "@module-federation/sdk": "npm:0.5.1"
-  checksum: 10/c5b998fdbf6c8ceee2f204d501f8cbe8b4356e4d0a03e767c49107ff6b2a11a077bb4fd17d042dfb050d483eca1baf9b50663e53d3ee9bd8148865be3bb63dcc
+    "@module-federation/runtime": "npm:0.8.4"
+    "@module-federation/webpack-bundler-runtime": "npm:0.8.4"
+  checksum: 10/a1b38be13e849c81319bd7e6070fd6f335f146ae372d7eff3e244ad47f7c058ec030bb2502e069bc5ac347fb90e1b37315d2b43233c927f8685d688a9b40b897
   languageName: node
   linkType: hard
 
-"@module-federation/sdk@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@module-federation/sdk@npm:0.5.1"
-  checksum: 10/7569f53f7e0d64ecfb57750d44dac93ba267f35b18921ff84ef2cc12a600690a28460cb2a5b9f2a3e0218b5e45879c16ab980c48930f82065f2c27f476ac3c6e
+"@module-federation/runtime@npm:0.8.4":
+  version: 0.8.4
+  resolution: "@module-federation/runtime@npm:0.8.4"
+  dependencies:
+    "@module-federation/error-codes": "npm:0.8.4"
+    "@module-federation/sdk": "npm:0.8.4"
+  checksum: 10/57f702afa22ae4f497fd8f2542ad1c4ab6aeda2b6ddc3fea74b74fb4f69ddac04bdf5e155e699a8d6a99bda59a8227b955fecf13492b967873121797553fc0d2
   languageName: node
   linkType: hard
 
-"@module-federation/webpack-bundler-runtime@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@module-federation/webpack-bundler-runtime@npm:0.5.1"
+"@module-federation/sdk@npm:0.8.4":
+  version: 0.8.4
+  resolution: "@module-federation/sdk@npm:0.8.4"
   dependencies:
-    "@module-federation/runtime": "npm:0.5.1"
-    "@module-federation/sdk": "npm:0.5.1"
-  checksum: 10/ba09e67a6d8f49a88a1660fbd2553de0d6a3524064cd12870688c79a04ac139ed8faf1657f8f805008b29c56db7c0254b64c0793ffc96d522ab1177d28a365bf
+    isomorphic-rslog: "npm:0.0.6"
+  checksum: 10/9b83139e8de0bb2bbb143d6a870aa10d81b740d2b1363bf56448ba0b61bd2d1c2328b9b936a1aff1975359fe8689cdac528b7f7ae60fd6d288d33823c39afc31
+  languageName: node
+  linkType: hard
+
+"@module-federation/webpack-bundler-runtime@npm:0.8.4":
+  version: 0.8.4
+  resolution: "@module-federation/webpack-bundler-runtime@npm:0.8.4"
+  dependencies:
+    "@module-federation/runtime": "npm:0.8.4"
+    "@module-federation/sdk": "npm:0.8.4"
+  checksum: 10/d4336e1408c1006e518adb24b3165201e770ac14844f6ea892c626c1d65a9554f53d96ee01cb833f60813a952a28fd23703614ffa0f23b7fdd1dd6f16a269002
   languageName: node
   linkType: hard
 
@@ -2922,82 +2932,82 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rspack/binding-darwin-arm64@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-darwin-arm64@npm:1.1.8"
+"@rspack/binding-darwin-arm64@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-darwin-arm64@npm:1.2.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rspack/binding-darwin-x64@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-darwin-x64@npm:1.1.8"
+"@rspack/binding-darwin-x64@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-darwin-x64@npm:1.2.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rspack/binding-linux-arm64-gnu@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-linux-arm64-gnu@npm:1.1.8"
+"@rspack/binding-linux-arm64-gnu@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-linux-arm64-gnu@npm:1.2.1"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@rspack/binding-linux-arm64-musl@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-linux-arm64-musl@npm:1.1.8"
+"@rspack/binding-linux-arm64-musl@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-linux-arm64-musl@npm:1.2.1"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@rspack/binding-linux-x64-gnu@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-linux-x64-gnu@npm:1.1.8"
+"@rspack/binding-linux-x64-gnu@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-linux-x64-gnu@npm:1.2.1"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@rspack/binding-linux-x64-musl@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-linux-x64-musl@npm:1.1.8"
+"@rspack/binding-linux-x64-musl@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-linux-x64-musl@npm:1.2.1"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@rspack/binding-win32-arm64-msvc@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-win32-arm64-msvc@npm:1.1.8"
+"@rspack/binding-win32-arm64-msvc@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-win32-arm64-msvc@npm:1.2.1"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rspack/binding-win32-ia32-msvc@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-win32-ia32-msvc@npm:1.1.8"
+"@rspack/binding-win32-ia32-msvc@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-win32-ia32-msvc@npm:1.2.1"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@rspack/binding-win32-x64-msvc@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding-win32-x64-msvc@npm:1.1.8"
+"@rspack/binding-win32-x64-msvc@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding-win32-x64-msvc@npm:1.2.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@rspack/binding@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/binding@npm:1.1.8"
+"@rspack/binding@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/binding@npm:1.2.1"
   dependencies:
-    "@rspack/binding-darwin-arm64": "npm:1.1.8"
-    "@rspack/binding-darwin-x64": "npm:1.1.8"
-    "@rspack/binding-linux-arm64-gnu": "npm:1.1.8"
-    "@rspack/binding-linux-arm64-musl": "npm:1.1.8"
-    "@rspack/binding-linux-x64-gnu": "npm:1.1.8"
-    "@rspack/binding-linux-x64-musl": "npm:1.1.8"
-    "@rspack/binding-win32-arm64-msvc": "npm:1.1.8"
-    "@rspack/binding-win32-ia32-msvc": "npm:1.1.8"
-    "@rspack/binding-win32-x64-msvc": "npm:1.1.8"
+    "@rspack/binding-darwin-arm64": "npm:1.2.1"
+    "@rspack/binding-darwin-x64": "npm:1.2.1"
+    "@rspack/binding-linux-arm64-gnu": "npm:1.2.1"
+    "@rspack/binding-linux-arm64-musl": "npm:1.2.1"
+    "@rspack/binding-linux-x64-gnu": "npm:1.2.1"
+    "@rspack/binding-linux-x64-musl": "npm:1.2.1"
+    "@rspack/binding-win32-arm64-msvc": "npm:1.2.1"
+    "@rspack/binding-win32-ia32-msvc": "npm:1.2.1"
+    "@rspack/binding-win32-x64-msvc": "npm:1.2.1"
   dependenciesMeta:
     "@rspack/binding-darwin-arm64":
       optional: true
@@ -3017,51 +3027,57 @@ __metadata:
       optional: true
     "@rspack/binding-win32-x64-msvc":
       optional: true
-  checksum: 10/694de94cbde004cd9011303d33b1e08cdbaf6029b167fdd65b582f17b8e099e67aa6bc4fd1c83cb2ab7c5ea83b0a59f071e796ed05e723479865a10cac33158a
+  checksum: 10/e56ffed69fda65d7a54583b78e0ad3546dfd9ea60d0bf0fa0f39dcd710346deef200342f1bc209f816c33d5076bbed8be22163f9e84f65582138cdb5e3f63405
   languageName: node
   linkType: hard
 
-"@rspack/cli@npm:^v1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/cli@npm:1.1.8"
+"@rspack/cli@npm:^v1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/cli@npm:1.2.1"
   dependencies:
     "@discoveryjs/json-ext": "npm:^0.5.7"
-    "@rspack/dev-server": "npm:1.0.9"
+    "@rspack/dev-server": "npm:1.0.10"
     colorette: "npm:2.0.19"
     exit-hook: "npm:^4.0.0"
     interpret: "npm:^3.1.1"
     rechoir: "npm:^0.8.0"
-    semver: "npm:^7.6.2"
     webpack-bundle-analyzer: "npm:4.6.1"
     yargs: "npm:17.6.2"
   peerDependencies:
     "@rspack/core": ^1.0.0-alpha || ^1.x
+    "@rspack/tracing": ^1.x
+  peerDependenciesMeta:
+    "@rspack/tracing":
+      optional: true
   bin:
     rspack: bin/rspack.js
-  checksum: 10/dbfa4622792537c2092cf9e3792cb46ab59a1f237e196f6f8e0a3fe9a3abbbf079b2c0e9dfef87d2b977910547bf1ab013171612ef4c8e0aa29c1f4f6243a779
+  checksum: 10/cf2b8afd29a236c2cc08450b94d8df116f291d98cda7a4a8af0dfef4c50581328e443da8607c63916555c8f5671e46bc669ed00f982a7404e5ad5768fce05875
   languageName: node
   linkType: hard
 
-"@rspack/core@npm:^v1.1.8":
-  version: 1.1.8
-  resolution: "@rspack/core@npm:1.1.8"
+"@rspack/core@npm:^v1.2.1":
+  version: 1.2.1
+  resolution: "@rspack/core@npm:1.2.1"
   dependencies:
-    "@module-federation/runtime-tools": "npm:0.5.1"
-    "@rspack/binding": "npm:1.1.8"
+    "@module-federation/runtime-tools": "npm:0.8.4"
+    "@rspack/binding": "npm:1.2.1"
     "@rspack/lite-tapable": "npm:1.0.1"
     caniuse-lite: "npm:^1.0.30001616"
   peerDependencies:
+    "@rspack/tracing": ^1.x
     "@swc/helpers": ">=0.5.1"
   peerDependenciesMeta:
+    "@rspack/tracing":
+      optional: true
     "@swc/helpers":
       optional: true
-  checksum: 10/fd3c8be0a47228d96b739852a7dbfa956896397d05486fe7fe2ce35797d468a3bd45f20ccdc464c73a6e21edafa9233b35e141903ed98eda5fcc962b8a855b4f
+  checksum: 10/4e67c320b71ef3123487ac706f0bbe3bb96907e42f8bb569a9386d2bc0be683b3a3fd1f9b31df0aae90732977bbd4fc437017bb84cbdd320a5cae37dbe810923
   languageName: node
   linkType: hard
 
-"@rspack/dev-server@npm:1.0.9":
-  version: 1.0.9
-  resolution: "@rspack/dev-server@npm:1.0.9"
+"@rspack/dev-server@npm:1.0.10":
+  version: 1.0.10
+  resolution: "@rspack/dev-server@npm:1.0.10"
   dependencies:
     chokidar: "npm:^3.6.0"
     connect-history-api-fallback: "npm:^2.0.0"
@@ -3074,7 +3090,7 @@ __metadata:
     ws: "npm:^8.16.0"
   peerDependencies:
     "@rspack/core": "*"
-  checksum: 10/9f993c1d1110dd451347cd92b9b5d6bbb4b1bf72c64bab35a16bc797232d8ed39da7b65f21e63ff972448c9e377d5caceb25092983695f9259388f7bca1925ba
+  checksum: 10/c8354f1c71bc790cb3f9d9496a674e1b18bbd9c2c70bded81369187a5593469141c608fbc037f35fc9d628b2616f6266eaecc626fb07797a2d79d3a1ecb58598
   languageName: node
   linkType: hard
 
@@ -3806,22 +3822,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/cli@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@swc/cli@npm:0.5.1"
+"@swc/cli@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@swc/cli@npm:0.6.0"
   dependencies:
     "@swc/counter": "npm:^0.1.3"
     "@xhmikosr/bin-wrapper": "npm:^13.0.5"
     commander: "npm:^8.3.0"
     fast-glob: "npm:^3.2.5"
     minimatch: "npm:^9.0.3"
-    piscina: "npm:^4.3.0"
+    piscina: "npm:^4.3.1"
     semver: "npm:^7.3.8"
     slash: "npm:3.0.0"
     source-map: "npm:^0.7.3"
   peerDependencies:
     "@swc/core": ^1.2.66
-    chokidar: ^3.5.1
+    chokidar: ^4.0.1
   peerDependenciesMeta:
     chokidar:
       optional: true
@@ -3829,7 +3845,14 @@ __metadata:
     spack: bin/spack.js
     swc: bin/swc.js
     swcx: bin/swcx.js
-  checksum: 10/6237ffdf511b6cd0fe975574d8637717f63e1120e41271023fac12c7495ab17d69742cd0866c2099e1def9a9db719703551120ea38ed6e52a4b16f33a098e206
+  checksum: 10/a5a3fbf6d664c7d43a12a506e07ff9e10752da3446d0d92bdb454d39f212eed6b23ea49707856896a74213f747b0154d3a2423a85e08189e33939719c08c7bb2
+  languageName: node
+  linkType: hard
+
+"@swc/core-darwin-arm64@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-darwin-arm64@npm:1.10.8"
+  conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
@@ -3840,10 +3863,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-darwin-x64@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-darwin-x64@npm:1.10.8"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-x64@npm:1.9.3":
   version: 1.9.3
   resolution: "@swc/core-darwin-x64@npm:1.9.3"
   conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm-gnueabihf@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.10.8"
+  conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
@@ -3854,10 +3891,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm64-gnu@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.10.8"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-arm64-gnu@npm:1.9.3":
   version: 1.9.3
   resolution: "@swc/core-linux-arm64-gnu@npm:1.9.3"
   conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-musl@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-linux-arm64-musl@npm:1.10.8"
+  conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
@@ -3868,10 +3919,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-x64-gnu@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-linux-x64-gnu@npm:1.10.8"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-x64-gnu@npm:1.9.3":
   version: 1.9.3
   resolution: "@swc/core-linux-x64-gnu@npm:1.9.3"
   conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-musl@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-linux-x64-musl@npm:1.10.8"
+  conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
@@ -3882,10 +3947,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-win32-arm64-msvc@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.10.8"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-arm64-msvc@npm:1.9.3":
   version: 1.9.3
   resolution: "@swc/core-win32-arm64-msvc@npm:1.9.3"
   conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-ia32-msvc@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.10.8"
+  conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
@@ -3896,6 +3975,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-win32-x64-msvc@npm:1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core-win32-x64-msvc@npm:1.10.8"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-x64-msvc@npm:1.9.3":
   version: 1.9.3
   resolution: "@swc/core-win32-x64-msvc@npm:1.9.3"
@@ -3903,7 +3989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:*, @swc/core@npm:1.9.3, @swc/core@npm:^1.7.3, @swc/core@npm:^1.9.3":
+"@swc/core@npm:*, @swc/core@npm:^1.7.3":
   version: 1.9.3
   resolution: "@swc/core@npm:1.9.3"
   dependencies:
@@ -3946,6 +4032,52 @@ __metadata:
     "@swc/helpers":
       optional: true
   checksum: 10/0a95ce8a2d21370c82e2b0e744c30eacdbd709a7b470950786f3c25a6272c0aa079206a3543aaccc022ca98af87a2a5536387a0259b5377e94d34fac28143cd0
+  languageName: node
+  linkType: hard
+
+"@swc/core@npm:1.10.8, @swc/core@npm:^1.10.8":
+  version: 1.10.8
+  resolution: "@swc/core@npm:1.10.8"
+  dependencies:
+    "@swc/core-darwin-arm64": "npm:1.10.8"
+    "@swc/core-darwin-x64": "npm:1.10.8"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.10.8"
+    "@swc/core-linux-arm64-gnu": "npm:1.10.8"
+    "@swc/core-linux-arm64-musl": "npm:1.10.8"
+    "@swc/core-linux-x64-gnu": "npm:1.10.8"
+    "@swc/core-linux-x64-musl": "npm:1.10.8"
+    "@swc/core-win32-arm64-msvc": "npm:1.10.8"
+    "@swc/core-win32-ia32-msvc": "npm:1.10.8"
+    "@swc/core-win32-x64-msvc": "npm:1.10.8"
+    "@swc/counter": "npm:^0.1.3"
+    "@swc/types": "npm:^0.1.17"
+  peerDependencies:
+    "@swc/helpers": "*"
+  dependenciesMeta:
+    "@swc/core-darwin-arm64":
+      optional: true
+    "@swc/core-darwin-x64":
+      optional: true
+    "@swc/core-linux-arm-gnueabihf":
+      optional: true
+    "@swc/core-linux-arm64-gnu":
+      optional: true
+    "@swc/core-linux-arm64-musl":
+      optional: true
+    "@swc/core-linux-x64-gnu":
+      optional: true
+    "@swc/core-linux-x64-musl":
+      optional: true
+    "@swc/core-win32-arm64-msvc":
+      optional: true
+    "@swc/core-win32-ia32-msvc":
+      optional: true
+    "@swc/core-win32-x64-msvc":
+      optional: true
+  peerDependenciesMeta:
+    "@swc/helpers":
+      optional: true
+  checksum: 10/d215538af7de6bbceaf9c76ba2c13c2ad88c9daed0a2156702f9dd3c1890bffaadf040b7a0ad56a26431683b4df257b143b429dc3bdfc09be406666a720d2b61
   languageName: node
   linkType: hard
 
@@ -5475,7 +5607,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-codemods@workspace:packages/codemods"
   dependencies:
-    "@swc/core": "npm:^1.9.3"
+    "@swc/core": "npm:^1.10.8"
     "@swc/jest": "npm:^0.2.37"
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jest": "npm:^29.5.14"
@@ -5533,7 +5665,7 @@ __metadata:
   resolution: "@vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui"
   dependencies:
     "@floating-ui/react-dom": "npm:^2.1.2"
-    "@swc/core": "npm:^1.9.3"
+    "@swc/core": "npm:^1.10.8"
     "@swc/helpers": "npm:^0.5.15"
     "@swc/jest": "npm:^0.2.37"
     "@types/jest": "npm:^29.5.14"
@@ -5559,13 +5691,13 @@ __metadata:
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0"
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0"
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
-    "@rspack/cli": "npm:^v1.1.8"
-    "@rspack/core": "npm:^v1.1.8"
+    "@rspack/cli": "npm:^v1.2.1"
+    "@rspack/core": "npm:^v1.2.1"
     "@size-limit/file": "npm:^11.1.6"
     "@size-limit/webpack": "npm:^11.1.6"
     "@size-limit/webpack-css": "npm:^11.1.6"
-    "@swc/cli": "npm:^0.5.1"
-    "@swc/core": "npm:1.9.3"
+    "@swc/cli": "npm:^0.6.0"
+    "@swc/core": "npm:1.10.8"
     "@swc/jest": "npm:^0.2.37"
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
@@ -5635,8 +5767,8 @@ __metadata:
     stylelint-use-logical: "npm:^2.1.2"
     stylelint-value-no-unknown-custom-properties: "npm:^6.0.1"
     swc-loader: "npm:^0.2.6"
-    swc-plugin-css-modules: "npm:1.0.0"
-    swc-plugin-transform-remove-imports: "npm:2.0.0"
+    swc-plugin-css-modules: "npm:2.0.2"
+    swc-plugin-transform-remove-imports: "npm:3.0.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.3"
     typescript-plugin-css-modules: "npm:^5.1.0"
@@ -5651,7 +5783,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-token-translator@workspace:packages/token-translator"
   dependencies:
-    "@swc/core": "npm:1.9.3"
+    "@swc/core": "npm:1.10.8"
     "@swc/jest": "npm:^0.2.37"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.10.7"
@@ -6750,7 +6882,7 @@ __metadata:
   resolution: "benchmark@workspace:benchmark"
   dependencies:
     "@playwright/test": "npm:1.49.1"
-    "@swc/core": "npm:^1.9.3"
+    "@swc/core": "npm:^1.10.8"
     "@vkontakte/vkui": "workspace:packages/vkui"
     cli-table3: "npm:^0.6.1"
     css-loader: "npm:7.1.2"
@@ -12876,6 +13008,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isomorphic-rslog@npm:0.0.6":
+  version: 0.0.6
+  resolution: "isomorphic-rslog@npm:0.0.6"
+  checksum: 10/3845525005054dde6876e844a2a499eb715628e57d7389ff6a5dac21a482e643b8e0e3abfbb0e6ed7613720e321d17befade4b42e1c2d62fbb76103a530c9c8f
+  languageName: node
+  linkType: hard
+
 "istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.2.0":
   version: 3.2.2
   resolution: "istanbul-lib-coverage@npm:3.2.2"
@@ -16564,15 +16703,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"piscina@npm:^4.3.0":
-  version: 4.7.0
-  resolution: "piscina@npm:4.7.0"
+"piscina@npm:^4.3.1":
+  version: 4.8.0
+  resolution: "piscina@npm:4.8.0"
   dependencies:
     "@napi-rs/nice": "npm:^1.0.1"
   dependenciesMeta:
     "@napi-rs/nice":
       optional: true
-  checksum: 10/d4a7dc3d9ae849248d1432be87ce8d5823ef0682f01b43f0255a87a03d660bb46d3ae8c5fbe86306ded8baedbb57fe01ba888c9638f83883742423a718085e23
+  checksum: 10/5c28396c2fa3001bcf669d3c5d2678a2e89de622f6a8dcf0ba00ed58412d9aa8fc4aca2cd28c6901a8dbf718ce3520b92bb2cd701d8309ca04258472267a2972
   languageName: node
   linkType: hard
 
@@ -20173,17 +20312,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin-css-modules@npm:1.0.0":
-  version: 1.0.0
-  resolution: "swc-plugin-css-modules@npm:1.0.0"
-  checksum: 10/df52ff2efd5ac4cf309acc03d5c55ba6204737da9145e7bc659db2b5c8f0d4ae30678f398f16603af4f405fcb8b386df02ae6387bc6cf6006234afd24667e03f
+"swc-plugin-css-modules@npm:2.0.2":
+  version: 2.0.2
+  resolution: "swc-plugin-css-modules@npm:2.0.2"
+  checksum: 10/94c878bd578cfa1a58905df61fcbe85d534431d59a0d717517f7e15d232f534809315234d84d7c4091045a42b9c4d420d3b2854ef013beaa00e9d8f8740dd0fd
   languageName: node
   linkType: hard
 
-"swc-plugin-transform-remove-imports@npm:2.0.0":
-  version: 2.0.0
-  resolution: "swc-plugin-transform-remove-imports@npm:2.0.0"
-  checksum: 10/8c08c3cd88807c5b811f8c44c741edce0293c2f7ed7469633d2c6ed52ada0088d05e6f7d55806a605b1526a0052ed477ef133a40e7a338b2493ff486b33e92f2
+"swc-plugin-transform-remove-imports@npm:3.0.2":
+  version: 3.0.2
+  resolution: "swc-plugin-transform-remove-imports@npm:3.0.2"
+  checksum: 10/acecab25a677a84932ed658b46d32dc1e1f8b6d1b314776431a1014766a2f914146cbf295a18a61b0ad46323a36217bfed76944a588c0e02aee39fb1873b9e31
   languageName: node
   linkType: hard
 
