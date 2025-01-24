@@ -77,7 +77,7 @@
   flex-shrink: 0;
   min-inline-size: 0;
   flex-grow: 1;
-  width: min-content;
+  inline-size: min-content;
 }
 
 .alignSelfStart {
