@@ -109,7 +109,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
   const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
     (options = { compensateKeyboardHeight: true }) => {
       if (!window) {
-        throw new Error('window is not defined');
+        return { x: 0, y: 0 };
       }
       const bodyStyles = document!.body.style;
       const [scrollLeft, scrollTop] = scrollLockEnabledRef.current
