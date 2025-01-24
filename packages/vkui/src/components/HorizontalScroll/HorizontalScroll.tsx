@@ -263,8 +263,10 @@ export const HorizontalScroll = ({
           e.preventDefault();
         }
       };
-      rootRef.current?.addEventListener('wheel', onWheel, { passive: false });
-      return () => rootRef.current?.removeEventListener('wheel', onWheel);
+      const listenerOptions = { passive: false };
+      rootRef.current?.addEventListener('wheel', onWheel, listenerOptions);
+      // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
+      return () => rootRef.current?.removeEventListener('wheel', onWheel, listenerOptions);
     },
     [rootRef, scrollOnAnyWheel, scrollerRef],
   );
