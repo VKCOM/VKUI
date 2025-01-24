@@ -4,6 +4,8 @@ import { withLabel } from '@vkui-e2e/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
+import { Flex } from '../Flex/Flex';
+import { Text } from '../Typography/Text/Text';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
 
@@ -86,6 +88,18 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           after: [withLabel('Very very very very very very very long after', 'Very long after')],
           beforeAlign: ['center', 'end'],
           contentAlign: ['center', 'end'],
+        },
+        // Проверяем, что при отсутствии after контент в основной части рястягивается на всю доступную ширину
+        {
+          children: ['Children'],
+          overTitle: ['Over title'],
+          extraSubtitle: [
+            <Flex key="extraSubtitle" justify="space-between" align="center">
+              <Button>Кнопка 1</Button>
+              <Text>Проможуточный текст</Text>
+              <Button>Кнопка 2</Button>
+            </Flex>,
+          ],
         },
       ]}
     >

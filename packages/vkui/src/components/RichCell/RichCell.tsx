@@ -111,9 +111,10 @@ export const RichCell: React.FC<RichCellProps> & {
   ...restProps
 }: RichCellProps) => {
   const { sizeY = 'none' } = useAdaptivity();
+  const withAfter = after || afterCaption;
 
   const afterRender = () => {
-    if (!after && !afterCaption) {
+    if (!withAfter) {
       return;
     }
     return (
@@ -139,7 +140,13 @@ export const RichCell: React.FC<RichCellProps> & {
       <div className={styles.inWrapper}>
         <div className={styles.in}>
           <div className={styles.content}>
-            <div className={classNames(styles.contentBefore, alignContentClassNames[contentAlign])}>
+            <div
+              className={classNames(
+                styles.contentBefore,
+                alignContentClassNames[contentAlign],
+                withAfter && styles.withAfter,
+              )}
+            >
               {overTitle && (
                 <Subhead Component="div" className={styles.overTitle}>
                   {overTitle}
