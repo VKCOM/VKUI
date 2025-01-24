@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { mergeCalls } from '../../lib/mergeCalls';
 import { stopPropagation } from '../../lib/utils';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import type { SharedDropdownProps } from './types';
@@ -28,18 +27,17 @@ export const ActionSheetDropdownSheet = ({
   const { sizeY } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (!allowClickPropagation) {
-      stopPropagation(event);
-    }
-  };
-
-  const clickHandlers = mergeCalls({ onClick: handleClick }, { onClick });
+  const handleClick = allowClickPropagation
+    ? onClick
+    : (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagation(event);
+        onClick?.(event);
+      };
 
   return (
     <FocusTrap
       {...restProps}
-      {...clickHandlers}
+      onClick={handleClick}
       className={classNames(
         styles.host,
         platform === 'ios' && styles.ios,

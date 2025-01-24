@@ -8,7 +8,6 @@ import { useEventListener } from '../../hooks/useEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
-import { mergeCalls } from '../../lib/mergeCalls';
 import { stopPropagation } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -69,13 +68,12 @@ export const ActionSheetDropdownMenu = ({
     return { current: toggleRef as HTMLElement };
   }, [toggleRef]);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (!allowClickPropagation) {
-      stopPropagation(event);
-    }
-  };
-
-  const clickHandlers = mergeCalls({ onClick: handleClick }, { onClick });
+  const handleClick = allowClickPropagation
+    ? onClick
+    : (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagation(event);
+        onClick?.(event);
+      };
 
   return (
     <Popper
@@ -96,7 +94,7 @@ export const ActionSheetDropdownMenu = ({
       onAnimationStart={onAnimationStart}
       onAnimationEnd={onAnimationEnd}
     >
-      <FocusTrap onClose={onClose} {...restProps} {...clickHandlers}>
+      <FocusTrap onClose={onClose} {...restProps} onClick={handleClick}>
         {children}
       </FocusTrap>
     </Popper>

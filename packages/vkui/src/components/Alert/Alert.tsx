@@ -7,7 +7,6 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
-import { mergeCalls } from '../../lib/mergeCalls';
 import { stopPropagation } from '../../lib/utils';
 import type {
   AlignType,
@@ -146,15 +145,14 @@ export const Alert = ({
     [close],
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (!allowClickPropagation) {
-      stopPropagation(event);
-    }
-  };
-
-  const clickHandlers = mergeCalls({ onClick: handleClick }, { onClick });
-
   useScrollLock();
+
+  const handleClick = allowClickPropagation
+    ? onClick
+    : (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagation(event);
+        onClick?.(event);
+      };
 
   return (
     <AppRootPortal usePortal={usePortal}>
@@ -168,7 +166,7 @@ export const Alert = ({
         <FocusTrap
           {...restProps}
           {...animationHandlers}
-          {...clickHandlers}
+          onClick={handleClick}
           getRootRef={elementRef}
           onClose={close}
           autoFocus={animationState === 'entered'}
