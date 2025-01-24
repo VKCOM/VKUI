@@ -309,6 +309,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const scrollBoxRef = React.useRef<HTMLDivElement | null>(null);
   const selectElRef = useExternRef(getRef);
   const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
+  const scrollPerformedRef = React.useRef(false);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -426,18 +427,23 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [options.length],
   );
 
-  const setScrollBoxRef = React.useCallback(
-    (ref: HTMLDivElement | null) => {
-      scrollBoxRef.current = ref;
+  useIsomorphicLayoutEffect(() => {
+    if (!opened) {
+      scrollPerformedRef.current = false;
+      return;
+    }
 
-      if (ref && selectedOptionIndex !== undefined && isValidIndex(selectedOptionIndex)) {
-        {
-          scrollToElement(selectedOptionIndex, true);
-        }
-      }
-    },
-    [isValidIndex, scrollToElement, selectedOptionIndex],
-  );
+    if (scrollPerformedRef.current) {
+      return;
+    }
+
+    const isIndexValid = selectedOptionIndex !== undefined && isValidIndex(selectedOptionIndex);
+
+    if (scrollBoxRef.current && isIndexValid) {
+      scrollPerformedRef.current = true;
+      scrollToElement(selectedOptionIndex, true);
+    }
+  }, [opened, selectedOptionIndex, scrollToElement, isValidIndex]);
 
   const [keyboardInput, setKeyboardInput] = React.useState('');
   const resetKeyboardInput = React.useCallback(() => {
@@ -926,7 +932,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         <CustomSelectDropdown
           targetRef={containerRef}
           placement={popperPlacement}
-          scrollBoxRef={setScrollBoxRef}
+          scrollBoxRef={scrollBoxRef}
           onPlacementChange={setPopperPlacement}
           onMouseLeave={resetFocusedOption}
           fetching={fetching}
