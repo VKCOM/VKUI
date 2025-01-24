@@ -1,4 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { ImageBase, type ImageBaseProps } from './ImageBase';
 
@@ -15,7 +16,7 @@ export const ImageWithParentWithBorderRadius = (props: ComponentPlaygroundProps)
     propSets={[
       {
         size: [72],
-        src: [base64Image],
+        src: [withLabel(base64Image, 'base64')],
       },
     ]}
   >

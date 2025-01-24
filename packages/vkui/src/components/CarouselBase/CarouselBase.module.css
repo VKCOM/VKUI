@@ -10,11 +10,6 @@
   position: relative;
 }
 
-.alignCenter .viewport {
-  margin-block: 0;
-  margin-inline: auto;
-}
-
 .layer {
   display: flex;
   inline-size: 100%;

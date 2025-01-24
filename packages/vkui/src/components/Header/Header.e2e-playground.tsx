@@ -6,6 +6,7 @@ import {
   Icon28UserCircleFillBlue,
 } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Counter } from '../Counter/Counter';
 import { Link } from '../Link/Link';
 import { Header, type HeaderProps } from './Header';
@@ -66,7 +67,6 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           size: ['m'],
           children: ['Кто может оставлять записи на моей странице'],
           afterTitle: [<Icon16UnlockOutline key="afterTitle" />],
-          multiline: [undefined, true],
         },
         {
           size: ['m'],
@@ -79,7 +79,6 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           children: ['Кто может оставлять записи на моей странице'],
           subtitle: ['SOHN — Conrad'],
           afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
-          multiline: [undefined, true],
         },
         {
           size: ['s', 'm', 'l', 'xl'],
@@ -90,7 +89,13 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           beforeSubtitle: [<Icon12Tag key="beforeSubtitle" />],
           afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
           subtitle: ['SOHN — Conrad'],
-          multiline: [undefined, true],
+        },
+        {
+          children: [withLabel('Very long children '.repeat(8), 'Very long children')],
+          subtitle: [withLabel('Very long subtitle '.repeat(16), 'Very long subtitle')],
+          afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
+          afterTitle: [<Icon16UnlockOutline key="afterTitle" />],
+          multiline: [false, true],
         },
       ]}
     >
