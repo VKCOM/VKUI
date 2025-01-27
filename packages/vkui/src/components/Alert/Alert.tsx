@@ -29,6 +29,8 @@ import styles from './Alert.module.css';
 
 type AlertActionMode = 'cancel' | 'destructive' | 'default';
 
+export type { AlertActionProps };
+
 export interface AlertActionInterface
   extends Pick<ButtonProps, 'Component'>,
     AnchorHTMLAttributesOnly,
