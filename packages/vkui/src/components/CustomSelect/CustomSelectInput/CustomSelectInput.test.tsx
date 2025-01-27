@@ -4,9 +4,7 @@ import { CustomSelectInput, type CustomSelectInputProps } from './CustomSelectIn
 import styles from './CustomSelectInput.module.css';
 
 describe(CustomSelectInput, () => {
-  baselineComponent(CustomSelectInput, {
-    a11y: false,
-  });
+  baselineComponent((props) => <CustomSelectInput {...props} placeholder="Select label" />);
 
   it.each<{ props: Partial<CustomSelectInputProps>; className: string }>([
     {

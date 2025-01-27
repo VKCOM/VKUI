@@ -8,6 +8,7 @@ import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { stopPropagation } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 import type {
   AlignType,
   AnchorHTMLAttributesOnly,
@@ -81,6 +82,8 @@ export interface AlertProps
   allowClickPropagation?: boolean;
 }
 
+const warn = warnOnce('Alert');
+
 /**
  * @see https://vkcom.github.io/VKUI/#/Alert
  */
@@ -149,6 +152,17 @@ export const Alert = ({
 
   useScrollLock();
 
+  if (
+    process.env.NODE_ENV === 'development' &&
+    !title &&
+    !restProps['aria-label'] &&
+    !restProps['aria-labelledby']
+  ) {
+    warn(
+      'Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+  }
+
   const handleClick = allowClickPropagation
     ? onClick
     : (event: React.MouseEvent<HTMLElement>) => {
@@ -166,7 +180,6 @@ export const Alert = ({
         getRootRef={getRootRef}
       >
         <FocusTrap
-          {...restProps}
           {...animationHandlers}
           onClick={handleClick}
           getRootRef={elementRef}
@@ -183,6 +196,7 @@ export const Alert = ({
           aria-modal
           aria-labelledby={titleId}
           aria-describedby={descriptionId}
+          {...restProps}
         >
           <div
             className={classNames(
