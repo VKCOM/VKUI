@@ -20,4 +20,8 @@ export interface SharedDropdownProps extends FocusTrapProps {
    * Отступ, где заданное кол-во единиц равняется пикселям
    * */
   popupOffsetDistance?: number;
+  /**
+   * По умолчанию событие onClick не всплывает
+   */
+  allowClickPropagation?: boolean;
 }
