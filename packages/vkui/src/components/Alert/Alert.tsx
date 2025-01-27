@@ -73,6 +73,10 @@ export interface AlertProps
    */
   dismissButtonTestId?: string;
   usePortal?: AppRootPortalProps['usePortal'];
+  /**
+   * По умолчанию событие onClick не всплывает
+   */
+  allowClickPropagation?: boolean;
 }
 
 /**
@@ -94,6 +98,8 @@ export const Alert = ({
   dismissButtonTestId,
   getRootRef,
   usePortal,
+  onClick,
+  allowClickPropagation = false,
   ...restProps
 }: AlertProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -141,6 +147,13 @@ export const Alert = ({
 
   useScrollLock();
 
+  const handleClick = allowClickPropagation
+    ? onClick
+    : (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagation(event);
+        onClick?.(event);
+      };
+
   return (
     <AppRootPortal usePortal={usePortal}>
       <PopoutWrapper
@@ -153,8 +166,8 @@ export const Alert = ({
         <FocusTrap
           {...restProps}
           {...animationHandlers}
+          onClick={handleClick}
           getRootRef={elementRef}
-          onClick={stopPropagation}
           onClose={close}
           autoFocus={animationState === 'entered'}
           className={classNames(

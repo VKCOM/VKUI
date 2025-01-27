@@ -12,8 +12,8 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "3.0.0",
-    "@playwright/experimental-ct-react": "1.49.1",
-    "@playwright/test": "1.49.1",
+    "@playwright/experimental-ct-react": "1.50.0",
+    "@playwright/test": "1.50.0",
     "@rspack/cli": "^v1.2.2",
     "@rspack/core": "^v1.2.2",
     "@size-limit/file": "^11.1.6",
