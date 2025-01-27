@@ -19,6 +19,15 @@ const story: Meta<RichCellProps> = {
     subtitle: StringArg,
     extraSubtitle: StringArg,
     children: StringArg,
+    after: createFieldWithPresets({
+      iconSizes: ['28'],
+      additionalPresets: {
+        Text: 'After',
+        LongText: 'Very long after'.repeat(5),
+        Button: <Button>Подписаться</Button>,
+      },
+    }),
+    afterCaption: StringArg,
     before: createFieldWithPresets({
       additionalPresets: {
         Avatar40: <Avatar size={40} src={getAvatarUrl()} />,
@@ -73,7 +82,7 @@ export const Playground: Story = {
     overTitle: 'Over Title',
     subtitle: 'Subtitle',
     extraSubtitle: 'Extra Subtitle',
-    after: 'After',
+    after: 'Text',
     afterCaption: 'After Caption',
     children: 'Example',
   },

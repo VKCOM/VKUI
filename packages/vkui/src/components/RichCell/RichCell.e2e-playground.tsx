@@ -14,8 +14,6 @@ const longChildren = withLabel('Children children children children', 'Long chil
 const longSubtitle = withLabel('Subtitle subtitle subtitle subtitle', 'Long subtitle');
 const longExtraSubtitle = withLabel('Extra subtitle Extra subtitle', 'Long extraSubtitle');
 
-const TextAfter = () => <div style={{ minWidth: 100, textAlign: 'right' }}>After</div>;
-
 export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
@@ -27,7 +25,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           children: [longChildren],
           subtitle: [longSubtitle],
           extraSubtitle: [longExtraSubtitle],
-          after: [<TextAfter key="after" />],
+          after: ['After'],
           afterAlign: ['start', 'center', 'end'],
           afterCaption: ['After Caption'],
           bottom: [
@@ -49,7 +47,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           children: [longChildren],
           subtitle: [longSubtitle],
           extraSubtitle: [longExtraSubtitle],
-          after: [<TextAfter key="after" />],
+          after: ['After'],
           afterCaption: ['After Caption'],
           bottom: [
             <UsersStack key="stack" photos={['', '', '']}>
