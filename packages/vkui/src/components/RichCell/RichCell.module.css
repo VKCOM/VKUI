@@ -44,11 +44,11 @@
   flex-grow: 1;
 }
 
-.host:not(.alignAfterStart).contentAlignStart .in {
+.host.withAfter:not(.alignAfterStart).contentAlignStart .in {
   justify-content: flex-start;
 }
 
-.host:not(.alignAfterStart).contentAlignEnd .in {
+.host.withAfter:not(.alignAfterStart).contentAlignEnd .in {
   justify-content: flex-end;
 }
 
