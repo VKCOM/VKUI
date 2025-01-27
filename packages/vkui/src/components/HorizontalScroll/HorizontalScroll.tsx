@@ -70,7 +70,7 @@ export interface HorizontalScrollProps
    */
   contentWrapperRef?: React.Ref<HTMLElement>;
   /**
-   * специфичный `className` для обертки над контентом, прокинутым в `children`
+   * Специфичный `className` для обертки над контентом, прокинутым в `children`
    */
   contentWrapperClassName?: string;
 }
