@@ -80,6 +80,15 @@
   );
 }
 
+.withFilter {
+  --vkui_internal--ImageBase_object_filter_default: none;
+
+  filter: var(
+    --vkui_internal--ImageBase_object_filter,
+    var(--vkui_internal--ImageBase_object_filter_default)
+  );
+}
+
 .loaded .img {
   visibility: visible;
 }

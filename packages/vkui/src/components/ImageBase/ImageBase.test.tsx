@@ -223,6 +223,15 @@ describe(ImageBase, () => {
     });
   });
 
+  it('should apply custom filter style', () => {
+    render(<ImageBaseTest src="#" filter="blur(5px)" />);
+
+    expect(getImageBaseImgEl()).toHaveClass(styles.withFilter);
+    expect(getImageBaseImgEl()).toHaveStyle({
+      '--vkui_internal--ImageBase_object_filter': 'blur(5px)',
+    });
+  });
+
   describe('DEV errros', () => {
     beforeEach(() => setNodeEnv('development'));
     afterEach(() => setNodeEnv('test'));
