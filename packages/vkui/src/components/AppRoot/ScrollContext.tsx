@@ -86,7 +86,7 @@ function useScrollLockController(enableScrollLock: () => void, disableScrollLock
   };
 }
 
-export function useScrollingLockedScroll(): Pick<ScrollContextInterface, 'scrollTo' | 'getScroll'> {
+export function useManualScroll(): Pick<ScrollContextInterface, 'scrollTo' | 'getScroll'> {
   const { scrollTo, getScroll } = React.useContext(ScrollContext);
   return React.useMemo(
     () => ({
