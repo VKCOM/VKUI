@@ -333,4 +333,32 @@ describe('Alert', () => {
       descriptionClassNames.forEach((className) => expect(textElement).toHaveClass(className));
     },
   );
+
+  it('handle allowClickPropagation correctly', async () => {
+    const onClose = jest.fn();
+    const onClick = jest.fn();
+    const action = {
+      'title': 'Item',
+      'data-testid': '__action__',
+      'autoCloseDisabled': true,
+      'mode': 'default' as const,
+    };
+    const result = render(
+      <div onClick={onClick}>
+        <Alert onClose={onClose} actions={[action]} />
+      </div>,
+    );
+
+    await userEvent.click(result.getByTestId('__action__'));
+    expect(onClick).not.toHaveBeenCalled();
+
+    result.rerender(
+      <div onClick={onClick}>
+        <Alert onClose={onClose} actions={[action]} allowClickPropagation />
+      </div>,
+    );
+
+    await userEvent.click(result.getByTestId('__action__'));
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
 });
