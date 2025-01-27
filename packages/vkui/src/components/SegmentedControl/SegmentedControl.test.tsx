@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, mockRtlDirection } from '../../testing/utils';
 import {
   SegmentedControl,
   type SegmentedControlOptionInterface,
   type SegmentedControlProps,
   type SegmentedControlValue,
 } from './SegmentedControl';
+import styles from './SegmentedControl.module.css';
+
 const ctrl = () => screen.getByTestId('ctrl');
 const option = (idx = 0) => ctrl().querySelectorAll("input[type='radio']")[idx];
 
@@ -149,6 +151,43 @@ describe('SegmentedControl', () => {
         expect(panelId).toBeTruthy();
         expect(tabId).not.toBe(panelId);
       });
+    });
+  });
+
+  describe('check slide rendering', () => {
+    const options: SegmentedControlOptionInterface[] = [
+      { label: 'vk', value: 'vk', id: 'vk' },
+      { label: 'ok', value: 'ok', id: 'ok' },
+      { label: 'fb', value: 'fb', id: 'fb' },
+    ];
+
+    const SegmentedControlTabsTest = (props: Omit<SegmentedControlProps, 'options' | 'role'>) => (
+      <SegmentedControl data-testid="ctrl" {...props} role="radiogroup" options={options} />
+    );
+
+    it('should use correct css variables', () => {
+      const { container } = render(<SegmentedControlTabsTest defaultValue="ok" />);
+      const slider = container.getElementsByClassName(styles.slider)[0];
+      expect(slider).toHaveStyle('--vkui_internal--SegmentedControl_actual_index: 1');
+      expect(slider).toHaveStyle('--vkui_internal--SegmentedControl_options: 3');
+    });
+  });
+
+  describe('check rtl', () => {
+    mockRtlDirection();
+
+    it('check rtl', () => {
+      const options: SegmentedControlOptionInterface[] = [
+        { label: 'vk', value: 'vk', id: 'vk' },
+        { label: 'ok', value: 'ok', id: 'ok' },
+        { label: 'fb', value: 'fb', id: 'fb' },
+      ];
+
+      const SegmentedControlTabsTest = (props: Omit<SegmentedControlProps, 'options' | 'role'>) => (
+        <SegmentedControl data-testid="ctrl" {...props} role="radiogroup" options={options} />
+      );
+      render(<SegmentedControlTabsTest />);
+      expect(ctrl()).toHaveClass(styles.rtl);
     });
   });
 });

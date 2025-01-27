@@ -9,17 +9,16 @@
   max-inline-size: var(--vkui_docs--max-width);
 }
 
-.content {
-  padding-block: 36px 60px;
+.blog {
+  max-inline-size: var(--vkui_docs_blog--max-width);
+  padding-block-start: var(--vkui--spacing_size_4xl);
+  padding-block-end: 60px;
   padding-inline: 40px;
-  inline-size: 100%;
-  min-inline-size: 0;
-  min-block-size: calc(100vh - var(--vkui_docs--navbar-height));
+  flex-direction: column;
 }
 
-@media (--viewWidth-tablet), (--viewWidth-tabletMinus) {
-  .content {
+@media (--viewWidth-smallTabletMinus) {
+  .blog {
     padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-    padding-block-start: 32px;
   }
 }

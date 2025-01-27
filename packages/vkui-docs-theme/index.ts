@@ -5,3 +5,5 @@ export { useFetch } from './src/hooks/useFetch';
 export { StorybookIcon, GithubIcon, FigmaIcon } from './src/icons';
 export { type DocsThemeConfig };
 export default Layout;
+
+export { TagTitle, TagName, getStaticPathsTags } from './src/blog/tags';

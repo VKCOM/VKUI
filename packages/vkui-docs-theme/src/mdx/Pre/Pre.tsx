@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { CopyToClipboard } from './CopyToClipboard/CopyToClipboard';
+import { Flex } from '@vkontakte/vkui';
+import { CopyToClipboard, type CopyToClipboardProps } from './CopyToClipboard/CopyToClipboard';
 import styles from './Pre.module.css';
 
 interface PreProps extends React.ComponentProps<'pre'> {
@@ -19,19 +20,30 @@ export function Pre({
 }: PreProps) {
   const preRef = React.useRef<HTMLPreElement | null>(null);
 
+  const getValue = () => preRef.current?.querySelector('code')?.textContent || '';
+
   return (
     <div className={styles.root}>
-      {filename && <div>{filename}</div>}
+      {filename && (
+        <Flex className={styles.header} align="center" justify="space-between">
+          <Flex>{filename}</Flex>
+          {copy === '' && <CopyButton getValue={getValue} />}
+        </Flex>
+      )}
       <pre className={classNames(styles.pre, className)} ref={preRef} {...props}>
         {children}
       </pre>
-      {copy === '' && (
-        <div className={classNames(styles.buttons)}>
-          <CopyToClipboard
-            getValue={() => preRef.current?.querySelector('code')?.textContent || ''}
-          />
-        </div>
+      {copy === '' && !filename && (
+        <CopyButton getValue={getValue} className={styles.buttonsAbsolute} />
       )}
+    </div>
+  );
+}
+
+function CopyButton({ getValue, className }: Pick<CopyToClipboardProps, 'getValue' | 'className'>) {
+  return (
+    <div className={classNames(styles.buttons, className)}>
+      <CopyToClipboard getValue={getValue} />
     </div>
   );
 }

@@ -1,10 +1,16 @@
 import { Icon24UserAddOutline } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
+
+const longOverTitle = withLabel('Subhead subhead subhead subhead', 'Long overTitle');
+const longChildren = withLabel('Subhead subhead subhead subhead', 'Long children');
+const longSubtitle = withLabel('Subhead subhead subhead subhead', 'Long subtitle');
+const longExtraSubtitle = withLabel('Subhead subhead subhead subhead', 'Long extraSubtitle');
 
 export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -13,10 +19,10 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           before: [<Avatar size={72} key="72" />],
-          overTitle: ['Subhead subhead subhead subhead'],
-          children: ['Children children children children'],
-          subtitle: ['Text text text text text text'],
-          extraSubtitle: ['Caption caption caption caption'],
+          overTitle: [longOverTitle],
+          children: [longChildren],
+          subtitle: [longSubtitle],
+          extraSubtitle: [longExtraSubtitle],
           after: ['After'],
           afterAlign: ['start', 'center', 'end'],
           afterCaption: ['After Caption'],
@@ -35,10 +41,10 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           before: [<Avatar size={72} key="72" />],
-          overTitle: ['Subhead subhead subhead subhead'],
-          children: ['Children children children children'],
-          subtitle: ['Text text text text text text'],
-          extraSubtitle: ['Caption caption caption caption'],
+          overTitle: [longOverTitle],
+          children: [longChildren],
+          subtitle: [longSubtitle],
+          extraSubtitle: [longExtraSubtitle],
           after: ['After'],
           afterCaption: ['After Caption'],
           bottom: [
@@ -67,7 +73,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
         {
           before: [<Avatar size={24} key="24" />],
           children: ['Михаил'],
-          after: ['Very very very very very very very long after'],
+          after: [withLabel('Very very very very very very very long after', 'Very long after')],
           beforeAlign: ['center', 'end'],
           contentAlign: ['center', 'end'],
         },

@@ -115,6 +115,11 @@ export interface ImageBaseProps
    * см. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming
    */
   elementTiming?: string;
+  /**
+   * Пользовательское значения стиля filter
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter)
+   */
+  filter?: React.CSSProperties['filter'];
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -177,6 +182,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   withTransparentBackground,
   objectFit = 'cover',
   objectPosition,
+  filter,
   keepAspectRatio = false,
   getRootRef,
   elementTiming,
@@ -256,11 +262,15 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     [size],
   );
 
-  const imgStyles: CSSCustomProperties<string | number> | undefined = objectPosition
-    ? {
-        '--vkui_internal--ImageBase_object_position': objectPosition,
-      }
-    : undefined;
+  const imgStyles:
+    | CSSCustomProperties<React.CSSProperties['objectPosition'] | React.CSSProperties['filter']>
+    | undefined =
+    objectPosition || filter
+      ? {
+          '--vkui_internal--ImageBase_object_position': objectPosition,
+          '--vkui_internal--ImageBase_object_filter': filter,
+        }
+      : undefined;
 
   const keepAspectRationStyles = keepAspectRatio
     ? {
@@ -291,6 +301,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
               styles.img,
               getObjectFitClassName(objectFit),
               objectPosition && styles.withObjectPosition,
+              filter && styles.withFilter,
               keepAspectRatio && styles.imgKeepRatio,
             )}
             crossOrigin={crossOrigin}

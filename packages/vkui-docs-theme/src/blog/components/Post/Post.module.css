@@ -1,0 +1,40 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.heading {
+  --vkui--color_text_link: var(--vkui--color_text_primary);
+
+  color: var(--vkui--color_text_primary);
+}
+
+.headingPrimary {
+  font-size: 40px;
+  line-height: 46px;
+}
+
+.date:not(:only-child)::after {
+  content: '•';
+  padding-inline: var(--vkui--spacing_size_s);
+}
+
+.content {
+  padding-block: var(--vkui--size_base_padding_vertical--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  --vkui--color_text_link: var(--vkui--color_text_primary);
+}
+
+.description {
+  margin-block-start: var(--vkui--spacing_size_s);
+}
+
+.meta {
+  margin-block-start: auto;
+  padding-block-start: var(--vkui--spacing_size_s);
+}
