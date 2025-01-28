@@ -251,6 +251,97 @@ describe(useScrollLock, () => {
       contextRef.current?.scrollTo();
       expect(contextRef.current?.getScroll()).toEqual({ x: 0, y: 0 });
     });
+
+    test.each([true, false])('context api with locked=%s', (locked) => {
+      const contextRef = createRef<ScrollContextInterface>();
+      const elRef = createRef<HTMLElement>();
+      setRef(document.createElement('div'), elRef);
+      const Fixture = () => (
+        <ElementScrollController elRef={elRef}>
+          <ChildWithContext contextRef={contextRef} />
+        </ElementScrollController>
+      );
+
+      const { rerender } = render(<Fixture />);
+
+      const clearElementMeasuresMock = mockElementMeasures(elRef.current!, 50, 50);
+      const clearElementScrollMock = mockElementScroll(elRef.current!, 100, 100);
+      const clearElementScrollToMock = mockElementScrollTo(elRef.current!);
+
+      if (locked) {
+        contextRef.current?.incrementScrollLockCounter();
+        rerender(<Fixture />);
+      }
+
+      expect(contextRef.current?.getScroll()).toEqual({
+        x: 0,
+        y: 0,
+      });
+      contextRef.current?.scrollTo(10, 10);
+      expect(contextRef.current?.getScroll()).toEqual({ x: 10, y: 10 });
+
+      if (locked) {
+        expect(getPositionOfElement(elRef.current)).toEqual([`-${10}px`, `-${10}px`]);
+        expect(elRef.current?.scrollTop).toBe(0);
+      } else {
+        expect(elRef.current?.scrollTop).toBe(10);
+      }
+
+      contextRef.current?.scrollTo();
+      expect(contextRef.current?.getScroll()).toEqual({ x: 0, y: 0 });
+
+      clearElementMeasuresMock();
+      clearElementScrollMock();
+      clearElementScrollToMock();
+    });
+
+    test('scroll when not locked and then when locked', () => {
+      const contextRef = createRef<ScrollContextInterface>();
+      const elRef = createRef<HTMLElement>();
+      setRef(document.createElement('div'), elRef);
+      const Fixture = () => (
+        <ElementScrollController elRef={elRef}>
+          <ChildWithContext contextRef={contextRef} />
+        </ElementScrollController>
+      );
+
+      const { rerender } = render(<Fixture />);
+
+      const clearElementMeasuresMock = mockElementMeasures(elRef.current!, 50, 50);
+      const clearElementScrollMock = mockElementScroll(elRef.current!, 100, 100);
+      const clearElementScrollToMock = mockElementScrollTo(elRef.current!);
+
+      // Скролим не залоченный скролл
+      contextRef.current?.scrollTo(10, 10);
+      expect(elRef.current?.scrollLeft).toBe(10);
+      expect(elRef.current?.scrollTop).toBe(10);
+
+      // Блокируем скролл
+      contextRef.current?.incrementScrollLockCounter();
+      rerender(<Fixture />);
+
+      // Блокируем скролл - отступы остаются те же
+      expect(elRef.current?.scrollLeft).toBe(10);
+      expect(elRef.current?.scrollTop).toBe(10);
+      expect(getPositionOfElement(elRef.current)).toEqual([`-${10}px`, `-${10}px`]);
+
+      // Скролим залоченный скролл
+      contextRef.current?.scrollTo(25, 25);
+
+      expect(getPositionOfElement(elRef.current)).toEqual([`-${25}px`, `-${25}px`]);
+
+      // Выключаем блокировку скролла
+      contextRef.current?.decrementScrollLockCounter();
+      rerender(<Fixture />);
+
+      // Отступы window должны пересчитаться
+      expect(elRef.current?.scrollLeft).toBe(25);
+      expect(elRef.current?.scrollTop).toBe(25);
+
+      clearElementMeasuresMock();
+      clearElementScrollMock();
+      clearElementScrollToMock();
+    });
   });
 });
 
@@ -284,6 +375,11 @@ function getStyleAttributeObject(el: HTMLElement | null) {
 
 function getPositionOfBody() {
   const styles = getStyleAttributeObject(document.body);
+  return styles && [styles.left, styles.top];
+}
+
+function getPositionOfElement(element: HTMLElement | null) {
+  const styles = element && getStyleAttributeObject(element);
   return styles && [styles.left, styles.top];
 }
 
@@ -338,9 +434,9 @@ function mockElementScrollTo(el: HTMLElement) {
   const original = el.scrollTo.bind(el);
   Object.defineProperty(el, 'scrollTo', {
     configurable: true,
-    value: (x: number, y: number) => {
-      Object.defineProperty(el, 'scrollLeft', { configurable: true, value: x });
-      Object.defineProperty(el, 'scrollTop', { configurable: true, value: y });
+    value: ({ left, top }: { left: number; top: number }) => {
+      Object.defineProperty(el, 'scrollLeft', { configurable: true, value: left });
+      Object.defineProperty(el, 'scrollTop', { configurable: true, value: top });
     },
   });
   return function clearMock() {

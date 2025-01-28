@@ -101,6 +101,67 @@ export interface ScrollControllerProps extends HasChildren {
   elRef: React.RefObject<HTMLElement | null>;
 }
 
+const _scrollTo = ({
+  x,
+  y,
+  scrollWidth,
+  clientWidth,
+  scrollHeight,
+  clientHeight,
+  scrollLockEnabled,
+  lockedElement,
+  elementToScroll,
+}: {
+  x: number;
+  y: number;
+  scrollWidth: number;
+  clientWidth: number;
+  scrollHeight: number;
+  clientHeight: number;
+  scrollLockEnabled: boolean;
+  lockedElement: HTMLElement;
+  elementToScroll: Window | HTMLElement;
+}) => {
+  // Some iOS versions do not normalize scroll — do it manually.
+  const left = x ? clamp(x, 0, scrollWidth - clientWidth) : 0;
+  const top = y ? clamp(y, 0, scrollHeight - clientHeight) : 0;
+
+  if (scrollLockEnabled) {
+    Object.assign(lockedElement.style, {
+      left: `-${left}px`,
+      top: `-${top}px`,
+    });
+  } else {
+    elementToScroll.scrollTo({
+      left,
+      top,
+    });
+  }
+};
+
+const _getScroll = ({
+  xOffset,
+  yOffset,
+  element,
+  scrollLockEnabled,
+  customCalcY = (v) => v,
+}: {
+  xOffset: number;
+  yOffset: number;
+  element: HTMLElement;
+  scrollLockEnabled: boolean;
+  customCalcY?: (scrollTop: number) => number;
+}) => {
+  const elementStyles = element.style;
+  const [scrollLeft, scrollTop] = scrollLockEnabled
+    ? [-parseFloat(elementStyles.left || '0'), -parseFloat(elementStyles.top || '0')]
+    : [xOffset, yOffset];
+  return {
+    x: scrollLeft,
+    y: customCalcY(scrollTop),
+  };
+};
+
 export const GlobalScrollController = ({ children }: ScrollControllerProps): React.ReactNode => {
   const { window, document } = useDOM();
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
@@ -108,19 +169,19 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
 
   const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
     (options = { compensateKeyboardHeight: true }) => {
-      if (!window) {
+      if (!window || !document) {
         return { x: 0, y: 0 };
       }
-      const bodyStyles = document!.body.style;
-      const [scrollLeft, scrollTop] = scrollLockEnabledRef.current
-        ? [-parseFloat(bodyStyles.left || '0'), -parseFloat(bodyStyles.top || '0')]
-        : [window.pageXOffset, window.pageYOffset];
-      return {
-        x: scrollLeft,
-        y: options.compensateKeyboardHeight
-          ? getPageYOffsetWithoutKeyboardHeight(window, scrollTop)
-          : scrollTop,
-      };
+      return _getScroll({
+        xOffset: window.pageXOffset,
+        yOffset: window.pageYOffset,
+        element: document.body,
+        scrollLockEnabled: scrollLockEnabledRef.current,
+        customCalcY: (scrollTop) =>
+          options.compensateKeyboardHeight
+            ? getPageYOffsetWithoutKeyboardHeight(window, scrollTop)
+            : scrollTop,
+      });
     },
     [document, window],
   );
@@ -129,26 +190,20 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
       if (!window || !document) {
         return;
       }
+      _scrollTo({
+        x,
+        y,
 
-      // Some iOS versions do not normalize scroll — do it manually.
-      const clampX = (value: number) =>
-        value ? clamp(value, 0, document.body.scrollWidth - window.innerWidth) : 0;
-      const clampY = (value: number) =>
-        value ? clamp(value, 0, document.body.scrollHeight - window.innerHeight) : 0;
+        scrollWidth: document.body.scrollWidth,
+        clientWidth: window.innerWidth,
 
-      const [left, top] = [clampX(x), clampY(y)];
+        scrollHeight: document.body.scrollHeight,
+        clientHeight: window.innerHeight,
 
-      if (scrollLockEnabledRef.current) {
-        Object.assign(document.body.style, {
-          left: `-${left}px`,
-          top: `-${top}px`,
-        });
-      } else {
-        window.scrollTo({
-          left,
-          top,
-        });
-      }
+        scrollLockEnabled: scrollLockEnabledRef.current,
+        lockedElement: document.body,
+        elementToScroll: window,
+      });
     },
     [document, window],
   );
@@ -208,22 +263,41 @@ export const ElementScrollController = ({
   children,
 }: ScrollControllerProps): React.ReactNode => {
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
+  const scrollLockEnabledRef = React.useRef(false);
 
-  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
-    () => ({
-      x: elRef.current?.scrollLeft ?? 0,
-      y: elRef.current?.scrollTop ?? 0,
-    }),
-    [elRef],
-  );
+  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(() => {
+    const element = elRef.current;
+    if (!element) {
+      return { x: 0, y: 0 };
+    }
+    return _getScroll({
+      xOffset: element.scrollLeft,
+      yOffset: element.scrollTop,
+      element: element,
+      scrollLockEnabled: scrollLockEnabledRef.current,
+    });
+  }, [elRef]);
+
   const scrollTo = React.useCallback<ScrollContextInterface['scrollTo']>(
     (x = 0, y = 0) => {
       const el = elRef.current;
-      // Some iOS versions do not normalize scroll — do it manually.
-      el?.scrollTo(
-        x ? clamp(x, 0, el.scrollWidth - el.clientWidth) : 0,
-        y ? clamp(y, 0, el.scrollHeight - el.clientHeight) : 0,
-      );
+      if (!el) {
+        return;
+      }
+      _scrollTo({
+        x,
+        y,
+
+        scrollWidth: el.scrollWidth,
+        clientWidth: el.clientWidth,
+
+        scrollHeight: el.scrollHeight,
+        clientHeight: el.clientHeight,
+
+        scrollLockEnabled: scrollLockEnabledRef.current,
+        lockedElement: el,
+        elementToScroll: el,
+      });
     },
     [elRef],
   );
@@ -237,20 +311,21 @@ export const ElementScrollController = ({
       fn();
     });
 
-    const scrollY = el.scrollTop;
-    const scrollX = el.scrollLeft;
+    const { x: scrollX, y: scrollY } = getScroll();
+
     const overflowY = el.scrollWidth > el.clientWidth ? 'scroll' : '';
     const overflowX = el.scrollHeight > el.clientHeight ? 'scroll' : '';
 
     Object.assign(el.style, {
       position: 'absolute',
-      top: `-${scrollY}px`,
-      left: `-${scrollX}px`,
       right: '0',
       overflowY,
       overflowX,
     });
-  }, [elRef]);
+    scrollLockEnabledRef.current = true;
+
+    scrollTo(scrollX, scrollY);
+  }, [elRef, getScroll, scrollTo]);
 
   const disableScrollLock = React.useCallback(() => {
     const el = elRef.current;
@@ -258,12 +333,12 @@ export const ElementScrollController = ({
       return;
     }
 
-    const scrollY = el.style.top;
-    const scrollX = el.style.left;
-
+    const scrollData = getScroll();
     clearDisableScrollStyle(el);
-    el.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
-  }, [elRef]);
+    scrollLockEnabledRef.current = false;
+
+    scrollTo(scrollData.x, scrollData.y);
+  }, [elRef, getScroll, scrollTo]);
 
   const { incrementScrollLockCounter, decrementScrollLockCounter } = useScrollLockController(
     enableScrollLock,
