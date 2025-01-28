@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
@@ -10,11 +10,27 @@ import { Group } from '../Group/Group';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
 
-const story: Meta<RichCellProps> = {
+const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
   title: 'Blocks/RichCell',
   component: RichCell,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
+    overTitle: StringArg,
+    subtitle: StringArg,
+    extraSubtitle: StringArg,
+    children: StringArg,
+    maxAfterWidth: {
+      control: 'number',
+    },
+    after: createFieldWithPresets({
+      iconSizes: ['28'],
+      additionalPresets: {
+        Text: 'After',
+        LongText: 'Very long after'.repeat(5),
+        Button: <Button>Подписаться</Button>,
+      },
+    }),
+    afterCaption: StringArg,
     before: createFieldWithPresets({
       additionalPresets: {
         Avatar40: <Avatar size={40} src={getAvatarUrl()} />,
@@ -61,7 +77,7 @@ const story: Meta<RichCellProps> = {
 
 export default story;
 
-type Story = StoryObj<RichCellProps>;
+type Story = StoryObj<RichCellProps & { maxAfterWidth: number }>;
 
 export const Playground: Story = {
   args: {
@@ -69,7 +85,8 @@ export const Playground: Story = {
     overTitle: 'Over Title',
     subtitle: 'Subtitle',
     extraSubtitle: 'Extra Subtitle',
-    after: 'After',
+    after: 'Text',
+    maxAfterWidth: 100,
     afterCaption: 'After Caption',
     children: 'Example',
   },
@@ -82,4 +99,20 @@ export const Playground: Story = {
     withSinglePanel,
     withVKUILayout,
   ],
+  render: ({ maxAfterWidth, afterCaption: afterCaptionProp, after: afterProp, ...args }) => {
+    const after =
+      maxAfterWidth !== undefined ? (
+        <div style={{ maxWidth: maxAfterWidth }}>{afterProp}</div>
+      ) : (
+        afterProp
+      );
+
+    const afterCaption =
+      maxAfterWidth !== undefined ? (
+        <div style={{ maxWidth: maxAfterWidth }}>{afterCaptionProp}</div>
+      ) : (
+        afterCaptionProp
+      );
+    return <RichCell after={after} afterCaption={afterCaption} {...args} />;
+  },
 };
