@@ -76,28 +76,28 @@
 }
 
 .modePrimary.appearanceNeutral {
-  background-color: var(--vkui--color_background_modal_inverse);
+  background-color: var(--vkui--color_background_content_inverse);
 }
 
 .modePrimary.appearanceNeutral.hover {
-  background-color: var(--vkui--color_background_modal_inverse--hover);
+  background-color: var(--vkui--color_background_content_inverse--hover);
 }
 
 .modePrimary.appearanceNeutral.active {
-  background-color: var(--vkui--color_background_modal_inverse--active);
+  background-color: var(--vkui--color_background_content_inverse--active);
 }
 
 /* Mode = Secondary */
 .modeSecondary {
-  background-color: var(--vkui--color_background_secondary_alpha);
+  background-color: var(--vkui--color_background_secondary);
 }
 
 .modeSecondary.hover {
-  background-color: var(--vkui--color_background_secondary_alpha--hover);
+  background-color: var(--vkui--color_background_secondary--hover);
 }
 
 .modeSecondary.active {
-  background-color: var(--vkui--color_background_secondary_alpha--active);
+  background-color: var(--vkui--color_background_secondary--active);
 }
 
 /* Mode = Tertiary */
