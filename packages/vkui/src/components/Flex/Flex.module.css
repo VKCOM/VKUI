@@ -3,6 +3,7 @@
   --vkui_internal--flex_original_margin_block: 0px;
 
   display: flex;
+  gap: var(--vkui_internal--row_gap) var(--vkui_internal--column_gap);
 }
 
 .marginAuto {
@@ -13,13 +14,21 @@
   margin-block: var(--vkui--size_base_padding_vertical--regular);
 }
 
-.withGaps {
-  margin-block-start: calc(
-    -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
-  );
-  margin-inline-start: calc(
-    -1 * var(--vkui_internal--column_gap) + var(--vkui_internal--flex_original_margin_inline)
-  );
+@supports not (inset: 0) {
+  .withGaps {
+    margin-block-start: calc(
+      -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
+    );
+    margin-inline-start: calc(
+      -1 * var(--vkui_internal--column_gap) + var(--vkui_internal--flex_original_margin_inline)
+    );
+  }
+
+  /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+  .withGaps.withGaps > * {
+    margin-block-start: var(--vkui_internal--row_gap);
+    margin-inline-start: var(--vkui_internal--column_gap);
+  }
 }
 
 .host > .marginAuto {
@@ -89,10 +98,4 @@
 
 .alignBaseline {
   align-items: baseline;
-}
-
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
-.withGaps.withGaps > * {
-  margin-block-start: var(--vkui_internal--row_gap);
-  margin-inline-start: var(--vkui_internal--column_gap);
 }
