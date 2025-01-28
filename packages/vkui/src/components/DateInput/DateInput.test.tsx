@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { format, isToday, isYesterday, subDays } from 'date-fns';
@@ -33,11 +33,13 @@ const convertInputsToNumbers = (inputs: HTMLElement[]) => {
 };
 
 describe('DateInput', () => {
-  baselineComponent(DateInput, {
-    // TODO [a11y]: "Elements must only use allowed ARIA attributes (aria-allowed-attr)"
-    //              https://dequeuniversity.com/rules/axe/4.5/aria-allowed-attr?application=axeAPI
-    a11y: false,
-  });
+  baselineComponent((props) => (
+    <React.Fragment>
+      <label htmlFor="date-input">Date range</label>
+      <DateInput {...props} id="date-input" />
+    </React.Fragment>
+  ));
+
   it('should be correct input value', () => {
     const onChange = jest.fn();
     render(
@@ -268,7 +270,7 @@ describe('DateInput', () => {
   it('check customValue visibility', async () => {
     let newDate: Date | undefined = undefined;
     const Fixture = () => {
-      const [dateValue, setDateValue] = useState<Date | undefined>(undefined);
+      const [dateValue, setDateValue] = React.useState<Date | undefined>(undefined);
       return (
         <>
           <DateInput

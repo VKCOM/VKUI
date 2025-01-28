@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { addDays, format } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
@@ -37,11 +38,12 @@ const convertInputsToNumbers = (inputs: HTMLElement[]) => {
 };
 
 describe('DateRangeInput', () => {
-  baselineComponent(DateRangeInput, {
-    // TODO [a11y]: "Elements must only use allowed ARIA attributes (aria-allowed-attr)"
-    //              https://dequeuniversity.com/rules/axe/4.5/aria-allowed-attr?application=axeAPI
-    a11y: false,
-  });
+  baselineComponent((props) => (
+    <React.Fragment>
+      <label htmlFor="range-input">Date range</label>
+      <DateRangeInput {...props} id="range-input" />
+    </React.Fragment>
+  ));
 
   it('should be correct input value', () => {
     render(
