@@ -1,4 +1,4 @@
-import { Children, type FC, Fragment, isValidElement, type ReactNode } from 'react';
+import { Children, type FC } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import {
   calculateGap,
@@ -73,28 +73,6 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
   reverse?: boolean;
 }
 
-const countChildren = (children: ReactNode): number => {
-  let count = 0;
-
-  Children.forEach(children, (child: ReactNode) => {
-    if (child === null || child === undefined) {
-      return;
-    }
-
-    if (isValidElement<{ children?: ReactNode }>(child)) {
-      if (child.type === Fragment) {
-        count += countChildren(child.props.children);
-      } else {
-        count++;
-      }
-    } else {
-      count++;
-    }
-  });
-
-  return count;
-};
-
 export const Flex: FC<FlexProps> & {
   Item: typeof FlexItem;
 } = ({
@@ -108,7 +86,7 @@ export const Flex: FC<FlexProps> & {
   children,
   ...props
 }: FlexProps) => {
-  const withGaps = countChildren(children) > 1 && gap;
+  const withGaps = Children.count(children) > 1 && gap;
   const [rowGap, columnGap] = calculateGap(gap);
 
   return (
