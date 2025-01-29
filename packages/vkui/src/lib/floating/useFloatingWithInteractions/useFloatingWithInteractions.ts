@@ -37,7 +37,6 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   middlewares,
   hoverDelay = 0,
   closeAfterClick = false,
-  getFloatingElementHiddenStyles,
 
   // disables
   disabled = false,
@@ -335,7 +334,6 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       x,
       y,
       middlewareData,
-      getFloatingElementHiddenStyles,
     });
 
     if (disableInteractive) {

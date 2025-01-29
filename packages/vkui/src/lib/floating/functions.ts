@@ -6,7 +6,6 @@ import type {
   PlacementWithAuto,
   UseFloatingData,
 } from './types/common';
-import { type FloatingComponentProps } from './types/component';
 
 export function checkIsNotAutoPlacement(placement: PlacementWithAuto): placement is Placement {
   return !placement.startsWith('auto');
@@ -17,24 +16,12 @@ export function getAutoPlacementAlign(placement: AutoPlacementType): 'start' | '
   return align === 'start' || align === 'end' ? align : null;
 }
 
-const defaultGetFloatingElementHiddenStyles: Exclude<
-  FloatingComponentProps['getFloatingElementHiddenStyles'],
-  undefined
-> = (hidden: boolean) => {
-  return hidden
-    ? {
-        visibility: 'hidden',
-      }
-    : {};
-};
-
 export type ConvertFloatingDataArgs = {
   strategy: FloatingPositionStrategy;
   x: UseFloatingData['x'];
   y: UseFloatingData['y'];
   initialWidth?: React.CSSProperties['width'] | null;
   middlewareData?: UseFloatingData['middlewareData'];
-  getFloatingElementHiddenStyles?: FloatingComponentProps['getFloatingElementHiddenStyles'];
 };
 
 /**
@@ -48,7 +35,6 @@ export function convertFloatingDataToReactCSSProperties({
   y,
   initialWidth = 'max-content',
   middlewareData,
-  getFloatingElementHiddenStyles = defaultGetFloatingElementHiddenStyles,
 }: ConvertFloatingDataArgs): React.CSSProperties {
   const styles: React.CSSProperties = {
     position: strategy,
@@ -63,7 +49,11 @@ export function convertFloatingDataToReactCSSProperties({
   if (middlewareData) {
     const hide = middlewareData.hide;
     if (hide) {
-      const hiddenStyles = getFloatingElementHiddenStyles(hide.referenceHidden || false);
+      const hiddenStyles = hide.referenceHidden
+        ? {
+            visibility: 'hidden',
+          }
+        : {};
       hiddenStyles && Object.assign(styles, hiddenStyles);
     }
   }

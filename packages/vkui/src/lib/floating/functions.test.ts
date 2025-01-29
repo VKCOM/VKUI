@@ -1,6 +1,5 @@
 import {
   checkIsNotAutoPlacement,
-  type ConvertFloatingDataArgs,
   convertFloatingDataToReactCSSProperties,
   getAutoPlacementAlign,
 } from './functions';
@@ -83,59 +82,6 @@ describe('floating/functions', () => {
         right: 'auto',
         bottom: 'auto',
         left: 0,
-      });
-    });
-
-    it('should use custom css properties with getFloatingElementHiddenStyles', () => {
-      const getFloatingElementHiddenStyles = (hidden: boolean) => {
-        if (hidden) {
-          return {
-            display: 'none',
-          };
-        }
-        return {
-          display: 'flex',
-        };
-      };
-      const args: ConvertFloatingDataArgs = {
-        strategy: 'absolute',
-        x: 0,
-        y: 0,
-        initialWidth: null,
-        getFloatingElementHiddenStyles,
-      };
-      const expectedStyles = {
-        position: 'absolute',
-        top: 0,
-        right: 'auto',
-        bottom: 'auto',
-        left: 0,
-      };
-      expect(
-        convertFloatingDataToReactCSSProperties({
-          ...args,
-          middlewareData: {
-            hide: {
-              referenceHidden: true,
-            },
-          },
-        }),
-      ).toEqual({
-        ...expectedStyles,
-        display: 'none',
-      });
-      expect(
-        convertFloatingDataToReactCSSProperties({
-          ...args,
-          middlewareData: {
-            hide: {
-              referenceHidden: false,
-            },
-          },
-        }),
-      ).toEqual({
-        ...expectedStyles,
-        display: 'flex',
       });
     });
   });

@@ -12,6 +12,7 @@ import {
   usePlacementChangeCallback,
   type VirtualElement,
 } from '../../lib/floating';
+import { useReferenceHiddenChangeCallback } from '../../lib/floating/useReferenceHiddenChangeCallback';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -46,7 +47,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'onShownChange'
   | 'defaultShown'
   | 'hideWhenReferenceHidden'
-  | 'getFloatingElementHiddenStyles'
+  | 'onReferenceHiddenChanged'
   | 'sameWidth'
   | 'zIndex'
   | 'strategy'
@@ -102,7 +103,6 @@ export const Popper = ({
   arrowPadding = DEFAULT_ARROW_PADDING,
   customMiddlewares,
   disableFlipMiddleware = false,
-  getFloatingElementHiddenStyles,
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
@@ -118,6 +118,7 @@ export const Popper = ({
   children,
   usePortal = true,
   onPlacementChange,
+  onReferenceHiddenChanged,
   zIndex,
   style,
   ...restProps
@@ -159,6 +160,8 @@ export const Popper = ({
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
+  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChanged);
+
   const { arrow: arrowCoords } = middlewareData;
 
   const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef);
@@ -186,7 +189,6 @@ export const Popper = ({
         y: floatingDataY,
         initialWidth: sameWidth ? null : undefined,
         middlewareData,
-        getFloatingElementHiddenStyles,
       })}
     >
       {arrow && (

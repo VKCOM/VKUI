@@ -18,7 +18,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'defaultShown'
   | 'onShownChange'
   | 'hideWhenReferenceHidden'
-  | 'getFloatingElementHiddenStyles'
+  | 'onReferenceHiddenChanged'
   | 'children'
   | 'zIndex'
   | 'usePortal'

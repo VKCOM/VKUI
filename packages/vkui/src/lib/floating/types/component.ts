@@ -59,4 +59,6 @@ export interface FloatingComponentProps
    * чтобы всплывающий элемент вместился в эту область видимости.
    */
   onPlacementChange?: OnPlacementChange;
+
+  onReferenceHiddenChanged?: (hidden: boolean) => void;
 }

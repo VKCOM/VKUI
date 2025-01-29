@@ -1,4 +1,3 @@
-import { type CSSProperties } from 'react';
 import {
   type FloatingPositionStrategy,
   type Placement,
@@ -97,11 +96,6 @@ export interface UseFloatingWithInteractionsProps {
    * Вызывается при каждом изменении видимости всплывающего элемента, но после завершении анимации.
    */
   onShownChanged?: OnShownChange;
-  /**
-   * Колбэк для установки стилей при скрытии всплывающего элемента.
-   * Работает только совместно со свойством `hideWhenReferenceHidden`
-   */
-  getFloatingElementHiddenStyles?: (hidden: boolean) => CSSProperties | undefined;
 }
 
 export type ReferenceProps<T = HTMLElement> = Omit<
