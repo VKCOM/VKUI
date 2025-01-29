@@ -6,6 +6,7 @@ import {
   Icon28UserCircleFillBlue,
 } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Counter } from '../Counter/Counter';
 import { Link } from '../Link/Link';
 import { Header, type HeaderProps } from './Header';
@@ -90,12 +91,8 @@ export const HeaderPlayground = (props: ComponentPlaygroundProps) => {
           subtitle: ['SOHN — Conrad'],
         },
         {
-          children: [
-            'Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children',
-          ],
-          subtitle: [
-            'Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle Very long subtitle  Very long subtitle  Very long subtitle  Very long subtitle  Very long subtitle  Very long subtitle',
-          ],
+          children: [withLabel('Very long children '.repeat(8), 'Very long children')],
+          subtitle: [withLabel('Very long subtitle '.repeat(16), 'Very long subtitle')],
           afterSubtitle: [<Icon12Fire key="afterSubtitle" />],
           afterTitle: [<Icon16UnlockOutline key="afterTitle" />],
           multiline: [false, true],

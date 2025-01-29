@@ -1,4 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { UsersStack, type UsersStackProps } from './UsersStack';
 
 const base64Image =
@@ -7,6 +8,11 @@ const base64Image =
   'xpHI9NvWHu9zdcViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFY' +
   'gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA' +
   'SUVORK5CYII=';
+
+const oneImage = withLabel([base64Image], '1 image');
+const twoImage = withLabel([base64Image, base64Image], '2 images');
+const threeImage = withLabel([base64Image, base64Image, base64Image], '3 images');
+const fourImage = withLabel([base64Image, base64Image, base64Image, base64Image], '4 images');
 
 export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -17,32 +23,24 @@ export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
           children: ['Понравилось Анне и ещё XX людям'],
           size: ['s', 'm', 'l'],
           avatarsPosition: ['inline-start', 'block-start', 'inline-end'],
-          photos: [
-            [base64Image],
-            [base64Image, base64Image],
-            [base64Image, base64Image, base64Image],
-            [base64Image, base64Image, base64Image, base64Image],
-          ],
+          photos: [oneImage, twoImage, threeImage, fourImage],
         },
         // при пустом children отсутствуют отступы
         {
           children: [undefined],
           avatarsPosition: ['inline-start', 'block-start', 'inline-end'],
-          photos: [[base64Image, base64Image, base64Image]],
+          photos: [threeImage],
         },
         {
           dir: ['rtl'],
           children: ['Понравилось Анне и ещё XX людям'],
           size: ['s', 'm', 'l'],
-          photos: [
-            [base64Image, base64Image, base64Image],
-            [base64Image, base64Image, base64Image, base64Image],
-          ],
+          photos: [threeImage, fourImage],
         },
         {
           children: [undefined],
           size: ['m', 'l'],
-          photos: [[base64Image, base64Image, base64Image]],
+          photos: [threeImage],
           count: [99],
         },
       ]}

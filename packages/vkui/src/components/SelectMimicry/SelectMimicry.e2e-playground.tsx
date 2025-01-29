@@ -1,4 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { SelectMimicry, type SelectMimicryProps } from './SelectMimicry';
 
 export const SelectMimicryPlayground = (props: ComponentPlaygroundProps) => {
@@ -14,8 +15,11 @@ export const SelectMimicryPlayground = (props: ComponentPlaygroundProps) => {
           // самый длинный в мире топоним из одного слова
           // https://ru.wikipedia.org/wiki/Тауматафакатангихангакоауауотаматеатурипукакапикимаунгахоронукупокаифенуакитанатаху
           children: [
-            'Вершина холма, где Таматеа, мужчина с большими коленями, который скатывался, ' +
-              'забирался и проглатывал горы, известный как поедатель земли, играл на своей флейте для своей возлюбленной',
+            withLabel(
+              'Вершина холма, где Таматеа, мужчина с большими коленями, который скатывался, ' +
+                'забирался и проглатывал горы, известный как поедатель земли, играл на своей флейте для своей возлюбленной',
+              'Long children',
+            ),
           ],
           multiline: [undefined, true],
         },

@@ -1,4 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Slider, type SliderMultipleProps, type SliderProps } from './Slider';
 
 export const SliderPlayground = (props: ComponentPlaygroundProps) => {
@@ -19,11 +20,11 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           multiple: [true],
-          defaultValue: [[20, 80]],
+          defaultValue: [withLabel<[number, number]>([20, 80], '20 - 80')],
         },
         {
           multiple: [true],
-          defaultValue: [[30, 90]],
+          defaultValue: [withLabel<[number, number]>([30, 90], '30 - 90')],
           dir: ['rtl'],
         },
         {
@@ -72,7 +73,7 @@ export const SliderPlaygroundForKeyboardTestWithTabButton = ({
       {...props}
       propSets={[
         {
-          defaultValue: [[20, 80]],
+          defaultValue: [withLabel<[number, number]>([20, 80], '20 - 80')],
           multiple: [true],
           withTooltip: [true],
         },

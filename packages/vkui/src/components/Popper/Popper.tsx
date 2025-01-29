@@ -49,6 +49,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'getFloatingElementHiddenStyles'
   | 'sameWidth'
   | 'zIndex'
+  | 'strategy'
   | 'usePortal'
   | 'customMiddlewares'
   | 'onPlacementChange'
@@ -105,6 +106,7 @@ export const Popper = ({
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
+  strategy: strategyProp,
 
   // ArrowProps
   arrowProps,
@@ -145,6 +147,7 @@ export const Popper = ({
     middlewareData,
   } = useFloating({
     placement: strictPlacement,
+    strategy: strategyProp,
     middleware: middlewares,
     whileElementsMounted(...args) {
       /* istanbul ignore next: не знаю как проверить */
