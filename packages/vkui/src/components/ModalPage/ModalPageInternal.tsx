@@ -2,6 +2,7 @@
 
 import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
@@ -184,11 +185,7 @@ export const ModalPageInternal = ({
           desktopMaxWidthClassName,
           sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
         )}
-        style={{
-          ...style,
-          ...desktopMaxWidthStyle,
-          ...getHeightCSSVariable(height),
-        }}
+        style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
       >
         <div
           {...bottomSheetEventHandlers}
@@ -243,6 +240,9 @@ function resolveDesktopMaxWidth(
 
 function getHeightCSSVariable(height?: number | string): CSSCustomProperties | undefined {
   return height !== undefined
-    ? { '--vkui_internal_ModalPage--userHeight': `${height}` }
+    ? {
+        '--vkui_internal_ModalPage--userHeight':
+          typeof height === 'number' ? `${height}px` : height,
+      }
     : undefined;
 }
