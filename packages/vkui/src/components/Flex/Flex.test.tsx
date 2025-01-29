@@ -28,6 +28,62 @@ describe(Flex, () => {
     expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--column_gap: 15px');
   });
 
+  it.each<{ children: FlexProps['children']; withGaps: boolean }>([
+    {
+      children: (
+        <>
+          <div></div>
+          <div></div>
+        </>
+      ),
+      withGaps: true,
+    },
+    {
+      children: [<div key="1"></div>, <div key="2"></div>],
+      withGaps: true,
+    },
+    {
+      children: (
+        <>
+          <div></div>
+          <>
+            <div></div>
+          </>
+        </>
+      ),
+      withGaps: true,
+    },
+    {
+      children: (
+        <>
+          <div></div>
+          <></>
+        </>
+      ),
+      withGaps: false,
+    },
+    {
+      children: (
+        <>
+          <></>
+          <></>
+        </>
+      ),
+      withGaps: false,
+    },
+  ])('should have className withGaps with children $children', ({ children, withGaps }) => {
+    render(
+      <Flex data-testid="flex" gap={10}>
+        {children}
+      </Flex>,
+    );
+    if (withGaps) {
+      expect(screen.getByTestId('flex')).toHaveClass(styles.withGaps);
+    } else {
+      expect(screen.getByTestId('flex')).not.toHaveClass(styles.withGaps);
+    }
+  });
+
   describe('check correct classNames', () => {
     it.each<{ props: Partial<FlexProps>; className: string }>([
       {

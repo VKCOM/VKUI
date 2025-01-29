@@ -14,6 +14,10 @@
   margin-block: var(--vkui--size_base_padding_vertical--regular);
 }
 
+/*Данная проверка позволяет максимально близко определить поддерживается ли gap + flex*/
+/*см. https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996*/
+/*Поддержка inset https://developer.mozilla.org/en-US/docs/Web/CSS/inset#browser_compatibility*/
+/*Поддержка gap https://developer.mozilla.org/en-US/docs/Web/CSS/gap#browser_compatibility*/
 @supports not (inset: 0) {
   .withGaps {
     margin-block-start: calc(
