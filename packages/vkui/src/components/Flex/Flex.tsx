@@ -1,4 +1,4 @@
-import { Children, type FC } from 'react';
+import { Children } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import {
   calculateGap,
@@ -73,7 +73,7 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
   reverse?: boolean;
 }
 
-export const Flex: FC<FlexProps> & {
+export const Flex: React.FC<FlexProps> & {
   Item: typeof FlexItem;
 } = ({
   gap,
