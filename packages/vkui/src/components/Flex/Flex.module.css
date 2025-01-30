@@ -23,7 +23,6 @@
     gap: var(--vkui_internal--row_gap) var(--vkui_internal--column_gap);
   }
 }
-
 @supports not (inset: 0) {
   .withGaps {
     margin-block-start: calc(
