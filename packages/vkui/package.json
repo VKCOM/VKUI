@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "7.1.2-alpha.0",
+  "version": "7.1.2-alpha.1",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
