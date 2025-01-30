@@ -1,5 +1,8 @@
 Базовый компонент для позиционирования элементов. Построен на базе `flex layout`.
 
+> ⚠️ Важно: в версиях браузеров `Chrome >= 87`, `Edge >= 87`, `Safari >= 14.1`, `Firefox >= 66`, `Opera >= 73` при использовании
+> свойства `gap` используется нативное CSS свойство `gap`. В версиях браузеров ниже используется `fallback` логика с использование свойства `margin`.
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 const FlexContainer = ({ itemsCount, ...props }) => {
   return (
