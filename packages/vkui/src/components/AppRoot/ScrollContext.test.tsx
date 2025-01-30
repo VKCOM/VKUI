@@ -46,6 +46,10 @@ describe(useScrollLock, () => {
           </GlobalScrollController>
         ),
       });
+
+      h.rerender(false);
+      h.rerender();
+
       expect(beforeScrollLockFn).toHaveBeenCalled();
 
       expect(getStyleAttributeObject(document.body)).toEqual({
@@ -70,6 +74,32 @@ describe(useScrollLock, () => {
 
       clearWindowMeasuresMock();
     });
+    test('unmount check', () => {
+      const h = renderHook(useScrollLock, {
+        wrapper: ({ children }) => (
+          <GlobalScrollController elRef={createRef<HTMLElement>()}>
+            {children}
+          </GlobalScrollController>
+        ),
+      });
+
+      expect(getStyleAttributeObject(document.body)).toEqual({
+        'position': 'fixed',
+        'top': `-${0}px`,
+        'left': `-${0}px`,
+        'right': '0px',
+        'overflow-x': 'scroll',
+        'overflow-y': 'scroll',
+      });
+      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.body)).toBe('none');
+      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
+
+      h.unmount();
+      expect(getStyleAttributeObject(document.body)).toEqual({});
+      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.body)).toBe('');
+      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
+    });
+
     test.each([true, false])('context api with locked=%s', (locked) => {
       const contextRef = createRef<ScrollContextInterface>();
       const Fixture = () => (
@@ -170,13 +200,19 @@ describe(useScrollLock, () => {
 
       const beforeScrollLockFn = jest.fn();
       const h = renderHook(useScrollLock, {
-        wrapper: ({ children }) => (
-          <ElementScrollController elRef={elRef}>
-            {children}
-            <ChildWithContext beforeScrollLockFn={beforeScrollLockFn} />
-          </ElementScrollController>
-        ),
+        wrapper: ({ children }) => {
+          return (
+            <ElementScrollController elRef={elRef}>
+              {children}
+              <ChildWithContext beforeScrollLockFn={beforeScrollLockFn} />
+            </ElementScrollController>
+          );
+        },
       });
+
+      h.rerender(false);
+      h.rerender();
+
       expect(beforeScrollLockFn).toHaveBeenCalled();
 
       expect(getStyleAttributeObject(elRef.current)).toEqual({

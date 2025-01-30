@@ -2,6 +2,7 @@
 
 import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
@@ -121,7 +122,9 @@ export const ModalPageInternal = ({
   const disableContentPanningGestureProp = disableContentPanningGesture
     ? BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE
     : undefined;
-  const [desktopMaxWidthClassName, desktopMaxWidthStyle] = resolveDesktopMaxWidth(desktopMaxWidth);
+  const [desktopMaxWidthClassName, desktopMaxWidthStyle] = resolveDesktopMaxWidth(
+    isDesktop ? desktopMaxWidth : 's',
+  );
 
   const modalOverlay = (
     <ModalOverlay
@@ -162,7 +165,7 @@ export const ModalPageInternal = ({
   useScrollLock(!hidden);
 
   return (
-    <ModalOutlet hidden={hidden} onKeyDown={handleEscKeyDown}>
+    <ModalOutlet hidden={hidden} isDesktop={isDesktop} onKeyDown={handleEscKeyDown}>
       {modalOverlay}
       <FocusTrap
         {...restProps}
@@ -174,27 +177,29 @@ export const ModalPageInternal = ({
         className={classNames(
           className,
           styles.host,
-          sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
-          hasCustomPanelHeaderAfter
-            ? styles.hostSafeAreaInsetTopWithCustomOffset
-            : styles.hostSafeAreaInsetTop,
+          isDesktop ? styles.hostDesktop : styles.hostMobile,
+          !isDesktop &&
+            (hasCustomPanelHeaderAfter
+              ? styles.hostMobileSafeAreaInsetTopWithCustomOffset
+              : styles.hostMobileSafeAreaInsetTop),
           desktopMaxWidthClassName,
+          sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
         )}
-        style={{
-          ...style,
-          ...desktopMaxWidthStyle,
-          ...getHeightCSSVariable(height),
-        }}
+        style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
       >
         <div
           {...bottomSheetEventHandlers}
           ref={handleSheetRef}
           role="document"
           style={documentStyle}
-          className={classNames(styles.document, transitionStateClassNames[transitionState])}
+          className={classNames(
+            styles.document,
+            isDesktop ? styles.documentDesktop : styles.documentMobile,
+            transitionStateClassNames[transitionState],
+          )}
           onTransitionEnd={onTransitionEnd}
         >
-          <div className={styles.children}>
+          <div className={classNames(styles.children, isDesktop && styles.childrenDesktop)}>
             {hasReactNode(header) && header}
             <ModalPageContent
               getRootRef={handleSheetScrollRef}
@@ -213,9 +218,9 @@ export const ModalPageInternal = ({
 };
 
 const desktopMaxWidthClassNames = {
-  s: styles['hostMaxWidthS'],
-  m: styles['hostMaxWidthM'],
-  l: styles['hostMaxWidthL'],
+  s: styles['hostDesktopMaxWidthS'],
+  m: styles['hostDesktopMaxWidthM'],
+  l: styles['hostDesktopMaxWidthL'],
 };
 
 function resolveDesktopMaxWidth(
@@ -235,6 +240,9 @@ function resolveDesktopMaxWidth(
 
 function getHeightCSSVariable(height?: number | string): CSSCustomProperties | undefined {
   return height !== undefined
-    ? { '--vkui_internal_ModalPage--userHeight': `${height}` }
+    ? {
+        '--vkui_internal_ModalPage--userHeight':
+          typeof height === 'number' ? `${height}px` : height,
+      }
     : undefined;
 }

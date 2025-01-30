@@ -104,7 +104,7 @@ export const Popper = ({
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
-  strategy: strategyProp = 'fixed',
+  strategy: strategyProp,
 
   // ArrowProps
   arrowProps,
