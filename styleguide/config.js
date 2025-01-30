@@ -244,6 +244,7 @@ const baseConfig = {
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalPageHeader/ModalPageHeader.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalCard/ModalCard.tsx`,
             `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalDismissButton/ModalDismissButton.tsx`,
+            `../${VKUI_PACKAGE.PATHS.COMPONENTS_DIR}/ModalOutsideButton/ModalOutsideButton.tsx`,
           ],
         },
         {

@@ -1,6 +1,7 @@
 'use client';
 
 import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
+import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
@@ -18,8 +19,9 @@ import type { CSSCustomProperties } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { ModalOutlet } from '../ModalOutlet/ModalOutlet';
+import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
+import { ModalOutsideButtons } from '../ModalOutsideButtons/ModalOutsideButtons';
 import {
   ModalOverlay as ModalOverlayDefault,
   type ModalOverlayProps,
@@ -67,6 +69,8 @@ export const ModalPageInternal = ({
   modalOverlayTestId,
   modalContentTestId,
   modalDismissButtonTestId,
+  modalDismissButtonLabel = 'Закрыть',
+  outsideButtons,
   noFocusToDialog,
   hideCloseButton,
   preventClose,
@@ -142,7 +146,7 @@ export const ModalPageInternal = ({
   );
   const closeButton =
     hideCloseButton || !isDesktop ? null : (
-      <ModalDismissButton
+      <ModalOutsideButton
         data-testid={modalDismissButtonTestId}
         onClick={
           closable
@@ -151,7 +155,10 @@ export const ModalPageInternal = ({
               }
             : undefined
         }
-      />
+        aria-label={modalDismissButtonLabel}
+      >
+        <Icon20Cancel />
+      </ModalOutsideButton>
     );
   const handleEscKeyDown = useCallback(
     (event: KeyboardEvent<HTMLElement>) => {
@@ -210,7 +217,12 @@ export const ModalPageInternal = ({
             </ModalPageContent>
             {hasReactNode(footer) && footer}
           </div>
-          {closeButton}
+          {isDesktop && (closeButton || outsideButtons) && (
+            <ModalOutsideButtons>
+              {closeButton}
+              {outsideButtons}
+            </ModalOutsideButtons>
+          )}
         </div>
       </FocusTrap>
     </ModalOutlet>
