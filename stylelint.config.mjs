@@ -15,6 +15,19 @@ const config = {
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,
     'comment-whitespace-inside': null,
+    'declaration-property-value-keyword-no-deprecated': [
+      true,
+      {
+        /**
+         * Сейчас ругается на `word-break: break-word;`.
+         *
+         * Можно поменять на `overflow-wrap: break-word;`, но нужно проверить, что работает одинаково.
+         *
+         * Заигноренно в рамках PR https://github.com/VKCOM/VKUI/pull/8152
+         */
+        ignoreKeywords: 'break-word',
+      },
+    ],
     'no-descending-specificity': null,
     'no-duplicate-selectors': null,
     'value-keyword-case': null,
@@ -61,6 +74,8 @@ const config = {
             import.meta.dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',
           ),
+          path.join(import.meta.dirname, 'packages/vkui-docs-theme/styles/constants.css'),
+          path.join(import.meta.dirname, 'packages/vkui-docs-theme/styles/colors.css'),
         ],
       },
     ],
@@ -82,6 +97,25 @@ const config = {
     'property-disallowed-list': null,
     'csstools/use-logical': 'always',
   },
+  overrides: [
+    {
+      files: [
+        `${path.join(import.meta.dirname, 'website')}/**/*.css`,
+        `${path.join(import.meta.dirname, 'packages/vkui-docs-theme')}/**/*.css`,
+      ],
+      rules: {
+        'csstools/media-use-custom-media': [
+          'known',
+          {
+            importFrom: path.join(
+              import.meta.dirname,
+              'packages/vkui/src/styles/customMedias.generated.css',
+            ),
+          },
+        ],
+      },
+    },
+  ],
 };
 
 export default config;

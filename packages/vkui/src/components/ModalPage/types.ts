@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode, Ref, UIEvent } from 'react';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
 import type { HTMLAttributesWithRootRef } from '../../types';
 
@@ -15,6 +16,7 @@ type OmittedStyleAttribute = {
 export interface ModalPageProps
   extends NavIdProps,
     Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'id' | 'style'>,
+    Pick<UseFocusTrapProps, 'restoreFocus'>,
     OmittedStyleAttribute {
   /**
    * Состояние видимости.
@@ -84,6 +86,10 @@ export interface ModalPageProps
    */
   modalDismissButtonTestId?: string;
   /**
+   * Текст для скринридера
+   */
+  modalDismissButtonLabel?: string;
+  /**
    * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, клик по подложке)
    *
    * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте
@@ -109,4 +115,11 @@ export interface ModalPageProps
    * Будет вызвано при окончательном закрытии модалки.
    */
   onClosed?: VoidFunction;
+  /**
+   * Управляющие элементы под кнопкой закрытия.
+   *
+   * Доступно только в `compact`-режиме. Рекомендуется размещать иконки размера 20, обернутые в ModalOutsideButton
+   *
+   */
+  outsideButtons?: React.ReactNode;
 }

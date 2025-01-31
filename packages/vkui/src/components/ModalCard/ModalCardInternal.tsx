@@ -66,6 +66,7 @@ export const ModalCardInternal = ({
   dismissButtonMode,
   dismissLabel,
   noFocusToDialog,
+  restoreFocus,
   onOpen,
   onOpened,
   onClose = noop,
@@ -136,10 +137,14 @@ export const ModalCardInternal = ({
   );
 
   useScrollLock(!hidden);
-  useFocusTrap(ref, { autoFocus: !noFocusToDialog, disabled: !opened || hidden });
+  useFocusTrap(ref, {
+    autoFocus: !noFocusToDialog,
+    disabled: !opened || hidden,
+    restoreFocus,
+  });
 
   return (
-    <ModalOutlet hidden={hidden} onKeyDown={handleEscKeyDown}>
+    <ModalOutlet hidden={hidden} isDesktop={isDesktop} onKeyDown={handleEscKeyDown}>
       {modalOverlay}
       <ModalCardBase
         {...restProps}
@@ -150,6 +155,7 @@ export const ModalCardInternal = ({
         style={style}
         className={classNames(
           styles.host,
+          isDesktop ? styles.hostDesktop : styles.hostMobile,
           sizeByPlatformClassNames[platform],
           transitionStateClassNames[transitionState],
           className,

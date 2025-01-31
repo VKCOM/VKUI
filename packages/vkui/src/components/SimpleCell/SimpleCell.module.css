@@ -78,11 +78,7 @@
   display: flex;
   align-content: flex-start;
   align-items: center;
-  justify-content: space-between;
   max-inline-size: 100%;
-}
-
-.host:not(.mult) .content {
   justify-content: flex-start;
 }
 
@@ -95,7 +91,7 @@
 
 .mult .children,
 .mult .subtitle {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
 }
 
 .badge {

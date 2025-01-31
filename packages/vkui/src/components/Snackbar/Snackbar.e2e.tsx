@@ -1,13 +1,26 @@
 import { test } from '@vkui-e2e/test';
-import { SnackbarModePlayground, SnackbarPlayground } from './Snackbar.e2e-playground';
+import {
+  SnackbarModePlayground,
+  SnackbarPlayground,
+  SnackbarRtlPlayground,
+} from './Snackbar.e2e-playground';
 
 test.describe('Snackbar', () => {
-  test('placement', async ({
+  test('placement dir=ltr', async ({
     mount,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
     await mount(<SnackbarPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+
+  test('placement dir=rtl', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<SnackbarRtlPlayground {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
 });

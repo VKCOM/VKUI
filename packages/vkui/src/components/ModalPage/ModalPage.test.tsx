@@ -1,8 +1,13 @@
+import { act } from 'react';
+import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent, waitCSSTransitionEnd } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
+import { type ModalCardProps } from '../ModalCard/types';
+import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalPage } from './ModalPage';
 
 export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
@@ -14,11 +19,11 @@ export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
  * Большинство логики покрыто в `ModalRoot.test.tsx`
  */
 describe(ModalPage, () => {
-  baselineComponent((props) => <ModalPage open nav="id" {...props} />, {
-    // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
-    //              https://dequeuniversity.com/rules/axe/4.5/aria-dialog-name?application=axeAPI
-    a11y: false,
-  });
+  baselineComponent((props) => (
+    <ModalPage open nav="id" {...props}>
+      <ModalPageHeader>Title</ModalPageHeader>
+    </ModalPage>
+  ));
 
   test('mount and unmount', async () => {
     const result = render(<ModalPage id="host" data-testid="host" />);
@@ -132,5 +137,57 @@ describe(ModalPage, () => {
     fireEvent.click(h.getByTestId('dismiss-button'));
     expect(onClose).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledWith('click-close-button', expect.any(Object));
+  });
+
+  describe('check restoreFocus prop', () => {
+    const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
+      const [open, setOpen] = React.useState(false);
+      return (
+        <>
+          <ConfigProvider platform="vkcom">
+            <ModalPage
+              key="host"
+              id="host"
+              open={open}
+              restoreFocus={restoreFocus}
+              modalDismissButtonTestId="dismiss-button"
+              data-testid="host"
+            />
+            <Button onClick={() => setOpen((v) => !v)} data-testid="open-modal">
+              Открыть
+            </Button>
+          </ConfigProvider>
+        </>
+      );
+    };
+
+    it.each([true, false])('check restoreFocus=%s', async (restoreFocus) => {
+      jest.useFakeTimers();
+      const h = render(<Fixture restoreFocus={restoreFocus} />);
+      expect(h.queryByTestId('host')).toBeFalsy();
+
+      const openButton = h.getByTestId('open-modal');
+      await act(async () => {
+        openButton.focus();
+      });
+      fireEvent.click(openButton);
+      expect(openButton).toHaveFocus();
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.queryByTestId('host')).toBeTruthy();
+      jest.runAllTimers();
+      expect(h.getByTestId('dismiss-button')).toHaveFocus();
+
+      fireEvent.click(openButton);
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.queryByTestId('host')).toBeFalsy();
+      jest.runAllTimers();
+
+      if (restoreFocus) {
+        expect(openButton).toHaveFocus();
+      } else {
+        expect(openButton).not.toHaveFocus();
+      }
+    });
   });
 });

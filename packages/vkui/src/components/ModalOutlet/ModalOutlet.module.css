@@ -7,10 +7,8 @@
 }
 
 /* Desktop */
-@media (--viewWidth-smallTabletPlus) {
-  .host:not([hidden]) {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
+.hostDesktop:not([hidden]) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
 }

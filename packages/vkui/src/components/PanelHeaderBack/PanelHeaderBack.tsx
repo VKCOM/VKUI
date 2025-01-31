@@ -10,6 +10,8 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useDirection } from '../../hooks/useDirection';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { PlatformType } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
@@ -59,9 +61,12 @@ export const PanelHeaderBack = ({
   className,
   hideLabelOnVKCom = false,
   hideLabelOnIOS = false,
+  getRootRef,
   ...restProps
 }: PanelHeaderBackProps): React.ReactNode => {
   const platform = usePlatform();
+  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const rootRef = useExternRef(getRootRef, directionRef);
   const { sizeX = 'none' } = useAdaptivity();
   // также label нужно скрывать при platform === 'ios' && sizeX === regular
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
@@ -71,11 +76,13 @@ export const PanelHeaderBack = ({
   return (
     <PanelHeaderButton
       {...restProps}
+      getRootRef={rootRef}
       className={classNames(
         sizeX !== 'regular' && sizeXClassNames[sizeX],
         platform === 'ios' && styles.backIos,
         platform === 'vkcom' && styles.backVkcom,
         showLabel && !!label && styles.backHasLabel,
+        textDirection === 'rtl' && styles.rtl,
         className,
       )}
       label={showLabel ? label : label && <VisuallyHidden>{label}</VisuallyHidden>}

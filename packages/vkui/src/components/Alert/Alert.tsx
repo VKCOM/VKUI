@@ -4,9 +4,11 @@ import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { stopPropagation } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 import type {
   AlignType,
   AnchorHTMLAttributesOnly,
@@ -27,6 +29,8 @@ import { AlertDescription, AlertTitle } from './AlertTypography';
 import styles from './Alert.module.css';
 
 type AlertActionMode = 'cancel' | 'destructive' | 'default';
+
+export type { AlertActionProps };
 
 export interface AlertActionInterface
   extends Pick<ButtonProps, 'Component'>,
@@ -49,6 +53,7 @@ export interface AlertActionInterface
 
 export interface AlertProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
+    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement> {
   actionsLayout?: 'vertical' | 'horizontal';
   actionsAlign?: AlignType;
@@ -71,7 +76,13 @@ export interface AlertProps
    */
   dismissButtonTestId?: string;
   usePortal?: AppRootPortalProps['usePortal'];
+  /**
+   * По умолчанию событие onClick не всплывает
+   */
+  allowClickPropagation?: boolean;
 }
+
+const warn = warnOnce('Alert');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Alert
@@ -92,6 +103,8 @@ export const Alert = ({
   dismissButtonTestId,
   getRootRef,
   usePortal,
+  onClick,
+  allowClickPropagation = false,
   ...restProps
 }: AlertProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -139,6 +152,24 @@ export const Alert = ({
 
   useScrollLock();
 
+  if (
+    process.env.NODE_ENV === 'development' &&
+    !title &&
+    !restProps['aria-label'] &&
+    !restProps['aria-labelledby']
+  ) {
+    warn(
+      'Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+  }
+
+  const handleClick = allowClickPropagation
+    ? onClick
+    : (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagation(event);
+        onClick?.(event);
+      };
+
   return (
     <AppRootPortal usePortal={usePortal}>
       <PopoutWrapper
@@ -149,10 +180,9 @@ export const Alert = ({
         getRootRef={getRootRef}
       >
         <FocusTrap
-          {...restProps}
           {...animationHandlers}
+          onClick={handleClick}
           getRootRef={elementRef}
-          onClick={stopPropagation}
           onClose={close}
           autoFocus={animationState === 'entered'}
           className={classNames(
@@ -166,6 +196,7 @@ export const Alert = ({
           aria-modal
           aria-labelledby={titleId}
           aria-describedby={descriptionId}
+          {...restProps}
         >
           <div
             className={classNames(

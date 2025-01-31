@@ -4,10 +4,11 @@ import { AdaptivityProvider } from '../../components/AdaptivityProvider/Adaptivi
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { ColorSchemeType } from '../../lib/colorScheme';
+import { mapObject } from '../../lib/object';
 import type { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppDefaultWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
-import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
+import { getAdaptivePxWidth, isCustomValueWithLabel, multiCartesian, prettyProps } from './utils';
 
 export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
   isFixedComponent?: boolean;
@@ -80,6 +81,8 @@ export const ComponentPlayground = <
               clonedAdaptivityProviderProps.sizeY = props.sizeY;
             }
 
+            const mappedProps = mapObject(props, (v) => (isCustomValueWithLabel(v) ? v.value : v));
+
             return (
               <React.Fragment key={i}>
                 {isFixedComponent ? null : (
@@ -87,7 +90,7 @@ export const ComponentPlayground = <
                 )}
                 <div>
                   <AdaptivityProvider {...clonedAdaptivityProviderProps}>
-                    {children(props)}
+                    {children(mappedProps)}
                   </AdaptivityProvider>
                 </div>
               </React.Fragment>

@@ -1,0 +1,121 @@
+<Overview>
+# Быстрый старт
+
+Всего четыре ключевых шага для создания простого приложения.
+
+</Overview>
+
+<Callout>
+  Если вы разработчик мини-приложений Вконтакте, используйте [библиотеку
+  `create-vk-mini-app`](https://www.npmjs.com/package/@vkontakte/create-vk-mini-app) и переходите
+  сразу к [шагу 3](#step3).
+</Callout>
+
+## Шаг 1. Подготовьте [SPA React приложение](https://ru.reactjs.org/docs/create-a-new-react-app.html) [#step1]
+
+Вы можете использовать любые шаблоны и сборщики, в том числе [Next.js](https://nextjs.org/) или [Vite](https://vite.dev/). Обратите внимание, что **VKUI** поддерживает Typescript.
+
+## Шаг 2. Подключите @vkontakte/vkui [#step2]
+
+Установите библиотеку, воспользовавшись нужной командой в соответствии с вашим пакетным менеджером:
+
+```sh
+# npm
+npm i --save @vkontakte/vkui
+# yarn
+yarn add @vkontakte/vkui
+# or pnpm
+pnpm add @vkontakte/vkui
+```
+
+## Шаг 3. Настройте meta-тэг [#step3]
+
+Для корректного отображения интерфейса на безрамочных смартфонах (подробнее см. в статье ["The Notch" and CSS](https://css-tricks.com/the-notch-and-css/)),
+необходимо добавить [meta-тэг](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag) в корневой `html`:
+
+```html
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+/>
+```
+
+- если вы используете Create React App, то инструкцию, как это можно сделать, ищите на [данной странице](https://create-react-app.dev/docs/title-and-meta-tags/).
+- если вы используете Vite, воспользуйтесь [этой инструкцией](https://vite.dev/guide/#index-html-and-project-root)
+- если вы используете Next.js, то ориентируйтесь на [эту страницу](https://nextjs.org/docs/app/building-your-application/optimizing/metadata)
+
+## Шаг 4. Соберите базовое приложение [#step4]
+
+Найдите корневой файл, в котором инициализируется ваше приложение. Обычно это `App.tsx` (`pages/_app.tsx` для Next.js),
+ориентируйтесь на выбранный шаблон или сборщик.
+Вставьте следующий программный код в найденный файл:
+
+```js
+import {
+  AdaptivityProvider,
+  ConfigProvider,
+  AppRoot,
+  SplitLayout,
+  SplitCol,
+  View,
+  Panel,
+  PanelHeader,
+  Header,
+  Group,
+  SimpleCell,
+  usePlatform,
+} from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+
+export default function App() {
+  const platform = usePlatform();
+
+  return (
+    <ConfigProvider>
+      <AdaptivityProvider>
+        <AppRoot>
+          <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
+            <SplitCol autoSpaced>
+              <View activePanel="main">
+                <Panel id="main">
+                  <PanelHeader>VKUI</PanelHeader>
+                  <Group header={<Header mode="secondary">Items</Header>}>
+                    <SimpleCell>Hello</SimpleCell>
+                    <SimpleCell>World</SimpleCell>
+                  </Group>
+                </Panel>
+              </View>
+            </SplitCol>
+          </SplitLayout>
+        </AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
+  );
+}
+```
+
+Если вы собираете приложение без использования каких-нибудь шаблонов или сборщиков, не забудьте
+отрендерить ваш компонент, добавив следующие строки:
+
+```js
+// добавить в блок с импортами
+import * as React from 'react';
+import { createRoot } from 'react-dom/client';
+
+// добавить в конце файла
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<App />);
+```
+
+<Callout>
+**Обратите внимание**
+
+Обертки `ConfigProvider`, `AdaptivityProvider` и `AppRoot` обязательны для приложения,
+остальная структура остается на ваше усмотрение.
+
+</Callout>
+
+## Ваше приложение готово!
+
+Теперь можно добавлять более сложные компоненты, новые экраны и настраивать переходы между ними.

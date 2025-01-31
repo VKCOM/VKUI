@@ -10,10 +10,14 @@ import {
   Icon28MessageOutline,
 } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { IconButton } from '../IconButton/IconButton';
 import { Switch } from '../Switch/Switch';
 import { SimpleCell, type SimpleCellProps } from './SimpleCell';
+
+const veryLongChildren = 'Very long children '.repeat(8);
+const veryLongSubtitle = 'Very long subtitle'.repeat(14);
 
 export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -44,13 +48,8 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
         {
           $adaptivity: 'y',
           before: [<Avatar key="avatar" size={40} />],
-          children: [
-            'Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children',
-          ],
-          subtitle: [
-            'Very long description Very long description Very long description Very long description Very long ' +
-              'description Very long description Very long description Very long description Very long description Very long description Very long description Very long description',
-          ],
+          children: [withLabel(veryLongChildren, 'Long children')],
+          subtitle: [withLabel(veryLongSubtitle, 'Long subtitle')],
           after: [
             <IconButton key="icon-w28">
               <Icon28MessageOutline />
@@ -79,7 +78,15 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           ],
           badgeBeforeTitle: [<Icon20AddCircleFillBlue key="leftBadge" />],
           badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
-          multiline: [true, false],
+        },
+        {
+          children: [withLabel(veryLongChildren, 'Long children')],
+          subtitle: [withLabel(veryLongSubtitle, 'Long subtitle')],
+          badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
+          badgeAfterSubtitle: [
+            <Icon12Fire key="iconFire" fill="var(--vkui--color_icon_negative)" />,
+          ],
+          multiline: [false, true],
         },
         {
           children: ['Title'],
@@ -94,7 +101,10 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
         // Индикатор не должен сжиматься
         {
           children: [
-            'Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children',
+            withLabel(
+              'Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children',
+              'Long children',
+            ),
           ],
           indicator: ['1:20:22'],
         },

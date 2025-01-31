@@ -40,7 +40,21 @@ describe('ChipsSelect', () => {
   afterEach(() => {
     placementStub = undefined;
   });
-  baselineComponent(ChipsSelect, { a11y: false });
+  baselineComponent(ChipsSelect, {
+    a11yConfig: {
+      rules: {
+        // TODO: listbox не имеет label/title/labelledby
+        // https://dequeuniversity.com/rules/axe/4.9/aria-input-field-name?application=axeAPI
+        'aria-input-field-name': { enabled: false },
+        // TODO: combobox is not allowed as children of listbox
+        // https://dequeuniversity.com/rules/axe/4.9/aria-required-children?application=axeAPI
+        'aria-required-children': { enabled: false },
+        // TODO: real input has no assiciated label
+        // https://dequeuniversity.com/rules/axe/4.9/label?application=axeAPI
+        'label': { enabled: false },
+      },
+    },
+  });
 
   fakeTimers();
 
@@ -68,6 +82,38 @@ describe('ChipsSelect', () => {
     const dropdownLocator = result.getByTestId('dropdown');
     expect(within(dropdownLocator).getAllByRole('option')).toHaveLength(1);
     expect(within(dropdownLocator).getByRole('option', { name: 'Синий' })).toBeTruthy();
+  });
+
+  it('should sort options by sortFn prop', async () => {
+    type Option = { label: string; value: number };
+    const options: Option[] = [
+      { label: '1', value: 1 },
+      { label: '3', value: 3 },
+      { label: '2', value: 2 },
+    ];
+    const byAsc = (a: Option, b: Option) => a.label.localeCompare(b.label);
+    const byDesc = (a: Option, b: Option) => b.label.localeCompare(a.label);
+
+    const checkOptionsOrder = async (order: string[]) => {
+      await userEvent.click(screen.getByRole('combobox'));
+      const dropdownLocator = screen.getByTestId('dropdown');
+      const optionsValues = within(dropdownLocator)
+        .getAllByRole('option')
+        .map((element) => element.textContent);
+      expect(optionsValues).toEqual(order);
+    };
+
+    // Сортируем по возрастанию
+    const { rerender } = render(
+      <ChipsSelect options={options} defaultValue={[]} sortFn={byAsc} dropdownTestId="dropdown" />,
+    );
+    await checkOptionsOrder(['1', '2', '3']);
+
+    // Сортируем по убыванию
+    rerender(
+      <ChipsSelect options={options} defaultValue={[]} sortFn={byDesc} dropdownTestId="dropdown" />,
+    );
+    await checkOptionsOrder(['3', '2', '1']);
   });
 
   it('shows spinner if fetching', async () => {

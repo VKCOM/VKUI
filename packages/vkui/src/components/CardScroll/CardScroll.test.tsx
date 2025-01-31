@@ -1,4 +1,3 @@
-import { type CSSProperties } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { baselineComponent, mockRtlDirection } from '../../testing/utils';
 import { CardScroll } from './CardScroll';
@@ -45,18 +44,25 @@ const mockCardScrollData = (
     jest.spyOn(card, 'offsetWidth', 'get').mockImplementation(() => width);
   });
 
-  jest.spyOn(window, 'getComputedStyle').mockImplementation(() => {
-    const styles: CSSProperties = {
-      marginInlineEnd: '8px',
-    };
-    return styles as CSSStyleDeclaration;
-  });
+  const originalGetComputedStyle = window.getComputedStyle;
+
+  const getComputedStyleInstance = jest
+    .spyOn(window, 'getComputedStyle')
+    .mockImplementation((e) => {
+      return {
+        ...originalGetComputedStyle(e),
+        marginInlineEnd: '8px',
+        getPropertyValue: (property: string) => {
+          if (property === '--vkui_internal--CardScroll_horizontal_padding') {
+            return '12px';
+          }
+          return '';
+        },
+      };
+    });
 
   const cardScrollContainer = container.getElementsByClassName(styles.in)[0] as HTMLDivElement;
   jest.spyOn(cardScrollContainer, 'offsetWidth', 'get').mockImplementation(() => containerWidth);
-
-  const gap = container.getElementsByClassName(styles.gap)[0] as HTMLDivElement;
-  jest.spyOn(gap, 'offsetWidth', 'get').mockImplementation(() => startOffsetLeft);
 
   const horizontalScroll = container.getElementsByClassName(
     horizontalScrollStyles.in,
@@ -67,6 +73,9 @@ const mockCardScrollData = (
       defaultScrollLeft * (isRtl ? -1 : 1),
     ),
     horizontalScroll,
+    mocksRestore: () => {
+      [getComputedStyleInstance].forEach((mock) => mock.mockRestore());
+    },
   };
 };
 
@@ -85,7 +94,7 @@ const setup = ({ defaultScrollLeft = 50, cardsCount = 6, isRtl = false }: Prepar
     </CardScroll>,
   );
 
-  const { horizontalScrollData, horizontalScroll } = mockCardScrollData(
+  const { horizontalScrollData, horizontalScroll, mocksRestore } = mockCardScrollData(
     container,
     cardsCount,
     defaultScrollLeft,
@@ -96,16 +105,15 @@ const setup = ({ defaultScrollLeft = 50, cardsCount = 6, isRtl = false }: Prepar
 
   return {
     horizontalScrollData,
+    mocksRestore,
   };
 };
 
 describe('CardScroll', () => {
-  baselineComponent(CardScroll, {
-    a11y: false,
-  });
+  baselineComponent(CardScroll);
 
   it('check scroll by click arrow left', async () => {
-    const { horizontalScrollData } = setup({
+    const { horizontalScrollData, mocksRestore } = setup({
       defaultScrollLeft: 1470,
     });
 
@@ -125,10 +133,11 @@ describe('CardScroll', () => {
     await waitFor(() => {
       expect(horizontalScrollData.scrollLeft).toBe(0);
     });
+    mocksRestore();
   });
 
   it('check scroll by click arrow right', async () => {
-    const { horizontalScrollData } = setup({});
+    const { horizontalScrollData, mocksRestore } = setup({});
 
     const arrowRight = screen.getByTestId('ScrollArrowRight');
 
@@ -146,10 +155,11 @@ describe('CardScroll', () => {
     await waitFor(() => {
       expect(horizontalScrollData.scrollLeft).toBe(1477);
     });
+    mocksRestore();
   });
 
   it('check scroll by click both arrows', async () => {
-    const { horizontalScrollData } = setup({});
+    const { horizontalScrollData, mocksRestore } = setup({});
 
     const arrowRight = screen.getByTestId('ScrollArrowRight');
     const arrowLeft = screen.getByTestId('ScrollArrowLeft');
@@ -163,6 +173,7 @@ describe('CardScroll', () => {
     await waitFor(() => {
       expect(horizontalScrollData.scrollLeft).toBe(0);
     });
+    mocksRestore();
   });
 
   describe('check rtl working', () => {

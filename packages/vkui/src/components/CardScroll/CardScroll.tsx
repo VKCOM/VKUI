@@ -28,6 +28,10 @@ export interface CardScrollProps
    * Добавляет отступы по краям слева и справа
    */
   padding?: boolean;
+  /**
+   * Позволяет поменять тег используемый для обертки над карточками
+   */
+  CardsListComponent?: React.ElementType;
 }
 
 /**
@@ -38,19 +42,26 @@ export const CardScroll = ({
   size = 's',
   showArrows = true,
   padding = false,
-  Component = 'ul',
+  CardsListComponent = 'ul',
   prevButtonTestId,
   nextButtonTestId,
   getRootRef,
   ...restProps
 }: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);
-  const gapRef = React.useRef<HTMLDivElement>(null);
   const [directionRef, textDirection] = useDirection<HTMLDivElement>();
   const direction = textDirection || 'ltr';
   const rootRef = useExternRef(directionRef, getRootRef);
 
   const { window } = useDOM();
+
+  const getPadding = (container: HTMLElement) => {
+    return parseFloat(
+      window!
+        .getComputedStyle(container)
+        .getPropertyValue('--vkui_internal--CardScroll_horizontal_padding'),
+    );
+  };
 
   const slideOffsetFromStart = (slide: HTMLElement) => {
     const containerWidth = refContainer.current?.offsetWidth || 0;
@@ -60,7 +71,7 @@ export const CardScroll = ({
   };
 
   function getScrollToLeft(offset: number): number {
-    if (!refContainer.current || !gapRef.current) {
+    if (!refContainer.current) {
       return offset;
     }
     const containerWidth = refContainer.current.offsetWidth;
@@ -85,18 +96,11 @@ export const CardScroll = ({
       return offset;
     }
 
-    if (slideIndex === 0) {
-      return 0;
-    }
-
     const slide = refContainer.current.children[slideIndex] as HTMLElement;
+    const padding = getPadding(refContainer.current);
+    const scrollTo = slideOffsetFromStart(slide) - (containerWidth - slide.offsetWidth) + padding;
 
-    const scrollTo =
-      slideOffsetFromStart(slide) -
-      (containerWidth - slide.offsetWidth) +
-      gapRef.current.offsetWidth;
-
-    if (scrollTo <= 2 * gapRef.current.offsetWidth) {
+    if (scrollTo <= 2 * padding) {
       return 0;
     }
 
@@ -104,7 +108,7 @@ export const CardScroll = ({
   }
 
   function getScrollToRight(offset: number): number {
-    if (!refContainer.current || !gapRef.current) {
+    if (!refContainer.current) {
       return offset;
     }
     const containerWidth = refContainer.current.offsetWidth;
@@ -116,14 +120,14 @@ export const CardScroll = ({
       return offset;
     }
 
-    return slideOffsetFromStart(slide) - gapRef.current.offsetWidth;
+    const padding = getPadding(refContainer.current);
+    return slideOffsetFromStart(slide) - padding;
   }
 
   return (
     <RootComponent
       {...restProps}
       getRootRef={rootRef}
-      Component={Component}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalCardScroll',
@@ -137,12 +141,11 @@ export const CardScroll = ({
         showArrows={showArrows}
         prevButtonTestId={prevButtonTestId}
         nextButtonTestId={nextButtonTestId}
+        ContentWrapperComponent={CardsListComponent}
+        contentWrapperRef={refContainer}
+        contentWrapperClassName={styles.in}
       >
-        <div className={styles.in} ref={refContainer}>
-          <span className={styles.gap} ref={gapRef} />
-          {children}
-          <span className={styles.gap} />
-        </div>
+        {children}
       </HorizontalScroll>
     </RootComponent>
   );
