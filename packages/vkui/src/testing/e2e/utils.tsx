@@ -5,6 +5,7 @@ import type {
 } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { getValueByKey } from '../../helpers/getValueByKey';
 import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
+import { type Direction } from '../../lib/direction';
 
 export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {
@@ -30,9 +31,13 @@ class CustomValueWithLabel<T> {
 
 type DecoratedPropValue<T> = T | CustomValueWithLabel<T>;
 
+type DirectionProps = { dir: Direction };
+
 type AdaptivityFlag = boolean | 'x' | 'y';
+type DirectionFlag = boolean | Direction;
 type PropDesc<Props> = { [K in keyof Props]?: Array<DecoratedPropValue<Props[K]>> } & {
   $adaptivity?: AdaptivityFlag;
+  $direction?: DirectionFlag;
 };
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
@@ -46,16 +51,32 @@ function getAdaptivity(adaptivity?: AdaptivityFlag) {
   return extra;
 }
 
-type TestProps<Props> = Array<Props & SizeProps & { dir: string }>;
+function getDirection(directionFlag?: DirectionFlag): PropDesc<DirectionProps> | undefined {
+  const dir: PropDesc<DirectionProps>['dir'] = [];
+  if (directionFlag && directionFlag !== 'rtl') {
+    dir.push('ltr');
+  }
+  if (directionFlag && directionFlag !== 'ltr') {
+    dir.push('rtl');
+  }
+  return dir.length
+    ? {
+        dir,
+      }
+    : undefined;
+}
+
+type TestProps<Props> = Array<Props & SizeProps & DirectionProps>;
 type CartesianOptions = { adaptive: boolean };
 
 function cartesian<Props>(
-  { $adaptivity, ...propDesc }: PropDesc<Props>,
+  { $adaptivity, $direction, ...propDesc }: PropDesc<Props>,
   ops: CartesianOptions,
 ): TestProps<Props> {
   propDesc = {
     ...propDesc,
     ...getAdaptivity(ops.adaptive ? $adaptivity : false),
+    ...getDirection($direction),
   };
   return Object.entries(propDesc).reduce<TestProps<Props>>(
     (acc, [prop, values]: [string, any]) => {

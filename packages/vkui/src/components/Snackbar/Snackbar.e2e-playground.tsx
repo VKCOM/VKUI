@@ -39,6 +39,7 @@ const SnackBarCommon = ({
       propSets={[
         {
           placement: ['top-start', 'top', 'top-end', 'bottom-start', 'bottom', 'bottom-end'],
+          $direction: dir,
         },
       ]}
     >

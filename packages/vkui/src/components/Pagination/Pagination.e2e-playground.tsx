@@ -8,7 +8,7 @@ export const PaginationPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           navigationButtonsStyle: ['icon', 'caption', 'both'],
-          dir: ['ltr', 'rtl'],
+          $direction: true,
           $adaptivity: 'y',
         },
         {
@@ -22,7 +22,7 @@ export const PaginationPlayground = (props: ComponentPlaygroundProps) => {
           totalPages: [123],
           siblingCount: [0],
           navigationButtonsStyle: ['icon', 'caption', 'both'],
-          dir: ['ltr', 'rtl'],
+          $direction: true,
           $adaptivity: 'y',
         },
       ]}

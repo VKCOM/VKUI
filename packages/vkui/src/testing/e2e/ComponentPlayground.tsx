@@ -6,13 +6,17 @@ import { DirectionProvider } from '../../components/DirectionProvider/DirectionP
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import { mapObject } from '../../lib/object';
-import { type Direction } from '../../lib/direction';
 import type { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppDefaultWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
 import { getAdaptivePxWidth, isCustomValueWithLabel, multiCartesian, prettyProps } from './utils';
 
-export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
+type DefaultProps<T extends React.ElementType> = Omit<
+  React.ComponentProps<T>,
+  'sizeX' | 'sizeY' | 'dir'
+>;
+
+export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
   isFixedComponent?: boolean;
   platform: PlatformType;
   colorScheme: ColorSchemeType;
@@ -30,9 +34,7 @@ export type ComponentPlaygroundProps = Pick<
 /**
  * Рендерит переданный в `children` компонент с разными параметрами (`propSets`).
  */
-export const ComponentPlayground = <
-  Props extends React.ComponentProps<any> = React.ComponentProps<'div'>,
->({
+export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultProps<'div'>>({
   isFixedComponent = false,
   colorScheme,
   platform,
@@ -75,17 +77,20 @@ export const ComponentPlayground = <
           {multiCartesian<Props>(propSets, { adaptive: !isVKCOM }).map((props, i) => {
             const clonedAdaptivityProviderProps = { ...adaptivityProviderProps };
 
-            if (props.sizeX) {
-              clonedAdaptivityProviderProps.sizeX = props.sizeX;
+            const { sizeX, sizeY, dir = 'ltr', ...componentProps } = props;
+
+            if (sizeX) {
+              clonedAdaptivityProviderProps.sizeX = sizeX;
             }
 
-            if (props.sizeY) {
-              clonedAdaptivityProviderProps.sizeY = props.sizeY;
+            if (sizeY) {
+              clonedAdaptivityProviderProps.sizeY = sizeY;
             }
 
-            const mappedProps = mapObject(props, (v) => (isCustomValueWithLabel(v) ? v.value : v));
+            const mappedProps: Props = mapObject(componentProps, (v) =>
+              isCustomValueWithLabel(v) ? v.value : v,
+            );
 
-            const dir = props.dir as Direction;
             return (
               <React.Fragment key={i}>
                 {isFixedComponent ? null : (
