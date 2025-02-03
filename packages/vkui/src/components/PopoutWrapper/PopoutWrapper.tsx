@@ -73,6 +73,7 @@ export const PopoutWrapper = ({
   closing = false,
   noBackground = false,
   strategy: strategyProp,
+  // TODO [>=8]: удалить свойство
   fixed = true,
   children,
   onClick,
