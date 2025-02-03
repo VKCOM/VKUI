@@ -60,10 +60,9 @@ export interface FloatingComponentProps
    */
   onPlacementChange?: OnPlacementChange;
   /**
-   * При использовании свойства `hideWhenReferenceHidden` колбэк срабатывает, когда
-   * целевой элемент вышел за область видимости(hidden=true) и вернулся обратно(hidden=false).
+   * Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.
    *
-   * > При первом появлении всплывающего элемента колбэк будет вызван со значением `false`
+   * > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента
    */
   onReferenceHiddenChange?: (hidden: boolean) => void;
 }
