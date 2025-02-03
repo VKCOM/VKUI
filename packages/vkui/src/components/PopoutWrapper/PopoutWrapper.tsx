@@ -44,6 +44,8 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * - `fixed`: у контейнера выставлен `position: fixed`
    * - `absolute`: у контейнера выставлен `position: absolute`
    * - `none`: у контейнера не выставлен `position`
+   *
+   * @default 'fixed'
    */
   strategy?: 'fixed' | 'absolute' | 'none';
   /**
