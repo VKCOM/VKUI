@@ -106,7 +106,7 @@ const preview: Preview = {
     getRef: { control: false },
     getRootRef: { control: false },
   },
-  decorators: [withConsoleWrapper, withVKUIWrapper],
+  decorators: [withVKUIWrapper, withConsoleWrapper],
 };
 
 export default preview;
