@@ -86,6 +86,10 @@ export interface ModalPageProps
    */
   modalDismissButtonTestId?: string;
   /**
+   * Текст для скринридера
+   */
+  modalDismissButtonLabel?: string;
+  /**
    * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, клик по подложке)
    *
    * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте
@@ -111,4 +115,11 @@ export interface ModalPageProps
    * Будет вызвано при окончательном закрытии модалки.
    */
   onClosed?: VoidFunction;
+  /**
+   * Управляющие элементы под кнопкой закрытия.
+   *
+   * Доступно только в `compact`-режиме. Рекомендуется размещать иконки размера 20, обернутые в ModalOutsideButton
+   *
+   */
+  outsideButtons?: React.ReactNode;
 }
