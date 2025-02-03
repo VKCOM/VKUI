@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { format, subDays } from 'date-fns';
+import { noop } from '@vkontakte/vkjs';
+import { format, isToday, isYesterday, subDays } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20, 0, 0);
@@ -263,5 +265,54 @@ describe('DateInput', () => {
     ]);
 
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('check customValue visibility', async () => {
+    let newDate: Date | undefined = undefined;
+    const Fixture = () => {
+      const [dateValue, setDateValue] = React.useState<Date | undefined>(undefined);
+      return (
+        <>
+          <DateInput
+            value={dateValue}
+            renderCustomValue={(date) => {
+              if (!date) {
+                return undefined;
+              }
+              if (isToday(date)) {
+                return 'Сегодня';
+              }
+              if (isYesterday(date)) {
+                return 'Вчера';
+              }
+              return undefined;
+            }}
+            onChange={noop}
+            {...testIds}
+          />
+          <Button data-testid="add-date" onClick={() => setDateValue(newDate)}>
+            Добавить дату
+          </Button>
+        </>
+      );
+    };
+
+    render(<Fixture />);
+    expect(screen.queryByText('Сегодня')).toBeFalsy();
+    expect(screen.queryByText('Вчера')).toBeFalsy();
+
+    newDate = new Date();
+    fireEvent.click(screen.getByTestId('add-date'));
+    expect(screen.queryByText('Сегодня')).toBeTruthy();
+
+    newDate = subDays(new Date(), 1);
+    fireEvent.click(screen.getByTestId('add-date'));
+    expect(screen.queryByText('Вчера')).toBeTruthy();
+
+    const inputLikes = getInputsLike();
+    const [dates] = inputLikes;
+    await userEvent.click(dates);
+
+    expect(screen.queryByText('Вчера')).toBeFalsy();
   });
 });

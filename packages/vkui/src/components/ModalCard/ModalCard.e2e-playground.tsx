@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
+import { Icon20More, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import {
   AppDefaultWrapper,
   type AppDefaultWrapperProps,
@@ -9,6 +9,7 @@ import {
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
+import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
 import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
@@ -128,6 +129,44 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
     >
       {(props: ModalCardProps) => (
         <div style={{ height: 500, overflow: 'hidden', transform: 'translateZ(0)' }}>
+          <ModalCard
+            open
+            // Note: с включенным фокусом ломаются скриншоты на движке Webkit из-за фокуса сразу
+            // на несколько окон
+            noFocusToDialog
+            {...props}
+          />
+        </div>
+      )}
+    </ComponentPlayground>
+  );
+};
+
+export const ModalCardOutsideButtonPlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          nav: ['1'],
+          title: ['Расскажите о себе'],
+          actions: [
+            <Button key="action" size="l" mode="primary" stretched>
+              Сохранить
+            </Button>,
+          ],
+          dismissButtonMode: ['inside', 'outside', 'none'],
+          outsideButtons: [
+            <ModalOutsideButton aria-label="More" key="outside">
+              <Icon20More />
+            </ModalOutsideButton>,
+          ],
+        },
+      ]}
+      AppWrapper={AppWrapper}
+    >
+      {(props: ModalCardProps) => (
+        <div style={{ height: 300, overflow: 'hidden', transform: 'translateZ(0)' }}>
           <ModalCard
             open
             // Note: с включенным фокусом ломаются скриншоты на движке Webkit из-за фокуса сразу

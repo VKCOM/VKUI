@@ -101,6 +101,11 @@ export interface DateInputProps
    * Колбэк срабатывающий при нажатии на кнопку "Done". Используется совместно с флагом `enableTime`.
    */
   onApply?: (value?: Date) => void;
+  /**
+   * Функция для кастомного форматирования отображаемого значения даты.
+   * Позволяет переопределить стандартное отображение даты и вернуть собственное представление.
+   */
+  renderCustomValue?: (date: Date | undefined) => React.ReactNode;
 }
 
 const elementsConfig = (index: number) => {
@@ -196,6 +201,7 @@ export const DateInput = ({
   minuteFieldTestId,
   id,
   onApply,
+  renderCustomValue,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -301,6 +307,11 @@ export const DateInput = ({
     removeFocusFromField();
   }, [onApply, onChange, removeFocusFromField, value]);
 
+  const customValue = React.useMemo(
+    () => !open && renderCustomValue?.(value),
+    [open, renderCustomValue, value],
+  );
+
   return (
     <FormField
       style={style}
@@ -322,74 +333,81 @@ export const DateInput = ({
       onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
-      <VisuallyHidden
-        id={id}
-        Component="input"
-        name={name}
-        value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
-      />
-      <Text
-        className={styles.input}
-        onKeyDown={handleKeyDown}
-        // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
-        // из-за чего `.Typography--normalize` перебивает стили.
-        normalize={false}
-        Component="span" // для <span> нормализация не нужна
-      >
-        <InputLike
-          length={2}
-          getRootRef={daysRef}
-          index={0}
-          onElementSelect={setFocusedElement}
-          value={internalValue[0]}
-          label={changeDayLabel}
-          data-testid={dayFieldTestId}
+      <div className={styles.wrapper}>
+        <VisuallyHidden
+          id={id}
+          Component="input"
+          name={name}
+          value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
         />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={2}
-          getRootRef={monthsRef}
-          index={1}
-          onElementSelect={setFocusedElement}
-          value={internalValue[1]}
-          label={changeMonthLabel}
-          data-testid={monthFieldTestId}
-        />
-        <InputLikeDivider>.</InputLikeDivider>
-        <InputLike
-          length={4}
-          getRootRef={yearsRef}
-          index={2}
-          onElementSelect={setFocusedElement}
-          value={internalValue[2]}
-          label={changeYearLabel}
-          data-testid={yearFieldTestId}
-        />
-        {enableTime && (
-          <React.Fragment>
-            <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
-            <InputLike
-              length={2}
-              getRootRef={hoursRef}
-              index={3}
-              onElementSelect={setFocusedElement}
-              value={internalValue[3]}
-              label={changeHoursLabel}
-              data-testid={hourFieldTestId}
-            />
-            <InputLikeDivider>:</InputLikeDivider>
-            <InputLike
-              length={2}
-              getRootRef={minutesRef}
-              index={4}
-              onElementSelect={setFocusedElement}
-              value={internalValue[4]}
-              label={changeMinutesLabel}
-              data-testid={minuteFieldTestId}
-            />
-          </React.Fragment>
+        <Text
+          className={classNames(styles.input, customValue && styles.hidden)}
+          onKeyDown={handleKeyDown}
+          // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
+          // из-за чего `.Typography--normalize` перебивает стили.
+          normalize={false}
+          Component="span" // для <span> нормализация не нужна
+        >
+          <InputLike
+            length={2}
+            getRootRef={daysRef}
+            index={0}
+            onElementSelect={setFocusedElement}
+            value={internalValue[0]}
+            label={changeDayLabel}
+            data-testid={dayFieldTestId}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={2}
+            getRootRef={monthsRef}
+            index={1}
+            onElementSelect={setFocusedElement}
+            value={internalValue[1]}
+            label={changeMonthLabel}
+            data-testid={monthFieldTestId}
+          />
+          <InputLikeDivider>.</InputLikeDivider>
+          <InputLike
+            length={4}
+            getRootRef={yearsRef}
+            index={2}
+            onElementSelect={setFocusedElement}
+            value={internalValue[2]}
+            label={changeYearLabel}
+            data-testid={yearFieldTestId}
+          />
+          {enableTime && (
+            <React.Fragment>
+              <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
+              <InputLike
+                length={2}
+                getRootRef={hoursRef}
+                index={3}
+                onElementSelect={setFocusedElement}
+                value={internalValue[3]}
+                label={changeHoursLabel}
+                data-testid={hourFieldTestId}
+              />
+              <InputLikeDivider>:</InputLikeDivider>
+              <InputLike
+                length={2}
+                getRootRef={minutesRef}
+                index={4}
+                onElementSelect={setFocusedElement}
+                value={internalValue[4]}
+                label={changeMinutesLabel}
+                data-testid={minuteFieldTestId}
+              />
+            </React.Fragment>
+          )}
+        </Text>
+        {customValue && (
+          <Text className={styles.customValue} aria-hidden>
+            {customValue}
+          </Text>
         )}
-      </Text>
+      </div>
       {open && !disableCalendar && (
         <Popper
           targetRef={rootRef}

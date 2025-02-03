@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Icon20More } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
@@ -9,6 +10,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
+import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
 import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
@@ -144,6 +146,11 @@ export const CardWithComplexContent: Story = {
           </Button>
         </ButtonGroup>
       </React.Fragment>
+    ),
+    outsideButtons: (
+      <ModalOutsideButton aria-label="More" onClick={noop}>
+        <Icon20More />
+      </ModalOutsideButton>
     ),
     children: (
       <>

@@ -61,6 +61,18 @@ export interface HorizontalScrollProps
    * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента
    */
   nextButtonTestId?: string;
+  /**
+   * Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`
+   */
+  ContentWrapperComponent?: React.ElementType;
+  /**
+   * `ref` для обертки над контентом, прокинутым в `children`
+   */
+  contentWrapperRef?: React.Ref<HTMLElement>;
+  /**
+   * Специфичный `className` для обертки над контентом, прокинутым в `children`
+   */
+  contentWrapperClassName?: string;
 }
 
 /**
@@ -179,6 +191,10 @@ export const HorizontalScroll = ({
   prevButtonTestId,
   nextButtonTestId,
   getRootRef,
+  // ContentWrapper
+  ContentWrapperComponent = 'div',
+  contentWrapperRef,
+  contentWrapperClassName,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -307,7 +323,12 @@ export const HorizontalScroll = ({
         />
       )}
       <div className={styles.in} ref={scrollerRef} onScroll={calculateArrowsVisibility}>
-        <div className={styles.inWrapper}>{children}</div>
+        <ContentWrapperComponent
+          className={classNames(styles.inWrapper, contentWrapperClassName)}
+          ref={contentWrapperRef}
+        >
+          {children}
+        </ContentWrapperComponent>
       </div>
     </RootComponent>
   );

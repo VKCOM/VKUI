@@ -22,7 +22,7 @@
 }
 
 .top {
-  padding-block: 2px 8px;
+  padding-block: var(--vkui--spacing_size_2xs) var(--vkui--spacing_size_m);
   color: var(--vkui--color_text_subhead);
   display: flex;
   align-items: flex-end;
@@ -59,7 +59,7 @@
 
 .bottom {
   color: var(--vkui--color_text_secondary);
-  padding-block-start: 8px;
+  padding-block-start: var(--vkui--spacing_size_m);
 }
 
 .statusError .bottom {
@@ -76,20 +76,20 @@
  */
 
 .sizeYCompact .top {
-  padding-block-end: 6px;
+  padding-block-end: var(--vkui--spacing_size_s);
 }
 
 .sizeYCompact .bottom {
-  padding-block-start: 6px;
+  padding-block-start: var(--vkui--spacing_size_s);
 }
 
 @media (--sizeY-compact) {
   .sizeYNone .top {
-    padding-block-end: 6px;
+    padding-block-end: var(--vkui--spacing_size_s);
   }
 
   .sizeYNone .bottom {
-    padding-block-start: 6px;
+    padding-block-start: var(--vkui--spacing_size_s);
   }
 }
 
@@ -111,7 +111,7 @@
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal:not(.vkuiInternalFormLayoutGroup--segmented))
   .host
   + .host {
-  margin-inline-start: 16px;
+  margin-inline-start: var(--vkui--spacing_size_2xl);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
@@ -138,19 +138,28 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .withTop,
 .withTop .removable {
-  margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--regular) - 8px);
+  margin-block-start: calc(
+    -1 * var(--vkui--spacing_size_2xs) - var(--vkui--font_subhead--line_height--regular) -
+      var(--vkui--spacing_size_m)
+  );
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .sizeYCompact.withTop,
 .sizeYCompact.withTop .removable {
-  margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
+  margin-block-start: calc(
+    -1 * var(--vkui--spacing_size_2xs) - var(--vkui--font_subhead--line_height--compact) -
+      var(--vkui--spacing_size_s)
+  );
 }
 
 @media (--sizeY-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .sizeYNone.withTop,
   .sizeYNone.withTop .removable {
-    margin-block-start: calc(-2px - var(--vkui--font_subhead--line_height--compact) - 6px);
+    margin-block-start: calc(
+      -1 * var(--vkui--spacing_size_2xs) - var(--vkui--font_subhead--line_height--compact) -
+        var(--vkui--spacing_size_s)
+    );
   }
 }

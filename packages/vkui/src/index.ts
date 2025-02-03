@@ -164,6 +164,8 @@ export { ModalCard } from './components/ModalCard/ModalCard';
 export type { ModalCardProps, ModalCardCloseReason } from './components/ModalCard/types';
 export { ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
+export { ModalOutsideButton } from './components/ModalOutsideButton/ModalOutsideButton';
+export type { ModalOutsideButtonProps } from './components/ModalOutsideButton/ModalOutsideButton';
 
 /**
  * Blocks
