@@ -178,6 +178,7 @@ export const Alert = ({
         style={style}
         onClick={close}
         getRootRef={getRootRef}
+        strategy="fixed"
       >
         <FocusTrap
           {...animationHandlers}

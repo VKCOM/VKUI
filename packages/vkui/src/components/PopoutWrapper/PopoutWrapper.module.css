@@ -19,6 +19,10 @@
   position: fixed;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .overlay {
   position: fixed;
   inset-inline-start: 0;
@@ -42,7 +46,8 @@
   background: var(--vkui--color_overlay_primary);
 }
 
-.fixed .overlay {
+.fixed .overlay,
+.absolute .overlay {
   position: absolute;
 }
 
