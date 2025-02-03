@@ -3395,6 +3395,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-console@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@storybook/addon-console@npm:3.0.0"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+  peerDependencies:
+    "@storybook/addon-actions": "*"
+    react: "*"
+  checksum: 10/82b50cbd7b96f2e462243bcf7b5f535dfcf10986ca21a6ba356b210c05667970904cad967785e6560e38459f599d98e8d2ffb30a54f02f850cfb74e618b98f2d
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-controls@npm:8.5.3":
   version: 8.5.3
   resolution: "@storybook/addon-controls@npm:8.5.3"
@@ -5807,6 +5819,7 @@ __metadata:
     "@size-limit/file": "npm:^11.1.6"
     "@size-limit/webpack": "npm:^11.1.6"
     "@size-limit/webpack-css": "npm:^11.1.6"
+    "@storybook/addon-console": "npm:^3.0.0"
     "@swc/cli": "npm:^0.6.0"
     "@swc/core": "npm:1.10.12"
     "@swc/jest": "npm:^0.2.37"
