@@ -3,9 +3,9 @@ import '../src/styles/themes.css';
 import '../src/styles/common.css';
 import '../src/styles/dynamicTokens.css';
 import '../src/styles/adaptivity.module.css';
-import { withConsole } from '@storybook/addon-console';
 
 import { Preview } from '@storybook/react';
+import { withConsole } from '@storybook/addon-console';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 
@@ -106,7 +106,7 @@ const preview: Preview = {
     getRef: { control: false },
     getRootRef: { control: false },
   },
-  decorators: [withVKUIWrapper, withConsoleWrapper],
+  decorators: [withConsoleWrapper, withVKUIWrapper],
 };
 
 export default preview;
