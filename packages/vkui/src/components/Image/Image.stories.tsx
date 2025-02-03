@@ -7,6 +7,19 @@ const story: Meta<ImageProps> = {
   title: 'Blocks/Image',
   component: Image,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  argTypes: {
+    filter: {
+      control: { type: 'select' },
+      options: ['blur', 'contrast', 'grayscale', 'hue-rotate', 'drop-shadow'],
+      mapping: {
+        'blur': 'blur(5px)',
+        'contrast': 'contrast(200%)',
+        'grayscale': 'grayscale(80%)',
+        'hue-rotate': 'hue-rotate(90deg)',
+        'drop-shadow': 'drop-shadow(16px 16px 20px red) invert(75%)',
+      },
+    },
+  },
 };
 
 export default story;

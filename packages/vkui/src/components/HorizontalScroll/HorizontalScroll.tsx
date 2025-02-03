@@ -1,11 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
@@ -60,6 +61,18 @@ export interface HorizontalScrollProps
    * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента
    */
   nextButtonTestId?: string;
+  /**
+   * Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`
+   */
+  ContentWrapperComponent?: React.ElementType;
+  /**
+   * `ref` для обертки над контентом, прокинутым в `children`
+   */
+  contentWrapperRef?: React.Ref<HTMLElement>;
+  /**
+   * Специфичный `className` для обертки над контентом, прокинутым в `children`
+   */
+  contentWrapperClassName?: string;
 }
 
 /**
@@ -177,6 +190,11 @@ export const HorizontalScroll = ({
   scrollOnAnyWheel = false,
   prevButtonTestId,
   nextButtonTestId,
+  getRootRef,
+  // ContentWrapper
+  ContentWrapperComponent = 'div',
+  contentWrapperRef,
+  contentWrapperClassName,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -188,6 +206,8 @@ export const HorizontalScroll = ({
   const isCustomScrollingRef = React.useRef(false);
 
   const scrollerRef = useExternRef(getRef);
+
+  const rootRef = useExternRef(getRootRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
@@ -243,36 +263,33 @@ export const HorizontalScroll = ({
 
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
-  const _onWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
-    },
-    [scrollerRef],
-  );
-
-  /**
-   * Прокрутка с помощью любого колеса мыши
-   */
-  const onScrollWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      _onWheel(e);
-      e.preventDefault();
-    },
-    [_onWheel],
-  );
-
-  const onArrowWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      if (e.deltaX || (e.deltaY && scrollOnAnyWheel)) {
-        _onWheel(e);
+  useIsomorphicLayoutEffect(
+    function addWheelEventHandler() {
+      if (!rootRef.current) {
+        return noop;
       }
+      /**
+       * Прокрутка с помощью любого колеса мыши
+       */
+      const onWheel = (e: WheelEvent) => {
+        const left = e.deltaX + (scrollOnAnyWheel ? e.deltaY : 0);
+        scrollerRef.current!.scrollBy({ left, behavior: 'auto' });
+        if (e.deltaY && scrollOnAnyWheel) {
+          e.preventDefault();
+        }
+      };
+      const listenerOptions = { passive: false };
+      rootRef.current?.addEventListener('wheel', onWheel, listenerOptions);
+      // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
+      return () => rootRef.current?.removeEventListener('wheel', onWheel, listenerOptions);
     },
-    [_onWheel, scrollOnAnyWheel],
+    [rootRef, scrollOnAnyWheel, scrollerRef],
   );
 
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalHorizontalScroll',
@@ -290,7 +307,6 @@ export const HorizontalScroll = ({
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowLeft)}
           onClick={scrollToLeft}
-          onWheel={onArrowWheel}
         />
       )}
       {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
@@ -303,16 +319,15 @@ export const HorizontalScroll = ({
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowRight)}
           onClick={scrollToRight}
-          onWheel={onArrowWheel}
         />
       )}
-      <div
-        className={styles.in}
-        ref={scrollerRef}
-        onScroll={calculateArrowsVisibility}
-        onWheel={scrollOnAnyWheel ? onScrollWheel : undefined}
-      >
-        <div className={styles.inWrapper}>{children}</div>
+      <div className={styles.in} ref={scrollerRef} onScroll={calculateArrowsVisibility}>
+        <ContentWrapperComponent
+          className={classNames(styles.inWrapper, contentWrapperClassName)}
+          ref={contentWrapperRef}
+        >
+          {children}
+        </ContentWrapperComponent>
       </div>
     </RootComponent>
   );

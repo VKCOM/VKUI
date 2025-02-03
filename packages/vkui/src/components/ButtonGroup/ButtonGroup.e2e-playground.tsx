@@ -1,5 +1,6 @@
 import { Icon24Add, Icon24Attach } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Button } from '../Button/Button';
 import { ButtonGroup, type ButtonGroupProps } from './ButtonGroup';
 
@@ -10,11 +11,14 @@ export const ButtonGroupPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           gap: ['none', 'space', 's', 'm'],
-          style: [{ minWidth: 300 }],
+          style: [withLabel({ minWidth: 300 }, 'With min-width=300px')],
         },
         {
           stretched: [undefined, true],
-          children: [undefined, 'Этот оооооочень длинный-длинный текст'],
+          children: [
+            undefined,
+            withLabel('Этот оооооочень длинный-длинный текст', 'Long children'),
+          ],
         },
       ]}
     >

@@ -120,7 +120,7 @@ export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 export { PopoutWrapper } from './components/PopoutWrapper/PopoutWrapper';
 export type { PopoutWrapperProps } from './components/PopoutWrapper/PopoutWrapper';
 export { Alert } from './components/Alert/Alert';
-export type { AlertProps, AlertActionInterface } from './components/Alert/Alert';
+export type { AlertProps, AlertActionProps, AlertActionInterface } from './components/Alert/Alert';
 export { ActionSheet } from './components/ActionSheet/ActionSheet';
 export type {
   ActionSheetProps,
@@ -164,6 +164,8 @@ export { ModalCard } from './components/ModalCard/ModalCard';
 export type { ModalCardProps, ModalCardCloseReason } from './components/ModalCard/types';
 export { ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
+export { ModalOutsideButton } from './components/ModalOutsideButton/ModalOutsideButton';
+export type { ModalOutsideButtonProps } from './components/ModalOutsideButton/ModalOutsideButton';
 
 /**
  * Blocks

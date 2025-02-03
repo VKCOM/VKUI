@@ -8,6 +8,7 @@ import { useEventListener } from '../../hooks/useEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
+import { stopPropagation } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
@@ -30,6 +31,8 @@ export const ActionSheetDropdownMenu = ({
   placement,
   onAnimationStart,
   onAnimationEnd,
+  allowClickPropagation = false,
+  onClick,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
   const { document } = useDOM();
@@ -57,8 +60,6 @@ export const ActionSheetDropdownMenu = ({
     });
   }, [bodyClickListener, document]);
 
-  const onClick = React.useCallback((e: React.MouseEvent<HTMLElement>) => e.stopPropagation(), []);
-
   const targetRef = React.useMemo(() => {
     if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
       return toggleRef;
@@ -66,6 +67,13 @@ export const ActionSheetDropdownMenu = ({
 
     return { current: toggleRef as HTMLElement };
   }, [toggleRef]);
+
+  const handleClick = allowClickPropagation
+    ? onClick
+    : (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagation(event);
+        onClick?.(event);
+      };
 
   return (
     <Popper
@@ -86,7 +94,7 @@ export const ActionSheetDropdownMenu = ({
       onAnimationStart={onAnimationStart}
       onAnimationEnd={onAnimationEnd}
     >
-      <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
+      <FocusTrap onClose={onClose} {...restProps} onClick={handleClick}>
         {children}
       </FocusTrap>
     </Popper>

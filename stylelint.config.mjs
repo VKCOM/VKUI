@@ -15,6 +15,19 @@ const config = {
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,
     'comment-whitespace-inside': null,
+    'declaration-property-value-keyword-no-deprecated': [
+      true,
+      {
+        /**
+         * Сейчас ругается на `word-break: break-word;`.
+         *
+         * Можно поменять на `overflow-wrap: break-word;`, но нужно проверить, что работает одинаково.
+         *
+         * Заигноренно в рамках PR https://github.com/VKCOM/VKUI/pull/8152
+         */
+        ignoreKeywords: 'break-word',
+      },
+    ],
     'no-descending-specificity': null,
     'no-duplicate-selectors': null,
     'value-keyword-case': null,

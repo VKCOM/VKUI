@@ -5,11 +5,12 @@ import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { DirectionProvider } from '../../components/DirectionProvider/DirectionProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { ColorSchemeType } from '../../lib/colorScheme';
+import { mapObject } from '../../lib/object';
 import { type Direction } from '../../lib/direction';
 import type { PlatformType } from '../../lib/platform';
 import { AppDefaultWrapper, type AppDefaultWrapperProps } from './AppDefaultWrapper';
 import { TEST_CLASS_NAMES } from './constants';
-import { getAdaptivePxWidth, multiCartesian, prettyProps } from './utils';
+import { getAdaptivePxWidth, isCustomValueWithLabel, multiCartesian, prettyProps } from './utils';
 
 export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
   isFixedComponent?: boolean;
@@ -82,6 +83,8 @@ export const ComponentPlayground = <
               clonedAdaptivityProviderProps.sizeY = props.sizeY;
             }
 
+            const mappedProps = mapObject(props, (v) => (isCustomValueWithLabel(v) ? v.value : v));
+
             const dir = props.dir as Direction;
             return (
               <React.Fragment key={i}>
@@ -91,7 +94,7 @@ export const ComponentPlayground = <
                 <div dir={dir}>
                   <DirectionProvider value={dir}>
                     <AdaptivityProvider {...clonedAdaptivityProviderProps}>
-                      {children(props)}
+                      {children(mappedProps)}
                     </AdaptivityProvider>
                   </DirectionProvider>
                 </div>
