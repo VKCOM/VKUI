@@ -47,7 +47,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'onShownChange'
   | 'defaultShown'
   | 'hideWhenReferenceHidden'
-  | 'onReferenceHiddenChanged'
+  | 'onReferenceHiddenChange'
   | 'sameWidth'
   | 'zIndex'
   | 'strategy'
@@ -118,7 +118,7 @@ export const Popper = ({
   children,
   usePortal = true,
   onPlacementChange,
-  onReferenceHiddenChanged,
+  onReferenceHiddenChange,
   zIndex,
   style,
   ...restProps
@@ -160,7 +160,7 @@ export const Popper = ({
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
-  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChanged);
+  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChange);
 
   const { arrow: arrowCoords } = middlewareData;
 

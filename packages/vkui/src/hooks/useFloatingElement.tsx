@@ -42,7 +42,7 @@ export type UseFloatingElementProps<
 > = Omit<UseFloatingMiddlewaresBootstrapOptions, 'arrowRef'> &
   Omit<UseFloatingWithInteractionsProps, 'placement'> & {
     onPlacementChange?: OnPlacementChange;
-    onReferenceHiddenChanged?: (hidden: boolean) => void;
+    onReferenceHiddenChange?: (hidden: boolean) => void;
     renderFloatingComponent: RenderFloatingComponentFn<FloatingElement>;
     remapReferenceProps?: RemapReferencePropsFn<ReferenceElement>;
     externalFloatingElementRef?: React.Ref<FloatingElement>;
@@ -83,7 +83,7 @@ export const useFloatingElement = <
   onShownChange,
   onShownChanged,
   strategy,
-  onReferenceHiddenChanged,
+  onReferenceHiddenChange,
 
   onPlacementChange,
 
@@ -142,7 +142,7 @@ export const useFloatingElement = <
 
   usePlacementChangeCallback(placement, resolvedPlacement, onPlacementChange);
 
-  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChanged);
+  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChange);
 
   const component = renderFloatingComponent({
     shown,

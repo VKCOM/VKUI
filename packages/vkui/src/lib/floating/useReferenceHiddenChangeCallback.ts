@@ -5,7 +5,7 @@ import { type FloatingComponentProps } from './types/component';
 
 export function useReferenceHiddenChangeCallback(
   hideMiddleware: UseFloatingData['middlewareData']['hide'],
-  onReferenceHiddenChanged: FloatingComponentProps['onReferenceHiddenChanged'],
+  onReferenceHiddenChange: FloatingComponentProps['onReferenceHiddenChange'],
 ) {
   const prevHiddenRef = React.useRef<boolean | undefined>(hideMiddleware?.referenceHidden);
   React.useEffect(() => {
@@ -14,13 +14,13 @@ export function useReferenceHiddenChangeCallback(
 
   useIsomorphicLayoutEffect(
     function checkHiddenChanged() {
-      if (!onReferenceHiddenChanged) {
+      if (!onReferenceHiddenChange) {
         return;
       }
       if (hideMiddleware?.referenceHidden !== prevHiddenRef.current) {
-        onReferenceHiddenChanged(hideMiddleware?.referenceHidden || false);
+        onReferenceHiddenChange(hideMiddleware?.referenceHidden || false);
       }
     },
-    [hideMiddleware?.referenceHidden, onReferenceHiddenChanged],
+    [hideMiddleware?.referenceHidden, onReferenceHiddenChange],
   );
 }

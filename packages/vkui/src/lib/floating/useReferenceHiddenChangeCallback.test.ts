@@ -4,36 +4,36 @@ import { useReferenceHiddenChangeCallback } from './useReferenceHiddenChangeCall
 type HookArguments = Parameters<typeof useReferenceHiddenChangeCallback>;
 type RenderHookProps = {
   hideMiddleware: HookArguments[0];
-  onReferenceHiddenChanged: HookArguments[1];
+  onReferenceHiddenChange: HookArguments[1];
 };
 
 describe('usePlacementChangeCallback', () => {
   it('calls callback on initial render when initial placement differ from resolvedPlacement', () => {
-    const onReferenceHiddenChangedStub = jest.fn();
+    const onReferenceHiddenChangeStub = jest.fn();
 
     const defaultProps: RenderHookProps = {
       hideMiddleware: {
         referenceHidden: false,
       },
-      onReferenceHiddenChanged: onReferenceHiddenChangedStub,
+      onReferenceHiddenChange: onReferenceHiddenChangeStub,
     };
 
     const { rerender } = renderHook<void, RenderHookProps>(
-      ({ hideMiddleware, onReferenceHiddenChanged }) =>
-        useReferenceHiddenChangeCallback(hideMiddleware, onReferenceHiddenChanged),
+      ({ hideMiddleware, onReferenceHiddenChange }) =>
+        useReferenceHiddenChangeCallback(hideMiddleware, onReferenceHiddenChange),
       {
         initialProps: defaultProps,
       },
     );
 
-    expect(onReferenceHiddenChangedStub).not.toHaveBeenCalled();
+    expect(onReferenceHiddenChangeStub).not.toHaveBeenCalled();
 
     rerender({ ...defaultProps, hideMiddleware: { referenceHidden: true } });
 
-    expect(onReferenceHiddenChangedStub).toHaveBeenNthCalledWith(1, true);
+    expect(onReferenceHiddenChangeStub).toHaveBeenNthCalledWith(1, true);
 
     rerender({ ...defaultProps, hideMiddleware: { referenceHidden: false } });
 
-    expect(onReferenceHiddenChangedStub).toHaveBeenNthCalledWith(2, false);
+    expect(onReferenceHiddenChangeStub).toHaveBeenNthCalledWith(2, false);
   });
 });

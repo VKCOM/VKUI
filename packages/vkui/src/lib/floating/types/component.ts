@@ -59,6 +59,11 @@ export interface FloatingComponentProps
    * чтобы всплывающий элемент вместился в эту область видимости.
    */
   onPlacementChange?: OnPlacementChange;
-
-  onReferenceHiddenChanged?: (hidden: boolean) => void;
+  /**
+   * При использовании свойства `hideWhenReferenceHidden` колбэк срабатывает, когда
+   * целевой элемент вышел за область видимости(hidden=true) и вернулся обратно(hidden=false).
+   *
+   * > При первом появлении всплывающего элемента колбэк будет вызван со значением `false`
+   */
+  onReferenceHiddenChange?: (hidden: boolean) => void;
 }

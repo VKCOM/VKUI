@@ -53,7 +53,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'usePortal'
   | 'sameWidth'
   | 'hideWhenReferenceHidden'
-  | 'onReferenceHiddenChanged'
+  | 'onReferenceHiddenChange'
   | 'disabled'
   | 'disableInteractive'
   | 'disableCloseOnClickOutside'
