@@ -1,10 +1,13 @@
 export type CSSTransitionControllerUnit = 'px' | '%' | '';
 
 export class CSSTransitionController<V extends number | string = number> {
-  constructor(
-    public readonly el: HTMLElement,
-    public readonly property: string,
-  ) {}
+  public readonly el: HTMLElement;
+  public readonly property: string;
+
+  constructor(el: HTMLElement, property: string) {
+    this.el = el;
+    this.property = property;
+  }
 
   set(to: V) {
     this.el.style.setProperty(this.property, `${to}`);
