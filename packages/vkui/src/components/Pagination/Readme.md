@@ -153,3 +153,4 @@ const Example = () => {
 ## Цифровая доступность (a11y)
 
 В вёрстке `Pagination` используется HTML тэг `nav`. По спецификации, если на странице несколько `nav` или элементов с ролью `navigation`, каждому стоит задать своё уникальное имя с помощью `aria-label` или `aria-labelledby` (см. [role navigation](https://doka.guide/a11y/role-navigation/#kak-pishetsya)).
+Так как `Pagination` уже связан с меткой блока навигации, который задаётся через свойство `navigationLabel`, с помощью `aria-labelledby`, то для каждого `Pagination` достаточно задать свой `navigationLabel`. Если `Pagination` элементы содержат одинаковые ссылки, то и `navigationLabel` должны быть одинаковыми.

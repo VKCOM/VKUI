@@ -77,9 +77,12 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   nextButtonLabel?: string;
   /**
    * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
-   * Чаще всего номера страницы, который и так есть в компоненте, достаточно,
-   * и лучше ничего дополнительного к нему не добавлять,
-   * чтобы у пользователей скринридера не было избыточности.
+   *
+   * > Note: По возможности лучше не использовать,
+   * так как компонент и так проставляет номер страницы в разметку,
+   * что достаточно для пользователей скринридеров.
+   * Дополнительная информация скорее будет избыточна,
+   * так как будет зачитываться для каждой кнопки при перемещении по списку.
    */
   getPageLabel?: (isCurrent: boolean) => string;
   onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
@@ -212,9 +215,19 @@ export const Pagination = ({
     [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY, pageButtonTestId],
   );
 
+  const navigationLabelId = React.useId();
+
   return (
-    <RootComponent Component="nav" role="navigation" getRootRef={rootRef} {...resetProps}>
-      <VisuallyHidden Component={navigationLabelComponent}>{navigationLabel}</VisuallyHidden>
+    <RootComponent
+      Component="nav"
+      role="navigation"
+      getRootRef={rootRef}
+      aria-labelledby={navigationLabelId}
+      {...resetProps}
+    >
+      <VisuallyHidden id={navigationLabelId} Component={navigationLabelComponent}>
+        {navigationLabel}
+      </VisuallyHidden>
       <ul className={styles.list}>
         <li className={styles.prevButtonContainer}>
           <PaginationNavigationButton
