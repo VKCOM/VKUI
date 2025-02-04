@@ -9,8 +9,8 @@
 
 .body {
   max-inline-size: inherit;
-  text-decoration: none;
   font-family: inherit;
+  text-decoration: none;
 }
 
 /* Перебиваем селектор в Tappable--sizeX-(compact|none) */
@@ -20,9 +20,9 @@
 
 .content {
   max-inline-size: inherit;
+  text-overflow: ellipsis;
   color: var(--vkui--color_text_primary);
   word-break: break-word;
-  text-overflow: ellipsis;
 }
 
 .subtitle {
@@ -99,8 +99,8 @@
 
 .host:first-child::before,
 .host:last-child::after {
-  content: '';
   min-inline-size: var(--vkui_internal--side_cell_gap);
+  content: '';
 }
 
 .sized:first-child,

@@ -3,13 +3,13 @@
   --vkui_internal--min_col_width: 0;
 
   display: grid;
-  gap: var(--vkui_internal--row_gap) var(--vkui_internal--column_gap);
   grid-template-columns: repeat(var(--vkui_internal--grid_columns), minmax(0, 1fr));
+  gap: var(--vkui_internal--row_gap) var(--vkui_internal--column_gap);
 }
 
 .marginAuto {
-  margin-inline: var(--vkui--size_base_padding_horizontal--regular);
   margin-block: var(--vkui--size_base_padding_vertical--regular);
+  margin-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .marginAutoInline {

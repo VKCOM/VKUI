@@ -1,13 +1,13 @@
 .host {
   position: relative;
-  inline-size: 100%;
-  border-end-start-radius: inherit;
-  border-end-end-radius: inherit;
-  background-color: var(--vkui--color_background_modal);
   box-sizing: border-box;
 
   /* см. `.children {}` в `ModalPage` */
   flex: 0 0 auto;
+  inline-size: 100%;
+  background-color: var(--vkui--color_background_modal);
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
 }
 
 .Separator {

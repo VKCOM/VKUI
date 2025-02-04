@@ -1,7 +1,7 @@
 import path from 'node:path';
 
 const config = {
-  extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
+  extends: ['stylelint-config-standard', '@vkontakte/stylelint-config', 'stylelint-config-recess-order'],
   plugins: [
     '@project-tools/stylelint-plugin-vkui',
     'stylelint-media-use-custom-media',

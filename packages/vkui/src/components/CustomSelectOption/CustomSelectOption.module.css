@@ -1,14 +1,14 @@
 .host {
-  inline-size: 100%;
-  display: flex;
-  align-items: center;
   position: relative;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
   padding-block: 8px;
   padding-inline: 12px;
-  user-select: none;
-  cursor: pointer;
   color: var(--vkui--color_text_primary);
+  cursor: pointer;
+  user-select: none;
 }
 
 .hierarchy {
@@ -46,8 +46,8 @@
 
 .main {
   flex-grow: 1;
-  max-inline-size: 100%;
   min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .children {
@@ -56,10 +56,10 @@
 }
 
 .after {
-  margin-inline-start: 8px;
-  flex-shrink: 0;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
+  margin-inline-start: 8px;
 }
 
 .description {

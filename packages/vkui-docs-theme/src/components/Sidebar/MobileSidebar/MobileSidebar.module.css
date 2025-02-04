@@ -1,16 +1,16 @@
 .root {
-  display: flex;
-  flex-direction: column;
   position: fixed;
   inset-block-start: 0;
   inset-block-end: 0;
-  inline-size: 380px;
   inset-inline-end: 0;
-  background-color: var(--vkui_docs--color_background_content);
   /* TODO: move to the common file with all the sizes? */
   z-index: 30;
-  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  inline-size: 380px;
+  background-color: var(--vkui_docs--color_background_content);
   border-radius: var(--vkui--size_border_radius--regular);
+  will-change: transform;
 }
 
 @media (--viewWidth-smallTabletMinus) {
@@ -25,9 +25,9 @@
   /* TODO move to the common file with all the sizes? */
   z-index: 29;
   background-color: var(--vkui--color_overlay_primary);
-  will-change: opacity;
   opacity: 0;
   transition: opacity 0.8s;
+  will-change: opacity;
 }
 
 .backdropShow {
@@ -62,13 +62,13 @@
 }
 
 .inner {
+  flex-grow: 1;
   padding-block: var(--vkui--spacing_size_2xl);
   padding-inline: var(--vkui--spacing_size_2xl);
   overflow-x: hidden;
   overflow-y: auto;
-  flex-grow: 1;
-  scrollbar-width: thin;
   scrollbar-gutter: stable;
+  scrollbar-width: thin;
 }
 
 @media (--viewWidth-smallTabletMinus) {

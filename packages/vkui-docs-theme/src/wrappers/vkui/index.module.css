@@ -1,10 +1,10 @@
 .root {
-  -webkit-tap-highlight-color: transparent;
-  text-size-adjust: 100%;
+  inline-size: 100%;
+  block-size: unset;
   font-family: var(--vkui--font_family_base);
   color: var(--vkui--color_text_primary);
   color-scheme: var(--vkui--colors_scheme);
-  block-size: unset;
-  inline-size: 100%;
   background-color: var(--vkui--color_background_content);
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
 }

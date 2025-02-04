@@ -11,9 +11,9 @@
   --vkui_internal--Group_padding_block: var(--vkui--spacing_size_m);
   --vkui_internal--Group_card_mode_padding_size: 0;
 
-  color: var(--vkui--color_text_primary);
   padding-block: var(--vkui_internal--Group_padding_block);
   padding-inline: var(--vkui_internal--Group_padding_inline);
+  color: var(--vkui--color_text_primary);
 }
 
 .paddingS {
@@ -63,16 +63,16 @@
 .sizeXCompact.modeCard:first-of-type {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
-  border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
   border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
+  border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
 @media (--sizeX-compact) {
   .sizeXNone.modeCard:first-of-type {
     border-start-start-radius: 0;
     border-start-end-radius: 0;
-    border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
     border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
+    border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
   }
 }
 
@@ -85,27 +85,27 @@
  */
 .modeCard::before,
 .sizeXRegular.modeNone::before {
-  content: '';
-  inset-inline-start: 0;
+  position: absolute;
   inset-block-start: 0;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
-  position: absolute;
-  border-radius: inherit;
   pointer-events: none;
+  content: '';
+  border-radius: inherit;
   box-shadow: inset 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_separator_primary);
 }
 
 @media (--sizeX-regular) {
   .sizeXNone.modeNone::before {
-    content: '';
-    inset-inline-start: 0;
+    position: absolute;
     inset-block-start: 0;
+    inset-inline-start: 0;
     inline-size: 100%;
     block-size: 100%;
-    position: absolute;
-    border-radius: inherit;
     pointer-events: none;
+    content: '';
+    border-radius: inherit;
     box-shadow: inset 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_field_border_alpha);
   }
 }
@@ -173,10 +173,10 @@
 
 .separatorSibling::before {
   display: var(--vkui_internal--Group__separator_hr);
-  content: '';
   block-size: var(--vkui--size_border--regular);
-  background: var(--vkui--color_separator_primary);
   margin-block-end: calc(-1 * var(--vkui--size_border--regular));
+  content: '';
+  background: var(--vkui--color_separator_primary);
 }
 
 /* разделитель при mode="plain" */
@@ -184,16 +184,16 @@
 .sizeXCompact.modeNone + .separatorSibling {
   --vkui_internal--Group__separator_hr: block;
 
-  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   padding-block: var(--vkui--spacing_size_m);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 @media (--sizeX-compact) {
   .sizeXNone.modeNone + .separatorSibling {
     --vkui_internal--Group__separator_hr: block;
 
-    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
     padding-block: var(--vkui--spacing_size_m);
+    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   }
 }
 
@@ -302,6 +302,6 @@
 :global(.vkuiInternalPanelHeader--vkcom) + * .host:first-of-type {
   position: relative;
   inset-block-start: -1px;
-  border-start-end-radius: 0;
   border-start-start-radius: 0;
+  border-start-end-radius: 0;
 }

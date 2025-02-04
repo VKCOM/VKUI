@@ -1,17 +1,17 @@
 .host {
   --vkui_internal--chips_input_base_container_gap: 4px;
 
+  position: relative;
+  z-index: var(--vkui_internal--z_index_form_field_element);
+  display: flex;
   flex-grow: 1;
   flex-shrink: 1;
-  position: relative;
-  display: flex;
   flex-wrap: wrap;
   max-inline-size: 100%;
-  list-style: none;
-  margin: 0;
   padding: var(--vkui_internal--chips_input_base_container_gap);
-  z-index: var(--vkui_internal--z_index_form_field_element);
+  margin: 0;
   overflow: hidden;
+  list-style: none;
 }
 
 .chip {
@@ -20,17 +20,17 @@
 }
 
 .el {
-  flex: 1;
   position: relative;
+  flex: 1;
   inline-size: 100%;
+  padding: 0;
   margin-block: 2px 4px;
   margin-inline: 10px 2px;
-  padding: 0;
   color: var(--vkui--color_text_primary);
+  appearance: none;
   background: transparent;
   border: 0;
   box-shadow: none;
-  appearance: none;
 }
 
 .el:not(:read-only):focus {
@@ -56,9 +56,9 @@
 }
 
 .hasPlaceholder .el {
-  white-space: nowrap;
-  text-overflow: ellipsis;
   margin-inline: calc(12px - var(--vkui_internal--chips_input_base_container_gap)) 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /**

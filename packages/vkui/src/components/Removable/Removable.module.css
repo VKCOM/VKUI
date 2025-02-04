@@ -22,8 +22,8 @@
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
-  border: 0;
   color: var(--vkui--color_icon_secondary);
+  border: 0;
 }
 
 .alignStart .action {
@@ -43,8 +43,8 @@
 
 .remove {
   position: absolute;
-  inset-inline-start: 100%;
   inset-block-start: 0;
+  inset-inline-start: 100%;
   block-size: 100%;
   padding-block: 0;
   padding-inline: 10px;
@@ -76,8 +76,8 @@
 .toggleIn {
   position: relative;
   display: flex;
-  align-items: center;
   align-content: center;
+  align-items: center;
   justify-content: center;
   inline-size: 100%;
   block-size: 100%;
@@ -85,19 +85,19 @@
 }
 
 .toggleIn::after {
-  content: '';
   inline-size: 22px;
   block-size: 22px;
+  content: '';
   background-color: var(--vkui--color_background_negative);
   border-radius: 50%;
 }
 
 .toggleIn::before {
-  content: '';
   position: absolute;
   display: block;
   inline-size: 12px;
   block-size: 2px;
+  content: '';
   background-color: var(--vkui_internal--white);
 }
 
@@ -132,8 +132,8 @@
 :global(.vkuiInternalFormItem--withTop) :global(.vkuiInternalFormItem__removable) ~ .offset,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--removable) :global(.vkuiInternalFormItem--withTop) ~ .offset {
-  order: -1;
   display: block;
+  order: -1;
   inline-size: 100%;
   block-size: calc(2px + var(--vkui--font_subhead--line_height--regular) + 8px);
 }

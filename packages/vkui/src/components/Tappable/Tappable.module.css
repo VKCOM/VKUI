@@ -1,7 +1,7 @@
 .host {
-  isolation: isolate;
   position: relative;
   border-radius: var(--vkui--size_border_radius--regular);
+  isolation: isolate;
 }
 
 /*
@@ -40,9 +40,9 @@ https://github.com/VKCOM/VKUI/pull/3641
  * hover & active state
  */
 .stateLayer {
-  z-index: var(--vkui_internal--z_index_tappable_state);
   position: absolute;
   inset: 0;
+  z-index: var(--vkui_internal--z_index_tappable_state);
   overflow: hidden;
   border-radius: inherit;
   transition: background-color 0.15s ease-out;
@@ -90,10 +90,10 @@ https://github.com/VKCOM/VKUI/pull/3641
   block-size: 24px;
   margin-block: -12px 0;
   margin-inline: 0 -12px;
-  opacity: 0;
   content: '';
-  border-radius: 50%;
   background: var(--vkui--color_transparent--active);
+  border-radius: 50%;
+  opacity: 0;
   animation: animation-wave 0.3s var(--vkui--animation_easing_platform);
 }
 
@@ -102,8 +102,8 @@ https://github.com/VKCOM/VKUI/pull/3641
  */
 @keyframes animation-wave {
   0% {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
   }
 
   30% {
@@ -111,7 +111,7 @@ https://github.com/VKCOM/VKUI/pull/3641
   }
 
   100% {
-    transform: scale(8);
     opacity: 0;
+    transform: scale(8);
   }
 }

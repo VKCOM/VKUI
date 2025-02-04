@@ -3,8 +3,8 @@
 }
 
 .in {
-  content: '';
   display: block;
+  content: '';
 
   /* см. "Примечание" в DefaultIcon.tsx. */
   transform: translateY(1px);

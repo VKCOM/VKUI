@@ -1,43 +1,43 @@
 .host {
-  font-size: var(--vkui--font_text--font_size--regular);
-  line-height: var(--vkui--font_text--line_height--regular);
-  font-weight: var(--vkui--font_text--font_weight--regular);
   font-family: var(--vkui--font_text--font_family--regular);
+  font-size: var(--vkui--font_text--font_size--regular);
+  font-weight: var(--vkui--font_text--font_weight--regular);
+  line-height: var(--vkui--font_text--line_height--regular);
 }
 
 .sizeYCompact {
-  font-size: var(--vkui--font_text--font_size--compact, var(--vkui--font_text--font_size--regular));
-  line-height: var(
-    --vkui--font_text--line_height--compact,
-    var(--vkui--font_text--line_height--regular)
+  font-family: var(
+    --vkui--font_text--font_family--compact,
+    var(--vkui--font_text--font_family--regular)
   );
+  font-size: var(--vkui--font_text--font_size--compact, var(--vkui--font_text--font_size--regular));
   font-weight: var(
     --vkui--font_text--font_weight--compact,
     var(--vkui--font_text--font_weight--regular)
   );
-  font-family: var(
-    --vkui--font_text--font_family--compact,
-    var(--vkui--font_text--font_family--regular)
+  line-height: var(
+    --vkui--font_text--line_height--compact,
+    var(--vkui--font_text--line_height--regular)
   );
 }
 
 @media (--sizeY-compact) {
   .sizeYNone {
+    font-family: var(
+      --vkui--font_text--font_family--compact,
+      var(--vkui--font_text--font_family--regular)
+    );
     font-size: var(
       --vkui--font_text--font_size--compact,
       var(--vkui--font_text--font_size--regular)
-    );
-    line-height: var(
-      --vkui--font_text--line_height--compact,
-      var(--vkui--font_text--line_height--regular)
     );
     font-weight: var(
       --vkui--font_text--font_weight--compact,
       var(--vkui--font_text--font_weight--regular)
     );
-    font-family: var(
-      --vkui--font_text--font_family--compact,
-      var(--vkui--font_text--font_family--regular)
+    line-height: var(
+      --vkui--font_text--line_height--compact,
+      var(--vkui--font_text--line_height--regular)
     );
   }
 }

@@ -7,19 +7,19 @@
 .in {
   position: relative;
   box-sizing: border-box;
-  inline-size: 100%;
-  min-block-size: 100%;
   display: flex;
   flex-direction: column;
+  inline-size: 100%;
+  min-block-size: 100%;
 }
 
 .centered {
+  box-sizing: border-box;
   display: flex;
   flex: 1 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
 }
 
 /* stylelint-disable selector-max-universal */

@@ -1,15 +1,15 @@
 .host {
   --vkui_internal--alert_animation_scale_initial: 0.95;
 
-  user-select: none;
-  color: var(--vkui--color_text_primary);
   position: relative;
   min-inline-size: 280px;
   max-inline-size: 416px;
   margin-block: auto;
   margin-inline: 24px;
-  box-shadow: var(--vkui--elevation4);
+  color: var(--vkui--color_text_primary);
+  user-select: none;
   border-radius: var(--vkui--size_border_radius_paper--regular);
+  box-shadow: var(--vkui--elevation4);
 }
 
 .desktop {
@@ -29,12 +29,12 @@
 
 .host::before {
   position: absolute;
-  inset-inline-start: 0;
   inset-block-start: 0;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
-  background-color: var(--vkui--color_background_modal);
   content: '';
+  background-color: var(--vkui--color_background_modal);
   border-radius: inherit;
 }
 
@@ -54,9 +54,9 @@
 }
 
 .actions {
+  position: relative;
   display: flex;
   max-inline-size: 100%;
-  position: relative;
   padding-block: 0 12px;
   padding-inline: 12px;
 }
@@ -89,18 +89,18 @@
 }
 
 .actionsAlignLeft {
-  justify-content: flex-start;
   align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .actionsAlignCenter {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .actionsAlignRight {
-  justify-content: flex-end;
   align-items: flex-end;
+  justify-content: flex-end;
 }
 
 /**
@@ -134,11 +134,11 @@
 }
 
 .ios .content::after {
-  content: '';
   position: absolute;
   inset-block-end: 0;
-  block-size: 1px;
   inset-inline: 0;
+  block-size: 1px;
+  content: '';
   background: var(--vkui--color_separator_primary_alpha);
   transform-origin: center bottom;
 }
@@ -153,27 +153,27 @@
 }
 
 .ios .action {
-  font-family: var(--vkui--font_family_base);
   position: relative;
-  font-size: 17px;
-  line-height: 44px;
-  color: var(--vkui--color_text_accent);
-  border: 0;
+  display: block;
+  block-size: 44px;
   padding-block: 0;
   padding-inline: 6px;
   margin: 0;
-  block-size: 44px;
-  display: block;
-  text-align: center;
-  text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: var(--vkui--font_family_base);
+  font-size: 17px;
+  line-height: 44px;
+  color: var(--vkui--color_text_accent);
+  text-align: center;
+  text-decoration: none;
+  border: 0;
   border-radius: 0;
 }
 
 .ios .action::after {
-  content: '';
   position: absolute;
+  content: '';
   background: var(--vkui--color_separator_primary_alpha);
 }
 
@@ -204,8 +204,8 @@
 }
 
 .ios .actionsDirectionVertical .action::after {
-  inset-inline-start: 0;
   inset-block-end: 0;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 1px;
   transform-origin: center bottom;
@@ -218,8 +218,8 @@
 .ios .actionsDirectionVertical .action:last-child {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
-  border-end-end-radius: 12px;
   border-end-start-radius: 12px;
+  border-end-end-radius: 12px;
 }
 
 @media (min-resolution: 2dppx) {
@@ -256,10 +256,10 @@
  */
 
 .vkcom {
+  inline-size: 400px;
   box-shadow:
     0 0 2px rgba(0, 0, 0, 0.12),
     0 0 96px rgba(0, 0, 0, 0.16);
-  inline-size: 400px;
 }
 
 .vkcom .content {
@@ -281,9 +281,9 @@
 
 .dismiss {
   position: absolute;
-  color: var(--vkui--color_icon_secondary);
   inset-block-start: 8px;
   inset-inline-end: 8px;
+  color: var(--vkui--color_icon_secondary);
 }
 
 @media (--reduce-motion) {

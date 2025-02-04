@@ -10,8 +10,8 @@
 }
 
 .icon .pin {
-  transform-origin: center;
   transform: scale(0);
+  transform-origin: center;
   transition: transform 0.15s var(--vkui--animation_easing_platform);
 }
 
