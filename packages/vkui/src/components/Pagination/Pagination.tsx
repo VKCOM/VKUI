@@ -19,7 +19,6 @@ import {
   PaginationPageButton,
 } from './PaginationPage/PaginationPageButton';
 import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
-import { getPageLabelDefault } from './utils';
 import styles from './Pagination.module.css';
 
 export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElement>, 'onChange'> {
@@ -78,6 +77,9 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   nextButtonLabel?: string;
   /**
    * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
+   * Чаще всего номера страницы, который и так есть в компоненте, достаточно,
+   * и лучше ничего дополнительного к нему не добавлять,
+   * чтобы у пользователей скринридера не было избыточности.
    */
   getPageLabel?: (isCurrent: boolean) => string;
   onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
@@ -119,8 +121,8 @@ export const Pagination = ({
   prevButtonCaption = 'Назад',
   nextButtonCaption = 'Вперёд',
   navigationButtonsStyle = 'icon',
-  getPageLabel = getPageLabelDefault,
-  navigationLabel = 'Навигация по страницам',
+  getPageLabel,
+  navigationLabel = 'Страницы',
   navigationLabelComponent = 'h2',
   prevButtonLabel = 'Перейти на предыдущую страницу',
   nextButtonLabel = 'Перейти на следующую страницу',
