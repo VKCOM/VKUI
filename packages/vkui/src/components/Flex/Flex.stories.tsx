@@ -7,24 +7,54 @@ import { Button } from '../Button/Button';
 import { Image } from '../Image/Image';
 import { Flex, type FlexProps } from './Flex';
 
-const story: Meta<FlexProps> = {
+type StoryProps = FlexProps & {
+  /**
+   * Отступ между строками
+   */
+  rowGap?: number;
+  /**
+   * Отступ между столбцами
+   */
+  columnGap?: number;
+  /**
+   * Количество элементов
+   */
+  itemsCount?: number;
+};
+
+const story: Meta<StoryProps> = {
   title: 'Layout/Flex',
   component: Flex,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  argTypes: {
+    rowGap: {
+      control: 'number',
+    },
+    columnGap: {
+      control: 'number',
+    },
+    itemsCount: {
+      control: 'number',
+    },
+  },
 };
 
 export default story;
 
-type Story = StoryObj<FlexProps>;
+type Story = StoryObj<StoryProps>;
 
 export const Playground: Story = {
   args: {
     gap: 'm',
+    itemsCount: 2,
     style: { height: '100%' },
   },
-  render: (args) => (
-    <Flex {...args}>
-      {Array.from({ length: 2 }, (_, index) => {
+  render: ({ itemsCount = 2, rowGap, columnGap, gap, ...args }) => (
+    <Flex
+      gap={rowGap !== undefined || columnGap !== undefined ? [rowGap || 0, columnGap || 0] : gap}
+      {...args}
+    >
+      {Array.from({ length: itemsCount }, (_, index) => {
         return (
           <Banner
             key={index}

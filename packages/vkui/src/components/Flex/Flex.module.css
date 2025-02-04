@@ -13,13 +13,31 @@
   margin-block: var(--vkui--size_base_padding_vertical--regular);
 }
 
-.withGaps {
-  margin-block-start: calc(
-    -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
-  );
-  margin-inline-start: calc(
-    -1 * var(--vkui_internal--column_gap) + var(--vkui_internal--flex_original_margin_inline)
-  );
+/*TODO [>=8]: Проверить браузерную поддержку gap*/
+/*Данная проверка позволяет максимально близко определить поддерживается ли gap + flex*/
+/*см. https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996*/
+/*Поддержка inset https://developer.mozilla.org/en-US/docs/Web/CSS/inset#browser_compatibility*/
+/*Поддержка gap https://developer.mozilla.org/en-US/docs/Web/CSS/gap#browser_compatibility*/
+@supports (inset: 0) {
+  .host {
+    gap: var(--vkui_internal--row_gap) var(--vkui_internal--column_gap);
+  }
+}
+@supports not (inset: 0) {
+  .withGaps {
+    margin-block-start: calc(
+      -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
+    );
+    margin-inline-start: calc(
+      -1 * var(--vkui_internal--column_gap) + var(--vkui_internal--flex_original_margin_inline)
+    );
+  }
+
+  /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
+  .withGaps.withGaps > * {
+    margin-block-start: var(--vkui_internal--row_gap);
+    margin-inline-start: var(--vkui_internal--column_gap);
+  }
 }
 
 .host > .marginAuto {
@@ -89,10 +107,4 @@
 
 .alignBaseline {
   align-items: baseline;
-}
-
-/* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
-.withGaps.withGaps > * {
-  margin-block-start: var(--vkui_internal--row_gap);
-  margin-inline-start: var(--vkui_internal--column_gap);
 }

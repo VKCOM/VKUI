@@ -42,8 +42,9 @@ export class CustomResizeObserver {
     iframe: HTMLIFrameElement;
   }> = [];
   mutationObserverFallback: MutationObserver | null = null;
+  private readonly updateFunction: () => void;
 
-  constructor(private readonly updateFunction: () => void) {
+  constructor(updateFunction: () => void) {
     this.updateFunction = updateFunction;
   }
 
