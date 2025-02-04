@@ -13,9 +13,7 @@ function MyContent() {
   return (
     <div dir={direction}>
       <p>Контент с {direction === 'rtl' ? 'RTL' : 'LTR'} направлением</p>
-      <div style={{ marginInlineStart: '16px' }}>
-        Отступ слева для LTR и справа для RTL
-      </div>
+      <div style={{ marginInlineStart: '16px' }}>Отступ слева для LTR и справа для RTL</div>
     </div>
   );
 }
