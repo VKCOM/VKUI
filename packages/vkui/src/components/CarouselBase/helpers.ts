@@ -1,4 +1,4 @@
-import { getValueByCheckedKey } from '../../helpers/getValueByCheckedKey';
+import { getRequiredValueByKey } from '../../helpers/getValueByKey';
 import { type AlignType } from '../../types';
 import { SLIDE_THRESHOLD } from './constants';
 import {
@@ -226,7 +226,7 @@ export const calcMin = ({
   if (align !== 'center' && isFullyVisible) {
     return 0;
   }
-  const result = getValueByCheckedKey(align, {
+  const result = getRequiredValueByKey(align, {
     left: () => containerWidth - layerWidth,
     right: () => viewportOffsetWidth - layerWidth,
     center: () => {
