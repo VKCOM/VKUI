@@ -31,6 +31,7 @@ const config: StorybookConfig = {
     './addons/colorScheme',
     './addons/pointer',
     './addons/customPanelHeaderAfter',
+    './addons/source-button',
     './addons/storybook-theme',
     getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
   ],
