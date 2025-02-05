@@ -2,6 +2,9 @@
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.withPadding {
   padding-inline-start: var(--vkui--size_base_padding_horizontal--regular);
 }
 

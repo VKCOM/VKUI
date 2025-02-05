@@ -68,6 +68,11 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
           children: [<Input key={0} placeholder="Введите ваше значение" />],
           required: [true],
         },
+        {
+          noPadding: [true],
+          removable: [undefined, true],
+          children: [<Input key={0} placeholder="Введите ваше значение" />],
+        },
       ]}
     >
       {(props: FormItemProps) => <FormItem {...props} style={{ maxWidth: '300px' }} />}
