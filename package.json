@@ -85,6 +85,7 @@
     "size-limit": "^11.1.6",
     "style-loader": "^4.0.0",
     "stylelint": "^16.14.1",
+    "stylelint-config-recess-order": "^6.0.0",
     "stylelint-config-standard": "^37.0.0",
     "stylelint-media-use-custom-media": "^4.0.0",
     "stylelint-prettier": "^5.0.3",

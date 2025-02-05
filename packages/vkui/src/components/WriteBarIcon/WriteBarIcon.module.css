@@ -1,14 +1,14 @@
 .host {
+  position: relative;
+  inline-size: 44px;
+  block-size: 52px;
+  padding: 0;
+  margin: 0;
+  color: var(--vkui--color_icon_secondary);
+  cursor: pointer;
   background: none;
   border: 0;
-  position: relative;
-  color: var(--vkui--color_icon_secondary);
-  block-size: 52px;
-  inline-size: 44px;
-  cursor: pointer;
   border-radius: var(--vkui--size_border_radius--regular);
-  margin: 0;
-  padding: 0;
 }
 
 .in {
@@ -20,8 +20,8 @@
 }
 
 .host:disabled {
-  opacity: 0.4;
   pointer-events: none;
+  opacity: 0.4;
 }
 
 .active {
@@ -53,9 +53,9 @@
 
 .ios.modeSend,
 .ios.modeDone {
-  color: var(--vkui--color_icon_accent_themed);
   inline-size: 48px;
   padding-inline: 0;
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .ios.modeSend,

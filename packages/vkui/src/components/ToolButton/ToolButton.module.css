@@ -1,19 +1,19 @@
 .host {
   position: relative;
-  display: flex;
   box-sizing: border-box;
-  text-decoration: none;
-  border: 0;
-  margin: 0;
-  padding: var(--vkui--spacing_size_m);
-  border-radius: var(--vkui--size_border_radius_paper--regular);
-  inline-size: 100%;
+  display: flex;
   flex-grow: 1;
   flex-basis: 0;
   align-items: center;
+  inline-size: 100%;
+  padding: var(--vkui--spacing_size_m);
+  margin: 0;
   font-family: var(--vkui--font_caption1--font_family--regular);
   font-size: var(--vkui--font_caption1--font_size--regular);
   line-height: var(--vkui--font_caption1--line_height--regular);
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
 .withFakeEndIcon {

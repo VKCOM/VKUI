@@ -70,9 +70,9 @@
 
 .label {
   flex-grow: 0;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .after {
@@ -80,8 +80,8 @@
 }
 
 .chevronIcon {
-  margin-inline-start: 8px;
   margin-block-start: 1px; /* Смещает иконку относительно текста */
+  margin-inline-start: 8px;
   color: var(--vkui--color_icon_secondary);
 }
 
@@ -123,16 +123,16 @@
  */
 
 .selected {
-  background-color: var(--vkui--color_background_accent_themed);
   color: var(--vkui--color_text_contrast_themed);
-  box-shadow: none;
+  background-color: var(--vkui--color_background_accent_themed);
   border: 0;
+  box-shadow: none;
 }
 
 .selected.modeTertiary,
 .selected.appearanceNeutral {
-  background-color: var(--vkui--color_transparent--active);
   color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_transparent--active);
 }
 
 .selected.appearanceAccent:not(.modeTertiary) .before,

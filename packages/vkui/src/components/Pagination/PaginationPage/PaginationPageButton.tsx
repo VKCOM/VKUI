@@ -5,7 +5,6 @@ import { Tappable, type TappableProps } from '../../Tappable/Tappable';
 import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import type { PaginationProps } from '../Pagination';
-import { getPageLabelDefault } from '../utils';
 import { getPaginationPageClassNames } from './usePaginationPageClasses';
 import styles from './PaginationPage.module.css';
 
@@ -26,7 +25,7 @@ const getTappablePropsFromPaginationPage = (
 ): TappableProps & { 'data-page': number } => {
   const {
     isCurrent = false,
-    getPageLabel = getPageLabelDefault,
+    getPageLabel,
     children,
     className,
     disabled,
@@ -40,6 +39,7 @@ const getTappablePropsFromPaginationPage = (
     sizeY,
   });
 
+  const pageLabel = getPageLabel?.(isCurrent);
   return {
     'className': classNames(pageClassNames, className),
     'activeMode': styles.stateActive,
@@ -49,7 +49,7 @@ const getTappablePropsFromPaginationPage = (
     'disabled': disabled,
     'children': (
       <Text normalize={false}>
-        <VisuallyHidden>{getPageLabel(isCurrent)} </VisuallyHidden>
+        {pageLabel && <VisuallyHidden>{pageLabel} </VisuallyHidden>}
         {children}
       </Text>
     ),

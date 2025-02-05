@@ -2,10 +2,10 @@
   --vkui_internal--actionsheet_animation_opacity_initial: 1;
   --vkui_internal--actionsheet_animation_translateY_initial: 100%;
 
+  box-sizing: border-box;
   inline-size: 100%;
   max-inline-size: var(--vkui--size_popup_small--regular);
   padding: 10px;
-  box-sizing: border-box;
 }
 
 @media (--reduce-motion) {
@@ -19,15 +19,15 @@
   padding-block: 8px;
   padding-inline: 0;
   overflow: hidden;
+  background: var(--vkui--color_background_modal);
   border-radius: 12px;
   box-shadow: var(--vkui--elevation3);
-  background: var(--vkui--color_background_modal);
 }
 
 .header {
-  color: var(--vkui--color_text_subhead);
   padding-block: 16px;
   padding-inline: 16px;
+  color: var(--vkui--color_text_subhead);
 }
 
 .opening {
@@ -54,16 +54,16 @@
 }
 
 .ios .contentWrapper {
-  border-radius: 14px;
   padding: 0;
+  border-radius: 14px;
 }
 
 .closeItemWrapperIos {
   margin-block: 8px var(--vkui_internal--safe_area_inset_bottom);
   overflow: hidden;
+  background: var(--vkui--color_background_modal);
   border-radius: 14px;
   box-shadow: var(--vkui--elevation3);
-  background: var(--vkui--color_background_modal);
 }
 
 .ios.closing {
@@ -85,12 +85,12 @@
 
 .ios .header::before {
   position: absolute;
-  inset-inline-start: 0;
   inset-block-start: 0;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
-  background-color: var(--vkui--color_background_modal);
   content: '';
+  background-color: var(--vkui--color_background_modal);
 }
 
 /**
@@ -110,14 +110,14 @@
   --vkui_internal--actionsheet_animation_translateY_initial: 5%;
 
   inline-size: auto;
+  max-inline-size: 100%;
   block-size: auto;
   padding: 0;
-  max-inline-size: 100%;
 }
 
 .menu.ios .contentWrapper {
-  border-radius: 14px;
   padding: 0;
+  border-radius: 14px;
 }
 
 @media (--reduce-motion) {

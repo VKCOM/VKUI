@@ -1,10 +1,10 @@
 .root {
+  display: flex;
   padding-block: var(--vkui--spacing_size_xl);
   padding-inline: var(--vkui--spacing_size_xl);
+  margin: 0;
   background: var(--vkui--color_background_warning);
   border-radius: 8px;
-  margin: 0;
-  display: flex;
 }
 
 .icon {
@@ -12,12 +12,12 @@
 }
 
 .content {
-  margin-inline-start: var(--vkui--spacing_size_xl);
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
   min-inline-size: 0;
+  margin-inline-start: var(--vkui--spacing_size_xl);
 }
 
 .root:not(:last-child) {

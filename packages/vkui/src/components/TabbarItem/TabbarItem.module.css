@@ -1,24 +1,24 @@
 .host {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  block-size: var(--vkui_internal--tabbar_height);
+  padding: 0;
   color: var(--vkui--color_tabbar_text_inactive);
   text-decoration: none;
-  border: 0;
   outline: var(--vkui_internal--outline-reset);
-  padding: 0;
   background: transparent;
-  block-size: var(--vkui_internal--tabbar_height);
-  position: relative;
+  border: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabbar) .host {
-  flex-shrink: 0;
-  max-inline-size: 100%;
-  min-inline-size: 0;
   flex-grow: 1;
+  flex-shrink: 0;
   flex-basis: 0;
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .selected {
@@ -30,16 +30,16 @@
 }
 
 .in {
+  box-sizing: border-box;
   display: flex;
-  padding-block: 4px 2px;
-  padding-inline: 2px;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
-  block-size: 100%;
   inline-size: 100%;
+  block-size: 100%;
+  padding-block: 4px 2px;
+  padding-inline: 2px;
   overflow: hidden;
-  box-sizing: border-box;
+  pointer-events: none;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
@@ -53,8 +53,8 @@
 }
 
 .icon {
-  color: var(--vkui--color_icon_secondary);
   position: relative;
+  color: var(--vkui--color_icon_secondary);
 }
 
 .selected .icon {
@@ -62,10 +62,10 @@
 }
 
 .label {
-  white-space: nowrap;
   max-inline-size: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
@@ -106,10 +106,10 @@
  */
 
 .ios .tappable {
-  inline-size: 100%;
-  block-size: 100%;
   inset-block-start: 0;
   inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .ios .in {

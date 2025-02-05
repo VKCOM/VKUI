@@ -22,7 +22,7 @@ export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
   colorScheme: ColorSchemeType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
-  children: (props: Props) => React.ReactNode;
+  children: React.FC<Props>;
   AppWrapper?: React.ComponentType<AppDefaultWrapperProps>;
 }
 
@@ -40,7 +40,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
   platform,
   adaptivityProviderProps: adaptivityProviderPropsProp,
   propSets = [],
-  children,
+  children: Children,
   AppWrapper = AppDefaultWrapper,
   ...restProps
 }: InternalComponentPlaygroundProps<Props>): React.ReactNode => {
@@ -99,7 +99,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
                 <div dir={dir}>
                   <DirectionProvider value={dir}>
                     <AdaptivityProvider {...clonedAdaptivityProviderProps}>
-                      {children(mappedProps)}
+                      <Children {...mappedProps} />
                     </AdaptivityProvider>
                   </DirectionProvider>
                 </div>

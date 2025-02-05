@@ -2,8 +2,8 @@
   --vkui_internal--view_animation_translateY_initial: 80px;
 
   position: relative;
-  block-size: 100%;
   inline-size: 100%;
+  block-size: 100%;
   word-wrap: break-word;
 }
 
@@ -19,15 +19,15 @@
 }
 
 .panelOverlay {
-  display: none;
   position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--vkui_internal--z_index_panel_header_fade);
+  display: none;
   inline-size: 100%;
   block-size: 100%;
-  inset-inline-start: 0;
-  inset-block-start: 0;
-  background-color: #000;
   pointer-events: none;
-  z-index: var(--vkui_internal--z_index_panel_header_fade);
+  background-color: #000;
 }
 
 .panelPrev .panelOverlay {
@@ -64,8 +64,8 @@
 }
 
 .panels {
-  block-size: 100%;
   inline-size: 100%;
+  block-size: 100%;
 }
 
 .panelIn {
@@ -74,9 +74,9 @@
 
 .panel {
   position: relative;
+  box-sizing: border-box;
   inline-size: 100%;
   block-size: 100%;
-  box-sizing: border-box;
   isolation: isolate;
 }
 

@@ -1,10 +1,10 @@
 .host {
   display: flex;
-  justify-content: center;
   align-items: center;
-  border-radius: 50%;
+  justify-content: center;
   inline-size: var(--vkui--size_field_height--regular);
   block-size: var(--vkui--size_field_height--regular);
+  border-radius: 50%;
 }
 
 .host[disabled] {

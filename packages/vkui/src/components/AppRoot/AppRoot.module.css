@@ -1,10 +1,10 @@
 .host {
+  inline-size: 100%;
   /* чтобы можно было ограничить размеры приложения
    * извне с помощью max-height, max-width */
   max-inline-size: inherit;
-  max-block-size: inherit;
-  inline-size: 100%;
   block-size: 100%;
+  max-block-size: inherit;
 }
 
 .layoutCard {

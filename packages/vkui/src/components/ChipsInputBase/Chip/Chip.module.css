@@ -1,11 +1,11 @@
 .host {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
-  background: var(--vkui--color_background_content);
-  border-radius: 6px;
   block-size: 32px;
-  box-sizing: border-box;
+  background: var(--vkui--color_background_content);
+  border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
+  border-radius: 6px;
 }
 
 .in,
@@ -27,34 +27,34 @@
 }
 
 .content {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--vkui--color_text_primary);
   display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--vkui--font_paragraph--font_family--regular);
 
   /* Typography/Paragraph */
   font-size: var(--vkui--font_paragraph--font_size--regular);
-  line-height: var(--vkui--font_paragraph--line_height--regular);
   font-weight: var(--vkui--font_paragraph--font_weight--regular);
-  font-family: var(--vkui--font_paragraph--font_family--regular);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  color: var(--vkui--color_text_primary);
+  white-space: nowrap;
 }
 
 .sizeYCompact .content {
+  font-family: var(--vkui--font_footnote--font_family--regular);
   /* Typography/Footnote */
   font-size: var(--vkui--font_footnote--font_size--regular);
-  line-height: var(--vkui--font_footnote--line_height--regular);
   font-weight: var(--vkui--font_footnote--font_weight--regular);
-  font-family: var(--vkui--font_footnote--font_family--regular);
+  line-height: var(--vkui--font_footnote--line_height--regular);
 }
 
 @media (--sizeY-compact) {
   .sizeYNone .content {
+    font-family: var(--vkui--font_footnote--font_family--regular);
     /* Typography/Footnote */
     font-size: var(--vkui--font_footnote--font_size--regular);
-    line-height: var(--vkui--font_footnote--line_height--regular);
     font-weight: var(--vkui--font_footnote--font_weight--regular);
-    font-family: var(--vkui--font_footnote--font_family--regular);
+    line-height: var(--vkui--font_footnote--line_height--regular);
   }
 }
 
@@ -64,15 +64,15 @@
 }
 
 .remove {
+  box-sizing: border-box;
   flex: 0 0 100%;
   padding: 5px;
-  transform: translateX(-1px);
   color: var(--vkui--color_icon_secondary);
+  cursor: pointer;
+  background: transparent;
   border: 0;
   border-radius: inherit;
-  background: transparent;
-  box-sizing: border-box;
-  cursor: pointer;
+  transform: translateX(-1px);
 }
 
 .before {

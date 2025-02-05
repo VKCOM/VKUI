@@ -1,12 +1,10 @@
 .host {
-  isolation: isolate;
   position: relative;
+  box-sizing: border-box;
   display: inline-grid;
   grid-auto-flow: column;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  block-size: auto;
 
   /**
    * `min-width` в контексте Flexbox по умолчанию имеет значение `auto`,
@@ -15,6 +13,8 @@
    * Подробности по ссылке https://stackoverflow.com/a/66689926/2903061
    */
   min-inline-size: 0;
+  block-size: auto;
+  isolation: isolate;
 }
 
 .sizeS {
@@ -113,12 +113,12 @@
 
 /* mode="outline" */
 .modeOutline::before {
-  content: '';
   position: absolute;
-  z-index: -1;
   inset: 0;
-  border-width: 1px;
+  z-index: -1;
+  content: '';
   border-style: solid;
+  border-width: 1px;
   border-radius: inherit;
 }
 
@@ -159,6 +159,6 @@
 }
 
 .outlineOverlay::before {
-  border-width: 0;
   background-color: var(--vkui--color_overlay_primary);
+  border-width: 0;
 }

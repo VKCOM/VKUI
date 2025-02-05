@@ -4974,11 +4974,11 @@ __metadata:
   linkType: hard
 
 "@types/react-dom@npm:^19.0.1":
-  version: 19.0.1
-  resolution: "@types/react-dom@npm:19.0.1"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: 10/59d0704e445a3e0d034ef016c92dc1bbec0ba6c1af084bf6de18f0ac3abd18a632961b7fd48668c519137d0bd7bfa77a8135a66c2725d4b7f68b830be263a564
+  version: 19.0.3
+  resolution: "@types/react-dom@npm:19.0.3"
+  peerDependencies:
+    "@types/react": ^19.0.0
+  checksum: 10/815907f7adaa078acbf1d1ae7b6bf69cebe86bd301b8b9744e392bc0f16feb31bfb9fe0bfa2681d7d86678c83d52dedba5ed9bc7776736d4050cdd426b8b2d2b
   languageName: node
   linkType: hard
 
@@ -4992,11 +4992,11 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:*, @types/react@npm:^19.0.1":
-  version: 19.0.1
-  resolution: "@types/react@npm:19.0.1"
+  version: 19.0.8
+  resolution: "@types/react@npm:19.0.8"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10/930dd4904047059c48ae64a90fc5e8078b5bac0a14c9d927917e5a07e88e4e5073ddc944cbde90a955f9f815c23b7112caea63e407bc423913073bedecb097aa
+  checksum: 10/1080d5b96ee0b4395f8f167ae6952f570088ee03bdce69f8237aab82c32d9bd2b71106f787bac17ba351acc4aba5e3454bafca51f2eb11d1562073b821e63d15
   languageName: node
   linkType: hard
 
@@ -5657,6 +5657,7 @@ __metadata:
     size-limit: "npm:^11.1.6"
     style-loader: "npm:^4.0.0"
     stylelint: "npm:^16.14.1"
+    stylelint-config-recess-order: "npm:^6.0.0"
     stylelint-config-standard: "npm:^37.0.0"
     stylelint-media-use-custom-media: "npm:^4.0.0"
     stylelint-prettier: "npm:^5.0.3"
@@ -17255,6 +17256,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-sorting@npm:^8.0.2":
+  version: 8.0.2
+  resolution: "postcss-sorting@npm:8.0.2"
+  peerDependencies:
+    postcss: ^8.4.20
+  checksum: 10/2496713e31c3d07c6d650d6ca4734489c2440fbbdd5c109ae5192178e6637e255bdd77dd52a0171f773c00df49bb8e0a7077c67aa0ab3b3c93a1934372318dff
+  languageName: node
+  linkType: hard
+
 "postcss-svgo@npm:^7.0.1":
   version: 7.0.1
   resolution: "postcss-svgo@npm:7.0.1"
@@ -17296,7 +17306,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.38, postcss@npm:^8.4.43, postcss@npm:^8.5.1":
+"postcss@npm:^8.0.0, postcss@npm:^8.1.2, postcss@npm:^8.4.32, postcss@npm:^8.4.33, postcss@npm:^8.4.35, postcss@npm:^8.4.38, postcss@npm:^8.4.43, postcss@npm:^8.5.1":
   version: 8.5.1
   resolution: "postcss@npm:8.5.1"
   dependencies:
@@ -19996,6 +20006,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stylelint-config-recess-order@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "stylelint-config-recess-order@npm:6.0.0"
+  dependencies:
+    stylelint-order: "npm:^6.0.4"
+  peerDependencies:
+    stylelint: ">=16"
+  checksum: 10/b38fbc0e79d3b40c8d049e35d71f47354167b44d6e8548e706cbe2679e23e0cf34ad1d9d74f6162f2f7e15a8422c586db175dbf2391bd7327fb2ad6593408ec9
+  languageName: node
+  linkType: hard
+
 "stylelint-config-recommended@npm:^15.0.0":
   version: 15.0.0
   resolution: "stylelint-config-recommended@npm:15.0.0"
@@ -20022,6 +20043,18 @@ __metadata:
   peerDependencies:
     stylelint: ">=16"
   checksum: 10/d74fca0a7c80875e25ad7ba5f5439201a12d7184e80ce1981320fc36384b2619ea9e026d33b2fff1fdbf6121dcf8853f75b1b5df5c0653283ce5ce52ea08149e
+  languageName: node
+  linkType: hard
+
+"stylelint-order@npm:^6.0.4":
+  version: 6.0.4
+  resolution: "stylelint-order@npm:6.0.4"
+  dependencies:
+    postcss: "npm:^8.4.32"
+    postcss-sorting: "npm:^8.0.2"
+  peerDependencies:
+    stylelint: ^14.0.0 || ^15.0.0 || ^16.0.1
+  checksum: 10/a16a017bded454f78fb3ed02643e93525ee1e4a03c0303c364aa8ee908c4500238036e8df15403f9bb968136c70a32335b494a443df15bb6985bb8e1f431edcd
   languageName: node
   linkType: hard
 

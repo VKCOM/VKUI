@@ -1,6 +1,5 @@
 .host {
   position: fixed;
-  box-sizing: border-box;
   /**
    * ⚠️ WARNING ⚠️
    * `left: auto` решает следующие задачи:
@@ -13,6 +12,7 @@
    */
   inset-inline-start: auto;
   z-index: var(--vkui_internal--z_index_fixed_layout);
+  box-sizing: border-box;
   padding-inline: var(--vkui_internal--safe_area_inset_left)
     var(--vkui_internal--safe_area_inset_right);
 }
@@ -22,13 +22,13 @@
 }
 
 .verticalTop {
-  inline-size: 100%;
   inset-block-start: 0;
+  inline-size: 100%;
 }
 
 .verticalBottom {
-  inline-size: 100%;
   inset-block-end: 0;
+  inline-size: 100%;
   padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
