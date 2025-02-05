@@ -1,13 +1,13 @@
 .host {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin: 0;
+  color: currentColor;
   appearance: none;
   background: none;
   border: 0;
   box-shadow: none;
-  display: block;
-  color: currentColor;
-  padding: 0;
-  margin: 0;
-  position: relative;
 }
 
 .host[disabled] {
@@ -16,9 +16,9 @@
 
 .primitive {
   block-size: 48px;
-  line-height: 48px;
   padding-block: 0;
   padding-inline: 10px;
+  line-height: 48px;
 }
 
 /* stylelint-disable selector-max-type */
@@ -87,8 +87,8 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .vkcom > :not(:global(.vkuiInternalBadge)):not(:global(.vkuiInternalCounter)) {
-  transition: opacity 0.3s;
   opacity: 0.7;
+  transition: opacity 0.3s;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
@@ -136,9 +136,9 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .host :global(.vkuiInternalCounter) {
   position: absolute;
-  padding: 0;
   inset-block-start: 4px;
   inset-inline-end: 4px;
+  padding: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */

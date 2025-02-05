@@ -1,12 +1,12 @@
 .host {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-inline: 5px;
-  text-align: center;
-  box-sizing: border-box;
-  background: var(--vkui_internal--counter_background);
   color: var(--vkui_internal--counter_foreground);
+  text-align: center;
+  background: var(--vkui_internal--counter_background);
 
   --vkui_internal--counter_background: transparent;
   --vkui_internal--counter_foreground: var(--vkui--color_text_contrast);
@@ -93,14 +93,14 @@
 /*----------------------------------*/
 
 .sizeM {
-  block-size: 24px;
   min-inline-size: 24px;
+  block-size: 24px;
   border-radius: 12px;
 }
 
 .sizeS {
-  block-size: 18px;
   min-inline-size: 18px;
+  block-size: 18px;
   border-radius: 9px;
 }
 

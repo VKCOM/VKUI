@@ -1,12 +1,12 @@
 .host {
   box-sizing: border-box;
-  text-decoration: none;
-  margin: 0;
-  border: 0;
   inline-size: 100%;
-  background: transparent;
-  text-align: start;
   padding-block: 0;
+  margin: 0;
+  text-align: start;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
 }
 
 /**
@@ -15,8 +15,8 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) .host {
-  inline-size: 100%;
   box-sizing: content-box;
+  inline-size: 100%;
   margin-block: 0;
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
@@ -38,11 +38,11 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .centered :global(.vkuiIcon) {
+  padding-inline-end: var(--vkui--spacing_size_m);
   /* компенсируем отступ заданные в SimpleCell__before */
   margin-inline-end: calc(
     -1 * var(--vkui_internal--SimpleCell-before-inline-padding-end, var(--vkui--spacing_size_xl))
   );
-  padding-inline-end: var(--vkui--spacing_size_m);
 }
 
 .appearanceAccent {

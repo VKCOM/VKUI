@@ -12,8 +12,8 @@ button.realClickable {
 }
 
 a.realClickable {
-  appearance: none;
   text-decoration: none;
+  appearance: none;
 }
 /* stylelint-enable selector-max-type */
 

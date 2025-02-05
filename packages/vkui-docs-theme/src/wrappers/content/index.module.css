@@ -10,11 +10,11 @@
 }
 
 .blog {
+  flex-direction: column;
   max-inline-size: var(--vkui_docs_blog--max-width);
   padding-block-start: var(--vkui--spacing_size_4xl);
   padding-block-end: 60px;
   padding-inline: 40px;
-  flex-direction: column;
 }
 
 @media (--viewWidth-smallTabletMinus) {

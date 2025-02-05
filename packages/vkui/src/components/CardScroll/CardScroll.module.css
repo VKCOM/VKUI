@@ -4,15 +4,15 @@
 
 .in {
   inline-size: 100%;
-  margin: 0;
   padding: 0;
+  margin: 0;
   list-style-type: none;
 }
 
 .in::after,
 .in::before {
-  content: '';
   padding-inline: calc(var(--vkui_internal--CardScroll_horizontal_padding) / 2);
+  content: '';
 }
 
 .host + .host {

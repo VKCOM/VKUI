@@ -3,11 +3,11 @@
 }
 
 .host::before {
-  content: '';
   position: absolute;
   inset: 0;
-  border-radius: var(--vkui--size_border_radius--regular);
+  content: '';
   border: 1px dashed var(--vkui--color_separator_primary);
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .active::before {

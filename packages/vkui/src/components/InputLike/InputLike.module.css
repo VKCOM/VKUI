@@ -4,12 +4,12 @@
 }
 
 .mask::after {
-  content: '';
   position: absolute;
-  inline-size: calc(100% - 0.1em);
-  block-size: 1px;
   inset-block-end: 0;
   inset-inline-start: 0;
+  inline-size: calc(100% - 0.1em);
+  block-size: 1px;
+  content: '';
   border-block-end: solid 1px var(--vkui--color_text_secondary);
 }
 

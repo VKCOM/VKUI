@@ -7,15 +7,15 @@
 }
 
 .host:last-child::after {
-  content: '';
   min-inline-size: var(--vkui_internal--side_cell_gap);
+  content: '';
 }
 
 .body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding-block: 4px;
   padding-inline: var(--vkui--spacing_size_s);
 }

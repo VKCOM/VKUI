@@ -16,16 +16,16 @@
 }
 
 .date:not(:only-child)::after {
-  content: '•';
   padding-inline: var(--vkui--spacing_size_s);
+  content: '•';
 }
 
 .content {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
   padding-block: var(--vkui--size_base_padding_vertical--regular);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
 
   --vkui--color_text_link: var(--vkui--color_text_primary);
 }
@@ -35,6 +35,6 @@
 }
 
 .meta {
-  margin-block-start: auto;
   padding-block-start: var(--vkui--spacing_size_s);
+  margin-block-start: auto;
 }

@@ -6,10 +6,10 @@
 @media (--viewWidth-desktopPlus) {
   .root {
     position: sticky;
+    inset-block-start: var(--vkui_docs--navbar-height);
     flex-shrink: 0;
     align-self: flex-start;
     inline-size: 310px;
-    inset-block-start: var(--vkui_docs--navbar-height);
     border-inline-end: var(--vkui--size_border--regular) solid
       var(--vkui_docs--color_stroke_separator_secondary);
   }
@@ -19,32 +19,32 @@
     position: fixed;
     inset-block-start: 0;
     inset-block-end: 0;
-    inline-size: 320px;
     inset-inline-end: 0;
-    background-color: var(--vkui_docs--color_background_content);
     /* TODO: move to the common file with all the sizes? */
     z-index: 30;
-    will-change: transform;
+    inline-size: 320px;
+    background-color: var(--vkui_docs--color_background_content);
     border-radius: var(--vkui--size_border_radius--regular);
+    will-change: transform;
   }
 }
 
 .inner {
+  flex-grow: 1;
   block-size: calc(100vh - var(--vkui_docs--navbar-height));
   padding-block: 32px var(--vkui--spacing_size_4xl);
   padding-inline: var(--vkui--spacing_size_3xl);
   overflow-x: hidden;
   overflow-y: auto;
-  flex-grow: 1;
-  scrollbar-width: thin;
   scrollbar-gutter: stable;
+  scrollbar-width: thin;
 }
 
 @media (--viewWidth-tablet), (--viewWidth-smallTabletMinus) {
   .inner {
+    block-size: calc(100vh - 76px);
     padding-block: var(--vkui--spacing_size_2xl);
     padding-inline: var(--vkui--spacing_size_2xl);
-    block-size: calc(100vh - 76px);
   }
 }
 @media (--viewWidth-smallTabletMinus) {

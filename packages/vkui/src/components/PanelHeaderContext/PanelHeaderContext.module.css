@@ -22,21 +22,21 @@
 
 .in {
   position: absolute;
-  z-index: 1;
   inset-inline-start: 0;
+  z-index: 1;
+  box-sizing: border-box;
   inline-size: 100%;
   padding: 8px;
-  box-sizing: border-box;
 }
 
 .fade {
-  display: var(--vkui_internal--PanelHeaderContext__fade_display);
   position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   z-index: 0;
+  display: var(--vkui_internal--PanelHeaderContext__fade_display);
   inline-size: 100%;
   block-size: 100%;
-  inset-inline-start: 0;
-  inset-block-start: 0;
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -82,16 +82,16 @@
  */
 .host:not(.ios) .content,
 .sizeXRegular.ios .content {
-  border-radius: 12px;
   padding-block: 8px;
   padding-inline: 0;
+  border-radius: 12px;
 }
 
 @media (--sizeX-regular) {
   .sizeXNone.ios .content {
-    border-radius: 12px;
     padding-block: 8px;
     padding-inline: 0;
+    border-radius: 12px;
   }
 }
 

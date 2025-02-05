@@ -84,29 +84,29 @@
 }
 
 .placementTopStart {
-  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
   inset-block-start: var(--vkui_internal--FloatElement_vertical_indent);
+  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
 }
 
 .placementTop {
-  inset-inline-start: 50%;
   inset-block-start: var(--vkui_internal--FloatElement_vertical_indent);
+  inset-inline-start: 50%;
   transform: translateX(-50%);
 }
 
 .placementTopEnd {
-  inset-inline-end: var(--vkui_internal--FloatElement_horizontal_indent);
   inset-block-start: var(--vkui_internal--FloatElement_vertical_indent);
+  inset-inline-end: var(--vkui_internal--FloatElement_horizontal_indent);
 }
 
 .placementBottomStart {
-  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
   inset-block-end: var(--vkui_internal--FloatElement_vertical_indent);
+  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
 }
 
 .placementBottom {
-  inset-inline-start: 50%;
   inset-block-end: var(--vkui_internal--FloatElement_vertical_indent);
+  inset-inline-start: 50%;
   transform: translateX(-50%);
 }
 
@@ -116,19 +116,19 @@
 }
 
 .placementMiddleStart {
-  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
   inset-block-start: 50%;
+  inset-inline-start: var(--vkui_internal--FloatElement_horizontal_indent);
   transform: translateY(-50%);
 }
 
 .placementMiddle {
-  inset-inline-start: 50%;
   inset-block-start: 50%;
+  inset-inline-start: 50%;
   transform: translate(-50%, -50%);
 }
 
 .placementMiddleEnd {
-  inset-inline-end: var(--vkui_internal--FloatElement_horizontal_indent);
   inset-block-start: 50%;
+  inset-inline-end: var(--vkui_internal--FloatElement_horizontal_indent);
   transform: translateY(-50%);
 }

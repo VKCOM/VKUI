@@ -6,8 +6,8 @@
 }
 
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -21,9 +21,9 @@ html {
 }
 
 body {
-  background-color: var(--vkui--color_background_content);
-  font-size: var(--vkui--font_paragraph--font_size--regular);
-  line-height: var(--vkui--font_paragraph--line_height--regular);
-  font-weight: var(--vkui--font_weight_base3);
   font-family: var(--vkui--font_family_base);
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  font-weight: var(--vkui--font_weight_base3);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  background-color: var(--vkui--color_background_content);
 }
