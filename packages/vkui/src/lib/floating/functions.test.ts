@@ -42,11 +42,13 @@ describe('floating/functions', () => {
         left: 10,
         width: 'max-content',
       };
-      expect(convertFloatingDataToReactCSSProperties('absolute', 10, 10)).toEqual({
+      expect(
+        convertFloatingDataToReactCSSProperties({ strategy: 'absolute', x: 10, y: 10 }),
+      ).toEqual({
         position: 'absolute',
         ...expectedCSSProperties,
       });
-      expect(convertFloatingDataToReactCSSProperties('fixed', 10, 10)).toEqual({
+      expect(convertFloatingDataToReactCSSProperties({ strategy: 'fixed', x: 10, y: 10 })).toEqual({
         position: 'fixed',
         ...expectedCSSProperties,
       });
@@ -61,13 +63,20 @@ describe('floating/functions', () => {
         left: 0,
         width: 'max-content',
       };
-      expect(convertFloatingDataToReactCSSProperties('absolute', 0, 0)).toEqual(
+      expect(convertFloatingDataToReactCSSProperties({ strategy: 'absolute', x: 0, y: 0 })).toEqual(
         expectedCSSProperties,
       );
     });
 
     it('should ignore `width` property if `initialWidth` prop is null', () => {
-      expect(convertFloatingDataToReactCSSProperties('absolute', 0, 0, null)).toEqual({
+      expect(
+        convertFloatingDataToReactCSSProperties({
+          strategy: 'absolute',
+          x: 0,
+          y: 0,
+          initialWidth: null,
+        }),
+      ).toEqual({
         position: 'absolute',
         top: 0,
         right: 'auto',

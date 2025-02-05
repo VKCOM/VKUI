@@ -10,6 +10,7 @@ import {
   usePlacementChangeCallback,
 } from '../lib/floating';
 import { type ReferenceProps } from '../lib/floating/useFloatingWithInteractions/types';
+import { useReferenceHiddenChangeCallback } from '../lib/floating/useReferenceHiddenChangeCallback';
 import { useExternRef } from './useExternRef';
 import { useGlobalEscKeyDown } from './useGlobalEscKeyDown';
 
@@ -41,6 +42,7 @@ export type UseFloatingElementProps<
 > = Omit<UseFloatingMiddlewaresBootstrapOptions, 'arrowRef'> &
   Omit<UseFloatingWithInteractionsProps, 'placement'> & {
     onPlacementChange?: OnPlacementChange;
+    onReferenceHiddenChange?: (hidden: boolean) => void;
     renderFloatingComponent: RenderFloatingComponentFn<FloatingElement>;
     remapReferenceProps?: RemapReferencePropsFn<ReferenceElement>;
     externalFloatingElementRef?: React.Ref<FloatingElement>;
@@ -81,6 +83,7 @@ export const useFloatingElement = <
   onShownChange,
   onShownChanged,
   strategy,
+  onReferenceHiddenChange,
 
   onPlacementChange,
 
@@ -138,6 +141,8 @@ export const useFloatingElement = <
   const resultRef = useExternRef<FloatingElement>(externalFloatingElementRef, refs.setFloating);
 
   usePlacementChangeCallback(placement, resolvedPlacement, onPlacementChange);
+
+  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChange);
 
   const component = renderFloatingComponent({
     shown,

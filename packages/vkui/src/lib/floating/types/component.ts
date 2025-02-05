@@ -59,4 +59,10 @@ export interface FloatingComponentProps
    * чтобы всплывающий элемент вместился в эту область видимости.
    */
   onPlacementChange?: OnPlacementChange;
+  /**
+   * Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.
+   *
+   * > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента
+   */
+  onReferenceHiddenChange?: (hidden: boolean) => void;
 }
