@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HasRootRef } from '../../types';
@@ -38,6 +40,8 @@ export const TabbarItem = ({
   href,
   Component = href ? 'a' : 'button',
   disabled,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
   ...restProps
 }: TabbarItemProps): React.ReactNode => {
   const platform = usePlatform();
@@ -50,11 +54,37 @@ export const TabbarItem = ({
     }
   }
 
+  const {
+    focusVisible,
+    onFocus: handleFocusVisibleOnFocus,
+    onBlur: handleFocusVisibleOnBlur,
+  } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({
+    focusVisible,
+  });
+
+  const handleFocus = React.useCallback(
+    (event: React.FocusEvent<HTMLElement>) => {
+      handleFocusVisibleOnFocus(event);
+      onFocusProp?.(event);
+    },
+    [onFocusProp, handleFocusVisibleOnFocus],
+  );
+  const handleBlur = React.useCallback(
+    (event: React.FocusEvent<HTMLElement>) => {
+      handleFocusVisibleOnBlur(event);
+      onBlurProp?.(event);
+    },
+    [onBlurProp, handleFocusVisibleOnBlur],
+  );
+
   return (
     <RootComponent
       Component={Component}
       {...restProps}
       disabled={disabled}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       href={href}
       baseClassName={classNames(
         styles.host,
@@ -69,8 +99,9 @@ export const TabbarItem = ({
         activeMode={platform === 'ios' ? styles.tappableActive : 'background'}
         activeEffectDelay={platform === 'ios' ? 0 : 300}
         hasHover={false}
-        className={styles.tappable}
+        className={classNames(styles.tappable, focusVisibleClassNames)}
         onClick={noop}
+        tabIndex={-1}
       />
       <div className={styles.in}>
         <div className={styles.icon}>
