@@ -18,6 +18,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/DefaultIcon';
 import type { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { onboardingTooltipContainerAttr } from './OnboardingTooltipContainer';
@@ -67,6 +68,10 @@ export interface OnboardingTooltipProps
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
   onClose?: (this: void) => void;
+  /**
+   * [a11y] Метка для подложки-кнопки, для описание того, что произойдёт при клике.
+   */
+  overlayLabel?: string;
 }
 
 /**
@@ -90,6 +95,7 @@ export const OnboardingTooltip = ({
   disableArrow = false,
   onPlacementChange,
   disableFlipMiddleware = false,
+  overlayLabel = 'Закрыть',
   ...restProps
 }: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -139,7 +145,8 @@ export const OnboardingTooltip = ({
     });
 
     tooltip = createPortal(
-      <>
+      <FocusTrap role="dialog" aria-modal="true" onClose={onClose}>
+        <button aria-label={overlayLabel} className={styles.overlay} onClickCapture={onClose} />
         <TooltipBase
           {...restProps}
           id={tooltipId}
@@ -158,8 +165,7 @@ export const OnboardingTooltip = ({
                 }
           }
         />
-        <div className={styles.overlay} onClickCapture={onClose} />
-      </>,
+      </FocusTrap>,
       tooltipContainer,
     );
   }
