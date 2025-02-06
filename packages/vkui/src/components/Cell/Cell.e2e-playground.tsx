@@ -6,7 +6,7 @@ export const CellPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
-      platformToHeight={{
+      componentStateHeight={{
         android: 155,
         ios: 155,
         vkcom: 100,

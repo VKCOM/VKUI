@@ -41,7 +41,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </ButtonGroup>,
           ],
           $adaptivity: 'y',
-          $platformToHeight: {
+          $componentStateHeight: {
             android: 290,
             ios: 290,
             vkcom: 210,
@@ -56,7 +56,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
               <Icon24UserAddOutline />
             </RichCell.Icon>,
           ],
-          $platformToHeight: {
+          $componentStateHeight: {
             android: 140,
             ios: 140,
             vkcom: 100,
@@ -68,7 +68,7 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           after: [withLabel('Very very very very very very very long after', 'Very long after')],
           beforeAlign: ['center', 'end'],
           contentAlign: ['center', 'end'],
-          $platformToHeight: {
+          $componentStateHeight: {
             android: 140,
             ios: 140,
             vkcom: 100,

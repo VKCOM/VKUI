@@ -10,7 +10,12 @@ import { AppDefaultWrapper, type AppDefaultWrapperProps } from './AppDefaultWrap
 import { TEST_CLASS_NAMES } from './constants';
 import { getAdaptivePxWidth, isCustomValueWithLabel, multiCartesian, prettyProps } from './utils';
 
-export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'div'>> {
+type DefaultProps<T extends React.ElementType> = Omit<
+  React.ComponentProps<T>,
+  'sizeX' | 'sizeY' | 'componentStateHeight'
+>;
+
+export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
   isFixedComponent?: boolean;
   platform: PlatformType;
   colorScheme: ColorSchemeType;
@@ -18,7 +23,7 @@ export interface InternalComponentPlaygroundProps<Props = React.ComponentProps<'
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
   children: (props: Props) => React.ReactNode;
   AppWrapper?: React.ComponentType<AppDefaultWrapperProps>;
-  platformToHeight?: Partial<Record<PlatformType, number>>;
+  componentStateHeight?: Partial<Record<PlatformType, number>>;
 }
 
 export type ComponentPlaygroundProps = Pick<
@@ -29,9 +34,7 @@ export type ComponentPlaygroundProps = Pick<
 /**
  * Рендерит переданный в `children` компонент с разными параметрами (`propSets`).
  */
-export const ComponentPlayground = <
-  Props extends React.ComponentProps<any> = React.ComponentProps<'div'>,
->({
+export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultProps<'div'>>({
   isFixedComponent = false,
   colorScheme,
   platform,
@@ -39,7 +42,7 @@ export const ComponentPlayground = <
   propSets = [],
   children,
   AppWrapper = AppDefaultWrapper,
-  platformToHeight: globalPlatformToHeight,
+  componentStateHeight: globalComponentStateHeight,
   ...restProps
 }: InternalComponentPlaygroundProps<Props>): React.ReactNode => {
   const isVKCOM = platform === 'vkcom';
@@ -72,19 +75,28 @@ export const ComponentPlayground = <
           }
           {...restProps}
         >
-          {multiCartesian(propSets, { adaptive: !isVKCOM }).map((props, i) => {
+          {multiCartesian<Props>(propSets, { adaptive: !isVKCOM, platform }).map((props, i) => {
             const clonedAdaptivityProviderProps = { ...adaptivityProviderProps };
+            const { sizeX, sizeY, componentStateHeight, ...componentProps } = props;
 
-            if (props.sizeX) {
-              clonedAdaptivityProviderProps.sizeX = props.sizeX;
+            if (sizeX) {
+              clonedAdaptivityProviderProps.sizeX = sizeX;
             }
 
-            if (props.sizeY) {
-              clonedAdaptivityProviderProps.sizeY = props.sizeY;
+            if (sizeY) {
+              clonedAdaptivityProviderProps.sizeY = sizeY;
             }
-            const { $platformToHeight, ...showedProps } = props;
-            const mappedProps = mapObject(props, (v) => (isCustomValueWithLabel(v) ? v.value : v));
-            const height = $platformToHeight?.[platform] || globalPlatformToHeight?.[platform];
+
+            const mappedProps: Props = mapObject(componentProps, (v) =>
+              isCustomValueWithLabel(v) ? v.value : v,
+            );
+            const height = componentStateHeight || globalComponentStateHeight?.[platform];
+
+            const showedProps = {
+              ...componentProps,
+              sizeX,
+              sizeY,
+            };
 
             return (
               <div key={i} style={{ height }}>

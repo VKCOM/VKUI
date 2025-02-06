@@ -23,7 +23,7 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
-      platformToHeight={{
+      componentStateHeight={{
         android: 105,
         ios: 105,
         vkcom: 80,
@@ -60,7 +60,7 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
               <Icon28MessageOutline />
             </IconButton>,
           ],
-          $platformToHeight: {
+          $componentStateHeight: {
             android: 130,
             ios: 130,
             vkcom: 80,
@@ -88,7 +88,7 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           ],
           badgeBeforeTitle: [<Icon20AddCircleFillBlue key="leftBadge" />],
           badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
-          $platformToHeight: {
+          $componentStateHeight: {
             android: 245,
             ios: 245,
             vkcom: 145,
@@ -136,7 +136,7 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
             <Icon12Fire key="iconFire" fill="var(--vkui--color_icon_negative)" />,
           ],
           multiline: [true],
-          $platformToHeight: {
+          $componentStateHeight: {
             android: 300,
             ios: 300,
             vkcom: 100,
