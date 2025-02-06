@@ -77,7 +77,8 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
         >
           {multiCartesian<Props>(propSets, { adaptive: !isVKCOM, platform }).map((props, i) => {
             const clonedAdaptivityProviderProps = { ...adaptivityProviderProps };
-            const { sizeX, sizeY, componentStateHeight, ...componentProps } = props;
+            const { componentStateHeight, ...showedProps } = props;
+            const { sizeX, sizeY, ...componentProps } = showedProps;
 
             if (sizeX) {
               clonedAdaptivityProviderProps.sizeX = sizeX;
@@ -91,12 +92,6 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
               isCustomValueWithLabel(v) ? v.value : v,
             );
             const height = componentStateHeight || globalComponentStateHeight?.[platform];
-
-            const showedProps = {
-              ...componentProps,
-              sizeX,
-              sizeY,
-            };
 
             return (
               <div key={i} style={{ height }}>
