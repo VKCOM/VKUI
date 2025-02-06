@@ -5,6 +5,7 @@ import '../src/styles/dynamicTokens.css';
 import '../src/styles/adaptivity.module.css';
 
 import { Preview } from '@storybook/react';
+import { withConsole } from '@storybook/addon-console';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 
@@ -33,6 +34,8 @@ const customViewports = Object.entries(BREAKPOINTS).reduce<Record<string, Custom
   },
   {},
 );
+
+const withConsoleWrapper = (Story, context) => withConsole()(Story)(context);
 
 const preview: Preview = {
   parameters: {
@@ -103,7 +106,7 @@ const preview: Preview = {
     getRef: { control: false },
     getRootRef: { control: false },
   },
-  decorators: [withVKUIWrapper],
+  decorators: [withVKUIWrapper, withConsoleWrapper],
 };
 
 export default preview;

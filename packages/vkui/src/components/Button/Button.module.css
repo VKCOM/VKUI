@@ -1,14 +1,14 @@
 .host {
   position: relative;
-  display: inline-block;
   box-sizing: border-box;
-  border: 0;
-  min-block-size: var(--vkui--size_button_small_height--compact);
-  margin: 0;
-  padding: 0;
-  border-radius: var(--vkui--size_border_radius--regular);
-  max-inline-size: 100%;
+  display: inline-block;
   min-inline-size: var(--vkui--size_button_minimum_width--regular);
+  max-inline-size: 100%;
+  min-block-size: var(--vkui--size_button_small_height--compact);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: var(--vkui--size_border_radius--regular);
   transition:
     background-color 0.15s ease-out,
     color 0.15s ease-out;
@@ -40,19 +40,19 @@
 
 .stretched {
   display: block;
-  inline-size: 100%;
   flex-grow: 1;
   flex-basis: 0;
+  inline-size: 100%;
 }
 
 .in {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   inline-size: 100%;
   min-block-size: inherit;
   text-align: center;
-  box-sizing: border-box;
 }
 
 .alignLeft .in {
@@ -77,10 +77,10 @@
 }
 
 .content {
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: var(--vkui--font_weight_accent2);
+  white-space: nowrap;
 }
 
 .sizeS .content:first-child {
@@ -165,13 +165,13 @@
 .singleIcon .before,
 .modeTertiary.singleIcon .after,
 .modeTertiary.singleIcon .before {
-  margin-inline: auto;
   padding-inline: 0;
+  margin-inline: auto;
 }
 
 .modeLink {
-  background: none;
   min-inline-size: initial;
+  background: none;
 }
 
 .modeLink .after,

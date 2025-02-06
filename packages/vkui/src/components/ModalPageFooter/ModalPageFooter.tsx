@@ -18,10 +18,14 @@ export const ModalPageFooter = ({
   children,
   ...restProps
 }: ModalPageFooterProps) => {
-  const { sizeX } = useAdaptivityWithJSMediaQueries();
+  const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
   return (
     <RootComponent
-      baseClassName={classNames(styles.host, !noPadding && styles.padded)}
+      baseClassName={classNames(
+        styles.host,
+        !noPadding && styles.padded,
+        isDesktop ? styles.hostDesktop : styles.hostMobile,
+      )}
       {...restProps}
     >
       {!noSeparator && <Separator className={styles.Separator} padding={sizeX !== 'regular'} />}

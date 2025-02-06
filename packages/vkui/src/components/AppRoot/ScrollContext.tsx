@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { useCounter } from '../../hooks/useCounter';
 import { useDOM } from '../../lib/dom';
 import type { HasChildren } from '../../types';
 
@@ -61,29 +60,27 @@ export const useScroll = (): ScrollContextInterface => React.useContext(ScrollCo
  * Если счетчик больше нуля, требуется заблокировать прокрутку
  */
 function useScrollLockController(enableScrollLock: () => void, disableScrollLock: () => void) {
-  const isFirstEffect = React.useRef(true);
-  const [count, { increment: incrementScrollLockCounter, decrement: decrementScrollLockCounter }] =
-    useCounter(0);
+  const countRef = React.useRef(0);
 
-  const needLockScroll = count > 0;
-
-  React.useEffect(() => {
-    if (isFirstEffect.current) {
-      isFirstEffect.current = false;
-      return;
-    }
-
-    if (needLockScroll) {
+  const updateScrollLock = React.useCallback(() => {
+    if (countRef.current > 0) {
       enableScrollLock();
     } else {
       disableScrollLock();
     }
-  }, [needLockScroll, enableScrollLock, disableScrollLock]);
+  }, [enableScrollLock, disableScrollLock]);
 
-  return {
-    incrementScrollLockCounter,
-    decrementScrollLockCounter,
-  };
+  const incrementScrollLockCounter = React.useCallback(() => {
+    countRef.current += 1;
+    updateScrollLock();
+  }, [updateScrollLock]);
+
+  const decrementScrollLockCounter = React.useCallback(() => {
+    countRef.current -= 1;
+    updateScrollLock();
+  }, [updateScrollLock]);
+
+  return [incrementScrollLockCounter, decrementScrollLockCounter];
 }
 
 export interface ScrollControllerProps extends HasChildren {
@@ -145,7 +142,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     window!.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
   }, [document, window]);
 
-  const { incrementScrollLockCounter, decrementScrollLockCounter } = useScrollLockController(
+  const [incrementScrollLockCounter, decrementScrollLockCounter] = useScrollLockController(
     enableScrollLock,
     disableScrollLock,
   );
@@ -226,7 +223,7 @@ export const ElementScrollController = ({
     el.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
   }, [elRef]);
 
-  const { incrementScrollLockCounter, decrementScrollLockCounter } = useScrollLockController(
+  const [incrementScrollLockCounter, decrementScrollLockCounter] = useScrollLockController(
     enableScrollLock,
     disableScrollLock,
   );

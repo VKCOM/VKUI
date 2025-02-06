@@ -329,13 +329,12 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
 
   if (shownFinalState) {
-    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(
+    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties({
       strategy,
       x,
       y,
-      undefined,
       middlewareData,
-    );
+    });
 
     if (disableInteractive) {
       floatingPropsRef.current.style.pointerEvents = 'none';

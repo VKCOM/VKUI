@@ -18,17 +18,36 @@ const stylesAlignY = {
   bottom: styles.alignYBottom,
 };
 
+const stylesStrategy = {
+  fixed: styles.fixed,
+  absolute: styles.absolute,
+  none: undefined,
+};
+
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Позволяет сделать прозрачную подложку
    */
   noBackground?: boolean;
   /**
+   * @deprecated будет удалён в **VKUI v8**
+   * Используйте `strategy` вместо этого свойства.
+   *
    * Включает фиксированное позиционирование.
    *
-   * По умолчанию у компонента не задан никакой `position`.
+   * При значении `false` у компонента не задан никакой `position`.
    */
   fixed?: boolean;
+  /**
+   * Стратегия позиционирования:
+   *
+   * - `fixed`: у контейнера выставлен `position: fixed`
+   * - `absolute`: у контейнера выставлен `position: absolute`
+   * - `none`: у контейнера не выставлен `position`
+   *
+   * @default 'fixed'
+   */
+  strategy?: 'fixed' | 'absolute' | 'none';
   /**
    * Выравнивает контент по горизонтали.
    */
@@ -55,12 +74,16 @@ export const PopoutWrapper = ({
   alignX = 'center',
   closing = false,
   noBackground = false,
+  strategy: strategyProp,
+  // TODO [>=8]: удалить свойство
   fixed = true,
   children,
   onClick,
   zIndex = 'var(--vkui--z_index_popout)',
   ...restProps
 }: PopoutWrapperProps): React.ReactNode => {
+  const strategy = strategyProp || (fixed ? 'fixed' : 'none');
+
   return (
     <RootComponent
       {...restProps}
@@ -69,7 +92,7 @@ export const PopoutWrapper = ({
         stylesAlignY[alignY],
         stylesAlignX[alignX],
         closing ? styles.closing : styles.opened,
-        fixed && styles.fixed,
+        strategy && stylesStrategy[strategy],
         !noBackground && styles.masked,
       )}
       baseStyle={{ zIndex }}

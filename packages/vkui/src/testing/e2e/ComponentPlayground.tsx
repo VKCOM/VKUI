@@ -21,7 +21,7 @@ export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
   colorScheme: ColorSchemeType;
   adaptivityProviderProps?: Partial<AdaptivityProps>;
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
-  children: (props: Props) => React.ReactNode;
+  children: React.FC<Props>;
   AppWrapper?: React.ComponentType<AppDefaultWrapperProps>;
   componentStateHeight?: Partial<Record<PlatformType, number>>;
 }
@@ -40,7 +40,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
   platform,
   adaptivityProviderProps: adaptivityProviderPropsProp,
   propSets = [],
-  children,
+  children: Children,
   AppWrapper = AppDefaultWrapper,
   componentStateHeight: globalComponentStateHeight,
   ...restProps
@@ -105,7 +105,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
                 )}
                 <div>
                   <AdaptivityProvider {...clonedAdaptivityProviderProps}>
-                    {children(mappedProps)}
+                    <Children {...mappedProps} />
                   </AdaptivityProvider>
                 </div>
               </div>

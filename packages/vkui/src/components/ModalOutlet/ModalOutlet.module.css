@@ -1,16 +1,14 @@
 .host:not([hidden]) {
-  isolation: isolate;
   position: fixed;
   inset: 0;
   z-index: var(--vkui--z_index_modal);
   overflow: hidden;
+  isolation: isolate;
 }
 
 /* Desktop */
-@media (--viewWidth-smallTabletPlus) {
-  .host:not([hidden]) {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
+.hostDesktop:not([hidden]) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
 }

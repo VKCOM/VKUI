@@ -78,9 +78,9 @@
 }
 
 .vkuiTestTextEllipsis {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 #root {
@@ -91,11 +91,11 @@
 *,
 *::before,
 *::after {
-  animation: none !important;
-  transition: none !important;
-  caret-color: transparent !important;
-  -webkit-font-smoothing: antialiased !important;
   font-family: var(--vkui--font_family_base);
+  caret-color: transparent !important;
+  transition: none !important;
+  animation: none !important;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 [class*='--light'] {

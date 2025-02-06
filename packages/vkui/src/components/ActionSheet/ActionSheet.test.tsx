@@ -261,4 +261,40 @@ describe(ActionSheet, () => {
     // desktop Android
     expect(screen.queryByText('Отмена')).toBeFalsy();
   });
+
+  describe('handle allowClickPropagation correctly', () => {
+    it.each([
+      ['menu', ActionSheetMenu],
+      ['sheet', ActionSheetSheet],
+    ])('%s', async (_name, ActionSheet) => {
+      const onClose = jest.fn();
+      const onClick = jest.fn();
+      const { rerender } = render(
+        <div onClick={onClick}>
+          <ActionSheet data-testid="container" onClose={onClose}>
+            <div data-testid="content" />
+          </ActionSheet>
+        </div>,
+      );
+      await waitForFloatingPosition();
+      act(jest.runAllTimers);
+
+      await userEvent.click(screen.getByTestId('content'));
+      expect(onClick).not.toHaveBeenCalled();
+
+      rerender(
+        <div onClick={onClick}>
+          <ActionSheet data-testid="container" onClose={onClose} allowClickPropagation>
+            <div data-testid="content" />
+          </ActionSheet>
+        </div>,
+      );
+
+      await waitForFloatingPosition();
+      act(jest.runAllTimers);
+
+      await userEvent.click(screen.getByTestId('content'));
+      expect(onClick).toHaveBeenCalled();
+    });
+  });
 });

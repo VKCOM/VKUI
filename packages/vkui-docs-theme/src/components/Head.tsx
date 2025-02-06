@@ -7,7 +7,8 @@ export function Head() {
   const { resolvedColorScheme } = useColorScheme();
   const mounted = useMounted();
 
-  const head = typeof themeConfig.head === 'function' ? themeConfig.head({}) : themeConfig.head;
+  const ThemeConfigHead = themeConfig.head;
+  const head = typeof ThemeConfigHead === 'function' ? <ThemeConfigHead /> : ThemeConfigHead;
 
   return (
     <NextHead>

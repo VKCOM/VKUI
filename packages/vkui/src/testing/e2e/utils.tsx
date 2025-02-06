@@ -23,10 +23,12 @@ export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
 }
 
 class CustomValueWithLabel<T> {
-  public constructor(
-    public value: T,
-    public label: string,
-  ) {}
+  public value: T;
+  public label: string;
+  public constructor(value: T, label: string) {
+    this.value = value;
+    this.label = label;
+  }
 }
 
 type ComponentStateHeightState = { componentStateHeight?: number };

@@ -35,6 +35,7 @@ export const useTooltip = ({
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
   disableTriggerOnFocus = false,
+  onReferenceHiddenChange,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -146,6 +147,7 @@ export const useTooltip = ({
     shown: shownProp,
     onShownChange,
     trigger: disableTriggerOnFocus ? 'hover' : ['hover', 'focus'],
+    onReferenceHiddenChange,
     hoverDelay,
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,

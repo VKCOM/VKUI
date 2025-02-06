@@ -23,7 +23,10 @@ export interface ActionSheetOnCloseOptions {
 }
 
 export interface ActionSheetProps
-  extends Pick<SharedDropdownProps, 'toggleRef' | 'popupOffsetDistance' | 'placement'>,
+  extends Pick<
+      SharedDropdownProps,
+      'toggleRef' | 'popupOffsetDistance' | 'placement' | 'allowClickPropagation'
+    >,
     Omit<UseFocusTrapProps, 'onClose'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   title?: React.ReactNode;
@@ -146,7 +149,7 @@ export const ActionSheet = ({
         className={className}
         style={style}
         onClick={onCloseWithOther}
-        fixed
+        strategy="fixed"
       >
         {actionSheet}
       </PopoutWrapper>

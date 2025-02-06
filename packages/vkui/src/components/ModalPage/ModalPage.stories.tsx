@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useArgs, useCallback, useState } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
+import { Icon20More, Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
 import { stopPropagation } from '../../lib/utils';
@@ -24,6 +24,7 @@ import { Header } from '../Header/Header';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { Input } from '../Input/Input';
+import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
 import { ModalPageFooter } from '../ModalPageFooter/ModalPageFooter';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
@@ -299,6 +300,11 @@ export const Sandbox: Story = {
           <ModalPageFooter>
             <Input name="footer" type="text" placeholder="Lorem ipsum..." />
           </ModalPageFooter>
+        }
+        outsideButtons={
+          <ModalOutsideButton aria-label="More" onClick={() => console.log('outside button click')}>
+            <Icon20More />
+          </ModalOutsideButton>
         }
         {...props}
         onClose={handleModalClose}

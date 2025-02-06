@@ -162,9 +162,9 @@
 }
 
 .stateEntered .in {
-  transition-property: transform;
-  transition-duration: var(--vkui_internal--snackbar_animation_duration);
   transition-timing-function: var(--vkui--animation_easing_platform);
+  transition-duration: var(--vkui_internal--snackbar_animation_duration);
+  transition-property: transform;
 }
 
 .touched .in {

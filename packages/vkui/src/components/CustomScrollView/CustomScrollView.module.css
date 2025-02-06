@@ -1,8 +1,8 @@
 .host {
   inline-size: 100%;
   block-size: 100%;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 @supports (scrollbar-color: auto) {
@@ -38,9 +38,9 @@
   .host::-webkit-scrollbar-thumb,
   .host::-webkit-scrollbar-thumb {
     background-color: var(--vkui--color_icon_tertiary_alpha);
+    background-clip: padding-box, content-box;
     border: 3px solid transparent;
     border-radius: 6px;
-    background-clip: padding-box, content-box;
   }
 
   .host::-webkit-scrollbar-thumb:hover,
