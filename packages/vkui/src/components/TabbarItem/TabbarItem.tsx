@@ -5,6 +5,7 @@ import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
+import { callMultiple } from '../../lib/callMultiple';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -63,28 +64,13 @@ export const TabbarItem = ({
     focusVisible,
   });
 
-  const handleFocus = React.useCallback(
-    (event: React.FocusEvent<HTMLElement>) => {
-      handleFocusVisibleOnFocus(event);
-      onFocusProp?.(event);
-    },
-    [onFocusProp, handleFocusVisibleOnFocus],
-  );
-  const handleBlur = React.useCallback(
-    (event: React.FocusEvent<HTMLElement>) => {
-      handleFocusVisibleOnBlur(event);
-      onBlurProp?.(event);
-    },
-    [onBlurProp, handleFocusVisibleOnBlur],
-  );
-
   return (
     <RootComponent
       Component={Component}
       {...restProps}
       disabled={disabled}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
+      onFocus={callMultiple(handleFocusVisibleOnFocus, onFocusProp)}
+      onBlur={callMultiple(handleFocusVisibleOnBlur, onBlurProp)}
       href={href}
       baseClassName={classNames(
         styles.host,
