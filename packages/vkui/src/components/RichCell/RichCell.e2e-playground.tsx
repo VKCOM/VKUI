@@ -42,8 +42,8 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           ],
           $adaptivity: 'y',
           $componentStateHeight: {
-            android: 290,
-            ios: 290,
+            android: 300,
+            ios: 300,
             vkcom: 210,
           },
         },
@@ -57,8 +57,8 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </RichCell.Icon>,
           ],
           $componentStateHeight: {
-            android: 140,
-            ios: 140,
+            android: 150,
+            ios: 150,
             vkcom: 100,
           },
         },
