@@ -122,4 +122,10 @@ export interface ModalPageProps
    *
    */
   outsideButtons?: React.ReactNode;
+  /**
+   * Позволяет отключить захват фокуса.
+   *
+   * Нужно использовать, когда поверх одной модалки открывается другая, что два `FocusTrap` не конфликтовали
+   */
+  focusTrapDisabled?: UseFocusTrapProps['disabled'];
 }

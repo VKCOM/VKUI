@@ -50,4 +50,10 @@ export interface ModalCardProps
    * Будет вызвано при окончательном закрытии модалки.
    */
   onClosed?: VoidFunction;
+  /**
+   * Позволяет отключить захват фокуса.
+   *
+   * Нужно использовать, когда поверх одной модалки открывается другая, что два `FocusTrap` не конфликтовали
+   */
+  focusTrapDisabled?: UseFocusTrapProps['disabled'];
 }

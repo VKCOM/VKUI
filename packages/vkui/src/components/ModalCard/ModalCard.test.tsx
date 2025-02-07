@@ -1,7 +1,9 @@
-import { act } from 'react';
+import { act, useState } from 'react';
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, waitCSSTransitionEnd } from '../../testing/utils';
+import { ViewWidth } from '../../lib/adaptivity';
+import { baselineComponent, userEvent, waitCSSTransitionEnd } from '../../testing/utils';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
@@ -130,6 +132,41 @@ describe(ModalCard, () => {
     fireEvent.click(h.getByTestId('dismiss-button'));
     expect(onClose).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledWith('click-close-button');
+  });
+
+  test('check disable focus trap', async () => {
+    const Fixture = () => {
+      const [open, setOpen] = useState(false);
+      return (
+        <>
+          <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+            <ModalCard
+              key="host"
+              id="host"
+              open={open}
+              modalDismissButtonTestId="dismiss-button"
+              data-testid="host"
+              focusTrapDisabled
+            />
+          </AdaptivityProvider>
+          <Button data-testid="open-button" onClick={() => setOpen(true)} />
+        </>
+      );
+    };
+
+    const h = render(<Fixture />);
+
+    const openButton = h.getByTestId('open-button');
+    fireEvent.click(openButton);
+
+    await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
+
+    const dismissButton = h.getByTestId('dismiss-button');
+    dismissButton.focus();
+    expect(dismissButton).toHaveFocus();
+
+    await userEvent.tab();
+    expect(openButton).toHaveFocus();
   });
 
   describe('check restoreFocus prop', () => {
