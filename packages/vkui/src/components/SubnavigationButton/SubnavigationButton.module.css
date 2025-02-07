@@ -4,6 +4,10 @@
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
+.disabled {
+  opacity: var(--vkui--opacity_disable_accessibility);
+}
+
 .in {
   display: flex;
   align-items: center;
