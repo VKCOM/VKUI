@@ -1,7 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { Icon28NewsfeedOutline } from '@vkontakte/icons';
+import {
+  AppRootContext,
+  DEFAULT_APP_ROOT_CONTEXT_VALUE,
+} from '../../components/AppRoot/AppRootContext';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { TabbarItem } from './TabbarItem';
+import styles from '../../styles/focusVisible.module.css';
 
 describe('TabbarItem', () => {
   baselineComponent((props) => (
@@ -38,5 +43,52 @@ describe('TabbarItem', () => {
     rerender(<TabbarItem onClick={cb} data-testid="test" disabled />);
     await userEvent.click(screen.getByTestId('test'));
     expect(cb).toHaveBeenCalledTimes(1);
+  });
+
+  function renderTabbarItemForFocus({ withKeyboardInput }: { withKeyboardInput: boolean }) {
+    const onFocusStub = jest.fn();
+    const onBlurStub = jest.fn();
+
+    return {
+      onFocusStub,
+      onBlurStub,
+      ...render(
+        <AppRootContext.Provider
+          value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput: withKeyboardInput }}
+        >
+          <TabbarItem onFocus={onFocusStub} onBlur={onBlurStub} data-testid="test" />,
+        </AppRootContext.Provider>,
+      ),
+    };
+  }
+
+  it('shows focus visible on focus with keyboard', async () => {
+    jest.useFakeTimers();
+
+    const component = renderTabbarItemForFocus({ withKeyboardInput: true });
+
+    await userEvent.tab();
+    expect(screen.getByRole('presentation')).toHaveClass(styles['-focus-visible--focused']);
+
+    await userEvent.tab();
+    expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
+
+    expect(component.onFocusStub).toHaveBeenCalledTimes(1);
+    expect(component.onBlurStub).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not show focus visible on focus without keyboard', async () => {
+    jest.useFakeTimers();
+
+    const component = renderTabbarItemForFocus({ withKeyboardInput: false });
+
+    await userEvent.click(screen.getByTestId('test'));
+    expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
+
+    await userEvent.tab();
+    expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
+
+    expect(component.onFocusStub).toHaveBeenCalledTimes(1);
+    expect(component.onBlurStub).toHaveBeenCalledTimes(1);
   });
 });
