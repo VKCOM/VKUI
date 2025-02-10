@@ -171,7 +171,7 @@ export const OnboardingTooltip = ({
           {...restProps}
           id={tooltipId}
           title={title}
-          titleId={titleId}
+          titleId={title ? titleId : undefined}
           getRootRef={tooltipRef}
           style={mergeStyle(floatingStyle, styleProp)}
           maxWidth={maxWidth}
