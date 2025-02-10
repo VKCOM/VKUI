@@ -62,7 +62,7 @@ const preview: Preview = {
     cartesian: { disabled: true },
   },
   globalTypes: {
-    styleguideComponentsMap: {
+    styleguideComponents: {
       defaultValue: __STYLEGUIDE_COMPONENTS_CONFIG__,
     },
     styleguideBaseUrl: {

@@ -33,7 +33,7 @@ export const DocumentationButton = () => {
   }
 
   const componentName = extractComponentName(importPath);
-  const hasDocumentation = globals.styleguideComponentsMap[componentName];
+  const hasDocumentation = globals.styleguideComponents.includes(componentName);
   if (!hasDocumentation) {
     return null;
   }

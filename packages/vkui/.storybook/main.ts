@@ -4,7 +4,7 @@ import path from 'path';
 import { readFileSync } from 'fs';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import WebpackCommonConfig from '../../../webpack.common.config';
-import { getStyleGuideComponentsMap } from './helpers';
+import { getStyleGuideComponents } from './helpers';
 
 const cssRegExpString = /\.css$/.toString();
 
@@ -70,7 +70,7 @@ const config: StorybookConfig = {
     const packageJSON = JSON.parse(readFileSync('./package.json', 'utf-8'));
     config.plugins.push(
       new DefinePlugin({
-        __STYLEGUIDE_COMPONENTS_CONFIG__: JSON.stringify(getStyleGuideComponentsMap()),
+        __STYLEGUIDE_COMPONENTS_CONFIG__: JSON.stringify(getStyleGuideComponents()),
         __STYLEGUIDE_URL__: JSON.stringify(packageJSON.homepage),
         __COMPONENTS_SOURCE_BASE_URL__: JSON.stringify(
           `${packageJSON.repository.url.replace('.git', '')}/tree/master/${packageJSON.repository.directory}`,

@@ -5,17 +5,16 @@ function extractComponentName(path: string): string {
   return match ? match[1] : '';
 }
 
-export function getStyleGuideComponentsMap() {
+export function getStyleGuideComponents() {
   const componentsSection = styleguideConfig.sections.find(
     (section) => section.name === 'Компоненты',
   );
-  const resultMap: Record<string, boolean> = {};
 
   const handleSections = (sections, resultArray: string[]) => {
     sections.forEach((section) => {
       const components =
         typeof section.components === 'function' ? section.components() : section.components;
-      resultArray.push(...components);
+      resultArray.push(...components.map(extractComponentName));
       if (section.sections) {
         handleSections(section.sections, resultArray);
       }
@@ -25,9 +24,5 @@ export function getStyleGuideComponentsMap() {
   const allComponents = [];
   handleSections(componentsSection.sections, allComponents);
 
-  allComponents.forEach((path) => {
-    resultMap[extractComponentName(path)] = true;
-  });
-
-  return resultMap;
+  return allComponents;
 }
