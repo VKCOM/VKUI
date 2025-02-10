@@ -4,6 +4,7 @@ import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
 import {
@@ -59,7 +60,8 @@ type AllowedFloatingArrowProps = {
 export interface OnboardingTooltipProps
   extends AllowedFloatingComponentProps,
     AllowedTooltipBaseProps,
-    AllowedFloatingArrowProps {
+    AllowedFloatingArrowProps,
+    Pick<UseFocusTrapProps, 'restoreFocus'> {
   /**
    * Скрывает стрелку, указывающую на якорный элемент.
    */
@@ -99,6 +101,7 @@ export const OnboardingTooltip = ({
   title,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
+  restoreFocus,
   ...restProps
 }: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -161,6 +164,7 @@ export const OnboardingTooltip = ({
         aria-label={ariaLabel}
         aria-labelledby={title ? titleId : ariaLabel ? undefined : ariaLabelledBy}
         onClose={onClose}
+        restoreFocus={restoreFocus}
       >
         <button aria-label={overlayLabel} className={styles.overlay} onClickCapture={onClose} />
         <TooltipBase
