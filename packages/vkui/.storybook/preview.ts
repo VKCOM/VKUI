@@ -9,6 +9,12 @@ import { withConsole } from '@storybook/addon-console';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 
+declare global {
+  const __STYLEGUIDE_COMPONENTS_CONFIG__: Record<string, boolean>;
+  const __STYLEGUIDE_URL__: string;
+  const __COMPONENTS_SOURCE_BASE_URL__: string;
+}
+
 interface CustomViewPortItem {
   name: string;
   styles: {
@@ -56,6 +62,15 @@ const preview: Preview = {
     cartesian: { disabled: true },
   },
   globalTypes: {
+    styleguideComponentsMap: {
+      defaultValue: __STYLEGUIDE_COMPONENTS_CONFIG__,
+    },
+    styleguideBaseUrl: {
+      defaultValue: __STYLEGUIDE_URL__,
+    },
+    componentsSourceBaseUrl: {
+      defaultValue: __COMPONENTS_SOURCE_BASE_URL__,
+    },
     colorScheme: {
       defaultValue: 'light',
     },
