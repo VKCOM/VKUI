@@ -38,7 +38,7 @@
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/prettier-config": "^0.2.1",
     "@vkontakte/stylelint-config": "^4.1.0",
-    "@vkontakte/vkui-tokens": "4.59.0",
+    "@vkontakte/vkui-tokens": "4.60.0",
     "autoprefixer": "^10.4.20",
     "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^9.1.2",
