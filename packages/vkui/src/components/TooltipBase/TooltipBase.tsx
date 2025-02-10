@@ -36,6 +36,11 @@ export interface TooltipBaseProps
    */
   title?: React.ReactNode;
   /**
+   * [a11y] Id для заголовок тултипа.
+   * Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`
+   */
+  titleId?: string;
+  /**
    * Для показа указателя, требуется передать хотя бы `coords` и `placement`.
    */
   arrowProps?: Omit<FloatingArrowProps, 'Icon'>;
@@ -85,6 +90,7 @@ export const TooltipBase = ({
   ArrowIcon = DefaultIcon,
   description,
   title,
+  titleId,
   maxWidth = TOOLTIP_MAX_WIDTH,
   closeIconLabel = 'Закрыть',
   onCloseIconClick,
@@ -111,7 +117,7 @@ export const TooltipBase = ({
       <div className={styles.content} style={maxWidth !== null ? { maxWidth } : undefined}>
         <div>
           {hasReactNode(title) && (
-            <Subhead className={styles.title} weight="2">
+            <Subhead id={titleId} className={styles.title} weight="2">
               {title}
             </Subhead>
           )}

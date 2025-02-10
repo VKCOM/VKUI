@@ -78,9 +78,9 @@ export interface OnboardingTooltipProps
  * @see https://vkcom.github.io/VKUI/#/Tooltip
  */
 export const OnboardingTooltip = ({
-  id: idProp,
+  'id': idProp,
   children,
-  shown: shownProp = true,
+  'shown': shownProp = true,
   arrowPadding = DEFAULT_ARROW_PADDING,
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   offsetByMainAxis = 0,
@@ -88,14 +88,17 @@ export const OnboardingTooltip = ({
   arrowOffset = 0,
   isStaticArrowOffset = false,
   onClose,
-  placement: placementProp = 'bottom-start',
+  'placement': placementProp = 'bottom-start',
   maxWidth = TOOLTIP_MAX_WIDTH,
-  style: styleProp,
+  'style': styleProp,
   getRootRef,
   disableArrow = false,
   onPlacementChange,
   disableFlipMiddleware = false,
   overlayLabel = 'Закрыть',
+  title,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
   ...restProps
 }: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -136,6 +139,13 @@ export const OnboardingTooltip = ({
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
+  const titleId = React.useId();
+  if (process.env.NODE_ENV === 'development' && !title && !ariaLabel && !ariaLabelledBy) {
+    warn(
+      'Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+  }
+
   let tooltip: React.ReactPortal | null = null;
   if (shown) {
     const floatingStyle = convertFloatingDataToReactCSSProperties({
@@ -145,11 +155,19 @@ export const OnboardingTooltip = ({
     });
 
     tooltip = createPortal(
-      <FocusTrap role="dialog" aria-modal="true" onClose={onClose}>
+      <FocusTrap
+        role="dialog"
+        aria-modal="true"
+        aria-label={ariaLabel}
+        aria-labelledby={title ? titleId : ariaLabel ? undefined : ariaLabelledBy}
+        onClose={onClose}
+      >
         <button aria-label={overlayLabel} className={styles.overlay} onClickCapture={onClose} />
         <TooltipBase
           {...restProps}
           id={tooltipId}
+          title={title}
+          titleId={titleId}
           getRootRef={tooltipRef}
           style={mergeStyle(floatingStyle, styleProp)}
           maxWidth={maxWidth}
