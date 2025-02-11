@@ -193,7 +193,7 @@ export function getTargetIndex({
   const shift = revertRtlValue(currentShiftX + currentShiftXDelta - max, isRtl);
 
   // Инвертируем направление для RTL режима
-  const direction = isRtl ? (currentShiftXDelta > 0 ? 1 : -1) : currentShiftXDelta < 0 ? 1 : -1;
+  const direction = isLower(currentShiftXDelta, 0, isRtl) ? 1 : -1;
 
   // Находим ближайшую границу слайда к текущему отступу
   let targetIndex = slides.reduce((val: number, item: GallerySlidesState, index: number) => {
