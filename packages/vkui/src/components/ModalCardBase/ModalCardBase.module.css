@@ -1,13 +1,13 @@
 .container {
-  box-sizing: border-box;
   position: relative;
-  background: var(--vkui--color_background_modal);
-  border-radius: 12px;
-  padding: 16px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 16px;
   pointer-events: initial;
+  background: var(--vkui--color_background_modal);
+  border-radius: 12px;
   box-shadow: var(--vkui--elevation3);
 
   --vkui_internal--background: var(--vkui--color_background_modal);
@@ -30,10 +30,10 @@
 
 .title,
 .description {
-  text-align: center;
-  margin: 0;
   padding-block: 0;
   padding-inline: 8px;
+  margin: 0;
+  text-align: center;
   word-break: break-word;
 }
 
@@ -59,8 +59,8 @@
   position: absolute;
   inset-block-start: 0;
   inset-inline-end: 0;
-  color: var(--vkui--color_icon_secondary);
   padding: var(--vkui_internal--dismiss_icon_padding);
+  color: var(--vkui--color_icon_secondary);
 }
 
 /**

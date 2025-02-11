@@ -2,6 +2,6 @@
   display: block;
   padding-block: 24px;
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-  text-align: center;
   color: var(--vkui--color_text_secondary);
+  text-align: center;
 }

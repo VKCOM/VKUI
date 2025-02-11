@@ -1,17 +1,17 @@
 /* Page styles */
 .host {
   box-sizing: border-box;
-  padding-inline: 8px;
+  display: block;
   inline-size: 100%;
   min-inline-size: 40px;
-  border-radius: var(--vkui--size_border_radius--regular);
-  text-align: center;
-  color: var(--vkui--color_text_secondary);
-  user-select: none;
   block-size: var(--vkui--size_button_large_height--regular);
+  padding-inline: 8px;
   line-height: var(--vkui--size_button_large_height--regular);
-  display: block;
+  color: var(--vkui--color_text_secondary);
+  text-align: center;
   text-decoration: none;
+  user-select: none;
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .stateHover {
@@ -29,14 +29,14 @@
 }
 
 .sizeYCompact {
-  line-height: var(--vkui--size_button_large_height--compact);
   block-size: var(--vkui--size_button_large_height--compact);
+  line-height: var(--vkui--size_button_large_height--compact);
 }
 
 @media (--sizeY-compact) {
   .sizeYNone {
-    line-height: var(--vkui--size_button_large_height--compact);
     block-size: var(--vkui--size_button_large_height--compact);
+    line-height: var(--vkui--size_button_large_height--compact);
   }
 }
 

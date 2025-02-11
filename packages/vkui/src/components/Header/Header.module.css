@@ -17,8 +17,8 @@
 
 .before {
   align-self: center;
-  margin-inline-end: var(--vkui--spacing_size_m);
   margin-block-start: var(--vkui--spacing_size_2xs);
+  margin-inline-end: var(--vkui--spacing_size_m);
 }
 
 .beforeWithSubtitle {
@@ -59,14 +59,14 @@
 
 .contentIn,
 .subtitle {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .contentMultiline {
-  white-space: initial;
   word-break: break-word;
+  white-space: initial;
 }
 
 .subtitle {
@@ -79,9 +79,9 @@
 }
 
 .indicator {
-  color: var(--vkui--color_text_secondary);
-  margin-inline-start: var(--vkui--spacing_size_xs);
   flex-shrink: 0;
+  margin-inline-start: var(--vkui--spacing_size_xs);
+  color: var(--vkui--color_text_secondary);
 }
 
 .host:not(.pi) .indicator {

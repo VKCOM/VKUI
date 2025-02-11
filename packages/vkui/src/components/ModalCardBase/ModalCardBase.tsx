@@ -1,16 +1,20 @@
 'use client';
 
 import * as React from 'react';
+import { Icon20Cancel, Icon24Dismiss } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
+import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
+import { ModalOutsideButtons } from '../ModalOutsideButtons/ModalOutsideButtons';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Spacing } from '../Spacing/Spacing';
+import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Title } from '../Typography/Title/Title';
-import { ModalCardBaseCloseButton } from './ModalCardBaseCloseButton';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './ModalCardBase.module.css';
 
 export interface ModalCardBaseProps
@@ -81,6 +85,13 @@ export interface ModalCardBaseProps
    * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте
    */
   preventClose?: boolean;
+  /**
+   * Управляющие элементы под кнопкой закрытия.
+   *
+   * Доступно только в `compact`-режиме. Рекомендуется размещать иконки размера 20, обернутые в ModalOutsideButton
+   *
+   */
+  outsideButtons?: React.ReactNode;
 }
 
 /**
@@ -95,11 +106,12 @@ export const ModalCardBase = ({
   children,
   actions,
   onClose,
-  dismissLabel = 'Скрыть',
+  dismissLabel = 'Закрыть',
   size: sizeProp,
   modalDismissButtonTestId,
   dismissButtonMode = 'outside',
   preventClose,
+  outsideButtons,
   ...restProps
 }: ModalCardBaseProps): React.ReactNode => {
   const platform = usePlatform();
@@ -113,6 +125,7 @@ export const ModalCardBase = ({
 
   const hasTitle = hasReactNode(title);
   const hasDescription = hasReactNode(description);
+
   return (
     <RootComponent
       {...restProps}
@@ -146,14 +159,33 @@ export const ModalCardBase = ({
 
         {hasReactNode(actions) && <div className={styles.actions}>{actions}</div>}
 
-        {dismissButtonMode !== 'none' && (
-          <ModalCardBaseCloseButton
-            testId={modalDismissButtonTestId}
-            onClose={onClose}
-            mode={dismissButtonMode}
+        {isDesktop && (dismissButtonMode === 'outside' || outsideButtons) && (
+          <ModalOutsideButtons>
+            {dismissButtonMode === 'outside' && (
+              <ModalOutsideButton
+                aria-label={dismissLabel}
+                data-testid={modalDismissButtonTestId}
+                onClick={onClose}
+              >
+                <Icon20Cancel />
+              </ModalOutsideButton>
+            )}
+            {outsideButtons}
+          </ModalOutsideButtons>
+        )}
+
+        {(dismissButtonMode === 'inside' ||
+          (platform === 'ios' && !isDesktop && dismissButtonMode !== 'none')) && (
+          <Tappable
+            className={styles.dismiss}
+            onClick={onClose}
+            hoverMode="opacity"
+            activeMode="opacity"
+            data-testid={modalDismissButtonTestId}
           >
-            {dismissLabel}
-          </ModalCardBaseCloseButton>
+            <VisuallyHidden>{dismissLabel}</VisuallyHidden>
+            {platform === 'ios' ? <Icon24Dismiss /> : <Icon20Cancel />}
+          </Tappable>
         )}
       </div>
     </RootComponent>

@@ -13,10 +13,16 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-const alignSelfClassNames = {
-  start: styles.alignSelfStart,
-  center: styles.alignSelfCenter,
-  end: styles.alignSelfEnd,
+const alignAfterClassNames = {
+  start: styles.alignAfterStart,
+  center: styles.alignAfterCenter,
+  end: styles.alignAfterEnd,
+};
+
+const alignBeforeClassNames = {
+  start: styles.alignBeforeStart,
+  center: styles.alignBeforeCenter,
+  end: styles.alignBeforeEnd,
 };
 
 const alignContentClassNames = {
@@ -111,13 +117,14 @@ export const RichCell: React.FC<RichCellProps> & {
   ...restProps
 }: RichCellProps) => {
   const { sizeY = 'none' } = useAdaptivity();
+  const withAfter = after || afterCaption;
 
   const afterRender = () => {
-    if (!after && !afterCaption) {
+    if (!withAfter) {
       return;
     }
     return (
-      <div className={classNames(styles.contentAfter, alignSelfClassNames[afterAlign])}>
+      <div className={styles.contentAfter}>
         {after && <div className={styles.afterChildren}>{after}</div>}
         {afterCaption && <div className={styles.afterCaption}>{afterCaption}</div>}
       </div>
@@ -131,35 +138,35 @@ export const RichCell: React.FC<RichCellProps> & {
         styles.host,
         !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
+        withAfter && styles.withAfter,
+        withAfter && alignAfterClassNames[afterAlign],
+        before && alignBeforeClassNames[beforeAlign],
+        alignContentClassNames[contentAlign],
       )}
     >
-      {before && (
-        <div className={classNames(styles.before, alignSelfClassNames[beforeAlign])}>{before}</div>
-      )}
-      <div className={styles.inWrapper}>
-        <div className={styles.in}>
-          <div className={styles.content}>
-            <div className={classNames(styles.contentBefore, alignContentClassNames[contentAlign])}>
-              {overTitle && (
-                <Subhead Component="div" className={styles.overTitle}>
-                  {overTitle}
-                </Subhead>
-              )}
-              <div className={styles.children}>{children}</div>
-              {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
-              {extraSubtitle && (
-                <Subhead Component="div" className={styles.extraSubtitle}>
-                  {extraSubtitle}
-                </Subhead>
-              )}
-            </div>
-            {afterAlign === 'start' && afterRender()}
+      {before && <div className={styles.before}>{before}</div>}
+      <div className={styles.in}>
+        <div className={styles.content}>
+          <div className={styles.contentBefore}>
+            {overTitle && (
+              <Subhead Component="div" className={styles.overTitle}>
+                {overTitle}
+              </Subhead>
+            )}
+            <div className={styles.children}>{children}</div>
+            {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+            {extraSubtitle && (
+              <Subhead Component="div" className={styles.extraSubtitle}>
+                {extraSubtitle}
+              </Subhead>
+            )}
           </div>
-          {bottom && <div className={styles.bottom}>{bottom}</div>}
-          {actions && <div className={styles.actions}>{actions}</div>}
+          {afterAlign === 'start' && afterRender()}
         </div>
-        {afterAlign !== 'start' && afterRender()}
+        {bottom && <div className={styles.bottom}>{bottom}</div>}
+        {actions && <div className={styles.actions}>{actions}</div>}
       </div>
+      {afterAlign !== 'start' && afterRender()}
     </Tappable>
   );
 };

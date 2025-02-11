@@ -1,7 +1,7 @@
 .host {
   position: relative;
-  line-height: 20px;
   font-size: 16px;
+  line-height: 20px;
 }
 
 .alignCenter .el {
@@ -15,13 +15,13 @@
 .el {
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
-  padding-block: 0;
-  padding-inline: 12px;
+  box-sizing: border-box;
   inline-size: 100%;
   block-size: var(--vkui--size_field_height--regular);
-  box-sizing: border-box;
-  border-radius: inherit;
+  padding-block: 0;
+  padding-inline: 12px;
   color: var(--vkui--color_text_primary);
+  border-radius: inherit;
 }
 
 .sizeYCompact .el {

@@ -3,9 +3,9 @@
   --vkui_internal--root_animation_transform_initial: scale(1.05);
   --vkui_internal--root_animation_duration: 0.3s;
 
+  position: relative;
   inline-size: 100%;
   block-size: 100%;
-  position: relative;
 }
 
 .ios {
@@ -19,9 +19,9 @@
 }
 
 .view {
+  position: relative;
   inline-size: 100%;
   block-size: 100%;
-  position: relative;
 }
 
 .viewShowForward {
@@ -36,8 +36,8 @@
 
 .transition .view {
   position: fixed;
-  inset-inline-start: 0;
   inset-block-start: 0;
+  inset-inline-start: 0;
   overflow: hidden;
 }
 
@@ -53,11 +53,11 @@
 .ios .viewShowBack::after,
 .ios .viewHideForward::after {
   position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: block;
   inline-size: 100%;
   block-size: 100%;
-  inset-inline-start: 0;
-  inset-block-start: 0;
-  display: block;
   content: '';
   background-color: #000;
 }
@@ -85,24 +85,24 @@
 
 @keyframes root-animation-hide-back {
   from {
-    transform: none;
     opacity: 1;
+    transform: none;
   }
 
   to {
-    transform: var(--vkui_internal--root_animation_transform_initial);
     opacity: var(--vkui_internal--root_animation_opacity_initial);
+    transform: var(--vkui_internal--root_animation_transform_initial);
   }
 }
 @keyframes root-animation-show-forward {
   from {
-    transform: var(--vkui_internal--root_animation_transform_initial);
     opacity: var(--vkui_internal--root_animation_opacity_initial);
+    transform: var(--vkui_internal--root_animation_transform_initial);
   }
 
   to {
-    transform: none;
     opacity: 1;
+    transform: none;
   }
 }
 @keyframes root-ios-overlay-animation-show-back {

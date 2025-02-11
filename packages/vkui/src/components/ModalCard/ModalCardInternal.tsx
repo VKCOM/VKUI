@@ -144,7 +144,7 @@ export const ModalCardInternal = ({
   });
 
   return (
-    <ModalOutlet hidden={hidden} onKeyDown={handleEscKeyDown}>
+    <ModalOutlet hidden={hidden} isDesktop={isDesktop} onKeyDown={handleEscKeyDown}>
       {modalOverlay}
       <ModalCardBase
         {...restProps}
@@ -155,6 +155,7 @@ export const ModalCardInternal = ({
         style={style}
         className={classNames(
           styles.host,
+          isDesktop ? styles.hostDesktop : styles.hostMobile,
           sizeByPlatformClassNames[platform],
           transitionStateClassNames[transitionState],
           className,

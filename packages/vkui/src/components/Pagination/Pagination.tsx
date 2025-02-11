@@ -19,7 +19,6 @@ import {
   PaginationPageButton,
 } from './PaginationPage/PaginationPageButton';
 import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
-import { getPageLabelDefault } from './utils';
 import styles from './Pagination.module.css';
 
 export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElement>, 'onChange'> {
@@ -78,6 +77,12 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   nextButtonLabel?: string;
   /**
    * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
+   *
+   * > Note: По возможности лучше не использовать,
+   * так как компонент и так проставляет номер страницы в разметку,
+   * что достаточно для пользователей скринридеров.
+   * Дополнительная информация скорее будет избыточна,
+   * так как будет зачитываться для каждой кнопки при перемещении по списку.
    */
   getPageLabel?: (isCurrent: boolean) => string;
   onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
@@ -119,8 +124,8 @@ export const Pagination = ({
   prevButtonCaption = 'Назад',
   nextButtonCaption = 'Вперёд',
   navigationButtonsStyle = 'icon',
-  getPageLabel = getPageLabelDefault,
-  navigationLabel = 'Навигация по страницам',
+  getPageLabel,
+  navigationLabel = 'Страницы',
   navigationLabelComponent = 'h2',
   prevButtonLabel = 'Перейти на предыдущую страницу',
   nextButtonLabel = 'Перейти на следующую страницу',
@@ -210,9 +215,19 @@ export const Pagination = ({
     [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY, pageButtonTestId],
   );
 
+  const navigationLabelId = React.useId();
+
   return (
-    <RootComponent Component="nav" role="navigation" getRootRef={rootRef} {...resetProps}>
-      <VisuallyHidden Component={navigationLabelComponent}>{navigationLabel}</VisuallyHidden>
+    <RootComponent
+      Component="nav"
+      role="navigation"
+      getRootRef={rootRef}
+      aria-labelledby={navigationLabelId}
+      {...resetProps}
+    >
+      <VisuallyHidden id={navigationLabelId} Component={navigationLabelComponent}>
+        {navigationLabel}
+      </VisuallyHidden>
       <ul className={styles.list}>
         <li className={styles.prevButtonContainer}>
           <PaginationNavigationButton

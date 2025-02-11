@@ -145,6 +145,7 @@ export const FormItem: React.FC<FormItemProps> & {
             }}
             removePlaceholder={removePlaceholder}
             indent={removable === 'indent'}
+            noPadding={noPadding}
           >
             <div className={classNames(styles.removable, 'vkuiInternalFormItem__removable')}>
               {wrappedChildren}

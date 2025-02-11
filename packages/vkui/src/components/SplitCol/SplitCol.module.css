@@ -1,9 +1,9 @@
 .host {
-  block-size: 100%;
-  inline-size: 1px;
+  position: relative;
   flex-grow: 1;
   flex-shrink: 1;
-  position: relative;
+  inline-size: 1px;
+  block-size: 100%;
 }
 
 .viewWidthSmallTabletPlus.spacedAuto {
@@ -35,19 +35,19 @@
 }
 
 .fixed {
-  block-size: 100%;
-  inline-size: 1px;
   flex-grow: 1;
   flex-shrink: 1;
+  inline-size: 1px;
+  block-size: 100%;
 }
 
 .fixedInner {
-  block-size: inherit;
+  position: fixed;
+  inset-block-start: 0;
   inline-size: inherit;
   min-inline-size: inherit;
   max-inline-size: inherit;
-  position: fixed;
-  transform: translateZ(0);
+  block-size: inherit;
   overflow: hidden;
-  inset-block-start: 0;
+  transform: translateZ(0);
 }

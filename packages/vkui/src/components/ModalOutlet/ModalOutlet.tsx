@@ -5,6 +5,7 @@ import styles from './ModalOutlet.module.css';
 export interface ModalOutletProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'hidden' | 'aria-hidden'> {
   hidden?: boolean;
+  isDesktop?: boolean;
 }
 
 /**
@@ -13,6 +14,7 @@ export interface ModalOutletProps
 export const ModalOutlet = ({
   className,
   hidden,
+  isDesktop,
   children,
   getRootRef,
   ...restProps
@@ -20,7 +22,7 @@ export const ModalOutlet = ({
   return (
     <div
       ref={getRootRef}
-      className={classNames(className, styles.host)}
+      className={classNames(className, styles.host, isDesktop && styles.hostDesktop)}
       hidden={hidden}
       aria-hidden={hidden}
       {...restProps}

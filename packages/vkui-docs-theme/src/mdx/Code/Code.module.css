@@ -1,12 +1,12 @@
 .root {
+  padding-block: 0;
+  padding-inline: var(--vkui_docs--code-inline-padding, 4px);
+  color: var(--vkui--color_text_primary);
   background-color: var(
     --vkui_docs--code-background,
     var(--vkui--color_background_secondary_alpha)
   );
-  padding-inline: var(--vkui_docs--code-inline-padding, 4px);
-  padding-block: 0;
   border-radius: 6px;
-  color: var(--vkui--color_text_primary);
 }
 
 /* stylelint-disable-next-line selector-max-type */
@@ -18,17 +18,17 @@ pre .root {
 /* stylelint-disable-next-line selector-max-type */
 .root span {
   /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
-  background-color: var(--shiki-light-bg);
-  /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
   color: var(--shiki-light);
+  /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
+  background-color: var(--shiki-light-bg);
 }
 
 /* stylelint-disable-next-line selector-max-type, selector-max-universal */
 .root span:is(html[class~='vkui--vkBase--dark'] *) {
   /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
-  background-color: var(--shiki-dark-bg);
-  /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
   color: var(--shiki-dark);
+  /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
+  background-color: var(--shiki-dark-bg);
 }
 
 /* stylelint-disable-next-line selector-max-type */

@@ -158,6 +158,10 @@ interface RemovableOwnProps
    * @since 5.4.0
    */
   indent?: boolean;
+  /**
+   * Убирает базовые отступы для базовой платформы
+   */
+  noPadding?: boolean;
   children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
 
@@ -173,6 +177,7 @@ export const Removable = ({
   toggleButtonTestId,
   removeButtonTestId,
   disabled,
+  noPadding,
   ...restProps
 }: RemovableOwnProps): React.ReactNode => {
   const platform = usePlatform();
@@ -194,7 +199,13 @@ export const Removable = ({
       )}
     >
       {platform !== 'ios' && (
-        <div className={classNames(styles.content, 'vkuiInternalRemovable__content')}>
+        <div
+          className={classNames(
+            styles.content,
+            !noPadding && styles.withPadding,
+            'vkuiInternalRemovable__content',
+          )}
+        >
           {typeof children === 'function' ? children({ isRemoving: false }) : children}
 
           <IconButton

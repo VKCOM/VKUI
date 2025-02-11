@@ -13,6 +13,7 @@ const SubnavigationButtonExample = () => {
   const [size, setSize] = useState('m');
   const [chevron, setChevron] = useState(false);
   const [selected, setSelected] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [addBefore, setAddBefore] = useState(false);
   const [addAfter, setAddAfter] = useState(false);
 
@@ -34,6 +35,7 @@ const SubnavigationButtonExample = () => {
                 after={buttonAfter}
                 chevron={chevron}
                 selected={selected}
+                disabled={disabled}
                 onClick={noop}
               >
                 {mode} button
@@ -91,6 +93,7 @@ const SubnavigationButtonExample = () => {
         </FormItem>
         <FormItem top="props">
           <Checkbox onChange={(e) => setSelected(e.target.checked)}>selected</Checkbox>
+          <Checkbox onChange={(e) => setDisabled(e.target.checked)}>disabled</Checkbox>
           <Checkbox onChange={(e) => setChevron(e.target.checked)}>chevron</Checkbox>
           <Checkbox onChange={(e) => setAddBefore(e.target.checked)}>add before</Checkbox>
           <Checkbox onChange={(e) => setAddAfter(e.target.checked)}>add after</Checkbox>

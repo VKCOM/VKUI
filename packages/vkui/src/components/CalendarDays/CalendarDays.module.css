@@ -1,14 +1,14 @@
 .host {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: space-around;
-  flex-grow: 1;
 }
 
 .row {
   display: flex;
-  justify-content: center;
   flex-grow: 1;
+  justify-content: center;
 }
 
 .row:first-child:not(.rowSizeS) {
@@ -24,12 +24,12 @@
 }
 
 .weekday {
-  text-transform: capitalize;
-  color: var(--vkui--color_text_subhead);
-  block-size: 32px;
-  flex-basis: calc(100% / 7);
-  flex-grow: 0;
   display: flex;
+  flex-grow: 0;
+  flex-basis: calc(100% / 7);
   align-items: center;
   justify-content: center;
+  block-size: 32px;
+  color: var(--vkui--color_text_subhead);
+  text-transform: capitalize;
 }

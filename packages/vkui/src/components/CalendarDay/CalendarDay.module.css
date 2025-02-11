@@ -1,16 +1,16 @@
 .content {
-  border-radius: 0;
+  block-size: 100%;
+  font-family: var(--vkui--font_family_base);
   font-size: 14px;
   color: var(--vkui--color_text_primary);
-  font-family: var(--vkui--font_family_base);
-  block-size: 100%;
+  border-radius: 0;
 }
 
 .host,
 .hidden {
-  border-radius: 0;
-  flex-basis: calc(100% / 7);
   flex-grow: 0;
+  flex-basis: calc(100% / 7);
+  border-radius: 0;
 }
 
 .hidden,
@@ -52,12 +52,12 @@
 }
 
 .today .dayNumber::after {
-  content: '';
-  border-block-end: 2px solid var(--vkui--color_stroke_accent);
-  inline-size: 16px;
-  display: block;
   position: relative;
   inset-inline-start: 50%;
+  display: block;
+  inline-size: 16px;
+  content: '';
+  border-block-end: 2px solid var(--vkui--color_stroke_accent);
   transform: translateX(-50%);
 }
 
@@ -74,8 +74,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  block-size: 100%;
   inline-size: 100%;
+  block-size: 100%;
 }
 
 .inner {
@@ -92,8 +92,8 @@
 }
 
 .innerActive {
-  background-color: var(--vkui--color_background_accent);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_accent);
 }
 
 .hostHovered .inner.innerActive {
