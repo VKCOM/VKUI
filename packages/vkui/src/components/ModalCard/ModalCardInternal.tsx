@@ -71,7 +71,7 @@ export const ModalCardInternal = ({
   onOpened,
   onClose = noop,
   onClosed,
-  focusTrapDisabled,
+  disableFocusTrap,
   ...restProps
 }: ModalCardInternalProps): ReactNode => {
   const platform = usePlatform();
@@ -140,7 +140,7 @@ export const ModalCardInternal = ({
   useScrollLock(!hidden);
   useFocusTrap(ref, {
     autoFocus: !noFocusToDialog,
-    disabled: !opened || hidden || focusTrapDisabled,
+    disabled: !opened || hidden || disableFocusTrap,
     restoreFocus,
   });
 

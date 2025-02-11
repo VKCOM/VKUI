@@ -150,7 +150,7 @@ describe(ModalPage, () => {
               id="host"
               open={open}
               modalDismissButtonTestId="dismiss-button"
-              focusTrapDisabled
+              disableFocusTrap
               noFocusToDialog
               data-testid="host"
             />

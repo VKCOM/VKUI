@@ -146,7 +146,7 @@ describe(ModalCard, () => {
               open={open}
               modalDismissButtonTestId="dismiss-button"
               data-testid="host"
-              focusTrapDisabled
+              disableFocusTrap
             />
           </AdaptivityProvider>
           <Button data-testid="open-button" onClick={() => setOpen(true)} />
