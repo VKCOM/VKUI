@@ -26,9 +26,9 @@ export interface AccordionProps extends HasChildren {
    */
   defaultExpanded?: boolean;
   /**
-   * Функция изменения
+   * Возвращает новое значение при изменении раскрытия/сворачивания контента.
    */
-  onChange?: (e: boolean) => void;
+  onChange?: (newValue: boolean) => void;
   disabled?: boolean;
 }
 
