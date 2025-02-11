@@ -27,7 +27,11 @@ import {
   calculateIndent,
   getLoopPoints,
   getTargetIndex,
+  isBigger,
+  isBiggerOrEqual,
+  isLowerOrEqual,
   revertRtlValue,
+  validateIndent,
 } from './helpers';
 import { useSlideAnimation } from './hooks';
 import {
@@ -87,33 +91,11 @@ export const CarouselBase = ({
 
   const isCenterAlign = align === 'center';
 
-  /*
-   * Считает отступ слоя галереи во время драга
-   * Используется только для looped=false галереи
-   * так как только у нее есть пределы по краям
-   */
-  const calculateDragIndent = () => {
-    const localMax = slidesManager.current.max ?? 0;
-    const localMin = slidesManager.current.min ?? 0;
-    const indent = shiftXCurrentRef.current + shiftXDeltaRef.current;
-
-    const moreThanMax = (isRtl && indent < localMax) || (!isRtl && indent > localMax);
-    const lessThanMin = (isRtl && indent > localMin) || (!isRtl && indent < localMin);
-
-    if (moreThanMax) {
-      return localMax + Number((indent - localMax) / 3);
-    } else if (lessThanMin) {
-      return localMin + Number((indent - localMin) / 3);
-    }
-
-    return indent;
-  };
-
   const calculateCanSlideLeft = () => {
     if (looped) {
       return !slidesManager.current.isFullyVisible;
     }
-    const isStartShiftX = isRtl ? shiftXCurrentRef.current <= 0 : shiftXCurrentRef.current >= 0;
+    const isStartShiftX = isBiggerOrEqual(shiftXCurrentRef.current, 0, isRtl);
     return !slidesManager.current.isFullyVisible && !isStartShiftX;
   };
 
@@ -151,7 +133,15 @@ export const CarouselBase = ({
     }
 
     if (layerRef.current) {
-      const indent = isDragging.current && !looped ? calculateDragIndent() : shiftX;
+      const indent =
+        isDragging.current && !looped
+          ? validateIndent(
+              slidesManager.current,
+              shiftXCurrentRef.current + shiftXDeltaRef.current,
+              isRtl,
+              false,
+            )
+          : shiftX;
 
       layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
       layerRef.current.style.transition = animation
@@ -161,7 +151,7 @@ export const CarouselBase = ({
   };
 
   const checkShiftOutOfBoundsFromStart = (shiftX: number, snaps: number[]) =>
-    (isRtl && shiftX < snaps[0]) || (!isRtl && shiftX > snaps[0]);
+    isBigger(shiftX, snaps[0], isRtl);
 
   const checkShiftOutOfBoundsFromEnd = (shiftX: number, slides: GallerySlidesState[]) => {
     /**
@@ -175,8 +165,7 @@ export const CarouselBase = ({
 
     const lastPoint =
       slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
-
-    return (isRtl && shiftX >= lastPoint) || (!isRtl && shiftX <= -lastPoint);
+    return isRtl ? shiftX >= lastPoint : shiftX <= -lastPoint;
   };
 
   const requestTransform = (shiftX: number, animation = false) => {
@@ -341,9 +330,11 @@ export const CarouselBase = ({
     const indent = snaps[slideIndex];
     let startPoint = shiftXCurrentRef.current;
 
-    const fromLastToFirst = isRtl
-      ? shiftXCurrentRef.current >= snaps[snaps.length - 1]
-      : shiftXCurrentRef.current <= snaps[snaps.length - 1];
+    const fromLastToFirst = isLowerOrEqual(
+      shiftXCurrentRef.current,
+      snaps[snaps.length - 1],
+      isRtl,
+    );
     /**
      * Переключаемся с последнего элемента на первый
      * Для корректной анимации мы прокручиваем последний слайд на всю длину (shiftX) "вперед"

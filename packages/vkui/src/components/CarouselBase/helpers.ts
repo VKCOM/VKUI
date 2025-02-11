@@ -12,17 +12,42 @@ export const revertRtlValue = (n: number, isRtl: boolean) => {
   return isRtl ? -n : n;
 };
 
-const validateIndent = (slidesManager: SlidesManagerState, value: number, isRtl: boolean) => {
+export const isBigger = (a: number, b: number, isRtl: boolean) => (isRtl ? a < b : a > b);
+export const isBiggerOrEqual = (a: number, b: number, isRtl: boolean) => (isRtl ? a <= b : a >= b);
+
+export const isLower = (a: number, b: number, isRtl: boolean) => (isRtl ? a > b : a < b);
+export const isLowerOrEqual = (a: number, b: number, isRtl: boolean) => (isRtl ? a >= b : a <= b);
+
+/*
+ * Считает отступ слоя галереи во время драга
+ * Используется только для looped=false галереи
+ * так как только у нее есть пределы по краям
+ */
+export const validateIndent = (
+  slidesManager: SlidesManagerState,
+  value: number,
+  isRtl: boolean,
+  bounded = true,
+) => {
   const localMax = slidesManager.max ?? 0;
   const localMin = slidesManager.min ?? 0;
 
-  const moreThanMax = (isRtl && value < localMax) || (!isRtl && value > localMax);
-  const lessThanMin = (isRtl && value > localMin) || (!isRtl && value < localMin);
-
+  const moreThanMax = isBigger(value, localMax, isRtl);
   if (moreThanMax) {
-    return localMax;
-  } else if (lessThanMin) {
-    return localMin;
+    if (bounded) {
+      return localMax;
+    } else {
+      return localMax + Number((value - localMax) / 3);
+    }
+  }
+
+  const lessThanMin = isLower(value, localMin, isRtl);
+  if (lessThanMin) {
+    if (bounded) {
+      return localMin;
+    } else {
+      return localMin + Number((value - localMin) / 3);
+    }
   }
 
   return value;
@@ -119,13 +144,7 @@ function calculateLoopPoints(
     return {
       index,
       target: (currentLocation) =>
-        isRtl
-          ? currentLocation <= loopPoint
-            ? initial
-            : altered
-          : currentLocation >= loopPoint
-            ? initial
-            : altered,
+        isBiggerOrEqual(currentLocation, loopPoint, isRtl) ? initial : altered,
     };
   });
 }
