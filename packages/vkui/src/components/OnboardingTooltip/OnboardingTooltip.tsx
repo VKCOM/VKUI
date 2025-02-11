@@ -71,7 +71,7 @@ export interface OnboardingTooltipProps
    */
   onClose?: (this: void) => void;
   /**
-   * [a11y] Метка для подложки-кнопки, для описание того, что произойдёт при клике.
+   * [a11y] Метка для подложки-кнопки, для описания того, что произойдёт при клике.
    */
   overlayLabel?: string;
 }

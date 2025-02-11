@@ -36,7 +36,7 @@ export interface TooltipBaseProps
    */
   title?: React.ReactNode;
   /**
-   * [a11y] Id для заголовок тултипа.
+   * [a11y] Id для заголовка тултипа.
    * Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`
    */
   titleId?: string;
