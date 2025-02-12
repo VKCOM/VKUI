@@ -1,4 +1,10 @@
-import { calculateIndent, getLoopPoints, getShiftedIndexes, getTargetIndex } from './helpers';
+import {
+  calculateIndent,
+  getLoopPoints,
+  getShiftedIndexes,
+  getTargetIndex,
+  revertRtlValue,
+} from './helpers';
 import type { SlidesManagerState } from './types';
 
 const createSlides = (slidesCount?: number, slideWidth?: number) => {
@@ -18,9 +24,11 @@ const createSlidesManager = ({
   snaps,
   slides,
   containerWidth,
+  isRtl = false,
 }: Partial<SlidesManagerState> & {
   slidesCount?: number;
   slideWidth?: number;
+  isRtl?: boolean;
 }): SlidesManagerState => {
   return {
     isFullyVisible: isFullyVisible || false,
@@ -31,7 +39,7 @@ const createSlidesManager = ({
     slides:
       slides ||
       new Array(slidesCount || 0).fill(0).map((_, index) => ({
-        coordX: index * (slideWidth || 100),
+        coordX: revertRtlValue(index * (slideWidth || 100), isRtl),
         width: slideWidth || 100,
       })),
     min: 0,
@@ -50,6 +58,7 @@ describe(calculateIndent, () => {
       }),
       targetIndex: 4,
       isCenterAlign: false,
+      isRtl: false,
       result: -800,
     },
     {
@@ -60,6 +69,7 @@ describe(calculateIndent, () => {
       }),
       targetIndex: 4,
       isCenterAlign: true,
+      isRtl: false,
       result: -800,
     },
     {
@@ -69,6 +79,7 @@ describe(calculateIndent, () => {
       }),
       targetIndex: 3,
       isCenterAlign: false,
+      isRtl: false,
       result: 0,
     },
     {
@@ -77,6 +88,7 @@ describe(calculateIndent, () => {
       }),
       targetIndex: 3,
       isCenterAlign: false,
+      isRtl: false,
       result: 0,
     },
     {
@@ -86,12 +98,32 @@ describe(calculateIndent, () => {
       }),
       targetIndex: 3,
       isCenterAlign: false,
+      isRtl: false,
       result: 0,
+    },
+    {
+      slidesManager: createSlidesManager({
+        slidesCount: 5,
+        slideWidth: 200,
+        isRtl: true,
+      }),
+      targetIndex: 4,
+      isCenterAlign: false,
+      isRtl: true,
+      result: -800,
     },
   ])(
     'should return $result when targetIndex $targetIndex and isCenterWithCustomWidth $isCenterWithCustomWidth',
-    ({ slidesManager, result, isCenterAlign, targetIndex }) => {
-      expect(calculateIndent(targetIndex, slidesManager, isCenterAlign, true)).toBe(result);
+    ({ slidesManager, result, isCenterAlign, targetIndex, isRtl }) => {
+      expect(
+        calculateIndent({
+          targetIndex,
+          slidesManager,
+          isCenter: isCenterAlign,
+          looped: true,
+          isRtl,
+        }),
+      ).toBe(result);
     },
   );
 });
@@ -142,11 +174,24 @@ describe(getLoopPoints, () => {
       containerWidth: 220,
       result: [-1000, -1000],
     },
+    {
+      slidesManager: createSlidesManager({
+        slidesCount: 5,
+        slideWidth: 200,
+        viewportOffsetWidth: 200,
+        snaps: [0, 200, 400, 600, 800],
+        contentSize: 1000,
+        isRtl: true,
+      }),
+      isRtl: true,
+      containerWidth: 220,
+      result: [-1000, -1000],
+    },
   ])(
     'should return correct result $result with containerWidth $containerWidth',
-    ({ slidesManager, result, containerWidth }) => {
+    ({ slidesManager, result, containerWidth, isRtl }) => {
       expect(
-        getLoopPoints(slidesManager, containerWidth).map(({ target }) => {
+        getLoopPoints(slidesManager, containerWidth, isRtl).map(({ target }) => {
           return target(1000);
         }),
       ).toEqual(result);
