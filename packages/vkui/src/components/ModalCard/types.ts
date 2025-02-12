@@ -1,4 +1,5 @@
 import type { UIEvent } from 'react';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
 import type { UseBottomSheetHandlers } from '../../lib/sheet';
 import type { ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
@@ -48,4 +49,10 @@ export interface ModalCardProps
    * Будет вызвано при окончательном закрытии модалки.
    */
   onClosed?: VoidFunction;
+  /**
+   * Позволяет отключить захват фокуса.
+   *
+   * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали
+   */
+  disableFocusTrap?: UseFocusTrapProps['disabled'];
 }
