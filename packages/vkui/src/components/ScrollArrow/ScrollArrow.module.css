@@ -64,7 +64,8 @@
   padding-block-end: var(--vkui--size_base_padding_horizontal--regular, 16px);
 }
 
-.directionLeft .defaultIcon {
+.directionLeft:not(.rtl) .defaultIcon,
+.directionRight.rtl .defaultIcon {
   transform: rotate(180deg);
 }
 

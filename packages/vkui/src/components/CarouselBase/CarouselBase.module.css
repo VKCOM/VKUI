@@ -81,11 +81,11 @@
   opacity: 0;
 }
 
-.arrowAreaStretch {
+.arrow.arrowAreaStretch {
   inset-block-start: 0;
 }
 
-.arrowAreaFit {
+.arrow.arrowAreaFit {
   inset-block-start: 50%;
   block-size: auto;
   padding-block: calc(var(--vkui--size_base_padding_vertical--regular) * 2);

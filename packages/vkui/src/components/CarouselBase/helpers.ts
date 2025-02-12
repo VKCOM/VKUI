@@ -1,3 +1,4 @@
+import { getRequiredValueByKey } from '../../helpers/getValueByKey';
 import { type AlignType } from '../../types';
 import { SLIDE_THRESHOLD } from './constants';
 import {
@@ -7,14 +8,46 @@ import {
   type SlidesManagerState,
 } from './types';
 
-const validateIndent = (slidesManager: SlidesManagerState, value: number) => {
+export const revertRtlValue = (n: number, isRtl: boolean) => {
+  return isRtl ? -n : n;
+};
+
+export const isBigger = (a: number, b: number, isRtl: boolean) => (isRtl ? a < b : a > b);
+export const isBiggerOrEqual = (a: number, b: number, isRtl: boolean) => (isRtl ? a <= b : a >= b);
+
+export const isLower = (a: number, b: number, isRtl: boolean) => (isRtl ? a > b : a < b);
+export const isLowerOrEqual = (a: number, b: number, isRtl: boolean) => (isRtl ? a >= b : a <= b);
+
+/*
+ * Считает отступ слоя галереи во время драга
+ * Используется только для looped=false галереи
+ * так как только у нее есть пределы по краям
+ */
+export const validateIndent = (
+  slidesManager: SlidesManagerState,
+  value: number,
+  isRtl: boolean,
+  bounded = true,
+) => {
   const localMax = slidesManager.max ?? 0;
   const localMin = slidesManager.min ?? 0;
 
-  if (value < localMin) {
-    return localMin;
-  } else if (value > localMax) {
-    return localMax;
+  const moreThanMax = isBigger(value, localMax, isRtl);
+  if (moreThanMax) {
+    if (bounded) {
+      return localMax;
+    } else {
+      return localMax + Number((value - localMax) / 3);
+    }
+  }
+
+  const lessThanMin = isLower(value, localMin, isRtl);
+  if (lessThanMin) {
+    if (bounded) {
+      return localMin;
+    } else {
+      return localMin + Number((value - localMin) / 3);
+    }
   }
 
   return value;
@@ -23,12 +56,19 @@ const validateIndent = (slidesManager: SlidesManagerState, value: number) => {
 /*
  * Считает отступ слоя галереи
  */
-export function calculateIndent(
-  targetIndex: number,
-  slidesManager: SlidesManagerState,
-  isCenter: boolean,
+export function calculateIndent({
+  targetIndex,
+  slidesManager,
+  isCenter,
   looped = false,
-): number {
+  isRtl = false,
+}: {
+  targetIndex: number;
+  slidesManager: SlidesManagerState;
+  isCenter: boolean;
+  looped: boolean;
+  isRtl: boolean;
+}): number {
   if (!slidesManager.slides.length) {
     return 0;
   }
@@ -39,10 +79,10 @@ export function calculateIndent(
     const { coordX, width } = targetSlide;
 
     if (isCenter) {
-      return slidesManager.containerWidth / 2 - coordX - width / 2;
+      return revertRtlValue(slidesManager.containerWidth / 2 - coordX - width / 2, isRtl);
     }
-    const indent = -1 * coordX;
-    return looped ? indent : validateIndent(slidesManager, indent);
+    const indent = revertRtlValue(-1 * coordX, isRtl);
+    return looped ? indent : validateIndent(slidesManager, indent, isRtl);
   }
 
   return 0;
@@ -82,23 +122,29 @@ function calculateLoopPoints(
   edge: 'start' | 'end',
   slidesManager: SlidesManagerState,
   containerWidth: number,
+  isRtl: boolean,
 ): LoopPoint[] {
   const { contentSize, slides, snaps } = slidesManager;
   const isStartEdge = edge === 'start';
   const offset = isStartEdge ? -contentSize : contentSize;
 
   return indexes.map((index) => {
-    const initial = isStartEdge ? 0 : -contentSize;
-    const altered = isStartEdge ? contentSize : 0;
-    const loopPoint = isStartEdge
-      ? snaps[index] + containerWidth + offset
-      : snaps[index] - slides[index].width + offset - snaps[0];
+    const initial = revertRtlValue(isStartEdge ? 0 : -contentSize, isRtl);
+    const altered = revertRtlValue(isStartEdge ? contentSize : 0, isRtl);
+
+    const snap = revertRtlValue(snaps[index], isRtl);
+    const firstSnap = revertRtlValue(snaps[0], isRtl);
+    const loopPoint = revertRtlValue(
+      isStartEdge
+        ? snap + containerWidth + offset
+        : snap - slides[index].width + offset - firstSnap,
+      isRtl,
+    );
 
     return {
       index,
-      target: (currentLocation) => {
-        return currentLocation >= loopPoint ? initial : altered;
-      },
+      target: (currentLocation) =>
+        isBiggerOrEqual(currentLocation, loopPoint, isRtl) ? initial : altered,
     };
   });
 }
@@ -109,14 +155,16 @@ function calculateLoopPoints(
 export function getLoopPoints(
   slidesManager: SlidesManagerState,
   containerWidth: number,
+  isRtl = false,
 ): LoopPoint[] {
   const { slides, snaps } = slidesManager;
-  const startShiftedIndexes = getShiftedIndexes(-1, slides, snaps[0]);
-  const endShiftedIndexes = getShiftedIndexes(1, slides, containerWidth - snaps[0]);
+  const firstSnap = revertRtlValue(snaps[0], isRtl);
+  const startShiftedIndexes = getShiftedIndexes(-1, slides, firstSnap);
+  const endShiftedIndexes = getShiftedIndexes(1, slides, containerWidth - firstSnap);
 
   return [
-    ...calculateLoopPoints(endShiftedIndexes, 'start', slidesManager, containerWidth),
-    ...calculateLoopPoints(startShiftedIndexes, 'end', slidesManager, containerWidth),
+    ...calculateLoopPoints(endShiftedIndexes, 'start', slidesManager, containerWidth, isRtl),
+    ...calculateLoopPoints(startShiftedIndexes, 'end', slidesManager, containerWidth, isRtl),
   ];
 }
 
@@ -130,6 +178,7 @@ export function getTargetIndex({
   currentShiftXDelta,
   looped = false,
   max = null,
+  isRtl = false,
 }: {
   slides: GallerySlidesState[];
   slideIndex: number;
@@ -137,14 +186,23 @@ export function getTargetIndex({
   currentShiftXDelta: number;
   looped: boolean;
   max?: number | null;
+  isRtl?: boolean;
 }): number {
-  const shift = currentShiftX + currentShiftXDelta - (max ?? 0);
-  const direction = currentShiftXDelta < 0 ? 1 : -1;
+  max = max ?? 0;
+  // Инвертируем значения смещения для RTL режима
+  const shift = revertRtlValue(currentShiftX + currentShiftXDelta - max, isRtl);
+
+  // Инвертируем направление для RTL режима
+  const direction = isLower(currentShiftXDelta, 0, isRtl) ? 1 : -1;
 
   // Находим ближайшую границу слайда к текущему отступу
   let targetIndex = slides.reduce((val: number, item: GallerySlidesState, index: number) => {
-    const previousValue = Math.abs(slides[val].coordX + shift);
-    const currentValue = Math.abs(item.coordX + shift);
+    // Инвертируем координаты для RTL режима
+    const previousCoordX = slides[val].coordX;
+    const currentCoordX = item.coordX;
+
+    const previousValue = Math.abs(previousCoordX + shift);
+    const currentValue = Math.abs(currentCoordX + shift);
 
     return previousValue < currentValue ? val : index;
   }, slideIndex);
@@ -171,6 +229,7 @@ export function getTargetIndex({
 }
 
 interface CalcMin extends Partial<LayoutState> {
+  isRtl?: boolean;
   align: AlignType;
 }
 
@@ -181,34 +240,37 @@ export const calcMin = ({
   viewportOffsetWidth = 0,
   isFullyVisible,
   align,
+  isRtl = false,
 }: CalcMin): number => {
-  switch (align) {
-    case 'left':
-      if (isFullyVisible) {
-        return 0;
-      }
-      return containerWidth - layerWidth;
-    case 'right':
-      if (isFullyVisible) {
-        return 0;
-      }
-      return viewportOffsetWidth - layerWidth;
-    case 'center':
+  if (align !== 'center' && isFullyVisible) {
+    return 0;
+  }
+  const result = getRequiredValueByKey(align, {
+    left: () => containerWidth - layerWidth,
+    right: () => viewportOffsetWidth - layerWidth,
+    center: () => {
       const { coordX, width } = slides[slides.length - 1];
       return containerWidth / 2 - coordX - width / 2;
-    default:
-      throw new Error(`unknown align ${align}`);
-  }
+    },
+  })();
+  return revertRtlValue(result, isRtl);
 };
 
 interface CalcMax extends Partial<LayoutState> {
+  isRtl?: boolean;
   isCenterAlign: boolean;
 }
 
-export const calcMax = ({ slides = [], containerWidth = 0, isCenterAlign }: CalcMax): number => {
+export const calcMax = ({
+  slides = [],
+  containerWidth = 0,
+  isCenterAlign,
+  isRtl = false,
+}: CalcMax): number => {
   if (isCenterAlign && slides.length) {
     const { width, coordX } = slides[0];
-    return containerWidth / 2 - coordX - width / 2;
+    const result = containerWidth / 2 - coordX - width / 2;
+    return revertRtlValue(result, isRtl);
   }
   return 0;
 };
