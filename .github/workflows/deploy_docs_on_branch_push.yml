@@ -52,7 +52,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Build
         run: yarn docs:styleguide:build
@@ -84,7 +84,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Build
         run: yarn docs:storybook:build
@@ -116,7 +116,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Build VKUI
         run: yarn build:vkui

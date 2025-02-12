@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Dedupe deps
         run: yarn dedupe
