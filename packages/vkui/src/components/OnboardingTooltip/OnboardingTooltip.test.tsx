@@ -1,6 +1,7 @@
 import { Fragment, type HtmlHTMLAttributes, type ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { noop } from '@vkontakte/vkjs';
+import { baselineComponent, setNodeEnv, waitForFloatingPosition } from '../../testing/utils';
 import type { HasRootRef } from '../../types';
 import { OnboardingTooltip, type OnboardingTooltipProps } from './OnboardingTooltip';
 import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
@@ -20,7 +21,7 @@ describe(OnboardingTooltip, () => {
   baselineComponent(
     (props) => (
       <OnboardingTooltipContainer>
-        <OnboardingTooltip shown description="text" {...props}>
+        <OnboardingTooltip shown title="Text element" description="text" {...props}>
           <div />
         </OnboardingTooltip>
       </OnboardingTooltipContainer>
@@ -123,5 +124,27 @@ describe(OnboardingTooltip, () => {
     await waitForFloatingPosition();
 
     expect(onPlacementChange).toHaveBeenCalledWith('top');
+  });
+
+  it('shows warning if title and area attributes are not provided', () => {
+    setNodeEnv('development');
+    const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+
+    const component = render(<OnboardingTooltip onClose={noop} title="title" />);
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(<OnboardingTooltip onClose={noop} aria-label="title" />);
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(<OnboardingTooltip onClose={noop} aria-labelledby="labelId" />);
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(<OnboardingTooltip onClose={noop} />);
+
+    expect(warn.mock.calls[0][0]).toBe(
+      '%c[VKUI/OnboardingTooltip] Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+
+    setNodeEnv('test');
   });
 });
