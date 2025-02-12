@@ -5,6 +5,7 @@ import type {
 } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { getValueByKey } from '../../helpers/getValueByKey';
 import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
+import { type PlatformType } from '../../lib/platform';
 
 export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {
@@ -30,11 +31,14 @@ class CustomValueWithLabel<T> {
   }
 }
 
+type ComponentStateHeightState = { componentStateHeight?: number };
+
 type DecoratedPropValue<T> = T | CustomValueWithLabel<T>;
 
 type AdaptivityFlag = boolean | 'x' | 'y';
 type PropDesc<Props> = { [K in keyof Props]?: Array<DecoratedPropValue<Props[K]>> } & {
   $adaptivity?: AdaptivityFlag;
+  $componentStateHeight?: Partial<Record<PlatformType, number>>;
 };
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
@@ -48,16 +52,29 @@ function getAdaptivity(adaptivity?: AdaptivityFlag) {
   return extra;
 }
 
-type TestProps<Props> = Array<Props & SizeProps>;
-type CartesianOptions = { adaptive: boolean };
+function getComponentStateHeight(
+  componentStateHeight: Partial<Record<PlatformType, number>> | undefined,
+  platform: PlatformType,
+): PropDesc<ComponentStateHeightState> | undefined {
+  if (componentStateHeight && componentStateHeight[platform] !== undefined) {
+    return {
+      componentStateHeight: [componentStateHeight[platform]],
+    };
+  }
+  return undefined;
+}
+
+type TestProps<Props> = Array<Props & SizeProps & ComponentStateHeightState>;
+type CartesianOptions = { adaptive: boolean; platform: PlatformType };
 
 function cartesian<Props>(
-  { $adaptivity, ...propDesc }: PropDesc<Props>,
+  { $adaptivity, $componentStateHeight, ...propDesc }: PropDesc<Props>,
   ops: CartesianOptions,
 ): TestProps<Props> {
   propDesc = {
     ...propDesc,
     ...getAdaptivity(ops.adaptive ? $adaptivity : false),
+    ...getComponentStateHeight($componentStateHeight, ops.platform),
   };
   return Object.entries(propDesc).reduce<TestProps<Props>>(
     (acc, [prop, values]: [string, any]) => {

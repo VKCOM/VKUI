@@ -23,6 +23,11 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
+      componentStateHeight={{
+        android: 105,
+        ios: 105,
+        vkcom: 80,
+      }}
       propSets={[
         {
           before: [<Avatar key="avatar" size={40} />],
@@ -55,6 +60,11 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
               <Icon28MessageOutline />
             </IconButton>,
           ],
+          $componentStateHeight: {
+            android: 130,
+            ios: 130,
+            vkcom: 80,
+          },
         },
         {
           before: [<Switch key="switch" />],
@@ -78,15 +88,11 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
           ],
           badgeBeforeTitle: [<Icon20AddCircleFillBlue key="leftBadge" />],
           badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
-        },
-        {
-          children: [withLabel(veryLongChildren, 'Long children')],
-          subtitle: [withLabel(veryLongSubtitle, 'Long subtitle')],
-          badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
-          badgeAfterSubtitle: [
-            <Icon12Fire key="iconFire" fill="var(--vkui--color_icon_negative)" />,
-          ],
-          multiline: [false, true],
+          $componentStateHeight: {
+            android: 245,
+            ios: 245,
+            vkcom: 145,
+          },
         },
         {
           children: ['Title'],
@@ -121,6 +127,20 @@ export const SimpleCellPlayground = (props: ComponentPlaygroundProps) => {
             </IconButton>,
           ],
           disabled: [true],
+        },
+        {
+          children: [withLabel(veryLongChildren, 'Long children')],
+          subtitle: [withLabel(veryLongSubtitle, 'Long subtitle')],
+          badgeAfterTitle: [<Icon12Verified key="rightBadge" />],
+          badgeAfterSubtitle: [
+            <Icon12Fire key="iconFire" fill="var(--vkui--color_icon_negative)" />,
+          ],
+          multiline: [true],
+          $componentStateHeight: {
+            android: 300,
+            ios: 300,
+            vkcom: 100,
+          },
         },
       ]}
     >
