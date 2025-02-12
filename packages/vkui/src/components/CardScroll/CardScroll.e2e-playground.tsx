@@ -24,6 +24,10 @@ export const CardScrollPlayground = (props: ComponentPlaygroundProps) => {
         {
           padding: [false],
         },
+        {
+          showArrows: ['always'],
+          dir: ['rtl'],
+        },
       ]}
     >
       {(props: CardScrollProps) => <CardScroll {...props}>{items}</CardScroll>}

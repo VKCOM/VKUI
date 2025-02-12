@@ -212,9 +212,9 @@ export const HorizontalScroll = ({
 
   const isCustomScrollingRef = React.useRef(false);
 
-  const scrollerRef = useExternRef(getRef, directionRef);
+  const scrollerRef = useExternRef(getRef);
 
-  const rootRef = useExternRef(getRootRef);
+  const rootRef = useExternRef(getRootRef, directionRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
