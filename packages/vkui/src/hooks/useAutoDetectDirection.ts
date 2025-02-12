@@ -5,7 +5,7 @@ import { useDOM } from '../lib/dom';
 export const useAutoDetectDirection = (directionProp: Direction): Direction => {
   const { window, document } = useDOM();
 
-  const getGlobalDir = () => {
+  return React.useMemo(() => {
     if (directionProp) {
       return directionProp;
     }
@@ -14,7 +14,5 @@ export const useAutoDetectDirection = (directionProp: Direction): Direction => {
     }
     const styleDeclaration = window.getComputedStyle(document.body);
     return styleDeclaration.direction as Direction;
-  };
-
-  return React.useMemo(() => getGlobalDir(), [directionProp, document, window]);
+  }, [directionProp, document, window]);
 };
