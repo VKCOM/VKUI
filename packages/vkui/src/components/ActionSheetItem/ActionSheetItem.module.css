@@ -1,14 +1,14 @@
 .host {
   position: relative;
-  overflow: hidden;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  text-decoration: none;
-  color: var(--vkui--color_text_primary);
+  min-block-size: 48px;
   padding-block: 0;
   padding-inline: 16px;
-  min-block-size: 48px;
-  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--vkui--color_text_primary);
+  text-decoration: none;
 }
 
 .container,
@@ -23,8 +23,8 @@
 }
 
 .container {
-  max-inline-size: 100%;
   flex-grow: 1;
+  max-inline-size: 100%;
   padding-block: 10px;
   padding-inline: 0;
 }
@@ -37,8 +37,8 @@
 .content {
   display: flex;
   align-items: baseline;
-  overflow: hidden;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .ellipsis .content {
@@ -52,21 +52,21 @@
 }
 
 .subtitle {
-  color: var(--vkui--color_text_secondary);
+  margin-block-start: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-block-start: 2px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .meta {
-  color: var(--vkui--color_text_secondary);
-  margin-inline-start: 6px;
   flex-shrink: 0;
+  margin-inline-start: 6px;
+  color: var(--vkui--color_text_secondary);
 }
 
 .before {
-  color: var(--vkui--color_icon_accent);
   margin-inline-end: 16px;
+  color: var(--vkui--color_icon_accent);
 }
 
 .menu .before {
@@ -74,8 +74,8 @@
 }
 
 .ios .before {
-  color: var(--vkui--color_icon_accent_themed);
   margin-inline-end: 18px;
+  color: var(--vkui--color_icon_accent_themed);
 }
 
 .modeDestructive .container:first-child {
@@ -103,9 +103,9 @@
  */
 
 .ios {
+  min-block-size: 56px;
   padding-block: 14px;
   padding-inline: 18px;
-  min-block-size: 56px;
   color: var(--vkui--color_text_accent_themed);
   background: var(--vkui--color_background_modal);
 }
@@ -120,12 +120,12 @@
 
 .ios::before {
   position: absolute;
-  inset-inline-start: 0;
   inset-block-start: 0;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
-  background-color: var(--vkui--color_background_modal);
   content: '';
+  background-color: var(--vkui--color_background_modal);
   transition:
     opacity 0.15s ease-out,
     background-color 0.15s ease-out;
@@ -133,10 +133,10 @@
 
 .ios::after {
   position: absolute;
+  inset-block-start: 0;
   inset-inline: 0;
   block-size: 1px;
   content: '';
-  inset-block-start: 0;
   background: var(--vkui--color_separator_primary_alpha);
   transform-origin: center bottom;
 }

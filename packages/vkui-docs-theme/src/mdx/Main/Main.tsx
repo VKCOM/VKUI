@@ -1,4 +1,4 @@
-import type * as React from 'react';
+import * as React from 'react';
 import { Breadcrumbs, NavLinks } from '../../components';
 import { useConfig, useThemeConfig } from '../../contexts';
 import styles from './Main.module.css';
@@ -25,7 +25,8 @@ export function Main({ children }: { children: React.ReactNode }) {
     </>
   );
 
-  const body = themeConfig.main?.({ children: content }) || content;
+  const ThemeConfigMain = themeConfig.main || React.Fragment;
+  const body = <ThemeConfigMain>{content}</ThemeConfigMain>;
 
   if (themeContext.layout === 'full') {
     return <main className={styles.content}>{body}</main>;

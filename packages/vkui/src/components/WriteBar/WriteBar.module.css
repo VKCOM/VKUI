@@ -18,24 +18,24 @@
 }
 
 .formIn {
+  position: relative;
+  display: flex;
   flex: 1;
   min-inline-size: 0;
-  display: flex;
-  position: relative;
 }
 
 .textarea {
   box-sizing: border-box;
-  inline-size: 100%;
   flex: 1;
+  inline-size: 100%;
   min-inline-size: 0;
+  max-block-size: 120px;
   margin: 0;
-  background: transparent;
-  border: 0;
-  resize: none;
   color: var(--vkui--color_text_primary);
   appearance: none;
-  max-block-size: 120px;
+  resize: none;
+  background: transparent;
+  border: 0;
 }
 
 .textarea::placeholder {
@@ -82,11 +82,11 @@
 
 .ios .formIn {
   box-sizing: border-box;
+  margin-block: 8px;
+  margin-inline: 0;
   background-color: var(--vkui--color_write_bar_input_background);
   border: var(--vkui--size_border--regular) solid var(--vkui--color_write_bar_input_border);
   border-radius: 18px;
-  margin-block: 8px;
-  margin-inline: 0;
 }
 
 .ios .formIn:first-child {
@@ -98,8 +98,8 @@
   --vkui_internal--writebar-right-gap: calc(-1 * var(--vkui--size_border--regular));
   --vkui_internal--writebar-vertical-gap: calc(var(--vkui_internal--writebar-right-gap) - 8px);
 
-  margin-inline-end: var(--vkui_internal--writebar-right-gap);
   margin-block: var(--vkui_internal--writebar-vertical-gap);
+  margin-inline-end: var(--vkui_internal--writebar-right-gap);
 }
 
 .ios .textarea {

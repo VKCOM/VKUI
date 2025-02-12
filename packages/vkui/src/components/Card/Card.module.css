@@ -1,9 +1,9 @@
 .host {
   position: relative;
+  display: block;
+  list-style-type: none;
   background: var(--vkui--color_background_secondary);
   border-radius: var(--vkui--size_card_border_radius--regular);
-  list-style-type: none;
-  display: block;
 }
 
 .modeShadow {
@@ -22,15 +22,15 @@
 
 .withBorder::after {
   position: absolute;
-  inset-inline-start: 0;
   inset-block-start: 0;
+  inset-inline-start: 0;
+  box-sizing: border-box;
+  display: block;
   inline-size: 100%;
   block-size: 100%;
-  content: '';
-  display: block;
-  border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
   pointer-events: none;
-  box-sizing: border-box;
+  content: '';
+  border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
   border-radius: inherit;
 }
 
@@ -40,8 +40,8 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalCardScroll) .host {
-  margin-inline-end: var(--vkui--size_cardgrid_padding--regular);
   flex-shrink: 0;
+  margin-inline-end: var(--vkui--size_cardgrid_padding--regular);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */

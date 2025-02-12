@@ -1,12 +1,12 @@
 .host {
+  box-sizing: border-box;
   display: flex;
+  min-block-size: 64px;
   padding-block: var(--vkui--spacing_size_m);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-  min-block-size: 64px;
-  box-sizing: border-box;
+  font-family: var(--vkui--font_family_base);
   color: var(--vkui--color_text_primary);
   text-decoration: none; /* в случае если Component="a" */
-  font-family: var(--vkui--font_family_base);
 }
 
 .sizeYCompact {
@@ -25,11 +25,11 @@
 
 .in {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 1;
-  max-inline-size: 100%;
   min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .host.withAfter:not(.alignAfterStart).contentAlignStart .in {
@@ -47,8 +47,8 @@
 
 .contentBefore {
   display: flex;
-  flex-direction: column;
   flex-grow: 1;
+  flex-direction: column;
   min-inline-size: 0;
 }
 
@@ -65,12 +65,12 @@
 }
 
 .contentAfter {
+  box-sizing: border-box;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   align-items: flex-end;
-  flex-shrink: 0;
   padding-inline-start: var(--vkui--spacing_size_xl);
-  box-sizing: border-box;
 }
 
 .alignBeforeStart .before,
@@ -128,10 +128,10 @@
 .textEllipsis .children,
 .textEllipsis .subtitle,
 .textEllipsis .extraSubtitle {
-  white-space: nowrap;
-  text-overflow: ellipsis;
   max-inline-size: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bottom {

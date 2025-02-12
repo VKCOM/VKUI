@@ -12,6 +12,7 @@ import {
   usePlacementChangeCallback,
   type VirtualElement,
 } from '../../lib/floating';
+import { useReferenceHiddenChangeCallback } from '../../lib/floating/useReferenceHiddenChangeCallback';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -46,6 +47,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'onShownChange'
   | 'defaultShown'
   | 'hideWhenReferenceHidden'
+  | 'onReferenceHiddenChange'
   | 'sameWidth'
   | 'zIndex'
   | 'strategy'
@@ -116,6 +118,7 @@ export const Popper = ({
   children,
   usePortal = true,
   onPlacementChange,
+  onReferenceHiddenChange,
   zIndex,
   style,
   ...restProps
@@ -157,6 +160,8 @@ export const Popper = ({
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
+  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChange);
+
   const { arrow: arrowCoords } = middlewareData;
 
   const handleRootRef = useExternRef<HTMLDivElement>(refs.setFloating, getRootRef);
@@ -178,13 +183,13 @@ export const Popper = ({
       style={mergeStyle(dropdownStyle, style)}
       baseClassName={styles.host}
       getRootRef={handleRootRef}
-      baseStyle={convertFloatingDataToReactCSSProperties(
-        floatingPositionStrategy,
-        floatingDataX,
-        floatingDataY,
-        sameWidth ? null : undefined,
+      baseStyle={convertFloatingDataToReactCSSProperties({
+        strategy: floatingPositionStrategy,
+        x: floatingDataX,
+        y: floatingDataY,
+        initialWidth: sameWidth ? null : undefined,
         middlewareData,
-      )}
+      })}
     >
       {arrow && (
         <FloatingArrow

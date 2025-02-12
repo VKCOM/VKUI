@@ -15,11 +15,11 @@
 }
 
 .middle {
+  display: flex;
   flex: 1;
+  align-items: center;
   min-inline-size: 0;
   overflow: hidden;
-  display: flex;
-  align-items: center;
 }
 
 .content {
@@ -27,15 +27,15 @@
   min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   word-break: break-word;
+  white-space: nowrap;
 }
 
 .textWrapShort .content {
-  white-space: initial;
   display: -webkit-box;
   max-block-size: 60px;
   -webkit-line-clamp: 3;
+  white-space: initial;
   -webkit-box-orient: vertical;
 }
 
@@ -49,8 +49,8 @@
 }
 
 .after {
-  margin-inline-start: var(--vkui--spacing_size_xl);
   margin-block: calc(-1 * var(--vkui--spacing_size_2xs));
+  margin-inline-start: var(--vkui--spacing_size_xl);
 }
 
 .modeAdd,

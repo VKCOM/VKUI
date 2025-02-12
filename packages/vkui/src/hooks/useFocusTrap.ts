@@ -166,7 +166,7 @@ export const useFocusTrap = (
 
     recalculateFocusableNodesRef(parentNode);
 
-    if (!autoFocus || arraysEquals(oldFocusableNodes, focusableNodesRef.current)) {
+    if (disabled || !autoFocus || arraysEquals(oldFocusableNodes, focusableNodesRef.current)) {
       return;
     }
 

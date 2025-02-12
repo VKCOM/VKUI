@@ -1,21 +1,21 @@
 .host {
+  position: relative;
+  display: block;
+  inline-size: fit-content;
+  block-size: 48px;
+  padding: 0;
+  margin: 0;
+  color: currentColor;
   appearance: none;
   background: none;
   border: 0;
-  box-shadow: none;
-  display: block;
-  color: currentColor;
-  padding: 0;
-  margin: 0;
-  position: relative;
-  block-size: 48px;
-  inline-size: fit-content;
 
   /**
    * Чтобы закргуление было равно половине высоты.
    * см. https://stackoverflow.com/questions/27233295/possible-to-make-border-radius-equal-to-half-the-total-height-without-javascript
    */
   border-radius: 9999px;
+  box-shadow: none;
 }
 
 .sizeYCompact {
@@ -104,8 +104,8 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after) .host {
   display: flex;
-  align-items: center;
   align-content: center;
+  align-items: center;
   justify-content: center;
   inline-size: var(--vkui--size_field_height--regular);
   block-size: var(--vkui--size_field_height--regular);

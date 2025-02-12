@@ -80,6 +80,7 @@ export const ModalPageInternal = ({
   onOpened,
   onClose = noop,
   onClosed,
+  disableFocusTrap,
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
@@ -180,7 +181,7 @@ export const ModalPageInternal = ({
         restoreFocus={restoreFocus}
         role="dialog"
         aria-modal="true"
-        disabled={!opened || hidden}
+        disabled={!opened || hidden || disableFocusTrap}
         className={classNames(
           className,
           styles.host,

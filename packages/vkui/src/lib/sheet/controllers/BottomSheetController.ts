@@ -26,8 +26,10 @@ export type BottomSheetControllerOptions = {
 };
 
 export class BottomSheetController {
+  private readonly sheetEl: HTMLElement;
+
   constructor(
-    private readonly sheetEl: HTMLElement,
+    sheetEl: HTMLElement,
     {
       sheetScrollEl,
       sheetTransitionController,
@@ -36,6 +38,7 @@ export class BottomSheetController {
       onDismiss,
     }: BottomSheetControllerOptions,
   ) {
+    this.sheetEl = sheetEl;
     this.onSnapPointChange = onSnapPointChange;
     this.onDismiss = onDismiss;
     this.panGestureRecognizer = new UIPanGestureRecognizer();

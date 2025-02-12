@@ -99,6 +99,7 @@ export const SubnavigationButton = ({
         appearanceStyles[appearance],
         selected && styles.selected,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
+        restProps.disabled && styles.disabled,
       )}
     >
       <span className={styles.in}>

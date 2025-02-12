@@ -37,9 +37,9 @@
 }
 
 .arrow {
-  z-index: var(--vkui_internal--z_index_horizontal_scroll_arrow);
   position: absolute;
   inset-block-start: 0;
+  z-index: var(--vkui_internal--z_index_horizontal_scroll_arrow);
   opacity: 0;
 }
 
@@ -75,8 +75,8 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--withGaps) .inWrapper::before {
   display: block;
-  inline-size: var(--vkui--size_base_padding_horizontal--regular);
   flex-shrink: 0;
+  inline-size: var(--vkui--size_base_padding_horizontal--regular);
   block-size: 1px;
   content: '';
 }

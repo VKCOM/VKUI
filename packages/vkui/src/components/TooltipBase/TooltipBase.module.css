@@ -6,23 +6,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--vkui--color_background_contrast_themed);
-  box-shadow: var(--vkui--elevation3);
   padding-block: 9px 10px;
   padding-inline: 12px;
-  border-radius: var(--vkui--size_border_radius--regular);
   color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_background_contrast_themed);
+  border-radius: var(--vkui--size_border_radius--regular);
+  box-shadow: var(--vkui--elevation3);
 }
 
 .closeButton {
   flex-grow: 0;
   flex-shrink: 0;
   align-self: flex-start;
+  padding: 0;
   margin-inline-start: 10px;
   color: inherit;
-  padding: 0;
-  border: 0;
   background: none;
+  border: 0;
 }
 
 .title,
@@ -35,8 +35,8 @@
 }
 
 .appearanceAccent .content {
-  background-color: var(--vkui--color_background_accent_tint);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_accent_tint);
 }
 
 .appearanceAccent .arrow {
@@ -44,8 +44,8 @@
 }
 
 .appearanceWhite .content {
-  background-color: var(--vkui--color_background_contrast);
   color: var(--vkui--color_text_primary_invariably);
+  background-color: var(--vkui--color_background_contrast);
 }
 
 .appearanceWhite .arrow {
@@ -53,8 +53,8 @@
 }
 
 .appearanceBlack .content {
-  background-color: var(--vkui--color_background_contrast_inverse);
   color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_background_contrast_inverse);
 }
 
 .appearanceBlack .arrow {
@@ -62,8 +62,8 @@
 }
 
 .appearanceInversion .content {
-  background-color: var(--vkui--color_background_modal_inverse);
   color: var(--vkui--color_text_contrast_themed);
+  background-color: var(--vkui--color_background_modal_inverse);
 }
 
 .appearanceInversion .arrow {

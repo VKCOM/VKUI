@@ -5,17 +5,17 @@
 }
 
 .viewport {
-  margin: 0;
-  block-size: 100%;
   position: relative;
+  block-size: 100%;
+  margin: 0;
 }
 
 .layer {
   display: flex;
+  align-items: stretch;
   inline-size: 100%;
   block-size: 100%;
   min-block-size: 100px;
-  align-items: stretch;
   backface-visibility: hidden;
 }
 
@@ -28,8 +28,8 @@
 }
 
 .slide {
-  inline-size: 100%;
   flex: 0 0 auto;
+  inline-size: 100%;
   max-inline-size: 100%;
   overflow: hidden;
 }
@@ -47,12 +47,12 @@
 .bullets {
   position: absolute;
   inset-block-end: 10px;
-  block-size: 6px;
-  inline-size: 100%;
   inset-inline-start: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  inline-size: 100%;
+  block-size: 6px;
 }
 
 .bulletsDark .bullet {
@@ -64,11 +64,11 @@
 }
 
 .bullet {
-  block-size: 6px;
   inline-size: 6px;
-  border-radius: 50%;
+  block-size: 6px;
   margin-block: 0;
   margin-inline: 3px;
+  border-radius: 50%;
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
@@ -81,15 +81,15 @@
   opacity: 0;
 }
 
-.arrowAreaStretch {
+.arrow.arrowAreaStretch {
   inset-block-start: 0;
 }
 
-.arrowAreaFit {
+.arrow.arrowAreaFit {
   inset-block-start: 50%;
-  transform: translateY(-50%);
   block-size: auto;
   padding-block: calc(var(--vkui--size_base_padding_vertical--regular) * 2);
+  transform: translateY(-50%);
 }
 
 .arrowStart {

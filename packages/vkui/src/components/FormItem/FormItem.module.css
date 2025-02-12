@@ -12,27 +12,27 @@
 }
 
 .removable {
-  max-inline-size: 100%;
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
-  padding: 0;
   min-inline-size: 1px;
+  max-inline-size: 100%;
+  padding: 0;
   overflow: hidden;
 }
 
 .top {
-  padding-block: var(--vkui--spacing_size_2xs) var(--vkui--spacing_size_m);
-  color: var(--vkui--color_text_subhead);
   display: flex;
   align-items: flex-end;
+  padding-block: var(--vkui--spacing_size_2xs) var(--vkui--spacing_size_m);
+  color: var(--vkui--color_text_subhead);
 }
 
 .label,
 .aside {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .label {
@@ -40,8 +40,8 @@
 }
 
 .aside {
-  color: var(--vkui--color_text_tertiary);
   margin-inline-start: auto;
+  color: var(--vkui--color_text_tertiary);
 }
 
 .aside:not(:only-child) {
@@ -53,13 +53,13 @@
 }
 
 .labelRequired {
-  color: var(--vkui--color_text_negative);
   margin-inline-start: 3px;
+  color: var(--vkui--color_text_negative);
 }
 
 .bottom {
-  color: var(--vkui--color_text_secondary);
   padding-block-start: var(--vkui--spacing_size_m);
+  color: var(--vkui--color_text_secondary);
 }
 
 .statusError .bottom {
@@ -99,12 +99,12 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .host {
-  max-inline-size: 100%;
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
-  padding: 0;
   min-inline-size: 1px;
+  max-inline-size: 100%;
+  padding: 0;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */

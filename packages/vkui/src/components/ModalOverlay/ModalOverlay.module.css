@@ -1,10 +1,10 @@
 .host {
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
+  background-color: rgba(0, 0, 0, 0.4);
   transition: opacity 0.3s linear;
   will-change: opacity;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nonInteractive {

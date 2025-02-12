@@ -5,21 +5,21 @@
 }
 
 .scrollIn {
-  margin: 0;
+  display: flex;
   padding-block: calc(var(--vkui--size_subnavigation_bar_padding_vertical--regular) + 8px);
   padding-inline: 0;
-  display: flex;
+  margin: 0;
 }
 
 .scrollIn::before,
 .scrollIn::after {
-  content: '';
   min-inline-size: var(--vkui--size_base_padding_horizontal--regular);
+  content: '';
 }
 
 .item {
-  list-style-type: none;
   display: flex;
+  list-style-type: none;
 }
 
 .item + .item {

@@ -51,6 +51,7 @@ export const SubnavigationButtonPlayground = (props: ComponentPlaygroundProps) =
             </Counter>,
           ],
           children: ['Фильтры'],
+          disabled: [undefined, true],
         },
       ]}
     >

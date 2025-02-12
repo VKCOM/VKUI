@@ -1,9 +1,9 @@
 .host {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  box-sizing: border-box;
   inline-size: 100%;
   block-size: 100%;
-  box-sizing: border-box;
-  inset-inline-start: 0;
-  inset-block-start: 0;
   pointer-events: none;
 }
 
@@ -19,10 +19,14 @@
   position: fixed;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .overlay {
   position: fixed;
-  inset-inline-start: 0;
   inset-block-start: 0;
+  inset-inline-start: 0;
   inline-size: 100%;
   block-size: 100%;
   opacity: 1;
@@ -42,24 +46,25 @@
   background: var(--vkui--color_overlay_primary);
 }
 
-.fixed .overlay {
+.fixed .overlay,
+.absolute .overlay {
   position: absolute;
 }
 
 .container {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
   inline-size: 100%;
   block-size: 100%;
-  position: relative;
-  display: flex;
-  box-sizing: border-box;
 }
 
 .content {
+  position: relative;
   display: flex;
   justify-content: center;
   inline-size: 100%;
   pointer-events: none;
-  position: relative;
 }
 
 /* stylelint-disable-next-line selector-max-universal */

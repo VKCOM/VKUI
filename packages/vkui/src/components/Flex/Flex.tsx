@@ -87,7 +87,7 @@ export const Flex: React.FC<FlexProps> & {
   ...props
 }: FlexProps) => {
   const withGaps = Children.count(children) > 1 && gap;
-  const [rowGap, columnGap] = calculateGap(withGaps ? gap : undefined);
+  const [rowGap, columnGap] = calculateGap(gap);
 
   return (
     <RootComponent

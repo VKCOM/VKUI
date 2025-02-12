@@ -36,8 +36,8 @@
 }
 
 .item {
-  block-size: var(--vkui_internal--UsersStack_item_size);
   min-inline-size: var(--vkui_internal--UsersStack_item_size);
+  block-size: var(--vkui_internal--UsersStack_item_size);
 }
 
 .photo {
@@ -45,10 +45,10 @@
 }
 
 .counter {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   padding-inline: var(--vkui--spacing_size_xs);
   color: var(--vkui--color_text_contrast_themed);
   background: var(--vkui--color_icon_secondary);
@@ -64,13 +64,13 @@
 }
 
 .text {
-  min-inline-size: 0;
   flex: 1;
+  min-inline-size: 0;
 }
 
 .avatarsPositionBlockStart .text {
-  text-align: center;
   margin-block-start: 8px;
+  text-align: center;
 }
 
 .avatarsPositionInlineStart .text {

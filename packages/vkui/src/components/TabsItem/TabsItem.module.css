@@ -3,14 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-block: 4px;
-  padding-inline: 8px;
   min-inline-size: 0;
   max-inline-size: 100%;
   min-block-size: 32px;
+  padding-block: 4px;
+  padding-inline: 8px;
+  text-decoration: none;
   border-radius: var(--vkui--size_border_radius--regular);
   transition: background-color 150ms ease-out;
-  text-decoration: none;
 }
 
 .withGaps {
@@ -22,14 +22,14 @@
 }
 
 .sizeYCompact {
-  padding-block: 2px;
   min-block-size: 28px;
+  padding-block: 2px;
 }
 
 @media (--sizeY-compact) {
   .sizeYNone {
-    padding-block: 2px;
     min-block-size: 28px;
+    padding-block: 2px;
   }
 }
 
@@ -40,23 +40,23 @@
 /* mode="default" */
 .modeDefault {
   position: relative;
-  flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 0;
+  flex-basis: 0;
+  min-block-size: 48px;
   padding-block: 12px;
   padding-inline: 16px;
-  min-block-size: 48px;
 }
 
 .sizeYCompact.modeDefault {
-  padding-block: 10px;
   min-block-size: 44px;
+  padding-block: 10px;
 }
 
 @media (--sizeY-compact) {
   .sizeYNone.modeDefault {
-    padding-block: 10px;
     min-block-size: 44px;
+    padding-block: 10px;
   }
 }
 
@@ -81,12 +81,12 @@
 }
 
 .modeAccent::before {
-  content: '';
   position: absolute;
   inset: 0;
+  pointer-events: none;
+  content: '';
   border: var(--vkui--size_border--regular) solid transparent;
   border-radius: inherit;
-  pointer-events: none;
 }
 
 .selected.modeAccent::before {
@@ -118,13 +118,13 @@
 }
 /* Элемент */
 .label {
+  min-inline-size: 0;
   max-inline-size: 100%;
   overflow: hidden;
-  color: var(--vkui--color_text_secondary);
   text-overflow: ellipsis;
+  color: var(--vkui--color_text_secondary);
   white-space: nowrap;
   transition: color 150ms ease-out;
-  min-inline-size: 0;
 }
 
 .selected .label {
@@ -161,14 +161,14 @@
 /* Элемент */
 .underline {
   position: absolute;
-  inset-inline: 16px;
   inset-block-end: 5px;
+  inset-inline: 16px;
   block-size: 2px;
-  border-radius: 2px;
+  pointer-events: none;
   background-color: var(--vkui--color_background_accent);
+  border-radius: 2px;
   opacity: 0;
   transition: opacity 150ms ease-out;
-  pointer-events: none;
 }
 
 .sizeYCompact .underline {
@@ -198,8 +198,8 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--vkcom) .underline {
-  inset-inline: 2px;
   inset-block-end: 0;
+  inset-inline: 2px;
 }
 
 /**
@@ -208,10 +208,10 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalHorizontalScroll) .host {
-  min-inline-size: 64px;
-  flex-basis: auto;
   flex-grow: 1;
   flex-shrink: 0;
+  flex-basis: auto;
+  min-inline-size: 64px;
 }
 
 .host.stretched {

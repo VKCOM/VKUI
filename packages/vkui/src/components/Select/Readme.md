@@ -23,7 +23,7 @@
 
 ```jsx static
 <label htmlFor="select-id">Администратор</label>
-<CustomSelect
+<Select
   id="select-id"
   placeholder="Не выбран"
   options={users}
@@ -34,7 +34,7 @@
 
 ```jsx static
 <FormItem top="Администратор" htmlFor="select-id">
-  <CustomSelect id="select-id" placeholder="Не выбран" options={users} />
+  <Select id="select-id" placeholder="Не выбран" options={users} />
 </FormItem>
 ```
 
@@ -42,7 +42,7 @@
 
 ```jsx static
 <VisuallyHidden Component="label" htmlFor="select-id">Администратор</VisuallyHidden>
-<CustomSelect
+<Select
   id="select-id"
   placeholder="Не выбран"
   options={users}
@@ -53,7 +53,7 @@
 
 ```jsx static
 <span id="select-label-id">Администратор</span>
-<CustomSelect
+<Select
   aria-labelledby="select-label-id"
   placeholder="Не выбран"
   options={users}
@@ -64,7 +64,7 @@
 
 ```jsx static
 <VisuallyHidden Component="span" id="select-label-id">Администратор</VisuallyHidden>
-<CustomSelect
+<Select
   aria-labelledby="select-label-id"
   placeholder="Не выбран"
   options={users}
@@ -74,7 +74,7 @@
 - вместе с [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
 
 ```jsx static
-<CustomSelect aria-label="Администратор" placeholder="Не выбран" options={users} />
+<Select aria-label="Администратор" placeholder="Не выбран" options={users} />
 ```
 
 ## Тестирование (e2e)

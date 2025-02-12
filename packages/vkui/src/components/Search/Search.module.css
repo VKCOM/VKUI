@@ -35,14 +35,14 @@
   display: flex;
   flex-grow: 2;
   flex-basis: 0%;
-  block-size: var(--vkui_internal--search_height);
-  background-color: var(--vkui--color_search_field_background);
-  border-radius: var(--vkui--size_border_radius--regular);
   /**
    * Костыль для PanelHeader. Необходимо для растягивания на всю ширину.
   */
   inline-size: 10000px;
+  block-size: var(--vkui_internal--search_height);
   overflow: hidden;
+  background-color: var(--vkui--color_search_field_background);
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .field:hover {
@@ -55,40 +55,40 @@
 
 .label {
   position: absolute;
-  cursor: text;
   inset: 0;
+  cursor: text;
   opacity: 0;
 }
 
 .input {
-  padding-inline-start: 12px;
-  color: var(--vkui--color_icon_medium);
+  position: relative;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
   inline-size: calc(100% - 1px);
   block-size: 100%;
+  padding-inline-start: 12px;
+  color: var(--vkui--color_icon_medium);
   border-radius: inherit;
-  position: relative;
 }
 
 .nativeInput {
   position: absolute;
   inset: 0;
+  box-sizing: border-box;
+  flex-grow: 1;
+  inline-size: stretch; /* автопрефиксер добавит фолбеки https://caniuse.com/mdn-css_properties_width_stretch */
+  min-inline-size: 0;
+  max-inline-size: 100%;
   block-size: 100%;
-  appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
-  border: 0;
-  margin: 0;
   padding: 0;
   padding-inline-start: 36px;
-  box-sizing: border-box;
-  border-radius: inherit;
-  max-inline-size: 100%;
-  flex-grow: 1;
-  min-inline-size: 0;
-  inline-size: stretch; /* автопрефиксер добавит фолбеки https://caniuse.com/mdn-css_properties_width_stretch */
-  background-color: transparent;
+  margin: 0;
   color: var(--vkui--color_text_primary);
+  appearance: none; /* не используем textfield из-за бага в iOS 15.1 http://www.openradar.me/FB9744107 */
+  background-color: transparent;
+  border: 0;
+  border-radius: inherit;
 }
 
 .nativeInput::-webkit-search-decoration,
@@ -108,9 +108,9 @@
 }
 
 .disabled {
-  opacity: var(--vkui--opacity_disable_accessibility);
   pointer-events: none;
   cursor: default;
+  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .nativeInput:disabled {
@@ -133,9 +133,9 @@
   align-items: center;
   justify-content: center;
   color: var(--vkui--color_icon_secondary);
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
   /* Используем translate3d, чтобы поправить дергание при наведении в Safari */
   transform: translate3d(calc(var(--vkui_internal--search_shift_direction) * 100%), 0, 0);
+  transition: transform 0.3s var(--vkui--animation_easing_platform);
 
   --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 4px);
 }
@@ -157,10 +157,10 @@
 }
 
 .icon {
-  inline-size: var(--vkui_internal--search_icon_size);
   display: flex;
   align-items: center;
   justify-content: center;
+  inline-size: var(--vkui_internal--search_icon_size);
   block-size: 100%;
   border-radius: var(--vkui--size_border_radius--regular);
 }
@@ -177,8 +177,8 @@
   flex-basis: 0%;
   min-inline-size: 0;
   max-inline-size: min-content;
-  transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
   pointer-events: none;
+  transition: flex-grow 0.3s var(--vkui--animation_easing_platform);
 }
 
 .focused .after,
@@ -189,11 +189,11 @@
 
 .after::before,
 .after::after {
-  content: '';
-  flex-shrink: 0;
   display: block;
+  flex-shrink: 0;
   inline-size: 4px;
   block-size: 100%;
+  content: '';
 }
 
 .withPadding .after::after {
@@ -202,15 +202,15 @@
 
 .afterTextClip {
   display: block;
+  overflow: hidden;
   text-overflow: clip;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .findButton {
+  inline-size: initial;
   min-inline-size: initial;
   max-inline-size: initial;
-  inline-size: initial;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */

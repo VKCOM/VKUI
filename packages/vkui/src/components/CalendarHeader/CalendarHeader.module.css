@@ -1,14 +1,14 @@
 .host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-block-size: 36px;
 }
 
 .pickers {
-  display: flex;
   position: absolute;
+  display: flex;
   color: var(--vkui--color_text_primary);
 }
 
@@ -19,8 +19,8 @@
 .navIcon {
   position: absolute;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 3px;
 }
 
