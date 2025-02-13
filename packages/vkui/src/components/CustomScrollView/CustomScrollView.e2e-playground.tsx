@@ -18,12 +18,14 @@ export const CustomScrollViewWithBothScrollsPlayground = (props: ComponentPlaygr
             borderRadius: 10,
             border: '1px solid #000',
             padding: 10,
+            boxSizing: 'content-box',
           }}
         >
           <CustomScrollView {...props} enableHorizontalScroll style={{ height: 300, width: 600 }}>
             <Div
               style={{
                 width: 1440,
+                boxSizing: 'content-box',
               }}
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a

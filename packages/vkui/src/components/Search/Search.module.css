@@ -1,4 +1,5 @@
 .host {
+  box-sizing: content-box;
   display: flex;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;

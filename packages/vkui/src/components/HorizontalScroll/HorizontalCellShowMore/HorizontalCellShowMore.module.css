@@ -12,6 +12,7 @@
 }
 
 .body {
+  box-sizing: content-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
