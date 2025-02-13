@@ -1,6 +1,7 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import type { HasChildren } from '../../types';
 import {
   Playground as CaptionStory,
@@ -24,7 +25,7 @@ interface TypographyOverview {
 
 const story: Meta<TypographyOverview> = {
   title: 'Typography',
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Typography', CanvasFullLayout),
   argTypes: {
     weight: {
       control: 'inline-radio',

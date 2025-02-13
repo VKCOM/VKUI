@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Play } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Banner } from '../Banner/Banner';
 import { Button } from '../Button/Button';
 import { Image } from '../Image/Image';
@@ -25,7 +26,7 @@ type StoryProps = FlexProps & {
 const story: Meta<StoryProps> = {
   title: 'Layout/Flex',
   component: Flex,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Flex', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     rowGap: {
       control: 'number',

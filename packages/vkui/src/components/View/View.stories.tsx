@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Alert } from '../Alert/Alert';
 import { Avatar } from '../Avatar/Avatar';
 import { CellButton } from '../CellButton/CellButton';
@@ -23,7 +24,7 @@ import { View, type ViewProps } from './View';
 const story: Meta<ViewProps> = {
   title: 'Layout/View',
   component: View,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('View', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

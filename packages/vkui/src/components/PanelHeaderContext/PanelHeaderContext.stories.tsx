@@ -10,6 +10,7 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Cell } from '../Cell/Cell';
 import { Div } from '../Div/Div';
 import { Panel } from '../Panel/Panel';
@@ -23,10 +24,7 @@ import { PanelHeaderContext, type PanelHeaderContextProps } from './PanelHeaderC
 const story: Meta<PanelHeaderContextProps> = {
   title: 'Layout/PanelHeaderContext',
   component: PanelHeaderContext,
-  parameters: {
-    ...CanvasFullLayout,
-    ...DisableCartesianParam,
-  },
+  parameters: createStoryParameters('PanelHeaderContext', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
 };
 

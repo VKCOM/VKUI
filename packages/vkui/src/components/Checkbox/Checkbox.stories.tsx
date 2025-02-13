@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Checkbox, type CheckboxProps } from './Checkbox';
 
 const story: Meta<CheckboxProps> = {
   title: 'Forms/Checkbox',
   component: Checkbox,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Checkbox', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     description: StringArg,
   },

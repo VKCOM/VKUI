@@ -2,13 +2,14 @@ import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import type { PartialStoryFn } from '@storybook/types';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
 import { ContentBadge, type ContentBadgeProps } from './ContentBadge';
 
 const meta: Meta<ContentBadgeProps> = {
   title: 'Blocks/ContentBadge',
   component: ContentBadge,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default meta;

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Input, type InputProps } from './Input';
 
 const iconsPresets = getFormFieldIconsPresets();
@@ -8,7 +9,7 @@ const iconsPresets = getFormFieldIconsPresets();
 const story: Meta<InputProps> = {
   title: 'Forms/Input',
   component: Input,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Input', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     before: iconsPresets,
     after: iconsPresets,
