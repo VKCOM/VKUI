@@ -27,7 +27,7 @@ jobs:
           label: 'patch'
 
       - name: VKUI-tokens
-        if: ${{ github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
+        if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
@@ -38,7 +38,7 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    if: ${{ github.event.action == 'opened' && github.actor == 'dependabot[bot]' }}
+    if: ${{ github.event.action == 'opened' && github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

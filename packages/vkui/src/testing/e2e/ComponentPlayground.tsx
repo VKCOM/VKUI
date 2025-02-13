@@ -13,7 +13,7 @@ import { getAdaptivePxWidth, isCustomValueWithLabel, multiCartesian, prettyProps
 
 type DefaultProps<T extends React.ElementType> = Omit<
   React.ComponentProps<T>,
-  'sizeX' | 'sizeY' | 'dir'
+  'sizeX' | 'sizeY' | 'dir' | 'componentStateHeight'
 >;
 
 export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
@@ -24,6 +24,7 @@ export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
   propSets?: Parameters<typeof multiCartesian<Props>>[0];
   children: React.FC<Props>;
   AppWrapper?: React.ComponentType<AppDefaultWrapperProps>;
+  componentStateHeight?: Partial<Record<PlatformType, number>>;
 }
 
 export type ComponentPlaygroundProps = Pick<
@@ -42,6 +43,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
   propSets = [],
   children: Children,
   AppWrapper = AppDefaultWrapper,
+  componentStateHeight: globalComponentStateHeight,
   ...restProps
 }: InternalComponentPlaygroundProps<Props>): React.ReactNode => {
   const isVKCOM = platform === 'vkcom';
@@ -74,10 +76,10 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
           }
           {...restProps}
         >
-          {multiCartesian<Props>(propSets, { adaptive: !isVKCOM }).map((props, i) => {
+          {multiCartesian<Props>(propSets, { adaptive: !isVKCOM, platform }).map((props, i) => {
             const clonedAdaptivityProviderProps = { ...adaptivityProviderProps };
-
-            const { sizeX, sizeY, dir = 'ltr', ...componentProps } = props;
+            const { componentStateHeight, ...showedProps } = props;
+            const { sizeX, sizeY, dir = 'ltr', ...componentProps } = showedProps;
 
             if (sizeX) {
               clonedAdaptivityProviderProps.sizeX = sizeX;
@@ -90,11 +92,12 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
             const mappedProps: Props = mapObject(componentProps, (v) =>
               isCustomValueWithLabel(v) ? v.value : v,
             );
+            const height = componentStateHeight || globalComponentStateHeight?.[platform];
 
             return (
-              <React.Fragment key={i}>
+              <div key={i} style={{ height }}>
                 {isFixedComponent ? null : (
-                  <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(props)}</div>
+                  <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(showedProps)}</div>
                 )}
                 <div dir={dir}>
                   <DirectionProvider value={dir}>
@@ -103,7 +106,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
                     </AdaptivityProvider>
                   </DirectionProvider>
                 </div>
-              </React.Fragment>
+              </div>
             );
           })}
         </AppWrapper>

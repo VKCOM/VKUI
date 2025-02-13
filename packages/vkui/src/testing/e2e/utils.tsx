@@ -6,6 +6,7 @@ import type {
 import { getValueByKey } from '../../helpers/getValueByKey';
 import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { type Direction } from '../../lib/direction';
+import { type PlatformType } from '../../lib/platform';
 
 export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {
@@ -31,6 +32,8 @@ class CustomValueWithLabel<T> {
   }
 }
 
+type ComponentStateHeightState = { componentStateHeight?: number };
+
 type DecoratedPropValue<T> = T | CustomValueWithLabel<T>;
 
 type DirectionProps = { dir: Direction };
@@ -39,6 +42,7 @@ type AdaptivityFlag = boolean | 'x' | 'y';
 type DirectionFlag = boolean | Direction;
 type PropDesc<Props> = { [K in keyof Props]?: Array<DecoratedPropValue<Props[K]>> } & {
   $adaptivity?: AdaptivityFlag;
+  $componentStateHeight?: Partial<Record<PlatformType, number>>;
   $direction?: DirectionFlag;
 };
 
@@ -68,17 +72,30 @@ function getDirection(directionFlag?: DirectionFlag): PropDesc<DirectionProps> |
     : undefined;
 }
 
-type TestProps<Props> = Array<Props & SizeProps & DirectionProps>;
-type CartesianOptions = { adaptive: boolean };
+function getComponentStateHeight(
+  componentStateHeight: Partial<Record<PlatformType, number>> | undefined,
+  platform: PlatformType,
+): PropDesc<ComponentStateHeightState> | undefined {
+  if (componentStateHeight && componentStateHeight[platform] !== undefined) {
+    return {
+      componentStateHeight: [componentStateHeight[platform]],
+    };
+  }
+  return undefined;
+}
+
+type TestProps<Props> = Array<Props & SizeProps & ComponentStateHeightState>;
+type CartesianOptions = { adaptive: boolean; platform: PlatformType };
 
 function cartesian<Props>(
-  { $adaptivity, $direction, ...propDesc }: PropDesc<Props>,
+  { $adaptivity, $direction, $componentStateHeight, ...propDesc }: PropDesc<Props>,
   ops: CartesianOptions,
 ): TestProps<Props> {
   propDesc = {
     ...propDesc,
     ...getAdaptivity(ops.adaptive ? $adaptivity : false),
     ...getDirection($direction),
+    ...getComponentStateHeight($componentStateHeight, ops.platform),
   };
   return Object.entries(propDesc).reduce<TestProps<Props>>(
     (acc, [prop, values]: [string, any]) => {
