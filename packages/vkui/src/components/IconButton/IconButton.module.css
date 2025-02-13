@@ -18,6 +18,11 @@
   box-shadow: none;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.host :global(.vkuiIcon) {
+  box-sizing: content-box;
+}
+
 .sizeYCompact {
   block-size: 44px;
 }

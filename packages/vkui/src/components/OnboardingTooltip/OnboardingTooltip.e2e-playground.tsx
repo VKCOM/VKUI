@@ -31,6 +31,7 @@ export const OnboardingTooltipPlayground = (props: ComponentPlaygroundProps) => 
       {(props: OnboardingTooltipProps) => (
         <OnboardingTooltipContainer
           style={{
+            boxSizing: 'content-box',
             minWidth: '300px',
             height: '100px',
             position: 'relative',
