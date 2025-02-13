@@ -8,6 +8,7 @@ import { Spacing, type SpacingProps } from './Spacing';
 const sizes = Object.keys(spacingSizeClassNames) as SpacingSize[];
 const divStyle: React.CSSProperties & CSSCustomProperties = {
   'width': 100,
+  'boxSizing': 'content-box',
   '--my-custom-var': '8px',
 };
 

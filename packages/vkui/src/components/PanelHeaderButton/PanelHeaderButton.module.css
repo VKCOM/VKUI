@@ -10,6 +10,11 @@
   position: relative;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.host :global(.vkuiIcon) {
+  box-sizing: content-box;
+}
+
 .host[disabled] {
   opacity: 0.6;
 }

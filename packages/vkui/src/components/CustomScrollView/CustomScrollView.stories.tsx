@@ -13,6 +13,7 @@ const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
       width: '100%',
       maxWidth: '600px',
       maxHeight: '300px',
+      boxSizing: 'content-box',
     }}
   >
     <Story />
@@ -36,6 +37,7 @@ export const Playground: Story = {
       <Div
         style={{
           width: 1440,
+          boxSizing: 'content-box',
         }}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a

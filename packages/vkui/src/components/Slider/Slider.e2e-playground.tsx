@@ -106,6 +106,7 @@ export const SliderPlaygroundForTooltipTest = (
         <div
           style={{
             padding: '80px 30px 30px',
+            boxSizing: 'content-box',
             width: '320px',
             height: 'auto',
           }}
