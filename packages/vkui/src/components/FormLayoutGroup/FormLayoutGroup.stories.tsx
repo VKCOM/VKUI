@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { DateInput } from '../DateInput/DateInput';
@@ -37,34 +36,27 @@ export const Playground: Story = {
   ),
 };
 
-function Render(props: FormLayoutGroupProps) {
-  const dateInputId = React.useId();
-  const nicknameInputId = React.useId();
-  const linkOrIdInputId = React.useId();
-  const [dateValue, setDateValue] = React.useState<Date | undefined>();
-
-  return (
-    <FormLayoutGroup mode="horizontal" segmented {...props}>
-      <VisuallyHidden Component="label" htmlFor={nicknameInputId}>
+export const AccessibleHorizontalSegmeted: Story = {
+  render: (args) => (
+    <FormLayoutGroup mode="horizontal" segmented {...args}>
+      <VisuallyHidden Component="label" htmlFor="nikname-id">
         Никнейм или имя
       </VisuallyHidden>
       <FormItem>
-        <Input id={nicknameInputId} placeholder="Никнейм или имя" />
+        <Input id="nickname-id" placeholder="Никнейм или имя" />
       </FormItem>
       <FormItem>
-        <VisuallyHidden Component="label" htmlFor={dateInputId}>
+        <VisuallyHidden Component="label" htmlFor="link-or-id-input-id">
           Ссылка на ID
         </VisuallyHidden>
-        <Input id={linkOrIdInputId} placeholder="Ссылка на ID" />
+        <Input id="link-or-id-input-id" placeholder="Ссылка на ID" />
       </FormItem>
       <FormItem>
-        <VisuallyHidden Component="label" htmlFor={dateInputId}>
+        <VisuallyHidden Component="label" htmlFor="date-id">
           Дата или диапазон
         </VisuallyHidden>
         <DateInput
-          id={dateInputId}
-          value={dateValue}
-          onChange={(date) => setDateValue(date)}
+          id="date-id"
           renderCustomValue={(date: Date | undefined) =>
             date ? undefined : (
               <span aria-hidden style={{ color: 'var(--vkui--color_text_secondary)' }}>
@@ -75,9 +67,5 @@ function Render(props: FormLayoutGroupProps) {
         />
       </FormItem>
     </FormLayoutGroup>
-  );
-}
-
-export const HorizontalSegmeted: Story = {
-  render: (args) => <Render {...args} />,
+  ),
 };
