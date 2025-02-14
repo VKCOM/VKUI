@@ -81,7 +81,7 @@ export interface ConfigProviderContextInterface {
    *
    * @default Определяется автоматически в зависимости от значения атрибута `dir` установленного на `body` страницы
    */
-  direction: Direction;
+  direction: Direction | undefined;
 }
 
 export const ConfigProviderContext: React.Context<ConfigProviderContextInterface> =
@@ -94,7 +94,7 @@ export const ConfigProviderContext: React.Context<ConfigProviderContextInterface
     colorScheme: undefined, // undefined обозначает что тема должна определиться автоматически
     tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
     locale: 'ru',
-    direction: 'ltr',
+    direction: undefined,
   });
 
 export const useConfigProvider = (): ConfigProviderContextInterface =>
