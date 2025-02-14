@@ -84,6 +84,7 @@
 }
 
 .chevronIcon {
+  box-sizing: content-box;
   margin-block-start: 1px; /* Смещает иконку относительно текста */
   margin-inline-start: 8px;
   color: var(--vkui--color_icon_secondary);

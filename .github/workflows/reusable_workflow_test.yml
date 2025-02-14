@@ -23,7 +23,7 @@ jobs:
           ref: ${{ inputs.ref }}
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Run tests for all workspaces
         if: ${{ !inputs.workspace }}
