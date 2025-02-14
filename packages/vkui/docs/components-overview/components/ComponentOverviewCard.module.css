@@ -1,0 +1,43 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkui--spacing_size_xl);
+  block-size: 200px;
+  padding: var(--vkui--spacing_size_2xl);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+
+  --vkui_internal--ComponentOverviewCard_scale: 1;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.title {
+  color: var(--vkui--color_text_primary);
+}
+
+.componentWrapper {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.componentContainer {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: fit-content;
+  block-size: fit-content;
+  transform-origin: center center;
+
+  transform: translate(-50%, -50%) scale(var(--vkui_internal--ComponentOverviewCard_scale));
+}
+
+.rtl .componentContainer {
+  transform: translate(50%, -50%) scale(var(--vkui_internal--ComponentOverviewCard_scale));
+}
