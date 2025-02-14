@@ -275,18 +275,11 @@ describe('DateInput', () => {
         <>
           <DateInput
             value={dateValue}
-            renderCustomValue={(date) => {
-              if (!date) {
-                return undefined;
-              }
-              if (isToday(date)) {
-                return 'Сегодня';
-              }
-              if (isYesterday(date)) {
-                return 'Вчера';
-              }
-              return undefined;
-            }}
+            renderCustomValue={(date) =>
+              date ? undefined : (
+                <span style={{ color: 'var(--vkui--color_text_secondary)' }}>Не задано</span>
+              )
+            }
             onChange={noop}
             {...testIds}
           />
