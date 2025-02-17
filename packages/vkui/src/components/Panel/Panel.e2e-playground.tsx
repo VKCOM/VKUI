@@ -35,6 +35,7 @@ export const PanelPlayground = (props: ComponentPlaygroundProps) => {
         <div
           style={{
             height: '200px',
+            boxSizing: 'content-box',
             overflow: 'auto',
             transform: 'translateZ(0)',
             // чтобы было проще видеть разницу скриншотов
@@ -66,7 +67,7 @@ export const PanelModePlayground = (props: ComponentPlaygroundProps) => {
     >
       {(props: PanelProps) => (
         <Panel {...props}>
-          <div style={{ padding: '8px' }}>
+          <div style={{ padding: '8px', boxSizing: 'content-box' }}>
             <Group mode={props.mode}>
               <div style={{ minHeight: '100px', minWidth: '100px' }}>
                 Text within Group with mode {props.mode}

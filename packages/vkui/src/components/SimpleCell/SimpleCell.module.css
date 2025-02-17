@@ -33,6 +33,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .before > :global(.vkuiIcon) {
+  box-sizing: content-box;
   padding-inline-end: var(--vkui--spacing_size_xs);
 }
 
@@ -127,6 +128,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .after > :global(.vkuiIcon) {
+  box-sizing: content-box;
   padding-inline-start: var(--vkui--spacing_size_m);
 }
 

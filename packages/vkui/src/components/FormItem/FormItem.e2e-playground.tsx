@@ -79,7 +79,9 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: FormItemProps) => <FormItem {...props} style={{ maxWidth: '300px' }} />}
+      {(props: FormItemProps) => (
+        <FormItem {...props} style={{ maxWidth: '300px', boxSizing: 'content-box' }} />
+      )}
     </ComponentPlayground>
   );
 };
@@ -128,7 +130,7 @@ export const FormItemTopAsidePlayground = (props: ComponentPlaygroundProps) => {
               {topAside}
             </FormItem.Top>
           }
-          style={{ maxWidth: '300px' }}
+          style={{ maxWidth: '300px', boxSizing: 'content-box' }}
         />
       )}
     </ComponentPlayground>
