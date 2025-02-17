@@ -8,16 +8,22 @@
     "noEmit": true,
     "incremental": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
-    "allowJs": true
+    "allowJs": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
-    "next-env.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/_app.tsx"
+    "content/_app.tsx",
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
   ]
 }

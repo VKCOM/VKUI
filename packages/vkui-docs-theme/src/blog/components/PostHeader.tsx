@@ -1,15 +1,22 @@
+'use client';
+
 import { Icon12ChevronLeft } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
-import { useRouter } from 'next/router';
-import { useConfig } from '../../contexts';
+import { useRouter } from 'next/navigation';
 import { getTags } from '../tags';
 import { PostHeading, PostMeta } from './Post';
 
-export function PostHeader() {
-  const config = useConfig();
-  const { frontMatter } = config;
+interface PostHeaderProps {
+  frontMatter: {
+    tags?: string;
+    date?: string;
+    title?: string;
+  };
+}
+
+export function PostHeader({ frontMatter }: PostHeaderProps) {
   const router = useRouter();
-  const tags = getTags(frontMatter);
+  const tags = getTags(frontMatter.tags);
 
   const back = () => {
     void router.push('/blog');

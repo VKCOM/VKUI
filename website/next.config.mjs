@@ -9,8 +9,6 @@ const withBundleAnalyzer = analyzer({
 });
 
 const withNextra = nextra({
-  theme: '@vkontakte/vkui-docs-theme',
-  themeConfig: './theme.config.tsx',
   defaultShowCopyCode: true,
   staticImage: false,
   // ... your Nextra config
@@ -25,6 +23,9 @@ export default withBundleAnalyzer(
         transform: '@vkontakte/vkui/dist/cssm',
         skipDefaultConversion: true,
       },
+    },
+    experimental: {
+      optimizePackageImports: ['@vkontakte/icons'],
     },
     basePath,
     output: 'export',
