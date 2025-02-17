@@ -93,7 +93,7 @@
     "@types/node": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "8.4.7",
+    "storybook": "8.5.6",
     "ts-node": "*"
   },
   "size-limit": [
