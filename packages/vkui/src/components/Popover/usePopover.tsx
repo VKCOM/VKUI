@@ -70,6 +70,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   className,
   noStyling = false,
   zIndex = 'var(--vkui--z_index_popout)',
+  disableFocusTrap,
   // a11y
   role = 'dialog',
   ...restPopoverProps
@@ -128,7 +129,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
                   className,
                 )}
                 mount={!hidden}
-                disabled={hidden}
+                disabled={hidden || disableFocusTrap}
                 autoFocus={disableInteractive ? false : autoFocus}
                 restoreFocus={restoreFocus ? () => onRestoreFocus(restoreFocus) : false}
               >

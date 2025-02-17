@@ -65,6 +65,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
   | 'customMiddlewares'
   | 'strategy'
+  | 'disableFocusTrap'
 >;
 
 /**
