@@ -39,6 +39,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'children'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'disableFocusTrap'
 >;
 
 type AllowedTooltipBaseProps = Omit<
@@ -102,6 +103,7 @@ export const OnboardingTooltip = ({
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   restoreFocus,
+  disableFocusTrap,
   ...restProps
 }: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -164,6 +166,7 @@ export const OnboardingTooltip = ({
         aria-label={ariaLabel}
         aria-labelledby={title ? titleId : ariaLabel ? undefined : ariaLabelledBy}
         onClose={onClose}
+        disabled={disableFocusTrap}
         restoreFocus={restoreFocus}
       >
         <button aria-label={overlayLabel} className={styles.overlay} onClickCapture={onClose} />
