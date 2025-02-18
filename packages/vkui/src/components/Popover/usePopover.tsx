@@ -146,6 +146,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
         autoFocus,
         className,
         content,
+        disableFocusTrap,
         disableInteractive,
         keepMounted,
         noStyling,

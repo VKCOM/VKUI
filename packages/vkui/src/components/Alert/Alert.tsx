@@ -84,15 +84,10 @@ export interface AlertProps
 
 const warn = warnOnce('Alert');
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Alert
- */
-export const Alert = ({
+export const AlertContent = ({
   actions,
   actionsLayout = 'horizontal',
   children,
-  className,
-  style,
   title,
   description,
   onClose,
@@ -101,12 +96,15 @@ export const Alert = ({
   actionsAlign,
   dismissButtonMode = 'outside',
   dismissButtonTestId,
-  getRootRef,
-  usePortal,
   onClick,
   allowClickPropagation = false,
+  closing,
+  setClosing,
   ...restProps
-}: AlertProps): React.ReactNode => {
+}: Omit<AlertProps, 'usePortal' | 'className' | 'style' | 'getRootRef'> & {
+  closing: boolean;
+  setClosing: (closing: boolean) => void;
+}) => {
   const generatedId = React.useId();
 
   const titleId = `vkui-alert-${generatedId}-title`;
@@ -114,8 +112,6 @@ export const Alert = ({
 
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
-
-  const [closing, setClosing] = React.useState(false);
   const itemActionCallbackRef = React.useRef(noop);
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     closing ? 'exit' : 'enter',
@@ -132,7 +128,7 @@ export const Alert = ({
 
   const close = React.useCallback(() => {
     setClosing(true);
-  }, []);
+  }, [setClosing]);
 
   const onItemClick = React.useCallback(
     (item: AlertActionInterface) => {
@@ -147,21 +143,8 @@ export const Alert = ({
         setClosing(true);
       }
     },
-    [close],
+    [close, setClosing],
   );
-
-  useScrollLock();
-
-  if (
-    process.env.NODE_ENV === 'development' &&
-    !title &&
-    !restProps['aria-label'] &&
-    !restProps['aria-labelledby']
-  ) {
-    warn(
-      'Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
-    );
-  }
 
   const handleClick = allowClickPropagation
     ? onClick
@@ -169,6 +152,95 @@ export const Alert = ({
         stopPropagation(event);
         onClick?.(event);
       };
+
+  return (
+    <FocusTrap
+      {...animationHandlers}
+      onClick={handleClick}
+      getRootRef={elementRef}
+      onClose={close}
+      autoFocus={animationState === 'entered'}
+      className={classNames(
+        styles.host,
+        platform === 'ios' && styles.ios,
+        platform === 'vkcom' && styles.vkcom,
+        closing ? styles.closing : styles.opening,
+        isDesktop && styles.desktop,
+      )}
+      role="alertdialog"
+      aria-modal
+      aria-labelledby={titleId}
+      aria-describedby={descriptionId}
+      {...restProps}
+    >
+      <div
+        className={classNames(
+          styles.content,
+          dismissButtonMode === 'inside' && styles.contentWithButton,
+        )}
+      >
+        {hasReactNode(title) && <AlertTitle id={titleId}>{title}</AlertTitle>}
+        {hasReactNode(description) && (
+          <AlertDescription id={descriptionId}>{description}</AlertDescription>
+        )}
+        {children}
+        {isDismissButtonVisible && dismissButtonMode === 'inside' && (
+          <IconButton
+            label={dismissLabel}
+            className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
+            onClick={close}
+            hoverMode="opacity"
+            activeMode="opacity"
+            data-testid={dismissButtonTestId}
+          >
+            <Icon20Cancel />
+          </IconButton>
+        )}
+      </div>
+      <AlertActions
+        actions={actions}
+        actionsAlign={actionsAlign}
+        actionsLayout={actionsLayout}
+        renderAction={renderAction}
+        onItemClick={onItemClick}
+      />
+      {isDismissButtonVisible && dismissButtonMode === 'outside' && (
+        <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
+          {dismissLabel}
+        </ModalDismissButton>
+      )}
+    </FocusTrap>
+  );
+};
+
+/**
+ * @see https://vkcom.github.io/VKUI/#/Alert
+ */
+export const Alert = ({
+  usePortal,
+  style,
+  className,
+  getRootRef,
+  ...restProps
+}: AlertProps): React.ReactNode => {
+  const [closing, setClosing] = React.useState(false);
+
+  const close = React.useCallback(() => {
+    setClosing(true);
+  }, []);
+
+  useScrollLock();
+
+  if (
+    process.env.NODE_ENV === 'development' &&
+    !restProps.title &&
+    !restProps['aria-label'] &&
+    !restProps['aria-labelledby']
+  ) {
+    warn(
+      'Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+  }
 
   return (
     <AppRootPortal usePortal={usePortal}>
@@ -180,62 +252,7 @@ export const Alert = ({
         getRootRef={getRootRef}
         strategy="fixed"
       >
-        <FocusTrap
-          {...animationHandlers}
-          onClick={handleClick}
-          getRootRef={elementRef}
-          onClose={close}
-          autoFocus={animationState === 'entered'}
-          className={classNames(
-            styles.host,
-            platform === 'ios' && styles.ios,
-            platform === 'vkcom' && styles.vkcom,
-            closing ? styles.closing : styles.opening,
-            isDesktop && styles.desktop,
-          )}
-          role="alertdialog"
-          aria-modal
-          aria-labelledby={titleId}
-          aria-describedby={descriptionId}
-          {...restProps}
-        >
-          <div
-            className={classNames(
-              styles.content,
-              dismissButtonMode === 'inside' && styles.contentWithButton,
-            )}
-          >
-            {hasReactNode(title) && <AlertTitle id={titleId}>{title}</AlertTitle>}
-            {hasReactNode(description) && (
-              <AlertDescription id={descriptionId}>{description}</AlertDescription>
-            )}
-            {children}
-            {isDismissButtonVisible && dismissButtonMode === 'inside' && (
-              <IconButton
-                label={dismissLabel}
-                className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
-                onClick={close}
-                hoverMode="opacity"
-                activeMode="opacity"
-                data-testid={dismissButtonTestId}
-              >
-                <Icon20Cancel />
-              </IconButton>
-            )}
-          </div>
-          <AlertActions
-            actions={actions}
-            actionsAlign={actionsAlign}
-            actionsLayout={actionsLayout}
-            renderAction={renderAction}
-            onItemClick={onItemClick}
-          />
-          {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-            <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
-              {dismissLabel}
-            </ModalDismissButton>
-          )}
-        </FocusTrap>
+        <AlertContent {...restProps} closing={closing} setClosing={setClosing} />
       </PopoutWrapper>
     </AppRootPortal>
   );

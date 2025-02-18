@@ -4,6 +4,7 @@
   gap: var(--vkui--spacing_size_xl);
   block-size: 200px;
   padding: var(--vkui--spacing_size_2xl);
+  color: var(--vkui--color_text_primary);
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
@@ -25,6 +26,8 @@
   overflow: hidden;
   pointer-events: none;
   user-select: none;
+  background: var(--vkui--color_background);
+  border-radius: var(--vkui--size_border_radius--regular);
 }
 
 .componentContainer {
@@ -33,9 +36,8 @@
   inset-inline-start: 50%;
   inline-size: fit-content;
   block-size: fit-content;
-  transform-origin: center center;
-
   transform: translate(-50%, -50%) scale(var(--vkui_internal--ComponentOverviewCard_scale));
+  transform-origin: center center;
 }
 
 .rtl .componentContainer {

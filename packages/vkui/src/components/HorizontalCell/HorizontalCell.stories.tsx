@@ -33,7 +33,7 @@ export const Playground: Story = {
     const platform = usePlatform();
 
     return (
-      <Flex style={{ minWidth: 400 }}>
+      <Flex>
         {values.map((value) => {
           return (
             <HorizontalCell key={value.id} title={value.title} {...args}>

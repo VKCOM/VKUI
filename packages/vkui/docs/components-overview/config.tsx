@@ -1,19 +1,27 @@
 'use client';
 
+import { type ComponentType, type ReactNode } from 'react';
 import {
+  Icon12Fire,
+  Icon12Tag,
   Icon12Verified,
   Icon16Dropdown,
+  Icon16LockOutline,
+  Icon16UnlockOutline,
   Icon20Add,
   Icon20ArticleOutline,
   Icon20NewsfeedOutline,
   Icon24Add,
+  Icon24ThumbsUpOutline,
   Icon28AddOutline,
   Icon28MessageOutline,
+  Icon28UserCircleFillBlue,
   Icon56MoneyTransferOutline,
 } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
   Accordion,
+  ActionSheetItem,
   Avatar,
   Badge,
   Banner,
@@ -39,6 +47,8 @@ import {
   DropZone,
   EllipsisText,
   File,
+  Flex,
+  Footer,
   Footnote,
   FormItem,
   FormLayoutGroup,
@@ -46,22 +56,27 @@ import {
   Gallery,
   Gradient,
   GridAvatar,
+  Group,
+  Header,
   Headline,
   HorizontalCell,
   IconButton,
   Image,
   InfoRow,
   Input,
+  Link,
   List,
   Mark,
   MiniInfoCell,
   ModalCardBase,
   OnboardingTooltip,
   Pagination,
+  PanelHeaderButton,
   PanelSpinner,
   Paragraph,
   Placeholder,
   Popover,
+  Popper,
   Progress,
   Radio,
   RadioGroup,
@@ -71,13 +86,17 @@ import {
   SegmentedControl,
   Select,
   SimpleCell,
+  SimpleGrid,
   Skeleton,
   Slider,
   Spinner,
+  SplitCol,
+  SplitLayout,
   Subhead,
   SubnavigationBar,
   SubnavigationButton,
   Switch,
+  TabbarItem,
   Tabs,
   TabsItem,
   Text,
@@ -89,6 +108,9 @@ import {
   WriteBar,
 } from '../../src';
 import { Playground as AccordionPlayground } from '../../src/components/Accordion/Accordion.stories';
+import { Playground as ActionSheetItemPlayground } from '../../src/components/ActionSheetItem/ActionSheetItem.stories';
+import { AlertContent } from '../../src/components/Alert/Alert';
+import { Playground as AlertPlayground } from '../../src/components/Alert/Alert.stories';
 import { Playground as AvatarPlayground } from '../../src/components/Avatar/Avatar.stories';
 import { Playground as BadgePlayground } from '../../src/components/Badge/Badge.stories';
 import { Playground as BannerPlayground } from '../../src/components/Banner/Banner.stories';
@@ -107,16 +129,21 @@ import { Playground as ChipsSelectPlayground } from '../../src/components/ChipsS
 import { Playground as ContentBadgePlayground } from '../../src/components/ContentBadge/ContentBadge.stories';
 import { Playground as ContentCardPlayground } from '../../src/components/ContentCard/ContentCard.stories';
 import { Playground as CounterPlayground } from '../../src/components/Counter/Counter.stories';
+import { Playground as CustomScrollViewPlayground } from '../../src/components/CustomScrollView/CustomScrollView.stories';
 import { Playground as DateInputPlayground } from '../../src/components/DateInput/DateInput.stories';
 import { Playground as DateRangeInputPlayground } from '../../src/components/DateRangeInput/DateRangeInput.stories';
 import { Playground as DropZonePlayground } from '../../src/components/DropZone/DropZone.stories';
 import { Playground as FilePlayground } from '../../src/components/File/File.stories';
+import { Playground as FlexPlayground } from '../../src/components/Flex/Flex.stories';
+import { Playground as FooterPlayground } from '../../src/components/Footer/Footer.stories';
 import { Playground as FormItemPlayground } from '../../src/components/FormItem/FormItem.stories';
 import { Playground as FormLayoutGroupPlayground } from '../../src/components/FormLayoutGroup/FormLayoutGroup.stories';
 import { Playground as FormStatusPlayground } from '../../src/components/FormStatus/FormStatus.stories';
 import { Playground as GalleryPlayground } from '../../src/components/Gallery/Gallery.stories';
 import { Playground as GradientPlayground } from '../../src/components/Gradient/Gradient.stories';
 import { Playground as GridAvatarPlayground } from '../../src/components/GridAvatar/GridAvatar.stories';
+import { Playground as GroupPlayground } from '../../src/components/Group/Group.stories';
+import { Playground as HeaderPlayground } from '../../src/components/Header/Header.stories';
 import { Playground as HorizontalCellPlayground } from '../../src/components/HorizontalCell/HorizontalCell.stories';
 import { Playground as ImagePlayground } from '../../src/components/Image/Image.stories';
 import { Playground as InfoRowPlayground } from '../../src/components/InfoRow/InfoRow.stories';
@@ -127,9 +154,11 @@ import { Playground as MiniInfoCellPlayground } from '../../src/components/MiniI
 import { Playground as ModalCardBasePlayground } from '../../src/components/ModalCardBase/ModalCardBase.stories';
 import { Playground as OnboardingTooltipPlayground } from '../../src/components/OnboardingTooltip/OnboardingTooltip.stories';
 import { Playground as PaginationPlayground } from '../../src/components/Pagination/Pagination.stories';
+import { Playground as PanelHeaderButtonPlayground } from '../../src/components/PanelHeaderButton/PanelHeaderButton.stories';
 import { Playground as PanelSpinnerPlayground } from '../../src/components/PanelSpinner/PanelSpinner.stories';
 import { Playground as PlaceholderPlayground } from '../../src/components/Placeholder/Placeholder.stories';
 import { Playground as PopoverPlayground } from '../../src/components/Popover/Popover.stories';
+import { Playground as PopperPlayground } from '../../src/components/Popper/Popper.stories';
 import { Playground as ProgressPlayground } from '../../src/components/Progress/Progress.stories';
 import { Playground as RadioPlayground } from '../../src/components/Radio/Radio.stories';
 import { Playground as RadioGroupPlayground } from '../../src/components/RadioGroup/RadioGroup.stories';
@@ -139,12 +168,18 @@ import { Playground as SearchPlayground } from '../../src/components/Search/Sear
 import { Playground as SegmentedControlPlayground } from '../../src/components/SegmentedControl/SegmentedControl.stories';
 import { Playground as SelectPlayground } from '../../src/components/Select/Select.stories';
 import { Playground as SimpleCellPlayground } from '../../src/components/SimpleCell/SimpleCell.stories';
+import { Playground as SimpleGridPlayground } from '../../src/components/SimpleGrid/SimpleGrid.stories';
 import { Playground as SkeletonPlayground } from '../../src/components/Skeleton/Skeleton.stories';
 import { Playground as SliderPlayground } from '../../src/components/Slider/Slider.stories';
+import { Basic } from '../../src/components/Snackbar/subcomponents/Basic/Basic';
+import { Playground as BasicPlayground } from '../../src/components/Snackbar/subcomponents/Basic/Basic.stories';
 import { Playground as SpinnerPlayground } from '../../src/components/Spinner/Spinner.stories';
+import { Playground as SplitColPlayground } from '../../src/components/SplitCol/SplitCol.stories';
+import { Playground as SplitLayoutPlayground } from '../../src/components/SplitLayout/SplitLayout.stories';
 import { Playground as SubnavigationBarPlayground } from '../../src/components/SubnavigationBar/SubnavigationBar.stories';
 import { Playground as SubnavigationButtonPlayground } from '../../src/components/SubnavigationButton/SubnavigationButton.stories';
 import { Playground as SwitchPlayground } from '../../src/components/Switch/Switch.stories';
+import { Playground as TabbarItemPlayground } from '../../src/components/TabbarItem/TabbarItem.stories';
 import { Playground as TabsPlayground } from '../../src/components/Tabs/Tabs.stories';
 import { Playground as TabsItemPlayground } from '../../src/components/TabsItem/TabsItem.stories';
 import { Playground as TextareaPlayground } from '../../src/components/Textarea/Textarea.stories';
@@ -162,8 +197,151 @@ import { Playground as TitlePlayground } from '../../src/components/Typography/T
 import { Playground as UsersStackPlayground } from '../../src/components/UsersStack/UsersStack.stories';
 import { Playground as WriteBarPlayground } from '../../src/components/WriteBar/WriteBar.stories';
 import { getAvatarUrl } from '../../src/testing/mock';
+import { ActionSheetPreview } from './custom-components-preview/ActionSheetPreview';
+import { CustomScrollViewPreview } from './custom-components-preview/CustomScrollViewPreview';
+import { HorizontalScrollPreview } from './custom-components-preview/HorizontalScrollPreview';
+import { PanelHeaderContentPreview } from './custom-components-preview/PanelHeaderContentPreview';
+import { PanelHeaderContextPreview } from './custom-components-preview/PanelHeaderContextPreview';
+import { PanelHeaderPreview } from './custom-components-preview/PanelHeaderPreview';
+import { PanelPreview } from './custom-components-preview/PanelPreview';
+import { ScreenSpinnerPreview } from './custom-components-preview/ScreenSpinnerPreview';
 
-export const COMPONENTS_DATA: Record<string, any> = {
+type ComponentData = {
+  component: ComponentType<any>;
+  playgroundRender?: (...args: any) => ReactNode;
+  args?: any;
+  decorator?: ComponentType<{ children: ReactNode }>;
+  minWidth?: number;
+  maxWidth?: number;
+};
+
+export const COMPONENTS_DATA: Record<string, ComponentData> = {
+  ActionSheet: {
+    component: ActionSheetPreview,
+  },
+  Snackbar: {
+    component: Basic,
+    args: {
+      ...BasicPlayground.args,
+      before: <Icon24ThumbsUpOutline />,
+      action: (
+        <Button align="left" mode="link" size="s">
+          Поделиться
+        </Button>
+      ),
+      children: 'Этот сервис рекомендует один друг',
+    },
+    minWidth: 300,
+  },
+  ScreenSpinner: {
+    component: ScreenSpinnerPreview,
+  },
+  Alert: {
+    component: AlertContent,
+    args: {
+      ...AlertPlayground.args,
+      style: {
+        inlineSize: 400,
+      },
+    },
+  },
+  ActionSheetItem: {
+    component: ActionSheetItem,
+    playgroundRender: ActionSheetItemPlayground.render,
+    args: {
+      ...ActionSheetItemPlayground.args,
+      style: {
+        border: '1px dashed red',
+      },
+    },
+  },
+  CustomScrollView: {
+    component: CustomScrollViewPreview,
+    args: CustomScrollViewPlayground.args,
+  },
+  TabbarItem: {
+    component: TabbarItem,
+    playgroundRender: TabbarItemPlayground.render,
+    args: { ...TabbarItemPlayground.args, children: <Icon28MessageOutline />, label: 'Messages' },
+  },
+  SplitLayout: {
+    component: SplitLayout,
+    playgroundRender: SplitLayoutPlayground.render,
+  },
+  SplitCol: {
+    component: SplitCol,
+    playgroundRender: SplitColPlayground.render,
+    args: SplitColPlayground.args,
+    minWidth: 500,
+  },
+  PanelHeaderContext: {
+    component: PanelHeaderContextPreview,
+  },
+  PanelHeaderContent: {
+    component: PanelHeaderContentPreview,
+  },
+  PanelHeaderButton: {
+    component: PanelHeaderButton,
+    playgroundRender: PanelHeaderButtonPlayground.render,
+  },
+  Panel: {
+    component: PanelPreview,
+  },
+  PanelHeader: {
+    component: PanelHeaderPreview,
+  },
+  Flex: {
+    component: Flex,
+    playgroundRender: FlexPlayground.render,
+    args: {
+      ...FlexPlayground.args,
+      itemsCount: 3,
+    },
+    minWidth: 600,
+    maxWidth: 600,
+  },
+  SimpleGrid: {
+    component: SimpleGrid,
+    playgroundRender: SimpleGridPlayground.render,
+    args: {
+      ...SimpleGridPlayground.args,
+      columns: 3,
+    },
+    minWidth: 600,
+    maxWidth: 600,
+  },
+  HorizontalScroll: {
+    component: HorizontalScrollPreview,
+    decorator: Group,
+  },
+  Footer: {
+    component: Footer,
+    playgroundRender: FooterPlayground.render,
+    args: FooterPlayground.args,
+    minWidth: 200,
+  },
+  Header: {
+    component: Header,
+    playgroundRender: HeaderPlayground.render,
+    args: {
+      ...HeaderPlayground.args,
+      before: <Icon28UserCircleFillBlue />,
+      beforeTitle: <Icon16LockOutline />,
+      afterTitle: <Icon16UnlockOutline />,
+      beforeSubtitle: <Icon12Tag />,
+      afterSubtitle: <Icon12Fire />,
+      subtitle: 'SOHN — Conrad',
+      after: <Link>Показать все</Link>,
+    },
+  },
+  Group: {
+    component: Group,
+    playgroundRender: GroupPlayground.render,
+    args: {
+      ...GroupPlayground.args,
+      separator: 'hide',
+    },
+  },
   OnboardingTooltip: {
     component: OnboardingTooltip,
     playgroundRender: OnboardingTooltipPlayground.render,
@@ -171,6 +349,14 @@ export const COMPONENTS_DATA: Record<string, any> = {
       ...OnboardingTooltipPlayground.args,
       shown: true,
       disableFocusTrap: true,
+    },
+  },
+  Popper: {
+    component: Popper,
+    playgroundRender: PopperPlayground.render,
+    args: {
+      ...PopperPlayground.args,
+      shown: true,
     },
   },
   Popover: {
@@ -210,12 +396,8 @@ export const COMPONENTS_DATA: Record<string, any> = {
   DisplayTitle: {
     component: DisplayTitle,
     playgroundRender: DisplayTitlePlayground.render,
-    args: {
-      ...DisplayTitlePlayground.args,
-      style: {
-        minWidth: 150,
-      },
-    },
+    args: DisplayTitlePlayground.args,
+    minWidth: 150,
   },
   EllipsisText: {
     component: EllipsisText,
@@ -247,10 +429,9 @@ export const COMPONENTS_DATA: Record<string, any> = {
     playgroundRender: WriteBarPlayground.render,
     args: {
       ...WriteBarPlayground.args,
-      style: {
-        width: 300,
-      },
     },
+    minWidth: 300,
+    maxWidth: 300,
   },
   UsersStack: {
     component: UsersStack,
@@ -281,6 +462,7 @@ export const COMPONENTS_DATA: Record<string, any> = {
   Tabs: {
     component: Tabs,
     playgroundRender: TabsPlayground.render,
+    decorator: Group,
     args: {
       ...TabsPlayground.args,
       count: 3,
@@ -312,14 +494,15 @@ export const COMPONENTS_DATA: Record<string, any> = {
     args: {
       ...SkeletonPlayground.args,
       style: {
-        minWidth: 300,
         height: 200,
       },
     },
+    minWidth: 300,
   },
   SimpleCell: {
     component: SimpleCell,
     playgroundRender: SimpleCellPlayground.render,
+    decorator: Group,
     args: {
       ...SimpleCellPlayground.args,
       after: (
@@ -339,12 +522,10 @@ export const COMPONENTS_DATA: Record<string, any> = {
   Search: {
     component: Search,
     playgroundRender: SearchPlayground.render,
-    args: {
-      ...SearchPlayground.args,
-      style: {
-        width: 300,
-      },
-    },
+    decorator: Group,
+    args: SearchPlayground.args,
+    minWidth: 300,
+    maxWidth: 300,
   },
   ScrollArrow: {
     component: ScrollArrow,
@@ -354,13 +535,12 @@ export const COMPONENTS_DATA: Record<string, any> = {
   RichCell: {
     component: RichCell,
     playgroundRender: RichCellPlayground.render,
+    decorator: Group,
     args: {
       ...RichCellPlayground.args,
       before: <Avatar size={72} src={getAvatarUrl()} />,
-      style: {
-        minWidth: 300,
-      },
     },
+    minWidth: 300,
   },
   Progress: {
     component: Progress,
@@ -368,20 +548,14 @@ export const COMPONENTS_DATA: Record<string, any> = {
     args: {
       ...ProgressPlayground.args,
       value: 30,
-      style: {
-        minWidth: 300,
-      },
     },
+    minWidth: 300,
   },
   Placeholder: {
     component: Placeholder,
     playgroundRender: PlaceholderPlayground.render,
-    args: {
-      ...PlaceholderPlayground.args,
-      style: {
-        minWidth: 300,
-      },
-    },
+    args: PlaceholderPlayground.args,
+    minWidth: 300,
   },
   PanelSpinner: {
     component: PanelSpinner,
@@ -412,10 +586,9 @@ export const COMPONENTS_DATA: Record<string, any> = {
     args: {
       ...MiniInfoCellPlayground.args,
       before: <Icon20ArticleOutline />,
-      style: {
-        width: 300,
-      },
     },
+    minWidth: 300,
+    maxWidth: 300,
   },
   Mark: {
     component: Mark,
@@ -425,12 +598,8 @@ export const COMPONENTS_DATA: Record<string, any> = {
   List: {
     component: List,
     playgroundRender: ListPlayground.render,
-    args: {
-      ...ListPlayground.args,
-      style: {
-        minWidth: 300,
-      },
-    },
+    args: ListPlayground.args,
+    minWidth: 300,
   },
   InfoRow: {
     component: InfoRow,
@@ -445,7 +614,9 @@ export const COMPONENTS_DATA: Record<string, any> = {
   HorizontalCell: {
     component: HorizontalCell,
     playgroundRender: HorizontalCellPlayground.render,
+    decorator: Group,
     args: HorizontalCellPlayground.args,
+    minWidth: 400,
   },
   GridAvatar: {
     component: GridAvatar,
@@ -455,13 +626,8 @@ export const COMPONENTS_DATA: Record<string, any> = {
   Gradient: {
     component: Gradient,
     playgroundRender: GradientPlayground.render,
-    args: {
-      ...GradientPlayground.args,
-      mode: 'overlay',
-      style: {
-        minWidth: 300,
-      },
-    },
+    args: GradientPlayground.args,
+    minWidth: 300,
   },
   Gallery: {
     component: Gallery,
@@ -484,17 +650,14 @@ export const COMPONENTS_DATA: Record<string, any> = {
   ContentCard: {
     component: ContentCard,
     playgroundRender: ContentCardPlayground.render,
-    args: {
-      ...ContentCardPlayground.args,
-      style: {
-        minWidth: 300,
-      },
-    },
+    args: ContentCardPlayground.args,
+    minWidth: 300,
   },
   ContentBadge: {
     component: ContentBadge,
     playgroundRender: ContentBadgePlayground.render,
     args: ContentBadgePlayground.args,
+    minWidth: 300,
   },
   CellButton: {
     component: CellButton,
@@ -507,6 +670,7 @@ export const COMPONENTS_DATA: Record<string, any> = {
   Cell: {
     component: Cell,
     playgroundRender: CellPlayground.render,
+    decorator: Group,
     args: {
       ...CellPlayground.args,
       before: <Avatar src={getAvatarUrl('user_xyz')} />,
@@ -516,23 +680,21 @@ export const COMPONENTS_DATA: Record<string, any> = {
   CardScroll: {
     component: CardScroll,
     playgroundRender: CardScrollPlayground.render,
-    args: {
-      ...CardScrollPlayground.args,
-      style: {
-        minWidth: 300,
-      },
-    },
+    decorator: Group,
+    args: CardScrollPlayground.args,
+    minWidth: 300,
   },
   Card: {
     component: Card,
     playgroundRender: CardPlayground.render,
+    decorator: Group,
     args: {
       ...CardPlayground.args,
       style: {
-        minWidth: 300,
         minHeight: 200,
       },
     },
+    minWidth: 300,
   },
   ButtonGroup: {
     component: ButtonGroup,
@@ -547,6 +709,7 @@ export const COMPONENTS_DATA: Record<string, any> = {
   Banner: {
     component: Banner,
     playgroundRender: BannerPlayground.render,
+    decorator: Group,
     args: {
       ...BannerPlayground.args,
       before: (
@@ -561,6 +724,7 @@ export const COMPONENTS_DATA: Record<string, any> = {
   Accordion: {
     component: Accordion,
     playgroundRender: AccordionPlayground.render,
+    decorator: Group,
     args: {
       ...AccordionPlayground.args,
       defaultExpanded: true,
@@ -574,12 +738,9 @@ export const COMPONENTS_DATA: Record<string, any> = {
   FormItem: {
     component: FormItem,
     playgroundRender: FormItemPlayground.render,
-    args: {
-      ...FormItemPlayground.args,
-      style: {
-        width: 150,
-      },
-    },
+    args: FormItemPlayground.args,
+    minWidth: 150,
+    maxWidth: 150,
   },
   Select: {
     component: Select,
@@ -595,10 +756,9 @@ export const COMPONENTS_DATA: Record<string, any> = {
     args: {
       ...CheckboxPlayground.args,
       children: 'Чекбокс',
-      style: {
-        width: 145,
-      },
     },
+    minWidth: 145,
+    maxWidth: 145,
   },
   ChipsInput: {
     component: ChipsInput,
@@ -680,22 +840,18 @@ export const COMPONENTS_DATA: Record<string, any> = {
   CardGrid: {
     component: CardGrid,
     playgroundRender: CardGridPlayground.render,
-    args: {
-      ...CardGridPlayground.args,
-      style: {
-        width: 300,
-      },
-    },
+    decorator: Group,
+    args: CardGridPlayground.args,
+    minWidth: 300,
+    maxWidth: 300,
   },
   DropZone: {
     component: DropZone,
     playgroundRender: DropZonePlayground.render,
-    args: {
-      ...DropZonePlayground.args,
-      style: {
-        width: 300,
-      },
-    },
+    decorator: Group,
+    args: DropZonePlayground.args,
+    minWidth: 300,
+    maxWidth: 300,
   },
   File: {
     component: File,
@@ -705,12 +861,8 @@ export const COMPONENTS_DATA: Record<string, any> = {
   FormStatus: {
     component: FormStatus,
     playgroundRender: FormStatusPlayground.render,
-    args: {
-      ...FormStatusPlayground.args,
-      style: {
-        minWidth: 300,
-      },
-    },
+    args: FormStatusPlayground.args,
+    minWidth: 300,
   },
   Input: {
     component: Input,
@@ -718,51 +870,36 @@ export const COMPONENTS_DATA: Record<string, any> = {
     args: {
       ...InputPlayground.args,
       value: 'Текст',
-      style: {
-        minWidth: 300,
-      },
     },
+    minWidth: 300,
   },
   Radio: {
     component: Radio,
     playgroundRender: RadioPlayground.render,
-    args: {
-      ...RadioPlayground.args,
-      style: {
-        minWidth: 145,
-      },
-    },
+    args: RadioPlayground.args,
+    minWidth: 145,
   },
   RadioGroup: {
     component: RadioGroup,
     playgroundRender: RadioGroupPlayground.render,
-    args: {
-      ...RadioGroupPlayground.args,
-      style: {
-        minWidth: 145,
-      },
-    },
+    args: RadioGroupPlayground.args,
+    minWidth: 200,
   },
   SegmentedControl: {
     component: SegmentedControl,
     playgroundRender: SegmentedControlPlayground.render,
-    args: {
-      ...SegmentedControlPlayground.args,
-      style: {
-        minWidth: 300,
-      },
-    },
+    args: SegmentedControlPlayground.args,
+    minWidth: 300,
   },
   Slider: {
     component: Slider,
     playgroundRender: SliderPlayground.render,
+    decorator: Group,
     args: {
       ...SliderPlayground.args,
       value: 30,
-      style: {
-        minWidth: 300,
-      },
     },
+    minWidth: 300,
   },
   Textarea: {
     component: Textarea,
@@ -771,10 +908,8 @@ export const COMPONENTS_DATA: Record<string, any> = {
       ...TextareaPlayground.args,
       value: 'Поле ввода',
       rows: 4,
-      style: {
-        minWidth: 300,
-      },
     },
+    minWidth: 300,
   },
 };
 
@@ -796,9 +931,12 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'ContentBadge',
       'ContentCard',
       'Counter',
+      'Footer',
       'Gallery',
       'Gradient',
       'GridAvatar',
+      'Group',
+      'Header',
       'HorizontalCell',
       'Image',
       'InfoRow',
@@ -864,8 +1002,29 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'Title',
     ],
   },
+  Popouts: {
+    title: 'Popouts',
+    components: ['ActionSheet', 'ActionSheetItem', 'Alert', 'ScreenSpinner', 'Snackbar'],
+  },
+  Layout: {
+    title: 'Layout',
+    components: [
+      'CustomScrollView',
+      'HorizontalScroll',
+      'Flex',
+      'SimpleGrid',
+      'Panel',
+      'PanelHeader',
+      'PanelHeaderButton',
+      'PanelHeaderContent',
+      'PanelHeaderContext',
+      'SplitCol',
+      'SplitLayout',
+      'TabbarItem',
+    ],
+  },
   Poppers: {
     title: 'Poppers',
-    components: ['OnboardingTooltip', 'Tooltip', 'Popover'],
+    components: ['OnboardingTooltip', 'Tooltip', 'Popover', 'Popper'],
   },
 };
