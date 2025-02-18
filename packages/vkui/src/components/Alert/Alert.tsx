@@ -198,16 +198,16 @@ export const AlertContent = ({
         )}
       </div>
       {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-            <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
-              {dismissLabel}
-            </ModalDismissButton>
-          )}<AlertActions
+        <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
+          {dismissLabel}
+        </ModalDismissButton>
+      )}
+      <AlertActions
         actions={actions}
         actionsAlign={actionsAlign}
         actionsLayout={actionsLayout}
         renderAction={renderAction}
         onItemClick={onItemClick}
-
       />
     </FocusTrap>
   );
