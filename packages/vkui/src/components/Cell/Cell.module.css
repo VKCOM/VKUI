@@ -11,7 +11,21 @@
 .dragger {
   position: relative;
   flex-shrink: 0;
+}
+
+.checkbox {
   margin-inline-end: var(--vkui--spacing_size_2xl);
+}
+
+.dragger {
+  display: flex;
+  align-items: center;
+  block-size: 100%;
+  padding-inline-end: var(--vkui--spacing_size_2xl);
+}
+
+.dragger.controlNoBefore {
+  padding-inline-end: 0;
 }
 
 .controlNoBefore {
@@ -46,7 +60,7 @@
  * iOS
  */
 .ios .dragger {
-  margin-inline: var(--vkui--spacing_size_xl) 0;
+  padding-inline: var(--vkui--spacing_size_xl) 0;
 }
 
 .ios .checkbox {

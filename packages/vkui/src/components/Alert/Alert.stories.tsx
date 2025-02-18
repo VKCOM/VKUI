@@ -28,16 +28,11 @@ export const Playground: StoryObj<AlertProps> = {
   },
   args: {
     actions: [
-      {
-        title: 'Отмена',
-        mode: 'cancel',
-      },
-      {
-        title: 'Удалить',
-        mode: 'destructive',
-      },
+      { title: 'Отмена', mode: 'cancel' },
+      { title: 'Удалить', mode: 'destructive' },
     ],
     actionsLayout: 'horizontal',
+    dismissLabel: 'Отмена',
     title: 'Удаление документа',
     description: 'Вы уверены, что хотите удалить этот документ?',
   },

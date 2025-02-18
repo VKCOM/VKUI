@@ -10,6 +10,25 @@
 - используя свойство `aria-label`;
 - используя свойство `aria-labelledby`;
 
+### Доступные имена кнопок
+
+Если две кнопки находятся в разных местах, но выполняют одну функцию, то лучше дать им одинаковые имена.
+Это относится, например, к кнопке закрытия (крестик на декстопах), имя которой можно задать через свойство `dismissLabel`.
+Если у вас среди кнопок действия есть кнопка `Отмена`, которая без дополнительного действия просто закрывает `Alert`, ровно
+как и кнопка закрытия, то кнопке закрытия следует дать то же имя `Отмена` через свойство `dismissLabel`.
+
+```jsx static
+<Alert
+  dismissLabel="Отмена"
+  actions={[
+    { title: 'Отмена', mode: 'cancel' },
+    { title: 'Удалить', mode: 'destructive', action: () => addActionLogItem('Документ удален.') },
+  ]}
+  title="Удаление документа"
+  description="Вы уверены, что хотите удалить этот документ?"
+/>
+```
+
 ## Типы кнопок
 
 В Алертах особое внимание нужно уделить кнопкам. Всего есть три типа кнопок:
@@ -56,11 +75,9 @@ const Example = () => {
             mode: 'destructive',
             action: () => addActionLogItem('Право на модерацию контента убрано.'),
           },
-          {
-            title: 'Отмена',
-            mode: 'cancel',
-          },
+          { title: 'Отмена', mode: 'cancel' },
         ]}
+        dismissLabel="Отмена"
         actionsLayout="vertical"
         onClose={closePopout}
         title="Подтвердите действие"
@@ -73,10 +90,7 @@ const Example = () => {
     setPopout(
       <Alert
         actions={[
-          {
-            title: 'Отмена',
-            mode: 'cancel',
-          },
+          { title: 'Отмена', mode: 'cancel' },
           {
             title: 'Удалить',
             mode: 'destructive',
@@ -84,6 +98,7 @@ const Example = () => {
           },
         ]}
         actionsLayout="horizontal"
+        dismissLabel="Отмена"
         dismissButtonMode="inside"
         onClose={closePopout}
         title="Удаление документа"
@@ -136,15 +151,10 @@ const Example = () => {
     setPopout(
       <Alert
         actions={[
-          {
-            title: 'Лишить права',
-            mode: 'destructive',
-          },
-          {
-            title: 'Отмена',
-            mode: 'cancel',
-          },
+          { title: 'Лишить права', mode: 'destructive' },
+          { title: 'Отмена', mode: 'cancel' },
         ]}
+        dismissLabel="Отмена"
         actionsAlign="left"
         actionsLayout="horizontal"
         renderAction={renderAction}
