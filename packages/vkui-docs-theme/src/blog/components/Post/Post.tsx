@@ -16,7 +16,7 @@ export function Post({ title, description, tags, publishDate, route, image }: Po
   return (
     <Card className={styles.root} mode="outline-tint" Component="article">
       <img
-        src={`${process.env.VKUI_DOCS_BASE_PATH || ''}${image}`}
+        src={`${process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH || ''}${image}`}
         alt={`Лого для карточки ${title}`}
         width="100%"
       />

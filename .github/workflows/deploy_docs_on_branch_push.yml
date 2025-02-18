@@ -124,7 +124,7 @@ jobs:
       - name: Build
         run: yarn docs:beta:build
         env:
-          VKUI_DOCS_BASE_PATH: /next/docs-beta
+          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /next/docs-beta
 
       - name: Upload to S3
         id: deploy
