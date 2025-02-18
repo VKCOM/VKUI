@@ -11,7 +11,7 @@ const items: ActionSheetItemProps[] = [
 
 export const ActionSheetPreview = () => {
   return (
-    <ActionSheetDropdownSheet closing={false} toggleRef={{ current: null }}>
+    <ActionSheetDropdownSheet closing={false} toggleRef={{ current: null }} disabled={true}>
       {items.map(({ children, ...rest }, index) => (
         <ActionSheetItem key={index} {...rest}>
           {children}

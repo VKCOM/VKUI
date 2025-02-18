@@ -20,7 +20,7 @@ import styles from './ComponentsOverview.module.css';
 export const ComponentsOverview = () => {
   const { colorScheme, platform, direction, hasCustomPanelHeaderAfter, hasPointer } =
     useGetGlobalParams();
-  const { config, loading, onUpdateQuery } = useGetConfigByQuery();
+  const { query: searchedQuery, config, loading, onUpdateQuery } = useGetConfigByQuery();
 
   return (
     <ConfigProvider
@@ -53,6 +53,7 @@ export const ComponentsOverview = () => {
                     {groupData.components.map((componentName) => (
                       <ComponentOverviewCardWrapper
                         key={componentName}
+                        searchedQuery={searchedQuery}
                         componentName={componentName}
                         groupTitle={groupData.title}
                         direction={direction}

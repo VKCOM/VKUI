@@ -206,7 +206,8 @@ import { PanelHeaderPreview } from './custom-components-preview/PanelHeaderPrevi
 import { PanelPreview } from './custom-components-preview/PanelPreview';
 import { ScreenSpinnerPreview } from './custom-components-preview/ScreenSpinnerPreview';
 
-type ComponentData = {
+export type ComponentConfigData = {
+  customPath?: string;
   component: ComponentType<any>;
   playgroundRender?: (...args: any) => ReactNode;
   args?: any;
@@ -215,7 +216,7 @@ type ComponentData = {
   maxWidth?: number;
 };
 
-export const COMPONENTS_DATA: Record<string, ComponentData> = {
+export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   ActionSheet: {
     component: ActionSheetPreview,
   },
@@ -240,6 +241,7 @@ export const COMPONENTS_DATA: Record<string, ComponentData> = {
     component: AlertContent,
     args: {
       ...AlertPlayground.args,
+      disabled: true,
       style: {
         inlineSize: 400,
       },
@@ -311,6 +313,7 @@ export const COMPONENTS_DATA: Record<string, ComponentData> = {
     maxWidth: 600,
   },
   HorizontalScroll: {
+    customPath: 'HorizontalScroll/HorizontalScroll',
     component: HorizontalScrollPreview,
     decorator: Group,
   },

@@ -2,27 +2,52 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Title } from '../../../src';
-import { Card } from '../../../src/components/Card/Card';
+import { Card, Mark, Title } from '../../../src';
 import { type Direction } from '../../../src/hooks/useDirection';
 import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
 import { useDOM } from '../../../src/lib/dom';
 import { type CSSCustomProperties } from '../../../src/types';
+import { type ComponentConfigData } from '../config';
 import styles from './ComponentOverviewCard.module.css';
 
-type CardProps = {
-  component: React.ReactNode;
-  name: string;
-  group: string;
+const CONTENT_PADDING = 10;
+
+export type ComponentOverviewCardProps = Pick<
+  ComponentConfigData,
+  'customPath' | 'minWidth' | 'maxWidth'
+> & {
+  componentName: string;
+  searchedQuery: string;
+  groupTitle: string;
   direction: Direction;
-  minWidth?: number;
-  maxWidth?: number;
+
+  component: React.ReactNode;
 };
 
-export const ComponentOverviewCard: React.FC<CardProps> = ({
-  component,
+const TitleWithSearch: React.FC<{ searchedQuery: string; name: string }> = ({
+  searchedQuery,
   name,
-  group,
+}) => {
+  const indexOfQuery = name.toLowerCase().indexOf(searchedQuery.toLowerCase());
+  const head = name.slice(0, indexOfQuery);
+  const content = name.slice(indexOfQuery, indexOfQuery + searchedQuery.length);
+  const tail = name.slice(indexOfQuery + searchedQuery.length);
+
+  return (
+    <Title level="3" className={styles.title}>
+      {head}
+      <Mark>{content}</Mark>
+      {tail}
+    </Title>
+  );
+};
+
+export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
+  component,
+  componentName,
+  customPath,
+  searchedQuery,
+  groupTitle,
   direction,
   minWidth,
   maxWidth,
@@ -38,10 +63,9 @@ export const ComponentOverviewCard: React.FC<CardProps> = ({
     if (!container || !window || !component) {
       return;
     }
-    const padding = 10;
 
-    const maxWidth = container.clientWidth - padding * 2;
-    const maxHeight = container.clientHeight - padding * 2;
+    const maxWidth = container.clientWidth - CONTENT_PADDING * 2;
+    const maxHeight = container.clientHeight - CONTENT_PADDING * 2;
 
     const scaleX = maxWidth / component.offsetWidth;
     const scaleY = maxHeight / component.offsetHeight;
@@ -55,12 +79,13 @@ export const ComponentOverviewCard: React.FC<CardProps> = ({
   useResizeObserver(containerRef, calculateScale);
 
   const createComponentUrl = React.useCallback(
-    (componentName: string, group: string) => {
+    (name: string, group: string, customPath?: string) => {
       if (!window) {
         return '';
       }
       const baseUrl = `${window.location.href.split('iframe')[0]}`;
-      return `${baseUrl}?path=/story/${group.toLowerCase()}-${componentName.toLowerCase()}--playground`;
+      const componentUrl = customPath ? customPath.replace('/', '-') : name;
+      return `${baseUrl}?path=/story/${group.toLowerCase()}-${componentUrl.toLowerCase()}--playground`;
     },
     [window],
   );
@@ -73,18 +98,22 @@ export const ComponentOverviewCard: React.FC<CardProps> = ({
     <Card
       Component="a"
       // @ts-expect-error: TS2322 в CardProps нет href свойства
-      href={createComponentUrl(name, group)}
+      href={createComponentUrl(componentName, groupTitle, customPath)}
       mode="shadow"
       className={classNames(styles.card, direction === 'rtl' && styles.rtl)}
       style={style}
     >
-      <Title level="3" className={styles.title}>
-        {name}
-      </Title>
+      {searchedQuery ? (
+        <TitleWithSearch searchedQuery={searchedQuery} name={componentName} />
+      ) : (
+        <Title level="3" className={styles.title}>
+          {componentName}
+        </Title>
+      )}
       <div
         className={styles.componentWrapper}
         ref={containerRef}
-        aria-label={`${name} component preview`}
+        aria-label={`${componentName} component preview`}
         // @ts-expect-error: TS2322 пока react нормально не поддерживает этот атрибут
         inert=""
       >

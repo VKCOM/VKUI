@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react';
-import { type Direction } from '../../../src/hooks/useDirection';
 import { COMPONENTS_DATA } from '../config';
-import { ComponentOverviewCard } from './ComponentOverviewCard';
+import { ComponentOverviewCard, type ComponentOverviewCardProps } from './ComponentOverviewCard';
 
 const getComponentRenderedNode = (componentName: string) => {
   const componentData = COMPONENTS_DATA[componentName];
@@ -26,19 +25,16 @@ const getComponentRenderedNode = (componentName: string) => {
   return component && createWithDecorator(component);
 };
 
-export const ComponentOverviewCardWrapper: React.FC<{
-  componentName: string;
-  groupTitle: string;
-  direction: Direction;
-}> = ({ componentName, groupTitle, direction }) => {
-  const componentData = COMPONENTS_DATA[componentName];
-  const component = getComponentRenderedNode(componentName);
+export const ComponentOverviewCardWrapper: React.FC<
+  Omit<ComponentOverviewCardProps, 'customPath' | 'minWidth' | 'maxWidth' | 'component'>
+> = (props) => {
+  const componentData = COMPONENTS_DATA[props.componentName];
+  const component = getComponentRenderedNode(props.componentName);
   return (
     <ComponentOverviewCard
-      name={componentName}
-      group={groupTitle}
+      {...props}
+      customPath={componentData.customPath}
       component={component}
-      direction={direction}
       minWidth={componentData.minWidth}
       maxWidth={componentData.maxWidth}
     />

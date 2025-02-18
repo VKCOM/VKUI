@@ -23,7 +23,7 @@ export const useGetConfigByQuery = () => {
     const resultConfig: typeof CONFIG = {};
     Object.entries(CONFIG).forEach(([groupKey, groupData]) => {
       const validComponents = groupData.components.filter((componentName) => {
-        return componentName.includes(query);
+        return componentName.toLowerCase().includes(query.toLowerCase());
       });
       if (validComponents.length) {
         resultConfig[groupKey] = {
@@ -47,5 +47,6 @@ export const useGetConfigByQuery = () => {
     loading,
     onUpdateQuery,
     config: filteredConfig,
+    query,
   };
 };
