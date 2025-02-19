@@ -7,6 +7,38 @@
 - Рекомендуется предавать в компонент атрибуты `aria-labelledby`, `aria-label` и `aria-describedby` для предоставления
   дополнительной информации об элементе
 
+### Сегментированный дизайн, где лейблы визуально лежат в плейсхолдерах инпутов
+
+Если по дизайну требуется использовать сегментированный режим `segmented`, где все поля слиты вместе и отделяются вертикальным разделителем, при этом над полями нету текста (лэйблов), то есть нельзя использовать свойства `htmlFor` и `top` у [FormItem](#!/FormItem) для связывания инпутов и лэйблов, то стоит добавить скрытые лэйблы, используя сервисный компонент [VisuallyHidden](#!/VisuallyHidden) и связать их с инпутами через `id` и `htmlFor` дублируя текс плейсхолдера.
+Живой пример ниже.
+
+```jsx static
+<FormLayoutGroup mode="horizontal" segmented>
+  <VisuallyHidden Component="label" htmlFor="nickname-id">
+    Никнейм или имя
+  </VisuallyHidden>
+  <FormItem>
+    <Input id="nickname-id" placeholder="Никнейм или имя" />
+  </FormItem>
+  <FormItem>
+    <VisuallyHidden Component="label" htmlFor='dateinput-id'>
+      Дата или диапазон
+    </VisuallyHidden>
+    <DateInput
+      id="dateinput-id"
+      {/* специальное свойство, позволяющее отрисовать плейсхолдер у DateInput */}
+      renderCustomValue={(date: Date | undefined) =>
+        date ? undefined : (
+          <span aria-hidden style={{ color: 'var(--vkui--color_text_secondary)' }}>
+            Дата или диапазон
+          </span>
+        )
+      }
+    />
+  </FormItem>
+</FormLayoutGroup>
+```
+
 ```jsx
 const Example = () => {
   const [showDates, setShowDates] = useState(true);
@@ -74,6 +106,36 @@ const Example = () => {
                 </FormItem>
               </FormLayoutGroup>
             )}
+          </FormLayoutGroup>
+        </Group>
+        <Group
+          header={
+            <Header>Сегментированный режим с лейблами, визуально лежащими в плейсхолдерах</Header>
+          }
+        >
+          <FormLayoutGroup mode="horizontal" segmented>
+            <VisuallyHidden Component="label" htmlFor="nickname-id">
+              Никнейм или имя
+            </VisuallyHidden>
+            <FormItem>
+              <Input id="nickname-id" placeholder="Никнейм или имя" />
+            </FormItem>
+            <FormItem>
+              <VisuallyHidden Component="label" htmlFor="dateinput-id">
+                Дата или диапазон
+              </VisuallyHidden>
+              <DateInput
+                id="dateinput-id"
+                // специальное свойство, позволяющее отрисовать плейсхолдер у DateInput
+                renderCustomValue={(date) =>
+                  date ? undefined : (
+                    <span aria-hidden style={{ color: 'var(--vkui--color_text_secondary)' }}>
+                      Дата или диапазон
+                    </span>
+                  )
+                }
+              />
+            </FormItem>
           </FormLayoutGroup>
         </Group>
       </Panel>
