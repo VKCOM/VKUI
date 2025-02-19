@@ -29,6 +29,11 @@ export const HorizontalScrollMobilePlayground = (props: ComponentPlaygroundProps
           arrowSize: ['s', 'm'],
           children: [items],
         },
+        {
+          showArrows: ['always'],
+          dir: ['rtl'],
+          children: [items],
+        },
       ]}
     >
       {baseRender}
@@ -45,6 +50,11 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
           showArrows: [undefined, 'always'],
           arrowSize: ['s', 'm'],
           arrowOffsetY: [-10],
+          children: [items],
+        },
+        {
+          showArrows: ['always'],
+          dir: ['rtl'],
           children: [items],
         },
       ]}
