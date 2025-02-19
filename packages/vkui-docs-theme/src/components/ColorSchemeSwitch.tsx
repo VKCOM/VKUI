@@ -1,5 +1,7 @@
+'use client';
+
 import { Icon20MoonOutline, Icon20SunOutline } from '@vkontakte/icons';
-import { AdaptivityProvider, SegmentedControl, Skeleton } from '@vkontakte/vkui';
+import { SegmentedControl, Skeleton } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import { useColorScheme } from '../contexts';
 
@@ -19,15 +21,13 @@ export function ColorSchemeSwitch() {
   }
 
   return (
-    <AdaptivityProvider sizeY="compact">
-      <SegmentedControl
-        size="l"
-        style={{ width: SWITCH_WIDTH }}
-        value={resolvedColorScheme}
-        // @ts-expect-error: TS2322 VKUI fix types?
-        onChange={setColorScheme}
-        options={options}
-      />
-    </AdaptivityProvider>
+    <SegmentedControl
+      size="l"
+      style={{ width: SWITCH_WIDTH }}
+      value={resolvedColorScheme}
+      // @ts-expect-error: TS2322 VKUI fix types?
+      onChange={setColorScheme}
+      options={options}
+    />
   );
 }

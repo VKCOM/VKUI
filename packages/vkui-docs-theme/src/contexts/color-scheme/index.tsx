@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import type { ColorSchemeType } from '@vkontakte/vkui';
@@ -19,7 +21,7 @@ export const useColorScheme = () => React.useContext(ColorSchemeContext);
 
 export const ColorSchemeProvider = ({
   defaultColorScheme = 'system',
-  storageKey = 'vkui-theme',
+  storageKey = 'vkui-docs-theme',
   children,
 }: ColorSchemeProviderProps) => {
   const [colorScheme, setColorScheme] = React.useState(

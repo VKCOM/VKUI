@@ -3,7 +3,6 @@ import { Icon20ChevronUp, Icon20Dropdown } from '@vkontakte/icons';
 import {
   AccordionContext,
   Flex,
-  Paragraph,
   Tappable,
   type TappableProps,
   Accordion as VKUIAccordion,
@@ -11,26 +10,19 @@ import {
 } from '@vkontakte/vkui';
 import styles from './Accordion.module.css';
 
-export interface AccordionProps extends Omit<TappableProps, 'onChange'> {
+export interface AccordionProps extends Omit<TappableProps, 'onChange' | 'title'> {
   expanded: VKUIAccordionProps['expanded'];
   onChange: (e?: React.MouseEvent<HTMLElement>, toggle?: boolean) => void;
   children?: React.ReactNode;
-  icon?: React.ReactNode;
   className?: string;
-  title: string;
+  title: React.ReactNode;
 }
 
 interface AccordionSummaryProps
-  extends Pick<AccordionProps, 'title' | 'className' | 'icon'>,
+  extends Pick<AccordionProps, 'title' | 'className'>,
     Pick<AccordionProps, 'onChange'> {}
 
-function AccordionSummary({
-  title,
-  className,
-  icon: Icon,
-  onChange,
-  ...restProps
-}: AccordionSummaryProps) {
+function AccordionSummary({ title, className, onChange, ...restProps }: AccordionSummaryProps) {
   const { expanded, labelId, contentId } = React.useContext(AccordionContext);
 
   return (
@@ -44,10 +36,7 @@ function AccordionSummary({
       onClick={onChange}
       {...restProps}
     >
-      <Flex align="center">
-        {Icon}
-        <Paragraph>{title}</Paragraph>
-      </Flex>
+      <Flex align="center">{title}</Flex>
       <Tappable className={styles.icon} onClick={(e) => onChange(e, true)}>
         {expanded ? <Icon20ChevronUp /> : <Icon20Dropdown />}
       </Tappable>

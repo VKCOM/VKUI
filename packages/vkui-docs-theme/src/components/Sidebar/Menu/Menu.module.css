@@ -44,7 +44,7 @@
   border-radius: 8px;
 }
 
-.activeMenuIcon {
+.activeMenuItem .menuIcon {
   color: var(--vkui--color_icon_primary);
 }
 
@@ -61,7 +61,7 @@
   margin-inline-start: calc(var(--vkui_docs--menu-item-icon-size) + var(--vkui--spacing_size_xl));
 }
 
-.currentMenu .nestedMenu .nestedMenu::before {
+.currentMenu .nestedMenu::before {
   position: absolute;
   inset-block: var(--vkui--size_base_padding_vertical--regular);
   display: block;

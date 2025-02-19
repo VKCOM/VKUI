@@ -2,15 +2,13 @@ import analyzer from '@next/bundle-analyzer';
 import nextra from 'nextra';
 
 const basePath =
-  process.env.NODE_ENV === 'production' ? process.env.VKUI_DOCS_BASE_PATH : undefined;
+  process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH : undefined;
 
 const withBundleAnalyzer = analyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
 const withNextra = nextra({
-  theme: '@vkontakte/vkui-docs-theme',
-  themeConfig: './theme.config.tsx',
   defaultShowCopyCode: true,
   staticImage: false,
   // ... your Nextra config
@@ -25,6 +23,9 @@ export default withBundleAnalyzer(
         transform: '@vkontakte/vkui/dist/cssm',
         skipDefaultConversion: true,
       },
+    },
+    experimental: {
+      optimizePackageImports: ['@vkontakte/icons'],
     },
     basePath,
     output: 'export',

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import {
@@ -11,23 +13,20 @@ import {
   useScrollLock,
   ViewWidth,
 } from '@vkontakte/vkui';
-import { useRouter } from 'next/router';
-import type { Item } from 'nextra/normalize-pages';
-import { useMenu, useThemeConfig } from '../../../contexts';
-import { renderComponent } from '../../../helpers/render';
+import { useFSRoute, useHash } from 'nextra/hooks';
+import { useConfig, useMenu, useThemeConfig } from '../../../contexts';
 import { ProjectButton } from '../../ProjectButton';
 import { Menu } from '../Menu/Menu';
 import styles from './MobileSidebar.module.css';
 
-interface MobileSideBarProps {
-  flatDirectories: Item[];
-  fullDirectories: Item[];
-}
-
-export function MobileSidebar({ flatDirectories, fullDirectories }: MobileSideBarProps) {
+export function MobileSidebar() {
+  const {
+    normalizePagesResult: { directories },
+  } = useConfig();
   const themeConfig = useThemeConfig();
   const { menu, setMenu } = useMenu();
-  const router = useRouter();
+  const pathname = useFSRoute();
+  const hash = useHash();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     menu ? 'enter' : 'exit',
     undefined,
@@ -38,7 +37,7 @@ export function MobileSidebar({ flatDirectories, fullDirectories }: MobileSideBa
 
   React.useEffect(() => {
     setMenu(false);
-  }, [router.asPath, setMenu]);
+  }, [pathname, hash, setMenu]);
 
   useScrollLock(menu);
 
@@ -62,23 +61,19 @@ export function MobileSidebar({ flatDirectories, fullDirectories }: MobileSideBa
         className={classNames(styles.root, menu ? styles.rootShow : styles.rootHide)}
         {...animationHandlers}
       >
-        <div className={classNames(styles.mobileHidden, styles.search)}>
-          {renderComponent(themeConfig.search.component, {
-            directories: flatDirectories,
-          })}
-        </div>
+        <div className={classNames(styles.mobileHidden, styles.search)}>{themeConfig.search}</div>
         <Spacing size={15} className={styles.mobileHidden} />
         <Separator className={styles.mobileHidden} />
         <nav className={styles.inner}>
-          <Menu directories={fullDirectories} />
+          <Menu directories={directories} mobileView />
         </nav>
         <AdaptivityProvider sizeY={SizeType.REGULAR}>
           <div className={classNames(styles.extra)}>
-            {renderComponent(themeConfig.navbar.versions, { sizeY: 'regular' })}
+            {themeConfig.versions}
             <ButtonGroup gap="m">
-              {renderComponent(themeConfig.navbar.extraButtons)}
-              {themeConfig.project.link ? (
-                <ProjectButton icon={themeConfig.project.icon} link={themeConfig.project.link} />
+              {themeConfig.extraButtons}
+              {themeConfig.projectLink ? (
+                <ProjectButton projectLink={themeConfig.projectLink} />
               ) : null}
             </ButtonGroup>
           </div>

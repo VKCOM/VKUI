@@ -6,45 +6,23 @@ export interface DocsThemeConfig {
   /**
    * Баннер сверху
    */
-  banner?: {
-    dismissible: boolean;
-    key: string;
-    content?: React.ReactNode;
-  };
-  /**
-   * Кастомные MDX-компоненты, которыми можно заменить дефолтные
-   */
-  components?: object;
+  banner?: React.ReactElement;
   /**
    * Направление письма сайта
    */
   direction?: 'ltr' | 'rtl';
   /**
-   * Кастомизация <head>-элемента
-   */
-  head?: React.ReactNode | React.FC;
-  /**
-   * Лого документации
-   */
-  logo: React.ReactNode | React.FC;
-  /**
-   * Ссылка для лого документации
-   *
-   * `true` - для перехода на главную
-   */
-  logoLink: boolean | string;
-  /**
-   * Компонент-обертка для main-контента
-   */
-  main?: React.FC<{ children: React.ReactNode }>;
-  /**
    * Навигационное меню
    */
-  navbar: {
-    extraButtons?: React.ReactNode | React.FC;
-    component: null | React.ReactNode | React.FC<NavbarProps>;
-    versions?: React.ReactNode | React.FC;
-  };
+  navbar?: React.ReactElement<NavbarProps>;
+  /**
+   * Компонент для дополнительных кнопок
+   */
+  extraButtons?: React.ReactElement;
+  /**
+   * Компонент версионирования
+   */
+  versions?: React.ReactElement;
   /**
    * Показывать ссылки на следующую/предыдущую страницы
    */
@@ -52,33 +30,13 @@ export interface DocsThemeConfig {
   /**
    * Управление цветовой схемой сайта
    */
-  colorScheme: ColorSchemeProviderProps;
+  colorScheme?: ColorSchemeProviderProps;
   /**
    * Поиск сайта
    */
-  search: {
-    component: null | React.ReactNode | React.FC;
-    emptyResult: React.ReactNode;
-    error: React.ReactNode;
-    loading: React.ReactNode;
-    placeholder: React.ReactNode;
-  };
+  search?: React.ReactElement;
   /**
    * Описание репозитория сайта
    */
-  project: {
-    icon: React.ReactNode;
-    link?: `https://${string}`;
-  };
+  projectLink: `https://${string}`;
 }
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-type DeepPartial<T> = T extends Function
-  ? T
-  : T extends object
-    ? {
-        [P in keyof T]?: DeepPartial<T[P]>;
-      }
-    : T;
-
-export type PartialDocsThemeConfig = DeepPartial<DocsThemeConfig>;

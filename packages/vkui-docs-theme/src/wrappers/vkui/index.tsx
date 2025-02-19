@@ -1,3 +1,5 @@
+'use client';
+
 import { AdaptivityProvider, AppRoot, ConfigProvider } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import { useColorScheme } from '../../contexts';

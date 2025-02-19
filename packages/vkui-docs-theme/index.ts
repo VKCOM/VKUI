@@ -1,9 +1,8 @@
-import Layout from './src/index';
-import type { PartialDocsThemeConfig as DocsThemeConfig } from './src/types';
-
 export { useFetch } from './src/hooks/useFetch';
-export { StorybookIcon, GithubIcon, FigmaIcon } from './src/icons';
-export { type DocsThemeConfig };
-export default Layout;
+export { StorybookIcon, GithubIcon, FigmaIcon, LogoIcon } from './src/icons';
 
-export { TagTitle, TagName, getStaticPathsTags } from './src/blog/tags';
+export { getStaticPathsTags } from './src/blog/tags';
+
+export { Head, Navbar } from './src/components';
+export { Layout } from './src/layout';
+export { getMdxComponents } from './src/mdx';

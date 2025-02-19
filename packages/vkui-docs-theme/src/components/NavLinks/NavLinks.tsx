@@ -1,16 +1,12 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16ChevronLeft, Icon16ChevronOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { Footnote, Headline, Tappable } from '@vkontakte/vkui';
 import NextLink from 'next/link';
-import type { Item } from 'nextra/normalize-pages';
-import { useThemeConfig } from '../../contexts';
+import { useConfig, useThemeConfig } from '../../contexts';
 import styles from './NavLinks.module.css';
-
-interface NavLinkProps {
-  currentIndex: number;
-  flatDirectories: Item[];
-}
 
 interface NavLinkItemProps {
   route: string;
@@ -32,12 +28,14 @@ function NavLinkItem({ type = 'prev', route, children, className }: NavLinkItemP
   );
 }
 
-export function NavLinks({ flatDirectories, currentIndex }: NavLinkProps) {
-  const themeConfig = useThemeConfig();
-  const nav = themeConfig.navigation;
+export function NavLinks() {
+  const {
+    normalizePagesResult: { flatDocsDirectories, activeIndex },
+  } = useConfig();
+  const { navigation: nav } = useThemeConfig();
   const navigation = typeof nav === 'boolean' ? { prev: nav, next: nav } : nav;
-  let prev = navigation.prev && flatDirectories[currentIndex - 1];
-  let next = navigation.next && flatDirectories[currentIndex + 1];
+  let prev = navigation.prev && flatDocsDirectories[activeIndex - 1];
+  let next = navigation.next && flatDocsDirectories[activeIndex + 1];
 
   if (prev && !prev.isUnderCurrentDocsTree) {
     prev = false;
