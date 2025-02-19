@@ -38,7 +38,6 @@ export const Link = ({
 
   return (
     <Tappable
-      Component={restProps.href ? 'a' : 'button'}
       {...restProps}
       baseClassName={classNames(
         styles.host,
