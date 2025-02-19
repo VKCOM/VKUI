@@ -16,7 +16,7 @@ export const SourceButton = () => {
   const story = index?.[storyId];
   const importPath = story && 'importPath' in story && story.importPath;
 
-  if (!importPath) {
+  if (!importPath || !globals.componentsSourceBaseUrl) {
     return null;
   }
 
