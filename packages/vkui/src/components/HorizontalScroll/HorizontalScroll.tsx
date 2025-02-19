@@ -190,7 +190,6 @@ export const HorizontalScroll = ({
   scrollOnAnyWheel = false,
   prevButtonTestId,
   nextButtonTestId,
-  getRootRef,
   // ContentWrapper
   ContentWrapperComponent = 'div',
   contentWrapperRef,
