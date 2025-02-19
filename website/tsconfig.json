@@ -18,6 +18,7 @@
     ]
   },
   "include": [
+    "postcss.config.js",
     "**/*.ts",
     "**/*.tsx",
     "content/_app.tsx",
