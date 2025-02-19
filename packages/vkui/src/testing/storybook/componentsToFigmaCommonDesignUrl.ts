@@ -1,4 +1,4 @@
-export const COMPONENTS_TO_FIGMA_DESIGN_URL: Record<string, string> = {
+export const COMPONENTS_TO_FIGMA_COMMON_DESIGN_URL: Record<string, string> = {
   ActionSheet:
     'https://www.figma.com/design/AdjYPPaNtrl0ZitenZgO0h/VKUI-Common-Library-%5BBeta%5D-(Community)?node-id=24799-204331&t=zm7u5mIujRMo61aB-0',
   ActionSheetItem:
