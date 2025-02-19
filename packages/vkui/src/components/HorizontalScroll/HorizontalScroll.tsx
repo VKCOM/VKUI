@@ -4,9 +4,9 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useDirection } from '../../hooks/useDirection';
+import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
@@ -208,8 +208,6 @@ export const HorizontalScroll = ({
 
   const scrollerRef = useExternRef(getRef, directionRef);
 
-  const rootRef = useExternRef(getRootRef);
-
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
   const hasPointer = useAdaptivityHasPointer();
@@ -264,33 +262,34 @@ export const HorizontalScroll = ({
 
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
-  useIsomorphicLayoutEffect(
-    function addWheelEventHandler() {
-      if (!rootRef.current) {
+  /**
+   * Прокрутка с помощью любого колеса мыши
+   */
+  const onWheel = React.useCallback(
+    (e: WheelEvent) => {
+      scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
+      e.preventDefault();
+    },
+    [scrollerRef],
+  );
+
+  const wheelEvent = useEventListener('wheel', onWheel);
+  React.useEffect(
+    function addScrollerRefToWheelEvent() {
+      if (!scrollerRef.current || !scrollOnAnyWheel) {
         return noop;
       }
-      /**
-       * Прокрутка с помощью любого колеса мыши
-       */
-      const onWheel = (e: WheelEvent) => {
-        const left = e.deltaX + (scrollOnAnyWheel ? e.deltaY : 0);
-        scrollerRef.current!.scrollBy({ left, behavior: 'auto' });
-        if (e.deltaY && scrollOnAnyWheel) {
-          e.preventDefault();
-        }
-      };
-      const listenerOptions = { passive: false };
-      rootRef.current?.addEventListener('wheel', onWheel, listenerOptions);
-      // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
-      return () => rootRef.current?.removeEventListener('wheel', onWheel, listenerOptions);
+
+      wheelEvent.add(scrollerRef.current);
+
+      return wheelEvent.remove;
     },
-    [rootRef, scrollOnAnyWheel, scrollerRef],
+    [wheelEvent, scrollerRef, scrollOnAnyWheel],
   );
 
   return (
     <RootComponent
       {...restProps}
-      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalHorizontalScroll',
