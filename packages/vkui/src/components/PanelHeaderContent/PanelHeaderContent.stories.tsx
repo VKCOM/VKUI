@@ -24,7 +24,7 @@ type Story = StoryObj<PanelHeaderContentProps>;
 
 const PANEL_ID = 'panel1';
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render() {
     const platform = usePlatform();
 

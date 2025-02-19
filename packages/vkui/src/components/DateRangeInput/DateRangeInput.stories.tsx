@@ -1,8 +1,8 @@
-import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { useCustomArgs } from '../../testing/useCustomArgs';
 import { DateRangeInput, type DateRangeInputProps } from './DateRangeInput';
 
 type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDate: number };
@@ -47,8 +47,8 @@ export default story;
 type Story = StoryObj<StoryDateRangeInputProps>;
 
 export const Playground: Story = {
-  render: function Render() {
-    const [{ value, startDate, endDate, ...args }, updateArgs] = useArgs();
+  render: function Render({ startDate, endDate, ...args }) {
+    const [, updateArgs] = useCustomArgs();
 
     const handleDateRangeUpdate: DateRangeInputProps['onChange'] = (updatedValue) => {
       const [changedStartDate, changedEndDate] = updatedValue || [null, null];
