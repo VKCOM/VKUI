@@ -1,8 +1,10 @@
-import { Configuration } from 'webpack';
+import { Configuration, DefinePlugin } from 'webpack';
 import type { Options } from '@swc/core';
 import path from 'path';
+import { readFileSync } from 'fs';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import WebpackCommonConfig from '../../../webpack.common.config';
+import { getStyleGuideComponents } from './helpers';
 
 const cssRegExpString = /\.css$/.toString();
 
@@ -32,6 +34,7 @@ const config: StorybookConfig = {
     './addons/pointer',
     './addons/customPanelHeaderAfter',
     './addons/source-button',
+    './addons/documentation-button',
     './addons/storybook-theme',
     getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
   ],
@@ -64,6 +67,16 @@ const config: StorybookConfig = {
     const rulesWithoutCss = excludeCssRulesFromConfig(config) ?? [];
 
     config.module!.rules = [...rulesWithoutCss, ...commonCssRules];
+    const packageJSON = JSON.parse(readFileSync('./package.json', 'utf-8'));
+    config.plugins.push(
+      new DefinePlugin({
+        __STYLEGUIDE_COMPONENTS_CONFIG__: JSON.stringify(getStyleGuideComponents()),
+        __STYLEGUIDE_URL__: JSON.stringify(packageJSON.homepage),
+        __COMPONENTS_SOURCE_BASE_URL__: JSON.stringify(
+          `${packageJSON.repository.url.replace('.git', '')}/tree/master/${packageJSON.repository.directory}`,
+        ),
+      }),
+    );
 
     return config;
   },

@@ -190,7 +190,6 @@ export const HorizontalScroll = ({
   scrollOnAnyWheel = false,
   prevButtonTestId,
   nextButtonTestId,
-  getRootRef,
   // ContentWrapper
   ContentWrapperComponent = 'div',
   contentWrapperRef,
@@ -207,8 +206,6 @@ export const HorizontalScroll = ({
   const isCustomScrollingRef = React.useRef(false);
 
   const scrollerRef = useExternRef(getRef, directionRef);
-
-  const rootRef = useExternRef(getRootRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
@@ -266,31 +263,40 @@ export const HorizontalScroll = ({
 
   useIsomorphicLayoutEffect(
     function addWheelEventHandler() {
-      if (!rootRef.current) {
+      const scrollEl = scrollerRef.current;
+      if (!scrollEl) {
         return noop;
       }
       /**
        * Прокрутка с помощью любого колеса мыши
        */
       const onWheel = (e: WheelEvent) => {
-        const left = e.deltaX + (scrollOnAnyWheel ? e.deltaY : 0);
-        scrollerRef.current!.scrollBy({ left, behavior: 'auto' });
-        if (e.deltaY && scrollOnAnyWheel) {
-          e.preventDefault();
-        }
+        scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
+        e.preventDefault();
       };
+
       const listenerOptions = { passive: false };
-      rootRef.current?.addEventListener('wheel', onWheel, listenerOptions);
-      // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
-      return () => rootRef.current?.removeEventListener('wheel', onWheel, listenerOptions);
+
+      if (scrollOnAnyWheel) {
+        scrollEl.addEventListener('wheel', onWheel, listenerOptions);
+      }
+      scrollEl.addEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+
+      return () => {
+        if (scrollOnAnyWheel) {
+          // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
+          scrollEl.removeEventListener('wheel', onWheel, listenerOptions);
+        }
+        // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для scroll нет passive свойства
+        scrollEl.removeEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+      };
     },
-    [rootRef, scrollOnAnyWheel, scrollerRef],
+    [scrollOnAnyWheel, calculateArrowsVisibility, scrollerRef],
   );
 
   return (
     <RootComponent
       {...restProps}
-      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalHorizontalScroll',
@@ -322,7 +328,7 @@ export const HorizontalScroll = ({
           onClick={scrollToRight}
         />
       )}
-      <div className={styles.in} ref={scrollerRef} onScroll={calculateArrowsVisibility}>
+      <div className={styles.in} ref={scrollerRef}>
         <ContentWrapperComponent
           className={classNames(styles.inWrapper, contentWrapperClassName)}
           ref={contentWrapperRef}
