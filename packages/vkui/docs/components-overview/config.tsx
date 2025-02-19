@@ -36,6 +36,7 @@ import {
   Cell,
   CellButton,
   Checkbox,
+  Chip,
   ChipsInput,
   ChipsSelect,
   ContentBadge,
@@ -85,10 +86,12 @@ import {
   Search,
   SegmentedControl,
   Select,
+  Separator,
   SimpleCell,
   SimpleGrid,
   Skeleton,
   Slider,
+  Spacing,
   Spinner,
   SplitCol,
   SplitLayout,
@@ -125,6 +128,7 @@ import { Playground as CellPlayground } from '../../src/components/Cell/Cell.sto
 import { Playground as CellButtonPlayground } from '../../src/components/CellButton/CellButton.stories';
 import { Playground as CheckboxPlayground } from '../../src/components/Checkbox/Checkbox.stories';
 import { Playground as ChipsInputPlayground } from '../../src/components/ChipsInput/ChipsInput.stories';
+import { Playground as ChipPlayground } from '../../src/components/ChipsInputBase/Chip/Chip.stories';
 import { Playground as ChipsSelectPlayground } from '../../src/components/ChipsSelect/ChipsSelect.stories';
 import { Playground as ContentBadgePlayground } from '../../src/components/ContentBadge/ContentBadge.stories';
 import { Playground as ContentCardPlayground } from '../../src/components/ContentCard/ContentCard.stories';
@@ -145,9 +149,11 @@ import { Playground as GridAvatarPlayground } from '../../src/components/GridAva
 import { Playground as GroupPlayground } from '../../src/components/Group/Group.stories';
 import { Playground as HeaderPlayground } from '../../src/components/Header/Header.stories';
 import { Playground as HorizontalCellPlayground } from '../../src/components/HorizontalCell/HorizontalCell.stories';
+import { Playground as IconButtonPlayground } from '../../src/components/IconButton/IconButton.stories';
 import { Playground as ImagePlayground } from '../../src/components/Image/Image.stories';
 import { Playground as InfoRowPlayground } from '../../src/components/InfoRow/InfoRow.stories';
 import { Playground as InputPlayground } from '../../src/components/Input/Input.stories';
+import { Playground as LinkPlayground } from '../../src/components/Link/Link.stories';
 import { Playground as ListPlayground } from '../../src/components/List/List.stories';
 import { Playground as MarkPlayground } from '../../src/components/Mark/Mark.stories';
 import { Playground as MiniInfoCellPlayground } from '../../src/components/MiniInfoCell/MiniInfoCell.stories';
@@ -167,12 +173,14 @@ import { Playground as ScrollArrowPlayground } from '../../src/components/Scroll
 import { Playground as SearchPlayground } from '../../src/components/Search/Search.stories';
 import { Playground as SegmentedControlPlayground } from '../../src/components/SegmentedControl/SegmentedControl.stories';
 import { Playground as SelectPlayground } from '../../src/components/Select/Select.stories';
+import { Playground as SeparatorPlayground } from '../../src/components/Separator/Separator.stories';
 import { Playground as SimpleCellPlayground } from '../../src/components/SimpleCell/SimpleCell.stories';
 import { Playground as SimpleGridPlayground } from '../../src/components/SimpleGrid/SimpleGrid.stories';
 import { Playground as SkeletonPlayground } from '../../src/components/Skeleton/Skeleton.stories';
 import { Playground as SliderPlayground } from '../../src/components/Slider/Slider.stories';
 import { Basic } from '../../src/components/Snackbar/subcomponents/Basic/Basic';
 import { Playground as BasicPlayground } from '../../src/components/Snackbar/subcomponents/Basic/Basic.stories';
+import { Playground as SpacingPlayground } from '../../src/components/Spacing/Spacing.stories';
 import { Playground as SpinnerPlayground } from '../../src/components/Spinner/Spinner.stories';
 import { Playground as SplitColPlayground } from '../../src/components/SplitCol/SplitCol.stories';
 import { Playground as SplitLayoutPlayground } from '../../src/components/SplitLayout/SplitLayout.stories';
@@ -205,6 +213,8 @@ import { PanelHeaderContextPreview } from './custom-components-preview/PanelHead
 import { PanelHeaderPreview } from './custom-components-preview/PanelHeaderPreview';
 import { PanelPreview } from './custom-components-preview/PanelPreview';
 import { ScreenSpinnerPreview } from './custom-components-preview/ScreenSpinnerPreview';
+import { SeparatorDecorator } from './custom-components-preview/SeparatorDecorator';
+import { SpacingDecorator } from './custom-components-preview/SpacingDecorator';
 
 export type ComponentConfigData = {
   customPath?: string;
@@ -217,6 +227,35 @@ export type ComponentConfigData = {
 };
 
 export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
+  Spacing: {
+    component: Spacing,
+    playgroundRender: SpacingPlayground.render,
+    args: SpacingPlayground.args,
+    decorator: SpacingDecorator,
+    minWidth: 150,
+  },
+  Separator: {
+    component: Separator,
+    playgroundRender: SeparatorPlayground.render,
+    args: SeparatorPlayground.args,
+    decorator: SeparatorDecorator,
+    minWidth: 150,
+  },
+  Link: {
+    component: Link,
+    playgroundRender: LinkPlayground.render,
+    args: LinkPlayground.args,
+  },
+  IconButton: {
+    component: IconButton,
+    playgroundRender: IconButtonPlayground.render,
+    args: IconButtonPlayground.args,
+  },
+  Chip: {
+    component: Chip,
+    playgroundRender: ChipPlayground.render,
+    args: ChipPlayground.args,
+  },
   ActionSheet: {
     component: ActionSheetPreview,
   },
@@ -941,8 +980,10 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'Group',
       'Header',
       'HorizontalCell',
+      'IconButton',
       'Image',
       'InfoRow',
+      'Link',
       'List',
       'Mark',
       'MiniInfoCell',
@@ -954,9 +995,11 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'RichCell',
       'ScrollArrow',
       'Search',
+      'Separator',
       'SimpleCell',
       'Skeleton',
       'Spinner',
+      'Spacing',
       'SubnavigationBar',
       'SubnavigationButton',
       'Switch',
@@ -975,6 +1018,7 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'CalendarRange',
       'Checkbox',
       'ChipsInput',
+      'Chip',
       'ChipsSelect',
       'DateInput',
       'DateRangeInput',
