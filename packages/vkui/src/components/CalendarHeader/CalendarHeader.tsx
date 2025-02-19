@@ -9,7 +9,6 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { addMonths, setMonth, setYear, subMonths } from 'date-fns';
-import { useCalendarDirectionContext } from '../../context/CalendarDirectionContext';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -104,8 +103,7 @@ export const CalendarHeader = ({
   nextMonthButtonTestId,
   ...restProps
 }: CalendarHeaderProps): React.ReactNode => {
-  const { locale } = useConfigProvider();
-  const { direction } = useCalendarDirectionContext();
+  const { locale, direction } = useConfigProvider();
 
   const onMonthsChange = React.useCallback(
     (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>

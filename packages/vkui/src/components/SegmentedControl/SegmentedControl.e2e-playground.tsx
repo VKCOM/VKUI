@@ -39,7 +39,7 @@ export const SegmentedControlPlayground = (props: ComponentPlaygroundProps) => {
             ],
           ],
           defaultValue: ['fb'],
-          dir: ['ltr', 'rtl'],
+          $direction: true,
         },
       ]}
     >

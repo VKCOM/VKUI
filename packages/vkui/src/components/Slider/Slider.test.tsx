@@ -7,10 +7,10 @@ import {
   baselineComponent,
   fakeTimers,
   mockRect,
-  mockRtlDirection,
   userEvent,
   waitForFloatingPosition,
 } from '../../testing/utils';
+import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import type { CustomTouchEvent } from '../Touch/Touch';
 import { Slider as SliderBase, type SliderMultipleProps, type SliderProps } from './Slider';
 
@@ -241,10 +241,12 @@ describe(Slider, () => {
   });
 
   describe('check rtl view', () => {
-    mockRtlDirection();
-
     it('moves start', async () => {
-      render(<Slider />);
+      render(
+        <DirectionProvider value="rtl">
+          <Slider />
+        </DirectionProvider>,
+      );
       const slider = screen.getByRole('slider');
 
       fireEvent.mouseDown(slider);
@@ -260,12 +262,14 @@ describe(Slider, () => {
 
     it('moves start (multiple)', async () => {
       render(
-        <Slider
-          multiple
-          defaultValue={[30, 70]}
-          startThumbTestId="startSlider"
-          endThumbTestId="endSlider"
-        />,
+        <DirectionProvider value="rtl">
+          <Slider
+            multiple
+            defaultValue={[30, 70]}
+            startThumbTestId="startSlider"
+            endThumbTestId="endSlider"
+          />
+        </DirectionProvider>,
       );
       const startSlider = screen.getByTestId('startSlider');
       const endSlider = screen.getByTestId('endSlider');
@@ -284,7 +288,11 @@ describe(Slider, () => {
     });
 
     it('moves end (multiple)', async () => {
-      render(<Slider multiple defaultValue={[30, 70]} />);
+      render(
+        <DirectionProvider value="rtl">
+          <Slider multiple defaultValue={[30, 70]} />
+        </DirectionProvider>,
+      );
       const [startSlider, endSlider] = screen.getAllByRole('slider');
 
       fireEvent.mouseDown(endSlider);

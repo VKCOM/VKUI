@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useDirection } from '../../hooks/useDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
@@ -143,19 +142,17 @@ export const UsersStack = ({
   size = 'm',
   children,
   avatarsPosition = 'inline-start',
-  getRootRef,
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
-  const [directionRef, textDirection = 'ltr'] = useDirection();
-  const rootRef = useExternRef(getRootRef, directionRef);
+  const direction = useConfigDirection();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
   const directionClip =
-    textDirection === 'ltr' ? (canShowOthers ? 'right' : 'left') : canShowOthers ? 'left' : 'right';
+    direction === 'ltr' ? (canShowOthers ? 'right' : 'left') : canShowOthers ? 'left' : 'right';
 
   const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
     const direction = i === 0 && !canShowOthers ? 'circle' : directionClip;
@@ -212,7 +209,6 @@ export const UsersStack = ({
   return (
     <RootComponent
       {...restProps}
-      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         stylesSize[size],

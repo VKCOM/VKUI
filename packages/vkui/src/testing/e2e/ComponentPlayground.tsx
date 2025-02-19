@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
+import { DirectionProvider } from '../../components/DirectionProvider/DirectionProvider';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import { mapObject } from '../../lib/object';
@@ -12,7 +13,7 @@ import { getAdaptivePxWidth, isCustomValueWithLabel, multiCartesian, prettyProps
 
 type DefaultProps<T extends React.ElementType> = Omit<
   React.ComponentProps<T>,
-  'sizeX' | 'sizeY' | 'componentStateHeight'
+  'sizeX' | 'sizeY' | 'dir' | 'componentStateHeight'
 >;
 
 export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
@@ -78,7 +79,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
           {multiCartesian<Props>(propSets, { adaptive: !isVKCOM, platform }).map((props, i) => {
             const clonedAdaptivityProviderProps = { ...adaptivityProviderProps };
             const { componentStateHeight, ...showedProps } = props;
-            const { sizeX, sizeY, ...componentProps } = showedProps;
+            const { sizeX, sizeY, dir = 'ltr', ...componentProps } = showedProps;
 
             if (sizeX) {
               clonedAdaptivityProviderProps.sizeX = sizeX;
@@ -98,10 +99,12 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
                 {isFixedComponent ? null : (
                   <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(showedProps)}</div>
                 )}
-                <div>
-                  <AdaptivityProvider {...clonedAdaptivityProviderProps}>
-                    <Children {...mappedProps} />
-                  </AdaptivityProvider>
+                <div dir={dir}>
+                  <DirectionProvider value={dir}>
+                    <AdaptivityProvider {...clonedAdaptivityProviderProps}>
+                      <Children {...mappedProps} />
+                    </AdaptivityProvider>
+                  </DirectionProvider>
                 </div>
               </div>
             );

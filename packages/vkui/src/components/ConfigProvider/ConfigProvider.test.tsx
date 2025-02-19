@@ -25,6 +25,7 @@ describe(ConfigProvider, () => {
         customPanelHeaderAfterMinWidth: 90,
         tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
         transitionMotionEnabled: false,
+        direction: 'ltr',
       });
       return null;
     };
@@ -55,6 +56,7 @@ describe(ConfigProvider, () => {
       isWebView: true,
       tokensClassNames: { light: 'some-class-light', dark: 'some-class-dark' },
       locale: 'en',
+      direction: 'ltr',
     };
     it.each([
       ['platform', 'android'],
@@ -65,6 +67,7 @@ describe(ConfigProvider, () => {
       ['platform', 'light'],
       ['tokensClassNames', { light: 'another-class-light', dark: 'another-class-dark' }],
       ['locale', 'ru'],
+      ['direction', 'rtl'],
     ])('%s => %s', (prop, value) => {
       const newConfig = { [prop]: value };
       render(
@@ -96,6 +99,7 @@ describe(ConfigProviderOverride, () => {
     isWebView: true,
     tokensClassNames: { light: 'some-class-light', dark: 'some-class-dark' },
     locale: 'en',
+    direction: 'ltr',
   };
   it.each([
     ['platform', 'android'],
@@ -106,6 +110,7 @@ describe(ConfigProviderOverride, () => {
     ['platform', 'light'],
     ['tokensClassNames', { light: 'another-class-light', dark: 'another-class-dark' }],
     ['locale', 'ru'],
+    ['direction', 'rtl'],
   ])('%s => %s', (prop, value) => {
     const newConfig = { [prop]: value };
     render(

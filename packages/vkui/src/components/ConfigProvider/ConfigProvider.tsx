@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
+import { useAutoDetectDirection } from '../../hooks/useAutoDetectDirection';
 import { TokensClassProvider } from '../../lib/tokens';
 import { excludeKeysWithUndefined } from '../../lib/utils';
 import {
@@ -29,10 +30,12 @@ export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode =
   };
 
   const colorScheme = useAutoDetectColorScheme(mergeProps.colorScheme);
+  const direction = useAutoDetectDirection(mergeProps.direction);
 
   const configContext = useConfigProviderContextMemo({
     ...mergeProps,
     colorScheme,
+    direction,
   });
 
   return (

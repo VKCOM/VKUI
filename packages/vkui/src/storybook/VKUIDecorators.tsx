@@ -41,6 +41,7 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
     <ConfigProvider
       platform={platform}
       colorScheme={colorScheme}
+      direction={direction}
       hasCustomPanelHeaderAfter={hasCustomPanelHeaderAfter}
     >
       <AdaptivityProvider hasPointer={hasPointer}>

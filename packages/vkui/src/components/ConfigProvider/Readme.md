@@ -4,4 +4,4 @@
 >
 > Обратите внимание, что в вашем приложении должен быть только один `ConfigProvider`. Если вам необходимо
 > переопределить какой-то из параметров, то это можно сделать с помощью [`PlatformProvider`](#/PlatformProvider),
-> [`ColorSchemeProvider`](#/ColorSchemeProvider) или [`LocaleProvider`](#/LocaleProvider)
+> [`ColorSchemeProvider`](#/ColorSchemeProvider), [`LocaleProvider`](#/LocaleProvider) или [`DirectionProvider`](#/DirectionProvider)

@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useDirection } from '../../../hooks/useDirection';
-import { useExternRef } from '../../../hooks/useExternRef';
+import { useConfigDirection } from '../../../hooks/useConfigDirection';
 import {
   getBadgeIconSizeByImageBaseSize,
   ImageBase,
@@ -26,12 +25,10 @@ export interface AvatarBadgeWithPresetProps
 export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
   preset = 'online',
   className,
-  getRootRef,
   ...restProps
 }: AvatarBadgeWithPresetProps) => {
-  const [directionRef, textDirection = 'ltr'] = useDirection<HTMLDivElement>();
-  const isRtl = textDirection === 'rtl';
-  const rootRef = useExternRef(getRootRef, directionRef);
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
   const { size } = React.useContext(ImageBaseContext);
   const badgeSize = getBadgeIconSizeByImageBaseSize(size);
   const isOnlinePreset = preset === 'online';
@@ -42,7 +39,6 @@ export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
     <ImageBase.Badge
       background="stroke"
       className={classNames(styles.host, isRtl && styles.rtl, presetClassName, className)}
-      getRootRef={rootRef}
       {...restProps}
     >
       <Icon width={badgeSize} height={badgeSize} />

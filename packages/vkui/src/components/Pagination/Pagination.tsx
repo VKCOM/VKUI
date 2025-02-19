@@ -3,8 +3,7 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useDirection } from '../../hooks/useDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { type PaginationPageType, usePagination } from '../../hooks/usePagination';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -135,12 +134,10 @@ export const Pagination = ({
   prevButtonTestId,
   nextButtonTestId,
   renderNavigationButton,
-  getRootRef,
   ...resetProps
 }: PaginationProps): React.ReactNode => {
-  const [directionRef, textDirection = 'ltr'] = useDirection();
-  const isRtl = textDirection === 'rtl';
-  const rootRef = useExternRef(getRootRef, directionRef);
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
   const pages = usePagination({
     currentPage,
     totalPages,
@@ -221,7 +218,6 @@ export const Pagination = ({
     <RootComponent
       Component="nav"
       role="navigation"
-      getRootRef={rootRef}
       aria-labelledby={navigationLabelId}
       {...resetProps}
     >

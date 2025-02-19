@@ -19,7 +19,7 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
         {
           value: [undefined, 'value'],
           icon: [undefined, <Icon16Add key="" />],
-          dir: ['ltr', 'rtl'],
+          $direction: true,
         },
         {
           value: ['value'],
