@@ -335,12 +335,7 @@ export const CarouselBase = ({
 
   const simpleSlideChangePerform = () => {
     const { snaps } = slidesManager.current;
-    const startPoint = shiftXCurrentRef.current;
-    const endPoint = snaps[slideIndex];
-    const distance = endPoint - startPoint;
-    addToAnimationQueue(
-      getAnimateFunction((progress) => transformCssStyles(startPoint + distance * progress)),
-    );
+    requestTransform(snaps[slideIndex], true);
   };
 
   useIsomorphicLayoutEffect(
