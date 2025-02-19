@@ -51,7 +51,8 @@ export interface Version {
 export type AnchorHTMLAttributesOnly = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   keyof React.HTMLAttributes<HTMLAnchorElement>
->;
+> &
+  React.AriaAttributes;
 
 /**
  * Проверяет, является ли тип подтипом другого.

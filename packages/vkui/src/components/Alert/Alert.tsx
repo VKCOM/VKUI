@@ -223,6 +223,11 @@ export const Alert = ({
               </IconButton>
             )}
           </div>
+          {isDismissButtonVisible && dismissButtonMode === 'outside' && (
+            <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
+              {dismissLabel}
+            </ModalDismissButton>
+          )}
           <AlertActions
             actions={actions}
             actionsAlign={actionsAlign}
@@ -230,11 +235,6 @@ export const Alert = ({
             renderAction={renderAction}
             onItemClick={onItemClick}
           />
-          {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-            <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
-              {dismissLabel}
-            </ModalDismissButton>
-          )}
         </FocusTrap>
       </PopoutWrapper>
     </AppRootPortal>
