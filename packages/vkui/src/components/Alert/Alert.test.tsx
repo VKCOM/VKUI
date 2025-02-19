@@ -340,14 +340,20 @@ describe('Alert', () => {
     async ({ title, description, titleClassNames, descriptionClassNames, platform }) => {
       const result = render(
         <ConfigProvider platform={platform}>
-          <Alert onClose={jest.fn()} title={title} description={description} />
+          <Alert
+            onClose={jest.fn()}
+            titleTestId="titleTestId"
+            descriptionTestId="descriptionTestId"
+            title={title}
+            description={description}
+          />
         </ConfigProvider>,
       );
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
-      const headerElement = result.container.getElementsByClassName(styles.title)[0];
-      const textElement = result.container.getElementsByClassName(styles.description)[0];
+      const headerElement = screen.getByTestId('titleTestId');
+      const textElement = screen.getByTestId('descriptionTestId');
 
       titleClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
       descriptionClassNames.forEach((className) => expect(textElement).toHaveClass(className));
