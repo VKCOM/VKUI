@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Gradient, type GradientProps } from './Gradient';
 
 const story: Meta<GradientProps> = {
   title: 'Blocks/Gradient',
   component: Gradient,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Gradient', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

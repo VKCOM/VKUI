@@ -3,6 +3,7 @@ import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { cities } from '../../testing/mock';
 import { getFormFieldIconsPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { CustomSelect, type SelectProps } from './CustomSelect';
 
 const iconsPresets = getFormFieldIconsPresets();
@@ -10,7 +11,7 @@ const iconsPresets = getFormFieldIconsPresets();
 const story: Meta<SelectProps> = {
   title: 'Forms/CustomSelect',
   component: CustomSelect,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('CustomSelect', CanvasFullLayout, DisableCartesianParam),
   args: { onOpen: fn(), onClose: fn() },
   argTypes: {
     before: iconsPresets,

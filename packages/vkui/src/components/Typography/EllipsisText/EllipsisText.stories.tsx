@@ -1,12 +1,13 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
+import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { EllipsisText, type EllipsisTextProps } from './EllipsisText';
 
 const story: Meta<EllipsisTextProps> = {
   title: 'Typography/EllipsisText',
   component: EllipsisText,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('EllipsisText', CanvasFullLayout),
   decorators: [withCartesian],
 };
 

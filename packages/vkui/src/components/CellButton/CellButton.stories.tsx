@@ -3,6 +3,7 @@ import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Switch } from '../Switch/Switch';
 import { CellButton, type CellButtonProps } from './CellButton';
@@ -10,7 +11,7 @@ import { CellButton, type CellButtonProps } from './CellButton';
 const story: Meta<CellButtonProps> = {
   title: 'Blocks/CellButton',
   component: CellButton,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('CellButton', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['28'],

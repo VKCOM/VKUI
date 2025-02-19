@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
 import { Radio as BasicRadio } from '../Radio/Radio';
 import {
@@ -12,7 +13,7 @@ import { RadioGroup, type RadioGroupProps } from './RadioGroup';
 const story: Meta<RadioGroupProps> = {
   title: 'Forms/RadioGroup',
   component: RadioGroup,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('RadioGroup', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

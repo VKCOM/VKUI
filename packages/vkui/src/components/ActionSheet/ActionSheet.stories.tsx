@@ -11,6 +11,7 @@ import {
   Icon28SubtitlesOutline,
 } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ActionSheetItem, type ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
@@ -19,7 +20,7 @@ import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 const story: Meta<ActionSheetProps> = {
   title: 'Popouts/ActionSheet',
   component: ActionSheet,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ActionSheet', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     title: StringArg,
     description: StringArg,

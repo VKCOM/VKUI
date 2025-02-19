@@ -8,6 +8,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { stopPropagation } from '../../lib/utils';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { cities, getRandomUser, getRandomUsers, multiplyText } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
@@ -42,7 +43,7 @@ import type { ModalPageCloseReason, ModalPageProps } from './types';
 const story: Meta<ModalPageProps> = {
   title: 'Modals/ModalPage',
   component: ModalPage,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ModalPage', CanvasFullLayout, DisableCartesianParam),
   decorators: function UIController(Component) {
     const [, updateArg] = useArgs();
     return (

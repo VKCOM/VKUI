@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ContentCard } from '../ContentCard/ContentCard';
 import { SimpleGrid, type SimpleGridProps } from './SimpleGrid';
 
 const story: Meta<SimpleGridProps> = {
   title: 'Layout/SimpleGrid',
   component: SimpleGrid,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('SimpleGrid', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

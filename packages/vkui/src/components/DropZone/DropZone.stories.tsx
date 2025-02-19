@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon56CameraOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { DropZone, type DropZoneProps } from './DropZone';
@@ -8,7 +9,7 @@ import { DropZone, type DropZoneProps } from './DropZone';
 const story: Meta<DropZoneProps> = {
   title: 'Forms/DropZone',
   component: DropZone,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('DropZone', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;
