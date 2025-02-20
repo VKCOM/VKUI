@@ -28,7 +28,7 @@ export const DocumentationButton = () => {
   const story = index?.[storyId];
   const importPath = story && 'importPath' in story && story.importPath;
 
-  if (!importPath) {
+  if (!importPath || !globals.styleguideComponents || globals.styleguideBaseUrl) {
     return null;
   }
 
