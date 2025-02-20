@@ -190,14 +190,14 @@ export const AlertContent = ({
         )}
       >
         {hasReactNode(title) && (
-              <AlertTitle data-testid={titleTestId} id={titleId}>
-                {title}
-              </AlertTitle>
-            )}
+          <AlertTitle data-testid={titleTestId} id={titleId}>
+            {title}
+          </AlertTitle>
+        )}
         {hasReactNode(description) && (
           <AlertDescription data-testid={descriptionTestId} id={descriptionId}>
-                {description}
-              </AlertDescription>
+            {description}
+          </AlertDescription>
         )}
         {children}
         {isDismissButtonVisible && dismissButtonMode === 'inside' && (
