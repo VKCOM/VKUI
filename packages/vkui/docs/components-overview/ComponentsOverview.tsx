@@ -42,7 +42,7 @@ const ComponentsOverview: React.FC<{ direction: Direction }> = ({ direction }) =
           return (
             <Flex key={groupKey} direction="column" gap="xl">
               <Title level="2">{groupData.title}</Title>
-              <ul className={styles.cardsContainer}>
+              <div className={styles.cardsContainer}>
                 {groupData.components.map((componentName) => (
                   <ComponentOverviewCardWrapper
                     key={componentName}
@@ -52,7 +52,7 @@ const ComponentsOverview: React.FC<{ direction: Direction }> = ({ direction }) =
                     direction={direction}
                   />
                 ))}
-              </ul>
+              </div>
             </Flex>
           );
         })}
