@@ -75,6 +75,14 @@ export interface AlertProps
    * Передает атрибут `data-testid` для кнопки закрытия
    */
   dismissButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для заголовка
+   */
+  titleTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для описания
+   */
+  descriptionTestId?: string;
   usePortal?: AppRootPortalProps['usePortal'];
   /**
    * По умолчанию событие onClick не всплывает
@@ -105,6 +113,8 @@ export const Alert = ({
   usePortal,
   onClick,
   allowClickPropagation = false,
+  titleTestId,
+  descriptionTestId,
   ...restProps
 }: AlertProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -205,9 +215,15 @@ export const Alert = ({
               dismissButtonMode === 'inside' && styles.contentWithButton,
             )}
           >
-            {hasReactNode(title) && <AlertTitle id={titleId}>{title}</AlertTitle>}
+            {hasReactNode(title) && (
+              <AlertTitle data-testid={titleTestId} id={titleId}>
+                {title}
+              </AlertTitle>
+            )}
             {hasReactNode(description) && (
-              <AlertDescription id={descriptionId}>{description}</AlertDescription>
+              <AlertDescription data-testid={descriptionTestId} id={descriptionId}>
+                {description}
+              </AlertDescription>
             )}
             {children}
             {isDismissButtonVisible && dismissButtonMode === 'inside' && (
