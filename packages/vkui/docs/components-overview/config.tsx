@@ -10,6 +10,7 @@ import {
   Icon16UnlockOutline,
   Icon20Add,
   Icon20ArticleOutline,
+  Icon20More,
   Icon20NewsfeedOutline,
   Icon24Add,
   Icon24ThumbsUpOutline,
@@ -70,6 +71,8 @@ import {
   Mark,
   MiniInfoCell,
   ModalCardBase,
+  ModalDismissButton,
+  ModalOutsideButton,
   OnboardingTooltip,
   Pagination,
   PanelHeaderButton,
@@ -157,7 +160,10 @@ import { Playground as LinkPlayground } from '../../src/components/Link/Link.sto
 import { Playground as ListPlayground } from '../../src/components/List/List.stories';
 import { Playground as MarkPlayground } from '../../src/components/Mark/Mark.stories';
 import { Playground as MiniInfoCellPlayground } from '../../src/components/MiniInfoCell/MiniInfoCell.stories';
+import { CardWithComplexContent as ModalCardPlayground } from '../../src/components/ModalCard/ModalCard.stories';
 import { Playground as ModalCardBasePlayground } from '../../src/components/ModalCardBase/ModalCardBase.stories';
+import { Playground as ModalDismissButtonPlayground } from '../../src/components/ModalDismissButton/ModalDismissButton.stories';
+import { Playground as ModalOutsideButtonPlayground } from '../../src/components/ModalOutsideButton/ModalOutsideButton.stories';
 import { Playground as OnboardingTooltipPlayground } from '../../src/components/OnboardingTooltip/OnboardingTooltip.stories';
 import { Playground as PaginationPlayground } from '../../src/components/Pagination/Pagination.stories';
 import { Playground as PanelHeaderButtonPlayground } from '../../src/components/PanelHeaderButton/PanelHeaderButton.stories';
@@ -622,6 +628,29 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
       icon: <Icon56MoneyTransferOutline />,
     },
   },
+  ModalOutsideButton: {
+    component: ModalOutsideButton,
+    args: {
+      ...ModalOutsideButtonPlayground.args,
+      children: <Icon20More />,
+    },
+  },
+  ModalDismissButton: {
+    component: ModalDismissButton,
+    args: {
+      ...ModalDismissButtonPlayground.args,
+      style: {
+        transform: 'translate(-50%, -50%)',
+      },
+    },
+  },
+  ModalCard: {
+    component: ModalCardBase,
+    args: {
+      ...ModalCardPlayground.args,
+      icon: <Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />,
+    },
+  },
   MiniInfoCell: {
     component: MiniInfoCell,
     playgroundRender: MiniInfoCellPlayground.render,
@@ -1069,6 +1098,10 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'SplitLayout',
       'TabbarItem',
     ],
+  },
+  Modals: {
+    title: 'Modals',
+    components: ['ModalCard', 'ModalDismissButton', 'ModalOutsideButton'],
   },
   Poppers: {
     title: 'Poppers',
