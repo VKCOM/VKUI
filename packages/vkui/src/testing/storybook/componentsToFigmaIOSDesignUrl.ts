@@ -39,9 +39,9 @@ export const COMPONENTS_TO_FIGMA_IOS_DESIGN_URL: Record<string, string> = {
   Group:
     'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=540-2',
   Header:
-    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=14853-51608&t=Ygu0Gmrf8a37OZAy-0',
+    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=14853-51608',
   Footer:
-    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=20499-51286&t=Ygu0Gmrf8a37OZAy-0',
+    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=20499-51286',
   HorizontalCell:
     'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=3458-50352',
   HorizontalScroll:
@@ -57,13 +57,13 @@ export const COMPONENTS_TO_FIGMA_IOS_DESIGN_URL: Record<string, string> = {
   Placeholder:
     'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=540-0',
   Spinner:
-    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=20501-240&t=Ygu0Gmrf8a37OZAy-0',
+    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=20501-240',
   ScreenSpinner:
-    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=20501-241&t=Ygu0Gmrf8a37OZAy-0',
+    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=20501-241',
   PanelSpinner:
-    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=16561-49951&t=Ygu0Gmrf8a37OZAy-0',
+    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=16561-49951',
   Progress:
-    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=3-83&t=Ygu0Gmrf8a37OZAy-0',
+    'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=3-83',
   RichCell:
     'https://www.figma.com/design/XT2NqNsU3WxdAB5EmXfpgu/VKUI-iOS-Library-(Community)?node-id=1070-21070',
   Search:
