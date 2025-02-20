@@ -1,6 +1,6 @@
-import { type ReactNode } from 'react';
+import { type ComponentConfigData } from '../config';
 
-export const SpacingDecorator: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const SpacingDecorator: ComponentConfigData['decorator'] = ({ children }) => {
   return (
     <div>
       Before Spacing

@@ -10,6 +10,7 @@ import {
   Icon16UnlockOutline,
   Icon20Add,
   Icon20ArticleOutline,
+  Icon20GiftCircleFillRed,
   Icon20More,
   Icon20NewsfeedOutline,
   Icon24Add,
@@ -46,6 +47,7 @@ import {
   DateInput,
   DateRangeInput,
   DisplayTitle,
+  Div,
   DropZone,
   EllipsisText,
   File,
@@ -140,6 +142,7 @@ import { Playground as CounterPlayground } from '../../src/components/Counter/Co
 import { Playground as CustomScrollViewPlayground } from '../../src/components/CustomScrollView/CustomScrollView.stories';
 import { Playground as DateInputPlayground } from '../../src/components/DateInput/DateInput.stories';
 import { Playground as DateRangeInputPlayground } from '../../src/components/DateRangeInput/DateRangeInput.stories';
+import { Playground as DivPlayground } from '../../src/components/Div/Div.stories';
 import { Playground as DropZonePlayground } from '../../src/components/DropZone/DropZone.stories';
 import { Playground as FilePlayground } from '../../src/components/File/File.stories';
 import { Playground as FlexPlayground } from '../../src/components/Flex/Flex.stories';
@@ -155,6 +158,12 @@ import { Playground as HeaderPlayground } from '../../src/components/Header/Head
 import { Playground as HorizontalCellPlayground } from '../../src/components/HorizontalCell/HorizontalCell.stories';
 import { Playground as IconButtonPlayground } from '../../src/components/IconButton/IconButton.stories';
 import { Playground as ImagePlayground } from '../../src/components/Image/Image.stories';
+import { ImageBaseBadge } from '../../src/components/ImageBase/ImageBaseBadge/ImageBaseBadge';
+import { Playground as ImageBaseBadgePlayground } from '../../src/components/ImageBase/ImageBaseBadge/ImageBaseBadge.stories';
+import { ImageBaseFloatElement } from '../../src/components/ImageBase/ImageBaseFloatElement/ImageBaseFloatElement';
+import { Playground as ImageBaseFloatElementPlayground } from '../../src/components/ImageBase/ImageBaseFloatElement/ImageBaseFloatElement.stories';
+import { ImageBaseOverlay } from '../../src/components/ImageBase/ImageBaseOverlay/ImageBaseOverlay';
+import { Playground as ImageBaseOverlayPlayground } from '../../src/components/ImageBase/ImageBaseOverlay/ImageBaseOverlay.stories';
 import { Playground as InfoRowPlayground } from '../../src/components/InfoRow/InfoRow.stories';
 import { Playground as InputPlayground } from '../../src/components/Input/Input.stories';
 import { Playground as LinkPlayground } from '../../src/components/Link/Link.stories';
@@ -212,10 +221,12 @@ import { Playground as TextPlayground } from '../../src/components/Typography/Te
 import { Playground as TitlePlayground } from '../../src/components/Typography/Title/Title.stories';
 import { Playground as UsersStackPlayground } from '../../src/components/UsersStack/UsersStack.stories';
 import { Playground as WriteBarPlayground } from '../../src/components/WriteBar/WriteBar.stories';
+import { IconExampleForBadgeBasedOnImageBaseSize } from '../../src/testing/icons';
 import { getAvatarUrl } from '../../src/testing/mock';
 import { ActionSheetPreview } from './custom-components-preview/ActionSheetPreview';
 import { CustomScrollViewPreview } from './custom-components-preview/CustomScrollViewPreview';
 import { HorizontalScrollPreview } from './custom-components-preview/HorizontalScrollPreview';
+import { ImageDecorator } from './custom-components-preview/ImageDecorator';
 import { ModalPageBasePreview } from './custom-components-preview/ModalPageBasePreview';
 import { ModalPageHeaderPreview } from './custom-components-preview/ModalPageHeaderPreview';
 import { PanelHeaderContentPreview } from './custom-components-preview/PanelHeaderContentPreview';
@@ -237,6 +248,41 @@ export type ComponentConfigData = {
 };
 
 export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
+  ImageBaseBadge: {
+    component: ImageBaseBadge,
+    playgroundRender: ImageBaseBadgePlayground.render,
+    args: {
+      ...ImageBaseBadgePlayground.args,
+      children: <IconExampleForBadgeBasedOnImageBaseSize />,
+    },
+    decorator: ImageDecorator,
+  },
+  ImageBaseFloatElement: {
+    component: ImageBaseFloatElement,
+    playgroundRender: ImageBaseFloatElementPlayground.render,
+    args: {
+      ...ImageBaseFloatElementPlayground.args,
+      visibility: 'always',
+    },
+    decorator: ImageDecorator,
+  },
+  ImageBaseOverlay: {
+    component: ImageBaseOverlay,
+    playgroundRender: ImageBaseOverlayPlayground.render,
+    args: {
+      ...ImageBaseOverlayPlayground.args,
+      visibility: 'always',
+      children: <Icon20GiftCircleFillRed width={32} height={32} />,
+    },
+    decorator: ImageDecorator,
+  },
+  Div: {
+    component: Div,
+    playgroundRender: DivPlayground.render,
+    args: DivPlayground.args,
+    decorator: Group,
+    minWidth: 150,
+  },
   Spacing: {
     component: Spacing,
     playgroundRender: SpacingPlayground.render,
@@ -1025,6 +1071,7 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'ContentBadge',
       'ContentCard',
       'Counter',
+      'Div',
       'Footer',
       'Gallery',
       'Gradient',
@@ -1034,6 +1081,9 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'HorizontalCell',
       'IconButton',
       'Image',
+      'ImageBaseBadge',
+      'ImageBaseFloatElement',
+      'ImageBaseOverlay',
       'InfoRow',
       'Link',
       'List',
