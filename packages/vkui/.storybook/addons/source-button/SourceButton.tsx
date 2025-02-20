@@ -21,7 +21,7 @@ export const SourceButton = () => {
   }
   const importPath = story && 'importPath' in story && story.importPath;
 
-  if (!importPath) {
+  if (!importPath || !globals.componentsSourceBaseUrl) {
     return null;
   }
 
