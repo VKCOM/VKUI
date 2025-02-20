@@ -102,6 +102,7 @@ import {
   SubnavigationBar,
   SubnavigationButton,
   Switch,
+  Tabbar,
   TabbarItem,
   Tabs,
   TabsItem,
@@ -193,6 +194,7 @@ import { Playground as SplitLayoutPlayground } from '../../src/components/SplitL
 import { Playground as SubnavigationBarPlayground } from '../../src/components/SubnavigationBar/SubnavigationBar.stories';
 import { Playground as SubnavigationButtonPlayground } from '../../src/components/SubnavigationButton/SubnavigationButton.stories';
 import { Playground as SwitchPlayground } from '../../src/components/Switch/Switch.stories';
+import { Playground as TabbarPlayground } from '../../src/components/Tabbar/Tabbar.stories';
 import { Playground as TabbarItemPlayground } from '../../src/components/TabbarItem/TabbarItem.stories';
 import { Playground as TabsPlayground } from '../../src/components/Tabs/Tabs.stories';
 import { Playground as TabsItemPlayground } from '../../src/components/TabsItem/TabsItem.stories';
@@ -214,6 +216,8 @@ import { getAvatarUrl } from '../../src/testing/mock';
 import { ActionSheetPreview } from './custom-components-preview/ActionSheetPreview';
 import { CustomScrollViewPreview } from './custom-components-preview/CustomScrollViewPreview';
 import { HorizontalScrollPreview } from './custom-components-preview/HorizontalScrollPreview';
+import { ModalPageBasePreview } from './custom-components-preview/ModalPageBasePreview';
+import { ModalPageHeaderPreview } from './custom-components-preview/ModalPageHeaderPreview';
 import { PanelHeaderContentPreview } from './custom-components-preview/PanelHeaderContentPreview';
 import { PanelHeaderContextPreview } from './custom-components-preview/PanelHeaderContextPreview';
 import { PanelHeaderPreview } from './custom-components-preview/PanelHeaderPreview';
@@ -305,6 +309,17 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   CustomScrollView: {
     component: CustomScrollViewPreview,
     args: CustomScrollViewPlayground.args,
+  },
+  Tabbar: {
+    component: Tabbar,
+    playgroundRender: TabbarPlayground.render,
+    args: {
+      ...TabbarPlayground.args,
+      style: {
+        position: 'relative',
+      },
+    },
+    minWidth: 300,
   },
   TabbarItem: {
     component: TabbarItem,
@@ -643,6 +658,14 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
         transform: 'translate(-50%, -50%)',
       },
     },
+  },
+  ModalPageHeader: {
+    component: ModalPageHeaderPreview,
+    minWidth: 400,
+  },
+  ModalPage: {
+    component: ModalPageBasePreview,
+    minWidth: 400,
   },
   ModalCard: {
     component: ModalCardBase,
@@ -1096,12 +1119,19 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'PanelHeaderContext',
       'SplitCol',
       'SplitLayout',
+      'Tabbar',
       'TabbarItem',
     ],
   },
   Modals: {
     title: 'Modals',
-    components: ['ModalCard', 'ModalDismissButton', 'ModalOutsideButton'],
+    components: [
+      'ModalCard',
+      'ModalDismissButton',
+      'ModalOutsideButton',
+      'ModalPage',
+      'ModalPageHeader',
+    ],
   },
   Poppers: {
     title: 'Poppers',
