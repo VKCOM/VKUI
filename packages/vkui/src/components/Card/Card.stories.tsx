@@ -9,6 +9,7 @@ const story: Meta<CardProps> = {
   component: Card,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withSinglePanel, withVKUILayout],
+  excludeStories: ['playgroundArgs'],
 };
 
 export default story;
