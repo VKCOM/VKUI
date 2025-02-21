@@ -1,16 +1,17 @@
-import type { MDXComponents } from 'nextra/mdx';
+import type { MDXComponents } from 'nextra/mdx-components';
+import { useMDXComponents as getNextraComponents } from 'nextra/mdx-components';
 import { Anchor } from '../components';
-import { type DocsThemeConfig } from '../types';
 import { Callout } from './Callout/Callout';
 import { Code } from './Code/Code';
+import { H1 } from './H1';
 import { HeadingLink } from './HeadingLink/HeadingLink';
 import { Main } from './Main/Main';
 import { Overview } from './Overview/Overview';
 import { Pre } from './Pre/Pre';
 import styles from './index.module.css';
 
-const DEFAULT_COMPONENTS: MDXComponents = {
-  h1: (props) => <h1 className={styles.h1} {...props} />,
+const DEFAULT_COMPONENTS = getNextraComponents({
+  h1: H1,
   h2: (props) => <HeadingLink Tag="h2" {...props} />,
   h3: (props) => <HeadingLink Tag="h3" {...props} />,
   h4: (props) => <HeadingLink Tag="h4" {...props} />,
@@ -29,9 +30,9 @@ const DEFAULT_COMPONENTS: MDXComponents = {
   wrapper: Main,
   Overview,
   Callout,
-};
+});
 
-export const getMdxComponents = (components: DocsThemeConfig['components']): MDXComponents => {
+export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
   return {
     ...DEFAULT_COMPONENTS,
     ...components,

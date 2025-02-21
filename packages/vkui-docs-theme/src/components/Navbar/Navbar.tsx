@@ -1,7 +1,10 @@
+'use client';
+
 import * as React from 'react';
 import { Icon24MenuOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import {
+  AdaptivityProvider,
   ButtonGroup,
   Flex,
   Headline,
@@ -12,81 +15,88 @@ import {
 } from '@vkontakte/vkui';
 import NextLink from 'next/link';
 import { useFSRoute } from 'nextra/hooks';
-import type { PageItem } from 'nextra/normalize-pages';
-import { useMenu, useThemeConfig } from '../../contexts';
-import { renderComponent } from '../../helpers/render';
-import { type DocsThemeConfig } from '../../types';
+import type { MenuItem, PageItem } from 'nextra/normalize-pages';
+import { useConfig, useMenu, useThemeConfig } from '../../contexts';
 import { ColorSchemeSwitch } from '../ColorSchemeSwitch';
 import { ProjectButton } from '../ProjectButton';
 import styles from './Navbar.module.css';
 
 export type NavbarProps = {
-  items: PageItem[];
+  /**
+   * Лого документации
+   */
+  logo: React.ReactElement;
 };
 
-export function Navbar({ items }: NavbarProps): React.ReactElement {
+const isMenu = (page: PageItem | MenuItem): page is MenuItem => page.type === 'menu';
+
+export function Navbar({ logo }: NavbarProps): React.ReactElement {
   const themeConfig = useThemeConfig();
   const activeRoute = useFSRoute();
   const { setMenu } = useMenu();
+  const {
+    normalizePagesResult: { topLevelNavbarItems: items },
+  } = useConfig();
 
   return (
     <div className={styles.root}>
       <nav className={styles.navbar}>
         <Flex align="center" gap="2xl">
-          {themeConfig.logoLink ? (
-            <Logo logo={themeConfig.logo} logoLink={themeConfig.logoLink} />
-          ) : (
-            renderComponent(themeConfig.logo)
-          )}
-          {renderComponent(themeConfig.search.component, {
-            className: styles.search,
-          })}
+          <Tappable
+            Component={NextLink}
+            className={styles.logo}
+            hoverMode="opacity"
+            activeMode="opacity"
+            href="/"
+          >
+            {logo}
+          </Tappable>
+          <div className={styles.search}>{themeConfig.search}</div>
         </Flex>
         <div className={classNames(styles.links)}>
           {items.map((page, index) => {
-            if (page.display === 'hidden') {
+            if (('display' in page && page.display === 'hidden') || isMenu(page)) {
               return null;
             }
 
             let href = page.href || page.route || '#';
 
             if (page.children) {
-              href = (page.withIndexPage ? page.route : page.firstChildRoute) || href;
+              href = ('frontMatter' in page ? page.route : page.firstChildRoute) || href;
             }
 
             const isActive =
-              (page.route === activeRoute || activeRoute.startsWith(page.route + '/')) &&
-              !page.newWindow;
+              href === activeRoute ||
+              (activeRoute.startsWith(page.route + '/') &&
+                items.every((item) => !('href' in item) || item.href !== activeRoute)) ||
+              undefined;
 
             return (
               <React.Fragment key={href}>
                 {index === items.length - 1 && <Separator />}
-                <NavBarLink
-                  title={page.title}
-                  newWindow={page.newWindow}
-                  href={href}
-                  activated={isActive || undefined}
-                />
+                <NavBarLink title={page.title} href={href} activated={isActive || undefined} />
                 {index === 0 && <Separator />}
               </React.Fragment>
             );
           })}
         </div>
-        <Flex align="center" gap="m">
-          <div className={styles.extraContent}>
-            <ButtonGroup gap="s">
-              {renderComponent(themeConfig.navbar.extraButtons)}
-              {themeConfig.project.link ? (
-                <ProjectButton icon={themeConfig.project.icon} link={themeConfig.project.link} />
-              ) : null}
-            </ButtonGroup>
-            {renderComponent(themeConfig.navbar.versions)}
-          </div>
-          <ColorSchemeSwitch />
-          <IconButton className={styles.menuButton} onClick={() => setMenu(true)} label="Меню">
-            <Icon24MenuOutline className={styles.menuIcon} />
-          </IconButton>
-        </Flex>
+        <AdaptivityProvider sizeY="compact">
+          <Flex align="center" gap="m">
+            <div className={styles.extraContent}>
+              <ButtonGroup gap="s">
+                {themeConfig.extraButtons}
+                {themeConfig.projectLink ? (
+                  <ProjectButton projectLink={themeConfig.projectLink} />
+                ) : null}
+              </ButtonGroup>
+              {themeConfig.versions}
+            </div>
+            <ColorSchemeSwitch />
+            <IconButton className={styles.menuButton} onClick={() => setMenu(true)} label="Меню">
+              <Icon24MenuOutline className={styles.menuIcon} />
+            </IconButton>
+          </Flex>
+        </AdaptivityProvider>
       </nav>
     </div>
   );
@@ -94,11 +104,13 @@ export function Navbar({ items }: NavbarProps): React.ReactElement {
 
 function NavBarLink({
   title,
-  newWindow,
+  href = '',
   ...restProps
 }: TappableProps & { title: PageItem['title']; newWindow?: boolean }) {
+  const newWindow = /^https?:\/\//.test(href);
   return (
     <Tappable
+      href={href}
       Component={NextLink}
       className={styles.navbarLink}
       activeClassName={styles.navbarLinkActive}
@@ -106,20 +118,6 @@ function NavBarLink({
       {...restProps}
     >
       <Headline level="2">{title}</Headline>
-    </Tappable>
-  );
-}
-
-function Logo({ logo, logoLink }: Pick<DocsThemeConfig, 'logo' | 'logoLink'>) {
-  return (
-    <Tappable
-      Component={NextLink}
-      hoverMode="opacity"
-      activeMode="opacity"
-      href={typeof logoLink === 'string' ? logoLink : '/'}
-      className={styles.logoLink}
-    >
-      {renderComponent(logo)}
     </Tappable>
   );
 }

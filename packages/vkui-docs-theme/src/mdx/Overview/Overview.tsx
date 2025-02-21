@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Button, ButtonGroup, ColorSchemeProvider } from '@vkontakte/vkui';
 import { FigmaIcon, GithubIcon, StorybookIcon } from '../../icons';
