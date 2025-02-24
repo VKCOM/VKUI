@@ -1263,12 +1263,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-localematcher@npm:^0.5.4":
-  version: 0.5.9
-  resolution: "@formatjs/intl-localematcher@npm:0.5.9"
+"@formatjs/intl-localematcher@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@formatjs/intl-localematcher@npm:0.6.0"
   dependencies:
     tslib: "npm:2"
-  checksum: 10/79b0009dc997dab90619bc0c1405bc541c288eeac10eb5f1aef8d6526611fca71de789a4b62efe781c0c2ccafba9f0a1da4088af436b84e439681df9cd657d7c
+  checksum: 10/d8fd984c14121949d0ba60732a096aed6dccb2ab93770c4bffaea1170c85f5639d2a71fe6e2c68ab62bf6f3583a9c4b1fcd11bd5fb8837bfb2582228c33398c1
   languageName: node
   linkType: hard
 
@@ -2676,7 +2676,7 @@ __metadata:
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
     next: "npm:^15.1.7"
-    nextra: "npm:^4.2.4"
+    nextra: "npm:^4.2.13"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     typescript: "npm:*"
@@ -5540,12 +5540,12 @@ __metadata:
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.60.0"
     next: "npm:^15.1.7"
-    nextra: "npm:^4.2.4"
+    nextra: "npm:^4.2.13"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
   peerDependencies:
     next: ^15.1.7
-    nextra: ^4.2.4
+    nextra: ^4.2.13
     react: ^18.3.1
     react-dom: ^18.3.1
   languageName: unknown
@@ -15708,11 +15708,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nextra@npm:^4.2.4":
-  version: 4.2.4
-  resolution: "nextra@npm:4.2.4"
+"nextra@npm:^4.2.13":
+  version: 4.2.13
+  resolution: "nextra@npm:4.2.13"
   dependencies:
-    "@formatjs/intl-localematcher": "npm:^0.5.4"
+    "@formatjs/intl-localematcher": "npm:^0.6.0"
     "@headlessui/react": "npm:^2.1.2"
     "@mdx-js/mdx": "npm:^3.0.0"
     "@napi-rs/simple-git": "npm:^0.1.9"
@@ -15754,7 +15754,7 @@ __metadata:
     next: ">=14"
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10/b76110ece92de434cd212c15877546780139ba730b0739f94d4e7235ea66450a28a0ea8f9d06e037e0f3b3804218e61f935246ee69215212106fb1251694449a
+  checksum: 10/c72a94ca6bc8529f68ea118c2ac174e84ae293f6b3de2a6dd3aed225b9803f2e8bee2cac023f62a958b17916be702f5bffd347661e65e326162cac0ae9243afc
   languageName: node
   linkType: hard
 
