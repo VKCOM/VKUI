@@ -3,8 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useDirection } from '../../hooks/useDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -38,9 +37,8 @@ export const Switch = ({
   onClick,
   ...restProps
 }: SwitchProps): React.ReactNode => {
-  const [directionRef, textDirection = 'ltr'] = useDirection<HTMLLabelElement>();
-  const isRtl = textDirection === 'rtl';
-  const rootRef = useExternRef<HTMLLabelElement>(getRootRef, directionRef);
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
@@ -96,7 +94,7 @@ export const Switch = ({
         className,
       )}
       style={style}
-      ref={rootRef}
+      ref={getRootRef}
     >
       <VisuallyHidden
         {...inputProps}

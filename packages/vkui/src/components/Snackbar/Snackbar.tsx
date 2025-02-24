@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useDirection } from '../../hooks/useDirection';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
@@ -105,10 +105,10 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const [open, setOpen] = React.useState(true);
   const [touched, setTouched] = React.useState(false);
 
-  const [directionRef, textDirection = 'ltr'] = useDirection();
-  const isRtl = textDirection === 'rtl';
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
 
-  const rootRef = useExternRef(getRootRef, directionRef);
+  const rootRef = useExternRef(getRootRef);
   const focused = useFocusWithin(rootRef);
   const inRef = React.useRef<HTMLDivElement>(null);
   const panGestureRecognizer = React.useRef<UIPanGestureRecognizer | null>(null);

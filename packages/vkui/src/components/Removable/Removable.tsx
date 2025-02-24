@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { useDirection } from '../../hooks/useDirection';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTextFromChildren } from '../../lib/children';
@@ -55,8 +55,8 @@ const RemovableIos = ({
   removeButtonTestId,
   disabled,
 }: RemovableIosOwnProps) => {
-  const [directionRef, textDirection = 'ltr'] = useDirection<HTMLDivElement>();
-  const isRtl = textDirection === 'rtl';
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
   const { window } = useDOM();
 
   const removeButtonRef = React.useRef<HTMLElement>(null);
@@ -101,7 +101,6 @@ const RemovableIos = ({
       className={classNames(styles.content, isRtl && styles.rtl, 'vkuiInternalRemovable__content')}
       style={style}
       onTransitionEnd={onRemoveTransitionEnd}
-      ref={directionRef}
     >
       <IconButton
         hasActive={false}

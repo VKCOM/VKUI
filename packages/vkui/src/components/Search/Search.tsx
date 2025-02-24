@@ -6,7 +6,7 @@ import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { useBooleanState } from '../../hooks/useBooleanState';
-import { useDirection } from '../../hooks/useDirection';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -76,9 +76,8 @@ export const Search = ({
   onFindButtonClick,
   ...inputProps
 }: SearchProps): React.ReactNode => {
-  const [directionRef, textDirection = 'ltr'] = useDirection<HTMLDivElement>();
-  const isRtl = textDirection === 'rtl';
-  const rootRef = useExternRef(directionRef, getRootRef);
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
   const inputRef = useExternRef(getRef);
   const {
     value: isFocused,
@@ -179,7 +178,7 @@ export const Search = ({
         isRtl && styles.rtl,
         className,
       )}
-      ref={rootRef}
+      ref={getRootRef}
       style={style}
     >
       <div className={styles.field}>
