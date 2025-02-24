@@ -3235,37 +3235,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@size-limit/file@npm:^11.1.6":
-  version: 11.1.6
-  resolution: "@size-limit/file@npm:11.1.6"
+"@size-limit/file@npm:^11.2.0":
+  version: 11.2.0
+  resolution: "@size-limit/file@npm:11.2.0"
   peerDependencies:
-    size-limit: 11.1.6
-  checksum: 10/5d26178cb9488d4ec8446c4cfee770a48450755636984ce0748255e3782555cf0a7cd944f879ad3dc5e661e6b57b0996b0feead72a73596b8d13aef6d2a0bfcf
+    size-limit: 11.2.0
+  checksum: 10/0802fddafe68c29268feb683a0b9d41dabe29d39278ddf704674d62485e1ea23743e88a435517dea6553da148e559d2537f3c459f9f7c92fd838563b2e97b3cf
   languageName: node
   linkType: hard
 
-"@size-limit/webpack-css@npm:^11.1.6":
-  version: 11.1.6
-  resolution: "@size-limit/webpack-css@npm:11.1.6"
+"@size-limit/webpack-css@npm:^11.2.0":
+  version: 11.2.0
+  resolution: "@size-limit/webpack-css@npm:11.2.0"
   dependencies:
     css-loader: "npm:^7.1.2"
     css-minimizer-webpack-plugin: "npm:^7.0.0"
     style-loader: "npm:^4.0.0"
   peerDependencies:
-    size-limit: 11.1.6
-  checksum: 10/4ac0d8e5fb963672df25ee00a3302841e12b48d3261c03e82fec97b23f9c00e41de59e0178174425d3ae424e1f56eed4d06dc2b5b07b7aad66128dd1a6e9864b
+    size-limit: 11.2.0
+  checksum: 10/4e621c68e2eb176b3ed6ebaf223d8b92ce8655f0823fcd32a3c04dfbd5613f91be228801554404657c4d88a09cf3a726842691e7c09431f31b9c633e550a2e06
   languageName: node
   linkType: hard
 
-"@size-limit/webpack@npm:^11.1.6":
-  version: 11.1.6
-  resolution: "@size-limit/webpack@npm:11.1.6"
+"@size-limit/webpack@npm:^11.2.0":
+  version: 11.2.0
+  resolution: "@size-limit/webpack@npm:11.2.0"
   dependencies:
-    nanoid: "npm:^5.0.7"
-    webpack: "npm:^5.95.0"
+    nanoid: "npm:^5.1.0"
+    webpack: "npm:^5.98.0"
   peerDependencies:
-    size-limit: 11.1.6
-  checksum: 10/33b06520934a2759e9bea8b3be19d91eb5b3ac504dc4fe6b1fc6f101c8274832fcc4bce5f7606d2c2aab7fe70ca6f1439567811671069ae72a4b6f1e054b2071
+    size-limit: 11.2.0
+  checksum: 10/7c7e25ffbdf097973c1fb7f50a706a8fb3e407223eb6e35caa36b90d2057ccb17a9269243ea46b0bd9db0183a4f9cc194849f5facd19701437b24fdf101a6573
   languageName: node
   linkType: hard
 
@@ -5722,9 +5722,9 @@ __metadata:
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
     "@rspack/cli": "npm:^v1.2.5"
     "@rspack/core": "npm:^v1.2.5"
-    "@size-limit/file": "npm:^11.1.6"
-    "@size-limit/webpack": "npm:^11.1.6"
-    "@size-limit/webpack-css": "npm:^11.1.6"
+    "@size-limit/file": "npm:^11.2.0"
+    "@size-limit/webpack": "npm:^11.2.0"
+    "@size-limit/webpack-css": "npm:^11.2.0"
     "@storybook/addon-console": "npm:^3.0.0"
     "@swc/cli": "npm:^0.6.0"
     "@swc/core": "npm:1.10.18"
@@ -5788,7 +5788,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     semver: "npm:^7.7.1"
     shx: "npm:^0.3.4"
-    size-limit: "npm:^11.1.6"
+    size-limit: "npm:^11.2.0"
     style-loader: "npm:^4.0.0"
     stylelint: "npm:^16.14.1"
     stylelint-config-recess-order: "npm:^6.0.0"
@@ -7476,12 +7476,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^4.0.0, chokidar@npm:^4.0.1":
+"chokidar@npm:^4.0.0":
   version: 4.0.1
   resolution: "chokidar@npm:4.0.1"
   dependencies:
     readdirp: "npm:^4.0.1"
   checksum: 10/62749d2173a60cc5632d6c6e0b7024f33aadce47b06d02e55ad03c7b8daaaf2fc85d4296c047473d04387fd992dab9384cc5263c70a3dc3018b7ebecfb5b5217
+  languageName: node
+  linkType: hard
+
+"chokidar@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "chokidar@npm:4.0.3"
+  dependencies:
+    readdirp: "npm:^4.0.1"
+  checksum: 10/bf2a575ea5596000e88f5db95461a9d59ad2047e939d5a4aac59dd472d126be8f1c1ff3c7654b477cf532d18f42a97279ef80ee847972fd2a25410bf00b80b59
   languageName: node
   linkType: hard
 
@@ -10734,15 +10743,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fdir@npm:^6.4.2":
-  version: 6.4.2
-  resolution: "fdir@npm:6.4.2"
+"fdir@npm:^6.4.3":
+  version: 6.4.3
+  resolution: "fdir@npm:6.4.3"
   peerDependencies:
     picomatch: ^3 || ^4
   peerDependenciesMeta:
     picomatch:
       optional: true
-  checksum: 10/5ff80d1d2034e75cc68be175401c9f64c4938a6b2c1e9a0c27f2d211ffbe491fd86d29e4576825d9da8aff9bd465f0283427c2dddc11653457906c46d3bbc448
+  checksum: 10/8e6d20f4590dc168de1374a9cadaa37e20ca6e0b822aa247c230e7ea1d9e9674a68cd816146435e4ecc98f9285091462ab7e5e56eebc9510931a1794e4db68b2
   languageName: node
   linkType: hard
 
@@ -13629,12 +13638,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^2.0.0":
-  version: 2.4.0
-  resolution: "jiti@npm:2.4.0"
+"jiti@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "jiti@npm:2.4.2"
   bin:
     jiti: lib/jiti-cli.mjs
-  checksum: 10/10aa999a4f9bccc82b1dab9ebaf4484a8770450883c1bf7fafc07f8fca1e417fd8e7731e651337d1060c9e2ff3f97362dcdfd27e86d1f385db97f4adf7b5a21d
+  checksum: 10/e2b07eb2e3fbb245e29ad288dddecab31804967fc84d5e01d39858997d2743b5e248946defcecf99272275a00284ecaf7ec88b8c841331324f0c946d8274414b
   languageName: node
   linkType: hard
 
@@ -15707,21 +15716,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^5.0.7":
-  version: 5.1.0
-  resolution: "nanoid@npm:5.1.0"
+"nanoid@npm:^5.1.0":
+  version: 5.1.2
+  resolution: "nanoid@npm:5.1.2"
   bin:
     nanoid: bin/nanoid.js
-  checksum: 10/753a25383a33e024ba41ef6bcf49c9750ea49af67c08e81235fb9048182af43f1f6c7c0dbf9d7c2abfb11a781916000c225532f593368153a6289c6997fe6b5e
+  checksum: 10/ada00d1a3f43ac037d2d9cb96fc33e60d8d522f5451a0b02d6d13548b534df1ba797f4d86cc821ad892b6761650b34f1c979bf5577295c2046b7d7b34b59f48e
   languageName: node
   linkType: hard
 
-"nanospinner@npm:^1.1.0":
-  version: 1.2.0
-  resolution: "nanospinner@npm:1.2.0"
+"nanospinner@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "nanospinner@npm:1.2.2"
   dependencies:
     picocolors: "npm:^1.1.1"
-  checksum: 10/083db6e33e6b33646af11debb53b8bb8970ade6a83899725f9aa42610cdadd7c1cd759f0efb047ec8c1d81ef2001365af294864a87c97d17a050e823ed4208bb
+  checksum: 10/40ed63364c95b58806a9989b16af8728fdb57d19a8bf05e643542a0c64b184df29435308a07a618af48817f22850dc1ef5827724c226047cab7e70bd22705a0e
   languageName: node
   linkType: hard
 
@@ -19430,20 +19439,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"size-limit@npm:^11.1.6":
-  version: 11.1.6
-  resolution: "size-limit@npm:11.1.6"
+"size-limit@npm:^11.2.0":
+  version: 11.2.0
+  resolution: "size-limit@npm:11.2.0"
   dependencies:
     bytes-iec: "npm:^3.1.1"
-    chokidar: "npm:^4.0.1"
-    jiti: "npm:^2.0.0"
-    lilconfig: "npm:^3.1.2"
-    nanospinner: "npm:^1.1.0"
-    picocolors: "npm:^1.1.0"
-    tinyglobby: "npm:^0.2.7"
+    chokidar: "npm:^4.0.3"
+    jiti: "npm:^2.4.2"
+    lilconfig: "npm:^3.1.3"
+    nanospinner: "npm:^1.2.2"
+    picocolors: "npm:^1.1.1"
+    tinyglobby: "npm:^0.2.11"
   bin:
     size-limit: bin.js
-  checksum: 10/e2d6ef5b9cf84b5f4ddf69a7fd16ce505dea024a71f7e46b9656d588b878e2e0e2527a4b6d8fba8541a90244391faf7fbcb957b8c8cb3e4bfd12963814da3799
+  checksum: 10/76c81693783a51621bca7a359777f8028f21ee1b77be8008768757d3f40bd8b6d173206b9c003d47e73b326090af9c05022d74004651f4a8e0895b3001c242e2
   languageName: node
   linkType: hard
 
@@ -20551,13 +20560,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.7":
-  version: 0.2.10
-  resolution: "tinyglobby@npm:0.2.10"
+"tinyglobby@npm:^0.2.11":
+  version: 0.2.12
+  resolution: "tinyglobby@npm:0.2.12"
   dependencies:
-    fdir: "npm:^6.4.2"
+    fdir: "npm:^6.4.3"
     picomatch: "npm:^4.0.2"
-  checksum: 10/10c976866d849702edc47fc3fef27d63f074c40f75ef17171ecc1452967900699fa1e62373681dd58e673ddff2e3f6094bcd0a2101e3e4b30f4c2b9da41397f2
+  checksum: 10/4ad28701fa9118b32ef0e27f409e0a6c5741e8b02286d50425c1f6f71e6d6c6ded9dd5bbbbb714784b08623c4ec4d150151f1d3d996cfabe0495f908ab4f7002
   languageName: node
   linkType: hard
 
@@ -21948,7 +21957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.95.0, webpack@npm:^5.98.0":
+"webpack@npm:5, webpack@npm:^5, webpack@npm:^5.98.0":
   version: 5.98.0
   resolution: "webpack@npm:5.98.0"
   dependencies:
