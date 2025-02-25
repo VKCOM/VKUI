@@ -39,10 +39,10 @@ export const Playground: Story = {
 export const AccessibleHorizontalSegmeted: Story = {
   render: (args) => (
     <FormLayoutGroup mode="horizontal" segmented {...args}>
-      <VisuallyHidden Component="label" htmlFor="nikname-id">
-        Никнейм или имя
-      </VisuallyHidden>
       <FormItem>
+        <VisuallyHidden Component="label" htmlFor="nikname-id">
+          Никнейм или имя
+        </VisuallyHidden>
         <Input id="nickname-id" placeholder="Никнейм или имя" />
       </FormItem>
       <FormItem>

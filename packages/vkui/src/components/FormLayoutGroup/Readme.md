@@ -9,15 +9,15 @@
 
 ### Сегментированный дизайн, где лейблы визуально лежат в плейсхолдерах инпутов
 
-Если по дизайну требуется использовать сегментированный режим `segmented`, где все поля слиты вместе и отделяются вертикальным разделителем, при этом над полями нету текста (лэйблов), то есть нельзя использовать свойства `htmlFor` и `top` у [FormItem](#!/FormItem) для связывания инпутов и лэйблов, то стоит добавить скрытые лэйблы, используя сервисный компонент [VisuallyHidden](#!/VisuallyHidden) и связать их с инпутами через `id` и `htmlFor` дублируя текс плейсхолдера.
+Если по дизайну требуется использовать сегментированный режим `segmented`, где все поля слиты вместе и отделяются вертикальным разделителем, при этом над полями нету текста (лэйблов), то есть нельзя использовать свойства `htmlFor` и `top` у [FormItem](#!/FormItem) для связывания инпутов и лэйблов, то стоит добавить скрытые лэйблы, используя сервисный компонент [VisuallyHidden](#!/VisuallyHidden) и связать их с инпутами через `id` и `htmlFor` дублируя текст плейсхолдера.
 Живой пример ниже.
 
 ```jsx static
 <FormLayoutGroup mode="horizontal" segmented>
-  <VisuallyHidden Component="label" htmlFor="nickname-id">
-    Никнейм или имя
-  </VisuallyHidden>
   <FormItem>
+    <VisuallyHidden Component="label" htmlFor="nickname-id">
+      Никнейм или имя
+    </VisuallyHidden>
     <Input id="nickname-id" placeholder="Никнейм или имя" />
   </FormItem>
   <FormItem>
@@ -114,10 +114,10 @@ const Example = () => {
           }
         >
           <FormLayoutGroup mode="horizontal" segmented>
-            <VisuallyHidden Component="label" htmlFor="nickname-id">
-              Никнейм или имя
-            </VisuallyHidden>
             <FormItem>
+              <VisuallyHidden Component="label" htmlFor="nickname-id">
+                Никнейм или имя
+              </VisuallyHidden>
               <Input id="nickname-id" placeholder="Никнейм или имя" />
             </FormItem>
             <FormItem>
