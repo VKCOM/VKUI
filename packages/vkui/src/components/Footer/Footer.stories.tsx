@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
@@ -12,7 +13,7 @@ import { Footer, type FooterProps } from './Footer';
 const story: Meta<FooterProps> = {
   title: 'Blocks/Footer',
   component: Footer,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Footer', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

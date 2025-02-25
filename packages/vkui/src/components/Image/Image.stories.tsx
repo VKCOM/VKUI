@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Image, type ImageProps } from './Image';
 
 const story: Meta<ImageProps> = {
   title: 'Blocks/Image',
   component: Image,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Image', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     filter: {
       control: { type: 'select' },

@@ -7,6 +7,7 @@ import {
   IconExampleForOverlayBasedOnImageBaseSize,
 } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { imageBaseSizes } from '../ImageBase/types';
 import { Avatar, type AvatarProps } from './Avatar';
 
@@ -15,7 +16,7 @@ type AvatarStoryProps = AvatarProps & { badge: React.ReactNode; overlay: React.R
 const story: Meta<AvatarStoryProps> = {
   title: 'Blocks/Avatar',
   component: Avatar,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Avatar', CanvasFullLayout),
   argTypes: {
     size: {
       control: {

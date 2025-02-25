@@ -3,6 +3,7 @@ import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators'
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
@@ -13,7 +14,7 @@ import { RichCell, type RichCellProps } from './RichCell';
 const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
   title: 'Blocks/RichCell',
   component: RichCell,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('RichCell', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     overTitle: StringArg,
     subtitle: StringArg,

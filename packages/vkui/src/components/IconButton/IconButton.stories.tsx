@@ -2,12 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Icon16Delete } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { IconButton, type IconButtonProps } from './IconButton';
 
 const story: Meta<IconButtonProps> = {
   title: 'Blocks/IconButton',
   component: IconButton,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('IconButton', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

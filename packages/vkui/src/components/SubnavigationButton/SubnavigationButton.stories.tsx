@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { SubnavigationButton, type SubnavigationButtonProps } from './SubnavigationButton';
@@ -9,7 +10,7 @@ import { SubnavigationButton, type SubnavigationButtonProps } from './Subnavigat
 const story: Meta<SubnavigationButtonProps> = {
   title: 'Blocks/SubnavigationButton',
   component: SubnavigationButton,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('SubnavigationButton', CanvasFullLayout, DisableCartesianParam),
   args: {
     onClick: noop,
   },

@@ -1,12 +1,13 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
+import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { Footnote, type FootnoteProps } from './Footnote';
 
 const story: Meta<FootnoteProps> = {
   title: 'Typography/Footnote',
   component: Footnote,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Footnote', CanvasFullLayout),
   decorators: [withCartesian],
 };
 

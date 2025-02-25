@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { Alert, type AlertProps } from './Alert';
@@ -8,7 +9,7 @@ import { Alert, type AlertProps } from './Alert';
 const story: Meta<AlertProps> = {
   title: 'Popouts/Alert',
   component: Alert,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Alert', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;
