@@ -22,9 +22,9 @@ jobs:
 
       # Создаем кэш для ветки один раз
       - name: Checkout LFS objects
-        uses: ./.github/actions/lfs
+        uses: VKCOM/VKUI/.github/actions/lfs@master
 
-      - uses: ./.github/actions/get-playwright-docker-image
+      - uses: VKCOM/VKUI/.github/actions/get-playwright-docker-image@master
         id: result
 
   test_e2e:
@@ -47,10 +47,10 @@ jobs:
           ref: ${{ inputs.ref }}
 
       - name: Checkout LFS objects
-        uses: ./.github/actions/lfs
+        uses: VKCOM/VKUI/.github/actions/lfs@master
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500

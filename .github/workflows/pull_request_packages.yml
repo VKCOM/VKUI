@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Run Stylelint
         run: yarn run lint:style
@@ -67,7 +67,7 @@ jobs:
 
   test:
     name: Call reusable workflow
-    uses: ./.github/workflows/reusable_workflow_test.yml
+    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_test.yml@master
 
   test_report:
     if: ${{ !cancelled() && (success() || failure()) }}
@@ -87,7 +87,7 @@ jobs:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     needs: changed_files
     name: Call reusable workflow
-    uses: ./.github/workflows/reusable_workflow_test_e2e.yml
+    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_test_e2e.yml@master
 
   test_e2e_prepare_and_upload_report:
     if: ${{ !cancelled() && (success() || failure()) }}
@@ -99,7 +99,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Download Playwright blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
@@ -143,7 +143,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - uses: andresz1/size-limit-action@v1.8.0
         with:
@@ -165,7 +165,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Build
         run: yarn run docs:styleguide:build
@@ -186,7 +186,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Build
         run: yarn docs:storybook:build
@@ -207,7 +207,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: ./.github/actions/node-setup
+        uses: VKCOM/VKUI/.github/actions/node-setup@master
 
       - name: Build VKUI
         run: yarn build:vkui
@@ -215,7 +215,7 @@ jobs:
       - name: Build
         run: yarn docs:beta:build
         env:
-          VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/docs-beta
+          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/docs-beta
 
       - name: Upload dist
         uses: actions/upload-artifact@v4
@@ -230,7 +230,7 @@ jobs:
     # см. https://github.com/orgs/community/discussions/26303
     if: ${{ !cancelled() }}
     name: Call reusable workflow
-    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
+    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_pr_worfklow_payload.yml@master
     with:
       action: upload
 

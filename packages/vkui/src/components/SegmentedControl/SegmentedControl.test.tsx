@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, mockRtlDirection } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
+import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import {
   SegmentedControl,
   type SegmentedControlOptionInterface,
@@ -174,8 +175,6 @@ describe('SegmentedControl', () => {
   });
 
   describe('check rtl', () => {
-    mockRtlDirection();
-
     it('check rtl', () => {
       const options: SegmentedControlOptionInterface[] = [
         { label: 'vk', value: 'vk', id: 'vk' },
@@ -184,7 +183,9 @@ describe('SegmentedControl', () => {
       ];
 
       const SegmentedControlTabsTest = (props: Omit<SegmentedControlProps, 'options' | 'role'>) => (
-        <SegmentedControl data-testid="ctrl" {...props} role="radiogroup" options={options} />
+        <DirectionProvider value="rtl">
+          <SegmentedControl data-testid="ctrl" {...props} role="radiogroup" options={options} />
+        </DirectionProvider>
       );
       render(<SegmentedControlTabsTest />);
       expect(ctrl()).toHaveClass(styles.rtl);

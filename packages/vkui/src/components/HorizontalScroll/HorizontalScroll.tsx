@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { useDirection } from '../../hooks/useDirection';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -197,7 +197,6 @@ export const HorizontalScroll = ({
   scrollOnAnyWheel = false,
   prevButtonTestId,
   nextButtonTestId,
-  getRootRef,
   // ContentWrapper
   ContentWrapperComponent = 'div',
   contentWrapperRef,
@@ -206,15 +205,12 @@ export const HorizontalScroll = ({
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollStart, setCanScrollStart] = React.useState(false);
   const [canScrollEnd, setCanScrollEnd] = React.useState(false);
-  const [directionRef, textDirection] = useDirection<HTMLDivElement>();
-  const direction = textDirection || 'ltr';
+  const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
 
   const isCustomScrollingRef = React.useRef(false);
 
   const scrollerRef = useExternRef(getRef);
-
-  const rootRef = useExternRef(getRootRef, directionRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
@@ -273,31 +269,40 @@ export const HorizontalScroll = ({
 
   useIsomorphicLayoutEffect(
     function addWheelEventHandler() {
-      if (!rootRef.current) {
+      const scrollEl = scrollerRef.current;
+      if (!scrollEl) {
         return noop;
       }
       /**
        * Прокрутка с помощью любого колеса мыши
        */
       const onWheel = (e: WheelEvent) => {
-        const left = e.deltaX + (scrollOnAnyWheel ? e.deltaY : 0);
-        scrollerRef.current!.scrollBy({ left, behavior: 'auto' });
-        if (e.deltaY && scrollOnAnyWheel) {
-          e.preventDefault();
-        }
+        scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
+        e.preventDefault();
       };
+
       const listenerOptions = { passive: false };
-      rootRef.current?.addEventListener('wheel', onWheel, listenerOptions);
-      // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
-      return () => rootRef.current?.removeEventListener('wheel', onWheel, listenerOptions);
+
+      if (scrollOnAnyWheel) {
+        scrollEl.addEventListener('wheel', onWheel, listenerOptions);
+      }
+      scrollEl.addEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+
+      return () => {
+        if (scrollOnAnyWheel) {
+          // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
+          scrollEl.removeEventListener('wheel', onWheel, listenerOptions);
+        }
+        // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для scroll нет passive свойства
+        scrollEl.removeEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+      };
     },
-    [rootRef, scrollOnAnyWheel, scrollerRef],
+    [scrollOnAnyWheel, calculateArrowsVisibility, scrollerRef],
   );
 
   return (
     <RootComponent
       {...restProps}
-      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalHorizontalScroll',
@@ -330,7 +335,7 @@ export const HorizontalScroll = ({
           onClick={scrollToEnd}
         />
       )}
-      <div className={styles.in} ref={scrollerRef} onScroll={calculateArrowsVisibility}>
+      <div className={styles.in} ref={scrollerRef}>
         <ContentWrapperComponent
           className={classNames(styles.inWrapper, contentWrapperClassName)}
           ref={contentWrapperRef}

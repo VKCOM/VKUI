@@ -43,7 +43,7 @@ export const GalleryPlayground = (props: ComponentPlaygroundProps) => {
           align: ['center', 'left'],
           bullets: ['light', 'dark', false],
           slideWidth: ['90%', '100%'],
-          dir: ['ltr', 'rtl'],
+          $direction: true,
         },
       ]}
     >

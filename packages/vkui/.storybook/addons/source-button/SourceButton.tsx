@@ -1,26 +1,26 @@
 import { IconButton } from '@storybook/components';
-import { useStorybookState } from '@storybook/manager-api';
+import { useGlobals, useStorybookState } from '@storybook/manager-api';
 import { GithubIcon } from '@storybook/icons';
 import * as React from 'react';
-import { BASE_COMPONENTS_URL } from './constants';
 
-const getComponentUrl = (importPath: string): string => {
+const getComponentUrl = (repositoryUrl: string, importPath: string): string => {
   const pathWithoutFile = importPath.replace(/\/[^/]+\.stories\.tsx$/, '');
   const cleanPath = pathWithoutFile.replace(/^\.\//, '');
-  return `${BASE_COMPONENTS_URL}/${cleanPath}/`;
+  return `${repositoryUrl}/${cleanPath}/`;
 };
 
 export const SourceButton = () => {
   const { index, storyId } = useStorybookState();
+  const [globals] = useGlobals();
 
   const story = index?.[storyId];
   const importPath = story && 'importPath' in story && story.importPath;
 
-  if (!importPath) {
+  if (!importPath || !globals.componentsSourceBaseUrl) {
     return null;
   }
 
-  const sourceUrl = getComponentUrl(importPath);
+  const sourceUrl = getComponentUrl(globals.componentsSourceBaseUrl, importPath);
 
   return (
     <a href={sourceUrl} target="_blank" rel="noreferrer">

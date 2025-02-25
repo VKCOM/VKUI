@@ -32,7 +32,7 @@ export const UsersStackPlayground = (props: ComponentPlaygroundProps) => {
           photos: [threeImage],
         },
         {
-          dir: ['rtl'],
+          $direction: true,
           children: ['Понравилось Анне и ещё XX людям'],
           size: ['s', 'm', 'l'],
           photos: [threeImage, fourImage],

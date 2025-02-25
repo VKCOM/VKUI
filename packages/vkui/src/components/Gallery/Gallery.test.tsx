@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, mockRtlDirection, setNodeEnv } from '../../testing/utils';
+import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../CarouselBase/constants';
 import { revertRtlValue } from '../CarouselBase/helpers';
 import { type BaseGalleryProps } from '../CarouselBase/types';
+import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { Gallery } from './Gallery';
 
 const mockRAF = () => {
@@ -160,33 +161,34 @@ const setup = ({
   };
 
   const Fixture = ({ slideIndex }: { slideIndex: number }) => (
-    <Gallery
-      looped={looped}
-      showArrows
-      align={align}
-      slideIndex={slideIndex}
-      onChange={onChange}
-      onNextClick={onNext}
-      onPrevClick={onPrev}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      bullets="light"
-      resizeSource={resizeSource}
-      slideWidth={isCustomSlideWidth ? 'custom' : undefined}
-      getRootRef={mockContainerData}
-      getRef={mockViewportData}
-      slideTestId={(index) => `slide-${index + 1}`}
-      bulletTestId={(index, active) => (active ? `bullet-${index}-active` : `bullet-${index}`)}
-      prevArrowTestId="prev-arrow"
-      nextArrowTestId="next-arrow"
-      dir={isRtl ? 'rtl' : 'ltr'}
-    >
-      {Array.from({ length: numberOfSlides }).map((_v, index) => (
-        <Slide key={index} getRef={(e: HTMLDivElement) => mockSlideData(e, index)}>
-          {index + 1}
-        </Slide>
-      ))}
-    </Gallery>
+    <DirectionProvider value={isRtl ? 'rtl' : 'ltr'}>
+      <Gallery
+        looped={looped}
+        showArrows
+        align={align}
+        slideIndex={slideIndex}
+        onChange={onChange}
+        onNextClick={onNext}
+        onPrevClick={onPrev}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        bullets="light"
+        resizeSource={resizeSource}
+        slideWidth={isCustomSlideWidth ? 'custom' : undefined}
+        getRootRef={mockContainerData}
+        getRef={mockViewportData}
+        slideTestId={(index) => `slide-${index + 1}`}
+        bulletTestId={(index, active) => (active ? `bullet-${index}-active` : `bullet-${index}`)}
+        prevArrowTestId="prev-arrow"
+        nextArrowTestId="next-arrow"
+      >
+        {Array.from({ length: numberOfSlides }).map((_v, index) => (
+          <Slide key={index} getRef={(e: HTMLDivElement) => mockSlideData(e, index)}>
+            {index + 1}
+          </Slide>
+        ))}
+      </Gallery>
+    </DirectionProvider>
   );
 
   const component = render(<Fixture slideIndex={defaultSlideIndex} />);
@@ -766,8 +768,6 @@ describe('Gallery', () => {
   });
 
   describe('check correct working with rtl direction', () => {
-    mockRtlDirection();
-
     it('check max and min restrictions', () => {
       const onChange = jest.fn();
       const onDragStart = jest.fn();

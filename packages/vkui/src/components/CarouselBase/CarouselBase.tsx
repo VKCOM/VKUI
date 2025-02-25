@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { useDirection } from '../../hooks/useDirection';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
@@ -71,10 +71,10 @@ export const CarouselBase = ({
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
   const slidesManager = React.useRef<SlidesManagerState>(SLIDES_MANAGER_STATE);
-  const [directionRef, textDirection = 'ltr'] = useDirection();
+  const textDirection = useConfigDirection();
   const isRtl = textDirection === 'rtl';
 
-  const rootRef = useExternRef(getRootRef, directionRef);
+  const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
   const layerRef = React.useRef<HTMLDivElement>(null);
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
@@ -397,12 +397,7 @@ export const CarouselBase = ({
 
   const simpleSlideChangePerform = () => {
     const { snaps } = slidesManager.current;
-    const startPoint = shiftXCurrentRef.current;
-    const endPoint = snaps[slideIndex];
-    const distance = endPoint - startPoint;
-    addToAnimationQueue(
-      getAnimateFunction((progress) => transformCssStyles(startPoint + distance * progress)),
-    );
+    requestTransform(snaps[slideIndex], true);
   };
 
   useIsomorphicLayoutEffect(

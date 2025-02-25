@@ -40,6 +40,43 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </ButtonGroup>,
           ],
           $adaptivity: 'y',
+          $componentStateHeight: {
+            android: 300,
+            ios: 300,
+            vkcom: 210,
+          },
+        },
+        {
+          before: [<Avatar size={48} key="48" />],
+          children: ['Михаил Лихачев'],
+          overTitle: ['Команда ВКонтакте, Санкт-Петербург'],
+          after: [
+            <RichCell.Icon key="icon">
+              <Icon24UserAddOutline />
+            </RichCell.Icon>,
+          ],
+          $componentStateHeight: {
+            android: 150,
+            ios: 150,
+            vkcom: 100,
+          },
+        },
+        {
+          before: [<Avatar size={24} key="24" />],
+          children: ['Михаил'],
+          after: [
+            withLabel(
+              <div style={{ maxWidth: 150 }}>Very very very very very very very long after</div>,
+              'Very long after',
+            ),
+          ],
+          beforeAlign: ['center', 'end'],
+          contentAlign: ['center', 'end'],
+          $componentStateHeight: {
+            android: 140,
+            ios: 140,
+            vkcom: 100,
+          },
         },
         {
           before: [<Avatar size={72} key="72" />],
@@ -69,28 +106,6 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           extraSubtitle: [longExtraSubtitle],
           after: [<Button key="After">Подписаться</Button>],
           afterAlign: ['start', 'center'],
-        },
-        {
-          before: [<Avatar size={48} key="48" />],
-          children: ['Михаил Лихачев'],
-          overTitle: ['Команда ВКонтакте, Санкт-Петербург'],
-          after: [
-            <RichCell.Icon key="icon">
-              <Icon24UserAddOutline />
-            </RichCell.Icon>,
-          ],
-        },
-        {
-          before: [<Avatar size={24} key="24" />],
-          children: ['Михаил'],
-          after: [
-            withLabel(
-              <div style={{ maxWidth: 150 }}>Very very very very very very very long after</div>,
-              'Very long after',
-            ),
-          ],
-          beforeAlign: ['center', 'end'],
-          contentAlign: ['center', 'end'],
         },
         // Проверяем, что при отсутствии after контент в основной части рястягивается на всю доступную ширину
         {

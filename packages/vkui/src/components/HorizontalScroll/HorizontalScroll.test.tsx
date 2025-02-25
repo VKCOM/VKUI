@@ -19,11 +19,6 @@ const setup = (element: HTMLElement, startScrollLeft = 0) => {
 
   jest.spyOn(element.firstElementChild!, 'scrollWidth', 'get').mockImplementation(() => 500);
 
-  // @ts-expect-error: TS2322 есть другой тип, но в компоненте он не используется
-  element.scrollBy = (options?: ScrollToOptions) => {
-    scrollLeft = scrollLeft + (options?.left || 0);
-  };
-
   return {
     get scrollLeft() {
       return scrollLeft;
@@ -194,39 +189,6 @@ describe('HorizontalScroll', () => {
     await waitFor(() => {
       expect(mockedData.scrollLeft).toBe(200);
     });
-  });
-
-  it('scroll by arrow', () => {
-    const ref: React.RefObject<HTMLDivElement | null> = {
-      current: null,
-    };
-    render(
-      <HorizontalScroll
-        getRef={ref}
-        data-testid="horizontal-scroll"
-        prevButtonTestId="scroll-arrow-left"
-        nextButtonTestId="scroll-arrow-right"
-      >
-        <div style={{ width: '1800px', height: '50px' }} />
-      </HorizontalScroll>,
-    );
-
-    const mockedData = setup(ref.current!, 50);
-
-    fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
-
-    const arrowLeft = screen.getByTestId('scroll-arrow-left');
-    const arrowRight = screen.getByTestId('scroll-arrow-right');
-
-    fireEvent.wheel(arrowRight, {
-      deltaX: 20,
-    });
-    expect(mockedData.scrollLeft).toBe(70);
-
-    fireEvent.wheel(arrowLeft, {
-      deltaX: 20,
-    });
-    expect(mockedData.scrollLeft).toBe(90);
   });
 
   describe('check rtl working', () => {
