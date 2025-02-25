@@ -31,7 +31,7 @@ export const HorizontalScrollMobilePlayground = (props: ComponentPlaygroundProps
         },
         {
           showArrows: ['always'],
-          dir: ['rtl'],
+          $direction: 'rtl',
           children: [items],
         },
       ]}

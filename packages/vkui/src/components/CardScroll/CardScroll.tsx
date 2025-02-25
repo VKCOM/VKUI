@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useDirection } from '../../hooks/useDirection';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useDOM } from '../../lib/dom';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { HorizontalScroll, type HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
@@ -45,13 +44,10 @@ export const CardScroll = ({
   CardsListComponent = 'ul',
   prevButtonTestId,
   nextButtonTestId,
-  getRootRef,
   ...restProps
 }: CardScrollProps): React.ReactNode => {
   const refContainer = React.useRef<HTMLDivElement>(null);
-  const [directionRef, textDirection] = useDirection<HTMLDivElement>();
-  const direction = textDirection || 'ltr';
-  const rootRef = useExternRef(directionRef, getRootRef);
+  const direction = useConfigDirection();
 
   const { window } = useDOM();
 
@@ -127,7 +123,6 @@ export const CardScroll = ({
   return (
     <RootComponent
       {...restProps}
-      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalCardScroll',

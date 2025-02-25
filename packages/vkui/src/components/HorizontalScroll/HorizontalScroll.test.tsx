@@ -2,8 +2,9 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, mockRtlDirection, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { HorizontalScroll } from './HorizontalScroll';
 
 const setup = (element: HTMLElement, startScrollLeft = 0) => {
@@ -192,22 +193,21 @@ describe('HorizontalScroll', () => {
   });
 
   describe('check rtl working', () => {
-    mockRtlDirection();
-
     it('click on arrows should change scrollLeft', async () => {
       const ref: React.RefObject<HTMLDivElement | null> = {
         current: null,
       };
       render(
-        <HorizontalScroll
-          getRef={ref}
-          data-testid="horizontal-scroll"
-          nextButtonTestId="next-scroll-arrow"
-          prevButtonTestId="prev-scroll-arrow"
-          dir="rtl"
-        >
-          <div style={{ width: '1800px', height: '50px' }} />
-        </HorizontalScroll>,
+        <DirectionProvider value="rtl">
+          <HorizontalScroll
+            getRef={ref}
+            data-testid="horizontal-scroll"
+            nextButtonTestId="next-scroll-arrow"
+            prevButtonTestId="prev-scroll-arrow"
+          >
+            <div style={{ width: '1800px', height: '50px' }} />
+          </HorizontalScroll>
+        </DirectionProvider>,
       );
 
       const mockedData = setup(ref.current!);

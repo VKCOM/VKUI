@@ -26,7 +26,7 @@ export const CardScrollPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           showArrows: ['always'],
-          dir: ['rtl'],
+          $direction: 'rtl',
         },
       ]}
     >

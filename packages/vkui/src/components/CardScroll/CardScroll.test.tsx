@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
+import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { CardScroll } from './CardScroll';
 import styles from './CardScroll.module.css';
 import horizontalScrollStyles from '../HorizontalScroll/HorizontalScroll.module.css';
@@ -36,7 +37,6 @@ const mockCardScrollData = (cardsCount: number, defaultScrollLeft = 50, isRtl = 
       return {
         ...originalGetComputedStyle(e),
         marginInlineEnd: '8px',
-        direction: isRtl ? 'rtl' : 'ltr',
         getPropertyValue: (property: string) => {
           if (property === '--vkui_internal--CardScroll_horizontal_padding') {
             return '12px';
@@ -58,19 +58,21 @@ const mockCardScrollData = (cardsCount: number, defaultScrollLeft = 50, isRtl = 
   };
 
   const { container } = render(
-    <CardScroll size="s" prevButtonTestId="ScrollArrowLeft" nextButtonTestId="ScrollArrowRight">
-      {Array.from({ length: cardsCount }).map((_, index) => (
-        <div
-          key={index}
-          data-testid={`card-${index}`}
-          ref={(element) => {
-            if (element) {
-              mockCard(element, index);
-            }
-          }}
-        ></div>
-      ))}
-    </CardScroll>,
+    <DirectionProvider value={isRtl ? 'rtl' : 'ltr'}>
+      <CardScroll size="s" prevButtonTestId="ScrollArrowLeft" nextButtonTestId="ScrollArrowRight">
+        {Array.from({ length: cardsCount }).map((_, index) => (
+          <div
+            key={index}
+            data-testid={`card-${index}`}
+            ref={(element) => {
+              if (element) {
+                mockCard(element, index);
+              }
+            }}
+          ></div>
+        ))}
+      </CardScroll>
+    </DirectionProvider>,
   );
 
   const cardScrollContainer = container.getElementsByClassName(styles.in)[0] as HTMLDivElement;
