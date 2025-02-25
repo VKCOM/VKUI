@@ -1,31 +1,13 @@
 import type { GetStaticPaths } from 'next';
-import Head from 'next/head';
-import type { FrontMatter, PageMapItem } from 'nextra';
-import { useData } from 'nextra/hooks';
+import type { PageMapItem } from 'nextra';
 import { isPost } from './helpers';
 
 const NEXTRA_INTERNAL = Symbol.for('__nextra_internal__');
 
-export const TagTitle = () => {
-  const { tag } = useData();
-  const title = `Посты по теме ${tag}`;
-  return (
-    <Head>
-      <title>{title}</title>
-    </Head>
-  );
-};
-
-export const TagName = () => {
-  const { tag } = useData();
-  return tag || null;
-};
-
-export function getTags(frontMatter: FrontMatter | undefined) {
-  if (!frontMatter) {
+export function getTags(tags?: string[] | string) {
+  if (!tags) {
     return [];
   }
-  const tags: string | string[] = frontMatter.tag || [];
   return (Array.isArray(tags) ? tags : tags.split(',')).map((s) => s.trim());
 }
 
@@ -36,7 +18,7 @@ const getStaticTags = (pageMap: PageMapItem[]) => {
     if ('children' in item && item.name === 'blog') {
       for (const pageMapItem of item.children) {
         if (isPost(pageMapItem)) {
-          tags.push(...getTags(pageMapItem.frontMatter));
+          tags.push(...getTags(pageMapItem.frontMatter?.tags));
         }
       }
     }

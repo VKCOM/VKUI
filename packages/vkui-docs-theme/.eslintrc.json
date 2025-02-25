@@ -1,5 +1,8 @@
 {
   "root": false,
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "rules": {
     "react/react-in-jsx-scope": "off",
     "no-restricted-globals": "off"

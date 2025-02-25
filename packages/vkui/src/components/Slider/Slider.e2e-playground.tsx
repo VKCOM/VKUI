@@ -16,7 +16,7 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
           min: [-10],
           max: [10],
           value: [0],
-          dir: ['ltr', 'rtl'],
+          $direction: true,
         },
         {
           multiple: [true],
@@ -25,7 +25,7 @@ export const SliderPlayground = (props: ComponentPlaygroundProps) => {
         {
           multiple: [true],
           defaultValue: [withLabel<[number, number]>([30, 90], '30 - 90')],
-          dir: ['rtl'],
+          $direction: 'rtl',
         },
         {
           defaultValue: [50],

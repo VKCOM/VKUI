@@ -1,4 +1,6 @@
-import { Fragment } from 'react';
+'use client';
+
+import * as React from 'react';
 import { Icon12ChevronOutline } from '@vkontakte/icons';
 import { classNames, Footnote } from '@vkontakte/vkui';
 import type { Item } from 'nextra/normalize-pages';
@@ -8,17 +10,17 @@ import styles from './Breadcrumbs.module.css';
 export function Breadcrumbs({ activePath }: { activePath: Item[] }) {
   return (
     <div className={styles.root}>
-      {activePath.map((item, index) => {
-        const isLink = !item.children || item.withIndexPage;
-        const isActive = index === activePath.length - 1;
+      {activePath.map((item, index, arr) => {
+        const nextItem = arr[index + 1];
+        const href = nextItem ? (item.frontMatter ? item.route : '') : '';
 
         return (
-          <Fragment key={`${item.route}-${item.name}`}>
+          <React.Fragment key={`${item.route}-${item.name}`}>
             {index > 0 && <Icon12ChevronOutline aria-hidden className={classNames(styles.icon)} />}
-            <Footnote className={classNames(styles.item, isActive && styles.activeItem)}>
-              {isLink && !isActive ? <Anchor href={item.route}>{item.title}</Anchor> : item.title}
+            <Footnote className={styles.item}>
+              {href ? <Anchor href={href}>{item.title}</Anchor> : item.title}
             </Footnote>
-          </Fragment>
+          </React.Fragment>
         );
       })}
     </div>

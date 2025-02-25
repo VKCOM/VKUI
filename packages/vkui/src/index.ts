@@ -413,7 +413,9 @@ export { ColorScheme } from './lib/colorScheme';
 export type { ColorSchemeType } from './lib/colorScheme';
 export { DOMContext } from './lib/dom';
 export { LocaleProvider } from './components/LocaleProvider/LocaleProvider';
+export { DirectionProvider } from './components/DirectionProvider/DirectionProvider';
 export type { LocaleProviderProps } from './components/LocaleProvider/LocaleProvider';
+export type { DirectionProviderProps } from './components/DirectionProvider/DirectionProvider';
 export { PlatformProvider } from './components/PlatformProvider/PlatformProvider';
 export type { PlatformProviderProps } from './components/PlatformProvider/PlatformProvider';
 export { Popover } from './components/Popover/Popover';
@@ -434,6 +436,7 @@ export { withPlatform } from './hoc/withPlatform';
  * Hooks
  */
 export { usePlatform } from './hooks/usePlatform';
+export { useConfigDirection as useDirection } from './hooks/useConfigDirection';
 export { useAdaptivity } from './hooks/useAdaptivity';
 export {
   type UseAdaptivityConditionalRender,
@@ -454,6 +457,7 @@ export { useNavDirection } from './components/NavTransitionDirectionContext/NavT
 export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useCSSKeyframesAnimationController as unstable_useCSSKeyframesAnimationController } from './lib/animation';
+export { useFocusVisible } from './hooks/useFocusVisible';
 
 /**
  * Utils

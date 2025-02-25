@@ -1,4 +1,4 @@
-import type { MdxFile, PageMapItem, PageOpts } from 'nextra';
+import type { MdxFile, PageMapItem } from 'nextra';
 
 const sortPosts = (a: MdxFile, b: MdxFile): number => {
   if (!a.frontMatter?.date || !b.frontMatter?.date) {
@@ -16,7 +16,7 @@ export const isPost = (page: PageMapItem): page is MdxFile => {
   return false;
 };
 
-export function findPosts(pageMap: PageOpts['pageMap']) {
+export function findPosts(pageMap: PageMapItem[]) {
   const posts: MdxFile[] = [];
 
   for (const item of pageMap) {

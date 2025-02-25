@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { type LinkProps, Link as VKUILink } from '@vkontakte/vkui';
 import NextLink from 'next/link';

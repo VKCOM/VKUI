@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { useDirection } from '../../hooks/useDirection';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { easeInOutSine } from '../../lib/fx';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -198,14 +198,13 @@ export const HorizontalScroll = ({
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
-  const [directionRef, textDirection] = useDirection<HTMLDivElement>();
-  const direction = textDirection || 'ltr';
+  const direction = useConfigDirection();
   const setCanScrollStart = direction === 'ltr' ? setCanScrollLeft : setCanScrollRight;
   const setCanScrollEnd = direction === 'ltr' ? setCanScrollRight : setCanScrollLeft;
 
   const isCustomScrollingRef = React.useRef(false);
 
-  const scrollerRef = useExternRef(getRef, directionRef);
+  const scrollerRef = useExternRef(getRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 

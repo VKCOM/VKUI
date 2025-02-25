@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { DEFAULT_THEME } from '../constants';
 import type { DocsThemeConfig } from '../types';
@@ -10,7 +12,7 @@ export function ThemeConfigProvider({
   value,
   children,
 }: {
-  value?: DocsThemeConfig;
+  value?: Partial<DocsThemeConfig>;
   children: React.ReactNode;
 }) {
   const storeRef = React.useRef<DocsThemeConfig>(undefined);

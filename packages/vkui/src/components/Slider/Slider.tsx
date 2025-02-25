@@ -5,7 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useDirection } from '../../hooks/useDirection';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { type CustomTouchEvent, type CustomTouchEventHandler, Touch } from '../Touch/Touch';
@@ -107,8 +107,8 @@ export const Slider = ({
   ...restProps
 }: SliderProps | SliderMultipleProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
-  const [directionRef, textDirection = 'ltr'] = useDirection();
-  const isRtl = textDirection === 'rtl';
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
 
   const isControlled = valueProp !== undefined;
   const [localValue, setValue] = React.useState(defaultValue);
@@ -258,7 +258,7 @@ export const Slider = ({
         className,
       )}
       style={mergeStyle(styleProp, style)}
-      getRootRef={directionRef}
+      getRootRef={getRootRef}
       onStart={disabled ? undefined : handlePointerStart}
       onMove={disabled ? undefined : handlePointerMove}
       onEnd={disabled ? undefined : handlePointerEnd}
