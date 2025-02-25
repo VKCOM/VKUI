@@ -28,7 +28,14 @@ const CustomInput = () => {
     background: 'transparent',
   };
 
-  return <input type="text" style={style} placeholder="Кастомный инпут" />;
+  return (
+    <input
+      type="text"
+      style={style}
+      placeholder="Кастомный инпут"
+      aria-label="Напишите сообщение..."
+    />
+  );
 };
 
 <Example />;
