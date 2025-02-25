@@ -6,7 +6,6 @@ import { baselineComponent, userEvent, waitCSSTransitionEnd } from '../../testin
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalCard } from './ModalCard';
 import { type ModalCardProps } from './types';
 
@@ -18,9 +17,7 @@ export const waitModalCardCSSTransitionEnd = async (el: HTMLElement) =>
  */
 describe(ModalCard, () => {
   baselineComponent((p) => (
-    <ModalCard open nav="id" {...p}>
-      <ModalPageHeader>Title</ModalPageHeader>
-    </ModalCard>
+    <ModalCard title="Title" open nav="id" {...p} />
   ));
 
   test('mount and unmount', async () => {
