@@ -54,6 +54,7 @@ export const ModalCard = ({
       <ModalCardInternal
         id={id}
         aria-labelledby={`${id}-label`}
+        titleId={`${id}-label`}
         {...resolvedProps}
         {...restProps}
       />
