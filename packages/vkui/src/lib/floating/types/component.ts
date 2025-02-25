@@ -65,4 +65,8 @@ export interface FloatingComponentProps
    * > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента
    */
   onReferenceHiddenChange?: (hidden: boolean) => void;
+  /**
+   * Позволяет отключить захват фокуса.
+   */
+  disableFocusTrap?: boolean;
 }

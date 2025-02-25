@@ -38,7 +38,7 @@ type Story = StoryObj<SplitLayoutProps>;
 const panels = ['panel 1', 'panel 2', 'panel 3'];
 const modals = ['modal 1', 'modal 2'];
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render() {
     const platform = usePlatform();
     const { viewWidth } = useAdaptivityConditionalRender();
