@@ -21,4 +21,8 @@ export default story;
 
 type Story = StoryObj<TextareaProps>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  args: {
+    'aria-label': 'Любимая музыка',
+  },
+};
