@@ -16,9 +16,7 @@ export const waitModalCardCSSTransitionEnd = async (el: HTMLElement) =>
  * Большинство логики покрыто в `ModalRoot.test.tsx`
  */
 describe(ModalCard, () => {
-  baselineComponent((p) => (
-    <ModalCard title="Title" open nav="id" {...p} />
-  ));
+  baselineComponent((p) => <ModalCard title="Title" open nav="id" {...p} />);
 
   test('mount and unmount', async () => {
     const result = render(<ModalCard id="host" data-testid="host" />);
