@@ -4908,12 +4908,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.0.0, @types/node@npm:^22.13.5":
+"@types/node@npm:*, @types/node@npm:^22.0.0":
   version: 22.13.5
   resolution: "@types/node@npm:22.13.5"
   dependencies:
     undici-types: "npm:~6.20.0"
   checksum: 10/a69ec8dba36a58a93e3ec3709a6a362ca0cdd8443310bb5e43b0c1f560c57bcc120c96fabb301ef42c2901f46103adad5158b6923ea14e8e14a432af20a2bb24
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.13.8":
+  version: 22.13.8
+  resolution: "@types/node@npm:22.13.8"
+  dependencies:
+    undici-types: "npm:~6.20.0"
+  checksum: 10/b69de3caab80336747bf41b5063478d23b196b9594c6f2eb819791380cc571676087dceb0fde9531ef7a1293f3eae12a9aaf79d8de349378c29a17c5e657bc78
   languageName: node
   linkType: hard
 
@@ -5516,7 +5525,7 @@ __metadata:
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jest": "npm:^29.5.14"
     "@types/jscodeshift": "npm:^0.12.0"
-    "@types/node": "npm:^22.13.5"
+    "@types/node": "npm:^22.13.8"
     "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^4.1.2"
     commander: "npm:^13.1.0"
@@ -5610,7 +5619,7 @@ __metadata:
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/jest": "npm:^29.5.14"
     "@types/jest-axe": "npm:^3.5.9"
-    "@types/node": "npm:^22.13.5"
+    "@types/node": "npm:^22.13.8"
     "@types/react": "npm:^19.0.1"
     "@types/react-dom": "npm:^19.0.1"
     "@types/webpack": "npm:^5.28.5"
@@ -5692,7 +5701,7 @@ __metadata:
     "@swc/core": "npm:1.10.18"
     "@swc/jest": "npm:^0.2.37"
     "@types/jest": "npm:^29.5.14"
-    "@types/node": "npm:^22.13.5"
+    "@types/node": "npm:^22.13.8"
     "@types/postcss-less": "npm:^4.0.6"
     jest: "npm:^29.7.0"
     postcss: "npm:^8.5.3"
