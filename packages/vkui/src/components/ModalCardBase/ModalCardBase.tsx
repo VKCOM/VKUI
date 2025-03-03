@@ -32,6 +32,8 @@ export interface ModalCardBaseProps
   title?: React.ReactNode;
   /* Позволяет поменять тег используемый для заголовка */
   titleComponent?: React.ElementType;
+  /* Позволяет задать id для заголовка. Используется, чтобы связать модальное окно и title через aria-labelledby, тем самым задав модальному окну имя через title */
+  titleId?: string;
 
   /**
    * Описание
@@ -112,6 +114,7 @@ export const ModalCardBase = ({
   dismissButtonMode = 'outside',
   preventClose,
   outsideButtons,
+  titleId,
   ...restProps
 }: ModalCardBaseProps): React.ReactNode => {
   const platform = usePlatform();
@@ -125,7 +128,6 @@ export const ModalCardBase = ({
 
   const hasTitle = hasReactNode(title);
   const hasDescription = hasReactNode(description);
-
   return (
     <RootComponent
       {...restProps}
@@ -142,7 +144,13 @@ export const ModalCardBase = ({
       <div className={styles.container}>
         {hasReactNode(icon) && <div className={styles.icon}>{icon}</div>}
         {hasReactNode(title) && (
-          <Title level="2" weight="2" className={styles.title} Component={titleComponent}>
+          <Title
+            id={titleId}
+            level="2"
+            weight="2"
+            className={styles.title}
+            Component={titleComponent}
+          >
             {title}
           </Title>
         )}
