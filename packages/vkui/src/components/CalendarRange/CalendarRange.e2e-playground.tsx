@@ -41,7 +41,7 @@ export const CalendarRangePlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           value: [rangeValue],
-          dir: ['rtl'],
+          $direction: 'rtl',
         },
       ]}
     >

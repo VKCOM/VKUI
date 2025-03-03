@@ -215,7 +215,7 @@ jobs:
       - name: Build
         run: yarn docs:beta:build
         env:
-          VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/docs-beta
+          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/docs-beta
 
       - name: Upload dist
         uses: actions/upload-artifact@v4

@@ -9,6 +9,6 @@ export interface UseColorSchemeProps {
 }
 
 export interface ColorSchemeProviderProps extends React.PropsWithChildren {
-  storageKey: string;
+  storageKey?: string;
   defaultColorScheme?: ColorSchemeExtendedType;
 }
