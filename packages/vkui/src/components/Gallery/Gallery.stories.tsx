@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Gallery, type GalleryProps } from './Gallery';
 
 const story: Meta<GalleryProps> = {
   title: 'Blocks/Gallery',
   component: Gallery,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Gallery', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import type { HasComponent, HasRootRef } from '../../types';
 import { VisuallyHidden } from './VisuallyHidden';
 
@@ -12,7 +13,7 @@ interface VisuallyHiddenProps
 const story: Meta<VisuallyHiddenProps> = {
   title: 'Service/VisuallyHidden',
   component: VisuallyHidden,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('VisuallyHidden', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

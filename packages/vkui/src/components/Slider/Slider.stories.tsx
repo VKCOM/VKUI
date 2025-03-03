@@ -1,6 +1,7 @@
 import type { Meta, StoryContext, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { FormItem } from '../FormItem/FormItem';
 import { Group } from '../Group/Group';
 import { Slider, type SliderMultipleProps, type SliderProps } from './Slider';
@@ -12,7 +13,7 @@ function getAriaLabel(index: number) {
 const story: Meta<SliderProps> = {
   title: 'Forms/Slider',
   component: Slider,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Slider', CanvasFullLayout, DisableCartesianParam),
   args: {
     getAriaLabel,
   },

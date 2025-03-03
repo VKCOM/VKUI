@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Clickable, type ClickableProps } from './Clickable';
 
 const story: Meta<ClickableProps> = {
   title: 'Blocks/Clickable',
   component: Clickable,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Clickable', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

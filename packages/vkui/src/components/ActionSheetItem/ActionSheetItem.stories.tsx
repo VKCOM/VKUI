@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ActionSheetItem, type ActionSheetItemProps } from './ActionSheetItem';
 
 const story: Meta<ActionSheetItemProps> = {
   title: 'Popouts/ActionSheetItem',
   component: ActionSheetItem,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ActionSheetItem', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['16', '20', '24', '28'],

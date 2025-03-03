@@ -4,6 +4,7 @@ import { Icon16Delete } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { IconButton } from '../IconButton/IconButton';
 import { File, type FileProps } from './File';
 
@@ -21,7 +22,7 @@ const iconsPresets = createFieldWithPresets({
 const story: Meta<FileProps> = {
   title: 'Forms/File',
   component: File,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('File', CanvasFullLayout),
   decorators: [withCartesian],
   argTypes: {
     before: iconsPresets,
