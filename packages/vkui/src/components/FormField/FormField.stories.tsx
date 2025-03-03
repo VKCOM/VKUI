@@ -25,6 +25,7 @@ export const Playground: Story = {
   render: (args) => (
     <FormField {...args}>
       <input
+        aria-label="Напишите сообщение..."
         style={{
           position: 'relative',
           display: 'block',
