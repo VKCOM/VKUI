@@ -3876,9 +3876,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-darwin-arm64@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-darwin-arm64@npm:1.11.5"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-x64@npm:1.10.18":
   version: 1.10.18
   resolution: "@swc/core-darwin-x64@npm:1.10.18"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-darwin-x64@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-darwin-x64@npm:1.11.5"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
@@ -3890,9 +3904,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm-gnueabihf@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.11.5"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-arm64-gnu@npm:1.10.18":
   version: 1.10.18
   resolution: "@swc/core-linux-arm64-gnu@npm:1.10.18"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-gnu@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.11.5"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
@@ -3904,9 +3932,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm64-musl@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-linux-arm64-musl@npm:1.11.5"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-x64-gnu@npm:1.10.18":
   version: 1.10.18
   resolution: "@swc/core-linux-x64-gnu@npm:1.10.18"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-gnu@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-linux-x64-gnu@npm:1.11.5"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -3918,9 +3960,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-x64-musl@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-linux-x64-musl@npm:1.11.5"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-arm64-msvc@npm:1.10.18":
   version: 1.10.18
   resolution: "@swc/core-win32-arm64-msvc@npm:1.10.18"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-arm64-msvc@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.11.5"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
@@ -3932,6 +3988,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-win32-ia32-msvc@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.11.5"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-x64-msvc@npm:1.10.18":
   version: 1.10.18
   resolution: "@swc/core-win32-x64-msvc@npm:1.10.18"
@@ -3939,7 +4002,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:*, @swc/core@npm:1.10.18, @swc/core@npm:^1.10.18, @swc/core@npm:^1.7.3":
+"@swc/core-win32-x64-msvc@npm:1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core-win32-x64-msvc@npm:1.11.5"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core@npm:*, @swc/core@npm:^1.7.3":
   version: 1.10.18
   resolution: "@swc/core@npm:1.10.18"
   dependencies:
@@ -3985,6 +4055,52 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core@npm:1.11.5, @swc/core@npm:^1.11.5":
+  version: 1.11.5
+  resolution: "@swc/core@npm:1.11.5"
+  dependencies:
+    "@swc/core-darwin-arm64": "npm:1.11.5"
+    "@swc/core-darwin-x64": "npm:1.11.5"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.11.5"
+    "@swc/core-linux-arm64-gnu": "npm:1.11.5"
+    "@swc/core-linux-arm64-musl": "npm:1.11.5"
+    "@swc/core-linux-x64-gnu": "npm:1.11.5"
+    "@swc/core-linux-x64-musl": "npm:1.11.5"
+    "@swc/core-win32-arm64-msvc": "npm:1.11.5"
+    "@swc/core-win32-ia32-msvc": "npm:1.11.5"
+    "@swc/core-win32-x64-msvc": "npm:1.11.5"
+    "@swc/counter": "npm:^0.1.3"
+    "@swc/types": "npm:^0.1.19"
+  peerDependencies:
+    "@swc/helpers": "*"
+  dependenciesMeta:
+    "@swc/core-darwin-arm64":
+      optional: true
+    "@swc/core-darwin-x64":
+      optional: true
+    "@swc/core-linux-arm-gnueabihf":
+      optional: true
+    "@swc/core-linux-arm64-gnu":
+      optional: true
+    "@swc/core-linux-arm64-musl":
+      optional: true
+    "@swc/core-linux-x64-gnu":
+      optional: true
+    "@swc/core-linux-x64-musl":
+      optional: true
+    "@swc/core-win32-arm64-msvc":
+      optional: true
+    "@swc/core-win32-ia32-msvc":
+      optional: true
+    "@swc/core-win32-x64-msvc":
+      optional: true
+  peerDependenciesMeta:
+    "@swc/helpers":
+      optional: true
+  checksum: 10/9af9ba75019fa28466656b9ddc7bc3a1282d8dd69c6080baca88c32a44a1aaa79f70d32031b2580d13bebaa60411aa2c820494ff70917859a25f9b9f8aec46de
+  languageName: node
+  linkType: hard
+
 "@swc/counter@npm:0.1.3, @swc/counter@npm:^0.1.3":
   version: 0.1.3
   resolution: "@swc/counter@npm:0.1.3"
@@ -4020,6 +4136,15 @@ __metadata:
   dependencies:
     "@swc/counter": "npm:^0.1.3"
   checksum: 10/ddef1ad5bfead3acdfc41f14e79ba43a99200eb325afbad5716058dbe36358b0513400e9f22aff32432be84a98ae93df95a20b94192f69b8687144270e4eaa18
+  languageName: node
+  linkType: hard
+
+"@swc/types@npm:^0.1.19":
+  version: 0.1.19
+  resolution: "@swc/types@npm:0.1.19"
+  dependencies:
+    "@swc/counter": "npm:^0.1.3"
+  checksum: 10/693147cc9b23147164ddff9cb89477c369fbeb103319584779352a9ff1c72e0a70b97a89dfd97629040db8956d668d7b7a8fed328ffea46a3e8c18577e396994
   languageName: node
   linkType: hard
 
@@ -5511,7 +5636,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-codemods@workspace:packages/codemods"
   dependencies:
-    "@swc/core": "npm:^1.10.18"
+    "@swc/core": "npm:^1.11.5"
     "@swc/jest": "npm:^0.2.37"
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jest": "npm:^29.5.14"
@@ -5569,7 +5694,7 @@ __metadata:
   resolution: "@vkontakte/vkui-floating-ui@workspace:packages/vkui-floating-ui"
   dependencies:
     "@floating-ui/react-dom": "npm:^2.1.2"
-    "@swc/core": "npm:^1.10.18"
+    "@swc/core": "npm:^1.11.5"
     "@swc/helpers": "npm:^0.5.15"
     "@swc/jest": "npm:^0.2.37"
     "@types/jest": "npm:^29.5.14"
@@ -5602,7 +5727,7 @@ __metadata:
     "@size-limit/webpack-css": "npm:^11.2.0"
     "@storybook/addon-console": "npm:^3.0.0"
     "@swc/cli": "npm:^0.6.0"
-    "@swc/core": "npm:1.10.18"
+    "@swc/core": "npm:1.11.5"
     "@swc/jest": "npm:^0.2.37"
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
@@ -5673,8 +5798,8 @@ __metadata:
     stylelint-use-logical: "npm:^2.1.2"
     stylelint-value-no-unknown-custom-properties: "npm:^6.0.1"
     swc-loader: "npm:^0.2.6"
-    swc-plugin-css-modules: "npm:2.2.1"
-    swc-plugin-transform-remove-imports: "npm:3.2.1"
+    swc-plugin-css-modules: "npm:3.0.0"
+    swc-plugin-transform-remove-imports: "npm:4.0.0"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.3"
     typescript-plugin-css-modules: "npm:^5.1.0"
@@ -5689,7 +5814,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-token-translator@workspace:packages/token-translator"
   dependencies:
-    "@swc/core": "npm:1.10.18"
+    "@swc/core": "npm:1.11.5"
     "@swc/jest": "npm:^0.2.37"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.13.5"
@@ -6788,7 +6913,7 @@ __metadata:
   resolution: "benchmark@workspace:benchmark"
   dependencies:
     "@playwright/test": "npm:1.50.1"
-    "@swc/core": "npm:^1.10.18"
+    "@swc/core": "npm:^1.11.5"
     "@vkontakte/vkui": "workspace:packages/vkui"
     cli-table3: "npm:^0.6.1"
     css-loader: "npm:7.1.2"
@@ -20217,17 +20342,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin-css-modules@npm:2.2.1":
-  version: 2.2.1
-  resolution: "swc-plugin-css-modules@npm:2.2.1"
-  checksum: 10/bb0a012f93096ab956549adba9941b1a3050daa0a3d43bdd674b7fd89d1c1226c2993102e7438669e457e0cf95823822549d6d539f694c76cf7bcc4676a44e07
+"swc-plugin-css-modules@npm:3.0.0":
+  version: 3.0.0
+  resolution: "swc-plugin-css-modules@npm:3.0.0"
+  checksum: 10/5e883bc85b68d4fdd41ce633e05e712a6d49cd47281418f31f454d229014d54622184746941c64db863471cb582b0da6d5439e17d1f368ee44e4bfdfb7a8894e
   languageName: node
   linkType: hard
 
-"swc-plugin-transform-remove-imports@npm:3.2.1":
-  version: 3.2.1
-  resolution: "swc-plugin-transform-remove-imports@npm:3.2.1"
-  checksum: 10/a5e165530587712b8f6ba73d315741af72e9d1d3fa553c4110cdffcb9601e6f16de5265f8cfac86c79be48f50dd98fdf2f673f3fc7e4e8e153d056267cc6014f
+"swc-plugin-transform-remove-imports@npm:4.0.0":
+  version: 4.0.0
+  resolution: "swc-plugin-transform-remove-imports@npm:4.0.0"
+  checksum: 10/0433aebb96d12e9115aef0fe8c3ce4ccdf6ed0f382faeafd1e76c40ff106caee287fc5e0d79e83b22e560c00cc36dc0aa18c2a5bbb8046fdb4caf9b98394af51
   languageName: node
   linkType: hard
 
