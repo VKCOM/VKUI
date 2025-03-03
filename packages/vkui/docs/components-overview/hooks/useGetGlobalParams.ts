@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { DocsContext } from '@storybook/addon-docs';
 import { type ColorSchemeType, type PlatformType } from '../../../src';
-import { type Direction } from '../../../src/hooks/useDirection';
+import { type Direction } from '../../../src/lib/direction';
 
 type DocsContextType = {
   store?: {

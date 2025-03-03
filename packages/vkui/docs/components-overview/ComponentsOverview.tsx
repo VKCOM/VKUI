@@ -11,28 +11,22 @@ import {
   Spinner,
   Title,
 } from '../../src';
-import { FlexItem } from '../../src/components/Flex/FlexItem/FlexItem';
-import { type Direction } from '../../src/hooks/useDirection';
 import { ComponentOverviewCardWrapper } from './components/ComponentOverviewCardWrapper';
 import { useGetConfigByQuery } from './hooks/useGetConfigByQuery';
 import { useGetGlobalParams } from './hooks/useGetGlobalParams';
 import styles from './ComponentsOverview.module.css';
 
-const ComponentsOverview: React.FC<{ direction: Direction }> = ({ direction }) => {
+const ComponentsOverview = () => {
   const { query: searchedQuery, config, loading, onUpdateQuery } = useGetConfigByQuery();
 
   return (
     <>
       <Flex direction="column" gap="2xl" align="start" className={styles.header}>
-        <FlexItem>
-          <Title>Витрина компонентов</Title>
-        </FlexItem>
+        <Title>Витрина компонентов</Title>
 
-        <FlexItem>
-          <Group separator="hide">
-            <Search noPadding onChange={onUpdateQuery} />
-          </Group>
-        </FlexItem>
+        <Group separator="hide">
+          <Search noPadding onChange={onUpdateQuery} />
+        </Group>
       </Flex>
 
       <Flex direction="column" gap="3xl">
@@ -49,7 +43,6 @@ const ComponentsOverview: React.FC<{ direction: Direction }> = ({ direction }) =
                     searchedQuery={searchedQuery}
                     componentName={componentName}
                     groupTitle={groupData.title}
-                    direction={direction}
                   />
                 ))}
               </div>
@@ -70,10 +63,11 @@ export const ComponentsOverviewPage = () => {
       colorScheme={colorScheme}
       platform={platform}
       hasCustomPanelHeaderAfter={hasCustomPanelHeaderAfter}
+      direction={direction}
     >
       <AdaptivityProvider hasPointer={hasPointer}>
         <AppRoot className="sb-unstyled" dir={direction}>
-          <ComponentsOverview direction={direction} />
+          <ComponentsOverview />
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>

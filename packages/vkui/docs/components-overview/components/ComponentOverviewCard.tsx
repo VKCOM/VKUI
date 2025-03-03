@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Card, Mark, Title } from '../../../src';
-import { type Direction } from '../../../src/hooks/useDirection';
+import { Card, Mark, Title, useDirection } from '../../../src';
 import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
 import { useDOM } from '../../../src/lib/dom';
 import { type CSSCustomProperties } from '../../../src/types';
@@ -19,7 +18,6 @@ export type ComponentOverviewCardProps = Pick<
   componentName: string;
   searchedQuery: string;
   groupTitle: string;
-  direction: Direction;
 
   component: React.ReactNode;
 };
@@ -48,12 +46,12 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
   customPath,
   searchedQuery,
   groupTitle,
-  direction,
   minWidth,
   maxWidth,
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const componentRef = React.useRef<HTMLDivElement>(null);
+  const direction = useDirection();
   const { window } = useDOM();
   const [scale, setScale] = React.useState(1);
 
@@ -78,17 +76,14 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
 
   useResizeObserver(containerRef, calculateScale);
 
-  const createComponentUrl = React.useCallback(
-    (name: string, group: string, customPath?: string) => {
-      if (!window) {
-        return '';
-      }
-      const baseUrl = `${window.location.href.split('iframe')[0]}`;
-      const componentUrl = customPath ? customPath.replace('/', '-') : name;
-      return `${baseUrl}?path=/story/${group.toLowerCase()}-${componentUrl.toLowerCase()}--playground`;
-    },
-    [window],
-  );
+  const componentUrl = React.useMemo(() => {
+    if (!window) {
+      return '';
+    }
+    const baseUrl = `${window.location.href.split('iframe')[0]}`;
+    const componentUrl = customPath ? customPath.replace('/', '-') : componentName;
+    return `${baseUrl}?path=/story/${groupTitle.toLowerCase()}-${componentUrl.toLowerCase()}--playground`;
+  }, [componentName, groupTitle, customPath, window]);
 
   const style: CSSCustomProperties = {
     '--vkui_internal--ComponentOverviewCard_scale': String(scale),
@@ -98,7 +93,7 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
     <Card
       Component="a"
       // @ts-expect-error: TS2322 в CardProps нет href свойства
-      href={createComponentUrl(componentName, groupTitle, customPath)}
+      href={componentUrl}
       mode="shadow"
       className={classNames(styles.card, direction === 'rtl' && styles.rtl)}
       style={style}
