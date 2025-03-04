@@ -1,3 +1,4 @@
+import { render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { Clickable } from './Clickable';
@@ -33,4 +34,14 @@ describe('Clickable', () => {
       content
     </Clickable>
   ));
+
+  it('href: should be link', () => {
+    const result = render(<Clickable href="https://vk.com" />);
+    expect(result.getByRole('link')).toBeInTheDocument();
+  });
+
+  it('href && disabled: should be link', () => {
+    const result = render(<Clickable href="https://vk.com" disabled />);
+    expect(result.getByRole('link')).toBeInTheDocument();
+  });
 });
