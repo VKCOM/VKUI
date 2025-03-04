@@ -9,112 +9,77 @@
 ```jsx
 const SnackBarExample = () => {
   const [text, setText] = React.useState('');
-  const [snackbar, setSnackbar] = React.useState(null);
+  const [api, snackbarHolder] = useSnackbar()
 
   const openBaseWithAction = () => {
-    if (snackbar) return;
-    setSnackbar(
-      <Snackbar
-        onClose={() => setSnackbar(null)}
-        action="Поделиться"
-        onActionClick={() => setText('Добавляем метку.')}
-        before={
-          <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
-            <Icon16Done fill="#fff" width={14} height={14} />
-          </Avatar>
-        }
-      >
-        Ссылка скопирована
-      </Snackbar>,
-    );
+    api.open({
+      action: 'Поделиться',
+      onActionClick: () => setText('Добавляем метку.'),
+      before: (
+        <Avatar size={24} style={{background: 'var(--vkui--color_background_accent)'}}>
+          <Icon16Done fill="#fff" width={14} height={14}/>
+        </Avatar>
+      ),
+      children: 'Ссылка скопирована',
+    })
   };
 
   const openVertical = () => {
-    if (snackbar) return;
-    setSnackbar(
-      <Snackbar
-        layout="vertical"
-        onClose={() => setSnackbar(null)}
-        action="Перейти в раздел «Понравилось»"
-        onActionClick={() => setText('Открыта подробная информация.')}
-        before={
-          <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
-            <Icon16Done fill="#fff" width={14} height={14} />
-          </Avatar>
-        }
-      >
-        Ссылка сохранена в закладки
-      </Snackbar>,
-    );
+    api.open({
+      layout: "vertical",
+      action: "Перейти в раздел «Понравилось»",
+      onActionClick: () => setText('Открыта подробная информация.'),
+      before: (
+        <Avatar size={24} style={{background: 'var(--vkui--color_background_accent)'}}>
+          <Icon16Done fill="#fff" width={14} height={14}/>
+        </Avatar>
+      ),
+      children: 'Ссылка сохранена в закладки',
+    });
   };
 
   const openWithAvatar = () => {
-    if (snackbar) return;
-    setSnackbar(
-      <Snackbar
-        onClose={() => setSnackbar(null)}
-        onActionClick={() => setText('Сообщение Ивану было отменено.')}
-        before={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
-      >
-        Отправлено Ивану Барышеву
-      </Snackbar>,
-    );
+    api.open({
+      onActionClick: () => setText('Сообщение Ивану было отменено.'),
+      before: <Avatar src={getAvatarUrl('user_wayshev')} size={32}/>,
+      children: 'Отправлено Ивану Барышеву',
+    });
   };
 
   const openWithSibtitle = () => {
-    if (snackbar) return;
-    setSnackbar(
-      <Snackbar
-        onClose={() => setSnackbar(null)}
-        subtitle="Вы можете порекомендовать сервис в дополнительном меню"
-        before={<Icon24ThumbsUpOutline fill="var(--vkui--color_icon_accent)" />}
-      >
-        Этот сервис рекомендует один друг
-      </Snackbar>,
-    );
+    api.open({
+      subtitle: "Вы можете порекомендовать сервис в дополнительном меню",
+      before: <Icon24ThumbsUpOutline fill="var(--vkui--color_icon_accent)"/>,
+      children: 'Этот сервис рекомендует один друг',
+    });
   };
 
   const openDark = () => {
-    if (snackbar) return;
-    setSnackbar(
-      <Snackbar
-        mode="dark"
-        onClose={() => setSnackbar(null)}
-        action="Поделиться"
-        onActionClick={() => setText('Добавляем метку.')}
-        before={
-          <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
-            <Icon16Done fill="#fff" width={14} height={14} />
-          </Avatar>
-        }
-      >
-        Ссылка скопирована
-      </Snackbar>,
-    );
+    api.open({
+      mode: "dark",
+      action: "Поделиться",
+      onActionClick: () => setText('Добавляем метку.'),
+      before: (
+        <Avatar size={24} style={{background: 'var(--vkui--color_background_accent)'}}>
+          <Icon16Done fill="#fff" width={14} height={14}/>
+        </Avatar>
+      ),
+      children: 'Ссылка скопирована',
+    });
   };
 
   const openSuccess = () => {
-    if (snackbar) return;
-    setSnackbar(
-      <Snackbar
-        onClose={() => setSnackbar(null)}
-        before={<Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)" />}
-      >
-        Аватар успешно изменен
-      </Snackbar>,
-    );
+    api.open({
+      before: <Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)"/>,
+      children: 'Аватар успешно изменен',
+    });
   };
 
   const openError = () => {
-    if (snackbar) return;
-    setSnackbar(
-      <Snackbar
-        onClose={() => setSnackbar(null)}
-        before={<Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />}
-      >
-        Не удалось применить изменения
-      </Snackbar>,
-    );
+    api.open({
+      before: <Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)"/>,
+      children: 'Не удалось применить изменения',
+    });
   };
 
   React.useEffect(() => {
@@ -141,7 +106,7 @@ const SnackBarExample = () => {
           </Group>
         )}
 
-        {snackbar}
+        {snackbarHolder}
       </Panel>
     </View>
   );

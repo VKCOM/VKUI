@@ -1,12 +1,15 @@
-import * as React from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { Avatar } from '../Avatar/Avatar';
+import { Flex } from '../Flex/Flex';
 import { Image } from '../Image/Image';
 import { Snackbar, type SnackbarProps } from './Snackbar';
+import { type SnackbarPlacement } from './types';
+import { useSnackbar } from './useSnackbar';
 
 const story: Meta<SnackbarProps> = {
   title: 'Popouts/Snackbar',
@@ -40,19 +43,44 @@ export default story;
 
 type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
 
+const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
+  'top-start',
+  'top',
+  'top-end',
+  'bottom-start',
+  'bottom',
+  'bottom-end',
+];
+
 export const Playground: Story = {
   render: function Render({ onClose, ...args }) {
-    const [open, setOpen] = React.useState(true);
+    const [api, snackbarHolder] = useSnackbar();
+    const [placementSnackbar, setPlacementSnackbar] = useState<Record<string, string>>({});
 
-    const handleClose = () => {
-      setOpen(false);
-      onClose?.();
+    const _onOpen = (placement: SnackbarPlacement) => {
+      const id = api.open({ ...args, placement });
+      setPlacementSnackbar((v) => ({
+        ...v,
+        [placement]: id,
+      }));
+    };
+
+    const _onClose = (placement: SnackbarPlacement) => {
+      const id = placementSnackbar[placement] || 'bottom-start';
+      api.close(id);
     };
 
     return (
       <>
-        <button onClick={() => setOpen(true)}>Открыть</button>
-        {open ? <Snackbar onClose={handleClose} {...args} /> : null}
+        <Flex direction="column" gap="2xl">
+          {PLACEMENT.map((placement) => (
+            <Flex gap="2xl" key={placement}>
+              <button onClick={() => _onOpen(placement)}>Открыть {placement}</button>
+              <button onClick={() => _onClose(placement)}>Закрыть {placement}</button>
+            </Flex>
+          ))}
+        </Flex>
+        {snackbarHolder}
       </>
     );
   },
