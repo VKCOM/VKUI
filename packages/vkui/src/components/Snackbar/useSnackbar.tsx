@@ -71,7 +71,6 @@ export const useSnackbar = (): UseSnackbarResult => {
   }, []);
 
   const snackbarsList = Object.values(snackbars).filter(Boolean) as SnackbarData[];
-
   return [
     api,
     snackbarsList.length ? (
