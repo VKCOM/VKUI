@@ -37,11 +37,8 @@ export const useSnackbar = (): UseSnackbarResult => {
       setSnackbars((oldSnackbars) => {
         const newSnackbars: SnackbarsMap = {};
         Object.entries(oldSnackbars).forEach(([placement, data]) => {
-          if (data && data?.id !== id) {
-            newSnackbars[placement] = {
-              id: data.id,
-              props: data.props,
-            };
+          if (data && data.id !== id) {
+            newSnackbars[placement] = data;
           }
         });
         return newSnackbars;
@@ -52,21 +49,20 @@ export const useSnackbar = (): UseSnackbarResult => {
       open: (config) => {
         const placement: SnackbarPlacement = config.placement || 'bottom-start';
         const id = uuidv4();
-        setSnackbars((oldSnackbars) => {
-          const mapCopy: SnackbarsMap = { ...oldSnackbars };
-          mapCopy[placement] = {
+        setSnackbars((oldSnackbars) => ({
+          ...oldSnackbars,
+          [placement]: {
             id,
             props: {
               ...config,
               placement,
               onClose: () => {
-                removeSnackbar(placement);
+                removeSnackbar(id);
                 config.onClose?.();
               },
             },
-          };
-          return mapCopy;
-        });
+          },
+        }));
         return id;
       },
       close: removeSnackbar,
