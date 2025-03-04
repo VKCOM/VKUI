@@ -4,12 +4,14 @@ import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icon
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { useSnackbarApi } from '../AppRoot/SnackbarContext';
 import { Avatar } from '../Avatar/Avatar';
+import { Button } from '../Button/Button';
 import { Flex } from '../Flex/Flex';
+import { FlexItem } from '../Flex/FlexItem/FlexItem';
 import { Image } from '../Image/Image';
 import { Snackbar, type SnackbarProps } from './Snackbar';
 import { type SnackbarPlacement } from './types';
-import { useSnackbar } from './useSnackbar';
 
 const story: Meta<SnackbarProps> = {
   title: 'Popouts/Snackbar',
@@ -54,11 +56,11 @@ const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
 
 export const Playground: Story = {
   render: function Render({ onClose, ...args }) {
-    const [api, snackbarHolder] = useSnackbar();
+    const snackbarApi = useSnackbarApi();
     const [placementSnackbar, setPlacementSnackbar] = useState<Record<string, string>>({});
 
     const _onOpen = (placement: SnackbarPlacement) => {
-      const id = api.open({ ...args, placement });
+      const id = snackbarApi.open({ ...args, placement });
       setPlacementSnackbar((v) => ({
         ...v,
         [placement]: id,
@@ -67,20 +69,29 @@ export const Playground: Story = {
 
     const _onClose = (placement: SnackbarPlacement) => {
       const id = placementSnackbar[placement] || 'bottom-start';
-      api.close(id);
+      snackbarApi.close(id);
     };
 
     return (
       <>
         <Flex direction="column" gap="2xl">
           {PLACEMENT.map((placement) => (
-            <Flex gap="2xl" key={placement}>
-              <button onClick={() => _onOpen(placement)}>Открыть {placement}</button>
-              <button onClick={() => _onClose(placement)}>Закрыть {placement}</button>
+            <Flex gap="2xl" justify="space-between" key={placement} noWrap>
+              <FlexItem flexBasis={100}>{placement}</FlexItem>
+              <FlexItem flex="grow">
+                <Button onClick={() => _onOpen(placement)}>Открыть</Button>
+              </FlexItem>
+              <FlexItem flex="grow">
+                <Button appearance="negative" onClick={() => _onClose(placement)}>
+                  Закрыть
+                </Button>
+              </FlexItem>
             </Flex>
           ))}
+          <Button appearance="negative" stretched onClick={snackbarApi.closeAll}>
+            Закрыть все
+          </Button>
         </Flex>
-        {snackbarHolder}
       </>
     );
   },

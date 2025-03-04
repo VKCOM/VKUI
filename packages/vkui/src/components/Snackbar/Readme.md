@@ -9,10 +9,10 @@
 ```jsx
 const SnackBarExample = () => {
   const [text, setText] = React.useState('');
-  const [api, snackbarHolder] = useSnackbar()
+  const snackbarApi = useSnackbarApi()
 
   const openBaseWithAction = () => {
-    api.open({
+    snackbarApi.open({
       action: 'Поделиться',
       onActionClick: () => setText('Добавляем метку.'),
       before: (
@@ -25,7 +25,7 @@ const SnackBarExample = () => {
   };
 
   const openVertical = () => {
-    api.open({
+    snackbarApi.open({
       layout: "vertical",
       action: "Перейти в раздел «Понравилось»",
       onActionClick: () => setText('Открыта подробная информация.'),
@@ -39,7 +39,7 @@ const SnackBarExample = () => {
   };
 
   const openWithAvatar = () => {
-    api.open({
+    snackbarApi.open({
       onActionClick: () => setText('Сообщение Ивану было отменено.'),
       before: <Avatar src={getAvatarUrl('user_wayshev')} size={32}/>,
       children: 'Отправлено Ивану Барышеву',
@@ -47,7 +47,7 @@ const SnackBarExample = () => {
   };
 
   const openWithSibtitle = () => {
-    api.open({
+    snackbarApi.open({
       subtitle: "Вы можете порекомендовать сервис в дополнительном меню",
       before: <Icon24ThumbsUpOutline fill="var(--vkui--color_icon_accent)"/>,
       children: 'Этот сервис рекомендует один друг',
@@ -55,7 +55,7 @@ const SnackBarExample = () => {
   };
 
   const openDark = () => {
-    api.open({
+    snackbarApi.open({
       mode: "dark",
       action: "Поделиться",
       onActionClick: () => setText('Добавляем метку.'),
@@ -69,14 +69,14 @@ const SnackBarExample = () => {
   };
 
   const openSuccess = () => {
-    api.open({
+    snackbarApi.open({
       before: <Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)"/>,
       children: 'Аватар успешно изменен',
     });
   };
 
   const openError = () => {
-    api.open({
+    snackbarApi.open({
       before: <Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)"/>,
       children: 'Не удалось применить изменения',
     });
@@ -105,8 +105,6 @@ const SnackBarExample = () => {
             <Div>{text}</Div>
           </Group>
         )}
-
-        {snackbarHolder}
       </Panel>
     </View>
   );

@@ -8,6 +8,7 @@ import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { AppRootContext } from './AppRootContext';
 import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
+import { SnackbarsController } from './SnackbarContext';
 import { useSafeAreaInsetsMemo } from './helpers';
 import type {
   AppRootLayout,
@@ -155,7 +156,9 @@ export const AppRoot = ({
 
   return mode === 'partial' ? (
     <AppRootContext.Provider value={contextValue}>
-      <ScrollController elRef={appRootRef}>{children}</ScrollController>
+      <ScrollController elRef={appRootRef}>
+        <SnackbarsController>{children}</SnackbarsController>
+      </ScrollController>
     </AppRootContext.Provider>
   ) : (
     <AppRootContext.Provider value={contextValue}>
@@ -171,7 +174,9 @@ export const AppRoot = ({
         )}
         {...props}
       >
-        <ScrollController elRef={appRootRef}>{children}</ScrollController>
+        <ScrollController elRef={appRootRef}>
+          <SnackbarsController>{children}</SnackbarsController>
+        </ScrollController>
       </AppRootStyleContainer>
     </AppRootContext.Provider>
   );

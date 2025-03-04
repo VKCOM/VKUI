@@ -5,9 +5,10 @@ import { type SnackbarPlacement } from './types';
 
 type SnackbarConfig = Omit<SnackbarProps, 'onClose'> & Partial<Pick<SnackbarProps, 'onClose'>>;
 
-interface SnackbarApi {
+export interface SnackbarApi {
   open: (config: SnackbarConfig) => string;
   close: (id: string) => void;
+  closeAll: () => void;
 }
 
 type UseSnackbarResult = [SnackbarApi, React.ReactElement | null];
@@ -69,6 +70,7 @@ export const useSnackbar = (): UseSnackbarResult => {
         return id;
       },
       close: removeSnackbar,
+      closeAll: () => setSnackbars({}),
     };
   }, []);
 
