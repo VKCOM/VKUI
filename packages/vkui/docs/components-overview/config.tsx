@@ -118,8 +118,8 @@ import {
 } from '../../src';
 import { Playground as AccordionPlayground } from '../../src/components/Accordion/Accordion.stories';
 import { Playground as ActionSheetItemPlayground } from '../../src/components/ActionSheetItem/ActionSheetItem.stories';
-import { AlertContent } from '../../src/components/Alert/Alert';
 import { Playground as AlertPlayground } from '../../src/components/Alert/Alert.stories';
+import { AlertBase } from '../../src/components/Alert/AlertBase';
 import { Playground as AvatarPlayground } from '../../src/components/Avatar/Avatar.stories';
 import { Playground as BadgePlayground } from '../../src/components/Badge/Badge.stories';
 import { Playground as BannerPlayground } from '../../src/components/Banner/Banner.stories';
@@ -335,7 +335,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     component: ScreenSpinnerPreview,
   },
   Alert: {
-    component: AlertContent,
+    component: AlertBase,
     args: {
       ...AlertPlayground.args,
       disabled: true,
