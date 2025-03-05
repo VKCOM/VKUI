@@ -14,6 +14,11 @@ export const SourceButton = () => {
   const [globals] = useGlobals();
 
   const story = index?.[storyId];
+  const storyType = story && 'type' in story && story.type;
+
+  if (storyType === 'docs') {
+    return null;
+  }
   const importPath = story && 'importPath' in story && story.importPath;
 
   if (!importPath || !globals.componentsSourceBaseUrl) {

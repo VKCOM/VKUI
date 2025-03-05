@@ -17,6 +17,7 @@ export const Playground: Story = {
   args: {
     href: 'https://vkcom.github.io/VKUI/#/About',
     children: 'О VKUI',
+    after: <Icon24ExternalLinkOutline width={16} height={16} />,
   },
 };
 
