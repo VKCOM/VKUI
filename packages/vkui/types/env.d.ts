@@ -13,6 +13,7 @@ declare module 'process' {
       interface Process {
         env: {
           readonly NODE_ENV: 'development' | 'production' | 'test';
+          TZ: string;
         };
       }
     }

@@ -14,6 +14,7 @@ const config: Config = {
   displayName: 'unit',
   roots: [path.join(__dirname, 'src')],
   setupFilesAfterEnv: [path.join(__dirname, 'jest.setup.ts')],
+  globalSetup: '<rootDir>/jest.global-setup.ts',
   testRegex: '\\.test\\.tsx?$',
   collectCoverage: true,
   collectCoverageFrom: ['src/*/**/**.{ts,tsx}'],

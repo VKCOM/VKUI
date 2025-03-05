@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { differenceInMilliseconds, endOfToday, isSameDay } from 'date-fns';
+import { differenceInMilliseconds, isSameDay, startOfTomorrow } from 'date-fns';
 import { useDOM } from '../lib/dom';
 
 /**
@@ -15,46 +15,49 @@ export function useTodayDate(listenDayChangesForUpdate = false): Date {
   const { document, window } = useDOM();
   const [todayDate, setTodayDate] = React.useState(() => new Date());
 
-  React.useEffect(() => {
-    if (!listenDayChangesForUpdate || !document || !window) {
-      return;
-    }
-
-    let timeout: number | undefined = undefined;
-
-    const recalcTimeout = () => {
-      if (document.visibilityState === 'visible') {
-        const now = new Date();
-
-        const timeToDayChange = differenceInMilliseconds(endOfToday(), now);
-
-        // Удаляем старый таймаут
-        window.clearTimeout(timeout);
-
-        // Создаем новый таймаут
-        timeout = window.setTimeout(() => {
-          setTodayDate(now);
-        }, timeToDayChange);
-
-        // Если todayDate не обновился в таймаут - обновить при заходе на вкладку
-        if (!isSameDay(todayDate, now)) {
-          setTodayDate(now);
-        }
+  React.useEffect(
+    function setupTodaysDateRecalculationListener() {
+      if (!listenDayChangesForUpdate || !document || !window) {
+        return;
       }
-    };
 
-    recalcTimeout();
+      let timeout: number | undefined = undefined;
 
-    // Создаем слушатель visibilitychange, чтобы предотвратить пропуск обновления стейта после заморозки вкладки
-    // Если человек ее долго не трогал или закрывал крышку ноута и тп
-    // https://developer.chrome.com/blog/page-lifecycle-api/
-    document.addEventListener('visibilitychange', recalcTimeout);
+      const recalcTimeout = () => {
+        if (document.visibilityState === 'visible') {
+          const now = new Date();
 
-    return () => {
-      window.clearTimeout(timeout);
-      document.removeEventListener('visibilitychange', recalcTimeout);
-    };
-  }, [document, listenDayChangesForUpdate, todayDate, window]);
+          const timeToDayChange = differenceInMilliseconds(startOfTomorrow(), now);
+
+          // Удаляем старый таймаут
+          window.clearTimeout(timeout);
+
+          // Создаем новый таймаут
+          timeout = window.setTimeout(() => {
+            setTodayDate(new Date());
+          }, timeToDayChange);
+
+          // Если todayDate не обновился в таймаут - обновить при заходе на вкладку
+          if (!isSameDay(todayDate, now)) {
+            setTodayDate(now);
+          }
+        }
+      };
+
+      recalcTimeout();
+
+      // Создаем слушатель visibilitychange, чтобы предотвратить пропуск обновления стейта после заморозки вкладки
+      // Если человек ее долго не трогал или закрывал крышку ноута и тп
+      // https://developer.chrome.com/blog/page-lifecycle-api/
+      document.addEventListener('visibilitychange', recalcTimeout);
+
+      return () => {
+        window.clearTimeout(timeout);
+        document.removeEventListener('visibilitychange', recalcTimeout);
+      };
+    },
+    [document, listenDayChangesForUpdate, todayDate, window],
+  );
 
   return todayDate;
 }
