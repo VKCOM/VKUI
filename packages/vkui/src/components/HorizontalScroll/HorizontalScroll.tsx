@@ -132,8 +132,15 @@ function doScroll({
   const extremeScrollLeft =
     (textDirection === 'ltr' ? 1 : -1) * (initialScrollWidth - scrollElement.offsetWidth);
 
-  let startScrollLeft = roundUpElementScrollLeft(scrollElement);
-  let endScrollLeft = getScrollPosition(startScrollLeft);
+  const startScrollLeft = roundUpElementScrollLeft(scrollElement);
+  const remappedStartScrollLeft = startScrollLeft * (textDirection === 'rtl' ? -1 : 1);
+
+  let endScrollLeft = getScrollPosition(remappedStartScrollLeft);
+
+  const diff = endScrollLeft - remappedStartScrollLeft;
+  if (textDirection === 'rtl') {
+    endScrollLeft = startScrollLeft - diff;
+  }
 
   onScrollStart();
 
@@ -196,11 +203,10 @@ export const HorizontalScroll = ({
   contentWrapperClassName,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
-  const [canScrollRight, setCanScrollRight] = React.useState(false);
+  const [canScrollStart, setCanScrollStart] = React.useState(false);
+  const [canScrollEnd, setCanScrollEnd] = React.useState(false);
   const direction = useConfigDirection();
-  const setCanScrollStart = direction === 'ltr' ? setCanScrollLeft : setCanScrollRight;
-  const setCanScrollEnd = direction === 'ltr' ? setCanScrollRight : setCanScrollLeft;
+  const isRtl = direction === 'rtl';
 
   const isCustomScrollingRef = React.useRef(false);
 
@@ -234,13 +240,13 @@ export const HorizontalScroll = ({
     [scrollerRef, scrollAnimationDuration, direction, setCanScrollEnd],
   );
 
-  const scrollToLeft = React.useCallback(() => {
+  const scrollToStart = React.useCallback(() => {
     const getScrollPosition =
       getScrollToLeft ?? ((i: number) => i - scrollerRef.current!.offsetWidth);
     scrollTo(getScrollPosition);
   }, [getScrollToLeft, scrollTo, scrollerRef]);
 
-  const scrollToRight = React.useCallback(() => {
+  const scrollToEnd = React.useCallback(() => {
     const getScrollPosition =
       getScrollToRight ?? ((i: number) => i + scrollerRef.current!.offsetWidth);
     scrollTo(getScrollPosition);
@@ -249,14 +255,15 @@ export const HorizontalScroll = ({
   const calculateArrowsVisibility = React.useCallback(() => {
     if (showArrows && hasPointer && scrollerRef.current && !isCustomScrollingRef.current) {
       const scrollElement = scrollerRef.current;
+      const scrollLeft = scrollElement.scrollLeft;
 
-      setCanScrollStart(scrollElement.scrollLeft !== 0);
+      setCanScrollStart(isRtl ? scrollLeft < 0 : scrollLeft > 0);
       setCanScrollEnd(
         Math.abs(roundUpElementScrollLeft(scrollElement)) + scrollElement.offsetWidth <
           scrollElement.scrollWidth,
       );
     }
-  }, [showArrows, hasPointer, scrollerRef, setCanScrollStart, setCanScrollEnd]);
+  }, [showArrows, hasPointer, scrollerRef, isRtl]);
 
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
@@ -300,10 +307,11 @@ export const HorizontalScroll = ({
         styles.host,
         'vkuiInternalHorizontalScroll',
         showArrows === 'always' && styles.withConstArrows,
+        isRtl && styles.rtl,
       )}
       onMouseEnter={calculateArrowsVisibility}
     >
-      {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
+      {showArrows && (hasPointer || hasPointer === undefined) && canScrollStart && (
         <ScrollArrow
           data-testid={prevButtonTestId}
           size={arrowSize}
@@ -312,10 +320,10 @@ export const HorizontalScroll = ({
           aria-hidden
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowLeft)}
-          onClick={scrollToLeft}
+          onClick={scrollToStart}
         />
       )}
-      {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
+      {showArrows && (hasPointer || hasPointer === undefined) && canScrollEnd && (
         <ScrollArrow
           data-testid={nextButtonTestId}
           size={arrowSize}
@@ -324,7 +332,7 @@ export const HorizontalScroll = ({
           aria-hidden
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowRight)}
-          onClick={scrollToRight}
+          onClick={scrollToEnd}
         />
       )}
       <div className={styles.in} ref={scrollerRef}>
