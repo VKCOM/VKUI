@@ -33,7 +33,8 @@
   }
 }
 
-.host[disabled] {
+.host[disabled],
+.host[aria-disabled='true'] {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
