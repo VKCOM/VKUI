@@ -1,4 +1,5 @@
 import { lightFormat } from 'date-fns';
+import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 
 export function parse(input: string, format: string, referenceDate: Date = new Date()): Date {
   const match2 = /^\d\d/; // 00 - 99
@@ -111,6 +112,26 @@ export function parse(input: string, format: string, referenceDate: Date = new D
 
   return date;
 }
+
+export const convertDateToTimeZone = (
+  date?: Date | null,
+  timezone?: string,
+): Date | undefined | null => {
+  if (!timezone) {
+    return date;
+  }
+  return date ? toZonedTime(date, timezone) : undefined;
+};
+
+export const convertDateFromTimeZone = (
+  date?: Date | null,
+  timezone?: string,
+): Date | undefined | null => {
+  if (!timezone) {
+    return date;
+  }
+  return date ? fromZonedTime(date, timezone) : undefined;
+};
 
 export function format(date: Date | number, format: string): string {
   return lightFormat(date, format);

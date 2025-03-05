@@ -2,6 +2,7 @@ import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
+import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';
 import { Calendar, type CalendarProps } from './Calendar';
 
 const story: Meta<CalendarProps> = {
@@ -22,6 +23,7 @@ const story: Meta<CalendarProps> = {
       control: false,
     },
     renderDayContent: createCalendarDayRenderField(),
+    timezone: createCalendarTimezoneField(),
   },
 };
 

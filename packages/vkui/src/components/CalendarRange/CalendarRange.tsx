@@ -14,6 +14,7 @@ import {
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
+import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -63,6 +64,7 @@ export interface CalendarRangeProps
   onChange?: (value: DateRangeType | undefined) => void;
   shouldDisableDate?: (value: Date) => boolean;
   onClose?: () => void;
+  timezone?: string;
 }
 
 const getIsDaySelected = (day: Date, value?: DateRangeType) => {
@@ -77,7 +79,7 @@ const getIsDaySelected = (day: Date, value?: DateRangeType) => {
  * @see https://vkcom.github.io/VKUI/#/CalendarRange
  */
 export const CalendarRange = ({
-  value,
+  value: valueProp,
   onChange,
   disablePast,
   disableFuture,
@@ -94,12 +96,21 @@ export const CalendarRange = ({
   nextMonthIcon,
   listenDayChangesForUpdate,
   renderDayContent,
+  timezone,
   dayTestId,
   leftPartHeaderTestsData,
   rightPartHeaderTestsData,
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
+  const value: DateRangeType = React.useMemo(
+    () => [
+      convertDateToTimeZone(valueProp?.[0], timezone) || null,
+      convertDateToTimeZone(valueProp?.[1], timezone) || null,
+    ],
+    [timezone, valueProp],
+  );
+
   const {
     viewDate,
     setViewDate,
@@ -160,10 +171,14 @@ export const CalendarRange = ({
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      onChange?.(getNewValue(date));
+      const newValue = getNewValue(date);
+      onChange?.([
+        convertDateFromTimeZone(newValue[0], timezone) || null,
+        convertDateFromTimeZone(newValue[1], timezone) || null,
+      ]);
       setHintedDate(undefined);
     },
-    [onChange, getNewValue],
+    [getNewValue, onChange, timezone],
   );
 
   const isDaySelected = React.useCallback((day: Date) => getIsDaySelected(day, value), [value]);

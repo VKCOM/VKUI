@@ -5,6 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
+import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -91,6 +92,7 @@ export interface CalendarProps
    * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
   maxDateTime?: Date;
+  timezone?: string;
 }
 
 const warn = warnOnce('Calendar');
@@ -100,7 +102,7 @@ const warn = warnOnce('Calendar');
  */
 export const Calendar = ({
   getRootRef,
-  value,
+  value: valueProp,
   onChange,
   disablePast,
   disableFuture,
@@ -135,6 +137,7 @@ export const Calendar = ({
   renderDayContent,
   minDateTime,
   maxDateTime,
+  timezone,
   minutesTestId,
   hoursTestId,
   doneButtonTestId,
@@ -145,6 +148,11 @@ export const Calendar = ({
   dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
+  const value: Date | undefined = React.useMemo(
+    () => convertDateToTimeZone(valueProp, timezone) || undefined,
+    [timezone, valueProp],
+  );
+
   const {
     viewDate,
     setViewDate,
@@ -183,6 +191,13 @@ export const Calendar = ({
     warn("Нельзя включить выбор времени, если размер календаря 's'", 'error');
   }
 
+  const _onChange = React.useCallback(
+    (date: Date | undefined) => {
+      onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
+    },
+    [onChange, timezone],
+  );
+
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
@@ -205,9 +220,9 @@ export const Calendar = ({
       if (minDateTime || maxDateTime) {
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
-      onChange?.(actualDate);
+      _onChange(actualDate);
     },
-    [value, onChange, maxDateTime, minDateTime],
+    [value, minDateTime, maxDateTime, _onChange],
   );
 
   const isDayActive = React.useCallback(
@@ -268,7 +283,7 @@ export const Calendar = ({
         <div className={styles.time}>
           <CalendarTime
             value={value}
-            onChange={onChange}
+            onChange={_onChange}
             onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
             doneButtonDisabled={doneButtonDisabled}

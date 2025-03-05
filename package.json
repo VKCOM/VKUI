@@ -8,7 +8,8 @@
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0",
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0",
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0",
-    "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
+    "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0",
+    "date-fns-tz": "^3.2.0"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "3.0.0",

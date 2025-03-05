@@ -2,6 +2,7 @@ import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
+import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { DateRangeInput, type DateRangeInputProps } from './DateRangeInput';
 
@@ -39,6 +40,7 @@ const story: Meta<StoryDateRangeInputProps> = {
     before: iconsPresets,
     after: iconsPresets,
     renderDayContent: createCalendarDayRenderField(),
+    timezone: createCalendarTimezoneField(),
   },
 };
 

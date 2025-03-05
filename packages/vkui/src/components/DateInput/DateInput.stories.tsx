@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
+import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { DateInput, type DateInputProps } from './DateInput';
 
@@ -20,6 +21,7 @@ const story: Meta<DateInputProps> = {
     before: iconsPresets,
     renderDayContent: createCalendarDayRenderField(),
     renderCustomValue: StringArg,
+    timezone: createCalendarTimezoneField(),
   },
 };
 
