@@ -4,6 +4,7 @@ import {
   AdaptivityProvider,
   AppRoot,
   ConfigProvider,
+  Counter,
   Flex,
   Footer,
   Group,
@@ -35,7 +36,12 @@ const ComponentsOverview = () => {
         {Object.entries(config).map(([groupKey, groupData]) => {
           return (
             <Flex key={groupKey} direction="column" gap="xl">
-              <Title level="2">{groupData.title}</Title>
+              <Flex align="center" gap="m">
+                <Title level="2">{groupData.title}</Title>
+                <Counter size="m" mode="primary" appearance="accent-red">
+                  {groupData.components.length}
+                </Counter>
+              </Flex>
               <div className={styles.cardsContainer}>
                 {groupData.components.map((componentName) => (
                   <ComponentOverviewCardWrapper
