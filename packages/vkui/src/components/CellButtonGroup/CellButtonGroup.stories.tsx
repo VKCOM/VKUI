@@ -1,0 +1,28 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import { noop } from '@vkontakte/vkjs';
+import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { CellButton } from '../CellButton/CellButton';
+import { CellButtonGroup, type CellButtonGroupProps } from './CellButtonGroup';
+
+const story: Meta<CellButtonGroupProps> = {
+  title: 'Blocks/CellButtonGroup',
+  component: CellButtonGroup,
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+};
+
+export default story;
+
+type Story = StoryObj<CellButtonGroupProps>;
+
+export const Playground: Story = {
+  render: (args) => (
+    <CellButtonGroup {...args}>
+      <CellButton onClick={noop} appearance="negative" centered>
+        Пожаловаться
+      </CellButton>
+      <CellButton onClick={noop} centered>
+        Отмена
+      </CellButton>
+    </CellButtonGroup>
+  ),
+};
