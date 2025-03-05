@@ -132,6 +132,8 @@ import { Playground as CardGridPlayground } from '../../src/components/CardGrid/
 import { Playground as CardScrollPlayground } from '../../src/components/CardScroll/CardScroll.stories';
 import { Playground as CellPlayground } from '../../src/components/Cell/Cell.stories';
 import { Playground as CellButtonPlayground } from '../../src/components/CellButton/CellButton.stories';
+import { CellButtonGroup } from '../../src/components/CellButtonGroup/CellButtonGroup';
+import { Playground as CellButtonGroupPlayground } from '../../src/components/CellButtonGroup/CellButtonGroup.stories';
 import { Playground as CheckboxPlayground } from '../../src/components/Checkbox/Checkbox.stories';
 import { Playground as ChipsInputPlayground } from '../../src/components/ChipsInput/ChipsInput.stories';
 import { Playground as ChipPlayground } from '../../src/components/ChipsInputBase/Chip/Chip.stories';
@@ -807,6 +809,13 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
       before: <Icon28AddOutline />,
     },
   },
+  CellButtonGroup: {
+    component: CellButtonGroup,
+    playgroundRender: CellButtonGroupPlayground.render,
+    args: CellButtonGroupPlayground.args,
+    decorator: Group,
+    minWidth: 300,
+  },
   Cell: {
     component: Cell,
     playgroundRender: CellPlayground.render,
@@ -1068,6 +1077,7 @@ export const CONFIG: Record<string, { title: string; components: string[] }> = {
       'CardScroll',
       'Cell',
       'CellButton',
+      'CellButtonGroup',
       'ContentBadge',
       'ContentCard',
       'Counter',
