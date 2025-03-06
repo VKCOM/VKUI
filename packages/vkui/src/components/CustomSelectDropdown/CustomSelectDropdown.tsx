@@ -58,6 +58,7 @@ export const CustomSelectDropdown = ({
       )}
       usePortal={forcePortal}
       autoUpdateOnTargetResize
+      flipMiddlewareFallbackAxisSideDirection="none"
       {...restProps}
     >
       <CustomScrollView
