@@ -92,6 +92,9 @@ export interface CalendarProps
    * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
   maxDateTime?: Date;
+  /**
+   * Свойство для отображения времени в нужной таймзоне
+   */
   timezone?: string;
 }
 

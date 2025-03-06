@@ -112,6 +112,9 @@ export interface DateInputProps
    * Позволяет переопределить стандартное отображение даты и вернуть собственное представление.
    */
   renderCustomValue?: (date: Date | undefined) => React.ReactNode;
+  /**
+   * Свойство для отображения времени в нужной таймзоне
+   */
   timezone?: string;
 }
 
