@@ -1,5 +1,5 @@
+import { TZDateMini } from '@date-fns/tz';
 import { lightFormat } from 'date-fns';
-import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 
 export function parse(input: string, format: string, referenceDate: Date = new Date()): Date {
   const match2 = /^\d\d/; // 00 - 99
@@ -120,7 +120,7 @@ export const convertDateToTimeZone = (
   if (!timezone) {
     return date;
   }
-  return date ? toZonedTime(date, timezone) : undefined;
+  return date ? TZDateMini.tz(timezone, date) : undefined;
 };
 
 export const convertDateFromTimeZone = (
@@ -130,7 +130,9 @@ export const convertDateFromTimeZone = (
   if (!timezone) {
     return date;
   }
-  return date ? fromZonedTime(date, timezone) : undefined;
+  // eslint-disable-next-line new-cap
+  const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return date ? TZDateMini.tz(systemTimezone, date) : undefined;
 };
 
 export function format(date: Date | number, format: string): string {
