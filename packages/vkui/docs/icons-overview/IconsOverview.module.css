@@ -1,27 +1,5 @@
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(#storybook-docs) > :global(.sbdocs) {
-  background: inherit;
-}
-
 .host {
   --vkui_internal--IconsOverview_icons_color: var(--vkui--color_text_primary_invariably);
-}
-
-.header {
-  position: sticky;
-  inset-block-start: 0;
-  z-index: 1;
-  box-sizing: border-box;
-  inline-size: calc(100% + 20px);
-  padding-inline: 10px;
-  margin-block-end: var(--vkui--spacing_size_xl);
-  margin-inline-start: -10px;
-  background: var(--vkui--color_background);
-}
-
-/* stylelint-disable-next-line selector-max-universal */
-.header > * {
-  inline-size: 100%;
 }
 
 .icon {

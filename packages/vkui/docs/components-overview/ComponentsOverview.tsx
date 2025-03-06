@@ -1,17 +1,8 @@
 'use client';
 
-import {
-  AdaptivityProvider,
-  AppRoot,
-  ConfigProvider,
-  Counter,
-  Flex,
-  Footer,
-  Group,
-  Search,
-  Spinner,
-  Title,
-} from '../../src';
+import { useMemo } from 'react';
+import { AdaptivityProvider, AppRoot, ConfigProvider } from '../../src';
+import { OverviewLayout } from '../common/components/OverviewLayout';
 import { useGetConfigByQuery } from '../common/hooks/useGetConfigByQuery';
 import { useGetGlobalParams } from '../common/hooks/useGetGlobalParams';
 import { ComponentOverviewCardWrapper } from './components/ComponentOverviewCardWrapper';
@@ -45,43 +36,31 @@ const ComponentsOverview = () => {
     onUpdateQuery,
   } = useGetConfigByQuery(CONFIG, filterConfig);
 
+  const sections = useMemo(
+    () =>
+      Object.values(config).map((groupData) => ({
+        title: groupData.title,
+        items: groupData.components,
+      })),
+    [config],
+  );
+
   return (
-    <>
-      <Flex direction="column" gap="2xl" align="start" className={styles.header}>
-        <Title>Витрина компонентов</Title>
-
-        <Group separator="hide">
-          <Search noPadding onChange={onUpdateQuery} />
-        </Group>
-      </Flex>
-
-      <Flex direction="column" gap="3xl">
-        {loading && <Spinner />}
-        {!loading && !Object.values(config).length && <Footer>Ничего не найдено</Footer>}
-        {Object.entries(config).map(([groupKey, groupData]) => {
-          return (
-            <Flex key={groupKey} direction="column" gap="xl">
-              <Flex align="center" gap="m">
-                <Title level="2">{groupData.title}</Title>
-                <Counter size="m" mode="primary" appearance="accent-red">
-                  {groupData.components.length}
-                </Counter>
-              </Flex>
-              <div className={styles.cardsContainer}>
-                {groupData.components.map((componentName) => (
-                  <ComponentOverviewCardWrapper
-                    key={componentName}
-                    searchedQuery={searchedQuery}
-                    componentName={componentName}
-                    groupTitle={groupData.title}
-                  />
-                ))}
-              </div>
-            </Flex>
-          );
-        })}
-      </Flex>
-    </>
+    <OverviewLayout
+      title="Витрина компонентов"
+      loading={loading}
+      onUpdateQuery={onUpdateQuery}
+      sections={sections}
+      ItemsContainer={({ children }) => <div className={styles.cardsContainer}>{children}</div>}
+      renderSectionItem={(componentName, groupData) => (
+        <ComponentOverviewCardWrapper
+          key={componentName}
+          searchedQuery={searchedQuery}
+          componentName={componentName}
+          groupTitle={groupData.title}
+        />
+      )}
+    />
   );
 };
 

@@ -2,20 +2,19 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Spinner } from '../../../src';
 import { useGlobalEventListener } from '../../../src/hooks/useGlobalEventListener';
 import { useDOM } from '../../../src/lib/dom';
-import { type CONFIG, type ConfigData } from '../config';
 
 const SPINNER_HEIGHT = 24;
 const WINDOW_PADDING_BOTTOM = 64;
 
-export const useInfiniteList = (config: ConfigData[]) => {
-  const [showedConfig, setShowedConfig] = useState<typeof CONFIG>([]);
+export const useInfiniteList = <Section,>(config: Section[]) => {
+  const [showedSections, setShowedSections] = useState<Section[]>([]);
   const { window, document } = useDOM();
   const configRef = useRef(config);
 
   useEffect(
     function resetShowedConfig() {
       configRef.current = config;
-      setShowedConfig(config.slice(0, 1));
+      setShowedSections(config.slice(0, 1));
     },
     [config],
   );
@@ -34,15 +33,15 @@ export const useInfiniteList = (config: ConfigData[]) => {
     const isVisible = pageYOffset >= maxScrollTop;
 
     if (isVisible) {
-      setShowedConfig(configRef.current.slice(0, showedConfig.length + 1));
+      setShowedSections(configRef.current.slice(0, showedSections.length + 1));
     }
-  }, [window, document, showedConfig]);
+  }, [window, document, showedSections]);
 
   useGlobalEventListener(window, 'scroll', handleScroll);
   useEffect(handleScroll, [handleScroll]);
 
   return {
-    showedConfig,
-    showMoreElement: showedConfig.length < config.length && <Spinner />,
+    showedSections,
+    showMoreElement: showedSections.length < config.length && <Spinner />,
   };
 };
