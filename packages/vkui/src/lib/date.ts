@@ -1,3 +1,4 @@
+import { TZDateMini } from '@date-fns/tz';
 import { lightFormat } from 'date-fns';
 
 export function parse(input: string, format: string, referenceDate: Date = new Date()): Date {
@@ -111,6 +112,28 @@ export function parse(input: string, format: string, referenceDate: Date = new D
 
   return date;
 }
+
+export const convertDateToTimeZone = (
+  date?: Date | null,
+  timezone?: string,
+): Date | undefined | null => {
+  if (!timezone) {
+    return date;
+  }
+  return date ? TZDateMini.tz(timezone, date) : undefined;
+};
+
+export const convertDateFromTimeZone = (
+  date?: Date | null,
+  timezone?: string,
+): Date | undefined | null => {
+  if (!timezone) {
+    return date;
+  }
+  // eslint-disable-next-line new-cap
+  const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return date ? TZDateMini.tz(systemTimezone, date) : undefined;
+};
 
 export function format(date: Date | number, format: string): string {
   return lightFormat(date, format);
