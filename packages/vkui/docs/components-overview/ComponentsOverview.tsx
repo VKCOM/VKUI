@@ -12,13 +12,38 @@ import {
   Spinner,
   Title,
 } from '../../src';
+import { useGetConfigByQuery } from '../common/hooks/useGetConfigByQuery';
+import { useGetGlobalParams } from '../common/hooks/useGetGlobalParams';
 import { ComponentOverviewCardWrapper } from './components/ComponentOverviewCardWrapper';
-import { useGetConfigByQuery } from './hooks/useGetConfigByQuery';
-import { useGetGlobalParams } from './hooks/useGetGlobalParams';
+import { CONFIG } from './config';
 import styles from './ComponentsOverview.module.css';
 
+const filterConfig = (config: typeof CONFIG, query: string) => {
+  if (!query) {
+    return config;
+  }
+  const resultConfig: typeof CONFIG = {};
+  Object.entries(config).forEach(([groupKey, groupData]) => {
+    const validComponents = groupData.components.filter((componentName) => {
+      return componentName.toLowerCase().includes(query.toLowerCase());
+    });
+    if (validComponents.length) {
+      resultConfig[groupKey] = {
+        title: groupData.title,
+        components: validComponents,
+      };
+    }
+  });
+  return resultConfig;
+};
+
 const ComponentsOverview = () => {
-  const { query: searchedQuery, config, loading, onUpdateQuery } = useGetConfigByQuery();
+  const {
+    query: searchedQuery,
+    config,
+    loading,
+    onUpdateQuery,
+  } = useGetConfigByQuery(CONFIG, filterConfig);
 
   return (
     <>
