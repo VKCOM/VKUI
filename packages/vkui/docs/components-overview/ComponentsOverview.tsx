@@ -1,9 +1,7 @@
 'use client';
 
-import { useMemo } from 'react';
 import { AdaptivityProvider, AppRoot, ConfigProvider } from '../../src';
 import { OverviewLayout } from '../common/components/OverviewLayout';
-import { useGetConfigByQuery } from '../common/hooks/useGetConfigByQuery';
 import { useGetGlobalParams } from '../common/hooks/useGetGlobalParams';
 import { ComponentOverviewCardWrapper } from './components/ComponentOverviewCardWrapper';
 import { CONFIG } from './config';
@@ -29,33 +27,21 @@ const filterConfig = (config: typeof CONFIG, query: string) => {
 };
 
 const ComponentsOverview = () => {
-  const {
-    query: searchedQuery,
-    config,
-    loading,
-    onUpdateQuery,
-  } = useGetConfigByQuery(CONFIG, filterConfig);
-
-  const sections = useMemo(
-    () =>
-      Object.values(config).map((groupData) => ({
-        title: groupData.title,
-        items: groupData.components,
-      })),
-    [config],
-  );
-
   return (
     <OverviewLayout
       title="Витрина компонентов"
-      loading={loading}
-      onUpdateQuery={onUpdateQuery}
-      sections={sections}
+      config={CONFIG}
+      filterConfig={filterConfig}
+      remapConfigToSections={(config) =>
+        Object.values(config).map((groupData) => ({
+          title: groupData.title,
+          items: groupData.components,
+        }))
+      }
       ItemsContainer={({ children }) => <div className={styles.cardsContainer}>{children}</div>}
       renderSectionItem={(componentName, groupData) => (
         <ComponentOverviewCardWrapper
           key={componentName}
-          searchedQuery={searchedQuery}
           componentName={componentName}
           groupTitle={groupData.title}
         />

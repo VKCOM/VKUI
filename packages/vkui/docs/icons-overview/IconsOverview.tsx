@@ -1,6 +1,6 @@
 'use client';
 
-import { type KeyboardEvent, type ReactNode, useCallback, useMemo, useRef, useState } from 'react';
+import { type KeyboardEvent, type ReactNode, useCallback, useRef, useState } from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
@@ -18,7 +18,6 @@ import {
 import { FlexItem } from '../../src/components/Flex/FlexItem/FlexItem';
 import { Keys, pressedKey } from '../../src/lib/accessibility';
 import { OverviewLayout } from '../common/components/OverviewLayout';
-import { useGetConfigByQuery } from '../common/hooks/useGetConfigByQuery';
 import { useGetGlobalParams } from '../common/hooks/useGetGlobalParams';
 import { ColorPickerControl } from './components/ColorPickerControl';
 import { CONFIG, type ConfigData, ICON_SIZES } from './config';
@@ -67,8 +66,6 @@ const IconsOverview = () => {
     [selectedSizes],
   );
 
-  const { config, loading, onUpdateQuery } = useGetConfigByQuery(CONFIG, _filterConfig);
-
   const onIconClick = (iconName: string) => {
     const iconCode = `<${iconName} />`;
 
@@ -99,22 +96,18 @@ const IconsOverview = () => {
     }
   }, []);
 
-  const sections = useMemo(
-    () =>
-      config.map((configItem) => ({
-        title: configItem.size,
-        items: configItem.icons,
-      })),
-    [config],
-  );
-
   return (
     <div className={styles.host} ref={rootRef}>
       <OverviewLayout
         title="Витрина иконок"
-        loading={loading}
-        onUpdateQuery={onUpdateQuery}
-        sections={sections}
+        config={CONFIG}
+        filterConfig={_filterConfig}
+        remapConfigToSections={(config) =>
+          config.map((configItem) => ({
+            title: configItem.size,
+            items: configItem.icons,
+          }))
+        }
         ItemsContainer={({ children }) => <Flex gap={['2xl', 'xl']}>{children}</Flex>}
         renderSectionItem={(iconData, iconSizeData) => (
           <Tooltip key={iconData.name} title={iconData.name} strategy="absolute">

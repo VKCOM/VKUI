@@ -38,7 +38,7 @@ export const useInfiniteList = <Section,>(config: Section[]) => {
   }, [window, document, showedSections]);
 
   useGlobalEventListener(window, 'scroll', handleScroll);
-  useEffect(handleScroll, [handleScroll]);
+  useEffect(() => handleScroll(), [handleScroll]);
 
   return {
     showedSections,

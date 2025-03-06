@@ -1,7 +1,7 @@
 .container {
   position: fixed;
   inset-block-end: 24px;
-  inset-inline-end: 24px;
+  inset-inline-start: 24px;
   inline-size: 56px;
   block-size: 56px;
   cursor: pointer;
