@@ -8,13 +8,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
-import {
-  convertDateFromTimeZone,
-  convertDateToTimeZone,
-  format,
-  isMatch,
-  parse,
-} from '../../lib/date';
+import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import type { HasRootRef } from '../../types';
 import {
@@ -103,7 +97,6 @@ export interface DateRangeInputProps
   changeEndMonthLabel?: string;
   changeEndYearLabel?: string;
   disableCalendar?: boolean;
-  timezone?: string;
 }
 
 const elementsConfig = (index: number) => {
@@ -153,7 +146,7 @@ export const DateRangeInput = ({
   shouldDisableDate,
   disableFuture,
   disablePast,
-  value: valueProp,
+  value,
   onChange,
   calendarPlacement = 'bottom-start',
   style,
@@ -182,7 +175,6 @@ export const DateRangeInput = ({
   prevMonthIcon,
   nextMonthIcon,
   disableCalendar = false,
-  timezone,
   onCalendarOpenChanged,
   renderDayContent,
   calendarTestsProps,
@@ -197,27 +189,6 @@ export const DateRangeInput = ({
   const daysEndRef = React.useRef<HTMLSpanElement>(null);
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
-
-  const value: DateRangeType = React.useMemo(
-    () => [
-      convertDateToTimeZone(valueProp?.[0], timezone) || null,
-      convertDateToTimeZone(valueProp?.[1], timezone) || null,
-    ],
-    [timezone, valueProp],
-  );
-
-  const _onChange: Exclude<DateRangeInputProps['onChange'], undefined> = React.useCallback(
-    (newValue) => {
-      if (!newValue) {
-        return onChange?.(newValue);
-      }
-      onChange?.([
-        convertDateFromTimeZone(newValue[0], timezone) || null,
-        convertDateFromTimeZone(newValue[1], timezone) || null,
-      ]);
-    },
-    [onChange, timezone],
-  );
 
   const onInternalValueChange = React.useCallback(
     (internalValue: string[]) => {
@@ -257,10 +228,10 @@ export const DateRangeInput = ({
         ? parse(formattedEndValue, mask, (valueExists && value?.[1]) || now)
         : null;
       if (start && end && isAfter(end, start)) {
-        _onChange([start, end]);
+        onChange?.([start, end]);
       }
     },
-    [_onChange, value],
+    [onChange, value],
   );
 
   const refs = React.useMemo(
@@ -286,7 +257,7 @@ export const DateRangeInput = ({
     autoFocus,
     disabled,
     elementsConfig,
-    onChange: _onChange,
+    onChange,
     onInternalValueChange,
     getInternalValue,
     value,
@@ -299,12 +270,12 @@ export const DateRangeInput = ({
 
   const onCalendarChange = React.useCallback(
     (newValue: DateRangeType | undefined) => {
-      _onChange(newValue);
+      onChange?.(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
         removeFocusFromField();
       }
     },
-    [_onChange, closeOnChange, value, removeFocusFromField],
+    [onChange, closeOnChange, value, removeFocusFromField],
   );
 
   return (
