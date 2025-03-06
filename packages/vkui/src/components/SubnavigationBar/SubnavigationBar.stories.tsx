@@ -1,7 +1,9 @@
-import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Icon24FavoriteOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { useCustomArgs } from '../../testing/useCustomArgs';
+import { Counter } from '../Counter/Counter';
 import { Group } from '../Group/Group';
 import { SubnavigationButton } from '../SubnavigationButton/SubnavigationButton';
 import {
@@ -31,7 +33,7 @@ type Story = StoryObj<StorySubnavigationBarProps>;
 
 export const Playground: Story = {
   render: function Render({ selected, ...args }) {
-    const [, updateArg] = useArgs();
+    const [, updateArg] = useCustomArgs();
 
     return (
       <SubnavigationBar {...args}>
@@ -42,11 +44,13 @@ export const Playground: Story = {
         />
         <SubnavigationButton
           {...IconSubnavigationButtonStory.args}
+          before={<Icon24FavoriteOutline />}
           selected={selected === 'favorite'}
           onClick={() => updateArg({ selected: 'favorite' })}
         />
         <SubnavigationButton
           {...CounterSubnavigationButtonStory.args}
+          after={<Counter size="s">3</Counter>}
           selected={selected === 'filters'}
           onClick={() => updateArg({ selected: 'filters' })}
         />

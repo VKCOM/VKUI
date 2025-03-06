@@ -56,7 +56,7 @@ export default story;
 
 type Story = StoryObj<ModalCardProps>;
 
-export const SimpleCard: Story = {
+export const Playground: Story = {
   args: {
     id: 'modal-card',
     open: true,
