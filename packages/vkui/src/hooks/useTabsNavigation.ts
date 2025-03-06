@@ -13,7 +13,9 @@ export function useTabsNavigation(enabled = true, isRtl = false) {
 
     return Array.from(
       // eslint-disable-next-line no-restricted-properties
-      tabsRef.current.querySelectorAll<HTMLDivElement>('[role=tab]:not([disabled])'),
+      tabsRef.current.querySelectorAll<HTMLDivElement>(
+        `[role=tab]:not([disabled]):not([aria-disabled='true'])`,
+      ),
     );
   };
 
