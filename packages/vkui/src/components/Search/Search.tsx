@@ -40,6 +40,10 @@ export interface SearchProps
   iconLabel?: string;
   clearLabel?: string;
   /**
+   * Передает атрибут `data-testid` для кнопки очистки
+   */
+  clearButtonTestId?: string;
+  /**
    * Удаляет отступы у компонента
    */
   noPadding?: boolean;
@@ -70,6 +74,7 @@ export const Search = ({
   onChange,
   iconLabel,
   clearLabel = 'Очистить',
+  clearButtonTestId,
   noPadding,
   getRootRef,
   findButtonText = 'Найти',
@@ -215,6 +220,7 @@ export const Search = ({
             className={styles.icon}
             tabIndex={hasValue ? undefined : -1}
             disabled={inputProps.disabled}
+            data-testid={clearButtonTestId}
           >
             <VisuallyHidden>{clearLabel}</VisuallyHidden>
             {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
