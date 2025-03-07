@@ -1,7 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { useMemo } from 'react';
+import {
+  createRef,
+  type CSSProperties,
+  memo,
+  type RefObject,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react';
 import { Counter, Flex, Footer, Group, Search, Spinner, Title } from '../../../src';
 import { useStableCallback } from '../../../src/hooks/useStableCallback';
 import { type HasChildren } from '../../../src/types';
@@ -12,6 +20,7 @@ import { OverviewLayoutContext } from './OverviewLayoutContext';
 import styles from './OverviewLayout.module.css';
 
 interface Section<T> {
+  id: string;
   title: string;
   items: T[];
 }
@@ -35,6 +44,8 @@ export const OverviewLayout = <CONFIG, ITEM>({
   renderSectionItem: renderSectionItemProp,
   additionalHeaderItem,
 }: OverviewLayoutProps<CONFIG, ITEM>) => {
+  const sectionsContainerRef = useRef<HTMLElement | null>(null);
+  const sectionsRefs = useRef<Record<string, RefObject<HTMLDivElement | null>>>({});
   const remapConfigToSections = useStableCallback(remapConfigToSectionsProp);
   const renderSectionItem = useStableCallback(renderSectionItemProp);
 
@@ -42,7 +53,17 @@ export const OverviewLayout = <CONFIG, ITEM>({
 
   const sections = useMemo(() => remapConfigToSections(config), [config, remapConfigToSections]);
 
-  const { showedSections, showMoreElement } = useInfiniteList(sections);
+  const { remappedSections, showMoreElement } = useInfiniteList(
+    sections,
+    sectionsRefs.current,
+    sectionsContainerRef,
+  );
+
+  const onSectionRef = useCallback((element: HTMLElement | null, id: string) => {
+    const ref = createRef<HTMLDivElement>();
+    ref.current = element as HTMLDivElement;
+    sectionsRefs.current[id] = ref;
+  }, []);
 
   return (
     <OverviewLayoutContext.Provider value={{ searchedQuery: query }}>
@@ -56,21 +77,22 @@ export const OverviewLayout = <CONFIG, ITEM>({
         {additionalHeaderItem}
       </Flex>
 
-      <Flex direction="column" gap="3xl">
+      <Flex direction="column" gap="3xl" getRootRef={sectionsContainerRef}>
         {loading && <Spinner />}
-        {!loading && showedSections.length === 0 && <Footer>Ничего не найдено</Footer>}
-        {showedSections.map((section) => (
-          <Flex key={section.title} direction="column" gap="xl">
-            <Flex align="center" gap="m">
-              <Title level="2">{section.title}</Title>
-              <Counter size="m" mode="primary" appearance="accent-red">
-                {section.items.length}
-              </Counter>
-            </Flex>
-            <ItemsContainer>
-              {section.items.map((item) => renderSectionItem(item, section))}
-            </ItemsContainer>
-          </Flex>
+        {!loading && sections.length === 0 && <Footer>Ничего не найдено</Footer>}
+        {remappedSections.map(({ minHeight, hidden, ...section }) => (
+          <Section
+            key={section.id}
+            hidden={hidden}
+            sectionData={section}
+            onSectionRef={onSectionRef}
+            style={{ minHeight }}
+            ItemsRenderer={({ section }) => (
+              <ItemsContainer>
+                {section.items.map((item) => renderSectionItem(item, section))}
+              </ItemsContainer>
+            )}
+          />
         ))}
       </Flex>
       <GoToUpButton />
@@ -78,3 +100,48 @@ export const OverviewLayout = <CONFIG, ITEM>({
     </OverviewLayoutContext.Provider>
   );
 };
+
+const Section = memo<{
+  style?: CSSProperties;
+  sectionData: Section<any>;
+  hidden?: boolean;
+  onSectionRef: (element: HTMLElement | null, id: string) => void;
+  ItemsRenderer: React.ComponentType<{ section: Section<any> }>;
+}>(
+  ({ style, hidden, sectionData, onSectionRef, ItemsRenderer }) => {
+    const _onSectionRef = useCallback(
+      (element: HTMLElement | null) => {
+        onSectionRef(element, sectionData.id);
+      },
+      [sectionData.id, onSectionRef],
+    );
+
+    return (
+      <Flex direction="column" gap="xl" getRootRef={_onSectionRef} style={style}>
+        {hidden ? null : (
+          <>
+            <Flex align="center" gap="m">
+              <Title level="2">{sectionData.title}</Title>
+              <Counter size="m" mode="primary" appearance="accent-red">
+                {sectionData.items.length}
+              </Counter>
+            </Flex>
+            <ItemsRenderer section={sectionData} />
+          </>
+        )}
+      </Flex>
+    );
+  },
+  (oldProps, newProps) => {
+    // Добавляем кастомное сравнение пропов, чтобы максимально уменьшить количество перерисовок компонентов
+    return (
+      oldProps.sectionData.id === newProps.sectionData.id &&
+      oldProps.sectionData.items.length === newProps.sectionData.items.length &&
+      oldProps.onSectionRef === newProps.onSectionRef &&
+      oldProps.hidden === newProps.hidden &&
+      oldProps.style?.minHeight === newProps.style?.minHeight
+    );
+  },
+);
+
+Section.displayName = 'Section';

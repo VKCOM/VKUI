@@ -104,6 +104,7 @@ const IconsOverview = () => {
         filterConfig={_filterConfig}
         remapConfigToSections={(config) =>
           config.map((configItem) => ({
+            id: configItem.size,
             title: configItem.size,
             items: configItem.icons,
           }))

@@ -34,6 +34,7 @@ const ComponentsOverview = () => {
       filterConfig={filterConfig}
       remapConfigToSections={(config) =>
         Object.values(config).map((groupData) => ({
+          id: groupData.title,
           title: groupData.title,
           items: groupData.components,
         }))

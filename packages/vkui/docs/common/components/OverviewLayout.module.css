@@ -22,15 +22,15 @@
 
 .upButton {
   position: fixed;
-  z-index: 100;
   inset-block-end: 24px;
   inset-inline-end: 24px;
+  z-index: 100;
   border-radius: 50%;
   opacity: 1;
   transition: 0.3s ease;
 }
 
 .hidden {
-  opacity: 0;
   pointer-events: none;
+  opacity: 0;
 }
