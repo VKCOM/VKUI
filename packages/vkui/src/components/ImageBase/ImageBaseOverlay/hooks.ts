@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { hasMouse as hasPointerLib } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusWithin } from '../../../hooks/useFocusWithin';
+import { useIsClient } from '../../../hooks/useIsClient';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 
 export function useNonInteractiveOverlayProps(rootRef: React.RefObject<HTMLElement | null>) {
@@ -23,4 +26,32 @@ export function useNonInteractiveOverlayProps(rootRef: React.RefObject<HTMLEleme
     shown: nonInteractiveFocusShown && focusWithin,
     onClick,
   };
+}
+
+/*
+ * Определям значение по умолчанию для свойства visibility.
+ *
+ * Задача состоит в том, чтобы правильно рендерить Overlay.
+ * Для устройств с мышкой, мы можем показывать его по наведению,
+ * а для остальных устройств он должен быть виден всегда.
+ *
+ * Задача в том, чтобы избежать проблем при гидратации,
+ * и отложить использование значения `always`, пока мы точно не уверены, что у пользоватея действительно нет мышки.
+ * Иначе Overlay при первом рендере может показаться, а потом исчезнуть.
+ *
+ * Основано на хуке `useAdaptivityHasPointer`, но если при первом рендере мы точно не знаем значения hasPointer, то возвращаем `on-hover`.
+ * */
+export function useCalculatedDefaultVisibility() {
+  const { hasPointer: hasPointerContext } = useAdaptivity();
+
+  const needTwoPassRendering = hasPointerContext === undefined;
+  const isClient = useIsClient(!needTwoPassRendering);
+
+  if (!isClient && hasPointerContext === undefined) {
+    return 'on-hover';
+  }
+
+  const hasPointer = hasPointerContext ?? hasPointerLib;
+
+  return hasPointer ? 'on-hover' : 'always';
 }
