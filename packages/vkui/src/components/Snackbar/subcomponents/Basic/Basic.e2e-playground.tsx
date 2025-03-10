@@ -62,6 +62,10 @@ export const BasicPlayground = (props: ComponentPlaygroundProps) => {
             </Button>,
           ],
         },
+        {
+          children: ['ОченьДлинныйТекстКоторыйНеДолженВылазитьЗаПределыКомпонента'],
+          subtitle: ['ОченьДлинныйТекстКоторыйНеДолженВылазитьЗаПределыКомпонента'],
+        },
       ]}
     >
       {(props: SnackbarBasicProps) => <Basic {...props} />}
