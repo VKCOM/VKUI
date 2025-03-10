@@ -2324,12 +2324,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/bundle-analyzer@npm:15.2.0":
-  version: 15.2.0
-  resolution: "@next/bundle-analyzer@npm:15.2.0"
+"@next/bundle-analyzer@npm:15.2.1":
+  version: 15.2.1
+  resolution: "@next/bundle-analyzer@npm:15.2.1"
   dependencies:
     webpack-bundle-analyzer: "npm:4.10.1"
-  checksum: 10/e7779604da370a696040f8a3ca7f2859c8e85510176b275f4b7bf712a85bd30bceb83045d2647617390c84018dc1414cf6fb52a1f0a8583c1572941e9f4e4326
+  checksum: 10/2b539876615d482acb686b278cc7849923d1d4f31c884fb9c7bbfa267770a4a0c5ad433dac8ac8061f341e083799e203aeb0583a386f0aa64157cdae2b460451
   languageName: node
   linkType: hard
 
@@ -2679,7 +2679,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@project-docs/website@workspace:website"
   dependencies:
-    "@next/bundle-analyzer": "npm:15.2.0"
+    "@next/bundle-analyzer": "npm:15.2.1"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
     next: "npm:^15.2.0"
