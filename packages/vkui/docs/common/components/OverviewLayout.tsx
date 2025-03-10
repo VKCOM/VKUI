@@ -51,7 +51,10 @@ export const OverviewLayout = <CONFIG, ITEM>({
 
   const { config, loading, onUpdateQuery, query } = useGetConfigByQuery(configProp, filterConfig);
 
-  const sections = useMemo(() => remapConfigToSections(config), [config, remapConfigToSections]);
+  const sections = useMemo(() => {
+    sectionsRefs.current = {};
+    return remapConfigToSections(config);
+  }, [config, remapConfigToSections]);
 
   const { remappedSections, showMoreElement } = useInfiniteList(
     sections,
