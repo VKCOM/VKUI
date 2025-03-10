@@ -16,7 +16,7 @@
     "css-loader": "7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "dotenv": "^16.4.7",
-    "finalhandler": "2.0.0",
+    "finalhandler": "2.1.0",
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
     "playwright": "1.50.1",
