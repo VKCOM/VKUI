@@ -28,9 +28,11 @@
     "@storybook/theming": "8.6.4",
     "@storybook/types": "8.6.4",
     "@swc/core": "*",
+    "storybook": "8.6.4"
+  },
+  "peerDependencies": {
     "react": "*",
     "react-dom": "*",
-    "storybook": "8.6.4",
     "typescript": "*"
   }
 }
