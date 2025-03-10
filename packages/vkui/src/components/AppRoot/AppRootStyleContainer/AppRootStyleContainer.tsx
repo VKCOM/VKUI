@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { useTokensClassName } from '../../../lib/tokens';
+import { useTokensClassName } from '../../../lib/tokens/useTokenClassName';
 import { useConfigProvider } from '../../ConfigProvider/ConfigProviderContext';
 import { RootComponent, type RootComponentProps } from '../../RootComponent/RootComponent';
 import { AppRootContext } from '../AppRootContext';
