@@ -16,7 +16,11 @@ export default story;
 
 type Story = StoryObj<CheckboxProps>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  args: {
+    'aria-label': 'Я учавствую в сборе',
+  },
+};
 
 export const WithText: Story = {
   ...Playground,

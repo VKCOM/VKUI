@@ -25,7 +25,7 @@ export default story;
 
 type Story = StoryObj<PanelProps>;
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render() {
     const [activePanel, setActivePanel] = React.useState('panel1');
 

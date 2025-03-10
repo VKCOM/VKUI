@@ -49,6 +49,8 @@ type Story = StoryObj<TabsItemProps>;
 export const Playground: Story = {
   args: {
     children: 'Сообщества',
+    before: 'Icon20NewsfeedOutline',
+    after: 'Icon16Dropdown',
   },
   decorators: [
     (Component) => (

@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react';
+import { type Meta, type StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import {
   CanvasFullLayout,
@@ -32,5 +32,9 @@ const story: Meta<SnackbarProps> = {
     offsetY: StringArg,
   },
 };
+
+type Story = StoryObj<SnackbarProps>;
+
+export const Playground: Story = {};
 
 export default story;

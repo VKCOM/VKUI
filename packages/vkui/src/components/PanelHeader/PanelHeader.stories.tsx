@@ -39,7 +39,7 @@ export default story;
 
 type Story = StoryObj<PanelHeaderProps>;
 
-export const SimplePanelHeader: Story = {
+export const Playground: Story = {
   render: () => (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">

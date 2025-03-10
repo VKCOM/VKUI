@@ -1,0 +1,44 @@
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(#storybook-docs) > :global(.sbdocs) {
+  background: inherit;
+}
+
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  inline-size: calc(100% + 20px);
+  padding-inline: 10px;
+  margin-block-end: var(--vkui--spacing_size_xl);
+  margin-inline-start: -10px;
+  background: var(--vkui--color_background);
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.header > * {
+  inline-size: 100%;
+}
+
+.cardsContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: var(--vkui--spacing_size_2xl);
+  grid-column-gap: var(--vkui--spacing_size_xl);
+  inline-size: 100%;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+@media screen and (min-width: 600px) {
+  .cardsContainer {
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: var(--vkui--spacing_size_4xl);
+  }
+}
+@media screen and (min-width: 1024px) {
+  .cardsContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -20,4 +20,8 @@ export default story;
 
 type Story = StoryObj<InputProps>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  args: {
+    'aria-label': 'Напишите сообщение...',
+  },
+};

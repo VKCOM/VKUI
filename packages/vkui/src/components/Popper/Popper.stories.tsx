@@ -18,7 +18,7 @@ type Story = StoryObj<PopperProps>;
 
 export const Playground: Story = {
   render: function Render(args) {
-    const [shown, setShown] = React.useState(false);
+    const [shown, setShown] = React.useState(args.shown || false);
     const buttonRef = React.useRef(null);
 
     return (

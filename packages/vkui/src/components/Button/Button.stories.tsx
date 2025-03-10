@@ -31,9 +31,6 @@ export default story;
 type Story = StoryObj<StoryButtonProps>;
 
 export const Playground: Story = {
-  render: ({ ...args }) => {
-    return <Button {...args} />;
-  },
   args: {
     children: 'Button',
     size: 's',

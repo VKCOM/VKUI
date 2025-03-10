@@ -22,7 +22,11 @@ export default story;
 
 type Story = StoryObj<SwitchProps>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  args: {
+    'aria-label': 'Комментарии к записям',
+  },
+};
 
 export const WithSimpleCellLabel: Story = {
   render: function Render(args) {

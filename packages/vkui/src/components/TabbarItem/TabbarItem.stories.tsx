@@ -36,9 +36,13 @@ export default story;
 
 type Story = StoryObj<TabbarItemProps>;
 
-const Playground: Story = {
+export const Playground: Story = {
   render: ({ ...args }) => {
     return <TabbarItem {...args} />;
+  },
+  args: {
+    children: 'Icon28MessageOutline',
+    label: 'Messages',
   },
 };
 

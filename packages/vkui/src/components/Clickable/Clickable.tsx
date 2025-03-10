@@ -26,6 +26,7 @@ const NonClickable = <T,>({
   unlockParentHover,
   activated,
   activeEffectDelay,
+  focusVisibleMode,
   ...restProps
 }: ClickableProps<T>) => <RootComponent {...restProps} />;
 
@@ -61,15 +62,29 @@ function component<T>({
   disabled,
 }: RootComponentProps<T>): RootComponentProps<T> {
   if (Component !== undefined) {
-    return { Component };
+    return { Component, disabled };
   } else if (href !== undefined) {
-    return { 'Component': 'a', 'aria-disabled': disabled };
+    return {
+      Component: 'a',
+
+      /**
+       * Если ссылка отключена, добавляем атрибуты для доступности.
+       *
+       * - Тег `a` не поддерживает атрибут disabled, поэтому используем `aria-disabled`
+       * - Тег `a` без `href` не является ссылкой, поэтому добавляем `role="link"`
+       *
+       * https://w3c.github.io/html-aria/#example-communicate-a-disabled-link-with-aria
+       */
+      ...(disabled && {
+        'aria-disabled': true,
+        'role': 'link',
+      }),
+    };
   } else if (onClick !== undefined || onClickCapture !== undefined) {
     return {
-      'Component': 'div',
-      'role': 'button',
-      'tabIndex': disabled ? undefined : 0,
-      'aria-disabled': disabled,
+      Component: 'div',
+      role: 'button',
+      ...(disabled ? { 'aria-disabled': true } : { tabIndex: 0 }),
     };
   }
 
@@ -88,25 +103,22 @@ function component<T>({
  * - стейты наведения и нажатия
  * - a11y компонентов
  */
-export const Clickable = <T,>({
-  focusVisibleMode = 'inside',
-  baseClassName: baseClassNameProp,
-  ...restProps
-}: ClickableProps<T>): React.ReactNode => {
-  const commonProps = component(restProps);
-  const isClickable = checkClickable(restProps);
-  const baseClassName = classNames(baseClassNameProp, styles.host);
+export const Clickable = <T,>(props: ClickableProps<T>): React.ReactNode => {
+  const commonProps = component(props);
+  const isClickable = checkClickable(props);
+  const Component = isClickable ? RealClickable : NonClickable;
 
-  if (isClickable) {
-    return (
-      <RealClickable
-        baseClassName={baseClassName}
-        focusVisibleMode={focusVisibleMode}
-        {...commonProps}
-        {...restProps}
-      />
-    );
-  }
+  const {
+    baseClassName,
+    disabled, // Игнорируем disabled из пропсов, т.к. он обрабатывается в commonProps
+    ...restProps
+  } = props;
 
-  return <NonClickable baseClassName={baseClassName} {...commonProps} {...restProps} />;
+  return (
+    <Component
+      baseClassName={classNames(baseClassName, styles.host)}
+      {...commonProps}
+      {...restProps}
+    />
+  );
 };

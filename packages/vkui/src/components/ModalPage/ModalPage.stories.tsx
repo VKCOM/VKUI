@@ -80,7 +80,7 @@ const IosCloseButton = ({ className, onClick }: React.ComponentProps<'div'>) => 
   );
 };
 
-export const DynamicModalPage: Story = {
+export const Playground: Story = {
   args: { id: 'modal-page', open: true },
   render: function Render(props) {
     const [, updateArgs] = useArgs();

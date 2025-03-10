@@ -23,11 +23,12 @@ export const Playground: Story = {
         maxWidth: '100%',
         maxHeight: '100%',
         border: '1px solid black',
+        ...args.style,
       }}
       slideWidth="90%"
     >
-      <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
       <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+      <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
       <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
     </Gallery>
   ),

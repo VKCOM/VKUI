@@ -32,7 +32,7 @@ export default story;
 
 type Story = StoryObj<PanelHeaderContextProps>;
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render() {
     const [contextOpened, setContextOpened] = React.useState(true);
     const [mode, setMode] = React.useState<string | undefined>('all');

@@ -34,7 +34,7 @@ export const Playground: Story = {
     const platform = usePlatform();
 
     return (
-      <>
+      <Flex>
         {values.map((value) => {
           return (
             <HorizontalCell key={value.id} title={value.title} {...args}>
@@ -42,7 +42,7 @@ export const Playground: Story = {
             </HorizontalCell>
           );
         })}
-      </>
+      </Flex>
     );
   },
   args: {
@@ -72,9 +72,7 @@ export const Playground: Story = {
   decorators: [
     (Component, context) => (
       <Group>
-        <Flex>
-          <Component {...context.args} />
-        </Flex>
+        <Component {...context.args} />
       </Group>
     ),
     withSinglePanel,

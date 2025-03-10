@@ -31,7 +31,7 @@ export default story;
 
 type Story = StoryObj<ActionSheetProps & { items: ActionSheetItemProps[] }>;
 
-export const Base: Story = {
+export const Playground: Story = {
   render: function Render({ items, ...args }) {
     const baseToggleRef = React.useRef(null);
     const [visible, setVisible] = React.useState(true);
@@ -72,7 +72,7 @@ export const Base: Story = {
 };
 
 export const WithIcon: Story = {
-  ...Base,
+  ...Playground,
   args: {
     items: [
       { before: <Icon28EditOutline />, children: 'Редактировать профиль' },
@@ -85,7 +85,7 @@ export const WithIcon: Story = {
 };
 
 export const WithSubtitle: Story = {
-  ...Base,
+  ...Playground,
   args: {
     items: [
       { before: <Icon28SettingsOutline />, subtitle: 'Авто', children: 'Качество' },
@@ -105,7 +105,7 @@ export const WithSubtitle: Story = {
 };
 
 export const WithTitle: Story = {
-  ...Base,
+  ...Playground,
   args: {
     title: 'Вы действительно хотите удалить это видео из Ваших видео?',
     items: [{ mode: 'destructive', children: 'Удалить видео' }],
@@ -113,7 +113,7 @@ export const WithTitle: Story = {
 };
 
 export const WithSelectable: Story = {
-  ...Base,
+  ...Playground,
   args: {
     items: [
       { name: 'menu', selectable: true, children: 'Лучшие друзья', defaultChecked: true },

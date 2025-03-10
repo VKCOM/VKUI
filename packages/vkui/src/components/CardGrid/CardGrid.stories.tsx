@@ -4,7 +4,7 @@ import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators'
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Card as BasicCard } from '../Card/Card';
-import { Playground as BasicCardStory } from '../Card/Card.stories';
+import { playgroundArgs as basicCardPlaygroundArgs } from '../Card/Card.stories';
 import { Group } from '../Group/Group';
 import { CardGrid, type CardGridProps } from './CardGrid';
 
@@ -31,7 +31,7 @@ export const Playground: Story = {
       {Array(count)
         .fill(null)
         .map((_, index) => (
-          <BasicCard key={index} {...BasicCardStory.args} />
+          <BasicCard key={index} {...basicCardPlaygroundArgs} />
         ))}
     </CardGrid>
   ),

@@ -1,0 +1,45 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vkui--spacing_size_xl);
+  block-size: 200px;
+  padding: var(--vkui--spacing_size_2xl);
+  color: var(--vkui--color_text_primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+
+  --vkui_internal--ComponentOverviewCard_scale: 1;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.title {
+  color: var(--vkui--color_text_primary);
+}
+
+.componentWrapper {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  background: var(--vkui--color_background);
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
+.componentContainer {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: fit-content;
+  block-size: fit-content;
+  transform: translate(-50%, -50%) scale(var(--vkui_internal--ComponentOverviewCard_scale));
+  transform-origin: center center;
+}
+
+.rtl .componentContainer {
+  transform: translate(50%, -50%) scale(var(--vkui_internal--ComponentOverviewCard_scale));
+}

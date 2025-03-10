@@ -3,6 +3,7 @@ import type { PartialStoryFn } from '@storybook/types';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { ContentBadge, type ContentBadgeProps } from './ContentBadge';
 
@@ -31,11 +32,11 @@ const Container = (Story: PartialStoryFn<ReactRenderer>) => (
 
 type DefaultStory = StoryObj<ContentBadgeProps>;
 
-export const Default: DefaultStory = {
+export const Playground: DefaultStory = {
   decorators: [Container],
   render({ children = 'Text', size, ...restProps }) {
     return (
-      <>
+      <Flex align="center" gap={24}>
         <ContentBadge {...restProps} size={size}>
           {children}
         </ContentBadge>
@@ -63,7 +64,7 @@ export const Default: DefaultStory = {
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
           </ContentBadge.SlotIcon>
         </ContentBadge>
-      </>
+      </Flex>
     );
   },
 };

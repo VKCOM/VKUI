@@ -48,7 +48,6 @@ export const Playground: Story = {
   args: {
     gap: 'm',
     itemsCount: 2,
-    style: { height: '100%' },
   },
   render: ({ itemsCount = 2, rowGap, columnGap, gap, ...args }) => (
     <Flex
