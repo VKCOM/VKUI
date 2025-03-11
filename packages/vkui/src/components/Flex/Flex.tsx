@@ -1,5 +1,7 @@
-import { Children } from 'react';
+'use client';
+
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import {
   calculateGap,
   columnGapClassNames,
@@ -11,6 +13,7 @@ import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
 import { FlexItem, type FlexItemProps } from './FlexItem/FlexItem';
+import { useWithGaps } from './hooks';
 import styles from './Flex.module.css';
 
 export type { FlexItemProps };
@@ -84,14 +87,18 @@ export const Flex: React.FC<FlexProps> & {
   direction = 'row',
   reverse = false,
   children,
+  getRootRef,
   ...props
 }: FlexProps) => {
-  const withGaps = Children.count(children) > 1 && gap;
+  const rootRef = useExternRef(getRootRef);
   const [rowGap, columnGap] = calculateGap(gap);
+
+  const withGaps = useWithGaps(rootRef, !gap);
 
   return (
     <RootComponent
       {...props}
+      getRootRef={rootRef}
       baseClassName={classNames(
         styles.host,
         !noWrap && styles.wrap,
