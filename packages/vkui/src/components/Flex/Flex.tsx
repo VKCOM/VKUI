@@ -76,6 +76,8 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
   reverse?: boolean;
 }
 
+const FLEX_GAP_SUPPORTED = CSS.supports('(inset: 0)');
+
 export const Flex: React.FC<FlexProps> & {
   Item: typeof FlexItem;
 } = ({
@@ -93,7 +95,7 @@ export const Flex: React.FC<FlexProps> & {
   const rootRef = useExternRef(getRootRef);
   const [rowGap, columnGap] = calculateGap(gap);
 
-  const withGaps = useWithGaps(rootRef, !gap);
+  const withGaps = useWithGaps(rootRef, FLEX_GAP_SUPPORTED || !gap);
 
   return (
     <RootComponent
