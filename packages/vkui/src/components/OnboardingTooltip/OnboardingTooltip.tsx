@@ -15,14 +15,13 @@ import {
   useFloatingMiddlewaresBootstrap,
   usePlacementChangeCallback,
 } from '../../lib/floating';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/DefaultIcon';
 import type { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
-import { onboardingTooltipContainerAttr } from './OnboardingTooltipContainer';
+import { useOnboardingTooltipContext } from './OnboardingTooltipContext';
 import styles from './OnboardingTooltip.module.css';
 
 const warn = warnOnce('OnboardingTooltip');
@@ -109,6 +108,7 @@ export const OnboardingTooltip = ({
   const generatedId = React.useId();
   const tooltipId = idProp || generatedId;
   const { entering } = useNavTransition();
+  const { containerRef: tooltipContainerRef } = useOnboardingTooltipContext();
 
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
   const [tooltipContainer, setTooltipContainer] = React.useState<HTMLElement | null>(null);
@@ -195,18 +195,17 @@ export const OnboardingTooltip = ({
     );
   }
 
-  useIsomorphicLayoutEffect(
+  React.useEffect(
     function initialize() {
+      const tooltipContainer = tooltipContainerRef.current;
       const referenceEl = childRef.current;
-      if (referenceEl) {
-        setTooltipContainer(
-          referenceEl.closest<HTMLDivElement>(`[${onboardingTooltipContainerAttr}]`), // eslint-disable-line no-restricted-properties
-        );
+      if (referenceEl && tooltipContainer) {
+        setTooltipContainer(tooltipContainer);
         setPositionStrategy(referenceEl.style.position === 'fixed' ? 'fixed' : 'absolute');
         refs.setReference(referenceEl);
       }
     },
-    [childRef],
+    [childRef, refs, tooltipContainerRef],
   );
 
   if (process.env.NODE_ENV === 'development') {

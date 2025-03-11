@@ -1,5 +1,9 @@
+'use client';
+
 import * as React from 'react';
+import { useExternRef } from '../../hooks/useExternRef';
 import type { HasComponent, HasDataAttribute } from '../../types';
+import { OnboardingTooltipContext } from './OnboardingTooltipContext';
 
 export const onboardingTooltipContainerAttr = 'data-onboarding-tooltip-container';
 
@@ -13,11 +17,16 @@ export const OnboardingTooltipContainer: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<OnboardingTooltipContainerProps> & React.RefAttributes<HTMLDivElement>
 > = React.forwardRef<HTMLDivElement, OnboardingTooltipContainerProps>(
   ({ fixed = false, Component = 'div', ...props }, ref) => {
+    const containerRef = useExternRef(ref);
     const dataProps = {
       [onboardingTooltipContainerAttr]: fixed ? 'fixed' : 'true',
     };
 
-    return <Component {...dataProps} {...props} ref={ref} />;
+    return (
+      <OnboardingTooltipContext.Provider value={{ containerRef }}>
+        <Component {...dataProps} {...props} ref={containerRef} />
+      </OnboardingTooltipContext.Provider>
+    );
   },
 );
 
