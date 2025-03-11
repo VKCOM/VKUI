@@ -110,7 +110,7 @@ export const Flex: React.FC<FlexProps> & {
         align && alignClassNames[align],
         justify && justifyClassNames[justify],
         withGaps && styles.withGaps,
-        withGaps && getGapsPresets(rowGap, columnGap),
+        getGapsPresets(rowGap, columnGap),
       )}
       baseStyle={getGapsByUser(rowGap, columnGap)}
     >
