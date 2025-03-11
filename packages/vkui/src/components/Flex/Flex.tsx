@@ -1,6 +1,6 @@
 'use client';
 
-import { classNames } from '@vkontakte/vkjs';
+import { canUseDOM, classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
   calculateGap,
@@ -76,7 +76,7 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
   reverse?: boolean;
 }
 
-const FLEX_GAP_SUPPORTED = CSS.supports('(inset: 0)');
+const FLEX_GAP_SUPPORTED = canUseDOM ? CSS.supports('(inset: 0)') : false;
 
 export const Flex: React.FC<FlexProps> & {
   Item: typeof FlexItem;
