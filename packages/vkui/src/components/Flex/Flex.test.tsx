@@ -46,6 +46,17 @@ describe(Flex, () => {
     await waitFor(() => {
       expect(screen.getByTestId('flex')).toHaveClass(styles.withGaps);
     });
+
+    rerender(
+      <Flex data-testid="flex">
+        <div />
+        <div />
+      </Flex>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('flex')).not.toHaveClass(styles.withGaps);
+    });
   });
 
   describe('check correct classNames', () => {
