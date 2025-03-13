@@ -193,7 +193,7 @@ export const DateRangeInput = ({
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
 
-  const { value, updateValue } = useMergedState<DateRangeType | undefined>([null, null], {
+  const { value, updateValue } = useMergedState<DateRangeType | undefined>(undefined, {
     value: valueProp,
     defaultValue,
     onChange,
