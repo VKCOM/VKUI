@@ -732,6 +732,34 @@ describe('CustomSelect', () => {
     expect(onChange.mock.calls[0][1]).toBe('1');
   });
 
+  it('(uncontrolled): doesn not calls onChange when click default selected option when defaultValue is string and option value is number', async () => {
+    const onChange = jest.fn();
+
+    render(
+      <CustomSelect
+        labelTextTestId="labelTextTestId"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        allowClearButton
+        onChange={onChange}
+        defaultValue='0'
+      />,
+    );
+
+    expect(onChange).toHaveBeenCalledTimes(0);
+    expect(getCustomSelectValue()).toEqual('Mike');
+
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Mike');
+    const selectedOption = screen.getByRole('option', { selected: true, name: 'Mike' });
+    fireEvent.mouseEnter(selectedOption);
+    fireEvent.click(selectedOption);
+
+    expect(onChange).toHaveBeenCalledTimes(0);
+  });
+
   it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
     // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очистки value проп не меняется
     const onChange = jest.fn();

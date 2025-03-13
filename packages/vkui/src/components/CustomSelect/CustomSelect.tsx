@@ -5,6 +5,7 @@ import { classNames, debounce } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
+import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
 import type { Placement } from '../../lib/floating';
@@ -314,35 +315,61 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
   const [inputValue, setInputValue] = React.useState('');
-  const [nativeSelectValue, setNativeSelectValue] = React.useState<NativeSelectValue>(() => {
-    if (props.value !== undefined) {
-      return remapFromSelectValueToNativeValue(props.value);
-    }
-    if (defaultValue !== undefined) {
-      return remapFromSelectValueToNativeValue(defaultValue);
-    }
-    return NOT_SELECTED.NATIVE;
-  });
-
-  const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
-  const [options, setOptions] = React.useState(optionsProp);
-  const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
-    findSelectedIndex(optionsProp, props.value ?? defaultValue ?? null),
-  );
-
-  React.useEffect(() => {
-    setIsControlledOutside((oldIsControlled) => {
-      const newIsControlled = props.value !== undefined;
-      checkMixControlledAndUncontrolledState(oldIsControlled, newIsControlled);
-      return newIsControlled;
-    });
-    setNativeSelectValue((nativeSelectValue) => {
+  const [[nativeSelectValue, prevNativeSelectValue], setNativeSelectValue] =
+    useStateWithPrev<NativeSelectValue>(() => {
       if (props.value !== undefined) {
         return remapFromSelectValueToNativeValue(props.value);
       }
-      return nativeSelectValue;
+      if (defaultValue !== undefined) {
+        return remapFromSelectValueToNativeValue(defaultValue);
+      }
+      return NOT_SELECTED.NATIVE;
     });
-  }, [props.value]);
+
+  const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
+
+  const options = React.useMemo(() => {
+    return filter(optionsProp, inputValue, filterFn);
+  }, [filterFn, inputValue, optionsProp]);
+
+  const [selectedOptionIndex, setSelectedOptionIndex] = React.useState<number | undefined>(
+    findSelectedIndex(options, props.value ?? defaultValue ?? null),
+  );
+
+  const value =
+    props.value !== undefined ? props.value : remapFromNativeValueToSelectValue(nativeSelectValue);
+
+  React.useEffect(
+    function updateOptionsIndexes() {
+      const selectedIndex = findSelectedIndex(options, value);
+      setSelectedOptionIndex(selectedIndex);
+      setFocusedOptionIndex(selectedIndex);
+    },
+    [value, options, filterFn],
+  );
+
+  React.useEffect(
+    function syncIsControlledState() {
+      setIsControlledOutside((oldIsControlled) => {
+        const newIsControlled = props.value !== undefined;
+        checkMixControlledAndUncontrolledState(oldIsControlled, newIsControlled);
+        return newIsControlled;
+      });
+    },
+    [props.value],
+  );
+
+  React.useEffect(
+    function syncNativeSelectValueWithPropValue() {
+      setNativeSelectValue((nativeSelectValue) => {
+        if (props.value !== undefined) {
+          return remapFromSelectValueToNativeValue(props.value);
+        }
+        return nativeSelectValue;
+      });
+    },
+    [props.value, setNativeSelectValue],
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (
@@ -414,6 +441,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
       // Это оптимизация, прежде всего, под `onMouseMove`
       setFocusedOptionIndex((focusedOptionIndex) =>
+        // FIXME: вроде бы использование коллбэка не имеет больше смысла
         focusedOptionIndex !== index ? index : focusedOptionIndex,
       );
     },
@@ -467,10 +495,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [keyboardInput, opened, resetFocusedOption],
   );
 
-  /**
-   * Note: сбрасывать `options` через `setOptions(optionsProp)` не нужно.
-   *  Сброс происходит в одном из эффекте `updateOptionsAndSelectedOptionIndex()`.
-   */
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
@@ -496,7 +520,15 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         selectElRef.current?.dispatchEvent(event);
       }
     },
-    [close, options, selectElRef, isControlledOutside, props.value, nativeSelectValue],
+    [
+      close,
+      options,
+      selectElRef,
+      isControlledOutside,
+      props.value,
+      nativeSelectValue,
+      setNativeSelectValue,
+    ],
   );
 
   const selectFocused = React.useCallback(() => {
@@ -554,55 +586,59 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [focusOptionByIndex, focusedOptionIndex, options],
   );
 
-  React.useEffect(
-    function updateOptionsAndSelectedOptionIndex() {
-      const value =
-        props.value !== undefined
-          ? props.value
-          : remapFromNativeValueToSelectValue(nativeSelectValue);
-
-      const options =
-        searchable && inputValue !== undefined
-          ? filter(optionsProp, inputValue, filterFn)
-          : optionsProp;
-
-      setOptions(options);
-      const selectedIndex = findSelectedIndex(options, value);
-      setSelectedOptionIndex(selectedIndex);
-      setFocusedOptionIndex(selectedIndex);
-    },
-    [filterFn, inputValue, nativeSelectValue, optionsProp, defaultValue, props.value, searchable],
-  );
-
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const remappedNativeValue = remapFromNativeValueToSelectValue(e.currentTarget.value);
-    const newSelectedOptionIndex = findSelectedIndex(options, remappedNativeValue);
+    const isTriggeredByClearButton = allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE;
 
-    if (selectedOptionIndex !== newSelectedOptionIndex) {
-      if (!isControlledOutside) {
-        setSelectedOptionIndex(newSelectedOptionIndex);
-      }
-      if (e.target.value === NOT_SELECTED.NATIVE) {
-        e.target.value = '';
-      }
-      if (e.currentTarget.value === NOT_SELECTED.NATIVE) {
-        e.currentTarget.value = '';
-      }
-      onChange?.(e, remappedNativeValue);
+    // для ситуаций, когда в опциях value это string а value/defaultValue это number
+    // и наоборот, приводим значение nativeSelectValue из стейта к строке.
+    // ведь nativeSelect всегда возвращает string в onChange, а пользователь
+    // может использовать number для опций
+    //
+    // native select всегда возвращает string в качестве value в onChange
+    // Когда селект контролируемый, то пользователь, в onChange может сохранить в свой стейт строку (например '3'), хотя
+    // в качестве value опции может использовать число (3),
+    // тогда строчное значение value ('3') из стейта пользователя
+    // будет передано в CustomSelect, и после синхронизации nativeSelectValue (3) и props.value ('3') и после клика на уже выбранную опцию (3),
+    // когда nativeSelectValue обновится на значение опции (число 3),
+    // сравнение nativeSelectValue (3) и prevNativeSelectValue ('3') может не сработать лишь из-за того, что они в разных типах.
+    const convertedNativeSelectValue =
+      typeof nativeSelectValue === 'number' &&
+      (typeof props.value === 'string' || typeof prevNativeSelectValue === 'string')
+        ? String(nativeSelectValue)
+        : nativeSelectValue;
+
+    const isCalledWithSameControlledOptionValue =
+      isControlledOutside &&
+      props.value === remapFromNativeValueToSelectValue(convertedNativeSelectValue);
+
+    const isNativeValueChanged =
+      convertedNativeSelectValue !== prevNativeSelectValue && prevNativeSelectValue !== undefined;
+
+    const shouldCallOnChange =
+      !isCalledWithSameControlledOptionValue && (isNativeValueChanged || isTriggeredByClearButton);
+
+    if (!shouldCallOnChange) {
+      return;
     }
+
+    const remappedNativeValue = remapFromNativeValueToSelectValue(e.currentTarget.value);
+
+    if (e.target.value === NOT_SELECTED.NATIVE) {
+      e.target.value = '';
+    }
+    if (e.currentTarget.value === NOT_SELECTED.NATIVE) {
+      e.currentTarget.value = '';
+    }
+
+    onChange?.(e, remappedNativeValue);
   };
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
       onInputChangeProp && onInputChangeProp(e);
-
-      const options = filter(optionsProp, e.target.value, filterFn);
-      setOptions(options);
-      setSelectedOptionIndex(findSelectedIndex(options, nativeSelectValue));
-
       setInputValue(e.target.value);
     },
-    [filterFn, nativeSelectValue, onInputChangeProp, optionsProp],
+    [onInputChangeProp],
   );
 
   const areOptionsShown = React.useCallback(() => {
@@ -788,6 +824,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     iconProp,
     restProps.disabled,
     clearButtonTestId,
+    setNativeSelectValue,
     selectInputRef,
   ]);
 
