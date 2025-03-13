@@ -439,11 +439,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         scrollToElement(index);
       }
 
-      // Это оптимизация, прежде всего, под `onMouseMove`
-      setFocusedOptionIndex((focusedOptionIndex) =>
-        // FIXME: вроде бы использование коллбэка не имеет больше смысла
-        focusedOptionIndex !== index ? index : focusedOptionIndex,
-      );
+      setFocusedOptionIndex(index);
     },
     [options, scrollToElement],
   );
@@ -587,8 +583,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   );
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const isTriggeredByClearButton = allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE;
-
     // для ситуаций, когда в опциях value это string а value/defaultValue это number
     // и наоборот, приводим значение nativeSelectValue из стейта к строке.
     // ведь nativeSelect всегда возвращает string в onChange, а пользователь
@@ -613,6 +607,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
     const isNativeValueChanged =
       convertedNativeSelectValue !== prevNativeSelectValue && prevNativeSelectValue !== undefined;
+
+    const isTriggeredByClearButton = allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE;
 
     const shouldCallOnChange =
       !isCalledWithSameControlledOptionValue && (isNativeValueChanged || isTriggeredByClearButton);
