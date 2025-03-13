@@ -7,6 +7,7 @@ import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergedState } from '../../hooks/useMergedState';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -52,7 +53,10 @@ export type DateInputPropsTestsProps = {
 };
 
 export interface DateInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'onChange' | 'size'>,
+  extends Omit<
+      React.InputHTMLAttributes<HTMLDivElement>,
+      'value' | 'defaultValue' | 'onChange' | 'size'
+    >,
     Pick<
       CalendarProps,
       | 'disablePast'
@@ -61,6 +65,7 @@ export interface DateInputProps
       | 'shouldDisableDate'
       | 'onChange'
       | 'value'
+      | 'defaultValue'
       | 'doneButtonText'
       | 'DoneButton'
       | 'weekStartsOn'
@@ -159,6 +164,7 @@ export const DateInput = ({
   minDateTime,
   maxDateTime,
   value: valueProp,
+  defaultValue,
   onChange,
   calendarPlacement = 'bottom-start',
   style,
@@ -209,16 +215,16 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
-  const [value, setValue] = React.useState<Date | undefined>(valueProp);
+
+  const { value, updateValue, setInternalValue, getLastUpdatedValue } = useMergedState<
+    Date | undefined
+  >(undefined, {
+    value: valueProp,
+    defaultValue,
+    onChange,
+  });
 
   const maxElement = enableTime ? 4 : 2;
-
-  useIsomorphicLayoutEffect(
-    function updateLocalValue() {
-      setValue(valueProp);
-    },
-    [valueProp],
-  );
 
   const onInternalValueChange = React.useCallback(
     (internalValue: string[]) => {
@@ -237,12 +243,12 @@ export const DateInput = ({
 
       if (isMatch(formattedValue, mask)) {
         const now = new Date();
-        onChange?.(
+        updateValue(
           parse(formattedValue, mask, value ?? (enableTime ? startOfMinute(now) : startOfDay(now))),
         );
       }
     },
-    [enableTime, maxElement, onChange, value],
+    [enableTime, maxElement, updateValue, value],
   );
 
   const refs = React.useMemo(
@@ -267,7 +273,7 @@ export const DateInput = ({
     autoFocus,
     disabled,
     elementsConfig,
-    onChange,
+    onChange: updateValue,
     onInternalValueChange,
     getInternalValue,
     value,
@@ -281,31 +287,31 @@ export const DateInput = ({
   useIsomorphicLayoutEffect(
     function resetValueOnCloseCalendar() {
       if (!open) {
-        setValue(valueProp);
+        setInternalValue(getLastUpdatedValue());
       }
     },
-    [open, valueProp],
+    [open, getLastUpdatedValue],
   );
 
   const onCalendarChange = React.useCallback(
     (value?: Date | undefined) => {
       if (enableTime) {
-        setValue(value);
+        setInternalValue(value);
         return;
       }
-      onChange?.(value);
+      updateValue(value);
       if (closeOnChange) {
         removeFocusFromField();
       }
     },
-    [onChange, removeFocusFromField, closeOnChange, enableTime],
+    [enableTime, updateValue, closeOnChange, setInternalValue, removeFocusFromField],
   );
 
   const onDoneButtonClick = React.useCallback(() => {
     onApply?.(value);
-    onChange?.(value);
+    updateValue(value);
     removeFocusFromField();
-  }, [onApply, onChange, removeFocusFromField, value]);
+  }, [onApply, removeFocusFromField, updateValue, value]);
 
   const customValue = React.useMemo(
     () => !open && renderCustomValue?.(value),

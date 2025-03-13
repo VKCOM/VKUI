@@ -7,6 +7,7 @@ import { isAfter } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergedState } from '../../hooks/useMergedState';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -59,7 +60,7 @@ export type DateRangeInputTestsProps = {
 };
 
 export interface DateRangeInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'onChange'>,
+  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
     Pick<
       CalendarRangeProps,
       | 'disablePast'
@@ -67,6 +68,7 @@ export interface DateRangeInputProps
       | 'shouldDisableDate'
       | 'onChange'
       | 'value'
+      | 'defaultValue'
       | 'weekStartsOn'
       | 'disablePickers'
       | 'prevMonthLabel'
@@ -146,7 +148,8 @@ export const DateRangeInput = ({
   shouldDisableDate,
   disableFuture,
   disablePast,
-  value,
+  value: valueProp,
+  defaultValue,
   onChange,
   calendarPlacement = 'bottom-start',
   style,
@@ -190,6 +193,12 @@ export const DateRangeInput = ({
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
 
+  const { value, updateValue } = useMergedState<DateRangeType | undefined>([null, null], {
+    value: valueProp,
+    defaultValue,
+    onChange,
+  });
+
   const onInternalValueChange = React.useCallback(
     (internalValue: string[]) => {
       let isStartValid = true;
@@ -228,10 +237,10 @@ export const DateRangeInput = ({
         ? parse(formattedEndValue, mask, (valueExists && value?.[1]) || now)
         : null;
       if (start && end && isAfter(end, start)) {
-        onChange?.([start, end]);
+        updateValue([start, end]);
       }
     },
-    [onChange, value],
+    [updateValue, value],
   );
 
   const refs = React.useMemo(
@@ -257,7 +266,7 @@ export const DateRangeInput = ({
     autoFocus,
     disabled,
     elementsConfig,
-    onChange,
+    onChange: updateValue,
     onInternalValueChange,
     getInternalValue,
     value,
@@ -270,12 +279,12 @@ export const DateRangeInput = ({
 
   const onCalendarChange = React.useCallback(
     (newValue: DateRangeType | undefined) => {
-      onChange?.(newValue);
+      updateValue(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
         removeFocusFromField();
       }
     },
-    [onChange, closeOnChange, value, removeFocusFromField],
+    [updateValue, closeOnChange, value, removeFocusFromField],
   );
 
   return (
