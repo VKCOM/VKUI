@@ -744,7 +744,7 @@ describe('CustomSelect', () => {
         ]}
         allowClearButton
         onChange={onChange}
-        defaultValue='0'
+        defaultValue="0"
       />,
     );
 
