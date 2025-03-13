@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { render } from '@testing-library/react';
-import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
+import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens/constants';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from './ConfigProvider';
 import {
