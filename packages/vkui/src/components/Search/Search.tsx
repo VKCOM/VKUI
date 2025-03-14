@@ -55,6 +55,10 @@ export interface SearchProps
    * Коллбэк для кнопки Найти
    */
   onFindButtonClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * Передает атрибут `data-testid` для кнопки поиска
+   */
+  findButtonTestId?: string;
 }
 
 /**
@@ -78,6 +82,7 @@ export const Search = ({
   noPadding,
   getRootRef,
   findButtonText = 'Найти',
+  findButtonTestId,
   onFindButtonClick,
   ...inputProps
 }: SearchProps): React.ReactNode => {
@@ -233,6 +238,7 @@ export const Search = ({
               focusVisibleMode="inside"
               onClick={onFindButtonClick}
               tabIndex={hasValue ? undefined : -1}
+              data-testid={findButtonTestId}
             >
               {findButtonText}
             </Button>
