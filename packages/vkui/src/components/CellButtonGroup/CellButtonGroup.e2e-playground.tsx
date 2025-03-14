@@ -10,6 +10,7 @@ export const CellButtonGroupPlayground = (props: ComponentPlaygroundProps) => {
           <CellButton appearance="negative" centered>
             Пожаловаться
           </CellButton>
+          <CellButtonGroup.Separator />
           <CellButton centered>Отмена</CellButton>
         </CellButtonGroup>
       )}

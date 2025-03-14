@@ -1,6 +1,7 @@
 import { classNames } from '@vkontakte/vkjs';
 import type { AlignType, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { ButtonGroupSeparator } from './ButtonGroupSeparator/ButtonGroupSeparator';
 import styles from './ButtonGroup.module.css';
 
 const stylesMode = {
@@ -65,3 +66,8 @@ export const ButtonGroup = ({
     />
   );
 };
+
+ButtonGroup.displayName = 'ButtonGroup';
+
+ButtonGroup.Separator = ButtonGroupSeparator;
+ButtonGroup.Separator.displayName = 'ButtonGroup.Separator';
