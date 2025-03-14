@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityHasPointer } from '../../../hooks/useAdaptivityHasPointer';
 import { useColorScheme } from '../../../hooks/useColorScheme';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
@@ -10,7 +9,7 @@ import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassNam
 import { clickByKeyboardHandler } from '../../../lib/utils';
 import { ImageBaseContext } from '../context';
 import { validateOverlayIcon } from '../validators';
-import { useNonInteractiveOverlayProps } from './hooks';
+import { useCalculatedDefaultVisibility, useNonInteractiveOverlayProps } from './hooks';
 import type {
   ImageBaseOverlayInteractiveProps,
   ImageBaseOverlayNonInteractiveProps,
@@ -95,9 +94,8 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
   ...restProps
 }: ImageBaseOverlayProps) => {
   const colorScheme = useColorScheme();
-  const hasPointer = useAdaptivityHasPointer();
+
   const theme = themeProp ?? colorScheme;
-  const visibility = visibilityProp ?? (hasPointer ? 'on-hover' : 'always');
 
   const commonClassNames = classNames(
     styles.host,
@@ -105,6 +103,9 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
     theme === 'dark' && styles.themeDark,
     className,
   );
+
+  const defaultVisibility = useCalculatedDefaultVisibility();
+  const visibility = visibilityProp ?? defaultVisibility;
 
   const commonProps = {
     className: commonClassNames,
