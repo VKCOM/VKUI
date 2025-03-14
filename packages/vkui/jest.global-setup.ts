@@ -5,7 +5,5 @@ module.exports = async function () {
   // UTC выбрана для того, чтобы упростить дебаг тестов с датами и не
   // путаться если в локальной зоне (+03) должен быть следующий день
   // а в логах видим предыдущий.
-  // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error) так как при использовании ts-expect-error получаем ошибку unused rule
-  // @ts-ignore: TS2339 специально не добавляем в types/env.d.ts чтобы кто-будь не использовал по ошибке и не сломал сборку в Vite
   process.env.TZ = 'UTC';
 };
