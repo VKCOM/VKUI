@@ -1,5 +1,3 @@
-'use client';
-
 import { classNames } from '@vkontakte/vkjs';
 import {
   calculateGap,
