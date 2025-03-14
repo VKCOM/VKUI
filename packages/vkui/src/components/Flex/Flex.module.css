@@ -1,8 +1,6 @@
 .host {
   --vkui_internal--flex_original_margin_inline: 0px;
   --vkui_internal--flex_original_margin_block: 0px;
-  --vkui_internal--row_gap: 0px;
-  --vkui_internal--column_gap: 0px;
 
   display: flex;
 }

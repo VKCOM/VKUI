@@ -75,7 +75,7 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
 export const Flex: React.FC<FlexProps> & {
   Item: typeof FlexItem;
 } = ({
-  gap,
+  gap = 0,
   align,
   justify,
   margin = 'none',
