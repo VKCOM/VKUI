@@ -336,16 +336,18 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     findSelectedIndex(options, props.value ?? defaultValue ?? null),
   );
 
-  const value =
-    props.value !== undefined ? props.value : remapFromNativeValueToSelectValue(nativeSelectValue);
-
   React.useEffect(
     function updateOptionsIndexes() {
+      const value =
+        props.value !== undefined
+          ? props.value
+          : remapFromNativeValueToSelectValue(nativeSelectValue);
+
       const selectedIndex = findSelectedIndex(options, value);
       setSelectedOptionIndex(selectedIndex);
       setFocusedOptionIndex(selectedIndex);
     },
-    [value, options, filterFn],
+    [props.value, nativeSelectValue, options, filterFn],
   );
 
   React.useEffect(
