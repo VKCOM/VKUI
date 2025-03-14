@@ -21,6 +21,7 @@ import type { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
+import { onboardingTooltipContainerAttr } from './OnboardingTooltipContainer';
 import { useOnboardingTooltipContext } from './OnboardingTooltipContext';
 import styles from './OnboardingTooltip.module.css';
 
@@ -197,9 +198,15 @@ export const OnboardingTooltip = ({
 
   React.useEffect(
     function initialize() {
-      const tooltipContainer = tooltipContainerRef.current;
       const referenceEl = childRef.current;
-      if (referenceEl && tooltipContainer) {
+      if (!referenceEl) {
+        return;
+      }
+      const tooltipContainer =
+        tooltipContainerRef.current ||
+        // eslint-disable-next-line no-restricted-properties
+        referenceEl.closest<HTMLDivElement>(`[${onboardingTooltipContainerAttr}]`);
+      if (tooltipContainer) {
         setTooltipContainer(tooltipContainer);
         setPositionStrategy(referenceEl.style.position === 'fixed' ? 'fixed' : 'absolute');
         refs.setReference(referenceEl);
