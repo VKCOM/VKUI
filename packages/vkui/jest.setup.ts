@@ -51,19 +51,6 @@ Object.defineProperty(global, 'scrollTo', {
   value: jest.fn(),
 });
 
-Object.defineProperty(CSS, 'supports', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => {
-    switch (query) {
-      // Поддержка flex. Устанавливаем в false, чтобы работали тесты функционала
-      // для браузеров, которые не поддерживают flex + gap
-      case '(inset: 0)':
-        return false;
-    }
-    return false;
-  }),
-});
-
 /**
  * @see https://github.com/vuejs/vue-test-utils/issues/319#issuecomment-354667621
  */

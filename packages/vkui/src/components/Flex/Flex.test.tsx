@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Flex, type FlexProps } from './Flex';
 import styles from './Flex.module.css';
@@ -26,37 +26,6 @@ describe(Flex, () => {
     );
     expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--row_gap: 20px');
     expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--column_gap: 15px');
-  });
-
-  it('should use correct withGaps className', async () => {
-    const { rerender } = render(
-      <Flex gap={10} data-testid="flex">
-        <div />
-      </Flex>,
-    );
-    expect(screen.getByTestId('flex')).not.toHaveClass(styles.withGaps);
-
-    rerender(
-      <Flex gap={10} data-testid="flex">
-        <div />
-        <div />
-      </Flex>,
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId('flex')).toHaveClass(styles.withGaps);
-    });
-
-    rerender(
-      <Flex data-testid="flex">
-        <div />
-        <div />
-      </Flex>,
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId('flex')).not.toHaveClass(styles.withGaps);
-    });
   });
 
   describe('check correct classNames', () => {

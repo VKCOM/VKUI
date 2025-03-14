@@ -1,6 +1,8 @@
 .host {
   --vkui_internal--flex_original_margin_inline: 0px;
   --vkui_internal--flex_original_margin_block: 0px;
+  --vkui_internal--row_gap: 0px;
+  --vkui_internal--column_gap: 0px;
 
   display: flex;
 }
@@ -24,7 +26,7 @@
   }
 }
 @supports not (inset: 0) {
-  .withGaps {
+  .host {
     margin-block-start: calc(
       -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
     );
@@ -34,7 +36,7 @@
   }
 
   /* stylelint-disable-next-line @project-tools/stylelint-atomic, selector-max-universal */
-  .withGaps.withGaps > * {
+  .host.host > * {
     margin-block-start: var(--vkui_internal--row_gap);
     margin-inline-start: var(--vkui_internal--column_gap);
   }
