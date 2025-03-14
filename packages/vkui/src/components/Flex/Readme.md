@@ -3,25 +3,27 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
 const FlexContainer = ({ itemsCount, ...props }) => {
   return (
-    <Flex gap="xs">
-      {new Array(3).fill(3).map((i) => (
-        <div
-          style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1px solid red' }}
-          key={i}
-        >
-          <Flex
-            align="center"
-            justify="center"
-            style={{
-              width: '36px',
-              height: '36px',
-              border: '1px solid blue',
-            }}
-          >
-            VKUI
-          </Flex>
-        </div>
-      ))}
+    <Flex {...props}>
+      {Array.from({ length: itemsCount }, (item, index) => {
+        return (
+          <Banner
+            key={index}
+            before={
+              <Image
+                size={96}
+                src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg"
+              />
+            }
+            title="Для Вас"
+            subtitle="Обновлено сегодня"
+            actions={
+              <Button before={<Icon24Play />} onClick={() => {}}>
+                Слушать
+              </Button>
+            }
+          />
+        );
+      })}
     </Flex>
   );
 };
