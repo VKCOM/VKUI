@@ -363,12 +363,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   React.useEffect(
     function syncNativeSelectValueWithPropValue() {
-      setNativeSelectValue((nativeSelectValue) => {
-        if (props.value !== undefined) {
-          return remapFromSelectValueToNativeValue(props.value);
-        }
-        return nativeSelectValue;
-      });
+      if (props.value !== undefined) {
+        setNativeSelectValue(remapFromSelectValueToNativeValue(props.value));
+      }
     },
     [props.value, setNativeSelectValue],
   );
