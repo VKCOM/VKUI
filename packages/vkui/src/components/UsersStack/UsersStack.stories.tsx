@@ -2,6 +2,7 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl, getRandomUser } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Tooltip } from '../Tooltip/Tooltip';
 import {
   UsersStack,
@@ -13,7 +14,7 @@ import {
 const story: Meta<UsersStackProps> = {
   title: 'Blocks/UsersStack',
   component: UsersStack,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('UsersStack', CanvasFullLayout),
   decorators: [withCartesian],
 };
 

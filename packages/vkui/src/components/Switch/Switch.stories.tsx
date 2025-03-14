@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { SimpleCell } from '../../components/SimpleCell/SimpleCell';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Switch, type SwitchProps } from './Switch';
 
 const story: Meta<SwitchProps> = {
   title: 'Blocks/Switch',
   component: Switch,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Switch', CanvasFullLayout, DisableCartesianParam),
   args: {
     name: 'switch',
   },

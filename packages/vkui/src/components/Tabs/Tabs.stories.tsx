@@ -9,6 +9,7 @@ import {
 } from '@vkontakte/icons';
 import { withSinglePanel } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { useCustomArgs } from '../../testing/useCustomArgs';
 import { Group } from '../Group/Group';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
@@ -27,7 +28,7 @@ type StoryTabsProps = TabsProps & { selected: string };
 const story: Meta<StoryTabsProps> = {
   title: 'Blocks/Tabs',
   component: Tabs,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Tabs', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     selected: {
       control: {

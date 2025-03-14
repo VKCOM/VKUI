@@ -3189,6 +3189,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-designs@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "@storybook/addon-designs@npm:8.1.0"
+  peerDependencies:
+    "@storybook/blocks": ^8.0.0 || ^8.1.0-0 || ^8.2.0-0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+    "@storybook/components": ^8.0.0 || ^8.1.0-0 || ^8.2.0-0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+    "@storybook/theming": ^8.0.0 || ^8.1.0-0 || ^8.2.0-0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+  peerDependenciesMeta:
+    "@storybook/blocks":
+      optional: true
+    "@storybook/components":
+      optional: true
+    "@storybook/theming":
+      optional: true
+  checksum: 10/c2c3b8810be846f997d0686733a551ba63f7ce0c5fd227fa1b04830e01f9411b716965085bf0301bfb4c3319348178c5fdf2413285b5e00b70ee708464fdbcc3
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-docs@npm:8.6.4":
   version: 8.6.4
   resolution: "@storybook/addon-docs@npm:8.6.4"
@@ -5401,6 +5419,7 @@ __metadata:
     "@size-limit/webpack": "npm:^11.2.0"
     "@size-limit/webpack-css": "npm:^11.2.0"
     "@storybook/addon-console": "npm:^3.0.0"
+    "@storybook/addon-designs": "npm:^8.1.0"
     "@swc/cli": "npm:^0.6.0"
     "@swc/core": "npm:1.11.8"
     "@swc/jest": "npm:^0.2.37"

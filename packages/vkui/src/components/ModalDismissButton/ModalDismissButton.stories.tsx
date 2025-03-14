@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ModalDismissButton, type ModalDismissButtonProps } from './ModalDismissButton';
 
 const story: Meta<ModalDismissButtonProps> = {
   title: 'Modals/ModalDismissButton',
   component: ModalDismissButton,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ModalDismissButton', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

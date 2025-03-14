@@ -20,6 +20,7 @@
     "@size-limit/webpack": "^11.2.0",
     "@size-limit/webpack-css": "^11.2.0",
     "@storybook/addon-console": "^3.0.0",
+    "@storybook/addon-designs": "^8.1.0",
     "@swc/cli": "^0.6.0",
     "@swc/core": "1.11.8",
     "@swc/jest": "^0.2.37",

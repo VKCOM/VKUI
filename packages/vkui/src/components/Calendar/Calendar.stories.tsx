@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { useCustomArgs } from '../../testing/useCustomArgs';
 import { Calendar, type CalendarProps } from './Calendar';
 
 const story: Meta<CalendarProps> = {
   title: 'Forms/Calendar',
   component: Calendar,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Calendar', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     value: {
       control: { type: 'date' },
