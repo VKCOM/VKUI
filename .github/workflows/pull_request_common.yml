@@ -24,7 +24,7 @@ jobs:
         uses: VKCOM/VKUI/.github/actions/add-label-to-pull-request@master
         with:
           issue_number: ${{ github.event.pull_request.number }}
-          label: 'patch'
+          label: 'ci:cherry-pick:patch'
 
       - name: VKUI-tokens
         if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}

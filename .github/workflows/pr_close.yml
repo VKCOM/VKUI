@@ -60,7 +60,7 @@ jobs:
           needScreenshots: true
 
   patch:
-    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'patch')
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:patch')
     concurrency: ci-stable
     runs-on: ubuntu-latest
     name: Stable Patch
