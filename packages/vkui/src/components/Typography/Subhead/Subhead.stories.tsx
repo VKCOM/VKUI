@@ -1,12 +1,13 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
+import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { Subhead, type SubheadProps } from './Subhead';
 
 const story: Meta<SubheadProps> = {
   title: 'Typography/Subhead',
   component: Subhead,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Subhead', CanvasFullLayout),
   decorators: [withCartesian],
 };
 

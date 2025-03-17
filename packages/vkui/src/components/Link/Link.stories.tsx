@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon16ChainOutline, Icon24ExternalLinkOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Link, type LinkProps } from './Link';
 
 const story: Meta<LinkProps> = {
   title: 'Blocks/Link',
   component: Link,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Link', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;
@@ -17,6 +18,7 @@ export const Playground: Story = {
   args: {
     href: 'https://vkcom.github.io/VKUI/#/About',
     children: 'О VKUI',
+    after: <Icon24ExternalLinkOutline width={16} height={16} />,
   },
 };
 

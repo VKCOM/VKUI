@@ -3,13 +3,14 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon16Add, Icon24Add } from '@vkontakte/icons';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
 import { ButtonGroup, type ButtonGroupProps } from './ButtonGroup';
 
 const story: Meta<ButtonGroupProps> = {
   title: 'Blocks/ButtonGroup',
   component: ButtonGroup,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('ButtonGroup', CanvasFullLayout),
   decorators: [withCartesian],
 };
 

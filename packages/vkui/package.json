@@ -88,12 +88,12 @@
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
-    "@storybook/react": "8.6.3",
-    "@storybook/react-webpack5": "8.6.3",
+    "@storybook/react": "8.6.6",
+    "@storybook/react-webpack5": "8.6.6",
     "@types/node": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "8.6.3",
+    "storybook": "8.6.6",
     "ts-node": "*"
   },
   "size-limit": [

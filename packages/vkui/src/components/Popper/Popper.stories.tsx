@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
 import { Div } from '../Div/Div';
 import { Popper, type PopperProps } from './Popper';
@@ -8,7 +9,7 @@ import { Popper, type PopperProps } from './Popper';
 const story: Meta<PopperProps> = {
   title: 'Poppers/Popper',
   component: Popper,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Popper', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;
@@ -17,7 +18,7 @@ type Story = StoryObj<PopperProps>;
 
 export const Playground: Story = {
   render: function Render(args) {
-    const [shown, setShown] = React.useState(false);
+    const [shown, setShown] = React.useState(args.shown || false);
     const buttonRef = React.useRef(null);
 
     return (

@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
@@ -17,7 +18,7 @@ import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
 const story: Meta<OnboardingTooltipProps> = {
   title: 'Poppers/OnboardingTooltip',
   component: OnboardingTooltip,
-  parameters: DisableCartesianParam,
+  parameters: createStoryParameters('OnboardingTooltip', DisableCartesianParam),
 };
 
 export default story;

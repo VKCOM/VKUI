@@ -80,6 +80,10 @@ updates:
       rspack:
         patterns:
           - '@rspack/*'
+      next:
+        patterns:
+          - 'next'
+          - '@next/*'
     versioning-strategy: increase
     open-pull-requests-limit: 20
     reviewers:

@@ -5,8 +5,8 @@ import { Search } from './Search';
 import styles from './Search.module.css';
 
 const getInput = () => screen.getByRole('searchbox');
-const getClearIcon = () => document.querySelector(`.${styles.icon}`)!;
-const getFindButton = () => document.querySelector(`.${styles.findButton}`)!;
+const getClearIcon = () => screen.getByTestId('clear-button');
+const getFindButton = () => screen.getByTestId('find-button');
 
 jest.mock('../../lib/touch', () => {
   const originalModule = jest.requireActual('../../lib/touch');
@@ -38,9 +38,9 @@ describe(Search, () => {
       expect(getInput()).toHaveValue('user');
       expect(value).toBe('user');
     });
-    // TODO (@SevereCloud): не понял почему тест сломался, на деле очистка работает
-    it.skip('clears value', async () => {
-      render(<Search defaultValue="def" />);
+    it('clears value', async () => {
+      render(<Search defaultValue="def" clearButtonTestId="clear-button" />);
+      expect(getInput()).toHaveValue('def');
       await userEvent.click(getClearIcon());
       expect(getInput()).toHaveValue('');
     });
@@ -58,7 +58,7 @@ describe(Search, () => {
     it('handles clear button visibility correctly', async () => {
       render(
         <form data-testid="form">
-          <Search />
+          <Search clearButtonTestId="clear-button" />
           <input data-testid="reset" type="reset" />
         </form>,
       );
@@ -71,7 +71,7 @@ describe(Search, () => {
     it('handles clear button visibility with default value correctly', async () => {
       render(
         <form data-testid="form">
-          <Search defaultValue="val" />
+          <Search defaultValue="val" clearButtonTestId="clear-button" />
           <input data-testid="reset" type="reset" />
         </form>,
       );
@@ -117,15 +117,20 @@ describe(Search, () => {
       expect(value).toBe('initX');
     });
     it('handles clear button visibility correctly', () => {
-      const { rerender } = render(<Search value="init" />);
+      const { rerender } = render(<Search value="init" clearButtonTestId="clear-button" />);
       expect(getClearIcon()).not.toHaveAttribute('tabindex');
-      rerender(<Search value="" />);
+      rerender(<Search value="" clearButtonTestId="clear-button" />);
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
     });
-    // TODO (@SevereCloud): не понял почему тест сломался, на деле очистка работает
-    it.skip('clears value', async () => {
+    it('clears value', async () => {
       let value = 'init';
-      render(<Search value={value} onChange={(e) => (value = e.target.value)} />);
+      render(
+        <Search
+          value={value}
+          onChange={(e) => (value = e.target.value)}
+          clearButtonTestId="clear-button"
+        />,
+      );
       await userEvent.click(getClearIcon());
       expect(value).toBe('');
     });
@@ -134,10 +139,9 @@ describe(Search, () => {
       await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('init');
     });
-    // known bug
-    it.skip('does not clear value without onChange', async () => {
+    it('does not clear value without onChange', async () => {
       let value = 'init';
-      render(<Search value={value} onChange={(e) => (value = e.target.value)} />);
+      render(<Search value={value} clearButtonTestId="clear-button" />);
       await userEvent.click(getClearIcon());
       expect(value).toBe('init');
       expect(getInput()).toHaveValue('init');
@@ -165,7 +169,7 @@ describe(Search, () => {
 
   it('calls onFindButtonClick', async () => {
     const cb = jest.fn();
-    render(<Search value="test" onFindButtonClick={cb} />);
+    render(<Search value="test" onFindButtonClick={cb} findButtonTestId="find-button" />);
     await userEvent.click(getFindButton());
     act(jest.runAllTimers);
     expect(cb).toHaveBeenCalled();

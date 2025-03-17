@@ -16,7 +16,7 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "outDir": ".cache/ts",
-    // "erasableSyntaxOnly": true, включить в v5.8.0
+    "erasableSyntaxOnly": true,
     "paths": {
       "@vkontakte/vkui": ["./packages/vkui/src"],
       // FIXME дублируем, чтобы не падал `yarn run lint:types`.

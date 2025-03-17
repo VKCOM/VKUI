@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28MusicOutline, Icon28UserOutline, Icon28UsersOutline } from '@vkontakte/icons';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
@@ -16,7 +17,7 @@ import { Panel, type PanelProps } from './Panel';
 const story: Meta<PanelProps> = {
   title: 'Layout/Panel',
   component: Panel,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Panel', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
 };
 
@@ -24,7 +25,7 @@ export default story;
 
 type Story = StoryObj<PanelProps>;
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render() {
     const [activePanel, setActivePanel] = React.useState('panel1');
 

@@ -1,12 +1,13 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
+import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { Title, type TitleProps } from './Title';
 
 const story: Meta<TitleProps> = {
   title: 'Typography/Title',
   component: Title,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Title', CanvasFullLayout),
   decorators: [withCartesian],
 };
 

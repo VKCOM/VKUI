@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { type CustomTouchEvent, Touch, type TouchProps } from './Touch';
 
 const story: Meta<TouchProps> = {
@@ -15,11 +16,11 @@ const story: Meta<TouchProps> = {
     onEndX: fn(),
     onEndY: fn(),
   },
-  parameters: {
+  parameters: createStoryParameters('Touch', {
     ...CanvasFullLayout,
     cantered: false,
     ...DisableCartesianParam,
-  },
+  }),
 };
 
 export default story;

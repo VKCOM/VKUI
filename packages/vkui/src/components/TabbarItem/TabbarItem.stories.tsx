@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { Tabbar } from '../Tabbar/Tabbar';
@@ -10,7 +11,7 @@ import { TabbarItem, type TabbarItemProps } from './TabbarItem';
 const story: Meta<TabbarItemProps> = {
   title: 'Layout/TabbarItem',
   component: TabbarItem,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('TabbarItem', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     children: createFieldWithPresets({
       iconSizes: ['28'],
@@ -35,9 +36,13 @@ export default story;
 
 type Story = StoryObj<TabbarItemProps>;
 
-const Playground: Story = {
+export const Playground: Story = {
   render: ({ ...args }) => {
     return <TabbarItem {...args} />;
+  },
+  args: {
+    children: 'Icon28MessageOutline',
+    label: 'Messages',
   },
 };
 

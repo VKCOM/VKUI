@@ -4,7 +4,7 @@ import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
 import { useAutoDetectDirection } from '../../hooks/useAutoDetectDirection';
-import { TokensClassProvider } from '../../lib/tokens';
+import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';
 import { excludeKeysWithUndefined } from '../../lib/utils';
 import {
   ConfigProviderContext,

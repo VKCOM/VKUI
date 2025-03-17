@@ -3,6 +3,7 @@ import {
   arrowMiddleware,
   autoPlacementMiddleware,
   flipMiddleware,
+  type FlipMiddlewareOptions,
   hideMiddleware,
   offsetMiddleware,
   shiftMiddleware,
@@ -26,6 +27,7 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    * Не оказывает влияния при `placement` значениях - `'auto' | 'auto-start' | 'auto-end'`
    */
   disableFlipMiddleware?: boolean;
+  flipMiddlewareFallbackAxisSideDirection?: FlipMiddlewareOptions['fallbackAxisSideDirection'];
   /**
    * Отступ по главной оси.
    */
@@ -73,6 +75,7 @@ export const useFloatingMiddlewaresBootstrap = ({
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
+  flipMiddlewareFallbackAxisSideDirection = 'start',
 }: UseFloatingMiddlewaresBootstrapOptions): {
   middlewares: UseFloatingMiddleware[];
   strictPlacement: Placement | undefined;
@@ -92,7 +95,8 @@ export const useFloatingMiddlewaresBootstrap = ({
     } else if (!disableFlipMiddleware) {
       middlewares.push(
         flipMiddleware({
-          fallbackAxisSideDirection: 'start',
+          fallbackAxisSideDirection: flipMiddlewareFallbackAxisSideDirection,
+          crossAxis: false,
         }),
       );
     }
@@ -137,6 +141,7 @@ export const useFloatingMiddlewaresBootstrap = ({
     arrowHeight,
     offsetByMainAxis,
     disableFlipMiddleware,
+    flipMiddlewareFallbackAxisSideDirection,
     sameWidth,
     customMiddlewares,
     hideWhenReferenceHidden,

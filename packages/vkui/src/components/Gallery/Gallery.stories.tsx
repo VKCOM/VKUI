@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Gallery, type GalleryProps } from './Gallery';
 
 const story: Meta<GalleryProps> = {
   title: 'Blocks/Gallery',
   component: Gallery,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Gallery', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;
@@ -22,11 +23,12 @@ export const Playground: Story = {
         maxWidth: '100%',
         maxHeight: '100%',
         border: '1px solid black',
+        ...args.style,
       }}
       slideWidth="90%"
     >
-      <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
       <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+      <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
       <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
     </Gallery>
   ),

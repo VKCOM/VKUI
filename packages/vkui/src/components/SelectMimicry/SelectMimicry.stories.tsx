@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { SelectMimicry, type SelectMimicryProps } from './SelectMimicry';
 
 const iconsPresets = getFormFieldIconsPresets();
@@ -10,7 +11,7 @@ type StorySelectMimicryProps = SelectMimicryProps & { selectValue: string };
 const story: Meta<StorySelectMimicryProps> = {
   title: 'Forms/SelectMimicry',
   component: SelectMimicry,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('SelectMimicry', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     selectValue: {
       description: 'Для отображения выбранного значения',

@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ScreenSpinner, type ScreenSpinnerProps } from './ScreenSpinner';
 
 const story: Meta<ScreenSpinnerProps> = {
   title: 'Popouts/ScreenSpinner',
   component: ScreenSpinner,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ScreenSpinner', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     customIcon: createFieldWithPresets({
       iconSizes: ['56'],

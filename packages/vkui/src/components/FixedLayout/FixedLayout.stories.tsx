@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
@@ -15,10 +16,7 @@ import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
 const story: Meta<FixedLayoutProps> = {
   title: 'Layout/FixedLayout',
   component: FixedLayout,
-  parameters: {
-    ...CanvasFullLayout,
-    ...DisableCartesianParam,
-  },
+  parameters: createStoryParameters('FixedLayout', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
 };
 
