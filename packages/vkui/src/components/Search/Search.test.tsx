@@ -6,7 +6,7 @@ import styles from './Search.module.css';
 
 const getInput = () => screen.getByRole('searchbox');
 const getClearIcon = () => screen.getByTestId('clear-button');
-const getFindButton = () => document.querySelector(`.${styles.findButton}`)!;
+const getFindButton = () => screen.getByTestId('find-button');
 
 jest.mock('../../lib/touch', () => {
   const originalModule = jest.requireActual('../../lib/touch');
@@ -169,7 +169,7 @@ describe(Search, () => {
 
   it('calls onFindButtonClick', async () => {
     const cb = jest.fn();
-    render(<Search value="test" onFindButtonClick={cb} />);
+    render(<Search value="test" onFindButtonClick={cb} findButtonTestId="find-button" />);
     await userEvent.click(getFindButton());
     act(jest.runAllTimers);
     expect(cb).toHaveBeenCalled();

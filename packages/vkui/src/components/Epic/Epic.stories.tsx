@@ -12,6 +12,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge } from '../Badge/Badge';
 import { Cell } from '../Cell/Cell';
 import { Counter } from '../Counter/Counter';
@@ -30,7 +31,7 @@ import { Epic, type EpicProps } from './Epic';
 const story: Meta<EpicProps> = {
   title: 'Layout/Epic',
   component: Epic,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Epic', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

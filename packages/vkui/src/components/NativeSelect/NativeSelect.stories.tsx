@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { NativeSelect, type NativeSelectProps } from './NativeSelect';
 
 const story: Meta<NativeSelectProps> = {
   title: 'Forms/NativeSelect',
   component: NativeSelect,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('NativeSelect', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     before: getFormFieldIconsPresets(),
   },

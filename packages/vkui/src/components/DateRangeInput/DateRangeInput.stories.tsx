@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { useCustomArgs } from '../../testing/useCustomArgs';
 import { DateRangeInput, type DateRangeInputProps } from './DateRangeInput';
 
@@ -12,7 +13,7 @@ const iconsPresets = getFormFieldIconsPresets();
 const story: Meta<StoryDateRangeInputProps> = {
   title: 'Forms/DateRangeInput',
   component: DateRangeInput,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('DateRangeInput', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     value: {
       description: 'Используйте startDate и endDate для задания периода',

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
 import { AspectRatio, type AspectRatioProps } from './AspectRatio';
@@ -8,7 +9,7 @@ import { AspectRatio, type AspectRatioProps } from './AspectRatio';
 const story: Meta<AspectRatioProps> = {
   title: 'Layout/AspectRatio',
   component: AspectRatio,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('AspectRatio', CanvasFullLayout),
   argTypes: {
     ratio: {
       control: { type: 'select' },
