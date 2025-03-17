@@ -4,6 +4,7 @@ import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators'
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
@@ -15,7 +16,7 @@ import { Banner, type BannerProps } from './Banner';
 const story: Meta<BannerProps> = {
   title: 'Blocks/Banner',
   component: Banner,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Banner', CanvasFullLayout),
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['96'],

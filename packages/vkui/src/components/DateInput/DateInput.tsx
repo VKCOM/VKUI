@@ -166,7 +166,7 @@ export const DateInput = ({
   value: valueProp,
   defaultValue,
   onChange,
-  calendarPlacement = 'bottom-start',
+  calendarPlacement: calendarPlacementProp = 'bottom-start',
   style,
   className,
   doneButtonText,
@@ -318,6 +318,13 @@ export const DateInput = ({
     [open, renderCustomValue, value],
   );
 
+  // при переключении месяцев высота календаря может меняться,
+  // чтобы календарь не прыгал при переключении месяцев каждый раз на
+  // лучшую позицию мы запоминаем последнюю удачную, чтобы календарь оставался
+  // на ней, пока помещается.
+  const [calendarPlacement, setCalendarPlacement] =
+    React.useState<PlacementWithAuto>(calendarPlacementProp);
+
   return (
     <FormField
       style={style}
@@ -419,6 +426,7 @@ export const DateInput = ({
           targetRef={rootRef}
           offsetByMainAxis={8}
           placement={calendarPlacement}
+          onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
           <Calendar

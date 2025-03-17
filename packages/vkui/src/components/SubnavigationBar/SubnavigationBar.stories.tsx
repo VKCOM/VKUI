@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24FavoriteOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { useCustomArgs } from '../../testing/useCustomArgs';
 import { Counter } from '../Counter/Counter';
 import { Group } from '../Group/Group';
@@ -18,7 +19,7 @@ type StorySubnavigationBarProps = SubnavigationBarProps & { selected: string };
 const story: Meta<StorySubnavigationBarProps> = {
   title: 'Blocks/SubnavigationBar',
   component: SubnavigationBar,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('SubnavigationBar', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     selected: {
       control: 'select',

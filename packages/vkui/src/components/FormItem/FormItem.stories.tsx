@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Input } from '../Input/Input';
 import { Textarea } from '../Textarea/Textarea';
 import { FormItem, type FormItemProps } from './FormItem';
@@ -7,7 +8,7 @@ import { FormItem, type FormItemProps } from './FormItem';
 const story: Meta<FormItemProps> = {
   title: 'Forms/FormItem',
   component: FormItem,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('FormItem', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

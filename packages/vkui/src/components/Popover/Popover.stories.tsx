@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Icon16Clear, Icon28AddOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import { DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { CellButton } from '../CellButton/CellButton';
@@ -20,7 +21,7 @@ import { Popover, type PopoverOnShownChange, type PopoverProps } from './Popover
 const story: Meta<PopoverProps> = {
   title: 'Poppers/Popover',
   component: Popover,
-  parameters: DisableCartesianParam,
+  parameters: createStoryParameters('Popover', DisableCartesianParam),
 };
 
 export default story;

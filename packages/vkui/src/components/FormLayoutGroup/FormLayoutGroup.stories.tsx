@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { DateInput } from '../DateInput/DateInput';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
@@ -10,7 +11,7 @@ import { FormLayoutGroup, type FormLayoutGroupProps } from './FormLayoutGroup';
 const story: Meta<FormLayoutGroupProps> = {
   title: 'Forms/FormLayoutGroup',
   component: FormLayoutGroup,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('FormLayoutGroup', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

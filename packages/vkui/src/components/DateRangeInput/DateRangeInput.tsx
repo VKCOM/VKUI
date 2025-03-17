@@ -151,7 +151,7 @@ export const DateRangeInput = ({
   value: valueProp,
   defaultValue,
   onChange,
-  calendarPlacement = 'bottom-start',
+  calendarPlacement: calendarPlacementProp = 'bottom-start',
   style,
   className,
   closeOnChange = true,
@@ -287,6 +287,13 @@ export const DateRangeInput = ({
     [updateValue, closeOnChange, value, removeFocusFromField],
   );
 
+  // при переключении месяцев высота календаря может меняться,
+  // чтобы календарь не прыгал при переключении месяцев каждый раз на
+  // лучшую позицию мы запоминаем последнюю удачную, чтобы календарь оставался
+  // на ней, пока помещается.
+  const [calendarPlacement, setCalendarPlacement] =
+    React.useState<PlacementWithAuto>(calendarPlacementProp);
+
   return (
     <FormField
       style={style}
@@ -386,7 +393,12 @@ export const DateRangeInput = ({
         </Text>
       </div>
       {open && !disableCalendar && (
-        <Popper targetRef={rootRef} offsetByMainAxis={8} placement={calendarPlacement}>
+        <Popper
+          targetRef={rootRef}
+          offsetByMainAxis={8}
+          placement={calendarPlacement}
+          onPlacementChange={setCalendarPlacement}
+        >
           <CalendarRange
             value={value}
             onChange={onCalendarChange}

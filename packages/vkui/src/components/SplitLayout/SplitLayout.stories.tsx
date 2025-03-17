@@ -8,6 +8,7 @@ import {
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Alert } from '../Alert/Alert';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
@@ -28,7 +29,7 @@ import { SplitLayout, type SplitLayoutProps } from './SplitLayout';
 const story: Meta<SplitLayoutProps> = {
   title: 'Layout/SplitLayout',
   component: SplitLayout,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('SplitLayout', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

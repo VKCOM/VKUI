@@ -29,16 +29,16 @@
     "@vkontakte/icons": "^2.159.0",
     "@vkontakte/vkjs": "^2.0.1",
     "@vkontakte/vkui": "workspace:^",
-    "@vkontakte/vkui-tokens": "4.61.1"
+    "@vkontakte/vkui-tokens": "4.61.3"
   },
   "devDependencies": {
-    "next": "^15.2.1",
+    "next": "^15.2.2",
     "nextra": "^4.2.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "peerDependencies": {
-    "next": "^15.2.1",
+    "next": "^15.2.2",
     "nextra": "^4.2.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
