@@ -52,7 +52,7 @@ describe(useScrollLock, () => {
 
       expect(beforeScrollLockFn).toHaveBeenCalled();
 
-      expect(getStyleAttributeObject(document.body)).toEqual({
+      expect(getStyleAttributeObject(document.documentElement)).toEqual({
         position: 'fixed',
         top: `-${0}px`,
         left: `-${0}px`,
@@ -64,12 +64,10 @@ describe(useScrollLock, () => {
             }
           : {}),
       });
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.body)).toBe('none');
       expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
 
       h.rerender(false);
-      expect(getStyleAttributeObject(document.body)).toEqual({});
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.body)).toBe('');
+      expect(getStyleAttributeObject(document.documentElement)).toEqual({});
       expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
 
       clearWindowMeasuresMock();
@@ -83,7 +81,7 @@ describe(useScrollLock, () => {
         ),
       });
 
-      expect(getStyleAttributeObject(document.body)).toEqual({
+      expect(getStyleAttributeObject(document.documentElement)).toEqual({
         'position': 'fixed',
         'top': `-${0}px`,
         'left': `-${0}px`,
@@ -91,12 +89,10 @@ describe(useScrollLock, () => {
         'overflow-x': 'scroll',
         'overflow-y': 'scroll',
       });
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.body)).toBe('none');
       expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
 
       h.unmount();
-      expect(getStyleAttributeObject(document.body)).toEqual({});
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.body)).toBe('');
+      expect(getStyleAttributeObject(document.documentElement)).toEqual({});
       expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
     });
 
@@ -111,7 +107,8 @@ describe(useScrollLock, () => {
       const { rerender } = render(<Fixture />);
 
       const clearWindowMeasuresMock = mockWindowMeasures(50, 50);
-      const clearElementScrollMock = mockElementScroll(document.body, 100, 100);
+      const clearElementScrollMock = mockElementScroll(document.documentElement, 100, 100);
+      const clearBodyElementScrollMock = mockElementScroll(document.body, 100, 100);
       const clearMockWindowScrollToMock = mockWindowScrollTo();
 
       if (locked) {
@@ -128,7 +125,7 @@ describe(useScrollLock, () => {
       expect(contextRef.current?.getScroll()).toEqual({ x: 10, y: 60 });
 
       if (locked) {
-        expect(getPositionOfBody()).toEqual([`-${10}px`, `-${10}px`]);
+        expect(getPositionOfDocumentElement()).toEqual([`-${10}px`, `-${10}px`]);
         expect(window.pageYOffset).toBe(0);
       } else {
         expect(window.pageYOffset).toBe(10);
@@ -139,6 +136,7 @@ describe(useScrollLock, () => {
 
       clearWindowMeasuresMock();
       clearElementScrollMock();
+      clearBodyElementScrollMock();
       clearMockWindowScrollToMock();
     });
 
@@ -168,12 +166,12 @@ describe(useScrollLock, () => {
       // Блокируем скролл - отступы остаются те же
       expect(window.pageYOffset).toBe(10);
       expect(window.pageXOffset).toBe(10);
-      expect(getPositionOfBody()).toEqual([`-${10}px`, `-${10}px`]);
+      expect(getPositionOfDocumentElement()).toEqual([`-${10}px`, `-${10}px`]);
 
       // Скролим залоченный скролл
       contextRef.current?.scrollTo(25, 25);
 
-      expect(getPositionOfBody()).toEqual([`-${25}px`, `-${25}px`]);
+      expect(getPositionOfDocumentElement()).toEqual([`-${25}px`, `-${25}px`]);
 
       // Выключаем блокировку скролла
       contextRef.current?.decrementScrollLockCounter();
@@ -409,8 +407,8 @@ function getStyleAttributeObject(el: HTMLElement | null) {
   );
 }
 
-function getPositionOfBody() {
-  const styles = getStyleAttributeObject(document.body);
+function getPositionOfDocumentElement() {
+  const styles = getStyleAttributeObject(document.documentElement);
   return styles && [styles.left, styles.top];
 }
 

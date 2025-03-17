@@ -110,9 +110,9 @@ describe('AppRoot', () => {
     );
 
     const result = render(<Template />);
-    expect(document.body).toHaveStyle('position: fixed');
+    expect(document.documentElement).toHaveStyle('position: fixed');
     fireEvent.click(result.getByRole('checkbox'));
-    expect(document.body).not.toHaveStyle('position: fixed');
+    expect(document.documentElement).not.toHaveStyle('position: fixed');
 
     result.rerender(<Template scroll="contain" />);
     expect(result.getByTestId('app-root')).toHaveStyle('position: absolute');
