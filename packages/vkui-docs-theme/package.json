@@ -32,13 +32,13 @@
     "@vkontakte/vkui-tokens": "4.61.3"
   },
   "devDependencies": {
-    "next": "^15.2.1",
+    "next": "^15.2.2",
     "nextra": "^4.2.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "peerDependencies": {
-    "next": "^15.2.1",
+    "next": "^15.2.2",
     "nextra": "^4.2.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
