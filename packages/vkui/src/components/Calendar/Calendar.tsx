@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
-import { useMergedState } from '../../hooks/useMergedState';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -148,7 +148,7 @@ export const Calendar = ({
   dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
-  const { value, updateValue } = useMergedState<Date | undefined>(undefined, {
+  const [value, updateValue] = useCustomEnsuredControl<Date | undefined>({
     value: valueProp,
     defaultValue,
     onChange,

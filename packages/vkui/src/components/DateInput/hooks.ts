@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-interface UseMergedStateOptions<T> {
-  value?: T;
-  defaultValue?: T;
-  onChange?: (value: T) => void;
+interface UseDateInputValueOptions {
+  value?: Date;
+  defaultValue?: Date;
+  onChange?: (value?: Date) => void;
 }
 
-export interface UseMergedStateReturn<V> {
-  value: V;
-  updateValue: (v: V) => void;
-  setInternalValue: (v: V) => void;
-  getLastUpdatedValue: () => V;
+export interface UseDateInputValueReturn {
+  value?: Date;
+  updateValue: (v?: Date) => void;
+  setInternalValue: (v?: Date) => void;
+  getLastUpdatedValue: () => Date | undefined;
 }
 
 const getStateValue = <T>(defaultStateValue: T, value?: T, defaultValue?: T): T => {
@@ -23,18 +23,18 @@ const getStateValue = <T>(defaultStateValue: T, value?: T, defaultValue?: T): T 
   return defaultStateValue;
 };
 
-export const useMergedState = <T>(
-  defaultStateValue: T,
-  options: UseMergedStateOptions<T>,
-): UseMergedStateReturn<T> => {
-  const { value, defaultValue, onChange } = options;
+export const useDateInputValue = ({
+  value,
+  defaultValue,
+  onChange,
+}: UseDateInputValueOptions): UseDateInputValueReturn => {
   const isControlled = value !== undefined;
 
-  const [internalValue, setInternalValue] = React.useState<T>(
-    getStateValue(defaultStateValue, value, defaultValue),
+  const [internalValue, setInternalValue] = React.useState<Date | undefined>(
+    getStateValue(undefined, value, defaultValue),
   );
-  const lastUpdatedValueRef = React.useRef<T>(
-    getStateValue(defaultStateValue, value, defaultValue),
+  const lastUpdatedValueRef = React.useRef<Date | undefined>(
+    getStateValue(undefined, value, defaultValue),
   );
 
   React.useEffect(() => {
@@ -47,7 +47,7 @@ export const useMergedState = <T>(
   const getLastUpdatedValue = React.useCallback(() => lastUpdatedValueRef.current, []);
 
   const updateValue = React.useCallback(
-    (newValue: T) => {
+    (newValue?: Date) => {
       if (!isControlled) {
         setInternalValue(newValue);
         lastUpdatedValueRef.current = newValue;

@@ -7,7 +7,6 @@ import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useMergedState } from '../../hooks/useMergedState';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -21,6 +20,7 @@ import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import { useDateInputValue } from './hooks';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
@@ -216,9 +216,7 @@ export const DateInput = ({
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
 
-  const { value, updateValue, setInternalValue, getLastUpdatedValue } = useMergedState<
-    Date | undefined
-  >(undefined, {
+  const { value, updateValue, setInternalValue, getLastUpdatedValue } = useDateInputValue({
     value: valueProp,
     defaultValue,
     onChange,

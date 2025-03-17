@@ -6,8 +6,8 @@ import { classNames } from '@vkontakte/vkjs';
 import { isAfter } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useMergedState } from '../../hooks/useMergedState';
 import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -193,7 +193,7 @@ export const DateRangeInput = ({
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
 
-  const { value, updateValue } = useMergedState<DateRangeType | undefined>(undefined, {
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
     value: valueProp,
     defaultValue,
     onChange,

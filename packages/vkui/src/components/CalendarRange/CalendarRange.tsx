@@ -13,7 +13,7 @@ import {
   subMonths,
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
-import { useMergedState } from '../../hooks/useMergedState';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
@@ -103,7 +103,7 @@ export const CalendarRange = ({
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
-  const { value, updateValue } = useMergedState<DateRangeType | undefined>([null, null], {
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
     value: valueProp,
     defaultValue,
     onChange,
