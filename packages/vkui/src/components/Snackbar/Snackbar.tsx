@@ -68,6 +68,14 @@ export interface SnackbarProps
    */
   onActionClick?: (event: React.MouseEvent) => void;
   /**
+   * Обработчик, срабатывающий при окончании свайпа снекбара, когда он должен закрыться
+   */
+  onSwipeEnd?: () => void;
+  /**
+   * Обработчик, срабатывающий при окончании таймера, длительность, которого задана свойством `duration`
+   */
+  onDurationEnd?: () => void;
+  /**
    * Время в миллисекундах, через которое плашка скроется
    */
   duration?: number;
@@ -79,6 +87,13 @@ export interface SnackbarProps
    * Величина отступа снизу. Используется для позиционирования элемента в случае, когда нежелательно, чтобы Snackbar при появлении перекрывал важные элементы интерфейса.
    */
   offsetY?: React.CSSProperties['bottom'];
+  /**
+   * Управление состоянием открытия снекбара:
+   * При `open = undefined` - работает как обычно
+   * При `open = true` - снекбар будет открыт при любых действиях со снекбаром
+   * При `open = false` - запустится анимация закрытия снекбара, и в конце анимации вызовется `onClose`
+   */
+  open?: boolean;
 }
 
 /**
@@ -98,6 +113,9 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   subtitle,
   offsetY,
   getRootRef,
+  open: openProp,
+  onSwipeEnd,
+  onDurationEnd,
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
@@ -119,10 +137,19 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const mediaQueries = useMediaQueries();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
-    open ? 'enter' : 'exit',
+    !open ? 'exit' : 'enter',
     {
       onExited: onClose,
     },
+  );
+
+  useIsomorphicLayoutEffect(
+    function updateForceOpen() {
+      if (openProp !== undefined) {
+        setOpen(openProp);
+      }
+    },
+    [openProp],
   );
 
   const clearRAF = React.useCallback(() => {
@@ -156,8 +183,10 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   );
 
   const close = React.useCallback(() => {
-    setOpen(false);
-  }, []);
+    if (openProp === undefined) {
+      setOpen(false);
+    }
+  }, [openProp]);
 
   const handleActionClick = (event: React.MouseEvent) => {
     close();
@@ -212,6 +241,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       )
     ) {
       close();
+      onSwipeEnd?.();
     }
 
     setTouched(false);
@@ -222,7 +252,12 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       if (!open || focused || touched || animationState !== 'entered') {
         return;
       }
-      closeTimeoutIdRef.current = setTimeout(close, duration);
+      const onTimeout = () => {
+        close();
+        onDurationEnd?.();
+      };
+
+      closeTimeoutIdRef.current = setTimeout(onTimeout, duration);
       return function preventCloseAfterDelayOnUnmount() {
         clearTimeout(closeTimeoutIdRef.current);
       };

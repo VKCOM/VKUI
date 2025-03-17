@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { act, render, screen } from '@testing-library/react';
+import { waitCSSKeyframesAnimation } from '../../testing/utils';
 import { type SnackbarApi } from '../Snackbar/useSnackbar';
 import { SnackbarsController, useSnackbarApi } from './SnackbarContext';
 
@@ -56,6 +57,8 @@ describe('SnackbarContext', () => {
     expect(screen.getByText('Test Snackbar to close')).toBeInTheDocument();
 
     act(() => apiRef.current?.close(snackbarId!));
+    await waitCSSKeyframesAnimation(screen.getByRole('alert'), { runOnlyPendingTimers: true });
+
     expect(screen.queryByText('Test Snackbar to close')).not.toBeInTheDocument();
   });
 });

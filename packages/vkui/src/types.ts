@@ -132,3 +132,6 @@ export type HasOnlyExpectedProps<Props, ExpectedProps> = {
 };
 
 export type TimeoutId = ReturnType<typeof setTimeout> | null;
+
+export type PartialFields<TYPE, FIELDS extends keyof TYPE> = Omit<TYPE, FIELDS> &
+  Partial<Pick<TYPE, FIELDS>>;

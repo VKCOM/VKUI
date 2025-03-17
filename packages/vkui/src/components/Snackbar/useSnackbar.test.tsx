@@ -55,6 +55,12 @@ describe('useSnackbar', () => {
       apiRef.current?.closeAll();
     });
 
+    await Promise.all([
+      screen
+        .getAllByRole('alert')
+        .map((alert) => waitCSSKeyframesAnimation(alert, { runOnlyPendingTimers: true })),
+    ]);
+
     expect(screen.queryByText('Test Snackbar 1')).not.toBeInTheDocument();
     expect(screen.queryByText('Test Snackbar 2')).not.toBeInTheDocument();
   });
@@ -70,6 +76,8 @@ describe('useSnackbar', () => {
     expect(screen.queryByText('Test Snackbar to close')).toBeInTheDocument();
 
     act(() => apiRef.current?.close(snackbarId!));
+
+    await waitCSSKeyframesAnimation(screen.getByRole('alert'), { runOnlyPendingTimers: true });
     expect(screen.queryByText('Test Snackbar to close')).not.toBeInTheDocument();
   });
 
