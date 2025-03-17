@@ -141,6 +141,16 @@ const filter = <T extends CustomSelectOptionInterface>(
     : options;
 };
 
+type MousePosition = {
+  x: React.MouseEvent['clientX'];
+  y: React.MouseEvent['clientY'];
+};
+function isMousePositionChanged(event: React.MouseEvent, prevPosition: MousePosition) {
+  return (
+    Math.abs(prevPosition.x - event.clientX) >= 1 || Math.abs(prevPosition.y - event.clientY) >= 1
+  );
+}
+
 export interface CustomSelectOptionInterface {
   value: Exclude<SelectValue, null>;
   label: React.ReactElement | string;
@@ -716,21 +726,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [options, selectOption],
   );
 
-  const prevMousePositionRef = React.useRef<{
-    x: React.MouseEvent['clientX'];
-    y: React.MouseEvent['clientY'];
-  }>({ x: 0, y: 0 });
+  const prevMousePositionOnSelectRef = React.useRef<MousePosition>({ x: 0, y: 0 });
   const focusOptionOnMouseMove = React.useCallback(
     (e: React.MouseEvent<HTMLElement>, index: number) => {
-      const isMouseChangedPosition =
-        Math.abs(prevMousePositionRef.current.x - e.clientX) >= 1 ||
-        Math.abs(prevMousePositionRef.current.y - e.clientY) >= 1;
-
-      if (isMouseChangedPosition) {
+      if (isMousePositionChanged(e, prevMousePositionOnSelectRef.current)) {
         focusOptionByIndex(index, false);
       }
-
-      prevMousePositionRef.current = { x: e.clientX, y: e.clientY };
     },
     [focusOptionByIndex],
   );
@@ -905,6 +906,15 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const focusWithin = useFocusWithin(handleRootRef);
 
+  const resetOptionFocusOnMouseLeave = React.useCallback(
+    (event: React.MouseEvent) => {
+      if (isMousePositionChanged(event, prevMousePositionOnSelectRef.current)) {
+        resetFocusedOption();
+      }
+    },
+    [resetFocusedOption],
+  );
+
   return (
     <div
       className={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
@@ -912,6 +922,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ref={handleRootRef}
       onClick={passClickAndFocusToInputOnClick}
       onMouseDown={preventInputBlurWhenClickInsideFocusedSelectArea}
+      onMouseMove={(e) => {
+        prevMousePositionOnSelectRef.current = { x: e.clientX, y: e.clientY };
+      }}
     >
       {focusWithin && selected && !opened && (
         <VisuallyHidden aria-live="polite">{selected.label}</VisuallyHidden>
@@ -966,7 +979,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           placement={popperPlacement}
           scrollBoxRef={scrollBoxRef}
           onPlacementChange={setPopperPlacement}
-          onMouseLeave={resetFocusedOption}
+          onMouseLeave={resetOptionFocusOnMouseLeave}
           fetching={fetching}
           overscrollBehavior={overscrollBehavior}
           offsetDistance={dropdownOffsetDistance}
