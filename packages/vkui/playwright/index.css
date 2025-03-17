@@ -41,6 +41,12 @@
   --vkui--font_family_base: 'Roboto' !important;
   --vkui--font_family_accent: 'Roboto' !important;
 
+  /* DisplayTitle */
+  --vkui--font_display_title1--font_family--regular: 'Roboto' !important;
+  --vkui--font_display_title2--font_family--regular: 'Roboto' !important;
+  --vkui--font_display_title3--font_family--regular: 'Roboto' !important;
+  --vkui--font_display_title4--font_family--regular: 'Roboto' !important;
+
   /* Caption */
   --vkui--font_caption1--font_family--regular: 'Roboto' !important;
   --vkui--font_caption1_caps--font_family--regular: 'Roboto' !important;
