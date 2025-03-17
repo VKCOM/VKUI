@@ -6,6 +6,7 @@ import { Card, Mark, Title, useDirection } from '../../../src';
 import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
 import { useDOM } from '../../../src/lib/dom';
 import { type CSSCustomProperties } from '../../../src/types';
+import { useOverviewLayoutContext } from '../../common/components/OverviewLayoutContext';
 import { type ComponentConfigData } from '../config';
 import styles from './ComponentOverviewCard.module.css';
 
@@ -16,7 +17,6 @@ export type ComponentOverviewCardProps = Pick<
   'customPath' | 'minWidth' | 'maxWidth'
 > & {
   componentName: string;
-  searchedQuery: string;
   groupTitle: string;
 
   component: React.ReactNode;
@@ -44,7 +44,6 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
   component,
   componentName,
   customPath,
-  searchedQuery,
   groupTitle,
   minWidth,
   maxWidth,
@@ -54,6 +53,7 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
   const direction = useDirection();
   const { window } = useDOM();
   const [scale, setScale] = React.useState(1);
+  const { searchedQuery } = useOverviewLayoutContext();
 
   const calculateScale = React.useCallback(() => {
     const container = containerRef.current;
