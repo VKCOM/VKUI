@@ -172,7 +172,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
       return _getScroll({
         xOffset: window.pageXOffset,
         yOffset: window.pageYOffset,
-        element: document.body,
+        element: document.documentElement,
         scrollLockEnabled: scrollLockEnabledRef.current,
         customCalcY: (scrollTop) =>
           options.compensateKeyboardHeight
@@ -198,7 +198,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
         clientHeight: window.innerHeight,
 
         scrollLockEnabled: scrollLockEnabledRef.current,
-        lockedElement: document.body,
+        lockedElement: document.documentElement,
         elementToScroll: window,
       });
     },
@@ -213,8 +213,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     const overflowY = window!.innerWidth > document!.documentElement.clientWidth ? 'scroll' : '';
     const overflowX = window!.innerHeight > document!.documentElement.clientHeight ? 'scroll' : '';
 
-    Object.assign(document!.documentElement.style, { overscrollBehavior: 'none' });
-    Object.assign(document!.body.style, {
+    Object.assign(document!.documentElement.style, {
       position: 'fixed',
       right: '0',
       overscrollBehavior: 'none',
@@ -229,8 +228,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
 
   const disableScrollLock = React.useCallback(() => {
     const scrollData = getScroll({ compensateKeyboardHeight: false });
-    Object.assign(document!.documentElement.style, { overscrollBehavior: '' });
-    clearDisableScrollStyle(document!.body);
+    clearDisableScrollStyle(document!.documentElement);
     scrollLockEnabledRef.current = false;
 
     scrollTo(scrollData.x, scrollData.y);
