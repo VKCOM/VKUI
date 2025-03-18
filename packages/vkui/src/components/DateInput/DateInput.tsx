@@ -7,12 +7,14 @@ import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { callMultiple } from '../../lib/callMultiple';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
@@ -84,7 +86,6 @@ export interface DateInputProps
       | 'nextMonthLabel'
       | 'changeMonthLabel'
       | 'changeYearLabel'
-      | 'changeDayLabel'
       | 'showNeighboringMonth'
       | 'size'
       | 'viewDate'
@@ -97,6 +98,7 @@ export interface DateInputProps
       | 'maxDateTime'
       | 'renderDayContent'
     >,
+    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
@@ -112,6 +114,10 @@ export interface DateInputProps
    * Автоматически закрывать календарь при изменениях.
    */
   closeOnChange?: boolean;
+  /**
+   * Aria-label для календаря.
+   */
+  calendarLabel?: string;
   /**
    * Label для кнопки очистки. Делает доступным для ассистивных технологий.
    */
@@ -129,6 +135,10 @@ export interface DateInputProps
    */
   onCalendarOpenChanged?: (opened: boolean) => void;
   /**
+   * `aria-label` для изменения дня.
+   */
+  changeDayLabel?: string;
+  /**
    * Обработчик нажатия на кнопку `"Done"`. Используется совместно с флагом `enableTime`.
    */
   onApply?: (value?: Date) => void;
@@ -141,6 +151,19 @@ export interface DateInputProps
    * Часовой пояс для отображения даты.
    */
   timezone?: string;
+  /**
+   * Включает режим в котором DateInput доступен
+   * для ассистивных технологий.
+   * В этом режиме:
+   * - календарь больше не открывает при фокусе/клике на DateInput;
+   * - иконка календаря видна всегда,
+   * чтобы пользователи могли открыть календарь по клику на иконку;
+   * - календарь при открытии получает фокус, клавиатурный
+   * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт;
+   *
+   * TODO [>=8]: включить по умолчанию.
+   */
+  accessible?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -209,10 +232,10 @@ export const DateInput = ({
   disabled,
   onClick,
   onFocus,
+  accessible,
+  calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
-  showNeighboringMonth,
-  size,
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
   changeDayLabel = 'Изменить день',
@@ -220,6 +243,8 @@ export const DateInput = ({
   changeMinutesLabel = 'Изменить минуту',
   clearFieldLabel = 'Очистить поле',
   showCalendarLabel = 'Показать календарь',
+  showNeighboringMonth,
+  size,
   viewDate,
   onHeaderChange,
   onNextMonth,
@@ -241,6 +266,7 @@ export const DateInput = ({
   onApply,
   renderCustomValue,
   timezone,
+  restoreFocus,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -293,13 +319,15 @@ export const DateInput = ({
     rootRef,
     calendarRef,
     open,
-    openCalendar,
     internalValue,
     handleKeyDown,
     setFocusedElement,
     handleFieldEnter,
     clear,
     removeFocusFromField,
+    closeCalendar,
+    toggleCalendar,
+    openCalendar,
   } = useDateInput({
     maxElement,
     refs,
@@ -311,6 +339,7 @@ export const DateInput = ({
     getInternalValue,
     value,
     onCalendarOpenChanged,
+    accessible,
   });
 
   const { sizeY = 'none' } = useAdaptivity();
@@ -364,60 +393,100 @@ export const DateInput = ({
   const [calendarPlacement, setCalendarPlacement] =
     React.useState<PlacementWithAuto>(calendarPlacementProp);
 
+  const { locale } = useConfigProvider();
+  const inputGroupLabel = 'Редактор даты';
+  const inputGroupLabelId = React.useId();
+  const currentDateLabel = value
+    ? new Intl.DateTimeFormat(locale, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(value)
+    : null;
+  const currentDateLabelId = React.useId();
+
+  const showCalendarOnInputAreaClick = React.useCallback(() => {
+    handleFieldEnter();
+    if (accessible) {
+      openCalendar();
+    }
+  }, [handleFieldEnter, openCalendar, accessible]);
+
   return (
     <FormField
       style={style}
       className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       getRootRef={handleRootRef}
+      role="group"
+      aria-labelledby={`${inputGroupLabelId} ${currentDateLabelId}`}
       after={
-        value ? (
-          <IconButton
-            hoverMode="opacity"
-            label={clearFieldLabel}
-            onClick={clear}
-            data-testid={clearButtonTestId}
-          >
-            <Icon16Clear />
-          </IconButton>
-        ) : (
-          <IconButton
-            hoverMode="opacity"
-            label={showCalendarLabel}
-            onClick={openCalendar}
-            data-testid={showCalendarButtonTestId}
-          >
-            <Icon20CalendarOutline />
-          </IconButton>
-        )
+        <React.Fragment>
+          {!disableCalendar && (accessible || (!accessible && !value)) ? (
+            <IconButton
+              hoverMode="opacity"
+              label={showCalendarLabel}
+              onClick={toggleCalendar}
+              data-testid={showCalendarButtonTestId}
+            >
+              <Icon20CalendarOutline />
+            </IconButton>
+          ) : null}
+          {value ? (
+            <IconButton
+              hoverMode="opacity"
+              label={clearFieldLabel}
+              onClick={clear}
+              data-testid={clearButtonTestId}
+            >
+              <Icon16Clear />
+            </IconButton>
+          ) : null}
+        </React.Fragment>
       }
       disabled={disabled}
-      onClick={callMultiple(handleFieldEnter, onClick)}
-      onFocus={callMultiple(handleFieldEnter, onFocus)}
+      onClick={onClick}
       {...props}
     >
       <div className={styles.wrapper}>
+        {inputGroupLabel && (
+          <VisuallyHidden id={inputGroupLabelId}>{inputGroupLabel}</VisuallyHidden>
+        )}
+        {currentDateLabel && (
+          <VisuallyHidden id={currentDateLabelId}>{currentDateLabel}</VisuallyHidden>
+        )}
         <VisuallyHidden
           id={id}
           Component="input"
+          readOnly
+          aria-hidden
+          tabIndex={-1}
           name={name}
           value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
+          onFocus={handleFieldEnter}
         />
         <Text
           className={classNames(styles.input, customValue && styles.hidden)}
-          onKeyDown={handleKeyDown}
           // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
           // из-за чего `.Typography--normalize` перебивает стили.
           normalize={false}
           Component="span" // для <span> нормализация не нужна
+          onClick={showCalendarOnInputAreaClick}
         >
           <InputLike
             length={2}
             getRootRef={daysRef}
             index={0}
+            onKeyDown={handleKeyDown}
             onElementSelect={setFocusedElement}
             value={internalValue[0]}
             label={changeDayLabel}
             data-testid={dayFieldTestId}
+            role="spinbutton"
+            aria-valuemin={1}
+            aria-valuemax={31}
+            aria-valuetext={internalValue[0]}
+            aria-label={changeDayLabel}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -425,9 +494,15 @@ export const DateInput = ({
             getRootRef={monthsRef}
             index={1}
             onElementSelect={setFocusedElement}
+            onKeyDown={handleKeyDown}
             value={internalValue[1]}
             label={changeMonthLabel}
             data-testid={monthFieldTestId}
+            role="spinbutton"
+            aria-valuemin={1}
+            aria-valuemax={12}
+            aria-valuetext={internalValue[1]}
+            aria-label={changeMonthLabel}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -437,7 +512,13 @@ export const DateInput = ({
             onElementSelect={setFocusedElement}
             value={internalValue[2]}
             label={changeYearLabel}
+            onKeyDown={handleKeyDown}
             data-testid={yearFieldTestId}
+            role="spinbutton"
+            aria-valuemin={1}
+            aria-valuemax={275750}
+            aria-valuetext={internalValue[2]}
+            aria-label={changeYearLabel}
           />
           {enableTime && (
             <React.Fragment>
@@ -449,7 +530,13 @@ export const DateInput = ({
                 onElementSelect={setFocusedElement}
                 value={internalValue[3]}
                 label={changeHoursLabel}
+                onKeyDown={handleKeyDown}
                 data-testid={hourFieldTestId}
+                role="spinbutton"
+                aria-valuemin={1}
+                aria-valuemax={24}
+                aria-valuetext={internalValue[3]}
+                aria-label={changeHoursLabel}
               />
               <InputLikeDivider>:</InputLikeDivider>
               <InputLike
@@ -459,7 +546,13 @@ export const DateInput = ({
                 onElementSelect={setFocusedElement}
                 value={internalValue[4]}
                 label={changeMinutesLabel}
+                onKeyDown={handleKeyDown}
                 data-testid={minuteFieldTestId}
+                role="spinbutton"
+                aria-valuemin={1}
+                aria-valuemax={59}
+                aria-valuetext={internalValue[4]}
+                aria-label={changeMinutesLabel}
               />
             </React.Fragment>
           )}
@@ -478,38 +571,45 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <Calendar
-            value={value}
-            onChange={onCalendarChange}
-            enableTime={enableTime}
-            disablePast={disablePast}
-            disableFuture={disableFuture}
-            shouldDisableDate={shouldDisableDate}
-            onDoneButtonClick={onDoneButtonClick}
-            getRootRef={calendarRef}
-            doneButtonText={doneButtonText}
-            DoneButton={DoneButton}
-            disablePickers={disablePickers}
-            changeHoursLabel={changeHoursLabel}
-            changeMinutesLabel={changeMinutesLabel}
-            prevMonthLabel={prevMonthLabel}
-            nextMonthLabel={nextMonthLabel}
-            changeMonthLabel={changeMonthLabel}
-            changeYearLabel={changeYearLabel}
-            changeDayLabel={changeDayLabel}
-            showNeighboringMonth={showNeighboringMonth}
-            renderDayContent={renderDayContent}
-            size={size}
-            viewDate={viewDate}
-            onHeaderChange={onHeaderChange}
-            onNextMonth={onNextMonth}
-            onPrevMonth={onPrevMonth}
-            prevMonthIcon={prevMonthIcon}
-            nextMonthIcon={nextMonthIcon}
-            minDateTime={minDateTime}
-            maxDateTime={maxDateTime}
-            {...calendarTestsProps}
-          />
+          <FocusTrap
+            onClose={closeCalendar}
+            disabled={!accessible}
+            restoreFocus={restoreFocus ?? Boolean(accessible)}
+          >
+            <Calendar
+              aria-label={calendarLabel}
+              role="dialog"
+              value={value}
+              onChange={onCalendarChange}
+              enableTime={enableTime}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              shouldDisableDate={shouldDisableDate}
+              onDoneButtonClick={onDoneButtonClick}
+              getRootRef={calendarRef}
+              doneButtonText={doneButtonText}
+              DoneButton={DoneButton}
+              disablePickers={disablePickers}
+              changeHoursLabel={changeHoursLabel}
+              changeMinutesLabel={changeMinutesLabel}
+              prevMonthLabel={prevMonthLabel}
+              nextMonthLabel={nextMonthLabel}
+              changeMonthLabel={changeMonthLabel}
+              changeYearLabel={changeYearLabel}
+              showNeighboringMonth={showNeighboringMonth}
+              renderDayContent={renderDayContent}
+              size={size}
+              viewDate={viewDate}
+              onHeaderChange={onHeaderChange}
+              onNextMonth={onNextMonth}
+              onPrevMonth={onPrevMonth}
+              prevMonthIcon={prevMonthIcon}
+              nextMonthIcon={nextMonthIcon}
+              minDateTime={minDateTime}
+              maxDateTime={maxDateTime}
+              {...calendarTestsProps}
+            />
+          </FocusTrap>
         </Popper>
       )}
     </FormField>
