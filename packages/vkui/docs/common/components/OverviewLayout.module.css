@@ -1,0 +1,36 @@
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(#storybook-docs) > :global(.sbdocs) {
+  background: inherit;
+}
+
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  inline-size: calc(100% + 20px);
+  padding-inline: 10px;
+  margin-block-end: var(--vkui--spacing_size_xl);
+  margin-inline-start: -10px;
+  background: var(--vkui--color_background);
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.header > * {
+  inline-size: 100%;
+}
+
+.upButton {
+  position: fixed;
+  inset-block-end: 24px;
+  inset-inline-end: 24px;
+  z-index: 100;
+  border-radius: 50%;
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.hidden {
+  pointer-events: none;
+  opacity: 0;
+}
