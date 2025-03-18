@@ -5515,25 +5515,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/icons-sprite@npm:2.3.1":
-  version: 2.3.1
-  resolution: "@vkontakte/icons-sprite@npm:2.3.1"
+"@vkontakte/icons-sprite@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@vkontakte/icons-sprite@npm:3.0.0"
   dependencies:
     "@swc/helpers": "npm:^0.5.15"
   peerDependencies:
-    react: ^16.9.34 || ^17 || ^18
-  checksum: 10/a81c8da21523c33c4d08684ce6d25796395ca1d3bea8d2bac68cda070b368de0085d24e1a34f8650edae92c7603c1a24f485c0b6fbaf1c07edb481a23cfb2e4c
+    react: ^18 || ^19
+  checksum: 10/127d50533fe7b4d5b46b9e2d766654423e082b990c076db4e9a20bf4b48a32f1a40b6ce9dc3a09b3c07a306036af00602cc8ab1a6213c11beff3dcbc3632f254
   languageName: node
   linkType: hard
 
-"@vkontakte/icons@npm:^2.115.0, @vkontakte/icons@npm:^2.159.0":
-  version: 2.159.0
-  resolution: "@vkontakte/icons@npm:2.159.0"
+"@vkontakte/icons@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@vkontakte/icons@npm:3.0.0"
   dependencies:
-    "@vkontakte/icons-sprite": "npm:2.3.1"
+    "@swc/helpers": "npm:^0.5.15"
+    "@vkontakte/icons-sprite": "npm:3.0.0"
   peerDependencies:
-    react: ^16.9.34 || ^17 || ^18
-  checksum: 10/e7510081e550c1be56b3c3fc4e5275fa75c7c9ae7bcdb1ae7f28c2170de959b1aac6f969d58eed81532d0dfbbcd3656026e5fd86e65e17a84f9b16fa07d675d5
+    react: ^18 || ^19
+  checksum: 10/ad7689c64bab4796d0cf9bd37ab9a434923f38b8d043ec95d8c37a1d31c82dff405ec352cb71558be7e0734a65ef0c1baab31de91d898310361f944b19811ce8
   languageName: node
   linkType: hard
 
@@ -5597,7 +5598,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-docs-theme@workspace:packages/vkui-docs-theme"
   dependencies:
-    "@vkontakte/icons": "npm:^2.159.0"
+    "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.61.3"
@@ -5786,7 +5787,7 @@ __metadata:
     "@storybook/react-webpack5": "npm:8.6.6"
     "@swc/helpers": "npm:^0.5.15"
     "@types/node": "npm:*"
-    "@vkontakte/icons": "npm:^2.115.0"
+    "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.3"
     date-fns: "npm:^4.1.0"
