@@ -726,10 +726,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [options, selectOption],
   );
 
-  const prevMousePositionOnSelectRef = React.useRef<MousePosition>({ x: 0, y: 0 });
+  const lastMousePositionRef = React.useRef<MousePosition>({ x: 0, y: 0 });
   const focusOptionOnMouseMove = React.useCallback(
     (e: React.MouseEvent<HTMLElement>, index: number) => {
-      if (isMousePositionChanged(e, prevMousePositionOnSelectRef.current)) {
+      if (isMousePositionChanged(e, lastMousePositionRef.current)) {
         focusOptionByIndex(index, false);
       }
     },
@@ -908,7 +908,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const resetOptionFocusOnMouseLeave = React.useCallback(
     (event: React.MouseEvent) => {
-      if (isMousePositionChanged(event, prevMousePositionOnSelectRef.current)) {
+      // В Хроме eсли мышка пользователя находится над инпутом селекта,
+      // и он с клавиатуры открывает опции, причём одна из опций
+      // уже выбрана, то видно, как выбранная опция получает фокус,
+      // но потом сразу же его теряет.
+      // Связано это с тем, что в этот момент вызывается onMouseLeave, на который у нас
+      // завязан сброс состония фокуса у опции. По хорошему фокус должен оставаться.
+      // Нам не интересен вызов onMouseLeave если мышка при этом не двигалась.
+      if (isMousePositionChanged(event, lastMousePositionRef.current)) {
         resetFocusedOption();
       }
     },
@@ -922,8 +929,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ref={handleRootRef}
       onClick={passClickAndFocusToInputOnClick}
       onMouseDown={preventInputBlurWhenClickInsideFocusedSelectArea}
-      onMouseMove={(e) => {
-        prevMousePositionOnSelectRef.current = { x: e.clientX, y: e.clientY };
+      onMouseMove={function updateLastMousePosition(e) {
+        lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
       }}
     >
       {focusWithin && selected && !opened && (

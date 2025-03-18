@@ -1401,12 +1401,8 @@ describe('CustomSelect', () => {
   });
 
   it('should not hover disabled option', async () => {
-    const inputRef: React.RefObject<HTMLInputElement | null> = {
-      current: null,
-    };
     render(
       <CustomSelect
-        getSelectInputRef={inputRef}
         data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
@@ -1422,6 +1418,48 @@ describe('CustomSelect', () => {
     await React.act(async () => fireEvent.mouseMove(option, { clientY: 20 }));
 
     expect(option.getAttribute('data-hovered')).toBe('false');
+  });
+
+  it.each([
+    {
+      testName: 'should not lose hover over option on onMouseLeave event when mouse is not moved',
+      expectedHover: 'true',
+    },
+    {
+      testName: 'should lose hover over option on onMouseLeave event when mouse moved',
+      expectedHover: 'false',
+    },
+  ])('$testName', async ({ expectedHover }) => {
+    const inputRef: React.RefObject<HTMLInputElement | null> = {
+      current: null,
+    };
+    render(
+      <CustomSelect
+        data-testid="select"
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+        defaultValue="1"
+        getSelectInputRef={inputRef}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('select'));
+    const option = screen.getByRole('option', { name: 'Категория 1' });
+
+    expect(option.getAttribute('data-hovered')).toBe('true');
+
+    if (expectedHover === 'false') {
+      await React.act(async () =>
+        fireEvent.mouseMove(inputRef.current!, { clientY: 20, clientX: 20 }),
+      );
+    }
+
+    await React.act(async () => fireEvent.mouseLeave(option));
+
+    expect(option.getAttribute('data-hovered')).toBe(expectedHover);
   });
 
   it('should not call select option when not focus to option', async () => {
