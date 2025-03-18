@@ -137,7 +137,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const mediaQueries = useMediaQueries();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
-    !open ? 'exit' : 'enter',
+    open ? 'enter' : 'exit',
     {
       onExited: onClose,
     },
