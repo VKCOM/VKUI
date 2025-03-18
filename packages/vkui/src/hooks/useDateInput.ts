@@ -140,6 +140,7 @@ export function useDateInput<T extends HTMLElement, D>({
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLSpanElement>) => {
+      console.log("Handle key down", e.key);
       if (focusedElement === null) {
         return;
       }

@@ -49,11 +49,11 @@ export const InputLike: React.FC<InputLikeProps> = ({
 
   return (
     <RootComponent
-      Component="span"
-      baseClassName={value?.length === length ? styles.full : undefined}
+      Component="div"
+      baseClassName={value?.length === length ? styles.host : undefined}
       tabIndex={0}
       onClick={callMultiple(onClick, handleElementSelect)}
-      onFocus={callMultiple(stopPropagation, onFocus)}
+      onFocus={callMultiple(onFocus)}
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}

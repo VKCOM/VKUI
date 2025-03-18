@@ -359,7 +359,6 @@ export const DateInput = ({
         />
         <Text
           className={classNames(styles.input, customValue && styles.hidden)}
-          onKeyDown={handleKeyDown}
           // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
           // из-за чего `.Typography--normalize` перебивает стили.
           normalize={false}
@@ -369,10 +368,16 @@ export const DateInput = ({
             length={2}
             getRootRef={daysRef}
             index={0}
+            onKeyDown={handleKeyDown}
             onElementSelect={setFocusedElement}
             value={internalValue[0]}
             label={changeDayLabel}
             data-testid={dayFieldTestId}
+            role="spinbutton"
+            aria-valuemin={1}
+            aria-valuemax={31}
+            aria-valuetext={internalValue[0]}
+            aria-label={changeDayLabel}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -380,9 +385,15 @@ export const DateInput = ({
             getRootRef={monthsRef}
             index={1}
             onElementSelect={setFocusedElement}
+            onKeyDown={handleKeyDown}
             value={internalValue[1]}
             label={changeMonthLabel}
             data-testid={monthFieldTestId}
+            role="spinbutton"
+            aria-valuemin={1}
+            aria-valuemax={12}
+            aria-valuetext={internalValue[1]}
+            aria-label={changeMonthLabel}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -392,7 +403,13 @@ export const DateInput = ({
             onElementSelect={setFocusedElement}
             value={internalValue[2]}
             label={changeYearLabel}
+            onKeyDown={handleKeyDown}
             data-testid={yearFieldTestId}
+            role="spinbutton"
+            aria-valuemin={1}
+            aria-valuemax={275750}
+            aria-valuetext={internalValue[2]}
+            aria-label={changeYearLabel}
           />
           {enableTime && (
             <React.Fragment>
@@ -404,7 +421,13 @@ export const DateInput = ({
                 onElementSelect={setFocusedElement}
                 value={internalValue[3]}
                 label={changeHoursLabel}
+                onKeyDown={handleKeyDown}
                 data-testid={hourFieldTestId}
+                role="spinbutton"
+                aria-valuemin={1}
+                aria-valuemax={24}
+                aria-valuetext={internalValue[3]}
+                aria-label={changeHoursLabel}
               />
               <InputLikeDivider>:</InputLikeDivider>
               <InputLike
@@ -414,7 +437,13 @@ export const DateInput = ({
                 onElementSelect={setFocusedElement}
                 value={internalValue[4]}
                 label={changeMinutesLabel}
+                onKeyDown={handleKeyDown}
                 data-testid={minuteFieldTestId}
+                role="spinbutton"
+                aria-valuemin={1}
+                aria-valuemax={59}
+                aria-valuetext={internalValue[4]}
+                aria-label={changeMinutesLabel}
               />
             </React.Fragment>
           )}

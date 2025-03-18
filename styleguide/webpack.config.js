@@ -10,6 +10,11 @@ module.exports = merge(webpackCommonConfig, {
       'process.env.VKUI_STYLEGUIDE_PROPSPARSER': process.env.VKUI_STYLEGUIDE_PROPSPARSER,
     }),
   ],
+  devServer: {
+    client: {
+      overlay: false,
+    },
+  },
   resolve: {
     alias: {
       '@rsg-components': path.resolve(
