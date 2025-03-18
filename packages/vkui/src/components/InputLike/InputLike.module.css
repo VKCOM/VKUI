@@ -1,3 +1,7 @@
+.host {
+  display: inline;
+}
+
 .mask {
   position: relative;
   font-family: var(--vkui--font_family_base);
@@ -28,6 +32,6 @@
   letter-spacing: 1px !important;
 }
 
-.full + .divider {
+.host + .divider {
   color: var(--vkui--color_text_primary);
 }
