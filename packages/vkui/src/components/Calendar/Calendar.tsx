@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -33,7 +34,7 @@ export type CalendarTestsProps = CalendarDaysTestsProps &
   CalendarTimeTestsProps;
 
 export interface CalendarProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'defaultValue'>,
     Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
     Pick<
       CalendarHeaderProps,
@@ -52,6 +53,7 @@ export interface CalendarProps
     CalendarDoneButtonProps,
     CalendarTestsProps {
   value?: Date;
+  defaultValue?: Date;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
@@ -106,6 +108,7 @@ const warn = warnOnce('Calendar');
 export const Calendar = ({
   getRootRef,
   value: valueProp,
+  defaultValue,
   onChange,
   disablePast,
   disableFuture,
@@ -151,6 +154,19 @@ export const Calendar = ({
   dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
+  const _onChange = React.useCallback(
+    (date: Date | undefined) => {
+      onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
+    },
+    [onChange, timezone],
+  );
+
+  const [value, updateValue] = useCustomEnsuredControl<Date | undefined>({
+    value: valueProp,
+    defaultValue,
+    onChange: _onChange,
+  });
+
   const value: Date | undefined = React.useMemo(
     () => convertDateToTimeZone(valueProp, timezone) || undefined,
     [timezone, valueProp],
@@ -194,13 +210,6 @@ export const Calendar = ({
     warn("Нельзя включить выбор времени, если размер календаря 's'", 'error');
   }
 
-  const _onChange = React.useCallback(
-    (date: Date | undefined) => {
-      onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
-    },
-    [onChange, timezone],
-  );
-
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
@@ -223,9 +232,9 @@ export const Calendar = ({
       if (minDateTime || maxDateTime) {
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
-      _onChange(actualDate);
+      updateValue(actualDate);
     },
-    [value, minDateTime, maxDateTime, _onChange],
+    [value, updateValue, maxDateTime, minDateTime],
   );
 
   const isDayActive = React.useCallback(
@@ -286,7 +295,7 @@ export const Calendar = ({
         <div className={styles.time}>
           <CalendarTime
             value={value}
-            onChange={_onChange}
+            onChange={updateValue}
             onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
             doneButtonDisabled={doneButtonDisabled}

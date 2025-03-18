@@ -26,6 +26,7 @@ import { InputLikeDivider } from '../InputLike/InputLikeDivider';
 import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import { useDateInputValue } from './hooks';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
@@ -58,7 +59,10 @@ export type DateInputPropsTestsProps = {
 };
 
 export interface DateInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLDivElement>, 'value' | 'onChange' | 'size'>,
+  extends Omit<
+      React.InputHTMLAttributes<HTMLDivElement>,
+      'value' | 'defaultValue' | 'onChange' | 'size'
+    >,
     Pick<
       CalendarProps,
       | 'disablePast'
@@ -67,6 +71,7 @@ export interface DateInputProps
       | 'shouldDisableDate'
       | 'onChange'
       | 'value'
+      | 'defaultValue'
       | 'doneButtonText'
       | 'DoneButton'
       | 'weekStartsOn'
@@ -177,6 +182,7 @@ export const DateInput = ({
   minDateTime,
   maxDateTime,
   value: valueProp,
+  defaultValue,
   onChange,
   calendarPlacement: calendarPlacementProp = 'bottom-start',
   style,
@@ -228,29 +234,27 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
-  const [value, setValue] = React.useState<Date | undefined>(
-    _convertDateToTimeZone(valueProp, timezone),
-  );
+
+  const { value, updateValue, setInternalValue, getLastUpdatedValue } = useDateInputValue({
+    value: valueProp,
+    defaultValue,
+    onChange,
+  });
+  // const [value, setValue] = React.useState<Date | undefined>(
+  //   _convertDateToTimeZone(valueProp, timezone),
+  // );
 
   const maxElement = enableTime ? 4 : 2;
 
-  useIsomorphicLayoutEffect(
-    function updateLocalValue() {
-      setValue(_convertDateToTimeZone(valueProp, timezone));
-    },
-    [valueProp, timezone],
-  );
-
-  const _onChange: Exclude<DateInputProps['onChange'], undefined> = React.useCallback(
-    (newValue) => {
-      if (!newValue) {
-        return newValue;
-      }
-      onChange?.(convertDateFromTimeZone(newValue, timezone) || undefined);
-    },
-    [onChange, timezone],
-  );
-
+  // const _onChange: Exclude<DateInputProps['onChange'], undefined> = React.useCallback(
+  //     (newValue) => {
+  //       if (!newValue) {
+  //         return newValue;
+  //       }
+  //       onChange?.(convertDateFromTimeZone(newValue, timezone) || undefined);
+  //     },
+  //     [onChange, timezone],
+  //   );
   const onInternalValueChange = React.useCallback(
     (internalValue: string[]) => {
       for (let i = 0; i <= maxElement; i += 1) {
@@ -268,19 +272,12 @@ export const DateInput = ({
 
       if (isMatch(formattedValue, mask)) {
         const now = new Date();
-        _onChange(
-          _convertDateFromTimeZone(
-            parse(
-              formattedValue,
-              mask,
-              value ?? (enableTime ? startOfMinute(now) : startOfDay(now)),
-            ),
-            timezone,
-          ),
+        updateValue(
+          parse(formattedValue, mask, value ?? (enableTime ? startOfMinute(now) : startOfDay(now))),
         );
       }
     },
-    [enableTime, maxElement, _onChange, timezone, value],
+    [enableTime, maxElement, updateValue, value],
   );
 
   const refs = React.useMemo(
@@ -305,7 +302,7 @@ export const DateInput = ({
     autoFocus,
     disabled,
     elementsConfig,
-    onChange: _onChange,
+    onChange: updateValue,
     onInternalValueChange,
     getInternalValue,
     value,
@@ -319,32 +316,31 @@ export const DateInput = ({
   useIsomorphicLayoutEffect(
     function resetValueOnCloseCalendar() {
       if (!open) {
-        setValue(_convertDateToTimeZone(valueProp, timezone));
+        setInternalValue(getLastUpdatedValue());
       }
     },
-    [open, valueProp, timezone],
+    [open, getLastUpdatedValue],
   );
 
   const onCalendarChange = React.useCallback(
     (value?: Date | undefined) => {
       if (enableTime) {
-        setValue(value);
+        setInternalValue(value);
         return;
       }
-      _onChange(_convertDateFromTimeZone(value, timezone));
+      updateValue(value);
       if (closeOnChange) {
         removeFocusFromField();
       }
     },
-    [_onChange, removeFocusFromField, closeOnChange, enableTime, timezone],
+    [enableTime, updateValue, closeOnChange, setInternalValue, removeFocusFromField],
   );
 
   const onDoneButtonClick = React.useCallback(() => {
-    const baseValue = _convertDateFromTimeZone(value, timezone);
-    onApply?.(baseValue);
-    onChange?.(baseValue);
+    onApply?.(_convertDateFromTimeZone(value, timezone));
+    updateValue(value);
     removeFocusFromField();
-  }, [onApply, onChange, removeFocusFromField, timezone, value]);
+  }, [onApply, removeFocusFromField, timezone, updateValue, value]);
 
   const customValue = React.useMemo(
     () => !open && renderCustomValue?.(value),

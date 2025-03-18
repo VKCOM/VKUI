@@ -13,6 +13,7 @@ import {
   subMonths,
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
@@ -42,7 +43,7 @@ export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
 };
 
 export interface CalendarRangeProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'defaultValue'>,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthLabel'
@@ -55,6 +56,7 @@ export interface CalendarRangeProps
     Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarRangeTestsProps {
   value?: DateRangeType;
+  defaultValue?: DateRangeType;
   disablePast?: boolean;
   disableFuture?: boolean;
   disablePickers?: boolean;
@@ -77,7 +79,8 @@ const getIsDaySelected = (day: Date, value?: DateRangeType) => {
  * @see https://vkcom.github.io/VKUI/#/CalendarRange
  */
 export const CalendarRange = ({
-  value,
+  value: valueProp,
+  defaultValue,
   onChange,
   disablePast,
   disableFuture,
@@ -100,6 +103,12 @@ export const CalendarRange = ({
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
+    value: valueProp,
+    defaultValue,
+    onChange,
+  });
+
   const {
     viewDate,
     setViewDate,
@@ -160,10 +169,10 @@ export const CalendarRange = ({
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      onChange?.(getNewValue(date));
+      updateValue(getNewValue(date));
       setHintedDate(undefined);
     },
-    [onChange, getNewValue],
+    [updateValue, getNewValue],
   );
 
   const isDaySelected = React.useCallback((day: Date) => getIsDaySelected(day, value), [value]);
