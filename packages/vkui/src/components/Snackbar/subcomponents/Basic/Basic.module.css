@@ -58,6 +58,7 @@
   display: flex;
   flex: 1;
   align-items: center;
+  word-break: break-word;
 }
 
 .contentText {

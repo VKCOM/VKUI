@@ -22,12 +22,12 @@
     "typescript": "^5.8.2"
   },
   "devDependencies": {
-    "@swc/core": "^1.11.5",
+    "@swc/core": "^1.11.9",
     "@swc/jest": "^0.2.37",
     "@types/cross-spawn": "^6.0.6",
     "@types/jest": "^29.5.14",
     "@types/jscodeshift": "^0.12.0",
-    "@types/node": "^22.13.8",
+    "@types/node": "^22.13.10",
     "@types/prompts": "^2.4.9",
     "jest": "^29.7.0",
     "ts-node": "^10.9.2"

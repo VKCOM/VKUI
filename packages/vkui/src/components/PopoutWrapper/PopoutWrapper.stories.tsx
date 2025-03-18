@@ -1,14 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 
 const story: Meta<PopoutWrapperProps> = {
   title: 'Popouts/PopoutWrapper',
   component: PopoutWrapper,
-  parameters: {
-    ...CanvasFullLayout,
-    ...DisableCartesianParam,
-  },
+  parameters: createStoryParameters('PopoutWrapper', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

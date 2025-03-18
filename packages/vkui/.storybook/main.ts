@@ -21,7 +21,7 @@ function excludeCssRulesFromConfig(config: Configuration) {
 }
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
   addons: [
     './addons/source-tab',
@@ -29,6 +29,7 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-essentials'),
     getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('@storybook/addon-designs'),
     getAbsolutePath('@project-tools/storybook-addon-cartesian'),
     './addons/colorScheme',
     './addons/pointer',

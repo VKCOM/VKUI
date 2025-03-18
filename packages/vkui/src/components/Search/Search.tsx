@@ -40,6 +40,10 @@ export interface SearchProps
   iconLabel?: string;
   clearLabel?: string;
   /**
+   * Передает атрибут `data-testid` для кнопки очистки
+   */
+  clearButtonTestId?: string;
+  /**
    * Удаляет отступы у компонента
    */
   noPadding?: boolean;
@@ -51,6 +55,10 @@ export interface SearchProps
    * Коллбэк для кнопки Найти
    */
   onFindButtonClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * Передает атрибут `data-testid` для кнопки поиска
+   */
+  findButtonTestId?: string;
 }
 
 /**
@@ -70,9 +78,11 @@ export const Search = ({
   onChange,
   iconLabel,
   clearLabel = 'Очистить',
+  clearButtonTestId,
   noPadding,
   getRootRef,
   findButtonText = 'Найти',
+  findButtonTestId,
   onFindButtonClick,
   ...inputProps
 }: SearchProps): React.ReactNode => {
@@ -215,6 +225,7 @@ export const Search = ({
             className={styles.icon}
             tabIndex={hasValue ? undefined : -1}
             disabled={inputProps.disabled}
+            data-testid={clearButtonTestId}
           >
             <VisuallyHidden>{clearLabel}</VisuallyHidden>
             {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
@@ -227,6 +238,7 @@ export const Search = ({
               focusVisibleMode="inside"
               onClick={onFindButtonClick}
               tabIndex={hasValue ? undefined : -1}
+              data-testid={findButtonTestId}
             >
               {findButtonText}
             </Button>

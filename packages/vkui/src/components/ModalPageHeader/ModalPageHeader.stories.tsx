@@ -29,7 +29,7 @@ const HeaderButton = ({ children }: { children: React.ReactNode }) => {
   return <PanelHeaderButton onClick={() => onClose?.(MODAL_ID)}>{children}</PanelHeaderButton>;
 };
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render(args) {
     const platform = usePlatform();
 

@@ -4,6 +4,7 @@ import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storyb
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { DateInput, type DateInputProps } from './DateInput';
 
 const iconsPresets = getFormFieldIconsPresets();
@@ -11,7 +12,7 @@ const iconsPresets = getFormFieldIconsPresets();
 const story: Meta<DateInputProps> = {
   title: 'Forms/DateInput',
   component: DateInput,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('DateInput', CanvasFullLayout, DisableCartesianParam),
   args: { onChange: fn() },
   argTypes: {
     value: {

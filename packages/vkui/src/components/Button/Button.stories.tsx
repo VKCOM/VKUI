@@ -2,6 +2,7 @@ import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Counter } from '../Counter/Counter';
 import { Button, type ButtonProps } from './Button';
 
@@ -17,7 +18,7 @@ const iconsPresets = createFieldWithPresets({
 const story: Meta<StoryButtonProps> = {
   title: 'Blocks/Button',
   component: Button,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Button', CanvasFullLayout),
   argTypes: {
     before: iconsPresets,
     after: iconsPresets,
@@ -30,9 +31,6 @@ export default story;
 type Story = StoryObj<StoryButtonProps>;
 
 export const Playground: Story = {
-  render: ({ ...args }) => {
-    return <Button {...args} />;
-  },
   args: {
     children: 'Button',
     size: 's',

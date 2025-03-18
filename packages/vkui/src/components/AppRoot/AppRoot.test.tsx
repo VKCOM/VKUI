@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ColorScheme } from '../../lib/colorScheme';
 import { Platform } from '../../lib/platform';
-import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens';
+import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens/constants';
 import { baselineComponent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -110,9 +110,9 @@ describe('AppRoot', () => {
     );
 
     const result = render(<Template />);
-    expect(document.body).toHaveStyle('position: fixed');
+    expect(document.documentElement).toHaveStyle('position: fixed');
     fireEvent.click(result.getByRole('checkbox'));
-    expect(document.body).not.toHaveStyle('position: fixed');
+    expect(document.documentElement).not.toHaveStyle('position: fixed');
 
     result.rerender(<Template scroll="contain" />);
     expect(result.getByTestId('app-root')).toHaveStyle('position: absolute');

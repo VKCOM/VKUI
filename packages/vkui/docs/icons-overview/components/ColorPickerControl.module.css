@@ -1,0 +1,50 @@
+.container {
+  position: fixed;
+  inset-block-end: 24px;
+  inset-inline-start: 24px;
+  inline-size: 56px;
+  block-size: 56px;
+  cursor: pointer;
+  /* stylelint-disable-next-line csstools/value-no-unknown-custom-properties */
+  background-color: var(--vkui_internal--IconsOverview_icons_color);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.container:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.container:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.5);
+}
+
+.input {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  cursor: pointer;
+  opacity: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    border-color: #2d2d2d;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    transition: none;
+  }
+
+  .container:hover {
+    transform: none;
+  }
+}

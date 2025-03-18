@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { TabsItem, type TabsItemProps } from './TabsItem';
@@ -9,7 +10,7 @@ import { TabsItem, type TabsItemProps } from './TabsItem';
 const story: Meta<TabsItemProps> = {
   title: 'Blocks/TabsItem',
   component: TabsItem,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('TabsItem', CanvasFullLayout, DisableCartesianParam),
   args: {
     onClick: noop,
   },
@@ -48,6 +49,8 @@ type Story = StoryObj<TabsItemProps>;
 export const Playground: Story = {
   args: {
     children: 'Сообщества',
+    before: 'Icon20NewsfeedOutline',
+    after: 'Icon16Dropdown',
   },
   decorators: [
     (Component) => (

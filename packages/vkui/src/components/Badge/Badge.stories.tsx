@@ -1,12 +1,13 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge, type BadgeProps } from './Badge';
 
 const story: Meta<BadgeProps> = {
   title: 'Blocks/Badge',
   component: Badge,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Badge', CanvasFullLayout),
   decorators: [withCartesian],
 };
 

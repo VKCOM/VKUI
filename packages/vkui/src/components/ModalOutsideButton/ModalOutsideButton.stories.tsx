@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ModalOutsideButton, type ModalOutsideButtonProps } from './ModalOutsideButton';
 
 const iconsPresets = createFieldWithPresets({
@@ -12,7 +13,7 @@ const iconsPresets = createFieldWithPresets({
 const story: Meta<ModalOutsideButtonProps> = {
   title: 'Modals/ModalOutsideButton',
   component: ModalOutsideButton,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ModalOutsideButton', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     children: iconsPresets,
   },

@@ -6,6 +6,7 @@ import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
@@ -20,11 +21,9 @@ import type { ModalCardProps } from './types';
 const story: Meta<ModalCardProps> = {
   title: 'Modals/ModalCard',
   component: ModalCard,
-  parameters: {
-    ...CanvasFullLayout,
-    ...DisableCartesianParam,
+  parameters: createStoryParameters('ModalCard', CanvasFullLayout, DisableCartesianParam, {
     background: 'linear-gradient(blue, pink)',
-  },
+  }),
   argTypes: {
     icon: createFieldWithPresets({
       iconSizes: ['56'],
@@ -56,7 +55,7 @@ export default story;
 
 type Story = StoryObj<ModalCardProps>;
 
-export const SimpleCard: Story = {
+export const Playground: Story = {
   args: {
     id: 'modal-card',
     open: true,

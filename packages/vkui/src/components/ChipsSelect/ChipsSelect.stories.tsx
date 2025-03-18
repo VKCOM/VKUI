@@ -3,6 +3,7 @@ import { fn } from '@storybook/test';
 import { Icon12Download } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { FormItem } from '../FormItem/FormItem';
 import { ChipsSelect, type ChipsSelectProps } from './ChipsSelect';
@@ -12,7 +13,7 @@ const iconsPresets = getFormFieldIconsPresets();
 const story: Meta<ChipsSelectProps<ChipOption>> = {
   title: 'Forms/ChipsSelect',
   component: ChipsSelect,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ChipsSelect', CanvasFullLayout, DisableCartesianParam),
   args: { onChange: fn(), onChangeStart: fn(), onInputChange: fn() },
   argTypes: {
     before: iconsPresets,

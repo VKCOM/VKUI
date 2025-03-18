@@ -1,32 +1,24 @@
 'use client';
 
 import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
-import { Icon20Cancel } from '@vkontakte/icons';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
-import {
-  BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE,
-  type SnapPoint,
-  type SnapPointChange,
-  useBottomSheet,
-} from '../../lib/sheet';
+import { type SnapPoint, type SnapPointChange, useBottomSheet } from '../../lib/sheet';
 import type { CSSCustomProperties } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalOutlet } from '../ModalOutlet/ModalOutlet';
-import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
-import { ModalOutsideButtons } from '../ModalOutsideButtons/ModalOutsideButtons';
 import {
   ModalOverlay as ModalOverlayDefault,
   type ModalOverlayProps,
 } from '../ModalOverlay/ModalOverlay';
-import { ModalPageContent } from '../ModalPageContent/ModalPageContent';
+import { ModalPageBase } from './ModalPageBase';
 import type { ModalPageProps } from './types';
 import styles from './ModalPage.module.css';
 
@@ -124,9 +116,6 @@ export const ModalPageInternal = ({
   const handleSheetRef = useExternRef<HTMLDivElement>(setSheetEl, ref);
   const handleSheetScrollRef = useExternRef<HTMLDivElement>(setSheetScrollEl, getModalContentRef);
 
-  const disableContentPanningGestureProp = disableContentPanningGesture
-    ? BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE
-    : undefined;
   const [desktopMaxWidthClassName, desktopMaxWidthStyle] = resolveDesktopMaxWidth(
     isDesktop ? desktopMaxWidth : 's',
   );
@@ -145,22 +134,6 @@ export const ModalPageInternal = ({
       }
     />
   );
-  const closeButton =
-    hideCloseButton || !isDesktop ? null : (
-      <ModalOutsideButton
-        data-testid={modalDismissButtonTestId}
-        onClick={
-          closable
-            ? function handleDismissButtonClick(event) {
-                onClose('click-close-button', event);
-              }
-            : undefined
-        }
-        aria-label={modalDismissButtonLabel}
-      >
-        <Icon20Cancel />
-      </ModalOutsideButton>
-    );
   const handleEscKeyDown = useCallback(
     (event: KeyboardEvent<HTMLElement>) => {
       if (closable && pressedKey(event) === Keys.ESCAPE) {
@@ -195,36 +168,30 @@ export const ModalPageInternal = ({
         )}
         style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
       >
-        <div
+        <ModalPageBase
           {...bottomSheetEventHandlers}
-          ref={handleSheetRef}
-          role="document"
+          getRootRef={handleSheetRef}
+          getRef={handleSheetScrollRef}
           style={documentStyle}
           className={classNames(
-            styles.document,
             isDesktop ? styles.documentDesktop : styles.documentMobile,
             transitionStateClassNames[transitionState],
           )}
           onTransitionEnd={onTransitionEnd}
+          isDesktop={isDesktop}
+          disableContentPanningGesture={disableContentPanningGesture}
+          header={header}
+          footer={footer}
+          outsideButtons={outsideButtons}
+          modalContentTestId={modalContentTestId}
+          modalDismissButtonTestId={modalDismissButtonTestId}
+          modalDismissButtonLabel={modalDismissButtonLabel}
+          hideCloseButton={hideCloseButton}
+          closable={closable}
+          onClose={onClose}
         >
-          <div className={classNames(styles.children, isDesktop && styles.childrenDesktop)}>
-            {hasReactNode(header) && header}
-            <ModalPageContent
-              getRootRef={handleSheetScrollRef}
-              data-testid={modalContentTestId}
-              {...disableContentPanningGestureProp}
-            >
-              {children}
-            </ModalPageContent>
-            {hasReactNode(footer) && footer}
-          </div>
-          {isDesktop && (closeButton || outsideButtons) && (
-            <ModalOutsideButtons>
-              {closeButton}
-              {outsideButtons}
-            </ModalOutsideButtons>
-          )}
-        </div>
+          {children}
+        </ModalPageBase>
       </FocusTrap>
     </ModalOutlet>
   );

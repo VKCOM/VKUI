@@ -4,7 +4,8 @@ import * as React from 'react';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import { type Direction } from '../../lib/direction';
 import { platform, type PlatformType } from '../../lib/platform';
-import { DEFAULT_TOKENS_CLASS_NAMES, type TokensClassNames } from '../../lib/tokens';
+import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens/constants';
+import { type TokensClassNames } from '../../lib/tokens/types';
 
 export interface ConfigProviderContextInterface {
   /**
