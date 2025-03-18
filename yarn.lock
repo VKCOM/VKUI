@@ -5656,7 +5656,6 @@ __metadata:
   resolution: "@vkontakte/vkui-monorepo@workspace:."
   dependencies:
     "@csstools/postcss-global-data": "npm:3.0.0"
-    "@date-fns/tz": "npm:^1.2.0"
     "@playwright/experimental-ct-react": "npm:1.51.0"
     "@playwright/test": "npm:1.51.0"
     "@project-docs/styleguide": "workspace:1.0.0"
@@ -5790,6 +5789,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
+    "@date-fns/tz": "npm:^1.2.0"
     "@storybook/react": "npm:8.6.6"
     "@storybook/react-webpack5": "npm:8.6.6"
     "@swc/helpers": "npm:^0.5.15"

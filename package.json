@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "name": "@vkontakte/vkui-monorepo",
   "dependencies": {
-    "@date-fns/tz": "^1.2.0",
     "@project-docs/styleguide": "workspace:1.0.0",
     "@project-docs/website": "workspace:1.0.0",
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0",
