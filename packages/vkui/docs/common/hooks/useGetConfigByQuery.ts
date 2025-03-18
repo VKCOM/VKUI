@@ -1,9 +1,11 @@
 import { type ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { throttle } from '@vkontakte/vkjs';
 import { useManualScroll } from '../../../src/components/AppRoot/ScrollContext';
-import { CONFIG } from '../config';
 
-export const useGetConfigByQuery = () => {
+export const useGetConfigByQuery = <CONFIG>(
+  config: CONFIG,
+  filterConfig: (config: CONFIG, query: string) => CONFIG,
+) => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const { scrollTo } = useManualScroll();
@@ -12,28 +14,13 @@ export const useGetConfigByQuery = () => {
     return throttle((newValue) => {
       setQuery(newValue);
       setLoading(false);
-      scrollTo(0, 0);
     }, 1000);
-  }, [scrollTo]);
+  }, []);
 
-  const filteredConfig: typeof CONFIG = useMemo(() => {
-    if (!query) {
-      return CONFIG;
-    }
-    const resultConfig: typeof CONFIG = {};
-    Object.entries(CONFIG).forEach(([groupKey, groupData]) => {
-      const validComponents = groupData.components.filter((componentName) => {
-        return componentName.toLowerCase().includes(query.toLowerCase());
-      });
-      if (validComponents.length) {
-        resultConfig[groupKey] = {
-          title: groupData.title,
-          components: validComponents,
-        };
-      }
-    });
-    return resultConfig;
-  }, [query]);
+  const filteredConfig: CONFIG = useMemo(() => {
+    scrollTo(0, 0);
+    return filterConfig(config, query);
+  }, [config, filterConfig, query, scrollTo]);
 
   const onUpdateQuery = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {

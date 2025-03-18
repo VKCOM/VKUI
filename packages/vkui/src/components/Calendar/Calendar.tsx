@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -32,7 +33,7 @@ export type CalendarTestsProps = CalendarDaysTestsProps &
   CalendarTimeTestsProps;
 
 export interface CalendarProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'defaultValue'>,
     Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
     Pick<
       CalendarHeaderProps,
@@ -51,6 +52,7 @@ export interface CalendarProps
     CalendarDoneButtonProps,
     CalendarTestsProps {
   value?: Date;
+  defaultValue?: Date;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
@@ -100,7 +102,8 @@ const warn = warnOnce('Calendar');
  */
 export const Calendar = ({
   getRootRef,
-  value,
+  value: valueProp,
+  defaultValue,
   onChange,
   disablePast,
   disableFuture,
@@ -145,6 +148,12 @@ export const Calendar = ({
   dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
+  const [value, updateValue] = useCustomEnsuredControl<Date | undefined>({
+    value: valueProp,
+    defaultValue,
+    onChange,
+  });
+
   const {
     viewDate,
     setViewDate,
@@ -205,9 +214,9 @@ export const Calendar = ({
       if (minDateTime || maxDateTime) {
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
-      onChange?.(actualDate);
+      updateValue(actualDate);
     },
-    [value, onChange, maxDateTime, minDateTime],
+    [value, updateValue, maxDateTime, minDateTime],
   );
 
   const isDayActive = React.useCallback(
@@ -268,7 +277,7 @@ export const Calendar = ({
         <div className={styles.time}>
           <CalendarTime
             value={value}
-            onChange={onChange}
+            onChange={updateValue}
             onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
             doneButtonDisabled={doneButtonDisabled}
