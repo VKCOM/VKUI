@@ -8,13 +8,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
-import {
-  convertDateFromTimeZone,
-  convertDateToTimeZone,
-  format,
-  isMatch,
-  parse,
-} from '../../lib/date';
+import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
@@ -163,14 +157,6 @@ const getInternalValue = (value: CalendarProps['value']) => {
   return newValue;
 };
 
-const _convertDateToTimeZone = (date?: Date, timezone?: string): Date | undefined => {
-  return convertDateToTimeZone(date, timezone) || undefined;
-};
-
-const _convertDateFromTimeZone = (date?: Date, timezone?: string): Date | undefined => {
-  return convertDateFromTimeZone(date, timezone) || undefined;
-};
-
 /**
  * @see https://vkcom.github.io/VKUI/#/DateInput
  */
@@ -239,22 +225,11 @@ export const DateInput = ({
     value: valueProp,
     defaultValue,
     onChange,
+    timezone,
   });
-  // const [value, setValue] = React.useState<Date | undefined>(
-  //   _convertDateToTimeZone(valueProp, timezone),
-  // );
 
   const maxElement = enableTime ? 4 : 2;
 
-  // const _onChange: Exclude<DateInputProps['onChange'], undefined> = React.useCallback(
-  //     (newValue) => {
-  //       if (!newValue) {
-  //         return newValue;
-  //       }
-  //       onChange?.(convertDateFromTimeZone(newValue, timezone) || undefined);
-  //     },
-  //     [onChange, timezone],
-  //   );
   const onInternalValueChange = React.useCallback(
     (internalValue: string[]) => {
       for (let i = 0; i <= maxElement; i += 1) {
@@ -337,10 +312,10 @@ export const DateInput = ({
   );
 
   const onDoneButtonClick = React.useCallback(() => {
-    onApply?.(_convertDateFromTimeZone(value, timezone));
-    updateValue(value);
+    const newValue = updateValue(value);
+    onApply?.(newValue);
     removeFocusFromField();
-  }, [onApply, removeFocusFromField, timezone, updateValue, value]);
+  }, [onApply, removeFocusFromField, updateValue, value]);
 
   const customValue = React.useMemo(
     () => !open && renderCustomValue?.(value),

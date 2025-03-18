@@ -167,9 +167,9 @@ export const Calendar = ({
     onChange: _onChange,
   });
 
-  const value: Date | undefined = React.useMemo(
-    () => convertDateToTimeZone(valueProp, timezone) || undefined,
-    [timezone, valueProp],
+  const timeZonedValue: Date | undefined = React.useMemo(
+    () => convertDateToTimeZone(value, timezone) || undefined,
+    [timezone, value],
   );
 
   const {
@@ -185,7 +185,7 @@ export const Calendar = ({
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({
-    value,
+    value: timeZonedValue,
     disableFuture,
     disablePast,
     shouldDisableDate,
@@ -197,10 +197,10 @@ export const Calendar = ({
   });
 
   useIsomorphicLayoutEffect(() => {
-    if (value) {
-      setViewDate(value);
+    if (timeZonedValue) {
+      setViewDate(timeZonedValue);
     }
-  }, [value]);
+  }, [timeZonedValue]);
 
   if (process.env.NODE_ENV === 'development' && !disablePickers && size === 's') {
     warn("Нельзя включить селекты выбора месяца/года, если размер календаря 's'", 'error');
@@ -216,30 +216,30 @@ export const Calendar = ({
         event.preventDefault();
       }
 
-      const newFocusedDay = navigateDate(focusedDay ?? value, event.key);
+      const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, event.key);
 
       if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
         setViewDate(newFocusedDay);
       }
       setFocusedDay(newFocusedDay);
     },
-    [focusedDay, setFocusedDay, setViewDate, value, viewDate],
+    [focusedDay, setFocusedDay, setViewDate, timeZonedValue, viewDate],
   );
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      let actualDate = setTimeEqual(date, value);
+      let actualDate = setTimeEqual(date, timeZonedValue);
       if (minDateTime || maxDateTime) {
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
       updateValue(actualDate);
     },
-    [value, updateValue, maxDateTime, minDateTime],
+    [timeZonedValue, updateValue, maxDateTime, minDateTime],
   );
 
   const isDayActive = React.useCallback(
-    (day: Date) => Boolean(value && isSameDay(day, value)),
-    [value],
+    (day: Date) => Boolean(timeZonedValue && isSameDay(day, timeZonedValue)),
+    [timeZonedValue],
   );
 
   return (
@@ -272,7 +272,7 @@ export const Calendar = ({
       />
       <CalendarDays
         viewDate={externalViewDate || viewDate}
-        value={value}
+        value={timeZonedValue}
         weekStartsOn={weekStartsOn}
         isDayFocused={isDayFocused}
         tabIndex={0}
@@ -291,10 +291,10 @@ export const Calendar = ({
         renderDayContent={renderDayContent}
         dayTestId={dayTestId}
       />
-      {enableTime && value && size !== 's' && (
+      {enableTime && timeZonedValue && size !== 's' && (
         <div className={styles.time}>
           <CalendarTime
-            value={value}
+            value={timeZonedValue}
             onChange={updateValue}
             onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
