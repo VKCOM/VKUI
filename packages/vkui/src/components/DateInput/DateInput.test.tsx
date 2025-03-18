@@ -97,7 +97,7 @@ describe('DateInput', () => {
     );
     const inputLikes = getInputsLike();
     const normalizedDate = convertInputsToNumbers(inputLikes);
-    expect(normalizedDate).toEqual([31, 7, 2024, 4, 20]);
+    expect(normalizedDate).toEqual([31, 7, 2024, 7, 20]);
   });
 
   it('should correct update value when typing text in input', async () => {
