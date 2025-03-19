@@ -100,6 +100,29 @@ describe('Calendar', () => {
     expect(screen.getByTestId(monthDropdownTestId(8))).toBeInTheDocument();
   });
 
+  it('should display correct timezone time', () => {
+    const onChange = jest.fn();
+    render(
+      <Calendar
+        value={targetDate}
+        onChange={onChange}
+        minutesTestId="minutes"
+        hoursTestId="hours"
+        timezone="America/New_York"
+        enableTime
+      />,
+    );
+
+    const minuteSelect = screen.getByTestId<HTMLInputElement>('minutes');
+    const hourSelect = screen.getByTestId<HTMLInputElement>('hours');
+
+    fireEvent.click(hourSelect);
+    expect(screen.queryByRole('option', { selected: true, name: '03' })).toBeInTheDocument();
+
+    fireEvent.click(minuteSelect);
+    expect(screen.queryByRole('option', { selected: true, name: '40' })).toBeInTheDocument();
+  });
+
   describe('DEV errors', () => {
     beforeEach(() => setNodeEnv('development'));
     afterEach(() => setNodeEnv('test'));

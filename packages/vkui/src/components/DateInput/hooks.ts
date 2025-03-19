@@ -1,48 +1,64 @@
 import * as React from 'react';
+import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 
 interface UseDateInputValueOptions {
   value?: Date;
   defaultValue?: Date;
   onChange?: (value?: Date) => void;
+  timezone?: string;
 }
 
 export interface UseDateInputValueReturn {
   value?: Date;
-  updateValue: (v?: Date) => void;
+  updateValue: (v?: Date) => Date | undefined;
   setInternalValue: (v?: Date) => void;
   getLastUpdatedValue: () => Date | undefined;
 }
 
-const getStateValue = <T>(defaultStateValue: T, value?: T, defaultValue?: T): T => {
+const _convertDateToTimeZone = (date?: Date, timezone?: string): Date | undefined => {
+  return convertDateToTimeZone(date, timezone) || undefined;
+};
+
+const _convertDateFromTimeZone = (date?: Date, timezone?: string): Date | undefined => {
+  return convertDateFromTimeZone(date, timezone) || undefined;
+};
+
+const getStateValue = (
+  defaultStateValue?: Date,
+  value?: Date,
+  defaultValue?: Date,
+  timezone?: string,
+): Date | undefined => {
   if (value !== undefined) {
-    return value;
+    return _convertDateToTimeZone(value, timezone);
   }
   if (defaultValue !== undefined) {
-    return defaultValue;
+    return _convertDateToTimeZone(defaultValue, timezone);
   }
-  return defaultStateValue;
+  return _convertDateToTimeZone(defaultStateValue, timezone);
 };
 
 export const useDateInputValue = ({
   value,
   defaultValue,
   onChange,
+  timezone,
 }: UseDateInputValueOptions): UseDateInputValueReturn => {
   const isControlled = value !== undefined;
 
   const [internalValue, setInternalValue] = React.useState<Date | undefined>(
-    getStateValue(undefined, value, defaultValue),
+    getStateValue(undefined, value, defaultValue, timezone),
   );
   const lastUpdatedValueRef = React.useRef<Date | undefined>(
-    getStateValue(undefined, value, defaultValue),
+    getStateValue(undefined, value, defaultValue, timezone),
   );
 
   React.useEffect(() => {
     if (isControlled) {
-      setInternalValue(value);
-      lastUpdatedValueRef.current = value;
+      setInternalValue(_convertDateToTimeZone(value, timezone));
+      lastUpdatedValueRef.current = _convertDateToTimeZone(value, timezone);
     }
-  }, [isControlled, value]);
+  }, [isControlled, timezone, value]);
 
   const getLastUpdatedValue = React.useCallback(() => lastUpdatedValueRef.current, []);
 
@@ -52,9 +68,11 @@ export const useDateInputValue = ({
         setInternalValue(newValue);
         lastUpdatedValueRef.current = newValue;
       }
-      onChange?.(newValue);
+      const originalTimezoneValue = _convertDateFromTimeZone(newValue, timezone);
+      onChange?.(originalTimezoneValue);
+      return originalTimezoneValue;
     },
-    [isControlled, onChange],
+    [isControlled, onChange, timezone],
   );
 
   return {

@@ -79,6 +79,27 @@ describe('DateInput', () => {
     expect(normalizedDate).toEqual([31, 7, 2024, 11, 20]);
   });
 
+  it('should be correct input value with time and specific timezone', () => {
+    const onChange = jest.fn();
+    render(
+      <DateInput
+        value={date}
+        onChange={onChange}
+        enableTime={true}
+        timezone="America/New_York"
+        changeMonthLabel=""
+        changeYearLabel=""
+        changeDayLabel=""
+        changeHoursLabel=""
+        changeMinutesLabel=""
+        {...testIds}
+      />,
+    );
+    const inputLikes = getInputsLike();
+    const normalizedDate = convertInputsToNumbers(inputLikes);
+    expect(normalizedDate).toEqual([31, 7, 2024, 7, 20]);
+  });
+
   it('should correct update value when typing text in input', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();

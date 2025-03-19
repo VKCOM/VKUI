@@ -111,6 +111,10 @@ export interface DateInputProps
    * Позволяет переопределить стандартное отображение даты и вернуть собственное представление.
    */
   renderCustomValue?: (date: Date | undefined) => React.ReactNode;
+  /**
+   * Свойство для отображения времени в нужной таймзоне
+   */
+  timezone?: string;
 }
 
 const elementsConfig = (index: number) => {
@@ -208,6 +212,7 @@ export const DateInput = ({
   id,
   onApply,
   renderCustomValue,
+  timezone,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -220,6 +225,7 @@ export const DateInput = ({
     value: valueProp,
     defaultValue,
     onChange,
+    timezone,
   });
 
   const maxElement = enableTime ? 4 : 2;
@@ -306,8 +312,8 @@ export const DateInput = ({
   );
 
   const onDoneButtonClick = React.useCallback(() => {
-    onApply?.(value);
-    updateValue(value);
+    const newValue = updateValue(value);
+    onApply?.(newValue);
     removeFocusFromField();
   }, [onApply, removeFocusFromField, updateValue, value]);
 
