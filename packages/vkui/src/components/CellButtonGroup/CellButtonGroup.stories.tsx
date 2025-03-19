@@ -20,6 +20,7 @@ export const Playground: Story = {
       <CellButton onClick={noop} appearance="negative" centered>
         Пожаловаться
       </CellButton>
+      <CellButtonGroup.Separator />
       <CellButton onClick={noop} centered>
         Отмена
       </CellButton>
