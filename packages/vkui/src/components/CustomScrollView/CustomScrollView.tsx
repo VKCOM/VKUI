@@ -19,8 +19,17 @@ const scrollBehaviorClassNames = {
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
+  /**
+   * Дополнительный класснейм
+   */
   className?: HTMLDivElement['className'];
+  /**
+   * Обработчик события `scroll`
+   */
   onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
+  /**
+   * Содержимое
+   */
   children: React.ReactNode;
   /**
    * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior)

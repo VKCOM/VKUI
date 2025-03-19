@@ -39,13 +39,20 @@ type TransitionEventHandler = (e?: TransitionEvent) => void;
 
 export let scrollsCache: ViewsScrolls = {};
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 export type TransitionParams = { from: string | null; to: string | null };
 
 export interface ViewInfiniteProps
   extends HTMLAttributesWithRootRef<HTMLElement>,
     HasPlatform,
     NavIdProps {
+  /**
+   * `id` активное панели
+   */
   activePanel: string;
+  /**
+   * callback, который вызывается при завершении анимации смены активной панели
+   */
   onTransition?: (params: TransitionParams & { isBack: boolean }) => void;
   /**
    * callback свайпа назад
@@ -59,7 +66,13 @@ export interface ViewInfiniteProps
    * callback завершения анимации отмененного пользователем свайпа
    */
   onSwipeBackCancel?: () => void;
+  /**
+   * Массив из id панелей в порядке открытия
+   */
   history?: string[];
+  /**
+   * Функция проверки перехода назад
+   */
   isBackCheck?: (params: TransitionParams) => boolean;
   /**
    * @ignore
@@ -75,6 +88,7 @@ export interface ViewInfiniteProps
   scroll?: ScrollContextInterface;
 }
 
+/* eslint-disable jsdoc/require-jsdoc */
 export interface ViewInfiniteState {
   animated: boolean;
 
@@ -93,6 +107,7 @@ export interface ViewInfiniteState {
 
   browserSwipe: boolean;
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 class ViewInfiniteComponent extends React.Component<
   ViewInfiniteProps & DOMProps,

@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { getRequiredValueByKey } from '../../helpers/getValueByKey';
 import { type AlignType } from '../../types';
 import { SLIDE_THRESHOLD } from './constants';

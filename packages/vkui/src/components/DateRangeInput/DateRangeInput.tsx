@@ -87,17 +87,53 @@ export interface DateRangeInputProps
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре
    */
   calendarTestsProps?: CalendarRangeTestsProps;
+  /**
+   * Расположение календаря относительно поля ввода
+   */
   calendarPlacement?: PlacementWithAuto;
+  /**
+   * Автоматически закрывать календарь при измененях
+   */
   closeOnChange?: boolean;
+  /**
+   * Колбэк при изменении состояния открытия календаря
+   */
   onCalendarOpenChanged?: (opened: boolean) => void;
+  /**
+   * label для кнопки очистки. Делает доступным для ассистивных технологий
+   */
   clearFieldLabel?: string;
+  /**
+   * label для кнопки открытия календаря. Делает доступным для ассистивных технологий
+   */
   showCalendarLabel?: string;
+  /**
+   * label для ввода дня начальной даты. Делает доступным для ассистивных технологий
+   */
   changeStartDayLabel?: string;
+  /**
+   * label для ввода месяца начальной даты. Делает доступным для ассистивных технологий
+   */
   changeStartMonthLabel?: string;
+  /**
+   * label для ввода года начальной даты. Делает доступным для ассистивных технологий
+   */
   changeStartYearLabel?: string;
+  /**
+   * label для ввода дня конечной даты. Делает доступным для ассистивных технологий
+   */
   changeEndDayLabel?: string;
+  /**
+   * label для ввода месяца конечной даты. Делает доступным для ассистивных технологий
+   */
   changeEndMonthLabel?: string;
+  /**
+   * label для ввода года конечной даты. Делает доступным для ассистивных технологий
+   */
   changeEndYearLabel?: string;
+  /**
+   * Отключение открытия календаря
+   */
   disableCalendar?: boolean;
 }
 

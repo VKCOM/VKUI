@@ -37,11 +37,12 @@ export interface RemovableProps {
    */
   disabled?: boolean;
 }
-
+/* eslint-disable jsdoc/require-jsdoc */
 interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
   children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 /**
  * @see https://vkcom.github.io/VKUI/#/RemovableIos
@@ -161,6 +162,9 @@ interface RemovableOwnProps
    * Убирает базовые отступы для базовой платформы
    */
   noPadding?: boolean;
+  /**
+   * Содержимое. Можно передать функция для отрисовки
+   */
   children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
 

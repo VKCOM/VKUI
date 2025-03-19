@@ -141,14 +141,26 @@ const filter = <T extends CustomSelectOptionInterface>(
 };
 
 export interface CustomSelectOptionInterface {
+  /**
+   * Значение
+   */
   value: Exclude<SelectValue, null>;
+  /**
+   * Отображаемый текст
+   */
   label: React.ReactElement | string;
+  /**
+   * Состояние заблокированности
+   */
   disabled?: boolean;
   [index: string]: any;
 }
 
 export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   extends CustomSelectOptionProps {
+  /**
+   * Данные об опции
+   */
   option: T;
 }
 
@@ -177,11 +189,17 @@ export interface SelectProps<
    * Событие изменения текстового поля
    */
   onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * Список опций в списке
+   */
   options: OptionInterfaceT[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
    */
   filterFn?: false | FilterFn<OptionInterfaceT>;
+  /**
+   * Направление раскрытия выпадающего списка
+   */
   popupDirection?: 'top' | 'bottom';
   /**
    * Рендер-проп для кастомного рендера опции.
@@ -206,7 +224,13 @@ export interface SelectProps<
    * "победит" `renderDropdown`.
    */
   fetching?: boolean;
+  /**
+   * Обработчик закрытия выпадающего списка
+   */
   onClose?: VoidFunction;
+  /**
+   * Обработчик открытия выпадающего списка
+   */
   onOpen?: VoidFunction;
   /**
    * Иконка раскрывающегося списка
@@ -233,7 +257,13 @@ export interface SelectProps<
    * Ширина раскрывающегося списка зависит от контента
    */
   dropdownAutoWidth?: boolean;
+  /**
+   * Использовать Portal для рендеринга выпадающего списка
+   */
   forceDropdownPortal?: boolean;
+  /**
+   * Тип отображения компонента
+   */
   selectType?: SelectType;
   /**
    * Отключает максимальную высоту по умолчанию
@@ -247,6 +277,9 @@ export interface SelectProps<
    * Передает атрибут `data-testid` для нативного элемента `select`.
    */
   nativeSelectTestId?: string;
+  /**
+   * Обработчик события `keyDown` в поле ввода
+   */
   onInputKeyDown?: (e: React.KeyboardEvent) => void;
 }
 

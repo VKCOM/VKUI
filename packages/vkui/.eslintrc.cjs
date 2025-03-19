@@ -17,7 +17,7 @@ if (!E2E_TEST || !E2E_PLAYGROUND_HELPERS) {
 module.exports = {
   root: false,
   extends: ['plugin:react-hooks/recommended', 'plugin:react-server-components/recommended'],
-  plugins: ['import', '@project-tools/vkui', 'unicorn'],
+  plugins: ['import', '@project-tools/vkui', 'unicorn', 'eslint-plugin-jsdoc'],
   parserOptions: {
     project: './tsconfig.eslint.json',
     tsconfigRootDir: __dirname,
@@ -135,9 +135,36 @@ module.exports = {
         onlyForFunctionsWithNames: ['classNames'],
       },
     ],
-    'unicorn/expiring-todo-comments': ['error'],
+    'jsdoc/require-jsdoc': 'off',
+    'jsdoc/check-syntax': 'off',
   },
   overrides: [
+    {
+      files: ['src/components/**/*.{ts,tsx}'],
+      excludedFiles: ['src/components/**/*.{test,e2e,e2e-playground,stories}.{ts,tsx}'],
+      rules: {
+        'jsdoc/require-jsdoc': [
+          'error',
+          {
+            contexts: [
+              'TSTypeAliasDeclaration > TSIntersectionType > TSTypeLiteral > TSPropertySignature',
+              'TSTypeAliasDeclaration > TSTypeLiteral > TSPropertySignature',
+              'TSInterfaceDeclaration TSPropertySignature:not(TSTypeLiteral TSPropertySignature)',
+            ],
+            require: {
+              FunctionDeclaration: false,
+              FunctionExpression: false,
+              ArrowFunctionExpression: false,
+              MethodDefinition: false,
+            },
+            checkConstructors: false,
+            checkGetters: false,
+            checkSetters: false,
+            enableFixer: false,
+          },
+        ],
+      },
+    },
     {
       files: ['src/**/*.{ts,tsx}'],
       excludedFiles: [

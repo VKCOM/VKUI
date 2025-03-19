@@ -26,6 +26,9 @@ const stylesMode = {
 };
 
 export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
+  /**
+   * Центрирование содержимого
+   */
   centered?: boolean;
   /**
    * Тип оформления панели.

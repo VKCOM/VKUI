@@ -14,6 +14,9 @@ export interface CellButtonProps extends SimpleCellProps {
    * > Режим `centered` переопределяет токен для темы `"accent"`.
    */
   appearance?: 'accent' | 'neutral' | 'negative';
+  /**
+   * Возможность центрирования содержимого компонента
+   */
   centered?: boolean;
 }
 

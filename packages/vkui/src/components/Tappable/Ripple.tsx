@@ -4,6 +4,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { getOffsetRect } from '../../lib/offset';
 import styles from './Tappable.module.css';
 
+/* eslint-disable jsdoc/require-jsdoc */
+
 /**
  * Возможно нужен Ripple эффект. Данный хук нужен для отказа
  * от двойного ререндера.

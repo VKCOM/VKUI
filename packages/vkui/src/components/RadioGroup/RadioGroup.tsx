@@ -5,6 +5,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './RadioGroup.module.css';
 
 export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Режим расположения элементов
+   */
   mode?: 'vertical' | 'horizontal';
 }
 

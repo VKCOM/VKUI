@@ -111,6 +111,9 @@ export interface PopoverProps
    * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  /**
+   * Управление автоматическим фокусом при открытии всплывающего элемента
+   */
   autoFocus?: FocusTrapProps['autoFocus'];
 }
 

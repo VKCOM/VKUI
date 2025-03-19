@@ -34,7 +34,13 @@ interface ViewsScrolls {
 export let scrollsCache: ViewsScrolls = {};
 
 export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavIdProps {
+  /**
+   * `id` активное панели
+   */
   activePanel: string;
+  /**
+   * callback, который вызывается при завершении анимации смены активной панели
+   */
   onTransition?: (params: { isBack: boolean; from: string; to: string }) => void;
   /**
    * callback свайпа назад
@@ -50,8 +56,13 @@ export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavId
    * callback завершения анимации отмененного пользователем свайпа
    */
   onSwipeBackCancel?: () => void;
+  /**
+   * Массив из id панелей в порядке открытия
+   */
   history?: string[];
-
+  /**
+   * Коллекция Panel. У каждой Panel должен быть уникальный `id`
+   */
   children: React.ReactElement | Iterable<React.ReactElement>;
 }
 

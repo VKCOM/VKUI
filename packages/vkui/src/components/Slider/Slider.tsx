@@ -36,9 +36,21 @@ const sizeClassNames = {
 
 export interface SliderBaseProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
+  /**
+   * Минимальное значение слайдера
+   */
   min?: number;
+  /**
+   * Максимальное значение слайдера
+   */
   max?: number;
+  /**
+   * Шаг изменения значения слайдера
+   */
   step?: number;
+  /**
+   * Определяет, отключен ли компонент
+   */
   disabled?: boolean;
   /**
    * Тоже самое, что и `aria-label`, но на вход можно получать индекс текущего ползунка и в зависимости от этого выдавать разный текст.
@@ -54,6 +66,9 @@ export interface SliderBaseProps
    * > Перебивает `aria-valuetext`.
    */
   getAriaValueText?: (value: number, index: number) => string;
+  /**
+   * Включает отображение всплывающей подсказки при взаимодействии с ползунком
+   */
   withTooltip?: boolean;
   /**
    * Размер ползунка.
@@ -70,16 +85,40 @@ export interface SliderBaseProps
 }
 
 export interface SliderProps extends SliderBaseProps {
+  /**
+   * Флаг множественного выбора (должен быть false или не указан)
+   */
   multiple?: false;
+  /**
+   * Текущее значение слайдера
+   */
   value?: number;
+  /**
+   * Значение слайдера по умолчанию
+   */
   defaultValue?: number;
+  /**
+   * Обработчик изменения значения слайдера
+   */
   onChange?: (value: number, event: CustomTouchEvent | React.ChangeEvent) => void;
 }
 
 export interface SliderMultipleProps extends SliderBaseProps {
+  /**
+   * Флаг множественного выбора (должен быть true)
+   */
   multiple: true;
+  /**
+   * Текущие значения слайдера в виде массива [начальное, конечное]
+   */
   value?: [number, number];
+  /**
+   * Значения слайдера по умолчанию в виде массива [начальное, конечное]
+   */
   defaultValue?: [number, number];
+  /**
+   * Обработчик изменения значений слайдера
+   */
   onChange?: (value: [number, number], event: CustomTouchEvent | React.ChangeEvent) => void;
 }
 

@@ -21,6 +21,9 @@ const directionStyles = {
 type ItemClickHandler = (item: AlertActionInterface) => void;
 interface AlertActionsProps
   extends Pick<AlertProps, 'actions' | 'actionsAlign' | 'renderAction' | 'actionsLayout'> {
+  /**
+   * Обработчик нажатия на одну из опций
+   */
   onItemClick: ItemClickHandler;
 }
 export const AlertActions = ({

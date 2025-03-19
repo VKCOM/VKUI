@@ -11,6 +11,9 @@ const stylesWeight = {
 };
 
 export interface HasCaps {
+  /**
+   * Отображение текста в верхнем регистре
+   */
   caps?: boolean;
 }
 

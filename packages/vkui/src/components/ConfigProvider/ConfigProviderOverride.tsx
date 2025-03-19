@@ -9,6 +9,9 @@ import {
 } from './ConfigProviderContext';
 
 export interface ConfigProviderOverrideProps extends Partial<ConfigProviderContextInterface> {
+  /**
+   * Содержимое
+   */
   children: React.ReactNode;
 }
 

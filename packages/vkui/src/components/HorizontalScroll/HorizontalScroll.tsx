@@ -12,6 +12,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
+/* eslint-disable jsdoc/require-jsdoc */
 interface ScrollContext {
   scrollElement: HTMLElement | null;
   scrollAnimationDuration: number;
@@ -27,6 +28,7 @@ interface ScrollContext {
   initialScrollWidth: number;
   textDirection: 'ltr' | 'rtl';
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 export type ScrollPositionHandler = (currentPosition: number) => number;
 
@@ -41,12 +43,21 @@ export interface HorizontalScrollProps
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
+  /**
+   * Размер стрелок
+   */
   arrowSize?: ScrollArrowProps['size'];
   /**
    * Смещает иконки кнопок навигации по вертикали.
    */
   arrowOffsetY?: number | string;
+  /**
+   * Показывать ли стрелки
+   */
   showArrows?: boolean | 'always';
+  /**
+   * Длительность анимации скролла
+   */
   scrollAnimationDuration?: number;
   /**
    * Добавляет возможность прокручивать контент на любое колесо мыши.

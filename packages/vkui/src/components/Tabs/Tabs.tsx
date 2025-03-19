@@ -10,6 +10,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Tabs.module.css';
 
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Режим отображения компонента
+   */
   mode?: 'default' | 'accent' | 'secondary';
   /**
    * Включает прокрутку контейнера до активной (`selected`) вкладки
@@ -32,6 +35,7 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   layoutFillMode?: 'auto' | 'stretched' | 'shrinked';
 }
 
+/* eslint-disable jsdoc/require-jsdoc */
 export interface TabsContextProps {
   mode: TabsProps['mode'];
   withGaps: boolean;
@@ -39,6 +43,7 @@ export interface TabsContextProps {
   withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
   scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 export const TabsModeContext: React.Context<TabsContextProps> =
   React.createContext<TabsContextProps>({

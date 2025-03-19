@@ -22,12 +22,24 @@ const avatarsPositionStyles = {
 };
 
 export type UsersStackRenderWrapperProps = {
+  /**
+   * Контент для обертки
+   */
   children: React.ReactElement;
+  /**
+   * Путь до фото
+   */
   ['data-src']: string;
 };
 
 export type UsersStackPhoto = {
+  /**
+   * Путь до фото
+   */
   src: string;
+  /**
+   * Функция для рендера обертки над фото
+   */
   renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactElement;
 };
 
@@ -59,7 +71,13 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
+  /**
+   * Размер фото
+   */
   photoSize: number;
+  /**
+   * Тип обрезания фото
+   */
   direction: 'circle' | 'right' | 'left';
 }
 

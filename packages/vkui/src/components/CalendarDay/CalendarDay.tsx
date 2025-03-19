@@ -21,24 +21,77 @@ export type CalendarDayTestsProps = {
 };
 
 export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTestsProps {
+  /**
+   * Дата, которую представляет этот день
+   */
   day: Date;
+  /**
+   * Является ли день сегодняшним
+   */
   today?: boolean;
+  /**
+   * Выбран ли день (в режиме одиночного выбора или как часть диапазона)
+   */
   selected?: boolean;
+  /**
+   * Является ли день началом выделенного диапазона
+   */
   selectionStart?: boolean;
+  /**
+   * Является ли день концом выделенного диапазона
+   */
   selectionEnd?: boolean;
+  /**
+   * Подсветить день как начало предполагаемого диапазона (при ховере)
+   */
   hintedSelectionStart?: boolean;
+  /**
+   * Подсветить день как конец предполагаемого диапазона (при ховере)
+   */
   hintedSelectionEnd?: boolean;
+  /**
+   * Активен ли день (текущая дата в календаре)
+   */
   active?: boolean;
+  /**
+   * Скрыть день (например, дни соседних месяцев)
+   */
   hidden?: boolean;
+  /**
+   * Заблокирован ли день для выбора
+   */
   disabled?: boolean;
+  /**
+   * Находится ли день в фокусе (клавиатурная навигация)
+   */
   focused?: boolean;
+  /**
+   * Подсвечен ли день (ховер)
+   */
   hinted?: boolean;
+  /**
+   * Принадлежит ли день текущему отображаемому месяцу
+   */
   sameMonth?: boolean;
+  /**
+   * Размер компонента
+   */
   size?: 's' | 'm';
+  /**
+   * Callback при выборе/изменении дня
+   */
   onChange: (value: Date) => void;
+  /**
+   * Callback при наведении на день
+   */
   onEnter?: (value: Date) => void;
+  /**
+   * Callback при снятии ховера с дня
+   */
   onLeave?: (value: Date) => void;
-  // Функция отрисовки контента в ячейке дня
+  /**
+   * Кастомизация отображения содержимого дня
+   */
   renderDayContent?: (day: Date) => React.ReactNode;
 }
 

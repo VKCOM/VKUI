@@ -55,15 +55,47 @@ export interface CalendarRangeProps
     >,
     Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarRangeTestsProps {
+  /**
+   * Текущий выбранный промежуток
+   */
   value?: DateRangeType;
+  /**
+   * Начальный промежуток при монтировании
+   */
   defaultValue?: DateRangeType;
+  /**
+   * Запрещает выбор даты в прошлом.
+   * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
+   */
   disablePast?: boolean;
+  /**
+   * Запрещает выбор даты в будущем.
+   * Применяется, если не задано `shouldDisableDate`.
+   */
   disableFuture?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года
+   */
   disablePickers?: boolean;
+  /**
+   * Лейбл для изменения дня (aria-label)
+   */
   changeDayLabel?: string;
+  /**
+   * День недели, с которого начинается неделя
+   */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * Колбэк при изменении промежутка
+   */
   onChange?: (value: DateRangeType | undefined) => void;
+  /**
+   * Функция для проверки запрета выбора даты
+   */
   shouldDisableDate?: (value: Date) => boolean;
+  /**
+   * @deprecated свойство не используется
+   */
   onClose?: () => void;
 }
 

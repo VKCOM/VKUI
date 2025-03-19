@@ -77,6 +77,9 @@ export interface ChipsSelectProps<O extends ChipOption>
     UseChipsSelectProps<O>,
     Pick<FormFieldProps, 'status' | 'mode' | 'before'>,
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'> {
+  /**
+   * Расположение выпадающего списка
+   */
   placement?: 'top' | 'bottom';
   /**
    * Отрисовка Spinner вместо списка опций в выпадающем списке
@@ -110,7 +113,9 @@ export interface ChipsSelectProps<O extends ChipOption>
    * Отключает максимальную высоту по умолчанию
    */
   noMaxHeight?: boolean;
-
+  /**
+   * Функция для отрисовки кастомной опции в выпадающем списке
+   */
   renderOption?: (props: CustomSelectOptionProps, option: O) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.

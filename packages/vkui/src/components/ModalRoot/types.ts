@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 /** TODO [>=8] Удалить deprecated типы */
 
 import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';

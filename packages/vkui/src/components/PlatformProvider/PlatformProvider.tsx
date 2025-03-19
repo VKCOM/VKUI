@@ -8,6 +8,9 @@ export interface PlatformProviderProps {
    * Платформа
    */
   value: PlatformType;
+  /**
+   * Содержимое
+   */
   children: React.ReactNode;
 }
 

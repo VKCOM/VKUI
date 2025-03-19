@@ -49,8 +49,17 @@ function useTransitionAnimate(animateProp?: boolean) {
 }
 
 export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Ширина колонки
+   */
   width?: number | string;
+  /**
+   * Максимальная ширина колонки
+   */
   maxWidth?: number | string;
+  /**
+   * Минимальная ширина колонки
+   */
   minWidth?: number | string;
   /**
    * Если false, то переходы между Panel происходят без анимации
@@ -60,6 +69,9 @@ export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement>
    * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`
    */
   autoSpaced?: boolean;
+  /**
+   * Фиксированное положение колонки
+   */
   fixed?: boolean;
   /**
    * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`

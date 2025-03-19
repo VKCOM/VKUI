@@ -25,6 +25,9 @@ export interface SplitLayoutProps
    * месте приложения в пределах `AppRoot`.
    */
   modal?: React.ReactNode;
+  /**
+   * Компонент для отрисовки заголовка
+   */
   header?: React.ReactNode;
   /**
    * Центрирует контент.

@@ -52,7 +52,13 @@ export interface CalendarProps
     Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarDoneButtonProps,
     CalendarTestsProps {
+  /**
+   * Текущая выбранная дата
+   */
   value?: Date;
+  /**
+   * Начальная дата при монтировании
+   */
   defaultValue?: Date;
   /**
    * Запрещает выбор даты в прошлом.
@@ -64,15 +70,36 @@ export interface CalendarProps
    * Применяется, если не задано `shouldDisableDate`.
    */
   disableFuture?: boolean;
+  /**
+   * Включает выбор времени
+   */
   enableTime?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года
+   */
   disablePickers?: boolean;
+  /**
+   * Лейбл для изменения дня (aria-label)
+   */
   changeDayLabel?: string;
+  /**
+   * День недели, с которого начинается неделя
+   */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * Показывать дни соседних месяцев
+   */
   showNeighboringMonth?: boolean;
+  /**
+   * Размер календаря
+   */
   size?: 's' | 'm';
+  /**
+   * Колбэк при изменении даты
+   */
   onChange?: (value?: Date) => void;
   /**
-   * Позволяет запретить выбор даты.
+   * Функция для проверки запрета выбора даты
    */
   shouldDisableDate?: (value: Date) => boolean;
   /**
@@ -81,7 +108,7 @@ export interface CalendarProps
    */
   viewDate?: Date;
   /**
-   * Изменение даты в шапке календаря.
+   * Callback при изменении даты в шапке календаря
    */
   onHeaderChange?: (value: Date) => void;
   /**
@@ -95,7 +122,7 @@ export interface CalendarProps
    */
   maxDateTime?: Date;
   /**
-   * Свойство для отображения времени в нужной таймзоне
+   * Таймзона для отображения даты
    */
   timezone?: string;
 }

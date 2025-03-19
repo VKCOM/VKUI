@@ -25,8 +25,17 @@ export interface TextareaProps
     HasRootRef<HTMLElement>,
     HasAlign,
     FormFieldProps {
+  /**
+   * Свойство управляющее автоматическим изменением высоты компонента
+   */
   grow?: boolean;
+  /**
+   * Колбэк, срабатывающий при изменении размера компонента
+   */
   onResize?: (el: HTMLTextAreaElement) => void;
+  /**
+   * Значение по умолчанию
+   */
   defaultValue?: string;
 }
 

@@ -4,6 +4,9 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Card.module.css';
 
 export interface CardProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
+  /**
+   * Внешний вид карточки
+   */
   mode?: 'tint' | 'shadow' | 'outline' | 'outline-tint' | 'plain';
 }
 

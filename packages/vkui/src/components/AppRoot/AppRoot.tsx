@@ -69,7 +69,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * @since 6.2.0
    */
   userSelectMode?: AppRootUserSelectMode;
-  /*
+  /**
    * По умолчанию в режиме `mode="full"` VKUI в рантайме выставляет:
    * - класс .vkui на html элемент
    * - класс .vkui__root на элемент-контейнер, в который монтируется VKUI

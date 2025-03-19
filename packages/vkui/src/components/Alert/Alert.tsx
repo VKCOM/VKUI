@@ -25,6 +25,9 @@ export interface AlertActionInterface
   extends Pick<ButtonProps, 'Component'>,
     AnchorHTMLAttributesOnly,
     HasDataAttribute {
+  /**
+   * Текст опции
+   */
   title: string;
   /**
    * Обработчик клика на опцию. Если свойство `autoCloseDisabled` включено,
@@ -37,6 +40,9 @@ export interface AlertActionInterface
    * позволяет отключить такое поведение
    */
   autoCloseDisabled?: boolean;
+  /**
+   * Режим отображения опции
+   */
   mode: AlertActionMode;
 }
 
@@ -44,12 +50,33 @@ export interface AlertProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
     Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement> {
+  /**
+   * Расположение действий - вертикально или горизонтально
+   */
   actionsLayout?: 'vertical' | 'horizontal';
+  /**
+   * Тип выравнивания действий
+   */
   actionsAlign?: AlignType;
+  /**
+   * Список действий
+   */
   actions?: AlertActionInterface[];
+  /**
+   * Функция для отрисовки действия
+   */
   renderAction?: (props: AlertActionProps) => React.ReactNode;
+  /**
+   * Заголовок модального окна
+   */
   title?: React.ReactNode;
+  /**
+   * Описание модального окна
+   */
   description?: React.ReactNode;
+  /**
+   * Колбэк, срабатывающий при закрытии модального окна
+   */
   onClose: VoidFunction;
   /**
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
@@ -72,6 +99,13 @@ export interface AlertProps
    * Передает атрибут `data-testid` для описания
    */
   descriptionTestId?: string;
+  /**
+   * - При передаче `true` в качестве портала будет использован `portalRoot`
+   * из контекста `AppRoot` если он передан в `AppRoot`, иначе `document.body`.
+   * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
+   *
+   * По умолчанию в качестве портала будет использован `document.body`
+   */
   usePortal?: AppRootPortalProps['usePortal'];
   /**
    * По умолчанию событие onClick не всплывает

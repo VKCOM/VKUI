@@ -7,6 +7,9 @@ export interface LocaleProviderProps {
    * Строка с языковой меткой BCP 47
    */
   value: ConfigProviderContextInterface['locale'];
+  /**
+   * Содержимое
+   */
   children: React.ReactNode;
 }
 

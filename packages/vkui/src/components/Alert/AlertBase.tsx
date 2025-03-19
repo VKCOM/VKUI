@@ -17,7 +17,13 @@ import styles from './Alert.module.css';
 
 export interface AlertBaseProps
   extends Omit<AlertProps, 'usePortal' | 'className' | 'style' | 'getRootRef'> {
+  /**
+   * Флаг для управлением закрытостью модального окна
+   */
   closing?: boolean;
+  /**
+   * Колбэк для управлением закрытостью модального окна
+   */
   setClosing?: (closing: boolean) => void;
 }
 

@@ -36,7 +36,9 @@ export interface WriteBarProps
    * Добавляет тень вокруг поля ввода
    */
   shadow?: boolean;
-
+  /**
+   * @deprecated неиспользуемое свойство
+   */
   children?: never;
 }
 

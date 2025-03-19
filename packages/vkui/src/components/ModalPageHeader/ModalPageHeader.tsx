@@ -15,6 +15,9 @@ export interface ModalPageHeaderProps
     Omit<PanelHeaderProps, 'fixed' | 'shadow' | 'delimiter'>,
     HasRef<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
+  /**
+   * Отключение разделителя
+   */
   noSeparator?: boolean;
 }
 

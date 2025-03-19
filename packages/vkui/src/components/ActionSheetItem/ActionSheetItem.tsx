@@ -18,17 +18,46 @@ export interface ActionSheetItemProps
   extends React.HTMLAttributes<HTMLElement>,
     React.AnchorHTMLAttributes<HTMLElement>,
     Pick<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'> {
+  /**
+   * Свойство, определяющее внешний вид элемента действия
+   */
   mode?: 'default' | 'destructive' | 'cancel';
+  /**
+   * Если указано, элемент будет использоваться как ссылка
+   */
+  href?: string;
+  /**
+   * Атрибут target для тега <a>
+   */
+  target?: string;
+  /**
+   * Иконка или другой React-элемент для отображения перед основным контентом
+   */
   before?: React.ReactNode;
+  /**
+   * Иконка или другой React-элемент для отображения после основного контента
+   */
   after?: React.ReactNode;
+  /**
+   * Дополнительная информация, отображаемая рядом с основным контентом
+   */
   meta?: React.ReactNode;
+  /**
+   * Слот для подсказки или вспомогательного текста
+   */
   subtitle?: React.ReactNode;
   /**
    * По умолчанию клик на опцию вызывает переданную в `ActionSheet` функцию `onClose`, данное свойство
    * позволяет отключить такое поведение
    */
   autoCloseDisabled?: boolean;
+  /**
+   * Включает возможность выбрать элемент (отображает радиокнопку)
+   */
   selectable?: boolean;
+  /**
+   * Отключает элемент
+   */
   disabled?: boolean;
   /**
    * Все текстовые элементы при необходимости занимают несколько строк
@@ -40,6 +69,9 @@ export interface ActionSheetItemProps
    * Если вам нужен объект события именно на момент клика, используйте `onImmediateClick`.
    */
   onClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * Обработчик клика, вызывающийся непосредственно в момент клика (в отличие от onClick)
+   */
   onImmediateClick?: React.MouseEventHandler<HTMLElement>;
   /**
    * Иконка для `checked` режима.

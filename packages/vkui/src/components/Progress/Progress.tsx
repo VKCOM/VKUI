@@ -25,6 +25,9 @@ export interface ProgressProps extends HTMLAttributesWithRootRef<HTMLDivElement>
    * Стиль отображения прогрессбара
    */
   appearance?: 'accent' | 'positive' | 'negative' | `--${string}` | `#${string}`;
+  /**
+   * Значение прогресса
+   */
   value?: number;
   /**
    * Высота элемента.

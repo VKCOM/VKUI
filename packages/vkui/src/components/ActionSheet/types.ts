@@ -5,6 +5,9 @@ import { type FocusTrapProps } from '../FocusTrap/FocusTrap';
 export type ToggleRef = Element | null | undefined | React.RefObject<Element | null>;
 
 export interface SharedDropdownProps extends FocusTrapProps {
+  /**
+   * Состояние закрытия всплывающего окна
+   */
   closing: boolean;
   /**
    * Элемент, рядом с которым вылезает попап на десктопе.

@@ -19,6 +19,9 @@ import styles from './ActionSheet.module.css';
 
 type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
 export interface ActionSheetOnCloseOptions {
+  /**
+   * Причина закрытия попапа
+   */
   closedBy: CloseInitiators;
 }
 
@@ -29,7 +32,13 @@ export interface ActionSheetProps
     >,
     Omit<UseFocusTrapProps, 'onClose'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
+  /**
+   * Заголовок попапа
+   */
   title?: React.ReactNode;
+  /**
+   * Описание попапа, под заголовком
+   */
   description?: React.ReactNode;
   /**
    * Закрыть попап по клику снаружи.
@@ -39,6 +48,12 @@ export interface ActionSheetProps
    * Только мобильный iOS.
    */
   iosCloseItem?: React.ReactNode;
+  /**
+   * Режим отображения компонента:
+   *
+   * - `"sheet"`: отображение снизу экрана, подходит для мобильных устройств
+   * - `"menu"`: отображение в виде поповера, относительно якорного элемента
+   */
   mode?: 'sheet' | 'menu';
 }
 

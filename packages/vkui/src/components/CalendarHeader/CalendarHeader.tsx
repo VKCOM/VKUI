@@ -44,6 +44,9 @@ export type CalendarHeaderTestsProps = {
 export interface CalendarHeaderProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
     CalendarHeaderTestsProps {
+  /**
+   * Отображаемая дата
+   */
   viewDate: Date;
   /**
    * Скрывает иконку для переключения на предыдущий месяц
@@ -53,17 +56,53 @@ export interface CalendarHeaderProps
    * Скрывает иконку для переключения на следующий месяц
    */
   nextMonthHidden?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года
+   */
   disablePickers?: boolean;
+  /**
+   * Лейбл для кнопки предыдущего месяца (aria-label)
+   */
   prevMonthLabel?: string;
+  /**
+   * Лейбл для кнопки следующего месяца (aria-label)
+   */
   nextMonthLabel?: string;
+  /**
+   * Лейбл для селектора месяца (aria-label)
+   */
   changeMonthLabel?: string;
+  /**
+   * Лейбл для селектора года (aria-label)
+   */
   changeYearLabel?: string;
+  /**
+   * Кастомная иконка для кнопки предыдущего месяца
+   */
   prevMonthIcon?: React.ReactNode;
+  /**
+   * Кастомная иконка для кнопки следующего месяца
+   */
   nextMonthIcon?: React.ReactNode;
+  /**
+   * Дополнительные свойства для кнопки предыдущего месяца
+   */
   prevMonthProps?: ArrowMonthProps;
+  /**
+   * Дополнительные свойства для кнопки следующего месяца
+   */
   nextMonthProps?: ArrowMonthProps;
+  /**
+   * Функция для проверки блокировки месяца
+   */
   isMonthDisabled?: (monthNumber: number, year?: number) => boolean;
+  /**
+   * Функция для проверки блокировки года
+   */
   isYearDisabled?: (yearNumber: number) => boolean;
+  /**
+   * Обработчик изменения отображаемой даты
+   */
   onChange: (viewDate: Date) => void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.

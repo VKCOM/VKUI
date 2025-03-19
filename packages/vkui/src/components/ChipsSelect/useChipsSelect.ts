@@ -21,6 +21,9 @@ import type { OptionPreset } from './types';
 
 export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
   extends UseChipsInputProps<O> {
+  /**
+   * Список опций в выпадающем списке
+   */
   options?: O[];
   /**
    * Возможность создавать чипы которых нет в списке:
@@ -38,7 +41,13 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
    * Показывать или скрывать уже выбранные опции.
    */
   selectedBehavior?: 'hide' | 'highlight';
+  /**
+   * Функция для фильтрации опций в списке
+   */
   filterFn?: false | FilterFn<O>;
+  /**
+   * Функция для сортировки опций в списке
+   */
   sortFn?: false | SortFn<O>;
   /**
    * Будет вызвано в момент скрытия выпадающего списка
