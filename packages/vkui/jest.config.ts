@@ -6,11 +6,14 @@ const swcConfig = JSON.parse(fs.readFileSync(`${__dirname}/package.swcrc`, 'utf-
 swcConfig.exclude = [];
 swcConfig.module.resolveFully = false;
 
+// Трансформируем esm пакеты
+const needTransformPackages = ['@vkontakte/vkjs', '@vkontakte/icons', '@vkontakte/icons-sprite'];
+
 const config: Config = {
   transform: {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { ...swcConfig }],
   },
-  transformIgnorePatterns: ['/node_modules/(?!@vkontakte/vkjs/)'],
+  transformIgnorePatterns: [`/node_modules/(?!(${needTransformPackages.join('|')})/)`],
   displayName: 'unit',
   roots: [path.join(__dirname, 'src')],
   setupFilesAfterEnv: [path.join(__dirname, 'jest.setup.ts')],

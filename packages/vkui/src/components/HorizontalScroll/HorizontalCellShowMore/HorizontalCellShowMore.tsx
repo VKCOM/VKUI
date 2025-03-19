@@ -73,7 +73,7 @@ export const HorizontalCellShowMore = ({
         hoverMode="opacity"
         {...restProps}
       >
-        <Icon28ChevronRightCircle className={styles.icon} fill="currentColor" />
+        <Icon28ChevronRightCircle className={styles.icon} />
 
         <Subhead className={styles.text} weight="2">
           {children}
