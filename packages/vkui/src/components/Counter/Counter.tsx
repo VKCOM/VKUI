@@ -47,7 +47,9 @@ export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
    * - При mode="inherit" - не работает
    */
   color?: string;
-
+  /**
+   * Размер счетчика
+   */
   size?: 's' | 'm';
 }
 

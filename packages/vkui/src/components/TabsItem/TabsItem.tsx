@@ -66,7 +66,13 @@ export interface TabsItemProps
    * Например, `<Icon16Dropdown />`
    */
   after?: React.ReactNode;
+  /**
+   * Флаг для отображения выбранного состояния
+   */
   selected?: boolean;
+  /**
+   * Блокировка взаимодействия с компонентом
+   */
   disabled?: boolean;
 }
 

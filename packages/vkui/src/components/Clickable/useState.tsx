@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeCalls } from '../../lib/mergeCalls';

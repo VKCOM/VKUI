@@ -9,7 +9,13 @@ import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface ColorSchemeProviderProps {
+  /**
+   * Цветовая схема
+   */
   value: ColorSchemeType;
+  /**
+   * Содержимое
+   */
   children: React.ReactNode;
 }
 

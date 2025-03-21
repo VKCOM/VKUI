@@ -33,9 +33,21 @@ const sizeYClassNames = {
 };
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
+  /**
+   * Стиль отображения кнопки
+   */
   mode?: 'primary' | 'outline' | 'tertiary';
+  /**
+   * Тип внешнего вида кнопки
+   */
   appearance?: 'accent' | 'neutral';
+  /**
+   * Размер кнопки
+   */
   size?: 's' | 'm' | 'l';
+  /**
+   * Выбранное состояние
+   */
   selected?: boolean;
   /**
    * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`
@@ -49,6 +61,9 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
    * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`
    */
   after?: React.ReactNode;
+  /**
+   * Нужно ли отображать иконку `"chevron"`
+   */
   chevron?: boolean;
 }
 

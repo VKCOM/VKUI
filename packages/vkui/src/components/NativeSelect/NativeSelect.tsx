@@ -69,8 +69,17 @@ export interface NativeSelectProps
    * > ⚠️ Лучше использовать второй параметр при работе с компонентом
    */
   onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
+  /**
+   * Текст-подсказка при отсутствии выбранного значения
+   */
   placeholder?: string;
+  /**
+   * Флаг для включения многострочного режима
+   */
   multiline?: boolean;
+  /**
+   * Тип селекта, влияющий на отображение
+   */
   selectType?: SelectType;
   /**
    * Иконка раскрывающегося списка

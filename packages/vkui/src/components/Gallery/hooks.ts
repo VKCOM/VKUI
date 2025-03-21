@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';

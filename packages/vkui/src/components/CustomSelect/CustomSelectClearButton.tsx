@@ -7,8 +7,17 @@ import type { HasDataAttribute } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 
 export interface CustomSelectClearButtonProps extends HasDataAttribute {
+  /**
+   * Дополнительный className
+   */
   className?: string;
+  /**
+   * Обработчик нажатия на кнопку
+   */
   onClick: () => void;
+  /**
+   * Блокировка кнопки
+   */
   disabled?: boolean;
 }
 

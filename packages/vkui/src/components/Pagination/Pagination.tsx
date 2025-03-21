@@ -65,6 +65,9 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * [a11y] Метка для обозначения блока навигации.
    */
   navigationLabel?: string;
+  /**
+   * Тип элемента отрисовки блока навигации.
+   */
   navigationLabelComponent?: HasComponent['Component'];
   /**
    * [a11y] Метка для кнопки навигации назад.
@@ -84,6 +87,9 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * так как будет зачитываться для каждой кнопки при перемещении по списку.
    */
   getPageLabel?: (isCurrent: boolean) => string;
+  /**
+   * Обработчик изменения выбранной страницы
+   */
   onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
   /**
    * Функция для кастомного рендера кнопок страниц.

@@ -33,11 +33,29 @@ export interface SearchProps
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
   after?: React.ReactNode;
+  /**
+   * Контент, отображаемый перед полем ввода
+   */
   before?: React.ReactNode;
+  /**
+   * Иконка поиска. Может быть React-элементом или функцией, возвращающей элемент
+   */
   icon?: React.ReactNode | ((renderFn: RenderIconButtonFn) => React.ReactNode);
+  /**
+   * Обработчик клика по иконке поиска
+   */
   onIconClick?: React.PointerEventHandler<HTMLElement>;
+  /**
+   * Значение поля ввода по умолчанию
+   */
   defaultValue?: string;
+  /**
+   * Текст для скринридеров, описывающий иконку поиска
+   */
   iconLabel?: string;
+  /**
+   * Текст для скринридеров, описывающий кнопку очистки
+   */
   clearLabel?: string;
   /**
    * Передает атрибут `data-testid` для кнопки очистки

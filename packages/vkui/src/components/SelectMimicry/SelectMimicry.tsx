@@ -23,8 +23,17 @@ export interface SelectMimicryProps
     HasRootRef<HTMLElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'after' | 'status'> {
+  /**
+   * Включает многострочный режим отображения
+   */
   multiline?: boolean;
+  /**
+   * Определяет, отключен ли компонент
+   */
   disabled?: boolean;
+  /**
+   * Тип селекта, влияющий на внешний вид компонента
+   */
   selectType?: SelectType;
 }
 

@@ -13,9 +13,17 @@ import { Title } from '../Typography/Title/Title';
 import styles from './Header.module.css';
 
 export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, HasComponent {
+  /**
+   * Размер компонента
+   */
   size?: 's' | 'm' | 'l' | 'xl';
+  /**
+   * Подпись под основным текстом
+   */
   subtitle?: React.ReactNode;
-  /* Позволяет задать тип элемента в который будет обёрнут subtitle */
+  /**
+   * Позволяет задать тип элемента в который будет обёрнут subtitle
+   */
   subtitleComponent?: React.ElementType;
   /**
    * Допускаются иконки, текст, Link
@@ -25,6 +33,9 @@ export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, Has
    * Допускаются текст, Indicator
    */
   indicator?: React.ReactNode;
+  /**
+   * Возможность отображения текста в несколько строк
+   */
   multiline?: boolean;
   /**
    * Иконка слева (рекомендуется использовать размер 28px)

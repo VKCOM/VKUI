@@ -17,6 +17,9 @@ const sizeYClassNames = {
 export interface FormLayoutGroupProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     RemovableProps {
+  /**
+   * Направление отображения элементов формы
+   */
   mode?: 'vertical' | 'horizontal';
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.

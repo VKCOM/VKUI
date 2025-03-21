@@ -3,7 +3,13 @@ import { type ConfigProviderContextInterface } from '../ConfigProvider/ConfigPro
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface DirectionProviderProps {
+  /**
+   * Направление контента
+   */
   value: ConfigProviderContextInterface['direction'];
+  /**
+   * Содержимое
+   */
   children: React.ReactNode;
 }
 

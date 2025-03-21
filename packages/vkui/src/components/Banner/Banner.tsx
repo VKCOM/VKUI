@@ -17,6 +17,9 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    * Тип баннера.
    */
   mode?: 'tint' | 'image';
+  /**
+   * Тип размера баннера.
+   */
   size?: 's' | 'm';
   /**
    * Тип действия в правой части баннера.
@@ -30,7 +33,7 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    */
   onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
   /**
-   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
+   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
   dismissLabel?: string;
   /**

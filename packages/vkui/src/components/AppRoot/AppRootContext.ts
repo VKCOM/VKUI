@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { type AppRootUserSelectMode, type SafeAreaInsets } from './types';
 

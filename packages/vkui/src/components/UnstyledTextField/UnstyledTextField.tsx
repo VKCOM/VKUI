@@ -19,6 +19,9 @@ export interface UnstyledTextFieldAsInputProps
   extends UnstyledTextFieldBaseProps,
     React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLInputElement> {
+  /**
+   * Тег используемый в компоненте
+   */
   as: 'input';
 }
 
@@ -26,6 +29,9 @@ export interface UnstyledTextFieldAsTextareaProps
   extends UnstyledTextFieldBaseProps,
     React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRootRef<HTMLTextAreaElement> {
+  /**
+   * Тег используемый в компоненте
+   */
   as: 'textarea';
 }
 

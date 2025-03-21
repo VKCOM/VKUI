@@ -17,6 +17,12 @@ export interface CellProps
   extends Omit<SimpleCellProps, 'getRootRef'>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
+  /**
+   * Режим отображения ячейки:
+   *
+   * - "removable": добавляется кнопка для удаления
+   * - "selectable": добавляется чекбокс для выбора
+   */
   mode?: 'removable' | 'selectable';
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет

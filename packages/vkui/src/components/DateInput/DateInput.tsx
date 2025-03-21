@@ -96,11 +96,29 @@ export interface DateInputProps
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре
    */
   calendarTestsProps?: CalendarTestsProps;
+  /**
+   * Расположение календаря относительно поля ввода
+   */
   calendarPlacement?: PlacementWithAuto;
+  /**
+   * Автоматически закрывать календарь при измененях
+   */
   closeOnChange?: boolean;
+  /**
+   * label для кнопки очистки. Делает доступным для ассистивных технологий
+   */
   clearFieldLabel?: string;
+  /**
+   * label для кнопки открытия календаря. Делает доступным для ассистивных технологий
+   */
   showCalendarLabel?: string;
+  /**
+   * Отключение открытия календаря
+   */
   disableCalendar?: boolean;
+  /**
+   * Колбэк при изменении состояния открытия календаря
+   */
   onCalendarOpenChanged?: (opened: boolean) => void;
   /**
    * Колбэк срабатывающий при нажатии на кнопку "Done". Используется совместно с флагом `enableTime`.

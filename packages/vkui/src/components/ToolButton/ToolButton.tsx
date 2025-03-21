@@ -32,8 +32,17 @@ const sizeYClassNames = {
 };
 
 export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProps {
+  /**
+   * Режим отображения компонента
+   */
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline';
+  /**
+   * Внешний вид компонента
+   */
   appearance?: 'accent' | 'neutral';
+  /**
+   * Направление контента
+   */
   direction?: 'row' | 'column';
   /**
    * Задаёт `50%` закругления для контейнера.

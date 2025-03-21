@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 export type SafeAreaInsets = {
   top?: number;
   right?: number;

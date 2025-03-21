@@ -10,6 +10,9 @@ export type ModalPageCloseReason =
   | 'swipe-down';
 
 type OmittedStyleAttribute = {
+  /**
+   * Допольнительные стили
+   */
   style?: Omit<CSSProperties, 'height' | 'maxWidth' | 'maxHeight'>;
 };
 

@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { Button, type ButtonProps } from '../../Button/Button';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';

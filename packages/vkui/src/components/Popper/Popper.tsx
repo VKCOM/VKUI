@@ -86,6 +86,9 @@ export interface PopperCommonProps
 }
 
 export interface PopperProps extends PopperCommonProps {
+  /**
+   * ref на якорный элемент
+   */
   targetRef: React.RefObject<HTMLElement | null> | VirtualElement;
 }
 

@@ -5,6 +5,9 @@ import { RootComponent, type RootComponentProps } from '../RootComponent/RootCom
 import styles from './AspectRatio.module.css';
 
 export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
+  /**
+   * Дополнительный className для компонента
+   */
   className?: string;
   /**
    * По умолчанию, вложенный контент будет растягиваться и заполнять весь блок.

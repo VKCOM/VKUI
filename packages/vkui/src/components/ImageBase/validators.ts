@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import type * as React from 'react';
 import { warnOnce } from '../../lib/warnOnce';
 import {

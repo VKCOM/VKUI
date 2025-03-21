@@ -14,7 +14,13 @@ export interface CheckboxProps
       TappableProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
+  /**
+   * Подпись под основным текстом
+   */
   description?: React.ReactNode;
+  /**
+   * Контент идущий за основным текстом
+   */
   titleAfter?: React.ReactNode;
 }
 

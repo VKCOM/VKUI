@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import type * as React from 'react';
 import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';

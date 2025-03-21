@@ -8,7 +8,13 @@ export interface RootComponentProps<T>
   extends React.AllHTMLAttributes<T>,
     HasRootRef<T>,
     HasComponent {
+  /**
+   * Базовый `className`
+   */
   baseClassName?: string | false;
+  /**
+   * Базовые стили
+   */
   baseStyle?: React.CSSProperties;
 }
 

@@ -30,16 +30,22 @@ export interface ModalCardBaseProps
    * Заголовок карточки
    */
   title?: React.ReactNode;
-  /* Позволяет поменять тег используемый для заголовка */
+  /**
+   * Позволяет поменять тег используемый для заголовка
+   */
   titleComponent?: React.ElementType;
-  /* Позволяет задать id для заголовка. Используется, чтобы связать модальное окно и title через aria-labelledby, тем самым задав модальному окну имя через title */
+  /**
+   * Позволяет задать id для заголовка. Используется, чтобы связать модальное окно и title через aria-labelledby, тем самым задав модальному окну имя через title
+   */
   titleId?: string;
 
   /**
    * Описание
    */
   description?: React.ReactNode;
-  /* Позволяет поменять тег используемый для описания */
+  /**
+   * Позволяет поменять тег используемый для описания
+   */
   descriptionComponent?: React.ElementType;
 
   /**
@@ -54,7 +60,9 @@ export interface ModalCardBaseProps
    * - `gap="m" mode="vertical" stretched`
    */
   actions?: React.ReactNode;
-
+  /**
+   * Обработчик закрытия модального окна
+   */
   onClose?: VoidFunction;
 
   /**

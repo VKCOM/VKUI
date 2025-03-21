@@ -45,14 +45,41 @@ const sizeYClassNames = {
 };
 
 export interface VKUIButtonProps extends HasAlign {
+  /**
+   * Режим отображения кнопки
+   */
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'link';
+  /**
+   * Цветовая схема кнопки
+   */
   appearance?: 'accent' | 'positive' | 'negative' | 'neutral' | 'overlay' | 'accent-invariable';
+  /**
+   * Размер кнопки
+   */
   size?: 's' | 'm' | 'l';
+  /**
+   * Растягивает кнопку на всю ширину контейнера
+   */
   stretched?: boolean;
+  /**
+   * Контент, отображаемый перед основным содержимым кнопки
+   */
   before?: React.ReactNode;
+  /**
+   * Контент, отображаемый после основного содержимого кнопки
+   */
   after?: React.ReactNode;
+  /**
+   * Включает состояние загрузки (отображает спиннер)
+   */
   loading?: boolean;
+  /**
+   * Отключает анимацию спиннера загрузки
+   */
   disableSpinnerAnimation?: boolean;
+  /**
+   * Добавляет скругленные углы кнопке
+   */
   rounded?: boolean;
 }
 

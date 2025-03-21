@@ -52,6 +52,9 @@ export interface ScrollArrowProps
    * Смещает иконку кнопки навигации по вертикали.
    */
   offsetY?: number | string;
+  /**
+   * [a11y]: Используется для ассистивных технологий
+   */
   label?: string;
 }
 

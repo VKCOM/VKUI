@@ -29,7 +29,15 @@ export interface FormItemProps
     HasRootRef<HTMLElement>,
     HasComponent,
     RemovableProps {
+  /**
+   * Дополнительный элемент, отображаемый над содержимым
+   */
   top?: React.ReactNode;
+  /**
+   * Передаётся при использовании `top`.
+   *
+   * `id` для `top`
+   */
   topId?: string;
   /**
    * Многострочный вывод заголовка. По умолчанию текст не переносится при переполнении.
@@ -41,6 +49,9 @@ export interface FormItemProps
    * Если оставить пустым и использовать htmlFor, то тег top будет label.
    */
   topComponent?: React.ElementType;
+  /**
+   * Дополнительный элемент, отображаемый под содержимым
+   */
   bottom?: React.ReactNode;
   /**
    * Передаётся при использовании `bottom`.
@@ -48,6 +59,9 @@ export interface FormItemProps
    * Должен совпадать с `aria-describedby`, который передаётся в компонент, отвечающий за пользовательский ввод.
    */
   bottomId?: string;
+  /**
+   * Статус, влияющий на стиль отображения компонента
+   */
   status?: 'default' | 'error' | 'valid';
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.

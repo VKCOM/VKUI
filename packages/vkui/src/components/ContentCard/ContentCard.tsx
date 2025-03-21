@@ -40,6 +40,9 @@ export interface ContentCardProps
     Максимальная высота изображения
    */
   maxHeight?: number;
+  /**
+   * Внешний вид карточки
+   */
   mode?: CardProps['mode'];
 }
 

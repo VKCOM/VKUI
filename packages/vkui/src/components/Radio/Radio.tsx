@@ -15,7 +15,13 @@ export interface RadioProps
       TappableProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
+  /**
+   * Дополнительное описание под основным текстом
+   */
   description?: React.ReactNode;
+  /**
+   * Элемент после основного текста
+   */
   titleAfter?: React.ReactNode;
   /**
    * Позволяет передавать data-* аттрибуты элементу label

@@ -17,6 +17,9 @@ export interface TabbarItemProps
   extends Omit<React.AllHTMLAttributes<HTMLElement>, 'label'>,
     HasRootRef<HTMLElement>,
     HasComponent {
+  /**
+   * Выбранное состояние компонента
+   */
   selected?: boolean;
   /**
    * Текст рядом с иконкой

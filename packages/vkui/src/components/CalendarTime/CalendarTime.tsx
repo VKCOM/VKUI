@@ -29,20 +29,47 @@ export type CalendarTimeTestsProps = {
 
 export type CalendarDoneButtonProps = {
   /**
-   * Кастомное отображение кнопки Done.
+   * Кастомное отображение кнопки `"Done"`.
    */
   DoneButton?: React.ComponentType<ButtonProps>;
+  /**
+   * Текст отображаемый в кнопке `"Done"`.
+   */
   doneButtonText?: string;
+  /**
+   * Управление отображением кнопки `"Done"`.
+   */
   doneButtonShow?: boolean;
+  /**
+   * Управление блокировкой кнопки `"Done"`.
+   */
   doneButtonDisabled?: boolean;
+  /**
+   * Обработки нажатия на кнопку `"Done"`.
+   */
   onDoneButtonClick?: () => void;
 };
 
 export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
+  /**
+   * Отображаемая дата
+   */
   value: Date;
+  /**
+   * Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий
+   */
   changeHoursLabel?: string;
+  /**
+   * Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий
+   */
   changeMinutesLabel?: string;
+  /**
+   * Обработчик изменения времени
+   */
   onChange?: (value: Date) => void;
+  /**
+   * Функция для проверки блокировки выбора даты и времени
+   */
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 

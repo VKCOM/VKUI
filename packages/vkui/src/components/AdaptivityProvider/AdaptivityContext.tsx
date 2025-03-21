@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import type { SizeTypeValues, ViewHeightType, ViewWidthType } from '../../lib/adaptivity';

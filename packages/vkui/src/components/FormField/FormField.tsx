@@ -36,6 +36,9 @@ const renderIcon = (icon: React.ReactNode, align: FieldIconsAlign, className: st
 export type FieldIconsAlign = 'start' | 'center' | 'end';
 
 export interface FormFieldProps {
+  /**
+   * Статус отображения поля в форме
+   */
   status?: 'default' | 'error' | 'valid';
   /**
    * Добавляет иконку слева.
@@ -81,6 +84,9 @@ export interface FormFieldOwnProps
     HasRootRef<HTMLElement>,
     HasComponent,
     FormFieldProps {
+  /**
+   * Состояние блокировки поля
+   */
   disabled?: boolean;
 }
 
