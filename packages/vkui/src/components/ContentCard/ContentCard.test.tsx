@@ -36,7 +36,7 @@ describe('ContentCard', () => {
 
   it('[img] passes ref to img', () => {
     const refCallback = jest.fn();
-    render(<ContentCardTest src="/image.png" getRef={refCallback} />);
+    render(<ContentCardTest getRef={refCallback} />);
 
     expect(refCallback).toHaveBeenCalled();
   });
@@ -47,6 +47,12 @@ describe('ContentCard', () => {
     Object.keys(imgOnlyAttributes).forEach((attr) => {
       expect(img()).toHaveAttribute(attr);
     });
+  });
+
+  it('[img] passes `imageObjectFit`', () => {
+    render(<ContentCardTest src="/image.png" imageObjectFit="contain" />);
+
+    expect(img()).toHaveStyle('object-fit: contain;');
   });
 
   it('[onClick] is disabled when there is no onClick', () => {
