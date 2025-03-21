@@ -19,9 +19,11 @@ const sizeXClassNames = {
 
 export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Управление состояние открытия
+   * Управление состоянием всплывающего элемента
+   * true - элемент открыт, false - элемент закрыт
    */
   opened: boolean;
+
   /**
    * Обработчик закрытия всплывающего элемента
    */

@@ -135,6 +135,7 @@ module.exports = {
         onlyForFunctionsWithNames: ['classNames'],
       },
     ],
+    'unicorn/expiring-todo-comments': ['error'],
     'jsdoc/require-jsdoc': 'off',
     'jsdoc/check-syntax': 'off',
   },

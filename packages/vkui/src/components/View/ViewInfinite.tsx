@@ -47,7 +47,7 @@ export interface ViewInfiniteProps
     HasPlatform,
     NavIdProps {
   /**
-   * `id` активное панели
+   * `id` активной панели
    */
   activePanel: string;
   /**

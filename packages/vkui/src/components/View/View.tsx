@@ -35,7 +35,7 @@ export let scrollsCache: ViewsScrolls = {};
 
 export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavIdProps {
   /**
-   * `id` активное панели
+   * `id` активной панели
    */
   activePanel: string;
   /**

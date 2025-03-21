@@ -49,6 +49,7 @@ export interface AlertActionInterface
 export interface AlertProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
     Pick<UseFocusTrapProps, 'restoreFocus'>,
+    Pick<AppRootPortalProps, 'usePortal'>,
     HasRootRef<HTMLDivElement> {
   /**
    * Расположение действий - вертикально или горизонтально
@@ -99,14 +100,6 @@ export interface AlertProps
    * Передает атрибут `data-testid` для описания
    */
   descriptionTestId?: string;
-  /**
-   * - При передаче `true` в качестве портала будет использован `portalRoot`
-   * из контекста `AppRoot` если он передан в `AppRoot`, иначе `document.body`.
-   * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
-   *
-   * По умолчанию в качестве портала будет использован `document.body`
-   */
-  usePortal?: AppRootPortalProps['usePortal'];
   /**
    * По умолчанию событие onClick не всплывает
    */

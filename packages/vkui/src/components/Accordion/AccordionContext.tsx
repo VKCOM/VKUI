@@ -3,19 +3,20 @@ import { noop } from '@vkontakte/vkjs';
 
 export interface AccordionContextProps {
   /**
-   * id для label(a11y)
+   * id для label (для обеспечения доступности a11y)
    */
   labelId: string;
   /**
-   * id для contentId(a11y)
+   * id для content (для обеспечения доступности a11y)
    */
   contentId: string;
   /**
-   * Состояние раскрытости аккордиона
+   * Состояние аккордеона
+   * true - аккордеон развернут, false - аккордеон свернут
    */
   expanded: boolean;
   /**
-   * Колбэк изменения состояния раскрытости
+   * Колбэк для изменения состояния аккордеона
    */
   onChange: (e: boolean) => void;
 }

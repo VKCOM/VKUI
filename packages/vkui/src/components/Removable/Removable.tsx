@@ -163,7 +163,7 @@ interface RemovableOwnProps
    */
   noPadding?: boolean;
   /**
-   * Содержимое. Можно передать функция для отрисовки
+   * Содержимое. Можно передать функцию для отрисовки
    */
   children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
