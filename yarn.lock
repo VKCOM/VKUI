@@ -5600,7 +5600,7 @@ __metadata:
     commander: "npm:^13.1.0"
     cross-spawn: "npm:^7.0.5"
     jest: "npm:^29.7.0"
-    jscodeshift: "npm:^17.1.2"
+    jscodeshift: "npm:^17.2.0"
     prompts: "npm:^2.4.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.8.2"
@@ -13577,9 +13577,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jscodeshift@npm:^17.1.2":
-  version: 17.1.2
-  resolution: "jscodeshift@npm:17.1.2"
+"jscodeshift@npm:^17.2.0":
+  version: 17.2.0
+  resolution: "jscodeshift@npm:17.2.0"
   dependencies:
     "@babel/core": "npm:^7.24.7"
     "@babel/parser": "npm:^7.24.7"
@@ -13596,7 +13596,7 @@ __metadata:
     micromatch: "npm:^4.0.7"
     neo-async: "npm:^2.5.0"
     picocolors: "npm:^1.0.1"
-    recast: "npm:^0.23.9"
+    recast: "npm:^0.23.10"
     tmp: "npm:^0.2.3"
     write-file-atomic: "npm:^5.0.1"
   peerDependencies:
@@ -13606,7 +13606,7 @@ __metadata:
       optional: true
   bin:
     jscodeshift: bin/jscodeshift.js
-  checksum: 10/5adfee6025a7e609c9079f7d7b83e605822b50757d1d4d4fec60c09175bec02301dce0ae6e32be530bc0a227da03749d331270619fb963c98cb57d6ce612567f
+  checksum: 10/4ca3e044d44382ec38d3bc4ed94f6eb37c775dd83ebb0a4bbbf57a4c9ad3c6782b660ab36bf2b58203299b73bbe7885f646176c7222582d2705a21dab4b94a97
   languageName: node
   linkType: hard
 
@@ -18074,7 +18074,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recast@npm:^0.23.5, recast@npm:^0.23.9":
+"recast@npm:^0.23.10":
+  version: 0.23.11
+  resolution: "recast@npm:0.23.11"
+  dependencies:
+    ast-types: "npm:^0.16.1"
+    esprima: "npm:~4.0.0"
+    source-map: "npm:~0.6.1"
+    tiny-invariant: "npm:^1.3.3"
+    tslib: "npm:^2.0.1"
+  checksum: 10/a622b7848efe13a59a40c9a1a3a8178433eae1048780e04d7392406e2d67fc29e3efa84b3aa8cfda28fd58989f4b59fa968bed295b739987a666bd11cc57a5b2
+  languageName: node
+  linkType: hard
+
+"recast@npm:^0.23.5":
   version: 0.23.9
   resolution: "recast@npm:0.23.9"
   dependencies:

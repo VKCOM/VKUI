@@ -7,7 +7,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ConfigProvider platform="ios">
         <App />
       </ConfigProvider>
@@ -38,7 +38,7 @@ const App = () => {
       }}>
         <App />
       </ConfigProvider>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

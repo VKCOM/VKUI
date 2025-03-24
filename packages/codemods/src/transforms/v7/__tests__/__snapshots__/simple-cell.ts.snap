@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <SimpleCell
         onClick={() => {}}
         chevron="auto"
@@ -29,7 +29,7 @@ const App = () => {
       >
         Геолокация
       </SimpleCell>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

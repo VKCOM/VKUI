@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Alert
         actions={[
           {
@@ -23,7 +23,7 @@ const App = () => {
         actionsAlign="left"
         actionsLayout="horizontal"
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

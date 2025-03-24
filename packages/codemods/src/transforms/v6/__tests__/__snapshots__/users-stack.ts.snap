@@ -7,10 +7,10 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <UsersStack direction="column">...</UsersStack>
       <UsersStack direction="row">...</UsersStack>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

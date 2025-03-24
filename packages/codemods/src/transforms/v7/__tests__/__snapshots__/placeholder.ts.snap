@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* Проверяем переименование свойства header */}
       <Placeholder
         icon={<Icon56UsersOutline />}
@@ -34,7 +34,7 @@ const App = () => {
           </ButtonGroup>
         </Placeholder.Actions>
       </Placeholder.Container>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;
