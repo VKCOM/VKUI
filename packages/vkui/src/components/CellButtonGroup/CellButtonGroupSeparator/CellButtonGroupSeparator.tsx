@@ -1,10 +1,20 @@
 import { Separator, type SeparatorProps } from '../../Separator/Separator';
 import styles from './CellButtonGroupSeparator.module.css';
 
-type CellButtonGroupSeparatorProps = SeparatorProps;
+type CellButtonGroupSeparatorProps = Omit<SeparatorProps, 'direction' | 'padding'>;
 
-export const CellButtonGroupSeparator = (props: CellButtonGroupSeparatorProps) => {
-  return <Separator className={styles.root} direction="vertical" padding {...props} />;
+export const CellButtonGroupSeparator = ({
+  className,
+  ...restProps
+}: CellButtonGroupSeparatorProps) => {
+  return (
+    <Separator
+      className={classNames(styles.root, className)}
+      {...restProps}
+      direction="vertical"
+      padding
+    />
+  );
 };
 
 CellButtonGroupSeparator.displayName = 'CellButtonGroupSeparator';
