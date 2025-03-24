@@ -7,13 +7,13 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ActionSheet>
         <ActionSheetItem>Сохранить в закладках</ActionSheetItem>
         <ActionSheetItem autoCloseDisabled>Закрепить запись</ActionSheetItem>
         <ActionSheetItem>Закрепить запись</ActionSheetItem>
       </ActionSheet>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

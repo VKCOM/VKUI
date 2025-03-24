@@ -7,12 +7,12 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ModalPageHeader getRootRef={ref2}>...</ModalPageHeader>
       <ModalPageHeader getRootRef={ref1} boolValue>...</ModalPageHeader>
       <ModalPageHeader>...</ModalPageHeader>
       <ModalPageHeader noSeparator>...</ModalPageHeader>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

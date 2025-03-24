@@ -9,25 +9,27 @@ const OtherContext = createContext({});
 
 const App = () => {
   const contextValue = {}
-  return (<>
-    <ConfigProvider
-      colorScheme={"dark"}
-      {...contextValue}
-    >
-      <div></div>
-    </ConfigProvider>
-    <ConfigProviderContext.Provider value={{
-      colorScheme: 'light',
-      ...contextValue
-    }}>
-      <div></div>
-    </ConfigProviderContext.Provider>
-    <OtherContext.Provider value={{
-      appearance: 'light',
-      ...contextValue
-    }}>
-      <div></div>
-    </OtherContext.Provider>
-  </>);
+  return (
+    <>
+      <ConfigProvider
+        colorScheme={"dark"}
+        {...contextValue}
+      >
+        <div></div>
+      </ConfigProvider>
+      <ConfigProviderContext.Provider value={{
+        colorScheme: 'light',
+        ...contextValue
+      }}>
+        <div></div>
+      </ConfigProviderContext.Provider>
+      <OtherContext.Provider value={{
+        appearance: 'light',
+        ...contextValue
+      }}>
+        <div></div>
+      </OtherContext.Provider>
+    </>
+  );
 };"
 `;

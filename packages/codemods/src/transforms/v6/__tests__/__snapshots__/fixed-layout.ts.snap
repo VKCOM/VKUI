@@ -7,10 +7,10 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <FixedLayout getRootRef={ref2}>...</FixedLayout>
       <FixedLayout getRootRef={ref1} boolValue>...</FixedLayout>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

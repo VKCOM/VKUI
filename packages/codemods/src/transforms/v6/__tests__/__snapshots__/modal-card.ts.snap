@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ModalCard header={header} headerComponent="h2"></ModalCard>
       <ModalCard subheader={subheader} subheaderComponent="h5"></ModalCard>
       <ModalCardBase
@@ -14,7 +14,7 @@ const App = () => {
         subheader={subheader}
         subheaderComponent="h5"
         headerComponent="h2"></ModalCardBase>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

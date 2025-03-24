@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Image src="image.svg"></Image>
       <ImageBase noBorder src="image.svg"></ImageBase>
       <VKUIAvatar />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

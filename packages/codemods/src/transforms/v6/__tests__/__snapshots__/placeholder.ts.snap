@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Placeholder>Placeholder</Placeholder>
       <Placeholder>Placeholder</Placeholder>
       <Placeholder noPadding>Placeholder</Placeholder>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

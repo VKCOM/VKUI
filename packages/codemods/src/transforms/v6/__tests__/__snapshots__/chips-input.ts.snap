@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ChipsInput id="color" value={colors} placeholder="Введите название цвета">
         Чип
       </ChipsInput>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

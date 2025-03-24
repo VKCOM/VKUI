@@ -8,12 +8,12 @@ import '@vkontakte/vkui/dist/vkui.css';
 const App = () => {
   const props = { id: 'RangeSlider' };
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Slider multiple />
       <Slider multiple {...props} boolValue />
       <Slider multiple test="123" />
       <Slider multiple test="123">inner</Slider>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;
@@ -26,10 +26,10 @@ import '@vkontakte/vkui/dist/vkui.css';
 const App = () => {
   const props = { id: 'RangeSlider' };
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <VKUIRangeSlider multiple {...props} boolValue />
       <Slider test="123" />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;
@@ -42,9 +42,9 @@ import '@vkontakte/vkui/dist/vkui.css';
 const App = () => {
   const props = { id: 'RangeSlider' };
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <VKUIRangeSlider multiple {...props} boolValue />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

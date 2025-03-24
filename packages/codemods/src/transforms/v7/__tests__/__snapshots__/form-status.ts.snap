@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <FormStatus title="Некорректный мобильный номер" mode="error">
         Необходимо корректно ввести номер в международном формате
       </FormStatus>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

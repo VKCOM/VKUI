@@ -7,7 +7,7 @@ import React from 'react';
 const App = () => {
   const callback = () => {}
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Calendar
         onChange={() => {}}
         enableTime={true}
@@ -22,7 +22,7 @@ const App = () => {
         disableFuture={true}
         onDoneButtonClick={callback}
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

@@ -9,7 +9,7 @@ const App = () => {
   const flag = true;
   const calculateMultiline = () => true;
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* test 1: should find TopLabel inside top prop */}
       <FormItem
         top={
@@ -106,7 +106,7 @@ const App = () => {
         }>
         <div/>
       </FormItem>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

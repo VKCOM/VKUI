@@ -7,7 +7,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <HorizontalScroll>
         <div />
         <div />
@@ -18,7 +18,7 @@ const App = () => {
         <div />
         <div />
       </HorizontalScroll>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

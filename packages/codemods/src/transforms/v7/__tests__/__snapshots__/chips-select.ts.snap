@@ -16,7 +16,7 @@ const App = () => {
   const [selectedColors, setSelectedColors] = React.useState(() => colors.slice(0, 2));
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ChipsSelect
         id="colors"
         value={selectedColors}
@@ -25,7 +25,7 @@ const App = () => {
         placeholder="Не выбраны"
         creatable="Добавить цвет"
         allowClearButton={true} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;
