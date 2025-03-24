@@ -3,7 +3,7 @@
 ## Что следует знать?
 
 - `CellButtonGroup` не отвечает за параметры вложенных [CellButton](#!/CellButton).
-- в качестве разделителя используйте подкомпонент `CellButtonGroup.Separator`, он принимет все свойства, что и [Separator](#!/Separator).
+- в качестве разделителя используйте подкомпонент `CellButtonGroup.Separator`, он принимет все свойства, что и [Separator](#!/Separator), кроме предустановленных `direction` и `padding`.
 
 ```jsx
 <View activePanel="CellButtonGroup">
