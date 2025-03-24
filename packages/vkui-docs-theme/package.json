@@ -29,7 +29,7 @@
     "@vkontakte/icons": "^2.159.0",
     "@vkontakte/vkjs": "^2.0.1",
     "@vkontakte/vkui": "workspace:^",
-    "@vkontakte/vkui-tokens": "4.61.3"
+    "@vkontakte/vkui-tokens": "4.62.0"
   },
   "devDependencies": {
     "next": "^15.2.3",
