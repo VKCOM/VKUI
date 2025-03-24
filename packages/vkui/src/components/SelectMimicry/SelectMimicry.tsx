@@ -24,15 +24,15 @@ export interface SelectMimicryProps
     HasAlign,
     Pick<FormFieldProps, 'before' | 'after' | 'status'> {
   /**
-   * Включает многострочный режим отображения
+   * Включает многострочный режим отображения.
    */
   multiline?: boolean;
   /**
-   * Определяет, отключен ли компонент
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
   /**
-   * Тип селекта, влияющий на внешний вид компонента
+   * Тип селекта, влияющий на внешний вид компонента.
    */
   selectType?: SelectType;
 }

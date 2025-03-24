@@ -56,22 +56,22 @@ export interface TabsItemProps
    * Добавляет элемент слева от `after`.
    *
    * - `React.ReactElement` – либо [`Badge`](https://vkcom.github.io/VKUI/#/Badge) с параметром `mode="prominent"`.
-   *   либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
+   *   Либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
    * - `number` – для показа текстового блока с переданным числом.
    */
   status?: React.ReactElement | number;
   /**
    * Добавляет иконку справа.
    *
-   * Например, `<Icon16Dropdown />`
+   * Например, `<Icon16Dropdown />`.
    */
   after?: React.ReactNode;
   /**
-   * Флаг для отображения выбранного состояния
+   * Флаг для отображения выбранного состояния.
    */
   selected?: boolean;
   /**
-   * Блокировка взаимодействия с компонентом
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
 }

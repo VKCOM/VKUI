@@ -18,7 +18,7 @@ export interface FormLayoutGroupProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     RemovableProps {
   /**
-   * Направление отображения элементов формы
+   * Направление отображения элементов формы.
    */
   mode?: 'vertical' | 'horizontal';
   /**

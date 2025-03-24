@@ -11,16 +11,16 @@ import styles from './Epic.module.css';
 
 export interface EpicProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Компонент Tabbar, который будет отображаться снизу
+   * Компонент Tabbar, который будет отображаться снизу.
    */
   tabbar?: React.ReactNode;
   /**
-   * `id` активного окна
+   * `id` активного окна.
    */
   activeStory: string;
   /**
    * Внутри `Epic` может находиться либо коллекция `Root`,
-   * либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`
+   * либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`.
    */
   children: React.ReactElement | Iterable<React.ReactElement>;
 }

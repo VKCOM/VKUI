@@ -60,19 +60,19 @@ export interface PanelHeaderProps
    *      - либо платформа `vkcom`
    *      - либо платформа `android`/`ios` при `<AdaptivityProvider sizeX="compact" />`
    * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider sizeX="regular" />`
-   * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям
+   * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям.
    */
   delimiter?: 'auto' | 'none' | 'separator' | 'spacing';
   /**
-   * Прозрачный фон компонента
+   * Прозрачный фон компонента.
    */
   transparent?: boolean;
   /**
-   * Добавление теней для компонента
+   * Добавление теней для компонента.
    */
   shadow?: boolean;
   /**
-   * Высота шапки будет игнорироваться контентом панели
+   * Высота шапки будет игнорироваться контентом панели.
    */
   float?: boolean;
   /**

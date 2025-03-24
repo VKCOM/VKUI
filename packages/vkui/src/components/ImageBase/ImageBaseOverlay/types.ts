@@ -25,7 +25,7 @@ export interface ImageBaseOverlayCommonProps
    */
   visibility?: 'on-hover' | 'always';
   /**
-   * Дополнительный `className`
+   * Дополнительный `className`.
    */
   className?: string;
 }
@@ -57,7 +57,7 @@ export interface ImageBaseOverlayNonInteractiveProps extends ImageBaseOverlayCom
    */
   onClick?: undefined;
   /**
-   * Содержимое
+   * Содержимое.
    */
   children: React.ReactNode;
 }

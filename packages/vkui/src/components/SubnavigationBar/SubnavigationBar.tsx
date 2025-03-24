@@ -16,7 +16,7 @@ export interface SubnavigationBarProps
       'showArrows' | 'getScrollToLeft' | 'getScrollToRight' | 'scrollAnimationDuration'
     > {
   /**
-   * Отключение возможности прокручивания компонента по горизонтали
+   * Отключение возможности прокручивания компонента по горизонтали.
    */
   fixed?: boolean;
 }

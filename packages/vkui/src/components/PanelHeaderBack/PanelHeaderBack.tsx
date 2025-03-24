@@ -28,11 +28,11 @@ const sizeXClassNames = {
 
 export type PanelHeaderBackProps = Omit<PanelHeaderButtonProps, 'children'> & {
   /**
-   * Скрыть надпись на платформе `vkcom`
+   * Скрыть надпись на платформе `vkcom`.
    */
   hideLabelOnVKCom?: boolean;
   /**
-   * Скрыть надпись на платформе `ios`
+   * Скрыть надпись на платформе `ios`.
    */
   hideLabelOnIOS?: boolean;
 };

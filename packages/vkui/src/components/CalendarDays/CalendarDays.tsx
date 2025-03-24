@@ -20,7 +20,7 @@ import styles from './CalendarDays.module.css';
 
 export type CalendarDaysTestsProps = {
   /**
-   * Передает атрибут `data-testid` для дня в календаре
+   * Передает атрибут `data-testid` для дня в календаре.
    */
   dayTestId?: CalendarDayTestsProps['testId'];
 };
@@ -30,79 +30,79 @@ export interface CalendarDaysProps
     Pick<CalendarDayProps, 'renderDayContent'>,
     CalendarDaysTestsProps {
   /**
-   * Выбранная дата или диапазон дат
+   * Выбранная дата или диапазон дат.
    */
   value?: Date | Array<Date | null>;
   /**
-   * Дата, определяющая отображаемый месяц
+   * Дата, определяющая отображаемый месяц.
    */
   viewDate: Date;
   /**
-   * День недели, с которого начинается неделя (0 - воскресенье, 6 - суббота)
+   * День недели, с которого начинается неделя (0 - воскресенье, 6 - суббота).
    */
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   /**
-   * Показывать дни соседних месяцев
+   * Показывать дни соседних месяцев.
    */
   showNeighboringMonth?: boolean;
   /**
-   * Размер календаря
+   * Размер календаря.
    */
   size?: 's' | 'm';
   /**
-   * Дополнительные свойства для элементов дней
+   * Дополнительные свойства для элементов дней.
    */
   dayProps?: CalendarDayElementProps;
   /**
-   * Следить за изменениями дней для обновления UI
+   * Следить за изменениями дней для обновления UI.
    */
   listenDayChangesForUpdate?: boolean;
   /**
-   * Колбэк при изменении выбранного дня
+   * Обработчик изменения выбранного дня.
    */
   onDayChange: (value: Date) => void;
   /**
-   * Проверяет, заблокирован ли день для выбора
+   * Проверяет, заблокирован ли день для выбора.
    */
   isDayDisabled: (value: Date) => boolean;
   /**
-   * Определяет, является ли день началом выделенного диапазона
+   * Определяет, является ли день началом выделенного диапазона.
    */
   isDaySelectionStart: (value: Date, dayOfWeek: number) => boolean;
   /**
-   * Определяет, является ли день концом выделенного диапазона
+   * Определяет, является ли день концом выделенного диапазона.
    */
   isDaySelectionEnd: (value: Date, dayOfWeek: number) => boolean;
   /**
-   * Определяет начало диапазона при наведении (подсветка)
+   * Определяет начало диапазона при наведении (подсветка).
    */
   isHintedDaySelectionStart?: (value: Date, dayOfWeek: number) => boolean;
   /**
-   * Определяет конец диапазона при наведении (подсветка)
+   * Определяет конец диапазона при наведении (подсветка).
    */
   isHintedDaySelectionEnd?: (value: Date, dayOfWeek: number) => boolean;
   /**
-   * Проверяет, является ли день активным (текущая дата)
+   * Проверяет, является ли день активным (текущая дата).
    */
   isDayActive: (value: Date) => boolean;
   /**
-   * Проверяет, подсвечен ли день (при наведении)
+   * Проверяет, подсвечен ли день (при наведении).
    */
   isDayHinted?: (value: Date) => boolean;
   /**
-   * Проверяет, выбран ли день
+   * Проверяет, выбран ли день.
    */
   isDaySelected?: (value: Date) => boolean;
   /**
-   * Проверяет, находится ли день в фокусе
+   * Проверяет, находится ли день в фокусе.
    */
   isDayFocused: (value: Date) => boolean;
   /**
-   * Колбэк при входе курсора на день
+   * Обработчик события 'pointerenter' на элементе дня.
    */
   onDayEnter?: (value: Date) => void;
   /**
-   * Колбэк при выходе курсора с дня
+   * Обработчик события 'pointerleave' на элементе дня.
    */
   onDayLeave?: (value: Date) => void;
 }

@@ -21,15 +21,15 @@ export type UseTooltipProps = Omit<TooltipProps, 'children'> & {
 
 export type UseTooltipResult<ElementType extends HTMLElement = HTMLElement> = {
   /**
-   * Реф на якорный элемент
+   * Реф на якорный элемент.
    */
   anchorRef: Ref<ElementType>;
   /**
-   * Свойства для якорного элемента, содержит необходимые обработчики
+   * Свойства для якорного элемента, содержит необходимые обработчики.
    */
   anchorProps: ReferenceProps<ElementType>;
   /**
-   * Отрендеренный компонент тултипа
+   * Отрендеренный компонент тултипа.
    */
   tooltip: React.ReactNode | null;
 };

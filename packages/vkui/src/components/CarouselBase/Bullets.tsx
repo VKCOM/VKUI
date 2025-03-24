@@ -7,7 +7,7 @@ import styles from './CarouselBase.module.css';
 
 export interface BulletsTestIds {
   /**
-   * Передает атрибут `data-testid` для bullets
+   * Передает атрибут `data-testid` для bullets.
    */
   bulletTestId?: (index: number, active: boolean) => string;
 }

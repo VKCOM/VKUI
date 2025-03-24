@@ -66,11 +66,11 @@ export interface ImageBaseProps
    */
   size?: LiteralUnion<ImageBaseSize, number>;
   /**
-   * Ширина изображения
+   * Ширина изображения.
    */
   widthSize?: number | string;
   /**
-   * Высота изображения
+   * Высота изображения.
    */
   heightSize?: number | string;
   /**
@@ -98,26 +98,26 @@ export interface ImageBaseProps
   withTransparentBackground?: boolean;
   /**
    * Пользовательское значения стиля object-fit
-   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
    */
   objectFit?: React.CSSProperties['objectFit'];
   /**
    * Пользовательское значения стиля object-position
-   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position)
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position).
    */
   objectPosition?: React.CSSProperties['objectPosition'];
   /**
    * Флаг для сохранения пропорций картинки.
-   * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки
+   * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки.
    */
   keepAspectRatio?: boolean;
   /**
-   * см. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming
+   * См. Https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming.
    */
   elementTiming?: string;
   /**
    * Пользовательское значения стиля filter
-   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter)
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).
    */
   filter?: React.CSSProperties['filter'];
 }

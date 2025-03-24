@@ -14,15 +14,15 @@ const selectFilterFn = () => true;
 
 export type CalendarTimeTestsProps = {
   /**
-   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре
+   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре.
    */
   hoursTestId?: string;
   /**
-   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре
+   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре.
    */
   minutesTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки "Готово" в календаре
+   * Передает атрибут `data-testid` для кнопки "Готово" в календаре.
    */
   doneButtonTestId?: string;
 };
@@ -41,7 +41,7 @@ export type CalendarDoneButtonProps = {
    */
   doneButtonShow?: boolean;
   /**
-   * Управление блокировкой кнопки `"Done"`.
+   * Блокировка взаимодействия с кнопкой "Done".
    */
   doneButtonDisabled?: boolean;
   /**
@@ -52,23 +52,23 @@ export type CalendarDoneButtonProps = {
 
 export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
   /**
-   * Отображаемая дата
+   * Отображаемая дата.
    */
   value: Date;
   /**
-   * Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий
+   * Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий.
    */
   changeHoursLabel?: string;
   /**
-   * Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий
+   * Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий.
    */
   changeMinutesLabel?: string;
   /**
-   * Обработчик изменения времени
+   * Обработчик изменения времени.
    */
   onChange?: (value: Date) => void;
   /**
-   * Функция для проверки блокировки выбора даты и времени
+   * Функция для проверки блокировки выбора даты и времени.
    */
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }

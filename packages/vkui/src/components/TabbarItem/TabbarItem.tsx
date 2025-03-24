@@ -18,15 +18,15 @@ export interface TabbarItemProps
     HasRootRef<HTMLElement>,
     HasComponent {
   /**
-   * Выбранное состояние компонента
+   * Выбранное состояние компонента.
    */
   selected?: boolean;
   /**
-   * Текст рядом с иконкой
+   * Текст рядом с иконкой.
    */
   label?: React.ReactNode;
   /**
-   * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`
+   * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`.
    */
   indicator?: React.ReactNode;
 }

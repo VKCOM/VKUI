@@ -7,11 +7,11 @@ import { GroupHeader } from './GroupHeader';
 
 export interface GroupProps extends GroupContainerProps {
   /**
-   * Элемент заголовка группы
+   * Элемент заголовка группы.
    */
   header?: React.ReactNode;
   /**
-   * Подпись под содержимым
+   * Подпись под содержимым.
    */
   description?: React.ReactNode;
 }

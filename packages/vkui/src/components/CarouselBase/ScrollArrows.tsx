@@ -25,11 +25,11 @@ export const getArrowClassName = (
 
 export interface ScrollArrowsTestIds {
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к следующему слайду
+   * Передает атрибут `data-testid` для кнопки перехода к следующему слайду.
    */
   nextArrowTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду
+   * Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду.
    */
   prevArrowTestId?: string;
 }

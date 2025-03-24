@@ -11,7 +11,7 @@ export interface ChipsInputProps<Option extends ChipOption>
     UseChipsInputProps<Option>,
     Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after' | 'maxHeight'> {
   /**
-   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
   allowClearButton?: boolean;
 }

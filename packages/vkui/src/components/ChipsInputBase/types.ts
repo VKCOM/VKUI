@@ -17,15 +17,15 @@ export type ChipOptionLabel = React.ReactElement | string | number;
 
 export type ChipOption = {
   /**
-   * Значение опции
+   * Значение опции.
    */
   value: ChipOptionValue;
   /**
-   * Отображаемый текст опции
+   * Отображаемый текст опции.
    */
   label: ChipOptionLabel;
   /**
-   * Флаг отключения опции
+   * Блокировка взаимодействия с оцией.
    */
   disabled?: boolean;
   [index: string]: any;
@@ -36,42 +36,42 @@ export interface ChipProps
     HasDataAttribute,
     HTMLAttributesWithRootRef<HTMLElement> {
   /**
-   * Значение чипа
+   * Значение чипа.
    */
   value?: ChipOptionValue;
   /**
-   * Можно ли удалить чип
+   * Можно ли удалить чип.
    */
   removable?: boolean;
   /**
-   * Отключен ли чип
+   * Блокировка взаимодействия с чипом.
    */
   disabled?: boolean;
   /**
-   * Режим только для чтения
+   * Режим только для чтения.
    */
   readOnly?: boolean;
   /**
-   * Текст для кнопки удаления
+   * Текст для кнопки удаления.
    */
   removeLabel?: string;
   /**
-   * Контент перед основным содержимым
+   * Контент перед основным содержимым.
    */
   before?: React.ReactNode;
   /**
-   * Контент после основного содержимого
+   * Контент после основного содержимого.
    */
   after?: React.ReactNode;
   /**
-   * Обработчик удаления чипа
+   * Обработчик удаления чипа.
    */
   onRemove?: (event: React.MouseEvent, value: ChipOptionValue) => void;
 }
 
 export interface RenderChipProps extends ChipProps {
   /**
-   * Отображаемый текст чипа
+   * Отображаемый текст чипа.
    */
   label: ChipOptionLabel;
 }
@@ -99,31 +99,31 @@ export type OnInputChange = (event: React.ChangeEvent<HTMLInputElement>) => void
  */
 export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
   /**
-   * Отключено ли поле ввода
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
   /**
-   * Выбранные опции
+   * Выбранные опции.
    */
   value?: O[];
   /**
-   * Выбранные опции по умолчанию
+   * Выбранные опции по умолчанию.
    */
   defaultValue?: O[];
   /**
-   * Обработчик изменения выбранных опций
+   * Обработчик изменения выбранных опций.
    */
   onChange?: OnChange<O>;
   /**
-   * Значение поля ввода
+   * Значение поля ввода.
    */
   inputValue?: string;
   /**
-   * Значение поля ввода по умолчанию
+   * Значение поля ввода по умолчанию.
    */
   defaultInputValue?: string;
   /**
-   * Обработчик изменения значения в поле ввода
+   * Обработчик изменения значения в поле ввода.
    */
   onInputChange?: OnInputChange;
 }
@@ -148,11 +148,11 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
     HasRef<HTMLInputElement>,
     HasAlign {
   /**
-   * Ссылка на корневой элемент
+   * Ссылка на корневой элемент.
    */
   getRootRef?: React.Ref<HTMLDivElement>;
   /**
-   * Добавляет значение в список на событие `onBlur`
+   * Добавляет значение в список на событие `onBlur`.
    */
   addOnBlur?: boolean;
   /**
@@ -162,16 +162,16 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
    */
   renderChip?: RenderChip;
   /**
-   * Показывать ли кнопку для очистки значения
+   * Показывать ли кнопку для очистки значения.
    */
   clearButtonShown?: boolean;
   /**
-   * (e2e) testId кнопки очистки
+   * (e2e) testId кнопки очистки.
    */
   clearButtonTestId?: string;
   /**
    * Кастомная кнопка для очистки значения.
-   * Должна принимать обязательное свойство onClick
+   * Должна принимать обязательное свойство onClick.
    */
   ClearButton?: React.ComponentType<FormFieldClearButtonProps>;
 }
@@ -183,15 +183,15 @@ export interface ChipsInputBasePrivateProps<O extends ChipOption = ChipOption>
   extends ChipsInputBaseProps<O>,
     Pick<FormFieldProps, 'mode' | 'status' | 'before' | 'after' | 'maxHeight'> {
   /**
-   * Обработчик очистки всех выбранных опций
+   * Обработчик очистки всех выбранных опций.
    */
   onClear: () => void;
   /**
-   * Обработчик добавления новой опции чипа
+   * Обработчик добавления новой опции чипа.
    */
   onAddChipOption: (value: string) => void;
   /**
-   * Обработчик удаления опции чипа
+   * Обработчик удаления опции чипа.
    */
   onRemoveChipOption: (value: O | ChipOptionValue) => void;
 }

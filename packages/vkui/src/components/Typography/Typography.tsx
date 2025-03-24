@@ -12,7 +12,7 @@ const stylesWeight = {
 
 export interface HasCaps {
   /**
-   * Отображение текста в верхнем регистре
+   * Отображение текста в верхнем регистре.
    */
   caps?: boolean;
 }
@@ -28,15 +28,15 @@ export interface TypographyProps
   /**
    * Включает акцентный тип начертания шрифта.
    * Используются токены fontWeightAccent[1, 2, 3]
-   * Используется только вместе с `weight`
+   * Используется только вместе с `weight`.
    */
   useAccentWeight?: boolean;
   /**
-   * Убирает внешние отступы
+   * Убирает внешние отступы.
    */
   normalize?: boolean;
   /**
-   * Делает блок инлайновым
+   * Делает блок инлайновым.
    */
   inline?: boolean;
 }

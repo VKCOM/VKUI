@@ -13,9 +13,9 @@ export interface ConfigProviderContextInterface {
    *
    * В условиях когда:
    * - `isWebView={true}`
-   * - platform="ios"
+   * - platform="ios".
    *
-   * для компонента `View` включается возможность навигации через смахивание.
+   * Для компонента `View` включается возможность навигации через смахивание.
    */
   isWebView: boolean;
   /**
@@ -30,21 +30,21 @@ export interface ConfigProviderContextInterface {
    * Задаёт необходимый минимальную ширину слота `after` в `PanelHeader` под пользовательский
    * "плавающий" элемент (например, ширина панели управления webview).
    *
-   * Учитывается только при `hasCustomPanelHeaderAfter={true}` (см. документацию `hasCustomPanelHeaderAfter`).
+   * Учитывается только при `hasCustomPanelHeaderAfter={true}` (см. Документацию `hasCustomPanelHeaderAfter`)..
    *
    * @default 90
    */
   customPanelHeaderAfterMinWidth: number | string;
   /**
-   * Тип цветовой схемы – `light` или `dark`
+   * Тип цветовой схемы – `light` или `dark`.
    */
   colorScheme: ColorSchemeType | undefined;
   /**
-   * Включена ли анимация переходов между экранами в `Root` и `View`
+   * Включена ли анимация переходов между экранами в `Root` и `View`.
    */
   transitionMotionEnabled: boolean;
   /**
-   * Платформа
+   * Платформа.
    */
   platform: PlatformType;
   /**
@@ -71,7 +71,7 @@ export interface ConfigProviderContextInterface {
    */
   tokensClassNames: TokensClassNames;
   /**
-   * Строка с языковой меткой BCP 47
+   * Строка с языковой меткой BCP 47.
    */
   locale: string;
   /**

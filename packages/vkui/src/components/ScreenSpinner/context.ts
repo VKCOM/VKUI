@@ -5,15 +5,15 @@ import { type ScreenSpinnerProps } from './types';
 
 export interface ScreenSpinnerContextProps {
   /**
-   * Тип отображения спиннера
+   * Тип отображения спиннера.
    */
   state: NonNullable<ScreenSpinnerProps['state']>;
   /**
-   * Текст под иконкой
+   * Текст под иконкой.
    */
   label?: ScreenSpinnerProps['label'];
   /**
-   * Кастомная иконка, работает совместно со `state="custom"`
+   * Кастомная иконка, работает совместно со `state="custom"`.
    */
   customIcon?: ScreenSpinnerProps['customIcon'];
 }

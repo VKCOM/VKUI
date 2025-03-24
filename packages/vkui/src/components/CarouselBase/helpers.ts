@@ -90,7 +90,7 @@ export function calculateIndent({
 }
 
 /**
- * Вычисляем индексы слайдов, которые необходимо смещать
+ * Вычисляем индексы слайдов, которые необходимо смещать.
  */
 export function getShiftedIndexes(
   direction: 1 | -1,
@@ -151,7 +151,7 @@ function calculateLoopPoints(
 }
 
 /**
- * Вычисляем "ключевые" точки, на которых должно происходить смещение слайдов
+ * Вычисляем "ключевые" точки, на которых должно происходить смещение слайдов.
  */
 export function getLoopPoints(
   slidesManager: SlidesManagerState,

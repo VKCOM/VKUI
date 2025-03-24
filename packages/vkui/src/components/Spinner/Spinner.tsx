@@ -16,15 +16,15 @@ const spinnerIconMap = {
 
 export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
   /**
-   * Размер спиннера
+   * Размер спиннера.
    */
   size?: 's' | 'm' | 'l' | 'xl';
   /**
-   * Отключение анимации
+   * Отключение анимации.
    */
   disableAnimation?: boolean;
   /**
-   * Задать цвет можно будет через свойство color родителя
+   * Задать цвет можно будет через свойство color родителя.
    */
   noColor?: boolean;
 }

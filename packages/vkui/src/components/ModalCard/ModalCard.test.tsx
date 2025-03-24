@@ -13,7 +13,7 @@ export const waitModalCardCSSTransitionEnd = async (el: HTMLElement) =>
   await waitCSSTransitionEnd(el);
 
 /**
- * Большинство логики покрыто в `ModalRoot.test.tsx`
+ * Большинство логики покрыто в `ModalRoot.test.tsx`.
  */
 describe(ModalCard, () => {
   baselineComponent((p) => <ModalCard title="Title" open nav="id" {...p} />);

@@ -1,7 +1,7 @@
 /**
  * Возвращает размер иконки основанный на дизайн-системы.
  *
- * @param imageSize наименьшая сторона изображения
+ * @param imageSize Наименьшая сторона изображения.
  */
 export function getFallbackIconSizeByImageBaseSize(imageSize: number): 12 | 16 | 20 | 24 | 28 | 36 {
   if (imageSize <= 20) {
@@ -26,7 +26,7 @@ getFallbackIconSizeByImageBaseSize.MAX_SIZE = 36;
 /**
  * Возвращает размер иконки основанный на дизайн-системы.
  *
- * @param imageSize наименьшая сторона изображения
+ * @param imageSize Наименьшая сторона изображения.
  */
 export function getBadgeIconSizeByImageBaseSize(imageSize: number): 12 | 16 | 20 | 24 {
   if (imageSize <= 36) {
@@ -47,7 +47,7 @@ getBadgeIconSizeByImageBaseSize.MAX_SIZE = 24 as const;
 /**
  * Возвращает размер иконки основанный на дизайн-системы.
  *
- * @param imageSize наименьшая сторона изображения
+ * @param imageSize Наименьшая сторона изображения.
  */
 export function getOverlayIconSizeByImageBaseSize(
   imageSize: number,

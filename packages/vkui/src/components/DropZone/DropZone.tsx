@@ -10,14 +10,14 @@ import styles from './DropZone.module.css';
 
 interface DropZonePropsChildrenProps {
   /**
-   * Флаг активного состояния компонента
+   * Флаг активного состояния компонента.
    */
   active: boolean;
 }
 
 export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
   /**
-   * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого
+   * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
    */
   children?: React.ReactNode | ((renderProps: DropZonePropsChildrenProps) => React.ReactNode);
 }

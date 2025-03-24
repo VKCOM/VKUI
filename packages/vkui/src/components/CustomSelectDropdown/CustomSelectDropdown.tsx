@@ -19,13 +19,13 @@ export interface CustomSelectDropdownProps
   fetching?: boolean;
   offsetDistance?: number;
   /**
-   * Ширина раскрывающегося списка зависит от контента
+   * Ширина раскрывающегося списка зависит от контента.
    */
   autoWidth?: boolean;
   forcePortal?: boolean;
   onPlacementChange?: (placement: Placement) => void;
   /**
-   * Отключает максимальную высоту по умолчанию
+   * Отключает максимальную высоту по умолчанию.
    */
   noMaxHeight?: boolean;
 }

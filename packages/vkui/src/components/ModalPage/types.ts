@@ -11,7 +11,7 @@ export type ModalPageCloseReason =
 
 type OmittedStyleAttribute = {
   /**
-   * Дополнительные стили
+   * Дополнительные стили.
    */
   style?: Omit<CSSProperties, 'height' | 'maxWidth' | 'maxHeight'>;
 };
@@ -34,11 +34,11 @@ export interface ModalPageProps
    */
   keepMounted?: boolean;
   /**
-   * Шапка модальной страницы, `<ModalPageHeader />`
+   * Шапка модальной страницы, `<ModalPageHeader />`.
    */
   header?: ReactNode;
   /**
-   * Подвал модальной страницы, `<ModalPageFooter />`
+   * Подвал модальной страницы, `<ModalPageFooter />`.
    */
   footer?: ReactNode;
   /**
@@ -69,7 +69,7 @@ export interface ModalPageProps
    */
   noFocusToDialog?: boolean;
   /**
-   * Скрывает кнопку закрытия (актуально для iOS, т.к. можно отрисовать кнопку закрытия внутри модалки)
+   * Скрывает кнопку закрытия (актуально для iOS, т.к. Можно отрисовать кнопку закрытия внутри модалки).
    */
   hideCloseButton?: boolean;
   /**
@@ -89,13 +89,13 @@ export interface ModalPageProps
    */
   modalDismissButtonTestId?: string;
   /**
-   * Текст для скринридера
+   * Текст для скринридера.
    */
   modalDismissButtonLabel?: string;
   /**
-   * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, клик по подложке)
+   * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, нажатие на подложку).
    *
-   * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте
+   * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте.
    */
   preventClose?: boolean;
   /**
@@ -121,14 +121,14 @@ export interface ModalPageProps
   /**
    * Управляющие элементы под кнопкой закрытия.
    *
-   * Доступно только в `compact`-режиме. Рекомендуется размещать иконки размера 20, обернутые в ModalOutsideButton
+   * Доступно только в `compact`-режиме. Рекомендуется размещать иконки размера 20, обернутые в ModalOutsideButton.
    *
    */
   outsideButtons?: React.ReactNode;
   /**
    * Позволяет отключить захват фокуса.
    *
-   * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали
+   * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
 }

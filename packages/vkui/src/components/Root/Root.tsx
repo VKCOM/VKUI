@@ -18,15 +18,15 @@ import styles from './Root.module.css';
 
 export interface RootProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
   /**
-   * `id` активной `View`
+   * `id` активной `View`.
    */
   activeView: string;
   /**
-   * Колбэк, который вызывается при завершении анимации смены активной `View`
+   * Обработчик, который вызывается при завершении анимации смены активной `View`.
    */
   onTransition?: (params: { isBack: boolean; from: string; to: string }) => void;
   /**
-   * Коллекция `View`. У каждой `View` должен быть `id`
+   * Коллекция `View`. У каждой `View` должен быть `id`.
    */
   children: React.ReactElement | Iterable<React.ReactElement>;
 }

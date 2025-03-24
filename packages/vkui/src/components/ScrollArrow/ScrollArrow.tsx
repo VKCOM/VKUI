@@ -41,11 +41,11 @@ export interface ScrollArrowProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     HasRootRef<HTMLButtonElement> {
   /**
-   * Направление стрелки
+   * Направление стрелки.
    */
   direction: 'up' | 'right' | 'down' | 'left';
   /**
-   * Размер стрелки
+   * Размер стрелки.
    */
   size?: 's' | 'm';
   /**
@@ -53,7 +53,7 @@ export interface ScrollArrowProps
    */
   offsetY?: number | string;
   /**
-   * [a11y]: Используется для ассистивных технологий
+   * [a11y]: Используется для ассистивных технологий.
    */
   label?: string;
 }

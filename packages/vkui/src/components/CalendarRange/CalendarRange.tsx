@@ -33,11 +33,11 @@ export type DateRangeType = [Date | null, Date | null];
 
 export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части.
    */
   leftPartHeaderTestsData?: CalendarHeaderTestsProps;
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части.
    */
   rightPartHeaderTestsData?: CalendarHeaderTestsProps;
 };
@@ -56,11 +56,11 @@ export interface CalendarRangeProps
     Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarRangeTestsProps {
   /**
-   * Текущий выбранный промежуток
+   * Текущий выбранный промежуток.
    */
   value?: DateRangeType;
   /**
-   * Начальный промежуток при монтировании
+   * Начальный промежуток при монтировании.
    */
   defaultValue?: DateRangeType;
   /**
@@ -74,27 +74,27 @@ export interface CalendarRangeProps
    */
   disableFuture?: boolean;
   /**
-   * Отключает селекторы выбора месяца/года
+   * Отключает селекторы выбора месяца/года.
    */
   disablePickers?: boolean;
   /**
-   * Лейбл для изменения дня (aria-label)
+   * Лейбл для изменения дня (`aria-label`).
    */
   changeDayLabel?: string;
   /**
-   * День недели, с которого начинается неделя
+   * День недели, с которого начинается неделя.
    */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   /**
-   * Колбэк при изменении промежутка
+   * Обработчик изменения выбранного промежутка.
    */
   onChange?: (value: DateRangeType | undefined) => void;
   /**
-   * Функция для проверки запрета выбора даты
+   * Функция для проверки запрета выбора даты.
    */
   shouldDisableDate?: (value: Date) => boolean;
   /**
-   * @deprecated свойство не используется
+   * @deprecated Свойство не используется.
    */
   onClose?: () => void;
 }

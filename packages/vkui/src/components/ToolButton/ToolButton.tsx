@@ -33,15 +33,15 @@ const sizeYClassNames = {
 
 export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProps {
   /**
-   * Режим отображения компонента
+   * Режим отображения компонента.
    */
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline';
   /**
-   * Внешний вид компонента
+   * Внешний вид компонента.
    */
   appearance?: 'accent' | 'neutral';
   /**
-   * Направление контента
+   * Направление контента.
    */
   direction?: 'row' | 'column';
   /**

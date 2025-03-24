@@ -10,11 +10,11 @@ import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride
 
 export interface ColorSchemeProviderProps {
   /**
-   * Цветовая схема
+   * Цветовая схема.
    */
   value: ColorSchemeType;
   /**
-   * Содержимое
+   * Содержимое.
    */
   children: React.ReactNode;
 }

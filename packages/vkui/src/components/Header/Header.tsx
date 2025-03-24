@@ -14,47 +14,47 @@ import styles from './Header.module.css';
 
 export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, HasComponent {
   /**
-   * Размер компонента
+   * Размер компонента.
    */
   size?: 's' | 'm' | 'l' | 'xl';
   /**
-   * Подпись под основным текстом
+   * Подпись под основным текстом.
    */
   subtitle?: React.ReactNode;
   /**
-   * Позволяет задать тип элемента в который будет обёрнут subtitle
+   * Позволяет задать тип элемента в который будет обёрнут subtitle.
    */
   subtitleComponent?: React.ElementType;
   /**
-   * Допускаются иконки, текст, Link
+   * Допускаются иконки, текст, Link.
    */
   after?: React.ReactNode;
   /**
-   * Допускаются текст, Indicator
+   * Допускаются текст, Indicator.
    */
   indicator?: React.ReactNode;
   /**
-   * Возможность отображения текста в несколько строк
+   * Возможность отображения текста в несколько строк.
    */
   multiline?: boolean;
   /**
-   * Иконка слева (рекомендуется использовать размер 28px)
+   * Иконка слева (рекомендуется использовать размер 28px).
    */
   before?: React.ReactNode;
   /**
-   * Иконка слева от title (рекомендуется использовать размер 16px)
+   * Иконка слева от title (рекомендуется использовать размер 16px).
    */
   beforeTitle?: React.ReactNode;
   /**
-   * Иконка справа от title (рекомендуется использовать размер 16px)
+   * Иконка справа от title (рекомендуется использовать размер 16px).
    */
   afterTitle?: React.ReactNode;
   /**
-   * Иконка слева от subtitle (рекомендуется использовать размер 12px)
+   * Иконка слева от subtitle (рекомендуется использовать размер 12px).
    */
   beforeSubtitle?: React.ReactNode;
   /**
-   * Иконка справа от subtitle (рекомендуется использовать размер 12px)
+   * Иконка справа от subtitle (рекомендуется использовать размер 12px).
    */
   afterSubtitle?: React.ReactNode;
 }

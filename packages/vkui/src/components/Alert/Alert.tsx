@@ -26,22 +26,22 @@ export interface AlertActionInterface
     AnchorHTMLAttributesOnly,
     HasDataAttribute {
   /**
-   * Текст опции
+   * Текст опции.
    */
   title: string;
   /**
-   * Обработчик клика на опцию. Если свойство `autoCloseDisabled` включено,
+   * Обработчик нажатия на опцию. Если свойство `autoCloseDisabled` включено,
    * то в аргументы `action` передаётся объект с функцией close,
    * вызвав которую можно закрыть `action` вручную.
    */
   action?: (args?: { close?: VoidFunction }) => void;
   /**
-   * По умолчанию клик на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
-   * позволяет отключить такое поведение
+   * По умолчанию нажатие на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
+   * позволяет отключить такое поведение.
    */
   autoCloseDisabled?: boolean;
   /**
-   * Режим отображения опции
+   * Режим отображения опции.
    */
   mode: AlertActionMode;
 }
@@ -52,56 +52,56 @@ export interface AlertProps
     Pick<AppRootPortalProps, 'usePortal'>,
     HasRootRef<HTMLDivElement> {
   /**
-   * Расположение действий - вертикально или горизонтально
+   * Расположение действий - вертикально или горизонтально.
    */
   actionsLayout?: 'vertical' | 'horizontal';
   /**
-   * Тип выравнивания действий
+   * Тип выравнивания действий.
    */
   actionsAlign?: AlignType;
   /**
-   * Список действий
+   * Список действий.
    */
   actions?: AlertActionInterface[];
   /**
-   * Функция для отрисовки действия
+   * Функция для отрисовки действия.
    */
   renderAction?: (props: AlertActionProps) => React.ReactNode;
   /**
-   * Заголовок модального окна
+   * Заголовок модального окна.
    */
   title?: React.ReactNode;
   /**
-   * Описание модального окна
+   * Описание модального окна.
    */
   description?: React.ReactNode;
   /**
-   * Колбэк, срабатывающий при закрытии модального окна
+   * Обработчик закрытия модального окна.
    */
   onClose: VoidFunction;
   /**
-   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
+   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
   dismissLabel?: string;
   /**
    * Расположение кнопки закрытия (внутри и вне `popout'a`)
-   * Доступно только в `compact`-режиме, не отображается на `iOS`
+   * Доступно только в `compact`-режиме, не отображается на `iOS`.
    */
   dismissButtonMode?: 'inside' | 'outside';
   /**
-   * Передает атрибут `data-testid` для кнопки закрытия
+   * Передает атрибут `data-testid` для кнопки закрытия.
    */
   dismissButtonTestId?: string;
   /**
-   * Передает атрибут `data-testid` для заголовка
+   * Передает атрибут `data-testid` для заголовка.
    */
   titleTestId?: string;
   /**
-   * Передает атрибут `data-testid` для описания
+   * Передает атрибут `data-testid` для описания.
    */
   descriptionTestId?: string;
   /**
-   * По умолчанию событие onClick не всплывает
+   * По умолчанию событие onClick не всплывает.
    */
   allowClickPropagation?: boolean;
 }

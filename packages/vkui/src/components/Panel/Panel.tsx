@@ -27,7 +27,7 @@ const stylesMode = {
 
 export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
   /**
-   * Центрирование содержимого
+   * Центрирование содержимого.
    */
   centered?: boolean;
   /**
@@ -43,7 +43,7 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
    */
   mode?: 'plain' | 'card';
   /**
-   * Отключает задний фон
+   * Отключает задний фон.
    */
   disableBackground?: boolean;
 }

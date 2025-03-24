@@ -50,31 +50,31 @@ function useTransitionAnimate(animateProp?: boolean) {
 
 export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Ширина колонки
+   * Ширина колонки.
    */
   width?: number | string;
   /**
-   * Максимальная ширина колонки
+   * Максимальная ширина колонки.
    */
   maxWidth?: number | string;
   /**
-   * Минимальная ширина колонки
+   * Минимальная ширина колонки.
    */
   minWidth?: number | string;
   /**
-   * Если false, то переходы между Panel происходят без анимации
+   * Если false, то переходы между Panel происходят без анимации.
    */
   animate?: boolean;
   /**
-   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`
+   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`.
    */
   autoSpaced?: boolean;
   /**
-   * Фиксированное положение колонки
+   * Фиксированное положение колонки.
    */
   fixed?: boolean;
   /**
-   * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`
+   * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`.
    */
   stretchedOnMobile?: boolean;
 }

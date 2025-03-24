@@ -8,7 +8,7 @@ import styles from './InfoRow.module.css';
 
 export interface InfoRowProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Элемент, отображаемый над содержимым
+   * Элемент, отображаемый над содержимым.
    */
   header: React.ReactNode;
 }

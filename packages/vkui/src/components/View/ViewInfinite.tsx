@@ -47,31 +47,31 @@ export interface ViewInfiniteProps
     HasPlatform,
     NavIdProps {
   /**
-   * `id` активной панели
+   * `id` активной панели.
    */
   activePanel: string;
   /**
-   * callback, который вызывается при завершении анимации смены активной панели
+   * Обработчик, который вызывается при завершении анимации смены активной панели.
    */
   onTransition?: (params: TransitionParams & { isBack: boolean }) => void;
   /**
-   * callback свайпа назад
+   * Обработчик свайпа назад.
    */
   onSwipeBack?: () => void;
   /**
-   * callback начала анимации свайпа назад.
+   * Обработчик начала анимации свайпа назад.
    */
   onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
   /**
-   * callback завершения анимации отмененного пользователем свайпа
+   * Обработчик завершения анимации отмененного пользователем свайпа.
    */
   onSwipeBackCancel?: () => void;
   /**
-   * Массив из id панелей в порядке открытия
+   * Массив из id панелей в порядке открытия.
    */
   history?: string[];
   /**
-   * Функция проверки перехода назад
+   * Функция проверки перехода назад.
    */
   isBackCheck?: (params: TransitionParams) => boolean;
   /**

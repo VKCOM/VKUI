@@ -36,11 +36,11 @@ export interface ScrollContextInterface {
   getScroll: (this: void, options?: GetScrollOptions) => { x: number; y: number };
   scrollTo: (this: void, x?: number, y?: number) => void;
   /**
-   * Увеличивает счетчик блокировки прокрутки
+   * Увеличивает счетчик блокировки прокрутки.
    */
   incrementScrollLockCounter: (this: void) => void;
   /**
-   * Уменьшает счетчик блокировки прокрутки
+   * Уменьшает счетчик блокировки прокрутки.
    */
   decrementScrollLockCounter: (this: void) => void;
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
@@ -58,7 +58,7 @@ export const useScroll = (): ScrollContextInterface => React.useContext(ScrollCo
 
 /**
  * Управляет блокировкой окна в зависимости от внутреннего счетчика.
- * Если счетчик больше нуля, требуется заблокировать прокрутку
+ * Если счетчик больше нуля, требуется заблокировать прокрутку.
  */
 function useScrollLockController(enableScrollLock: () => void, disableScrollLock: () => void) {
   const countRef = React.useRef(0);
@@ -356,9 +356,9 @@ export const ElementScrollController = ({
 };
 
 /**
- * Блокирует прокрутку окна
+ * Блокирует прокрутку окна.
  *
- * @param enabled - если false то не будет блокировать
+ * @param enabled - Если false то не будет блокировать.
  */
 export const useScrollLock = (enabled = true): void => {
   const { incrementScrollLockCounter, decrementScrollLockCounter } = useScroll();

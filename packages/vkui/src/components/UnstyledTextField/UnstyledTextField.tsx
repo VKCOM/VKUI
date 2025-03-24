@@ -20,7 +20,7 @@ export interface UnstyledTextFieldAsInputProps
     React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLInputElement> {
   /**
-   * Тег используемый в компоненте
+   * Тег используемый в компоненте.
    */
   as: 'input';
 }
@@ -30,7 +30,7 @@ export interface UnstyledTextFieldAsTextareaProps
     React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRootRef<HTMLTextAreaElement> {
   /**
-   * Тег используемый в компоненте
+   * Тег используемый в компоненте.
    */
   as: 'textarea';
 }

@@ -19,7 +19,7 @@ const stylesVertical = {
 
 export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
   /**
-   * Положение по вертикали, либо сверху, либо снизу
+   * Положение по вертикали, либо сверху, либо снизу.
    */
   vertical?: 'top' | 'bottom';
   /**

@@ -7,19 +7,19 @@ import { useStateWithDelay } from './useStateWithDelay';
 
 export interface StateProps {
   /**
-   * Указывает, должен ли компонент реагировать на hover-состояние
+   * Указывает, должен ли компонент реагировать на hover-состояние.
    */
   hasHover?: boolean;
   /**
-   * Позволяет управлять hovered-состоянием извне
+   * Позволяет управлять hovered-состоянием извне.
    */
   hovered?: boolean;
   /**
-   * Позволяет управлять activated-состоянием извне
+   * Позволяет управлять activated-состоянием извне.
    */
   activated?: boolean;
   /**
-   * Указывает, должен ли компонент реагировать на active-состояние
+   * Указывает, должен ли компонент реагировать на active-состояние.
    */
   hasActive?: boolean;
 
@@ -56,17 +56,17 @@ export interface StateProps {
   unlockParentHover?: boolean;
 
   /**
-   * Длительность показа `activated`-состояния
+   * Длительность показа `activated`-состояния.
    */
   activeEffectDelay?: number;
 
   /**
-   * Стиль подсветки active-состояния
+   * Стиль подсветки active-состояния.
    */
   activeClassName?: string;
 
   /**
-   * Стиль подсветки hover-состояния
+   * Стиль подсветки hover-состояния.
    */
   hoverClassName?: string;
 }
@@ -77,14 +77,14 @@ const ACTIVE_DELAY = 70;
 
 interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
   /**
-   * Блокирование активации состояний
+   * Блокирование активации состояний.
    */
   lockState: boolean;
   setParentStateLock: (v: boolean) => void;
 }
 
 /**
- * Управляет наведением на компонент, игнорирует тач события
+ * Управляет наведением на компонент, игнорирует тач события.
  */
 function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: UseHoverProps) {
   const [hoveredStateLocal, setHoveredStateLocal] = React.useState(false);
@@ -142,14 +142,14 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
 
 interface UseActiveProps extends Pick<StateProps, 'activated' | 'activeEffectDelay' | 'hasActive'> {
   /**
-   * Блокирование активации состояний
+   * Блокирование активации состояний.
    */
   lockStateRef: React.RefObject<boolean>;
   setParentStateLock: (v: boolean) => void;
 }
 
 /**
- * Управляет активацией компонента
+ * Управляет активацией компонента.
  */
 function useActive({
   activated,
@@ -227,7 +227,7 @@ export const ClickableLockStateContext: React.Context<ClickableLockStateContextI
   });
 
 /**
- * Блокирует стейт на всплытие
+ * Блокирует стейт на всплытие.
  */
 function useLockState(
   setParentStateLockBubbling: (v: boolean) => void,
@@ -262,7 +262,7 @@ function useLockRef(
 }
 
 /**
- * Управляет состоянием компонента
+ * Управляет состоянием компонента.
  */
 export function useState({
   hovered,

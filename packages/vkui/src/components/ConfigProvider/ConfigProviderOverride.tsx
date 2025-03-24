@@ -10,13 +10,13 @@ import {
 
 export interface ConfigProviderOverrideProps extends Partial<ConfigProviderContextInterface> {
   /**
-   * Содержимое
+   * Содержимое.
    */
   children: React.ReactNode;
 }
 
 /**
- * Компонент предназначен для перебивания одного из значений контекста
+ * Компонент предназначен для перебивания одного из значений контекста.
  */
 export function ConfigProviderOverride({
   children,

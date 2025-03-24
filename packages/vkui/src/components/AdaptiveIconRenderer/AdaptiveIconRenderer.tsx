@@ -5,11 +5,11 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 
 export interface AdaptiveIconRendererProps {
   /**
-   * Компонент иконки для компактного размера
+   * Компонент иконки для компактного размера.
    */
   IconCompact: React.ComponentType<{ className?: string }>;
   /**
-   * Компонент иконки для обычного размера
+   * Компонент иконки для обычного размера.
    */
   IconRegular: React.ComponentType<{ className?: string }>;
 }

@@ -10,7 +10,7 @@ import styles from './ModalDismissButton.module.css';
 
 export interface ModalDismissButtonProps extends Omit<ModalOutsideButtonProps, 'children'> {
   /**
-   * Содержимое кнопки
+   * Содержимое кнопки.
    */
   children?: React.ReactNode;
 }

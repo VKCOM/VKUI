@@ -9,11 +9,11 @@ export interface RootComponentProps<T>
     HasRootRef<T>,
     HasComponent {
   /**
-   * Базовый `className`
+   * Базовый `className`.
    */
   baseClassName?: string | false;
   /**
-   * Базовые стили
+   * Базовые стили.
    */
   baseStyle?: React.CSSProperties;
 }

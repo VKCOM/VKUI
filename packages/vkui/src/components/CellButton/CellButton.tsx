@@ -15,7 +15,7 @@ export interface CellButtonProps extends SimpleCellProps {
    */
   appearance?: 'accent' | 'neutral' | 'negative';
   /**
-   * Возможность центрирования содержимого компонента
+   * Возможность центрирования содержимого компонента.
    */
   centered?: boolean;
 }

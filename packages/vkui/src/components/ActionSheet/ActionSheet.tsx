@@ -20,7 +20,7 @@ import styles from './ActionSheet.module.css';
 type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
 export interface ActionSheetOnCloseOptions {
   /**
-   * Причина закрытия попапа
+   * Причина закрытия всплывающего элемента.
    */
   closedBy: CloseInitiators;
 }
@@ -33,15 +33,15 @@ export interface ActionSheetProps
     Omit<UseFocusTrapProps, 'onClose'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**
-   * Заголовок попапа
+   * Заголовок всплыващего окна.
    */
   title?: React.ReactNode;
   /**
-   * Описание попапа, под заголовком
+   * Описание всплыващего окна, под заголовком.
    */
   description?: React.ReactNode;
   /**
-   * Закрыть попап по клику снаружи.
+   * Закрыть всплыващее окно по нажатию снаружи.
    */
   onClose: (options: ActionSheetOnCloseOptions) => void;
   /**
@@ -51,8 +51,8 @@ export interface ActionSheetProps
   /**
    * Режим отображения компонента:
    *
-   * - `"sheet"`: отображение снизу экрана, подходит для мобильных устройств
-   * - `"menu"`: отображение в виде поповера, относительно якорного элемента
+   * - `"sheet"`: отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
+   * - `"menu"`: отображение в виде всплывающего элемента, относительно якорного элемента.
    */
   mode?: 'sheet' | 'menu';
 }

@@ -24,26 +24,26 @@ const sizeYClassNames = {
 
 export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Компонент отображаемый после содержимого
+   * Компонент отображаемый после содержимого.
    */
   aside?: React.ReactNode;
   /**
-   * Компонент отображаемый до содержимого
+   * Компонент отображаемый до содержимого.
    */
   before?: React.ReactNode;
   /**
-   * Подпись под основным текстом
+   * Подпись под основным текстом.
    */
   subtitle?: React.ReactNode;
 }
 
 interface PanelHeaderChildrenProps extends HasChildren {
   /**
-   * Есть ли подпись
+   * Есть ли подпись.
    */
   hasSubtitle: boolean;
   /**
-   * Есть ли `before`
+   * Есть ли `before`.
    */
   hasBefore: boolean;
 }

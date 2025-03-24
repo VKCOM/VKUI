@@ -53,11 +53,11 @@ export interface CalendarProps
     CalendarDoneButtonProps,
     CalendarTestsProps {
   /**
-   * Текущая выбранная дата
+   * Текущая выбранная дата.
    */
   value?: Date;
   /**
-   * Начальная дата при монтировании
+   * Начальная дата при монтировании.
    */
   defaultValue?: Date;
   /**
@@ -71,35 +71,35 @@ export interface CalendarProps
    */
   disableFuture?: boolean;
   /**
-   * Включает выбор времени
+   * Включает выбор времени.
    */
   enableTime?: boolean;
   /**
-   * Отключает селекторы выбора месяца/года
+   * Отключает селекторы выбора месяца/года.
    */
   disablePickers?: boolean;
   /**
-   * Лейбл для изменения дня (aria-label)
+   * Лейбл для изменения дня (aria-label).
    */
   changeDayLabel?: string;
   /**
-   * День недели, с которого начинается неделя
+   * День недели, с которого начинается неделя.
    */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   /**
-   * Показывать дни соседних месяцев
+   * Показывать дни соседних месяцев.
    */
   showNeighboringMonth?: boolean;
   /**
-   * Размер календаря
+   * Размер календаря.
    */
   size?: 's' | 'm';
   /**
-   * Колбэк при изменении даты
+   * Обработчик изменения выбранной даты.
    */
   onChange?: (value?: Date) => void;
   /**
-   * Функция для проверки запрета выбора даты
+   * Функция для проверки запрета выбора даты.
    */
   shouldDisableDate?: (value: Date) => boolean;
   /**
@@ -108,11 +108,11 @@ export interface CalendarProps
    */
   viewDate?: Date;
   /**
-   * Callback при изменении даты в шапке календаря
+   * Обработчик изменения даты в шапке календаря.
    */
   onHeaderChange?: (value: Date) => void;
   /**
-   * Минимальные дата и время, которые можно выбрать
+   * Минимальные дата и время, которые можно выбрать.
    * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
   minDateTime?: Date;
@@ -122,7 +122,7 @@ export interface CalendarProps
    */
   maxDateTime?: Date;
   /**
-   * Таймзона для отображения даты
+   * Таймзона для отображения даты.
    */
   timezone?: string;
 }

@@ -16,7 +16,7 @@ export interface ModalPageHeaderProps
     HasRef<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
   /**
-   * Отключение разделителя
+   * Отключение разделителя.
    */
   noSeparator?: boolean;
 }

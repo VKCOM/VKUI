@@ -9,11 +9,11 @@ import styles from './ModalPageFooter.module.css';
 
 export interface ModalPageFooterProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Отключение отображения разделителя
+   * Отключение отображения разделителя.
    */
   noSeparator?: boolean;
   /**
-   * Отключение отступов сверху и снизу
+   * Отключение отступов сверху и снизу.
    */
   noPadding?: boolean;
 }

@@ -6,11 +6,11 @@ import styles from './FormStatus.module.css';
 
 export interface FormStatusProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
   /**
-   * Режим отображения компонента
+   * Режим отображения компонента.
    */
   mode?: 'default' | 'error';
   /**
-   * Основной текст
+   * Основной текст.
    */
   title?: React.ReactNode;
 }

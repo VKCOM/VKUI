@@ -5,17 +5,17 @@ import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride
 
 export interface PlatformProviderProps {
   /**
-   * Платформа
+   * Платформа.
    */
   value: PlatformType;
   /**
-   * Содержимое
+   * Содержимое.
    */
   children: React.ReactNode;
 }
 
 /**
- * Компонент, позволяющий переопределить платформу для части приложения
+ * Компонент, позволяющий переопределить платформу для части приложения.
  *
  * @since 5.1.0
  * @see https://vkcom.github.io/VKUI/#/PlatformProvider

@@ -13,11 +13,11 @@ export interface AlertActionProps
   extends Pick<AlertActionInterface, 'Component' | 'mode'>,
     AnchorHTMLAttributesOnly {
   /**
-   * Содержимое компонента
+   * Содержимое компонента.
    */
   children: string;
   /**
-   * Обработчик нажатия на `Action`
+   * Обработчик нажатия на `Action`.
    */
   onClick: React.MouseEventHandler<HTMLElement>;
 }

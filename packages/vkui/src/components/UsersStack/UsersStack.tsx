@@ -23,38 +23,38 @@ const avatarsPositionStyles = {
 
 export type UsersStackRenderWrapperProps = {
   /**
-   * Контент для обертки
+   * Контент для обертки.
    */
   children: React.ReactElement;
   /**
-   * Путь до фотографии
+   * Путь до фотографии.
    */
   ['data-src']: string;
 };
 
 export type UsersStackPhoto = {
   /**
-   * Путь до фотографии
+   * Путь до фотографии.
    */
   src: string;
   /**
-   * Функция для рендера обертки над фотографией
+   * Функция для рендера обертки над фотографией.
    */
   renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactElement;
 };
 
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`:
+   * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`.
    */
   photos?: string[] | UsersStackPhoto[];
   /**
-   * Размер аватарок
+   * Размер аватарок.
    */
   size?: 's' | 'm' | 'l';
   /**
    * Количество аватарок, которые будут показаны.
-   * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов
+   * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов.
    */
   visibleCount?: number;
   /**
@@ -65,18 +65,18 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   count?: number;
   /**
    * Определяет положение аватаров
-   * Режим `block-start` рекомендуется использовать с размером `m`
+   * Режим `block-start` рекомендуется использовать с размером `m`.
    */
   avatarsPosition?: 'inline-start' | 'block-start' | 'inline-end';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
   /**
-   * Размер фотографии
+   * Размер фотографии.
    */
   photoSize: number;
   /**
-   * Тип обрезания фотографии
+   * Тип обрезания фотографии.
    */
   direction: 'circle' | 'right' | 'left';
 }

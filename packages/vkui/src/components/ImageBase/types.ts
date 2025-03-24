@@ -4,30 +4,30 @@ export type ImageBaseSize = (typeof imageBaseSizes)[number];
 
 export type ImageBaseExpectedIconProps = {
   /**
-   * Ширина иконки
+   * Ширина иконки.
    */
   width?: number;
   /**
-   * Высота иконки
+   * Высота иконки.
    */
   height?: number;
   /**
-   * className для иконки
+   * ClassName для иконки.
    */
   className?: string;
 };
 
 export interface ImageBaseContextProps {
   /**
-   * Размер картинки
+   * Размер картинки.
    */
   size: ImageBaseSize | number;
   /**
-   * Обработчики события `mouseOver`
+   * Обработчики события `mouseOver`.
    */
   onMouseOverHandlers: VoidFunction[];
   /**
-   * Обработчики события `mouseOut`
+   * Обработчики события `mouseOut`.
    */
   onMouseOutHandlers: VoidFunction[];
 }

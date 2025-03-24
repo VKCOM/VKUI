@@ -37,19 +37,19 @@ const sizeClassNames = {
 export interface SliderBaseProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
   /**
-   * Минимальное значение слайдера
+   * Минимальное значение слайдера.
    */
   min?: number;
   /**
-   * Максимальное значение слайдера
+   * Максимальное значение слайдера.
    */
   max?: number;
   /**
-   * Шаг изменения значения слайдера
+   * Шаг изменения значения слайдера.
    */
   step?: number;
   /**
-   * Определяет, отключен ли компонент
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
   /**
@@ -67,7 +67,7 @@ export interface SliderBaseProps
    */
   getAriaValueText?: (value: number, index: number) => string;
   /**
-   * Включает отображение всплывающей подсказки при взаимодействии с ползунком
+   * Включает отображение всплывающей подсказки при взаимодействии с ползунком.
    */
   withTooltip?: boolean;
   /**
@@ -75,49 +75,49 @@ export interface SliderBaseProps
    */
   size?: 's' | 'm' | 'l';
   /**
-   * Передает атрибут `data-testid` для первого ползунка
+   * Передает атрибут `data-testid` для первого ползунка.
    */
   startThumbTestId?: string;
   /**
-   * Передает атрибут `data-testid` для второго ползунка когда `multiple=true`
+   * Передает атрибут `data-testid` для второго ползунка когда `multiple=true`.
    */
   endThumbTestId?: string;
 }
 
 export interface SliderProps extends SliderBaseProps {
   /**
-   * Флаг множественного выбора (должен быть false или не указан)
+   * Флаг множественного выбора (должен быть false или не указан).
    */
   multiple?: false;
   /**
-   * Текущее значение слайдера
+   * Текущее значение слайдера.
    */
   value?: number;
   /**
-   * Значение слайдера по умолчанию
+   * Значение слайдера по умолчанию.
    */
   defaultValue?: number;
   /**
-   * Обработчик изменения значения слайдера
+   * Обработчик изменения значения слайдера.
    */
   onChange?: (value: number, event: CustomTouchEvent | React.ChangeEvent) => void;
 }
 
 export interface SliderMultipleProps extends SliderBaseProps {
   /**
-   * Флаг множественного выбора (должен быть true)
+   * Флаг множественного выбора (должен быть true).
    */
   multiple: true;
   /**
-   * Текущие значения слайдера в виде массива [начальное, конечное]
+   * Текущие значения слайдера в виде массива [начальное, конечное].
    */
   value?: [number, number];
   /**
-   * Значения слайдера по умолчанию в виде массива [начальное, конечное]
+   * Значения слайдера по умолчанию в виде массива [начальное, конечное].
    */
   defaultValue?: [number, number];
   /**
-   * Обработчик изменения значений слайдера
+   * Обработчик изменения значений слайдера.
    */
   onChange?: (value: [number, number], event: CustomTouchEvent | React.ChangeEvent) => void;
 }

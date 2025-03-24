@@ -22,15 +22,15 @@ export type UsePopoverProps = Omit<PopoverProps, 'children'> & {
 
 export type UsePopoverResult<ElementType extends HTMLElement = HTMLElement> = {
   /**
-   * Реф на якорный элемент
+   * Реф на якорный элемент.
    */
   anchorRef: Ref<ElementType>;
   /**
-   * Свойства для якорного элемента, содержит необходимые обработчики
+   * Свойства для якорного элемента, содержит необходимые обработчики.
    */
   anchorProps: ReferenceProps<ElementType>;
   /**
-   * Отрендеренный компонент всплывающего элемента
+   * Отрендеренный компонент всплывающего элемента.
    */
   popover: React.ReactNode | null;
 };

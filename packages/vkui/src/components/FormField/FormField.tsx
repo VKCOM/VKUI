@@ -37,7 +37,7 @@ export type FieldIconsAlign = 'start' | 'center' | 'end';
 
 export interface FormFieldProps {
   /**
-   * Статус отображения поля в форме
+   * Статус отображения поля в форме.
    */
   status?: 'default' | 'error' | 'valid';
   /**
@@ -46,11 +46,11 @@ export interface FormFieldProps {
    * Рекомендации:
    *
    * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
-   * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна кликабельная иконка.
+   * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна иконка, реагирующая на нажатие.
    */
   before?: React.ReactNode;
   /**
-   * Вертикальное выравнивание иконки слева
+   * Вертикальное выравнивание иконки слева.
    */
   beforeAlign?: FieldIconsAlign;
   /**
@@ -59,11 +59,11 @@ export interface FormFieldProps {
    * Рекомендации:
    *
    * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
-   * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна кликабельная иконка.
+   * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна иконка, реагируюущая на нажатие.
    */
   after?: React.ReactNode;
   /**
-   * Вертикальное выравнивание иконки справа
+   * Вертикальное выравнивание иконки справа.
    */
   afterAlign?: FieldIconsAlign;
   /**
@@ -74,7 +74,7 @@ export interface FormFieldProps {
    */
   mode?: 'default' | 'plain';
   /**
-   * Максимальная высота поля
+   * Максимальная высота поля.
    */
   maxHeight?: number;
 }
@@ -85,7 +85,7 @@ export interface FormFieldOwnProps
     HasComponent,
     FormFieldProps {
   /**
-   * Состояние блокировки поля
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
 }

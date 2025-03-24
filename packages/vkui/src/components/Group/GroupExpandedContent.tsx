@@ -12,7 +12,7 @@ const stylesDirection = {
 export type GroupExpandedContentProps = HTMLAttributesWithRootRef<HTMLElement> &
   HasComponent & {
     /**
-     * Направление отображения контента
+     * Направление отображения контента.
      */
     direction?: 'inline' | 'block';
   };

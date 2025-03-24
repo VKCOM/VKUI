@@ -10,11 +10,11 @@ import { useAutoPlay } from './hooks';
 
 export interface GalleryProps extends BaseGalleryProps {
   /**
-   * Индекс слайда по умолчанию
+   * Индекс слайда по умолчанию.
    */
   initialSlideIndex?: number;
   /**
-   * При передаче происходит автоматический переход к следующему слайду через переданное время в ms
+   * При передаче происходит автоматический переход к следующему слайду через переданное время в ms.
    */
   timeout?: number;
 }
