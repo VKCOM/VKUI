@@ -1,0 +1,19 @@
+.layout {
+  block-size: 100%
+}
+
+.header {
+  margin-block-start: 5px;
+  margin-inline-end: 5px;
+}
+
+.main {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.tipIcon {
+  margin-inline-end: 2px;
+  vertical-align: bottom;
+  display: inline;
+}
