@@ -1,3 +1,4 @@
+import { classNames } from '@vkontakte/vkjs';
 import { Separator, type SeparatorProps } from '../../Separator/Separator';
 import styles from './CellButtonGroupSeparator.module.css';
 
