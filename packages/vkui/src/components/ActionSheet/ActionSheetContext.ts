@@ -4,7 +4,7 @@ export type ActionType<T> = (event: React.MouseEvent<T>) => void;
 
 export type ItemClickHandler<T extends Element = Element> = (options: {
   /**
-   * Действие, которое будет выполненго после завершения анимации скрытия и после вызова onClose.
+   * Действие, которое будет выполненно после завершения анимации скрытия и после вызова onClose.
    * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
    * Если вам нужен объект события именно на момент клика, используйте `immediateAction`.
    */

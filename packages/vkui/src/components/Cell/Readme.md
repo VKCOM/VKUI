@@ -43,7 +43,7 @@ const reorderList = ({ from, to }, list, updateListFn) => {
     <PanelHeader>Cell</PanelHeader>
 
     <Group header={<Header subtitle={<code>mode="selectable"</code>}>Выделение</Header>}>
-      <Cell mode="selectable" before={<Avatar />} onChange={(e) => console.log(e.target.checked)}>
+      <Cell mode="selectable" before={<Avatar />}>
         Артур Стамбульцян
       </Cell>
       <Cell mode="selectable" before={<Avatar />}>

@@ -8,7 +8,7 @@ import type { HasComponent, HasRootRef } from '../../types';
 
 export interface CustomTouchEvent extends Gesture {
   /**
-   * Оригинальный нативный event
+   * Оригинальное событие
    */
   originalEvent: VKUITouchEvent;
 }

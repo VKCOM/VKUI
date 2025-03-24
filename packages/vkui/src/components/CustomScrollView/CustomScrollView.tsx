@@ -20,7 +20,7 @@ export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
   /**
-   * Дополнительный класснейм
+   * Дополнительный `className`
    */
   className?: HTMLDivElement['className'];
   /**

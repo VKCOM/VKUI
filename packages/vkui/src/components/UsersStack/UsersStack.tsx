@@ -27,18 +27,18 @@ export type UsersStackRenderWrapperProps = {
    */
   children: React.ReactElement;
   /**
-   * Путь до фото
+   * Путь до фотографии
    */
   ['data-src']: string;
 };
 
 export type UsersStackPhoto = {
   /**
-   * Путь до фото
+   * Путь до фотографии
    */
   src: string;
   /**
-   * Функция для рендера обертки над фото
+   * Функция для рендера обертки над фотографией
    */
   renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactElement;
 };
@@ -72,11 +72,11 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
   /**
-   * Размер фото
+   * Размер фотографии
    */
   photoSize: number;
   /**
-   * Тип обрезания фото
+   * Тип обрезания фотографии
    */
   direction: 'circle' | 'right' | 'left';
 }

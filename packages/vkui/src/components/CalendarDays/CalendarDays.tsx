@@ -74,11 +74,11 @@ export interface CalendarDaysProps
    */
   isDaySelectionEnd: (value: Date, dayOfWeek: number) => boolean;
   /**
-   * Определяет начало диапазона при ховере (подсветка)
+   * Определяет начало диапазона при наведении (подсветка)
    */
   isHintedDaySelectionStart?: (value: Date, dayOfWeek: number) => boolean;
   /**
-   * Определяет конец диапазона при ховере (подсветка)
+   * Определяет конец диапазона при наведении (подсветка)
    */
   isHintedDaySelectionEnd?: (value: Date, dayOfWeek: number) => boolean;
   /**
@@ -86,7 +86,7 @@ export interface CalendarDaysProps
    */
   isDayActive: (value: Date) => boolean;
   /**
-   * Проверяет, подсвечен ли день (при ховере)
+   * Проверяет, подсвечен ли день (при наведении)
    */
   isDayHinted?: (value: Date) => boolean;
   /**

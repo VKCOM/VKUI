@@ -11,7 +11,7 @@ export type ModalPageCloseReason =
 
 type OmittedStyleAttribute = {
   /**
-   * Допольнительные стили
+   * Дополнительные стили
    */
   style?: Omit<CSSProperties, 'height' | 'maxWidth' | 'maxHeight'>;
 };

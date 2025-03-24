@@ -25,7 +25,7 @@ export interface ImageBaseOverlayCommonProps
    */
   visibility?: 'on-hover' | 'always';
   /**
-   * Дополнительный className
+   * Дополнительный `className`
    */
   className?: string;
 }

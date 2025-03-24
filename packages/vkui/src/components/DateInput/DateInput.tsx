@@ -101,7 +101,7 @@ export interface DateInputProps
    */
   calendarPlacement?: PlacementWithAuto;
   /**
-   * Автоматически закрывать календарь при измененях
+   * Автоматически закрывать календарь при изменениях
    */
   closeOnChange?: boolean;
   /**

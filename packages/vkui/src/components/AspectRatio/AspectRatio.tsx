@@ -6,7 +6,7 @@ import styles from './AspectRatio.module.css';
 
 export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
   /**
-   * Дополнительный className для компонента
+   * Дополнительный `className` для компонента
    */
   className?: string;
   /**

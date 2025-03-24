@@ -42,11 +42,11 @@ export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTe
    */
   selectionEnd?: boolean;
   /**
-   * Подсветить день как начало предполагаемого диапазона (при ховере)
+   * Подсветить день как начало предполагаемого диапазона (при наведении)
    */
   hintedSelectionStart?: boolean;
   /**
-   * Подсветить день как конец предполагаемого диапазона (при ховере)
+   * Подсветить день как конец предполагаемого диапазона (при наведении)
    */
   hintedSelectionEnd?: boolean;
   /**
