@@ -1,15 +1,10 @@
 .layout {
-  block-size: 100%
+  block-size: 100%;
 }
 
 .header {
-  margin-block-start: 5px;
-  margin-inline-end: 5px;
-}
-
-.main {
-  flex-grow: 1;
-  text-align: center;
+  padding-block: 5px;
+  padding-inline: 5px;
 }
 
 .tipIcon {

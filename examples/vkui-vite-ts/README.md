@@ -1,39 +1,64 @@
-# Material UI - Vite.js in TypeScript example
+# VKUI — шаблон приложения на Vite.js + TypeScript
 
-## How to use
+[![Открыть в CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/VKCOM/VKUI/tree/master/examples/vkui-vite-ts)
+[![Открыть в StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/VKCOM/VKUI/tree/master/examples/vkui-vite-ts)
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+Готовый шаблон для быстрого старта проектов с VKUI, Vite и TypeScript.
 
-<!-- #repo-reference -->
+## Как использовать
 
+### 1. Скачать шаблон
+
+Через curl:
 ```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/material-ui-vite-ts
-cd material-ui-vite-ts
+curl https://codeload.github.com/VKCOM/VKUI/tar.gz/master | tar -xz --strip=2 VKUI-master/examples/vkui-vite-ts
+cd vkui-vite-ts
 ```
 
-Install it and run:
+Или клонировать репозиторий:
+```bash
+git clone https://github.com/VKCOM/VKUI.git
+cd VKUI/examples/vkui-vite-ts
+```
 
+### 2. Установить зависимости
+
+С помощью yarn:
+```bash
+yarn install
+```
+
+С помощью npm:
 ```bash
 npm install
+```
+
+### 3. Запустить проект
+
+В режиме разработки:
+```bash
+yarn dev
+# или
 npm run dev
 ```
 
-or:
+Сборка для production:
+```bash
+yarn build
+# или
+npm run build
+```
 
-<!-- #repo-reference -->
+## О шаблоне
 
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-ui-vite-ts)
+Этот пример демонстрирует:
+- Интеграцию VKUI с современным сборщиком Vite
+- Готовую конфигурацию TypeScript
+- Настройку темизации через `ConfigProvider`
+- Примеры использования основных компонентов VKUI
+- Поддержку мобильных устройств и десктопа
 
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/material-ui-vite-ts)
+## Что дальше?
 
-## The idea behind the example
-
-This example uses [Vite.js](https://github.com/vitejs/vite).
-It includes `@mui/material` and its peer dependencies, including [Emotion](https://emotion.sh/docs/introduction), the default style engine in Material UI v6.
-
-## What's next?
-
-<!-- #host-reference -->
-
-You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://next.mui.com/material-ui/getting-started/templates/) section.
+1. Изучите [документацию VKUI](https://vkcom.github.io/VKUI) для работы с компонентами
+2. Посмотрите [другие примеры](https://github.com/VKCOM/VKUI/tree/master/examples) из репозитория

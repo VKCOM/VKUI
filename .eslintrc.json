@@ -89,7 +89,8 @@
     {
       "files": ["examples/**/*.{ts,tsx}"],
       "rules": {
-        "no-restricted-globals": "off"
+        "no-restricted-globals": "off",
+        "react/react-in-jsx-scope": "off"
       }
     },
     {

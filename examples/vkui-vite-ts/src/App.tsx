@@ -1,9 +1,9 @@
-import * as React from 'react';
 import { Icon24LightbulbOutline } from '@vkontakte/icons';
 import {
   AppRoot,
   Caption,
   ColorSchemeProvider,
+  FixedLayout,
   Flex,
   Headline,
   Link,
@@ -42,11 +42,13 @@ export default function App() {
   return (
     <ColorSchemeProvider value={colorScheme}>
       <AppRoot>
-        <Flex direction="column" className={styles.layout}>
-          <Flex justify="end" className={styles.header}>
-            <Flex.Item flexBasis={100}>{colorSchemeSwitcher}</Flex.Item>
-          </Flex>
-          <Flex direction="column" justify="center" align="center" className={styles.main}>
+        <Flex direction="column" justify="center" className={styles.layout}>
+          <FixedLayout vertical="top">
+            <Flex justify="end" className={styles.header}>
+              <Flex.Item flexBasis={100}>{colorSchemeSwitcher}</Flex.Item>
+            </Flex>
+          </FixedLayout>
+          <Flex direction="column" justify="center" align="center">
             <Title level="1" Component="h1">
               VKUI Vite.js example in TypeScript
             </Title>

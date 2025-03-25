@@ -25,7 +25,7 @@ const ColorSchemeSwitcher: React.FC<{
   );
 };
 
-export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactElement] => {
+export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactNode] => {
   const defaultColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = React.useState(defaultColorScheme);
 

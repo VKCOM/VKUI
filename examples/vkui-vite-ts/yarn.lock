@@ -716,24 +716,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:latest":
-  version: 19.0.4
-  resolution: "@types/react-dom@npm:19.0.4"
-  peerDependencies:
-    "@types/react": ^19.0.0
-  checksum: 10/f15d470242f0b7cca57dd7e991a2852525ac93b2cb92f7e6c104d7bd6a978c3b1d0ba9b8698f23bc19c16b5cd98a6d160007be52c61196952f57cf019f204254
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:latest":
-  version: 19.0.12
-  resolution: "@types/react@npm:19.0.12"
-  dependencies:
-    csstype: "npm:^3.0.2"
-  checksum: 10/2476295f27371ea67f0ba3ca8fae3c683fc8d086b8b387e0519e67ff5731072c6ff0372fbd5a4c6d760895b1e7dc8997ac518f07bf6b6a8d1e40aeb5d2068b9e
-  languageName: node
-  linkType: hard
-
 "@vitejs/plugin-react@npm:latest":
   version: 4.3.4
   resolution: "@vitejs/plugin-react@npm:4.3.4"
@@ -979,13 +961,6 @@ __metadata:
     shebang-command: "npm:^2.0.0"
     which: "npm:^2.0.1"
   checksum: 10/0d52657d7ae36eb130999dffff1168ec348687b48dd38e2ff59992ed916c88d328cf1d07ff4a4a10bc78de5e1c23f04b306d569e42f7a2293915c081e4dfee86
-  languageName: node
-  linkType: hard
-
-"csstype@npm:^3.0.2":
-  version: 3.1.3
-  resolution: "csstype@npm:3.1.3"
-  checksum: 10/f593cce41ff5ade23f44e77521e3a1bcc2c64107041e1bf6c3c32adc5187d0d60983292fda326154d20b01079e24931aa5b08e4467cc488b60bb1e7f6d478ade
   languageName: node
   linkType: hard
 
@@ -2003,8 +1978,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vkui-vite-ts@workspace:."
   dependencies:
-    "@types/react": "npm:latest"
-    "@types/react-dom": "npm:latest"
     "@vitejs/plugin-react": "npm:latest"
     "@vkontakte/icons": "npm:latest"
     "@vkontakte/vkui": "npm:latest"
