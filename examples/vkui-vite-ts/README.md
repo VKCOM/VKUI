@@ -1,7 +1,7 @@
 # VKUI — шаблон приложения на Vite.js + TypeScript
 
-[![Открыть в CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/VKCOM/VKUI/tree/e.muhamethanov/vkui-vite-example/examples/vkui-vite-ts)
-[![Открыть в StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/VKCOM/VKUI/tree/e.muhamethanov/vkui-vite-example/examples/vkui-vite-ts)
+[![Открыть в CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/VKCOM/VKUI/tree/master/examples/vkui-vite-ts)
+[![Открыть в StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/VKCOM/VKUI/tree/master/examples/vkui-vite-ts)
 
 Готовый шаблон для быстрого старта проектов с VKUI, Vite и TypeScript.
 
