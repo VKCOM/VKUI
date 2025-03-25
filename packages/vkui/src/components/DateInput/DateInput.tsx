@@ -367,15 +367,16 @@ export const DateInput = ({
       role="group"
       aria-labelledby={`${inputGroupLabelId} ${currentDateLabelId}`}
       after={
-        value ? (
-          <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
-            <Icon16Clear />
-          </IconButton>
-        ) : (
+        <React.Fragment>
           <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
             <Icon20CalendarOutline />
           </IconButton>
-        )
+          {value ? (
+            <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
+              <Icon16Clear />
+            </IconButton>
+          ) : null}
+        </React.Fragment>
       }
       disabled={disabled}
       onClick={callMultiple(handleFieldEnter, onClick)}
