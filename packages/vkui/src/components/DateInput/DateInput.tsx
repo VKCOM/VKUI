@@ -13,6 +13,7 @@ import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
@@ -329,11 +330,24 @@ export const DateInput = ({
   const [calendarPlacement, setCalendarPlacement] =
     React.useState<PlacementWithAuto>(calendarPlacementProp);
 
+  const { locale } = useConfigProvider();
+  const inputGroupLabel = 'Редактор даты';
+  const inputGroupLabelId = React.useId();
+  const currentDateLabel = new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(value);
+  const currentDateLabelId = React.useId();
+
   return (
     <FormField
       style={style}
       className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       getRootRef={handleRootRef}
+      role="group"
+      aria-labelledby={`${inputGroupLabelId} ${currentDateLabelId}`}
       after={
         value ? (
           <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
@@ -347,15 +361,21 @@ export const DateInput = ({
       }
       disabled={disabled}
       onClick={callMultiple(handleFieldEnter, onClick)}
-      onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
       <div className={styles.wrapper}>
+        {inputGroupLabel && (
+          <VisuallyHidden id={inputGroupLabelId}>{inputGroupLabel}</VisuallyHidden>
+        )}
+        {currentDateLabel && (
+          <VisuallyHidden id={currentDateLabelId}>{currentDateLabel}</VisuallyHidden>
+        )}
         <VisuallyHidden
           id={id}
           Component="input"
           name={name}
           value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
+          tabIndex={-1}
         />
         <Text
           className={classNames(styles.input, customValue && styles.hidden)}
