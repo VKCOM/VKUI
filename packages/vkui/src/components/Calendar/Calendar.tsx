@@ -208,7 +208,6 @@ export const Calendar = ({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({
@@ -321,7 +320,6 @@ export const Calendar = ({
         isDaySelectionStart={isFirstDay}
         isDaySelectionEnd={isLastDay}
         isDayDisabled={isDayDisabled}
-        onBlur={resetSelectedDay}
         showNeighboringMonth={showNeighboringMonth}
         size={size}
         dayProps={dayProps}
