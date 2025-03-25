@@ -72,14 +72,17 @@ export const getDaysNames = (
   now: Date,
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6,
   locale?: string,
-): string[] => {
-  const formatter = new Intl.DateTimeFormat(locale, {
+): Array<{ short: string; long: string }> => {
+  const shortFormatter = new Intl.DateTimeFormat(locale, {
     weekday: 'short',
+  });
+  const longFormatter = new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
   });
   return eachDayOfInterval({
     start: startOfWeek(now, { weekStartsOn }),
     end: endOfWeek(now, { weekStartsOn }),
-  }).map((day) => formatter.format(day));
+  }).map((day) => ({ short: shortFormatter.format(day), long: longFormatter.format(day) }));
 };
 
 export const navigateDate = (date?: Date | null, key?: string): Date => {
