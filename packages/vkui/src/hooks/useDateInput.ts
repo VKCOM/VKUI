@@ -118,14 +118,13 @@ export function useDateInput<T extends HTMLElement, D>({
 
     if (element) {
       element.focus();
-      _onCalendarOpen();
       range.selectNodeContents(element as Node);
 
       const selection = window!.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(range);
     }
-  }, [disabled, focusedElement, _onCalendarOpen, refs, window]);
+  }, [disabled, focusedElement, refs, window]);
 
   const clear = React.useCallback(() => {
     onChange?.(undefined);
@@ -133,14 +132,11 @@ export function useDateInput<T extends HTMLElement, D>({
   }, [onChange, selectFirst]);
 
   const handleFieldEnter = React.useCallback(() => {
-    if (!open) {
-      selectFirst();
-    }
-  }, [open, selectFirst]);
+    selectFirst();
+  }, [selectFirst]);
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLSpanElement>) => {
-      console.log("Handle key down", e.key);
       if (focusedElement === null) {
         return;
       }
@@ -173,17 +169,19 @@ export function useDateInput<T extends HTMLElement, D>({
         _value[focusedElement] = String(
           currentValue >= config.max ? config.min : currentValue + 1,
         ).padStart(config.length, '0');
-      } else if (
-        e.key === 'Enter' ||
-        (e.key === 'Tab' && focusedElement === maxElement) ||
-        (e.key === 'Tab' && e.shiftKey && focusedElement === 0)
-      ) {
-        removeFocusFromField();
-        return;
       } else if (e.key === 'ArrowLeft' || e.key === 'Left' || (e.key === 'Tab' && e.shiftKey)) {
-        setFocusedElement(focusedElement <= 0 ? maxElement : focusedElement - 1);
+        if (focusedElement <= 0) {
+          removeFocusFromField();
+          return;
+        }
+        setFocusedElement(focusedElement - 1);
       } else if (e.key === 'ArrowRight' || e.key === 'Right' || e.key === 'Tab') {
-        setFocusedElement(focusedElement >= maxElement ? 0 : focusedElement + 1);
+        if (focusedElement >= maxElement) {
+          removeFocusFromField();
+          return;
+        }
+
+        setFocusedElement(focusedElement + 1);
       } else if (e.key === 'Delete' || e.key === 'Del') {
         _value[focusedElement] = '';
       } else {
@@ -195,12 +193,12 @@ export function useDateInput<T extends HTMLElement, D>({
       onInternalValueChange(_value);
     },
     [
+      removeFocusFromField,
       elementsConfig,
       focusedElement,
       internalValue,
       maxElement,
       onInternalValueChange,
-      removeFocusFromField,
     ],
   );
 
