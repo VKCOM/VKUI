@@ -13,7 +13,7 @@
 }
 
 .tipIcon {
+  display: inline;
   margin-inline-end: 2px;
   vertical-align: bottom;
-  display: inline;
 }

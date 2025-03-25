@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type ColorSchemeType, Select, type SelectProps } from '@vkontakte/vkui';
+import { type ColorSchemeType, Select, type SelectProps, useColorScheme } from '@vkontakte/vkui';
 
 const OPTIONS: SelectProps['options'] = [
   {
@@ -25,9 +25,8 @@ const ColorSchemeSwitcher: React.FC<{
   );
 };
 
-export const useColorSchemeSwitcher = (
-  defaultColorScheme: ColorSchemeType,
-): [ColorSchemeType, React.ReactElement] => {
+export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactElement] => {
+  const defaultColorScheme = useColorScheme();
   const [colorScheme, setColorScheme] = React.useState(defaultColorScheme);
 
   React.useLayoutEffect(() => setColorScheme(defaultColorScheme), [defaultColorScheme]);

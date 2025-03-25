@@ -9,10 +9,9 @@ import {
   Link,
   Spacing,
   Title,
-  useColorScheme,
 } from '@vkontakte/vkui';
 import { useColorSchemeSwitcher } from './ColorSchemeSwitcher';
-import styles from './styles.module.css';
+import styles from './App.module.css';
 
 function Copyright() {
   return (
@@ -38,11 +37,10 @@ function ProTip() {
 }
 
 export default function App() {
-  const colorScheme = useColorScheme();
-  const [resolvedColorScheme, colorSchemeSwitcher] = useColorSchemeSwitcher(colorScheme);
+  const [colorScheme, colorSchemeSwitcher] = useColorSchemeSwitcher();
 
   return (
-    <ColorSchemeProvider value={resolvedColorScheme}>
+    <ColorSchemeProvider value={colorScheme}>
       <AppRoot>
         <Flex direction="column" className={styles.layout}>
           <Flex justify="end" className={styles.header}>
