@@ -184,6 +184,9 @@ export function useDateInput<T extends HTMLElement, D>({
         setFocusedElement(focusedElement + 1);
       } else if (e.key === 'Delete' || e.key === 'Del') {
         _value[focusedElement] = '';
+      } else if (e.key === ' ') {
+        _onCalendarOpen();
+        return;
       } else {
         return;
       }
@@ -193,6 +196,7 @@ export function useDateInput<T extends HTMLElement, D>({
       onInternalValueChange(_value);
     },
     [
+      _onCalendarOpen,
       removeFocusFromField,
       elementsConfig,
       focusedElement,
