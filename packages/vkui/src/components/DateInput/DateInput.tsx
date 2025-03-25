@@ -14,6 +14,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
@@ -290,6 +291,7 @@ export const DateInput = ({
     handleFieldEnter,
     clear,
     removeFocusFromField,
+    closeCalendar,
   } = useDateInput({
     maxElement,
     refs,
@@ -501,38 +503,40 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <Calendar
-            value={value}
-            onChange={onCalendarChange}
-            enableTime={enableTime}
-            disablePast={disablePast}
-            disableFuture={disableFuture}
-            shouldDisableDate={shouldDisableDate}
-            onDoneButtonClick={onDoneButtonClick}
-            getRootRef={calendarRef}
-            doneButtonText={doneButtonText}
-            DoneButton={DoneButton}
-            disablePickers={disablePickers}
-            changeHoursLabel={changeHoursLabel}
-            changeMinutesLabel={changeMinutesLabel}
-            prevMonthLabel={prevMonthLabel}
-            nextMonthLabel={nextMonthLabel}
-            changeMonthLabel={changeMonthLabel}
-            changeYearLabel={changeYearLabel}
-            changeDayLabel={changeDayLabel}
-            showNeighboringMonth={showNeighboringMonth}
-            renderDayContent={renderDayContent}
-            size={size}
-            viewDate={viewDate}
-            onHeaderChange={onHeaderChange}
-            onNextMonth={onNextMonth}
-            onPrevMonth={onPrevMonth}
-            prevMonthIcon={prevMonthIcon}
-            nextMonthIcon={nextMonthIcon}
-            minDateTime={minDateTime}
-            maxDateTime={maxDateTime}
-            {...calendarTestsProps}
-          />
+          <FocusTrap onClose={closeCalendar}>
+            <Calendar
+              value={value}
+              onChange={onCalendarChange}
+              enableTime={enableTime}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              shouldDisableDate={shouldDisableDate}
+              onDoneButtonClick={onDoneButtonClick}
+              getRootRef={calendarRef}
+              doneButtonText={doneButtonText}
+              DoneButton={DoneButton}
+              disablePickers={disablePickers}
+              changeHoursLabel={changeHoursLabel}
+              changeMinutesLabel={changeMinutesLabel}
+              prevMonthLabel={prevMonthLabel}
+              nextMonthLabel={nextMonthLabel}
+              changeMonthLabel={changeMonthLabel}
+              changeYearLabel={changeYearLabel}
+              changeDayLabel={changeDayLabel}
+              showNeighboringMonth={showNeighboringMonth}
+              renderDayContent={renderDayContent}
+              size={size}
+              viewDate={viewDate}
+              onHeaderChange={onHeaderChange}
+              onNextMonth={onNextMonth}
+              onPrevMonth={onPrevMonth}
+              prevMonthIcon={prevMonthIcon}
+              nextMonthIcon={nextMonthIcon}
+              minDateTime={minDateTime}
+              maxDateTime={maxDateTime}
+              {...calendarTestsProps}
+            />
+          </FocusTrap>
         </Popper>
       )}
     </FormField>
