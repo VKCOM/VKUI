@@ -1,5 +1,6 @@
 import {
   addDays,
+  addMonths,
   addWeeks,
   eachDayOfInterval,
   endOfMonth,
@@ -12,6 +13,7 @@ import {
   startOfMonth,
   startOfWeek,
   subDays,
+  subMonths,
   subWeeks,
 } from 'date-fns';
 import { clamp as clampNumber } from '../helpers/math';
@@ -95,6 +97,18 @@ export const navigateDate = (date?: Date | null, key?: string): Date => {
       break;
     case 'ArrowDown':
       newDate = addWeeks(newDate, 1);
+      break;
+    case 'Home':
+      newDate = startOfWeek(newDate, { weekStartsOn: 1 });
+      break;
+    case 'End':
+      newDate = endOfWeek(newDate, { weekStartsOn: 1 });
+      break;
+    case 'PageUp':
+      newDate = subMonths(newDate, 1);
+      break;
+    case 'PageDown':
+      newDate = addMonths(newDate, 1);
       break;
   }
 
