@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -43,11 +42,13 @@ export interface CalendarDaysProps
   isHintedDaySelectionStart?: (value: Date, dayOfWeek: number) => boolean;
   isHintedDaySelectionEnd?: (value: Date, dayOfWeek: number) => boolean;
   isDayActive: (value: Date) => boolean;
+  isDayFocusable?: (value: Date) => boolean;
   isDayHinted?: (value: Date) => boolean;
   isDaySelected?: (value: Date) => boolean;
   isDayFocused: (value: Date) => boolean;
   onDayEnter?: (value: Date) => void;
   onDayLeave?: (value: Date) => void;
+  onDayFocus?: (value: Date) => void;
 }
 
 export const CalendarDays = ({
@@ -61,10 +62,12 @@ export const CalendarDays = ({
   isDaySelectionStart,
   onDayEnter,
   onDayLeave,
+  onDayFocus,
   isDayHinted,
   isHintedDaySelectionStart,
   isHintedDaySelectionEnd,
   isDayFocused,
+  isDayFocusable,
   isDayDisabled,
   size,
   showNeighboringMonth = false,
@@ -76,7 +79,6 @@ export const CalendarDays = ({
   ...props
 }: CalendarDaysProps): React.ReactNode => {
   const { locale } = useConfigProvider();
-  const ref = useExternRef(getRootRef);
   const now = useTodayDate(listenDayChangesForUpdate);
 
   const weeks = React.useMemo(() => getWeeks(viewDate, weekStartsOn), [weekStartsOn, viewDate]);
@@ -89,14 +91,12 @@ export const CalendarDays = ({
   const handleDayChange = React.useCallback(
     (date: Date) => {
       onDayChange(date);
-
-      ref.current?.focus();
     },
-    [onDayChange, ref],
+    [onDayChange],
   );
 
   return (
-    <RootComponent role="grid" {...props} baseClassName={styles.host} getRootRef={ref}>
+    <RootComponent role="grid" {...props} baseClassName={styles.host}>
       <div role="row" className={classNames(styles.row, size === 's' && styles.rowSizeS)}>
         {daysNames.map(({ short: shortDayName, long: longDayName }) => (
           <Footnote
@@ -123,12 +123,14 @@ export const CalendarDays = ({
               const isHidden = !showNeighboringMonth && !sameMonth;
               const isToday = isSameDay(day, now);
               const isActive = isDayActive(day);
+              const isFocused = isDayFocused(day);
               return (
                 <CalendarDay
                   aria-role="gridcell"
                   aria-current={isToday ? 'date' : undefined}
                   aria-selected={isActive ? 'true' : 'false'}
                   aria-colindex={i + 1}
+                  tabIndex={isDayFocusable?.(day) ? 0 : -1}
                   key={day.toISOString()}
                   day={day}
                   today={isToday}
@@ -141,10 +143,10 @@ export const CalendarDays = ({
                   hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
                   hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
                   selected={isDaySelected?.(day)}
-                  focused={isDayFocused(day)}
-                  focusedDay={focusedDay}
+                  focused={isFocused}
                   onEnter={onDayEnter}
                   onLeave={onDayLeave}
+                  onFocus={onDayFocus}
                   hinted={isDayHinted?.(day)}
                   sameMonth={sameMonth}
                   size={size}

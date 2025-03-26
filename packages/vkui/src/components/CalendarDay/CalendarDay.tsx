@@ -10,7 +10,7 @@ import styles from './CalendarDay.module.css';
 
 export type CalendarDayElementProps = Omit<
   React.AllHTMLAttributes<HTMLElement>,
-  'onChange' | 'size' | 'disabled' | 'selected'
+  'onChange' | 'size' | 'disabled' | 'selected' | 'onFocus'
 >;
 
 export type CalendarDayTestsProps = {
@@ -38,6 +38,7 @@ export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTe
   onChange: (value: Date) => void;
   onEnter?: (value: Date) => void;
   onLeave?: (value: Date) => void;
+  onFocus?: (value: Date) => void;
   // Функция отрисовки контента в ячейке дня
   renderDayContent?: (day: Date) => React.ReactNode;
 }
@@ -56,6 +57,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     focused,
     onEnter,
     onLeave,
+    onFocus,
     hinted,
     hintedSelectionStart,
     hintedSelectionEnd,
@@ -71,6 +73,7 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
     const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
+    const handleFocus = React.useCallback(() => onFocus?.(day), [day, onFocus]);
 
     const label = new Intl.DateTimeFormat(locale, {
       weekday: 'long',
@@ -113,8 +116,8 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
         activeMode={styles.hostActivated}
         hasActive={false}
         onClick={onClick}
+        onFocus={handleFocus}
         disabled={disabled}
-        tabIndex={focused ? 0 : -1}
         getRootRef={ref}
         focusVisibleMode={active ? 'outside' : 'inside'}
         onPointerEnter={handleEnter}
