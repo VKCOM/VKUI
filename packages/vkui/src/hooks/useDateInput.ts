@@ -65,6 +65,7 @@ export function useDateInput<T extends HTMLElement, D>({
     if (!open) {
       openCalendar();
       onCalendarOpenChanged?.(true);
+      setFocusedElement(null);
     }
   }, [onCalendarOpenChanged, open, openCalendar]);
 
@@ -90,8 +91,12 @@ export function useDateInput<T extends HTMLElement, D>({
   );
 
   const selectFirst = React.useCallback(() => {
+    if (focusedElement !== null) {
+      return;
+    }
+
     setFocusedElement(0);
-  }, []);
+  }, [focusedElement]);
 
   useGlobalEventListener(document, 'click', handleClickOutside, {
     capture: true,
