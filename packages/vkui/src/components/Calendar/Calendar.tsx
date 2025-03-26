@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameDay, isSameMonth, startOfMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
@@ -206,6 +206,8 @@ export const Calendar = ({
     setNextMonth,
     focusedDay,
     setFocusedDay,
+    focusableDay,
+    setFocusableDay,
     isDayFocused,
     isDayDisabled,
     isMonthDisabled,
@@ -251,16 +253,24 @@ export const Calendar = ({
         ].includes(event.key)
       ) {
         event.preventDefault();
+
+        const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, event.key);
+
+        if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+        setFocusableDay(newFocusedDay);
+
+        return;
       }
 
-      const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, event.key);
-
-      if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
-        setViewDate(newFocusedDay);
+      if (event.key === 'Tab') {
+        setFocusedDay(undefined);
+        setFocusableDay(focusedDay);
       }
-      setFocusedDay(newFocusedDay);
     },
-    [focusedDay, setFocusedDay, setViewDate, timeZonedValue, viewDate],
+    [focusedDay, setFocusedDay, setFocusableDay, setViewDate, timeZonedValue, viewDate],
   );
 
   const onDayChange = React.useCallback(
@@ -270,13 +280,52 @@ export const Calendar = ({
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
       updateValue(actualDate);
+      setFocusedDay(actualDate);
+      setFocusableDay(actualDate);
     },
-    [timeZonedValue, updateValue, maxDateTime, minDateTime],
+    [timeZonedValue, updateValue, maxDateTime, minDateTime, setFocusedDay, setFocusableDay],
   );
 
+  const onDayFocus = React.useCallback(
+    (date: Date) => {
+      if (focusedDay && isSameDay(focusedDay, date)) {
+        return;
+      }
+
+      setFocusedDay(date);
+    },
+    [focusedDay, setFocusedDay],
+  );
+
+  // activeDay это день в календаре соответствующий значению в инпуте
   const isDayActive = React.useCallback(
     (day: Date) => Boolean(timeZonedValue && isSameDay(day, timeZonedValue)),
     [timeZonedValue],
+  );
+
+  // это день в календаре на который можно попасть с помощью Tab
+  const isDayFocusable = React.useCallback(
+    (day: Date) => {
+      const isFocusedDayInViewDate = focusableDay ? isSameMonth(focusableDay, viewDate) : false;
+      // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
+      // если нет, то tabIndex="0" получит первый день месяца
+      const focusedDayOnViewDate = isFocusedDayInViewDate ? focusableDay : startOfMonth(viewDate);
+
+      if (focusableDay && focusedDayOnViewDate) {
+        return isSameDay(focusedDayOnViewDate, day);
+      }
+
+      // при открытии календаря focusableDay не определён,
+      // по этому tabIndex="0" будет у дня, соответствующего дню в инпуте
+      if (timeZonedValue && isSameMonth(timeZonedValue, viewDate)) {
+        return isDayActive(day);
+      }
+
+      // при переключении месяца любая навигация с помощью Tab начинается
+      // с первого дня месяца.
+      return isSameDay(startOfMonth(viewDate), day);
+    },
+    [timeZonedValue, focusableDay, viewDate, isDayActive],
   );
 
   return (
@@ -308,15 +357,16 @@ export const Calendar = ({
         yearDropdownTestId={yearDropdownTestId}
       />
       <CalendarDays
+        onKeyDown={handleKeyDown}
         viewDate={externalViewDate || viewDate}
         value={timeZonedValue}
         weekStartsOn={weekStartsOn}
-        isDayFocused={isDayFocused}
-        tabIndex={0}
         aria-label={changeDayLabel}
-        onKeyDown={handleKeyDown}
         onDayChange={onDayChange}
+        onDayFocus={onDayFocus}
         isDayActive={isDayActive}
+        isDayFocused={isDayFocused}
+        isDayFocusable={isDayFocusable}
         isDaySelectionStart={isFirstDay}
         isDaySelectionEnd={isLastDay}
         isDayDisabled={isDayDisabled}
