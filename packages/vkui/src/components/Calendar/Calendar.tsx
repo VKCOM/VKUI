@@ -303,21 +303,24 @@ export const Calendar = ({
     [timeZonedValue],
   );
 
-  // это день в календаре на который можно попасть с помощью Tab
+  const isFocusableDayInViewDateMonth = focusableDay && isSameMonth(focusableDay, viewDate);
+  const isInputValueDateInViewDateMonth = timeZonedValue && isSameMonth(timeZonedValue, viewDate);
+  /**
+   * Функция позволяет проверить является ли день в календаре днём на который
+   * можно попасть с помощью Tab.
+   * Единственный день в таблице календаря у которого есть tabIndex="0"
+   * Чтобы на него можно было попасть из заголовка календаря.
+   */
   const isDayFocusable = React.useCallback(
     (day: Date) => {
-      const isFocusedDayInViewDate = focusableDay ? isSameMonth(focusableDay, viewDate) : false;
       // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
-      // если нет, то tabIndex="0" получит первый день месяца
-      const focusedDayOnViewDate = isFocusedDayInViewDate ? focusableDay : startOfMonth(viewDate);
-
-      if (focusableDay && focusedDayOnViewDate) {
-        return isSameDay(focusedDayOnViewDate, day);
+      if (isFocusableDayInViewDateMonth) {
+        return isSameDay(focusableDay, day);
       }
 
       // при открытии календаря focusableDay не определён,
-      // по этому tabIndex="0" будет у дня, соответствующего дню в инпуте
-      if (timeZonedValue && isSameMonth(timeZonedValue, viewDate)) {
+      // поэтому tabIndex="0" будет у дня, соответствующего дню в инпуте
+      if (isInputValueDateInViewDateMonth) {
         return isDayActive(day);
       }
 
@@ -325,7 +328,13 @@ export const Calendar = ({
       // с первого дня месяца.
       return isSameDay(startOfMonth(viewDate), day);
     },
-    [timeZonedValue, focusableDay, viewDate, isDayActive],
+    [
+      focusableDay,
+      viewDate,
+      isDayActive,
+      isFocusableDayInViewDateMonth,
+      isInputValueDateInViewDateMonth,
+    ],
   );
 
   return (
