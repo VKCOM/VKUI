@@ -344,139 +344,141 @@ export const DateInput = ({
   const currentDateLabelId = React.useId();
 
   return (
-    <FormField
-      style={style}
-      className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
-      getRootRef={handleRootRef}
-      role="group"
-      aria-labelledby={`${inputGroupLabelId} ${currentDateLabelId}`}
-      after={
-        <React.Fragment>
-          <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
-            <Icon20CalendarOutline />
-          </IconButton>
-          {value ? (
-            <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
-              <Icon16Clear />
+    <React.Fragment>
+      <FormField
+        style={style}
+        className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
+        getRootRef={handleRootRef}
+        role="group"
+        aria-labelledby={`${inputGroupLabelId} ${currentDateLabelId}`}
+        after={
+          <React.Fragment>
+            <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
+              <Icon20CalendarOutline />
             </IconButton>
-          ) : null}
-        </React.Fragment>
-      }
-      disabled={disabled}
-      onClick={callMultiple(handleFieldEnter, onClick)}
-      {...props}
-    >
-      <div className={styles.wrapper}>
-        {inputGroupLabel && (
-          <VisuallyHidden id={inputGroupLabelId}>{inputGroupLabel}</VisuallyHidden>
-        )}
-        {currentDateLabel && (
-          <VisuallyHidden id={currentDateLabelId}>{currentDateLabel}</VisuallyHidden>
-        )}
-        <VisuallyHidden
-          id={id}
-          Component="input"
-          name={name}
-          value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
-          tabIndex={-1}
-        />
-        <Text
-          className={classNames(styles.input, customValue && styles.hidden)}
-          // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
-          // из-за чего `.Typography--normalize` перебивает стили.
-          normalize={false}
-          Component="span" // для <span> нормализация не нужна
-        >
-          <InputLike
-            length={2}
-            getRootRef={daysRef}
-            index={0}
-            onKeyDown={handleKeyDown}
-            onElementSelect={setFocusedElement}
-            value={internalValue[0]}
-            label={changeDayLabel}
-            data-testid={dayFieldTestId}
-            role="spinbutton"
-            aria-valuemin={1}
-            aria-valuemax={31}
-            aria-valuetext={internalValue[0]}
-            aria-label={changeDayLabel}
-          />
-          <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
-            length={2}
-            getRootRef={monthsRef}
-            index={1}
-            onElementSelect={setFocusedElement}
-            onKeyDown={handleKeyDown}
-            value={internalValue[1]}
-            label={changeMonthLabel}
-            data-testid={monthFieldTestId}
-            role="spinbutton"
-            aria-valuemin={1}
-            aria-valuemax={12}
-            aria-valuetext={internalValue[1]}
-            aria-label={changeMonthLabel}
-          />
-          <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
-            length={4}
-            getRootRef={yearsRef}
-            index={2}
-            onElementSelect={setFocusedElement}
-            value={internalValue[2]}
-            label={changeYearLabel}
-            onKeyDown={handleKeyDown}
-            data-testid={yearFieldTestId}
-            role="spinbutton"
-            aria-valuemin={1}
-            aria-valuemax={275750}
-            aria-valuetext={internalValue[2]}
-            aria-label={changeYearLabel}
-          />
-          {enableTime && (
-            <React.Fragment>
-              <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
-              <InputLike
-                length={2}
-                getRootRef={hoursRef}
-                index={3}
-                onElementSelect={setFocusedElement}
-                value={internalValue[3]}
-                label={changeHoursLabel}
-                onKeyDown={handleKeyDown}
-                data-testid={hourFieldTestId}
-                role="spinbutton"
-                aria-valuemin={1}
-                aria-valuemax={24}
-                aria-valuetext={internalValue[3]}
-                aria-label={changeHoursLabel}
-              />
-              <InputLikeDivider>:</InputLikeDivider>
-              <InputLike
-                length={2}
-                getRootRef={minutesRef}
-                index={4}
-                onElementSelect={setFocusedElement}
-                value={internalValue[4]}
-                label={changeMinutesLabel}
-                onKeyDown={handleKeyDown}
-                data-testid={minuteFieldTestId}
-                role="spinbutton"
-                aria-valuemin={1}
-                aria-valuemax={59}
-                aria-valuetext={internalValue[4]}
-                aria-label={changeMinutesLabel}
-              />
-            </React.Fragment>
+            {value ? (
+              <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
+                <Icon16Clear />
+              </IconButton>
+            ) : null}
+          </React.Fragment>
+        }
+        disabled={disabled}
+        onClick={callMultiple(handleFieldEnter, onClick)}
+        {...props}
+      >
+        <div className={styles.wrapper}>
+          {inputGroupLabel && (
+            <VisuallyHidden id={inputGroupLabelId}>{inputGroupLabel}</VisuallyHidden>
           )}
-        </Text>
-        {customValue && (
-          <Text className={styles.customValue} aria-hidden>
-            {customValue}
+          {currentDateLabel && (
+            <VisuallyHidden id={currentDateLabelId}>{currentDateLabel}</VisuallyHidden>
+          )}
+          <VisuallyHidden
+            id={id}
+            Component="input"
+            name={name}
+            value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
+            tabIndex={-1}
+          />
+          <Text
+            className={classNames(styles.input, customValue && styles.hidden)}
+            // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
+            // из-за чего `.Typography--normalize` перебивает стили.
+            normalize={false}
+            Component="span" // для <span> нормализация не нужна
+          >
+            <InputLike
+              length={2}
+              getRootRef={daysRef}
+              index={0}
+              onKeyDown={handleKeyDown}
+              onElementSelect={setFocusedElement}
+              value={internalValue[0]}
+              label={changeDayLabel}
+              data-testid={dayFieldTestId}
+              role="spinbutton"
+              aria-valuemin={1}
+              aria-valuemax={31}
+              aria-valuetext={internalValue[0]}
+              aria-label={changeDayLabel}
+            />
+            <InputLikeDivider>.</InputLikeDivider>
+            <InputLike
+              length={2}
+              getRootRef={monthsRef}
+              index={1}
+              onElementSelect={setFocusedElement}
+              onKeyDown={handleKeyDown}
+              value={internalValue[1]}
+              label={changeMonthLabel}
+              data-testid={monthFieldTestId}
+              role="spinbutton"
+              aria-valuemin={1}
+              aria-valuemax={12}
+              aria-valuetext={internalValue[1]}
+              aria-label={changeMonthLabel}
+            />
+            <InputLikeDivider>.</InputLikeDivider>
+            <InputLike
+              length={4}
+              getRootRef={yearsRef}
+              index={2}
+              onElementSelect={setFocusedElement}
+              value={internalValue[2]}
+              label={changeYearLabel}
+              onKeyDown={handleKeyDown}
+              data-testid={yearFieldTestId}
+              role="spinbutton"
+              aria-valuemin={1}
+              aria-valuemax={275750}
+              aria-valuetext={internalValue[2]}
+              aria-label={changeYearLabel}
+            />
+            {enableTime && (
+              <React.Fragment>
+                <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
+                <InputLike
+                  length={2}
+                  getRootRef={hoursRef}
+                  index={3}
+                  onElementSelect={setFocusedElement}
+                  value={internalValue[3]}
+                  label={changeHoursLabel}
+                  onKeyDown={handleKeyDown}
+                  data-testid={hourFieldTestId}
+                  role="spinbutton"
+                  aria-valuemin={1}
+                  aria-valuemax={24}
+                  aria-valuetext={internalValue[3]}
+                  aria-label={changeHoursLabel}
+                />
+                <InputLikeDivider>:</InputLikeDivider>
+                <InputLike
+                  length={2}
+                  getRootRef={minutesRef}
+                  index={4}
+                  onElementSelect={setFocusedElement}
+                  value={internalValue[4]}
+                  label={changeMinutesLabel}
+                  onKeyDown={handleKeyDown}
+                  data-testid={minuteFieldTestId}
+                  role="spinbutton"
+                  aria-valuemin={1}
+                  aria-valuemax={59}
+                  aria-valuetext={internalValue[4]}
+                  aria-label={changeMinutesLabel}
+                />
+              </React.Fragment>
+            )}
           </Text>
-        )}
-      </div>
+          {customValue && (
+            <Text className={styles.customValue} aria-hidden>
+              {customValue}
+            </Text>
+          )}
+        </div>
+      </FormField>
       {open && !disableCalendar && (
         <Popper
           targetRef={rootRef}
@@ -524,6 +526,6 @@ export const DateInput = ({
           </FocusTrap>
         </Popper>
       )}
-    </FormField>
+    </React.Fragment>
   );
 };
