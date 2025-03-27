@@ -1,9 +1,10 @@
 'use client';
 
-import { useId } from 'react';
+import { useContext, useId } from 'react';
 import { ModalContext } from '../../context/ModalContext';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { useModalManager } from '../ModalRoot/useModalManager';
 import { ModalCardInternal } from './ModalCardInternal';
 import type { ModalCardProps } from './types';
@@ -27,7 +28,8 @@ export const ModalCard = ({
   ...restProps
 }: ModalCardProps): React.ReactNode => {
   const generatingId = useId();
-  const id = getNavId({ nav, id: idProp }, warn) || generatingId;
+  const { isInsideModal: isInsideModalRoot } = useContext(ModalRootContext);
+  const id = getNavId({ nav, id: idProp }, isInsideModalRoot ? warn : undefined) || generatingId;
 
   const {
     mounted,
