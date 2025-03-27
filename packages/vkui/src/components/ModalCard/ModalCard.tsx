@@ -1,15 +1,9 @@
 'use client';
 
-import { useContext, useId } from 'react';
 import { ModalContext } from '../../context/ModalContext';
-import { getNavId } from '../../lib/getNavId';
-import { warnOnce } from '../../lib/warnOnce';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { useModalManager } from '../ModalRoot/useModalManager';
 import { ModalCardInternal } from './ModalCardInternal';
 import type { ModalCardProps } from './types';
-
-const warn = warnOnce('ModalCard');
 
 /**
  * @see https://vkcom.github.io/VKUI/#/ModalCard
@@ -27,16 +21,13 @@ export const ModalCard = ({
   keepMounted = false,
   ...restProps
 }: ModalCardProps): React.ReactNode => {
-  const generatingId = useId();
-  const { isInsideModal: isInsideModalRoot } = useContext(ModalRootContext);
-  const id = getNavId({ nav, id: idProp }, isInsideModalRoot ? warn : undefined) || generatingId;
-
   const {
     mounted,
     shouldPreserveSnapPoint: excludedProp,
+    id,
     ...resolvedProps
   } = useModalManager({
-    id,
+    id: nav || idProp,
     open,
     keepMounted,
     modalOverlayTestId,
