@@ -46,3 +46,6 @@ export const FormItemTopLabel: React.FC<FormItemTopLabelProps> = ({
 };
 
 FormItemTopLabel.displayName = 'FormItemTopLabel';
+Object.defineProperty(FormItemTopLabel, 'name', {
+  value: 'FormItemTopLabel',
+});

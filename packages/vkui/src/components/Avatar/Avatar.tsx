@@ -128,14 +128,26 @@ export const Avatar: React.FC<AvatarProps> & {
 };
 
 Avatar.displayName = 'Avatar';
+Object.defineProperty(Avatar, 'name', {
+  value: 'Avatar',
+});
 
 Avatar.Badge = AvatarBadge;
 Avatar.Badge.displayName = 'Avatar.Badge';
+Object.defineProperty(Avatar.Badge, 'name', {
+  value: 'Avatar.Badge',
+});
 
 Avatar.BadgeWithPreset = AvatarBadgeWithPreset;
 Avatar.BadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';
+Object.defineProperty(Avatar.BadgeWithPreset, 'name', {
+  value: 'Avatar.BadgeWithPreset',
+});
 
 Avatar.Overlay = ImageBaseOverlay;
 Avatar.Overlay.displayName = 'Avatar.Overlay';
+Object.defineProperty(Avatar.Overlay, 'name', {
+  value: 'Avatar.Overlay',
+});
 
 Avatar.getInitialsFontSize = getInitialsFontSize;

@@ -170,12 +170,24 @@ export const Image: React.FC<ImageProps> & {
 };
 
 Image.displayName = 'Image';
+Object.defineProperty(Image, 'name', {
+  value: 'Image',
+});
 
 Image.Badge = ImageBadge;
 Image.Badge.displayName = 'Image.Badge';
+Object.defineProperty(Image.Badge, 'name', {
+  value: 'Image.Badge',
+});
 
 Image.Overlay = ImageBase.Overlay;
 Image.Overlay.displayName = 'Image.Overlay';
+Object.defineProperty(Image.Overlay, 'name', {
+  value: 'Image.Overlay',
+});
 
 Image.FloatElement = ImageBase.FloatElement;
 Image.FloatElement.displayName = 'Image.FloatElement';
+Object.defineProperty(Image.FloatElement, 'name', {
+  value: 'Image.FloatElement',
+});

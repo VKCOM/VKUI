@@ -45,12 +45,24 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
 };
 
 ScreenSpinner.displayName = 'ScreenSpinner';
+Object.defineProperty(ScreenSpinner, 'name', {
+  value: 'ScreenSpinner',
+});
 
 ScreenSpinner.Container = ScreenSpinnerContainer;
 ScreenSpinner.Container.displayName = 'ScreenSpinner.Container';
+Object.defineProperty(ScreenSpinner.Container, 'name', {
+  value: 'ScreenSpinner.Container',
+});
 
 ScreenSpinner.Loader = ScreenSpinnerLoader;
 ScreenSpinner.Loader.displayName = 'ScreenSpinner.Loader';
+Object.defineProperty(ScreenSpinner.Loader, 'name', {
+  value: 'ScreenSpinner.Loader',
+});
 
 ScreenSpinner.SwapIcon = ScreenSpinnerSwapIcon;
 ScreenSpinner.SwapIcon.displayName = 'ScreenSpinner.SwapIcon';
+Object.defineProperty(ScreenSpinner.SwapIcon, 'name', {
+  value: 'ScreenSpinner.SwapIcon',
+});

@@ -11,3 +11,6 @@ export const GroupHeader: React.FC<GroupHeaderProps> = ({
   <div className={classNames(className, styles.header)} {...restProps} />
 );
 GroupHeader.displayName = 'GroupHeader';
+Object.defineProperty(GroupHeader, 'name', {
+  value: 'GroupHeader',
+});

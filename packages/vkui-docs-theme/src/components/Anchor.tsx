@@ -10,6 +10,9 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => (
   <VKUILink {...props} getRootRef={ref} />
 ));
 Link.displayName = 'VKUILinkWithRef';
+Object.defineProperty(Link, 'name', {
+  value: 'VKUILinkWithRef',
+});
 
 export function Anchor({ href = '', children, ...props }: LinkProps) {
   const newWindow = EXTERNAL_HREF_REGEX.test(href);

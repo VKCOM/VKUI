@@ -23,3 +23,6 @@ export const DropZoneGrid: React.FC<DropZoneGridProps> = ({
 );
 
 DropZoneGrid.displayName = 'DropZoneGrid';
+Object.defineProperty(DropZoneGrid, 'name', {
+  value: 'DropZoneGrid',
+});

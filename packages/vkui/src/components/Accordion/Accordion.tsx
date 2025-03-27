@@ -72,9 +72,18 @@ export const Accordion: React.FC<AccordionProps> & {
 };
 
 Accordion.displayName = 'Accordion';
+Object.defineProperty(Accordion, 'name', {
+  value: 'Accordion',
+});
 
 Accordion.Summary = AccordionSummary;
 Accordion.Summary.displayName = 'Accordion.Summary';
+Object.defineProperty(Accordion.Summary, 'name', {
+  value: 'Accordion.Summary',
+});
 
 Accordion.Content = AccordionContent;
 Accordion.Content.displayName = 'Accordion.Content';
+Object.defineProperty(Accordion.Content, 'name', {
+  value: 'Accordion.Content',
+});

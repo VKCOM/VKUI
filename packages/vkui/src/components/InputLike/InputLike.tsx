@@ -70,3 +70,6 @@ export const InputLike: React.FC<InputLikeProps> = ({
 };
 
 InputLike.displayName = 'InputLike';
+Object.defineProperty(InputLike, 'name', {
+  value: 'InputLike',
+});

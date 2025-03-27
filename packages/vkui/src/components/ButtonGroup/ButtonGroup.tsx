@@ -67,3 +67,6 @@ export const ButtonGroup = ({
 };
 
 ButtonGroup.displayName = 'ButtonGroup';
+Object.defineProperty(ButtonGroup, 'name', {
+  value: 'ButtonGroup',
+});

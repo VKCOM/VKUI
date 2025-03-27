@@ -174,12 +174,24 @@ export const FormItem: React.FC<FormItemProps> & {
 };
 
 FormItem.displayName = 'FormItem';
+Object.defineProperty(FormItem, 'name', {
+  value: 'FormItem',
+});
 
 FormItem.Top = FormItemTop;
 FormItem.Top.displayName = 'FormItem.Top';
+Object.defineProperty(FormItem.Top, 'name', {
+  value: 'FormItem.Top',
+});
 
 FormItem.TopLabel = FormItemTopLabel;
 FormItem.TopLabel.displayName = 'FormItem.TopLabel';
+Object.defineProperty(FormItem.TopLabel, 'name', {
+  value: 'FormItem.TopLabel',
+});
 
 FormItem.TopAside = FormItemTopAside;
 FormItem.TopAside.displayName = 'FormItem.TopAside';
+Object.defineProperty(FormItem.TopAside, 'name', {
+  value: 'FormItem.TopAside',
+});

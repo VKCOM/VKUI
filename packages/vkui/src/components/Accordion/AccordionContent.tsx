@@ -83,3 +83,6 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
 };
 
 AccordionContent.displayName = 'AccordionContent';
+Object.defineProperty(AccordionContent, 'name', {
+  value: 'AccordionContent',
+});
