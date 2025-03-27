@@ -1,11 +1,12 @@
 'use client';
 
-import { useId, useMemo } from 'react';
+import { useContext, useId, useMemo } from 'react';
 import { ModalContext } from '../../context/ModalContext';
 import { inRange } from '../../helpers/range';
 import { getNavId } from '../../lib/getNavId';
 import { SNAP_POINT_DETENTS, SNAP_POINT_SAFE_RANGE, type SnapPoint } from '../../lib/sheet';
 import { warnOnce } from '../../lib/warnOnce';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { useModalManager } from '../ModalRoot/useModalManager';
 import { ModalPageInternal } from './ModalPageInternal';
 import type { ModalPageProps } from './types';
@@ -34,7 +35,8 @@ export const ModalPage = ({
   ...restProps
 }: ModalPageProps) => {
   const generatingId = useId();
-  const id = getNavId({ nav, id: idProp }, warn) || generatingId;
+  const { isInsideModal: isInsideModalRoot } = useContext(ModalRootContext);
+  const id = getNavId({ nav, id: idProp }, isInsideModalRoot ? warn : undefined) || generatingId;
 
   const { mounted, shouldPreserveSnapPoint, ...resolvedProps } = useModalManager({
     id,
