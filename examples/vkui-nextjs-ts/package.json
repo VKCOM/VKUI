@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@vkontakte/vkui": "latest",
     "@vkontakte/icons": "latest",
+    "@vkontakte/vkui": "latest",
     "next": "^15.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -18,7 +19,7 @@
     "@types/node": "latest",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "eslint": "latest",
+    "eslint": "^8.56.0",
     "eslint-config-next": "^15.0.0",
     "typescript": "latest"
   },

@@ -27,7 +27,7 @@ const getColorSchemeFromStorage = (defaultColorScheme: ColorSchemeType) => {
   let colorScheme;
   try {
     colorScheme = (localStorage.getItem(STORAGE_KEY) as ColorSchemeType) || defaultColorScheme;
-  } catch (e) {
+  } catch {
     // Unsupported
   }
   return colorScheme || defaultColorScheme;
@@ -39,7 +39,7 @@ const setColorSchemeToStorage = (colorScheme: ColorSchemeType) => {
   }
   try {
     localStorage.setItem(STORAGE_KEY, colorScheme);
-  } catch (e) {
+  } catch {
     // Unsupported
   }
 };
@@ -68,7 +68,7 @@ export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactNode] => 
 
   React.useLayoutEffect(
     () => _updateColorScheme(getColorSchemeFromStorage(defaultColorScheme)),
-    [defaultColorScheme],
+    [_updateColorScheme, defaultColorScheme],
   );
 
   return [
