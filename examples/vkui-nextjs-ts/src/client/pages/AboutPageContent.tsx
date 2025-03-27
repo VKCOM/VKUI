@@ -1,9 +1,9 @@
 'use client';
 
-import Copyright from '@/client/common/Copyright';
-import ProTip from '@/client/common/ProTip';
 import { Button, Flex, Spacing, Title } from '@vkontakte/vkui';
 import NextLink from 'next/link';
+import Copyright from '@/client/common/Copyright';
+import ProTip from '@/client/common/ProTip';
 
 export function AboutPageContent() {
   return (

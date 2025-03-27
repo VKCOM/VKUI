@@ -1,8 +1,8 @@
 'use client';
 
-import { useColorSchemeSwitcher } from '@/client/ColorSchemeSwitcher';
 import { AdaptivityProvider, AppRoot, ConfigProvider, FixedLayout, Flex } from '@vkontakte/vkui';
 import styles from './Layout.module.css';
+import { useColorSchemeSwitcher } from '@/client/ColorSchemeSwitcher';
 import '@vkontakte/vkui/dist/cssm/styles/themes.css';
 
 interface LayoutProps {

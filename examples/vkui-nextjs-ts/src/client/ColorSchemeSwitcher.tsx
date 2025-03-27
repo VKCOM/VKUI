@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {
+  ColorScheme,
   type ColorSchemeType,
   Select,
   type SelectProps,
   useColorScheme,
-  ColorScheme,
 } from '@vkontakte/vkui';
 
 const OPTIONS: SelectProps['options'] = [

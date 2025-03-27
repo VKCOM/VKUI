@@ -1,5 +1,5 @@
-import { Layout } from '@/client/Layout';
 import * as React from 'react';
+import { Layout } from '@/client/Layout';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
