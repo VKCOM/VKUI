@@ -15,3 +15,6 @@ export const FormItemTop: React.FC<FormItemTopProps> = (props: FormItemTopProps)
 );
 
 FormItemTop.displayName = 'FormItemTop';
+Object.defineProperty(FormItemTop, 'name', {
+  value: 'FormItemTop',
+});

@@ -153,3 +153,6 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
 );
 
 CalendarDay.displayName = 'CalendarDay';
+Object.defineProperty(CalendarDay, 'name', {
+  value: 'CalendarDay',
+});

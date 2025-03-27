@@ -19,3 +19,6 @@ export const CellButtonGroupSeparator = ({
 };
 
 CellButtonGroupSeparator.displayName = 'CellButtonGroupSeparator';
+Object.defineProperty(CellButtonGroupSeparator, 'name', {
+  value: 'CellButtonGroupSeparator',
+});

@@ -42,6 +42,9 @@ const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
 };
 
 ScreenSpinnerCancelIcon.displayName = 'ScreenSpinnerCancelIcon';
+Object.defineProperty(ScreenSpinnerCancelIcon, 'name', {
+  value: 'ScreenSpinnerCancelIcon',
+});
 
 export const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
   cancelLabel,
@@ -75,3 +78,6 @@ export const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
 };
 
 ScreenSpinnerSwapIcon.displayName = 'ScreenSpinnerSwapIcon';
+Object.defineProperty(ScreenSpinnerSwapIcon, 'name', {
+  value: 'ScreenSpinnerSwapIcon',
+});

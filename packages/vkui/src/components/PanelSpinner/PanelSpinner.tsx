@@ -15,3 +15,6 @@ export const PanelSpinner: React.FC<PanelSpinnerProps> = React.memo(
 );
 
 PanelSpinner.displayName = 'PanelSpinner';
+Object.defineProperty(PanelSpinner, 'name', {
+  value: 'PanelSpinner',
+});

@@ -26,3 +26,6 @@ export const FormItemTopAside: React.FC<FormItemTopAsideProps> = ({
 };
 
 FormItemTopAside.displayName = 'FormItemTopAside';
+Object.defineProperty(FormItemTopAside, 'name', {
+  value: 'FormItemTopAside',
+});

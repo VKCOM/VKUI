@@ -71,3 +71,6 @@ export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
 };
 
 AccordionSummary.displayName = 'AccordionSummary';
+Object.defineProperty(AccordionSummary, 'name', {
+  value: 'AccordionSummary',
+});

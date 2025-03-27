@@ -15,6 +15,12 @@ export const CellButtonGroup = (props: CellButtonGroupProps): React.ReactNode =>
 };
 
 CellButtonGroup.displayName = 'CellButtonGroup';
+Object.defineProperty(CellButtonGroup, 'name', {
+  value: 'CellButtonGroup',
+});
 
 CellButtonGroup.Separator = CellButtonGroupSeparator;
 CellButtonGroup.Separator.displayName = 'CellButtonGroup.Separator';
+Object.defineProperty(CellButtonGroup.Separator, 'name', {
+  value: 'CellButtonGroup.Separator',
+});

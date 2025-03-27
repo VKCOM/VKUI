@@ -69,3 +69,6 @@ export const ImageBaseBadge: React.FC<ImageBaseBadgeProps> = ({
 };
 
 ImageBaseBadge.displayName = 'ImageBaseBadge';
+Object.defineProperty(ImageBaseBadge, 'name', {
+  value: 'ImageBaseBadge',
+});
