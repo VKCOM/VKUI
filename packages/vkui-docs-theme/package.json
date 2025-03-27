@@ -26,7 +26,7 @@
     "*.css"
   ],
   "dependencies": {
-    "@vkontakte/icons": "^2.159.0",
+    "@vkontakte/icons": "^3.0.0",
     "@vkontakte/vkjs": "^2.0.1",
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-tokens": "4.62.0"
