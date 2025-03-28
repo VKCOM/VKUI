@@ -24,7 +24,7 @@ export interface AppRootPortalProps extends HasChildren {
    */
   usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement | null> | null;
   /**
-   * Дополнительный `className`.
+   * `className` для контейнера портала.
    */
   className?: string;
 }

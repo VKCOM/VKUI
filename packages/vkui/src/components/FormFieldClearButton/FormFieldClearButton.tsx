@@ -8,7 +8,7 @@ import { IconButton } from '../IconButton/IconButton';
 
 export interface FormFieldClearButtonProps extends HasDataAttribute {
   /**
-   * Дополнительный `className`.
+   * `className` для компонента.
    */
   className?: string;
   /**

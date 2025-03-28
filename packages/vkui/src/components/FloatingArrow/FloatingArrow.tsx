@@ -43,7 +43,7 @@ export interface FloatingArrowProps
    */
   iconStyle?: React.CSSProperties;
   /**
-   * Дополнительный `className` иконки.
+   * `className` для иконки.
    */
   iconClassName?: string;
   /**
