@@ -16,9 +16,9 @@ import styles from './App.module.css';
 function Copyright() {
   return (
     <Caption>
-      {'Copyright © '}
+      {'Авторские права © '}
       <Link color="inherit" href="https://vkcom.github.io/VKUI/">
-        Your Website
+        Ваш сайт
       </Link>{' '}
       {new Date().getFullYear()}.
     </Caption>
@@ -29,9 +29,9 @@ function ProTip() {
   return (
     <Headline inline>
       <Icon24LightbulbOutline className={styles.tipIcon} />
-      {'Pro tip: See more '}
-      <Link href="https://vkcom.github.io/VKUI/">templates</Link>
-      {' in the VKUI documentation.'}
+      {'Совет: посмотрите другие '}
+      <Link href="https://vkcom.github.io/VKUI/">шаблоны</Link>
+      {' в документации VKUI.'}
     </Headline>
   );
 }
@@ -45,12 +45,12 @@ export default function App() {
         <Flex direction="column" justify="center" className={styles.layout}>
           <FixedLayout vertical="top">
             <Flex justify="end" className={styles.header}>
-              <Flex.Item flexBasis={100}>{colorSchemeSwitcher}</Flex.Item>
+              <Flex.Item>{colorSchemeSwitcher}</Flex.Item>
             </Flex>
           </FixedLayout>
           <Flex direction="column" justify="center" align="center">
             <Title level="1" Component="h1">
-              VKUI Vite.js example in TypeScript
+              VKUI Vite.js пример на TypeScript
             </Title>
             <Spacing />
             <ProTip />
