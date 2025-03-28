@@ -17,7 +17,7 @@ export interface AlertActionProps
    */
   children: string;
   /**
-   * Обработчик нажатия на `Action`.
+   * Обработчик нажатия.
    */
   onClick: React.MouseEventHandler<HTMLElement>;
 }

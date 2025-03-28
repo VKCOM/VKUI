@@ -79,7 +79,7 @@ export interface CalendarProps
    */
   disablePickers?: boolean;
   /**
-   * Лейбл для изменения дня (aria-label).
+   * `aria-label` для изменения дня.
    */
   changeDayLabel?: string;
   /**
@@ -122,7 +122,7 @@ export interface CalendarProps
    */
   maxDateTime?: Date;
   /**
-   * Таймзона для отображения даты.
+   * Часовой пояс для отображения даты.
    */
   timezone?: string;
 }

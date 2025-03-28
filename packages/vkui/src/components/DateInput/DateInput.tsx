@@ -130,7 +130,7 @@ export interface DateInputProps
    */
   renderCustomValue?: (date: Date | undefined) => React.ReactNode;
   /**
-   * Свойство для отображения времени в нужной таймзоне.
+   * Часовой пояс для отображения даты.
    */
   timezone?: string;
 }

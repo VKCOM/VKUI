@@ -61,19 +61,19 @@ export interface CalendarHeaderProps
    */
   disablePickers?: boolean;
   /**
-   * Лейбл для кнопки предыдущего месяца (aria-label).
+   * `aria-label` для кнопки предыдущего месяца.
    */
   prevMonthLabel?: string;
   /**
-   * Лейбл для кнопки следующего месяца (aria-label).
+   * `aria-label` для кнопки следующего месяца.
    */
   nextMonthLabel?: string;
   /**
-   * Лейбл для селектора месяца (aria-label).
+   * `aria-label` для селектора месяца.
    */
   changeMonthLabel?: string;
   /**
-   * Лейбл для селектора года (aria-label).
+   * `aria-label` для селектора года.
    */
   changeYearLabel?: string;
   /**

@@ -46,7 +46,7 @@ export interface ContentCardProps
   mode?: CardProps['mode'];
   /**
    * Пользовательское значения стиля `object-fit` для картинки
-   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
    */
   imageObjectFit?: React.CSSProperties['objectFit'];
 }

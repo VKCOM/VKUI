@@ -14,13 +14,13 @@ export interface AppRootPortalProps extends HasChildren {
   /**
    * Настройка портала для рендеринга компонента.
    *
-   * `true` - Использует portalRoot из контекста AppRoot (если доступен) или document.body
-   * `false` - Отключает использование портала
-   * `HTMLElement` - Указывает конкретный DOM-элемент для использования в качестве портала
-   * `React.RefObject<HTMLElement | null>` - Ссылка на DOM-элемент для использования в качестве портала
-   * `null` - Эквивалентно `false`, отключает использование портала.
+   * `true` - использует `portalRoot` из контекста `AppRoot` (если доступен) или `document.body`;
+   * `false` - отключает использование портала;
+   * `HTMLElement` - указывает конкретный DOM-элемент для использования в качестве портала;
+   * `React.RefObject<HTMLElement | null>` - ссылка на DOM-элемент для использования в качестве портала;
+   * `null` - эквивалентно `false`, отключает использование портала.
    *
-   * @default true (использует document.body как портал по умолчанию)
+   * @default true (использует `document.body` как портал по умолчанию)
    */
   usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement | null> | null;
   /**

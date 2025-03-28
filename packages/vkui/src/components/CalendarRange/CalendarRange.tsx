@@ -78,7 +78,7 @@ export interface CalendarRangeProps
    */
   disablePickers?: boolean;
   /**
-   * Лейбл для изменения дня (`aria-label`).
+   * `aria-label` для изменения дня.
    */
   changeDayLabel?: string;
   /**

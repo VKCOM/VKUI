@@ -18,7 +18,7 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    */
   mode?: 'tint' | 'image';
   /**
-   * Тип размера баннера.
+   * Размер баннера.
    */
   size?: 's' | 'm';
   /**

@@ -141,10 +141,13 @@ const filter = <T extends CustomSelectOptionInterface>(
     : options;
 };
 
+/* eslint-disable jsdoc/require-jsdoc */
 type MousePosition = {
   x: React.MouseEvent['clientX'];
   y: React.MouseEvent['clientY'];
 };
+/* eslint-enable jsdoc/require-jsdoc */
+
 function isMousePositionChanged(event: React.MouseEvent, prevPosition: MousePosition) {
   return (
     Math.abs(prevPosition.x - event.clientX) >= 1 || Math.abs(prevPosition.y - event.clientY) >= 1
