@@ -2,6 +2,9 @@ import * as React from 'react';
 import { Spinner, type SpinnerProps } from '../Spinner/Spinner';
 
 export interface PanelSpinnerProps extends SpinnerProps {
+  /**
+   * Высота компонента.
+   */
   height?: number;
 }
 

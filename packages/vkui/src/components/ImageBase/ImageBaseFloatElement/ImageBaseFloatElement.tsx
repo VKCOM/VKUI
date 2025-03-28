@@ -71,22 +71,22 @@ const blockIndentClassNames = {
 
 export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Позиция компонента относительно родителя
+   * Позиция компонента относительно родителя.
    */
   placement: FloatElementPlacement;
   /**
-   * Отступ компонента от края контейнера по горизонтали
+   * Отступ компонента от края контейнера по горизонтали.
    */
   inlineIndent?: FloatElementIndentation;
   /**
-   * Отступ компонента от края контейнера по вертикали
+   * Отступ компонента от края контейнера по вертикали.
    */
   blockIndent?: FloatElementIndentation;
   /**
    * Режим отображения компонента:
    *
    * - `"always"`: Всегда
-   * - `"on-hover"`: При наведении на картинку
+   * - `"on-hover"`: При наведении на картинку.
    */
   visibility?: 'always' | 'on-hover';
 }

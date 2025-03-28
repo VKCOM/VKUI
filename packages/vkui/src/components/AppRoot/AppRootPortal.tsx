@@ -12,13 +12,20 @@ import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleConta
 
 export interface AppRootPortalProps extends HasChildren {
   /**
-   * - При передаче `true` в качестве портала будет использован `portalRoot`
-   * из контекста `AppRoot` если он передан в `AppRoot`, иначе `document.body`.
-   * - При передаче элемента будут игнорироваться `portalRoot` и `disablePortal` из контекста `AppRoot`.
+   * Настройка портала для рендеринга компонента.
    *
-   * По умолчанию в качестве портала будет использован `document.body`
+   * `true` - использует `portalRoot` из контекста `AppRoot` (если доступен) или `document.body`;
+   * `false` - отключает использование портала;
+   * `HTMLElement` - указывает конкретный DOM-элемент для использования в качестве портала;
+   * `React.RefObject<HTMLElement | null>` - ссылка на DOM-элемент для использования в качестве портала;
+   * `null` - эквивалентно `false`, отключает использование портала.
+   *
+   * @default true (использует `document.body` как портал по умолчанию)
    */
   usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement | null> | null;
+  /**
+   * `className` для контейнера портала.
+   */
   className?: string;
 }
 

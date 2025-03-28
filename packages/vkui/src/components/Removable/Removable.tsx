@@ -21,27 +21,28 @@ export interface RemovableProps {
    */
   removePlaceholder?: React.ReactNode;
   /**
-   * Коллбэк срабатывает при клике на контрол удаления.
+   * Обработчик, срабатывающий при нажатии на контрол удаления.
    */
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement | null) => void;
   /**
-   * Передает атрибут `data-testid` для кнопки, которая активирует кнопку удаления (iOS only)
+   * Передает атрибут `data-testid` для кнопки, которая активирует кнопку удаления (iOS only).
    */
   toggleButtonTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки удаления
+   * Передает атрибут `data-testid` для кнопки удаления.
    */
   removeButtonTestId?: string;
   /**
-   * Ячейка превращается в неактивную
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
 }
-
+/* eslint-disable jsdoc/require-jsdoc */
 interface RemovableIosOwnProps extends RemovableProps {
   removePlaceholderString?: string;
   children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 /**
  * @see https://vkcom.github.io/VKUI/#/RemovableIos
@@ -137,8 +138,8 @@ const RemovableIos = ({
 
 interface RemovableIosRenderProps {
   /**
-   * Показывает состояние Removable на платформе iOS при клике на иконку удаления.
-   * Для имитации поведения на iOS при клике на иконку удаления самого удаление не происходит,
+   * Показывает состояние Removable на платформе iOS при нажатии на иконку удаления.
+   * Для имитации поведения на iOS при нажатии на иконку удаления самого удаление не происходит,
    * контент сдвигается влево и справа выезжает настоящая кнопка "Удалить".
    * Когда контент сдвинут `isRemoving = true`.
    */
@@ -158,9 +159,12 @@ interface RemovableOwnProps
    */
   indent?: boolean;
   /**
-   * Убирает базовые отступы для базовой платформы
+   * Убирает базовые отступы для базовой платформы.
    */
   noPadding?: boolean;
+  /**
+   * Содержимое. Можно передать функцию для отрисовки.
+   */
   children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
 

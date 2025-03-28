@@ -6,7 +6,13 @@ import { GroupExpandedContent } from './GroupExpandedContent';
 import { GroupHeader } from './GroupHeader';
 
 export interface GroupProps extends GroupContainerProps {
+  /**
+   * Элемент заголовка группы.
+   */
   header?: React.ReactNode;
+  /**
+   * Подпись под содержимым.
+   */
   description?: React.ReactNode;
 }
 

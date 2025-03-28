@@ -26,7 +26,7 @@ const alignClassNames = {
 
 export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
   /**
-   * Количество колонок
+   * Количество колонок.
    */
   columns?: number;
   /**
@@ -40,15 +40,15 @@ export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, '
    * Значение `none` позволяет отключить отступы
    * Значение `auto` позволяет задать платформенные отступы
    * Значение `auto-inline` позволяет задать платформенные inline-отступы
-   * Значение `auto-block` позволяет задать платформенные block-отступы
+   * Значение `auto-block` позволяет задать платформенные block-отступы.
    */
   margin?: 'none' | 'auto' | 'auto-inline' | 'auto-block';
   /**
-   * Вместо задания количества колонок, можно указать минимальную ширину элементов
+   * Вместо задания количества колонок, можно указать минимальную ширину элементов.
    */
   minColWidth?: number;
   /**
-   * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`
+   * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
   align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
 }

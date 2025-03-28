@@ -17,12 +17,22 @@ const platformClassNames = {
 };
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
+  /**
+   * Флаг для обозначения первичной кнопки
+   * Влияет на стилизацию кнопки.
+   */
   primary?: boolean;
-  // TODO [>=8]: добавить св-во `indicator`, чтобы разграничить кейсы
-  label?: React.ReactNode;
+  /**
+   * Текст или содержимое кнопки.
+   */
+  label?: React.ReactNode; // TODO [>=8]: добавить св-во indicator, чтобы разграничить кейсы.
 }
 
 interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
+  /**
+   * Флаг для обозначения первичной кнопки
+   * Наследуется от PanelHeaderButtonProps['primary'].
+   */
   primary?: PanelHeaderButtonProps['primary'];
 }
 

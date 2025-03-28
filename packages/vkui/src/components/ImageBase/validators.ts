@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import type * as React from 'react';
 import { warnOnce } from '../../lib/warnOnce';
 import {
@@ -9,11 +11,10 @@ import { imageBaseSizes } from './types';
 
 /**
  * Пример,
- *
  * Icon28User -> 28
  * Icon12Circle1 -> 12
  * Icon12Circle2 -> 12
- * Icon20TextHeading1Outline -> 20
+ * Icon20TextHeading1Outline -> 20.
  */
 function parseIconSizeByDisplayName(displayName: unknown): number | null {
   if (typeof displayName !== 'string') {

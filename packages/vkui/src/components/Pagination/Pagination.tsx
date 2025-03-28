@@ -38,7 +38,7 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    */
   totalPages?: number;
   /**
-   * Блокировка всех кнопок.
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
   /**
@@ -65,6 +65,9 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * [a11y] Метка для обозначения блока навигации.
    */
   navigationLabel?: string;
+  /**
+   * Тип элемента отрисовки блока навигации.
+   */
   navigationLabelComponent?: HasComponent['Component'];
   /**
    * [a11y] Метка для кнопки навигации назад.
@@ -84,6 +87,9 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * так как будет зачитываться для каждой кнопки при перемещении по списку.
    */
   getPageLabel?: (isCurrent: boolean) => string;
+  /**
+   * Обработчик изменения выбранной страницы.
+   */
   onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
   /**
    * Функция для кастомного рендера кнопок страниц.
@@ -98,15 +104,15 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    */
   renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
   /**
-   * Передает атрибут `data-testid` для кнопок страниц
+   * Передает атрибут `data-testid` для кнопок страниц.
    */
   pageButtonTestId?: (day: PaginationPageType, active: boolean) => string;
   /**
-   * Передает атрибут `data-testid` для кнопки `prev`
+   * Передает атрибут `data-testid` для кнопки `prev`.
    */
   prevButtonTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки `next`
+   * Передает атрибут `data-testid` для кнопки `next`.
    */
   nextButtonTestId?: string;
 }

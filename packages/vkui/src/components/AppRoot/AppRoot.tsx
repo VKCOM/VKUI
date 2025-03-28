@@ -24,7 +24,9 @@ const layoutClassNames = {
 };
 
 export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Режим встраивания */
+  /**
+   * Режим встраивания.
+   */
   mode?: AppRootMode;
   /**
    * - `global` (по умолчанию) — VKUI-приложение скроллится вместе со страницей.
@@ -34,15 +36,15 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   scroll?: AppRootScroll;
   /**
-   * см. документацию [mdn web docs | env#values](https://developer.mozilla.org/en-US/docs/Web/CSS/env#values).
+   * См. Документацию [mdn web docs | env#values](https://developer.mozilla.org/en-US/docs/Web/CSS/env#values).
    */
   safeAreaInsets?: SafeAreaInsets;
   /**
-   * Кастомный root-элемент портала
+   * Кастомный root-элемент портала.
    */
   portalRoot?: HTMLElement | React.RefObject<HTMLElement | null> | null;
   /**
-   * Отключает рендер всплывающих компонентов в отдельном контейнере
+   * Отключает рендер всплывающих компонентов в отдельном контейнере.
    */
   disablePortal?: boolean;
   /**
@@ -69,7 +71,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * @since 6.2.0
    */
   userSelectMode?: AppRootUserSelectMode;
-  /*
+  /**
    * По умолчанию в режиме `mode="full"` VKUI в рантайме выставляет:
    * - класс .vkui на html элемент
    * - класс .vkui__root на элемент-контейнер, в который монтируется VKUI

@@ -24,19 +24,19 @@ type ArrowMonthProps = Omit<React.AllHTMLAttributes<HTMLElement>, 'onClick' | 'a
 
 export type CalendarHeaderTestsProps = {
   /**
-   * Передает атрибут `data-testid` для дропдауна выбора месяца в заголовке календаря
+   * Передает атрибут `data-testid` для дропдауна выбора месяца в заголовке календаря.
    */
   monthDropdownTestId?: string | ((monthIndex: number) => string);
   /**
-   * Передает атрибут `data-testid` для дропдауна выбора года в заголовке календаря
+   * Передает атрибут `data-testid` для дропдауна выбора года в заголовке календаря.
    */
   yearDropdownTestId?: string | ((year: number) => string);
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к следующему месяцу в заголовке календаря
+   * Передает атрибут `data-testid` для кнопки перехода к следующему месяцу в заголовке календаря.
    */
   nextMonthButtonTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к предыдущему месяцу в заголовке календаря
+   * Передает атрибут `data-testid` для кнопки перехода к предыдущему месяцу в заголовке календаря.
    */
   prevMonthButtonTestId?: string;
 };
@@ -44,26 +44,65 @@ export type CalendarHeaderTestsProps = {
 export interface CalendarHeaderProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
     CalendarHeaderTestsProps {
+  /**
+   * Отображаемая дата.
+   */
   viewDate: Date;
   /**
-   * Скрывает иконку для переключения на предыдущий месяц
+   * Скрывает иконку для переключения на предыдущий месяц.
    */
   prevMonthHidden?: boolean;
   /**
-   * Скрывает иконку для переключения на следующий месяц
+   * Скрывает иконку для переключения на следующий месяц.
    */
   nextMonthHidden?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года.
+   */
   disablePickers?: boolean;
+  /**
+   * `aria-label` для кнопки предыдущего месяца.
+   */
   prevMonthLabel?: string;
+  /**
+   * `aria-label` для кнопки следующего месяца.
+   */
   nextMonthLabel?: string;
+  /**
+   * `aria-label` для селектора месяца.
+   */
   changeMonthLabel?: string;
+  /**
+   * `aria-label` для селектора года.
+   */
   changeYearLabel?: string;
+  /**
+   * Кастомная иконка для кнопки предыдущего месяца.
+   */
   prevMonthIcon?: React.ReactNode;
+  /**
+   * Кастомная иконка для кнопки следующего месяца.
+   */
   nextMonthIcon?: React.ReactNode;
+  /**
+   * Дополнительные свойства для кнопки предыдущего месяца.
+   */
   prevMonthProps?: ArrowMonthProps;
+  /**
+   * Дополнительные свойства для кнопки следующего месяца.
+   */
   nextMonthProps?: ArrowMonthProps;
+  /**
+   * Функция для проверки блокировки месяца.
+   */
   isMonthDisabled?: (monthNumber: number, year?: number) => boolean;
+  /**
+   * Функция для проверки блокировки года.
+   */
   isYearDisabled?: (yearNumber: number) => boolean;
+  /**
+   * Обработчик изменения отображаемой даты.
+   */
   onChange: (viewDate: Date) => void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.

@@ -9,11 +9,11 @@ import styles from './Placeholder.module.css';
 export interface PlaceholderContainerProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
   /**
-   * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер
+   * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер.
    */
   stretched?: boolean;
   /**
-   * Убирает отступы у компонента
+   * Убирает отступы у компонента.
    */
   noPadding?: boolean;
 }
@@ -62,15 +62,15 @@ const PlaceholderActions = (props: PlaceholderActionsProps): React.ReactNode => 
 
 export interface PlaceholderProps extends PlaceholderContainerProps {
   /**
-   * Иконка
+   * Иконка.
    */
   icon?: React.ReactNode;
   /**
-   * Заголовок плейсхолдера
+   * Заголовок плейсхолдера.
    */
   title?: React.ReactNode;
   /**
-   * Кнопка действия
+   * Кнопка действия.
    */
   action?: React.ReactNode;
 }

@@ -7,7 +7,9 @@ import { DefaultIcon } from './DefaultIcon';
 import styles from './FloatingArrow.module.css';
 
 export type Coords = {
+  /** Координата x. */
   x?: number;
+  /** Координата y. */
   y?: number;
 };
 
@@ -28,10 +30,25 @@ export interface FloatingArrowProps
    * Включает абсолютное смещение по `offset`.
    */
   isStaticOffset?: boolean;
+  /**
+   * Координаты стрелки.
+   */
   coords?: Coords;
+  /**
+   * Расположение всплывающего элемента.
+   */
   placement?: Placement;
+  /**
+   * Стили иконки.
+   */
   iconStyle?: React.CSSProperties;
+  /**
+   * `className` для иконки.
+   */
   iconClassName?: string;
+  /**
+   * Иконка для отображения стрелки.
+   */
   Icon?: React.ComponentType<React.SVGAttributes<SVGSVGElement>>;
 }
 

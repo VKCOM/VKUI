@@ -28,7 +28,7 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
 
   /**
    * Содержимое справа.<br />
-   * `<UsersStack size="s" />` или `<Avatar size={24} />`
+   * `<UsersStack size="s" />` или `<Avatar size={24} />`.
    */
   after?: React.ReactNode;
 
@@ -47,12 +47,12 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
    *
    * - `nowrap` – в одну строку, текст не переносится и обрезается.
    * - `short` – максимально отображается 3 строки, остальное обрезается.
-   * - `full` – текст отображается полностью. В дизайне это свойство `multiline`
+   * - `full` – текст отображается полностью. В дизайне это свойство `multiline`.
    */
   textWrap?: 'nowrap' | 'short' | 'full';
 
   /**
-   * Передавать `true`, если предполагается переход при клике по ячейке.
+   * Передавать `true`, если предполагается переход при нажатии на ячейку.
    */
   chevron?: boolean;
 }

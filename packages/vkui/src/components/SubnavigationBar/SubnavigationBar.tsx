@@ -15,6 +15,9 @@ export interface SubnavigationBarProps
       HorizontalScrollProps,
       'showArrows' | 'getScrollToLeft' | 'getScrollToRight' | 'scrollAnimationDuration'
     > {
+  /**
+   * Отключение возможности прокручивания компонента по горизонтали.
+   */
   fixed?: boolean;
 }
 

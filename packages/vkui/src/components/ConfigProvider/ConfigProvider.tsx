@@ -14,6 +14,9 @@ import {
 } from './ConfigProviderContext';
 
 export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
 }
 

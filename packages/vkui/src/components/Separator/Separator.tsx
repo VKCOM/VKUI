@@ -8,25 +8,25 @@ export const CUSTOM_CSS_TOKEN_FOR_USER_SIZE = '--vkui_internal--spacing_size';
 
 export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Стиль отображения разделителя
+   * Стиль отображения разделителя.
    */
   appearance?: 'primary' | 'secondary' | 'primary-alpha';
   /**
-   * Добавляет стандартные отступы у разделителя
+   * Добавляет стандартные отступы у разделителя.
    */
   padding?: boolean;
   /**
-   * Направление отображения разделителя
+   * Направление отображения разделителя.
    */
   direction?: 'horizontal' | 'vertical';
   /**
-   * Размер контейнера, в который вложен разделитель
+   * Размер контейнера, в который вложен разделитель.
    *
-   * Принимает значения дизайн-системы, числовые значения и css-переменные
+   * Принимает значения дизайн-системы, числовые значения и css-переменные.
    */
   size?: SpacingSizeProp;
   /**
-   * Выравнивание разделителя в контейнере
+   * Выравнивание разделителя в контейнере.
    */
   align?: 'start' | 'center' | 'end';
 }

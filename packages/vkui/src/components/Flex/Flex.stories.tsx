@@ -10,15 +10,15 @@ import { Flex, type FlexProps } from './Flex';
 
 type StoryProps = FlexProps & {
   /**
-   * Отступ между строками
+   * Отступ между строками.
    */
   rowGap?: number;
   /**
-   * Отступ между столбцами
+   * Отступ между столбцами.
    */
   columnGap?: number;
   /**
-   * Количество элементов
+   * Количество элементов.
    */
   itemsCount?: number;
 };

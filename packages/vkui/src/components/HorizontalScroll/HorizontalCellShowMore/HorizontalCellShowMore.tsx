@@ -38,7 +38,7 @@ export interface HorizontalCellShowMoreProps
    * */
   children?: SubheadProps['children'];
   /**
-   * Выравнивание по центру относительно родителя
+   * Выравнивание по центру относительно родителя.
    */
   centered?: boolean;
 }

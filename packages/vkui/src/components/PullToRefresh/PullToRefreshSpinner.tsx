@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';

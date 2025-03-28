@@ -49,7 +49,7 @@ export interface ImageBaseBadgeProps extends HTMLAttributesWithRootRef<HTMLDivEl
 /**
  * Бейдж в правом нижнем углу компонента.
  *
- * > Не используйте при `size < 24`
+ * > Не используйте при `size < 24`.
  */
 export const ImageBaseBadge: React.FC<ImageBaseBadgeProps> = ({
   background = 'shadow',

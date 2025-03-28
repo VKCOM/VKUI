@@ -17,20 +17,23 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    * Тип баннера.
    */
   mode?: 'tint' | 'image';
+  /**
+   * Размер баннера.
+   */
   size?: 's' | 'm';
   /**
    * Тип действия в правой части баннера.
    *
-   * - `dismiss` – отображается иконка крестика, при клике на неё сработает свойство `onDismiss`.
-   * - `chevron` – отображается иконка шеврона, которая подразумевает, что при клике на баннер можно куда-то перейти.
+   * - `dismiss` – отображается иконка крестика, при нажатии на неё сработает свойство `onDismiss`.
+   * - `chevron` – отображается иконка шеврона, которая подразумевает, что при нажатии на баннер можно куда-то перейти.
    */
   after?: 'dismiss' | 'chevron' | React.ReactNode;
   /**
-   * Срабатывает при клике на иконку крестика при `after="dismiss"`.
+   * Срабатывает при нажатии на иконку крестика при `after="dismiss"`.
    */
   onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
   /**
-   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий
+   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
   dismissLabel?: string;
   /**
@@ -74,7 +77,7 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
    *
    * - `gap="m" mode="horizontal" stretched`
-   * - `gap="m" mode="vertical" stretched`
+   * - `gap="m" mode="vertical" stretched`.
    */
   actions?: React.ReactNode;
 }

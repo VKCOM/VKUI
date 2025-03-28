@@ -1,8 +1,8 @@
 /**
- * По дизайну `ActionSheet` должен закрывать при клике на `ActionSheetItem`.
+ * По дизайну `ActionSheet` должен закрывать при нажатии на `ActionSheetItem`.
  * В режиме `selectable` в реализации используются нативный input type=radio
  * И при навигации стрелочками по элементам происходит событие `click` из-за чего `ActionSheet` закрывается.
- * Поэтому нужно как-то отличить реальное событие клика
+ * Поэтому нужно как-то отличить реальное событие нажатия.
  * @see https://github.com/facebook/react/issues/7407
  * @see https://github.com/VKCOM/VKUI/issues/6954
  */

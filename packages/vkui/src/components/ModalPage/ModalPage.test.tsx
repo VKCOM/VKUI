@@ -16,7 +16,7 @@ export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
   );
 
 /**
- * Большинство логики покрыто в `ModalRoot.test.tsx`
+ * Большинство логики покрыто в `ModalRoot.test.tsx`.
  */
 describe(ModalPage, () => {
   baselineComponent((props) => (

@@ -80,10 +80,10 @@ export interface PopoverProps
    * У `content`:
    * - _background_
    * - _border-radius_
-   * - _box-shadow_
+   * - _box-shadow_.
    *
    * У `arrow`:
-   * - _color_
+   * - _color_.
    *
    * Используется в случае, если необходимо стилизовать по своему. Для `arrow` _color_ можно
    * определить через в `arrowProps.iconClassName` или `arrowProps.iconStyle`.
@@ -108,9 +108,12 @@ export interface PopoverProps
    */
   ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
   /**
-   * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
+   * Используется для того, чтобы не удалять всплывающий элемент из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  /**
+   * Управление автоматическим фокусом при открытии всплывающего элемента.
+   */
   autoFocus?: FocusTrapProps['autoFocus'];
 }
 

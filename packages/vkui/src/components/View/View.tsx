@@ -34,24 +34,35 @@ interface ViewsScrolls {
 export let scrollsCache: ViewsScrolls = {};
 
 export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavIdProps {
+  /**
+   * `id` активной панели.
+   */
   activePanel: string;
+  /**
+   * Обработчик, который вызывается при завершении анимации смены активной панели.
+   */
   onTransition?: (params: { isBack: boolean; from: string; to: string }) => void;
   /**
-   * callback свайпа назад
+   * Обработчик свайпа назад.
    */
   onSwipeBack?: () => void;
   /**
-   * callback начала анимации свайпа назад.
+   * Обработчик начала анимации свайпа назад.
    *
    * Чтобы остановить свайп назад, возвращайте `"prevent"`.
    */
   onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
   /**
-   * callback завершения анимации отмененного пользователем свайпа
+   * Обработчик завершения анимации отмененного пользователем свайпа.
    */
   onSwipeBackCancel?: () => void;
+  /**
+   * Массив из id панелей в порядке открытия.
+   */
   history?: string[];
-
+  /**
+   * Коллекция Panel. У каждой Panel должен быть уникальный `id`.
+   */
   children: React.ReactElement | Iterable<React.ReactElement>;
 }
 

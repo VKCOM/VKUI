@@ -8,7 +8,13 @@ import { Separator } from '../Separator/Separator';
 import styles from './ModalPageFooter.module.css';
 
 export interface ModalPageFooterProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Отключение отображения разделителя.
+   */
   noSeparator?: boolean;
+  /**
+   * Отключение отступов сверху и снизу.
+   */
   noPadding?: boolean;
 }
 

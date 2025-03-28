@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { type SizeTypeValues } from '../../../lib/adaptivity';

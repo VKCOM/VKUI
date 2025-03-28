@@ -40,6 +40,11 @@ const sizeYClassNames = {
 export interface PanelHeaderProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
+  /**
+   * Добавляет элемент слева.
+   *
+   * При передаче нескольких элементов, расставляет отступы между ними.
+   */
   before?: React.ReactNode;
   /**
    * Добавляет элемент справа.
@@ -55,13 +60,19 @@ export interface PanelHeaderProps
    *      - либо платформа `vkcom`
    *      - либо платформа `android`/`ios` при `<AdaptivityProvider sizeX="compact" />`
    * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider sizeX="regular" />`
-   * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям
+   * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям.
    */
   delimiter?: 'auto' | 'none' | 'separator' | 'spacing';
+  /**
+   * Прозрачный фон компонента.
+   */
   transparent?: boolean;
+  /**
+   * Добавление теней для компонента.
+   */
   shadow?: boolean;
   /**
-   * Высота шапки будет игнорироваться контентом панели
+   * Высота шапки будет игнорироваться контентом панели.
    */
   float?: boolean;
   /**
@@ -74,12 +85,14 @@ export interface PanelHeaderProps
   typographyProps?: HasComponent & React.HTMLAttributes<HTMLElement> & HasDataAttribute;
 }
 
+/* eslint-disable jsdoc/require-jsdoc */
 interface PanelHeaderInProps {
   before?: PanelHeaderProps['before'];
   after?: PanelHeaderProps['after'];
   children?: PanelHeaderProps['children'];
   typographyProps?: PanelHeaderProps['typographyProps'];
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 const PanelHeaderIn = ({ before, after, children, typographyProps = {} }: PanelHeaderInProps) => {
   const { Component = 'span', ...restProps } = typographyProps;

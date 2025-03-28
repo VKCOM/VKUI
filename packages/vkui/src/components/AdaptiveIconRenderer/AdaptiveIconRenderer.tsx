@@ -4,7 +4,13 @@ import * as React from 'react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 
 export interface AdaptiveIconRendererProps {
+  /**
+   * Компонент иконки для компактного размера.
+   */
   IconCompact: React.ComponentType<{ className?: string }>;
+  /**
+   * Компонент иконки для обычного размера.
+   */
   IconRegular: React.ComponentType<{ className?: string }>;
 }
 

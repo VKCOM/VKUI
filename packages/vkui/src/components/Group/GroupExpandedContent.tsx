@@ -11,6 +11,9 @@ const stylesDirection = {
 
 export type GroupExpandedContentProps = HTMLAttributesWithRootRef<HTMLElement> &
   HasComponent & {
+    /**
+     * Направление отображения контента.
+     */
     direction?: 'inline' | 'block';
   };
 export const GroupExpandedContent: React.FC<GroupExpandedContentProps> = ({

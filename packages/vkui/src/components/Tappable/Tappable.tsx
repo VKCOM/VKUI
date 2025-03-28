@@ -28,7 +28,7 @@ function hasPointerClassName(hasPointer: boolean | undefined) {
 export interface TappableProps extends ClickableProps, StateProps {
   /**
    * Задает border-radius элементу
-   * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`
+   * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`.
    */
   borderRadiusMode?: 'auto' | 'inherit';
 }

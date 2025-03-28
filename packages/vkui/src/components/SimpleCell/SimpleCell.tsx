@@ -19,7 +19,7 @@ const sizeYClassNames = {
 
 export interface SimpleCellOwnProps extends HasComponent {
   /**
-   * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
+   * Иконка 28 или `<Avatar size={28|32|40|48|72} />`.
    */
   before?: React.ReactNode;
   /**
@@ -59,22 +59,22 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   after?: React.ReactNode;
   /**
-   * Помечает ячейку неактивной
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
   /**
-   * Управляет видимостью иконки шеврона `›`
+   * Управляет видимостью иконки шеврона `›`.
    *
    * - `auto` - добавляет шеврон справа только для платформы `ios`;
    * - `always` - всегда показывает шеврон.
    */
   chevron?: 'auto' | 'always';
   /**
-   * Размер chevron
+   * Размер chevron.
    */
   chevronSize?: 's' | 'm';
   /**
-   * Включает многострочный режим для отображения текста
+   * Включает многострочный режим для отображения текста.
    */
   multiline?: boolean;
 }

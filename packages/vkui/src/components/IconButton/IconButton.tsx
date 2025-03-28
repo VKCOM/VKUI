@@ -16,7 +16,7 @@ const sizeYClassNames = {
 
 export interface IconButtonProps extends TappableProps {
   /**
-   * Текст кнопки-иконки. Делает ее доступной для ассистивных технологий
+   * Текст кнопки-иконки. Делает ее доступной для ассистивных технологий.
    */
   label?: string;
 }

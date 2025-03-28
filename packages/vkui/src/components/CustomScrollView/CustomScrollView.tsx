@@ -19,25 +19,34 @@ const scrollBehaviorClassNames = {
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
+  /**
+   * `className` для компонента.
+   */
   className?: HTMLDivElement['className'];
+  /**
+   * Обработчик события `scroll`.
+   */
   onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
   /**
-   * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior)
+   * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior).
    */
   overscrollBehavior?: 'auto' | 'contain' | 'none';
   /**
-   * Поведение scroll-behavior, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior)
+   * Поведение scroll-behavior, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior).
    */
   scrollBehavior?: 'auto' | 'smooth';
   /**
-   * Включение отображения горизонтального скролла
+   * Включение отображения горизонтального скролла.
    */
   enableHorizontalScroll?: boolean;
   /**
-   * Скрытие скроллбара
+   * Скрытие скроллбара.
    *
-   * > В версии ниже Firefox 64 будет виден скролл
+   * > В версии ниже Firefox 64 будет виден скролл.
    */
   scrollbarHidden?: boolean;
 }

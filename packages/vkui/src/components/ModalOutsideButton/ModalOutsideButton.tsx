@@ -7,11 +7,11 @@ import styles from './ModalOutsideButton.module.css';
 
 export interface ModalOutsideButtonProps extends TappableProps {
   /**
-   * Текст для скринридера
+   * Текст для скринридера.
    */
   'aria-label'?: string;
   /**
-   * Рекомендуется использовать иконки размером `20px`
+   * Рекомендуется использовать иконки размером `20px`.
    */
   'children': React.ReactNode;
 }

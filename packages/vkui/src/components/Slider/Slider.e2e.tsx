@@ -29,10 +29,10 @@ test.describe('Slider with Tooltip', () => {
 });
 
 /**
- * Проверяем клавиатурные события в Playwright, т.к. в `@testing/library` пока не поддерживается
+ * Проверяем клавиатурные события в Playwright, т.к. В `@testing/library` пока не поддерживается
  * `onchange` на `<input type="range" />`.
  *
- * см. https://github.com/testing-library/user-event/issues/871
+ * см. https://github.com/testing-library/user-event/issues/871.
  */
 test.describe('keyboard events', () => {
   test.use({ onlyForPlatforms: ['android'], onlyForColorSchemes: ['light'] });

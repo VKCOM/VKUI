@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import { useReducedMotion } from '../../lib/animation';
 import { type SpinnerProps } from './Spinner';

@@ -35,26 +35,26 @@ const sizeYClassNames = {
 
 type DateTestsProps = {
   /**
-   * Передает атрибут `data-testid` для поля ввода дня
+   * Передает атрибут `data-testid` для поля ввода дня.
    */
   day?: string;
   /**
-   * Передает атрибут `data-testid` для поля ввода месяца
+   * Передает атрибут `data-testid` для поля ввода месяца.
    */
   month?: string;
   /**
-   * Передает атрибут `data-testid` для поля ввода года
+   * Передает атрибут `data-testid` для поля ввода года.
    */
   year?: string;
 };
 
 export type DateRangeInputTestsProps = {
   /**
-   * Передает атрибуты `data-testid` для полей ввода начальной даты
+   * Передает атрибуты `data-testid` для полей ввода начальной даты.
    */
   startDateTestsProps?: DateTestsProps;
   /**
-   * Передает атрибуты `data-testid` для полей ввода конечной даты
+   * Передает атрибуты `data-testid` для полей ввода конечной даты.
    */
   endDateTestsProps?: DateTestsProps;
 };
@@ -84,20 +84,56 @@ export interface DateRangeInputProps
     Omit<FormFieldProps, 'maxHeight'>,
     DateRangeInputTestsProps {
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в календаре
+   * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
   calendarTestsProps?: CalendarRangeTestsProps;
+  /**
+   * Расположение календаря относительно поля ввода.
+   */
   calendarPlacement?: PlacementWithAuto;
+  /**
+   * Автоматически закрывать календарь при изменениях.
+   */
   closeOnChange?: boolean;
+  /**
+   * Обработчик изменения состояния открытия календаря.
+   */
   onCalendarOpenChanged?: (opened: boolean) => void;
+  /**
+   * Label для кнопки очистки. Делает доступным для ассистивных технологий.
+   */
   clearFieldLabel?: string;
+  /**
+   * Label для кнопки открытия календаря. Делает доступным для ассистивных технологий.
+   */
   showCalendarLabel?: string;
+  /**
+   * Label для ввода дня начальной даты. Делает доступным для ассистивных технологий.
+   */
   changeStartDayLabel?: string;
+  /**
+   * Label для ввода месяца начальной даты. Делает доступным для ассистивных технологий.
+   */
   changeStartMonthLabel?: string;
+  /**
+   * Label для ввода года начальной даты. Делает доступным для ассистивных технологий.
+   */
   changeStartYearLabel?: string;
+  /**
+   * Label для ввода дня конечной даты. Делает доступным для ассистивных технологий.
+   */
   changeEndDayLabel?: string;
+  /**
+   * Label для ввода месяца конечной даты. Делает доступным для ассистивных технологий.
+   */
   changeEndMonthLabel?: string;
+  /**
+   * Label для ввода года конечной даты. Делает доступным для ассистивных технологий.
+   */
   changeEndYearLabel?: string;
+  /**
+   * Отключение открытия календаря.
+   */
   disableCalendar?: boolean;
 }
 
