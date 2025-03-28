@@ -171,7 +171,7 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
   clearButtonTestId?: string;
   /**
    * Кастомная кнопка для очистки значения.
-   * Должна принимать обязательное свойство onClick.
+   * Должна принимать обязательное свойство `onClick`.
    */
   ClearButton?: React.ComponentType<FormFieldClearButtonProps>;
 }

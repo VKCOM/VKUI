@@ -127,7 +127,7 @@ export interface ChipsSelectProps<O extends ChipOption>
     defaultDropdownContent: React.ReactNode;
   }) => React.ReactNode;
   /**
-   * Событие срабатывающее перед onChange.
+   * Событие срабатывающее перед `onChange`.
    */
   onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
 

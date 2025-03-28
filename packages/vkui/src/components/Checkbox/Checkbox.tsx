@@ -19,7 +19,7 @@ export interface CheckboxProps
    */
   description?: React.ReactNode;
   /**
-   * Контент идущий за основным текстом.
+   * Контент, идущий за основным текстом.
    */
   titleAfter?: React.ReactNode;
 }

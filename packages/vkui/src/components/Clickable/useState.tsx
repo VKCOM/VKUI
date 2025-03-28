@@ -7,25 +7,25 @@ import { useStateWithDelay } from './useStateWithDelay';
 
 export interface StateProps {
   /**
-   * Указывает, должен ли компонент реагировать на hover-состояние.
+   * Указывает, должен ли компонент реагировать на `hover`-состояние.
    */
   hasHover?: boolean;
   /**
-   * Позволяет управлять hovered-состоянием извне.
+   * Позволяет управлять `hovered`-состоянием извне.
    */
   hovered?: boolean;
   /**
-   * Позволяет управлять activated-состоянием извне.
+   * Позволяет управлять `activated`-состоянием извне.
    */
   activated?: boolean;
   /**
-   * Указывает, должен ли компонент реагировать на active-состояние.
+   * Указывает, должен ли компонент реагировать на `active`-состояние.
    */
   hasActive?: boolean;
 
   /**
    * Позволяет родительскому компоненту
-   * иметь hovered-cостояние при наведении
+   * иметь `hovered`-cостояние при наведении
    * на любой дочерний элемент.
    * По умолчанию состояние hovered у родителя сбрасывается.
    *
@@ -61,12 +61,12 @@ export interface StateProps {
   activeEffectDelay?: number;
 
   /**
-   * Стиль подсветки active-состояния.
+   * Стиль подсветки `active`-состояния.
    */
   activeClassName?: string;
 
   /**
-   * Стиль подсветки hover-состояния.
+   * Стиль подсветки `hover`-состояния.
    */
   hoverClassName?: string;
 }
