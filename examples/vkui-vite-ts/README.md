@@ -35,8 +35,6 @@ yarn install
 
 ```bash
 yarn dev
-# или
-npm run dev
 ```
 
 Сборка для production:
