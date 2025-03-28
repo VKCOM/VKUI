@@ -10,11 +10,11 @@ export function HomePageContent() {
   return (
     <Flex direction="column" justify="center" align="center">
       <Title level="3" Component="h1">
-        VKUI - Next.js App Router example in TypeScript
+        VKUI — пример использования Next.js App Router на TypeScript
       </Title>
       <Spacing />
       <Link Component={NextLink} href="/about">
-        Go to the about page
+        Перейти на страницу «О проекте»
       </Link>
       <ProTip />
       <Copyright />

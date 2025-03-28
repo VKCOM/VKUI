@@ -19,7 +19,7 @@ export function Layout({ children }: LayoutProps) {
           <Flex direction="column" justify="center" className={styles.layout}>
             <FixedLayout vertical="top">
               <Flex justify="end" className={styles.header}>
-                <Flex.Item flexBasis={100}>{colorSchemeSwitcher}</Flex.Item>
+                <Flex.Item>{colorSchemeSwitcher}</Flex.Item>
               </Flex>
             </FixedLayout>
             {children}

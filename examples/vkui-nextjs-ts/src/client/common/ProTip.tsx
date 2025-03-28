@@ -6,9 +6,9 @@ export default function ProTip() {
   return (
     <Headline className={styles.proTip}>
       <Icon24LightbulbOutline className={styles.proTipIcon} />
-      {'Pro tip: See more '}
-      <Link href="https://vkcom.github.io/VKUI/">templates</Link>
-      {' in the Material UI documentation.'}
+      {'Совет: посмотрите другие '}
+      <Link href="https://vkcom.github.io/VKUI/">шаблоны</Link>
+      {' в документации VKUI.'}
     </Headline>
   );
 }

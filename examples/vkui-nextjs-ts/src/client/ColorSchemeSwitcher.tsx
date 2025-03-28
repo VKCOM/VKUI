@@ -1,22 +1,6 @@
 import * as React from 'react';
-import {
-  ColorScheme,
-  type ColorSchemeType,
-  Select,
-  type SelectProps,
-  useColorScheme,
-} from '@vkontakte/vkui';
-
-const OPTIONS: SelectProps['options'] = [
-  {
-    value: 'light',
-    label: 'light',
-  },
-  {
-    value: 'dark',
-    label: 'dark',
-  },
-];
+import { ColorScheme, type ColorSchemeType, IconButton, useColorScheme } from '@vkontakte/vkui';
+import { Icon28SunOutline, Icon28MoonOutline } from '@vkontakte/icons';
 
 const STORAGE_KEY = 'vkui-next-js-template:color-scheme';
 
@@ -49,11 +33,14 @@ const ColorSchemeSwitcher: React.FC<{
   setColorScheme: (colorScheme: ColorSchemeType) => void;
 }> = ({ colorScheme, setColorScheme }) => {
   return (
-    <Select
-      options={OPTIONS}
-      value={colorScheme}
-      onChange={(_, newColorScheme) => setColorScheme(newColorScheme as ColorSchemeType)}
-    />
+    <IconButton
+      label={`Цветовая схема: ${colorScheme}`}
+      onClick={() =>
+        setColorScheme(colorScheme === 'light' ? ('dark' as const) : ('light' as const))
+      }
+    >
+      {colorScheme === 'light' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
+    </IconButton>
   );
 };
 

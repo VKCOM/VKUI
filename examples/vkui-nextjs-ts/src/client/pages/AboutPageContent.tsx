@@ -9,11 +9,11 @@ export function AboutPageContent() {
   return (
     <Flex direction="column" justify="center" align="center">
       <Title level="3" Component="h1">
-        VKUI - Next.js example in TypeScript
+        VKUI - Next.js пример на TypeScript
       </Title>
       <Spacing />
       <Button Component={NextLink} href="/">
-        Go to the home page
+        Перейти на домашнюю страницу
       </Button>
       <ProTip />
       <Copyright />
