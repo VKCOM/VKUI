@@ -3,11 +3,11 @@ import { noop } from '@vkontakte/vkjs';
 
 export interface AccordionContextProps {
   /**
-   * `id` для label (для обеспечения доступности a11y).
+   * [a11y] Id для `Accordion.Summary`.
    */
   labelId: string;
   /**
-   * `id` для content (для обеспечения доступности a11y).
+   * [a11y] Id для свойства `Accordion.Content`
    */
   contentId: string;
   /**

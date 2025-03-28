@@ -1,7 +1,7 @@
 /**
  * Возвращает размер иконки основанный на дизайн-системы.
  *
- * @param imageSize Наименьшая сторона изображения.
+ * @param imageSize наименьшая сторона изображения.
  */
 export function getFallbackIconSizeByImageBaseSize(imageSize: number): 12 | 16 | 20 | 24 | 28 | 36 {
   if (imageSize <= 20) {

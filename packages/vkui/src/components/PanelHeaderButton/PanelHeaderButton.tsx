@@ -24,9 +24,8 @@ export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
   /**
    * Текст или содержимое кнопки
-   * TODO [>=8]: добавить св-во indicator, чтобы разграничить кейсы.
    */
-  label?: React.ReactNode;
+  label?: React.ReactNode; // TODO [>=8]: добавить св-во indicator, чтобы разграничить кейсы.
 }
 
 interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {

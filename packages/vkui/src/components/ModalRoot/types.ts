@@ -89,6 +89,9 @@ export type ModalRootActiveModal = string | null;
 export type ModalRootCallbackFunction = (modalId: string) => void;
 
 type ModalRootBaseProps = {
+  /**
+   * Открывает модальное окно с переданным id.
+   */
   activeModal?: ModalRootActiveModal;
 
   /**
