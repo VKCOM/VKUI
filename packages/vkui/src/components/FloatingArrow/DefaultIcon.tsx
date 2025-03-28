@@ -20,7 +20,7 @@ const ARROW_HEIGHT_WITH_WHITE_SPACE = DEFAULT_ARROW_HEIGHT + PLATFORM_HEIGHT;
  * 1. Прибавить высоту платформы к `height` и `viewBox` SVG контейнера.
  * 2. Сместить положение SVG контейнера на высоту платформы – сделано в CSS через `translateY(1px)`.
  *
- * Https://github.com/VKCOM/VKUI/issues/2123.
+ * см. https://github.com/VKCOM/VKUI/issues/2123.
  *
  * @since 7.0.0
  */

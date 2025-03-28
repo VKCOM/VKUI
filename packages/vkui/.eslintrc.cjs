@@ -144,7 +144,9 @@ module.exports = {
       files: ['src/components/**/*.{ts,tsx}'],
       excludedFiles: ['src/components/**/*.{test,e2e,e2e-playground,stories}.{ts,tsx}'],
       rules: {
-        'jsdoc/require-description-complete-sentence': ['error'],
+        'jsdoc/require-description-complete-sentence': ['error', {
+          abbreviations: ['т.к.', 'см.', 'См.']
+        }],
         'jsdoc/require-jsdoc': [
           'error',
           {

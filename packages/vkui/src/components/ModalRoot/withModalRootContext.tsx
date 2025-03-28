@@ -8,7 +8,7 @@ import type { ModalRootContextInterface } from './types';
 type PickedProps = Pick<ModalRootContextInterface, 'updateModalHeight'>;
 
 /**
- * @deprecated HOC не актуален и будет удалён в **VKUI v8**, так как вызывать `updateModalHeight()`
+ * @deprecated HOC не актуален и будет удалён в **VKUI v8**, т.к. Вызывать `updateModalHeight()`
  *  для модальных окон с `dynamicContentHeight` больше не требуется.
  */
 export function withModalRootContext<P extends PickedProps>(

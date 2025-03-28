@@ -30,7 +30,7 @@ export interface SearchProps
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
   /**
-   * IOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
+   * Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
   after?: React.ReactNode;
   /**

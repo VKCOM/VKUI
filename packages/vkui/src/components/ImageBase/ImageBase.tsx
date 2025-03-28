@@ -112,7 +112,7 @@ export interface ImageBaseProps
    */
   keepAspectRatio?: boolean;
   /**
-   * См. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming.
+   * см. https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming.
    */
   elementTiming?: string;
   /**

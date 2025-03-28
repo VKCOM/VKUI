@@ -10,8 +10,7 @@ import {
 import { imageBaseSizes } from './types';
 
 /**
- * Пример,.
- *
+ * Пример,
  * Icon28User -> 28
  * Icon12Circle1 -> 12
  * Icon12Circle2 -> 12

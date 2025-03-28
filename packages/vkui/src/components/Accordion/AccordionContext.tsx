@@ -7,7 +7,7 @@ export interface AccordionContextProps {
    */
   labelId: string;
   /**
-   * [a11y] Id для свойства `Accordion.Content`
+   * [a11y] Id для свойства `Accordion.Content`.
    */
   contentId: string;
   /**

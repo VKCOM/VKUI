@@ -30,7 +30,7 @@ export interface ConfigProviderContextInterface {
    * Задаёт необходимый минимальную ширину слота `after` в `PanelHeader` под пользовательский
    * "плавающий" элемент (например, ширина панели управления webview).
    *
-   * Учитывается только при `hasCustomPanelHeaderAfter={true}` (см. Документацию `hasCustomPanelHeaderAfter`)..
+   * Учитывается только при `hasCustomPanelHeaderAfter={true}` (см. документацию `hasCustomPanelHeaderAfter`).
    *
    * @default 90
    */

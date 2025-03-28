@@ -23,7 +23,7 @@ const CUSTOM_PROPERTY_GRADIENT_LEFT = '--vkui_internal--skeleton_gradient_left';
  * кейсов со скелетонами. Если такой кейс принесут, необходимо обработать
  * событие `visibilitychange` используя функцию `syncAnimation`.
  *
- * Https://developer.chrome.com/blog/page-lifecycle-api/.
+ * см. https://developer.chrome.com/blog/page-lifecycle-api/.
  *
  * @param duration Длительность анимации в секундах.
  */

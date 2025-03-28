@@ -23,7 +23,7 @@ export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
    */
   primary?: boolean;
   /**
-   * Текст или содержимое кнопки
+   * Текст или содержимое кнопки.
    */
   label?: React.ReactNode; // TODO [>=8]: добавить св-во indicator, чтобы разграничить кейсы.
 }
