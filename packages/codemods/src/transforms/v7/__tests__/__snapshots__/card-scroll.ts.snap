@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* noSpaces by default -> padding=true */}
       <CardScroll size="s" padding>
         <Card>
@@ -46,7 +46,7 @@ const App = () => {
           <div style={{ paddingBottom: '66%' }} />
         </Card>
       </CardScroll>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

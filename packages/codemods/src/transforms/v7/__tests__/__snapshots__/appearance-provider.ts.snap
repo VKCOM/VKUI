@@ -21,10 +21,10 @@ const App = () => {
   )
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ColorSchemeProvider {...props} />
       {getAdditionalProvider()}
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <CardScroll>{cards}</CardScroll>
       <CardScroll noSpaces>{cards}</CardScroll>
       <CardScroll withSpaces={withSpaces}>{cards}</CardScroll>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

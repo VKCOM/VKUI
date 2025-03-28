@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Popper offsetByMainAxis={0}>content</Popper>
       <Popper offsetByCrossAxis={0}>content</Popper>
       <Popper arrowProps={{
@@ -16,7 +16,7 @@ const App = () => {
       <Popper usePortal={document.getElementById('root')}>content</Popper>
       <Popper usePortal={document.getElementById('root')}>content</Popper>
       <Popper children={() => <div>content</div>} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

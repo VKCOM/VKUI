@@ -22,14 +22,14 @@ const App = () => {
   ];
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <CustomSelect
         id="select-type-select-id"
         value={selectType}
         placeholder="Не задан"
         options={selectTypes}
         onChange={(e) => setSelectType(e.target.value)} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

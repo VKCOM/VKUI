@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <DateRangeInput
         value={value}
         prevMonthLabel="prevMonthLabel"
@@ -23,7 +23,7 @@ const App = () => {
         clearFieldLabel="clearFieldLabel"
         showCalendarLabel="showCalendarLabel"
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

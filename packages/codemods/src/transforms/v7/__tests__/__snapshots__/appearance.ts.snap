@@ -20,9 +20,9 @@ const App = () => {
   const fromHookAppearance = useColorScheme();
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Component appearance={ColorScheme.DARK} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

@@ -160,7 +160,7 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
    *
    * @default Используется [Chip](#/Chip)
    */
-  renderChip?: RenderChip;
+  renderChip?: RenderChip<O>;
   /**
    * Показывать ли кнопку для очистки значения.
    */

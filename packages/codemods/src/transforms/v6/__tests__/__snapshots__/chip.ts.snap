@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Chip value="Чип" removable={true} removeLabel="Удалить">
         Чип
       </Chip>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

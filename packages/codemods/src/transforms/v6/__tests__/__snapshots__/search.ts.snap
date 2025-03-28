@@ -6,9 +6,9 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Search iconLabel="Иконка" clearLabel="Очистить" />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

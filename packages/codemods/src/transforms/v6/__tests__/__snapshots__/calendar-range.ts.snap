@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = ({ value, setValue, ...rest }) => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <CalendarRange
         value={value}
         onChange={setValue}
@@ -17,7 +17,7 @@ const App = ({ value, setValue, ...rest }) => {
         changeMonthLabel="changeMonthLabel"
         changeYearLabel="changeYearLabel"
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

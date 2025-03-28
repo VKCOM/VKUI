@@ -6,9 +6,9 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <OnboardingTooltipContainer>Tooltip</OnboardingTooltipContainer>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

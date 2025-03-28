@@ -36,7 +36,7 @@ function parseIconSizeByWidthProp(width: unknown): number | null {
 }
 
 function getElementDisplayName(element: React.JSX.Element): string | null {
-  return element.type.displayName ?? null;
+  return element.type.displayName ?? element.type.name ?? null;
 }
 
 function getElementWidthProp(element: React.JSX.Element): number | string | null {

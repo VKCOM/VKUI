@@ -6,12 +6,12 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <PanelHeader>PanelHeader</PanelHeader>
       <PanelHeader float>PanelHeader</PanelHeader>
       <PanelHeader>PanelHeader</PanelHeader>
       <PanelHeader delimiter="none">PanelHeader</PanelHeader>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

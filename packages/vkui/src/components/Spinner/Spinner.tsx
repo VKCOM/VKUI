@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { SpinnerAnimation } from './SpinnerAnimation';
+import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from './icons';
 import styles from './Spinner.module.css';
 
 const spinnerIconMap = {

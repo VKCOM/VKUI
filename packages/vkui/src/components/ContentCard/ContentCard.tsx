@@ -44,6 +44,11 @@ export interface ContentCardProps
    * Внешний вид карточки.
    */
   mode?: CardProps['mode'];
+  /**
+   * Пользовательское значения стиля `object-fit` для картинки
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
+   */
+  imageObjectFit?: React.CSSProperties['objectFit'];
 }
 
 /**
@@ -66,7 +71,7 @@ export const ContentCard = ({
   src,
   srcSet,
   alt = '',
-  width,
+  width = '100%',
   height,
   crossOrigin,
   decoding,
@@ -75,6 +80,7 @@ export const ContentCard = ({
   sizes,
   useMap,
   fetchPriority,
+  imageObjectFit,
   hasHover = false,
   hasActive = false,
   Component = 'li',
@@ -109,8 +115,8 @@ export const ContentCard = ({
             useMap={useMap}
             {...getFetchPriorityProp(fetchPriority)}
             height={height}
-            style={{ maxHeight }}
-            width="100%"
+            width={width}
+            style={{ maxHeight, objectFit: imageObjectFit }}
           />
         )}
         <div className={styles.body}>
