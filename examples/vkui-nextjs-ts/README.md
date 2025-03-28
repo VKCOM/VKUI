@@ -1,7 +1,7 @@
 # VKUI — шаблон приложения на Next.js + TypeScript
 
-[![Открыть в CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/VKCOM/VKUI/tree/master/examples/vkui-nextjs-ts)
 [![Открыть в StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/VKCOM/VKUI/tree/master/examples/vkui-nextjs-ts)
+[![Открыть в CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/VKCOM/VKUI/tree/master/examples/vkui-nextjs-ts)
 
 Готовый шаблон для быстрого старта проектов с VKUI, Next.js и TypeScript с использованием App Router.
 
@@ -25,16 +25,8 @@ cd VKUI/examples/vkui-nextjs-ts
 
 ### 2. Установить зависимости
 
-С помощью yarn:
-
 ```bash
 yarn install
-```
-
-С помощью npm:
-
-```bash
-npm install
 ```
 
 ### 3. Запустить проект
@@ -43,16 +35,12 @@ npm install
 
 ```bash
 yarn dev
-# или
-npm run dev
 ```
 
 Сборка для production:
 
 ```bash
 yarn build
-# или
-npm run build
 ```
 
 ## О шаблоне
