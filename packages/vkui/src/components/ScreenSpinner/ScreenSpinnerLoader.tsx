@@ -26,3 +26,6 @@ export const ScreenSpinnerLoader: React.FC<Omit<SpinnerProps, 'size'>> = ({
 };
 
 ScreenSpinnerLoader.displayName = 'ScreenSpinnerLoader';
+Object.defineProperty(ScreenSpinnerLoader, 'name', {
+  value: 'ScreenSpinnerLoader',
+});

@@ -148,3 +148,6 @@ const Section = memo<{
 );
 
 Section.displayName = 'Section';
+Object.defineProperty(Section, 'name', {
+  value: 'Section',
+});

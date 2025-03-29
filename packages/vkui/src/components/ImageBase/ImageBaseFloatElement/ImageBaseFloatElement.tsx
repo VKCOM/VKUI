@@ -166,3 +166,6 @@ export const ImageBaseFloatElement = ({
 };
 
 ImageBaseFloatElement.displayName = 'ImageBaseFloatElement';
+Object.defineProperty(ImageBaseFloatElement, 'name', {
+  value: 'ImageBaseFloatElement',
+});

@@ -31,3 +31,6 @@ export const OnboardingTooltipContainer: React.ForwardRefExoticComponent<
 );
 
 OnboardingTooltipContainer.displayName = 'OnboardingTooltipContainer';
+Object.defineProperty(OnboardingTooltipContainer, 'name', {
+  value: 'OnboardingTooltipContainer',
+});
