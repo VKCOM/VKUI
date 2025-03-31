@@ -39,16 +39,16 @@ export const Link = ({
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
+      hasHover={false}
+      activeMode="opacity"
+      hoverMode="none"
+      focusVisibleMode="outside"
       {...restProps}
       baseClassName={classNames(
         styles.host,
         hasVisited && styles.hasVisited,
         noUnderline ? undefined : styles.withUnderline,
       )}
-      hasHover={false}
-      activeMode="opacity"
-      hoverMode="none"
-      focusVisibleMode="outside"
     >
       {before}
       {children}
