@@ -46,8 +46,9 @@ yarn build
 ## О шаблоне
 
 Этот пример демонстрирует:
-- Интеграцию VKUI с Next.js App Router 
-- Готовую конфигурацию TypeScript 
+
+- Интеграцию VKUI с Next.js App Router
+- Готовую конфигурацию TypeScript
 - Настройку темизации через `ConfigProvider`
 - Примеры использования основных компонентов VKUI
 
