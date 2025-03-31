@@ -31,6 +31,20 @@ export interface TappableProps extends ClickableProps, StateProps {
    * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`
    */
   borderRadiusMode?: 'auto' | 'inherit';
+  /** Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>  */
+  /**
+   * @deprecated since 7.3.0
+   *
+   * Свойство устарело и будет удалено в `v8`, используйте свойство `activeMode`.
+   */
+  activeClassName?: string;
+  /** Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>  */
+  /**
+   * @deprecated since 7.3.0
+   *
+   * Свойство устарело и будет удалено в `v8`, используйте свойство `hoverMode`.
+   */
+  hoverClassName?: string;
 }
 
 export const Tappable = ({
