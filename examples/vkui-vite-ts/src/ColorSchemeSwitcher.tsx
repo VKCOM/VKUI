@@ -1,6 +1,6 @@
 import { Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
 import * as React from 'react';
-import { type ColorSchemeType, IconButton, useColorScheme } from '@vkontakte/vkui';
+import { ColorScheme, type ColorSchemeType, IconButton, useColorScheme } from '@vkontakte/vkui';
 
 const ColorSchemeSwitcher: React.FC<{
   colorScheme: ColorSchemeType;
@@ -10,10 +10,10 @@ const ColorSchemeSwitcher: React.FC<{
     <IconButton
       label={`Цветовая схема: ${colorScheme}`}
       onClick={() =>
-        setColorScheme(colorScheme === 'light' ? ('dark' as const) : ('light' as const))
+        setColorScheme(colorScheme === ColorScheme.LIGHT ? ColorScheme.DARK : ColorScheme.LIGHT)
       }
     >
-      {colorScheme === 'light' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
+      {colorScheme === ColorScheme.LIGHT ? <Icon28SunOutline /> : <Icon28MoonOutline />}
     </IconButton>
   );
 };
