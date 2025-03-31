@@ -60,14 +60,14 @@ export interface CellCheckboxProps
   type?: 'auto' | 'circle' | 'square';
 }
 
-export const CellCheckbox = ({
+export const CellCheckbox: React.FC<CellCheckboxProps> = ({
   getRootRef,
   getRef,
   className,
   style,
   type = 'auto',
   ...restProps
-}: CellCheckboxProps): React.ReactNode => {
+}) => {
   const typeIcon = useTypeIcon(type);
 
   const IconOff = typeIcon === 'circle' ? CheckCircleOff : CheckBoxOff;

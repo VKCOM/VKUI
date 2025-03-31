@@ -49,4 +49,7 @@ export const GridAvatar: React.FC<GridAvatarProps> & { Badge: typeof GridAvatarB
   );
 };
 
+GridAvatar.displayName = 'GridAvatar';
+
 GridAvatar.Badge = GridAvatarBadge;
+GridAvatar.Badge.displayName = 'GridAvatar.Badge';

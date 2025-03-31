@@ -1,64 +1,10 @@
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
-import { Headline } from '../Typography/Headline/Headline';
-import { Title } from '../Typography/Title/Title';
-import styles from './Placeholder.module.css';
-
-export interface PlaceholderContainerProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
-  /**
-   * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер
-   */
-  stretched?: boolean;
-  /**
-   * Убирает отступы у компонента
-   */
-  noPadding?: boolean;
-}
-
-const PlaceholderContainer = ({
-  stretched,
-  noPadding = false,
-  ...restProps
-}: PlaceholderContainerProps): React.ReactNode => (
-  <RootComponent
-    baseClassName={classNames(
-      styles.host,
-      stretched && styles.stretched,
-      !noPadding && styles.withPadding,
-    )}
-    {...restProps}
-  />
-);
-
-export type PlaceholderIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;
-
-const PlaceholderIcon = (props: PlaceholderIconProps): React.ReactNode => (
-  <RootComponent baseClassName={styles.icon} {...props} />
-);
-
-export type PlaceholderTitleProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
-
-const PlaceholderTitle = ({ className, ...restProps }: PlaceholderTitleProps): React.ReactNode => (
-  <Title level="2" weight="2" className={classNames(className, styles.title)} {...restProps} />
-);
-
-export type PlaceholderDescriptionProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
-
-const PlaceholderDescription = ({
-  className,
-  ...restProps
-}: PlaceholderDescriptionProps): React.ReactNode => (
-  <Headline weight="3" className={classNames(className, styles.description)} {...restProps} />
-);
-
-export type PlaceholderActionsProps = HTMLAttributesWithRootRef<HTMLDivElement>;
-
-const PlaceholderActions = (props: PlaceholderActionsProps): React.ReactNode => (
-  <RootComponent baseClassName={styles.action} {...props} />
-);
+import { hasReactNode } from '@vkontakte/vkjs';
+import { PlaceholderActions } from './PlaceholderActions';
+import { PlaceholderContainer, type PlaceholderContainerProps } from './PlaceholderContainer';
+import { PlaceholderDescription } from './PlaceholderDescription';
+import { PlaceholderIcon } from './PlaceholderIcon';
+import { PlaceholderTitle } from './PlaceholderTitle';
 
 export interface PlaceholderProps extends PlaceholderContainerProps {
   /**
@@ -93,8 +39,19 @@ export const Placeholder: React.FC<PlaceholderProps> & {
   </PlaceholderContainer>
 );
 
+Placeholder.displayName = 'Placeholder';
+
 Placeholder.Container = PlaceholderContainer;
+Placeholder.Container.displayName = 'Placeholder.Container';
+
 Placeholder.Icon = PlaceholderIcon;
+Placeholder.Icon.displayName = 'Placeholder.Icon';
+
 Placeholder.Title = PlaceholderTitle;
+Placeholder.Title.displayName = 'Placeholder.Title';
+
 Placeholder.Description = PlaceholderDescription;
+Placeholder.Description.displayName = 'Placeholder.Description';
+
 Placeholder.Actions = PlaceholderActions;
+Placeholder.Actions.displayName = 'Placeholder.Actions';

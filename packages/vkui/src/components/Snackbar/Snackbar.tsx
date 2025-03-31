@@ -315,4 +315,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   );
 };
 
+Snackbar.displayName = 'Snackbar';
+
 Snackbar.Basic = Basic;
+Snackbar.Basic.displayName = 'Snackbar.Basic';

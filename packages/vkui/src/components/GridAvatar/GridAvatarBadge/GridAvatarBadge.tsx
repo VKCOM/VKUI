@@ -7,10 +7,10 @@ import styles from './GridAvatarBadge.module.css';
 
 export type GridAvatarBadgeProps = ImageBaseBadgeProps;
 
-export const GridAvatarBadge = ({
+export const GridAvatarBadge: React.FC<GridAvatarBadgeProps> = ({
   className,
   ...restProps
-}: GridAvatarBadgeProps): React.ReactNode => {
+}): React.ReactNode => {
   const { size } = React.useContext(ImageBaseContext);
   return (
     <ImageBase.Badge

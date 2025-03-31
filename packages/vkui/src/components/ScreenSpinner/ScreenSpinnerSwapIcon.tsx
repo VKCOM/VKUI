@@ -12,9 +12,8 @@ import { ScreenSpinnerContext } from './context';
 import { type ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
 
-type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> & {
-  cancelLabel?: ScreenSpinnerProps['cancelLabel'];
-};
+type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> &
+  Pick<ScreenSpinnerProps, 'cancelLabel'>;
 
 const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
   onKeyDown,

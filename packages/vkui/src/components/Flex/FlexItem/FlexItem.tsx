@@ -41,13 +41,13 @@ export interface FlexItemProps
   flexBasis?: number | string;
 }
 
-export const FlexItem = ({
+export const FlexItem: React.FC<FlexItemProps> = ({
   children,
   alignSelf,
   flex,
   flexBasis,
   ...rest
-}: FlexItemProps): React.ReactNode => {
+}) => {
   return (
     <RootComponent
       {...rest}

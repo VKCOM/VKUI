@@ -64,4 +64,7 @@ export const Checkbox = (props: CheckboxProps): React.ReactNode => {
   return <CheckboxComponent {...props} />;
 };
 
+Checkbox.displayName = 'Checkbox';
+
 Checkbox.Input = CheckboxInput;
+Checkbox.Input.displayName = 'Checkbox.Input';

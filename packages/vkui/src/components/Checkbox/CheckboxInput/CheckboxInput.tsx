@@ -43,7 +43,7 @@ export interface CheckboxInputProps
 
 const warn = warnOnce('Checkbox');
 
-export function CheckboxInput({
+export const CheckboxInput: React.FC<CheckboxInputProps> = ({
   className,
   style,
   getRootRef,
@@ -57,7 +57,7 @@ export function CheckboxInput({
   IconOffRegular = Icon24CheckBoxOff,
   IconIndeterminate = Icon20CheckBoxIndetermanate,
   ...restProps
-}: CheckboxInputProps) {
+}) => {
   const inputRef = useExternRef(getRef);
   const platform = usePlatform();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
@@ -167,4 +167,4 @@ export function CheckboxInput({
       )}
     </RootComponent>
   );
-}
+};

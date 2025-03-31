@@ -61,7 +61,7 @@ export interface BasicProps {
 
 export interface SnackbarBasicProps extends HTMLAttributesWithRootRef<HTMLDivElement>, BasicProps {}
 
-export function Basic({
+export const Basic: React.FC<SnackbarBasicProps> = ({
   layout: layoutProps,
   action,
   after,
@@ -70,7 +70,7 @@ export function Basic({
   subtitle,
   children,
   ...restProps
-}: SnackbarBasicProps): React.ReactNode {
+}) => {
   const { sizeY = 'none' } = useAdaptivity();
   const layout = after || subtitle ? 'vertical' : 'none';
 
@@ -96,4 +96,4 @@ export function Basic({
       {after && <div className={styles.after}>{after}</div>}
     </RootComponent>
   );
-}
+};

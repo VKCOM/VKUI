@@ -127,4 +127,7 @@ function getGapsByUser(rowGap?: GapProp, columnGap?: GapProp) {
   return style;
 }
 
+Flex.displayName = 'Flex';
+
 Flex.Item = FlexItem;
+Flex.Item.displayName = 'Flex.Item';

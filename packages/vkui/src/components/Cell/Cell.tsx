@@ -181,4 +181,7 @@ export const Cell: React.FC<CellProps> & {
   );
 };
 
+Cell.displayName = 'Cell';
+
 Cell.Checkbox = CellCheckbox;
+Cell.Checkbox.displayName = 'Cell.Checkbox';

@@ -1,0 +1,11 @@
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+#storybook-docs > .sbdocs {
+  background: inherit;
+}
+.sbdocs.sbdocs {
+  background: inherit;
+}
+
+.sbdocs.sbdocs table {
+  margin: 0;
+}

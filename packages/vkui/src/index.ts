@@ -255,14 +255,12 @@ export type { SeparatorProps } from './components/Separator/Separator';
 export { Spacing } from './components/Spacing/Spacing';
 export type { SpacingProps } from './components/Spacing/Spacing';
 export { Placeholder } from './components/Placeholder/Placeholder';
-export type {
-  PlaceholderProps,
-  PlaceholderContainerProps,
-  PlaceholderIconProps,
-  PlaceholderTitleProps,
-  PlaceholderDescriptionProps,
-  PlaceholderActionsProps,
-} from './components/Placeholder/Placeholder';
+export type { PlaceholderProps } from './components/Placeholder/Placeholder';
+export type { PlaceholderContainerProps } from './components/Placeholder/PlaceholderContainer';
+export type { PlaceholderIconProps } from './components/Placeholder/PlaceholderIcon';
+export type { PlaceholderDescriptionProps } from './components/Placeholder/PlaceholderDescription';
+export type { PlaceholderTitleProps } from './components/Placeholder/PlaceholderTitle';
+export type { PlaceholderActionsProps } from './components/Placeholder/PlaceholderActions';
 export { Banner } from './components/Banner/Banner';
 export type { BannerProps } from './components/Banner/Banner';
 export { MiniInfoCell } from './components/MiniInfoCell/MiniInfoCell';
