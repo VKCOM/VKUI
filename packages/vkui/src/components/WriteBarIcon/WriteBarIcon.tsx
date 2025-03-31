@@ -107,10 +107,10 @@ export const WriteBarIcon = ({
 
   return (
     <Tappable
-      {...restProps}
       Component="button"
       hasHover={false}
       activeMode={styles.active}
+      {...restProps}
       baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
