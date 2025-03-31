@@ -36,10 +36,10 @@ const ColorSchemeSwitcher: React.FC<{
     <IconButton
       label={`Цветовая схема: ${colorScheme}`}
       onClick={() =>
-        setColorScheme(colorScheme === 'light' ? ('dark' as const) : ('light' as const))
+        setColorScheme(colorScheme === ColorScheme.LIGHT ? ColorScheme.DARK : ColorScheme.LIGHT)
       }
     >
-      {colorScheme === 'light' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
+      {ColorScheme.LIGHT ? <Icon28SunOutline /> : <Icon28MoonOutline />}
     </IconButton>
   );
 };
