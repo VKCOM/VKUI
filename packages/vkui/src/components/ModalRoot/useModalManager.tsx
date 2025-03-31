@@ -1,15 +1,18 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import { useContext, useState } from 'react';
+import { useContext, useId, useState } from 'react';
+import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../lib/warnOnce';
 import type { AnyFunction } from '../../types';
 import { ModalOverlay, type ModalOverlayProps } from '../ModalOverlay/ModalOverlay';
 import { ModalRootContext } from './ModalRootContext';
 import { VisuallyHiddenModalOverlay } from './VisuallyHiddenModalOverlay/VisuallyHiddenModalOverlay';
 import type { ModalRootCallbackFunction } from './types';
 
+const warn = warnOnce('useModalManager');
 export interface UseModalManager {
-  id: string;
+  id?: string;
   open: boolean;
   keepMounted: boolean;
   modalOverlayTestId?: string;
@@ -21,6 +24,7 @@ export interface UseModalManager {
 }
 
 export interface UseModalManagerResolvedProps {
+  id: string;
   open: boolean;
   noFocusToDialog?: boolean;
   modalOverlayTestId?: string;
@@ -32,11 +36,11 @@ export interface UseModalManagerResolvedProps {
 }
 
 export type UseModalManagerResult =
-  | { mounted: false; shouldPreserveSnapPoint: boolean }
+  | { mounted: false; shouldPreserveSnapPoint: boolean; id: UseModalManagerResolvedProps['id'] }
   | ({ mounted: true; shouldPreserveSnapPoint: boolean } & UseModalManagerResolvedProps);
 
 export const useModalManager = ({
-  id,
+  id: idProp,
   open,
   keepMounted,
   modalOverlayTestId,
@@ -47,6 +51,8 @@ export const useModalManager = ({
   onClosed,
 }: UseModalManager): UseModalManagerResult => {
   const context = useContext(ModalRootContext);
+  const generatingId = useId();
+  const id = getNavId({ nav: idProp }, context.isInsideModal ? warn : undefined) || generatingId;
   const opened = context.isInsideModal ? context.activeModal === id : open;
   const shouldPreserveSnapPoint = context.isInsideModal ? context.activeModal !== null : false;
 
@@ -62,10 +68,11 @@ export const useModalManager = ({
   );
 
   if (unmounted) {
-    return { mounted: false, shouldPreserveSnapPoint };
+    return { mounted: false, shouldPreserveSnapPoint, id };
   }
 
   return {
+    id,
     mounted: true,
     open: opened,
     shouldPreserveSnapPoint,
