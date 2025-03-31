@@ -24,7 +24,7 @@
     "postcss-modules": "^6.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "serve-static": "1.16.2",
+    "serve-static": "2.2.0",
     "swc-loader": "^0.2.6",
     "terser-webpack-plugin": "^5.3.14",
     "webpack": "^5.98.0"
