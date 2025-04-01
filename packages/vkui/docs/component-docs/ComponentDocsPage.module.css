@@ -1,0 +1,8 @@
+/* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
+:global(.sbdocs):global(.sbdocs) {
+  background: inherit;
+}
+/* stylelint-disable-next-line selector-max-type */
+.page.page table {
+  margin: 0;
+}

@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import * as React from 'react';
 import { DocsContext } from '@storybook/addon-docs';
 import { ArgTypes, DocsContainer } from '@storybook/blocks';
+import { classNames } from '@vkontakte/vkjs';
 import { vkuiDarkTheme, vkuiLightTheme } from '../../.storybook/addons/storybook-theme/vkuiThemes';
 import { AppRoot, ConfigProvider, DisplayTitle, Flex } from '../../src';
 import { useGetGlobalParams } from '../common/hooks/useGetGlobalParams';
@@ -11,7 +12,7 @@ import { ComponentLinks } from './ComponentLinks';
 import { DescriptionBlock } from './DescriptionBlock';
 import { SectionGroup } from './SectionGroup';
 import { SubcomponentsBlocks } from './SubcomponentsBlocks';
-import './ComponentDocsPage.css';
+import styles from './ComponentDocsPage.module.css';
 
 interface ComponentDocsPageProps {
   component: React.ComponentType<any>;
@@ -30,7 +31,7 @@ export const ComponentDocsPage: React.FC<ComponentDocsPageProps> = ({
         context={context}
         theme={colorScheme === 'light' ? vkuiLightTheme : vkuiDarkTheme}
       >
-        <AppRoot className="sb-unstyled" dir={direction}>
+        <AppRoot className={classNames(styles.page, 'sb-unstyled')} dir={direction}>
           <Flex direction="column" gap="xl">
             <DisplayTitle level="1">{parentDisplayName}</DisplayTitle>
 

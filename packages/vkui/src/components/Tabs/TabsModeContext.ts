@@ -1,5 +1,5 @@
-import * as React from "react";
-import {type TabsContextProps} from "./Tabs";
+import * as React from 'react';
+import { type TabsContextProps } from './Tabs';
 
 export const TabsModeContext: React.Context<TabsContextProps> =
   React.createContext<TabsContextProps>({
