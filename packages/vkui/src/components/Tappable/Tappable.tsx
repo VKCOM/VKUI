@@ -28,23 +28,21 @@ function hasPointerClassName(hasPointer: boolean | undefined) {
 export interface TappableProps extends ClickableProps, StateProps {
   /**
    * Задает border-radius элементу
-   * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`
+   * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`.
    */
   borderRadiusMode?: 'auto' | 'inherit';
-  /** Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>  */
   /**
-   * @deprecated since 7.3.0
+   * @deprecated Since 7.3.0.
    *
    * Свойство устарело и будет удалено в `v8`, используйте свойство `activeMode`.
    */
-  activeClassName?: string;
-  /** Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>  */
+  activeClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
   /**
-   * @deprecated since 7.3.0
+   * @deprecated Since 7.3.0.
    *
    * Свойство устарело и будет удалено в `v8`, используйте свойство `hoverMode`.
    */
-  hoverClassName?: string;
+  hoverClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
 }
 
 export const Tappable = ({

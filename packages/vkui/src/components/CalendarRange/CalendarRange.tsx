@@ -33,11 +33,11 @@ export type DateRangeType = [Date | null, Date | null];
 
 export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части.
    */
   leftPartHeaderTestsData?: CalendarHeaderTestsProps;
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части.
    */
   rightPartHeaderTestsData?: CalendarHeaderTestsProps;
 };
@@ -55,15 +55,47 @@ export interface CalendarRangeProps
     >,
     Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarRangeTestsProps {
+  /**
+   * Текущий выбранный промежуток.
+   */
   value?: DateRangeType;
+  /**
+   * Начальный промежуток при монтировании.
+   */
   defaultValue?: DateRangeType;
+  /**
+   * Запрещает выбор даты в прошлом.
+   * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
+   */
   disablePast?: boolean;
+  /**
+   * Запрещает выбор даты в будущем.
+   * Применяется, если не задано `shouldDisableDate`.
+   */
   disableFuture?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года.
+   */
   disablePickers?: boolean;
+  /**
+   * `aria-label` для изменения дня.
+   */
   changeDayLabel?: string;
+  /**
+   * День недели, с которого начинается неделя.
+   */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * Обработчик изменения выбранного промежутка.
+   */
   onChange?: (value: DateRangeType | undefined) => void;
+  /**
+   * Функция для проверки запрета выбора даты.
+   */
   shouldDisableDate?: (value: Date) => boolean;
+  /**
+   * @deprecated Свойство не используется.
+   */
   onClose?: () => void;
 }
 

@@ -16,6 +16,9 @@ function useAccordionId(id: AccordionProps['id']) {
 }
 
 export interface AccordionProps extends HasChildren {
+  /**
+   * Используется для генерации id для заголовка и контента(a11y).
+   */
   id?: string;
   /**
    * Управляет раскрытием и скрытием контента.
@@ -29,6 +32,9 @@ export interface AccordionProps extends HasChildren {
    * Возвращает новое значение при изменении раскрытия/сворачивания контента.
    */
   onChange?: (newValue: boolean) => void;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
 }
 

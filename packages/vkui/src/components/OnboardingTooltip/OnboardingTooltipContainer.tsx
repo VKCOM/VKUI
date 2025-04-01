@@ -10,6 +10,9 @@ export const onboardingTooltipContainerAttr = 'data-onboarding-tooltip-container
 type OnboardingTooltipContainerProps = React.HTMLAttributes<HTMLDivElement> &
   HasComponent &
   HasDataAttribute & {
+    /**
+     * Фиксированное отображение тултипа.
+     */
     fixed?: boolean;
   };
 

@@ -141,10 +141,13 @@ const filter = <T extends CustomSelectOptionInterface>(
     : options;
 };
 
+/* eslint-disable jsdoc/require-jsdoc */
 type MousePosition = {
   x: React.MouseEvent['clientX'];
   y: React.MouseEvent['clientY'];
 };
+/* eslint-enable jsdoc/require-jsdoc */
+
 function isMousePositionChanged(event: React.MouseEvent, prevPosition: MousePosition) {
   return (
     Math.abs(prevPosition.x - event.clientX) >= 1 || Math.abs(prevPosition.y - event.clientY) >= 1
@@ -152,14 +155,26 @@ function isMousePositionChanged(event: React.MouseEvent, prevPosition: MousePosi
 }
 
 export interface CustomSelectOptionInterface {
+  /**
+   * Значение.
+   */
   value: Exclude<SelectValue, null>;
+  /**
+   * Отображаемый текст.
+   */
   label: React.ReactElement | string;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
   [index: string]: any;
 }
 
 export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   extends CustomSelectOptionProps {
+  /**
+   * Данные об опции.
+   */
   option: T;
 }
 
@@ -172,11 +187,11 @@ export interface SelectProps<
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
     Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
   /**
-   * ref на внутрений компонент input
+   * Ref на внутрений компонент input.
    */
   getSelectInputRef?: React.Ref<HTMLInputElement>;
   /**
-   * Если `true`, то при клике на `CustomSelect` в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
+   * Если `true`, то при нажатии на `CustomSelect` в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
    */
   searchable?: boolean;
@@ -185,18 +200,24 @@ export interface SelectProps<
    */
   emptyText?: string;
   /**
-   * Событие изменения текстового поля
+   * Событие изменения текстового поля.
    */
   onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * Список опций в списке.
+   */
   options: OptionInterfaceT[];
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
    */
   filterFn?: false | FilterFn<OptionInterfaceT>;
+  /**
+   * Направление раскрытия выпадающего списка.
+   */
   popupDirection?: 'top' | 'bottom';
   /**
    * Рендер-проп для кастомного рендера опции.
-   * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props)
+   * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props).
    *
    * > ⚠️  Важно: cвойство опции `disabled` должно выставляться только через проп `options`.
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе `CustomSelect` не будет знать об актуальном состоянии
@@ -217,37 +238,49 @@ export interface SelectProps<
    * "победит" `renderDropdown`.
    */
   fetching?: boolean;
+  /**
+   * Обработчик закрытия выпадающего списка.
+   */
   onClose?: VoidFunction;
+  /**
+   * Обработчик открытия выпадающего списка.
+   */
   onOpen?: VoidFunction;
   /**
-   * Иконка раскрывающегося списка
+   * Иконка раскрывающегося списка.
    */
   icon?: React.ReactNode;
   /**
    * Кастомная кнопка для очистки значения.
-   * Должна принимать обязательное свойство `onClick`
+   * Должна принимать обязательное свойство `onClick`.
    */
   ClearButton?: React.ComponentType<CustomSelectClearButtonProps>;
   /**
-   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
   allowClearButton?: boolean;
   /**
-   * Передает атрибут `data-testid` для кнопки очистки
+   * Передает атрибут `data-testid` для кнопки очистки.
    */
   clearButtonTestId?: string;
   /**
-   * Отступ от выпадающего списка
+   * Отступ от выпадающего списка.
    */
   dropdownOffsetDistance?: number;
   /**
-   * Ширина раскрывающегося списка зависит от контента
+   * Ширина раскрывающегося списка зависит от контента.
    */
   dropdownAutoWidth?: boolean;
+  /**
+   * Использовать Portal для рендеринга выпадающего списка.
+   */
   forceDropdownPortal?: boolean;
+  /**
+   * Тип отображения компонента.
+   */
   selectType?: SelectType;
   /**
-   * Отключает максимальную высоту по умолчанию
+   * Отключает максимальную высоту по умолчанию.
    */
   noMaxHeight?: boolean;
   /**
@@ -258,6 +291,9 @@ export interface SelectProps<
    * Передает атрибут `data-testid` для нативного элемента `select`.
    */
   nativeSelectTestId?: string;
+  /**
+   * Обработчик события `keyDown` в поле ввода.
+   */
   onInputKeyDown?: (e: React.KeyboardEvent) => void;
 }
 

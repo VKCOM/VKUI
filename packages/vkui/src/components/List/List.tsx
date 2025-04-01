@@ -6,7 +6,7 @@ import styles from './List.module.css';
 
 export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement> & {
   /**
-   * Задает отступ между элементами
+   * Задает отступ между элементами.
    */
   gap?: number;
 };

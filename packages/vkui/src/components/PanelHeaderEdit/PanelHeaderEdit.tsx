@@ -17,15 +17,15 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
 export interface PanelHeaderEditProps extends Omit<PanelHeaderButtonProps, 'label' | 'children'> {
   /**
-   * Включен ли режим редактирования
+   * Включен ли режим редактирования.
    */
   isActive?: boolean;
   /**
-   * Текст кнопки, когда режим редактирования не активен. Визуально скрыт везде, кроме iOS
+   * Текст кнопки, когда режим редактирования не активен. Визуально скрыт везде, кроме iOS.
    */
   editLabel?: string;
   /**
-   * Текст кнопки при активном режиме редактирования для выхода из него. Визуально скрыт везде, кроме iOS
+   * Текст кнопки при активном режиме редактирования для выхода из него. Визуально скрыт везде, кроме iOS.
    */
   doneLabel?: string;
 }

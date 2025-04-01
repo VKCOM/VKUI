@@ -7,6 +7,9 @@ import { coordX, coordY, touchEnabled, type VKUITouchEvent } from '../../lib/tou
 import type { HasComponent, HasRootRef } from '../../types';
 
 export interface CustomTouchEvent extends Gesture {
+  /**
+   * Оригинальное событие.
+   */
   originalEvent: VKUITouchEvent;
 }
 
@@ -19,42 +22,152 @@ export interface TouchProps
     HasRootRef<HTMLElement>,
     HasComponent {
   /**
-   * Привязать onEnter и onLeave через pointer-events - работает на disabled-инпутах
+   * Использовать pointer-events для hover-состояний.
+   * Работает на отключенных элементах (disabled inputs).
    */
   usePointerHover?: boolean;
+  /**
+   * Использовать фазу capture для событий.
+   */
   useCapture?: boolean;
+  /**
+   * Порог расстояния в пикселях для активации свайпа.
+   * @default 5
+   */
   slideThreshold?: number;
+  /**
+   * Блокировать click-события после распознавания свайпа.
+   */
   noSlideClick?: boolean;
-  onEnter?: HoverHandler;
-  onLeave?: HoverHandler;
-  onStart?: CustomTouchEventHandler;
-  onStartX?: CustomTouchEventHandler;
-  onStartY?: CustomTouchEventHandler;
-  onMove?: CustomTouchEventHandler;
-  onMoveX?: CustomTouchEventHandler;
-  onMoveY?: CustomTouchEventHandler;
-  onEnd?: CustomTouchEventHandler;
-  onEndX?: CustomTouchEventHandler;
-  onEndY?: CustomTouchEventHandler;
+  /**
+   * Останавливать всплытие событий.
+   */
   stopPropagation?: boolean;
+  /**
+   * Обработчик входа курсора в область.
+   */
+  onEnter?: HoverHandler;
+  /**
+   * Обработчик выхода курсора из области.
+   */
+  onLeave?: HoverHandler;
+  /**
+   * Общий обработчик начала взаимодействия.
+   */
+  onStart?: CustomTouchEventHandler;
+  /**
+   * Обработчик начала горизонтального перемещения.
+   */
+  onStartX?: CustomTouchEventHandler;
+  /**
+   * Обработчик начала вертикального перемещения.
+   */
+  onStartY?: CustomTouchEventHandler;
+  /**
+   * Общий обработчик перемещения.
+   */
+  onMove?: CustomTouchEventHandler;
+  /**
+   * Обработчик горизонтального перемещения.
+   */
+  onMoveX?: CustomTouchEventHandler;
+  /**
+   * Обработчик вертикального перемещения.
+   */
+  onMoveY?: CustomTouchEventHandler;
+  /**
+   * Общий обработчик завершения взаимодействия.
+   */
+  onEnd?: CustomTouchEventHandler;
+  /**
+   * Обработчик завершения горизонтального свайпа.
+   */
+  onEndX?: CustomTouchEventHandler;
+  /**
+   * Обработчик завершения вертикального свайпа.
+   */
+  onEndY?: CustomTouchEventHandler;
 }
 
 export interface Gesture {
+  /**
+   * Начальная X-координата касания.
+   */
   startX: number;
+
+  /**
+   * Начальная Y-координата касания.
+   */
   startY: number;
+
+  /**
+   * Время начала взаимодействия.
+   */
   startT: Date;
+
+  /**
+   * Длительность взаимодействия в миллисекундах.
+   */
   duration: number;
+
+  /**
+   * Флаг активного нажатия.
+   */
   isPressed: boolean;
+
+  /**
+   * Флаг вертикального перемещения.
+   */
   isY: boolean;
+
+  /**
+   * Флаг горизонтального перемещения.
+   */
   isX: boolean;
+
+  /**
+   * Флаг горизонтального свайпа.
+   */
   isSlideX: boolean;
+
+  /**
+   * Флаг вертикального свайпа.
+   */
   isSlideY: boolean;
+
+  /**
+   * Общий флаг свайпа (вертикального или горизонтального).
+   */
   isSlide: boolean;
+
+  /**
+   * Текущая X-координата курсора/касания.
+   */
   clientX: number;
+
+  /**
+   * Текущая Y-координата курсора/касания.
+   */
   clientY: number;
+
+  /**
+   * Смещение по X относительно начальной точки.
+   */
   shiftX: number;
+
+  /**
+   * Смещение по Y относительно начальной точки.
+   */
   shiftY: number;
+
+  /**
+   * Абсолютное смещение по X.
+   */
   shiftXAbs: number;
+
+  /**
+   * Абсолютное смещение по Y.
+   */
   shiftYAbs: number;
 }
 
@@ -246,7 +359,7 @@ export const Touch = ({
     : undefined;
 
   /**
-   * Отменяет нативное браузерное поведение для вложенных ссылок и изображений
+   * Отменяет нативное браузерное поведение для вложенных ссылок и изображений.
    */
   const handleDragStart = (event: React.DragEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
@@ -256,7 +369,7 @@ export const Touch = ({
   };
 
   /**
-   * Отменяет переход по вложенной ссылке, если был зафиксирован свайп
+   * Отменяет переход по вложенной ссылке, если был зафиксирован свайп.
    */
   const handleClickCapture: typeof onClickCapture = (event) => {
     if (!didSlide.current) {

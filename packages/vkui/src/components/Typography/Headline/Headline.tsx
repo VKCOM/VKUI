@@ -16,6 +16,9 @@ const sizeYClassNames = {
 };
 
 export interface HeadlineProps extends TypographyProps {
+  /**
+   * Уровень заголовка (от 1 до 2).
+   */
   level?: '1' | '2';
 }
 

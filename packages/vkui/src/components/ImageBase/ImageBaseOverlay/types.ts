@@ -24,6 +24,9 @@ export interface ImageBaseOverlayCommonProps
    * > [AdaptivityProvider](#/AdaptivityProvider) для того, чтобы явно определить `hasPointer`.
    */
   visibility?: 'on-hover' | 'always';
+  /**
+   * `className` для компонента.
+   */
   className?: string;
 }
 
@@ -53,5 +56,8 @@ export interface ImageBaseOverlayNonInteractiveProps extends ImageBaseOverlayCom
    * такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`.
    */
   onClick?: undefined;
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
 }

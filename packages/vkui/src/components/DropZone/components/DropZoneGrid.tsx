@@ -9,6 +9,9 @@ const directionStyle = {
 };
 
 export interface DropZoneGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Направление дочерних компонентов.
+   */
   direction?: 'row' | 'column';
 }
 

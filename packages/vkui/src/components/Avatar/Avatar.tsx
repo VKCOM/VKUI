@@ -68,7 +68,7 @@ export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightS
    * 3: 'yellow'
    * 4: 'green'
    * 5: 'l-blue'
-   * 6: 'violet'
+   * 6: 'violet'.
    *
    * > Если необходимо задать свой градиент, то используйте значение `"custom"` и определите цвет градиента либо через
    * > свой класс в `className`, либо через `style={{ backgroundImage: "..." }}`.
