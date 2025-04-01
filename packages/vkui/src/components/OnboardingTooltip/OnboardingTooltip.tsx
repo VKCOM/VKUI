@@ -68,7 +68,7 @@ export interface OnboardingTooltipProps
    */
   disableArrow?: boolean;
   /**
-   * Обработчик, который вызывается при нажатие по любому месту в пределах экрана.
+   * Обработчик, который вызывается при нажатии по любому месту в пределах экрана.
    */
   onClose?: (this: void) => void;
   /**

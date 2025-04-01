@@ -11,7 +11,7 @@ type OnboardingTooltipContainerProps = React.HTMLAttributes<HTMLDivElement> &
   HasComponent &
   HasDataAttribute & {
     /**
-     * Фиксированное отображения тултипа.
+     * Фиксированное отображение тултипа.
      */
     fixed?: boolean;
   };
