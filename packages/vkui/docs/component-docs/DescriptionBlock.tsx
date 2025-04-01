@@ -6,7 +6,7 @@ export const DescriptionBlock: React.FC<{
   component: React.ComponentType<any>;
 }> = ({ component }) => {
   const description = <Description of={component} />;
-  const descriptionText = description.props.of.__docgenInfo.description;
+  const descriptionText = description.props.of.__docgenInfo?.description;
   if (!descriptionText) {
     return null;
   }

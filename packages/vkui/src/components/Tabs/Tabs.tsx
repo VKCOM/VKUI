@@ -7,6 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { TabsModeContext } from './TabsModeContext';
 import styles from './Tabs.module.css';
 
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -40,19 +41,10 @@ export interface TabsContextProps {
   scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
 }
 
-export const TabsModeContext: React.Context<TabsContextProps> =
-  React.createContext<TabsContextProps>({
-    mode: 'default',
-    withGaps: false,
-    layoutFillMode: 'auto',
-    withScrollToSelectedTab: false,
-    scrollBehaviorToSelectedTab: 'nearest',
-  });
-
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
  */
-export const Tabs = ({
+export const Tabs: React.FC<TabsProps> = ({
   children,
   mode = 'default',
   role = 'tablist',
@@ -60,7 +52,7 @@ export const Tabs = ({
   scrollBehaviorToSelectedTab = 'nearest',
   layoutFillMode = 'auto',
   ...restProps
-}: TabsProps): React.ReactNode => {
+}) => {
   const platform = usePlatform();
   const direction = useConfigDirection();
   const isTabFlow = role === 'tablist';

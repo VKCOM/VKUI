@@ -22,16 +22,14 @@ import {
 } from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import type { FormFieldProps } from '../FormField/FormField';
+import type { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import {
+  type NativeSelectValue,
   NOT_SELECTED,
   remapFromNativeValueToSelectValue,
   remapFromSelectValueToNativeValue,
-} from '../NativeSelect/NativeSelect';
-import type {
-  NativeSelectProps,
-  NativeSelectValue,
-  SelectValue,
-} from '../NativeSelect/NativeSelect';
+  type SelectValue,
+} from '../NativeSelect/helpers';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

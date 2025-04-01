@@ -13,33 +13,18 @@ import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
+import {
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+  remapFromSelectValueToNativeValue,
+  type SelectValue,
+} from './helpers';
 import styles from '../Select/Select.module.css';
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
   compact: styles.sizeYCompact,
 };
-
-export type SelectValue = Exclude<
-  React.SelectHTMLAttributes<HTMLSelectElement>['value'],
-  undefined
-> | null;
-
-export type NativeSelectValue = Exclude<SelectValue, null>;
-
-export const NOT_SELECTED = {
-  NATIVE: '__vkui_internal_Select_not_selected__',
-  CUSTOM: null,
-};
-
-/**
- * @visibleName NativeSelect
- */
-export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
-  value === NOT_SELECTED.CUSTOM ? NOT_SELECTED.NATIVE : value;
-
-export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
-  value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
 
 export interface NativeSelectProps
   extends Omit<
@@ -81,7 +66,7 @@ export interface NativeSelectProps
 /**
  * @see https://vkcom.github.io/VKUI/#/NativeSelect
  */
-export const NativeSelect = ({
+export const NativeSelect: React.FC<NativeSelectProps> = ({
   style,
   align,
   placeholder,
@@ -99,7 +84,7 @@ export const NativeSelect = ({
   value,
   defaultValue,
   ...restProps
-}: NativeSelectProps): React.ReactNode => {
+}) => {
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
   const selectRef = useExternRef(getRef);
