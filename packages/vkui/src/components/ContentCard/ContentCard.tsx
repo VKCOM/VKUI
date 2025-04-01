@@ -95,10 +95,10 @@ export const ContentCard = ({
       className={classNames(restProps.disabled && styles.disabled, className)}
     >
       <Tappable
-        {...restProps}
         hasHover={hasHover}
         hasActive={hasActive}
-        className={styles.tappable}
+        {...restProps}
+        baseClassName={styles.tappable}
       >
         {(src || srcSet) && (
           <img

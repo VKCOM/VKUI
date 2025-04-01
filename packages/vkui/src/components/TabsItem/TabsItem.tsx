@@ -92,9 +92,6 @@ export const TabsItem = ({
   getRootRef,
   hoverMode = styles.hover,
   activeMode = '',
-  hovered,
-  activated,
-  hasHover,
   hasActive = false,
   focusVisibleMode = 'inside',
   ...restProps
@@ -188,8 +185,14 @@ export const TabsItem = ({
 
   return (
     <Tappable
-      {...restProps}
       getRootRef={rootRef}
+      hoverMode={hoverMode}
+      activeMode={activeMode}
+      hasActive={hasActive}
+      focusVisibleMode={focusVisibleMode}
+      role={role}
+      aria-selected={selected}
+      tabIndex={tabIndex}
       baseClassName={classNames(
         styles.host,
         mode && stylesMode[mode],
@@ -198,16 +201,7 @@ export const TabsItem = ({
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
       )}
-      hoverMode={hoverMode}
-      activeMode={activeMode}
-      hasHover={hasHover}
-      hasActive={hasActive}
-      hovered={hovered}
-      activated={activated}
-      focusVisibleMode={focusVisibleMode}
-      role={role}
-      aria-selected={selected}
-      tabIndex={tabIndex}
+      {...restProps}
     >
       {before && <div className={styles.before}>{before}</div>}
       <Headline
