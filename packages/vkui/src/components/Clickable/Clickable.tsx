@@ -73,7 +73,8 @@ function component<T>({
        * - Тег `a` не поддерживает атрибут disabled, поэтому используем `aria-disabled`
        * - Тег `a` без `href` не является ссылкой, поэтому добавляем `role="link"`.
        *
-       * см. https://w3c.github.io/html-aria/#example-communicate-a-disabled-link-with-aria.
+       * @see см. https://w3c.github.io/html-aria/#example-communicate-a-disabled-link-with-aria.
+       *
        */
       ...(disabled && {
         'aria-disabled': true,
