@@ -160,7 +160,11 @@ export const CalendarDays = ({
 
   return (
     <RootComponent role="grid" {...props} baseClassName={styles.host}>
-      <div role="row" className={classNames(styles.row, size === 's' && styles.rowSizeS)}>
+      <div
+        role="row"
+        aria-rowindex={1}
+        className={classNames(styles.row, size === 's' && styles.rowSizeS)}
+      >
         {daysNames.map(({ short: shortDayName, long: longDayName }) => (
           <Footnote
             role="columnheader"
@@ -173,56 +177,54 @@ export const CalendarDays = ({
         ))}
       </div>
 
-      <div role="rowgroup">
-        {weeks.map((week, i) => (
-          <div
-            role="row"
-            aria-rowindex={i + 1}
-            className={classNames(styles.row, size === 's' && styles.rowSizeS)}
-            key={i}
-          >
-            {week.map((day, i) => {
-              const sameMonth = isSameMonth(day, viewDate);
-              const isHidden = !showNeighboringMonth && !sameMonth;
-              const isToday = isSameDay(day, now);
-              const isActive = isDayActive(day);
-              const isFocused = isDayFocused(day);
-              return (
-                <CalendarDay
-                  aria-role="gridcell"
-                  aria-current={isToday ? 'date' : undefined}
-                  aria-selected={isActive ? 'true' : 'false'}
-                  aria-colindex={i + 1}
-                  tabIndex={isDayFocusable?.(day) ? 0 : -1}
-                  key={day.toISOString()}
-                  day={day}
-                  today={isToday}
-                  active={isActive}
-                  onChange={handleDayChange}
-                  hidden={isHidden}
-                  disabled={isDayDisabled(day)}
-                  selectionStart={isDaySelectionStart(day, i)}
-                  selectionEnd={isDaySelectionEnd(day, i)}
-                  hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
-                  hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
-                  selected={isDaySelected?.(day)}
-                  focused={isFocused}
-                  onEnter={onDayEnter}
-                  onLeave={onDayLeave}
-                  onFocus={onDayFocus}
-                  hinted={isDayHinted?.(day)}
-                  sameMonth={sameMonth}
-                  size={size}
-                  renderDayContent={renderDayContent}
-                  testId={dayTestId}
-                  {...dayProps}
-                  className={classNames(dayProps?.className, styles.rowDay)}
-                />
-              );
-            })}
-          </div>
-        ))}
-      </div>
+      {weeks.map((week, i) => (
+        <div
+          role="row"
+          aria-rowindex={i + 2}
+          className={classNames(styles.row, size === 's' && styles.rowSizeS)}
+          key={i}
+        >
+          {week.map((day, i) => {
+            const sameMonth = isSameMonth(day, viewDate);
+            const isHidden = !showNeighboringMonth && !sameMonth;
+            const isToday = isSameDay(day, now);
+            const isActive = isDayActive(day);
+            const isFocused = isDayFocused(day);
+            return (
+              <CalendarDay
+                role="gridcell"
+                aria-current={isToday ? 'date' : undefined}
+                aria-selected={isActive ? 'true' : 'false'}
+                aria-colindex={i + 1}
+                tabIndex={-1}
+                key={day.toISOString()}
+                day={day}
+                today={isToday}
+                active={isActive}
+                onChange={handleDayChange}
+                hidden={isHidden}
+                disabled={isDayDisabled(day)}
+                selectionStart={isDaySelectionStart(day, i)}
+                selectionEnd={isDaySelectionEnd(day, i)}
+                hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
+                hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
+                selected={isDaySelected?.(day)}
+                focused={isFocused}
+                onEnter={onDayEnter}
+                onLeave={onDayLeave}
+                onFocus={onDayFocus}
+                hinted={isDayHinted?.(day)}
+                sameMonth={sameMonth}
+                size={size}
+                renderDayContent={renderDayContent}
+                testId={dayTestId}
+                {...dayProps}
+                className={classNames(dayProps?.className, styles.rowDay)}
+              />
+            );
+          })}
+        </div>
+      ))}
     </RootComponent>
   );
 };

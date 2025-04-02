@@ -124,6 +124,8 @@ export const CalendarDay = React.memo(
     children,
     renderDayContent,
     testId,
+    role,
+    'aria-colindex': colIndex,
     ...restProps
   }: CalendarDayProps) => {
     const { locale, direction } = useConfigProvider();
@@ -160,7 +162,13 @@ export const CalendarDay = React.memo(
     }, [renderDayContent, day, children, label]);
 
     if (hidden) {
-      return <div className={classNames(styles.hidden, size === 's' && styles.sizeS)} />;
+      return (
+        <div
+          role={role}
+          aria-colindex={colIndex}
+          className={classNames(styles.hidden, size === 's' && styles.sizeS)}
+        />
+      );
     }
 
     return (
@@ -170,6 +178,8 @@ export const CalendarDay = React.memo(
           size === 's' && styles.sizeS,
           direction === 'rtl' && styles.rtl,
         )}
+        role={role}
+        aria-colindex={colIndex}
         hoverMode={styles.hostHovered}
         activeMode={styles.hostActivated}
         hasActive={false}
