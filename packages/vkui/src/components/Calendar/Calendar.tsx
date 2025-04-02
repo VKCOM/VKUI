@@ -370,7 +370,6 @@ export const Calendar = ({
         viewDate={externalViewDate || viewDate}
         value={timeZonedValue}
         weekStartsOn={weekStartsOn}
-        aria-label={changeDayLabel}
         onDayChange={onDayChange}
         onDayFocus={onDayFocus}
         isDayActive={isDayActive}
