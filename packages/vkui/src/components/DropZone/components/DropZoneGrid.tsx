@@ -21,8 +21,3 @@ export const DropZoneGrid: React.FC<DropZoneGridProps> = ({
 }: DropZoneGridProps) => (
   <RootComponent baseClassName={classNames(styles.host, directionStyle[direction])} {...props} />
 );
-
-DropZoneGrid.displayName = 'DropZoneGrid';
-Object.defineProperty(DropZoneGrid, 'name', {
-  value: 'DropZoneGrid',
-});

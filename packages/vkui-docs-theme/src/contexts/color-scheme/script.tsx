@@ -19,10 +19,13 @@ export const ColorSchemeScript = React.memo(
     );
   },
 );
-ColorSchemeScript.displayName = 'ColorSchemeScript';
-Object.defineProperty(ColorSchemeScript, 'name', {
-  value: 'ColorSchemeScript',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  ColorSchemeScript.displayName = 'ColorSchemeScript';
+  Object.defineProperty(ColorSchemeScript, 'name', {
+    value: 'ColorSchemeScript',
+  });
+}
 
 function script(storageKey: string, defaultColorScheme: 'light' | 'dark') {
   const LIGHT_CLASS_NAME = 'vkui--vkBase--light';

@@ -51,8 +51,3 @@ export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
     </ScreenSpinnerContext.Provider>
   );
 };
-
-ScreenSpinnerContainer.displayName = 'ScreenSpinnerContainer';
-Object.defineProperty(ScreenSpinnerContainer, 'name', {
-  value: 'ScreenSpinnerContainer',
-});

@@ -16,10 +16,13 @@ function OverviewTags({ children }: { children: React.ReactNode }) {
     </ButtonGroup>
   );
 }
-OverviewTags.displayName = 'OverviewTags';
-Object.defineProperty(OverviewTags, 'name', {
-  value: 'OverviewTags',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  OverviewTags.displayName = 'OverviewTags';
+  Object.defineProperty(OverviewTags, 'name', {
+    value: 'OverviewTags',
+  });
+}
 
 const IconsMap = {
   github: GithubIcon,
@@ -43,10 +46,13 @@ function OverviewTag({
     </Button>
   );
 }
-OverviewTag.displayName = 'OverviewTag';
-Object.defineProperty(OverviewTag, 'name', {
-  value: 'OverviewTag',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  OverviewTag.displayName = 'OverviewTag';
+  Object.defineProperty(OverviewTag, 'name', {
+    value: 'OverviewTag',
+  });
+}
 
 export function Overview({ children }: OverviewProps) {
   return (
@@ -56,19 +62,21 @@ export function Overview({ children }: OverviewProps) {
   );
 }
 
-Overview.displayName = 'Overview';
-Object.defineProperty(Overview, 'name', {
-  value: 'Overview',
-});
+if (process.env.NODE_ENV !== 'production') {
+  Overview.displayName = 'Overview';
+  Object.defineProperty(Overview, 'name', {
+    value: 'Overview',
+  });
 
-Overview.Tag = OverviewTag;
-Overview.Tag.displayName = 'Overview.Tag';
-Object.defineProperty(Overview.Tag, 'name', {
-  value: 'Overview.Tag',
-});
+  Overview.Tag = OverviewTag;
+  Overview.Tag.displayName = 'Overview.Tag';
+  Object.defineProperty(Overview.Tag, 'name', {
+    value: 'Overview.Tag',
+  });
 
-Overview.Tags = OverviewTags;
-Overview.Tags.displayName = 'Overview.Tags';
-Object.defineProperty(Overview.Tags, 'name', {
-  value: 'Overview.Tags',
-});
+  Overview.Tags = OverviewTags;
+  Overview.Tags.displayName = 'Overview.Tags';
+  Object.defineProperty(Overview.Tags, 'name', {
+    value: 'Overview.Tags',
+  });
+}

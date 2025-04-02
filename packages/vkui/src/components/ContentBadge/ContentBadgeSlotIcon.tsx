@@ -43,8 +43,3 @@ export const ContentBadgeSlotIcon: React.FC<ContentBadgeSlotIconProps> = ({
     </div>
   );
 };
-
-ContentBadgeSlotIcon.displayName = 'ContentBadgeSlotIcon';
-Object.defineProperty(ContentBadgeSlotIcon, 'name', {
-  value: 'ContentBadgeSlotIcon',
-});

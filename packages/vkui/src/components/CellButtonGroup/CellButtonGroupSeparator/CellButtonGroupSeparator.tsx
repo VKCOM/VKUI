@@ -4,10 +4,10 @@ import styles from './CellButtonGroupSeparator.module.css';
 
 type CellButtonGroupSeparatorProps = Omit<SeparatorProps, 'direction' | 'padding'>;
 
-export const CellButtonGroupSeparator = ({
+export const CellButtonGroupSeparator: React.FC<CellButtonGroupSeparatorProps> = ({
   className,
   ...restProps
-}: CellButtonGroupSeparatorProps) => {
+}) => {
   return (
     <Separator
       className={classNames(styles.root, className)}
@@ -17,8 +17,3 @@ export const CellButtonGroupSeparator = ({
     />
   );
 };
-
-CellButtonGroupSeparator.displayName = 'CellButtonGroupSeparator';
-Object.defineProperty(CellButtonGroupSeparator, 'name', {
-  value: 'CellButtonGroupSeparator',
-});

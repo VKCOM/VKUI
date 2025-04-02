@@ -119,8 +119,3 @@ export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
 
   return <ImageBaseOverlayInteractive {...restProps} {...commonProps} />;
 };
-
-ImageBaseOverlay.displayName = 'ImageBaseOverlay';
-Object.defineProperty(ImageBaseOverlay, 'name', {
-  value: 'ImageBaseOverlay',
-});

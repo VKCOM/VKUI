@@ -59,13 +59,11 @@ export const DropZone: React.FC<DropZoneProps> & {
   );
 };
 
-DropZone.displayName = 'DropZone';
-Object.defineProperty(DropZone, 'name', {
-  value: 'DropZone',
-});
-
 DropZone.Grid = DropZoneGrid;
-DropZone.Grid.displayName = 'DropZone.Grid';
-Object.defineProperty(DropZone.Grid, 'name', {
-  value: 'DropZone.Grid',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  DropZone.Grid.displayName = 'DropZone.Grid';
+  Object.defineProperty(DropZone.Grid, 'name', {
+    value: 'DropZone.Grid',
+  });
+}

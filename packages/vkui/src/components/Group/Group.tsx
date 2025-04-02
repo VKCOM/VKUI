@@ -34,27 +34,29 @@ export const Group: React.FC<GroupProps> & {
   );
 };
 
-Group.displayName = 'Group';
-Object.defineProperty(Group, 'name', {
-  value: 'Group',
-});
 Group.Container = GroupContainer;
-Group.Container.displayName = 'Group.Container';
-Object.defineProperty(Group.Container, 'name', {
-  value: 'Group.Container',
-});
 Group.Header = GroupHeader;
-Group.Header.displayName = 'Group.Header';
-Object.defineProperty(Group.Header, 'name', {
-  value: 'Group.Header',
-});
 Group.Description = GroupDescription;
-Group.Description.displayName = 'Group.Description';
-Object.defineProperty(Group.Description, 'name', {
-  value: 'Group.Description',
-});
 Group.ExpandedContent = GroupExpandedContent;
-Group.ExpandedContent.displayName = 'Group.ExpandedContent';
-Object.defineProperty(Group.ExpandedContent, 'name', {
-  value: 'Group.ExpandedContent',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  Group.Container.displayName = 'Group.Container';
+  Object.defineProperty(Group.Container, 'name', {
+    value: 'Group.Container',
+  });
+
+  Group.Header.displayName = 'Group.Header';
+  Object.defineProperty(Group.Header, 'name', {
+    value: 'Group.Header',
+  });
+
+  Group.Description.displayName = 'Group.Description';
+  Object.defineProperty(Group.Description, 'name', {
+    value: 'Group.Description',
+  });
+
+  Group.ExpandedContent.displayName = 'Group.ExpandedContent';
+  Object.defineProperty(Group.ExpandedContent, 'name', {
+    value: 'Group.ExpandedContent',
+  });
+}

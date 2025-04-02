@@ -56,7 +56,9 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
   },
 );
 
-Spinner.displayName = 'Spinner';
-Object.defineProperty(Spinner, 'name', {
-  value: 'Spinner',
-});
+if (process.env.NODE_ENV !== 'production') {
+  Spinner.displayName = 'Spinner';
+  Object.defineProperty(Spinner, 'name', {
+    value: 'Spinner',
+  });
+}

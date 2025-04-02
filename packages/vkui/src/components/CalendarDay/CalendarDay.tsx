@@ -205,7 +205,9 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
   },
 );
 
-CalendarDay.displayName = 'CalendarDay';
-Object.defineProperty(CalendarDay, 'name', {
-  value: 'CalendarDay',
-});
+if (process.env.NODE_ENV !== 'production') {
+  CalendarDay.displayName = 'CalendarDay';
+  Object.defineProperty(CalendarDay, 'name', {
+    value: 'CalendarDay',
+  });
+}

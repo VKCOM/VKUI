@@ -68,8 +68,3 @@ export const InputLike: React.FC<InputLikeProps> = ({
     </RootComponent>
   );
 };
-
-InputLike.displayName = 'InputLike';
-Object.defineProperty(InputLike, 'name', {
-  value: 'InputLike',
-});

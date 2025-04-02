@@ -33,7 +33,9 @@ export const OnboardingTooltipContainer: React.ForwardRefExoticComponent<
   },
 );
 
-OnboardingTooltipContainer.displayName = 'OnboardingTooltipContainer';
-Object.defineProperty(OnboardingTooltipContainer, 'name', {
-  value: 'OnboardingTooltipContainer',
-});
+if (process.env.NODE_ENV !== 'production') {
+  OnboardingTooltipContainer.displayName = 'OnboardingTooltipContainer';
+  Object.defineProperty(OnboardingTooltipContainer, 'name', {
+    value: 'OnboardingTooltipContainer',
+  });
+}

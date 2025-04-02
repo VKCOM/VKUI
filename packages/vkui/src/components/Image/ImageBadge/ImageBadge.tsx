@@ -19,8 +19,3 @@ export const ImageBadge: React.FC<ImageBadgeProps> = ({
     />
   );
 };
-
-ImageBadge.displayName = 'ImageBadge';
-Object.defineProperty(ImageBadge, 'name', {
-  value: 'ImageBadge',
-});

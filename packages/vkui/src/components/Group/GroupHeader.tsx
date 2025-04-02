@@ -10,7 +10,3 @@ export const GroupHeader: React.FC<GroupHeaderProps> = ({
 }: GroupHeaderProps): React.ReactNode => (
   <div className={classNames(className, styles.header)} {...restProps} />
 );
-GroupHeader.displayName = 'GroupHeader';
-Object.defineProperty(GroupHeader, 'name', {
-  value: 'GroupHeader',
-});

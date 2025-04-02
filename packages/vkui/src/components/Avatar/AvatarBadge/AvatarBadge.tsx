@@ -19,8 +19,3 @@ export const AvatarBadge: React.FC<AvatarBadgeProps> = ({
     />
   );
 };
-
-AvatarBadge.displayName = 'Avatar.Badge';
-Object.defineProperty(AvatarBadge, 'name', {
-  value: 'Avatar.Badge',
-});

@@ -329,26 +329,23 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     </ImageBaseContext.Provider>
   );
 };
-
-ImageBase.displayName = 'ImageBase';
-Object.defineProperty(ImageBase, 'name', {
-  value: 'ImageBase',
-});
-
 ImageBase.Badge = ImageBaseBadge;
-ImageBase.Badge.displayName = 'ImageBase.Badge';
-Object.defineProperty(ImageBase.Badge, 'name', {
-  value: 'ImageBase.Badge',
-});
-
 ImageBase.Overlay = ImageBaseOverlay;
-ImageBase.Overlay.displayName = 'ImageBase.Overlay';
-Object.defineProperty(ImageBase.Overlay, 'name', {
-  value: 'ImageBase.Overlay',
-});
-
 ImageBase.FloatElement = ImageBaseFloatElement;
-ImageBase.FloatElement.displayName = 'ImageBase.FloatElement';
-Object.defineProperty(ImageBase.FloatElement, 'name', {
-  value: 'ImageBase.FloatElement',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  ImageBase.Badge.displayName = 'ImageBase.Badge';
+  Object.defineProperty(ImageBase.Badge, 'name', {
+    value: 'ImageBase.Badge',
+  });
+
+  ImageBase.Overlay.displayName = 'ImageBase.Overlay';
+  Object.defineProperty(ImageBase.Overlay, 'name', {
+    value: 'ImageBase.Overlay',
+  });
+
+  ImageBase.FloatElement.displayName = 'ImageBase.FloatElement';
+  Object.defineProperty(ImageBase.FloatElement, 'name', {
+    value: 'ImageBase.FloatElement',
+  });
+}

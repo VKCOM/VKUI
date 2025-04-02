@@ -118,13 +118,11 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
   );
 };
 
-ContentBadge.displayName = 'ContentBadge';
-Object.defineProperty(ContentBadge, 'name', {
-  value: 'ContentBadge',
-});
-
 ContentBadge.SlotIcon = ContentBadgeSlotIcon;
-ContentBadge.SlotIcon.displayName = 'ContentBadge.SlotIcon';
-Object.defineProperty(ContentBadge.SlotIcon, 'name', {
-  value: 'ContentBadge.SlotIcon',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  ContentBadge.SlotIcon.displayName = 'ContentBadge.SlotIcon';
+  Object.defineProperty(ContentBadge.SlotIcon, 'name', {
+    value: 'ContentBadge.SlotIcon',
+  });
+}

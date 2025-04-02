@@ -13,8 +13,3 @@ export interface FormItemTopProps extends HTMLAttributesWithRootRef<HTMLDivEleme
 export const FormItemTop: React.FC<FormItemTopProps> = (props: FormItemTopProps) => (
   <RootComponent {...props} baseClassName={styles.top} />
 );
-
-FormItemTop.displayName = 'FormItemTop';
-Object.defineProperty(FormItemTop, 'name', {
-  value: 'FormItemTop',
-});

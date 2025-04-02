@@ -101,10 +101,3 @@ export const Tabs = ({
     </RootComponent>
   );
 };
-
-// чтобы styleguidist не путал компонент
-// с другими именованными экспортами
-Tabs.displayName = 'Tabs';
-Object.defineProperty(Tabs, 'name', {
-  value: 'Tabs',
-});

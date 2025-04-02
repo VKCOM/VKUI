@@ -148,7 +148,3 @@ export const GroupContainer: React.FC<GroupContainerProps> = ({
     </>
   );
 };
-GroupContainer.displayName = 'GroupContainer';
-Object.defineProperty(GroupContainer, 'name', {
-  value: 'GroupContainer',
-});

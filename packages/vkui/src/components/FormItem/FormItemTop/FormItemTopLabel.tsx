@@ -44,8 +44,3 @@ export const FormItemTopLabel: React.FC<FormItemTopLabelProps> = ({
     </Subhead>
   );
 };
-
-FormItemTopLabel.displayName = 'FormItemTopLabel';
-Object.defineProperty(FormItemTopLabel, 'name', {
-  value: 'FormItemTopLabel',
-});

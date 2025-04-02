@@ -14,13 +14,11 @@ export const CellButtonGroup = (props: CellButtonGroupProps): React.ReactNode =>
   return <ButtonGroup gap="none" stretched {...props} />;
 };
 
-CellButtonGroup.displayName = 'CellButtonGroup';
-Object.defineProperty(CellButtonGroup, 'name', {
-  value: 'CellButtonGroup',
-});
-
 CellButtonGroup.Separator = CellButtonGroupSeparator;
-CellButtonGroup.Separator.displayName = 'CellButtonGroup.Separator';
-Object.defineProperty(CellButtonGroup.Separator, 'name', {
-  value: 'CellButtonGroup.Separator',
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  CellButtonGroup.Separator.displayName = 'CellButtonGroup.Separator';
+  Object.defineProperty(CellButtonGroup.Separator, 'name', {
+    value: 'CellButtonGroup.Separator',
+  });
+}

@@ -91,7 +91,7 @@ export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HT
   visibility?: 'always' | 'on-hover';
 }
 
-export const ImageBaseFloatElement = ({
+export const ImageBaseFloatElement: React.FC<ImageBaseFloatElementProps> = ({
   placement,
   visibility = 'always',
   style,
@@ -99,7 +99,7 @@ export const ImageBaseFloatElement = ({
   inlineIndent,
   blockIndent,
   ...restProps
-}: ImageBaseFloatElementProps) => {
+}) => {
   const [hidden, setHidden] = React.useState(visibility !== 'always');
   const { onMouseOverHandlers, onMouseOutHandlers } = React.useContext(ImageBaseContext);
 
@@ -164,8 +164,3 @@ export const ImageBaseFloatElement = ({
     />
   );
 };
-
-ImageBaseFloatElement.displayName = 'ImageBaseFloatElement';
-Object.defineProperty(ImageBaseFloatElement, 'name', {
-  value: 'ImageBaseFloatElement',
-});

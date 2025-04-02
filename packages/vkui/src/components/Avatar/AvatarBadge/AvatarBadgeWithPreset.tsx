@@ -45,8 +45,3 @@ export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
     </ImageBase.Badge>
   );
 };
-
-AvatarBadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';
-Object.defineProperty(AvatarBadgeWithPreset, 'name', {
-  value: 'Avatar.BadgeWithPreset',
-});
