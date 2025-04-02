@@ -32,7 +32,7 @@ export interface ModalPageBaseProps
   closable?: boolean;
 }
 
-export const ModalPageBase: React.FC<ModalPageBaseProps> = ({
+export const ModalPageBase = ({
   isDesktop,
   getRef,
   disableContentPanningGesture,
@@ -47,7 +47,7 @@ export const ModalPageBase: React.FC<ModalPageBaseProps> = ({
   closable,
   onClose = noop,
   ...restProps
-}) => {
+}: ModalPageBaseProps) => {
   const disableContentPanningGestureProp = disableContentPanningGesture
     ? BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE
     : undefined;

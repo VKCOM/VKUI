@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -118,7 +119,8 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
   );
 };
 
-ContentBadge.displayName = 'ContentBadge';
-
 ContentBadge.SlotIcon = ContentBadgeSlotIcon;
-ContentBadge.SlotIcon.displayName = 'ContentBadge.SlotIcon';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ContentBadge.SlotIcon, 'ContentBadge.SlotIcon');
+}

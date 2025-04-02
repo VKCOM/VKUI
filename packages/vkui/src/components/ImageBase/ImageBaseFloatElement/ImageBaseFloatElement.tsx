@@ -164,5 +164,3 @@ export const ImageBaseFloatElement = ({
     />
   );
 };
-
-ImageBaseFloatElement.displayName = 'ImageBaseFloatElement';

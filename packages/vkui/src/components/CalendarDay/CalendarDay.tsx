@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -95,7 +96,8 @@ export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTe
   renderDayContent?: (day: Date) => React.ReactNode;
 }
 
-export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
+// eslint-disable-next-line react/display-name -- используется defineComponentDisplayNames
+export const CalendarDay = React.memo(
   ({
     day,
     today,
@@ -205,4 +207,6 @@ export const CalendarDay: React.FC<CalendarDayProps> = React.memo(
   },
 );
 
-CalendarDay.displayName = 'CalendarDay';
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(CalendarDay, 'CalendarDay');
+}

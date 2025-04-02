@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { DropZoneGrid } from './components/DropZoneGrid';
@@ -59,7 +60,8 @@ export const DropZone: React.FC<DropZoneProps> & {
   );
 };
 
-DropZone.displayName = 'DropZone';
-
 DropZone.Grid = DropZoneGrid;
-DropZone.Grid.displayName = 'DropZone.Grid';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(DropZone.Grid, 'DropZone.Grid');
+}

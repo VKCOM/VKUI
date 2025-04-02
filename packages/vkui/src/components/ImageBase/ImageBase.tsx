@@ -6,6 +6,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import { minOr } from '../../lib/comparing';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { getFetchPriorityProp } from '../../lib/utils';
 import type {
   AnchorHTMLAttributesOnly,
@@ -329,14 +330,12 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     </ImageBaseContext.Provider>
   );
 };
-
-ImageBase.displayName = 'ImageBase';
-
 ImageBase.Badge = ImageBaseBadge;
-ImageBase.Badge.displayName = 'ImageBase.Badge';
-
 ImageBase.Overlay = ImageBaseOverlay;
-ImageBase.Overlay.displayName = 'ImageBase.Overlay';
-
 ImageBase.FloatElement = ImageBaseFloatElement;
-ImageBase.FloatElement.displayName = 'ImageBase.FloatElement';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ImageBase.Badge, 'ImageBase.Badge');
+  defineComponentDisplayNames(ImageBase.Overlay, 'ImageBase.Overlay');
+  defineComponentDisplayNames(ImageBase.FloatElement, 'ImageBase.FloatElement');
+}

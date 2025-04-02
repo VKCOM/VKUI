@@ -1,6 +1,5 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { type BaseGalleryProps } from './types';
 import styles from './CarouselBase.module.css';
@@ -23,7 +22,7 @@ const stylesBullets = {
   light: styles.bulletsLight,
 };
 
-export const Bullets: React.FC<BulletsProps> = ({ bullets, slideIndex, count, bulletTestId }) => {
+export const Bullets = ({ bullets, slideIndex, count, bulletTestId }: BulletsProps) => {
   return (
     <div aria-hidden className={classNames(styles.bullets, stylesBullets[bullets])}>
       {Array.from({ length: count }).map((_, index) => (

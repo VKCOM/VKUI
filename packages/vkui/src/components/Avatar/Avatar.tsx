@@ -1,4 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { ImageBase, type ImageBaseProps } from '../ImageBase/ImageBase';
 import {
   ImageBaseOverlay,
@@ -127,15 +128,13 @@ export const Avatar: React.FC<AvatarProps> & {
   );
 };
 
-Avatar.displayName = 'Avatar';
-
 Avatar.Badge = AvatarBadge;
-Avatar.Badge.displayName = 'Avatar.Badge';
-
 Avatar.BadgeWithPreset = AvatarBadgeWithPreset;
-Avatar.BadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';
-
 Avatar.Overlay = ImageBaseOverlay;
-Avatar.Overlay.displayName = 'Avatar.Overlay';
-
 Avatar.getInitialsFontSize = getInitialsFontSize;
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(Avatar.Badge, 'Avatar.Badge');
+  defineComponentDisplayNames(Avatar.BadgeWithPreset, 'Avatar.BadgeWithPreset');
+  defineComponentDisplayNames(Avatar.Overlay, 'Avatar.Overlay');
+}

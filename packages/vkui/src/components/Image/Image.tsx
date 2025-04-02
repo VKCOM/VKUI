@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { type CSSCustomProperties } from '../../types';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { ImageBadge, type ImageBadgeProps } from './ImageBadge/ImageBadge';
@@ -169,13 +170,12 @@ export const Image: React.FC<ImageProps> & {
   );
 };
 
-Image.displayName = 'Image';
-
 Image.Badge = ImageBadge;
-Image.Badge.displayName = 'Image.Badge';
-
 Image.Overlay = ImageBase.Overlay;
-Image.Overlay.displayName = 'Image.Overlay';
-
 Image.FloatElement = ImageBase.FloatElement;
-Image.FloatElement.displayName = 'Image.FloatElement';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(Image.Badge, 'Image.Badge');
+  defineComponentDisplayNames(Image.Overlay, 'Image.Overlay');
+  defineComponentDisplayNames(Image.FloatElement, 'Image.FloatElement');
+}

@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
 import { AccordionContext } from './AccordionContext';
@@ -71,10 +72,10 @@ export const Accordion: React.FC<AccordionProps> & {
   return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
 };
 
-Accordion.displayName = 'Accordion';
-
 Accordion.Summary = AccordionSummary;
-Accordion.Summary.displayName = 'Accordion.Summary';
-
 Accordion.Content = AccordionContent;
-Accordion.Content.displayName = 'Accordion.Content';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(Accordion.Summary, 'Accordion.Summary');
+  defineComponentDisplayNames(Accordion.Content, 'Accordion.Content');
+}

@@ -17,7 +17,7 @@ type GalleryViewPortProps = Pick<BaseGalleryProps, 'slideWidth' | 'slideTestId'>
     layerRef?: React.Ref<HTMLDivElement>;
   };
 
-export const CarouselViewPort: React.FC<GalleryViewPortProps> = ({
+export const CarouselViewPort = ({
   slideTestId,
   slideWidth,
   onStart,
@@ -27,7 +27,7 @@ export const CarouselViewPort: React.FC<GalleryViewPortProps> = ({
   layerRef,
   children,
   setSlideRef,
-}) => {
+}: GalleryViewPortProps) => {
   return (
     <Touch
       className={styles.viewport}

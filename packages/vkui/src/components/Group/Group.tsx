@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { GroupContainer, type GroupContainerProps } from './GroupContainer';
 import { GroupDescription } from './GroupDescription';
 import { GroupExpandedContent } from './GroupExpandedContent';
@@ -34,12 +35,14 @@ export const Group: React.FC<GroupProps> & {
   );
 };
 
-Group.displayName = 'Group';
 Group.Container = GroupContainer;
-Group.Container.displayName = 'Group.Container';
 Group.Header = GroupHeader;
-Group.Header.displayName = 'Group.Header';
 Group.Description = GroupDescription;
-Group.Description.displayName = 'Group.Description';
 Group.ExpandedContent = GroupExpandedContent;
-Group.ExpandedContent.displayName = 'Group.ExpandedContent';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(Group.Container, 'Group.Container');
+  defineComponentDisplayNames(Group.Header, 'Group.Header');
+  defineComponentDisplayNames(Group.Description, 'Group.Description');
+  defineComponentDisplayNames(Group.ExpandedContent, 'Group.ExpandedContent');
+}
