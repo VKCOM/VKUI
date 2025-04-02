@@ -19,7 +19,7 @@ export interface FormItemTopLabelProps
  * @since 6.1.0
  *
  */
-export const FormItemTopLabel: React.FC<FormItemTopLabelProps> = ({
+export const FormItemTopLabel = ({
   children,
   Component: componentProp,
   htmlFor,

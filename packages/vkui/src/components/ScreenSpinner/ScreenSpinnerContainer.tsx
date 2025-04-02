@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -22,7 +21,7 @@ const modeClassNames = {
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
   Pick<ScreenSpinnerProps, 'state' | 'mode' | 'label' | 'customIcon'>;
 
-export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
+export const ScreenSpinnerContainer = ({
   state = 'loading',
   mode = 'shadow',
   customIcon,

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -32,7 +33,8 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
 /**
  * @see https://vkcom.github.io/VKUI/#/Spinner
  */
-export const Spinner: React.FC<SpinnerProps> = React.memo(
+// eslint-disable-next-line react/display-name -- используется defineComponentDisplayNames
+export const Spinner = React.memo(
   ({
     size = 'm',
     children = 'Загружается...',
@@ -57,8 +59,5 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
 );
 
 if (process.env.NODE_ENV !== 'production') {
-  Spinner.displayName = 'Spinner';
-  Object.defineProperty(Spinner, 'name', {
-    value: 'Spinner',
-  });
+  defineComponentDisplayNames(Spinner, 'Spinner');
 }

@@ -82,7 +82,7 @@ export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
 
 const warn = warnOnce('Group');
 
-export const GroupContainer: React.FC<GroupContainerProps> = ({
+export const GroupContainer = ({
   children,
   separator = 'auto',
   mode: modeProps,

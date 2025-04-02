@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -16,7 +15,7 @@ export type GroupExpandedContentProps = HTMLAttributesWithRootRef<HTMLElement> &
      */
     direction?: 'inline' | 'block';
   };
-export const GroupExpandedContent: React.FC<GroupExpandedContentProps> = ({
+export const GroupExpandedContent = ({
   direction = 'inline',
   ...restProps
 }: GroupExpandedContentProps) => {

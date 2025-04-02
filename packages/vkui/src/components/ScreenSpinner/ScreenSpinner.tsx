@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
@@ -49,18 +50,7 @@ ScreenSpinner.Loader = ScreenSpinnerLoader;
 ScreenSpinner.SwapIcon = ScreenSpinnerSwapIcon;
 
 if (process.env.NODE_ENV !== 'production') {
-  ScreenSpinner.Container.displayName = 'ScreenSpinner.Container';
-  Object.defineProperty(ScreenSpinner.Container, 'name', {
-    value: 'ScreenSpinner.Container',
-  });
-
-  ScreenSpinner.Loader.displayName = 'ScreenSpinner.Loader';
-  Object.defineProperty(ScreenSpinner.Loader, 'name', {
-    value: 'ScreenSpinner.Loader',
-  });
-
-  ScreenSpinner.SwapIcon.displayName = 'ScreenSpinner.SwapIcon';
-  Object.defineProperty(ScreenSpinner.SwapIcon, 'name', {
-    value: 'ScreenSpinner.SwapIcon',
-  });
+  defineComponentDisplayNames(ScreenSpinner.Container, 'ScreenSpinner.Container');
+  defineComponentDisplayNames(ScreenSpinner.Loader, 'ScreenSpinner.Loader');
+  defineComponentDisplayNames(ScreenSpinner.SwapIcon, 'ScreenSpinner.SwapIcon');
 }

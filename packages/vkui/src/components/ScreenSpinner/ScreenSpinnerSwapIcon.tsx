@@ -17,7 +17,7 @@ type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> & {
   cancelLabel?: ScreenSpinnerProps['cancelLabel'];
 };
 
-const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
+const ScreenSpinnerCancelIcon = ({
   onKeyDown,
   'aria-label': ariaLabel = 'Отменить',
   ...restProps
@@ -42,7 +42,7 @@ const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
   );
 };
 
-export const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
+export const ScreenSpinnerSwapIcon = ({
   cancelLabel,
   ...restProps
 }: ScreenSpinnerSwapIconProps) => {

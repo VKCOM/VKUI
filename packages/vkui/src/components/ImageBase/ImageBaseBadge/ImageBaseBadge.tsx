@@ -51,10 +51,7 @@ export interface ImageBaseBadgeProps extends HTMLAttributesWithRootRef<HTMLDivEl
  *
  * > Не используйте при `size < 24`.
  */
-export const ImageBaseBadge: React.FC<ImageBaseBadgeProps> = ({
-  background = 'shadow',
-  ...restProps
-}: ImageBaseBadgeProps) => {
+export const ImageBaseBadge = ({ background = 'shadow', ...restProps }: ImageBaseBadgeProps) => {
   return (
     <>
       <RootComponent

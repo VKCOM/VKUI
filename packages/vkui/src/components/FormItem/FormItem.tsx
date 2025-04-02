@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasComponent, HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -178,18 +179,7 @@ FormItem.TopLabel = FormItemTopLabel;
 FormItem.TopAside = FormItemTopAside;
 
 if (process.env.NODE_ENV !== 'production') {
-  FormItem.Top.displayName = 'FormItem.Top';
-  Object.defineProperty(FormItem.Top, 'name', {
-    value: 'FormItem.Top',
-  });
-
-  FormItem.TopLabel.displayName = 'FormItem.TopLabel';
-  Object.defineProperty(FormItem.TopLabel, 'name', {
-    value: 'FormItem.TopLabel',
-  });
-
-  FormItem.TopAside.displayName = 'FormItem.TopAside';
-  Object.defineProperty(FormItem.TopAside, 'name', {
-    value: 'FormItem.TopAside',
-  });
+  defineComponentDisplayNames(FormItem.Top, 'FormItem.Top');
+  defineComponentDisplayNames(FormItem.TopLabel, 'FormItem.TopLabel');
+  defineComponentDisplayNames(FormItem.TopAside, 'FormItem.TopAside');
 }

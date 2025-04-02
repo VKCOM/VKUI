@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { type HTMLAttributesWithRootRef } from '../../types';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { CellButtonGroupSeparator } from './CellButtonGroupSeparator/CellButtonGroupSeparator';
@@ -17,8 +18,5 @@ export const CellButtonGroup = (props: CellButtonGroupProps): React.ReactNode =>
 CellButtonGroup.Separator = CellButtonGroupSeparator;
 
 if (process.env.NODE_ENV !== 'production') {
-  CellButtonGroup.Separator.displayName = 'CellButtonGroup.Separator';
-  Object.defineProperty(CellButtonGroup.Separator, 'name', {
-    value: 'CellButtonGroup.Separator',
-  });
+  defineComponentDisplayNames(CellButtonGroup.Separator, 'CellButtonGroup.Separator');
 }

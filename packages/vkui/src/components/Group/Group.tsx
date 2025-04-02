@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { GroupContainer, type GroupContainerProps } from './GroupContainer';
 import { GroupDescription } from './GroupDescription';
 import { GroupExpandedContent } from './GroupExpandedContent';
@@ -40,23 +41,8 @@ Group.Description = GroupDescription;
 Group.ExpandedContent = GroupExpandedContent;
 
 if (process.env.NODE_ENV !== 'production') {
-  Group.Container.displayName = 'Group.Container';
-  Object.defineProperty(Group.Container, 'name', {
-    value: 'Group.Container',
-  });
-
-  Group.Header.displayName = 'Group.Header';
-  Object.defineProperty(Group.Header, 'name', {
-    value: 'Group.Header',
-  });
-
-  Group.Description.displayName = 'Group.Description';
-  Object.defineProperty(Group.Description, 'name', {
-    value: 'Group.Description',
-  });
-
-  Group.ExpandedContent.displayName = 'Group.ExpandedContent';
-  Object.defineProperty(Group.ExpandedContent, 'name', {
-    value: 'Group.ExpandedContent',
-  });
+  defineComponentDisplayNames(Group.Container, 'Group.Container');
+  defineComponentDisplayNames(Group.Header, 'Group.Header');
+  defineComponentDisplayNames(Group.Description, 'Group.Description');
+  defineComponentDisplayNames(Group.ExpandedContent, 'Group.ExpandedContent');
 }

@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
 import { AccordionContext } from './AccordionContext';
@@ -75,13 +76,6 @@ Accordion.Summary = AccordionSummary;
 Accordion.Content = AccordionContent;
 
 if (process.env.NODE_ENV !== 'production') {
-  Accordion.Summary.displayName = 'Accordion.Summary';
-  Object.defineProperty(Accordion.Summary, 'name', {
-    value: 'Accordion.Summary',
-  });
-
-  Accordion.Content.displayName = 'Accordion.Content';
-  Object.defineProperty(Accordion.Content, 'name', {
-    value: 'Accordion.Content',
-  });
+  defineComponentDisplayNames(Accordion.Summary, 'Accordion.Summary');
+  defineComponentDisplayNames(Accordion.Content, 'Accordion.Content');
 }

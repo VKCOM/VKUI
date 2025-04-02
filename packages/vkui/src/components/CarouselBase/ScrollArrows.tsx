@@ -44,7 +44,7 @@ interface ScrollArrowsProps
   onSlideRight: (e: React.MouseEvent) => void;
 }
 
-export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
+export const ScrollArrows = ({
   hasPointer,
   canSlideLeft,
   canSlideRight,
@@ -55,7 +55,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
   arrowAreaHeight = 'stretch',
   nextArrowTestId,
   prevArrowTestId,
-}) => {
+}: ScrollArrowsProps) => {
   return showArrows && hasPointer ? (
     <>
       {canSlideLeft && (

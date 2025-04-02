@@ -87,7 +87,7 @@ const ImageBaseOverlayNonInteractive = ({
 /**
  * Оверлей над картинкой.
  */
-export const ImageBaseOverlay: React.FC<ImageBaseOverlayProps> = ({
+export const ImageBaseOverlay = ({
   className,
   theme: themeProp,
   visibility: visibilityProp,

@@ -7,10 +7,7 @@ import styles from './ImageBadge.module.css';
 
 export type ImageBadgeProps = ImageBaseBadgeProps;
 
-export const ImageBadge: React.FC<ImageBadgeProps> = ({
-  className,
-  ...restProps
-}: ImageBadgeProps) => {
+export const ImageBadge = ({ className, ...restProps }: ImageBadgeProps) => {
   const { size } = React.useContext(ImageBaseContext);
   return (
     <ImageBase.Badge

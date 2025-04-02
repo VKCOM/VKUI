@@ -7,10 +7,9 @@ import type { SpinnerProps } from '../Spinner/Spinner';
 import { ScreenSpinnerContext } from './context';
 import styles from './ScreenSpinner.module.css';
 
-export const ScreenSpinnerLoader: React.FC<Omit<SpinnerProps, 'size'>> = ({
-  children,
-  ...restProps
-}) => {
+type ScreenSpinnerLoaderProps = Omit<SpinnerProps, 'size'>;
+
+export const ScreenSpinnerLoader = ({ children, ...restProps }: ScreenSpinnerLoaderProps) => {
   const { label } = React.useContext(ScreenSpinnerContext);
   const a11yText = children ?? label;
   return (
