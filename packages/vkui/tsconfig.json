@@ -8,16 +8,7 @@
       "@vkui-e2e/test": ["./src/testing/e2e/index.playwright"],
       "@vkui-e2e/playground-helpers": ["./src/testing/e2e/index.playground"],
       "@vkui-e2e/utils": ["./src/testing/e2e/utils"]
-    },
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules",
-        "options": {
-          "classnameTransform": "asIs",
-          "customMatcher": "\\.module\\.css$"
-        }
-      }
-    ]
+    }
   },
   "include": ["*.ts*", "**/*.ts*", "*.js", "**/*.js", "*.mjs", "**/*.mjs", "*.cjs", "**/*.cjs"],
   "files": ["./global.d.ts", "types/env.d.ts"]

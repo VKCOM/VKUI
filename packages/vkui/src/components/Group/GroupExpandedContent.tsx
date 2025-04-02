@@ -1,4 +1,3 @@
-import { classNames } from '@vkontakte/vkjs';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Group.module.css';
@@ -20,10 +19,6 @@ export const GroupExpandedContent = ({
   ...restProps
 }: GroupExpandedContentProps) => {
   return (
-    <RootComponent
-      Component="div"
-      {...restProps}
-      baseClassName={classNames(styles.expandedContent, stylesDirection[direction])}
-    />
+    <RootComponent Component="div" {...restProps} baseClassName={stylesDirection[direction]} />
   );
 };

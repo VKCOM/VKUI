@@ -1,0 +1,31 @@
+declare const styles: {
+  readonly "actions": string;
+  readonly "afterCaption": string;
+  readonly "afterChildren": string;
+  readonly "alignAfterCenter": string;
+  readonly "alignAfterEnd": string;
+  readonly "alignAfterStart": string;
+  readonly "alignBeforeCenter": string;
+  readonly "alignBeforeEnd": string;
+  readonly "alignBeforeStart": string;
+  readonly "before": string;
+  readonly "bottom": string;
+  readonly "children": string;
+  readonly "content": string;
+  readonly "contentAfter": string;
+  readonly "contentAlignCenter": string;
+  readonly "contentAlignEnd": string;
+  readonly "contentAlignStart": string;
+  readonly "contentBefore": string;
+  readonly "extraSubtitle": string;
+  readonly "host": string;
+  readonly "in": string;
+  readonly "overTitle": string;
+  readonly "sizeYCompact": string;
+  readonly "sizeYNone": string;
+  readonly "subtitle": string;
+  readonly "textEllipsis": string;
+  readonly "withAfter": string;
+};
+export = styles;
+

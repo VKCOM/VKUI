@@ -126,7 +126,6 @@ export const Cell: React.FC<CellProps> & {
     dragging && styles.dragging,
     platform === 'ios' && styles.ios,
     removable && styles.removable,
-    Component === 'label' && styles.selectable,
   );
 
   const simpleCellProps: SimpleCellProps = {
