@@ -797,6 +797,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             // C mousemove такой проблемы нет, что позволяет реализовать поведение при наведении с клавиатуры и при наведении мышью идентично `<select>`.
             onMouseMove: (e) => focusOptionOnMouseMove(e, index),
             id: `${popupAriaId}-${option.value}`,
+            ...option,
           })}
         </React.Fragment>
       );
