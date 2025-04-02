@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { format } from 'date-fns';
+import { addDays, format, startOfDay } from 'date-fns';
 import { baselineComponent, setNodeEnv, userEvent } from '../../testing/utils';
 import { Calendar } from './Calendar';
 
@@ -68,6 +68,34 @@ describe('Calendar', () => {
     );
     fireEvent.click(screen.getByTestId(dayTestId(maxDate)));
     expect(onChange).toHaveBeenCalledWith(maxDate);
+  });
+
+  it('override onEnter day prop', () => {
+    const onChange = jest.fn();
+    const onEnter = jest.fn();
+
+    render(
+      <Calendar
+        value={targetDate}
+        onChange={onChange}
+        dayTestId={dayTestId}
+        overrideDayProps={() => {
+          return {
+            onEnter,
+            className: 'calendar-day',
+            disabled: true,
+          };
+        }}
+      />,
+    );
+    const enterDate = addDays(targetDate, 1);
+    const enterDateElement = screen.getByTestId(dayTestId(enterDate));
+
+    fireEvent.pointerEnter(enterDateElement);
+    expect(onEnter).toHaveBeenCalledWith(startOfDay(enterDate));
+
+    expect(enterDateElement).toHaveClass('calendar-day');
+    expect(enterDateElement).toHaveAttribute('aria-disabled');
   });
 
   it('check navigation by keyboard between two months', async () => {

@@ -53,7 +53,7 @@ export interface CalendarRangeProps
       | 'prevMonthIcon'
       | 'nextMonthIcon'
     >,
-    Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent' | 'overrideDayProps'>,
     CalendarRangeTestsProps {
   /**
    * Текущий выбранный промежуток.
@@ -133,6 +133,7 @@ export const CalendarRange = ({
   leftPartHeaderTestsData,
   rightPartHeaderTestsData,
   getRootRef,
+  overrideDayProps,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
   const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
@@ -296,6 +297,7 @@ export const CalendarRange = ({
           renderDayContent={renderDayContent}
           aria-label={changeDayLabel}
           dayTestId={dayTestId}
+          overrideDayProps={overrideDayProps}
         />
       </div>
       <div className={styles.inner}>
@@ -338,6 +340,7 @@ export const CalendarRange = ({
           tabIndex={0}
           onBlur={resetSelectedDay}
           dayTestId={dayTestId}
+          overrideDayProps={overrideDayProps}
         />
       </div>
     </RootComponent>
