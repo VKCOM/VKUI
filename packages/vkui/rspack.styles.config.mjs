@@ -95,6 +95,10 @@ const config = {
       cleanOnceBeforeBuildPatterns: [],
       cleanAfterEveryBuildPatterns: ['*.tmp', '*.tmp.*'],
     }),
+    new rspack.CircularDependencyRspackPlugin({
+      failOnError: true,
+      allowAsyncCycles: false,
+    }),
   ],
   stats: {
     all: false,
@@ -106,6 +110,7 @@ const config = {
     css: true,
     outputModule: true,
   },
+  performance: { maxAssetSize: 10_000_000, maxEntrypointSize: 10_000_000 },
 };
 
 // eslint-disable-next-line import/no-default-export -- rspack-у нужен дефолтный экспорт
