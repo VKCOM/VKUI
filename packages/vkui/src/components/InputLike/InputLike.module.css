@@ -1,7 +1,3 @@
-.host {
-  display: inline;
-}
-
 .mask {
   position: relative;
   font-family: var(--vkui--font_family_base);
