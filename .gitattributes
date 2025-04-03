@@ -3,3 +3,5 @@
 # https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 /.yarn/releases/** binary
 /.yarn/plugins/** binary
+
+packages/vkui/src/**/*.css.d.ts linguist-generated=true
