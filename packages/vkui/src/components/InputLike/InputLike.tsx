@@ -50,7 +50,7 @@ export const InputLike = ({
 
   return (
     <RootComponent
-      Component="div"
+      Component="span"
       baseClassName={value?.length === length ? styles.host : undefined}
       tabIndex={0}
       onClick={callMultiple(onClick, handleElementSelect)}
