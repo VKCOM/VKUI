@@ -7,6 +7,7 @@ import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
+import { isHTMLElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -268,6 +269,13 @@ export const Calendar = ({
       if (event.key === 'Tab') {
         setFocusedDay(undefined);
         setFocusableDay(focusedDay);
+
+        return;
+      }
+
+      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+        event.preventDefault();
+        event.target.click?.();
       }
     },
     [focusedDay, setFocusedDay, setFocusableDay, setViewDate, timeZonedValue, viewDate],
