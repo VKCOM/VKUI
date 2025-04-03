@@ -53,6 +53,10 @@ export interface HorizontalScrollProps
   arrowOffsetY?: number | string;
   /**
    * Показывать ли стрелки.
+   *
+   * > Важно: На мобильных устройствах(`platform="ios"` или `platform="android"`) стрелки отображаться не будут.
+   * > Если вам нужно, чтобы стрелки отображались на мобильных устройствах, вы можете
+   * > обернуть ваш компонент `HorizontalScroll` в `<AdaptivityProvider hasPointer>`.
    */
   showArrows?: boolean | 'always';
   /**
