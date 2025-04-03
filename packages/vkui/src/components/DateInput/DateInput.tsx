@@ -352,12 +352,14 @@ export const DateInput = ({
   const { locale } = useConfigProvider();
   const inputGroupLabel = 'Редактор даты';
   const inputGroupLabelId = React.useId();
-  const currentDateLabel = new Intl.DateTimeFormat(locale, {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(value);
+  const currentDateLabel = value
+    ? new Intl.DateTimeFormat(locale, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(value)
+    : null;
   const currentDateLabelId = React.useId();
 
   return (

@@ -137,7 +137,6 @@ export const CalendarDay = React.memo(
 
     const label = new Intl.DateTimeFormat(locale, {
       weekday: 'long',
-      year: 'numeric',
       month: 'long',
       day: 'numeric',
     }).format(day);
