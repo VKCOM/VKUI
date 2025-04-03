@@ -7,7 +7,6 @@ import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -382,7 +381,7 @@ export const DateInput = ({
           </React.Fragment>
         }
         disabled={disabled}
-        onClick={callMultiple(handleFieldEnter, onClick)}
+        onClick={onClick}
         {...props}
       >
         <div className={styles.wrapper}>
@@ -405,6 +404,7 @@ export const DateInput = ({
             // из-за чего `.Typography--normalize` перебивает стили.
             normalize={false}
             Component="span" // для <span> нормализация не нужна
+            onClick={handleFieldEnter}
           >
             <InputLike
               length={2}
