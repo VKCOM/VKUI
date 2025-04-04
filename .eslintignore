@@ -13,3 +13,4 @@ tmp/
 out/
 .next/
 next-env.d.ts
+*.css.d.ts

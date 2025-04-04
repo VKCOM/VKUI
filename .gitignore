@@ -63,3 +63,6 @@ __diff_output__
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+*.css.d.ts
+*.d.ts.map
