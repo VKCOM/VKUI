@@ -398,6 +398,7 @@ export const DateInput = ({
             Component="input"
             name={name}
             value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
+            onFocus={handleFieldEnter}
             tabIndex={-1}
           />
           <Text
