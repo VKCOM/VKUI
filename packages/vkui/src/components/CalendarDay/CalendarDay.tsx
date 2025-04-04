@@ -11,7 +11,7 @@ import styles from './CalendarDay.module.css';
 
 export type CalendarDayElementProps = Omit<
   React.AllHTMLAttributes<HTMLElement>,
-  'onChange' | 'size' | 'disabled' | 'selected'
+  'onChange' | 'size' | 'disabled' | 'selected' | 'onFocus'
 >;
 
 export type CalendarDayTestsProps = {
@@ -91,7 +91,11 @@ export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTe
    */
   onLeave?: (value: Date) => void;
   /**
-   * Кастомизация отображения содержимого дня.
+   * Обработчик фокуса на дне.
+   */
+  onFocus?: (value: Date) => void;
+  /**
+   * Функция отрисовки контента в ячейке дня.
    */
   renderDayContent?: (day: Date) => React.ReactNode;
 }
@@ -111,6 +115,7 @@ export const CalendarDay = React.memo(
     focused,
     onEnter,
     onLeave,
+    onFocus,
     hinted,
     hintedSelectionStart,
     hintedSelectionEnd,
@@ -119,6 +124,8 @@ export const CalendarDay = React.memo(
     children,
     renderDayContent,
     testId,
+    role,
+    'aria-colindex': colIndex,
     ...restProps
   }: CalendarDayProps) => {
     const { locale, direction } = useConfigProvider();
@@ -126,10 +133,10 @@ export const CalendarDay = React.memo(
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
     const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
+    const handleFocus = React.useCallback(() => onFocus?.(day), [day, onFocus]);
 
     const label = new Intl.DateTimeFormat(locale, {
       weekday: 'long',
-      year: 'numeric',
       month: 'long',
       day: 'numeric',
     }).format(day);
@@ -154,7 +161,13 @@ export const CalendarDay = React.memo(
     }, [renderDayContent, day, children, label]);
 
     if (hidden) {
-      return <div className={classNames(styles.hidden, size === 's' && styles.sizeS)} />;
+      return (
+        <div
+          role={role}
+          aria-colindex={colIndex}
+          className={classNames(styles.hidden, size === 's' && styles.sizeS)}
+        />
+      );
     }
 
     return (
@@ -164,12 +177,14 @@ export const CalendarDay = React.memo(
           size === 's' && styles.sizeS,
           direction === 'rtl' && styles.rtl,
         )}
+        role={role}
+        aria-colindex={colIndex}
         hoverMode={styles.hostHovered}
         activeMode={styles.hostActivated}
         hasActive={false}
         onClick={onClick}
+        onFocus={handleFocus}
         disabled={disabled}
-        tabIndex={-1}
         getRootRef={ref}
         focusVisibleMode={active ? 'outside' : 'inside'}
         onPointerEnter={handleEnter}

@@ -65,6 +65,7 @@ export function useDateInput<T extends HTMLElement, D>({
     if (!open) {
       openCalendar();
       onCalendarOpenChanged?.(true);
+      setFocusedElement(null);
     }
   }, [onCalendarOpenChanged, open, openCalendar]);
 
@@ -90,8 +91,12 @@ export function useDateInput<T extends HTMLElement, D>({
   );
 
   const selectFirst = React.useCallback(() => {
+    if (focusedElement !== null) {
+      return;
+    }
+
     setFocusedElement(0);
-  }, []);
+  }, [focusedElement]);
 
   useGlobalEventListener(document, 'click', handleClickOutside, {
     capture: true,
@@ -118,14 +123,13 @@ export function useDateInput<T extends HTMLElement, D>({
 
     if (element) {
       element.focus();
-      _onCalendarOpen();
       range.selectNodeContents(element as Node);
 
       const selection = window!.getSelection();
       selection?.removeAllRanges();
       selection?.addRange(range);
     }
-  }, [disabled, focusedElement, _onCalendarOpen, refs, window]);
+  }, [disabled, focusedElement, refs, window]);
 
   const clear = React.useCallback(() => {
     onChange?.(undefined);
@@ -133,10 +137,8 @@ export function useDateInput<T extends HTMLElement, D>({
   }, [onChange, selectFirst]);
 
   const handleFieldEnter = React.useCallback(() => {
-    if (!open) {
-      selectFirst();
-    }
-  }, [open, selectFirst]);
+    selectFirst();
+  }, [selectFirst]);
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLSpanElement>) => {
@@ -172,19 +174,24 @@ export function useDateInput<T extends HTMLElement, D>({
         _value[focusedElement] = String(
           currentValue >= config.max ? config.min : currentValue + 1,
         ).padStart(config.length, '0');
-      } else if (
-        e.key === 'Enter' ||
-        (e.key === 'Tab' && focusedElement === maxElement) ||
-        (e.key === 'Tab' && e.shiftKey && focusedElement === 0)
-      ) {
-        removeFocusFromField();
-        return;
       } else if (e.key === 'ArrowLeft' || e.key === 'Left' || (e.key === 'Tab' && e.shiftKey)) {
-        setFocusedElement(focusedElement <= 0 ? maxElement : focusedElement - 1);
+        if (focusedElement <= 0) {
+          removeFocusFromField();
+          return;
+        }
+        setFocusedElement(focusedElement - 1);
       } else if (e.key === 'ArrowRight' || e.key === 'Right' || e.key === 'Tab') {
-        setFocusedElement(focusedElement >= maxElement ? 0 : focusedElement + 1);
+        if (focusedElement >= maxElement) {
+          removeFocusFromField();
+          return;
+        }
+
+        setFocusedElement(focusedElement + 1);
       } else if (e.key === 'Delete' || e.key === 'Del') {
         _value[focusedElement] = '';
+      } else if (e.key === ' ') {
+        _onCalendarOpen();
+        return;
       } else {
         return;
       }
@@ -194,12 +201,13 @@ export function useDateInput<T extends HTMLElement, D>({
       onInternalValueChange(_value);
     },
     [
+      _onCalendarOpen,
+      removeFocusFromField,
       elementsConfig,
       focusedElement,
       internalValue,
       maxElement,
       onInternalValueChange,
-      removeFocusFromField,
     ],
   );
 

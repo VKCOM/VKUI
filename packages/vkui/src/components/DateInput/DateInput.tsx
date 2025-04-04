@@ -7,12 +7,13 @@ import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { callMultiple } from '../../lib/callMultiple';
 import { format, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLike } from '../InputLike/InputLike';
@@ -289,6 +290,7 @@ export const DateInput = ({
     handleFieldEnter,
     clear,
     removeFocusFromField,
+    closeCalendar,
   } = useDateInput({
     maxElement,
     refs,
@@ -347,102 +349,156 @@ export const DateInput = ({
   const [calendarPlacement, setCalendarPlacement] =
     React.useState<PlacementWithAuto>(calendarPlacementProp);
 
+  const { locale } = useConfigProvider();
+  const inputGroupLabel = 'Редактор даты';
+  const inputGroupLabelId = React.useId();
+  const currentDateLabel = value
+    ? new Intl.DateTimeFormat(locale, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(value)
+    : null;
+  const currentDateLabelId = React.useId();
+
   return (
-    <FormField
-      style={style}
-      className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
-      getRootRef={handleRootRef}
-      after={
-        value ? (
-          <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
-            <Icon16Clear />
-          </IconButton>
-        ) : (
-          <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
-            <Icon20CalendarOutline />
-          </IconButton>
-        )
-      }
-      disabled={disabled}
-      onClick={callMultiple(handleFieldEnter, onClick)}
-      onFocus={callMultiple(handleFieldEnter, onFocus)}
-      {...props}
-    >
-      <div className={styles.wrapper}>
-        <VisuallyHidden
-          id={id}
-          Component="input"
-          name={name}
-          value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
-        />
-        <Text
-          className={classNames(styles.input, customValue && styles.hidden)}
-          onKeyDown={handleKeyDown}
-          // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
-          // из-за чего `.Typography--normalize` перебивает стили.
-          normalize={false}
-          Component="span" // для <span> нормализация не нужна
-        >
-          <InputLike
-            length={2}
-            getRootRef={daysRef}
-            index={0}
-            onElementSelect={setFocusedElement}
-            value={internalValue[0]}
-            label={changeDayLabel}
-            data-testid={dayFieldTestId}
-          />
-          <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
-            length={2}
-            getRootRef={monthsRef}
-            index={1}
-            onElementSelect={setFocusedElement}
-            value={internalValue[1]}
-            label={changeMonthLabel}
-            data-testid={monthFieldTestId}
-          />
-          <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
-            length={4}
-            getRootRef={yearsRef}
-            index={2}
-            onElementSelect={setFocusedElement}
-            value={internalValue[2]}
-            label={changeYearLabel}
-            data-testid={yearFieldTestId}
-          />
-          {enableTime && (
-            <React.Fragment>
-              <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
-              <InputLike
-                length={2}
-                getRootRef={hoursRef}
-                index={3}
-                onElementSelect={setFocusedElement}
-                value={internalValue[3]}
-                label={changeHoursLabel}
-                data-testid={hourFieldTestId}
-              />
-              <InputLikeDivider>:</InputLikeDivider>
-              <InputLike
-                length={2}
-                getRootRef={minutesRef}
-                index={4}
-                onElementSelect={setFocusedElement}
-                value={internalValue[4]}
-                label={changeMinutesLabel}
-                data-testid={minuteFieldTestId}
-              />
-            </React.Fragment>
+    <React.Fragment>
+      <FormField
+        style={style}
+        className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
+        getRootRef={handleRootRef}
+        role="group"
+        aria-labelledby={`${inputGroupLabelId} ${currentDateLabelId}`}
+        after={
+          <React.Fragment>
+            <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
+              <Icon20CalendarOutline />
+            </IconButton>
+            {value ? (
+              <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
+                <Icon16Clear />
+              </IconButton>
+            ) : null}
+          </React.Fragment>
+        }
+        disabled={disabled}
+        onClick={onClick}
+        {...props}
+      >
+        <div className={styles.wrapper}>
+          {inputGroupLabel && (
+            <VisuallyHidden id={inputGroupLabelId}>{inputGroupLabel}</VisuallyHidden>
           )}
-        </Text>
-        {customValue && (
-          <Text className={styles.customValue} aria-hidden>
-            {customValue}
+          {currentDateLabel && (
+            <VisuallyHidden id={currentDateLabelId}>{currentDateLabel}</VisuallyHidden>
+          )}
+          <VisuallyHidden
+            id={id}
+            Component="input"
+            name={name}
+            value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
+            tabIndex={-1}
+          />
+          <Text
+            className={classNames(styles.input, customValue && styles.hidden)}
+            // Инцидент: в PR https://github.com/VKCOM/VKUI/pull/6649 стабильно ломается порядок стилей
+            // из-за чего `.Typography--normalize` перебивает стили.
+            normalize={false}
+            Component="span" // для <span> нормализация не нужна
+            onClick={handleFieldEnter}
+          >
+            <InputLike
+              length={2}
+              getRootRef={daysRef}
+              index={0}
+              onKeyDown={handleKeyDown}
+              onElementSelect={setFocusedElement}
+              value={internalValue[0]}
+              label={changeDayLabel}
+              data-testid={dayFieldTestId}
+              role="spinbutton"
+              aria-valuemin={1}
+              aria-valuemax={31}
+              aria-valuetext={internalValue[0]}
+              aria-label={changeDayLabel}
+            />
+            <InputLikeDivider>.</InputLikeDivider>
+            <InputLike
+              length={2}
+              getRootRef={monthsRef}
+              index={1}
+              onElementSelect={setFocusedElement}
+              onKeyDown={handleKeyDown}
+              value={internalValue[1]}
+              label={changeMonthLabel}
+              data-testid={monthFieldTestId}
+              role="spinbutton"
+              aria-valuemin={1}
+              aria-valuemax={12}
+              aria-valuetext={internalValue[1]}
+              aria-label={changeMonthLabel}
+            />
+            <InputLikeDivider>.</InputLikeDivider>
+            <InputLike
+              length={4}
+              getRootRef={yearsRef}
+              index={2}
+              onElementSelect={setFocusedElement}
+              value={internalValue[2]}
+              label={changeYearLabel}
+              onKeyDown={handleKeyDown}
+              data-testid={yearFieldTestId}
+              role="spinbutton"
+              aria-valuemin={1}
+              aria-valuemax={275750}
+              aria-valuetext={internalValue[2]}
+              aria-label={changeYearLabel}
+            />
+            {enableTime && (
+              <React.Fragment>
+                <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
+                <InputLike
+                  length={2}
+                  getRootRef={hoursRef}
+                  index={3}
+                  onElementSelect={setFocusedElement}
+                  value={internalValue[3]}
+                  label={changeHoursLabel}
+                  onKeyDown={handleKeyDown}
+                  data-testid={hourFieldTestId}
+                  role="spinbutton"
+                  aria-valuemin={1}
+                  aria-valuemax={24}
+                  aria-valuetext={internalValue[3]}
+                  aria-label={changeHoursLabel}
+                />
+                <InputLikeDivider>:</InputLikeDivider>
+                <InputLike
+                  length={2}
+                  getRootRef={minutesRef}
+                  index={4}
+                  onElementSelect={setFocusedElement}
+                  value={internalValue[4]}
+                  label={changeMinutesLabel}
+                  onKeyDown={handleKeyDown}
+                  data-testid={minuteFieldTestId}
+                  role="spinbutton"
+                  aria-valuemin={1}
+                  aria-valuemax={59}
+                  aria-valuetext={internalValue[4]}
+                  aria-label={changeMinutesLabel}
+                />
+              </React.Fragment>
+            )}
           </Text>
-        )}
-      </div>
+          {customValue && (
+            <Text className={styles.customValue} aria-hidden>
+              {customValue}
+            </Text>
+          )}
+        </div>
+      </FormField>
       {open && !disableCalendar && (
         <Popper
           targetRef={rootRef}
@@ -451,40 +507,45 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <Calendar
-            value={value}
-            onChange={onCalendarChange}
-            enableTime={enableTime}
-            disablePast={disablePast}
-            disableFuture={disableFuture}
-            shouldDisableDate={shouldDisableDate}
-            onDoneButtonClick={onDoneButtonClick}
-            getRootRef={calendarRef}
-            doneButtonText={doneButtonText}
-            DoneButton={DoneButton}
-            disablePickers={disablePickers}
-            changeHoursLabel={changeHoursLabel}
-            changeMinutesLabel={changeMinutesLabel}
-            prevMonthLabel={prevMonthLabel}
-            nextMonthLabel={nextMonthLabel}
-            changeMonthLabel={changeMonthLabel}
-            changeYearLabel={changeYearLabel}
-            changeDayLabel={changeDayLabel}
-            showNeighboringMonth={showNeighboringMonth}
-            renderDayContent={renderDayContent}
-            size={size}
-            viewDate={viewDate}
-            onHeaderChange={onHeaderChange}
-            onNextMonth={onNextMonth}
-            onPrevMonth={onPrevMonth}
-            prevMonthIcon={prevMonthIcon}
-            nextMonthIcon={nextMonthIcon}
-            minDateTime={minDateTime}
-            maxDateTime={maxDateTime}
-            {...calendarTestsProps}
-          />
+          <FocusTrap onClose={closeCalendar}>
+            <Calendar
+              aria-label="Календарь"
+              aria-modal="true"
+              role="dialog"
+              value={value}
+              onChange={onCalendarChange}
+              enableTime={enableTime}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              shouldDisableDate={shouldDisableDate}
+              onDoneButtonClick={onDoneButtonClick}
+              getRootRef={calendarRef}
+              doneButtonText={doneButtonText}
+              DoneButton={DoneButton}
+              disablePickers={disablePickers}
+              changeHoursLabel={changeHoursLabel}
+              changeMinutesLabel={changeMinutesLabel}
+              prevMonthLabel={prevMonthLabel}
+              nextMonthLabel={nextMonthLabel}
+              changeMonthLabel={changeMonthLabel}
+              changeYearLabel={changeYearLabel}
+              changeDayLabel={changeDayLabel}
+              showNeighboringMonth={showNeighboringMonth}
+              renderDayContent={renderDayContent}
+              size={size}
+              viewDate={viewDate}
+              onHeaderChange={onHeaderChange}
+              onNextMonth={onNextMonth}
+              onPrevMonth={onPrevMonth}
+              prevMonthIcon={prevMonthIcon}
+              nextMonthIcon={nextMonthIcon}
+              minDateTime={minDateTime}
+              maxDateTime={maxDateTime}
+              {...calendarTestsProps}
+            />
+          </FocusTrap>
         </Popper>
       )}
-    </FormField>
+    </React.Fragment>
   );
 };
