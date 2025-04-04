@@ -119,14 +119,24 @@ export function useDateInput<T extends HTMLElement, D>({
 
     let element = refs[focusedElement].current;
 
+    let timerId: ReturnType<typeof setTimeout>;
     if (element) {
       element.focus();
       range.selectNodeContents(element as Node);
 
-      const selection = window!.getSelection();
-      selection?.removeAllRanges();
-      selection?.addRange(range);
+      // Fix для Firefox: setTimeout нужен чтобы отложить range selection на
+      // какое-то время, иначе, при фокусе на InputLike
+      // извне, контент визуально не будет выбран
+      timerId = setTimeout(() => {
+        const selection = window!.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+      }, 0);
     }
+
+    return () => {
+      clearTimeout(timerId);
+    };
   }, [disabled, focusedElement, refs, window]);
 
   const clear = React.useCallback(() => {
