@@ -194,6 +194,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   dropdownOffsetDistance = 0,
   allowClearButton,
   clearButtonTestId,
+  delimiter,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
   const {
@@ -244,6 +245,7 @@ export const ChipsSelect = <Option extends ChipOption>({
 
     // other
     disabled,
+    delimiter,
   });
 
   // Связано с ChipsInputProps

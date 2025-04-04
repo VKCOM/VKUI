@@ -135,4 +135,45 @@ describe(ChipsInput, () => {
     resultValue.pop();
     expect(onChange).toBeCalledWith(resultValue);
   });
+
+  it('should add some options by splitting by delimiter', async () => {
+    const onChange = jest.fn();
+    render(
+      <ChipsInput
+        data-testid="input"
+        value={[
+          {
+            value: 'navarin',
+            label: 'Наваринского пламени с дымом',
+          },
+          {
+            value: 'red',
+            label: 'Красный',
+          },
+        ]}
+        onChange={onChange}
+        delimiter=","
+      />,
+    );
+    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
+    expect(onChange).toBeCalledWith([
+      {
+        value: 'navarin',
+        label: 'Наваринского пламени с дымом',
+      },
+      {
+        value: 'red',
+        label: 'Красный',
+      },
+      {
+        value: 'Зеленый',
+        label: 'Зеленый',
+      },
+      {
+        value: 'Фиолетовый',
+        label: 'Фиолетовый',
+      },
+    ]);
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
+  });
 });

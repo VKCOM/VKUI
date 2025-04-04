@@ -586,4 +586,46 @@ describe('ChipsSelect', () => {
     fireEvent.click(getDropdownIcon());
     expect(screen.queryByTestId('dropdown')).toBeFalsy();
   });
+
+  it('should add some options by splitting by delimiter when creatable', async () => {
+    const onChange = jest.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        data-testid="input"
+        onChange={onChange}
+        delimiter=","
+        creatable
+      />,
+    );
+    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
+    expect(onChange).toBeCalledWith([
+      {
+        value: 'Зеленый',
+        label: 'Зеленый',
+      },
+      {
+        value: 'Фиолетовый',
+        label: 'Фиолетовый',
+      },
+    ]);
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
+  });
+
+  it('should not add some options by splitting by delimiter when not creatable', async () => {
+    const onChange = jest.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        data-testid="input"
+        onChange={onChange}
+        delimiter=","
+      />,
+    );
+    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('Зеленый,Фиолетовый');
+  });
 });
