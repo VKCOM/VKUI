@@ -19,7 +19,7 @@
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.9",
     "postcss-value-parser": "^4.2.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@swc/core": "1.11.13",
