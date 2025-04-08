@@ -29,8 +29,8 @@
   border-radius: inherit;
   box-shadow:
     inset 0 0 0 0.5px var(--vkui--color_image_border_alpha),
-    0 3px 8px rgba(0, 0, 0, 0.12),
-    0 3px 1px rgba(0, 0, 0, 0.04);
+    0 3px 8px rgb(0, 0, 0, 0.12),
+    0 3px 1px rgb(0, 0, 0, 0.04);
   transform: translateX(calc(var(--vkui_internal--SegmentedControl_actual_index) * 100%));
   transform-origin: 0 0;
   transition: transform 150ms;

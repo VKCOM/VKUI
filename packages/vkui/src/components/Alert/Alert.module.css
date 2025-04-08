@@ -258,8 +258,8 @@
 .vkcom {
   inline-size: 400px;
   box-shadow:
-    0 0 2px rgba(0, 0, 0, 0.12),
-    0 0 96px rgba(0, 0, 0, 0.16);
+    0 0 2px rgb(0, 0, 0, 0.12),
+    0 0 96px rgb(0, 0, 0, 0.16);
 }
 
 .vkcom .content {
