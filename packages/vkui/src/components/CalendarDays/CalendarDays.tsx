@@ -15,6 +15,7 @@ import {
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarDays.module.css';
 
 export type CalendarDaysTestsProps = {
@@ -158,8 +159,22 @@ export const CalendarDays = ({
     [onDayChange],
   );
 
+  const viewDateLabelId = React.useId();
+  const currentMonthLabel = value
+    ? new Intl.DateTimeFormat(locale, {
+        year: 'numeric',
+        month: 'long',
+      }).format(viewDate)
+    : null;
+
   return (
-    <RootComponent role="grid" {...props} baseClassName={styles.host}>
+    <RootComponent
+      role="grid"
+      aria-labelledBy={viewDateLabelId}
+      {...props}
+      baseClassName={styles.host}
+    >
+      <VisuallyHidden id={viewDateLabelId}>{currentMonthLabel}</VisuallyHidden>
       <div
         role="row"
         aria-rowindex={1}
