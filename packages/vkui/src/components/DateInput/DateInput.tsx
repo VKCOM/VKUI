@@ -511,7 +511,6 @@ export const DateInput = ({
           <FocusTrap onClose={closeCalendar}>
             <Calendar
               aria-label="Календарь"
-              aria-modal="true"
               role="dialog"
               value={value}
               onChange={onCalendarChange}
