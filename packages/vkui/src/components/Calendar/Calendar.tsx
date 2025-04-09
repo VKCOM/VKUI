@@ -154,6 +154,7 @@ export const Calendar = ({
   DoneButton,
   weekStartsOn = 1,
   disablePickers,
+  'aria-label': ariaLabel = 'Календарь',
   changeHoursLabel = 'Изменить час',
   changeMinutesLabel = 'Изменить минуту',
   prevMonthLabel = 'Предыдущий месяц',
@@ -351,6 +352,7 @@ export const Calendar = ({
 
   return (
     <RootComponent
+      aria-label={ariaLabel}
       {...props}
       baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
       getRootRef={getRootRef}

@@ -105,6 +105,10 @@ export interface DateInputProps
    */
   closeOnChange?: boolean;
   /**
+   * Aria-label для календаря.
+   */
+  calendarLabel?: string;
+  /**
    * Label для кнопки очистки. Делает доступным для ассистивных технологий.
    */
   clearFieldLabel?: string;
@@ -205,10 +209,9 @@ export const DateInput = ({
   disabled,
   onClick,
   onFocus,
+  calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
-  showNeighboringMonth,
-  size,
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
   changeDayLabel = 'Изменить день',
@@ -216,6 +219,8 @@ export const DateInput = ({
   changeMinutesLabel = 'Изменить минуту',
   clearFieldLabel = 'Очистить поле',
   showCalendarLabel = 'Показать календарь',
+  showNeighboringMonth,
+  size,
   viewDate,
   onHeaderChange,
   onNextMonth,
@@ -513,7 +518,7 @@ export const DateInput = ({
         >
           <FocusTrap onClose={closeCalendar}>
             <Calendar
-              aria-label="Календарь"
+              aria-label={calendarLabel}
               role="dialog"
               value={value}
               onChange={onCalendarChange}
