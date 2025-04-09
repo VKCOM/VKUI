@@ -141,6 +141,19 @@ export interface DateInputProps
    * Часовой пояс для отображения даты.
    */
   timezone?: string;
+  /**
+   * Включает режим в котором DateInput доступен
+   * для ассистивных технологий.
+   * В этом режиме:
+   * - календарь больше не открывает при фокусе/клике на DateInput;
+   * - иконка календаря видна всегда,
+   * чтобы пользователи могли открыть календарь по клику на иконку;
+   * - календарь при открытии получает фокус и клавиатурный
+   * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт;
+   *
+   * TODO [>=8]: включить по умолчанию.
+   */
+  accessible?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -209,6 +222,7 @@ export const DateInput = ({
   disabled,
   onClick,
   onFocus,
+  accessible,
   calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
@@ -310,6 +324,7 @@ export const DateInput = ({
     getInternalValue,
     value,
     onCalendarOpenChanged,
+    accessible,
   });
 
   const { sizeY = 'none' } = useAdaptivity();
@@ -380,9 +395,11 @@ export const DateInput = ({
         aria-labelledby={`${inputGroupLabelId} ${currentDateLabelId}`}
         after={
           <React.Fragment>
-            <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
-              <Icon20CalendarOutline />
-            </IconButton>
+            {accessible || (!accessible && !value) ? (
+              <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
+                <Icon20CalendarOutline />
+              </IconButton>
+            ) : null}
             {value ? (
               <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
                 <Icon16Clear />
@@ -404,6 +421,8 @@ export const DateInput = ({
           <VisuallyHidden
             id={id}
             Component="input"
+            readOnly
+            aria-hidden
             name={name}
             value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
             onFocus={handleFieldEnter}
@@ -516,7 +535,11 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <FocusTrap onClose={closeCalendar}>
+          <FocusTrap
+            onClose={closeCalendar}
+            disabled={!accessible}
+            restoreFocus={Boolean(accessible)}
+          >
             <Calendar
               aria-label={calendarLabel}
               role="dialog"

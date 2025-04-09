@@ -19,6 +19,7 @@ export interface UseDateInputDependencies<T, D> {
   getInternalValue: (value?: D | undefined) => string[];
   onChange?: (value?: D | undefined) => void;
   onCalendarOpenChanged?: (opened: boolean) => void;
+  accessible?: boolean;
 }
 
 export function useDateInput<T extends HTMLElement, D>({
@@ -32,6 +33,7 @@ export function useDateInput<T extends HTMLElement, D>({
   getInternalValue,
   value,
   onCalendarOpenChanged,
+  accessible,
 }: UseDateInputDependencies<T, D>): {
   rootRef: React.RefObject<HTMLDivElement | null>;
   calendarRef: React.RefObject<HTMLDivElement | null>;
@@ -65,9 +67,11 @@ export function useDateInput<T extends HTMLElement, D>({
     if (!open) {
       openCalendar();
       onCalendarOpenChanged?.(true);
-      setFocusedElement(null);
+      if (accessible) {
+        setFocusedElement(null);
+      }
     }
-  }, [onCalendarOpenChanged, open, openCalendar]);
+  }, [onCalendarOpenChanged, open, openCalendar, accessible]);
 
   const removeFocusFromField = React.useCallback(() => {
     setFocusedElement(null);
@@ -122,6 +126,9 @@ export function useDateInput<T extends HTMLElement, D>({
     let timerId: ReturnType<typeof setTimeout>;
     if (element) {
       element.focus();
+      if (!accessible) {
+        _onCalendarOpen();
+      }
       range.selectNodeContents(element as Node);
 
       // Fix для Firefox: setTimeout нужен чтобы отложить range selection на
@@ -137,7 +144,7 @@ export function useDateInput<T extends HTMLElement, D>({
     return () => {
       clearTimeout(timerId);
     };
-  }, [disabled, focusedElement, refs, window]);
+  }, [disabled, focusedElement, refs, window, _onCalendarOpen, accessible]);
 
   const clear = React.useCallback(() => {
     onChange?.(undefined);
