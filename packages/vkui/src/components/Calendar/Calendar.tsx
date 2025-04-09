@@ -81,6 +81,11 @@ export interface CalendarProps
   disablePickers?: boolean;
   /**
    * `aria-label` для изменения дня.
+   *
+   * @deprecated Будет удалeно в **VKUI v8**.
+   * Использовалось для задания aria-label для контейнера дней в календаре.
+   * Теперь этот контейнер является таблицей (с помощью role="grid") и
+   * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
   changeDayLabel?: string;
   /**
@@ -156,7 +161,6 @@ export const Calendar = ({
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
   showNeighboringMonth,
-  changeDayLabel = 'Изменить день',
   size = 'm',
   viewDate: externalViewDate,
   onHeaderChange,

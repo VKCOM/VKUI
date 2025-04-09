@@ -77,7 +77,6 @@ export interface DateInputProps
       | 'nextMonthLabel'
       | 'changeMonthLabel'
       | 'changeYearLabel'
-      | 'changeDayLabel'
       | 'showNeighboringMonth'
       | 'size'
       | 'viewDate'
@@ -121,6 +120,10 @@ export interface DateInputProps
    * Обработчик изменения состояния открытия календаря.
    */
   onCalendarOpenChanged?: (opened: boolean) => void;
+  /**
+   * `aria-label` для изменения дня.
+   */
+  changeDayLabel?: string;
   /**
    * Обработчик нажатия на кнопку `"Done"`. Используется совместно с флагом `enableTime`.
    */
@@ -529,7 +532,6 @@ export const DateInput = ({
               nextMonthLabel={nextMonthLabel}
               changeMonthLabel={changeMonthLabel}
               changeYearLabel={changeYearLabel}
-              changeDayLabel={changeDayLabel}
               showNeighboringMonth={showNeighboringMonth}
               renderDayContent={renderDayContent}
               size={size}
