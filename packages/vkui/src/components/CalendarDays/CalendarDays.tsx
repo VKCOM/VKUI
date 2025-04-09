@@ -170,7 +170,7 @@ export const CalendarDays = ({
   return (
     <RootComponent
       role="grid"
-      aria-labelledBy={viewDateLabelId}
+      aria-labelledby={viewDateLabelId}
       {...props}
       baseClassName={styles.host}
     >
