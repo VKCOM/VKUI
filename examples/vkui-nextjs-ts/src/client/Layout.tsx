@@ -1,6 +1,13 @@
 'use client';
 
-import { AdaptivityProvider, AppRoot, ConfigProvider, FixedLayout, Flex } from '@vkontakte/vkui';
+import {
+  AdaptivityProvider,
+  AppRoot,
+  ColorSchemeProvider,
+  ConfigProvider,
+  FixedLayout,
+  Flex,
+} from '@vkontakte/vkui';
 import styles from './Layout.module.css';
 import { useColorSchemeSwitcher } from '@/client/ColorSchemeSwitcher';
 import '@vkontakte/vkui/dist/cssm/styles/themes.css';
@@ -9,22 +16,30 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export function Layout({ children }: LayoutProps) {
+function LayoutContent({ children }: LayoutProps) {
   const [colorScheme, colorSchemeSwitcher] = useColorSchemeSwitcher();
 
   return (
-    <ConfigProvider colorScheme={colorScheme}>
+    <ColorSchemeProvider value={colorScheme}>
+      <AppRoot>
+        <Flex direction="column" justify="center" className={styles.layout}>
+          <FixedLayout vertical="top">
+            <Flex justify="end" className={styles.header}>
+              {colorSchemeSwitcher}
+            </Flex>
+          </FixedLayout>
+          {children}
+        </Flex>
+      </AppRoot>
+    </ColorSchemeProvider>
+  );
+}
+
+export function Layout({ children }: LayoutProps) {
+  return (
+    <ConfigProvider>
       <AdaptivityProvider>
-        <AppRoot>
-          <Flex direction="column" justify="center" className={styles.layout}>
-            <FixedLayout vertical="top">
-              <Flex justify="end" className={styles.header}>
-                <Flex.Item>{colorSchemeSwitcher}</Flex.Item>
-              </Flex>
-            </FixedLayout>
-            {children}
-          </Flex>
-        </AppRoot>
+        <LayoutContent>{children}</LayoutContent>
       </AdaptivityProvider>
     </ConfigProvider>
   );
