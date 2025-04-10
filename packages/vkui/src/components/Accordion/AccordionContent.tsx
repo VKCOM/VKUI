@@ -25,13 +25,13 @@ export interface AccordionContentProps
     HasRef<HTMLDivElement>,
     React.HTMLAttributes<HTMLDivElement> {}
 
-export const AccordionContent: React.FC<AccordionContentProps> = ({
+export const AccordionContent = ({
   getRootRef,
   getRef,
   className,
   children,
   ...restProps
-}) => {
+}: AccordionContentProps) => {
   const { expanded, labelId, contentId } = React.useContext(AccordionContext);
 
   const inRef = useExternRef(getRef);
@@ -81,5 +81,3 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
     </div>
   );
 };
-
-AccordionContent.displayName = 'AccordionContent';

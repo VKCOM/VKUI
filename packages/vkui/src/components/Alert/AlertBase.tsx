@@ -17,7 +17,15 @@ import styles from './Alert.module.css';
 
 export interface AlertBaseProps
   extends Omit<AlertProps, 'usePortal' | 'className' | 'style' | 'getRootRef'> {
+  /**
+   * Флаг, определяющий состояние закрытия модального окна.
+   * Когда установлен в true, запускает анимацию закрытия окна.
+   */
   closing?: boolean;
+  /**
+   * Функция обратного вызова для управления состоянием закрытия модального окна.
+   * Принимает булево значение, которое определяет, находится ли окно в процессе закрытия.
+   */
   setClosing?: (closing: boolean) => void;
 }
 

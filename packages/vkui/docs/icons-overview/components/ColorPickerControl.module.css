@@ -9,18 +9,18 @@
   background-color: var(--vkui_internal--IconsOverview_icons_color);
   border: 2px solid #fff;
   border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
 .container:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgb(0, 0, 0, 0.2);
   transform: scale(1.05);
 }
 
 .container:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.5);
+  box-shadow: 0 0 0 3px rgb(33, 150, 243, 0.5);
 }
 
 .input {
@@ -36,7 +36,7 @@
 @media (prefers-color-scheme: dark) {
   .container {
     border-color: #2d2d2d;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgb(0, 0, 0, 0.4);
   }
 }
 @media (prefers-reduced-motion: reduce) {

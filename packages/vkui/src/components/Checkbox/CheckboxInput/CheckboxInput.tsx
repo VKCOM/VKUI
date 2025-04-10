@@ -32,12 +32,33 @@ export interface CheckboxInputProps
   extends React.ComponentProps<'input'>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
+  /**
+   * Неопределенное состояние чекбокса.
+   */
   indeterminate?: boolean;
+  /**
+   * Неопределенное состояние чекбокса по умолчанию.
+   */
   defaultIndeterminate?: boolean;
+  /**
+   * Иконка для включенного состояния в компактном режиме.
+   */
   IconOnCompact?: CheckboxInputIconType;
+  /**
+   * Иконка для включенного состояния в обычном режиме.
+   */
   IconOnRegular?: CheckboxInputIconType;
+  /**
+   * Иконка для выключенного состояния в компактном режиме.
+   */
   IconOffCompact?: CheckboxInputIconType;
+  /**
+   * Иконка для выключенного состояния в обычном режиме.
+   */
   IconOffRegular?: CheckboxInputIconType;
+  /**
+   * Иконка для неопределенного состояния.
+   */
   IconIndeterminate?: CheckboxInputIconType;
 }
 

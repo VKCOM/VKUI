@@ -74,8 +74,8 @@
   --vkui_internal--z_index_form_field_side: 6;
 
   /* z_index ImageBase isolate */
-  --vkui_internal--z_index_image_base_overlay: 0;
-  --vkui_internal--z_index_image_base_border: 1;
+  --vkui_internal--z_index_image_base_border: 0;
+  --vkui_internal--z_index_image_base_overlay: 1;
   --vkui_internal--z_index_image_base_badge: 2;
   --vkui_internal--z_index_image_base_positioned_element: 3;
 

@@ -22,16 +22,19 @@ function progressCustomHeightStyle(height: number | undefined): React.CSSPropert
 
 export interface ProgressProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Стиль отображения прогрессбара
+   * Стиль отображения прогрессбара.
    */
   appearance?: 'accent' | 'positive' | 'negative' | `--${string}` | `#${string}`;
+  /**
+   * Значение прогресса.
+   */
   value?: number;
   /**
    * Высота элемента.
    */
   height?: number;
   /**
-   * Сделать прогрессбар прозрачным
+   * Сделать прогрессбар прозрачным.
    */
   trackDisable?: boolean;
 }

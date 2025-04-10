@@ -9,8 +9,8 @@
 .modeShadow {
   box-shadow: var(
     --vkui--elevation3,
-    0 2px 24px 0 rgba(0, 0, 0, 0.08),
-    0 0 2px 0 rgba(0, 0, 0, 0.08)
+    0 2px 24px 0 rgb(0, 0, 0, 0.08),
+    0 0 2px 0 rgb(0, 0, 0, 0.08)
   );
 }
 

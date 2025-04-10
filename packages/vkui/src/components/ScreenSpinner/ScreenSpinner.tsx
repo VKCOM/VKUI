@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
@@ -44,13 +45,12 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   );
 };
 
-ScreenSpinner.displayName = 'ScreenSpinner';
-
 ScreenSpinner.Container = ScreenSpinnerContainer;
-ScreenSpinner.Container.displayName = 'ScreenSpinner.Container';
-
 ScreenSpinner.Loader = ScreenSpinnerLoader;
-ScreenSpinner.Loader.displayName = 'ScreenSpinner.Loader';
-
 ScreenSpinner.SwapIcon = ScreenSpinnerSwapIcon;
-ScreenSpinner.SwapIcon.displayName = 'ScreenSpinner.SwapIcon';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ScreenSpinner.Container, 'ScreenSpinner.Container');
+  defineComponentDisplayNames(ScreenSpinner.Loader, 'ScreenSpinner.Loader');
+  defineComponentDisplayNames(ScreenSpinner.SwapIcon, 'ScreenSpinner.SwapIcon');
+}

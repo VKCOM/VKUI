@@ -26,11 +26,11 @@ const stylesStrategy = {
 
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Позволяет сделать прозрачную подложку
+   * Позволяет сделать прозрачную подложку.
    */
   noBackground?: boolean;
   /**
-   * @deprecated будет удалён в **VKUI v8**
+   * @deprecated Будет удалён в **VKUI v8**
    * Используйте `strategy` вместо этого свойства.
    *
    * Включает фиксированное позиционирование.
@@ -43,7 +43,7 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
    *
    * - `fixed`: у контейнера выставлен `position: fixed`
    * - `absolute`: у контейнера выставлен `position: absolute`
-   * - `none`: у контейнера не выставлен `position`
+   * - `none`: у контейнера не выставлен `position`.
    *
    * @default 'fixed'
    */
@@ -61,7 +61,7 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
    */
   closing?: boolean;
   /**
-   * Позволяет задать z-index через токен или числом
+   * Позволяет задать z-index через токен или числом.
    */
   zIndex?: number | string;
 }

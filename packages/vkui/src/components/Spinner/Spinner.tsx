@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { SpinnerAnimation } from './SpinnerAnimation';
+import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from './icons';
 import styles from './Spinner.module.css';
 
 const spinnerIconMap = {
@@ -15,10 +16,16 @@ const spinnerIconMap = {
 };
 
 export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
+  /**
+   * Размер спиннера.
+   */
   size?: 's' | 'm' | 'l' | 'xl';
+  /**
+   * Отключение анимации.
+   */
   disableAnimation?: boolean;
   /**
-   * Задать цвет можно будет через свойство color родителя
+   * Задать цвет можно будет через свойство color родителя.
    */
   noColor?: boolean;
 }
@@ -26,7 +33,8 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
 /**
  * @see https://vkcom.github.io/VKUI/#/Spinner
  */
-export const Spinner: React.FC<SpinnerProps> = React.memo(
+// eslint-disable-next-line react/display-name -- используется defineComponentDisplayNames
+export const Spinner = React.memo(
   ({
     size = 'm',
     children = 'Загружается...',
@@ -50,4 +58,6 @@ export const Spinner: React.FC<SpinnerProps> = React.memo(
   },
 );
 
-Spinner.displayName = 'Spinner';
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(Spinner, 'Spinner');
+}

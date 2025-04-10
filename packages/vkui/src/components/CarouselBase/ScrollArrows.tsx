@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
@@ -24,11 +25,11 @@ export const getArrowClassName = (
 
 export interface ScrollArrowsTestIds {
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к следующему слайду
+   * Передает атрибут `data-testid` для кнопки перехода к следующему слайду.
    */
   nextArrowTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду
+   * Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду.
    */
   prevArrowTestId?: string;
 }
@@ -43,7 +44,7 @@ interface ScrollArrowsProps
   onSlideRight: (e: React.MouseEvent) => void;
 }
 
-export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
+export const ScrollArrows = ({
   hasPointer,
   canSlideLeft,
   canSlideRight,
@@ -54,7 +55,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
   arrowAreaHeight = 'stretch',
   nextArrowTestId,
   prevArrowTestId,
-}) => {
+}: ScrollArrowsProps) => {
   return showArrows && hasPointer ? (
     <>
       {canSlideLeft && (

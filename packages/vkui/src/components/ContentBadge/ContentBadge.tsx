@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -57,7 +58,7 @@ export interface ContentBadgeProps
   /**
    * Включает приближение значения закругления к форме круга.
    *
-   * > Note: игнорируется при size="s"
+   * > Note: игнорируется при size="s".
    */
   capsule?: boolean;
   /**
@@ -67,7 +68,7 @@ export interface ContentBadgeProps
    *
    * - size="s" – ⚠️ не поддерживает иконки;
    * - size="m" – при **одиночной** иконке `16x16`, в остальных случаях `12x12`;
-   * - size="l" – при **одиночной** иконке `20x20`, в остальных случаях `16x16`;
+   * - size="l" – при **одиночной** иконке `20x20`, в остальных случаях `16x16`.
    */
   size?: ContentBadgeSizeType;
 }
@@ -118,7 +119,8 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
   );
 };
 
-ContentBadge.displayName = 'ContentBadge';
-
 ContentBadge.SlotIcon = ContentBadgeSlotIcon;
-ContentBadge.SlotIcon.displayName = 'ContentBadge.SlotIcon';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ContentBadge.SlotIcon, 'ContentBadge.SlotIcon');
+}

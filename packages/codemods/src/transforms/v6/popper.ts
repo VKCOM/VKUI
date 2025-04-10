@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import type { API, FileInfo } from 'jscodeshift';
 import {
-  type AttributeManipulator,
+  type AttributeManipulatorDeclaration,
   createAttributeManipulator,
   getImportInfo,
 } from '../../codemod-helpers';
@@ -11,7 +11,7 @@ export const parser = 'tsx';
 
 const componentName = 'unstable_Popper';
 
-const ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
+const ATTRIBUTE_MANIPULATOR: AttributeManipulatorDeclaration = {
   offsetDistance: {
     keyTo: 'offsetByMainAxis',
   },
@@ -46,7 +46,7 @@ const ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
 };
 
 const FORCE_PORTAL = 'forcePortal';
-const COMPLEX_ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
+const COMPLEX_ATTRIBUTE_MANIPULATOR: AttributeManipulatorDeclaration = {
   [FORCE_PORTAL]: {
     keyTo: 'usePortal',
   },

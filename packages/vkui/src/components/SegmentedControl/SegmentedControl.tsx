@@ -27,20 +27,44 @@ export interface SegmentedControlOptionInterface
   extends Omit<React.HTMLAttributes<HTMLElement>, 'label'> {
   /**
    * Вставляет элемент перед основным контентом.
-   * Рекомендуется использовать только иконки с размером 20
+   * Рекомендуется использовать только иконки с размером 20.
    */
   before?: React.ReactNode;
+  /**
+   * Текст или React-элемент, отображаемый в качестве метки опции.
+   */
   label: React.ReactNode;
+  /**
+   * Значение опции, которое будет передано в обработчик onChange при выборе.
+   */
   value: SegmentedControlValue;
 }
 
 export interface SegmentedControlProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
+  /**
+   * Массив опций для отображения в компоненте.
+   */
   options: SegmentedControlOptionInterface[];
+  /**
+   * Размер компонента.
+   */
   size?: 'm' | 'l';
+  /**
+   * Имя для input-элементов внутри компонента.
+   */
   name?: string;
+  /**
+   * Обработчик изменения выбранного значения.
+   */
   onChange?: (value: SegmentedControlValue) => void;
+  /**
+   * Текущее выбранное значение (для контролируемого компонента).
+   */
   value?: SegmentedControlValue;
+  /**
+   * Значение по умолчанию (для неконтролируемого компонента).
+   */
   defaultValue?: SegmentedControlValue;
 }
 

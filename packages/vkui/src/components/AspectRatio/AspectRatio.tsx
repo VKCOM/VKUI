@@ -5,6 +5,9 @@ import { RootComponent, type RootComponentProps } from '../RootComponent/RootCom
 import styles from './AspectRatio.module.css';
 
 export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
+  /**
+   * `className` для компонента.
+   */
   className?: string;
   /**
    * По умолчанию, вложенный контент будет растягиваться и заполнять весь блок.
@@ -14,7 +17,7 @@ export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 
    * Например:
    * - в виде числа: 16 / 9, 4 / 3, 1920 / 1080,
    * - в виде css переменной: `var(--css-aspect-ratio-var)`
-   * - в виде сложного выражения: `calc(<какие-то вычисления>)`
+   * - в виде сложного выражения: `calc(<какие-то вычисления>)`.
    */
   ratio: number | string;
 }

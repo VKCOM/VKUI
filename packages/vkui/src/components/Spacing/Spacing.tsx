@@ -9,13 +9,13 @@ export const CUSTOM_CSS_TOKEN_FOR_USER_GAP = '--vkui_internal--spacing_size';
 
 export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Высота спэйсинга
+   * Высота спэйсинга.
    *
-   * Принимает значения дизайн-системы, числовые значения и css-переменные
+   * Принимает значения дизайн-системы, числовые значения и css-переменные.
    */
   size?: SpacingSizeProp;
   /**
-   * @deprecated 7.0.0
+   * @deprecated 7.0.0.
    *
    * Свойство устарело и будет удалено в v8.
    */

@@ -6,18 +6,18 @@ export type StateModeLiteral = LiteralUnion<StateMode, string>;
 
 export interface StateProps {
   /**
-   * Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active
+   * Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active.
    */
   activeMode?: StateModeLiteral;
 
   /**
-   * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
+   * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover.
    */
   hoverMode?: StateModeLiteral;
 }
 
 /**
- * Состояние по умолчанию
+ * Состояние по умолчанию.
  */
 export const DEFAULT_STATE_MODE: StateMode = 'background';
 
@@ -28,7 +28,7 @@ const stylesHovered: Record<string, string> = {
 };
 
 /**
- * Определяем класс наведения
+ * Определяем класс наведения.
  */
 export function hoverClass(hoverMode: StateModeLiteral = DEFAULT_STATE_MODE): string {
   const presetClass = stylesHovered[hoverMode] as string | undefined;
@@ -43,7 +43,7 @@ const stylesActivated: Record<string, string> = {
 };
 
 /**
- * Определяем класс наведения
+ * Определяем класс наведения.
  */
 export function activeClass(activeMode: StateModeLiteral = DEFAULT_STATE_MODE): string {
   const presetClass = stylesActivated[activeMode] as string | undefined;

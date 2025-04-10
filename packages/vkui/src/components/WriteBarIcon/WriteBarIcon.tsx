@@ -36,7 +36,7 @@ export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButton
    * Валидные значения:
    * - `attach` – иконка прикрепления, текст по умолчанию — "Прикрепить файл";
    * - `send` – иконка отправки, текст по умолчанию — "Отправить";
-   * - `done` – иконка отправки в режиме редактирования, текст по умолчанию — "Готово";
+   * - `done` – иконка отправки в режиме редактирования, текст по умолчанию — "Готово".
    */
   mode?: 'attach' | 'send' | 'done';
   /**
@@ -107,10 +107,10 @@ export const WriteBarIcon = ({
 
   return (
     <Tappable
-      {...restProps}
       Component="button"
       hasHover={false}
       activeMode={styles.active}
+      {...restProps}
       baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,

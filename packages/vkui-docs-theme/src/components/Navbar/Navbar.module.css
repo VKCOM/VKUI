@@ -8,7 +8,7 @@
   background-color: var(--vkui--color_background_content);
   border-block-end: var(--vkui--size_border--regular) solid
     var(--vkui_docs--color_stroke_separator_secondary);
-  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 30px 0 rgb(0, 0, 0, 0.04);
 }
 
 .navbar {
