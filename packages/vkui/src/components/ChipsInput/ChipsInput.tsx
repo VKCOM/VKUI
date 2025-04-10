@@ -37,6 +37,7 @@ export const ChipsInput = <Option extends ChipOption>({
   // other
   disabled,
   allowClearButton,
+  delimiter,
   ...restProps
 }: ChipsInputProps<Option>): React.ReactNode => {
   const {
@@ -65,6 +66,7 @@ export const ChipsInput = <Option extends ChipOption>({
 
     // other
     disabled,
+    delimiter,
   });
   const inputRef = useExternRef(getRef, inputRefHook);
 

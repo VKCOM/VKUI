@@ -62,6 +62,7 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
 export const useChipsSelect = <O extends ChipOption>({
   // common
   disabled,
+  delimiter,
 
   // option
   value: valueProp,
@@ -127,6 +128,7 @@ export const useChipsSelect = <O extends ChipOption>({
 
     // other
     disabled,
+    delimiter,
   });
 
   // dropdown
@@ -160,14 +162,14 @@ export const useChipsSelect = <O extends ChipOption>({
 
   const handleInputChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onInputChange(event);
+      onInputChange(event, !!creatable);
 
       if (!opened) {
         handleOpened(true);
         setFocusedOptionIndex(0);
       }
     },
-    [onInputChange, opened, handleOpened],
+    [onInputChange, creatable, opened, handleOpened],
   );
 
   useIsomorphicLayoutEffect(
