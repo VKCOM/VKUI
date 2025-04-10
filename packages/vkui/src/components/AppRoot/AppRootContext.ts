@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { type AppRootUserSelectMode, type SafeAreaInsets } from './types';
 
@@ -14,7 +16,7 @@ export interface AppRootContextInterface {
 }
 
 /**
- * Вынесен в константу, чтобы можно было в тестах создавать свой контекст и сливать перед этим значения по-умолчанию
+ * Вынесен в константу, чтобы можно было в тестах создавать свой контекст и сливать перед этим значения по-умолчанию.
  *
  * > Note: не смог убрать из покрытия через 'istanbul ignore next'.
  */

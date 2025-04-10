@@ -23,19 +23,19 @@ const sizeYClassNames = {
 export interface BasicProps {
   /**
    * Элемент действия.
-   * Не может использоваться одновременно с `subtitle`
+   * Не может использоваться одновременно с `subtitle`.
    */
   action?: React.ReactNode;
 
   /**
-   * Контент в правой части, может быть иконкой 24x24
+   * Контент в правой части, может быть иконкой 24x24.
    */
   after?: React.ReactNode;
 
   /**
    * Варианты расположения кнопки действия
    * По умолчанию на десктопах, или при наличии элементов `after` или `subtitle`
-   * имеет значение `vertical`, в остальных случаях `horizontal`
+   * имеет значение `vertical`, в остальных случаях `horizontal`.
    */
   layout?: 'vertical' | 'horizontal';
 
@@ -43,18 +43,18 @@ export interface BasicProps {
    * Может быть следующими компонентами:
    *  - цветная иконка 24x24 или 28x28 пикселя
    *  - `<Avatar size={32} />`
-   *  - `<Image size={40} />`
+   *  - `<Image size={40} />`.
    */
   before?: React.ReactNode;
 
   /**
-   * Задает стиль снекбара
+   * Задает стиль снекбара.
    */
   mode?: 'default' | 'dark';
 
   /**
    * Дополнительная строка текста под `children`.
-   * Не может использоваться одновременно с `action`
+   * Не может использоваться одновременно с `action`.
    */
   subtitle?: React.ReactNode;
 }

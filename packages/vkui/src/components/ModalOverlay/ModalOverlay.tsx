@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import type { DataHTMLAttributes } from 'react';
 import { classNames } from '@vkontakte/vkjs';

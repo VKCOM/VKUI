@@ -26,19 +26,19 @@
     "*.css"
   ],
   "dependencies": {
-    "@vkontakte/icons": "^2.159.0",
+    "@vkontakte/icons": "^3.0.0",
     "@vkontakte/vkjs": "^2.0.1",
     "@vkontakte/vkui": "workspace:^",
-    "@vkontakte/vkui-tokens": "4.62.0"
+    "@vkontakte/vkui-tokens": "4.63.0"
   },
   "devDependencies": {
-    "next": "^15.2.3",
+    "next": "^15.2.4",
     "nextra": "^4.2.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "peerDependencies": {
-    "next": "^15.2.3",
+    "next": "^15.2.4",
     "nextra": "^4.2.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

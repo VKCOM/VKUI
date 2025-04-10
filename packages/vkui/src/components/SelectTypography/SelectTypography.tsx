@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import type { SelectType } from '../Select/Select';
 import { Text, type TextProps } from '../Typography/Text/Text';
 

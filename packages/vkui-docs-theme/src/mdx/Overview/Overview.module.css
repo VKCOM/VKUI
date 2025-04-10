@@ -22,7 +22,7 @@
     linear-gradient(to right, var(--vkui--color_separator_primary) 1px, transparent 1px),
     linear-gradient(to bottom, var(--vkui--color_separator_primary) 1px, transparent 1px);
   background-size: 32px 32px;
-  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 30%, #000 100%);
+  mask-image: linear-gradient(to right, rgb(0, 0, 0, 0) 30%, #000 100%);
 }
 
 /* No classes for markdown content */

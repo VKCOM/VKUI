@@ -8,8 +8,18 @@ export interface RootComponentProps<T>
   extends React.AllHTMLAttributes<T>,
     HasRootRef<T>,
     HasComponent {
-  baseClassName?: string | false;
-  baseStyle?: React.CSSProperties;
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство устарело и будет удалено в `v8`, используйте свойство `className`.
+   */
+  baseClassName?: string | false; // TODO:  Перенести свойство в RootComponentInternalProps, в непубличное API
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство устарело и будет удалено в `v8`, используйте свойство `style`.
+   */
+  baseStyle?: React.CSSProperties; // TODO:  Перенести свойство в RootComponentInternalProps, в непубличное API
 }
 
 /**

@@ -14,15 +14,10 @@ export interface FormItemTopAsideProps
  * @since 6.1.0
  *
  */
-export const FormItemTopAside: React.FC<FormItemTopAsideProps> = ({
-  children,
-  ...restProps
-}: FormItemTopAsideProps) => {
+export const FormItemTopAside = ({ children, ...restProps }: FormItemTopAsideProps) => {
   return (
     <Subhead className={styles.aside} {...restProps}>
       {children}
     </Subhead>
   );
 };
-
-FormItemTopAside.displayName = 'FormItemTopAside';

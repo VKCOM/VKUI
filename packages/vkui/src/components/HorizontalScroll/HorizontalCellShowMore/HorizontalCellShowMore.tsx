@@ -19,7 +19,7 @@ export interface HorizontalCellShowMoreProps
    * Задаёт высоту компонента. Должeн соответствовать размеру картинок
    * внутри соседних `HorizontalCell` компонентов.
    *
-   * Используйте размеры, заданные дизайн-системой (см. типы).
+   * Используйте размеры, заданные дизайн-системой (смотри типы).
    *
    * > ⚠️ Использование кастомного размера – это пограничный кейс.
    *
@@ -38,7 +38,7 @@ export interface HorizontalCellShowMoreProps
    * */
   children?: SubheadProps['children'];
   /**
-   * Выравнивание по центру относительно родителя
+   * Выравнивание по центру относительно родителя.
    */
   centered?: boolean;
 }
@@ -73,7 +73,7 @@ export const HorizontalCellShowMore = ({
         hoverMode="opacity"
         {...restProps}
       >
-        <Icon28ChevronRightCircle className={styles.icon} fill="currentColor" />
+        <Icon28ChevronRightCircle className={styles.icon} />
 
         <Subhead className={styles.text} weight="2">
           {children}

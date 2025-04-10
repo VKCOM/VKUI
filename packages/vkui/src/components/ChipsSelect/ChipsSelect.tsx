@@ -77,17 +77,20 @@ export interface ChipsSelectProps<O extends ChipOption>
     UseChipsSelectProps<O>,
     Pick<FormFieldProps, 'status' | 'mode' | 'before'>,
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'> {
+  /**
+   * Расположение выпадающего списка.
+   */
   placement?: 'top' | 'bottom';
   /**
-   * Отрисовка Spinner вместо списка опций в выпадающем списке
+   * Отрисовка Spinner вместо списка опций в выпадающем списке.
    */
   fetching?: boolean;
   /**
-   * Закрытие выпадающего списка после выбора элемента
+   * Закрытие выпадающего списка после выбора элемента.
    */
   closeAfterSelect?: boolean;
   /**
-   * Ширина раскрывающегося списка зависит от контента
+   * Ширина раскрывающегося списка зависит от контента.
    */
   dropdownAutoWidth?: boolean;
   /**
@@ -99,18 +102,20 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   dropdownTestId?: string;
   /**
-   * Иконка раскрывающегося списка
+   * Иконка раскрывающегося списка.
    */
   icon?: React.ReactNode;
   /**
-   * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`)
+   * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`).
    */
   addOnBlur?: boolean;
   /**
-   * Отключает максимальную высоту по умолчанию
+   * Отключает максимальную высоту по умолчанию.
    */
   noMaxHeight?: boolean;
-
+  /**
+   * Функция для отрисовки кастомной опции в выпадающем списке.
+   */
   renderOption?: (props: CustomSelectOptionProps, option: O) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
@@ -122,17 +127,17 @@ export interface ChipsSelectProps<O extends ChipOption>
     defaultDropdownContent: React.ReactNode;
   }) => React.ReactNode;
   /**
-   * Событие срабатывающее перед onChange
+   * Событие срабатывающее перед `onChange`.
    */
   onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
 
   /**
-   * Отступ от выпадающего списка
+   * Отступ от выпадающего списка.
    */
   dropdownOffsetDistance?: number;
 
   /**
-   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
   allowClearButton?: boolean;
 }

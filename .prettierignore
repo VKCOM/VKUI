@@ -24,6 +24,7 @@ all-blob-reports/
 .next/
 out/
 
+packages/vkui/**/*.css.d.ts
 packages/vkui-floating-ui/**/*.d.ts
 packages/vkui-floating-ui/**/*.d.mts
 packages/vkui-floating-ui/**/*.mjs

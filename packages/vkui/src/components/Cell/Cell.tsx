@@ -17,32 +17,38 @@ export interface CellProps
   extends Omit<SimpleCellProps, 'getRootRef'>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
+  /**
+   * Режим отображения ячейки:
+   *
+   * - "removable": добавляется кнопка для удаления
+   * - "selectable": добавляется чекбокс для выбора.
+   */
   mode?: 'removable' | 'selectable';
   /**
-   * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
+   * В режиме перетаскивания ячейка перестает реагировать на нажатие, то есть при нажатии переданный `onClick` вызываться не будет.
    */
   draggable?: boolean;
   /**
-   * Имя для input в режиме selectable
+   * Имя для `input` в режиме `selectable`.
    */
   name?: string;
   /**
-   * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
+   * В режиме `selectable` реагирует на входящие значения пропса `cheсked`, как зависящий напрямую от входящего значения.
    */
   checked?: boolean;
   /**
-   * В режиме selectable реагирует на входящие значения пропса defaultChecked как неконтролируемый компонент
+   * В режиме `selectable` реагирует на входящие значения пропса `defaultChecked` как неконтролируемый компонент.
    */
   defaultChecked?: boolean;
   /**
-   * Коллбэк срабатывает при завершении перетаскивания.
-   * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
+   * Обработчик, срабатывающий при завершении перетаскивания.
+   * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В обработчике есть объект с полями `from` и `to`.
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
   onDragFinish?: (swappedItemRange: SwappedItemRange) => void;
   /**
-   * Текст для кнопки перетаскивания ячейки
+   * Текст для кнопки перетаскивания ячейки.
    */
   draggerLabel?: string;
 }
@@ -120,7 +126,6 @@ export const Cell: React.FC<CellProps> & {
     dragging && styles.dragging,
     platform === 'ios' && styles.ios,
     removable && styles.removable,
-    Component === 'label' && styles.selectable,
   );
 
   const simpleCellProps: SimpleCellProps = {

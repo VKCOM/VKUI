@@ -65,5 +65,3 @@ export const ButtonGroup = ({
     />
   );
 };
-
-ButtonGroup.displayName = 'ButtonGroup';

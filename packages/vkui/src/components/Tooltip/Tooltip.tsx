@@ -67,7 +67,7 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
    */
   disableArrow?: boolean;
   /**
-   * Отключает закрытие по клику.
+   * Отключает закрытие по нажатию.
    */
   disableCloseAfterClick?: boolean;
   /**

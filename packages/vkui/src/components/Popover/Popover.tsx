@@ -80,10 +80,10 @@ export interface PopoverProps
    * У `content`:
    * - _background_
    * - _border-radius_
-   * - _box-shadow_
+   * - _box-shadow_.
    *
    * У `arrow`:
-   * - _color_
+   * - _color_.
    *
    * Используется в случае, если необходимо стилизовать по своему. Для `arrow` _color_ можно
    * определить через в `arrowProps.iconClassName` или `arrowProps.iconStyle`.
@@ -101,16 +101,19 @@ export interface PopoverProps
    * 1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`).
    * 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
    *    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
-   *    (см. https://github.com/VKCOM/VKUI/pull/4496).
+   *    (смотри https://github.com/VKCOM/VKUI/pull/4496).
    * 3. Передайте высоту иконки в параметр `arrowHeight`. В значении высоты можно исключить хак с `1px` из п.2.
    * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    */
   ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
   /**
-   * Используется для того, чтобы не удалять поповер из DOM дерева при скрытии.
+   * Используется для того, чтобы не удалять всплывающий элемент из DOM дерева при скрытии.
    */
   keepMounted?: boolean;
+  /**
+   * Управление автоматическим фокусом при открытии всплывающего элемента.
+   */
   autoFocus?: FocusTrapProps['autoFocus'];
 }
 

@@ -54,11 +54,11 @@ export interface RichCellProps extends TappableProps {
    * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
    *
    * - `mode="primary" size="s"`
-   * - `mode="secondary" size="s"`
+   * - `mode="secondary" size="s"`.
    *
    * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
    *
-   * - `mode="horizontal" gap="s" stretched`
+   * - `mode="horizontal" gap="s" stretched`.
    */
   actions?: React.ReactNode;
   /**
@@ -74,19 +74,19 @@ export interface RichCellProps extends TappableProps {
    */
   afterCaption?: React.ReactNode;
   /**
-   * Выравнивание before компонента по вертикали
+   * Выравнивание before компонента по вертикали.
    */
   beforeAlign?: Align;
   /**
-   * Выравнивание центрального контента по вертикали
+   * Выравнивание центрального контента по вертикали.
    */
   contentAlign?: Align;
   /**
-   * Выравнивание after компонента по вертикали
+   * Выравнивание after компонента по вертикали.
    */
   afterAlign?: Align;
   /**
-   * Убирает анимацию нажатия.
+   * Блокировка взаимодействия с компонентом. Убирает анимацию нажатия.
    */
   disabled?: boolean;
   /**

@@ -3,16 +3,23 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { callMultiple } from '../../lib/callMultiple';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { DropZoneGrid } from './components/DropZoneGrid';
 import styles from './DropZone.module.css';
 
 interface DropZonePropsChildrenProps {
+  /**
+   * Флаг активного состояния компонента.
+   */
   active: boolean;
 }
 
 export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'> {
+  /**
+   * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
+   */
   children?: React.ReactNode | ((renderProps: DropZonePropsChildrenProps) => React.ReactNode);
 }
 
@@ -53,7 +60,8 @@ export const DropZone: React.FC<DropZoneProps> & {
   );
 };
 
-DropZone.displayName = 'DropZone';
-
 DropZone.Grid = DropZoneGrid;
-DropZone.Grid.displayName = 'DropZone.Grid';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(DropZone.Grid, 'DropZone.Grid');
+}

@@ -17,5 +17,3 @@ export const CellButtonGroupSeparator = ({
     />
   );
 };
-
-CellButtonGroupSeparator.displayName = 'CellButtonGroupSeparator';

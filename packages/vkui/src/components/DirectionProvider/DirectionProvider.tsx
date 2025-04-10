@@ -3,12 +3,18 @@ import { type ConfigProviderContextInterface } from '../ConfigProvider/ConfigPro
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface DirectionProviderProps {
+  /**
+   * Направление контента.
+   */
   value: ConfigProviderContextInterface['direction'];
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
 }
 
 /**
- * Компонент, прокидывающий направление контента
+ * Компонент, прокидывающий направление контента.
  * @see https://vkcom.github.io/VKUI/#/DirectionProvider
  * @since 7.2.0
  */

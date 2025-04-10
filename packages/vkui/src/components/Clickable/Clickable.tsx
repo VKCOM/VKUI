@@ -31,7 +31,7 @@ const NonClickable = <T,>({
 }: ClickableProps<T>) => <RootComponent {...restProps} />;
 
 /**
- * Проверяем, является ли компонент кликабельным
+ * Проверяем, является ли компонент кликабельным.
  */
 export function checkClickable<T>(props: ClickableProps<T>): boolean {
   return (
@@ -47,7 +47,7 @@ export function checkClickable<T>(props: ClickableProps<T>): boolean {
 }
 
 /**
- * Определяет правильный компонент и его свойства
+ * Определяет правильный компонент и его свойства.
  *
  * - если передан Component, используем его
  * - при передаче `href` превратится в `a`,
@@ -71,9 +71,10 @@ function component<T>({
        * Если ссылка отключена, добавляем атрибуты для доступности.
        *
        * - Тег `a` не поддерживает атрибут disabled, поэтому используем `aria-disabled`
-       * - Тег `a` без `href` не является ссылкой, поэтому добавляем `role="link"`
+       * - Тег `a` без `href` не является ссылкой, поэтому добавляем `role="link"`.
        *
-       * https://w3c.github.io/html-aria/#example-communicate-a-disabled-link-with-aria
+       * @see см. https://w3c.github.io/html-aria/#example-communicate-a-disabled-link-with-aria.
+       *
        */
       ...(disabled && {
         'aria-disabled': true,
@@ -101,7 +102,7 @@ function component<T>({
  * Отвечает за:
  *
  * - стейты наведения и нажатия
- * - a11y компонентов
+ * - a11y компонентов.
  */
 export const Clickable = <T,>(props: ClickableProps<T>): React.ReactNode => {
   const commonProps = component(props);
