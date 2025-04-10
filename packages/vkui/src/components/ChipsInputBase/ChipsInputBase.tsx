@@ -260,6 +260,7 @@ export const ChipsInputBase = <O extends ChipOption>({
                 // чтобы можно было легче найти этот чип в DOM
                 'data-index': index,
                 'data-value': option.value,
+                'data-value-type': typeof option.value,
                 // для a11y
                 'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
                 'role': 'option',
