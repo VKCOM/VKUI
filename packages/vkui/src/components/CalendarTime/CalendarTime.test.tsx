@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { setHours, setMinutes } from 'date-fns';
 import { userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
@@ -112,23 +112,20 @@ describe('CalendarTime', () => {
   });
 
   describe('Keyboard Navigation', () => {
-    const tab = (element: HTMLElement, shiftKey = false) => {
-      fireEvent.keyDown(element, {
-        key: 'Tab',
-        code: 'Tab',
-        shiftKey,
-      });
-    };
     it('should handle Tab navigation between hours, minutes and done button', async () => {
-      const onChange = jest.fn();
+      jest.useFakeTimers();
       render(
-        <CalendarTime
-          onChange={onChange}
-          value={dayDate}
-          hoursTestId="hours-picker"
-          minutesTestId="minutes-picker"
-          doneButtonTestId="done-button"
-        />,
+        <div>
+          <CalendarTime
+            value={dayDate}
+            hoursTestId="hours-picker"
+            minutesTestId="minutes-picker"
+            doneButtonTestId="done-button"
+          />
+          <button type="button">
+            Следующая кнопка
+          </button>
+        </div>,
       );
 
       const hoursInput = screen.getByTestId('hours-picker');
@@ -136,19 +133,56 @@ describe('CalendarTime', () => {
       const doneButton = screen.getByTestId('done-button');
 
       // Начинаем с часов
-      hoursInput.focus();
+      act(() => hoursInput.focus());
       expect(document.activeElement).toBe(hoursInput);
 
       // Tab к минутам
-      tab(hoursInput);
+      await act(() => userEvent.tab());
       expect(document.activeElement).toBe(minutesInput);
 
       // Tab к кнопке "Готово"
-      tab(minutesInput);
+      await act(() => userEvent.tab());
       expect(document.activeElement).toBe(doneButton);
+
+      // Tab к кнопке "Следующая кнопка" после CalendarTime
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(screen.getByText('Следующая кнопка'));
+    });
+
+    it('should handle Tab navigation between hours, minutes without done button', async () => {
+      jest.useFakeTimers();
+      render(
+        <div>
+          <CalendarTime
+            value={dayDate}
+            hoursTestId="hours-picker"
+            minutesTestId="minutes-picker"
+            doneButtonShow={false}
+          />
+          <button type="button">
+            Следующая кнопка
+          </button>
+        </div>,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      const minutesInput = screen.getByTestId('minutes-picker');
+
+      // Начинаем с часов
+      act(() => hoursInput.focus());
+      expect(document.activeElement).toBe(hoursInput);
+
+      // Tab к минутам
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(minutesInput);
+
+      // Tab к кнопке "Следующая кнопка" после CalendarTime
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(screen.getByText('Следующая кнопка'));
     });
 
     it('should handle Shift+Tab navigation', async () => {
+      jest.useFakeTimers();
       render(
         <CalendarTime
           value={dayDate}
@@ -167,11 +201,11 @@ describe('CalendarTime', () => {
       expect(document.activeElement).toBe(doneButton);
 
       // Shift+Tab к минутам
-      tab(doneButton, true);
+      await act(() => userEvent.tab({ shift: true }));
       expect(document.activeElement).toBe(minutesInput);
 
       // // Shift+Tab к часам
-      tab(minutesInput, true);
+      await act(() => userEvent.tab({ shift: true }));
       expect(document.activeElement).toBe(hoursInput);
     });
   });
