@@ -3,16 +3,12 @@
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { useConfigDirection } from '../../hooks/useConfigDirection';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTextFromChildren } from '../../lib/children';
-import { useDOM } from '../../lib/dom';
-import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { Tappable } from '../Tappable/Tappable';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+import { RemovableIos } from './RemovableIos';
 import styles from './Removable.module.css';
 
 export interface RemovableProps {
@@ -38,105 +34,56 @@ export interface RemovableProps {
   disabled?: boolean;
 }
 /* eslint-disable jsdoc/require-jsdoc */
-interface RemovableIosOwnProps extends RemovableProps {
+interface RemovableCommonOwnProps
+  extends Pick<
+    RemovableOwnProps,
+    'noPadding' | 'children' | 'removeButtonTestId' | 'disabled' | 'indent'
+  > {
   removePlaceholderString?: string;
-  children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
+  onRemoveClick: (e: React.MouseEvent) => void;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
-/**
- * @see https://vkcom.github.io/VKUI/#/RemovableIos
- */
-const RemovableIos = ({
-  onRemove,
-  removePlaceholder,
+const RemovableCommon = ({
+  noPadding,
+  children,
   removePlaceholderString,
-  children: childrenProp,
-  toggleButtonTestId,
+  onRemoveClick,
   removeButtonTestId,
   disabled,
-}: RemovableIosOwnProps) => {
-  const direction = useConfigDirection();
-  const isRtl = direction === 'rtl';
-  const { window } = useDOM();
-
-  const removeButtonRef = React.useRef<HTMLElement>(null);
-  const disabledRef = React.useRef(true);
-  const [removeOffset, updateRemoveOffset] = React.useState(0);
-
-  useGlobalEventListener(
-    window,
-    'click',
-    () => {
-      if (removeOffset > 0) {
-        updateRemoveOffset(0);
-      }
-    },
-    { capture: true },
-  );
-
-  const onRemoveTransitionEnd = () => {
-    if (removeOffset > 0) {
-      removeButtonRef?.current?.focus();
-    } else {
-      disabledRef.current = true;
-    }
-  };
-
-  const onRemoveActivateClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!removeButtonRef.current) {
-      return;
-    }
-    const { offsetWidth } = removeButtonRef.current;
-    disabledRef.current = false;
-    updateRemoveOffset(offsetWidth);
-  };
-
-  const style: CSSCustomProperties = {
-    '--vkui_internal_Removable_remove_offset': String(removeOffset ?? 0),
-  };
-
+  indent,
+}: RemovableCommonOwnProps) => {
   return (
     <div
-      className={classNames(styles.content, isRtl && styles.rtl, 'vkuiInternalRemovable__content')}
-      style={style}
-      onTransitionEnd={onRemoveTransitionEnd}
+      className={classNames(
+        styles.content,
+        !noPadding && styles.withPadding,
+        'vkuiInternalRemovable__content',
+      )}
     >
-      <IconButton
-        hasActive={false}
-        hasHover={false}
-        className={classNames(styles.action, styles.toggle, 'vkuiInternalRemovable__action')}
-        onClick={onRemoveActivateClick}
-        disabled={removeOffset > 0 || disabled}
-        data-testid={toggleButtonTestId}
-      >
-        <VisuallyHidden>{removePlaceholderString}</VisuallyHidden>
-        <i className={styles.toggleIn} role="presentation" />
-      </IconButton>
-      {typeof childrenProp === 'function'
-        ? childrenProp({ isRemoving: removeOffset > 0 })
-        : childrenProp}
+      {typeof children === 'function' ? children({ isRemoving: false }) : children}
 
+      {indent ? (
+        <div className={classNames(styles.action, styles.indentation)} />
+      ) : (
+        <IconButton
+          activeMode="opacity"
+          hoverMode="opacity"
+          className={classNames(styles.action, 'vkuiInternalRemovable__action')}
+          onClick={onRemoveClick}
+          label={removePlaceholderString}
+          data-testid={removeButtonTestId}
+          disabled={disabled}
+        >
+          <Icon24Cancel role="presentation" />
+        </IconButton>
+      )}
       <span className={styles.offset} aria-hidden />
-
-      <Tappable
-        Component="button"
-        hasActive={false}
-        hasHover={false}
-        disabled={disabledRef.current}
-        getRootRef={removeButtonRef}
-        className={styles.remove}
-        onClick={onRemove}
-        data-testid={removeButtonTestId}
-      >
-        <span className={styles.removeIn}>{removePlaceholder}</span>
-      </Tappable>
     </div>
   );
 };
 
-interface RemovableIosRenderProps {
+export interface RemovableIosRenderProps {
   /**
    * Показывает состояние Removable на платформе iOS при нажатии на иконку удаления.
    * Для имитации поведения на iOS при нажатии на иконку удаления самого удаление не происходит,
@@ -201,33 +148,7 @@ export const Removable = ({
         indent && styles.indent,
       )}
     >
-      {platform !== 'ios' && (
-        <div
-          className={classNames(
-            styles.content,
-            !noPadding && styles.withPadding,
-            'vkuiInternalRemovable__content',
-          )}
-        >
-          {typeof children === 'function' ? children({ isRemoving: false }) : children}
-
-          <IconButton
-            activeMode="opacity"
-            hoverMode="opacity"
-            className={classNames(styles.action, 'vkuiInternalRemovable__action')}
-            onClick={onRemoveClick}
-            label={removePlaceholderString}
-            data-testid={removeButtonTestId}
-            disabled={disabled}
-          >
-            <Icon24Cancel role="presentation" />
-          </IconButton>
-
-          <span className={styles.offset} aria-hidden />
-        </div>
-      )}
-
-      {platform === 'ios' && (
+      {platform === 'ios' ? (
         <RemovableIos
           onRemove={onRemoveClick}
           removePlaceholder={removePlaceholder}
@@ -235,9 +156,21 @@ export const Removable = ({
           toggleButtonTestId={toggleButtonTestId}
           removeButtonTestId={removeButtonTestId}
           disabled={disabled}
+          indent={indent}
         >
           {children}
         </RemovableIos>
+      ) : (
+        <RemovableCommon
+          onRemoveClick={onRemoveClick}
+          noPadding={noPadding}
+          removeButtonTestId={removeButtonTestId}
+          removePlaceholderString={removePlaceholderString}
+          disabled={disabled}
+          indent={indent}
+        >
+          {children}
+        </RemovableCommon>
       )}
     </RootComponent>
   );
