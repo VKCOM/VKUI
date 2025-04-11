@@ -3,9 +3,27 @@
 - Если нужен календарь без поля ввода, используйте [Calendar](#!/Calendar).
 - Если нужен выбор диапазона дат, используйте [DateRangeInput](#!/DateRangeInput).
 
+## Цифровая доступность (a11y)
+
+> ⚠️ Настоятельно рекомендуем включить режим `accessible`, чтобы сделать DateInput доступным уже сейчас. В v8 режим `accessible` будет включен по умолчанию
+
+По умолчанию (в v7) `DateInput` сложно использовать пользователям ассистивных технологий.
+Мы доработали компонент так, чтобы сделать его доступным. К сожалению, это потребовало изменений в визуальном поведении компонента. Мы можем включить это поведение по умолчанию только в мажорном релизе VKUI (v8), так как это влияет в том числе и на текущих пользователей VKUI v7.
+Тем не менее новое, доступное поведение можно включить с помощью нового свойства `accessible`. Настоятельно рекомендуем это сделать.
+Вот список изменений которые отличают поведение со свойством `accessible` от поведения `DateInput` по умолчанию:
+
+- иконка календаря видна постоянно. Раньше она была видна только если в `DateInput` нет значения;
+- календарь открывается:
+  - по клику по иконке календаря,
+  - по нажатию `<Space>`, если `DateInput` в фокусе.
+
+Раньше он открывался по клику на `DateInput`, или сразу при фокусе на `DateInput`;
+
+- при открытии календарь получает фокус. При закрытии календаря фокус возвращается на `DateInput`.
+
 > ⚠️ Данный компонент предназначен для использования на desktop. При использовании на ios/android работа компонента не гарантируется
 
-```jsx { "props": { "layout": false, "iframe": false } }
+```jsx { "props": { "layout": false } }
 const Example = () => {
   const [value, setValue] = useState(() => new Date());
   const [enableTime, setEnableTime] = useState(false);
@@ -15,92 +33,109 @@ const Example = () => {
   const [closeOnChange, setCloseOnChange] = useState(true);
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
   const [disableCalendar, setDisableCalendar] = useState(false);
+  const [accessible, setAccessible] = useState(false);
   const [locale, setLocale] = useState('ru');
 
   return (
-    <FormLayoutGroup mode="vertical">
-      <FormItem top="Выбор времени">
-        <Checkbox checked={enableTime} onChange={(e) => setEnableTime(e.target.checked)}>
-          Включено
-        </Checkbox>
-      </FormItem>
-      <FormItem top="Запрет выбора прошлых дат">
-        <Checkbox checked={disablePast} onChange={(e) => setDisablePast(e.target.checked)}>
-          Включено
-        </Checkbox>
-      </FormItem>
-      <FormItem top="Запрет выбора будущих дат">
-        <Checkbox checked={disableFuture} onChange={(e) => setDisableFuture(e.target.checked)}>
-          Включено
-        </Checkbox>
-      </FormItem>
-      <FormItem top="Закрывать календарь послы выбора даты">
-        <Checkbox checked={closeOnChange} onChange={(e) => setCloseOnChange(e.target.checked)}>
-          Включено
-        </Checkbox>
-      </FormItem>
-      <FormItem top="Отключить селекты выбора месяца/года">
-        <Checkbox checked={disablePickers} onChange={(e) => setDisablePickers(e.target.checked)}>
-          Включено
-        </Checkbox>
-      </FormItem>
-      <FormItem top="Отображать даты с прошлого и следующего месяца">
-        <Checkbox
-          checked={showNeighboringMonth}
-          onChange={(e) => setShowNeighboringMonth(e.target.checked)}
-        >
-          Включено
-        </Checkbox>
-      </FormItem>
-      <FormItem top="Отключить отображение выпадающего календаря">
-        <Checkbox checked={disableCalendar} onChange={(e) => setDisableCalendar(e.target.checked)}>
-          Включено
-        </Checkbox>
-      </FormItem>
-      <FormItem top="Локаль">
-        <Select
-          style={{ width: 100 }}
-          value={locale}
-          onChange={(_, newValue) => setLocale(newValue)}
-          options={[
-            {
-              label: 'ru',
-              value: 'ru',
-            },
-            {
-              label: 'en',
-              value: 'en',
-            },
-            {
-              label: 'ar',
-              value: 'ar',
-            },
-            {
-              label: 'fr',
-              value: 'fr',
-            },
-          ]}
-        />
-      </FormItem>
-      <FormItem top="Результат" htmlFor="date">
-        <Flex>
-          <LocaleProvider value={locale}>
-            <DateInput
-              id="date"
-              value={value}
-              onChange={setValue}
-              enableTime={enableTime}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              closeOnChange={closeOnChange}
-              disablePickers={disablePickers}
-              showNeighboringMonth={showNeighboringMonth}
-              disableCalendar={disableCalendar}
+    <View activePanel="new-user">
+      <Panel id="new-user" mode="plain">
+        <FormLayoutGroup mode="vertical">
+          <FormItem top="Выбор времени">
+            <Checkbox checked={enableTime} onChange={(e) => setEnableTime(e.target.checked)}>
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Запрет выбора прошлых дат">
+            <Checkbox checked={disablePast} onChange={(e) => setDisablePast(e.target.checked)}>
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Запрет выбора будущих дат">
+            <Checkbox checked={disableFuture} onChange={(e) => setDisableFuture(e.target.checked)}>
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Закрывать календарь послы выбора даты">
+            <Checkbox checked={closeOnChange} onChange={(e) => setCloseOnChange(e.target.checked)}>
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Отключить селекты выбора месяца/года">
+            <Checkbox
+              checked={disablePickers}
+              onChange={(e) => setDisablePickers(e.target.checked)}
+            >
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Отображать даты с прошлого и следующего месяца">
+            <Checkbox
+              checked={showNeighboringMonth}
+              onChange={(e) => setShowNeighboringMonth(e.target.checked)}
+            >
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Отключить отображение выпадающего календаря">
+            <Checkbox
+              checked={disableCalendar}
+              onChange={(e) => setDisableCalendar(e.target.checked)}
+            >
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Включить режим, в котором DateInput доступен для ассистивных технологий">
+            <Checkbox checked={accessible} onChange={(e) => setAccessible(e.target.checked)}>
+              Включено
+            </Checkbox>
+          </FormItem>
+          <FormItem top="Локаль">
+            <Select
+              style={{ width: 100 }}
+              value={locale}
+              onChange={(_, newValue) => setLocale(newValue)}
+              options={[
+                {
+                  label: 'ru',
+                  value: 'ru',
+                },
+                {
+                  label: 'en',
+                  value: 'en',
+                },
+                {
+                  label: 'ar',
+                  value: 'ar',
+                },
+                {
+                  label: 'fr',
+                  value: 'fr',
+                },
+              ]}
             />
-          </LocaleProvider>
-        </Flex>
-      </FormItem>
-    </FormLayoutGroup>
+          </FormItem>
+          <FormItem top="Результат" htmlFor="date">
+            <Flex>
+              <LocaleProvider value={locale}>
+                <DateInput
+                  id="date"
+                  value={value}
+                  onChange={setValue}
+                  enableTime={enableTime}
+                  disablePast={disablePast}
+                  disableFuture={disableFuture}
+                  closeOnChange={closeOnChange}
+                  disablePickers={disablePickers}
+                  showNeighboringMonth={showNeighboringMonth}
+                  disableCalendar={disableCalendar}
+                  accessible={accessible}
+                />
+              </LocaleProvider>
+            </Flex>
+          </FormItem>
+        </FormLayoutGroup>
+      </Panel>
+    </View>
   );
 };
 

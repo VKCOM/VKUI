@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -16,6 +15,7 @@ import {
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarDays.module.css';
 
 export type CalendarDaysTestsProps = {
@@ -90,6 +90,10 @@ export interface CalendarDaysProps
    */
   isDayHinted?: (value: Date) => boolean;
   /**
+   * Проверяет, возможно ли сфокусироваться на дне с клавиатуры.
+   */
+  isDayFocusable?: (value: Date) => boolean;
+  /**
    * Проверяет, выбран ли день.
    */
   isDaySelected?: (value: Date) => boolean;
@@ -105,6 +109,10 @@ export interface CalendarDaysProps
    * Обработчик события 'pointerleave' на элементе дня.
    */
   onDayLeave?: (value: Date) => void;
+  /**
+   * Обработчик события `focus` на элементе дня.
+   */
+  onDayFocus?: (value: Date) => void;
 }
 
 export const CalendarDays = ({
@@ -118,10 +126,12 @@ export const CalendarDays = ({
   isDaySelectionStart,
   onDayEnter,
   onDayLeave,
+  onDayFocus,
   isDayHinted,
   isHintedDaySelectionStart,
   isHintedDaySelectionEnd,
   isDayFocused,
+  isDayFocusable,
   isDayDisabled,
   size,
   showNeighboringMonth = false,
@@ -133,7 +143,6 @@ export const CalendarDays = ({
   ...props
 }: CalendarDaysProps): React.ReactNode => {
   const { locale } = useConfigProvider();
-  const ref = useExternRef(getRootRef);
   const now = useTodayDate(listenDayChangesForUpdate);
 
   const weeks = React.useMemo(() => getWeeks(viewDate, weekStartsOn), [weekStartsOn, viewDate]);
@@ -146,43 +155,79 @@ export const CalendarDays = ({
   const handleDayChange = React.useCallback(
     (date: Date) => {
       onDayChange(date);
-
-      ref.current?.focus();
     },
-    [onDayChange, ref],
+    [onDayChange],
   );
 
+  const viewDateLabelId = React.useId();
+  const currentMonthLabel = value
+    ? new Intl.DateTimeFormat(locale, {
+        year: 'numeric',
+        month: 'long',
+      }).format(viewDate)
+    : null;
+
   return (
-    <RootComponent {...props} baseClassName={styles.host} getRootRef={ref}>
-      <div className={classNames(styles.row, size === 's' && styles.rowSizeS)}>
-        {daysNames.map((dayName) => (
-          <Footnote key={dayName} className={styles.weekday}>
-            {dayName}
+    <RootComponent
+      role="grid"
+      aria-labelledby={viewDateLabelId}
+      {...props}
+      baseClassName={styles.host}
+    >
+      <VisuallyHidden id={viewDateLabelId}>{currentMonthLabel}</VisuallyHidden>
+      <div
+        role="row"
+        aria-rowindex={1}
+        className={classNames(styles.row, size === 's' && styles.rowSizeS)}
+      >
+        {daysNames.map(({ short: shortDayName, long: longDayName }) => (
+          <Footnote
+            role="columnheader"
+            aria-label={longDayName}
+            key={shortDayName}
+            className={styles.weekday}
+          >
+            {shortDayName}
           </Footnote>
         ))}
       </div>
 
       {weeks.map((week, i) => (
-        <div className={classNames(styles.row, size === 's' && styles.rowSizeS)} key={i}>
+        <div
+          role="row"
+          aria-rowindex={i + 2}
+          className={classNames(styles.row, size === 's' && styles.rowSizeS)}
+          key={i}
+        >
           {week.map((day, i) => {
             const sameMonth = isSameMonth(day, viewDate);
+            const isHidden = !showNeighboringMonth && !sameMonth;
+            const isToday = isSameDay(day, now);
+            const isActive = isDayActive(day);
+            const isFocused = isDayFocused(day);
             return (
               <CalendarDay
+                role="gridcell"
+                aria-current={isToday ? 'date' : undefined}
+                aria-selected={isActive ? 'true' : 'false'}
+                aria-colindex={i + 1}
+                tabIndex={isDayFocusable?.(day) ? 0 : -1}
                 key={day.toISOString()}
                 day={day}
-                today={isSameDay(day, now)}
-                active={isDayActive(day)}
+                today={isToday}
+                active={isActive}
                 onChange={handleDayChange}
-                hidden={!showNeighboringMonth && !sameMonth}
+                hidden={isHidden}
                 disabled={isDayDisabled(day)}
                 selectionStart={isDaySelectionStart(day, i)}
                 selectionEnd={isDaySelectionEnd(day, i)}
                 hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
                 hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
                 selected={isDaySelected?.(day)}
-                focused={isDayFocused(day)}
+                focused={isFocused}
                 onEnter={onDayEnter}
                 onLeave={onDayLeave}
+                onFocus={onDayFocus}
                 hinted={isDayHinted?.(day)}
                 sameMonth={sameMonth}
                 size={size}
