@@ -1,9 +1,10 @@
 'use client';
 
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
+import { Keys, pressedKey } from '../../lib/accessibility';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
@@ -114,6 +115,10 @@ export const CalendarTime = ({
   doneButtonTestId,
   DoneButton,
 }: CalendarTimeProps): React.ReactNode => {
+  const hoursInputRef = useRef<HTMLInputElement | null>(null);
+  const minutesInputRef = useRef<HTMLInputElement | null>(null);
+  const doneButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const localHours = isDayDisabled
     ? hours.map((hour) => {
         return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };
@@ -157,6 +162,31 @@ export const CalendarTime = ({
     [onChange, value],
   );
 
+  const onPickerKeyDown = (e: React.KeyboardEvent) => {
+    const key = pressedKey(e);
+    /* Мы хотим иметь возможность быстро, по Enter перемещаться между
+     * селектами с часами и минутами, также как мы это делаем по нажатию на Tab */
+    if (key !== Keys.ENTER) {
+      return;
+    }
+
+    const steps = [hoursInputRef, minutesInputRef, doneButtonRef].filter((ref) =>
+      Boolean(ref.current),
+    );
+    const currentStepIndex = steps.findIndex((step) => step.current === e.target);
+    const diff = e.key === 'Tab' && e.shiftKey ? -1 : 1;
+    const nextStepIndex = currentStepIndex + diff;
+    if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
+      return;
+    }
+    const nextStep = steps[nextStepIndex];
+
+    if (nextStep.current) {
+      e.preventDefault();
+      nextStep.current?.focus();
+    }
+  };
+
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
     return (
@@ -164,6 +194,8 @@ export const CalendarTime = ({
         mode="secondary"
         onClick={onDoneButtonClick}
         size="l"
+        getRootRef={doneButtonRef}
+        onKeyDown={onPickerKeyDown}
         disabled={doneButtonDisabled}
         data-testid={doneButtonTestId}
       >
@@ -184,6 +216,8 @@ export const CalendarTime = ({
             searchable
             filterFn={selectFilterFn}
             onInputChange={onHoursInputChange}
+            onInputKeyDown={onPickerKeyDown}
+            getSelectInputRef={hoursInputRef}
             aria-label={changeHoursLabel}
             data-testid={hoursTestId}
           />
@@ -200,6 +234,8 @@ export const CalendarTime = ({
             searchable
             filterFn={selectFilterFn}
             onInputChange={onMinutesInputChange}
+            getSelectInputRef={minutesInputRef}
+            onInputKeyDown={onPickerKeyDown}
             aria-label={changeMinutesLabel}
             data-testid={minutesTestId}
           />
