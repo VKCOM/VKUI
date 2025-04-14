@@ -55,11 +55,11 @@ export interface CalendarProps
   /**
    * Текущая выбранная дата.
    */
-  value?: Date;
+  value?: Date | null;
   /**
    * Начальная дата при монтировании.
    */
-  defaultValue?: Date;
+  defaultValue?: Date | null;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
@@ -97,7 +97,7 @@ export interface CalendarProps
   /**
    * Обработчик изменения выбранной даты.
    */
-  onChange?: (value?: Date) => void;
+  onChange?: (value?: Date) => void; // TODO [>=8]: поменять тип на `(value?: Date | null) => void`
   /**
    * Функция для проверки запрета выбора даты.
    */
@@ -182,20 +182,20 @@ export const Calendar = ({
   ...props
 }: CalendarProps): React.ReactNode => {
   const _onChange = React.useCallback(
-    (date: Date | undefined) => {
+    (date: Date | null | undefined) => {
       onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
     },
     [onChange, timezone],
   );
 
-  const [value, updateValue] = useCustomEnsuredControl<Date | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<Date | null | undefined>({
     value: valueProp,
     defaultValue,
     onChange: _onChange,
   });
 
-  const timeZonedValue: Date | undefined = React.useMemo(
-    () => convertDateToTimeZone(value, timezone) || undefined,
+  const timeZonedValue: Date | null | undefined = React.useMemo(
+    () => convertDateToTimeZone(value, timezone),
     [timezone, value],
   );
 
