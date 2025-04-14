@@ -14,20 +14,6 @@ const FrameDomProvider = ({ colorSchemeOptions, themeName, children }) => {
   React.useEffect(() => {
     const hotObservers = [];
 
-    // Пихаем в iFrame с примером спрайты для иконок
-    const sprite = document.getElementById('__SVG_SPRITE_NODE__');
-
-    if (sprite) {
-      frame.document.body.appendChild(sprite.cloneNode(true));
-    }
-
-    const hotIconChange = new MutationObserver(() => {
-      frame.document.getElementById('__SVG_SPRITE_NODE__').remove();
-      frame.document.body.appendChild(sprite.cloneNode(true));
-    });
-    hotIconChange.observe(sprite, { characterData: true, childList: true });
-    hotObservers.push(hotIconChange);
-
     frame.document.querySelector('.frame-content').setAttribute('id', 'root');
 
     // Пихаем в iFrame vkui стили

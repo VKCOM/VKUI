@@ -37,7 +37,7 @@
   display: var(--vkui_internal--PanelHeaderContext__fade_display);
   inline-size: 100%;
   block-size: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgb(0, 0, 0, 0.4);
 }
 
 .opened .fade {
@@ -110,8 +110,8 @@
 
 .sizeXRegular .content {
   box-shadow:
-    0 0 4px rgba(0, 0, 0, 0.08),
-    0 8px 8px rgba(0, 0, 0, 0.16);
+    0 0 4px rgb(0, 0, 0, 0.08),
+    0 8px 8px rgb(0, 0, 0, 0.16);
 }
 
 @media (--sizeX-regular) {
@@ -126,8 +126,8 @@
 
   .sizeXNone .content {
     box-shadow:
-      0 0 4px rgba(0, 0, 0, 0.08),
-      0 8px 8px rgba(0, 0, 0, 0.16);
+      0 0 4px rgb(0, 0, 0, 0.08),
+      0 8px 8px rgb(0, 0, 0, 0.16);
   }
 }
 

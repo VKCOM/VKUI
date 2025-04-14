@@ -51,7 +51,7 @@
     "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",
     "size": "yarn clear && yarn build:no-types && size-limit",
     "size:ci": "YARN_ENABLE_SCRIPTS=false yarn install --immutable && yarn build:no-types",
-    "build": "yarn clear && yarn run -T concurrently 'yarn:build:*'",
+    "build": "yarn clear && yarn generate && yarn run -T concurrently 'yarn:build:*'",
     "build:types": "yarn run -T concurrently 'yarn:tsc:*'",
     "build:no-types": "yarn run -T concurrently 'yarn:swc:*' 'yarn:postcss'",
     "clear": "yarn run -T shx rm -rf dist/* || yarn run -T shx true",
@@ -71,10 +71,14 @@
     "test:e2e:ci:ui": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --ui --ui-port=4300 --ui-host=0.0.0.0 --config playwright-ct.config.mjs",
     "test:e2e:ui": "../../scripts/generate_env_docker.sh -r test:e2e:ci:ui && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
-    "lint:generated-files": "yarn run -T tsc scripts/generateCSSCustomMedias.mjs --checkJs --module ESNext --moduleResolution node --resolveJsonModule --allowSyntheticDefaultImports --jsx react-jsx --noEmit && yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
+    "lint:generated-files": "yarn run -T concurrently 'yarn:lint:generated-files:*'",
+    "lint:generated-files:css-custom-medias": "yarn run -T tsc scripts/generateCSSCustomMedias.mjs --checkJs --module ESNext --moduleResolution node --resolveJsonModule --allowSyntheticDefaultImports --jsx react-jsx --noEmit && yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
+    "lint:generated-files:css-modules": "yarn run generate:css-modules",
     "storybook": "bash -c 'source .env && yarn run -T cross-env SANDBOX=\\.storybook storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
     "storybook:build": "yarn run -T cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build",
-    "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.mjs"
+    "generate": "yarn run -T concurrently 'yarn:generate:*'",
+    "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.mjs",
+    "generate:css-modules": "yarn run -T hcm 'src/**/*.css'"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",
@@ -89,12 +93,12 @@
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
-    "@storybook/react": "8.6.8",
-    "@storybook/react-webpack5": "8.6.8",
+    "@storybook/react": "8.6.12",
+    "@storybook/react-webpack5": "8.6.12",
     "@types/node": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "8.6.11",
+    "storybook": "8.6.12",
     "ts-node": "*"
   },
   "size-limit": [

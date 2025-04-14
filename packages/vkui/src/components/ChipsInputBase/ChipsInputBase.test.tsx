@@ -433,4 +433,21 @@ describe(ChipsInputBase, () => {
 
     expect(onClearOptions).toHaveBeenCalledTimes(1);
   });
+
+  it('remove option by backspace when option value is number', async () => {
+    const result = render(
+      <ChipsInputBaseTest
+        value={[{ value: 1, label: 'Красный' }]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.type(
+      result.getByRole('option', { name: withRegExp('Красный') }),
+      `{Backspace}`,
+    );
+    expect(onRemoveChipOption).toHaveBeenCalledWith(1);
+  });
 });
