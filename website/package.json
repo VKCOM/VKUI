@@ -8,10 +8,10 @@
     "start": "next start"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "15.2.4",
+    "@next/bundle-analyzer": "15.3.0",
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-docs-theme": "workspace:^",
-    "next": "^15.2.4",
+    "next": "^15.3.0",
     "nextra": "^4.2.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
