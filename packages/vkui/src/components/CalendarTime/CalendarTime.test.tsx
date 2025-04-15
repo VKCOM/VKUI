@@ -147,6 +147,42 @@ describe('CalendarTime', () => {
       expect(document.activeElement).toBe(screen.getByText('Следующая кнопка'));
     });
 
+    it('should handle Enter navigation between hours, minutes and done button', async () => {
+      jest.useFakeTimers();
+      render(
+        <div>
+          <CalendarTime
+            value={dayDate}
+            hoursTestId="hours-picker"
+            minutesTestId="minutes-picker"
+            doneButtonTestId="done-button"
+          />
+          <button type="button">Следующая кнопка</button>
+        </div>,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      const minutesInput = screen.getByTestId('minutes-picker');
+      const doneButton = screen.getByTestId('done-button');
+
+      // Начинаем с часов
+      act(() => hoursInput.focus());
+      expect(document.activeElement).toBe(hoursInput);
+
+      // Enter к минутам
+      await act(() => userEvent.keyboard('{Enter}'));
+      expect(document.activeElement).toBe(minutesInput);
+
+      // Enter к кнопке "Готово"
+      await act(() => userEvent.keyboard('{Enter}'));
+      expect(document.activeElement).toBe(doneButton);
+
+      // C кнопки "Готово" Enter уже никуда фокус не уводит
+      await act(() => userEvent.keyboard('{Enter}'));
+      expect(document.activeElement).not.toBe(screen.getByText('Следующая кнопка'));
+      expect(document.activeElement).toBe(doneButton);
+    });
+
     it('should handle Tab navigation between hours, minutes without done button', async () => {
       jest.useFakeTimers();
       render(
@@ -175,6 +211,37 @@ describe('CalendarTime', () => {
       // Tab к кнопке "Следующая кнопка" после CalendarTime
       await act(() => userEvent.tab());
       expect(document.activeElement).toBe(screen.getByText('Следующая кнопка'));
+    });
+
+    it('should handle Enter navigation between hours, minutes without done button', async () => {
+      jest.useFakeTimers();
+      render(
+        <div>
+          <CalendarTime
+            value={dayDate}
+            hoursTestId="hours-picker"
+            minutesTestId="minutes-picker"
+            doneButtonShow={false}
+          />
+          <button type="button">Следующая кнопка</button>
+        </div>,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      const minutesInput = screen.getByTestId('minutes-picker');
+
+      // Начинаем с часов
+      act(() => hoursInput.focus());
+      expect(document.activeElement).toBe(hoursInput);
+
+      // Enter к минутам
+      await act(() => userEvent.keyboard('{Enter}'));
+      expect(document.activeElement).toBe(minutesInput);
+
+      // C минут Enter уже никуда фокус не уводит
+      await act(() => userEvent.keyboard('{Enter}'));
+      expect(document.activeElement).not.toBe(screen.getByText('Следующая кнопка'));
+      expect(document.activeElement).toBe(minutesInput);
     });
 
     it('should handle Shift+Tab navigation', async () => {
