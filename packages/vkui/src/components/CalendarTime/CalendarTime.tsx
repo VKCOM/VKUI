@@ -175,7 +175,7 @@ export const CalendarTime = ({
     );
     const currentStepIndex = steps.findIndex((step) => step.current === e.target);
     const nextStepIndex = currentStepIndex + 1;
-    if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
+    if (nextStepIndex >= steps.length) {
       return;
     }
     const nextStep = steps[nextStepIndex];
