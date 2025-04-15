@@ -174,8 +174,7 @@ export const CalendarTime = ({
       Boolean(ref.current),
     );
     const currentStepIndex = steps.findIndex((step) => step.current === e.target);
-    const diff = e.key === 'Tab' && e.shiftKey ? -1 : 1;
-    const nextStepIndex = currentStepIndex + diff;
+    const nextStepIndex = currentStepIndex + 1;
     if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
       return;
     }
