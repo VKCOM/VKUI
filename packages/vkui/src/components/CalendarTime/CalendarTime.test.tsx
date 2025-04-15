@@ -122,9 +122,7 @@ describe('CalendarTime', () => {
             minutesTestId="minutes-picker"
             doneButtonTestId="done-button"
           />
-          <button type="button">
-            Следующая кнопка
-          </button>
+          <button type="button">Следующая кнопка</button>
         </div>,
       );
 
@@ -159,9 +157,7 @@ describe('CalendarTime', () => {
             minutesTestId="minutes-picker"
             doneButtonShow={false}
           />
-          <button type="button">
-            Следующая кнопка
-          </button>
+          <button type="button">Следующая кнопка</button>
         </div>,
       );
 
