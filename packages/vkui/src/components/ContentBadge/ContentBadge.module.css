@@ -66,8 +66,8 @@
 }
 
 .primaryNeutral {
-  color: var(--vkui--color_text_primary);
-  background-color: var(--vkui--color_background_secondary);
+  color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_icon_secondary);
 }
 
 .primaryAccentGreen {
@@ -92,8 +92,8 @@
 }
 
 .secondaryNeutral {
-  color: var(--vkui--color_text_subhead);
-  background-color: var(--vkui--color_background_secondary);
+  color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_background_secondary_alpha);
 }
 
 .secondaryAccentGreen {
