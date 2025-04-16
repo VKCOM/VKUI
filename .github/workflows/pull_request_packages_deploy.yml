@@ -188,13 +188,47 @@ jobs:
         id: url
         run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/storybook/index.html" >> $GITHUB_OUTPUT
 
+  deploy_package:
+    needs: pr_workflow_payload
+    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
+    runs-on: ubuntu-latest
+    name: Deploy package
+    outputs:
+      url: ${{ steps.url.outputs.value }}
+    steps:
+      - name: Download package artifact
+        id: artifact
+        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
+        with:
+          name: package
+          path: out/
+
+      - name: Upload
+        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: out/
+          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/pkg/@vkontakte/vkui
+
+      - name: Create doc url
+        if: ${{ steps.deploy.outcome == 'success' }}
+        id: url
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/pkg/@vkontakte/vkui/_pkg.tgz" >> $GITHUB_OUTPUT
+
   docs_comment:
     needs:
       - deploy_storybook
       - deploy_styleguide
       - deploy_docs_beta
+      - deploy_package
       - pr_workflow_payload
-    if: ${{ needs.deploy_styleguide.outputs.url != '' || needs.deploy_storybook.outputs.url != '' || needs.deploy_docs_beta.outputs.url != '' }}
+    if: ${{ needs.deploy_styleguide.outputs.url != '' || needs.deploy_storybook.outputs.url != '' || needs.deploy_docs_beta.outputs.url != '' || needs.deploy_package.outputs.url != '' }}
     runs-on: ubuntu-latest
     name: Docs comment
     steps:
@@ -218,6 +252,12 @@ jobs:
             - ${{ (needs.deploy_styleguide.outputs.url != '' && '✅') || '❌' }} [Styleguide](${{ needs.deploy_styleguide.outputs.url }})
             - ${{ (needs.deploy_storybook.outputs.url != '' && '✅') || '❌' }} [Storybook](${{ needs.deploy_storybook.outputs.url }})
             - ${{ (needs.deploy_docs_beta.outputs.url != '' && '✅') || '❌' }} [Docs beta](${{ needs.deploy_docs_beta.outputs.url }})
+
+            ## 📦 Package ${{ (needs.deploy_package.outputs.url != '' && '✅') || '❌' }}
+
+            ```sh
+            yarn add @vkontakte/vkui@${{ needs.deploy_package.outputs.url }}
+            ```
 
             Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace
