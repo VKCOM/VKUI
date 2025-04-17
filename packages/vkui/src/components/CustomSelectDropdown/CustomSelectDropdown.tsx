@@ -65,6 +65,7 @@ export const CustomSelectDropdown = ({
         getRootRef={scrollBoxRef}
         className={noMaxHeight ? undefined : styles.inWithMaxHeight}
         overscrollBehavior={overscrollBehavior}
+        tabIndex={-1}
       >
         {fetching ? (
           <div className={styles.fetching}>

@@ -962,6 +962,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         {selected?.label}
       </CustomSelectInput>
       <select
+        tabIndex={-1}
         ref={selectElRef}
         name={name}
         onChange={onNativeSelectChange}
