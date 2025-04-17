@@ -2,14 +2,14 @@ import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { addDays, format } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
-import { DateRangeInput, type DateRangeInputTestsProps } from './DateRangeInput';
+import { DateRangeInput } from './DateRangeInput';
 
 const startDate = new Date(2024, 6, 20);
 const endDate = new Date(2024, 6, 31);
 
 const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
 
-const testsProps: DateRangeInputTestsProps = {
+const testsProps = {
   startDateTestsProps: {
     day: 'start-day',
     month: 'start-month',
@@ -20,16 +20,18 @@ const testsProps: DateRangeInputTestsProps = {
     month: 'end-month',
     year: 'end-year',
   },
+  clearButtonTestId: 'clear-button',
+  showCalendarButtonTestId: 'show-calendar-button',
 };
 
 const getInputsLike = () => {
   return [
-    screen.getByTestId('start-day'),
-    screen.getByTestId('start-month'),
-    screen.getByTestId('start-year'),
-    screen.getByTestId('end-day'),
-    screen.getByTestId('end-month'),
-    screen.getByTestId('end-year'),
+    screen.getByTestId(testsProps.startDateTestsProps.day),
+    screen.getByTestId(testsProps.startDateTestsProps.month),
+    screen.getByTestId(testsProps.startDateTestsProps.year),
+    screen.getByTestId(testsProps.endDateTestsProps.day),
+    screen.getByTestId(testsProps.endDateTestsProps.month),
+    screen.getByTestId(testsProps.endDateTestsProps.year),
   ];
 };
 
@@ -186,5 +188,14 @@ describe('DateRangeInput', () => {
     expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
 
     expect(container.contains(document.activeElement)).toBeFalsy();
+  });
+
+  it('should call onChange with undefined when click on clear button', async () => {
+    const onChange = jest.fn();
+    render(<DateRangeInput value={[startDate, endDate]} onChange={onChange} {...testsProps} />);
+
+    fireEvent.click(screen.getByTestId(testsProps.clearButtonTestId));
+
+    expect(onChange).toHaveBeenCalledWith(undefined);
   });
 });

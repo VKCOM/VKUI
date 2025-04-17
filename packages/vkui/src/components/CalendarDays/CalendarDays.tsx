@@ -32,7 +32,7 @@ export interface CalendarDaysProps
   /**
    * Выбранная дата или диапазон дат.
    */
-  value?: Date | Array<Date | null>;
+  value?: Date | Array<Date | null> | null;
   /**
    * Дата, определяющая отображаемый месяц.
    */
