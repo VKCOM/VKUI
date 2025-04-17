@@ -164,16 +164,24 @@ export const CalendarTime = ({
 
   const onPickerKeyDown = (e: React.KeyboardEvent) => {
     const key = pressedKey(e);
-    if (key === Keys.ENTER || key === Keys.TAB) {
-      const steps = [hoursInputRef, minutesInputRef, doneButtonRef];
-      const currentStepIndex = steps.findIndex((step) => step.current === e.target);
-      const diff = e.key === 'Tab' && e.shiftKey ? -1 : 1;
-      const nextStepIndex = currentStepIndex + diff;
-      if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
-        return;
-      }
+    /* Мы хотим иметь возможность быстро, по Enter перемещаться между
+     * селектами с часами и минутами, также как мы это делаем по нажатию на Tab */
+    if (key !== Keys.ENTER) {
+      return;
+    }
+
+    const steps = [hoursInputRef, minutesInputRef, doneButtonRef].filter((ref) =>
+      Boolean(ref.current),
+    );
+    const currentStepIndex = steps.findIndex((step) => step.current === e.target);
+    const nextStepIndex = currentStepIndex + 1;
+    if (nextStepIndex >= steps.length) {
+      return;
+    }
+    const nextStep = steps[nextStepIndex];
+
+    if (nextStep.current) {
       e.preventDefault();
-      const nextStep = steps[nextStepIndex];
       nextStep.current?.focus();
     }
   };
