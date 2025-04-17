@@ -156,5 +156,6 @@ export interface ModalRootContextInterface
     ModalRootBaseProps {}
 
 export interface UseModalRootContext extends ModalRootContextBaseInterface {
+  activeModal?: string | null;
   onClose?: VoidFunction;
 }
