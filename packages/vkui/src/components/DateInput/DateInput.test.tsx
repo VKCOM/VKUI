@@ -8,21 +8,23 @@ import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20, 0, 0);
 
-const testIds: DateInputPropsTestsProps = {
+const testIds: Required<DateInputPropsTestsProps> = {
   dayFieldTestId: 'day-picker',
   monthFieldTestId: 'month-picker',
   yearFieldTestId: 'year-picker',
   hourFieldTestId: 'hour-picker',
   minuteFieldTestId: 'minute-picker',
+  clearButtonTestId: 'clear-button',
+  showCalendarButtonTestId: 'show-calendar-button',
 };
 
 const getInputsLike = () => {
   return [
-    screen.queryByTestId('day-picker'),
-    screen.queryByTestId('month-picker'),
-    screen.queryByTestId('year-picker'),
-    screen.queryByTestId('hour-picker'),
-    screen.queryByTestId('minute-picker'),
+    screen.queryByTestId(testIds.dayFieldTestId),
+    screen.queryByTestId(testIds.monthFieldTestId),
+    screen.queryByTestId(testIds.yearFieldTestId),
+    screen.queryByTestId(testIds.hourFieldTestId),
+    screen.queryByTestId(testIds.minuteFieldTestId),
   ].filter(Boolean) as HTMLElement[];
 };
 
@@ -335,5 +337,15 @@ describe('DateInput', () => {
     await userEvent.click(dates);
 
     expect(screen.queryByText('Вчера')).toBeFalsy();
+  });
+
+  it('should call onChange with undefined when click on clear button', async () => {
+    const onChange = jest.fn();
+
+    render(<DateInput value={new Date(2023, 5, 30)} onChange={onChange} {...testIds} />);
+
+    fireEvent.click(screen.getByTestId(testIds.clearButtonTestId));
+
+    expect(onChange).toHaveBeenCalledWith(undefined);
   });
 });

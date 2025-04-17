@@ -120,6 +120,9 @@ export const convertDateToTimeZone = (
   if (!timezone) {
     return date;
   }
+  if (date === null) {
+    return null;
+  }
   return date ? TZDateMini.tz(timezone, date) : undefined;
 };
 
@@ -129,6 +132,9 @@ export const convertDateFromTimeZone = (
 ): Date | undefined | null => {
   if (!timezone) {
     return date;
+  }
+  if (date === null) {
+    return null;
   }
   // eslint-disable-next-line new-cap
   const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

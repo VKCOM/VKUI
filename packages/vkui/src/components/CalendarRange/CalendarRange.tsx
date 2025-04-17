@@ -55,19 +55,19 @@ export interface CalendarRangeProps
     >,
     Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarRangeTestsProps {
-  value?: DateRangeType;
-  defaultValue?: DateRangeType;
+  value?: DateRangeType | null;
+  defaultValue?: DateRangeType | null;
   disablePast?: boolean;
   disableFuture?: boolean;
   disablePickers?: boolean;
   changeDayLabel?: string;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  onChange?: (value: DateRangeType | undefined) => void;
+  onChange?: (value: DateRangeType | undefined) => void; // TODO [>=8]: поменять тип на `(value?: DateRangeType | null) => void`
   shouldDisableDate?: (value: Date) => boolean;
   onClose?: () => void;
 }
 
-const getIsDaySelected = (day: Date, value?: DateRangeType) => {
+const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
   if (!value?.[0] || !value[1]) {
     return false;
   }
@@ -103,10 +103,15 @@ export const CalendarRange = ({
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
+  const _onChange = React.useCallback(
+    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
+    [onChange],
+  );
+
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
     value: valueProp,
     defaultValue,
-    onChange,
+    onChange: _onChange,
   });
 
   const {
