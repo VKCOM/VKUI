@@ -54,7 +54,7 @@ export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactNode] => 
   }, []);
 
   React.useLayoutEffect(
-    () => _updateColorScheme(getColorSchemeFromStorage(defaultColorScheme)),
+    () => setColorScheme(getColorSchemeFromStorage(defaultColorScheme)),
     [_updateColorScheme, defaultColorScheme],
   );
 
