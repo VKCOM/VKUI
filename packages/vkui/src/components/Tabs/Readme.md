@@ -142,35 +142,32 @@ const Scrollable = () => {
         layoutFillMode={layoutFillMode}
         withScrollToSelectedTab
         scrollBehaviorToSelectedTab="center"
+        selectedTabId={selected}
+        onSelectedTabChanged={setSelected}
       >
         <HorizontalScroll arrowSize="m">
-          <TabsItem
-            selected={selected === 'groups'}
-            disabled={disabled}
-            onClick={() => setSelected('groups')}
-          >
+          <TabsItem tabId="groups" disabled={disabled}>
             Сообщества
           </TabsItem>
           <TabsItem
+            tabId="news"
             before={mode === 'default' ? <Icon24NewsfeedOutline /> : <Icon20NewsfeedOutline />}
             after={<Icon16Dropdown />}
-            selected={selected === 'news'}
             disabled={disabled}
-            onClick={() => setSelected('news')}
           >
             Лента
           </TabsItem>
           <TabsItem
+            tabId="recommendations"
             before={mode === 'default' ? <Icon24ThumbsUpOutline /> : <Icon20ThumbsUpOutline />}
             status={<Badge mode="prominent">Есть новые</Badge>}
             after={<Icon16Dropdown />}
-            selected={selected === 'recommendations'}
             disabled={disabled}
-            onClick={() => setSelected('recommendations')}
           >
             Рекомендации
           </TabsItem>
           <TabsItem
+            tabId="friends"
             before={mode === 'default' ? <Icon24UsersOutline /> : <Icon20UsersOutline />}
             status={
               <Counter mode="primary" appearance="accent-red" size="s">
@@ -178,19 +175,16 @@ const Scrollable = () => {
               </Counter>
             }
             after={<Icon16Dropdown />}
-            selected={selected === 'friends'}
             disabled={disabled}
-            onClick={() => setSelected('friends')}
           >
             Друзья
           </TabsItem>
           <TabsItem
+            tabId="photos"
             before={mode === 'default' ? <Icon24PictureOutline /> : <Icon20PictureOutline />}
             status={23}
             after={<Icon16Dropdown />}
-            selected={selected === 'photos'}
             disabled={disabled}
-            onClick={() => setSelected('photos')}
           >
             Фотографии
           </TabsItem>
