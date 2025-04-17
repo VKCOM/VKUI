@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
+import { getMergedSameEventsByProps } from '../../helpers/getMergedSameEventsByProps';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
@@ -105,6 +106,23 @@ export interface CalendarDaysProps
    * Обработчик события 'pointerleave' на элементе дня.
    */
   onDayLeave?: (value: Date) => void;
+  /**
+   * Функция, которая позволяет настроить свойства для компонента дня в календаре.
+   * Принимает дату дня (`Date`) и возвращает объект с переопределяемыми свойствами.
+   * Если передать обработчики событий (например, `onChange`, `onEnter`), они не заменят существующие,
+   * а будут объединены с ними, чтобы оба сработали. Все остальные свойства просто перезапишут стандартные.
+   *
+   * Пример.
+   *
+   * ```
+   * overrideDayProps: (date) => ({
+   *   disabled: date.getDay() === 0, // Отключаем воскресенья
+   *   className: 'custom-day',       // Добавляем свой класс
+   *   onChange: () => console.log('День выбран'), // Добавляем свой обработчик
+   * })
+   * ```
+   */
+  overrideDayProps?: (value: Date) => Partial<Omit<CalendarDayProps, 'day' | 'renderDayContent'>>;
 }
 
 export const CalendarDays = ({
@@ -130,6 +148,7 @@ export const CalendarDays = ({
   getRootRef,
   renderDayContent,
   dayTestId,
+  overrideDayProps,
   ...props
 }: CalendarDaysProps): React.ReactNode => {
   const { locale } = useConfigProvider();
@@ -166,32 +185,44 @@ export const CalendarDays = ({
         <div className={classNames(styles.row, size === 's' && styles.rowSizeS)} key={i}>
           {week.map((day, i) => {
             const sameMonth = isSameMonth(day, viewDate);
-            return (
-              <CalendarDay
-                key={day.toISOString()}
-                day={day}
-                today={isSameDay(day, now)}
-                active={isDayActive(day)}
-                onChange={handleDayChange}
-                hidden={!showNeighboringMonth && !sameMonth}
-                disabled={isDayDisabled(day)}
-                selectionStart={isDaySelectionStart(day, i)}
-                selectionEnd={isDaySelectionEnd(day, i)}
-                hintedSelectionStart={isHintedDaySelectionStart?.(day, i)}
-                hintedSelectionEnd={isHintedDaySelectionEnd?.(day, i)}
-                selected={isDaySelected?.(day)}
-                focused={isDayFocused(day)}
-                onEnter={onDayEnter}
-                onLeave={onDayLeave}
-                hinted={isDayHinted?.(day)}
-                sameMonth={sameMonth}
-                size={size}
-                renderDayContent={renderDayContent}
-                testId={dayTestId}
-                {...dayProps}
-                className={classNames(dayProps?.className, styles.rowDay)}
-              />
+
+            const overridedProps = overrideDayProps?.(day);
+
+            const ownProps: CalendarDayProps = {
+              day,
+              today: isSameDay(day, now),
+              active: isDayActive(day),
+              onChange: handleDayChange,
+              hidden: !showNeighboringMonth && !sameMonth,
+              disabled: isDayDisabled(day),
+              selectionStart: isDaySelectionStart(day, i),
+              selectionEnd: isDaySelectionEnd(day, i),
+              hintedSelectionStart: isHintedDaySelectionEnd?.(day, i),
+              selected: isDaySelected?.(day),
+              focused: isDayFocused(day),
+              onEnter: onDayEnter,
+              onLeave: onDayLeave,
+              hinted: isDayHinted?.(day),
+              sameMonth,
+              size,
+              renderDayContent: renderDayContent,
+              testId: dayTestId,
+              ...dayProps,
+            };
+
+            const mergedEventsByInjectProps = getMergedSameEventsByProps(
+              ownProps,
+              overridedProps || {},
             );
+
+            const props: CalendarDayProps = {
+              ...ownProps,
+              ...overridedProps,
+              ...mergedEventsByInjectProps,
+              className: classNames(dayProps?.className, overridedProps?.className, styles.rowDay),
+            };
+
+            return <CalendarDay key={day.toISOString()} {...props} />;
           })}
         </div>
       ))}

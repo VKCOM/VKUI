@@ -79,6 +79,7 @@ export interface DateRangeInputProps
       | 'prevMonthIcon'
       | 'nextMonthIcon'
       | 'renderDayContent'
+      | 'overrideDayProps'
     >,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
@@ -220,6 +221,7 @@ export const DateRangeInput = ({
   startDateTestsProps,
   endDateTestsProps,
   id,
+  overrideDayProps,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -452,6 +454,7 @@ export const DateRangeInput = ({
             prevMonthIcon={prevMonthIcon}
             nextMonthIcon={nextMonthIcon}
             renderDayContent={renderDayContent}
+            overrideDayProps={overrideDayProps}
             {...calendarTestsProps}
           />
         </Popper>

@@ -88,6 +88,7 @@ export interface DateInputProps
       | 'minDateTime'
       | 'maxDateTime'
       | 'renderDayContent'
+      | 'overrideDayProps'
     >,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
@@ -231,6 +232,7 @@ export const DateInput = ({
   onApply,
   renderCustomValue,
   timezone,
+  overrideDayProps,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -481,6 +483,7 @@ export const DateInput = ({
             nextMonthIcon={nextMonthIcon}
             minDateTime={minDateTime}
             maxDateTime={maxDateTime}
+            overrideDayProps={overrideDayProps}
             {...calendarTestsProps}
           />
         </Popper>

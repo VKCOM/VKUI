@@ -49,7 +49,10 @@ export interface CalendarProps
       | 'prevMonthProps'
       | 'nextMonthProps'
     >,
-    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    Pick<
+      CalendarDaysProps,
+      'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent' | 'overrideDayProps'
+    >,
     CalendarDoneButtonProps,
     CalendarTestsProps {
   /**
@@ -179,6 +182,7 @@ export const Calendar = ({
   monthDropdownTestId,
   yearDropdownTestId,
   dayTestId,
+  overrideDayProps,
   ...props
 }: CalendarProps): React.ReactNode => {
   const _onChange = React.useCallback(
@@ -317,6 +321,7 @@ export const Calendar = ({
         listenDayChangesForUpdate={listenDayChangesForUpdate}
         renderDayContent={renderDayContent}
         dayTestId={dayTestId}
+        overrideDayProps={overrideDayProps}
       />
       {enableTime && timeZonedValue && size !== 's' && (
         <div className={styles.time}>
