@@ -194,6 +194,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   dropdownOffsetDistance = 0,
   allowClearButton,
   clearButtonTestId,
+  delimiter,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
   const {
@@ -244,11 +245,13 @@ export const ChipsSelect = <Option extends ChipOption>({
 
     // other
     disabled,
+    delimiter,
   });
 
   // Связано с ChipsInputProps
   const rootRef = useExternRef(getRootRef);
   const inputRef = useExternRef(getRef, inputRefHook);
+  const forbidCloseByOutsideClick = React.useRef(false);
 
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
@@ -424,7 +427,10 @@ export const ChipsSelect = <Option extends ChipOption>({
   }, [setFocusedOptionIndex]);
 
   const handleClickOutside = React.useCallback(() => {
-    setOpened(false);
+    if (!forbidCloseByOutsideClick.current) {
+      setOpened(false);
+    }
+    forbidCloseByOutsideClick.current = false;
   }, [setOpened]);
 
   useGlobalOnClickOutside(
@@ -497,6 +503,7 @@ export const ChipsSelect = <Option extends ChipOption>({
                 if (!event.defaultPrevented) {
                   closeAfterSelect && setOpened(false);
                   addOption(option);
+                  forbidCloseByOutsideClick.current = true;
                   clearInput();
                 }
               },

@@ -86,19 +86,19 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
-    "@swc/helpers": "^0.5.15",
+    "@swc/helpers": "^0.5.17",
     "@vkontakte/icons": "^3.0.0",
     "@vkontakte/vkjs": "^2.0.1",
     "@vkontakte/vkui-floating-ui": "^0.2.3",
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
-    "@storybook/react": "8.6.8",
-    "@storybook/react-webpack5": "8.6.8",
+    "@storybook/react": "8.6.12",
+    "@storybook/react-webpack5": "8.6.12",
     "@types/node": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "storybook": "8.6.11",
+    "storybook": "8.6.12",
     "ts-node": "*"
   },
   "size-limit": [
