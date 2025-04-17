@@ -29,7 +29,7 @@ export interface CalendarDaysProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
     Pick<CalendarDayProps, 'renderDayContent'>,
     CalendarDaysTestsProps {
-  value?: Date | Array<Date | null>;
+  value?: Date | Array<Date | null> | null;
   viewDate: Date;
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;

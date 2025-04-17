@@ -15,7 +15,7 @@ export interface UseCalendarDependencies
     | 'disableFuture'
     | 'disablePast'
   > {
-  value?: Array<Date | null> | Date;
+  value?: Array<Date | null> | Date | null;
 }
 
 export function useCalendar({

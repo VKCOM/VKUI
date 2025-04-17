@@ -52,8 +52,8 @@ export interface CalendarProps
     Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarDoneButtonProps,
     CalendarTestsProps {
-  value?: Date;
-  defaultValue?: Date;
+  value?: Date | null;
+  defaultValue?: Date | null;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
@@ -70,7 +70,7 @@ export interface CalendarProps
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   showNeighboringMonth?: boolean;
   size?: 's' | 'm';
-  onChange?: (value?: Date) => void;
+  onChange?: (value?: Date) => void; // TODO [>=8]: поменять тип на `(value?: Date | null) => void`
   /**
    * Позволяет запретить выбор даты.
    */
@@ -155,20 +155,20 @@ export const Calendar = ({
   ...props
 }: CalendarProps): React.ReactNode => {
   const _onChange = React.useCallback(
-    (date: Date | undefined) => {
+    (date: Date | null | undefined) => {
       onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
     },
     [onChange, timezone],
   );
 
-  const [value, updateValue] = useCustomEnsuredControl<Date | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<Date | null | undefined>({
     value: valueProp,
     defaultValue,
     onChange: _onChange,
   });
 
-  const timeZonedValue: Date | undefined = React.useMemo(
-    () => convertDateToTimeZone(value, timezone) || undefined,
+  const timeZonedValue: Date | null | undefined = React.useMemo(
+    () => convertDateToTimeZone(value, timezone),
     [timezone, value],
   );
 
