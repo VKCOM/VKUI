@@ -168,6 +168,11 @@ export interface DateInputProps
    * Позволяет отключить захват фокуса при появлении календаря.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
+  /**
+   * Лэйбл для группы инпута, который зачитывается при фокусе на DateInput.
+   * По умолчанию лэйбл DateInput звучит так: "Редактор даты {дата, заданная в DateInput}".
+   * */
+  inputGroupLabel?: string;
 }
 
 const elementsConfig = (index: number) => {
@@ -220,10 +225,10 @@ export const DateInput = ({
   disablePast,
   minDateTime,
   maxDateTime,
-  value: valueProp,
+  'value': valueProp,
   defaultValue,
   onChange,
-  calendarPlacement: calendarPlacementProp = 'bottom-start',
+  'calendarPlacement': calendarPlacementProp = 'bottom-start',
   style,
   className,
   doneButtonText,
@@ -272,6 +277,8 @@ export const DateInput = ({
   timezone,
   restoreFocus,
   disableFocusTrap,
+  inputGroupLabel = 'Редактор даты',
+  'aria-label': ariaLabel,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -399,7 +406,6 @@ export const DateInput = ({
     React.useState<PlacementWithAuto>(calendarPlacementProp);
 
   const { locale } = useConfigProvider();
-  const inputGroupLabel = 'Редактор даты';
   const inputGroupLabelId = React.useId();
   const currentDateLabel = value
     ? new Intl.DateTimeFormat(locale, {
@@ -455,7 +461,9 @@ export const DateInput = ({
     >
       <div className={styles.wrapper}>
         {inputGroupLabel && (
-          <VisuallyHidden id={inputGroupLabelId}>{inputGroupLabel}</VisuallyHidden>
+          <VisuallyHidden id={inputGroupLabelId}>
+            {ariaLabel} {inputGroupLabel}
+          </VisuallyHidden>
         )}
         {currentDateLabel && (
           <VisuallyHidden id={currentDateLabelId}>{currentDateLabel}</VisuallyHidden>
@@ -491,7 +499,7 @@ export const DateInput = ({
             aria-valuemin={1}
             aria-valuemax={31}
             aria-valuetext={internalValue[0]}
-            aria-label={changeDayLabel}
+            aria-label={`${ariaLabel} ${changeDayLabel}`}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -507,7 +515,7 @@ export const DateInput = ({
             aria-valuemin={1}
             aria-valuemax={12}
             aria-valuetext={internalValue[1]}
-            aria-label={changeMonthLabel}
+            aria-label={`${ariaLabel} ${changeMonthLabel}`}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -523,7 +531,7 @@ export const DateInput = ({
             aria-valuemin={1}
             aria-valuemax={275750}
             aria-valuetext={internalValue[2]}
-            aria-label={changeYearLabel}
+            aria-label={`${ariaLabel} ${changeYearLabel}`}
           />
           {enableTime && (
             <React.Fragment>
@@ -541,7 +549,7 @@ export const DateInput = ({
                 aria-valuemin={1}
                 aria-valuemax={24}
                 aria-valuetext={internalValue[3]}
-                aria-label={changeHoursLabel}
+                aria-label={`${ariaLabel} ${changeHoursLabel}`}
               />
               <InputLikeDivider>:</InputLikeDivider>
               <InputLike
@@ -557,7 +565,7 @@ export const DateInput = ({
                 aria-valuemin={1}
                 aria-valuemax={59}
                 aria-valuetext={internalValue[4]}
-                aria-label={changeMinutesLabel}
+                aria-label={`${ariaLabel} ${changeMinutesLabel}`}
               />
             </React.Fragment>
           )}
