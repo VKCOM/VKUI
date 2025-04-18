@@ -1,7 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, endOfDay, format, startOfDay } from 'date-fns';
 import { getDocumentBody } from '../../lib/dom';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
 import dayStyles from '../CalendarDay/CalendarDay.module.css';
 import daysStyles from '../CalendarDays/CalendarDays.module.css';
@@ -111,6 +111,33 @@ describe('CalendarRange', () => {
 
     expect(screen.getByTestId(`left-month-picker-7`));
     checkActiveDay(new Date(2023, 8, 1));
+  });
+
+  it('checks day selection by keyboard', async () => {
+    jest.useFakeTimers();
+    const onChangeStub = jest.fn();
+    const startDate = new Date(2024, 2, 1);
+    const endDate = new Date(2024, 2, 10);
+    render(
+      <CalendarRange
+        value={[startDate, endDate]}
+        onChange={onChangeStub}
+        dayTestId={(day) => `${day.getDate()}`}
+      />,
+    );
+    await act(() => userEvent.click(screen.getAllByRole('gridcell', { selected: true })[0]));
+    expect(onChangeStub).toHaveBeenCalledTimes(1);
+
+    await act(() => userEvent.keyboard('{ArrowLeft}'));
+
+    // выбираем день с помощью Space
+    await act(() => userEvent.keyboard(' '));
+    expect(onChangeStub).toHaveBeenCalledTimes(2);
+    await act(() => userEvent.keyboard('{ArrowLeft}'));
+    await act(() => userEvent.keyboard('{ArrowLeft}'));
+    // выбираем день с помощью Enter
+    await act(() => userEvent.keyboard('{Enter}'));
+    expect(onChangeStub).toHaveBeenCalledTimes(3);
   });
 
   it('check click on same day', () => {
