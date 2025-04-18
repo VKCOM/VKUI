@@ -164,6 +164,10 @@ export interface DateInputProps
    * TODO [>=8]: включить по умолчанию.
    */
   accessible?: boolean;
+  /**
+   * Позволяет отключить захват фокуса при появлении календаря.
+   */
+  disableFocusTrap?: UseFocusTrapProps['disabled'];
 }
 
 const elementsConfig = (index: number) => {
@@ -267,6 +271,7 @@ export const DateInput = ({
   renderCustomValue,
   timezone,
   restoreFocus,
+  disableFocusTrap,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -573,7 +578,7 @@ export const DateInput = ({
         >
           <FocusTrap
             onClose={closeCalendar}
-            disabled={!accessible}
+            disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
           >
             <Calendar
