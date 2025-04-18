@@ -155,7 +155,7 @@ describe('DateInput', () => {
   it('should call onChange callback when change data by calendar', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onChange={onChange}
