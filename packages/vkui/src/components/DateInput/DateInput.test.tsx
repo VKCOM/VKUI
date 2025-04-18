@@ -180,18 +180,18 @@ describe('DateInput', () => {
     const resultDate = new Date(date);
     resultDate.setDate(date.getDate() - 1);
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+    expect(screen.queryByLabelText('Календарь')).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(resultDate)));
 
     expect(onChange).toHaveBeenCalledWith(resultDate);
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
+    expect(screen.queryByLabelText('Календарь')).toBeFalsy();
   });
 
   it('should call onCloseCalendar calendar was closed', async () => {
     jest.useFakeTimers();
     const onCalendarOpenChanged = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onCalendarOpenChanged={onCalendarOpenChanged}
@@ -209,13 +209,13 @@ describe('DateInput', () => {
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
     expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+    expect(screen.queryByLabelText('Календарь')).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(subDays(date, 1))));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
+    expect(screen.queryByLabelText('Календарь')).toBeFalsy();
   });
 
   it('should call onApply when clicking Done button', async () => {
