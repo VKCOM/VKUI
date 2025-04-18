@@ -26,6 +26,23 @@
   Если нужно отключить это поведение, используйте свойство `disableFocusTrap`. Если нужно
   больше контроля на тем куда возвращать фокус, используйте свойство `restoreFocus`.
 
+К сожалению, из-за особенности реализации `DateInput`, если вкладывать его внутрь `label`, или связывать `label` и `DateInput` через `htmlFor`, то хоть по клику на `label` фокус будет попадать на `DateInput`, но текст `label` скринридером зачитываться в момент фокуса не будет.
+Рекомендуем дублировать текст `label` в `DateInput`, передавая в `DateInput` текст через свойство `aria-label`.
+
+```jsx static
+<label>
+  День рождения
+  <DateInput aria-label="День рождения" />
+</label>
+
+<label htmlFor="date"> День рождения</label>
+<DateInput id="date" aria-label="День рождения" />
+
+<FormItem top="День рождения" htmlFor="date">
+  <DateInput id="date" aria-label="День рождения" />
+</FormItem>
+```
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 const Example = () => {
   const [value, setValue] = useState(() => new Date());
@@ -114,6 +131,7 @@ const Example = () => {
           <LocaleProvider value={locale}>
             <DateInput
               id="date"
+              aria-label="Результат"
               value={value}
               onChange={setValue}
               enableTime={enableTime}
