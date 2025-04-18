@@ -19,6 +19,7 @@ export interface UseDateInputDependencies<T, D> {
   getInternalValue: (value?: D | null | undefined) => string[];
   onClear: () => void;
   onCalendarOpenChanged?: (opened: boolean) => void;
+  accessible?: boolean;
 }
 
 export function useDateInput<T extends HTMLElement, D>({
@@ -32,12 +33,14 @@ export function useDateInput<T extends HTMLElement, D>({
   getInternalValue,
   value,
   onCalendarOpenChanged,
+  accessible,
 }: UseDateInputDependencies<T, D>): {
   rootRef: React.RefObject<HTMLDivElement | null>;
   calendarRef: React.RefObject<HTMLDivElement | null>;
   open: boolean;
   openCalendar: () => void;
   closeCalendar: () => void;
+  toggleCalendar: () => void;
   internalValue: string[];
   focusedElement: number | null;
   setFocusedElement: React.Dispatch<React.SetStateAction<number | null>>;
@@ -65,17 +68,26 @@ export function useDateInput<T extends HTMLElement, D>({
     if (!open) {
       openCalendar();
       onCalendarOpenChanged?.(true);
+      if (accessible) {
+        setFocusedElement(null);
+      }
     }
-  }, [onCalendarOpenChanged, open, openCalendar]);
+  }, [onCalendarOpenChanged, open, openCalendar, accessible]);
+
+  const toggleCalendar = useCallback(() => {
+    if (open) {
+      _onCalendarClose();
+    } else {
+      _onCalendarOpen();
+    }
+  }, [open, _onCalendarOpen, _onCalendarClose]);
 
   const removeFocusFromField = React.useCallback(() => {
-    if (focusedElement !== null) {
-      setFocusedElement(null);
-      _onCalendarClose();
-      window!.getSelection()?.removeAllRanges();
-      setInternalValue(getInternalValue(value));
-    }
-  }, [focusedElement, _onCalendarClose, window, getInternalValue, value]);
+    setFocusedElement(null);
+    _onCalendarClose();
+    window!.getSelection()?.removeAllRanges();
+    setInternalValue(getInternalValue(value));
+  }, [_onCalendarClose, window, getInternalValue, value]);
 
   const handleClickOutside = React.useCallback(
     (e: MouseEvent) => {
@@ -90,8 +102,12 @@ export function useDateInput<T extends HTMLElement, D>({
   );
 
   const selectFirst = React.useCallback(() => {
+    if (focusedElement !== null) {
+      return;
+    }
+
     setFocusedElement(0);
-  }, []);
+  }, [focusedElement]);
 
   useGlobalEventListener(document, 'click', handleClickOutside, {
     capture: true,
@@ -116,16 +132,28 @@ export function useDateInput<T extends HTMLElement, D>({
 
     let element = refs[focusedElement].current;
 
+    let timerId: ReturnType<typeof setTimeout>;
     if (element) {
       element.focus();
-      _onCalendarOpen();
+      if (!accessible) {
+        _onCalendarOpen();
+      }
       range.selectNodeContents(element as Node);
 
-      const selection = window!.getSelection();
-      selection?.removeAllRanges();
-      selection?.addRange(range);
+      // Fix для Firefox: setTimeout нужен чтобы отложить range selection на
+      // какое-то время, иначе, при фокусе на InputLike
+      // извне, контент визуально не будет выбран
+      timerId = setTimeout(() => {
+        const selection = window!.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+      }, 0);
     }
-  }, [disabled, focusedElement, _onCalendarOpen, refs, window]);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [disabled, focusedElement, refs, window, _onCalendarOpen, accessible]);
 
   const clear = React.useCallback(() => {
     onClear?.();
@@ -133,10 +161,8 @@ export function useDateInput<T extends HTMLElement, D>({
   }, [onClear, selectFirst]);
 
   const handleFieldEnter = React.useCallback(() => {
-    if (!open) {
-      selectFirst();
-    }
-  }, [open, selectFirst]);
+    selectFirst();
+  }, [selectFirst]);
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLSpanElement>) => {
@@ -172,19 +198,24 @@ export function useDateInput<T extends HTMLElement, D>({
         _value[focusedElement] = String(
           currentValue >= config.max ? config.min : currentValue + 1,
         ).padStart(config.length, '0');
-      } else if (
-        e.key === 'Enter' ||
-        (e.key === 'Tab' && focusedElement === maxElement) ||
-        (e.key === 'Tab' && e.shiftKey && focusedElement === 0)
-      ) {
-        removeFocusFromField();
-        return;
       } else if (e.key === 'ArrowLeft' || e.key === 'Left' || (e.key === 'Tab' && e.shiftKey)) {
-        setFocusedElement(focusedElement <= 0 ? maxElement : focusedElement - 1);
+        if (focusedElement <= 0) {
+          removeFocusFromField();
+          return;
+        }
+        setFocusedElement(focusedElement - 1);
       } else if (e.key === 'ArrowRight' || e.key === 'Right' || e.key === 'Tab') {
-        setFocusedElement(focusedElement >= maxElement ? 0 : focusedElement + 1);
+        if (focusedElement >= maxElement) {
+          removeFocusFromField();
+          return;
+        }
+
+        setFocusedElement(focusedElement + 1);
       } else if (e.key === 'Delete' || e.key === 'Del') {
         _value[focusedElement] = '';
+      } else if (e.key === ' ') {
+        _onCalendarOpen();
+        return;
       } else {
         return;
       }
@@ -194,12 +225,13 @@ export function useDateInput<T extends HTMLElement, D>({
       onInternalValueChange(_value);
     },
     [
+      _onCalendarOpen,
+      removeFocusFromField,
       elementsConfig,
       focusedElement,
       internalValue,
       maxElement,
       onInternalValueChange,
-      removeFocusFromField,
     ],
   );
 
@@ -209,6 +241,7 @@ export function useDateInput<T extends HTMLElement, D>({
     open,
     openCalendar: _onCalendarOpen,
     closeCalendar: _onCalendarClose,
+    toggleCalendar,
     internalValue,
     focusedElement,
     setFocusedElement,

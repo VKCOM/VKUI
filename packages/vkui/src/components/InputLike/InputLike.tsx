@@ -51,10 +51,10 @@ export const InputLike = ({
   return (
     <RootComponent
       Component="span"
-      baseClassName={value?.length === length ? styles.full : undefined}
+      baseClassName={value?.length === length ? styles.host : undefined}
       tabIndex={0}
-      onClick={callMultiple(onClick, handleElementSelect)}
-      onFocus={callMultiple(stopPropagation, onFocus)}
+      onClick={onClick}
+      onFocus={callMultiple(onFocus, handleElementSelect)}
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}
