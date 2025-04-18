@@ -19,7 +19,7 @@
   padding-block-end: 2px;
 }
 
-.row:not(:nth-child(3)):not(.rowSizeS) .rowDay {
+.row:not(:nth-child(2)):not(.rowSizeS) .rowDay {
   padding-block-start: 2px;
 }
 
