@@ -8,7 +8,7 @@ import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
-import { type TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
+import { type TabsContextProps, TabsModeContext } from '../Tabs/TabsModeContext';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -45,6 +45,10 @@ export interface TabsItemProps
       | 'hasHover'
       | 'focusVisibleMode'
     > {
+  /**
+   * Идентификатор вкладки. Используется, когда выбранная вкладка контролируется на уровне `Tabs`.
+   */
+  tabId?: string;
   /**
    * Добавляет иконку слева.
    *
@@ -86,7 +90,7 @@ export const TabsItem = ({
   children,
   status,
   after,
-  selected = false,
+  selected: selectedProp = false,
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
@@ -94,6 +98,8 @@ export const TabsItem = ({
   activeMode = '',
   hasActive = false,
   focusVisibleMode = 'inside',
+  tabId,
+  onClick,
   ...restProps
 }: TabsItemProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -103,10 +109,13 @@ export const TabsItem = ({
     layoutFillMode,
     scrollBehaviorToSelectedTab,
     withScrollToSelectedTab,
+    controller,
   }: TabsContextProps = React.useContext(TabsModeContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';
+
+  const selected = selectedProp || (!!tabId && controller?.selectedTab === tabId);
 
   if (hasReactNode(status)) {
     statusComponent =
@@ -183,6 +192,16 @@ export const TabsItem = ({
     [rootRef, document, shouldScrollToSelected, scrollBehaviorToSelectedTab],
   );
 
+  const _onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(
+    (e) => {
+      onClick?.(e);
+      if (tabId) {
+        controller?.onChange(tabId);
+      }
+    },
+    [tabId, onClick, controller],
+  );
+
   return (
     <Tappable
       getRootRef={rootRef}
@@ -201,6 +220,7 @@ export const TabsItem = ({
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
       )}
+      onClick={_onClick}
       {...restProps}
     >
       {before && <div className={styles.before}>{before}</div>}
