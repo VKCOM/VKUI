@@ -377,11 +377,11 @@ describe('DateInput', () => {
       render(
         <div>
           <button type="button">Предыдущая кнопка</button>
-          <DateInput {...testIds} />
+          <DateInput enableTime {...testIds} />
         </div>,
       );
 
-      const [dayPicker, monthPicker, yearPicker] = getInputsLike();
+      const [dayPicker, monthPicker, yearPicker, hourPicker, minutePicker] = getInputsLike();
 
       await act(() => userEvent.click(dayPicker));
       expect(document.activeElement).toBe(dayPicker);
@@ -393,9 +393,21 @@ describe('DateInput', () => {
       expect(document.activeElement).toBe(yearPicker);
 
       await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(hourPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(minutePicker);
+
+      await act(() => userEvent.tab());
       expect(document.activeElement).toBe(
         screen.getByRole('button', { name: 'Показать календарь' }),
       );
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(minutePicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(hourPicker);
 
       await act(() => userEvent.tab({ shift: true }));
       expect(document.activeElement).toBe(yearPicker);
@@ -534,7 +546,7 @@ describe('DateInput', () => {
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
         jest.runOnlyPendingTimers();
 
-        // onCalendarOpenChanged вызан лишь раз
+        // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
         onCalendarOpenChangedStub.mockClear();
 
@@ -549,7 +561,7 @@ describe('DateInput', () => {
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
         jest.runOnlyPendingTimers();
 
-        // onCalendarOpenChanged вызан лишь раз
+        // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
         onCalendarOpenChangedStub.mockClear();
 
@@ -560,7 +572,7 @@ describe('DateInput', () => {
         await act(() => userEvent.click(inputPart));
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
-        // onCalendarOpenChanged вызан лишь раз
+        // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
         onCalendarOpenChangedStub.mockClear();
 
