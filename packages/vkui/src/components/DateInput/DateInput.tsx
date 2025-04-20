@@ -278,7 +278,7 @@ export const DateInput = ({
   restoreFocus,
   disableFocusTrap,
   inputGroupLabel = 'Редактор даты',
-  'aria-label': ariaLabel,
+  'aria-label': ariaLabel = '',
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
