@@ -15,7 +15,7 @@ export const makeTokenClassName = (themeName, colorScheme) => {
  * @param {object} colorSchemeOptions
  * @return {object}
  */
-export const getVKUIConfigProviderTokensClassNamesWithGlobalAppearance = (
+const getVKUIConfigProviderTokensClassNamesWithGlobalAppearance = (
   themeName,
   colorSchemeOptions = [],
 ) => {
