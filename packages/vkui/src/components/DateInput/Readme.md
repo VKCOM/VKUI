@@ -43,6 +43,26 @@
 </FormItem>
 ```
 
+## Переводы (i18n)
+
+Формат дат и их перевод задаётся с помощью средств браузера [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat). Тем не менее компонент, в том числе и календарь, имеют большое количество внтутренних интерактивных элементов, которые должны иметь описание.
+Особенно важно для доступности (a11y), так как большинство подписей зрячему пользователю не видны, но критически важны пользователям скринридеров.
+
+Ниже приведён список свойств, которые стоит использовать, если требуется перевести компонент на другой язык. Полный список ищите в таблице свойств компонента ниже.
+
+Свойства календаря:
+
+- `changeHoursLabel`;
+- `changeMinutsLabel`;
+- `changeDayLabel`;
+- `changeMonthLabel`;
+- `changeYearLabel`;
+- `prevMonthLabel`;
+- `nextMonthLabel`;
+- `clearFieldLabel`;
+- `showCalendarLabel`;
+- `calendarLabel`.
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 const Example = () => {
   const [value, setValue] = useState(() => new Date());
