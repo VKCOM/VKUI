@@ -30,7 +30,7 @@ export interface ActionSheetProps
       SharedDropdownProps,
       'toggleRef' | 'popupOffsetDistance' | 'placement' | 'allowClickPropagation'
     >,
-    Omit<UseFocusTrapProps, 'onClose'>,
+    Omit<UseFocusTrapProps, 'onClose' | 'mount' | 'disabled'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**
    * Заголовок всплыващего окна.
@@ -55,6 +55,18 @@ export interface ActionSheetProps
    * - `menu` –  отображение в виде всплывающего элемента, относительно якорного элемента.
    */
   mode?: 'sheet' | 'menu';
+  /**
+   * @deprecated Since 7.3.0.
+   * 
+   * Свойство не используется и будет удалено в `v8`.
+   */
+  mount?: boolean;
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство не используется и будет удалено в `v8`.
+   */
+  disabled?: boolean;
 }
 
 /**
