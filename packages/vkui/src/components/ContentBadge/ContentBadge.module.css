@@ -15,6 +15,8 @@
   min-inline-size: 0;
   block-size: auto;
   isolation: isolate;
+
+  --vkui_internal--ContentBadge_color: var(--vkui--color_background_accent);
 }
 
 .sizeS {
@@ -60,8 +62,15 @@
 }
 
 /* mode="primary" */
-.primaryAccent {
+.modePrimary {
   color: var(--vkui--color_text_contrast);
+}
+
+.customAppearance.modePrimary {
+  background-color: var(--vkui_internal--ContentBadge_color);
+}
+
+.primaryAccent {
   background-color: var(--vkui--color_background_accent);
 }
 
@@ -70,22 +79,25 @@
   background-color: var(--vkui--color_background_secondary);
 }
 
-.primaryAccentGreen {
-  color: var(--vkui--color_text_contrast);
-  background-color: var(--vkui--color_accent_green);
-}
-
-.primaryAccentRed {
-  color: var(--vkui--color_text_contrast);
-  background-color: var(--vkui--color_accent_red);
-}
-
 .primaryOverlay {
-  color: var(--vkui--color_text_contrast);
   background-color: var(--vkui--color_overlay_primary);
 }
 
 /* mode="secondary" */
+.customAppearance.modeSecondary::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  background-color: currentColor;
+  border-radius: inherit;
+  opacity: 0.12;
+}
+
+.customAppearance.modeSecondary {
+  color: var(--vkui_internal--ContentBadge_color);
+}
+
 .secondaryAccent {
   color: var(--vkui--color_text_accent);
   background-color: var(--vkui--color_background_secondary_alpha);
@@ -94,16 +106,6 @@
 .secondaryNeutral {
   color: var(--vkui--color_text_subhead);
   background-color: var(--vkui--color_background_secondary);
-}
-
-.secondaryAccentGreen {
-  color: var(--vkui--color_accent_green);
-  background-color: var(--vkui--color_background_positive_tint);
-}
-
-.secondaryAccentRed {
-  color: var(--vkui--color_accent_red);
-  background-color: var(--vkui--color_background_negative_tint);
 }
 
 .secondaryOverlay {
@@ -117,9 +119,14 @@
   inset: 0;
   z-index: -1;
   content: '';
+  border-color: currentColor;
   border-style: solid;
   border-width: 1px;
   border-radius: inherit;
+}
+
+.customAppearance.modeOutline {
+  color: var(--vkui_internal--ContentBadge_color);
 }
 
 .outlineAccent {
@@ -136,22 +143,6 @@
 
 .outlineNeutral::before {
   border-color: var(--vkui--color_icon_secondary);
-}
-
-.outlineAccentGreen {
-  color: var(--vkui--color_accent_green);
-}
-
-.outlineAccentGreen::before {
-  border-color: currentColor;
-}
-
-.outlineAccentRed {
-  color: var(--vkui--color_accent_red);
-}
-
-.outlineAccentRed::before {
-  border-color: currentColor;
 }
 
 .outlineOverlay {

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import type { TypographyProps } from '../Typography/Typography';
@@ -10,33 +11,68 @@ import { ContentBadgeSlotIcon } from './ContentBadgeSlotIcon';
 import type { ContentBadgeModeType, ContentBadgeSizeType } from './types';
 import styles from './ContentBadge.module.css';
 
+const modeClassNames = {
+  primary: styles.modePrimary,
+  secondary: styles.modeSecondary,
+  outline: styles.modeOutline,
+};
+
 const appearanceClassNames = {
-  'accent': {
+  accent: {
     primary: styles.primaryAccent,
     secondary: styles.secondaryAccent,
     outline: styles.outlineAccent,
   },
-  'neutral': {
+  neutral: {
     primary: styles.primaryNeutral,
     secondary: styles.secondaryNeutral,
     outline: styles.outlineNeutral,
   },
-  'accent-green': {
-    primary: styles.primaryAccentGreen,
-    secondary: styles.secondaryAccentGreen,
-    outline: styles.outlineAccentGreen,
-  },
-  'accent-red': {
-    primary: styles.primaryAccentRed,
-    secondary: styles.secondaryAccentRed,
-    outline: styles.outlineAccentRed,
-  },
-  'overlay': {
+  overlay: {
     primary: styles.primaryOverlay,
     secondary: styles.secondaryOverlay,
     outline: styles.outlineOverlay,
   },
 };
+
+function resolveAppearanceClassName(
+  appearance: ContentBadgeProps['appearance'] = 'accent',
+  mode: ContentBadgeModeType,
+) {
+  if (!appearanceClassNames.hasOwnProperty(appearance)) {
+    return styles.customAppearance;
+  }
+
+  return appearanceClassNames[appearance][mode];
+}
+
+const appearanceStyleColor = {
+  'accent-red': 'var(--vkui--color_accent_red)',
+  'accent-green': 'var(--vkui--color_accent_green)',
+};
+
+function resolveAppearanceStyleColor(appearance: ContentBadgeProps['appearance'] = 'accent') {
+  if (appearanceStyleColor.hasOwnProperty(appearance)) {
+    return appearanceStyleColor[appearance];
+  }
+
+  if (appearance.startsWith('var(--')) {
+    return appearance;
+  }
+
+  return undefined;
+}
+
+function resolveAppearanceStyle(
+  appearance: ContentBadgeProps['appearance'],
+): (React.CSSProperties & CSSCustomProperties) | undefined {
+  const color = resolveAppearanceStyleColor(appearance);
+  if (!color) {
+    return undefined;
+  }
+
+  return { '--vkui_internal--ContentBadge_color': color };
+}
 
 const sizeClassNames = {
   s: styles.sizeS,
@@ -54,7 +90,13 @@ export interface ContentBadgeProps
   /**
    * Цвет оформления.
    */
-  appearance?: 'accent' | 'neutral' | 'accent-green' | 'accent-red' | 'overlay';
+  appearance?:
+    | 'accent'
+    | 'neutral'
+    | 'accent-green'
+    | 'accent-red'
+    | 'overlay'
+    | `var(--${string})`;
   /**
    * Включает приближение значения закругления к форме круга.
    *
@@ -91,6 +133,7 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
   size = 'm',
   weight = '2',
   className,
+  style,
   children,
   ...restProps
 }: ContentBadgeProps) => {
@@ -101,12 +144,13 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
       {...restProps}
       weight={weight}
       normalize
+      style={mergeStyle(style, resolveAppearanceStyle(appearance))}
       className={classNames(
         className,
         styles.host,
         size !== 's' && capsule && styles.capsule,
-        mode === 'outline' && styles.modeOutline,
-        appearanceClassNames[appearance][mode],
+        modeClassNames[mode],
+        resolveAppearanceClassName(appearance, mode),
         sizeClassNames[size],
       )}
     >
