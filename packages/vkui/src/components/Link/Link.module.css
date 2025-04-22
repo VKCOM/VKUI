@@ -13,10 +13,8 @@
   border-radius: 0;
 }
 
-@media (--hover-has) {
-  .withUnderline:hover {
-    text-decoration: underline;
-  }
+.withUnderline.hover {
+  text-decoration: underline;
 }
 
 .hasVisited:visited {
