@@ -47,8 +47,8 @@ export interface AlertActionInterface
 }
 
 export interface AlertProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
-    Pick<UseFocusTrapProps, 'restoreFocus'>,
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title' | 'autoFocus'>,
+    Pick<UseFocusTrapProps, 'restoreFocus' | 'autoFocus'>,
     Pick<AppRootPortalProps, 'usePortal'>,
     HasRootRef<HTMLDivElement> {
   /**
