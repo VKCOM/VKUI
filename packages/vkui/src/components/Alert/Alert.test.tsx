@@ -268,25 +268,41 @@ describe('Alert', () => {
     },
   );
 
-  it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
-    'passes data-testid to dismiss button in %s dismissButtonMode',
-    async (dismissButtonMode) => {
-      render(
+  describe('handles dismissButtonMode', () => {
+    it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
+      'passes data-testid to dismiss button in %s dismissButtonMode',
+      async (dismissButtonMode) => {
+        render(
+          <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+            <Alert
+              onClose={jest.fn()}
+              dismissLabel="Закрыть предупреждение"
+              dismissButtonTestId="dismiss-button-test-id"
+              dismissButtonMode={dismissButtonMode}
+            />
+          </AdaptivityProvider>,
+        );
+        act(jest.runAllTimers);
+        expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
+          'Закрыть предупреждение',
+        );
+      },
+    );
+
+    it('should hide button in dismissButtonMode="none"', async () => {
+      const result = render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Alert
             onClose={jest.fn()}
-            dismissLabel="Закрыть предупреждение"
             dismissButtonTestId="dismiss-button-test-id"
-            dismissButtonMode={dismissButtonMode}
+            dismissButtonMode="none"
           />
         </AdaptivityProvider>,
       );
       act(jest.runAllTimers);
-      expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
-        'Закрыть предупреждение',
-      );
-    },
-  );
+      expect(result.queryByTestId('dismiss-button-test-id')).not.toBeInTheDocument();
+    });
+  });
 
   it.each([
     {
