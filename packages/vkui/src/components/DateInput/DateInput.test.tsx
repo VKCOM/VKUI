@@ -521,13 +521,7 @@ describe('DateInput', () => {
         />,
       );
 
-      const inputLikesLabels = [
-        'Изменить день',
-        'Изменить месяц',
-        'Изменить год',
-        'Изменить час',
-        'Изменить минуту',
-      ];
+      const inputLikesLabels = ['День', 'Месяц', 'Год', 'Час', 'Минута'];
 
       for (const inputLabel of inputLikesLabels) {
         onCalendarOpenChangedStub.mockClear();
