@@ -203,6 +203,15 @@ export const CalendarHeader = ({
     );
   }
 
+  const stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
+    (event: React.KeyboardEvent, isOpen: boolean) => {
+      if (isOpen && event.key === 'Escape') {
+        event.stopPropagation();
+      }
+    },
+    [],
+  );
+
   return (
     <RootComponent baseClassName={styles.host} {...restProps}>
       {!prevMonthHidden && (
@@ -254,6 +263,7 @@ export const CalendarHeader = ({
                   ? monthDropdownTestId
                   : monthDropdownTestId?.(currentMonth)
               }
+              onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
             />
             <CustomSelect
               className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
@@ -267,6 +277,7 @@ export const CalendarHeader = ({
               selectType="accent"
               aria-label={changeYearLabel}
               data-testid={yearDropdownTestId}
+              onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
             />
           </div>
         </AdaptivityProvider>

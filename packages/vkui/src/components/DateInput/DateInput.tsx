@@ -578,6 +578,7 @@ export const DateInput = ({
             onClose={closeCalendar}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
+            captureEscapeKeyboardEvent={false}
           >
             <Calendar
               aria-label={calendarLabel}
