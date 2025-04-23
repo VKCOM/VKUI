@@ -57,6 +57,14 @@ export type DateRangeInputTestsProps = {
    * Передает атрибуты `data-testid` для полей ввода конечной даты.
    */
   endDateTestsProps?: DateTestsProps;
+  /**
+   * Передает атрибут `data-testid` для кнопки показа календаря.
+   */
+  showCalendarButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки очистки даты.
+   */
+  clearButtonTestId?: string;
 };
 
 export interface DateRangeInputProps
@@ -220,6 +228,8 @@ export const DateRangeInput = ({
   calendarTestsProps,
   startDateTestsProps,
   endDateTestsProps,
+  clearButtonTestId,
+  showCalendarButtonTestId,
   id,
   overrideDayProps,
   ...props
@@ -231,10 +241,15 @@ export const DateRangeInput = ({
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
 
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
+  const _onChange = React.useCallback(
+    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
+    [onChange],
+  );
+
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
     value: valueProp,
     defaultValue,
-    onChange,
+    onChange: _onChange,
   });
 
   const onInternalValueChange = React.useCallback(
@@ -286,6 +301,8 @@ export const DateRangeInput = ({
     [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
   );
 
+  const onClear = React.useCallback(() => updateValue(undefined), [updateValue]);
+
   const {
     rootRef,
     calendarRef,
@@ -304,7 +321,7 @@ export const DateRangeInput = ({
     autoFocus,
     disabled,
     elementsConfig,
-    onChange: updateValue,
+    onClear,
     onInternalValueChange,
     getInternalValue,
     value,
@@ -339,12 +356,16 @@ export const DateRangeInput = ({
       getRootRef={handleRootRef}
       after={
         value ? (
-          <IconButton hoverMode="opacity" onClick={clear}>
+          <IconButton hoverMode="opacity" onClick={clear} data-testid={clearButtonTestId}>
             <VisuallyHidden>{clearFieldLabel}</VisuallyHidden>
             <Icon16Clear />
           </IconButton>
         ) : (
-          <IconButton hoverMode="opacity" onClick={openCalendar}>
+          <IconButton
+            hoverMode="opacity"
+            onClick={openCalendar}
+            data-testid={showCalendarButtonTestId}
+          >
             <VisuallyHidden>{showCalendarLabel}</VisuallyHidden>
             <Icon20CalendarOutline />
           </IconButton>

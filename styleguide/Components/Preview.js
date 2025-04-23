@@ -14,7 +14,6 @@ import {
   usePlatform,
 } from '@vkui';
 import { BREAKPOINTS } from '@vkui/lib/adaptivity';
-import { getVKUIConfigProviderTokensClassNamesWithGlobalAppearance } from '../lib/theme';
 import { useLoadThemeTokens } from '../lib/theme/useLoadThemeTokens';
 import { useViewPortSize } from '../utils';
 import { Frame } from './Frame/Frame';
@@ -43,14 +42,7 @@ const Config = ({
   ...config
 }) => {
   return (
-    <ConfigProvider
-      {...config}
-      colorScheme={colorScheme}
-      tokensClassNames={getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(
-        themeName,
-        colorSchemeOptions,
-      )}
-    >
+    <ConfigProvider {...config} colorScheme={colorScheme}>
       <AdaptivityProvider hasPointer={hasPointer}>
         <AppRoot layout={layout}>{children}</AppRoot>
       </AdaptivityProvider>
@@ -124,10 +116,6 @@ class Preview extends PreviewParent {
             <ConfigProvider
               platform={styleGuideContext.platform}
               colorScheme={styleGuideContext.colorScheme}
-              tokensClassNames={getVKUIConfigProviderTokensClassNamesWithGlobalAppearance(
-                styleGuideContext.themeName,
-                styleGuideContext.colorSchemeOptions,
-              )}
             >
               <div
                 className={classNames(

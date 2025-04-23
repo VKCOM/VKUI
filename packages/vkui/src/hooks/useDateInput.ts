@@ -9,15 +9,15 @@ export interface UseDateInputDependencies<T, D> {
   refs: Array<React.RefObject<T | null>>;
   autoFocus?: boolean;
   disabled?: boolean;
-  value?: D;
+  value?: D | null;
   elementsConfig: (index: number) => {
     length: number;
     min: number;
     max: number;
   };
   onInternalValueChange: (value: string[]) => void;
-  getInternalValue: (value?: D | undefined) => string[];
-  onChange?: (value?: D | undefined) => void;
+  getInternalValue: (value?: D | null | undefined) => string[];
+  onClear: () => void;
   onCalendarOpenChanged?: (opened: boolean) => void;
 }
 
@@ -27,7 +27,7 @@ export function useDateInput<T extends HTMLElement, D>({
   autoFocus,
   disabled,
   elementsConfig,
-  onChange,
+  onClear,
   onInternalValueChange,
   getInternalValue,
   value,
@@ -128,9 +128,9 @@ export function useDateInput<T extends HTMLElement, D>({
   }, [disabled, focusedElement, _onCalendarOpen, refs, window]);
 
   const clear = React.useCallback(() => {
-    onChange?.(undefined);
+    onClear?.();
     selectFirst();
-  }, [onChange, selectFirst]);
+  }, [onClear, selectFirst]);
 
   const handleFieldEnter = React.useCallback(() => {
     if (!open) {

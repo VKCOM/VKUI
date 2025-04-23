@@ -50,6 +50,14 @@ export type DateInputPropsTestsProps = {
    * Передает атрибут `data-testid` для поля ввода минут.
    */
   minuteFieldTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки показа календаря.
+   */
+  showCalendarButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки очистки даты.
+   */
+  clearButtonTestId?: string;
 };
 
 export interface DateInputProps
@@ -228,6 +236,8 @@ export const DateInput = ({
   yearFieldTestId,
   hourFieldTestId,
   minuteFieldTestId,
+  showCalendarButtonTestId,
+  clearButtonTestId,
   id,
   onApply,
   renderCustomValue,
@@ -241,12 +251,13 @@ export const DateInput = ({
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
 
-  const { value, updateValue, setInternalValue, getLastUpdatedValue } = useDateInputValue({
-    value: valueProp,
-    defaultValue,
-    onChange,
-    timezone,
-  });
+  const { value, updateValue, setInternalValue, getLastUpdatedValue, clearValue } =
+    useDateInputValue({
+      value: valueProp,
+      defaultValue,
+      onChange,
+      timezone,
+    });
 
   const maxElement = enableTime ? 4 : 2;
 
@@ -297,7 +308,7 @@ export const DateInput = ({
     autoFocus,
     disabled,
     elementsConfig,
-    onChange: updateValue,
+    onClear: clearValue,
     onInternalValueChange,
     getInternalValue,
     value,
@@ -319,6 +330,9 @@ export const DateInput = ({
 
   const onCalendarChange = React.useCallback(
     (value?: Date | undefined) => {
+      if (!value) {
+        return;
+      }
       if (enableTime) {
         setInternalValue(value);
         return;
@@ -332,13 +346,16 @@ export const DateInput = ({
   );
 
   const onDoneButtonClick = React.useCallback(() => {
+    if (!value) {
+      return;
+    }
     const newValue = updateValue(value);
     onApply?.(newValue);
     removeFocusFromField();
   }, [onApply, removeFocusFromField, updateValue, value]);
 
   const customValue = React.useMemo(
-    () => !open && renderCustomValue?.(value),
+    () => !open && renderCustomValue?.(value || undefined),
     [open, renderCustomValue, value],
   );
 
@@ -356,11 +373,21 @@ export const DateInput = ({
       getRootRef={handleRootRef}
       after={
         value ? (
-          <IconButton hoverMode="opacity" label={clearFieldLabel} onClick={clear}>
+          <IconButton
+            hoverMode="opacity"
+            label={clearFieldLabel}
+            onClick={clear}
+            data-testid={clearButtonTestId}
+          >
             <Icon16Clear />
           </IconButton>
         ) : (
-          <IconButton hoverMode="opacity" label={showCalendarLabel} onClick={openCalendar}>
+          <IconButton
+            hoverMode="opacity"
+            label={showCalendarLabel}
+            onClick={openCalendar}
+            data-testid={showCalendarButtonTestId}
+          >
             <Icon20CalendarOutline />
           </IconButton>
         )

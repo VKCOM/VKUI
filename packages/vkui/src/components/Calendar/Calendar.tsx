@@ -2,11 +2,12 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameDay, isSameMonth, startOfMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
 import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
+import { isHTMLElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -58,11 +59,11 @@ export interface CalendarProps
   /**
    * Текущая выбранная дата.
    */
-  value?: Date;
+  value?: Date | null;
   /**
    * Начальная дата при монтировании.
    */
-  defaultValue?: Date;
+  defaultValue?: Date | null;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
@@ -83,6 +84,11 @@ export interface CalendarProps
   disablePickers?: boolean;
   /**
    * `aria-label` для изменения дня.
+   *
+   * @deprecated Будет удалeно в **VKUI v8**.
+   * Использовалось для задания aria-label для контейнера дней в календаре.
+   * Теперь этот контейнер является таблицей (с помощью role="grid") и
+   * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
   changeDayLabel?: string;
   /**
@@ -100,7 +106,7 @@ export interface CalendarProps
   /**
    * Обработчик изменения выбранной даты.
    */
-  onChange?: (value?: Date) => void;
+  onChange?: (value?: Date) => void; // TODO [>=8]: поменять тип на `(value?: Date | null) => void`
   /**
    * Функция для проверки запрета выбора даты.
    */
@@ -137,7 +143,7 @@ const warn = warnOnce('Calendar');
  */
 export const Calendar = ({
   getRootRef,
-  value: valueProp,
+  'value': valueProp,
   defaultValue,
   onChange,
   disablePast,
@@ -151,6 +157,7 @@ export const Calendar = ({
   DoneButton,
   weekStartsOn = 1,
   disablePickers,
+  'aria-label': ariaLabel = 'Календарь',
   changeHoursLabel = 'Изменить час',
   changeMinutesLabel = 'Изменить минуту',
   prevMonthLabel = 'Предыдущий месяц',
@@ -158,9 +165,8 @@ export const Calendar = ({
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
   showNeighboringMonth,
-  changeDayLabel = 'Изменить день',
   size = 'm',
-  viewDate: externalViewDate,
+  'viewDate': externalViewDate,
   onHeaderChange,
   onNextMonth,
   onPrevMonth,
@@ -186,20 +192,20 @@ export const Calendar = ({
   ...props
 }: CalendarProps): React.ReactNode => {
   const _onChange = React.useCallback(
-    (date: Date | undefined) => {
+    (date: Date | null | undefined) => {
       onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
     },
     [onChange, timezone],
   );
 
-  const [value, updateValue] = useCustomEnsuredControl<Date | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<Date | null | undefined>({
     value: valueProp,
     defaultValue,
     onChange: _onChange,
   });
 
-  const timeZonedValue: Date | undefined = React.useMemo(
-    () => convertDateToTimeZone(value, timezone) || undefined,
+  const timeZonedValue: Date | null | undefined = React.useMemo(
+    () => convertDateToTimeZone(value, timezone),
     [timezone, value],
   );
 
@@ -210,9 +216,10 @@ export const Calendar = ({
     setNextMonth,
     focusedDay,
     setFocusedDay,
+    focusableDay,
+    setFocusableDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({
@@ -243,18 +250,44 @@ export const Calendar = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      if (
+        [
+          'ArrowUp',
+          'ArrowDown',
+          'ArrowLeft',
+          'ArrowRight',
+          'Home',
+          'End',
+          'PageUp',
+          'PageDown',
+        ].includes(event.key)
+      ) {
         event.preventDefault();
+
+        const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, event.key);
+
+        if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+        setFocusableDay(newFocusedDay);
+
+        return;
       }
 
-      const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, event.key);
+      if (event.key === 'Tab') {
+        setFocusedDay(undefined);
+        setFocusableDay(focusedDay);
 
-      if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
-        setViewDate(newFocusedDay);
+        return;
       }
-      setFocusedDay(newFocusedDay);
+
+      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+        event.preventDefault();
+        event.target.click?.();
+      }
     },
-    [focusedDay, setFocusedDay, setViewDate, timeZonedValue, viewDate],
+    [focusedDay, setFocusedDay, setFocusableDay, setViewDate, timeZonedValue, viewDate],
   );
 
   const onDayChange = React.useCallback(
@@ -264,17 +297,66 @@ export const Calendar = ({
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
       updateValue(actualDate);
+      setFocusedDay(actualDate);
+      setFocusableDay(actualDate);
     },
-    [timeZonedValue, updateValue, maxDateTime, minDateTime],
+    [timeZonedValue, updateValue, maxDateTime, minDateTime, setFocusedDay, setFocusableDay],
   );
 
+  const onDayFocus = React.useCallback(
+    (date: Date) => {
+      if (focusedDay && isSameDay(focusedDay, date)) {
+        return;
+      }
+
+      setFocusedDay(date);
+    },
+    [focusedDay, setFocusedDay],
+  );
+
+  // activeDay это день в календаре соответствующий значению в инпуте
   const isDayActive = React.useCallback(
     (day: Date) => Boolean(timeZonedValue && isSameDay(day, timeZonedValue)),
     [timeZonedValue],
   );
 
+  const isFocusableDayInViewDateMonth = focusableDay && isSameMonth(focusableDay, viewDate);
+  const isInputValueDateInViewDateMonth = timeZonedValue && isSameMonth(timeZonedValue, viewDate);
+  /**
+   * Функция позволяет проверить является ли день в календаре днём на который
+   * можно попасть с помощью Tab.
+   * Единственный день в таблице календаря у которого есть tabIndex="0"
+   * Чтобы на него можно было попасть из заголовка календаря.
+   */
+  const isDayFocusable = React.useCallback(
+    (day: Date) => {
+      // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
+      if (isFocusableDayInViewDateMonth) {
+        return isSameDay(focusableDay, day);
+      }
+
+      // при открытии календаря focusableDay не определён,
+      // поэтому tabIndex="0" будет у дня, соответствующего дню в инпуте
+      if (isInputValueDateInViewDateMonth) {
+        return isDayActive(day);
+      }
+
+      // при переключении месяца любая навигация с помощью Tab начинается
+      // с первого дня месяца.
+      return isSameDay(startOfMonth(viewDate), day);
+    },
+    [
+      focusableDay,
+      viewDate,
+      isDayActive,
+      isFocusableDayInViewDateMonth,
+      isInputValueDateInViewDateMonth,
+    ],
+  );
+
   return (
     <RootComponent
+      aria-label={ariaLabel}
       {...props}
       baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
       getRootRef={getRootRef}
@@ -305,16 +387,15 @@ export const Calendar = ({
         viewDate={externalViewDate || viewDate}
         value={timeZonedValue}
         weekStartsOn={weekStartsOn}
-        isDayFocused={isDayFocused}
-        tabIndex={0}
-        aria-label={changeDayLabel}
         onKeyDown={handleKeyDown}
         onDayChange={onDayChange}
         isDayActive={isDayActive}
+        onDayFocus={onDayFocus}
+        isDayFocused={isDayFocused}
+        isDayFocusable={isDayFocusable}
         isDaySelectionStart={isFirstDay}
         isDaySelectionEnd={isLastDay}
         isDayDisabled={isDayDisabled}
-        onBlur={resetSelectedDay}
         showNeighboringMonth={showNeighboringMonth}
         size={size}
         dayProps={dayProps}

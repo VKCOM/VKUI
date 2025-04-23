@@ -8,21 +8,23 @@ import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20, 0, 0);
 
-const testIds: DateInputPropsTestsProps = {
+const testIds: Required<DateInputPropsTestsProps> = {
   dayFieldTestId: 'day-picker',
   monthFieldTestId: 'month-picker',
   yearFieldTestId: 'year-picker',
   hourFieldTestId: 'hour-picker',
   minuteFieldTestId: 'minute-picker',
+  clearButtonTestId: 'clear-button',
+  showCalendarButtonTestId: 'show-calendar-button',
 };
 
 const getInputsLike = () => {
   return [
-    screen.queryByTestId('day-picker'),
-    screen.queryByTestId('month-picker'),
-    screen.queryByTestId('year-picker'),
-    screen.queryByTestId('hour-picker'),
-    screen.queryByTestId('minute-picker'),
+    screen.queryByTestId(testIds.dayFieldTestId),
+    screen.queryByTestId(testIds.monthFieldTestId),
+    screen.queryByTestId(testIds.yearFieldTestId),
+    screen.queryByTestId(testIds.hourFieldTestId),
+    screen.queryByTestId(testIds.minuteFieldTestId),
   ].filter(Boolean) as HTMLElement[];
 };
 
@@ -153,7 +155,7 @@ describe('DateInput', () => {
   it('should call onChange callback when change data by calendar', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onChange={onChange}
@@ -178,18 +180,18 @@ describe('DateInput', () => {
     const resultDate = new Date(date);
     resultDate.setDate(date.getDate() - 1);
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+    expect(screen.queryByLabelText('Календарь')).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(resultDate)));
 
     expect(onChange).toHaveBeenCalledWith(resultDate);
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
+    expect(screen.queryByLabelText('Календарь')).toBeFalsy();
   });
 
   it('should call onCloseCalendar calendar was closed', async () => {
     jest.useFakeTimers();
     const onCalendarOpenChanged = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onCalendarOpenChanged={onCalendarOpenChanged}
@@ -207,13 +209,13 @@ describe('DateInput', () => {
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
     expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+    expect(screen.queryByLabelText('Календарь')).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(subDays(date, 1))));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
+    expect(screen.queryByLabelText('Календарь')).toBeFalsy();
   });
 
   it('should call onApply when clicking Done button', async () => {
@@ -335,5 +337,15 @@ describe('DateInput', () => {
     await userEvent.click(dates);
 
     expect(screen.queryByText('Вчера')).toBeFalsy();
+  });
+
+  it('should call onChange with undefined when click on clear button', async () => {
+    const onChange = jest.fn();
+
+    render(<DateInput value={new Date(2023, 5, 30)} onChange={onChange} {...testIds} />);
+
+    fireEvent.click(screen.getByTestId(testIds.clearButtonTestId));
+
+    expect(onChange).toHaveBeenCalledWith(undefined);
   });
 });
