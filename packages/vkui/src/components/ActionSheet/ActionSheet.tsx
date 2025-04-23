@@ -30,7 +30,7 @@ export interface ActionSheetProps
       SharedDropdownProps,
       'toggleRef' | 'popupOffsetDistance' | 'placement' | 'allowClickPropagation'
     >,
-    Omit<UseFocusTrapProps, 'onClose' | 'mount' | 'disabled'>,
+    Omit<UseFocusTrapProps, 'onClose' | 'mount' | 'disabled' | 'captureEscapeKeyboardEvent'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**
    * Заголовок всплыващего окна.

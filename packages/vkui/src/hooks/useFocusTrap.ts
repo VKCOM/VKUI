@@ -111,6 +111,7 @@ export type UseFocusTrapProps = {
    * до того как это событие будет обработано на EventTarget
    * Удобно установить в false, если требуется запретить "всплытие" события до FocusTrap
    *
+   * @default true
    */
   captureEscapeKeyboardEvent?: boolean;
 };
