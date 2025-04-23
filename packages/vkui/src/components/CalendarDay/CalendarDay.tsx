@@ -2,6 +2,9 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { mergeCalls } from '../../lib/mergeCalls';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable } from '../Tappable/Tappable';
@@ -115,6 +118,7 @@ export const CalendarDay = React.memo(
     onEnter,
     onLeave,
     onFocus,
+    onBlur,
     hinted,
     hintedSelectionStart,
     hintedSelectionEnd,
@@ -133,6 +137,14 @@ export const CalendarDay = React.memo(
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
     const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
     const handleFocus = React.useCallback(() => onFocus?.(day), [day, onFocus]);
+
+    const focusVisibleMode = active ? 'outside' : 'inside';
+    const { focusVisible, ...focusEvents } = useFocusVisible();
+    const focusVisibleClassNames = useFocusVisibleClassName({
+      focusVisible,
+      mode: focusVisibleMode,
+    });
+    const focusHandlers = mergeCalls(focusEvents, { onFocus: handleFocus, onBlur });
 
     const label = new Intl.DateTimeFormat(locale, {
       weekday: 'long',
@@ -174,6 +186,7 @@ export const CalendarDay = React.memo(
           styles.host,
           size === 's' && styles.sizeS,
           direction === 'rtl' && styles.rtl,
+          focusVisibleClassNames,
         )}
         role={role}
         aria-colindex={colIndex}
@@ -181,14 +194,13 @@ export const CalendarDay = React.memo(
         activeMode={styles.hostActivated}
         hasActive={false}
         onClick={onClick}
-        onFocus={handleFocus}
         disabled={disabled}
         getRootRef={ref}
-        focusVisibleMode={active ? 'outside' : 'inside'}
         onPointerEnter={handleEnter}
         onPointerLeave={handleLeave}
         data-testid={typeof testId === 'string' ? testId : testId?.(day)}
         {...restProps}
+        {...focusHandlers}
       >
         <div
           className={classNames(
