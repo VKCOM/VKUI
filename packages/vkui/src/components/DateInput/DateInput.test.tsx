@@ -578,5 +578,63 @@ describe('DateInput', () => {
         expect(document.activeElement).toBe(inputPart);
       }
     });
+
+    it('does not close calendar when Escape is pressed to close inner dropdown (month, year, hour, minute)', async () => {
+      jest.useFakeTimers();
+      const onCalendarOpenChangedStub = jest.fn();
+      render(
+        <DateInput
+          value={new Date()}
+          accessible
+          enableTime
+          onCalendarOpenChanged={onCalendarOpenChangedStub}
+          calendarTestsProps={{
+            monthDropdownTestId: 'month-dropdown',
+            yearDropdownTestId: 'year-dropdown',
+            hoursTestId: 'hours-dropdown',
+            minutesTestId: 'minutes-dropdown',
+          }}
+        />,
+      );
+
+      // проверяем, что календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+
+      const calendarIcon = screen.getByText('Показать календарь');
+      await act(() => userEvent.click(calendarIcon));
+
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+
+      const calendarSelectsIds = [
+        'month-dropdown',
+        'year-dropdown',
+        'hours-dropdown',
+        'minutes-dropdown',
+      ];
+
+      for (const selectTestId of calendarSelectsIds) {
+        // dropdown закрыт
+        expect(screen.queryByRole('listbox')).toBeFalsy();
+        // открываем дропдаун одного из селектов
+        await act(() => userEvent.click(screen.getByTestId(selectTestId)));
+        // dropdown открыт
+        expect(screen.queryByRole('listbox')).toBeTruthy();
+
+        // закрываем дропдаун с помощью Escape
+        await act(() => userEvent.keyboard('{Escape}'));
+        expect(screen.queryByRole('listbox')).toBeFalsy();
+
+        // календарь всё ещё должен быть открыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+      }
+
+      // закрываем календарь с помощью Escape
+      await act(() => userEvent.keyboard('{Escape}'));
+      // календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(2);
+    });
   });
 });
