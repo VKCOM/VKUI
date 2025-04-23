@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { getMergedSameEventsByProps } from '../../helpers/getMergedSameEventsByProps';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -243,31 +242,31 @@ export const CalendarDays = ({
               const overridedProps = overrideDayProps?.(day);
 
               const ownProps: CalendarDayProps = {
-                role: 'gridcell',
+                'role': 'gridcell',
                 'aria-current': isToday ? 'date' : undefined,
                 'aria-selected': isActive ? 'true' : 'false',
                 'aria-colindex': i + 1,
-                tabIndex: isDayFocusable?.(day) ? 0 : -1,
+                'tabIndex': isDayFocusable?.(day) ? 0 : -1,
                 day,
-                today: isSameDay(day, now),
-                active: isDayActive(day),
-                onChange: handleDayChange,
-                hidden: isHidden,
-                disabled: isDayDisabled(day),
-                selectionStart: isDaySelectionStart(day, i),
-                selectionEnd: isDaySelectionEnd(day, i),
-                hintedSelectionStart: isHintedDaySelectionStart?.(day, i),
-                hintedSelectionEnd: isHintedDaySelectionEnd?.(day, i),
-                selected: isDaySelected?.(day),
-                focused: isFocused,
-                onEnter: onDayEnter,
-                onLeave: onDayLeave,
-                onFocus: onDayFocus,
-                hinted: isDayHinted?.(day),
+                'today': isSameDay(day, now),
+                'active': isDayActive(day),
+                'onChange': handleDayChange,
+                'hidden': isHidden,
+                'disabled': isDayDisabled(day),
+                'selectionStart': isDaySelectionStart(day, i),
+                'selectionEnd': isDaySelectionEnd(day, i),
+                'hintedSelectionStart': isHintedDaySelectionStart?.(day, i),
+                'hintedSelectionEnd': isHintedDaySelectionEnd?.(day, i),
+                'selected': isDaySelected?.(day),
+                'focused': isFocused,
+                'onEnter': onDayEnter,
+                'onLeave': onDayLeave,
+                'onFocus': onDayFocus,
+                'hinted': isDayHinted?.(day),
                 sameMonth,
                 size,
-                renderDayContent: renderDayContent,
-                testId: dayTestId,
+                'renderDayContent': renderDayContent,
+                'testId': dayTestId,
                 ...dayProps,
               };
 
@@ -280,15 +279,14 @@ export const CalendarDays = ({
                 ...ownProps,
                 ...overridedProps,
                 ...mergedEventsByInjectProps,
-                className: classNames(dayProps?.className, overridedProps?.className, styles.rowDay),
+                className: classNames(
+                  dayProps?.className,
+                  overridedProps?.className,
+                  styles.rowDay,
+                ),
               };
 
-              return (
-                <CalendarDay
-                  key={day.toISOString()}
-                  {...props}
-                />
-              );
+              return <CalendarDay key={day.toISOString()} {...props} />;
             })}
           </div>
         ))}
