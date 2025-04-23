@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable } from '../Tappable/Tappable';
@@ -143,7 +142,6 @@ export const CalendarDay = React.memo(
 
     React.useEffect(() => {
       if (focused && ref.current) {
-        ref.current.dispatchEvent(new Event(ENABLE_KEYBOARD_INPUT_EVENT_NAME, { bubbles: true }));
         ref.current.focus();
       }
     }, [focused]);
