@@ -47,8 +47,8 @@ export interface AlertActionInterface
 }
 
 export interface AlertProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>,
-    Pick<UseFocusTrapProps, 'restoreFocus'>,
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title' | 'autoFocus'>,
+    Pick<UseFocusTrapProps, 'restoreFocus' | 'autoFocus'>,
     Pick<AppRootPortalProps, 'usePortal'>,
     HasRootRef<HTMLDivElement> {
   /**
@@ -86,8 +86,10 @@ export interface AlertProps
   /**
    * Расположение кнопки закрытия (внутри и вне `popout'a`)
    * Доступно только в `compact`-режиме, не отображается на `iOS`.
+   *
+   * ⚠️ ВНИМАНИЕ: использование `none` скрывает крестик, это негативно сказывается на пользовательском опыте.
    */
-  dismissButtonMode?: 'inside' | 'outside';
+  dismissButtonMode?: 'inside' | 'outside' | 'none';
   /**
    * Передает атрибут `data-testid` для кнопки закрытия.
    */

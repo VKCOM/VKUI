@@ -15,6 +15,7 @@ import {
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
+import { isHTMLElement } from '../../lib/dom';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -58,11 +59,11 @@ export interface CalendarRangeProps
   /**
    * Текущий выбранный промежуток.
    */
-  value?: DateRangeType;
+  value?: DateRangeType | null;
   /**
    * Начальный промежуток при монтировании.
    */
-  defaultValue?: DateRangeType;
+  defaultValue?: DateRangeType | null;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
@@ -88,7 +89,7 @@ export interface CalendarRangeProps
   /**
    * Обработчик изменения выбранного промежутка.
    */
-  onChange?: (value: DateRangeType | undefined) => void;
+  onChange?: (value: DateRangeType | undefined) => void; // TODO [>=8]: поменять тип на `(value?: DateRangeType | null) => void`
   /**
    * Функция для проверки запрета выбора даты.
    */
@@ -99,7 +100,7 @@ export interface CalendarRangeProps
   onClose?: () => void;
 }
 
-const getIsDaySelected = (day: Date, value?: DateRangeType) => {
+const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
   if (!value?.[0] || !value[1]) {
     return false;
   }
@@ -117,7 +118,6 @@ export const CalendarRange = ({
   disablePast,
   disableFuture,
   shouldDisableDate,
-  onClose,
   weekStartsOn = 1,
   disablePickers,
   prevMonthLabel = 'Предыдущий месяц',
@@ -135,10 +135,15 @@ export const CalendarRange = ({
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
+  const _onChange = React.useCallback(
+    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
+    [onChange],
+  );
+
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
     value: valueProp,
     defaultValue,
-    onChange,
+    onChange: _onChange,
   });
 
   const {
@@ -160,20 +165,37 @@ export const CalendarRange = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-        event.preventDefault();
-      }
-
-      const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
-
       if (
-        newFocusedDay &&
-        !isSameMonth(newFocusedDay, viewDate) &&
-        !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
+        [
+          'ArrowUp',
+          'ArrowDown',
+          'ArrowLeft',
+          'ArrowRight',
+          'Home',
+          'End',
+          'PageUp',
+          'PageDown',
+        ].includes(event.key)
       ) {
-        setViewDate(newFocusedDay);
+        event.preventDefault();
+
+        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
+
+        if (
+          newFocusedDay &&
+          !isSameMonth(newFocusedDay, viewDate) &&
+          !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
+        ) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+        return;
       }
-      setFocusedDay(newFocusedDay);
+
+      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+        event.preventDefault();
+        event.target.click?.();
+      }
     },
     [focusedDay, setFocusedDay, setViewDate, value, viewDate],
   );
