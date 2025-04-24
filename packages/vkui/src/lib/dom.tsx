@@ -332,3 +332,11 @@ export const hasSelectionWithRangeType = (node: unknown) => {
   const selection = getWindow(node).getSelection();
   return selection ? selection.type === 'Range' : false;
 };
+
+export function isSVGElement(value: unknown): value is SVGElement {
+  if (!canUseDOM) {
+    return false;
+  }
+
+  return value instanceof SVGElement || value instanceof getWindow(value).SVGElement;
+}

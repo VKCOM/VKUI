@@ -89,7 +89,7 @@ https://github.com/VKCOM/VKUI/pull/3641
   inline-size: 24px;
   block-size: 24px;
   margin-block: -12px 0;
-  margin-inline: 0 -12px;
+  margin-inline: -12px 0;
   content: '';
   background: var(--vkui--color_transparent--active);
   border-radius: 50%;
