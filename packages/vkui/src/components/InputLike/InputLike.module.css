@@ -28,6 +28,6 @@
   letter-spacing: 1px !important;
 }
 
-.full + .divider {
+.host + .divider {
   color: var(--vkui--color_text_primary);
 }

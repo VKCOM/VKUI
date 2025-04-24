@@ -5,6 +5,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
 import { Keys, pressedKey } from '../../lib/accessibility';
+import { callMultiple } from '../../lib/callMultiple';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
@@ -186,6 +187,20 @@ export const CalendarTime = ({
     }
   };
 
+  const stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
+    (event: React.KeyboardEvent, isOpen: boolean) => {
+      if (isOpen && event.key === 'Escape') {
+        event.stopPropagation();
+      }
+    },
+    [],
+  );
+
+  const onSelectInputKeyDown = callMultiple(
+    onPickerKeyDown,
+    stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen,
+  );
+
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
     return (
@@ -215,7 +230,7 @@ export const CalendarTime = ({
             searchable
             filterFn={selectFilterFn}
             onInputChange={onHoursInputChange}
-            onInputKeyDown={onPickerKeyDown}
+            onInputKeyDown={onSelectInputKeyDown}
             getSelectInputRef={hoursInputRef}
             aria-label={changeHoursLabel}
             data-testid={hoursTestId}
@@ -234,7 +249,7 @@ export const CalendarTime = ({
             filterFn={selectFilterFn}
             onInputChange={onMinutesInputChange}
             getSelectInputRef={minutesInputRef}
-            onInputKeyDown={onPickerKeyDown}
+            onInputKeyDown={onSelectInputKeyDown}
             aria-label={changeMinutesLabel}
             data-testid={minutesTestId}
           />
