@@ -212,8 +212,6 @@ export const Calendar = ({
     setNextMonth,
     focusedDay,
     setFocusedDay,
-    focusableDay,
-    setFocusableDay,
     isDayFocused,
     isDayDisabled,
     isMonthDisabled,
@@ -229,6 +227,8 @@ export const Calendar = ({
     minDateTime,
     maxDateTime,
   });
+  // соотвествует дню, на котором можно сфокусироваться с помощью Tab
+  const [focusableDay, setFocusableDay] = React.useState<Date>();
 
   useIsomorphicLayoutEffect(() => {
     if (timeZonedValue) {
@@ -293,10 +293,8 @@ export const Calendar = ({
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
       updateValue(actualDate);
-      setFocusedDay(actualDate);
-      setFocusableDay(actualDate);
     },
-    [timeZonedValue, updateValue, maxDateTime, minDateTime, setFocusedDay, setFocusableDay],
+    [timeZonedValue, updateValue, maxDateTime, minDateTime],
   );
 
   const onDayFocus = React.useCallback(

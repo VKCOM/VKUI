@@ -10,6 +10,7 @@ import {
   isSameMonth,
   isWithinInterval,
   startOfDay,
+  startOfMonth,
   subMonths,
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
@@ -80,6 +81,11 @@ export interface CalendarRangeProps
   disablePickers?: boolean;
   /**
    * `aria-label` для изменения дня.
+   *
+   * @deprecated Будет удалeно в **VKUI v8**.
+   * Использовалось для задания aria-label для контейнера дней в календаре.
+   * Теперь этот контейнер является таблицей (с помощью role="grid") и
+   * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
   changeDayLabel?: string;
   /**
@@ -124,7 +130,6 @@ export const CalendarRange = ({
   nextMonthLabel = 'Следующий месяц',
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
-  changeDayLabel = 'Изменить день',
   prevMonthIcon,
   nextMonthIcon,
   listenDayChangesForUpdate,
@@ -155,10 +160,12 @@ export const CalendarRange = ({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
+  // соотвествует дню, на котором можно сфокусироваться с помощью Tab
+  const [focusableDayOnFirstCalendar, setFocusableDayOnFirstCalendar] = React.useState<Date>();
+  const [focusableDayOnSecondCalendar, setFocusableDayOnSecondCalendar] = React.useState<Date>();
 
   const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
@@ -179,16 +186,25 @@ export const CalendarRange = ({
       ) {
         event.preventDefault();
 
-        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
+        const newFocusedDay = navigateDate(focusedDay ?? value?.[0], event.key);
 
         if (
           newFocusedDay &&
           !isSameMonth(newFocusedDay, viewDate) &&
-          !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
+          !isSameMonth(newFocusedDay, secondViewDate)
         ) {
           setViewDate(newFocusedDay);
         }
         setFocusedDay(newFocusedDay);
+        setFocusableDayOnFirstCalendar(newFocusedDay);
+
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        setFocusedDay(undefined);
+        setFocusableDayOnFirstCalendar(focusedDay);
+
         return;
       }
 
@@ -197,7 +213,69 @@ export const CalendarRange = ({
         event.target.click?.();
       }
     },
-    [focusedDay, setFocusedDay, setViewDate, value, viewDate],
+    [
+      focusedDay,
+      setFocusedDay,
+      setViewDate,
+      secondViewDate,
+      value,
+      viewDate,
+      setFocusableDayOnFirstCalendar,
+    ],
+  );
+
+  const handleSecondCalendarKeyDown = React.useCallback(
+    (event: React.KeyboardEvent) => {
+      if (
+        [
+          'ArrowUp',
+          'ArrowDown',
+          'ArrowLeft',
+          'ArrowRight',
+          'Home',
+          'End',
+          'PageUp',
+          'PageDown',
+        ].includes(event.key)
+      ) {
+        event.preventDefault();
+
+        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
+
+        if (
+          newFocusedDay &&
+          !isSameMonth(newFocusedDay, viewDate) &&
+          !isSameMonth(newFocusedDay, secondViewDate)
+        ) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+        setFocusableDayOnSecondCalendar(newFocusedDay);
+
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        setFocusedDay(undefined);
+        setFocusableDayOnSecondCalendar(focusedDay);
+
+        return;
+      }
+
+      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+        event.preventDefault();
+        event.target.click?.();
+      }
+    },
+    [
+      focusedDay,
+      setFocusedDay,
+      setViewDate,
+      value,
+      secondViewDate,
+      viewDate,
+      setFocusableDayOnSecondCalendar,
+    ],
   );
 
   const getNewValue = React.useCallback(
@@ -278,6 +356,98 @@ export const CalendarRange = ({
     [setViewDate],
   );
 
+  const isFocusableDayInViewDateMonth =
+    (focusableDayOnFirstCalendar && isSameMonth(focusableDayOnFirstCalendar, viewDate)) ||
+    (focusableDayOnSecondCalendar && isSameMonth(focusableDayOnSecondCalendar, viewDate));
+  const isSecondFocusableDayInViewDateMonth =
+    (focusableDayOnSecondCalendar && isSameMonth(focusableDayOnSecondCalendar, secondViewDate)) ||
+    (focusableDayOnFirstCalendar && isSameMonth(focusableDayOnFirstCalendar, secondViewDate));
+  const isValueInFirstViewDate =
+    value &&
+    ((value[0] && isSameMonth(value[0], viewDate)) ||
+      (value[1] && isSameMonth(value[1], viewDate)));
+  const isValueInSecondViewDate =
+    value &&
+    ((value[0] && isSameMonth(value[0], secondViewDate)) ||
+      (value[1] && isSameMonth(value[1], secondViewDate)));
+
+  /**
+   * Функция позволяет проверить является ли день в календаре днём на который
+   * можно попасть с помощью Tab.
+   * Единственный день в таблице календаря у которого есть tabIndex="0"
+   * Чтобы на него можно было попасть из заголовка календаря.
+   */
+  const isDayFocusableInFirstCalendar = React.useCallback(
+    (day: Date) => {
+      // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
+      if (isFocusableDayInViewDateMonth) {
+        return Boolean(
+          (focusableDayOnFirstCalendar && isSameDay(focusableDayOnFirstCalendar, day)) ||
+            (focusableDayOnSecondCalendar && isSameDay(focusableDayOnSecondCalendar, day)),
+        );
+      }
+
+      // при открытии календаря focusableDay не определён,
+      // поэтому tabIndex="0" будет у дня, соответствующего дню в инпуте
+      if (isValueInFirstViewDate) {
+        return isDayActive(day);
+      }
+
+      // при переключении месяца любая навигация с помощью Tab начинается
+      // с первого дня месяца.
+      return isSameDay(startOfMonth(viewDate), day);
+    },
+    [
+      focusableDayOnFirstCalendar,
+      focusableDayOnSecondCalendar,
+      isValueInFirstViewDate,
+      viewDate,
+      isDayActive,
+      isFocusableDayInViewDateMonth,
+    ],
+  );
+
+  const isDayFocusableInSecondCalendar = React.useCallback(
+    (day: Date) => {
+      // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
+      if (isSecondFocusableDayInViewDateMonth) {
+        return Boolean(
+          (focusableDayOnSecondCalendar && isSameDay(focusableDayOnSecondCalendar, day)) ||
+            (focusableDayOnFirstCalendar && isSameDay(focusableDayOnFirstCalendar, day)),
+        );
+      }
+
+      // при открытии календаря focusableDay не определён,
+      // поэтому tabIndex="0" будет у дня, соответствующего дню в инпуте
+      if (isValueInSecondViewDate) {
+        return isDayActive(day);
+      }
+
+      // при переключении месяца любая навигация с помощью Tab начинается
+      // с первого дня месяца.
+      return isSameDay(startOfMonth(secondViewDate), day);
+    },
+    [
+      focusableDayOnFirstCalendar,
+      focusableDayOnSecondCalendar,
+      secondViewDate,
+      isDayActive,
+      isValueInSecondViewDate,
+      isSecondFocusableDayInViewDateMonth,
+    ],
+  );
+
+  const onDayFocus = React.useCallback(
+    (date: Date) => {
+      if (focusedDay && isSameDay(focusedDay, date)) {
+        return;
+      }
+
+      setFocusedDay(date);
+    },
+    [focusedDay, setFocusedDay],
+  );
+
   return (
     <RootComponent {...props} baseClassName={styles.host} getRootRef={getRootRef}>
       <div className={styles.inner}>
@@ -302,7 +472,9 @@ export const CalendarRange = ({
           value={value}
           weekStartsOn={weekStartsOn}
           onKeyDown={handleKeyDown}
+          onDayFocus={onDayFocus}
           isDayFocused={isDayFocused}
+          isDayFocusable={isDayFocusableInFirstCalendar}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -316,7 +488,6 @@ export const CalendarRange = ({
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
           renderDayContent={renderDayContent}
-          aria-label={changeDayLabel}
           dayTestId={dayTestId}
         />
       </div>
@@ -341,9 +512,10 @@ export const CalendarRange = ({
           viewDate={secondViewDate}
           value={value}
           weekStartsOn={weekStartsOn}
-          aria-label={changeDayLabel}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleSecondCalendarKeyDown}
+          onDayFocus={onDayFocus}
           isDayFocused={isDayFocused}
+          isDayFocusable={isDayFocusableInSecondCalendar}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -357,8 +529,6 @@ export const CalendarRange = ({
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
           renderDayContent={renderDayContent}
-          tabIndex={0}
-          onBlur={resetSelectedDay}
           dayTestId={dayTestId}
         />
       </div>
