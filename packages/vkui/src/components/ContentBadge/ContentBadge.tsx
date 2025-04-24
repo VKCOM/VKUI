@@ -96,7 +96,22 @@ export interface ContentBadgeProps
     | 'accent-green'
     | 'accent-red'
     | 'overlay'
-    | `var(--${string})`;
+    | `var(--vkui--color_accent_${
+        | 'blue'
+        | 'gray'
+        | 'red'
+        | 'orange_fire'
+        | 'orange'
+        | 'orange_peach'
+        | 'lime'
+        | 'green'
+        | 'cyan'
+        | 'azure'
+        | 'purple'
+        | 'violet'
+        | 'raspberry_pink'
+        | 'pink'
+        | 'secondary'})`;
   /**
    * Включает приближение значения закругления к форме круга.
    *
