@@ -15,6 +15,7 @@ import {
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
+import { isHTMLElement } from '../../lib/dom';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -117,7 +118,6 @@ export const CalendarRange = ({
   disablePast,
   disableFuture,
   shouldDisableDate,
-  onClose,
   weekStartsOn = 1,
   disablePickers,
   prevMonthLabel = 'Предыдущий месяц',
@@ -165,20 +165,37 @@ export const CalendarRange = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-        event.preventDefault();
-      }
-
-      const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
-
       if (
-        newFocusedDay &&
-        !isSameMonth(newFocusedDay, viewDate) &&
-        !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
+        [
+          'ArrowUp',
+          'ArrowDown',
+          'ArrowLeft',
+          'ArrowRight',
+          'Home',
+          'End',
+          'PageUp',
+          'PageDown',
+        ].includes(event.key)
       ) {
-        setViewDate(newFocusedDay);
+        event.preventDefault();
+
+        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
+
+        if (
+          newFocusedDay &&
+          !isSameMonth(newFocusedDay, viewDate) &&
+          !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
+        ) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+        return;
       }
-      setFocusedDay(newFocusedDay);
+
+      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+        event.preventDefault();
+        event.target.click?.();
+      }
     },
     [focusedDay, setFocusedDay, setViewDate, value, viewDate],
   );

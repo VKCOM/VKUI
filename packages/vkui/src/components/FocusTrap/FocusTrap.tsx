@@ -24,6 +24,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   timeout = 0,
   getRootRef,
   children,
+  captureEscapeKeyboardEvent = true,
   ...restProps
 }: FocusTrapProps<T>): React.ReactNode => {
   const ref = useExternRef<T>(getRootRef);
@@ -35,6 +36,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
     mount,
     timeout,
     onClose,
+    captureEscapeKeyboardEvent,
   });
 
   return (

@@ -1,5 +1,6 @@
 import { createElement } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { Icon12Add } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
@@ -138,6 +139,23 @@ describe('Touch', () => {
       if (input === 'touch') {
         beforeEach(() => (window['ontouchstart'] = null));
       }
+
+      it('check svg', () => {
+        const handlers = makeHandlers();
+        render(
+          <Touch {...handlers}>
+            <Icon12Add data-testid="__t__" />
+          </Touch>,
+        );
+        fireGesture(screen.getByTestId('__t__'), [
+          [20, 20],
+          [20, 26],
+          [20, 30],
+        ]);
+        expect(handlers.onStart).toHaveBeenCalledTimes(1);
+        expect(handlers.onMove).toHaveBeenCalledTimes(2);
+        expect(handlers.onEnd).toHaveBeenCalledTimes(1);
+      });
 
       describe('callback gesture params', () => {
         const emptyGesture = (x: number, y: number) =>

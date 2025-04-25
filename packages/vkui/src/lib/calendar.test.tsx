@@ -1,4 +1,4 @@
-import { clamp, getYears, isDayMinMaxRestricted, setTimeEqual } from './calendar';
+import { clamp, getYears, isDayMinMaxRestricted, navigateDate, setTimeEqual } from './calendar';
 
 describe('calendar utils', () => {
   describe('setTimeEqual', () => {
@@ -138,6 +138,27 @@ describe('calendar utils', () => {
       ({ targetDate, min, max, expected }) => {
         const result = clamp(targetDate, { max, min });
         expect(result.toISOString()).toBe(expected);
+      },
+    );
+  });
+
+  describe(navigateDate, () => {
+    const targetDate = new Date('2023-09-15T10:35:00.000Z');
+    test.each`
+      targetDate    | key             | expectedDate
+      ${targetDate} | ${'ArrowRight'} | ${'2023-09-16T10:35:00.000Z'}
+      ${targetDate} | ${'ArrowLeft'}  | ${'2023-09-14T10:35:00.000Z'}
+      ${targetDate} | ${'ArrowUp'}    | ${'2023-09-08T10:35:00.000Z'}
+      ${targetDate} | ${'ArrowDown'}  | ${'2023-09-22T10:35:00.000Z'}
+      ${targetDate} | ${'Home'}       | ${'2023-09-11T00:00:00.000Z'}
+      ${targetDate} | ${'End'}        | ${'2023-09-17T23:59:59.999Z'}
+      ${targetDate} | ${'PageUp'}     | ${'2023-08-15T10:35:00.000Z'}
+      ${targetDate} | ${'PageDown'}   | ${'2023-10-15T10:35:00.000Z'}
+    `(
+      'returns $expectedDate when key $key pressed on date $targetDate',
+      ({ targetDate, key, expectedDate }) => {
+        const result = navigateDate(targetDate, key);
+        expect(result.toISOString()).toBe(expectedDate);
       },
     );
   });

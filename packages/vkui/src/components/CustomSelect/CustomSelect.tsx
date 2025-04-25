@@ -294,7 +294,7 @@ export interface SelectProps<
   /**
    * Обработчик события `keyDown` в поле ввода.
    */
-  onInputKeyDown?: (e: React.KeyboardEvent) => void;
+  onInputKeyDown?: (e: React.KeyboardEvent, isOpen: boolean) => void;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -747,6 +747,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ],
   );
 
+  const handleInputKeydown = React.useCallback(
+    (event: React.KeyboardEvent) => {
+      onInputKeyDown?.(event, opened);
+    },
+    [opened, onInputKeyDown],
+  );
+  const _onInputKeyDown = callMultiple(handleKeyDownSelect, handleInputKeydown);
+
   const handleOptionClick = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       const index = Array.prototype.indexOf.call(
@@ -988,7 +996,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         fetching={fetching}
         value={inputValue}
         onKeyUp={handleKeyUp}
-        onKeyDown={callMultiple(handleKeyDownSelect, onInputKeyDown)}
+        onKeyDown={_onInputKeyDown}
         onChange={onInputChange}
         onClick={onClick}
         before={before}
