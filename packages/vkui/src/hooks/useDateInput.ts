@@ -214,6 +214,7 @@ export function useDateInput<T extends HTMLElement, D>({
       } else if (e.key === 'Delete' || e.key === 'Del') {
         _value[focusedElement] = '';
       } else if (e.key === ' ') {
+        e.preventDefault();
         _onCalendarOpen();
         return;
       } else {
