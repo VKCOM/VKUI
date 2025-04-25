@@ -371,7 +371,7 @@ describe('DateInput', () => {
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
 
-  it.only('closes calendar on click outside (focus should not return to the input)', async () => {
+  it('closes calendar on click outside (focus should not return to the input)', async () => {
     jest.useFakeTimers();
     render(
       <div>
@@ -531,6 +531,36 @@ describe('DateInput', () => {
       await act(() => userEvent.keyboard('1'));
       normalizedDate = convertInputsToNumbers(inputLikes);
       expect(normalizedDate).toEqual([1, 6, 2001]);
+    });
+
+    it('removes digit by digit on backspace', async () => {
+      jest.useFakeTimers();
+      render(
+        <DateInput
+          changeMonthLabel=""
+          changeYearLabel=""
+          changeDayLabel=""
+          changeHoursLabel=""
+          changeMinutesLabel=""
+          value={date}
+          onChange={jest.fn()}
+          {...testIds}
+        />,
+      );
+
+      const inputLikes = getInputsLike();
+      const [dayPicker] = inputLikes;
+
+      await act(() => userEvent.click(dayPicker));
+      expect(document.activeElement).toBe(dayPicker);
+
+      let normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{backspace}'));
+      await act(() => userEvent.keyboard('{backspace}'));
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([0, 7, 2024]);
     });
   });
 
