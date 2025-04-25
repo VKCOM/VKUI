@@ -14,7 +14,8 @@ import {
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import { isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
 import { isHTMLElement } from '../../lib/dom';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
@@ -165,21 +166,12 @@ export const CalendarRange = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (
-        [
-          'ArrowUp',
-          'ArrowDown',
-          'ArrowLeft',
-          'ArrowRight',
-          'Home',
-          'End',
-          'PageUp',
-          'PageDown',
-        ].includes(event.key)
-      ) {
+      const key = pressedKey(event);
+
+      if (key && NAVIGATION_KEYS.includes(key)) {
         event.preventDefault();
 
-        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
+        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], key);
 
         if (
           newFocusedDay &&
@@ -192,7 +184,7 @@ export const CalendarRange = ({
         return;
       }
 
-      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+      if ((key === Keys.ENTER || key === Keys.SPACE) && isHTMLElement(event.target)) {
         event.preventDefault();
         event.target.click?.();
       }

@@ -48,6 +48,7 @@ export function useDateInput<T extends HTMLElement, D>({
   clear: () => void;
   handleFieldEnter: () => void;
   removeFocusFromField: () => void;
+  handleRestoreFocus: () => boolean;
 } {
   const { document } = useDOM();
   const { value: open, setTrue: openCalendar, setFalse: closeCalendar } = useBooleanState(false);
@@ -55,7 +56,14 @@ export function useDateInput<T extends HTMLElement, D>({
   const calendarRef = React.useRef<HTMLDivElement | null>(null);
   const [internalValue, setInternalValue] = React.useState<string[]>([]);
   const [focusedElement, setFocusedElement] = React.useState<number | null>(null);
+  const isClickedOutsideRef = React.useRef(false);
   const { window } = useDOM();
+
+  const handleRestoreFocus = React.useCallback(() => {
+    // если календарь был закрыт кликом вне календаря
+    // то FocusTrap возвращать фокус не должен
+    return !isClickedOutsideRef.current;
+  }, []);
 
   const _onCalendarClose = useCallback(() => {
     if (open) {
@@ -71,6 +79,7 @@ export function useDateInput<T extends HTMLElement, D>({
       if (accessible) {
         setFocusedElement(null);
       }
+      isClickedOutsideRef.current = false;
     }
   }, [onCalendarOpenChanged, open, openCalendar, accessible]);
 
@@ -83,11 +92,13 @@ export function useDateInput<T extends HTMLElement, D>({
   }, [open, _onCalendarOpen, _onCalendarClose]);
 
   const removeFocusFromField = React.useCallback(() => {
-    setFocusedElement(null);
+    if (focusedElement !== null) {
+      setFocusedElement(null);
+      window!.getSelection()?.removeAllRanges();
+      setInternalValue(getInternalValue(value));
+    }
     _onCalendarClose();
-    window!.getSelection()?.removeAllRanges();
-    setInternalValue(getInternalValue(value));
-  }, [_onCalendarClose, window, getInternalValue, value]);
+  }, [_onCalendarClose, window, getInternalValue, value, focusedElement]);
 
   const handleClickOutside = React.useCallback(
     (e: MouseEvent) => {
@@ -95,6 +106,7 @@ export function useDateInput<T extends HTMLElement, D>({
         !rootRef.current?.contains(e.target as Node | null) &&
         !calendarRef.current?.contains(e.target as Node | null)
       ) {
+        isClickedOutsideRef.current = true;
         removeFocusFromField();
       }
     },
@@ -214,6 +226,7 @@ export function useDateInput<T extends HTMLElement, D>({
       } else if (e.key === 'Delete' || e.key === 'Del') {
         _value[focusedElement] = '';
       } else if (e.key === ' ') {
+        e.preventDefault();
         _onCalendarOpen();
         return;
       } else {
@@ -249,5 +262,6 @@ export function useDateInput<T extends HTMLElement, D>({
     clear,
     handleFieldEnter,
     removeFocusFromField,
+    handleRestoreFocus,
   };
 }
