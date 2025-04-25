@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, endOfDay, format, startOfDay } from 'date-fns';
 import { getDocumentBody } from '../../lib/dom';
@@ -138,6 +139,58 @@ describe('CalendarRange', () => {
     // выбираем день с помощью Enter
     await act(() => userEvent.keyboard('{Enter}'));
     expect(onChangeStub).toHaveBeenCalledTimes(3);
+  });
+
+  it.only('checks focusable days on each part of calendar', async () => {
+    jest.useFakeTimers();
+    const startDate = new Date(2024, 2, 1);
+    const endDate = new Date(2024, 3, 10);
+    const onChangeStub = jest.fn();
+    render(
+      <CalendarRange
+        defaultValue={[startDate, endDate]}
+        onChange={onChangeStub}
+        dayTestId={dayTestId}
+      />,
+    );
+
+    // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(startDate))));
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(endDate))));
+
+    // выбранные в данный момент дни диапазона имеют tabIndex = 0
+    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
+    expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+
+    // выбираем новый диапазон в пределах левого календаря
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(startDate))));
+    const sameMonthDate = addDays(startDate, 10);
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(sameMonthDate))));
+
+    // уйдём с календаря и вернёмся
+    await act(() => userEvent.tab());
+    await act(() => userEvent.tab({ shift: true }));
+
+    // только последний выбранный день диапазона имеет tabIndex="0"
+    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('-1');
+    expect(screen.getByTestId(dayTestId(sameMonthDate)).getAttribute('tabindex')).toBe('0');
+
+    // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(startDate))));
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(endDate))));
+
+    // уйдём с календаря и вернёмся
+    await act(() => userEvent.tab());
+    await act(() => userEvent.tab({ shift: true }));
+
+    // на каждом календре дни на которые пришлись последние клики имеют tabIndex="0"
+    expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+    await act(() => userEvent.tab({ shift: true }));
+    await act(() => userEvent.tab({ shift: true }));
+    await act(() => userEvent.tab({ shift: true }));
+    await act(() => userEvent.tab({ shift: true }));
+    expect(document.activeElement).toBe(screen.getByTestId(dayTestId(startDate)));
+    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
   });
 
   it('check click on same day', () => {
