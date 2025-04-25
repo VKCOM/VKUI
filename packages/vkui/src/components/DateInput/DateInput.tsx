@@ -332,6 +332,7 @@ export const DateInput = ({
     closeCalendar,
     toggleCalendar,
     openCalendar,
+    handleRestoreFocus,
   } = useDateInput({
     maxElement,
     refs,
@@ -575,7 +576,7 @@ export const DateInput = ({
           <FocusTrap
             onClose={closeCalendar}
             disabled={disableFocusTrap ?? !accessible}
-            restoreFocus={restoreFocus ?? Boolean(accessible)}
+            restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
             captureEscapeKeyboardEvent={false}
           >
             <Calendar
