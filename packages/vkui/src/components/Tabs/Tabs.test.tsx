@@ -79,7 +79,7 @@ function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; rol
 
   return (
     <div>
-      <Tabs role={props.role} selectedTabId={currentTab} onSelectedTabChanged={setCurrentTab}>
+      <Tabs role={props.role} selectedId={currentTab} onSelectedChange={setCurrentTab}>
         <TabsItem
           id="tab-first"
           tabId="first"

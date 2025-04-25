@@ -142,8 +142,8 @@ const Scrollable = () => {
         layoutFillMode={layoutFillMode}
         withScrollToSelectedTab
         scrollBehaviorToSelectedTab="center"
-        selectedTabId={selected}
-        onSelectedTabChanged={setSelected}
+        selectedId={selected}
+        onSelectedChange={setSelected}
       >
         <HorizontalScroll arrowSize="m">
           <TabsItem tabId="groups" disabled={disabled}>

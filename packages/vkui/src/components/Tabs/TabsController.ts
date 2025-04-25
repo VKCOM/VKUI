@@ -10,24 +10,24 @@ export type TabsController = {
 /* eslint-enable jsdoc/require-jsdoc */
 
 export const useTabsController = ({
-  selectedTabId,
-  defaultSelectedTabId,
-  onSelectedTabChanged: onSelectedTabChangedProp,
+  selectedId,
+  defaultSelectedId,
+  onSelectedChange: onSelectedTabChangeProp,
 }: Pick<
   TabsProps,
-  'selectedTabId' | 'defaultSelectedTabId' | 'onSelectedTabChanged'
+  'selectedId' | 'defaultSelectedId' | 'onSelectedChange'
 >): TabsController | null => {
-  const onSelectedTabChanged = useStableCallback(
-    (id: string | undefined) => id && onSelectedTabChangedProp?.(id),
+  const onSelectedChange = useStableCallback(
+    (id: string | undefined) => id && onSelectedTabChangeProp?.(id),
   );
 
   const [value, onChange] = useCustomEnsuredControl<string | undefined>({
-    onChange: onSelectedTabChanged,
-    value: selectedTabId,
-    defaultValue: defaultSelectedTabId,
+    onChange: onSelectedChange,
+    value: selectedId,
+    defaultValue: defaultSelectedId,
   });
 
-  if ((!selectedTabId && !defaultSelectedTabId) || !value) {
+  if ((!selectedId && !defaultSelectedId) || !value) {
     return null;
   }
   return {

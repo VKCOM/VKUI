@@ -36,17 +36,17 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    */
   layoutFillMode?: 'auto' | 'stretched' | 'shrinked';
   /**
-   * Идентификатор(id) выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `tabId`.
+   * Идентификатор выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `tabId`.
    */
-  selectedTabId?: string;
+  selectedId?: string;
   /**
-   * Идентификатор(id) выбранной вкладки по умолчанию. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `tabId`.
+   * Идентификатор выбранной вкладки по умолчанию. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `tabId`.
    */
-  defaultSelectedTabId?: string;
+  defaultSelectedId?: string;
   /**
    * Обработчик изменения выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `tabId`.
    */
-  onSelectedTabChanged?: (id: string) => void;
+  onSelectedChange?: (id: string) => void;
 }
 
 /**
@@ -59,15 +59,15 @@ export const Tabs = ({
   withScrollToSelectedTab,
   scrollBehaviorToSelectedTab = 'nearest',
   layoutFillMode = 'auto',
-  selectedTabId,
-  defaultSelectedTabId,
-  onSelectedTabChanged,
+  selectedId,
+  defaultSelectedId,
+  onSelectedChange,
   ...restProps
 }: TabsProps): React.ReactNode => {
   const controller = useTabsController({
-    selectedTabId,
-    defaultSelectedTabId,
-    onSelectedTabChanged,
+    selectedId,
+    defaultSelectedId,
+    onSelectedChange,
   });
   const platform = usePlatform();
   const direction = useConfigDirection();
