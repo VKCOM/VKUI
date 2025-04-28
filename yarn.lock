@@ -4688,7 +4688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.4, @types/json-schema@npm:^7.0.5, @types/json-schema@npm:^7.0.8, @types/json-schema@npm:^7.0.9":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.15, @types/json-schema@npm:^7.0.4, @types/json-schema@npm:^7.0.5, @types/json-schema@npm:^7.0.8, @types/json-schema@npm:^7.0.9":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 10/1a3c3e06236e4c4aab89499c428d585527ce50c24fe8259e8b3926d3df4cfbbbcf306cfc73ddfb66cbafc973116efd15967020b0f738f63e09e64c7d260519e7
@@ -5544,7 +5544,7 @@ __metadata:
     swc-plugin-transform-remove-imports: "npm:4.0.3"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.8.3"
-    webpack: "npm:^5.99.6"
+    webpack: "npm:^5.99.7"
     webpack-cli: "npm:^6.0.1"
     webpack-merge: "npm:^6.0.1"
     yargs: "npm:^17.7.2"
@@ -6679,7 +6679,7 @@ __metadata:
     serve-static: "npm:2.2.0"
     swc-loader: "npm:^0.2.6"
     terser-webpack-plugin: "npm:^5.3.14"
-    webpack: "npm:^5.99.6"
+    webpack: "npm:^5.99.7"
   languageName: unknown
   linkType: soft
 
@@ -18824,6 +18824,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"schema-utils@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "schema-utils@npm:4.3.2"
+  dependencies:
+    "@types/json-schema": "npm:^7.0.9"
+    ajv: "npm:^8.9.0"
+    ajv-formats: "npm:^2.1.1"
+    ajv-keywords: "npm:^5.1.0"
+  checksum: 10/02c32c34aae762d48468f98465a96a167fede637772871c7c7d8923671ddb9f20b2cc6f6e8448ae6bef5363e3597493c655212c8b06a4ee73aa099d9452fbd8b
+  languageName: node
+  linkType: hard
+
 "seek-bzip@npm:^2.0.0":
   version: 2.0.0
   resolution: "seek-bzip@npm:2.0.0"
@@ -21757,12 +21769,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.99.6":
-  version: 5.99.6
-  resolution: "webpack@npm:5.99.6"
+"webpack@npm:^5.99.7":
+  version: 5.99.7
+  resolution: "webpack@npm:5.99.7"
   dependencies:
     "@types/eslint-scope": "npm:^3.7.7"
     "@types/estree": "npm:^1.0.6"
+    "@types/json-schema": "npm:^7.0.15"
     "@webassemblyjs/ast": "npm:^1.14.1"
     "@webassemblyjs/wasm-edit": "npm:^1.14.1"
     "@webassemblyjs/wasm-parser": "npm:^1.14.1"
@@ -21779,7 +21792,7 @@ __metadata:
     loader-runner: "npm:^4.2.0"
     mime-types: "npm:^2.1.27"
     neo-async: "npm:^2.6.2"
-    schema-utils: "npm:^4.3.0"
+    schema-utils: "npm:^4.3.2"
     tapable: "npm:^2.1.1"
     terser-webpack-plugin: "npm:^5.3.11"
     watchpack: "npm:^2.4.1"
@@ -21789,7 +21802,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 10/94e9fc07ec6cca7ed34f7ca1a7f5fcbfd2165b51ce8cf6520363f3b97170b089a046da8ca3d62f48d231bbc1d252e4e4330b55ab93a6711bf167f5a8680d7acd
+  checksum: 10/c7498395cd1ac600a8e6d249b533ae414fcf73383566cd7ac99c07cebf2df0dd930134d45fa23b4283db33542359669eedf3495f5a1b4a543aab655cbaa27c12
   languageName: node
   linkType: hard
 
