@@ -189,16 +189,16 @@
  * Disabled
  */
 
-.host[disabled] .children,
-.host[disabled] .meta,
-.host[disabled] .subtitle {
-  color: var(--vkui--color_text_secondary);
-}
-
-.host[disabled] .marker,
-.host[disabled] .before {
-  color: var(--vkui--color_icon_secondary);
-}
+ .disabled .children,
+ .disabled .meta,
+ .disabled .subtitle {
+   color: var(--vkui--color_text_secondary);
+ }
+ 
+ .disabled .marker,
+ .disabled .before {
+   color: var(--vkui--color_icon_secondary);
+ }
 
 /**
  * SizeY = compact
