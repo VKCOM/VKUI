@@ -61,7 +61,7 @@ export const getMonths = (
 
   for (let i = 0; i < 12; i++) {
     months.push({
-      label: formatter.format(new Date('1970-01-01').setMonth(i)),
+      label: formatter.format(new Date(2023, i, 15)),
       value: i,
     });
   }
