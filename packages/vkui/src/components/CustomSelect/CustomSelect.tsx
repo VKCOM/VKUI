@@ -8,7 +8,7 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
-import type { Placement } from '../../lib/floating';
+import type { Alignment, Placement, Side } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -22,15 +22,15 @@ import {
 } from '../CustomSelectOption/CustomSelectOption';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import type { FormFieldProps } from '../FormField/FormField';
-import {
-  NOT_SELECTED,
-  remapFromNativeValueToSelectValue,
-  remapFromSelectValueToNativeValue,
-} from '../NativeSelect/NativeSelect';
 import type {
   NativeSelectProps,
   NativeSelectValue,
   SelectValue,
+} from '../NativeSelect/NativeSelect';
+import {
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+  remapFromSelectValueToNativeValue,
 } from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -178,6 +178,10 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   option: T;
 }
 
+type PopupDirectionSide = Extract<Side, 'top' | 'bottom'>;
+
+type PopupDirection = PopupDirectionSide | `${PopupDirectionSide}-${Alignment}`;
+
 export type { CustomSelectClearButtonProps };
 
 export interface SelectProps<
@@ -214,7 +218,7 @@ export interface SelectProps<
   /**
    * Направление раскрытия выпадающего списка.
    */
-  popupDirection?: 'top' | 'bottom';
+  popupDirection?: PopupDirection;
   /**
    * Рендер-проп для кастомного рендера опции.
    * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props).
