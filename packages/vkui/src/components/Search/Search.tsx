@@ -22,8 +22,10 @@ import styles from './Search.module.css';
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
-  props?: Partial<IconButtonProps>,
-) => React.ReactNode;
+  props?: Partial<IconButtonProps> & {
+    [key: `data-${string}`]: string | number | boolean;
+  },
+) => React.ReactElement;
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
