@@ -61,7 +61,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-server-components": "^1.2.0",
     "eslint-plugin-unicorn": "^55.0.0",
-    "happy-css-modules": "^3.2.0",
+    "happy-css-modules": "^4.0.0",
     "husky": "^9.1.6",
     "jest": "^29.7.0",
     "jest-axe": "^10.0.0",
