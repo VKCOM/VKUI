@@ -13,7 +13,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { touchEnabled } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
 import { Headline } from '../Typography/Headline/Headline';
@@ -22,9 +22,7 @@ import styles from './Search.module.css';
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
-  props?: Partial<IconButtonProps> & {
-    [key: `data-${string}`]: string | number | boolean;
-  },
+  props?: Partial<IconButtonProps> & HasDataAttribute,
 ) => React.ReactElement;
 
 export interface SearchProps
