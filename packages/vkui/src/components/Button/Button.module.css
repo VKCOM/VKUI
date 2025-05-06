@@ -10,8 +10,8 @@
   border: 0;
   border-radius: var(--vkui--size_border_radius--regular);
   transition:
-    background-color 0.15s ease-out,
-    color 0.15s ease-out;
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .rounded {
