@@ -21,14 +21,14 @@ jobs:
 
       - name: Patch
         if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
-        uses: VKCOM/VKUI/.github/actions/add-label-to-pull-request@master
+        uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
           label: 'ci:cherry-pick:patch'
 
       - name: VKUI-tokens
         if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
-        uses: VKCOM/VKUI/.github/actions/add-label-to-pull-request@master
+        uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
           label: 'vkui-tokens'
@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Fetch Dependabot metadata
         id: metadata
@@ -117,7 +117,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
-
+        uses: ./.github/actions/node-setup
       - name: Run Prettier
         run: yarn run lint:prettier
