@@ -146,11 +146,11 @@ const Scrollable = () => {
         onSelectedChange={setSelected}
       >
         <HorizontalScroll arrowSize="m">
-          <TabsItem tabId="groups" disabled={disabled}>
+          <TabsItem id="groups" disabled={disabled}>
             Сообщества
           </TabsItem>
           <TabsItem
-            tabId="news"
+            id="news"
             before={mode === 'default' ? <Icon24NewsfeedOutline /> : <Icon20NewsfeedOutline />}
             after={<Icon16Dropdown />}
             disabled={disabled}
@@ -158,7 +158,7 @@ const Scrollable = () => {
             Лента
           </TabsItem>
           <TabsItem
-            tabId="recommendations"
+            id="recommendations"
             before={mode === 'default' ? <Icon24ThumbsUpOutline /> : <Icon20ThumbsUpOutline />}
             status={<Badge mode="prominent">Есть новые</Badge>}
             after={<Icon16Dropdown />}
@@ -167,7 +167,7 @@ const Scrollable = () => {
             Рекомендации
           </TabsItem>
           <TabsItem
-            tabId="friends"
+            id="friends"
             before={mode === 'default' ? <Icon24UsersOutline /> : <Icon20UsersOutline />}
             status={
               <Counter mode="primary" appearance="accent-red" size="s">
@@ -180,7 +180,7 @@ const Scrollable = () => {
             Друзья
           </TabsItem>
           <TabsItem
-            tabId="photos"
+            id="photos"
             before={mode === 'default' ? <Icon24PictureOutline /> : <Icon20PictureOutline />}
             status={23}
             after={<Icon16Dropdown />}

@@ -75,14 +75,13 @@ function TestTabs(props: { disabledKeys?: string[]; role?: string }) {
 }
 
 function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; role?: string }) {
-  const [currentTab, setCurrentTab] = useState('first');
+  const [currentTab, setCurrentTab] = useState('tab-first');
 
   return (
     <div>
       <Tabs role={props.role} selectedId={currentTab} onSelectedChange={setCurrentTab}>
         <TabsItem
           id="tab-first"
-          tabId="first"
           data-testid="first"
           aria-controls="tab-content-first"
           disabled={props.disabledKeys?.includes('first')}
@@ -91,7 +90,6 @@ function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; rol
         </TabsItem>
         <TabsItem
           id="tab-second"
-          tabId="second"
           data-testid="second"
           aria-controls="tab-content-second"
           disabled={props.disabledKeys?.includes('second')}
@@ -100,7 +98,6 @@ function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; rol
         </TabsItem>
         <TabsItem
           id="tab-third"
-          tabId="third"
           data-testid="third"
           aria-controls="tab-content-third"
           disabled={props.disabledKeys?.includes('third')}
@@ -108,7 +105,7 @@ function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; rol
           Third
         </TabsItem>
       </Tabs>
-      {currentTab === 'first' && (
+      {currentTab === 'tab-first' && (
         <Group
           role="tabpanel"
           data-testid="content-first"
@@ -116,7 +113,7 @@ function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; rol
           aria-labelledby="tab-first"
         ></Group>
       )}
-      {currentTab === 'second' && (
+      {currentTab === 'tab-second' && (
         <Group
           role="tabpanel"
           data-testid="content-second"
@@ -124,7 +121,7 @@ function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; rol
           aria-labelledby="tab-second"
         ></Group>
       )}
-      {currentTab === 'third' && (
+      {currentTab === 'tab-third' && (
         <Group
           role="tabpanel"
           data-testid="content-third"

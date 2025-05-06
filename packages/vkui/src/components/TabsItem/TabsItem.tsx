@@ -46,10 +46,6 @@ export interface TabsItemProps
       | 'focusVisibleMode'
     > {
   /**
-   * Идентификатор вкладки. Используется, когда выбранная вкладка контролируется на уровне `Tabs`.
-   */
-  tabId?: string;
-  /**
    * Добавляет иконку слева.
    *
    * - Для `mode="default"` используйте иконки размером 24.
@@ -98,7 +94,7 @@ export const TabsItem = ({
   activeMode = '',
   hasActive = false,
   focusVisibleMode = 'inside',
-  tabId,
+  id,
   onClick,
   ...restProps
 }: TabsItemProps): React.ReactNode => {
@@ -115,7 +111,7 @@ export const TabsItem = ({
 
   const isTabFlow = role === 'tab';
 
-  const selected = selectedProp || (!!tabId && controller?.selectedTab === tabId);
+  const selected = selectedProp || (!!id && controller?.selectedTab === id);
 
   if (hasReactNode(status)) {
     statusComponent =
@@ -139,7 +135,7 @@ export const TabsItem = ({
   if (process.env.NODE_ENV === 'development' && isTabFlow) {
     if (!restProps['aria-controls']) {
       warn(`Передайте в "aria-controls" id контролируемого блока`, 'warn');
-    } else if (!restProps['id']) {
+    } else if (!id) {
       warn(
         `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
         'warn',
@@ -195,11 +191,11 @@ export const TabsItem = ({
   const _onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(
     (e) => {
       onClick?.(e);
-      if (tabId) {
-        controller?.onChange(tabId);
+      if (id) {
+        controller?.onChange(id);
       }
     },
-    [tabId, onClick, controller],
+    [id, onClick, controller],
   );
 
   return (
@@ -221,6 +217,7 @@ export const TabsItem = ({
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
       )}
       onClick={_onClick}
+      id={id}
       {...restProps}
     >
       {before && <div className={styles.before}>{before}</div>}
