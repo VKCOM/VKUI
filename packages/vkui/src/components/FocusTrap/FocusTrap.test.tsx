@@ -150,6 +150,42 @@ describe(FocusTrap, () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it('captures Esc by default and calls onClose', async () => {
+    jest.useFakeTimers();
+    const onCloseStub = jest.fn();
+    render(
+      <FocusTrap onClose={onCloseStub}>
+        <input onKeyDown={(event) => event.stopPropagation()} value="Test input" />
+      </FocusTrap>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard(`{Escape}`);
+
+    // event.stopPropagation of input does nothing, onClose of FocusTrap is triggered on Esc
+    expect(onCloseStub).toHaveBeenCalledTimes(1);
+  });
+
+  it('allows to stop Escape keyboard event propagation from inner element with captureEscapeKeyboardEvent flag set to false', async () => {
+    jest.useFakeTimers();
+    const onCloseStub = jest.fn();
+    render(
+      <FocusTrap onClose={onCloseStub} captureEscapeKeyboardEvent={false}>
+        <input
+          data-testid="input"
+          onKeyDown={(event) => event.stopPropagation()}
+          value="Test button"
+        />
+      </FocusTrap>,
+    );
+
+    await userEvent.tab();
+    await userEvent.keyboard(`{Escape}`);
+
+    // event.stopPropagation of input doesn't trigger onClose of FocusTrap on Esc
+    expect(onCloseStub).toHaveBeenCalledTimes(0);
+  });
+
   describe('focus restoration', () => {
     it('restores focus by default', async () => {
       const onClose = jest.fn();

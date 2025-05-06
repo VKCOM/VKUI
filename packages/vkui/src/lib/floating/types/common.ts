@@ -15,6 +15,8 @@ export type {
   ArrowOptions,
   UseFloatingReturn,
   Placement,
+  Side,
+  Alignment,
   Middleware as UseFloatingMiddleware,
   UseFloatingData,
   Strategy as FloatingPositionStrategy,

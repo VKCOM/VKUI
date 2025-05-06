@@ -28,7 +28,9 @@ export interface AdaptivityProps extends SizeProps {
    */
   hasPointer?: boolean;
   /**
-   * Флаг поддержки эффекта наведения на устройстве.
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство нигде не используется и будет удалено в `v8`.
    */
   hasHover?: boolean;
 }

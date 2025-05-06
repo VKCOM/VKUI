@@ -567,11 +567,14 @@ const SomeAsyncEffect = () => {
 const ModalPageWrapper = ({ id, ...restProps }) => {
   const { activeModal } = useModalRootContext();
 
-  useEffect(function enableSomeEffect() {
-    if (id === activeModal) {
-      /* ... */
-    }
-  }, [id, activeModal];
+  useEffect(
+    function enableSomeEffect() {
+      if (id === activeModal) {
+        /* ... */
+      }
+    },
+    [id, activeModal],
+  );
 
   return (
     <ModalPage id={id} {...restProps}>

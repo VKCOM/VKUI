@@ -106,6 +106,14 @@ export type UseFocusTrapProps = {
    * Вызывается при нажатии на кнопку `Escape`.
    */
   onClose?: VoidFunction;
+  /**
+   * Следует ли обрабатываеть событие нажатия клавиши Escape при "погружении", то есть
+   * до того как это событие будет обработано на EventTarget
+   * Удобно установить в false, если требуется запретить "всплытие" события до FocusTrap
+   *
+   * @default true
+   */
+  captureEscapeKeyboardEvent?: boolean;
 };
 
 /**
@@ -120,6 +128,7 @@ export const useFocusTrap = (
     restoreFocus = true,
     timeout = 0,
     onClose,
+    captureEscapeKeyboardEvent = true,
   }: UseFocusTrapProps,
 ) => {
   const { document } = useDOM();
@@ -252,11 +261,22 @@ export const useFocusTrap = (
 
             break;
           }
-          case Keys.ESCAPE: {
-            if (onClose) {
-              event.preventDefault();
-              onClose();
-            }
+        }
+
+        return true;
+      };
+
+      const onEscapeKeydown = (event: KeyboardEvent) => {
+        if (disabled) {
+          return;
+        }
+
+        const pressedKeyResult = pressedKey(event);
+
+        if (pressedKeyResult === Keys.ESCAPE) {
+          if (onClose) {
+            event.preventDefault();
+            onClose();
           }
         }
 
@@ -267,8 +287,12 @@ export const useFocusTrap = (
       doc.addEventListener('keydown', onDocumentKeydown, {
         capture: true,
       });
+      doc.addEventListener('keydown', onEscapeKeydown, {
+        capture: captureEscapeKeyboardEvent,
+      });
       return () => {
         doc.removeEventListener('keydown', onDocumentKeydown, true);
+        doc.removeEventListener('keydown', onEscapeKeydown, captureEscapeKeyboardEvent);
       };
     },
     [onClose, ref, disabled],

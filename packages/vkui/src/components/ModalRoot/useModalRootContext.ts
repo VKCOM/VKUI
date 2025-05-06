@@ -17,5 +17,5 @@ export const useModalRootContext = (): UseModalRootContext => {
     }
   }, [activeModal, onCloseContext]);
 
-  return { isInsideModal, onClose, updateModalHeight, registerModal };
+  return { activeModal, isInsideModal, onClose, updateModalHeight, registerModal };
 };
