@@ -169,6 +169,7 @@ export const ActionSheetItem = ({
         sizeY === 'compact' && styles.sizeYCompact,
         isRich && styles.rich,
         actionSheetMode === 'menu' && styles.menu,
+        restProps.disabled && styles.disabled,
       )}
       onKeyDown={onKeyDown}
     >

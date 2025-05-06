@@ -371,6 +371,32 @@ describe('DateInput', () => {
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
 
+  it('closes calendar on click outside (focus should not return to the input)', async () => {
+    jest.useFakeTimers();
+    render(
+      <div>
+        <button type="button">Предыдущая кнопка</button>
+        <DateInput value={new Date()} accessible {...testIds} />
+      </div>,
+    );
+
+    const [dayPicker] = getInputsLike();
+    await act(() => userEvent.click(dayPicker));
+
+    // календарь открыт
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+
+    await act(() => userEvent.click(screen.getByText(/Предыдущая кнопка/)));
+
+    // календарь закрыт
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+    // обязательно ждём, ведь в случае ошибки
+    // фокус может прыгнуть нетуда (с помощью FocusTrap)
+    // через некоторый промежуток времени
+    jest.runOnlyPendingTimers();
+    expect(document.activeElement).toBe(screen.getByText(/Предыдущая кнопка/));
+  });
+
   describe('keyboard', () => {
     it('controls focus when arrows or tab keys are pressed', async () => {
       jest.useFakeTimers();
@@ -505,6 +531,36 @@ describe('DateInput', () => {
       await act(() => userEvent.keyboard('1'));
       normalizedDate = convertInputsToNumbers(inputLikes);
       expect(normalizedDate).toEqual([1, 6, 2001]);
+    });
+
+    it('removes digit by digit on backspace', async () => {
+      jest.useFakeTimers();
+      render(
+        <DateInput
+          changeMonthLabel=""
+          changeYearLabel=""
+          changeDayLabel=""
+          changeHoursLabel=""
+          changeMinutesLabel=""
+          value={date}
+          onChange={jest.fn()}
+          {...testIds}
+        />,
+      );
+
+      const inputLikes = getInputsLike();
+      const [dayPicker] = inputLikes;
+
+      await act(() => userEvent.click(dayPicker));
+      expect(document.activeElement).toBe(dayPicker);
+
+      let normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{backspace}'));
+      await act(() => userEvent.keyboard('{backspace}'));
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([0, 7, 2024]);
     });
   });
 
