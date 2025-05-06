@@ -10,7 +10,7 @@ on:
 jobs:
   pr_workflow_payload:
     name: Call reusable workflow
-    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_pr_worfklow_payload.yml@master
+    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: download
 

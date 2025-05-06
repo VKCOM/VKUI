@@ -20,9 +20,9 @@ jobs:
 
       # Создаем кэш для ветки один раз
       - name: Checkout LFS objects
-        uses: VKCOM/VKUI/.github/actions/lfs@master
+        uses: ./.github/actions/lfs
 
-      - uses: VKCOM/VKUI/.github/actions/get-playwright-docker-image@master
+      - uses: ./.github/actions/get-playwright-docker-image
         id: result
 
   update_screens:
@@ -43,14 +43,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Checkout LFS objects
-        uses: VKCOM/VKUI/.github/actions/lfs@master
+        uses: ./.github/actions/lfs
 
       - name: Install rsync && zip
         run: |
           apt-get install -y rsync zip
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Update screenshots
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
