@@ -437,6 +437,7 @@ export { withPlatform } from './hoc/withPlatform';
  */
 export { usePlatform } from './hooks/usePlatform';
 export { useConfigDirection as useDirection } from './hooks/useConfigDirection';
+export { useLocale } from './hooks/useLocale';
 export { useAdaptivity } from './hooks/useAdaptivity';
 export {
   type UseAdaptivityConditionalRender,

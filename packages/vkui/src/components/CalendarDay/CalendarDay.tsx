@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { mergeCalls } from '../../lib/mergeCalls';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable } from '../Tappable/Tappable';
@@ -11,7 +13,7 @@ import styles from './CalendarDay.module.css';
 
 export type CalendarDayElementProps = Omit<
   React.AllHTMLAttributes<HTMLElement>,
-  'onChange' | 'size' | 'disabled' | 'selected'
+  'onChange' | 'size' | 'disabled' | 'selected' | 'onFocus'
 >;
 
 export type CalendarDayTestsProps = {
@@ -91,6 +93,10 @@ export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTe
    */
   onLeave?: (value: Date) => void;
   /**
+   * Обработчик фокуса на дне.
+   */
+  onFocus?: (value: Date) => void;
+  /**
    * Кастомизация отображения содержимого дня.
    */
   renderDayContent?: (day: Date) => React.ReactNode;
@@ -111,6 +117,8 @@ export const CalendarDay = React.memo(
     focused,
     onEnter,
     onLeave,
+    onFocus,
+    onBlur,
     hinted,
     hintedSelectionStart,
     hintedSelectionEnd,
@@ -119,6 +127,8 @@ export const CalendarDay = React.memo(
     children,
     renderDayContent,
     testId,
+    role,
+    'aria-colindex': colIndex,
     ...restProps
   }: CalendarDayProps) => {
     const { locale, direction } = useConfigProvider();
@@ -126,17 +136,24 @@ export const CalendarDay = React.memo(
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);
     const handleLeave = React.useCallback(() => onLeave?.(day), [day, onLeave]);
+    const handleFocus = React.useCallback(() => onFocus?.(day), [day, onFocus]);
+
+    const focusVisibleMode = active ? 'outside' : 'inside';
+    const { focusVisible, ...focusEvents } = useFocusVisible();
+    const focusVisibleClassNames = useFocusVisibleClassName({
+      focusVisible,
+      mode: focusVisibleMode,
+    });
+    const focusHandlers = mergeCalls(focusEvents, { onFocus: handleFocus, onBlur });
 
     const label = new Intl.DateTimeFormat(locale, {
       weekday: 'long',
-      year: 'numeric',
       month: 'long',
       day: 'numeric',
     }).format(day);
 
     React.useEffect(() => {
       if (focused && ref.current) {
-        ref.current.dispatchEvent(new Event(ENABLE_KEYBOARD_INPUT_EVENT_NAME, { bubbles: true }));
         ref.current.focus();
       }
     }, [focused]);
@@ -154,7 +171,13 @@ export const CalendarDay = React.memo(
     }, [renderDayContent, day, children, label]);
 
     if (hidden) {
-      return <div className={classNames(styles.hidden, size === 's' && styles.sizeS)} />;
+      return (
+        <div
+          role={role}
+          aria-colindex={colIndex}
+          className={classNames(styles.hidden, size === 's' && styles.sizeS)}
+        />
+      );
     }
 
     return (
@@ -163,19 +186,21 @@ export const CalendarDay = React.memo(
           styles.host,
           size === 's' && styles.sizeS,
           direction === 'rtl' && styles.rtl,
+          focusVisibleClassNames,
         )}
+        role={role}
+        aria-colindex={colIndex}
         hoverMode={styles.hostHovered}
         activeMode={styles.hostActivated}
         hasActive={false}
         onClick={onClick}
         disabled={disabled}
-        tabIndex={-1}
         getRootRef={ref}
-        focusVisibleMode={active ? 'outside' : 'inside'}
         onPointerEnter={handleEnter}
         onPointerLeave={handleLeave}
         data-testid={typeof testId === 'string' ? testId : testId?.(day)}
         {...restProps}
+        {...focusHandlers}
       >
         <div
           className={classNames(

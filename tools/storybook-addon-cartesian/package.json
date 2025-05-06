@@ -9,13 +9,13 @@
     "test:ci": "echo no test:ci"
   },
   "dependencies": {
-    "@babel/core": "^7.26.10",
+    "@babel/core": "^7.27.1",
     "@storybook/addon-a11y": "8.6.12",
     "@storybook/addon-actions": "8.6.12",
     "@storybook/addon-essentials": "8.6.12",
     "@storybook/addon-interactions": "8.6.12",
     "@storybook/addon-links": "8.6.12",
-    "@storybook/addon-webpack5-compiler-swc": "patch:@storybook/addon-webpack5-compiler-swc@npm%3A1.0.5#~/.yarn/patches/@storybook-addon-webpack5-compiler-swc-npm-1.0.5-dbab81c473.patch",
+    "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
     "@storybook/blocks": "8.6.12",
     "@storybook/components": "8.6.12",
     "@storybook/core-events": "^8.6.12",
