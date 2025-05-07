@@ -66,6 +66,10 @@ export const WriteBarPlayground = (props: ComponentPlaygroundProps) => {
           value: ['', 'Сообщение'],
           shadow: [undefined, true],
         },
+        {
+          value: [''],
+          placeholder: ['Очень очень очень длинный placeholder'],
+        },
       ]}
     >
       {(props: WriteBarProps) => <WriteBarTestComponent {...props} />}
