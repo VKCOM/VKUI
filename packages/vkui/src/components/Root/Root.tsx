@@ -58,9 +58,9 @@ export const Root = ({
   const scrolls = React.useRef<Record<string, number>>({}).current;
   const viewNodes = React.useRef<Record<string, HTMLElement | null>>({}).current;
 
-  const { transitionMotionEnabled = true } = useConfigProvider();
+  const { transitionMotionEnabled = true, transitionDisabled } = useConfigProvider();
   const { animate } = React.useContext(SplitColContext);
-  const disableAnimation = !transitionMotionEnabled || !animate;
+  const disableAnimation = transitionDisabled ?? (!transitionMotionEnabled || !animate);
 
   const views = React.Children.toArray(children) as Array<React.ReactElement<NavIdProps>>;
 

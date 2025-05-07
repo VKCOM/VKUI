@@ -140,7 +140,8 @@ export const View = ({
   );
 
   const disableAnimation =
-    !configProvider.transitionMotionEnabled || !splitCol.animate || platform === 'vkcom';
+    configProvider.transitionDisabled ??
+    (!configProvider.transitionMotionEnabled || !splitCol.animate || platform === 'vkcom');
   const iOSSwipeBackSimulationEnabled =
     !disableAnimation && platform === 'ios' && configProvider.isWebView && Boolean(onSwipeBack);
 

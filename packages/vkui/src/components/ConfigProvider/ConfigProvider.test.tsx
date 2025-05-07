@@ -25,6 +25,7 @@ describe(ConfigProvider, () => {
         customPanelHeaderAfterMinWidth: 90,
         tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
         transitionMotionEnabled: false,
+        transitionDisabled: false,
         direction: 'ltr',
       });
       return null;
@@ -34,6 +35,7 @@ describe(ConfigProvider, () => {
         colorScheme="light"
         hasCustomPanelHeaderAfter={false}
         transitionMotionEnabled={false}
+        transitionDisabled={false}
       >
         <ConfigUser />
       </ConfigProvider>,
@@ -53,6 +55,7 @@ describe(ConfigProvider, () => {
       hasCustomPanelHeaderAfter: true,
       customPanelHeaderAfterMinWidth: 90,
       transitionMotionEnabled: false,
+      transitionDisabled: false,
       isWebView: true,
       tokensClassNames: { light: 'some-class-light', dark: 'some-class-dark' },
       locale: 'en',
@@ -63,6 +66,7 @@ describe(ConfigProvider, () => {
       ['hasCustomPanelHeaderAfter', false],
       ['customPanelHeaderAfterMinWidth', 100],
       ['transitionMotionEnabled', true],
+      ['transitionDisabled', true],
       ['isWebView', false],
       ['platform', 'light'],
       ['tokensClassNames', { light: 'another-class-light', dark: 'another-class-dark' }],
@@ -96,6 +100,7 @@ describe(ConfigProviderOverride, () => {
     hasCustomPanelHeaderAfter: true,
     customPanelHeaderAfterMinWidth: 90,
     transitionMotionEnabled: false,
+    transitionDisabled: false,
     isWebView: true,
     tokensClassNames: { light: 'some-class-light', dark: 'some-class-dark' },
     locale: 'en',
@@ -106,6 +111,7 @@ describe(ConfigProviderOverride, () => {
     ['hasCustomPanelHeaderAfter', false],
     ['customPanelHeaderAfterMinWidth', 100],
     ['transitionMotionEnabled', true],
+    ['transitionDisabled', true],
     ['isWebView', false],
     ['platform', 'light'],
     ['tokensClassNames', { light: 'another-class-light', dark: 'another-class-dark' }],

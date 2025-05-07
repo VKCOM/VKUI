@@ -40,9 +40,17 @@ export interface ConfigProviderContextInterface {
    */
   colorScheme: ColorSchemeType | undefined;
   /**
-   * Включена ли анимация переходов между экранами в `Root` и `View`.
+   *  @deprecated Since 7.4.0.
+   *
+   * Свойство будет удалено в `v8`. Используйте свойство `transitionDisabled`.
    */
   transitionMotionEnabled: boolean;
+  /**
+   * Позволяет отключить анимации переходов между экранами в `Root` и `View`.
+   *
+   * В `v8` значение по умолчанию будет `false` для мобильных устройств, `true` - для планшетов и десктопов и платформы `vkcom`.
+   */
+  transitionDisabled: boolean | undefined;
   /**
    * Платформа.
    */
@@ -91,6 +99,7 @@ export const ConfigProviderContext: React.Context<ConfigProviderContextInterface
     customPanelHeaderAfterMinWidth: 90,
     isWebView: false,
     transitionMotionEnabled: true,
+    transitionDisabled: undefined,
     platform: platform(),
     colorScheme: undefined, // undefined обозначает что тема должна определиться автоматически
     tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
@@ -108,6 +117,7 @@ export function useConfigProviderContextMemo(config: ConfigProviderContextInterf
     customPanelHeaderAfterMinWidth,
     colorScheme,
     transitionMotionEnabled,
+    transitionDisabled,
     platform,
     tokensClassNames,
     locale,
@@ -121,6 +131,7 @@ export function useConfigProviderContextMemo(config: ConfigProviderContextInterf
       customPanelHeaderAfterMinWidth,
       colorScheme,
       transitionMotionEnabled,
+      transitionDisabled,
       platform,
       tokensClassNames,
       locale,
@@ -132,6 +143,7 @@ export function useConfigProviderContextMemo(config: ConfigProviderContextInterf
     customPanelHeaderAfterMinWidth,
     colorScheme,
     transitionMotionEnabled,
+    transitionDisabled,
     platform,
     tokensClassNames,
     locale,
