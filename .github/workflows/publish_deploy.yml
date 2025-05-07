@@ -68,7 +68,7 @@ jobs:
           ref: ${{ env.CHECKOUT_BRANCH }}
 
       - name: Setting up the repository environment
-        uses: VKCOM/VKUI/.github/actions/setup@master
+        uses: ./.github/actions/setup
 
       - name: Creating docs for pre-release
         if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) == true }}
