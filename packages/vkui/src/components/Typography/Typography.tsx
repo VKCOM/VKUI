@@ -10,6 +10,14 @@ const stylesWeight = {
   '3': styles.weight3,
 };
 
+export function weightClassNames(weight: '1' | '2' | '3' | undefined, useAccentWeight = false) {
+  if (!weight) {
+    return '';
+  }
+
+  return classNames(stylesWeight[weight], useAccentWeight && styles.accent);
+}
+
 export interface HasCaps {
   /**
    * Отображение текста в верхнем регистре.
@@ -55,8 +63,7 @@ export const Typography = ({
       styles.host,
       normalize && styles.normalize,
       inline && styles.inline,
-      weight && stylesWeight[weight],
-      weight && useAccentWeight && styles.accent,
+      weightClassNames(weight, useAccentWeight),
     )}
     {...restProps}
   />
