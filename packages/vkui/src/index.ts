@@ -1,10 +1,11 @@
-import './styles/constants.css';
 import './styles/adaptivity.module.css';
+import './styles/animationFades.module.css';
+import './styles/common.css';
+import './styles/constants.css';
 import './styles/dynamicTokens.css';
 import './styles/focusVisible.module.css';
-import './styles/animationFades.module.css';
-import './styles/transformOriginByPlacement.module.css';
 import './styles/gaps.module.css';
+import './styles/transformOriginByPlacement.module.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export { AppRootPortal } from './components/AppRoot/AppRootPortal';
@@ -453,6 +454,7 @@ export { type Orientation, useOrientationChange } from './hooks/useOrientationCh
 export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock, useManualScroll as useScroll } from './components/AppRoot/ScrollContext';
+export { useModalsApi } from './components/AppRoot/ModalContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
@@ -503,5 +505,3 @@ export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInf
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
 export { ModalPageFooter as unstable_ModalPageFooter } from './components/ModalPageFooter/ModalPageFooter';
 export type { ModalPageFooterProps as unstable_ModalPageFooterProps } from './components/ModalPageFooter/ModalPageFooter';
-
-import './styles/common.css';
