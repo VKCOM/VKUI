@@ -1,0 +1,14 @@
+.layout {
+  block-size: 100%;
+}
+
+.header {
+  padding-block: 5px;
+  padding-inline: 5px;
+}
+
+.tipIcon {
+  display: inline;
+  margin-inline-end: 2px;
+  vertical-align: bottom;
+}
