@@ -50,7 +50,9 @@ const propSets = [
     children: [
       [
         <ActionSheetItem key="1">Элемент</ActionSheetItem>,
-        <ActionSheetItem key="2">Второй элемент</ActionSheetItem>,
+        <ActionSheetItem key="2" disabled>
+          Второй элемент
+        </ActionSheetItem>,
         <ActionSheetItem key="3" before={<Icon28SettingsOutline />}>
           Третий элемент
         </ActionSheetItem>,
