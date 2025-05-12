@@ -47,23 +47,23 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Setting up the repository environment
-        uses: VKCOM/VKUI/.github/actions/publish-workflow-1-setup@master
+        uses: ./.github/actions/publish-workflow-1-setup
 
       - name: Bump version
         id: updated_versions_info
-        uses: VKCOM/VKUI/.github/actions/publish-workflow-2-bump-version@master
+        uses: ./.github/actions/publish-workflow-2-bump-version
         with:
           package_name: ${{ inputs.package_name }}
           new_version: ${{ inputs.custom_version || inputs.new_version }}
 
       - name: Run pre-publish checks
-        uses: VKCOM/VKUI/.github/actions/publish-workflow-3-validation@master
+        uses: ./.github/actions/publish-workflow-3-validation
         with:
           package_name: ${{ inputs.package_name }}
 
       - name: Complete publish
         id: complete_publish
-        uses: VKCOM/VKUI/.github/actions/publish-workflow-4-complete@master
+        uses: ./.github/actions/publish-workflow-4-complete
         with:
           branch: ${{ github.ref }}
           prev_version: ${{ steps.updated_versions_info.outputs.prev_version }}
