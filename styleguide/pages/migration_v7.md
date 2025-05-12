@@ -723,7 +723,7 @@
 
   </details>
 
-- У под-компонента `FormItem.TopLabel` свойство `multiline` было удалено, теперь свойство `topMultiline` устанавливается у компонент `FormItem`.
+- У подкомпонента `FormItem.TopLabel` свойство `multiline` было удалено, теперь свойство `topMultiline` устанавливается у компонент `FormItem`.
   <details>
   <summary>Миграция</summary>
 
@@ -897,7 +897,7 @@
 
 ### [Image](https://vkcom.github.io/VKUI/7.0.0/#/Image)
 
-У под-компонента `Image.Overlay` свойство `disableInteractive` было удалено, вместо него теперь можно просто не прокидывать
+У подкомпонента `Image.Overlay` свойство `disableInteractive` было удалено, вместо него теперь можно просто не прокидывать
 свойство `onClick`.
 
 <hr/>

@@ -17,6 +17,7 @@ import {
   subWeeks,
 } from 'date-fns';
 import { clamp as clampNumber } from '../helpers/math';
+import { Keys, type KeysValues } from './accessibility';
 
 export const DEFAULT_MAX_YEAR = 9999;
 // 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
@@ -60,7 +61,7 @@ export const getMonths = (
 
   for (let i = 0; i < 12; i++) {
     months.push({
-      label: formatter.format(new Date('1970-01-01').setMonth(i)),
+      label: formatter.format(new Date(2023, i, 15)),
       value: i,
     });
   }
@@ -85,32 +86,43 @@ export const getDaysNames = (
   }).map((day) => ({ short: shortFormatter.format(day), long: longFormatter.format(day) }));
 };
 
-export const navigateDate = (date?: Date | null, key?: string): Date => {
+export const NAVIGATION_KEYS: KeysValues[] = [
+  Keys.ARROW_UP,
+  Keys.ARROW_DOWN,
+  Keys.ARROW_LEFT,
+  Keys.ARROW_RIGHT,
+  Keys.HOME,
+  Keys.END,
+  Keys.PAGE_UP,
+  Keys.PAGE_DOWN,
+];
+
+export const navigateDate = (date?: Date | null, key?: (typeof NAVIGATION_KEYS)[number]): Date => {
   let newDate = date ?? new Date();
 
   switch (key) {
-    case 'ArrowRight':
+    case Keys.ARROW_RIGHT:
       newDate = addDays(newDate, 1);
       break;
-    case 'ArrowLeft':
+    case Keys.ARROW_LEFT:
       newDate = subDays(newDate, 1);
       break;
-    case 'ArrowUp':
+    case Keys.ARROW_UP:
       newDate = subWeeks(newDate, 1);
       break;
-    case 'ArrowDown':
+    case Keys.ARROW_DOWN:
       newDate = addWeeks(newDate, 1);
       break;
-    case 'Home':
+    case Keys.HOME:
       newDate = startOfWeek(newDate, { weekStartsOn: 1 });
       break;
-    case 'End':
+    case Keys.END:
       newDate = endOfWeek(newDate, { weekStartsOn: 1 });
       break;
-    case 'PageUp':
+    case Keys.PAGE_UP:
       newDate = subMonths(newDate, 1);
       break;
-    case 'PageDown':
+    case Keys.PAGE_DOWN:
       newDate = addMonths(newDate, 1);
       break;
   }

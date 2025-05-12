@@ -86,9 +86,6 @@ updates:
           - '@next/*'
     versioning-strategy: increase
     open-pull-requests-limit: 20
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
 
   # GitHub Actions
 
@@ -98,6 +95,3 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
