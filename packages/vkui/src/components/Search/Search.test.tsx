@@ -1,7 +1,12 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon24Done } from '@vkontakte/icons';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  userEvent,
+  waitCSSKeyframesAnimation,
+} from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
 
@@ -63,11 +68,12 @@ describe(Search, () => {
           <input data-testid="reset" type="reset" />
         </form>,
       );
-      expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      expect(screen.queryByTestId('clear-button')).toBeNull();
       await userEvent.type(getInput(), 'user');
       expect(getClearIcon()).not.toHaveAttribute('tabindex');
       fireEvent.click(screen.getByTestId('reset'));
-      expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
+      await waitCSSKeyframesAnimation(getClearIcon());
+      expect(screen.queryByTestId('clear-button')).toBeNull();
     });
     it('handles clear button visibility with default value correctly', async () => {
       render(
