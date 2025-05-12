@@ -5584,7 +5584,7 @@ __metadata:
     "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
     "@vkontakte/vkui": "workspace:^"
-    "@vkontakte/vkui-tokens": "npm:4.63.0"
+    "@vkontakte/vkui-tokens": "npm:4.65.0"
     next: "npm:^15.3.1"
     nextra: "npm:^4.2.17"
     react: "npm:^18.3.1"
@@ -5666,7 +5666,7 @@ __metadata:
     "@vkontakte/eslint-plugin": "npm:^2.0.0"
     "@vkontakte/prettier-config": "npm:^0.2.1"
     "@vkontakte/stylelint-config": "npm:^4.1.0"
-    "@vkontakte/vkui-tokens": "npm:4.63.0"
+    "@vkontakte/vkui-tokens": "npm:4.65.0"
     autoprefixer: "npm:^10.4.21"
     clean-webpack-plugin: "npm:^4.0.0"
     concurrently: "npm:^9.1.2"
@@ -5688,7 +5688,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^5.2.0"
     eslint-plugin-react-server-components: "npm:^1.2.0"
     eslint-plugin-unicorn: "npm:^55.0.0"
-    happy-css-modules: "npm:^3.2.0"
+    happy-css-modules: "npm:^4.0.0"
     husky: "npm:^9.1.6"
     jest: "npm:^29.7.0"
     jest-axe: "npm:^10.0.0"
@@ -5754,12 +5754,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-tokens@npm:4.63.0":
-  version: 4.63.0
-  resolution: "@vkontakte/vkui-tokens@npm:4.63.0"
+"@vkontakte/vkui-tokens@npm:4.65.0":
+  version: 4.65.0
+  resolution: "@vkontakte/vkui-tokens@npm:4.65.0"
   dependencies:
     csstype: "npm:^3.1.1"
-  checksum: 10/4a115625bac876122c463247120b214561ad1834e7b275681c43fbc405a5393868aab168d7e78b8ef68d138d286b4f19dfb0f5b12bdcc86fd09542f358e5174d
+  checksum: 10/5fa70d8a16094d4b7d3f2794683eab640d2fad7fa152d6a77aea9a733fd36ea7eba7cc0fd681d3c80a0b09ce2dc52aa5ed30cc4c5357e5bcd1167835ba32478b
   languageName: node
   linkType: hard
 
@@ -6642,6 +6642,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"async-mutex@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "async-mutex@npm:0.5.0"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/4c6bfce1cc9cd43f723c4d96403ac5f4757f885c953b839cde6956ec8817ff39623b82d67614de10c7933e21626925882fb9bac367db7d15d7cb4f84228722c9
+  languageName: node
+  linkType: hard
+
 "asynckit@npm:^0.4.0":
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
@@ -6680,13 +6689,6 @@ __metadata:
   dependencies:
     possible-typed-array-names: "npm:^1.0.0"
   checksum: 10/6c9da3a66caddd83c875010a1ca8ef11eac02ba15fb592dc9418b2b5e7b77b645fa7729380a92d9835c2f05f2ca1b6251f39b993e0feb3f1517c74fa1af02cab
-  languageName: node
-  linkType: hard
-
-"await-lock@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "await-lock@npm:2.2.2"
-  checksum: 10/feb11f36768a8545879ed2d214b46aae484e6564ffa466af9212d5782897203770795cae01f813de04a46f66c0b8ee6bc690a0c435b04e00cad5a18ef0842e25
   languageName: node
   linkType: hard
 
@@ -11527,13 +11529,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-css-modules@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "happy-css-modules@npm:3.2.0"
+"happy-css-modules@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "happy-css-modules@npm:4.0.0"
   dependencies:
     "@file-cache/core": "npm:^2.0.0"
     "@file-cache/npm": "npm:^2.0.0"
-    await-lock: "npm:^2.2.2"
+    async-mutex: "npm:^0.5.0"
     camelcase: "npm:^8.0.0"
     chalk: "npm:^5.3.0"
     chokidar: "npm:^3.6.0"
@@ -11551,7 +11553,7 @@ __metadata:
   peerDependencies:
     less: ^3.0.0 || ^4.0.0
     postcss: ^8.0.0
-    sass: ^1.63.3
+    sass: ^1.68.0
   peerDependenciesMeta:
     less:
       optional: true
@@ -11559,7 +11561,7 @@ __metadata:
       optional: true
   bin:
     hcm: bin/hcm.js
-  checksum: 10/f123aa915c7b35fb413ec439fceeec648bc1a9950b449513823cbcda5404b8631a8649845233fa498803d60083ef3e48bf138ac417991a793ce3f8f369d28d86
+  checksum: 10/32252310cd874e215d2a4f025b44519821d2459725702455722387dcce14f7d6e190b72a64eec6a0d096f1a82927c80d8fc362985e5f7487fd743515b4ee0fc9
   languageName: node
   linkType: hard
 
