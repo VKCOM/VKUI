@@ -26,10 +26,10 @@ const stylesStatus = {
 };
 
 export interface FormItemProps
-  extends React.AllHTMLAttributes<HTMLElement>,
+  extends Omit<React.AllHTMLAttributes<HTMLElement>, 'disabled'>,
     HasRootRef<HTMLElement>,
     HasComponent,
-    RemovableProps {
+    Omit<RemovableProps, 'disabled'> {
   /**
    * Дополнительный элемент, отображаемый над содержимым.
    */
@@ -79,6 +79,12 @@ export interface FormItemProps
    * Помечает поле обязательным.
    */
   required?: boolean;
+  /**
+   * @deprecated Since 7.4.0.
+   *
+   * Свойство ни на что не влияет и будет удалено в `v8`.
+   */
+  disabled?: boolean;
 }
 
 /**
