@@ -38,8 +38,15 @@
   border: 0;
 }
 
+.textarea:placeholder-shown {
+  text-overflow: ellipsis;
+}
+
 .textarea::placeholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--vkui--color_text_subhead);
+  white-space: nowrap;
   /* Для Firefox */
   opacity: 1;
 }
