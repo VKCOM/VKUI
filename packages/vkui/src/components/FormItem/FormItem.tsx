@@ -26,10 +26,10 @@ const stylesStatus = {
 };
 
 export interface FormItemProps
-  extends Omit<React.AllHTMLAttributes<HTMLElement>, 'disabled'>,
+  extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
     HasComponent,
-    Omit<RemovableProps, 'disabled'> {
+    RemovableProps {
   /**
    * Дополнительный элемент, отображаемый над содержимым.
    */
@@ -79,12 +79,6 @@ export interface FormItemProps
    * Помечает поле обязательным.
    */
   required?: boolean;
-  /**
-   * @deprecated Since 7.4.0.
-   *
-   * Свойство ни на что не влияет и будет удалено в `v8`.
-   */
-  disabled?: boolean;
 }
 
 /**
@@ -110,6 +104,7 @@ export const FormItem: React.FC<FormItemProps> & {
   bottomId,
   noPadding,
   required = false,
+  disabled,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -167,6 +162,7 @@ export const FormItem: React.FC<FormItemProps> & {
             removePlaceholder={removePlaceholder}
             indent={removable === 'indent'}
             noPadding={noPadding}
+            disabled={disabled}
           >
             <div className={classNames(styles.removable, 'vkuiInternalFormItem__removable')}>
               {wrappedChildren}
