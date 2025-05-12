@@ -46,7 +46,7 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Обработчик изменения выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
    */
-  onSelectedChange?: (id: string) => void;
+  onSelectedIdChange?: (id: string) => void;
 }
 
 /**
@@ -61,13 +61,13 @@ export const Tabs = ({
   layoutFillMode = 'auto',
   selectedId,
   defaultSelectedId,
-  onSelectedChange,
+  onSelectedIdChange,
   ...restProps
 }: TabsProps): React.ReactNode => {
   const controller = useTabsController({
     selectedId,
     defaultSelectedId,
-    onSelectedChange,
+    onSelectedIdChange,
   });
   const platform = usePlatform();
   const direction = useConfigDirection();

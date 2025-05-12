@@ -12,17 +12,17 @@ export type TabsController = {
 export const useTabsController = ({
   selectedId,
   defaultSelectedId,
-  onSelectedChange: onSelectedTabChangeProp,
+  onSelectedIdChange: onSelectedIdChangeProp,
 }: Pick<
   TabsProps,
-  'selectedId' | 'defaultSelectedId' | 'onSelectedChange'
+  'selectedId' | 'defaultSelectedId' | 'onSelectedIdChange'
 >): TabsController | null => {
-  const onSelectedChange = useStableCallback(
-    (id: string | undefined) => id && onSelectedTabChangeProp?.(id),
+  const onSelectedIdChange = useStableCallback(
+    (id: string | undefined) => id && onSelectedIdChangeProp?.(id),
   );
 
   const [value, onChange] = useCustomEnsuredControl<string | undefined>({
-    onChange: onSelectedChange,
+    onChange: onSelectedIdChange,
     value: selectedId,
     defaultValue: defaultSelectedId,
   });

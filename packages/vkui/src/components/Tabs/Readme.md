@@ -52,16 +52,12 @@ const Example = () => {
         </PanelHeader>
 
         {selected === 'news' && (
-          <Group id="tab-content-news" aria-labelledby="tab-news" role="tabpanel">
+          <Group id="tab-content-news" aria-labelledby="news" role="tabpanel">
             <Div>Контент новостей</Div>
           </Group>
         )}
         {selected === 'recommendations' && (
-          <Group
-            id="tab-content-recommendations"
-            aria-labelledby="tab-recommendations"
-            role="tabpanel"
-          >
+          <Group id="tab-content-recommendations" aria-labelledby="recommendations" role="tabpanel">
             <Div>Контент рекомендаций</Div>
           </Group>
         )}
@@ -93,8 +89,9 @@ const Example = () => {
 
 const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
   return (
-    <Tabs>
+    <Tabs selectedId={selected} onSelectedIdChange={setSelected}>
       <TabsItem
+        id="news"
         after={
           <Icon16Dropdown
             style={{
@@ -102,25 +99,20 @@ const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
             }}
           />
         }
-        selected={selected === 'news'}
         onClick={() => {
           if (selected === 'news') {
             onMenuClick(true);
           }
-          setSelected('news');
         }}
-        id="tab-news"
         aria-controls="tab-content-news"
       >
         Новости
       </TabsItem>
       <TabsItem
-        selected={selected === 'recommendations'}
+        id="recommendations"
         onClick={() => {
           onMenuClick(false);
-          setSelected('recommendations');
         }}
-        id="tab-recommendations"
         aria-controls="tab-content-recommendations"
       >
         Интересное
@@ -143,7 +135,7 @@ const Scrollable = () => {
         withScrollToSelectedTab
         scrollBehaviorToSelectedTab="center"
         selectedId={selected}
-        onSelectedChange={setSelected}
+        onSelectedIdChange={setSelected}
       >
         <HorizontalScroll arrowSize="m">
           <TabsItem id="groups" disabled={disabled}>
