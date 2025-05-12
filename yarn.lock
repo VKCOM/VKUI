@@ -2564,37 +2564,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-core@npm:1.51.1":
-  version: 1.51.1
-  resolution: "@playwright/experimental-ct-core@npm:1.51.1"
+"@playwright/experimental-ct-core@npm:1.52.0":
+  version: 1.52.0
+  resolution: "@playwright/experimental-ct-core@npm:1.52.0"
   dependencies:
-    playwright: "npm:1.51.1"
-    playwright-core: "npm:1.51.1"
-    vite: "npm:^5.4.14 || ^6.0.0"
-  checksum: 10/7123f8a52034c3932f2caacba9a6b508a80f1b948ddc139131771b9b5995684b0942513d14b543a0d049a56472ab035952e8f5f1139e4d669a4a758f12f3f274
+    playwright: "npm:1.52.0"
+    playwright-core: "npm:1.52.0"
+    vite: "npm:^6.2.6"
+  checksum: 10/36fefbc3fc88dc11ed44ab4eceb49655621ac4c094dfc87aa15b6b0fe9f6a33f04d1d346bc3e35785a2ecc37e9efc450ee8c7e033d0e96d448ed7cbc591e3a77
   languageName: node
   linkType: hard
 
-"@playwright/experimental-ct-react@npm:1.51.1":
-  version: 1.51.1
-  resolution: "@playwright/experimental-ct-react@npm:1.51.1"
+"@playwright/experimental-ct-react@npm:1.52.0":
+  version: 1.52.0
+  resolution: "@playwright/experimental-ct-react@npm:1.52.0"
   dependencies:
-    "@playwright/experimental-ct-core": "npm:1.51.1"
+    "@playwright/experimental-ct-core": "npm:1.52.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
   bin:
     playwright: cli.js
-  checksum: 10/5e34e7b738cd3cc69c144751a1457103574a663c00c1c62c27f53b7307a586010e5080849a141efec10ef56130c0d1f34a091f8c547a63dcd35059df8a44faed
+  checksum: 10/4d32bac9aeffb08bd28c2a27559e22376f8e136d08c4dfad41bfa65ff078e42bd4c1590772ccee19a18fbf2c7977df704f68ccf9be8250321f910f09abec335e
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.51.1":
-  version: 1.51.1
-  resolution: "@playwright/test@npm:1.51.1"
+"@playwright/test@npm:1.52.0":
+  version: 1.52.0
+  resolution: "@playwright/test@npm:1.52.0"
   dependencies:
-    playwright: "npm:1.51.1"
+    playwright: "npm:1.52.0"
   bin:
     playwright: cli.js
-  checksum: 10/ffb0c964d54f593897f05a2587d8e1e4f5f0e8c28f5f6260c1182ff938eb375d96c57594dd2f223ec45452a6af40695fd22f222930610c32f345e28ccf53141d
+  checksum: 10/e18a4eb626c7bc6cba212ff2e197cf9ae2e4da1c91bfdf08a744d62e27222751173e4b220fa27da72286a89a3b4dea7c09daf384d23708f284b64f98e9a63a88
   languageName: node
   linkType: hard
 
@@ -5517,8 +5517,8 @@ __metadata:
   resolution: "@vkontakte/vkui-monorepo@workspace:."
   dependencies:
     "@csstools/postcss-global-data": "npm:3.0.0"
-    "@playwright/experimental-ct-react": "npm:1.51.1"
-    "@playwright/test": "npm:1.51.1"
+    "@playwright/experimental-ct-react": "npm:1.52.0"
+    "@playwright/test": "npm:1.52.0"
     "@project-docs/styleguide": "workspace:1.0.0"
     "@project-docs/website": "workspace:1.0.0"
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0"
@@ -6729,7 +6729,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "benchmark@workspace:benchmark"
   dependencies:
-    "@playwright/test": "npm:1.51.1"
+    "@playwright/test": "npm:1.52.0"
     "@swc/core": "npm:^1.11.24"
     "@vkontakte/vkui": "workspace:packages/vkui"
     cli-table3: "npm:^0.6.1"
@@ -6739,7 +6739,7 @@ __metadata:
     finalhandler: "npm:2.1.0"
     html-webpack-plugin: "npm:^5.6.3"
     mini-css-extract-plugin: "npm:^2.9.2"
-    playwright: "npm:1.51.1"
+    playwright: "npm:1.52.0"
     postcss: "npm:^8.5.3"
     postcss-modules: "npm:^6.0.1"
     react: "npm:^18.3.1"
@@ -7142,14 +7142,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001717":
-  version: 1.0.30001717
-  resolution: "caniuse-lite@npm:1.0.30001717"
-  checksum: 10/e47dfd8707ea305baa177f3d3d531df614f5a9ac6335363fc8f86f0be4caf79f5734f3f68b601fee4edd9d79f1e5ffc0931466bb894bf955ed6b1dd5a1c34b1d
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001716":
+"caniuse-lite@npm:^1.0.30001716, caniuse-lite@npm:^1.0.30001717":
   version: 1.0.30001717
   resolution: "caniuse-lite@npm:1.0.30001717"
   checksum: 10/e47dfd8707ea305baa177f3d3d531df614f5a9ac6335363fc8f86f0be4caf79f5734f3f68b601fee4edd9d79f1e5ffc0931466bb894bf955ed6b1dd5a1c34b1d
@@ -16734,27 +16727,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.51.1":
-  version: 1.51.1
-  resolution: "playwright-core@npm:1.51.1"
+"playwright-core@npm:1.52.0":
+  version: 1.52.0
+  resolution: "playwright-core@npm:1.52.0"
   bin:
     playwright-core: cli.js
-  checksum: 10/954ce25782bbf0780c170caa56e7a0ab2e625dad42c628f9ee684974398b93885e58b88afb8b18dd2c96a7a82c6dde474d4fa7a4f6dff32111a562506c187cc3
+  checksum: 10/42e13f5f98dc25ebc95525fb338a215b9097b2ba39d41e99972a190bf75d79979f163f5bc07b1ca06847ee07acb2c9b487d070fab67e9cd55e33310fc05aca3c
   languageName: node
   linkType: hard
 
-"playwright@npm:1.51.1":
-  version: 1.51.1
-  resolution: "playwright@npm:1.51.1"
+"playwright@npm:1.52.0":
+  version: 1.52.0
+  resolution: "playwright@npm:1.52.0"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.51.1"
+    playwright-core: "npm:1.52.0"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10/cc7d3e204b9fd70a7208ef1d189981135a04de533eff4a6772a6c8be1604a1eaaa3bac9129eb5d814384d4f727fb8011832676a5105b1b260917c48c421f7f9b
+  checksum: 10/214175446089000c2ac997b925063b95f7d86d129c5d7c74caa5ddcb05bcad598dfd569d2133a10dc82d288bf67e7858877dcd099274b0b928b9c63db7d6ecec
   languageName: node
   linkType: hard
 
@@ -21814,9 +21807,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.4.14 || ^6.0.0":
-  version: 6.3.4
-  resolution: "vite@npm:6.3.4"
+"vite@npm:^6.2.6":
+  version: 6.3.5
+  resolution: "vite@npm:6.3.5"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.4.4"
@@ -21865,7 +21858,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/347579b6571e591c1e4f54262e631f02e952e548171af09042aeffb40adfa5c9b43cf05cf115f0961cc553f6b7173fb9c2ee997a688007c01b6e13779d9a2bd4
+  checksum: 10/7bc3a1c5ef79413ad70daeeaf69b76cd1218d16aa18ed8ee08d74648ef17284f4a17c11f5cf42b573b6dc5e3d5f115110b67b1d23c2c699cfe404757764a634a
   languageName: node
   linkType: hard
 
