@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ModalCard } from '../../ModalCard/ModalCard';
@@ -41,6 +43,7 @@ export const useModalRoot = (props: UseModalRootProps): UseModalRootReturn => {
     activeModal: null,
     modals: [],
   });
+  const [overlayShowed, setOverlayShowed] = React.useState(false);
   const needCloseModals = React.useRef<Set<string>>(new Set());
 
   const removeModalImpl = (oldState: ModalRootState, id: string) => {
@@ -109,6 +112,7 @@ export const useModalRoot = (props: UseModalRootProps): UseModalRootReturn => {
   const open = React.useCallback(
     <T extends ModalRootItem>(props: T) => {
       const id = props.id || uuidv4();
+      setOverlayShowed(true);
       setState((oldState) => {
         if (oldState.modals.find((modal) => modal.id === id)) {
           return oldState;
@@ -164,10 +168,15 @@ export const useModalRoot = (props: UseModalRootProps): UseModalRootReturn => {
   }, [close, closeAll, openCard, openPage]);
 
   const contextHolder: React.ReactElement | null = React.useMemo(() => {
-    return state.modals.length ? (
-      <ContextHolder modals={state.modals} activeModal={state.activeModal} {...props} />
+    return state.modals.length || overlayShowed ? (
+      <ContextHolder
+        modals={state.modals}
+        activeModal={state.activeModal}
+        onOverlayClosed={() => setOverlayShowed(false)}
+        {...props}
+      />
     ) : null;
-  }, [state, props]);
+  }, [state.modals, state.activeModal, overlayShowed, props]);
 
   return [api, contextHolder];
 };

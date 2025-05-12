@@ -3,7 +3,10 @@ import { type ModalPageProps } from '../../ModalPage/types';
 import { type ModalRootProps } from '../types';
 
 /* eslint-disable jsdoc/require-jsdoc */
-export type UseModalRootProps = Omit<ModalRootProps, 'activeModal' | 'children'>;
+export type UseModalRootProps = Omit<
+  ModalRootProps,
+  'activeModal' | 'children' | 'onOverlayClosed'
+>;
 
 export type ModalPageItem = ModalPageProps & {
   type: 'page';
