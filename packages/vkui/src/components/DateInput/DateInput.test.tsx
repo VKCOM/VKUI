@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { format, isToday, isYesterday, subDays } from 'date-fns';
 import { baselineComponent, userEvent } from '../../testing/utils';
@@ -8,21 +8,23 @@ import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20, 0, 0);
 
-const testIds: DateInputPropsTestsProps = {
+const testIds: Required<DateInputPropsTestsProps> = {
   dayFieldTestId: 'day-picker',
   monthFieldTestId: 'month-picker',
   yearFieldTestId: 'year-picker',
   hourFieldTestId: 'hour-picker',
   minuteFieldTestId: 'minute-picker',
+  clearButtonTestId: 'clear-button',
+  showCalendarButtonTestId: 'show-calendar-button',
 };
 
 const getInputsLike = () => {
   return [
-    screen.queryByTestId('day-picker'),
-    screen.queryByTestId('month-picker'),
-    screen.queryByTestId('year-picker'),
-    screen.queryByTestId('hour-picker'),
-    screen.queryByTestId('minute-picker'),
+    screen.queryByTestId(testIds.dayFieldTestId),
+    screen.queryByTestId(testIds.monthFieldTestId),
+    screen.queryByTestId(testIds.yearFieldTestId),
+    screen.queryByTestId(testIds.hourFieldTestId),
+    screen.queryByTestId(testIds.minuteFieldTestId),
   ].filter(Boolean) as HTMLElement[];
 };
 
@@ -153,16 +155,11 @@ describe('DateInput', () => {
   it('should call onChange callback when change data by calendar', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onChange={onChange}
         closeOnChange={true}
-        changeMonthLabel=""
-        changeYearLabel=""
-        changeDayLabel=""
-        changeHoursLabel=""
-        changeMinutesLabel=""
         {...testIds}
         calendarTestsProps={{
           dayTestId,
@@ -178,18 +175,18 @@ describe('DateInput', () => {
     const resultDate = new Date(date);
     resultDate.setDate(date.getDate() - 1);
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(resultDate)));
 
     expect(onChange).toHaveBeenCalledWith(resultDate);
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
 
   it('should call onCloseCalendar calendar was closed', async () => {
     jest.useFakeTimers();
     const onCalendarOpenChanged = jest.fn();
-    const { container } = render(
+    render(
       <DateInput
         value={date}
         onCalendarOpenChanged={onCalendarOpenChanged}
@@ -207,13 +204,13 @@ describe('DateInput', () => {
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
     expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(subDays(date, 1))));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
 
   it('should call onApply when clicking Done button', async () => {
@@ -335,5 +332,365 @@ describe('DateInput', () => {
     await userEvent.click(dates);
 
     expect(screen.queryByText('Вчера')).toBeFalsy();
+  });
+
+  it('should call onChange with undefined when click on clear button', async () => {
+    const onChange = jest.fn();
+
+    render(<DateInput value={new Date(2023, 5, 30)} onChange={onChange} {...testIds} />);
+
+    fireEvent.click(screen.getByTestId(testIds.clearButtonTestId));
+
+    expect(onChange).toHaveBeenCalledWith(undefined);
+  });
+
+  it('should toggle calendar open state on calendar icon click', async () => {
+    jest.useFakeTimers();
+    const onCalendarOpenChanged = jest.fn();
+    render(
+      <DateInput
+        showCalendarLabel="Показать календарь"
+        onCalendarOpenChanged={onCalendarOpenChanged}
+      />,
+    );
+
+    // проверяем, что календарь закрыт
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+
+    const calendarIcon = screen.getByText('Показать календарь');
+    await act(() => userEvent.click(calendarIcon));
+
+    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
+    expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+
+    await act(() => userEvent.click(calendarIcon));
+
+    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
+    expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+  });
+
+  it('closes calendar on click outside (focus should not return to the input)', async () => {
+    jest.useFakeTimers();
+    render(
+      <div>
+        <button type="button">Предыдущая кнопка</button>
+        <DateInput value={new Date()} accessible {...testIds} />
+      </div>,
+    );
+
+    const [dayPicker] = getInputsLike();
+    await act(() => userEvent.click(dayPicker));
+
+    // календарь открыт
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+
+    await act(() => userEvent.click(screen.getByText(/Предыдущая кнопка/)));
+
+    // календарь закрыт
+    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+    // обязательно ждём, ведь в случае ошибки
+    // фокус может прыгнуть нетуда (с помощью FocusTrap)
+    // через некоторый промежуток времени
+    jest.runOnlyPendingTimers();
+    expect(document.activeElement).toBe(screen.getByText(/Предыдущая кнопка/));
+  });
+
+  describe('keyboard', () => {
+    it('controls focus when arrows or tab keys are pressed', async () => {
+      jest.useFakeTimers();
+      render(
+        <div>
+          <button type="button">Предыдущая кнопка</button>
+          <DateInput enableTime {...testIds} />
+        </div>,
+      );
+
+      const [dayPicker, monthPicker, yearPicker, hourPicker, minutePicker] = getInputsLike();
+
+      await act(() => userEvent.click(dayPicker));
+      expect(document.activeElement).toBe(dayPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(monthPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(yearPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(hourPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(minutePicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(
+        screen.getByRole('button', { name: 'Показать календарь' }),
+      );
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(minutePicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(hourPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(yearPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(monthPicker);
+
+      await act(() => userEvent.keyboard('{ArrowRight}'));
+      expect(document.activeElement).toBe(yearPicker);
+
+      await act(() => userEvent.keyboard('{ArrowLeft}'));
+      expect(document.activeElement).toBe(monthPicker);
+
+      await act(() => userEvent.keyboard('{ArrowLeft}'));
+      expect(document.activeElement).toBe(dayPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(screen.getByText('Предыдущая кнопка'));
+    });
+
+    it('clears part of input data by pressing delete', async () => {
+      jest.useFakeTimers();
+      render(
+        <DateInput
+          changeMonthLabel=""
+          changeYearLabel=""
+          changeDayLabel=""
+          changeHoursLabel=""
+          changeMinutesLabel=""
+          value={date}
+          onChange={jest.fn()}
+          {...testIds}
+        />,
+      );
+
+      const inputLikes = getInputsLike();
+      const [dayPicker] = inputLikes;
+
+      await act(() => userEvent.click(dayPicker));
+      expect(document.activeElement).toBe(dayPicker);
+
+      let normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{Del}'));
+
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([0, 7, 2024]);
+    });
+
+    it('changes input values by arrow keys', async () => {
+      jest.useFakeTimers();
+      render(
+        <DateInput
+          changeMonthLabel=""
+          changeYearLabel=""
+          changeDayLabel=""
+          changeHoursLabel=""
+          changeMinutesLabel=""
+          value={date}
+          onChange={jest.fn()}
+          {...testIds}
+        />,
+      );
+
+      const inputLikes = getInputsLike();
+      const [dayPicker] = inputLikes;
+
+      await act(() => userEvent.click(dayPicker));
+      expect(document.activeElement).toBe(dayPicker);
+
+      let normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{ArrowUp}'));
+
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([1, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{ArrowRight}'));
+      await act(() => userEvent.keyboard('{ArrowDown}'));
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([1, 6, 2024]);
+
+      await act(() => userEvent.keyboard('{ArrowRight}'));
+      await act(() => userEvent.keyboard('{ArrowDown}'));
+
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([1, 6, 2023]);
+
+      await act(() => userEvent.keyboard('{Del}'));
+      await act(() => userEvent.keyboard('2'));
+      await act(() => userEvent.keyboard('0'));
+      await act(() => userEvent.keyboard('0'));
+      await act(() => userEvent.keyboard('1'));
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([1, 6, 2001]);
+    });
+
+    it('removes digit by digit on backspace', async () => {
+      jest.useFakeTimers();
+      render(
+        <DateInput
+          changeMonthLabel=""
+          changeYearLabel=""
+          changeDayLabel=""
+          changeHoursLabel=""
+          changeMinutesLabel=""
+          value={date}
+          onChange={jest.fn()}
+          {...testIds}
+        />,
+      );
+
+      const inputLikes = getInputsLike();
+      const [dayPicker] = inputLikes;
+
+      await act(() => userEvent.click(dayPicker));
+      expect(document.activeElement).toBe(dayPicker);
+
+      let normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{backspace}'));
+      await act(() => userEvent.keyboard('{backspace}'));
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([0, 7, 2024]);
+    });
+  });
+
+  describe('accessible mode', () => {
+    it('opens/closes calendar with keyboard/mouse', async () => {
+      jest.useFakeTimers();
+      const onCalendarOpenChangedStub = jest.fn();
+      render(
+        <DateInput
+          accessible
+          enableTime
+          onCalendarOpenChanged={onCalendarOpenChangedStub}
+          {...testIds}
+        />,
+      );
+
+      const inputLikesLabels = ['День', 'Месяц', 'Год', 'Час', 'Минута'];
+
+      for (const inputLabel of inputLikesLabels) {
+        onCalendarOpenChangedStub.mockClear();
+        // фокусируемся на одном из полей инпута
+        await act(() => userEvent.tab());
+        // фокус на инпуте
+        const inputPart = screen.getByRole('spinbutton', { name: inputLabel });
+        expect(document.activeElement).toBe(inputPart);
+
+        // календарь при фокусе закрыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+
+        // нажимаем пробел
+        await act(() => userEvent.keyboard(' '));
+        // календарь открыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+        jest.runOnlyPendingTimers();
+
+        // onCalendarOpenChanged вызван лишь раз
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+        onCalendarOpenChangedStub.mockClear();
+
+        // фокус на кнопке в календаре
+        expect(document.activeElement).toBe(
+          screen.getByRole('button', { name: /Предыдущий месяц/ }),
+        );
+
+        // закрываем, нажимая Esc
+        await act(() => userEvent.keyboard('{Escape}'));
+        // календарь закрыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+        jest.runOnlyPendingTimers();
+
+        // onCalendarOpenChanged вызван лишь раз
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+        onCalendarOpenChangedStub.mockClear();
+
+        // фокус возвращается на часть инпутa
+        expect(document.activeElement).toBe(inputPart);
+
+        // кликаем на ту же часть инпута чтобы открыть календарь
+        await act(() => userEvent.click(inputPart));
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+
+        // onCalendarOpenChanged вызван лишь раз
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+        onCalendarOpenChangedStub.mockClear();
+
+        // закрываем, нажимая Esc
+        await act(() => userEvent.keyboard('{Escape}'));
+        jest.runOnlyPendingTimers();
+
+        // фокус возвращается на часть инпутa
+        expect(document.activeElement).toBe(inputPart);
+      }
+    });
+
+    it('does not close calendar when Escape is pressed to close inner dropdown (month, year, hour, minute)', async () => {
+      jest.useFakeTimers();
+      const onCalendarOpenChangedStub = jest.fn();
+      render(
+        <DateInput
+          value={new Date()}
+          accessible
+          enableTime
+          onCalendarOpenChanged={onCalendarOpenChangedStub}
+          calendarTestsProps={{
+            monthDropdownTestId: 'month-dropdown',
+            yearDropdownTestId: 'year-dropdown',
+            hoursTestId: 'hours-dropdown',
+            minutesTestId: 'minutes-dropdown',
+          }}
+        />,
+      );
+
+      // проверяем, что календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+
+      const calendarIcon = screen.getByText('Показать календарь');
+      await act(() => userEvent.click(calendarIcon));
+
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+
+      const calendarSelectsIds = [
+        'month-dropdown',
+        'year-dropdown',
+        'hours-dropdown',
+        'minutes-dropdown',
+      ];
+
+      for (const selectTestId of calendarSelectsIds) {
+        // dropdown закрыт
+        expect(screen.queryByRole('listbox')).toBeFalsy();
+        // открываем дропдаун одного из селектов
+        await act(() => userEvent.click(screen.getByTestId(selectTestId)));
+        // dropdown открыт
+        expect(screen.queryByRole('listbox')).toBeTruthy();
+
+        // закрываем дропдаун с помощью Escape
+        await act(() => userEvent.keyboard('{Escape}'));
+        expect(screen.queryByRole('listbox')).toBeFalsy();
+
+        // календарь всё ещё должен быть открыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+      }
+
+      // закрываем календарь с помощью Escape
+      await act(() => userEvent.keyboard('{Escape}'));
+      // календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(2);
+    });
   });
 });

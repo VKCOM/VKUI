@@ -5,7 +5,7 @@ describe('useMergedState', () => {
   it('works in uncontrolled mode', () => {
     const { result } = renderHook(() => useDateInputValue({}));
 
-    expect(result.current.value).toBe(undefined);
+    expect(result.current.value).toBe(null);
 
     const newDate = new Date();
 
@@ -83,7 +83,7 @@ describe('useMergedState', () => {
       initialProps: {},
     });
 
-    expect(result.current.value).toBe(undefined);
+    expect(result.current.value).toBe(null);
 
     const controlledValue = new Date();
     rerender({ value: controlledValue });
@@ -91,5 +91,18 @@ describe('useMergedState', () => {
 
     rerender({});
     expect(result.current.value).toBe(controlledValue);
+  });
+
+  it('correctly clear value', () => {
+    const defaultValue = new Date();
+    const onChange = jest.fn();
+    const { result } = renderHook(() => useDateInputValue({ defaultValue, onChange }));
+
+    expect(result.current.value).toBe(defaultValue);
+    act(() => {
+      result.current.clearValue();
+    });
+
+    expect(result.current.value).toBe(null);
   });
 });

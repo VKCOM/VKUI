@@ -35,8 +35,12 @@ export const getChipOptionIndexByHTMLElement = (el: HTMLElement | null): number 
 /**
  * @private
  */
-export const getChipOptionValueByHTMLElement = (el: HTMLElement | null): string | -1 => {
+export const getChipOptionValueByHTMLElement = (el: HTMLElement | null): ChipOptionValue | -1 => {
   const value = el && el.dataset.value;
+  const valueType = el && el.dataset.valueType;
+  if (valueType === 'number') {
+    return Number(value);
+  }
   return typeof value === 'string' ? value : -1;
 };
 

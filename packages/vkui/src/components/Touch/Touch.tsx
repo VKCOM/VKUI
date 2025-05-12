@@ -2,9 +2,41 @@
 
 import * as React from 'react';
 import { useStableCallback } from '../../hooks/useStableCallback';
-import { getWindow, isHTMLElement } from '../../lib/dom';
+import { getWindow, isHTMLElement, isSVGElement } from '../../lib/dom';
 import { coordX, coordY, touchEnabled, type VKUITouchEvent } from '../../lib/touch';
 import type { HasComponent, HasRootRef } from '../../types';
+
+/**
+ * Костыль для правильной работы тайпскрипта.
+ */
+type HTMLorSVGElementWithEvents = {
+  /**
+   * AddEventListener.
+   */
+  addEventListener: (<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+    options?: boolean | AddEventListenerOptions,
+  ) => void) &
+    (<K extends keyof SVGElementEventMap>(
+      type: K,
+      listener: (this: SVGElement, ev: SVGElementEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ) => void);
+  /**
+   * RemoveEventListener.
+   */
+  removeEventListener: (<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+    options?: boolean | EventListenerOptions,
+  ) => void) &
+    (<K extends keyof SVGElementEventMap>(
+      type: K,
+      listener: (this: SVGElement, ev: SVGElementEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ) => void);
+};
 
 export interface CustomTouchEvent extends Gesture {
   /**
@@ -318,10 +350,10 @@ export const Touch = ({
     // FIXME: заменить touch/mouse-события ниже на pointer-события после того, как бразуеры из
     // .browserslistrc начнут поддерживать его (см. https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#browser_compatibility).
     if (isTouchEnabled) {
-      if (isHTMLElement(event.target)) {
+      if (isHTMLElement(event.target) || isSVGElement(event.target)) {
         // Тач-события не всплывают, поэтому навешиваем события на целевой элемент
         // см. #235, #1968, https://stackoverflow.com/a/45760014
-        const target = event.target;
+        const target: HTMLorSVGElementWithEvents = event.target;
 
         target.addEventListener('touchmove', handleNativePointerMove, eventOptions);
         target.addEventListener('touchend', handleNativePointerUp, eventOptions);

@@ -74,7 +74,7 @@ export interface ActionSheetItemProps
    */
   onImmediateClick?: React.MouseEventHandler<HTMLElement>;
   /**
-   * Иконка для `checked` режима.
+   * Иконка для `selectable` режима.
    */
   iconChecked?: React.ReactNode;
   /**
@@ -169,6 +169,7 @@ export const ActionSheetItem = ({
         sizeY === 'compact' && styles.sizeYCompact,
         isRich && styles.rich,
         actionSheetMode === 'menu' && styles.menu,
+        restProps.disabled && styles.disabled,
       )}
       onKeyDown={onKeyDown}
     >
