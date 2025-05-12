@@ -132,9 +132,6 @@ const SearchExample = () => {
             <Panel id="search">
               <SimpleSearch goHeaderSearch={goHeaderSearch} />
             </Panel>
-            <Panel id="header-search">
-              <HeaderSearch onFiltersClick={openFilters} goSearch={goSearch} />
-            </Panel>
           </View>
         </SplitCol>
       </SplitLayout>
@@ -198,88 +195,3 @@ const SearchExample = () => {
 ```
 
 ## Поиск с кнопкой Найти
-
-```jsx { "props": { "adaptivity": true } }
-const App = () => {
-  const platform = usePlatform();
-
-  const isVKCOM = platform === Platform.VKCOM;
-
-  const [activeModal, setActiveModal] = React.useState(null);
-
-  const onFindButtonClick = () => {
-    setActiveModal('findModal');
-  };
-  return (
-    <React.Fragment>
-      <SplitLayout header={!isVKCOM && <PanelHeader delimiter="none" />}>
-        <SplitCol>
-          <View activePanel="find">
-            <Panel id="find">
-              <PanelHeader>Только для Compact-версии</PanelHeader>
-              <Group>
-                <Search
-                  defaultValue="value"
-                  icon={(renderButton) => (
-                    <Popover
-                      noStyling
-                      trigger="click"
-                      id="menupopup"
-                      role="dialog"
-                      aria-labelledby="menubutton"
-                      content={({ onClose }) => (
-                        <div
-                          style={{
-                            backgroundColor: 'var(--vkui--color_background_modal_inverse)',
-                            borderRadius: 8,
-                            boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-                          }}
-                        >
-                          <CellButton
-                            role="menuitem"
-                            before={<Icon28AddOutline />}
-                            onClick={onClose}
-                          >
-                            Добавить
-                          </CellButton>
-                          <CellButton
-                            role="menuitem"
-                            before={<Icon28DeleteOutline />}
-                            appearance="negative"
-                            onClick={onClose}
-                          >
-                            Добавить и очистить
-                          </CellButton>
-                        </div>
-                      )}
-                    >
-                      {renderButton(<Icon24Done />)}
-                    </Popover>
-                  )}
-                  after={<Icon24User />}
-                  onFindButtonClick={onFindButtonClick}
-                />
-              </Group>
-            </Panel>
-          </View>
-        </SplitCol>
-      </SplitLayout>
-      <ModalRoot activeModal={activeModal}>
-        <ModalCard
-          id="findModal"
-          onClose={() => setActiveModal(null)}
-          icon={<Icon56MoneyTransferOutline />}
-          title="Здесь ничего нет"
-          actions={
-            <Button size="l" mode="primary" stretched onClick={() => setActiveModal(null)}>
-              Понятно
-            </Button>
-          }
-        ></ModalCard>
-      </ModalRoot>
-    </React.Fragment>
-  );
-};
-
-<App />;
-```

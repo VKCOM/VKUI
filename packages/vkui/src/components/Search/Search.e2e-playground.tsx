@@ -41,6 +41,14 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
           onFindButtonClick: [noop],
           value: ['value'],
         },
+        {
+          placeholder: [
+            withLabel(
+              'Very very very very very very very very long placeholder',
+              'Long placeholder',
+            ),
+          ],
+        },
       ]}
     >
       {({ dir, ...props }: SearchProps) => (
