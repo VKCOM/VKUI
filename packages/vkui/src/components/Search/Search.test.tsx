@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { Icon24Done } from '@vkontakte/icons';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
@@ -187,4 +188,19 @@ describe(Search, () => {
       expect(value).toEqual('');
     },
   );
+
+  it('should render custom icon by function', () => {
+    render(
+      <Search
+        value="test"
+        icon={(renderButton) => (
+          <div data-testid="wrapper">
+            {renderButton(<Icon24Done />, { 'data-testid': 'button' })}
+          </div>
+        )}
+      />,
+    );
+    expect(screen.getByTestId('wrapper')).toBeInTheDocument();
+    expect(screen.getByTestId('button')).toBeInTheDocument();
+  });
 });
