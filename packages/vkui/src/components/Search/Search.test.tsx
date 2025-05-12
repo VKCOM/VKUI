@@ -168,7 +168,7 @@ describe(Search, () => {
 
   it('calls onIconClick', async () => {
     const cb = jest.fn();
-    render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
+    render(<Search defaultValue="value" icon={<div data-testid="icon" />} onIconClick={cb} />);
     await userEvent.click(screen.getByTestId('icon'));
     act(jest.runAllTimers);
     expect(cb).toHaveBeenCalled();
