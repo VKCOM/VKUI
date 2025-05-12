@@ -5422,8 +5422,8 @@ __metadata:
     stylelint-use-logical: "npm:^2.1.2"
     stylelint-value-no-unknown-custom-properties: "npm:^6.0.1"
     swc-loader: "npm:^0.2.6"
-    swc-plugin-css-modules: "npm:3.1.0"
-    swc-plugin-transform-remove-imports: "npm:4.0.3"
+    swc-plugin-css-modules: "npm:3.1.1"
+    swc-plugin-transform-remove-imports: "npm:4.0.4"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.8.3"
     webpack: "npm:^5.99.8"
@@ -20033,17 +20033,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin-css-modules@npm:3.1.0":
-  version: 3.1.0
-  resolution: "swc-plugin-css-modules@npm:3.1.0"
-  checksum: 10/fefd9ad4d95344d5e03feef51ede91b49b72c13ae2158cc2d8ad7753e0f328dd019510483f6f86c2aba3efa08a13fbde7ef447a3c0dbc0e1446b92390fdc7917
+"swc-plugin-css-modules@npm:3.1.1":
+  version: 3.1.1
+  resolution: "swc-plugin-css-modules@npm:3.1.1"
+  checksum: 10/6326b8be5a88713299de37edcbaf54d4e1f306a270c07264ce088a09261fded3d8a9b39d6b3233a738e82490bb628dbe3240b350a99fd38b6817a2f7ff274cf4
   languageName: node
   linkType: hard
 
-"swc-plugin-transform-remove-imports@npm:4.0.3":
-  version: 4.0.3
-  resolution: "swc-plugin-transform-remove-imports@npm:4.0.3"
-  checksum: 10/b8ad4f638bb474658376718481a6cd4d94d8b4e11d6657bfba0cde0f58870b5a1a0bef5ef2711eb67cd69dba9c42d6546fc67f190aebd9288d97c4e1f456e4b0
+"swc-plugin-transform-remove-imports@npm:4.0.4":
+  version: 4.0.4
+  resolution: "swc-plugin-transform-remove-imports@npm:4.0.4"
+  checksum: 10/d850ae3de538fb9ccb2865f8115fda2aa5a0fd7d3f7320289ede995f3603e562a426bc3bd88226f39b0ecfa0dbb5cf1c47b6b9da82941db140cf3f58ab2ee658
   languageName: node
   linkType: hard
 
