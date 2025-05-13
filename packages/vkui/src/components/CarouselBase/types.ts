@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import type * as React from 'react';
-import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HasAlign, HasRef, HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
 import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import type { CustomTouchEvent, CustomTouchEventHandler } from '../Touch/Touch';
 import { type BulletsTestIds } from './Bullets';
@@ -86,7 +86,12 @@ export interface BaseGalleryProps
     HasRef<HTMLElement>,
     BulletsTestIds,
     ScrollArrowsTestIds {
-  slideWidth?: string | number;
+  /**
+   * Размер слайда.
+   *
+   * Значение `"custom"` используется если ширина у слайдов разная.
+   */
+  slideWidth?: LiteralUnion<'custom', string> | number;
   slideIndex?: number;
   onDragStart?: CustomTouchEventHandler;
   onDragEnd?: (e: CustomTouchEvent, targetIndex: number) => void;
