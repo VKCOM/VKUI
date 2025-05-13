@@ -1,5 +1,6 @@
 'use client';
 
+import { useColorSchemeSwitcher } from '@/client/ColorSchemeSwitcher';
 import {
   AdaptivityProvider,
   AppRoot,
@@ -9,8 +10,6 @@ import {
   Flex,
 } from '@vkontakte/vkui';
 import styles from './Layout.module.css';
-import { useColorSchemeSwitcher } from '@/client/ColorSchemeSwitcher';
-import '@vkontakte/vkui/dist/cssm/styles/themes.css';
 
 interface LayoutProps {
   children: React.ReactNode;

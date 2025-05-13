@@ -1,6 +1,7 @@
+import { Layout } from '@/client/Layout';
+import '@vkontakte/vkui/dist/cssm/styles/themes.css';
 import { Viewport } from 'next';
 import * as React from 'react';
-import { Layout } from '@/client/Layout';
 
 export const viewport: Viewport = {
   width: 'device-width',
