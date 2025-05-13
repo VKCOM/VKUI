@@ -89,7 +89,7 @@ export interface BaseGalleryProps
   /**
    * Размер слайда.
    *
-   * Значение `"custom"` используется если ширина у слайдов разная.
+   * Значение `"custom"` используется, если ширина у слайдов разная.
    */
   slideWidth?: LiteralUnion<'custom', string> | number;
   slideIndex?: number;
