@@ -3,9 +3,7 @@
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ModalCard } from '../../ModalCard/ModalCard';
-import { type ModalCardProps } from '../../ModalCard/types';
 import { ModalPage } from '../../ModalPage/ModalPage';
-import { type ModalPageProps } from '../../ModalPage/types';
 import { ModalRoot } from '../ModalRoot';
 import { type ModalRootProps } from '../types';
 import {
@@ -54,6 +52,27 @@ export const useModalRoot = (props: UseModalRootProps): UseModalRootReturn => {
       modals: newModals,
     };
   };
+
+  const updateModalProps = React.useCallback((id: string, props: ModalRootItem) => {
+    setState((oldState) => {
+      const { modals, activeModal } = oldState;
+      if ('id' in props) {
+        delete props['id'];
+      }
+      const modalIndex = modals.findIndex((modal) => modal.id === id);
+      if (modalIndex === -1) {
+        return oldState;
+      }
+      const newModalProps: ModalRootItem = Object.assign(modals[modalIndex], props);
+      return {
+        modals: modals
+          .slice(0, modalIndex)
+          .concat([newModalProps])
+          .concat(modals.slice(modalIndex + 1)),
+        activeModal,
+      };
+    });
+  }, []);
 
   const removeModal = React.useCallback((id: string) => {
     setState((oldState) => removeModalImpl(oldState, id));
@@ -113,6 +132,12 @@ export const useModalRoot = (props: UseModalRootProps): UseModalRootReturn => {
     <T extends ModalRootItem>(props: T) => {
       const id = props.id || uuidv4();
       setOverlayShowed(true);
+
+      let resolvePromise: () => void;
+      const promise = new Promise<void>((resolve) => {
+        resolvePromise = resolve;
+      });
+
       setState((oldState) => {
         if (oldState.modals.find((modal) => modal.id === id)) {
           return oldState;
@@ -131,6 +156,7 @@ export const useModalRoot = (props: UseModalRootProps): UseModalRootReturn => {
                 if (needCloseModals.current.has(id)) {
                   removeModal(id);
                   needCloseModals.current.delete(id);
+                  resolvePromise();
                 }
                 props.onClosed?.();
               },
@@ -139,23 +165,56 @@ export const useModalRoot = (props: UseModalRootProps): UseModalRootReturn => {
           activeModal: id,
         };
       });
-      return id;
+      return {
+        id,
+        close: () => close(id),
+        then: <R,>(resolve: () => R) => {
+          return promise.then(resolve);
+        },
+      };
     },
-    [removeModal, setPrevActiveModal],
+    [close, removeModal, setPrevActiveModal],
   );
 
   const openCard: ModalRootApi['openCard'] = React.useCallback(
-    (props: ModalCardProps) => {
-      return open({ ...props, type: 'card' });
+    (props) => {
+      const result: Omit<ReturnType<ModalRootApi['openCard']>, 'update'> = open({
+        ...props,
+        type: 'card',
+      });
+      return {
+        id: result.id,
+        close: result.close,
+        then: result.then,
+        update: (newProps) => {
+          updateModalProps(result.id, {
+            type: 'card',
+            ...newProps,
+          });
+        },
+      };
     },
-    [open],
+    [open, updateModalProps],
   );
 
   const openPage: ModalRootApi['openPage'] = React.useCallback(
-    (props: ModalPageProps) => {
-      return open({ ...props, type: 'page' });
+    (props) => {
+      const result: Omit<ReturnType<ModalRootApi['openPage']>, 'update'> = open({
+        ...props,
+        type: 'page',
+      });
+      return {
+        id: result.id,
+        close: result.close,
+        then: result.then,
+        update: (newProps) =>
+          updateModalProps(result.id, {
+            type: 'page',
+            ...newProps,
+          }),
+      };
     },
-    [open],
+    [open, updateModalProps],
   );
 
   const api: ModalRootApi = React.useMemo(() => {
