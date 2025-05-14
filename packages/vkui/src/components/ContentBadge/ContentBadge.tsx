@@ -6,7 +6,7 @@ import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import type { TypographyProps } from '../Typography/Typography';
 import { ContentBadgeContext } from './ContentBadgeContext';
-import { ContentBadgeSlotIcon } from './ContentBadgeSlotIcon';
+import { ContentBadgeIconSlot } from './ContentBadgeIconSlot';
 import type { ContentBadgeModeType, ContentBadgeSizeType } from './types';
 import styles from './ContentBadge.module.css';
 
@@ -83,7 +83,11 @@ export interface ContentBadgeProps
  * @see https://vkcom.github.io/VKUI/#/ContentBadge
  */
 export const ContentBadge: React.FC<ContentBadgeProps> & {
-  SlotIcon: typeof ContentBadgeSlotIcon;
+  IconSlot: typeof ContentBadgeIconSlot;
+  /**
+   * @deprecated Since 7.3.4. Используйте `IconSlot`.
+   */
+  SlotIcon: typeof ContentBadgeIconSlot;
 } = ({
   appearance = 'accent',
   mode = 'primary',
@@ -119,8 +123,10 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
   );
 };
 
-ContentBadge.SlotIcon = ContentBadgeSlotIcon;
+ContentBadge.IconSlot = ContentBadgeIconSlot;
+ContentBadge.SlotIcon = ContentBadgeIconSlot;
 
 if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ContentBadge.IconSlot, 'ContentBadge.IconSlot');
   defineComponentDisplayNames(ContentBadge.SlotIcon, 'ContentBadge.SlotIcon');
 }
