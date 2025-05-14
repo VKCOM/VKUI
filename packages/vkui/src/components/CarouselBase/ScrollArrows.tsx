@@ -35,7 +35,10 @@ export interface ScrollArrowsTestIds {
 }
 
 interface ScrollArrowsProps
-  extends Pick<BaseGalleryProps, 'showArrows' | 'arrowSize' | 'arrowAreaHeight'>,
+  extends Pick<
+      BaseGalleryProps,
+      'showArrows' | 'arrowSize' | 'arrowAreaHeight' | 'arrowPrevLabel' | 'arrowNextLabel'
+    >,
     ScrollArrowsTestIds {
   hasPointer?: boolean;
   canSlideLeft: boolean;
@@ -53,6 +56,8 @@ export const ScrollArrows = ({
   showArrows = false,
   arrowSize = 'm',
   arrowAreaHeight = 'stretch',
+  arrowPrevLabel,
+  arrowNextLabel,
   nextArrowTestId,
   prevArrowTestId,
 }: ScrollArrowsProps) => {
@@ -65,6 +70,7 @@ export const ScrollArrows = ({
           onClick={onSlideLeft}
           size={arrowSize}
           data-testid={prevArrowTestId}
+          label={arrowPrevLabel}
         />
       )}
       {canSlideRight && (
@@ -74,6 +80,7 @@ export const ScrollArrows = ({
           onClick={onSlideRight}
           size={arrowSize}
           data-testid={nextArrowTestId}
+          label={arrowNextLabel}
         />
       )}
     </>
