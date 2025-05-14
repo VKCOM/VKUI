@@ -124,9 +124,6 @@ const RemovableIosWithIndent = ({
   );
 };
 
-/**
- * @see https://vkcom.github.io/VKUI/#/RemovableIos
- */
 const RemovableIos = ({ indent, children, ...restProps }: RemovableIosOwnProps) => {
   return indent ? (
     <RemovableIosWithIndent>{children}</RemovableIosWithIndent>

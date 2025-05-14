@@ -115,9 +115,6 @@ interface RemovableOwnProps
   children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/Removable
- */
 export const Removable = ({
   children,
   onRemove,
