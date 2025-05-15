@@ -62,7 +62,9 @@ export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement>
    */
   minWidth?: number | string;
   /**
-   * Если false, то переходы между Panel происходят без анимации.
+   * @deprecated Since 7.4.0.
+   *
+   * Свойство будет удалено в `v8`. Используйте свойство `transitionDisabled` компонента `ConfigProvider`.
    */
   animate?: boolean;
   /**
