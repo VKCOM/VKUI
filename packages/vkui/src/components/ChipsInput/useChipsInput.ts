@@ -115,7 +115,7 @@ export const useChipsInput = <O extends ChipOption>({
             ? getNewOptionData(option.value, option.label)
             : getNewOptionData(option, typeof option === 'string' ? option : '');
           resolvedNextOptionsSet.add(resolvedOption.value);
-          return resolvedOption;
+          return isLikeObjectOption ? { ...option, ...resolvedOption } : resolvedOption;
         });
 
         const nextValue = prevValue.filter(
