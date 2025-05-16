@@ -253,5 +253,4 @@ jobs:
         uses: VKCOM/gh-actions/VKUI/auto-update-release-notes@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          current_vkui_version: ${{ steps.get_version.outputs.vkui_version }}
           pull_request_number: ${{ github.event.pull_request.number }}
