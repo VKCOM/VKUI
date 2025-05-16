@@ -14,7 +14,9 @@ import {
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import { isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
+import { isHTMLElement } from '../../lib/dom';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -33,11 +35,11 @@ export type DateRangeType = [Date | null, Date | null];
 
 export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части.
    */
   leftPartHeaderTestsData?: CalendarHeaderTestsProps;
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части.
    */
   rightPartHeaderTestsData?: CalendarHeaderTestsProps;
 };
@@ -55,19 +57,51 @@ export interface CalendarRangeProps
     >,
     Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
     CalendarRangeTestsProps {
-  value?: DateRangeType;
-  defaultValue?: DateRangeType;
+  /**
+   * Текущий выбранный промежуток.
+   */
+  value?: DateRangeType | null;
+  /**
+   * Начальный промежуток при монтировании.
+   */
+  defaultValue?: DateRangeType | null;
+  /**
+   * Запрещает выбор даты в прошлом.
+   * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
+   */
   disablePast?: boolean;
+  /**
+   * Запрещает выбор даты в будущем.
+   * Применяется, если не задано `shouldDisableDate`.
+   */
   disableFuture?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года.
+   */
   disablePickers?: boolean;
+  /**
+   * `aria-label` для изменения дня.
+   */
   changeDayLabel?: string;
+  /**
+   * День недели, с которого начинается неделя.
+   */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  onChange?: (value: DateRangeType | undefined) => void;
+  /**
+   * Обработчик изменения выбранного промежутка.
+   */
+  onChange?: (value: DateRangeType | undefined) => void; // TODO [>=8]: поменять тип на `(value?: DateRangeType | null) => void`
+  /**
+   * Функция для проверки запрета выбора даты.
+   */
   shouldDisableDate?: (value: Date) => boolean;
+  /**
+   * @deprecated Свойство не используется.
+   */
   onClose?: () => void;
 }
 
-const getIsDaySelected = (day: Date, value?: DateRangeType) => {
+const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
   if (!value?.[0] || !value[1]) {
     return false;
   }
@@ -85,7 +119,6 @@ export const CalendarRange = ({
   disablePast,
   disableFuture,
   shouldDisableDate,
-  onClose,
   weekStartsOn = 1,
   disablePickers,
   prevMonthLabel = 'Предыдущий месяц',
@@ -103,10 +136,15 @@ export const CalendarRange = ({
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
+  const _onChange = React.useCallback(
+    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
+    [onChange],
+  );
+
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
     value: valueProp,
     defaultValue,
-    onChange,
+    onChange: _onChange,
   });
 
   const {
@@ -128,20 +166,28 @@ export const CalendarRange = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      const key = pressedKey(event);
+
+      if (key && NAVIGATION_KEYS.includes(key)) {
         event.preventDefault();
+
+        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], key);
+
+        if (
+          newFocusedDay &&
+          !isSameMonth(newFocusedDay, viewDate) &&
+          !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
+        ) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+        return;
       }
 
-      const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
-
-      if (
-        newFocusedDay &&
-        !isSameMonth(newFocusedDay, viewDate) &&
-        !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
-      ) {
-        setViewDate(newFocusedDay);
+      if ((key === Keys.ENTER || key === Keys.SPACE) && isHTMLElement(event.target)) {
+        event.preventDefault();
+        event.target.click?.();
       }
-      setFocusedDay(newFocusedDay);
     },
     [focusedDay, setFocusedDay, setViewDate, value, viewDate],
   );

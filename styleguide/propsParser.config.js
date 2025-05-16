@@ -64,6 +64,8 @@ module.exports = {
       version: 0,
     });
 
+    const componentNameFromPath = path.basename(file, '.tsx');
+
     const components = parser
       .parseWithProgramProvider(file, function () {
         if (languageService) {
@@ -89,6 +91,16 @@ module.exports = {
         return component;
       });
 
-    return components;
+    // Стайлгайд забирает первый компонент из массива
+    return components.sort((a, b) => {
+      if (a.displayName === componentNameFromPath) {
+        return -1;
+      }
+      if (b.displayName === componentNameFromPath) {
+        return 1;
+      }
+
+      return 0;
+    });
   },
 };

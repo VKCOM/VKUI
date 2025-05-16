@@ -11,7 +11,6 @@ export { useLoadThemeTokens } from './useLoadThemeTokens';
 
 export {
   makeTokenClassName,
-  getVKUIConfigProviderTokensClassNamesWithGlobalAppearance,
   generateVKUIConfigProviderTokensClassNamesCodeExamples,
   onlyVariablesLocalURL,
   getDefaultByThemesPresets,

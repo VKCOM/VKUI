@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import type { TypographyProps } from '../Typography/Typography';
 import { ContentBadgeContext } from './ContentBadgeContext';
-import { ContentBadgeSlotIcon } from './ContentBadgeSlotIcon';
+import { ContentBadgeIconSlot } from './ContentBadgeIconSlot';
 import type { ContentBadgeModeType, ContentBadgeSizeType } from './types';
 import styles from './ContentBadge.module.css';
 
@@ -57,7 +58,7 @@ export interface ContentBadgeProps
   /**
    * Включает приближение значения закругления к форме круга.
    *
-   * > Note: игнорируется при size="s"
+   * > Note: игнорируется при size="s".
    */
   capsule?: boolean;
   /**
@@ -67,7 +68,7 @@ export interface ContentBadgeProps
    *
    * - size="s" – ⚠️ не поддерживает иконки;
    * - size="m" – при **одиночной** иконке `16x16`, в остальных случаях `12x12`;
-   * - size="l" – при **одиночной** иконке `20x20`, в остальных случаях `16x16`;
+   * - size="l" – при **одиночной** иконке `20x20`, в остальных случаях `16x16`.
    */
   size?: ContentBadgeSizeType;
 }
@@ -82,7 +83,11 @@ export interface ContentBadgeProps
  * @see https://vkcom.github.io/VKUI/#/ContentBadge
  */
 export const ContentBadge: React.FC<ContentBadgeProps> & {
-  SlotIcon: typeof ContentBadgeSlotIcon;
+  IconSlot: typeof ContentBadgeIconSlot;
+  /**
+   * @deprecated Since 7.3.4. Используйте `IconSlot`.
+   */
+  SlotIcon: typeof ContentBadgeIconSlot;
 } = ({
   appearance = 'accent',
   mode = 'primary',
@@ -118,7 +123,10 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
   );
 };
 
-ContentBadge.displayName = 'ContentBadge';
+ContentBadge.IconSlot = ContentBadgeIconSlot;
+ContentBadge.SlotIcon = ContentBadgeIconSlot;
 
-ContentBadge.SlotIcon = ContentBadgeSlotIcon;
-ContentBadge.SlotIcon.displayName = 'ContentBadge.SlotIcon';
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ContentBadge.IconSlot, 'ContentBadge.IconSlot');
+  defineComponentDisplayNames(ContentBadge.SlotIcon, 'ContentBadge.SlotIcon');
+}

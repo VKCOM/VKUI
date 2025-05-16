@@ -1,7 +1,3 @@
-'use client';
-
-// TODO [@vkontakte/icons-sprite>=2.3.1]: Удалить use client, если он появился в IconAppearanceProvider
-
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import type { ColorSchemeType } from '../../lib/colorScheme';
@@ -9,7 +5,13 @@ import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface ColorSchemeProviderProps {
+  /**
+   * Цветовая схема.
+   */
   value: ColorSchemeType;
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
 }
 

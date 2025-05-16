@@ -10,23 +10,20 @@ import dotenv from 'dotenv';
 import postcssCustomMedia from 'postcss-custom-media';
 import postcssGapProperties from 'postcss-gap-properties';
 import cssImport from 'postcss-import';
-// import * as tsconfig from './tsconfig.json' with { type: 'json' };
+import tsconfig from './tsconfig.json' with { type: 'json' };
 
 const rootDirectory = path.join(import.meta.dirname, '../..');
 
 // см. `.env`
 dotenv.config();
 
-// TODO [@playwright/experimental-ct-react>=1.49] использовать TS_CONFIG_ALIASES в resolve.alias
-//  https://github.com/microsoft/playwright/issues/33557
-//
-// const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce(
-//   (aliases, [name, paths]) => {
-//     aliases[name] = path.join(__dirname, paths[0]);
-//     return aliases;
-//   },
-//   {},
-// );
+const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce(
+  (aliases, [name, paths]) => {
+    aliases[name] = path.join(import.meta.dirname, paths[0]);
+    return aliases;
+  },
+  {},
+);
 
 /** @type {import('@playwright/test').ReporterDescription}  */
 const DEFAULT_REPORTER = ['json', { outputFile: 'e2e-results.json' }];
@@ -85,17 +82,7 @@ export default defineConfig({
     ctViteConfig: {
       build: { commonjsOptions: { include: [/node_modules/, /\.js/] }, sourcemap: false },
 
-      resolve: {
-        // alias: TS_CONFIG_ALIASES,
-        alias: {
-          '@vkui-e2e/test': path.join(import.meta.dirname, 'src/testing/e2e/index.playwright'),
-          '@vkui-e2e/playground-helpers': path.join(
-            import.meta.dirname,
-            'src/testing/e2e/index.playground',
-          ),
-          '@vkui-e2e/utils': path.join(import.meta.dirname, 'src/testing/e2e/utils'),
-        },
-      },
+      resolve: { alias: TS_CONFIG_ALIASES },
 
       css: {
         postcss: {

@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ModalCardBase
         dismissButtonMode="inside"
         dismissLabel="Закрыть"
@@ -37,7 +37,7 @@ const App = () => {
           </React.Fragment>
         }
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

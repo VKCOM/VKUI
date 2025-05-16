@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';

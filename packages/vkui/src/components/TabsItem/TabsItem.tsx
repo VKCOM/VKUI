@@ -8,7 +8,7 @@ import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
-import { type TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
+import { type TabsContextProps, TabsModeContext } from '../Tabs/TabsModeContext';
 import { Tappable, type TappableProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -56,17 +56,23 @@ export interface TabsItemProps
    * Добавляет элемент слева от `after`.
    *
    * - `React.ReactElement` – либо [`Badge`](https://vkcom.github.io/VKUI/#/Badge) с параметром `mode="prominent"`.
-   *   либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
+   *   Либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
    * - `number` – для показа текстового блока с переданным числом.
    */
   status?: React.ReactElement | number;
   /**
    * Добавляет иконку справа.
    *
-   * Например, `<Icon16Dropdown />`
+   * Например, `<Icon16Dropdown />`.
    */
   after?: React.ReactNode;
+  /**
+   * Флаг для отображения выбранного состояния.
+   */
   selected?: boolean;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
 }
 
@@ -80,17 +86,16 @@ export const TabsItem = ({
   children,
   status,
   after,
-  selected = false,
+  selected: selectedProp = false,
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
   hoverMode = styles.hover,
   activeMode = '',
-  hovered,
-  activated,
-  hasHover,
   hasActive = false,
   focusVisibleMode = 'inside',
+  id,
+  onClick,
   ...restProps
 }: TabsItemProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -100,10 +105,13 @@ export const TabsItem = ({
     layoutFillMode,
     scrollBehaviorToSelectedTab,
     withScrollToSelectedTab,
+    controller,
   }: TabsContextProps = React.useContext(TabsModeContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';
+
+  const selected = selectedProp || (!!id && controller?.selectedTab === id);
 
   if (hasReactNode(status)) {
     statusComponent =
@@ -127,7 +135,7 @@ export const TabsItem = ({
   if (process.env.NODE_ENV === 'development' && isTabFlow) {
     if (!restProps['aria-controls']) {
       warn(`Передайте в "aria-controls" id контролируемого блока`, 'warn');
-    } else if (!restProps['id']) {
+    } else if (!id) {
       warn(
         `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
         'warn',
@@ -180,10 +188,26 @@ export const TabsItem = ({
     [rootRef, document, shouldScrollToSelected, scrollBehaviorToSelectedTab],
   );
 
+  const _onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(
+    (e) => {
+      onClick?.(e);
+      if (id) {
+        controller?.onChange(id);
+      }
+    },
+    [id, onClick, controller],
+  );
+
   return (
     <Tappable
-      {...restProps}
       getRootRef={rootRef}
+      hoverMode={hoverMode}
+      activeMode={activeMode}
+      hasActive={hasActive}
+      focusVisibleMode={focusVisibleMode}
+      role={role}
+      aria-selected={selected}
+      tabIndex={tabIndex}
       baseClassName={classNames(
         styles.host,
         mode && stylesMode[mode],
@@ -192,16 +216,9 @@ export const TabsItem = ({
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
       )}
-      hoverMode={hoverMode}
-      activeMode={activeMode}
-      hasHover={hasHover}
-      hasActive={hasActive}
-      hovered={hovered}
-      activated={activated}
-      focusVisibleMode={focusVisibleMode}
-      role={role}
-      aria-selected={selected}
-      tabIndex={tabIndex}
+      onClick={_onClick}
+      id={id}
+      {...restProps}
     >
       {before && <div className={styles.before}>{before}</div>}
       <Headline

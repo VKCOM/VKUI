@@ -12,7 +12,7 @@ import { ClickableLockStateContext, DEFAULT_ACTIVE_EFFECT_DELAY, useState } from
 import styles from './Clickable.module.css';
 
 /**
- * Кликабельный компонент. Добавляем кучу обвесов
+ * Кликабельный компонент. Добавляем кучу обвесов.
  */
 export const RealClickable = <T,>({
   baseClassName,

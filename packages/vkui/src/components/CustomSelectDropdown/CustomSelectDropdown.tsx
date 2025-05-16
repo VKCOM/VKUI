@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
@@ -17,13 +19,13 @@ export interface CustomSelectDropdownProps
   fetching?: boolean;
   offsetDistance?: number;
   /**
-   * Ширина раскрывающегося списка зависит от контента
+   * Ширина раскрывающегося списка зависит от контента.
    */
   autoWidth?: boolean;
   forcePortal?: boolean;
   onPlacementChange?: (placement: Placement) => void;
   /**
-   * Отключает максимальную высоту по умолчанию
+   * Отключает максимальную высоту по умолчанию.
    */
   noMaxHeight?: boolean;
 }
@@ -65,6 +67,7 @@ export const CustomSelectDropdown = ({
         getRootRef={scrollBoxRef}
         className={noMaxHeight ? undefined : styles.inWithMaxHeight}
         overscrollBehavior={overscrollBehavior}
+        tabIndex={-1}
       >
         {fetching ? (
           <div className={styles.fetching}>

@@ -49,6 +49,7 @@
 }
 
 .labelMultiline {
+  text-overflow: unset;
   white-space: normal;
 }
 

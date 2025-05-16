@@ -12,7 +12,13 @@ import styles from './Alert.module.css';
 export interface AlertActionProps
   extends Pick<AlertActionInterface, 'Component' | 'mode'>,
     AnchorHTMLAttributesOnly {
+  /**
+   * Содержимое компонента.
+   */
   children: string;
+  /**
+   * Обработчик нажатия.
+   */
   onClick: React.MouseEventHandler<HTMLElement>;
 }
 

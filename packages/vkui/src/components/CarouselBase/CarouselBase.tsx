@@ -62,6 +62,8 @@ export const CarouselBase = ({
   getRef,
   arrowSize,
   arrowAreaHeight,
+  arrowNextLabel,
+  arrowPrevLabel,
   slideTestId,
   bulletTestId,
   nextArrowTestId,
@@ -156,7 +158,7 @@ export const CarouselBase = ({
   const checkShiftOutOfBoundsFromEnd = (shiftX: number, slides: GallerySlidesState[]) => {
     /**
      * Поскольку при `align="center"` слайды сдвинуты, прежде чем рассчитать крайнюю правую точку,
-     * нужно вычесть сдвиг слайдов
+     * нужно вычесть сдвиг слайдов.
      */
     const firstSlideShift =
       align === 'center'
@@ -177,7 +179,7 @@ export const CarouselBase = ({
     animationFrameRef.current = requestAnimationFrame(() => {
       /**
        * Для бесконечной галереи проверяем, что при dnd мы прокрутили левее, чем первый слайд,
-       * чтобы сбросить `shiftXCurrentRef`
+       * чтобы сбросить `shiftXCurrentRef`.
        */
       if (looped && checkShiftOutOfBoundsFromStart(shiftX, snaps)) {
         const firstSnap = revertRtlValue(snaps[0], isRtl);
@@ -187,7 +189,7 @@ export const CarouselBase = ({
 
       /**
        * Для бесконечной галереи проверяем, что при dnd мы прокрутили правее, чем последний слайд,
-       * чтобы правильно пересчитать `shiftXCurrentRef`
+       * чтобы правильно пересчитать `shiftXCurrentRef`.
        */
       if (looped && checkShiftOutOfBoundsFromEnd(shiftX, slides)) {
         shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
@@ -338,7 +340,7 @@ export const CarouselBase = ({
     /**
      * Переключаемся с последнего элемента на первый
      * Для корректной анимации мы прокручиваем последний слайд на всю длину (shiftX) "вперед"
-     * В конце анимации при отрисовке следующего кадра задаем всем слайдам начальные значения
+     * В конце анимации при отрисовке следующего кадра задаем всем слайдам начальные значения.
      */
     if (indent === snaps[0] && fromLastToFirst) {
       const endEdge = revertRtlValue(
@@ -363,7 +365,7 @@ export const CarouselBase = ({
       /**
        * Переключаемся с первого слайда на последний
        * Для корректной анимации сначала задаем первым видимым слайдам смещение
-       * В следующем кадре начинаем анимация прокрутки "назад"
+       * В следующем кадре начинаем анимация прокрутки "назад".
        */
     } else if (indent === snaps[snaps.length - 1] && shiftXCurrentRef.current === snaps[0]) {
       startPoint = indent - revertRtlValue(slides[slides.length - 1].width, isRtl);
@@ -380,7 +382,7 @@ export const CarouselBase = ({
         });
       });
       /**
-       * Если не обработаны `corner`-кейсы выше, то просто проигрываем анимацию смещения
+       * Если не обработаны `corner`-кейсы выше, то просто проигрываем анимацию смещения.
        */
     } else {
       addToAnimationQueue(() => {
@@ -559,6 +561,8 @@ export const CarouselBase = ({
         showArrows={showArrows}
         arrowSize={arrowSize}
         arrowAreaHeight={arrowAreaHeight}
+        arrowPrevLabel={arrowPrevLabel}
+        arrowNextLabel={arrowNextLabel}
         prevArrowTestId={prevArrowTestId}
         nextArrowTestId={nextArrowTestId}
       />

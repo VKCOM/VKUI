@@ -31,7 +31,7 @@ export interface HorizontalCellProps
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
-   * Ширина компонента
+   * Ширина компонента.
    *
    * Значения `'s' | 'm' | 'l' | 'xl'` определяются дизайн-системой.
    * Значение `auto` позволяет задать динамическую ширину, определяемую контентом.
@@ -39,7 +39,7 @@ export interface HorizontalCellProps
    */
   size?: LiteralUnion<HorizontalCellSizes, number>;
   /**
-   * Заголовок
+   * Заголовок.
    */
   title?: React.ReactNode;
   /**
@@ -51,13 +51,13 @@ export interface HorizontalCellProps
    */
   extraSubtitle?: React.ReactNode;
   /**
-   * Задает выравнивание типографики. По умолчанию `center` для `size=s`, иначе `start`
+   * Задает выравнивание типографики. По умолчанию `center` для `size=s`, иначе `start`.
    */
   textAlign?: 'start' | 'center' | 'end';
   /**
-   * Отключает формирование отступов у крайних элементов
+   * Отключает формирование отступов у крайних элементов.
    *
-   * Актуально для использования в многострочных списках
+   * Актуально для использования в многострочных списках.
    */
   noPadding?: boolean;
   /**

@@ -12,6 +12,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
+/* eslint-disable jsdoc/require-jsdoc */
 interface ScrollContext {
   scrollElement: HTMLElement | null;
   scrollAnimationDuration: number;
@@ -22,11 +23,12 @@ interface ScrollContext {
   onScrollStart: VoidFunction;
   /**
    * Начальная ширина прокрутки.
-   * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
+   * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate.
    */
   initialScrollWidth: number;
   textDirection: 'ltr' | 'rtl';
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 export type ScrollPositionHandler = (currentPosition: number) => number;
 
@@ -34,19 +36,28 @@ export interface HorizontalScrollProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
-   * Функция для расчета величины прокрутки при клике на левую стрелку.
+   * Функция для расчета величины прокрутки при нажатии на левую стрелку.
    */
   getScrollToLeft?: ScrollPositionHandler;
   /**
-   * Функция для расчета величины прокрутки при клике на правую стрелку.
+   * Функция для расчета величины прокрутки при нажатии на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
+  /**
+   * Размер стрелок.
+   */
   arrowSize?: ScrollArrowProps['size'];
   /**
    * Смещает иконки кнопок навигации по вертикали.
    */
   arrowOffsetY?: number | string;
+  /**
+   * Показывать ли стрелки.
+   */
   showArrows?: boolean | 'always';
+  /**
+   * Длительность анимации скролла.
+   */
   scrollAnimationDuration?: number;
   /**
    * Добавляет возможность прокручивать контент на любое колесо мыши.
@@ -54,36 +65,36 @@ export interface HorizontalScrollProps
    */
   scrollOnAnyWheel?: boolean;
   /**
-   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента.
    */
   prevButtonTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента.
    */
   nextButtonTestId?: string;
   /**
-   * Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`
+   * Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`.
    */
   ContentWrapperComponent?: React.ElementType;
   /**
-   * `ref` для обертки над контентом, прокинутым в `children`
+   * `ref` для обертки над контентом, прокинутым в `children`.
    */
   contentWrapperRef?: React.Ref<HTMLElement>;
   /**
-   * Специфичный `className` для обертки над контентом, прокинутым в `children`
+   * Специфичный `className` для обертки над контентом, прокинутым в `children`.
    */
   contentWrapperClassName?: string;
 }
 
 /**
- * timing method
+ * Timing method.
  */
 function now() {
   return performance && performance.now ? performance.now() : Date.now();
 }
 
 /**
- * Округление к большему по модулю
+ * Округление к большему по модулю.
  *
  * ## Пример
  *
@@ -100,13 +111,13 @@ function roundingAwayFromZero(value: number): number {
 
 /**
  * Округляем el.scrollLeft
- * https://github.com/VKCOM/VKUI/pull/2445
+ * https://github.com/VKCOM/VKUI/pull/2445.
  */
 const roundUpElementScrollLeft = (el: HTMLElement) => roundingAwayFromZero(el.scrollLeft);
 
 /**
  * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
- * Константа взята из полифила (468), на дизайн-ревью уточнили до 250
+ * Константа взята из полифила (468), на дизайн-ревью уточнили до 250.
  * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
  */
 const SCROLL_ONE_FRAME_TIME = 250;
@@ -127,7 +138,7 @@ function doScroll({
   }
 
   /**
-   * крайнее значение сдвига
+   * Крайнее значение сдвига.
    */
   const extremeScrollLeft =
     (textDirection === 'ltr' ? 1 : -1) * (initialScrollWidth - scrollElement.offsetWidth);
@@ -145,7 +156,7 @@ function doScroll({
   onScrollStart();
 
   /**
-   * Если окончание прокрутки вышло за ноль
+   * Если окончание прокрутки вышло за ноль.
    */
   if (startScrollLeft * endScrollLeft < 0) {
     endScrollLeft = 0;
@@ -274,7 +285,7 @@ export const HorizontalScroll = ({
         return noop;
       }
       /**
-       * Прокрутка с помощью любого колеса мыши
+       * Прокрутка с помощью любого колеса мыши.
        */
       const onWheel = (e: WheelEvent) => {
         scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });

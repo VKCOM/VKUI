@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <PanelHeaderClose onClick={noop} label={"Закрыть"}></PanelHeaderClose>
       <PanelHeaderClose onClick={noop} label={<><span>Закрыть</span></>}></PanelHeaderClose>
       <PanelHeaderClose onClick={noop} label="Закрыть" />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

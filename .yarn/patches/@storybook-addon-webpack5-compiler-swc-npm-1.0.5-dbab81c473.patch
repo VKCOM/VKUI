@@ -1,9 +1,0 @@
-diff --git a/preset.js b/preset.js
-index c01b8800eaaee4c44ee8254b79993b74d12bdcbd..847999db8b09675ef90b7fc44b1cc968d00417d5 100644
---- a/preset.js
-+++ b/preset.js
-@@ -1 +1,2 @@
--module.exports = require('./dist/preset.cjs');
-\ No newline at end of file
-+import preset from "./dist/preset.cjs";
-+export default preset;

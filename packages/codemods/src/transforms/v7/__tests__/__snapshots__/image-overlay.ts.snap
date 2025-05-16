@@ -8,7 +8,7 @@ import React from 'react';
 const App = () => {
   const callback = () => {};
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* test 1: disableInteractive={true} -> remove disableInteractive and onClick */}
       <Image
         src="avatar_url"
@@ -45,7 +45,7 @@ const App = () => {
           <Icon12Add />
         </Image.Overlay>
       </Image>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;
@@ -58,7 +58,7 @@ import React from 'react';
 const App = () => {
   const callback = () => {};
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* test 1: disableInteractive={true} -> remove disableInteractive and onClick */}
       <ImageBase
         src="avatar_url"
@@ -95,7 +95,7 @@ const App = () => {
           <Icon12Add />
         </ImageBase.Overlay>
       </ImageBase>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

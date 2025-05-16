@@ -4,6 +4,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { getOffsetRect } from '../../lib/offset';
 import styles from './Tappable.module.css';
 
+/* eslint-disable jsdoc/require-jsdoc */
+
 /**
  * Возможно нужен Ripple эффект. Данный хук нужен для отказа
  * от двойного ререндера.
@@ -28,7 +30,7 @@ const DELAY = 70;
 const WAVE_LIVE = 225;
 
 /**
- * Хук для создания Ripple эффектов
+ * Хук для создания Ripple эффектов.
  */
 export const useRipple = (
   needRipple: boolean,
@@ -41,7 +43,7 @@ export const useRipple = (
   const [clicks, setClicks] = React.useState<Wave[]>([]);
 
   /**
-   * Коллекция нажатий и таймеров задержки появления волны
+   * Коллекция нажатий и таймеров задержки появления волны.
    */
   const pointerDelayTimers = React.useMemo(
     () => new Map<number, ReturnType<typeof setTimeout>>(),

@@ -7,11 +7,11 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <SplitCol autoSpaced>...</SplitCol>
       <SplitCol>...</SplitCol>
       <SplitCol autoSpaced>...</SplitCol>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

@@ -1,6 +1,6 @@
 import type { API, ASTPath, FileInfo, JSXAttribute, StringLiteral } from 'jscodeshift';
 import {
-  type AttributeManipulator,
+  type AttributeManipulatorDeclaration,
   createAttributeManipulator,
   getImportInfo,
   swapBooleanValue,
@@ -12,7 +12,7 @@ export const parser = 'tsx';
 const componentName = 'Tooltip';
 const componentNameTo = 'OnboardingTooltip';
 
-const ATTRIBUTE_REPLACER: AttributeManipulator = {
+const ATTRIBUTE_REPLACER: AttributeManipulatorDeclaration = {
   isShown: {
     keyTo: 'shown',
   },

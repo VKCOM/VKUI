@@ -6,14 +6,14 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Spacing size="2xs">
         <Separator/>
       </Spacing>
       <Spacing size="2xs" />
       <Spacing size={"2xs"} />
       <Spacing size={8} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

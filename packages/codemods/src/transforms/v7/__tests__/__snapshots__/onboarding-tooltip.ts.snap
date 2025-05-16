@@ -6,11 +6,11 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <OnboardingTooltip placement="right" title="Header" description="Привет">
         <Button style={{ margin: 20 }}>Наведи</Button>
       </OnboardingTooltip>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

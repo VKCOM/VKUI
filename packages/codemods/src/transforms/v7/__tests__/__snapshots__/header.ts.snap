@@ -13,7 +13,7 @@ const App = () => {
   )
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* Проверка изменения size */}
       <Header multiline size="l">
         Кто может писать мне личные сообщения
@@ -50,7 +50,7 @@ const App = () => {
       <Header size="s" subtitle="SOHN — Conrad" />
       {/* замена Regular secondary на s */}
       <Header size="s" subtitle="SOHN — Conrad" />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

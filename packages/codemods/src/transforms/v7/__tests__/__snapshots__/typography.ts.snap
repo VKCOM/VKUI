@@ -18,7 +18,7 @@ export const App = () => {
   const flag = false;
   const calculateUseAccentWeight = () => false;
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* должен оставить как есть*/}
       <Typography />
       {/* должен оставить weight */}
@@ -171,7 +171,7 @@ export const App = () => {
       <Title weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Title />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

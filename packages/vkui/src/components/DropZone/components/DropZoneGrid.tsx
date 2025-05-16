@@ -9,14 +9,12 @@ const directionStyle = {
 };
 
 export interface DropZoneGridProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Направление дочерних компонентов.
+   */
   direction?: 'row' | 'column';
 }
 
-export const DropZoneGrid: React.FC<DropZoneGridProps> = ({
-  direction = 'column',
-  ...props
-}: DropZoneGridProps) => (
+export const DropZoneGrid = ({ direction = 'column', ...props }: DropZoneGridProps) => (
   <RootComponent baseClassName={classNames(styles.host, directionStyle[direction])} {...props} />
 );
-
-DropZoneGrid.displayName = 'DropZoneGrid';

@@ -21,31 +21,40 @@ import type { OptionPreset } from './types';
 
 export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
   extends UseChipsInputProps<O> {
+  /**
+   * Список опций в выпадающем списке.
+   */
   options?: O[];
   /**
    * Возможность создавать чипы которых нет в списке:
    * - `true` – добавление по кнопке Enter;
    * - `<текст>` – помимо возможности добавления через Enter, в пункте меню появится кнопка с текстом.
-   * Текст для пункта, создающего чипы при клике, также отвечает за то, будет ли показан этот пункт
+   * Текст для пункта, создающего чипы при нажатии, также отвечает за то, будет ли показан этот пункт
    * (показывается после того как в списке не останется опций).
    */
   creatable?: boolean | string;
   /**
-   * Текст, который показывается если список опций пуст
+   * Текст, который показывается если список опций пуст.
    */
   emptyText?: string;
   /**
    * Показывать или скрывать уже выбранные опции.
    */
   selectedBehavior?: 'hide' | 'highlight';
+  /**
+   * Функция для фильтрации опций в списке.
+   */
   filterFn?: false | FilterFn<O>;
+  /**
+   * Функция для сортировки опций в списке.
+   */
   sortFn?: false | SortFn<O>;
   /**
-   * Будет вызвано в момент скрытия выпадающего списка
+   * Будет вызвано в момент скрытия выпадающего списка.
    */
   onClose?: VoidFunction;
   /**
-   * Будет вызвано в момент открытия выпадающего списка
+   * Будет вызвано в момент открытия выпадающего списка.
    */
   onOpen?: VoidFunction;
 }
@@ -53,6 +62,7 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
 export const useChipsSelect = <O extends ChipOption>({
   // common
   disabled,
+  delimiter,
 
   // option
   value: valueProp,
@@ -118,6 +128,7 @@ export const useChipsSelect = <O extends ChipOption>({
 
     // other
     disabled,
+    delimiter,
   });
 
   // dropdown
@@ -151,14 +162,14 @@ export const useChipsSelect = <O extends ChipOption>({
 
   const handleInputChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      onInputChange(event);
+      onInputChange(event, !!creatable);
 
       if (!opened) {
         handleOpened(true);
         setFocusedOptionIndex(0);
       }
     },
-    [onInputChange, opened, handleOpened],
+    [onInputChange, creatable, opened, handleOpened],
   );
 
   useIsomorphicLayoutEffect(

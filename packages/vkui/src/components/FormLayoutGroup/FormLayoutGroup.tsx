@@ -17,6 +17,9 @@ const sizeYClassNames = {
 export interface FormLayoutGroupProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     RemovableProps {
+  /**
+   * Направление отображения элементов формы.
+   */
   mode?: 'vertical' | 'horizontal';
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
@@ -42,6 +45,7 @@ export const FormLayoutGroup = ({
   removePlaceholder = 'Удалить',
   onRemove,
   getRootRef,
+  disabled,
   ...restProps
 }: FormLayoutGroupProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -61,6 +65,7 @@ export const FormLayoutGroup = ({
         isRemovable && classNames(styles.withRemovable, 'vkuiInternalFormLayoutGroup--removable'),
         segmented && classNames(styles.segmented, 'vkuiInternalFormLayoutGroup--segmented'),
       )}
+      disabled={disabled}
       {...restProps}
     >
       {isRemovable ? (
@@ -73,6 +78,7 @@ export const FormLayoutGroup = ({
               onRemove?.(e, rootEl.current);
             }
           }}
+          disabled={disabled}
           indent={removable === 'indent'}
         >
           {children}

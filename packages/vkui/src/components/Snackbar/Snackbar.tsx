@@ -60,11 +60,11 @@ export interface SnackbarProps
   placement?: SnackbarPlacement;
   /**
    * Название кнопки действия в уведомлении
-   * Не может использоваться одновременно с `subtitle`
+   * Не может использоваться одновременно с `subtitle`.
    */
   action?: React.ReactNode;
   /**
-   * Будет вызвано при клике на кнопку действия
+   * Будет вызвано при нажатии на кнопку действия.
    */
   onActionClick?: (event: React.MouseEvent) => void;
   /**
@@ -76,11 +76,11 @@ export interface SnackbarProps
    */
   onDurationEnd?: () => void;
   /**
-   * Время в миллисекундах, через которое плашка скроется
+   * Время в миллисекундах, через которое плашка скроется.
    */
   duration?: number;
   /**
-   * Обработчик закрытия уведомления
+   * Обработчик закрытия уведомления.
    */
   onClose: () => void;
   /**

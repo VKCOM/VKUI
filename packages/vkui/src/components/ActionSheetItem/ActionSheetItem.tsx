@@ -18,36 +18,68 @@ export interface ActionSheetItemProps
   extends React.HTMLAttributes<HTMLElement>,
     React.AnchorHTMLAttributes<HTMLElement>,
     Pick<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'> {
+  /**
+   * Свойство, определяющее внешний вид элемента действия.
+   */
   mode?: 'default' | 'destructive' | 'cancel';
+  /**
+   * Если указано, элемент будет использоваться как ссылка.
+   */
+  href?: string;
+  /**
+   * Атрибут `target` для тега `<a>`.
+   */
+  target?: string;
+  /**
+   * Иконка или другой React-элемент для отображения перед основным контентом.
+   */
   before?: React.ReactNode;
+  /**
+   * Иконка или другой React-элемент для отображения после основного контента.
+   */
   after?: React.ReactNode;
+  /**
+   * Дополнительная информация, отображаемая рядом с основным контентом.
+   */
   meta?: React.ReactNode;
+  /**
+   * Слот для подсказки или вспомогательного текста.
+   */
   subtitle?: React.ReactNode;
   /**
-   * По умолчанию клик на опцию вызывает переданную в `ActionSheet` функцию `onClose`, данное свойство
-   * позволяет отключить такое поведение
+   * По умолчанию нажатие на опцию вызывает переданную в `ActionSheet` функцию `onClose`, данное свойство
+   * позволяет отключить такое поведение.
    */
   autoCloseDisabled?: boolean;
+  /**
+   * Включает возможность выбрать элемент (отображает радиокнопку).
+   */
   selectable?: boolean;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
   /**
-   * Все текстовые элементы при необходимости занимают несколько строк
+   * Все текстовые элементы при необходимости занимают несколько строк.
    */
   multiline?: boolean;
   /**
-   * По умолчанию onClick будет вызван после завершения анимации скрытия и после вызова onClose.
+   * По умолчанию `onClick` будет вызван после завершения анимации скрытия и после вызова `onClose`.
    * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
-   * Если вам нужен объект события именно на момент клика, используйте `onImmediateClick`.
+   * Если вам нужен объект события именно на момент нажатия, используйте `onImmediateClick`.
    */
   onClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * Обработчик нажатия, вызывающийся непосредственно в момент нажатия (в отличие от `onClick`).
+   */
   onImmediateClick?: React.MouseEventHandler<HTMLElement>;
   /**
-   * Иконка для `checked` режима.
+   * Иконка для `selectable` режима.
    */
   iconChecked?: React.ReactNode;
   /**
-   * Позволяет отделить ActionItem от CancelItem для определении того,
-   * кто вызвал закрытие ActionSheet. Используется в ActionSheet.onClose()
+   * Позволяет отделить `ActionItem` от `CancelItem` для определении того,
+   * кто вызвал закрытие `ActionSheet`. Используется в `ActionSheet.onClose()`.
    */
   isCancelItem?: boolean;
 }
@@ -137,6 +169,7 @@ export const ActionSheetItem = ({
         sizeY === 'compact' && styles.sizeYCompact,
         isRich && styles.rich,
         actionSheetMode === 'menu' && styles.menu,
+        restProps.disabled && styles.disabled,
       )}
       onKeyDown={onKeyDown}
     >

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, hasReactNode, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasComponent, HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -29,7 +30,15 @@ export interface FormItemProps
     HasRootRef<HTMLElement>,
     HasComponent,
     RemovableProps {
+  /**
+   * Дополнительный элемент, отображаемый над содержимым.
+   */
   top?: React.ReactNode;
+  /**
+   * Передаётся при использовании `top`.
+   *
+   * `id` для `top`.
+   */
   topId?: string;
   /**
    * Многострочный вывод заголовка. По умолчанию текст не переносится при переполнении.
@@ -41,6 +50,9 @@ export interface FormItemProps
    * Если оставить пустым и использовать htmlFor, то тег top будет label.
    */
   topComponent?: React.ElementType;
+  /**
+   * Дополнительный элемент, отображаемый под содержимым.
+   */
   bottom?: React.ReactNode;
   /**
    * Передаётся при использовании `bottom`.
@@ -48,20 +60,23 @@ export interface FormItemProps
    * Должен совпадать с `aria-describedby`, который передаётся в компонент, отвечающий за пользовательский ввод.
    */
   bottomId?: string;
+  /**
+   * Статус, влияющий на стиль отображения компонента.
+   */
   status?: 'default' | 'error' | 'valid';
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    *
-   * Режим `indent` предназначен для визуального отступа
+   * Режим `indent` предназначен для визуального отступа.
    */
   removable?: boolean | 'indent';
   /**
-   * Удаляет внешние отступы вокруг компонента
+   * Удаляет внешние отступы вокруг компонента.
    * @since 5.8.0
    */
   noPadding?: boolean;
   /**
-   * Помечает поле обязательным
+   * Помечает поле обязательным.
    */
   required?: boolean;
 }
@@ -89,6 +104,7 @@ export const FormItem: React.FC<FormItemProps> & {
   bottomId,
   noPadding,
   required = false,
+  disabled,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -146,6 +162,7 @@ export const FormItem: React.FC<FormItemProps> & {
             removePlaceholder={removePlaceholder}
             indent={removable === 'indent'}
             noPadding={noPadding}
+            disabled={disabled}
           >
             <div className={classNames(styles.removable, 'vkuiInternalFormItem__removable')}>
               {wrappedChildren}
@@ -159,13 +176,12 @@ export const FormItem: React.FC<FormItemProps> & {
   );
 };
 
-FormItem.displayName = 'FormItem';
-
 FormItem.Top = FormItemTop;
-FormItem.Top.displayName = 'FormItem.Top';
-
 FormItem.TopLabel = FormItemTopLabel;
-FormItem.TopLabel.displayName = 'FormItem.TopLabel';
-
 FormItem.TopAside = FormItemTopAside;
-FormItem.TopAside.displayName = 'FormItem.TopAside';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(FormItem.Top, 'FormItem.Top');
+  defineComponentDisplayNames(FormItem.TopLabel, 'FormItem.TopLabel');
+  defineComponentDisplayNames(FormItem.TopAside, 'FormItem.TopAside');
+}

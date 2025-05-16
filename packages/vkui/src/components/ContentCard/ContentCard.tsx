@@ -17,30 +17,38 @@ export interface ContentCardProps
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
   /**
-   Текст над заголовком
+   Текст над заголовком.
    */
   overTitle?: React.ReactNode;
   /**
-   Заголовок
+   Заголовок.
    */
   title?: React.ReactNode;
   /**
-   Позволяет поменять тег используемый для заголовка
+   Позволяет поменять тег используемый для заголовка.
    */
   titleComponent?: React.ElementType;
   /**
-   Текст
+   Текст.
    */
   description?: React.ReactNode;
   /**
-   Нижний текст
+   Нижний текст.
    */
   caption?: React.ReactNode;
   /**
-    Максимальная высота изображения
+    Максимальная высота изображения.
    */
   maxHeight?: number;
+  /**
+   * Внешний вид карточки.
+   */
   mode?: CardProps['mode'];
+  /**
+   * Пользовательское значения стиля `object-fit` для картинки
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
+   */
+  imageObjectFit?: React.CSSProperties['objectFit'];
 }
 
 /**
@@ -63,7 +71,7 @@ export const ContentCard = ({
   src,
   srcSet,
   alt = '',
-  width,
+  width = '100%',
   height,
   crossOrigin,
   decoding,
@@ -72,6 +80,7 @@ export const ContentCard = ({
   sizes,
   useMap,
   fetchPriority,
+  imageObjectFit,
   hasHover = false,
   hasActive = false,
   Component = 'li',
@@ -86,10 +95,10 @@ export const ContentCard = ({
       className={classNames(restProps.disabled && styles.disabled, className)}
     >
       <Tappable
-        {...restProps}
         hasHover={hasHover}
         hasActive={hasActive}
-        className={styles.tappable}
+        {...restProps}
+        baseClassName={styles.tappable}
       >
         {(src || srcSet) && (
           <img
@@ -106,8 +115,8 @@ export const ContentCard = ({
             useMap={useMap}
             {...getFetchPriorityProp(fetchPriority)}
             height={height}
-            style={{ maxHeight }}
-            width="100%"
+            width={width}
+            style={{ maxHeight, objectFit: imageObjectFit }}
           />
         )}
         <div className={styles.body}>

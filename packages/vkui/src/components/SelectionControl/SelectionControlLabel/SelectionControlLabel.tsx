@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';

@@ -18,6 +18,9 @@ const stylesVertical = {
 };
 
 export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
+  /**
+   * Положение по вертикали, либо сверху, либо снизу.
+   */
   vertical?: 'top' | 'bottom';
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
@@ -29,13 +32,6 @@ export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
    * Ширина пересчитывается по событию `window` `resize`.
    */
   useParentWidth?: boolean;
-}
-
-export interface FixedLayoutState {
-  position: 'absolute' | null;
-  top: number;
-  bottom: number;
-  width: string;
 }
 
 /**

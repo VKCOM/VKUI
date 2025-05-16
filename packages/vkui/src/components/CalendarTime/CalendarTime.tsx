@@ -5,6 +5,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { setHours, setMinutes } from 'date-fns';
 import { Keys, pressedKey } from '../../lib/accessibility';
+import { callMultiple } from '../../lib/callMultiple';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
@@ -14,35 +15,62 @@ const selectFilterFn = () => true;
 
 export type CalendarTimeTestsProps = {
   /**
-   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре
+   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре.
    */
   hoursTestId?: string;
   /**
-   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре
+   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре.
    */
   minutesTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки "Готово" в календаре
+   * Передает атрибут `data-testid` для кнопки "Готово" в календаре.
    */
   doneButtonTestId?: string;
 };
 
 export type CalendarDoneButtonProps = {
   /**
-   * Кастомное отображение кнопки Done.
+   * Кастомное отображение кнопки `"Done"`.
    */
   DoneButton?: React.ComponentType<ButtonProps>;
+  /**
+   * Текст отображаемый в кнопке `"Done"`.
+   */
   doneButtonText?: string;
+  /**
+   * Управление отображением кнопки `"Done"`.
+   */
   doneButtonShow?: boolean;
+  /**
+   * Блокировка взаимодействия с кнопкой "Done".
+   */
   doneButtonDisabled?: boolean;
+  /**
+   * Обработки нажатия на кнопку `"Done"`.
+   */
   onDoneButtonClick?: () => void;
 };
 
 export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
+  /**
+   * Отображаемая дата.
+   */
   value: Date;
+  /**
+   * Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий.
+   */
   changeHoursLabel?: string;
+  /**
+   * Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий.
+   */
   changeMinutesLabel?: string;
+  /**
+   * Обработчик изменения времени.
+   */
   onChange?: (value: Date) => void;
+  /**
+   * Функция для проверки блокировки выбора даты и времени.
+   */
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
@@ -137,19 +165,41 @@ export const CalendarTime = ({
 
   const onPickerKeyDown = (e: React.KeyboardEvent) => {
     const key = pressedKey(e);
-    if (key === Keys.ENTER || key === Keys.TAB) {
-      const steps = [hoursInputRef, minutesInputRef, doneButtonRef];
-      const currentStepIndex = steps.findIndex((step) => step.current === e.target);
-      const diff = e.key === 'Tab' && e.shiftKey ? -1 : 1;
-      const nextStepIndex = currentStepIndex + diff;
-      if (nextStepIndex < 0 || nextStepIndex >= steps.length) {
-        return;
-      }
+    /* Мы хотим иметь возможность быстро, по Enter перемещаться между
+     * селектами с часами и минутами, также как мы это делаем по нажатию на Tab */
+    if (key !== Keys.ENTER) {
+      return;
+    }
+
+    const steps = [hoursInputRef, minutesInputRef, doneButtonRef].filter((ref) =>
+      Boolean(ref.current),
+    );
+    const currentStepIndex = steps.findIndex((step) => step.current === e.target);
+    const nextStepIndex = currentStepIndex + 1;
+    if (nextStepIndex >= steps.length) {
+      return;
+    }
+    const nextStep = steps[nextStepIndex];
+
+    if (nextStep.current) {
       e.preventDefault();
-      const nextStep = steps[nextStepIndex];
       nextStep.current?.focus();
     }
   };
+
+  const stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
+    (event: React.KeyboardEvent, isOpen: boolean) => {
+      if (isOpen && event.key === 'Escape') {
+        event.stopPropagation();
+      }
+    },
+    [],
+  );
+
+  const onSelectInputKeyDown = callMultiple(
+    onPickerKeyDown,
+    stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen,
+  );
 
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
@@ -180,7 +230,7 @@ export const CalendarTime = ({
             searchable
             filterFn={selectFilterFn}
             onInputChange={onHoursInputChange}
-            onInputKeyDown={onPickerKeyDown}
+            onInputKeyDown={onSelectInputKeyDown}
             getSelectInputRef={hoursInputRef}
             aria-label={changeHoursLabel}
             data-testid={hoursTestId}
@@ -199,7 +249,7 @@ export const CalendarTime = ({
             filterFn={selectFilterFn}
             onInputChange={onMinutesInputChange}
             getSelectInputRef={minutesInputRef}
-            onInputKeyDown={onPickerKeyDown}
+            onInputKeyDown={onSelectInputKeyDown}
             aria-label={changeMinutesLabel}
             data-testid={minutesTestId}
           />

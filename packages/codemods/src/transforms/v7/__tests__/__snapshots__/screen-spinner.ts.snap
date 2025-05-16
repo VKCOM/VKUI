@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* Проверяем удаление size */}
       <ScreenSpinner state="loading" />
       <ScreenSpinner.Container>
@@ -22,7 +22,7 @@ const App = () => {
         <ScreenSpinner.Loader />
         <ScreenSpinner.SwapIcon />
       </ScreenSpinner.Container>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

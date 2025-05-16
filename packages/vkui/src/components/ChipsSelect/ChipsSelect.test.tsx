@@ -159,6 +159,48 @@ describe('ChipsSelect', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it('should check custom fields when onChange', async () => {
+    const onChange = jest.fn();
+    const options = colors.map((color, index) => ({
+      ...color,
+      custom: index.toString(),
+    }));
+
+    const result = render(
+      <ChipsSelect
+        options={options}
+        defaultValue={[]}
+        onChange={onChange}
+        dropdownTestId="dropdown"
+      />,
+    );
+    const inputLocator = result.getByRole('combobox');
+    await userEvent.click(inputLocator);
+    await waitForFloatingPosition();
+
+    const dropdownOption = within(result.getByTestId('dropdown')).getByRole('option', {
+      name: withRegExp(FIRST_OPTION.label),
+    });
+    await userEvent.hover(dropdownOption); // для вызова onDropdownMouseLeave
+    await userEvent.hover(inputLocator);
+    await userEvent.click(dropdownOption);
+
+    result.rerender(
+      <ChipsSelect
+        value={[{ ...FIRST_OPTION, custom: '0' }]}
+        options={options}
+        onChange={onChange}
+        dropdownTestId="dropdown"
+      />,
+    );
+    expect(
+      result.getByRole('option', {
+        name: withRegExp(FIRST_OPTION.label),
+      }),
+    ).toBeTruthy();
+    expect(onChange).toHaveBeenCalledWith([{ ...FIRST_OPTION, custom: '0' }]);
+  });
+
   it.each(['{ArrowDown}', 'typing text'])(
     'closes dropdown on {Escape} and open when %s',
     async (type) => {
@@ -585,5 +627,47 @@ describe('ChipsSelect', () => {
     expect(screen.queryByTestId('dropdown')).toBeTruthy();
     fireEvent.click(getDropdownIcon());
     expect(screen.queryByTestId('dropdown')).toBeFalsy();
+  });
+
+  it('should add some options by splitting by delimiter when creatable', async () => {
+    const onChange = jest.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        data-testid="input"
+        onChange={onChange}
+        delimiter=","
+        creatable
+      />,
+    );
+    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
+    expect(onChange).toBeCalledWith([
+      {
+        value: 'Зеленый',
+        label: 'Зеленый',
+      },
+      {
+        value: 'Фиолетовый',
+        label: 'Фиолетовый',
+      },
+    ]);
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
+  });
+
+  it('should not add some options by splitting by delimiter when not creatable', async () => {
+    const onChange = jest.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        data-testid="input"
+        onChange={onChange}
+        delimiter=","
+      />,
+    );
+    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('Зеленый,Фиолетовый');
   });
 });

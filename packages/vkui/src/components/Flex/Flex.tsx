@@ -1,4 +1,3 @@
-import { Children } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import {
   calculateGap,
@@ -76,7 +75,7 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
 export const Flex: React.FC<FlexProps> & {
   Item: typeof FlexItem;
 } = ({
-  gap,
+  gap = 0,
   align,
   justify,
   margin = 'none',
@@ -86,7 +85,6 @@ export const Flex: React.FC<FlexProps> & {
   children,
   ...props
 }: FlexProps) => {
-  const withGaps = Children.count(children) > 1 && gap;
   const [rowGap, columnGap] = calculateGap(gap);
 
   return (
@@ -100,8 +98,7 @@ export const Flex: React.FC<FlexProps> & {
         margin !== 'none' && styles.marginAuto,
         align && alignClassNames[align],
         justify && justifyClassNames[justify],
-        withGaps && styles.withGaps,
-        withGaps && getGapsPresets(rowGap, columnGap),
+        getGapsPresets(rowGap, columnGap),
       )}
       baseStyle={getGapsByUser(rowGap, columnGap)}
     >

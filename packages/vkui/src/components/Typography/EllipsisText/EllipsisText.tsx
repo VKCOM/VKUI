@@ -19,14 +19,14 @@ export interface EllipsisTextProps
    */
   maxWidth?: number;
   /**
-   * Максимальное количество видимых строк
+   * Максимальное количество видимых строк.
    *
    * > При `maxLines > 1` используется свойство line-clamp, которое поддерживается не всеми версиями браузеров. Используйте с осторожностью
-   * > @see [line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+   * > @see [line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp).
    */
   maxLines?: number;
   /**
-   * Отключает отображение нативного тултипа с полным текстом
+   * Отключает отображение нативного тултипа с полным текстом.
    */
   disableNativeTitle?: boolean;
 }

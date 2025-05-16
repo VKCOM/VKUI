@@ -16,14 +16,14 @@ const singleIconClassNames = {
   l: styles.singleIconSlotSizeL,
 };
 
-export type ContentBadgeSlotIconProps = HTMLAttributesWithRootRef<HTMLDivElement>;
+type ContentBadgeIconSlotProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
-export const ContentBadgeSlotIcon: React.FC<ContentBadgeSlotIconProps> = ({
+export const ContentBadgeIconSlot = ({
   className,
   getRootRef,
   children,
   ...restProps
-}: ContentBadgeSlotIconProps) => {
+}: ContentBadgeIconSlotProps) => {
   const { size, isSingleChild } = React.useContext(ContentBadgeContext);
 
   if (size === 's') {
@@ -43,5 +43,3 @@ export const ContentBadgeSlotIcon: React.FC<ContentBadgeSlotIconProps> = ({
     </div>
   );
 };
-
-ContentBadgeSlotIcon.displayName = 'ContentBadgeSlotIcon';

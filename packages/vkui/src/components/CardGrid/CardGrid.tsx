@@ -18,9 +18,12 @@ const stylesSize = {
 };
 
 export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
+  /**
+   * Размер карточек.
+   */
   size?: 's' | 'm' | 'l';
   /**
-   * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа
+   * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа.
    */
   padding?: boolean;
 }

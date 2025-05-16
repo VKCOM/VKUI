@@ -14,18 +14,18 @@ import styles from './Skeleton.module.css';
 const CUSTOM_PROPERTY_GRADIENT_LEFT = '--vkui_internal--skeleton_gradient_left';
 
 /**
- * Синхронизирует анимацию скелетонов с помощью временных отрезков
+ * Синхронизирует анимацию скелетонов с помощью временных отрезков.
  *
  * ## visibilitychange
  *
  * В синхронизацию не заложен механизм перехода на оптимизации браузеров при
  * переходе на другую вкладку, поскольку нет уверенности в реальности таких
  * кейсов со скелетонами. Если такой кейс принесут, необходимо обработать
- * событие `visibilitychange` используя функцию `syncAnimation`
+ * событие `visibilitychange` используя функцию `syncAnimation`.
  *
- * https://developer.chrome.com/blog/page-lifecycle-api/
+ * Смотри https://developer.chrome.com/blog/page-lifecycle-api/.
  *
- * @param duration длительность анимации в секундах
+ * @param duration Длительность анимации в секундах.
  */
 function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
   const [isAnimationStarted, setIsAnimationStarted] = React.useState<boolean>(false);
@@ -60,7 +60,7 @@ function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
 }
 
 /**
- * Вычисляет позицию скелетона
+ * Вычисляет позицию скелетона.
  */
 function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
   const { document, window } = useDOM();
@@ -100,22 +100,22 @@ export interface SkeletonProps
       | 'margin'
     > {
   /**
-   * Начальный цвет анимации
+   * Начальный цвет анимации.
    */
   colorFrom?: string;
 
   /**
-   * Финальный цвет анимации
+   * Финальный цвет анимации.
    */
   colorTo?: string;
 
   /**
-   * Выключает анимацию, в результате чего показывается только один цвет
+   * Выключает анимацию, в результате чего показывается только один цвет.
    */
   noAnimation?: boolean;
 
   /**
-   * Длительность анимации в секундах
+   * Длительность анимации в секундах.
    */
   duration?: number;
 }

@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
@@ -35,11 +36,11 @@ export interface ScrollContextInterface {
   getScroll: (this: void, options?: GetScrollOptions) => { x: number; y: number };
   scrollTo: (this: void, x?: number, y?: number) => void;
   /**
-   * Увеличивает счетчик блокировки прокрутки
+   * Увеличивает счетчик блокировки прокрутки.
    */
   incrementScrollLockCounter: (this: void) => void;
   /**
-   * Уменьшает счетчик блокировки прокрутки
+   * Уменьшает счетчик блокировки прокрутки.
    */
   decrementScrollLockCounter: (this: void) => void;
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
@@ -57,7 +58,7 @@ export const useScroll = (): ScrollContextInterface => React.useContext(ScrollCo
 
 /**
  * Управляет блокировкой окна в зависимости от внутреннего счетчика.
- * Если счетчик больше нуля, требуется заблокировать прокрутку
+ * Если счетчик больше нуля, требуется заблокировать прокрутку.
  */
 function useScrollLockController(enableScrollLock: () => void, disableScrollLock: () => void) {
   const countRef = React.useRef(0);
@@ -215,6 +216,8 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
 
     Object.assign(document!.documentElement.style, {
       position: 'fixed',
+      top: `-${scrollY}px`,
+      left: `-${scrollX}px`,
       right: '0',
       overscrollBehavior: 'none',
       overflowY,
@@ -222,9 +225,7 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     });
 
     scrollLockEnabledRef.current = true;
-
-    scrollTo(scrollX, scrollY);
-  }, [document, getScroll, scrollTo, window]);
+  }, [document, getScroll, window]);
 
   const disableScrollLock = React.useCallback(() => {
     const scrollData = getScroll({ compensateKeyboardHeight: false });
@@ -314,13 +315,13 @@ export const ElementScrollController = ({
     Object.assign(el.style, {
       position: 'absolute',
       right: '0',
+      top: `-${scrollY}px`,
+      left: `-${scrollX}px`,
       overflowY,
       overflowX,
     });
     scrollLockEnabledRef.current = true;
-
-    scrollTo(scrollX, scrollY);
-  }, [elRef, getScroll, scrollTo]);
+  }, [elRef, getScroll]);
 
   const disableScrollLock = React.useCallback(() => {
     const el = elRef.current;
@@ -355,9 +356,9 @@ export const ElementScrollController = ({
 };
 
 /**
- * Блокирует прокрутку окна
+ * Блокирует прокрутку окна.
  *
- * @param enabled - если false то не будет блокировать
+ * @param enabled - Если false то не будет блокировать.
  */
 export const useScrollLock = (enabled = true): void => {
   const { incrementScrollLockCounter, decrementScrollLockCounter } = useScroll();

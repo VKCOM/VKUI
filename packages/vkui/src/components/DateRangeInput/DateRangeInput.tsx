@@ -35,28 +35,36 @@ const sizeYClassNames = {
 
 type DateTestsProps = {
   /**
-   * Передает атрибут `data-testid` для поля ввода дня
+   * Передает атрибут `data-testid` для поля ввода дня.
    */
   day?: string;
   /**
-   * Передает атрибут `data-testid` для поля ввода месяца
+   * Передает атрибут `data-testid` для поля ввода месяца.
    */
   month?: string;
   /**
-   * Передает атрибут `data-testid` для поля ввода года
+   * Передает атрибут `data-testid` для поля ввода года.
    */
   year?: string;
 };
 
 export type DateRangeInputTestsProps = {
   /**
-   * Передает атрибуты `data-testid` для полей ввода начальной даты
+   * Передает атрибуты `data-testid` для полей ввода начальной даты.
    */
   startDateTestsProps?: DateTestsProps;
   /**
-   * Передает атрибуты `data-testid` для полей ввода конечной даты
+   * Передает атрибуты `data-testid` для полей ввода конечной даты.
    */
   endDateTestsProps?: DateTestsProps;
+  /**
+   * Передает атрибут `data-testid` для кнопки показа календаря.
+   */
+  showCalendarButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки очистки даты.
+   */
+  clearButtonTestId?: string;
 };
 
 export interface DateRangeInputProps
@@ -84,20 +92,56 @@ export interface DateRangeInputProps
     Omit<FormFieldProps, 'maxHeight'>,
     DateRangeInputTestsProps {
   /**
-   * Передает атрибуты `data-testid` для интерактивных элементов в календаре
+   * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
   calendarTestsProps?: CalendarRangeTestsProps;
+  /**
+   * Расположение календаря относительно поля ввода.
+   */
   calendarPlacement?: PlacementWithAuto;
+  /**
+   * Автоматически закрывать календарь при изменениях.
+   */
   closeOnChange?: boolean;
+  /**
+   * Обработчик изменения состояния открытия календаря.
+   */
   onCalendarOpenChanged?: (opened: boolean) => void;
+  /**
+   * Label для кнопки очистки. Делает доступным для ассистивных технологий.
+   */
   clearFieldLabel?: string;
+  /**
+   * Label для кнопки открытия календаря. Делает доступным для ассистивных технологий.
+   */
   showCalendarLabel?: string;
+  /**
+   * Label для ввода дня начальной даты. Делает доступным для ассистивных технологий.
+   */
   changeStartDayLabel?: string;
+  /**
+   * Label для ввода месяца начальной даты. Делает доступным для ассистивных технологий.
+   */
   changeStartMonthLabel?: string;
+  /**
+   * Label для ввода года начальной даты. Делает доступным для ассистивных технологий.
+   */
   changeStartYearLabel?: string;
+  /**
+   * Label для ввода дня конечной даты. Делает доступным для ассистивных технологий.
+   */
   changeEndDayLabel?: string;
+  /**
+   * Label для ввода месяца конечной даты. Делает доступным для ассистивных технологий.
+   */
   changeEndMonthLabel?: string;
+  /**
+   * Label для ввода года конечной даты. Делает доступным для ассистивных технологий.
+   */
   changeEndYearLabel?: string;
+  /**
+   * Отключение открытия календаря.
+   */
   disableCalendar?: boolean;
 }
 
@@ -183,6 +227,8 @@ export const DateRangeInput = ({
   calendarTestsProps,
   startDateTestsProps,
   endDateTestsProps,
+  clearButtonTestId,
+  showCalendarButtonTestId,
   id,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
@@ -193,10 +239,15 @@ export const DateRangeInput = ({
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
 
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | undefined>({
+  const _onChange = React.useCallback(
+    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
+    [onChange],
+  );
+
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
     value: valueProp,
     defaultValue,
-    onChange,
+    onChange: _onChange,
   });
 
   const onInternalValueChange = React.useCallback(
@@ -248,6 +299,8 @@ export const DateRangeInput = ({
     [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
   );
 
+  const onClear = React.useCallback(() => updateValue(undefined), [updateValue]);
+
   const {
     rootRef,
     calendarRef,
@@ -266,7 +319,7 @@ export const DateRangeInput = ({
     autoFocus,
     disabled,
     elementsConfig,
-    onChange: updateValue,
+    onClear,
     onInternalValueChange,
     getInternalValue,
     value,
@@ -301,12 +354,16 @@ export const DateRangeInput = ({
       getRootRef={handleRootRef}
       after={
         value ? (
-          <IconButton hoverMode="opacity" onClick={clear}>
+          <IconButton hoverMode="opacity" onClick={clear} data-testid={clearButtonTestId}>
             <VisuallyHidden>{clearFieldLabel}</VisuallyHidden>
             <Icon16Clear />
           </IconButton>
         ) : (
-          <IconButton hoverMode="opacity" onClick={openCalendar}>
+          <IconButton
+            hoverMode="opacity"
+            onClick={openCalendar}
+            data-testid={showCalendarButtonTestId}
+          >
             <VisuallyHidden>{showCalendarLabel}</VisuallyHidden>
             <Icon20CalendarOutline />
           </IconButton>

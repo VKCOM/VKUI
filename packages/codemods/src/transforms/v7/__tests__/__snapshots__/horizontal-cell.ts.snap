@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <HorizontalCell
         title="Title"
         subtitle="Subtitle"
@@ -23,7 +23,7 @@ const App = () => {
       >
         <Image size={88} borderRadius="l" />
       </HorizontalCell>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

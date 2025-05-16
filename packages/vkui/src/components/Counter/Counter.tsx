@@ -30,12 +30,12 @@ const sizeClassNames = {
 
 export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement> {
   /**
-   * Режим отображения счетчика
+   * Режим отображения счетчика.
    */
   mode?: 'primary' | 'contrast' | 'tertiary' | 'inherit';
 
   /**
-   * Внешний вид счетчика
+   * Внешний вид счетчика.
    */
   appearance?: 'accent' | 'neutral' | 'accent-green' | 'accent-red' | 'custom';
 
@@ -44,10 +44,12 @@ export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
    * - При mode="primary" - изменяет фон
    * - При mode="contrast" - изменяет цвет текста
    * - При mode="tertiary" - изменяет цвет текста
-   * - При mode="inherit" - не работает
+   * - При mode="inherit" - не работает.
    */
   color?: string;
-
+  /**
+   * Размер счетчика.
+   */
   size?: 's' | 'm';
 }
 

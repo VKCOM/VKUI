@@ -31,12 +31,12 @@
 }
 
 .sizeXRegular.shadow .in {
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 4px rgb(0, 0, 0, 0.08);
 }
 
 @media (--sizeX-regular) {
   .sizeXNone.shadow .in {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 4px rgb(0, 0, 0, 0.08);
   }
 }
 

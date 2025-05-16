@@ -19,7 +19,7 @@ const App = () => {
   ];
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Alert
         actions={[
           {
@@ -36,7 +36,7 @@ const App = () => {
         text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
       />
       <Alert actions={action} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

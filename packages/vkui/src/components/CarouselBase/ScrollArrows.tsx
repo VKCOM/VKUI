@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
@@ -24,17 +25,20 @@ export const getArrowClassName = (
 
 export interface ScrollArrowsTestIds {
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к следующему слайду
+   * Передает атрибут `data-testid` для кнопки перехода к следующему слайду.
    */
   nextArrowTestId?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду
+   * Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду.
    */
   prevArrowTestId?: string;
 }
 
 interface ScrollArrowsProps
-  extends Pick<BaseGalleryProps, 'showArrows' | 'arrowSize' | 'arrowAreaHeight'>,
+  extends Pick<
+      BaseGalleryProps,
+      'showArrows' | 'arrowSize' | 'arrowAreaHeight' | 'arrowPrevLabel' | 'arrowNextLabel'
+    >,
     ScrollArrowsTestIds {
   hasPointer?: boolean;
   canSlideLeft: boolean;
@@ -43,7 +47,7 @@ interface ScrollArrowsProps
   onSlideRight: (e: React.MouseEvent) => void;
 }
 
-export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
+export const ScrollArrows = ({
   hasPointer,
   canSlideLeft,
   canSlideRight,
@@ -52,9 +56,11 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
   showArrows = false,
   arrowSize = 'm',
   arrowAreaHeight = 'stretch',
+  arrowPrevLabel,
+  arrowNextLabel,
   nextArrowTestId,
   prevArrowTestId,
-}) => {
+}: ScrollArrowsProps) => {
   return showArrows && hasPointer ? (
     <>
       {canSlideLeft && (
@@ -64,6 +70,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
           onClick={onSlideLeft}
           size={arrowSize}
           data-testid={prevArrowTestId}
+          label={arrowPrevLabel}
         />
       )}
       {canSlideRight && (
@@ -73,6 +80,7 @@ export const ScrollArrows: React.FC<ScrollArrowsProps> = ({
           onClick={onSlideRight}
           size={arrowSize}
           data-testid={nextArrowTestId}
+          label={arrowNextLabel}
         />
       )}
     </>

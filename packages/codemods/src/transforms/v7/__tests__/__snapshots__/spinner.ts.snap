@@ -6,12 +6,12 @@ import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Spinner size="xl" />
       <Spinner size="l" />
       <Spinner size="m" />
       <Spinner size="s">Кастомный текст вместо "Загружается...", который озвучит скринридер</Spinner>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

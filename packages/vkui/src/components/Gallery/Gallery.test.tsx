@@ -181,6 +181,8 @@ const setup = ({
         bulletTestId={(index, active) => (active ? `bullet-${index}-active` : `bullet-${index}`)}
         prevArrowTestId="prev-arrow"
         nextArrowTestId="next-arrow"
+        arrowPrevLabel="prev-label"
+        arrowNextLabel="next-label"
       >
         {Array.from({ length: numberOfSlides }).map((_v, index) => (
           <Slide key={index} getRef={(e: HTMLDivElement) => mockSlideData(e, index)}>
@@ -326,6 +328,9 @@ describe('Gallery', () => {
 
       const [leftArrow, rightArrow] = getArrows();
       fireEvent.click(rightArrow);
+
+      expect(screen.getByText('prev-label')).toBeInTheDocument();
+      expect(screen.getByText('next-label')).toBeInTheDocument();
 
       expect(onNext).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[2]]);

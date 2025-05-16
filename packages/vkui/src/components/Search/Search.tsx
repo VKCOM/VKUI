@@ -13,7 +13,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { touchEnabled } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
 import { Headline } from '../Typography/Headline/Headline';
@@ -22,41 +22,59 @@ import styles from './Search.module.css';
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
-  props?: Partial<IconButtonProps>,
-) => React.ReactNode;
+  props?: Partial<IconButtonProps> & HasDataAttribute,
+) => React.ReactElement;
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
   /**
-   * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
+   * Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
   after?: React.ReactNode;
+  /**
+   * Контент, отображаемый перед полем ввода.
+   */
   before?: React.ReactNode;
+  /**
+   * Иконка поиска. Может быть React-элементом или функцией, возвращающей элемент.
+   */
   icon?: React.ReactNode | ((renderFn: RenderIconButtonFn) => React.ReactNode);
+  /**
+   * Обработчик нажатия на иконку поиска.
+   */
   onIconClick?: React.PointerEventHandler<HTMLElement>;
+  /**
+   * Значение поля ввода по умолчанию.
+   */
   defaultValue?: string;
+  /**
+   * Текст для скринридеров, описывающий иконку поиска.
+   */
   iconLabel?: string;
+  /**
+   * Текст для скринридеров, описывающий кнопку очистки.
+   */
   clearLabel?: string;
   /**
-   * Передает атрибут `data-testid` для кнопки очистки
+   * Передает атрибут `data-testid` для кнопки очистки.
    */
   clearButtonTestId?: string;
   /**
-   * Удаляет отступы у компонента
+   * Удаляет отступы у компонента.
    */
   noPadding?: boolean;
   /**
-   * Текст для кнопки Найти
+   * Текст для кнопки Найти.
    */
   findButtonText?: string;
   /**
-   * Коллбэк для кнопки Найти
+   * Обработчик, при нажатии на кнопку "Найти".
    */
   onFindButtonClick?: React.MouseEventHandler<HTMLElement>;
   /**
-   * Передает атрибут `data-testid` для кнопки поиска
+   * Передает атрибут `data-testid` для кнопки поиска.
    */
   findButtonTestId?: string;
 }

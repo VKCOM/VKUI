@@ -7,12 +7,17 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { useTabsController } from './TabsController';
+import { TabsModeContext } from './TabsModeContext';
 import styles from './Tabs.module.css';
 
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Режим отображения компонента.
+   */
   mode?: 'default' | 'accent' | 'secondary';
   /**
-   * Включает прокрутку контейнера до активной (`selected`) вкладки
+   * Включает прокрутку контейнера до активной (`selected`) вкладки.
    * @since 5.10.0
    */
   withScrollToSelectedTab?: boolean;
@@ -27,27 +32,22 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    *  - равномерно занимают всю доступную ширину при вложении в `HorizontalScroll`
    *  - равномерно занимают всю доступную ширину при `mode=default` и platform !== 'VKCOM'
    * При `stretched` и `shrinked` вкладки либо равномерно занимают всю ширину,
-   * либо выравниваются по контенту соответственно
+   * либо выравниваются по контенту соответственно.
    */
   layoutFillMode?: 'auto' | 'stretched' | 'shrinked';
+  /**
+   * Идентификатор выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  selectedId?: string;
+  /**
+   * Идентификатор выбранной вкладки по умолчанию. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  defaultSelectedId?: string;
+  /**
+   * Обработчик изменения выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  onSelectedIdChange?: (id: string) => void;
 }
-
-export interface TabsContextProps {
-  mode: TabsProps['mode'];
-  withGaps: boolean;
-  layoutFillMode: NonNullable<TabsProps['layoutFillMode']>;
-  withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
-  scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
-}
-
-export const TabsModeContext: React.Context<TabsContextProps> =
-  React.createContext<TabsContextProps>({
-    mode: 'default',
-    withGaps: false,
-    layoutFillMode: 'auto',
-    withScrollToSelectedTab: false,
-    scrollBehaviorToSelectedTab: 'nearest',
-  });
 
 /**
  * @see https://vkcom.github.io/VKUI/#/Tabs
@@ -59,8 +59,16 @@ export const Tabs = ({
   withScrollToSelectedTab,
   scrollBehaviorToSelectedTab = 'nearest',
   layoutFillMode = 'auto',
+  selectedId,
+  defaultSelectedId,
+  onSelectedIdChange,
   ...restProps
 }: TabsProps): React.ReactNode => {
+  const controller = useTabsController({
+    selectedId,
+    defaultSelectedId,
+    onSelectedIdChange,
+  });
   const platform = usePlatform();
   const direction = useConfigDirection();
   const isTabFlow = role === 'tablist';
@@ -88,6 +96,7 @@ export const Tabs = ({
             layoutFillMode,
             withScrollToSelectedTab,
             scrollBehaviorToSelectedTab,
+            controller,
           }}
         >
           {children}
@@ -96,7 +105,3 @@ export const Tabs = ({
     </RootComponent>
   );
 };
-
-// чтобы styleguidist не путал компонент
-// с другими именованными экспортами
-Tabs.displayName = 'Tabs';

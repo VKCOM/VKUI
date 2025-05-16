@@ -186,7 +186,6 @@ describe('Cell', () => {
       );
       const cell = screen.getByTestId('cell');
       expect(cell.tagName).toBe('LABEL');
-      expect(cell.parentElement).toHaveClass(styles.selectable);
 
       const checkbox = getByRole(cell, 'checkbox');
       expect(checkbox).toBeInTheDocument();

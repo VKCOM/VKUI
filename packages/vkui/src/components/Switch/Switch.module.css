@@ -101,9 +101,9 @@
   --vkui_internal--Switch__handle_shift_x_easing: cubic-bezier(0.36, -0.24, 0.26, 1.32);
   /* prettier-ignore */
   --vkui_internal--Switch__handle_shadow:
-    0 3px 8px rgba(0, 0, 0, 0.15),
-    0 3px 1px rgba(0, 0, 0, 0.06),
-    inset 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+    0 3px 8px rgb(0, 0, 0, 0.15),
+    0 3px 1px rgb(0, 0, 0, 0.06),
+    inset 0 0 0 0.5px rgb(0, 0, 0, 0.04);
 }
 
 .ios.sizeYCompact {

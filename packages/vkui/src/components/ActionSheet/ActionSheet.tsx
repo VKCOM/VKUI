@@ -19,6 +19,9 @@ import styles from './ActionSheet.module.css';
 
 type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
 export interface ActionSheetOnCloseOptions {
+  /**
+   * Причина закрытия всплывающего элемента.
+   */
   closedBy: CloseInitiators;
 }
 
@@ -27,19 +30,43 @@ export interface ActionSheetProps
       SharedDropdownProps,
       'toggleRef' | 'popupOffsetDistance' | 'placement' | 'allowClickPropagation'
     >,
-    Omit<UseFocusTrapProps, 'onClose'>,
+    Omit<UseFocusTrapProps, 'onClose' | 'mount' | 'disabled' | 'captureEscapeKeyboardEvent'>,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
+  /**
+   * Заголовок всплыващего окна.
+   */
   title?: React.ReactNode;
+  /**
+   * Описание всплыващего окна, под заголовком.
+   */
   description?: React.ReactNode;
   /**
-   * Закрыть попап по клику снаружи.
+   * Закрыть всплыващее окно по нажатию снаружи.
    */
   onClose: (options: ActionSheetOnCloseOptions) => void;
   /**
    * Только мобильный iOS.
    */
   iosCloseItem?: React.ReactNode;
+  /**
+   * Режим отображения компонента:
+   *
+   * - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
+   * - `menu` –  отображение в виде всплывающего элемента, относительно якорного элемента.
+   */
   mode?: 'sheet' | 'menu';
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство не используется и будет удалено в `v8`.
+   */
+  mount?: boolean;
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство не используется и будет удалено в `v8`.
+   */
+  disabled?: boolean;
 }
 
 /**

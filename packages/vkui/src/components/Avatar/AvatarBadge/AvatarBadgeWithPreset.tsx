@@ -22,7 +22,7 @@ export interface AvatarBadgeWithPresetProps
   preset?: 'online' | 'online-mobile';
 }
 
-export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
+export const AvatarBadgeWithPreset = ({
   preset = 'online',
   className,
   ...restProps
@@ -45,5 +45,3 @@ export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
     </ImageBase.Badge>
   );
 };
-
-AvatarBadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';

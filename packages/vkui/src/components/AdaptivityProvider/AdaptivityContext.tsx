@@ -4,25 +4,33 @@ import * as React from 'react';
 import type { SizeTypeValues, ViewHeightType, ViewWidthType } from '../../lib/adaptivity';
 
 export interface SizeProps {
+  /**
+   * Тип размера экрана по горизонтали.
+   */
   sizeX?: SizeTypeValues;
+  /**
+   * Тип размера экрана по вертикали.
+   */
   sizeY?: SizeTypeValues;
 }
 
 export interface AdaptivityProps extends SizeProps {
   /**
-   * @ignore
+   * Тип ширины экрана для адаптивного отображения.
    */
   viewWidth?: ViewWidthType;
   /**
-   * @ignore
+   * Тип высоты экрана для адаптивного отображения.
    */
   viewHeight?: ViewHeightType;
   /**
-   * @ignore
+   * Флаг наличия указателя (например, мыши) на устройстве.
    */
   hasPointer?: boolean;
   /**
-   * @ignore
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство нигде не используется и будет удалено в `v8`.
    */
   hasHover?: boolean;
 }

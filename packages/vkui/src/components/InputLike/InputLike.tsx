@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { callMultiple } from '../../lib/callMultiple';
@@ -29,7 +30,7 @@ function getMaskElements(length: number) {
   return result;
 }
 
-export const InputLike: React.FC<InputLikeProps> = ({
+export const InputLike = ({
   value,
   length,
   index,
@@ -50,10 +51,10 @@ export const InputLike: React.FC<InputLikeProps> = ({
   return (
     <RootComponent
       Component="span"
-      baseClassName={value?.length === length ? styles.full : undefined}
+      baseClassName={value?.length === length ? styles.host : undefined}
       tabIndex={0}
-      onClick={callMultiple(onClick, handleElementSelect)}
-      onFocus={callMultiple(stopPropagation, onFocus)}
+      onClick={onClick}
+      onFocus={callMultiple(onFocus, handleElementSelect)}
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}
@@ -67,5 +68,3 @@ export const InputLike: React.FC<InputLikeProps> = ({
     </RootComponent>
   );
 };
-
-InputLike.displayName = 'InputLike';

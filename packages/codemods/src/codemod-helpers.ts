@@ -228,12 +228,23 @@ interface AttributeManipulatorAPI {
   action?: 'rename' | 'remove';
 }
 
-export type AttributeManipulator = Record<string, AttributeManipulatorAPI>;
+export type AttributeManipulatorDeclaration = Record<string, AttributeManipulatorAPI>;
+
+export type AttributeReplacers = {
+  keyTo(k?: string): string;
+  valueTo(attributeKeyValue: JSXAttribute['value']): JSXAttribute['value'];
+  action: AttributeManipulatorAPI['action'];
+};
+
+export interface AttributeManipulator {
+  has(attributeKey: string | JSXIdentifier): boolean;
+  getReplacers(attributeKeyProp: string | JSXIdentifier): AttributeReplacers | undefined;
+}
 
 export const createAttributeManipulator = (
   props: Record<string, AttributeManipulatorAPI>,
   api: API,
-) => {
+): AttributeManipulator => {
   const map = new Map<string, AttributeManipulatorAPI>(Object.entries(props));
 
   return {
@@ -261,7 +272,7 @@ export const createAttributeManipulator = (
           }
           return found.keyTo(attributeKey);
         },
-        valueTo(attributeKeyValue: JSXAttribute['value']) {
+        valueTo(attributeKeyValue) {
           if (!found || !found.valueTo) {
             return attributeKeyValue;
           }
