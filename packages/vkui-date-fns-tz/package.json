@@ -68,6 +68,11 @@
     "build": "yarn run node build.ts",
     "test": "yarn run node --test '**/*.test.*'",
     "test:ci": "yarn run test",
+    "lint:types": "tsc",
     "prepack": "yarn run build"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.11.24",
+    "typescript": "^5.8.3"
   }
 }
