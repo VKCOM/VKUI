@@ -2,15 +2,11 @@ import type * as React from 'react';
 import { isElement, useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
-/**
- * Завязывается на document.
- *
- * @private
- */
-export const useGlobalOnClickOutside = <
+const useCommonGlobalClickOutside = <
   T extends React.RefObject<ElementType | null> | undefined | null,
   ElementType extends Element = Element,
 >(
+  event: Extract<keyof DocumentEventMap, 'click' | 'mousedown'>,
   callback: (event: MouseEvent) => void,
   ...refs: T[]
 ): void => {
@@ -29,12 +25,42 @@ export const useGlobalOnClickOutside = <
         callback(event);
       }
     };
-    document.addEventListener('click', handleClick, {
+    document.addEventListener(event, handleClick, {
       passive: true,
       capture: true,
     });
     return () => {
-      document.removeEventListener('click', handleClick, true);
+      document.removeEventListener(event, handleClick, true);
     };
   }, [document, callback, ...refs]);
+};
+
+/**
+ * Завязывается на document.
+ *
+ * @private
+ */
+export const useGlobalOnClickOutside = <
+  T extends React.RefObject<ElementType | null> | undefined | null,
+  ElementType extends Element = Element,
+>(
+  callback: (event: MouseEvent) => void,
+  ...refs: T[]
+): void => {
+  useCommonGlobalClickOutside('click', callback, ...refs);
+};
+
+/**
+ * Завязывается на document.
+ *
+ * @private
+ */
+export const useGlobalOnMouseDownOutside = <
+  T extends React.RefObject<ElementType | null> | undefined | null,
+  ElementType extends Element = Element,
+>(
+  callback: (event: MouseEvent) => void,
+  ...refs: T[]
+): void => {
+  useCommonGlobalClickOutside('mousedown', callback, ...refs);
 };

@@ -1,22 +1,25 @@
 import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { useGlobalOnClickOutside } from './useGlobalOnClickOutside';
+import { useGlobalOnClickOutside, useGlobalOnMouseDownOutside } from './useGlobalOnClickOutside';
 
 interface WrapperUseGlobalOnClickOutsideProps {
   disableTarget?: 'target-1' | 'target-2';
   disableAllTarget?: boolean;
   globalClickHandler: () => void;
+  useGlobalOnClickOutsideImpl: typeof useGlobalOnClickOutside;
 }
 
 const WrapperUseGlobalOnClickOutside = ({
   disableTarget,
   disableAllTarget = false,
   globalClickHandler,
+  useGlobalOnClickOutsideImpl,
 }: WrapperUseGlobalOnClickOutsideProps) => {
   const target1Ref = React.createRef<HTMLDivElement>();
   const target2Ref = React.createRef<HTMLDivElement>();
 
-  useGlobalOnClickOutside(
+  // eslint-disable-next-line react-compiler/react-compiler
+  useGlobalOnClickOutsideImpl(
     globalClickHandler,
     disableAllTarget || disableTarget === 'target-1' ? null : target1Ref,
     disableAllTarget || disableTarget === 'target-2' ? null : target2Ref,
@@ -33,21 +36,31 @@ const WrapperUseGlobalOnClickOutside = ({
   );
 };
 
-describe(useGlobalOnClickOutside, () => {
+describe.each([
+  ['click', useGlobalOnClickOutside],
+  ['mousedown', useGlobalOnMouseDownOutside],
+])('check for %s', (event, hook) => {
+  const targetEvent = (element: HTMLElement) => {
+    (event === 'click' ? fireEvent.click : fireEvent.mouseDown)(element);
+  };
+
   it('should works with multiple refs provided', () => {
     const globalClickHandler = jest.fn();
     const result = render(
-      <WrapperUseGlobalOnClickOutside globalClickHandler={globalClickHandler} />,
+      <WrapperUseGlobalOnClickOutside
+        globalClickHandler={globalClickHandler}
+        useGlobalOnClickOutsideImpl={hook}
+      />,
     );
 
-    fireEvent.click(result.getByTestId('target-1'));
-    fireEvent.click(result.getByTestId('target-2'));
-    fireEvent.click(result.getByTestId('target-2-child'));
+    targetEvent(result.getByTestId('target-1'));
+    targetEvent(result.getByTestId('target-2'));
+    targetEvent(result.getByTestId('target-2-child'));
     expect(globalClickHandler).not.toHaveBeenCalled();
 
-    fireEvent.click(document.documentElement);
-    fireEvent.click(result.getByTestId('root'));
-    fireEvent.click(result.getByTestId('outside'));
+    targetEvent(document.documentElement);
+    targetEvent(result.getByTestId('root'));
+    targetEvent(result.getByTestId('outside'));
     expect(globalClickHandler).toHaveBeenCalledTimes(3);
   });
 
@@ -57,20 +70,26 @@ describe(useGlobalOnClickOutside, () => {
       <WrapperUseGlobalOnClickOutside
         globalClickHandler={globalClickHandler}
         disableTarget="target-1"
+        useGlobalOnClickOutsideImpl={hook}
       />,
     );
 
-    fireEvent.click(result.getByTestId('target-1'));
-    fireEvent.click(result.getByTestId('target-2'));
+    targetEvent(result.getByTestId('target-1'));
+    targetEvent(result.getByTestId('target-2'));
     expect(globalClickHandler).toHaveBeenCalledTimes(1);
 
-    result.rerender(<WrapperUseGlobalOnClickOutside globalClickHandler={globalClickHandler} />);
+    result.rerender(
+      <WrapperUseGlobalOnClickOutside
+        globalClickHandler={globalClickHandler}
+        useGlobalOnClickOutsideImpl={hook}
+      />,
+    );
 
-    fireEvent.click(result.getByTestId('target-1'));
-    fireEvent.click(result.getByTestId('target-2'));
-    fireEvent.click(document.documentElement);
-    fireEvent.click(result.getByTestId('root'));
-    fireEvent.click(result.getByTestId('outside'));
+    targetEvent(result.getByTestId('target-1'));
+    targetEvent(result.getByTestId('target-2'));
+    targetEvent(document.documentElement);
+    targetEvent(result.getByTestId('root'));
+    targetEvent(result.getByTestId('outside'));
     expect(globalClickHandler).toHaveBeenCalledTimes(4);
   });
 
@@ -78,21 +97,28 @@ describe(useGlobalOnClickOutside, () => {
     const globalClickHandler = jest.fn();
 
     const result = render(
-      <WrapperUseGlobalOnClickOutside globalClickHandler={globalClickHandler} />,
+      <WrapperUseGlobalOnClickOutside
+        globalClickHandler={globalClickHandler}
+        useGlobalOnClickOutsideImpl={hook}
+      />,
     );
 
-    fireEvent.click(result.getByTestId('target-2'));
+    targetEvent(result.getByTestId('target-2'));
     expect(globalClickHandler).not.toHaveBeenCalled();
 
-    fireEvent.click(result.getByTestId('outside'));
+    targetEvent(result.getByTestId('outside'));
     expect(globalClickHandler).toHaveBeenCalledTimes(1);
 
     result.rerender(
-      <WrapperUseGlobalOnClickOutside globalClickHandler={globalClickHandler} disableAllTarget />,
+      <WrapperUseGlobalOnClickOutside
+        globalClickHandler={globalClickHandler}
+        disableAllTarget
+        useGlobalOnClickOutsideImpl={hook}
+      />,
     );
 
-    fireEvent.click(result.getByTestId('target-2'));
-    fireEvent.click(result.getByTestId('outside'));
+    targetEvent(result.getByTestId('target-2'));
+    targetEvent(result.getByTestId('outside'));
     expect(globalClickHandler).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,10 +1,10 @@
 'use client';
 
-import { type MouseEventHandler } from 'react';
 import * as React from 'react';
+import { type MouseEventHandler } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalOnClickOutside } from '../../hooks/useGlobalOnClickOutside';
+import { useGlobalOnMouseDownOutside } from '../../hooks/useGlobalOnClickOutside';
 import { Keys } from '../../lib/accessibility';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
@@ -251,7 +251,6 @@ export const ChipsSelect = <Option extends ChipOption>({
   // Связано с ChipsInputProps
   const rootRef = useExternRef(getRootRef);
   const inputRef = useExternRef(getRef, inputRefHook);
-  const forbidCloseByOutsideClick = React.useRef(false);
 
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
@@ -427,13 +426,10 @@ export const ChipsSelect = <Option extends ChipOption>({
   }, [setFocusedOptionIndex]);
 
   const handleClickOutside = React.useCallback(() => {
-    if (!forbidCloseByOutsideClick.current) {
-      setOpened(false);
-    }
-    forbidCloseByOutsideClick.current = false;
+    setOpened(false);
   }, [setOpened]);
 
-  useGlobalOnClickOutside(
+  useGlobalOnMouseDownOutside(
     handleClickOutside,
     opened ? rootRef : null,
     opened ? dropdownScrollBoxRef : null,
@@ -503,7 +499,6 @@ export const ChipsSelect = <Option extends ChipOption>({
                 if (!event.defaultPrevented) {
                   closeAfterSelect && setOpened(false);
                   addOption(option);
-                  forbidCloseByOutsideClick.current = true;
                   clearInput();
                 }
               },
