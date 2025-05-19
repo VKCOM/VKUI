@@ -1,0 +1,73 @@
+{
+  "name": "@vkontakte/vkui-date-fns-tz",
+  "version": "0.0.0",
+  "description": "date-fns timezone utils",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "tzOffset/",
+    "tzScan/",
+    "date/",
+    "tz/",
+    "constants/"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    },
+    "./tzOffset": {
+      "import": {
+        "types": "./tzOffset/index.d.ts",
+        "default": "./tzOffset/index.js"
+      }
+    },
+    "./tzScan": {
+      "import": {
+        "types": "./tzScan/index.d.ts",
+        "default": "./tzScan/index.js"
+      }
+    },
+    "./date": {
+      "import": {
+        "types": "./date/index.d.ts",
+        "default": "./date/index.js"
+      }
+    },
+    "./date/mini": {
+      "import": {
+        "types": "./date/mini.d.ts",
+        "default": "./date/mini.js"
+      }
+    },
+    "./tz": {
+      "import": {
+        "types": "./tz/index.d.ts",
+        "default": "./tz/index.js"
+      }
+    },
+    "./constants": {
+      "import": {
+        "types": "./constants/index.d.ts",
+        "default": "./constants/index.js"
+      }
+    }
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "provenance": true
+  },
+  "scripts": {
+    "node": "node --experimental-transform-types",
+    "build": "yarn run node build.ts",
+    "test": "yarn run node --test '**/*.test.*'",
+    "test:ci": "yarn run test",
+    "prepack": "yarn run build"
+  }
+}
