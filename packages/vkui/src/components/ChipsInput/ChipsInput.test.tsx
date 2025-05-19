@@ -136,11 +136,45 @@ describe(ChipsInput, () => {
     expect(onChange).toBeCalledWith(resultValue);
   });
 
-  it('should add some options by splitting by delimiter', async () => {
+  it.each<{
+    delimiter: string | RegExp | string[];
+    str: string;
+    expectedValues: string[];
+  }>([
+    {
+      delimiter: ',',
+      str: 'Зеленый,Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: new RegExp(','),
+      str: 'Зеленый,Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: /\./,
+      str: 'Зеленый.Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: [',', '.'],
+      str: 'Зеленый,Фиолетовый.Красный',
+      expectedValues: ['Зеленый', 'Фиолетовый', 'Красный'],
+    },
+    {
+      delimiter: '.',
+      str: 'Зеленый.Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: [' ', ',', '.', '|'],
+      str: 'Зеленый.Фиолетовый,Красный|Розовый Синий',
+      expectedValues: ['Зеленый', 'Фиолетовый', 'Красный', 'Розовый', 'Синий'],
+    },
+  ])('should correct use delimiter $delimiter', ({ delimiter, str, expectedValues }) => {
     const onChange = jest.fn();
     render(
       <ChipsInput
-        data-testid="input"
         value={[
           {
             value: 'navarin',
@@ -151,11 +185,14 @@ describe(ChipsInput, () => {
             label: 'Красный',
           },
         ]}
+        data-testid="input"
         onChange={onChange}
-        delimiter=","
+        delimiter={delimiter}
       />,
     );
-    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
+    fireEvent.input(screen.getByTestId('input'), {
+      target: { value: str },
+    });
     expect(onChange).toBeCalledWith([
       {
         value: 'navarin',
@@ -165,14 +202,10 @@ describe(ChipsInput, () => {
         value: 'red',
         label: 'Красный',
       },
-      {
-        value: 'Зеленый',
-        label: 'Зеленый',
-      },
-      {
-        value: 'Фиолетовый',
-        label: 'Фиолетовый',
-      },
+      ...expectedValues.map((value) => ({
+        value,
+        label: value,
+      })),
     ]);
     expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
   });
