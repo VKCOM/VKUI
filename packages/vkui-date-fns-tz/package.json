@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-date-fns-tz",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "date-fns timezone utils",
   "repository": {
     "type": "git",
