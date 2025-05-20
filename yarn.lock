@@ -5343,6 +5343,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vkontakte/vkui-date-fns-tz@workspace:packages/vkui-date-fns-tz":
+  version: 0.0.0-use.local
+  resolution: "@vkontakte/vkui-date-fns-tz@workspace:packages/vkui-date-fns-tz"
+  dependencies:
+    "@swc/core": "npm:^1.11.24"
+    typescript: "npm:^5.8.3"
+  languageName: unknown
+  linkType: soft
+
 "@vkontakte/vkui-docs-theme@workspace:^, @vkontakte/vkui-docs-theme@workspace:packages/vkui-docs-theme":
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-docs-theme@workspace:packages/vkui-docs-theme"
