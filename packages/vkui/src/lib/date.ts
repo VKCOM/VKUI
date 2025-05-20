@@ -1,4 +1,4 @@
-import { TZDateMini } from '@date-fns/tz';
+import { TZDateMini } from '@vkontakte/vkui-date-fns-tz';
 import { lightFormat } from 'date-fns';
 
 export function parse(input: string, format: string, referenceDate: Date = new Date()): Date {

@@ -803,7 +803,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@date-fns/tz@npm:^1.2.0":
+"@date-fns/tz@npm:1.2.0":
   version: 1.2.0
   resolution: "@date-fns/tz@npm:1.2.0"
   checksum: 10/a9c2d32f98a5a5c655a7d3843046a5a36779b2ef0db803c608291976e6254e594a085777bf738379f50c7e9fc2ffebbf8bb836e9e9759a5ef2b703f91bb785de
@@ -5277,10 +5277,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vkontakte/vkui-date-fns-tz@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@vkontakte/vkui-date-fns-tz@npm:0.0.4"
+  checksum: 10/763bbbfbae5f6a50c11fa48de43ec1b4ee51bc8a2632af5d77f05edf698cd043998cb0a5edf0c95ebfa1dc6e2a25104079f0ebdae3e448a4cf146e71ede8df48
+  languageName: node
+  linkType: hard
+
 "@vkontakte/vkui-date-fns-tz@workspace:packages/vkui-date-fns-tz":
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-date-fns-tz@workspace:packages/vkui-date-fns-tz"
   dependencies:
+    "@date-fns/tz": "npm:1.2.0"
     "@swc/core": "npm:^1.11.24"
     typescript: "npm:^5.8.3"
   languageName: unknown
@@ -5476,13 +5484,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
-    "@date-fns/tz": "npm:^1.2.0"
     "@storybook/react": "npm:8.6.12"
     "@storybook/react-webpack5": "npm:8.6.12"
     "@swc/helpers": "npm:^0.5.17"
     "@types/node": "npm:*"
     "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
+    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.4"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.3"
     date-fns: "npm:^4.1.0"
     react: "npm:^18.3.1"
