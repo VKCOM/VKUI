@@ -430,7 +430,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   }, [setOpened]);
 
   useGlobalOnEventOutside(
-    'mousedown',
+    'mousedown', // см. https://github.com/VKCOM/VKUI/pull/8582
     handleClickOutside,
     opened ? rootRef : null,
     opened ? dropdownScrollBoxRef : null,
