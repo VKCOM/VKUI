@@ -62,6 +62,8 @@ export const CarouselBase = ({
   getRef,
   arrowSize,
   arrowAreaHeight,
+  arrowNextLabel,
+  arrowPrevLabel,
   slideTestId,
   bulletTestId,
   nextArrowTestId,
@@ -559,6 +561,8 @@ export const CarouselBase = ({
         showArrows={showArrows}
         arrowSize={arrowSize}
         arrowAreaHeight={arrowAreaHeight}
+        arrowPrevLabel={arrowPrevLabel}
+        arrowNextLabel={arrowNextLabel}
         prevArrowTestId={prevArrowTestId}
         nextArrowTestId={nextArrowTestId}
       />

@@ -56,7 +56,7 @@ export interface StateProps {
   unlockParentHover?: boolean;
 
   /**
-   * Длительность показа `activated`-состояния.
+   * Длительность показа `active`-состояния.
    */
   activeEffectDelay?: number;
 
