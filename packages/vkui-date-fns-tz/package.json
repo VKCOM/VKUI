@@ -1,0 +1,77 @@
+{
+  "name": "@vkontakte/vkui-date-fns-tz",
+  "version": "0.0.1",
+  "description": "date-fns timezone utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/vkui-date-fns-tz"
+  },
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "tzOffset/",
+    "tzScan/",
+    "date/",
+    "tz/",
+    "constants/"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    },
+    "./tzOffset": {
+      "types": "./tzOffset/index.d.ts",
+      "import": "./tzOffset/index.js",
+      "default": "./tzOffset/index.js"
+    },
+    "./tzScan": {
+      "types": "./tzScan/index.d.ts",
+      "import": "./tzScan/index.js",
+      "default": "./tzScan/index.js"
+    },
+    "./date": {
+      "types": "./date/index.d.ts",
+      "import": "./date/index.js",
+      "default": "./date/index.js"
+    },
+    "./date/mini": {
+      "types": "./date/mini.d.ts",
+      "import": "./date/mini.js",
+      "default": "./date/mini.js"
+    },
+    "./tz": {
+      "types": "./tz/index.d.ts",
+      "import": "./tz/index.js",
+      "default": "./tz/index.js"
+    },
+    "./constants": {
+      "types": "./constants/index.d.ts",
+      "import": "./constants/index.js",
+      "default": "./constants/index.js"
+    }
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "node": "node --experimental-transform-types",
+    "build": "yarn run node build.ts",
+    "test": "yarn run node --test '**/*.test.*'",
+    "test:ci": "yarn run test",
+    "lint:types": "tsc",
+    "prepack": "yarn run build"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.11.24",
+    "typescript": "^5.8.3"
+  }
+}

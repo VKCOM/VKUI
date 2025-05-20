@@ -8,20 +8,20 @@ describe(ContentBadge, () => {
 
   baselineComponent(
     (props) => (
-      <ContentBadge.SlotIcon {...props}>
+      <ContentBadge.IconSlot {...props}>
         <Icon16Services />{' '}
-      </ContentBadge.SlotIcon>
+      </ContentBadge.IconSlot>
     ),
     undefined,
-    'baseline (ContentBadge.SlotIcon)',
+    'baseline (ContentBadge.IconSlot)',
   );
 
   it('should hide icon if size="s"', () => {
     const result = render(
       <ContentBadge size="m">
-        <ContentBadge.SlotIcon data-testid="icon">
+        <ContentBadge.IconSlot data-testid="icon">
           <Icon16Services />
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
         Test
       </ContentBadge>,
     );
@@ -30,9 +30,9 @@ describe(ContentBadge, () => {
 
     result.rerender(
       <ContentBadge size="s">
-        <ContentBadge.SlotIcon data-testid="icon">
+        <ContentBadge.IconSlot data-testid="icon">
           <Icon16Services />
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
         Test
       </ContentBadge>,
     );

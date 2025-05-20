@@ -5,7 +5,15 @@ import { classNames } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth, startOfMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import {
+  clamp,
+  isFirstDay,
+  isLastDay,
+  navigateDate,
+  NAVIGATION_KEYS,
+  setTimeEqual,
+} from '../../lib/calendar';
 import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 import { isHTMLElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -246,21 +254,11 @@ export const Calendar = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (
-        [
-          'ArrowUp',
-          'ArrowDown',
-          'ArrowLeft',
-          'ArrowRight',
-          'Home',
-          'End',
-          'PageUp',
-          'PageDown',
-        ].includes(event.key)
-      ) {
+      const key = pressedKey(event);
+      if (key && NAVIGATION_KEYS.includes(key)) {
         event.preventDefault();
 
-        const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, event.key);
+        const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, key);
 
         if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
           setViewDate(newFocusedDay);
@@ -271,14 +269,14 @@ export const Calendar = ({
         return;
       }
 
-      if (event.key === 'Tab') {
+      if (key === Keys.TAB) {
         setFocusedDay(undefined);
         setFocusableDay(focusedDay);
 
         return;
       }
 
-      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+      if ((key === Keys.ENTER || key === Keys.SPACE) && isHTMLElement(event.target)) {
         event.preventDefault();
         event.target.click?.();
       }

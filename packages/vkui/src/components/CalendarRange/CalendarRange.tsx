@@ -13,7 +13,9 @@ import {
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { isFirstDay, isLastDay } from '../../lib/calendar';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import { isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
+import { isHTMLElement } from '../../lib/dom';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,

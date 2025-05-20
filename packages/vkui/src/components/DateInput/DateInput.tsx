@@ -159,11 +159,9 @@ export interface DateInputProps
    * - иконка календаря видна всегда, чтобы пользователи
    * ассистивных технологий могли открыть календарь по клику на иконку;
    * - календарь при открытии получает фокус, клавиатурный
-   * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт;
-   *
-   * TODO [>=8]: включить по умолчанию.
+   * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean;
+  accessible?: boolean /* TODO [>=v8] включить по умолчанию */;
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
@@ -334,6 +332,7 @@ export const DateInput = ({
     closeCalendar,
     toggleCalendar,
     openCalendar,
+    handleRestoreFocus,
   } = useDateInput({
     maxElement,
     refs,
@@ -577,7 +576,7 @@ export const DateInput = ({
           <FocusTrap
             onClose={closeCalendar}
             disabled={disableFocusTrap ?? !accessible}
-            restoreFocus={restoreFocus ?? Boolean(accessible)}
+            restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
             captureEscapeKeyboardEvent={false}
           >
             <Calendar
