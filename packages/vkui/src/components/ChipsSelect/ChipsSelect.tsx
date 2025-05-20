@@ -4,7 +4,7 @@ import * as React from 'react';
 import { type MouseEventHandler } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalOnMouseDownOutside } from '../../hooks/useGlobalOnClickOutside';
+import { useGlobalOnEventOutside } from '../../hooks/useGlobalOnClickOutside';
 import { Keys } from '../../lib/accessibility';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
@@ -429,7 +429,8 @@ export const ChipsSelect = <Option extends ChipOption>({
     setOpened(false);
   }, [setOpened]);
 
-  useGlobalOnMouseDownOutside(
+  useGlobalOnEventOutside(
+    'mousedown',
     handleClickOutside,
     opened ? rootRef : null,
     opened ? dropdownScrollBoxRef : null,

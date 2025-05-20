@@ -2,7 +2,7 @@ import type * as React from 'react';
 import { isElement, useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
-const useCommonGlobalClickOutside = <
+export const useGlobalOnEventOutside = <
   T extends React.RefObject<ElementType | null> | undefined | null,
   ElementType extends Element = Element,
 >(
@@ -47,20 +47,5 @@ export const useGlobalOnClickOutside = <
   callback: (event: MouseEvent) => void,
   ...refs: T[]
 ): void => {
-  useCommonGlobalClickOutside('click', callback, ...refs);
-};
-
-/**
- * Завязывается на document.
- *
- * @private
- */
-export const useGlobalOnMouseDownOutside = <
-  T extends React.RefObject<ElementType | null> | undefined | null,
-  ElementType extends Element = Element,
->(
-  callback: (event: MouseEvent) => void,
-  ...refs: T[]
-): void => {
-  useCommonGlobalClickOutside('mousedown', callback, ...refs);
+  useGlobalOnEventOutside('click', callback, ...refs);
 };

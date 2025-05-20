@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { useGlobalOnClickOutside, useGlobalOnMouseDownOutside } from './useGlobalOnClickOutside';
+import { useGlobalOnClickOutside, useGlobalOnEventOutside } from './useGlobalOnClickOutside';
 
 interface WrapperUseGlobalOnClickOutsideProps {
   disableTarget?: 'target-1' | 'target-2';
@@ -34,6 +34,16 @@ const WrapperUseGlobalOnClickOutside = ({
       </div>
     </div>
   );
+};
+
+const useGlobalOnMouseDownOutside = <
+  T extends React.RefObject<ElementType | null> | undefined | null,
+  ElementType extends Element = Element,
+>(
+  callback: (event: MouseEvent) => void,
+  ...refs: T[]
+): void => {
+  useGlobalOnEventOutside('mousedown', callback, ...refs);
 };
 
 describe.each([
