@@ -3,6 +3,7 @@
   inline-size: 100%;
   margin-block: var(--vkui--spacing_size_3xl);
   overflow: auto;
+  background-color: rgb(127, 143, 160, 0.08);
   border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
   border-radius: 8px;
 
@@ -12,11 +13,11 @@
 }
 
 .pre {
-  padding-block: var(--vkui--spacing_size_3xl);
+  flex: 1;
+  padding-block: var(--vkui--spacing_size_2xl);
   padding-inline: var(--vkui--spacing_size_4xl);
   overflow-x: auto;
   font-size: 14px;
-  background-color: var(--vkui_docs--color_background_content);
   contain: paint;
   -webkit-font-smoothing: auto;
 }
@@ -29,12 +30,6 @@
 /* stylelint-disable-next-line selector-max-universal */
 .buttons > *:not(:last-child) {
   margin-inline-end: var(--vkui--spacing_size_xs);
-}
-
-.buttonsAbsolute {
-  position: absolute;
-  inset-block-start: var(--vkui--spacing_size_m);
-  inset-inline-end: var(--vkui--spacing_size_m);
 }
 
 .header {

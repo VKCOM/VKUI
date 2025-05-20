@@ -1,0 +1,247 @@
+<Overview>
+# Установка
+
+За три простых шага можно начать создавать приложения с помощью `VKUI`.
+На данной странице также можно ознакомиться с разными вариантами конфигурации приложения.
+
+</Overview>
+
+<Callout>
+  Если вы разработчик мини-приложений Вконтакте, используйте [библиотеку
+  `create-vk-mini-app`](https://www.npmjs.com/package/@vkontakte/create-vk-mini-app). На данной
+  странице вам будет полезен только раздел с [CSS Modules](#css-modules).
+</Callout>
+
+## Базовая установка [#base-install]
+
+> TODO: оставить ссылку на темплейты
+
+<Steps>
+
+### Подготовьте SPA React приложение [#step1]
+
+Подробнее узнать о возможных вариантах создания `React`-приложения можно на [этой странице](https://ru.react.dev/learn/start-a-new-react-project).
+Вы можете использовать любые шаблоны и сборщики, в том числе [Next.js](https://nextjs.org/) или [Vite](https://vite.dev/).
+Обратите внимание, что `VKUI` поддерживает Typescript.
+
+#### Peer Dependencies
+
+Если вы не используете никакие стартовые пакеты, то убедитесь, что у вас установлены следующие обязательные зависимости:
+
+```jsx
+"peerDependencies": {
+ "react": "^18.2.0 || ^19.0.0",
+ "react-dom": "^18.2.0 || ^19.0.0"
+}
+```
+
+### Подключите @vkontakte/vkui [#step2]
+
+Установите библиотеку, воспользовавшись нужной командой в соответствии с вашим пакетным менеджером:
+
+```sh
+# npm
+npm i --save @vkontakte/vkui
+# yarn
+yarn add @vkontakte/vkui
+# or pnpm
+pnpm add @vkontakte/vkui
+```
+
+### Настройте `meta`-тег [#step3]
+
+Для корректного отображения интерфейса на безрамочных смартфонах (подробнее см. в статье ["The Notch" and CSS](https://css-tricks.com/the-notch-and-css/)),
+необходимо добавить [meta-тег](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag) в корневой `html`:
+
+```html
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+/>
+```
+
+- если вы используете Create React App, то инструкцию, как это можно сделать, ищите на [данной странице](https://create-react-app.dev/docs/title-and-meta-tags/).
+- если вы используете Vite, воспользуйтесь [этой инструкцией](https://vite.dev/guide/#index-html-and-project-root)
+- если вы используете Next.js, то ориентируйтесь на [эту страницу](https://nextjs.org/docs/app/building-your-application/optimizing/metadata)
+
+</Steps>
+
+После выполнения данных шагов вы можете начать разрабатывать приложение на `VKUI`.
+Подробные инструкции по структуре приложения и стартовым экранам доступны в разделе [Использование](/docs/overview/usage).
+
+## CSS Modules
+
+`VKUI` позволяет подключить специальную версию c [**CSS Modules**](https://github.com/css-modules/css-modules) и **ESNext**.
+Сборка позволяет уменьшить размер приложения, однако для её использования необходимо дополнительно настроить сборщики.
+
+<Steps>
+
+### Подключение стилей
+
+Удалите импорт `vkui.css` и подключите дефолтные темы:
+
+```diff
+- import "@vkontakte/vkui/dist/vkui.css";
++ import "@vkontakte/vkui/dist/cssm/styles/themes.css";
+```
+
+Если вы используете [кастомные темы](#/Customize), то необходимо просто удалить `components.css`:
+
+```diff
+- import '@vkontakte/vkui/dist/components.css';
+import '@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariables.css';
+import '@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css';
+```
+
+### Конфигурация сборщиков
+
+Далее необходимо трансформировать импорт, включить транспиляцию и подключить CSS modules.
+Для разных сборщиков или фреймворков специфичные инструкции.
+
+#### Next.js
+
+```js filename="next.config.js"
+module.exports = {
+  // ...
+
+  // Включаем транспиляцию
+  transpilePackages: ['@vkontakte/vkui'],
+
+  // Трансформируем импорты
+  modularizeImports: {
+    '@vkontakte/vkui': {
+      transform: '@vkontakte/vkui/dist/cssm',
+      skipDefaultConversion: true,
+    },
+  },
+};
+```
+
+[Пример приложения](https://codesandbox.io/p/sandbox/vkui-next-js-cssm-el0g7c) на Next.js
+
+#### Vite
+
+```js filename="vite.config.js"
+export default defineConfig({
+  // ...
+  resolve: {
+    alias: [{ find: /^@vkontakte\/vkui$/, replacement: '@vkontakte/vkui/dist/cssm' }],
+  },
+});
+```
+
+[Пример приложения](https://codesandbox.io/p/sandbox/vkui-vite-cssm-4iikku) на Vite
+
+#### webpack
+
+```js filename="webpack.config.js"
+module.exports = {
+  //...
+
+  module: {
+    rules: [
+      // Включаем транспиляцию
+      {
+        test: /\.js$/,
+        include: /node_modules\/@vkontakte\/vkui/,
+        use: ['babel-loader'],
+      },
+
+      // Обрабатываем css modules
+      {
+        test: /\.css$/,
+        include: /node_modules\/@vkontakte\/vkui/,
+        use: [
+          {
+            loader: 'css-loader',
+            /* Используем следующие опции в случае использования `css-loader >= 7.0.0` (см. https://github.com/webpack-contrib/css-loader/blob/v7.1.0/CHANGELOG.md) */
+            // options: {
+            //   namedExport: false,
+            //   exportLocalsConvention: 'as-is',
+            // }
+          },
+        ],
+      },
+    ],
+  },
+
+  // Трансформируем импорты
+  resolve: {
+    alias: {
+      '@vkontakte/vkui$': '@vkontakte/vkui/dist/cssm',
+    },
+  },
+};
+```
+
+</Steps>
+
+## Иконки
+
+`VKUI` использует пакет `@vkontakte/icons` для добавления элементов графического интерфейса.
+Пакет содержит набор готовых SVG-иконок, представленных в виде `React`-компонентов.
+Увидеть полный список иконок можно в [отдельной документации](https://vkcom.github.io/icons).
+
+### Дедупликация
+
+Если вы выберите использование иконок из `@vkontakte/icons` (и укажете пакет в качестве зависимости в своём `package.json`),
+то можете столкнуться с дублированием зависимостей. Вам необходимо произвести дедупликацию в соответствии с вашим
+пакетным менеджером:
+
+**npm - [npm dedupe](https://docs.npmjs.com/cli/v6/commands/npm-dedupe)**
+
+```sh
+npm dedupe
+```
+
+**Yarn Classic - [yarn-deduplicate](https://www.npmjs.com/package/yarn-deduplicate)**
+
+```sh
+npx yarn-deduplicate --packages @vkontakte/icons
+```
+
+**Yarn Modern - [yarn dedupe](https://yarnpkg.com/cli/dedupe)**
+
+```sh
+yarn dedupe @vkontakte/icons
+```
+
+**pnpm - [pnpm dedupe](https://pnpm.io/cli/dedupe)**
+
+```sh
+pnpm dedupe
+```
+
+## CDN
+
+Для того, чтобы начать использовать `VKUI` с минимальными затратами на настройку окружения, можно
+воспользоваться такими инструментами как [esh.sh](https://esm.sh/) или [esm.run](https://www.jsdelivr.com/esm).
+
+На примере `esm.sh` ваш `index.html` может выглядеть следующим образом:
+
+```html
+<link rel="stylesheet" href="https://esm.sh/@vkontakte/vkui@7/dist/vkui.css" />
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@19/",
+      "react-dom/": "https://esm.sh/react-dom@19/",
+      "@vkontakte/vkui": "https://esm.sh/@vkontakte/vkui@7/"
+    }
+  }
+</script>
+<script type="module">
+  import React from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { Button } from '@vkontakte/vkui';
+
+  const root = createRoot(document.getElementById('root'));
+  root.render(React.createElement(Button, null, 'Кнопка'));
+</script>
+```
+
+<Callout>
+  Мы рекомендуем выбирать данный метод только для быстрого прототипирования. Для того, чтобы
+  использовать `VKUI` с оптимальными настройками, отдавайте предпочтение [установке с использованием
+  сборщиков](#base-install).
+</Callout>

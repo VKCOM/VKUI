@@ -1,6 +1,6 @@
 import type { MDXComponents } from 'nextra/mdx-components';
 import { useMDXComponents as getNextraComponents } from 'nextra/mdx-components';
-import { Anchor } from '../components';
+import { Anchor, TOC } from '../components';
 import { Callout } from './Callout/Callout';
 import { Code } from './Code/Code';
 import { H1 } from './H1';
@@ -8,6 +8,7 @@ import { HeadingLink } from './HeadingLink/HeadingLink';
 import { Main } from './Main/Main';
 import { Overview } from './Overview/Overview';
 import { Pre } from './Pre/Pre';
+import { Steps } from './Steps/Steps';
 import styles from './index.module.css';
 
 const DEFAULT_COMPONENTS = getNextraComponents({
@@ -20,16 +21,26 @@ const DEFAULT_COMPONENTS = getNextraComponents({
   ul: (props) => <ul className={styles.ul} {...props} />,
   ol: (props) => <ol className={styles.ol} {...props} />,
   li: (props) => <li className={styles.li} {...props} />,
-  blockquote: (props) => <blockquote {...props} />,
+  blockquote: (props) => <Callout {...props} />,
   hr: (props) => <hr className={styles.hr} {...props} />,
   a: Anchor,
   p: (props) => <p className={styles.paragraph} {...props} />,
   pre: Pre,
   code: Code,
   strong: (props) => <strong className={styles.strong} {...props} />,
-  wrapper: Main,
+  wrapper: ({ toc, ...restProps }) => {
+    return (
+      <>
+        <Main {...restProps} />
+        <TOC toc={toc} />
+      </>
+    );
+  },
   Overview,
   Callout,
+  Steps,
+  details: (props) => <details className={styles.details} {...props} />,
+  summary: (props) => <summary className={styles.summary} {...props} />,
 });
 
 export const getMdxComponents = (components?: MDXComponents): MDXComponents => {

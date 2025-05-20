@@ -5,51 +5,23 @@
 .menuItem {
   display: flex;
   align-items: center;
-  block-size: 44px;
-  color: var(--vkui--color_text_secondary);
+  block-size: 32px;
+  color: var(--vkui--color_text_primary);
   text-decoration: none;
 }
 
-@media (--viewWidth-desktopPlus) {
-  .menuItem {
-    margin-inline: var(--vkui--spacing_size_xl);
-  }
+.listItem {
+  border-start-end-radius: 4px;
+  border-end-end-radius: 4px;
 }
 
-.listItem:not(:first-of-type) {
-  margin-block-start: var(--vkui--spacing_size_xs);
-}
-
-@media (--viewWidth-desktopPlus) {
-  .listItem:not(:first-of-type) {
-    margin-block-start: var(--vkui--spacing_size_m);
-  }
-}
-
-.nestedMenu .listItem {
-  margin-block-start: 0;
+.nestedMenu .menuItem {
+  padding-inline-start: var(--vkui--spacing_size_xl);
 }
 
 .activeMenuItem {
   color: var(--vkui--color_text_primary);
-}
-
-.menuIcon {
-  inline-size: var(--vkui_docs--menu-item-icon-size);
-  block-size: var(--vkui_docs--menu-item-icon-size);
-  padding: 8px;
-  margin-inline-end: var(--vkui--spacing_size_xl);
-  color: var(--vkui--color_icon_secondary);
-  background-color: var(--vkui--color_background_tertiary);
-  border-radius: 8px;
-}
-
-.activeMenuItem .menuIcon {
-  color: var(--vkui--color_icon_primary);
-}
-
-.accordion {
-  justify-content: space-between;
+  background-color: var(--vkui--color_background_accent_themed_alpha);
 }
 
 .nestedMenu {
@@ -57,15 +29,15 @@
   margin-inline-start: var(--vkui--spacing_size_xl);
 }
 
-.menuItemWithIcon {
-  margin-inline-start: calc(var(--vkui_docs--menu-item-icon-size) + var(--vkui--spacing_size_xl));
+.nestedMenu .menuItem {
+  border-inline-start: 1px solid var(--vkui--color_separator_primary_alpha);
 }
 
-.currentMenu .nestedMenu::before {
-  position: absolute;
-  inset-block: var(--vkui--size_base_padding_vertical--regular);
-  display: block;
-  inline-size: 1px;
-  content: '';
-  background-color: var(--vkui_docs--color_stroke_separator_secondary);
+.hoverMenuItem {
+  background-color: var(--vkui--color_background_secondary--hover);
+}
+
+.nestedMenu .activeMenuItem {
+  background-color: var(--vkui--color_background_accent_themed_alpha);
+  border-inline-start-color: var(--vkui--color_stroke_accent);
 }

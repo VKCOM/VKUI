@@ -29,8 +29,8 @@ export function Anchor({ href = '', children, ...props }: LinkProps) {
   }
 
   return (
-    <NextLink href={href} {...props} passHref legacyBehavior>
-      <Link>{children}</Link>
-    </NextLink>
+    <Link href={href} Component={NextLink}>
+      {children}
+    </Link>
   );
 }
