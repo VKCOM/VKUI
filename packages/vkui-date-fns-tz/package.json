@@ -2,6 +2,11 @@
   "name": "@vkontakte/vkui-date-fns-tz",
   "version": "0.0.0",
   "description": "date-fns timezone utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/vkui-date-fns-tz"
+  },
   "type": "module",
   "main": "index.js",
   "module": "index.js",
