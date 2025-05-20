@@ -11,6 +11,7 @@
   "main": "index.js",
   "module": "index.js",
   "files": [
+    "index.cjs",
     "index.js",
     "index.d.ts",
     "tzOffset/",
