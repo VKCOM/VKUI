@@ -17,22 +17,22 @@
 
 <Callout>
   Советуем использовать шаблон
-  [`@vkontakte/create-vk-mini-app`](https://github.com/VKCOM/create-vk-mini-app). В нем
-  конфигурация, описанная ниже, есть по умолчанию.
+  [`@vkontakte/create-vk-mini-app`](https://dev.vk.com/ru/mini-apps/getting-started/create-vk-mini-app).
+  В нем конфигурация, описанная ниже, есть по умолчанию.
 </Callout>
 
 Для начала устанавливаем библиотеки:
 
-- [`@vkontakte/vk-bridge`](https://www.npmjs.com/package/@vkontakte/vk-bridge) **>= 2.9.0**
-- [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge) **>= 1.0.0**
+- [`@vkontakte/vk-bridge`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
+- [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 
 ```sh
 # для примера используется пакетный менеджер yarn
 yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
 ```
 
-Далее подписываемся на изменения из **VK Bridge**. Для этого используем готовые хуки из
-[`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge):
+Далее подписываемся на изменения из **VK Bridge** и передаём их в компонент `ConfigProvider` из `VKUI`.
+Для этого используем готовые хуки из [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 
 ```tsx filename="App.tsx"
 import * as React from 'react';
@@ -40,13 +40,12 @@ import { createRoot } from 'react-dom/client';
 import vkBridge, { parseURLSearchParamsForGetLaunchParams } from '@vkontakte/vk-bridge';
 import { useAppearance, useInsets, useAdaptivity } from '@vkontakte/vk-bridge-react';
 import { Platform, ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
-import { transformVKBridgeAdaptivity } from './transformers/transformVKBridgeAdaptivity';
-import { App } from './App';
+import { transformVKBridgeAdaptivity } from './helpers/transformVKBridgeAdaptivity';
 
 // Инициализируем VK  Mini App
 vkBridge.send('VKWebAppInit');
 
-const Root = () => {
+const App = () => {
   const vkBridgeColorScheme = useAppearance() || undefined; // Вместо undefined можно задать значение по умолчанию
   const vkBridgeInsets = useInsets() || undefined; // Вместо undefined можно задать значение по умолчанию
   const vkBridgeAdaptivityProps = transformVKBridgeAdaptivity(useAdaptivity()); // Конвертируем значения из VK Bridge в параметры AdaptivityProvider
@@ -62,7 +61,7 @@ const Root = () => {
       <AdaptivityProvider {...vkBridgeAdaptivityProps}>
         {/* Для VK Mini Apps рекомендуем использовать mode="full" (выставлен по умолчанию, для примера указан явно) */}
         <AppRoot mode="full" safeAreaInsets={vkBridgeInsets}>
-          <App />
+          {/* Ваше приложение */}
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
@@ -70,11 +69,11 @@ const Root = () => {
 };
 
 const container = document.getElementById('root');
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<Root />);
+const root = createRoot(container); // createRoot(container!), если используется TypeScript
+root.render(<App />);
 ```
 
-```ts filename="./transformers/transformVKBridgeAdaptivity.ts"
+```ts filename="./helpers/transformVKBridgeAdaptivity.ts"
 import {
   type AdaptivityProps,
   getViewWidthByViewportWidth,
@@ -112,23 +111,7 @@ export const transformVKBridgeAdaptivity = ({
 
 ## Навигация
 
-### [`PanelHeader`](#/PanelHeader)
-
-Мини-приложению доступна почти вся площадь экрана, поэтому для корректной работы навигации
-необходимо использовать компонент [`PanelHeader`](#/PanelHeader) на каждом
-экране приложения. Он должен содержать название приложения и значок **Назад** (см.
-[`PanelHeaderBack`](#/PanelHeaderBack)) на тех экранах, где тот
-требуется.
-
-<Callout>
-_Правый верхний угол_ [`PanelHeader`](#/PanelHeader) зарезервирован для нативного бара с кнопками управления мини-приложением, 
-поэтому не рекомендуем использовать параметр `after`.
-
-Чтобы автоматически скрывать `after` у [`PanelHeader`](#/PanelHeader), в [`ConfigProvider`](#/ConfigProvider) есть параметр `hasCustomPanelHeaderAfter`.
-
-</Callout>
-
-### [`View`](#/View)
+### `View`
 
 На стартовой странице мини-приложения вы должны включить свайпбек нативного клиента, чтобы
 пользователь смог выйти из мини-приложения. Для этого нужно вызывать определенные методы
@@ -176,11 +159,27 @@ const SomeViews = () => {
 ```
 
 <Callout>
-На устройствах с Android нажатие кнопки **Назад** вызывает в WebView событие [history.back](https://developer.mozilla.org/ru/docs/Web/API/Window/history).
+На устройствах с `android` нажатие кнопки **Назад** вызывает в WebView событие [history.back](https://developer.mozilla.org/ru/docs/Web/API/Window/history).
 По нажатию этой кнопки официальное приложение сделает возврат на предыдущую страницу вашего
 приложения или закроет его, если вернуться невозможно. Поэтому для корректной навигации вы должны
 обрабатывать нажатие аппаратной клавиши в мини-приложении и реализовывать роутинг. Сделать это
 можно, например, при помощи библиотеки `react-router`.
+
+</Callout>
+
+### `PanelHeader`
+
+Мини-приложению доступна почти вся площадь экрана, поэтому для корректной работы навигации
+необходимо использовать компонент [`PanelHeader`](/docs/components/panel-header) на каждом
+экране приложения. Он должен содержать название приложения и значок **Назад** (см.
+[`PanelHeaderBack`](/docs/components/panel-header-button#panelheaderback)) на тех экранах, где тот
+требуется.
+
+<Callout>
+_Правый верхний угол_ `PanelHeader` зарезервирован для нативного бара с кнопками управления мини-приложением, 
+поэтому не рекомендуем использовать параметр `after`.
+
+Чтобы автоматически скрывать `after` у `PanelHeader`, в [`ConfigProvider`](/docs/components/config-provider) есть параметр `hasCustomPanelHeaderAfter`.
 
 </Callout>
 
@@ -193,7 +192,7 @@ const SomeViews = () => {
 функцию `runTapticImpactOccurred`, которая отправляет событие [VKWebAppTapticImpactOccurred](https://dev.vk.com/bridge/VKWebAppTapticImpactOccurred),
 как раз заранее проверяя, что возможность вызова вибрации доступна на устройстве.
 
-Виброотликом можно воспользоваться, например, при использовании компонента [`PullToRefresh`](#/PullToRefresh)
+Виброотликом можно воспользоваться, например, при использовании компонента [`PullToRefresh`](/docs/components/pull-to-refresh)
 на `onRefresh`.
 
 ```tsx {2,13}

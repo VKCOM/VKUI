@@ -1,0 +1,48 @@
+<Overview>
+# Серверный рендеринг
+
+</Overview>
+
+## Клиентские компоненты
+
+Так как подавляющее большинство компонентов **VKUI** интерактивные или используют хуки и эффекты, они помечены
+директивой `use client`, что обеспечивает совместимость в использовании с серверными компонентами без дополнительных обёрток.
+Подробнее о данной концепции можно прочитать в [документации React](https://react.dev/reference/rsc/directives).
+
+## Server Side Rendering
+
+<Callout>
+ **Важно**
+
+При работе с **SSR** нужно предварительно добавить классы **VKUI**, чтобы избежать изменений стилей после гидратации.
+
+На `html` элемент нужно добавить класс `.vkui`.
+На точку монтирования нужно добавить класс `.vkui__root`.
+
+</Callout>
+
+Мы постарались максимально облегчить вам работу с `SSR`. Для корректного рендеринга **VKUI**-компонентов на сервере,
+необходимо обернуть ваше приложение в `SSRWrapper`, передав туда значение заголовка `userAgent`. Это нужно для
+определения платформы пользователя (`iOS` или `Android`) на стороне сервера. Пример:
+
+```jsx
+import { renderToString } from 'react-dom/server'; // [!code --]
+import { Button, SSRWrapper } from '@vkontakte/vkui'; // [!code ++]
+import express from 'express';
+import useragent from 'express-useragent';
+
+const server = express();
+server.use(useragent.express());
+
+server.get('/', function (req, res) {
+  res.send(
+    renderToString(
+      <SSRWrapper userAgent={req.useragent.source}>
+        <Button>Hello</Button>
+      </SSRWrapper>,
+    ),
+  );
+});
+
+server.listen(3000);
+```

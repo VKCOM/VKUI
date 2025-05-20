@@ -1,6 +1,7 @@
 /* stylelint-disable declaration-property-value-disallowed-list */
 @media (prefers-color-scheme: light) {
   :root {
+    --vkui_docs--color_text_primary: var(--vkui--color_text_muted);
     --vkui_docs--color_background_content: #fafafa;
     --vkui_docs--color_background_icon: #fff;
     --vkui_docs--color_stroke_separator_secondary: #ebebeb;
@@ -9,6 +10,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
+    --vkui_docs--color_text_primary: #cfd8d8;
     --vkui_docs--color_background_content: #161617;
     --vkui_docs--color_background_icon: #1f1f1f;
     --vkui_docs--color_stroke_separator_secondary: #272728;
@@ -17,6 +19,7 @@
 }
 
 .vkui--vkBase--light {
+  --vkui_docs--color_text_primary: var(--vkui--color_text_muted);
   --vkui_docs--color_background_content: #fafafa;
   --vkui_docs--color_background_icon: #fff;
   --vkui_docs--color_stroke_separator_secondary: #ebebeb;
@@ -28,4 +31,8 @@
   --vkui_docs--color_background_icon: #1f1f1f;
   --vkui_docs--color_stroke_separator_secondary: #272728;
   --vkui_docs--color_background_playground: #0e0e0f;
+}
+
+.vkui--vkBase--dark.vkui--vkBase--dark {
+  --vkui_docs--color_text_primary: #cfd8d8;
 }

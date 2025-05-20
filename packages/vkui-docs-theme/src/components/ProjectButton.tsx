@@ -5,15 +5,7 @@ import { type DocsThemeConfig } from '../types';
 export function ProjectButton({ projectLink }: Pick<DocsThemeConfig, 'projectLink'>) {
   return (
     <Button
-      before={
-        <GithubIcon
-          width="24"
-          height="24"
-          viewBox="0 0 20 20"
-          verticalAlign="middle"
-          color="medium"
-        />
-      }
+      before={<GithubIcon width="24" height="24" viewBox="0 0 20 20" verticalAlign="middle" />}
       href={projectLink}
       appearance="neutral"
       mode="secondary"

@@ -1,0 +1,171 @@
+<Overview>
+# Использование
+
+На данной странице представлены варианты с минимальной структурой приложения.
+
+</Overview>
+
+## Обязательная конфигурация [#required-wrapper]
+
+Найдите корневой файл, в котором инициализируется ваше приложение. Обычно это `App.tsx/index.tsx` (`pages/_app.tsx` для `Next.js`),
+ориентируйтесь на выбранный шаблон или сборщик.
+Добавьте следующий программный код в найденный файл(убедитесь, что компонент `App` корректно рендерится в
+[точке монтирования](https://react.dev/reference/react-dom/client/createRoot)):
+
+```jsx
+import { AdaptivityProvider, ConfigProvider, AppRoot } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+
+export default function App() {
+  return (
+    <ConfigProvider>
+      <AdaptivityProvider>
+        <AppRoot>{/* Ваше приложение */}</AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
+  );
+}
+```
+
+> На второй строке импортируются все необходимые стили для отображения компонентов.
+> Если вас интересует настройка `CSS Modules`, то обратитесь к [соответствующей странице](/docs/overview/install#css-modules).
+
+- [`ConfigProvider`](/docs/components/config-provider) позволяет конфигурировать приложение под разные платформы и темы.
+
+- [`AdaptivityProvider`](/docs/components/adaptivity-provider) позволяет приложению корректно адаптироваться под разные размеры и типы экранов.
+
+- [`AppRoot`](/docs/components/app-root) позволяет управлять режимами встраивания, скроллом, безопасными отступами и порталами.
+
+> Обертки `ConfigProvider`, `AdaptivityProvider` и `AppRoot` обязательны для приложения,
+> остальная структура остается на ваше усмотрение.
+
+## Многоколоночная структура
+
+`VKUI` позволяет создавать многоколоночные интерфейсы (например, как сайт `vk.com`).
+Для этого используйте компоненты [`SplitLayout`](/docs/components/split-layout) и [`SplitCol`](/docs/components/split-col).
+
+> Компонент `SplitLayout` должен быть один на всё приложение.
+>
+> Если ваше приложение не подразумевает использование многоколоночного интерфейса, то достаточно сделать обёртку в виде
+> одного `SplitLayout` и одного `SplitCol`.
+
+```jsx
+import {
+  AdaptivityProvider,
+  ConfigProvider,
+  AppRoot,
+  SplitLayout,
+  SplitCol,
+} from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+
+export default function App() {
+  return (
+    <ConfigProvider>
+      <AdaptivityProvider>
+        <AppRoot>
+          <SplitLayout>
+            <SplitCol width={280} maxWidth={280}>
+              Колонка слева
+            </SplitCol>
+            <SplitCol>Колонка справа</SplitCol>
+          </SplitLayout>
+        </AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
+  );
+}
+```
+
+В реальном приложении ваша структура будет выглядеть несколько сложнее. Например, в колонку справа вы
+можете передавать коллекцию `Panel` или `View`, для организации постраничной навигации, а в колонке слева
+держать только один компонент `Panel` с навигационным меню.
+
+## Навигационные слои
+
+Страницы и экраны (навигационные слои) в библиотеке `VKUI` представлены несколькими компонентами:
+
+- [`Panel`](/docs/components/panel) - минимальный навигационный слой, представляющий собой страницу с контентом;
+- [`View`](/docs/components/view) - позволяет создавать коллекцию компонентов `Panel`;
+- [`Root`](/docs/components/root) - позволяет создавать коллекцию компонентов `View`;
+- [`Epic`](/docs/components/epic) - позволяет создавать либо коллекцию компонентов `Root`, либо коллекцию `View`.
+
+Подробнее про компоненты можно почитать на соответствующих страницах, а увидеть примеры и рекомендации по
+использованию конкретных навигационных слоёв на странице ["Навигация"](/docs/overview/navigation).
+
+Минимальный пример с одной страницей будет выглядеть следующим образом
+(используйте компонент `PageExample` внутри [Обязательной обёртки](#required-wrapper)):
+
+```jsx
+import { SplitLayout, SplitCol, Panel, PanelHeader, usePlatform } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+
+export function PageExample() {
+  const platform = usePlatform();
+  // Необходимо для создания сквозной шапки
+  const hasHeader = platform !== 'vkcom';
+
+  return (
+    <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+      <SplitCol width="100%" stretchedOnMobile autoSpaced>
+        <Panel id="main">
+          <PanelHeader>VKUI</PanelHeader>
+          {/* Контент */}
+        </Panel>
+      </SplitCol>
+    </SplitLayout>
+  );
+}
+```
+
+## Платформы
+
+На данный момент поддерживаются 2 платформы — `android` и `ios`.
+Также есть платформа `vkcom`, подробнее читайте в [О vkcom](#vkcom).
+
+Передавать платформу в [`ConfigProvider`](/docs/components/config-provider) необязательно, т.к. она по умолчанию определяется
+автоматически и специфичные компоненты подстраиваются под неё.
+
+Для ручного определения или форсирования платформы вы можете передать в `ConfigProvider` свойство
+`platform` с нужным значением:
+
+```jsx {1}
+<ConfigProvider platform="ios">
+  <AdaptivityProvider>
+    <AppRoot>
+      <SimpleCell>Эта ячейка будет иметь поведение и стилизацию как в iOS</SimpleCell>
+    </AppRoot>
+  </AdaptivityProvider>
+</ConfigProvider>
+```
+
+Или, если вам необходимо переопределить платформу точечно для отдельных компонентов приложения, то
+вы можете сделать это с помощью [`PlatformProvider`](/docs/components/platform-provider).
+
+```jsx {1,3}
+<PlatformProvider value="ios">
+  <Snackbar action="Поделиться">Поделиться</Snackbar>
+</PlatformProvider>
+```
+
+Чтобы получить значение текущей платформы, используйте хук `usePlatform`.
+Подробнее об этих инструментах можно прочитать на странице [`PlatformProvider`](/docs/components/platform-provider/#use-platform).
+
+### О `vkcom` [#vkcom]
+
+Такое название платформа имеет по историческим причинам и используется командой ВКонтакте.
+
+Нужно иметь ввиду, что она не предназначена для адаптивного интерфейса. Используйте её только в том
+случае, если ваше приложение встроено в [vk.com](https://vk.com).
+
+## Режимы подключения
+
+Библиотека `VKUI` поддерживает три режима подключения. В зависимости от выбранного режима подключения
+вам будут доступны или не доступны некоторые возможности `VKUI`.
+
+- **full** — ваше приложение полностью реализовано с помощью библиотеки `VKUI` и контролируется ей;
+- **embedded** — ваше приложение будет реализовано в виде блока, встроенного в основное приложение (например, Марусю или базовое приложение ВКонтакте);
+- **partial** — ваше приложение реализовано с помощью сторонних решений и использует некоторые компоненты библиотеки `VKUI`.
+
+Режим выставляется в компоненте [`AppRoot`](/docs/components/app-root) с помощью свойства `mode`. Подробнее о вариантах использования
+можно прочитать на странице компонента.
