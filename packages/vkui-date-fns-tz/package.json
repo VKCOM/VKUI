@@ -60,6 +60,10 @@
     }
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "node": "node --experimental-transform-types",
     "build": "yarn run node build.ts",
