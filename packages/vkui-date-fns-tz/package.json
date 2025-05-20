@@ -79,6 +79,7 @@
     "prepack": "yarn run build"
   },
   "devDependencies": {
+    "@date-fns/tz": "1.2.0",
     "@swc/core": "^1.11.24",
     "typescript": "^5.8.3"
   }
