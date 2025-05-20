@@ -22,46 +22,39 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
     },
     "./tzOffset": {
-      "import": {
-        "types": "./tzOffset/index.d.ts",
-        "default": "./tzOffset/index.js"
-      }
+      "types": "./tzOffset/index.d.ts",
+      "import": "./tzOffset/index.js",
+      "default": "./tzOffset/index.js"
     },
     "./tzScan": {
-      "import": {
-        "types": "./tzScan/index.d.ts",
-        "default": "./tzScan/index.js"
-      }
+      "types": "./tzScan/index.d.ts",
+      "import": "./tzScan/index.js",
+      "default": "./tzScan/index.js"
     },
     "./date": {
-      "import": {
-        "types": "./date/index.d.ts",
-        "default": "./date/index.js"
-      }
+      "types": "./date/index.d.ts",
+      "import": "./date/index.js",
+      "default": "./date/index.js"
     },
     "./date/mini": {
-      "import": {
-        "types": "./date/mini.d.ts",
-        "default": "./date/mini.js"
-      }
+      "types": "./date/mini.d.ts",
+      "import": "./date/mini.js",
+      "default": "./date/mini.js"
     },
     "./tz": {
-      "import": {
-        "types": "./tz/index.d.ts",
-        "default": "./tz/index.js"
-      }
+      "types": "./tz/index.d.ts",
+      "import": "./tz/index.js",
+      "default": "./tz/index.js"
     },
     "./constants": {
-      "import": {
-        "types": "./constants/index.d.ts",
-        "default": "./constants/index.js"
-      }
+      "types": "./constants/index.d.ts",
+      "import": "./constants/index.js",
+      "default": "./constants/index.js"
     }
   },
   "license": "MIT",

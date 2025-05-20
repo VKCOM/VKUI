@@ -8,10 +8,8 @@ type ExportEntries = Array<
   [
     string,
     {
-      import: {
-        types: string;
-        default: string;
-      };
+      types: string;
+      default: string;
     },
   ]
 >;
@@ -20,8 +18,8 @@ async function cleanup(exportsEntries: ExportEntries) {
   await Promise.all([
     ...exportsEntries
       .map((exportItem) => {
-        const types = exportItem[1].import.types;
-        const esm = exportItem[1].import.default;
+        const types = exportItem[1].types;
+        const esm = exportItem[1].default;
 
         return [types, esm].reduce<Array<Promise<any>>>((acc, filePath) => {
           if (fs.existsSync(filePath)) {
@@ -87,12 +85,12 @@ export async function main() {
 
   await Promise.all([
     ...exportsEntries.map(async (exportItem) => {
-      const types = exportItem[1].import.types;
+      const types = exportItem[1].types;
 
       await copyFile(convertToNodeModulesPath(types), types);
     }),
     ...exportsEntries.map(async (exportItem) => {
-      const esm = exportItem[1].import.default;
+      const esm = exportItem[1].default;
 
       const code = await transformFile(convertToNodeModulesPath(esm));
 
