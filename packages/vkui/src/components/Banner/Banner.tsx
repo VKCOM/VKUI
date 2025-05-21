@@ -5,14 +5,14 @@ import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { IconButton } from '../IconButton/IconButton';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
-export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
+export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
   /**
    * Тип баннера.
    */

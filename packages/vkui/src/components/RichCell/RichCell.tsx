@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';
@@ -33,7 +33,7 @@ const alignContentClassNames = {
 
 type Align = 'start' | 'center' | 'end';
 
-export interface RichCellProps extends TappableProps {
+export interface RichCellProps extends TappableOmitProps {
   /**
    * Контейнер для текста над `children`.
    */
