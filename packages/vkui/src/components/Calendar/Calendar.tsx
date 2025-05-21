@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, isSameDate } from '@vkontakte/vkjs';
 import { isSameDay, isSameMonth, startOfMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
@@ -302,8 +302,11 @@ export const Calendar = ({
       }
 
       setFocusedDay(date);
+      if (!focusableDay || !isSameDate(date, focusableDay)) {
+        setFocusableDay(date);
+      }
     },
-    [focusedDay, setFocusedDay],
+    [focusableDay, focusedDay, setFocusedDay],
   );
 
   // activeDay это день в календаре соответствующий значению в инпуте

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, endOfDay, format, startOfDay } from 'date-fns';
 import { getDocumentBody } from '../../lib/dom';
@@ -20,6 +19,40 @@ describe('CalendarRange', () => {
   };
 
   const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+
+  it('checks aria roles', async () => {
+    const targetDate = new Date('2023-09-20T07:40:00.000Z');
+
+    jest.useFakeTimers({ now: targetDate });
+    render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
+
+    expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
+    expect(screen.getByRole('grid', { name: 'октябрь 2023 г.' })).toBeDefined();
+    expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
+    expect(screen.getAllByRole('columnheader', { name: 'понедельник' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'вторник' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'среда' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'четверг' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'пятница' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'суббота' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'воскресенье' })).toHaveLength(2);
+
+    let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+    expect(currentDate.getAttribute('aria-current')).toBe('date');
+    expect(currentDate.getAttribute('aria-selected')).toBe('true');
+
+    await act(() =>
+      userEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' })),
+    );
+
+    currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+    expect(currentDate.getAttribute('aria-current')).toBe('date');
+    expect(currentDate.getAttribute('aria-selected')).toBe('false');
+
+    const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
+    expect(selectedDate.getAttribute('aria-current')).toBe(null);
+    expect(selectedDate.getAttribute('aria-selected')).toBe('true');
+  });
 
   it('calls onChange when initial value is [null, null]', () => {
     const onChangeStub = jest.fn();
@@ -141,7 +174,7 @@ describe('CalendarRange', () => {
     expect(onChangeStub).toHaveBeenCalledTimes(3);
   });
 
-  it.only('checks focusable days on each part of calendar', async () => {
+  it('checks focusable days on each part of calendar', async () => {
     jest.useFakeTimers();
     const startDate = new Date(2024, 2, 1);
     const endDate = new Date(2024, 3, 10);

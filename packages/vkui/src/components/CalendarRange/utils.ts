@@ -1,41 +1,39 @@
 import * as React from 'react';
-import { isSameDay, isSameMonth, startOfMonth } from 'date-fns';
-import { navigateDate } from '../../lib/calendar';
+import { isSameDate } from '@vkontakte/vkjs';
+import { isAfter, isBefore, isSameDay, isSameMonth, startOfMonth } from 'date-fns';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import { navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
 import { isHTMLElement } from '../../lib/dom';
 import type { DateRangeType } from './types';
 
 export function useCalendarKeyboardNavigation({
   focusedDay,
-  setFocusedDay,
-  setFocusableDay,
   value,
+  setFocusedDay,
   viewDates: [firstCalendarViewDate, secondCalendarViewDate],
   setViewDate,
 }: {
   focusedDay: Date | undefined;
-  setFocusedDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  setFocusableDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setViewDate: (date: Date) => void;
+  setFocusedDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
   viewDates: [Date, Date];
   value: DateRangeType | null | undefined;
 }) {
+  // соотвествует дню, на котором можно сфокусироваться с помощью Tab
+  const [focusableDayOnFirstCalendar, setFocusableDayOnFirstCalendar] = React.useState<Date>();
+  const [focusableDayOnSecondCalendar, setFocusableDayOnSecondCalendar] = React.useState<Date>();
+
   const handleCalendarKeyDown = React.useCallback(
-    (event: React.KeyboardEvent) => {
-      if (
-        [
-          'ArrowUp',
-          'ArrowDown',
-          'ArrowLeft',
-          'ArrowRight',
-          'Home',
-          'End',
-          'PageUp',
-          'PageDown',
-        ].includes(event.key)
-      ) {
+    (event: React.KeyboardEvent, isFirst: boolean) => {
+      const key = pressedKey(event);
+      if (!key) {
+        return;
+      }
+
+      if (NAVIGATION_KEYS.includes(key)) {
         event.preventDefault();
 
-        const newFocusedDay = navigateDate(focusedDay ?? value?.[0], event.key);
+        const newFocusedDay = navigateDate(focusedDay ?? value?.[0], key);
 
         if (
           newFocusedDay &&
@@ -44,36 +42,89 @@ export function useCalendarKeyboardNavigation({
         ) {
           setViewDate(newFocusedDay);
         }
+
+        if (isFirst) {
+          if (isSameMonth(newFocusedDay, firstCalendarViewDate)) {
+            setFocusableDayOnFirstCalendar(newFocusedDay);
+          } else if (isAfter(newFocusedDay, firstCalendarViewDate)) {
+            setFocusableDayOnSecondCalendar(newFocusedDay);
+          }
+        } else {
+          if (isSameMonth(newFocusedDay, secondCalendarViewDate)) {
+            setFocusableDayOnSecondCalendar(newFocusedDay);
+          } else if (isBefore(newFocusedDay, secondCalendarViewDate)) {
+            setFocusableDayOnFirstCalendar(newFocusedDay);
+          }
+        }
+
         setFocusedDay(newFocusedDay);
-        setFocusableDay(newFocusedDay);
 
         return;
       }
 
-      if (event.key === 'Tab') {
+      if (key === Keys.TAB) {
         setFocusedDay(undefined);
-        setFocusableDay(focusedDay);
+        if (isFirst) {
+          setFocusableDayOnFirstCalendar(focusedDay);
+        } else {
+          setFocusableDayOnSecondCalendar(focusedDay);
+        }
 
         return;
       }
 
-      if ((event.key === 'Enter' || event.key === ' ') && isHTMLElement(event.target)) {
+      if ((key === Keys.ENTER || key === Keys.SPACE) && isHTMLElement(event.target)) {
         event.preventDefault();
         event.target.click?.();
       }
     },
+    [focusedDay, value, firstCalendarViewDate, secondCalendarViewDate, setFocusedDay, setViewDate],
+  );
+
+  const handleFirstCalendarKeyDown = React.useCallback(
+    (event: React.KeyboardEvent) => {
+      handleCalendarKeyDown(event, true);
+    },
+    [handleCalendarKeyDown],
+  );
+
+  const handleSecondCalendarKeyDown = React.useCallback(
+    (event: React.KeyboardEvent) => {
+      handleCalendarKeyDown(event, false);
+    },
+    [handleCalendarKeyDown],
+  );
+
+  const handleDayFocus = React.useCallback(
+    (value: Date) => {
+      if (
+        isSameMonth(firstCalendarViewDate, value) &&
+        (!focusableDayOnFirstCalendar || !isSameDate(focusableDayOnFirstCalendar, value))
+      ) {
+        setFocusableDayOnFirstCalendar(value);
+      }
+      if (
+        isSameMonth(secondCalendarViewDate, value) &&
+        (!focusableDayOnSecondCalendar || !isSameDate(focusableDayOnSecondCalendar, value))
+      ) {
+        setFocusableDayOnSecondCalendar(value);
+      }
+    },
     [
-      focusedDay,
-      setFocusedDay,
-      setViewDate,
-      value,
       firstCalendarViewDate,
+      focusableDayOnFirstCalendar,
+      focusableDayOnSecondCalendar,
       secondCalendarViewDate,
-      setFocusableDay,
     ],
   );
 
-  return handleCalendarKeyDown;
+  return {
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    handleFirstCalendarKeyDown,
+    handleSecondCalendarKeyDown,
+    handleDayFocus,
+  };
 }
 
 /**

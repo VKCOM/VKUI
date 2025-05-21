@@ -13,9 +13,7 @@ import {
 } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { Keys, pressedKey } from '../../lib/accessibility';
-import { isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
-import { isHTMLElement } from '../../lib/dom';
+import { isFirstDay, isLastDay } from '../../lib/calendar';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -119,7 +117,7 @@ const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
  * @see https://vkcom.github.io/VKUI/#/CalendarRange
  */
 export const CalendarRange = ({
-  value: valueProp,
+  'value': valueProp,
   defaultValue,
   onChange,
   disablePast,
@@ -131,6 +129,7 @@ export const CalendarRange = ({
   nextMonthLabel = 'Следующий месяц',
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
+  'aria-label': ariaLabel = 'Календарь',
   prevMonthIcon,
   nextMonthIcon,
   listenDayChangesForUpdate,
@@ -164,26 +163,19 @@ export const CalendarRange = ({
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
-  // соотвествует дню, на котором можно сфокусироваться с помощью Tab
-  const [focusableDayOnFirstCalendar, setFocusableDayOnFirstCalendar] = React.useState<Date>();
-  const [focusableDayOnSecondCalendar, setFocusableDayOnSecondCalendar] = React.useState<Date>();
 
   const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
 
-  const handleFirstCalendarKeyDown = useCalendarKeyboardNavigation({
+  const {
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    handleFirstCalendarKeyDown,
+    handleSecondCalendarKeyDown,
+    handleDayFocus,
+  } = useCalendarKeyboardNavigation({
     focusedDay,
     setFocusedDay,
-    setFocusableDay: setFocusableDayOnFirstCalendar,
-    value,
-    viewDates: [viewDate, secondViewDate],
-    setViewDate,
-  });
-
-  const handleSecondCalendarKeyDown = useCalendarKeyboardNavigation({
-    focusedDay,
-    setFocusedDay,
-    setFocusableDay: setFocusableDayOnSecondCalendar,
     value,
     viewDates: [viewDate, secondViewDate],
     setViewDate,
@@ -290,12 +282,18 @@ export const CalendarRange = ({
       }
 
       setFocusedDay(date);
+      handleDayFocus(date);
     },
-    [focusedDay, setFocusedDay],
+    [focusedDay, handleDayFocus, setFocusedDay],
   );
 
   return (
-    <RootComponent {...props} baseClassName={styles.host} getRootRef={getRootRef}>
+    <RootComponent
+      aria-label={ariaLabel}
+      {...props}
+      baseClassName={styles.host}
+      getRootRef={getRootRef}
+    >
       <div className={styles.inner}>
         <CalendarHeader
           viewDate={viewDate}
