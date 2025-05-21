@@ -41,3 +41,33 @@
   background-color: var(--vkui--color_background_accent_themed_alpha);
   border-inline-start-color: var(--vkui--color_stroke_accent);
 }
+
+.separator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  block-size: 24px;
+  padding-inline-start: var(--vkui--spacing_size_xl);
+  margin-block-start: var(--vkui--spacing_size_xs);
+  color: var(--vkui--color_text_secondary);
+}
+
+.separator::before,
+.separator::after {
+  position: absolute;
+  content: '';
+  background-color: var(--vkui--color_separator_primary_alpha);
+}
+
+.separator::before {
+  inset-inline-start: 1px;
+  inline-size: 8px;
+  block-size: 1px;
+}
+
+.separator::after {
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 12px;
+}

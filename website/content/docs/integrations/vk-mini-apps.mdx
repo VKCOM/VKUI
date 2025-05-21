@@ -31,7 +31,7 @@
 yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
 ```
 
-Далее подписываемся на изменения из **VK Bridge** и передаём их в компонент `ConfigProvider` из `VKUI`.
+Далее подписываемся на изменения из **VK Bridge** и передаём их в компонент `ConfigProvider` из VKUI.
 Для этого используем готовые хуки из [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 
 ```tsx filename="App.tsx"
@@ -159,7 +159,7 @@ const SomeViews = () => {
 ```
 
 <Callout>
-На устройствах с `android` нажатие кнопки **Назад** вызывает в WebView событие [history.back](https://developer.mozilla.org/ru/docs/Web/API/Window/history).
+На устройствах с android нажатие кнопки **Назад** вызывает в WebView событие [history.back](https://developer.mozilla.org/ru/docs/Web/API/Window/history).
 По нажатию этой кнопки официальное приложение сделает возврат на предыдущую страницу вашего
 приложения или закроет его, если вернуться невозможно. Поэтому для корректной навигации вы должны
 обрабатывать нажатие аппаратной клавиши в мини-приложении и реализовывать роутинг. Сделать это
