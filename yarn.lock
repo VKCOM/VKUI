@@ -803,7 +803,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@date-fns/tz@npm:^1.2.0":
+"@date-fns/tz@npm:1.2.0":
   version: 1.2.0
   resolution: "@date-fns/tz@npm:1.2.0"
   checksum: 10/a9c2d32f98a5a5c655a7d3843046a5a36779b2ef0db803c608291976e6254e594a085777bf738379f50c7e9fc2ffebbf8bb836e9e9759a5ef2b703f91bb785de
@@ -5343,10 +5343,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vkontakte/vkui-date-fns-tz@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@vkontakte/vkui-date-fns-tz@npm:0.0.4"
+  checksum: 10/763bbbfbae5f6a50c11fa48de43ec1b4ee51bc8a2632af5d77f05edf698cd043998cb0a5edf0c95ebfa1dc6e2a25104079f0ebdae3e448a4cf146e71ede8df48
+  languageName: node
+  linkType: hard
+
 "@vkontakte/vkui-date-fns-tz@workspace:packages/vkui-date-fns-tz":
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-date-fns-tz@workspace:packages/vkui-date-fns-tz"
   dependencies:
+    "@date-fns/tz": "npm:1.2.0"
     "@swc/core": "npm:^1.11.24"
     typescript: "npm:^5.8.3"
   languageName: unknown
@@ -5542,13 +5550,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
-    "@date-fns/tz": "npm:^1.2.0"
     "@storybook/react": "npm:8.6.12"
     "@storybook/react-webpack5": "npm:8.6.12"
     "@swc/helpers": "npm:^0.5.17"
     "@types/node": "npm:*"
     "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
+    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.4"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.3"
     date-fns: "npm:^4.1.0"
     react: "npm:^18.3.1"
@@ -10093,21 +10101,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"estree-util-value-to-estree@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "estree-util-value-to-estree@npm:1.3.0"
-  dependencies:
-    is-plain-obj: "npm:^3.0.0"
-  checksum: 10/ebde685fe5f16b2a6d7b4204e9ac08c0ec71da855ece61dab84f748edbc9a4f77f47eba71c1d9d1755fabf88792d75accccc3c00d6433f1f65840e7dabb0c453
-  languageName: node
-  linkType: hard
-
-"estree-util-value-to-estree@npm:^3.0.1":
-  version: 3.2.1
-  resolution: "estree-util-value-to-estree@npm:3.2.1"
+"estree-util-value-to-estree@npm:^3.0.1, estree-util-value-to-estree@npm:^3.3.3":
+  version: 3.4.0
+  resolution: "estree-util-value-to-estree@npm:3.4.0"
   dependencies:
     "@types/estree": "npm:^1.0.0"
-  checksum: 10/5ab0d7590ca8f3e929b376ecbf9d1ef3a71c01b4625622ef8bcb1fffb4727d0080b115a642f08f74cb98f9852487411064d615719868a564ec7d5a232308311e
+  checksum: 10/4fdb101cba7e3c8a2aaf1881c0c169218addaea0b6101e3de344c137663e4db8887da7fccd0c96939340aa13679af085a07cca05ee168d61a5fb783054bdffe5
   languageName: node
   linkType: hard
 
@@ -18236,14 +18235,14 @@ __metadata:
   linkType: hard
 
 "remark-reading-time@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "remark-reading-time@npm:2.0.1"
+  version: 2.0.2
+  resolution: "remark-reading-time@npm:2.0.2"
   dependencies:
     estree-util-is-identifier-name: "npm:^2.0.0"
-    estree-util-value-to-estree: "npm:^1.3.0"
+    estree-util-value-to-estree: "npm:^3.3.3"
     reading-time: "npm:^1.3.0"
     unist-util-visit: "npm:^3.1.0"
-  checksum: 10/81d408c4391b4f6814aa50e35a217b7c17734a4677fe804a4ccdccef45705c2b57df79e0c4b87fcd387912567ef72509e4f34c6d292f1448384a72643d2d8c17
+  checksum: 10/6166f2bc183622f58e2ee72480b8b804db6e4c969d7ce52e3854b4b5d6b8f73f61baa95cc3e4936fc7dcfdd1098884874b6c485013acc4a1386a682851bacda7
   languageName: node
   linkType: hard
 

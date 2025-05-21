@@ -9,6 +9,7 @@ type ExportEntries = Array<
     string,
     {
       types: string;
+      require: string;
       default: string;
     },
   ]
@@ -60,10 +61,10 @@ function convertToNodeModulesPath(relativePathToFile: string) {
   return path.join(modulePath, relativePathToFile);
 }
 
-async function transformFile(filePath: string) {
+async function transformFile(filePath: string, moduleType: 'es6' | 'commonjs' = 'es6') {
   const { code } = await swc.transformFile(filePath, {
     module: {
-      type: 'es6',
+      type: moduleType,
       noInterop: true,
     },
     jsc: {
@@ -95,6 +96,13 @@ export async function main() {
       const code = await transformFile(convertToNodeModulesPath(esm));
 
       await createFile(esm, code);
+    }),
+    ...exportsEntries.map(async (exportItem) => {
+      const require = exportItem[1].require;
+
+      const code = await transformFile(convertToNodeModulesPath(require), 'commonjs');
+
+      await createFile(require, code);
     }),
   ]);
 }
