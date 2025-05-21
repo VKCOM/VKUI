@@ -23,7 +23,7 @@ export function Anchor({ href = '', children, ...props }: LinkProps) {
   if (newWindow) {
     return (
       <Link href={href} target="_blank" rel="noreferrer" {...props}>
-        {children}
+        {children}&nbsp;↗
       </Link>
     );
   }

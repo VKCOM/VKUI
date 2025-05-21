@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Subhead, Tappable } from '@vkontakte/vkui';
+import { Caption, Subhead, Tappable } from '@vkontakte/vkui';
 import NextLink from 'next/link';
 import { useFSRoute } from 'nextra/hooks';
 import type { Item, PageItem } from 'nextra/normalize-pages';
@@ -8,6 +8,16 @@ import { Accordion, type AccordionProps } from '../Accordion/Accordion';
 import styles from './Menu.module.css';
 
 const TreeState: Record<string, boolean> = Object.create(null);
+
+function Separator({ title }: { title: string }) {
+  return (
+    <div className={styles.separator} role="separator">
+      <Caption level="3" caps>
+        {title}
+      </Caption>
+    </div>
+  );
+}
 
 export interface FolderProps {
   item: PageItem | Item;
@@ -122,6 +132,9 @@ export function Menu({
   return (
     <ul className={classNames(styles.root, !mobileView && styles.currentMenu, className)}>
       {directories.map((item) => {
+        if (item.type === 'separator') {
+          return <Separator key={item.name} title={item.title} />;
+        }
         const Component = item.type === 'menu' || item.children?.length ? Folder : File;
         return <Component key={item.name} item={item} />;
       })}
