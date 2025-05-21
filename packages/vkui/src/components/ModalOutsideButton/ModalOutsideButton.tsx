@@ -1,11 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './ModalOutsideButton.module.css';
 
-export interface ModalOutsideButtonProps extends TappableProps {
+export interface ModalOutsideButtonProps extends TappableOmitProps {
   /**
    * Текст для скринридера.
    */
