@@ -33,8 +33,8 @@ export function Anchor({ href = '', as, children, ...props }: AnchorProps) {
     }
 
     return (
-      <Link href={href} Component={NextLink} as={as} {...props}>
-        {children}
+      <Link href={href} target="_blank" rel="noreferrer" {...props}>
+        {children}&nbsp;↗
       </Link>
     );
   }
