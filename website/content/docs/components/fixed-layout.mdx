@@ -1,0 +1,23 @@
+<Overview>
+
+# FixedLayout
+
+Компонент закрепляет переданный контент сверху или снизу области видимости.
+Учитывает высоту шапки и прочие системные отступы.
+
+</Overview>
+
+> Компонент использует `position: fixed` вместо `position: sticky` (ограничение минимально поддерживаемых версий браузеров).
+> По этой причине `FixedLayout` находится вне основного потока. Учитывайте это при разработке интерфейсов.
+
+```jsx
+<View activePanel="fixedLayout">
+  <Panel id="fixedLayout">
+    <PanelHeader fixed>Fixed layout</PanelHeader>
+    <FixedLayout vertical="top" filled>
+      <Search />
+      <Separator />
+    </FixedLayout>
+  </Panel>
+</View>
+```

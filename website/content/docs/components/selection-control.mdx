@@ -1,0 +1,53 @@
+<Overview>
+
+# SelectionControl
+
+Компонент, который представляет собой базовую обертку для переключателей (`checkbox`, `radio`, `switch`).
+Лежит в основе таких компонентов как `Radio`, `Checkbox` и `Switch`.
+
+</Overview>
+
+```jsx
+<SelectionControl>
+  <SelectionControl.Label>Элемент выбора</SelectionControl.Label>
+</SelectionControl>
+```
+
+## Применение компонента
+
+> **Обратите внимание**
+>
+> Если вам не нужна дополнительная стилизация или специфичное поведение, то используйте компоненты `Radio`, `Checkbox` или `Switch`
+> напрямую. Они покрывают все базовые потребности пользователя и стилизованы под дизайн-систему VKUI.
+
+С помощью данного компонента можно более гибко контролировать поведение и стилизацию всех типов переключателей.
+Может быть полезно, если вы хотите задать специфичную цветовую тему компонентов или изменить порядок
+текстовых элементов.
+
+## Структура
+
+Компонент `SelectionControl` служит обёрткой для всего контента.
+
+Подкомпонент `SelectionControl.Label` вкладывается в `SelectionControl` и используется для задания заголовка и подзаголовка переключателя.
+
+Также в `SelectionControl` необходимо вложить нужный переключатель, для этого используйте соответствующие компоненты `Checkbox.Input`,
+`Radio.Input` или `Switch`.
+
+Переключатели и подкомпонент `SelectionControl.Label` можно располагать в любом порядке.
+
+```jsx
+<>
+  <SelectionControl>
+    <Checkbox.Input />
+    <SelectionControl.Label titleAfter={<Icon12Lock />}>Заголовок</SelectionControl.Label>
+  </SelectionControl>
+  <SelectionControl>
+    <Radio.Input />
+    <SelectionControl.Label description="Описание">Заголовок</SelectionControl.Label>
+  </SelectionControl>
+  <SelectionControl>
+    <SelectionControl.Label description="Описание">Заголовок</SelectionControl.Label>
+    <Switch />
+  </SelectionControl>
+</>
+```

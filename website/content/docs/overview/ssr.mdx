@@ -1,7 +1,7 @@
 <Overview>
 # Серверный рендеринг
 
-По умолчанию **VKUI**-компоненты рендерятся одинаково что на клиенте, что на сервере. Но, как
+По умолчанию VKUI-компоненты рендерятся одинаково что на клиенте, что на сервере. Но, как
 говорится, есть нюанс и не один. Если вы хотите настроить в своём проекте SSR, то вы попали
 на нужную страницу – здесь мы рассмотрим все нюансы.
 
@@ -15,7 +15,7 @@
 
 ### Подготовка HTML-страницы [#step1]
 
-Шаг необязательный, но важный для минимизирования `reflow` страницы после гидратации. Нужно добавить следующие **VKUI**-классы в
+Шаг необязательный, но важный для минимизирования `reflow` страницы после гидратации. Нужно добавить следующие VKUI-классы в
 базовый HTML-шаблон:
 
 - `class="vkui"` на `<html>`;
@@ -23,7 +23,7 @@
 
 ### Определение платформы и направления текста на сервере [#step2]
 
-Скорей всего вы уже успели ознакомиться с тем, что **VKUI** умеет мимикрировать под платформы `android` и `iOS`. На клиенте, если
+Скорей всего вы уже успели ознакомиться с тем, что VKUI умеет мимикрировать под платформы android и iOS. На клиенте, если
 в `ConfigProvider` платформа не зашита в свойстве `platform`, то она автоматически определиться опираясь на `navigator.userAgent`.
 Это первый момент. Второй момент, направление текста `ltr`/`rtl`. Опять же, если в `ConfigProvider` в свойстве `direction` не зашито
 направление, то оно автоматически определиться через браузерное API.
@@ -61,7 +61,7 @@
 
 Представим наполнение каждого файла.
 
-```tsx filename="app/layout.tsx" {19-21,23-26,29-31}
+```jsx filename="app/layout.tsx" {19-21,23-26,29-31}
 import { Viewport } from 'next';
 import { Layout } from '../client/Layout';
 import { detectIOS } from '@vkontakte/vkjs';
@@ -109,7 +109,7 @@ export default Page;
 
 Применяем переданные из `app/layout.tsx` свойства `platform` и `direction`, типы берём из `ConfigProviderProps`.
 
-```tsx filename="client/Layout.tsx" {4,10,14}
+```jsx filename="client/Layout.tsx" {4,10,14}
 'use client';
 
 import {
@@ -132,7 +132,7 @@ export function Layout({ platform, direction, children }: LayoutProps) {
 }
 ```
 
-```tsx filename="client/Pages.tsx"
+```jsx filename="client/Pages.tsx"
 'use client';
 
 import { SelectionControl, Switch, Flex } from '@vkontakte/vkui';
@@ -319,7 +319,7 @@ export default function App() {
 гидрации. Использование этого свойства оправдано, если у вас клиент всегда в одной версии либо в мобильной, либо в десктопной.
 Также можно зашить конкретную версию обернув компонент в `AdaptivityProvider`.
 
-```tsx
+```jsx
 import { AdaptivityProvider, ViewWidth, ModalPage } from '@vkontakte/vkui';
 
 const App = () => {

@@ -1,0 +1,49 @@
+<Overview>
+
+# DropZone
+
+Компонент, который позволяет пользователям загружать файлы, перетаскивая их в специальную область на странице.
+
+</Overview>
+
+```jsx
+const dragOverHandler = (event) => {
+  event.preventDefault();
+};
+
+const dropHandler = (event) => {
+  event.preventDefault();
+
+  console.table(event.dataTransfer.files);
+};
+
+<DropZone.Grid>
+  <DropZone onDragOver={dragOverHandler} onDrop={dropHandler}>
+    <Placeholder>Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+</DropZone.Grid>;
+```
+
+## Структура
+
+Подкомпонент `DropZone.Grid` предназначен для расположения нескольких `DropZone` по заданной сетке.
+Можно выбрать направление расположения в строку или столбец с помощью свойства `direction`.
+При расположении в столбец первый компонент `DropZone` растягивается на всю доступную ширину.
+
+## Функция-рендер
+
+Для более гибкой настройки внешнего вида можно использовать функцию-рендер, которая даёт доступ к свойству `active`,
+позволяющему определить, находится ли файл над специальной областью:
+
+```jsx
+<DropZone>
+  {({ active }) => (
+    <Placeholder
+      icon={<Icon56CameraOutline fill={active ? 'var(--vkui--color_icon_accent)' : undefined} />}
+      title="Загрузка файлов"
+    >
+      {active ? 'Отпустите файлы здесь.' : 'Перенесите файл сюда.'}
+    </Placeholder>
+  )}
+</DropZone>
+```

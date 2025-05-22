@@ -59,7 +59,7 @@ const SmartWrapper = ({ children }) => {
 
 ### Расширенный пример с инъекцией пропсов
 
-```tsx
+```jsx
 const FocusableContainer = ({ children }) => {
   const [childRef, patchedChild] = usePatchChildren(children, {
     tabIndex: 0,
@@ -87,7 +87,7 @@ const FocusableContainer = ({ children }) => {
 
 - Избегайте:
 
-```tsx
+```jsx
 // ❌ Невалидно - текстовая нода
 usePatchChildren('Simple text');
 
