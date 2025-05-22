@@ -1,0 +1,79 @@
+<Overview>
+
+# CellButton
+
+Компонент для создания кнопок в виде строк. Используется для списков действий, меню настроек и других сценариев, где требуется компактное отображение интерактивных элементов.
+
+Связанные компоненты:
+
+- CellButtonGroup
+
+</Overview>
+
+## Цветовые схемы
+
+Задается свойством `appearance`
+
+```jsx
+<Group header={<Header size="s">Разные цветовые схемы</Header>}>
+  <CellButton appearance="accent">Основное действие</CellButton>
+  <CellButton appearance="neutral">Нейтральное действие</CellButton>
+  <CellButton appearance="negative">Критичное действие</CellButton>
+</Group>
+```
+
+## Выравнивание
+
+Задается свойством `centered`
+
+```jsx
+<Group header={<Header size="s">Центрирование</Header>}>
+  <CellButton before={<Icon24Add />}>Создать</CellButton>
+
+  <CellButton centered before={<Icon24Add />}>
+    Центрированная кнопка
+  </CellButton>
+</Group>
+```
+
+## Особенности
+
+### Наследование свойств
+
+Поддерживает все свойства [`SimpleCell`](#/SimpleCell):
+
+- `before` / `after`
+- `subtitle` / `extraSubtitle`
+- `multiline`
+- `disabled`
+
+Пример с дополнительным контентом:
+
+```jsx
+<CellButton before={<Icon28WalletOutline />} subtitle="Баланс: 500 ₽" after={<Counter>3</Counter>}>
+  Кошелёк
+</CellButton>
+```
+
+## Доступность (a11y)
+
+### Рекомендации
+
+- Для иконок без текста используйте `aria-label`
+- Сочетайте с семантическими тегами:
+
+```jsx
+<CellButton Component="a" href="/settings">
+  Настройки
+</CellButton>
+```
+
+- Для скринридеров:
+
+```jsx
+<CellButton>
+  <VisuallyHidden>Действие:</VisuallyHidden>
+  Создать документ
+  <VisuallyHidden>. Нажмите Enter для активации</VisuallyHidden>
+</CellButton>
+```

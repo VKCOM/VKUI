@@ -1,0 +1,89 @@
+<Overview>
+
+# Skeleton
+
+Компонент для отображения анимированных заглушек во время загрузки контента. Автоматически адаптируется под размеры и стили ожидаемого контента.
+
+</Overview>
+
+## Пример использования
+
+```jsx
+<PanelHeader>
+<Skeleton width="100%" />
+</PanelHeader>
+<Group>
+<SimpleCell
+before={<Skeleton width={36} height={36} borderRadius="50%" />}
+subtitle={<Skeleton width={90} />}
+>
+<Skeleton width={120} />
+</SimpleCell>
+<Div>
+<Skeleton width="100%" />
+<Skeleton width="100%" />
+<Skeleton width="75%" />
+</Div>
+</Group>
+```
+
+## Элементы интерфейса
+
+Примеры использования для разных элементов интерфейса
+
+```jsx static
+// Аватар
+<Skeleton
+width={48}
+height={48}
+borderRadius="50%"
+/>
+
+// Кнопка
+<Skeleton
+width={120}
+height={36}
+borderRadius={8}
+/>
+
+// Карточка
+<Skeleton
+width={300}
+height={200}
+borderRadius={12}
+/>
+```
+
+## Настройка анимации
+
+- `duration` - длительность анимации
+- `colorFrom` - начальный цвет анимации
+- `colorTo` - начальный цвет анимации
+
+```jsx
+<Skeleton colorFrom="#f0f0f0" colorTo="#e0e0e0" duration={1.5} />
+```
+
+### Отключение анимации
+
+Отлючить анимацию можно с помощью свойства `noAnimation`
+
+```jsx
+<Skeleton noAnimation />
+```
+
+## Особенности
+
+- **Автоматическая высота** для текстовых блоков:
+
+```jsx static
+<div style={{ fontSize: 16 }}>
+  <Skeleton />
+</div>
+```
+
+- **Адаптивные размеры** через CSS-переменные:
+
+```jsx static
+<Skeleton inlineSize="var(--custom-width)" blockSize="var(--custom-height)" />
+```

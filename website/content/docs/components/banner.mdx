@@ -1,0 +1,100 @@
+<Overview>
+# Banner
+
+Компонент для отображения важных уведомлений и промо-блоков с возможностью взаимодействия. Поддерживает различные режимы отображения и типы контента.
+
+</Overview>
+
+## Основные режимы
+
+### `mode="tint"` (по умолчанию)
+
+```jsx
+<Banner
+  before={<Avatar size={48} src={userAvatar} />}
+  title="Новое уведомление"
+  subtitle="У вас 5 новых сообщений"
+  actions={<Button mode="primary">Просмотреть</Button>}
+/>
+```
+
+### `mode="image"`
+
+Фоновое изображение:
+
+```jsx
+<Banner
+  mode="image"
+  title="Мои достижения"
+  subtitle="Разблокировано 9 из 36"
+  background={
+    <div
+      style={{
+        backgroundColor: '#65c063',
+        backgroundImage:
+          'url(https://sun9-59.userapi.com/7J6qHkTa_P8VKRTO5gkh6MizcCEefz04Y0gDmA/y6dSjdtPU4U.jpg)',
+        backgroundPosition: 'right bottom',
+        backgroundSize: 320,
+        backgroundRepeat: 'no-repeat',
+      }}
+    />
+  }
+  actions={<Button appearance="overlay">Подробнее</Button>}
+/>
+```
+
+## Контентные блоки
+
+### `after` - правая секция
+
+- `dismiss` - кнопка закрытия
+- `chevron` - индикатор перехода
+- `ReactNode` - пользовательский элемент
+
+```jsx
+<Banner
+  title="Больше интересных подкастов вкаталоге"
+  subtitle="Найдите интересующие именно Вас подкасты!"
+  after="chevron"
+  onClick={() => console.log('[Podcast banner] onClick')}
+/>
+```
+
+### `before` - левая секция:
+
+```jsx
+<Banner
+  before={
+    <Image
+      size={96}
+      src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
+    />
+  }
+  title="Баста в Ледовом"
+  subtitle="Большой концерт"
+  after="dismiss"
+  onDismiss={noop}
+  actions={<Button>Подробнее</Button>}
+/>
+```
+
+### Текстовые элементы:
+
+- `title` - основной заголовок
+- `subtitle` - дополнительный текст
+- `extraSubtitle` - расширенное описание
+
+## Действия
+
+Для добавления действий можно использовать свойство `actions`
+
+```jsx
+<Banner
+  actions={
+    <ButtonGroup mode="vertical" gap="m">
+      <Button mode="primary">Принять</Button>
+      <Button mode="secondary">Отклонить</Button>
+    </ButtonGroup>
+  }
+/>
+```
