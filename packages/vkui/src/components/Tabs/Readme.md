@@ -52,16 +52,12 @@ const Example = () => {
         </PanelHeader>
 
         {selected === 'news' && (
-          <Group id="tab-content-news" aria-labelledby="tab-news" role="tabpanel">
+          <Group id="tab-content-news" aria-labelledby="news" role="tabpanel">
             <Div>Контент новостей</Div>
           </Group>
         )}
         {selected === 'recommendations' && (
-          <Group
-            id="tab-content-recommendations"
-            aria-labelledby="tab-recommendations"
-            role="tabpanel"
-          >
+          <Group id="tab-content-recommendations" aria-labelledby="recommendations" role="tabpanel">
             <Div>Контент рекомендаций</Div>
           </Group>
         )}
@@ -93,8 +89,9 @@ const Example = () => {
 
 const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
   return (
-    <Tabs>
+    <Tabs selectedId={selected} onSelectedIdChange={setSelected}>
       <TabsItem
+        id="news"
         after={
           <Icon16Dropdown
             style={{
@@ -102,25 +99,20 @@ const DefaultInPanel = ({ menuOpened, onMenuClick, selected, setSelected }) => {
             }}
           />
         }
-        selected={selected === 'news'}
         onClick={() => {
           if (selected === 'news') {
             onMenuClick(true);
           }
-          setSelected('news');
         }}
-        id="tab-news"
         aria-controls="tab-content-news"
       >
         Новости
       </TabsItem>
       <TabsItem
-        selected={selected === 'recommendations'}
+        id="recommendations"
         onClick={() => {
           onMenuClick(false);
-          setSelected('recommendations');
         }}
-        id="tab-recommendations"
         aria-controls="tab-content-recommendations"
       >
         Интересное
@@ -142,35 +134,32 @@ const Scrollable = () => {
         layoutFillMode={layoutFillMode}
         withScrollToSelectedTab
         scrollBehaviorToSelectedTab="center"
+        selectedId={selected}
+        onSelectedIdChange={setSelected}
       >
         <HorizontalScroll arrowSize="m">
-          <TabsItem
-            selected={selected === 'groups'}
-            disabled={disabled}
-            onClick={() => setSelected('groups')}
-          >
+          <TabsItem id="groups" disabled={disabled}>
             Сообщества
           </TabsItem>
           <TabsItem
+            id="news"
             before={mode === 'default' ? <Icon24NewsfeedOutline /> : <Icon20NewsfeedOutline />}
             after={<Icon16Dropdown />}
-            selected={selected === 'news'}
             disabled={disabled}
-            onClick={() => setSelected('news')}
           >
             Лента
           </TabsItem>
           <TabsItem
+            id="recommendations"
             before={mode === 'default' ? <Icon24ThumbsUpOutline /> : <Icon20ThumbsUpOutline />}
             status={<Badge mode="prominent">Есть новые</Badge>}
             after={<Icon16Dropdown />}
-            selected={selected === 'recommendations'}
             disabled={disabled}
-            onClick={() => setSelected('recommendations')}
           >
             Рекомендации
           </TabsItem>
           <TabsItem
+            id="friends"
             before={mode === 'default' ? <Icon24UsersOutline /> : <Icon20UsersOutline />}
             status={
               <Counter mode="primary" appearance="accent-red" size="s">
@@ -178,19 +167,16 @@ const Scrollable = () => {
               </Counter>
             }
             after={<Icon16Dropdown />}
-            selected={selected === 'friends'}
             disabled={disabled}
-            onClick={() => setSelected('friends')}
           >
             Друзья
           </TabsItem>
           <TabsItem
+            id="photos"
             before={mode === 'default' ? <Icon24PictureOutline /> : <Icon20PictureOutline />}
             status={23}
             after={<Icon16Dropdown />}
-            selected={selected === 'photos'}
             disabled={disabled}
-            onClick={() => setSelected('photos')}
           >
             Фотографии
           </TabsItem>

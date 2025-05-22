@@ -45,6 +45,11 @@ export interface TappableProps extends ClickableProps, StateProps {
   hoverClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
 }
 
+// TODO [>=8]: = React.AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>
+//
+// NOTE: Возможно стоит вообще запретить компонентам расширяться от TappableProps?
+export type TappableOmitProps = Omit<TappableProps, 'DefaultComponent'>;
+
 export const Tappable = ({
   baseClassName,
   borderRadiusMode = 'auto',

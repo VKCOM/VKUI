@@ -42,27 +42,27 @@ export const Playground: DefaultStory = {
         </ContentBadge>
 
         <ContentBadge {...restProps} size={size}>
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
           {children}
         </ContentBadge>
 
         <ContentBadge {...restProps} size={size}>
           {children}
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
         </ContentBadge>
 
         <ContentBadge {...restProps} size={size}>
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
           {children}
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
         </ContentBadge>
       </Flex>
     );
@@ -83,9 +83,9 @@ export const SingleIcon: SingleIconStory = {
 
     return (
       <ContentBadge {...restProps} size={size}>
-        <ContentBadge.SlotIcon>
+        <ContentBadge.IconSlot>
           {size === 'l' ? <Icon20ServicesFilled /> : <Icon16Services />}
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
       </ContentBadge>
     );
   },

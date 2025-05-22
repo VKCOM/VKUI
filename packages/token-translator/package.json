@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-token-translator",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Tools for translate Appearance to vkui-tokens",
   "repository": "https://github.com/VKCOM/VKUI",
   "homepage": "https://vkcom.github.io/VKUI/",
@@ -14,7 +14,7 @@
     "node": ">12.0.0"
   },
   "dependencies": {
-    "@types/node": "^22.15.17",
+    "@types/node": "^22.15.19",
     "postcss": "^8.5.3",
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.9",

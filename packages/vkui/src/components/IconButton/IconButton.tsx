@@ -5,7 +5,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './IconButton.module.css';
 
@@ -14,7 +14,7 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 } as const;
 
-export interface IconButtonProps extends TappableProps {
+export interface IconButtonProps extends TappableOmitProps {
   /**
    * Текст кнопки-иконки. Делает ее доступной для ассистивных технологий.
    */

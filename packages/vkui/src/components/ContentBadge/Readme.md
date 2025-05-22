@@ -15,33 +15,33 @@ const Stand = ({ size }) =>
       </ContentBadge>
 
       <ContentBadge size={size} appearance={appearance} mode={mode} capsule={capsule}>
-        <ContentBadge.SlotIcon>
+        <ContentBadge.IconSlot>
           {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
         Badge
       </ContentBadge>
 
       <ContentBadge size={size} appearance={appearance} mode={mode} capsule={capsule}>
         Badge
-        <ContentBadge.SlotIcon>
+        <ContentBadge.IconSlot>
           {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
       </ContentBadge>
 
       <ContentBadge size={size} appearance={appearance} mode={mode} capsule={capsule}>
-        <ContentBadge.SlotIcon>
+        <ContentBadge.IconSlot>
           {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
         Badge
-        <ContentBadge.SlotIcon>
+        <ContentBadge.IconSlot>
           {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
       </ContentBadge>
 
       <ContentBadge size={size} appearance={appearance} mode={mode} capsule>
-        <ContentBadge.SlotIcon>
+        <ContentBadge.IconSlot>
           {size === 'l' ? <Icon20ServicesFilled /> : <Icon16Services />}
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
       </ContentBadge>
     </>
   );

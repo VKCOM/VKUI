@@ -6,7 +6,7 @@ import {
   AdaptiveIconRenderer,
   type AdaptiveIconRendererProps,
 } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import styles from './ToolButton.module.css';
 
 const stylesMode = {
@@ -31,7 +31,7 @@ const sizeYClassNames = {
   regular: styles.sizeYRegular,
 };
 
-export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProps {
+export interface ToolButtonProps extends TappableOmitProps, AdaptiveIconRendererProps {
   /**
    * Режим отображения компонента.
    */
