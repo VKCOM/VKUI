@@ -1,0 +1,85 @@
+<Overview>
+
+# ContentBadge
+
+Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса. Используется в ячейках, кнопках и навигации.
+
+</Overview>
+
+## Свойства отображения
+
+### Режим отображения
+
+Определяет стиль контейнера свойством `mode`:
+
+- `primary` — акцентный вариант с заливкой;
+- `secondary` — контурный стиль с прозрачным фоном;
+- `outline` — минималистичный контур без фона.
+
+```jsx
+<ContentBadge mode="secondary">Черновик</ContentBadge>
+```
+
+### Внешний вид
+
+Цветовое оформление, определяется свойством `appearance`:
+
+- `accent` — акцентный цвет темы;
+- `neutral` — бейдж в спокойных цветах;
+- `accent-green` — акцентный зелёный цвет;
+- `accent-red` — акцентный красный цвет;
+- `overlay` — для распологающихся поверх другого контента.
+
+```jsx
+<ContentBadge appearance="accent-green">Активно</ContentBadge>
+```
+
+### Размер
+
+Определяется свойством `size`:
+
+- `s` — компактный (только текст, без иконок);
+- `m` — стандартный с поддержкой иконок 16px;
+- `l` — крупный с иконками 20px.
+
+```jsx
+<ContentBadge size="l">
+  <ContentBadge.SlotIcon>
+    <Icon20Warning />
+  </ContentBadge.SlotIcon>
+  Важно
+</ContentBadge>
+```
+
+### Скругление
+
+Свойство `capsule` включает приближение значения закругления к форме круга:
+
+- Для `size="m"` и `l` — приближает к овальной форме
+- Для `size="s"` игнорируется
+
+```jsx
+<ContentBadge capsule size="m">
+  <ContentBadge.SlotIcon>
+    <Icon16Check />
+  </ContentBadge.SlotIcon>
+  Готово
+</ContentBadge>
+```
+
+## Работа с иконками
+
+Используйте `ContentBadge.SlotIcon` для вставки одиночной иконки:
+
+- Для `size="m"` — рекомендуемый размер 16px
+- Для `size="l"` — рекомендуемый размер 20px
+- `size="s"` не поддерживает иконки
+
+```jsx
+<ContentBadge size="m">
+  <ContentBadge.SlotIcon>
+    <Icon16Lock />
+  </ContentBadge.SlotIcon>
+  Заблокировано
+</ContentBadge>
+```

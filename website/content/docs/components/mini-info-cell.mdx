@@ -1,0 +1,107 @@
+<Overview>
+
+# MiniInfoCell
+
+Компонент для отображения компактной информации или быстрых действий. Идеален для метаданных, статусов и кратких уведомлений.
+
+</Overview>
+
+## Основные свойства
+
+```jsx
+<MiniInfoCell
+  before={<Icon20ArticleOutline />}
+  after={<Avatar size={24} src={userAvatar} />}
+  mode="accent"
+  textWrap="short"
+  chevron
+>
+  Место работы: Команда ВКонтакте
+</MiniInfoCell>
+```
+
+## Структура элемента
+
+### Визуальные элементы
+
+1. **before** - Иконка 20px слева
+2. **after** - Контент справа (`<UsersStack size="s" />` или `<Avatar size={24} />`)
+
+### Текстовые режимы
+
+- **textWrap** - Управление переносом текста:
+- `nowrap` - Одна строка, обрезка (...)
+- `short` - До 3 строк
+- `full` - Полный текст с переносами
+
+## Режимы отображения
+
+### `mode="base"` (по умолчанию)
+
+Стандартный стиль для информации:
+
+```jsx
+<MiniInfoCell before={<Icon20GlobeOutline />}>
+  <Link href="https://vk.com/team">vk.com/team</Link>
+</MiniInfoCell>
+```
+
+### `mode="accent"`
+
+Акцентное выделение:
+
+```jsx
+<MiniInfoCell mode="accent" before={<Icon20WorkOutline />} after={<Avatar size={24} />}>
+  Место работы: Команда ВКонтакте
+</MiniInfoCell>
+```
+
+### `mode="add"`
+
+Призыв к действию:
+
+```jsx
+<MiniInfoCell mode="add" before={<Icon20EducationOutline />} onClick={handleAddEducation} chevron>
+  Укажите место учёбы
+</MiniInfoCell>
+```
+
+### `mode="more"`
+
+Индикатор дополнительной информации:
+
+```jsx
+<MiniInfoCell mode="more" before={<Icon20InfoOutline />} onClick={showDetails} chevron>
+  Подробная информация
+</MiniInfoCell>
+```
+
+## Особенности
+
+### Шеврон (chevron)
+
+Используйте для интерактивных элементов:
+
+```jsx
+<MiniInfoCell chevron onClick={handleClick} before={<Icon20SettingsOutline />}>
+  Настройки профиля
+</MiniInfoCell>
+```
+
+## Рекомендации
+
+1. Для иконок используйте только 20px версии
+2. В режиме `add` обязательно добавляйте обработчик `onClick`
+3. Избегайте длинных текстов в `nowrap` режиме
+4. Для групп элементов используйте общий `Group` с отступами
+
+### Доступность (a11y)
+
+- Для кликабельных элементов добавляйте aria-label
+- Сочетайте с семантическими тегами:
+
+```jsx static
+<MiniInfoCell Component="a" href="/settings">
+  ...
+</MiniInfoCell>
+```

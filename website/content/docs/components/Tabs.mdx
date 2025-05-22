@@ -1,0 +1,188 @@
+<Overview>
+
+# Tabs
+
+Компонент для организации контента в виде вкладок. Позволяет пользователю переключаться между разными разделами информации в одном пространстве.
+
+Связанные компоненты:
+
+- TabsItem
+
+</Overview>
+
+## Режимы отображения
+
+Задаётся свойством `mode`:
+
+- `default` — стандартное отображение вкладок;
+- `accent` — акцентный вариант, выделяет активную вкладку;
+- `secondary` — более сдержанный стиль для второстепенных разделов.
+
+## Распределение вкладок
+
+Задаётся свойством `layoutFillMode`:
+
+- `auto` — автоматическое распределение (по умолчанию):
+- равномерно занимают всю ширину при использовании внутри `HorizontalScroll`
+- равномерное распределение в режиме `default` на всех платформах кроме VKCOM
+- `stretched` — вкладки растягиваются на всю доступную ширину;
+- `shrinked` — вкладки сжимаются по размеру контента.
+
+## Скролл к активной вкладке
+
+По умолчанию автоматический скролл к выбранной вкладке отключён. Для включения:
+
+- `withScrollToSelectedTab` — включает прокрутку к активной вкладке;
+- `scrollBehaviorToSelectedTab` — контролирует горизонтальное выравнивание при скролле (соответствует параметрам [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)).
+
+### Особенности скролла
+
+1. Вертикальный скролл автоматически отключается, если вкладка находится вне видимой области по вертикали
+2. В браузерах без поддержки параметров `scrollIntoView` скролл будет отключён
+
+## Способы управления активной вкладкой
+
+### Использование `selected` у `TabsItem`
+
+Управлять активной вкладкой можно вручную задавая `selected` у необходимой вкладки:
+
+```jsx
+const Example = () => {
+  const [selected, setSelected] = React.useState('news');
+
+  return (
+    <Group>
+      <Tabs withScrollToSelectedTab scrollBehaviorToSelectedTab="center">
+        <HorizontalScroll arrowSize="m">
+          <TabsItem selected={selected === 'groups'} onClick={() => setSelected('groups')}>
+            Сообщества
+          </TabsItem>
+          <TabsItem
+            before={<Icon24NewsfeedOutline />}
+            after={<Icon16Dropdown />}
+            selected={selected === 'news'}
+            onClick={() => setSelected('news')}
+          >
+            Лента
+          </TabsItem>
+          <TabsItem
+            before={<Icon24ThumbsUpOutline />}
+            status={<Badge mode="prominent">Есть новые</Badge>}
+            after={<Icon16Dropdown />}
+            selected={selected === 'recommendations'}
+            onClick={() => setSelected('recommendations')}
+          >
+            Рекомендации
+          </TabsItem>
+          <TabsItem
+            before={<Icon24UsersOutline />}
+            status={
+              <Counter mode="primary" appearance="accent-red" size="s">
+                3
+              </Counter>
+            }
+            after={<Icon16Dropdown />}
+            selected={selected === 'friends'}
+            onClick={() => setSelected('friends')}
+          >
+            Друзья
+          </TabsItem>
+          <TabsItem
+            before={<Icon24PictureOutline />}
+            status={23}
+            after={<Icon16Dropdown />}
+            selected={selected === 'photos'}
+            onClick={() => setSelected('photos')}
+          >
+            Фотографии
+          </TabsItem>
+        </HorizontalScroll>
+      </Tabs>
+    </Group>
+  );
+};
+
+<Example />;
+```
+
+### Использование `selectedId`/`defaultSelectedId` у `Tabs`
+
+Также можно управлять активной вкладкой через свойства `selectedId`/`defaultSelectedId` у `Tabs`. Для того, чтобы этот подход работал,
+нужно, чтобы у каждой вкладки `TabsItem` был выставлено свойство `id`:
+
+```jsx
+const Example = () => {
+  const [selected, setSelected] = React.useState('news');
+
+  return (
+    <Group>
+      <Tabs withScrollToSelectedTab scrollBehaviorToSelectedTab="center">
+        <HorizontalScroll arrowSize="m">
+          <TabsItem id="groups">Сообщества</TabsItem>
+          <TabsItem id="news" before={<Icon24NewsfeedOutline />} after={<Icon16Dropdown />}>
+            Лента
+          </TabsItem>
+          <TabsItem
+            id="recommendations"
+            before={<Icon24ThumbsUpOutline />}
+            status={<Badge mode="prominent">Есть новые</Badge>}
+            after={<Icon16Dropdown />}
+          >
+            Рекомендации
+          </TabsItem>
+          <TabsItem
+            id="friends"
+            before={<Icon24UsersOutline />}
+            status={
+              <Counter mode="primary" appearance="accent-red" size="s">
+                3
+              </Counter>
+            }
+            after={<Icon16Dropdown />}
+          >
+            Друзья
+          </TabsItem>
+          <TabsItem
+            id="photos"
+            before={<Icon24PictureOutline />}
+            status={23}
+            after={<Icon16Dropdown />}
+          >
+            Фотографии
+          </TabsItem>
+        </HorizontalScroll>
+      </Tabs>
+    </Group>
+  );
+};
+
+<Example />;
+```
+
+## Доступность (a11y)
+
+Для корректной работы со скринридерами необходимо:
+
+1. В `TabsItem` передать:
+
+- `id` — уникальный идентификатор вкладки
+- `aria-controls` — указывает на id связанной области контента
+
+2. В области контента указать:
+
+- `id` — соответствует `aria-controls` вкладки
+- `tabIndex="0"` — делает область фокусируемой
+- `aria-labelledby` — ссылается на id соответствующей вкладки
+
+Пример корректной разметки:
+
+```jsx static
+<Tabs>
+  <TabsItem id="tab1" aria-controls="content1">
+    Вкладка 1
+  </TabsItem>
+  <div id="content1" tabIndex={0} aria-labelledby="tab1">
+    Контент 1
+  </div>
+</Tabs>
+```

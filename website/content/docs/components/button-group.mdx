@@ -1,0 +1,46 @@
+<Overview>
+
+# ButtonGroup
+
+Компонент, который позволяет группировать кнопки (компонент [Button](https://vkcom.github.io/VKUI/#/Button)) и управлять их расположением и выравниванием. Поддерживает как горизонтальное, так и вертикальное расположение кнопок, а также позволяет настраивать отступы между ними.
+
+Связанные компоненты:
+
+- Button
+
+</Overview>
+
+## Особенности использования
+
+- `ButtonGroup` не управляет свойствами вложенных кнопок или групп кнопок. Параметры, такие как размер, цвет или состояние кнопок, должны быть установлены на самих кнопках.
+
+- При использовании свойства `stretched`, для вложенных кнопок или групп кнопок необходимо самостоятельно определять, должны ли они также растягиваться.
+
+## Вложенные `ButtonGroup`
+
+`ButtonGroup` может содержать вложенные `ButtonGroup` для создания более сложных структур
+
+```jsx
+<ButtonGroup mode="vertical" gap="m" style={{ minWidth: 328 }}>
+  <Button onClick={() => {}} size="l" appearance="accent" stretched>
+    Разрешить
+  </Button>
+  <Button onClick={() => {}} size="l" appearance="accent" stretched>
+    Завершить
+  </Button>
+  <ButtonGroup mode="horizontal" gap="m" stretched>
+    <Button onClick={() => {}} size="l" appearance="negative" stretched>
+      Не сейчас
+    </Button>
+    <Button onClick={() => {}} size="l" appearance="positive" stretched>
+      Продолжить
+    </Button>
+  </ButtonGroup>
+</ButtonGroup>
+```
+
+## Доступность (a11y)
+
+-`ButtonGroup` является контейнером для кнопок, поэтому основная ответственность за доступность лежит на самих кнопках.
+
+- По умолчанию использует role="group"

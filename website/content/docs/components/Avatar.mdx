@@ -1,0 +1,97 @@
+<Overview>
+# Avatar
+
+Компонент для отображения аватара пользователя — фотографии, инициалов или графики. Наследует все свойства HTML-элемента `<img>`.
+
+</Overview>
+
+## Основные варианты
+
+1. **Изображение**
+   Основной вариант, использует стандартный `<img>` под капотом:
+
+```jsx
+<Avatar src="/user.jpg" alt="Фото пользователя" />
+```
+
+2. **Инициалы**
+   Отображаются если изображение не загрузилось:
+
+```jsx
+<Avatar initials="ИП" src="/user.jpg" alt="Фото пользователя" />
+```
+
+- Рекомендуемая длина — **не более 2 символов**
+- Размер шрифта автоматически адаптируется под размер аватара
+
+3. **Градиентный фон**
+   Используется при отсутствии изображения:
+
+```jsx
+<Avatar initials="ИП" gradientColor={5} />
+```
+
+## Градиенты
+
+Задаются свойством `gradientColor`.
+Можно использовать предопределенные цвета:
+
+- `1`: `"red"`
+- `2`: `"orange"`
+- `3`: `"yellow"`
+- `4`: `"green"`
+- `5`: `"l-blue"`
+- `6`: `"violet"`
+
+А также можно использовать кастомный градиент:
+
+```jsx stati
+<Avatar gradientColor="custom" style={{ backgroundImage: 'linear-gradient(...)' }} />
+```
+
+Для динамического определения цвета по ID пользователя:
+
+```jsx static
+import { calcInitialsAvatarColor } from '@vkontakte/vkui';
+
+<Avatar initials="ИП" gradientColor={calcInitialsAvatarColor(userId)} />;
+```
+
+## Дополнительные элементы
+
+### Бейдж
+
+```jsx
+<Avatar src="/user.jpg" size={48}>
+  <Avatar.Badge background="stroke">
+    <Icon20OnlineMobile />
+  </Avatar.Badge>
+</Avatar>
+```
+
+### Готовый пресет бейджа
+
+Подкомпонент `Avatar.BadgeWithPreset` предоставляет готовые пресеты `Avatar.Badge`. При прокидывании в свойство `preset` значения `online` используется
+иконка `Icon12Circle`,а при значении `online-mobile` иконка `Icon12OnlineMobile`.
+
+```jsx
+<Avatar src="/user.jpg" size={48}>
+  <Avatar.BadgeWithPreset preset="online" />
+</Avatar>
+```
+
+### Наложение
+
+```jsx
+<Avatar src="/user.jpg" size={48}>
+  <Avatar.Overlay theme="dark">
+    <Icon24Camera />
+  </Avatar.Overlay>
+</Avatar>
+```
+
+## Особенности
+
+- Автоматически адаптирует размер шрифта для инициалов
+- Поддерживает все стандартные HTML-атрибуты `<img>`
+- Сохраняет пропорции изображения при изменении размеров

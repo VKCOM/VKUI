@@ -1,0 +1,138 @@
+<Overview>
+
+# Pagination
+
+Компонент для навигации по страницам с поддержкой сложных сценариев отображения.
+Особое внимание уделено цифровой доступности и гибкой кастомизации.
+
+</Overview>
+
+## Стиль кнопок навигации
+
+Задается свойством `navigationButtonsStyle`:
+
+```jsx
+function Example() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [navigationButtonsStyle, setNavigationButtonsStyle] = useState('icon');
+
+  return (
+    <Flex direction="column" gap="l">
+      <Pagination
+        totalPages={20}
+        siblingCount={1}
+        navigationButtonsStyle={navigationButtonsStyle}
+        currentPage={currentPage}
+        onChange={setCurrentPage}
+      />
+      <Flex.Item alignSelf="start">
+        <FormItem top="prop[navigationButtonsStyle]">
+          <Select
+            value={navigationButtonsStyle}
+            onChange={(_, newValue) => setNavigationButtonsStyle(newValue)}
+            options={[
+              { label: 'icon', value: 'icon' },
+              { label: 'caption', value: 'caption' },
+              { label: 'both', value: 'both' },
+            ]}
+          />
+        </FormItem>
+      </Flex.Item>
+    </Flex>
+  );
+}
+
+<Example />;
+```
+
+## Кастомизация элементов
+
+С помощью свойств `renderPageButton` и `renderNavigationButton` можно отрисовать кастомные кнопки навигации и кнопки перехода по страницам.
+
+- в `renderPageButton` прокидывается объект с пропсами типа `CustomPaginationPageButtonProps` - наследует API [Tappable](https://vkcom.github.io/VKUI/#/Tappable).
+- в `renderNavigationButton` прокидывается объект с пропсами типа `CustomPaginationNavigationButton` наследует API [Button](https://vkcom.github.io/VKUI/#/Button).
+
+```jsx
+function Example() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  return (
+    <Flex direction="column">
+      <Pagination
+        totalPages={20}
+        siblingCount={1}
+        currentPage={currentPage}
+        onChange={setCurrentPage}
+        renderPageButton={(props) => (
+          <Tooltip title={`Страница ${props['data-page']}`}>
+            <Tappable {...props} />
+          </Tooltip>
+        )}
+        renderNavigationButton={(props) => <Button {...props} mode="primary" />}
+      />
+    </Flex>
+  );
+}
+
+<Example />;
+```
+
+## Хук usePagination
+
+Для полного контроля над отображением используйте хук:
+
+```jsx
+function Example() {
+  const { items } = usePagination({
+    totalPages: 10,
+    boundaryCount: 1,
+    siblingCount: 1,
+  });
+
+  // items → [1, 'start-ellipsis', 4, 5, 6, 'end-ellipsis', 10]
+
+  return (
+    <nav>
+      {items.map((item) =>
+        item === 'start-ellipsis' || item === 'end-ellipsis' ? (
+          <span key={item}>...</span>
+        ) : (
+          <button key={item}>{item}</button>
+        ),
+      )}
+    </nav>
+  );
+}
+
+<Example />;
+```
+
+### Когда использовать хук:
+
+- Нестандартный UI пагинации
+- Интеграция с кастомной логикой
+- Сложные анимации переходов
+
+## Доступность (a11y)
+
+### Обязательные требования
+
+1. **Уникальные метки**
+   Если на странице несколько компонентов:
+
+```jsx
+// ❌ Плохо (дублирующиеся метки)
+<Pagination navigationLabel="Страницы" />
+<Pagination navigationLabel="Страницы" />
+
+// ✅ Хорошо
+<Pagination navigationLabel="Страницы статей" />
+<Pagination navigationLabel="Страницы комментариев" />
+```
+
+2. **Семантика навигации**
+
+- Автоматически использует `<nav role="navigation">`
+- Связывает элементы через `aria-labelledby`
+
+3. В `navigationLabel` стоит избегать слова "Навигация" или слов близких по значению, так как скринридер и так зачитывает это видя тег `nav` или `role="navigation"`. Лучше ограничиться чем-то вроде "Страницы".

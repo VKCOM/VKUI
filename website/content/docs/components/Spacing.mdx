@@ -1,0 +1,38 @@
+<Overview>
+
+# Spacing
+
+Компонент для создания вертикальных отступов между элементами интерфейса.
+
+</Overview>
+## Основное использование
+
+```jsx static
+<Group header={<Header size="s">Default Spacing (empty, 8px)</Header>}>
+  <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
+  <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
+
+  <Spacing />
+
+  <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
+  <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
+</Group>
+```
+
+## Размеры отступов
+
+Задаются свойством `size`. Принимает значения дизайн-системы, числовые значения и css-переменные.
+
+**Примеры разных размеров:**
+
+```jsx static
+<Spacing size="xs" /> // 4px
+<Spacing size={32} /> // 32px
+<Spacing size="var(--custom-spacing)" /> // Кастомная CSS-переменная
+```
+
+## Особенности
+
+- Не принимает контент (свойство `children` устарело)
+- Для горизонтальных разделителей используйте [`Separator`](#/Separator)
+- Работает как прозрачный блок заданной высоты

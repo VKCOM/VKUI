@@ -1,0 +1,96 @@
+<Overview>
+
+# usePatchChildren
+
+Хук для модификации дочерних элементов с возможностью получения ссылки на DOM-узел и инъекции дополнительных пропсов.
+
+</Overview>
+
+## Параметры
+
+| Параметр    | Тип                                      | Описание                                                 |
+| ----------- | ---------------------------------------- | -------------------------------------------------------- |
+| children    | `ChildrenElement<ElementType>`           | Целевой React-элемент или произвольные дочерние элементы |
+| injectProps | `InjectProps<ElementType>` (опционально) | Дополнительные пропсы для инъекции в элемент             |
+| externRef   | `React.Ref<ElementType>` (опционально)   | Внешний ref для синхронизации с DOM-узлом                |
+
+## Возвращаемое значение
+
+Кортеж:
+
+1. `React.RefObject<ElementType | null>` - Ref на DOM-элемент
+2. `ChildrenElement<ElementType> | undefined` - Модифицированный дочерний элемент
+
+## Примеры использования
+
+### Базовый сценарий (без внешнего ref)
+
+```jsx static
+const Component = ({ children }) => {
+  const [childRef, patchedChild] = usePatchChildren(children);
+
+  React.useEffect(() => {
+    if (childRef.current) {
+      console.log('DOM node:', childRef.current);
+    }
+  }, []);
+
+  return <div>{patchedChild}</div>;
+};
+```
+
+### Интеграция с внешним ref
+
+```jsx static
+const SmartWrapper = ({ children }) => {
+  const internalRef = useRef < HTMLDivElement > null;
+  const [, patchedChild] = usePatchChildren(
+    children,
+    { 'data-wrapper': 'true' }, // Инжект пропсов
+    internalRef, // Синхронизация рефов
+  );
+
+  // Использование общего ref
+  useSomeHook(internalRef);
+
+  return <div>{patchedChild}</div>;
+};
+```
+
+### Расширенный пример с инъекцией пропсов
+
+```tsx
+const FocusableContainer = ({ children }) => {
+  const [childRef, patchedChild] = usePatchChildren(children, {
+    tabIndex: 0,
+    onFocus: () => console.log('Element focused'),
+    style: { outline: '2px solid red' },
+  });
+
+  return <>{patchedChild}</>;
+};
+```
+
+## Особенности
+
+- Работает только с элементами, принимающими стандартные DOM-пропсы
+- Автоматически мержит переданные `injectProps` с существующими пропсами элемента
+- Гарантирует сохранение оригинальной функциональности ref
+
+## Рекомендации
+
+- Используйте для:
+- Получения доступа к DOM-узлам в композитных компонентах
+- Добавления кастомных обработчиков событий
+- Динамической модификации стилей дочерних элементов
+- Интеграции с библиотеками, требующими DOM-референсы
+
+- Избегайте:
+
+```tsx
+// ❌ Невалидно - текстовая нода
+usePatchChildren('Simple text');
+
+// ❌ Элемент без поддержки DOM-пропсов
+usePatchChildren(<MyCustomComponent />);
+```
