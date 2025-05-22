@@ -166,6 +166,10 @@ export interface DateInputProps
    * Позволяет отключить захват фокуса при появлении календаря.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
+  /**
+   * Показывать ли кнопку очистки поля.
+   */
+  allowClearButton?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -253,7 +257,6 @@ export const DateInput = ({
   onPrevMonth,
   prevMonthIcon,
   nextMonthIcon,
-  disableCalendar = false,
   renderDayContent,
   onCalendarOpenChanged,
   calendarTestsProps,
@@ -270,6 +273,9 @@ export const DateInput = ({
   timezone,
   restoreFocus,
   disableFocusTrap,
+  'allowClearButton': allowClearButtonProp = true,
+  readOnly,
+  'disableCalendar': disableCalendarProp = false,
   'aria-label': ariaLabel = '',
   ...props
 }: DateInputProps): React.ReactNode => {
@@ -278,6 +284,9 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
+
+  const disableCalendar = readOnly ? true : disableCalendarProp;
+  const allowClearButton = readOnly ? false : allowClearButtonProp;
 
   const { value, updateValue, setInternalValue, getLastUpdatedValue, clearValue } =
     useDateInputValue({
@@ -337,7 +346,7 @@ export const DateInput = ({
     maxElement,
     refs,
     autoFocus,
-    disabled,
+    disabled: disabled || readOnly,
     elementsConfig,
     onClear: clearValue,
     onInternalValueChange,
@@ -436,7 +445,7 @@ export const DateInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value ? (
+          {value && allowClearButton ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}
@@ -462,7 +471,7 @@ export const DateInput = ({
           Component="input"
           readOnly
           aria-hidden
-          tabIndex={-1}
+          tabIndex={readOnly ? 0 : -1}
           name={name}
           value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
           onFocus={handleFieldEnter}
@@ -482,6 +491,7 @@ export const DateInput = ({
             onKeyDown={handleKeyDown}
             onElementSelect={setFocusedElement}
             value={internalValue[0]}
+            readOnly={readOnly}
             label={changeDayLabel}
             data-testid={dayFieldTestId}
             role="spinbutton"
@@ -489,6 +499,7 @@ export const DateInput = ({
             aria-valuemax={31}
             aria-valuetext={internalValue[0]}
             aria-label={changeDayLabel}
+            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -498,6 +509,7 @@ export const DateInput = ({
             onElementSelect={setFocusedElement}
             onKeyDown={handleKeyDown}
             value={internalValue[1]}
+            readOnly={readOnly}
             label={changeMonthLabel}
             data-testid={monthFieldTestId}
             role="spinbutton"
@@ -505,6 +517,7 @@ export const DateInput = ({
             aria-valuemax={12}
             aria-valuetext={internalValue[1]}
             aria-label={changeMonthLabel}
+            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -513,6 +526,7 @@ export const DateInput = ({
             index={2}
             onElementSelect={setFocusedElement}
             value={internalValue[2]}
+            readOnly={readOnly}
             label={changeYearLabel}
             onKeyDown={handleKeyDown}
             data-testid={yearFieldTestId}
@@ -521,6 +535,7 @@ export const DateInput = ({
             aria-valuemax={275750}
             aria-valuetext={internalValue[2]}
             aria-label={changeYearLabel}
+            aria-readonly={readOnly}
           />
           {enableTime && (
             <React.Fragment>
@@ -531,6 +546,7 @@ export const DateInput = ({
                 index={3}
                 onElementSelect={setFocusedElement}
                 value={internalValue[3]}
+                readOnly={readOnly}
                 label={changeHoursLabel}
                 onKeyDown={handleKeyDown}
                 data-testid={hourFieldTestId}
@@ -539,6 +555,7 @@ export const DateInput = ({
                 aria-valuemax={24}
                 aria-valuetext={internalValue[3]}
                 aria-label={changeHoursLabel}
+                aria-readonly={readOnly}
               />
               <InputLikeDivider>:</InputLikeDivider>
               <InputLike
@@ -547,6 +564,7 @@ export const DateInput = ({
                 index={4}
                 onElementSelect={setFocusedElement}
                 value={internalValue[4]}
+                readOnly={readOnly}
                 label={changeMinutesLabel}
                 onKeyDown={handleKeyDown}
                 data-testid={minuteFieldTestId}
@@ -555,6 +573,7 @@ export const DateInput = ({
                 aria-valuemax={59}
                 aria-valuetext={internalValue[4]}
                 aria-label={changeMinutesLabel}
+                aria-readonly={readOnly}
               />
             </React.Fragment>
           )}

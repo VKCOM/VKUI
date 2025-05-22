@@ -143,6 +143,10 @@ export interface DateRangeInputProps
    * Отключение открытия календаря.
    */
   disableCalendar?: boolean;
+  /**
+   * Показывать ли кнопку очистки поля.
+   */
+  allowClearButton?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -221,7 +225,6 @@ export const DateRangeInput = ({
   showCalendarLabel = 'Показать календарь',
   prevMonthIcon,
   nextMonthIcon,
-  disableCalendar = false,
   onCalendarOpenChanged,
   renderDayContent,
   calendarTestsProps,
@@ -230,6 +233,9 @@ export const DateRangeInput = ({
   clearButtonTestId,
   showCalendarButtonTestId,
   id,
+  allowClearButton: allowClearButtonProp = true,
+  readOnly,
+  disableCalendar: disableCalendarProp = false,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -238,6 +244,9 @@ export const DateRangeInput = ({
   const daysEndRef = React.useRef<HTMLSpanElement>(null);
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
+
+  const disableCalendar = readOnly ? true : disableCalendarProp;
+  const allowClearButton = readOnly ? false : allowClearButtonProp;
 
   const _onChange = React.useCallback(
     (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
@@ -317,7 +326,7 @@ export const DateRangeInput = ({
     maxElement: 5,
     refs,
     autoFocus,
-    disabled,
+    disabled: disabled || readOnly,
     elementsConfig,
     onClear,
     onInternalValueChange,
@@ -353,21 +362,24 @@ export const DateRangeInput = ({
       className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
       getRootRef={handleRootRef}
       after={
-        value ? (
-          <IconButton hoverMode="opacity" onClick={clear} data-testid={clearButtonTestId}>
-            <VisuallyHidden>{clearFieldLabel}</VisuallyHidden>
-            <Icon16Clear />
-          </IconButton>
-        ) : (
-          <IconButton
-            hoverMode="opacity"
-            onClick={openCalendar}
-            data-testid={showCalendarButtonTestId}
-          >
-            <VisuallyHidden>{showCalendarLabel}</VisuallyHidden>
-            <Icon20CalendarOutline />
-          </IconButton>
-        )
+        <React.Fragment>
+          {!disableCalendar && !value && (
+            <IconButton
+              hoverMode="opacity"
+              onClick={openCalendar}
+              data-testid={showCalendarButtonTestId}
+            >
+              <VisuallyHidden>{showCalendarLabel}</VisuallyHidden>
+              <Icon20CalendarOutline />
+            </IconButton>
+          )}
+          {allowClearButton && value && (
+            <IconButton hoverMode="opacity" onClick={clear} data-testid={clearButtonTestId}>
+              <VisuallyHidden>{clearFieldLabel}</VisuallyHidden>
+              <Icon16Clear />
+            </IconButton>
+          )}
+        </React.Fragment>
       }
       disabled={disabled}
       onClick={callMultiple(handleFieldEnter, onClick)}
@@ -379,6 +391,9 @@ export const DateRangeInput = ({
           id={id}
           Component="input"
           name={name}
+          readOnly
+          aria-hidden
+          tabIndex={readOnly ? 0 : -1}
           value={
             value
               ? `${value[0] ? format(value[0], 'dd.MM.yyyy') : ''} - ${
@@ -387,15 +402,17 @@ export const DateRangeInput = ({
               : ''
           }
         />
-        <Text className={dateInputStyles.input} onKeyDown={handleKeyDown}>
+        <Text className={dateInputStyles.input} onKeyDown={readOnly ? undefined : handleKeyDown}>
           <InputLike
             length={2}
             getRootRef={daysStartRef}
             index={0}
             onElementSelect={setFocusedElement}
             value={internalValue[0]}
+            readOnly={readOnly}
             label={changeStartDayLabel}
             data-testid={startDateTestsProps?.day}
+            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -404,8 +421,10 @@ export const DateRangeInput = ({
             index={1}
             onElementSelect={setFocusedElement}
             value={internalValue[1]}
+            readOnly={readOnly}
             label={changeStartMonthLabel}
             data-testid={startDateTestsProps?.month}
+            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -414,8 +433,10 @@ export const DateRangeInput = ({
             index={2}
             onElementSelect={setFocusedElement}
             value={internalValue[2]}
+            readOnly={readOnly}
             label={changeStartYearLabel}
             data-testid={startDateTestsProps?.year}
+            aria-readonly={readOnly}
           />
           <InputLikeDivider>{' — '}</InputLikeDivider>
           <InputLike
@@ -424,8 +445,10 @@ export const DateRangeInput = ({
             index={3}
             onElementSelect={setFocusedElement}
             value={internalValue[3]}
+            readOnly={readOnly}
             label={changeEndDayLabel}
             data-testid={endDateTestsProps?.day}
+            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -434,8 +457,10 @@ export const DateRangeInput = ({
             index={4}
             onElementSelect={setFocusedElement}
             value={internalValue[4]}
+            readOnly={readOnly}
             label={changeEndMonthLabel}
             data-testid={endDateTestsProps?.month}
+            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <InputLike
@@ -444,8 +469,10 @@ export const DateRangeInput = ({
             index={5}
             onElementSelect={setFocusedElement}
             value={internalValue[5]}
+            readOnly={readOnly}
             label={changeEndYearLabel}
             data-testid={endDateTestsProps?.year}
+            aria-readonly={readOnly}
           />
         </Text>
       </div>

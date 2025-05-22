@@ -42,6 +42,39 @@ describe('DateInput', () => {
     </React.Fragment>
   ));
 
+  it('check correct readonly state', async () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+    render(
+      <DateInput
+        value={date}
+        onChange={onChange}
+        changeMonthLabel=""
+        changeYearLabel=""
+        changeDayLabel=""
+        changeHoursLabel=""
+        changeMinutesLabel=""
+        readOnly={true}
+        {...testIds}
+      />,
+    );
+    const inputLikes = getInputsLike();
+    inputLikes.forEach((inputLike) => {
+      expect(inputLike).toHaveAttribute('aria-readonly', 'true');
+    });
+
+    const [dates, months, years] = inputLikes;
+
+    await userEvent.type(dates, '30');
+    await userEvent.type(months, '06');
+    await userEvent.type(years, '2023');
+
+    const normalizedDate = convertInputsToNumbers(inputLikes);
+    expect(normalizedDate).toEqual([31, 7, 2024]);
+
+    expect(onChange).toHaveBeenCalledTimes(0);
+  });
+
   it('should be correct input value', () => {
     const onChange = jest.fn();
     render(
@@ -342,6 +375,21 @@ describe('DateInput', () => {
     fireEvent.click(screen.getByTestId(testIds.clearButtonTestId));
 
     expect(onChange).toHaveBeenCalledWith(undefined);
+  });
+
+  it('should not show clear button when allowClearButton=false', async () => {
+    const onChange = jest.fn();
+
+    render(
+      <DateInput
+        value={new Date(2023, 5, 30)}
+        onChange={onChange}
+        allowClearButton={false}
+        {...testIds}
+      />,
+    );
+
+    expect(screen.queryByTestId(testIds.clearButtonTestId)).toBeNull();
   });
 
   it('should toggle calendar open state on calendar icon click', async () => {
