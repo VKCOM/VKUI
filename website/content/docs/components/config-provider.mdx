@@ -1,0 +1,141 @@
+<Overview>
+
+# ConfigProvider
+
+[Обязательный компонент](/docs/overview/usage#required-wrapper), в который нужно обернуть всё приложение.
+В нём инкапсулирована логика управления темой, платформой, локализацией и другими глобальными настройками приложения.
+
+</Overview>
+
+> **Важно**
+>
+> Обратите внимание, что в вашем приложении должен быть только один `ConfigProvider`. Если вам необходимо
+> переопределить какой-то из параметров для части приложения, то это можно сделать
+> с помощью [`PlatformProvider`](#/PlatformProvider), [`ColorSchemeProvider`](#/ColorSchemeProvider),
+> [`LocaleProvider`](#/LocaleProvider) или [`DirectionProvider`](#/DirectionProvider).
+
+## Платформа
+
+Задаётся свойством `platform`. Если не указывать, то значение определяется автоматически на основе браузерной информации.
+
+- `"android"` — базовая платформа по умолчанию;
+- `"ios"` — платформа для отображения на iOS-девайсах (включая `iPad`);
+- `"vkcom"` — устаревшая платформа для отображения на сайте `vk.com`.
+
+Выбор платформы влияет на внешний вид компонентов, анимации и поведение интерфейса.
+
+> Задавайте конкретное значение `platform` только если уверены, что ваше приложение будет запускаться на одной
+> платформе или вам необходим единый визуальный стиль на любой из платформ:
+>
+> ```jsx
+> <ConfigProvider platform="ios">
+>   <App /> {/* Приложение со стилизацией под "ios" на всех платформах */}
+> </ConfigProvider>
+> ```
+
+## Цветовая схема
+
+Задаётся свойством `colorScheme`. Если не указывать, то значение определяется автоматически исходя из настроек операционной системы.
+
+- `"light"` — светлая схема;
+- `"dark"` — тёмная схема.
+
+```jsx
+<ConfigProvider colorScheme="dark">
+  <App /> {/* Приложение всегда в тёмной теме */}
+</ConfigProvider>
+```
+
+## Локализация
+
+Задаётся свойством `locale`. Если не указывать, то значение будет равно `"ru"`.
+В качестве значений принимает строку с [языковой меткой BCP 47](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+
+```jsx
+<ConfigProvider locale="en">
+  <App /> {/* Компоненты приложения будут с английской локалью */}
+</ConfigProvider>
+```
+
+> Данное свойство само по себе не отвечает за интернационализацию (`i18n`) и локализацию (`L10n`) вашего приложения.
+> Для поддержки данной функциональности вам нужно будет воспользоваться сторонними решениями.
+> VKUI лишь предоставляет возможность получить указанную локаль посредством вызова хука `useLocale`.
+>
+> Единственный компонент, на который по умолчанию влияет данной свойство, это `Calendar` (названия месяцев и дней недели).
+
+## Направление контента
+
+Задаётся свойством `direction`. По умолчанию значение определяется автоматически на основе атрибута `dir` на `body` страницы.
+
+- `"ltr"` — направление "слева-направо" (для большинства языков);
+- `"rtl"` — направление "справа-налево" (для арабского, иврита и т.д.).
+
+```jsx
+<ConfigProvider direction="rtl">
+  <App /> {/*  Приложение поддерживает только направление "справа-налево" */}
+</ConfigProvider>
+```
+
+## Токены тем
+
+Задаётся свойством `tokensClassNames`. Позволяет настроить `CSS`-классы для различных тем и платформ.
+
+```jsx
+const customTokens = {
+  light: 'custom-light-theme',
+  dark: 'custom-dark-theme',
+};
+
+<ConfigProvider tokensClassNames={customTokens}>
+  <App />
+</ConfigProvider>;
+```
+
+## Настройка PanelHeader
+
+Задаются свойствами `hasCustomPanelHeaderAfter` и `customPanelHeaderAfterMinWidth`.
+
+- `hasCustomPanelHeaderAfter` — при `true` свойство `after` у `PanelHeader` резервируется
+  под размещение пользовательского "плавающего" элемента (актуально для [VK Mini Apps](https://vk.com/miniapps), которые
+  имеют системный компонент на месте `after`);
+- `customPanelHeaderAfterMinWidth` — задаёт минимальную ширину слота `after` в `PanelHeader` (по умолчанию `90`).
+
+```jsx
+<ConfigProvider customPanelHeaderAfterMinWidth={100} hasCustomPanelHeaderAfter>
+  <MiniApp />
+</ConfigProvider>
+```
+
+## Анимации переходов
+
+Задаётся свойством `transitionMotionEnabled`.
+
+- `true` — включены анимации переходов между экранами в `Root` и `View`;
+- `false` — анимации отключены.
+
+```jsx
+<ConfigProvider transitionMotionEnabled={false}>
+  <App /> {/* Анимации переходов всех экранов отключены */}
+</ConfigProvider>
+```
+
+## WebView
+
+Задаётся свойством `isWebView`.
+Значение `true` позволяет приложению определить, что оно запущено в рамках мобильного приложения.
+
+> **Важно**
+>
+> При `isWebView={true}` и `platform="ios"` для компонента `View` включается возможность навигации через смахивание.
+
+## Хук useConfigProvider
+
+Для получения текущих настроек приложения используйте хук `useConfigProvider`:
+
+```jsx
+import { useConfigProvider } from '@vkontakte/vkui';
+```
+
+```jsx
+const { colorScheme, platform, locale, direction, ...restProps } = useConfigProvider();
+```
