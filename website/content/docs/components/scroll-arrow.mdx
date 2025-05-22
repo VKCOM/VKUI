@@ -1,0 +1,62 @@
+<Overview>
+
+# ScrollArrow
+
+Компонент стрелки для навигации в горизонтальных скроллах и галереях. Используется внутри [`HorizontalScroll`](#/HorizontalScroll) и [`Gallery`](#/Gallery).
+
+</Overview>
+## Обязательные свойства
+
+### Направление стрелки
+
+Задается свойством `direction`
+
+```jsx static
+<ScrollArrow direction="up" />
+<ScrollArrow direction="right" />
+<ScrollArrow direction="down" />
+<ScrollArrow direction="left" />
+```
+
+## Вертикальное смещение
+
+Задается свойством `offsetY`, принимает числовое и строковое значение:
+
+```jsx static
+<ScrollArrow direction="up" offsetY="-5px" label="Скролл к началу" />
+```
+
+## Кастомные иконки
+
+Кастомную иконку можно прокинуть в свойство `children` компонента
+
+```jsx static
+<ScrollArrow direction="left">
+  <Icon24ArrowLeftCustom />
+</ScrollArrow>
+```
+
+## Особенности
+
+- Автоматическая адаптация под RTL-локали
+- Поддерживает все свойства HTML-элемента `<button>`
+
+## Доступность (a11y)
+
+### Обязательные параметры
+
+- Всегда указывайте `label` для скринридеров
+- Используйте семантические названия действий:
+
+```jsx
+<ScrollArrow direction="left" label="Предыдущий слайд" />
+```
+
+### Автоматические метки
+
+Если `label` не указан, используется текст по умолчанию:
+
+- left: "Прокрутить влево"
+- right: "Прокрутить вправо"
+- up: "Прокрутить вверх"
+- down: "Прокрутить вниз"

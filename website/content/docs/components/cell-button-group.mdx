@@ -1,0 +1,95 @@
+<Overview>
+
+# CellButtonGroup
+
+Компонент для группировки [`CellButton`](#/CellButton) с разделителями. Обеспечивает визуальное объединение связанных действий в списке.
+
+Связанные компоненты:
+
+- CellButton
+
+</Overview>
+
+## Основное использование
+
+```jsx
+<CellButtonGroup>
+  <CellButton appearance="negative">Пожаловаться</CellButton>
+  <CellButtonGroup.Separator />
+  <CellButton>Отмена</CellButton>
+</CellButtonGroup>
+```
+
+## Свойства
+
+Наследует все свойства HTML-элемента `<div>`. Основные настройки:
+
+- Автоматическое растяжение кнопок на всю ширину
+- Удаление стандартных отступов между элементами
+
+## Подкомпоненты
+
+### CellButtonGroup.Separator
+
+Разделитель между кнопками. Поддерживает все свойства [`Separator`](#/Separator), кроме:
+
+- `direction` (фиксированно `horizontal`)
+- `padding` (автоматически адаптирован)
+
+```jsx
+<CellButtonGroup>
+  <CellButton>Действие 1</CellButton>
+  <CellButtonGroup.Separator />
+  <CellButton>Действие 2</CellButton>
+</CellButtonGroup>
+```
+
+## Особенности
+
+1. **Автоматическое выравнивание**
+   Все кнопки растягиваются на всю ширину контейнера
+
+2. **Гибкие разделители**
+   Можно кастомизировать через пропсы:
+
+```jsx static
+<CellButtonGroup.Separator style={{ backgroundColor: 'var(--accent)' }} />
+```
+
+3. **Сочетание с другими компонентами**
+   Внутри группы можно использовать любые вариации `CellButton`:
+
+```jsx
+<CellButtonGroup>
+  <CellButton centered>Центрированная</CellButton>
+  <CellButtonGroup.Separator />
+  <CellButton before={<Icon24Add />}>С иконкой</CellButton>
+</CellButtonGroup>
+```
+
+## Ограничения
+
+- Не поддерживает вертикальное расположение
+- Не управляет состоянием вложенных кнопок
+- Для сложных сценариев используйте [`ButtonGroup`](#/ButtonGroup)
+
+## Доступность (a11y)
+
+### Рекомендации
+
+- Группируйте логически связанные действия
+- Используйте семантические заголовки при необходимости:
+
+```jsx static
+<Group header={<Header>Действия с профилем</Header>}>
+  <CellButtonGroup>...</CellButtonGroup>
+</Group>
+```
+
+- Для скринридеров добавляйте пояснения:
+
+```jsx static
+<CellButtonGroup role="group" aria-label="Действия с заказом">
+  ...
+</CellButtonGroup>
+```
