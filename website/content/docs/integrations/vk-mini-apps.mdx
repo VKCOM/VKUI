@@ -34,7 +34,7 @@ yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
 Далее подписываемся на изменения из **VK Bridge** и передаём их в компонент `ConfigProvider` из VKUI.
 Для этого используем готовые хуки из [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
 
-```tsx filename="App.tsx"
+```jsx filename="App.tsx"
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import vkBridge, { parseURLSearchParamsForGetLaunchParams } from '@vkontakte/vk-bridge';
@@ -125,7 +125,7 @@ export const transformVKBridgeAdaptivity = ({
   первую панель и событие [`VKWebAppDisableSwipeBack`](https://dev.vk.com/bridge/VKWebAppDisableSwipeBack)
   при переходе на любую другую.
 
-```tsx {15,17}
+```jsx {15,17}
 import vkBridge from '@vkontakte/vk-bridge';
 
 const SomeViews = () => {
@@ -195,7 +195,7 @@ _Правый верхний угол_ `PanelHeader` зарезервирова�
 Виброотликом можно воспользоваться, например, при использовании компонента [`PullToRefresh`](/docs/components/pull-to-refresh)
 на `onRefresh`.
 
-```tsx {2,13}
+```jsx {2,13}
 import * as React from 'react';
 import { runTapticImpactOccurred } from '@vkontakte/vk-bridge-react';
 

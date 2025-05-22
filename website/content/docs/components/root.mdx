@@ -1,0 +1,86 @@
+<Overview>
+
+# Root
+
+Компонент-контейнер, представляющий собой навигационный слой, содержащий коллекцию `View`.
+
+</Overview>
+
+```jsx
+import { Root, View, Panel, PanelHeader, Group, CellButton } from '@vkontakte/vkui';
+
+function Example() {
+  const [activeView, setActiveView] = React.useState('messages');
+
+  return (
+    <Root activeView={activeView}>
+      <View id="messages" activePanel="messages">
+        <Panel id="messages">
+          <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Сообщения</PanelHeader>
+          <Group>
+            <CellButton onClick={() => setActiveView('profile')}>Open View 2</CellButton>
+          </Group>
+        </Panel>
+      </View>
+      <View id="profile" activePanel="profile">
+        <Panel id="profile">
+          <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Профиль</PanelHeader>
+          <Group>Информация о пользователе</Group>
+        </Panel>
+      </View>
+    </Root>
+  );
+}
+```
+
+## Уникальный идентификатор
+
+Уникальный идентификатор для `Root` можно задать либо с помощью свойства `nav`, либо `id`.
+Обязательно указывайте идентификатор, когда используете компонент внутри `Epic`.
+
+```jsx
+<Root id="profile">{/* views */}</Root>
+```
+
+> Обратите внимание, что при использовании внутри `Epic` идентификатор для `Root` должен присутствовать
+> на элементе, непосредственно переданном в `Epic`. Если вы выносите реализацию `Root` в отдельный компонент, учитывайте
+> это при разработке.
+>
+> ```jsx
+> function ExternalRoot({ id }) {
+>   // Пробрасываем id далее в Root
+>   return <Root id={id}>{/* views */}</Root>;
+> }
+>
+> <Epic activeStory="external">
+>   {/* Передаем id на прямого потомка Epic */}
+>   <ExternalRoot id="external" />
+> </Epic>;
+> ```
+
+## Управление `View`
+
+Коллекцию `View` следует передавать в свойстве `children`.
+
+Свойство `activeView` принимает уникальный идентификатор (`id`/`nav`) активного компонента `View`.
+
+## Обработчики событий
+
+### `onTransition`
+
+Свойство `onTransition` принимает обработчик, который вызывается при завершении анимации смены активной `View`.
+
+```jsx
+function transitionHandler({
+  // Произошел аыа
+  isBack: boolean;
+  // Уникальный идентификатор `View`, откуда произошел переход
+  from: string;
+  // Уникальный идентификатор `View`, куда произошел переход
+  to: string;
+}) {
+    // обработчик
+}
+
+<Root onTransition={transitionHandler}>{/* views */}</Root>;
+```
