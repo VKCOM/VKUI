@@ -11,6 +11,7 @@ on:
         options:
           - '@vkontakte/vkui'
           - '@vkontakte/vkui-floating-ui'
+          - '@vkontakte/vkui-date-fns-tz'
           - '@vkontakte/vkui-token-translator'
           - '@vkontakte/vkui-codemods'
       new_version:

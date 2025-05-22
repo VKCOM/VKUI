@@ -9,7 +9,7 @@ import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
 import { type TabsContextProps, TabsModeContext } from '../Tabs/TabsModeContext';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -35,7 +35,7 @@ export interface TabsItemProps
   extends HTMLAttributesWithRootRef<HTMLElement>,
     AnchorHTMLAttributesOnly,
     Pick<
-      TappableProps,
+      TappableOmitProps,
       | 'Component'
       | 'activeMode'
       | 'hoverMode'

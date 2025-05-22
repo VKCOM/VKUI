@@ -346,6 +346,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     getSelectInputRef,
     overscrollBehavior,
     onInputKeyDown,
+    readOnly,
     ...restProps
   } = props;
 
@@ -886,7 +887,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     );
   }, [clearButtonShown, iconProp, opened]);
 
-  const afterIcons = (icon || clearButtonShown) && (
+  const afterIcons = !readOnly && (icon || clearButtonShown) && (
     <React.Fragment>
       {clearButton}
       {icon}
@@ -996,13 +997,13 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         onFocus={onFocus}
         onBlur={onBlur}
         className={openedClassNames}
-        readOnly={!searchable}
+        readOnly={readOnly || !searchable}
         fetching={fetching}
         value={inputValue}
         onKeyUp={handleKeyUp}
-        onKeyDown={_onInputKeyDown}
+        onKeyDown={!readOnly ? _onInputKeyDown : undefined}
         onChange={onInputChange}
-        onClick={onClick}
+        onClick={!readOnly ? onClick : undefined}
         before={before}
         after={afterIcons}
         selectType={selectType}

@@ -35,6 +35,7 @@ export const RealClickable = <T,>({
   onBlur,
   onFocus,
   onKeyDown,
+  DefaultComponent,
   ...restProps
 }: ClickableProps<T>) => {
   const { focusVisible, ...focusEvents } = useFocusVisible();

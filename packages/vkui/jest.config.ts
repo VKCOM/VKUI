@@ -7,7 +7,12 @@ swcConfig.exclude = [];
 swcConfig.module.resolveFully = false;
 
 // Трансформируем esm пакеты
-const needTransformPackages = ['@vkontakte/vkjs', '@vkontakte/icons', '@vkontakte/icons-sprite'];
+const needTransformPackages = [
+  '@vkontakte/vkjs',
+  '@vkontakte/icons',
+  '@vkontakte/icons-sprite',
+  '@vkontakte/vkui-date-fns-tz',
+];
 
 const config: Config = {
   transform: {
