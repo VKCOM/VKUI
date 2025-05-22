@@ -1,6 +1,6 @@
 import { Layout } from '@/client/Layout';
 import '@vkontakte/vkui/dist/cssm/styles/themes.css';
-import { Viewport } from 'next';
+import { Metadata, Viewport } from 'next';
 import * as React from 'react';
 
 export const viewport: Viewport = {
@@ -10,13 +10,14 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
+export const metadata: Metadata = {
+  title: 'NextJS + VKUI + TS',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" suppressHydrationWarning>
-      <head>
-        <title>NextJS + VKUI + TS</title>
-      </head>
-      <body>
+    <html lang="ru" className="vkui" suppressHydrationWarning>
+      <body className="vkui__root">
         <Layout>{children}</Layout>
       </body>
     </html>
