@@ -9,6 +9,7 @@ import { Main } from './Main/Main';
 import { Overview } from './Overview/Overview';
 import { Pre } from './Pre/Pre';
 import { Steps } from './Steps/Steps';
+import { Table, Td, Th, Tr } from './Table/Table';
 import styles from './index.module.css';
 
 const DEFAULT_COMPONENTS = getNextraComponents({
@@ -41,6 +42,10 @@ const DEFAULT_COMPONENTS = getNextraComponents({
   Steps,
   details: (props) => <details className={styles.details} {...props} />,
   summary: (props) => <summary className={styles.summary} {...props} />,
+  table: Table,
+  td: Td,
+  th: Th,
+  tr: Tr,
 });
 
 export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
