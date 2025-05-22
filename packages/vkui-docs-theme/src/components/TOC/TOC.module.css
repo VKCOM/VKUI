@@ -49,6 +49,7 @@
 
 .menuItem {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding-block: var(--vkui--spacing_size_s);
   color: var(--vkui--color_text_primary);
