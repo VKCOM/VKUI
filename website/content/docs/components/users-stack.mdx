@@ -1,0 +1,74 @@
+<Overview>
+
+# UsersStack
+
+Компонент для отображения группы аватарок пользователей с возможностью добавления сопроводительного текста.
+Оптимален для визуализации участников чата, подписчиков или коллаборативной работы.
+
+</Overview>
+
+## Режимы отображения
+
+### Горизонтальный (inline)
+
+```jsx
+<UsersStack photos={userPhotos} size="l">
+  <Text>Последние участники</Text>
+</UsersStack>
+```
+
+### Вертикальный (block)
+
+```jsx
+<UsersStack photos={userPhotos} avatarsPosition="block-start" size="m">
+  <Text>Команда проекта</Text>
+</UsersStack>
+```
+
+## Кастомизация аватарок
+
+Аватарки можно оборачивать в кастомный компонент для добавления дополнительного функционала с помощью свойства `renderWrapper` у элемента списка `photos`:
+
+```jsx
+function AvatarWrapper(props) {
+  const user = getRandomUser();
+
+  return (
+    <Tooltip description={`${user.first_name} ${user.last_name}`}>
+      <div
+        style={{
+          cursor: 'pointer',
+        }}
+        onClick={() => window.open(props['data-src'], '_blank')}
+      >
+        {props.children}
+      </div>
+    </Tooltip>
+  );
+}
+
+function Example() {
+  return (
+    <UsersStack
+      photos={[
+        { src: getAvatarUrl('user_ox'), renderWrapper: AvatarWrapper },
+        { src: getAvatarUrl('user_vitalyavolyn'), renderWrapper: AvatarWrapper },
+        { src: getAvatarUrl('user_eee'), renderWrapper: AvatarWrapper },
+        { src: getAvatarUrl('user_wayshev'), renderWrapper: AvatarWrapper },
+        { src: getAvatarUrl('user_arthurstam'), renderWrapper: AvatarWrapper },
+        { src: getAvatarUrl('user_xyz'), renderWrapper: AvatarWrapper },
+      ]}
+      size="l"
+      avatarsPosition="block-start"
+    >
+      Иван и ещё 2 ваших друга подписаны
+    </UsersStack>
+  );
+}
+```
+
+## Ограничения
+
+1. Максимальное число в счётчике: 99
+2. При `size="s"` счётчик не отображается
+3. Не используйте с `avatarsPosition="block-start"` и `size="l"`
