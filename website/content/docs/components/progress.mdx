@@ -1,0 +1,36 @@
+<Overview>
+
+# Progress
+
+Компонент для визуализации прогресса выполнения задачи. Поддерживает различные стили оформления и настройку высоты.
+
+</Overview>
+## Кастомные цвета
+
+Используйте свойство `appearance` для задания произвольного цвета прогрессбара. Поддерживаются:
+
+### HEX-коды
+
+```jsx static
+<Progress appearance="#FFA500" value={45} />
+```
+
+### CSS-переменные
+
+```jsx static
+<div style={{ '--custom-progress': '#00FF00' }}>
+  <Progress appearance="var(--custom-progress)" value={80} />
+</div>
+```
+
+## Прозрачный фон
+
+Для отключения фона можно использовать свойство `trackDisable`:
+
+```jsx
+<Progress appearance="#FFA500" trackDisable value={65} />
+```
+
+## Доступность (a11y)
+
+Доступность реализована на основе рекомендаций из [Meter WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/).

@@ -1,0 +1,88 @@
+<Overview>
+
+# Image
+
+Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов. Наследует все свойства HTML-элемента `<img>`.
+
+</Overview>
+
+## Адаптивные размеры
+
+Используйте предопределённые размеры (16-96px) или кастомные значения:
+
+```jsx
+<div style={{ width: 70 }}>
+  <Image
+    keepAspectRatio
+    src={getAvatarUrl('app_shorm_online')}
+    widthSize="100%"
+    alt="Адаптивное изображение"
+  />
+</div>
+```
+
+**Особенности `keepAspectRatio`:**
+
+- Требует указания `widthSize` или `heightSize`
+- Сохраняет оригинальное соотношение сторон
+
+## Скругления
+
+Контролируйте радиус скругления углов:
+
+### Единое скругление
+
+```jsx
+<Image borderRadius="m" src={getAvatarUrl('app_shorm_online')} alt="Скруглённое" />
+```
+
+### Индивидуальные углы
+
+```jsx
+<Image
+  borderStartStartRadius="l"
+  borderEndEndRadius="l"
+  src={getAvatarUrl('app_shorm_online')}
+  alt="Кастомные скругления"
+/>
+```
+
+## Дополнительные элементы
+
+Добавляйте дополнительные элементы поверх изображения:
+
+### Бейдж
+
+Бейдж в правом нижнем углу компонента
+
+```jsx
+<Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение">
+  <Image.Badge background="stroke">
+    <Icon20GiftCircleFillRed />
+  </Image.Badge>
+</Image>
+```
+
+### Наложение
+
+Оверлей над картинкой
+
+```jsx
+<Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение">
+  <Image.Overlay theme="dark" visibility="on-hover">
+    <Icon24AddOutline />
+  </Image.Overlay>
+</Image>
+```
+
+### Позиционированный компонент
+
+Позиционированный компонент расположенный поверх изображения в произвольной позиции
+
+```jsx
+<Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение">
+  <Image.FloatElement placement="top-end" inlineIndent="l" blockIndent="l">
+    <Button mode="primary" after={<Icon16MoreHorizontal />} />
+  </Image.FloatElement>
+</Image>
+```

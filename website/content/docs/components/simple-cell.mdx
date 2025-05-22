@@ -1,0 +1,87 @@
+<Overview>
+
+# SimpleCell
+
+Упрощённый вариант ячейки для отображения базовой информации с минимальным набором элементов. Идеален для компактных интерфейсов и сценариев с ограниченным пространством.
+
+</Overview>
+
+## Базовое использование
+
+```jsx
+<SimpleCell
+  before={<Avatar size={28} src={userAvatar} />}
+  after={<Icon24Chevron />}
+  subtitle="Должность"
+>
+  Иван Иванов
+</SimpleCell>
+```
+
+## Дополнительные элементы
+
+### Бейджи и индикаторы
+
+**Рекомендуемые размеры элементов:**
+
+- `before`: 28px (иконки) / 28-72px (аватар)
+- `badgeBeforeTitle`/`badgeAfterTitle`/`badgeBeforeSubtitle`/`badgeAfterSubtitle`: 12px (иконки/бейджи)
+- `after`: 24-28px (иконки) или `<Switch />`
+
+```jsx
+<SimpleCell
+  badgeBeforeTitle={<Icon12Online />}
+  badgeAfterTitle={<Badge mode="prominent">New</Badge>}
+  indicator="15:30"
+  subtitle={
+    <>
+      <Icon12Message />
+      Последнее сообщение
+    </>
+  }
+>
+  Чат с поддержкой
+</SimpleCell>
+```
+
+### Многострочный текст
+
+Для того, чтобы длинный текст мог отображаться в несколько строк можно использовать свойство `multiline`. По умолчанию текст будет обрезаться многоточием
+
+```jsx
+<SimpleCell
+  overTitle="Переговорная"
+  subtitle="3 этаж"
+  extraSubtitle="Вместимость: 10 человек"
+  multiline
+>
+  Конференц-зал «Солнечный»
+</SimpleCell>
+```
+
+## Визуальные настройки
+
+### Шеврон
+
+Для управления видимостью иконки шеврона `›` можно использовать свойство `chevron`. Для управления размерами иконки - свойством `chevronSize`
+
+```jsx
+<Group>
+  // Автоматическое отображение только на iOS
+  <SimpleCell chevron="auto" />
+  // Принудительное отображение
+  <SimpleCell chevron="always" chevronSize="m" />
+</Group>
+```
+
+## Состояния
+
+### Блокировка
+
+Задается свойством `disabled`
+
+```jsx
+<SimpleCell disabled subtitle="Недоступно для редактирования">
+  Заблокированный элемент
+</SimpleCell>
+```
