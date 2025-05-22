@@ -1,0 +1,37 @@
+<Overview>
+
+# Separator
+
+Компонент для визуального разделения контента. Поддерживает горизонтальное и вертикальное расположение, различные стили оформления и настройку отступов.
+
+</Overview>
+
+## Основное использование
+
+### Горизонтальный разделитель
+
+```jsx static
+<Group header={<Header size="s">direction="horizontal"</Header>}>
+  <Cell before={<Icon28Notifications />}>Уведомления</Cell>
+  <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
+
+  <Separator size="4xl" />
+
+  <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
+  <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
+</Group>
+```
+
+### Вертикальный разделитель
+
+Для использования вертикального разделителя необходимо обязательно обернуть в flex-контейнер
+
+```jsx static
+<Flex margin="auto">
+  <Link>Новости</Link>
+  <Separator direction="vertical" size="xl" />
+  <Link>Звонки</Link>
+  <Separator direction="vertical" size="xl" />
+  <Link>Друзья</Link>
+</Flex>
+```

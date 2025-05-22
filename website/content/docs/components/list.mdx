@@ -1,0 +1,69 @@
+<Overview>
+
+# List
+
+Специализированный контейнер для работы с компонентами [`Cell`](#!/Cell). Обеспечивает правильное отображение и взаимодействие элементов, особенно при использовании свойства `draggable`.
+
+</Overview>
+
+### Использованиеdraggable-элементов
+
+Обязателен для корректной работы перетаскивания:
+
+```jsx
+const Example = () => {
+  const [draggingList, updateDraggingList] = React.useState([
+    'Say',
+    'Hello',
+    'To',
+    'My',
+    'Little',
+    'Friend',
+  ]);
+
+  const onDragFinish = ({ from, to }) => {
+    const _list = [...draggingList];
+    _list.splice(from, 1);
+    _list.splice(to, 0, draggingList[from]);
+    updateDraggingList(_list);
+  };
+
+  return (
+    <List gap={10}>
+      {draggingList.map((item) => (
+        <Cell key={item} before={<Avatar />} draggable onDragFinish={onDragFinish}>
+          {item}
+        </Cell>
+      ))}
+    </List>
+  );
+};
+
+<Example />;
+```
+
+## Использование обычных Cell
+
+Может использоваться как семантический контейнер:
+
+```jsx
+<List>
+  <Cell before={<Icon28User />}>Профиль</Cell>
+  <Cell before={<Icon28Settings />}>Настройки</Cell>
+</List>
+```
+
+## Отступы между элементами
+
+Контролируется свойством `gap`:
+
+```jsx
+<List gap={16}>
+  <Cell before={<Icon28User />}>Профиль</Cell>
+  <Cell before={<Icon28Settings />}>Настройки</Cell>
+</List>
+```
+
+## Доступность (a11y)
+
+- Автоматически добавляет `role="list"`

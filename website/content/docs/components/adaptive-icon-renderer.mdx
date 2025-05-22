@@ -1,0 +1,29 @@
+<Overview>
+# AdaptiveIconRenderer
+
+Компонент для автоматического выбора иконок в зависимости от размера интерфейса. Позволяет легко переключаться между regular/compact-режимами без ручной проверки условий.
+
+</Overview>
+## Основное использование
+
+```jsx
+<Div>
+  <AdaptivityProvider sizeY="regular">
+    <Text>Icon size 28</Text>
+    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+  </AdaptivityProvider>
+  <AdaptivityProvider sizeY="compact">
+    <Text>Icon size 24</Text>
+    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+  </AdaptivityProvider>
+</Div>
+```
+
+## Передача свойств в иконки
+
+```jsx
+const StyledIcon24 = (props) => <Icon24SmileOutline {...props} className="my-class-24" />;
+const StyledIcon28 = (props) => <Icon28SmileOutline {...props} className="my-class-28" />;
+
+<AdaptiveIconRenderer IconCompact={StyledIcon24} IconRegular={StyledIcon28} />;
+```

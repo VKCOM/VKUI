@@ -1,0 +1,73 @@
+<Overview>
+
+# PullToRefetch
+
+Компонент для обновления контента жестом "потянуть вниз". Работает на сенсорных устройствах и поддерживает управление состоянием загрузки.
+
+</Overview>
+
+## Пример использования
+
+```jsx
+const initUsers = getRandomUsers(10);
+
+const Example = () => {
+  const [users, setUsers] = React.useState(initUsers);
+  const [fetching, setFetching] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setFetching(true);
+
+    setTimeout(
+      () => {
+        setFetching(false);
+        setUsers((prevUsers) => [getRandomUser(), ...prevUsers]);
+      },
+      getRandomInt(600, 2000),
+    );
+  }, []);
+
+  return (
+    <View activePanel="users">
+      <Panel id="users">
+        <PanelHeader>Пользователи</PanelHeader>
+
+        <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
+          <Group>
+            <List>
+              {users.map(({ id, name, photo_100 }, i) => {
+                return (
+                  <Cell key={i} before={<Avatar src={photo_100} />}>
+                    {name}
+                  </Cell>
+                );
+              })}
+            </List>
+          </Group>
+        </PullToRefresh>
+      </Panel>
+    </View>
+  );
+};
+
+<Example />;
+```
+
+## Обязательные свойства
+
+### Обработчик `onRefresh`
+
+Функция обновления данных (прим.: функция должна быть мемоизированным обработчиком)
+
+## Особенности работы
+
+1. **Жест обновления**
+   Активируется при вертикальном скролле вниз, когда контент уже в начале
+
+2. **Управление состоянием**
+
+- Установите `isFetching={true}` при начале загрузки
+- Сбросьте в `false` после завершения
+
+3. **Визуальная обратная связь**
+   Автоматически показывает спиннер при активации жеста

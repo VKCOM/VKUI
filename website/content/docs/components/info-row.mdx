@@ -1,0 +1,55 @@
+<Overview>
+
+# InfoRow
+
+Компонент для отображения статичной информации в виде пар «заголовок-значение». Рекомендуется исппользовать внутри [`SimpleCell`](#!/SimpleCell) и других ячеечных компонентов.
+
+Связанные компоненты:
+
+- SimpleCell
+
+</Overview>
+
+## Группы элементов
+
+Рекомендуется оборачивать связанные InfoRow в [`Group`](#!/Group) с заголовком:
+
+```jsx
+<Group header={<Header mode="secondary">Профиль</Header>}>
+  <SimpleCell>
+    <InfoRow header="Должность">Frontend-разработчик</InfoRow>
+  </SimpleCell>
+  <SimpleCell>
+    <InfoRow header="Стаж">5 лет</InfoRow>
+  </SimpleCell>
+</Group>
+```
+
+## Многострочный контент
+
+```jsx
+<SimpleCell multiline>
+  <InfoRow header="Описание">
+    Разработка интерфейсов для экосистемы VK с использованием React и TypeScript
+  </InfoRow>
+</SimpleCell>
+```
+
+## Когда использовать
+
+1. Отображение статических данных
+2. Карточки профилей
+3. Детализация записей
+4. Списки характеристик
+
+```jsx
+// ❌ Неправильно (интерактивный элемент)
+<InfoRow header="Настройки">
+<Switch checked={value} />
+</InfoRow>
+
+// ✅ Правильно (только статичный контент)
+<InfoRow header="Статус">
+<Text>Активен</Text>
+</InfoRow>
+```
