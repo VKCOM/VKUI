@@ -1,0 +1,64 @@
+<Overview>
+# Search
+
+Компонент для реализации поисковых интерфейсов. Наследует все свойства нативного `<input type="search">` с расширенными возможностями кастомизации.
+
+</Overview>
+
+## Контролируемое состояние
+
+Используйте `value` и `onChange` для ручного управления состоянием.
+
+```jsx
+function Example() {
+  const [value, setValue] = React.useState('');
+
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  return (
+    <Search
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
+
+<Example/>
+```
+
+## Пользовательская иконка поиска
+
+Вы можете использовать любую иконку для кнопки поиска, просто прокинув ее в свойство `icon`. Также, в более сложных кейсах, можно использовать функцию в свойстве `icon`.
+В качестве параметра эта функция принимает другую функцию отрисовки иконки(тип ее можно посмотреть импортировав `RenderIconButtonFn`);
+
+```jsx
+<Search
+  defaultValue="value"
+  icon={(renderButton) => (
+    <Popover
+      content={({ onClose }) => (
+        <div style={popoverStyle}>
+          <CellButton before={<Icon28TagOutline />} onClick={onClose}>
+            По тегам
+          </CellButton>
+          <CellButton before={<Icon28CalendarOutline />} onClick={onClose}>
+            По дате
+          </CellButton>
+        </div>
+      )}
+    >
+      {renderButton(<Icon24Filter />)}
+    </Popover>
+  )}
+/>
+```
+
+## iOS-специфика
+
+Свойство `after` позволяет поменять текст кнопки сброса:
+
+```jsx
+<Search after="Сброс" icon={<Icon28SearchAppleOutline />} noPadding />
+```
