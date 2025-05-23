@@ -2467,6 +2467,7 @@ __metadata:
   resolution: "@project-docs/website@workspace:website"
   dependencies:
     "@next/bundle-analyzer": "npm:15.3.2"
+    "@shikijs/transformers": "npm:^3.2.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
     next: "npm:^15.3.2"
@@ -2930,6 +2931,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@shikijs/core@npm:3.4.1":
+  version: 3.4.1
+  resolution: "@shikijs/core@npm:3.4.1"
+  dependencies:
+    "@shikijs/types": "npm:3.4.1"
+    "@shikijs/vscode-textmate": "npm:^10.0.2"
+    "@types/hast": "npm:^3.0.4"
+    hast-util-to-html: "npm:^9.0.5"
+  checksum: 10/f08d3f4580588473df147c96eca71ee9c97ecd8b21dece46826147a73c229c78933844cfa4df33e32dbb3fba7a73bfd8cf721b98eb91aee6f786fe7198cf6b60
+  languageName: node
+  linkType: hard
+
 "@shikijs/engine-javascript@npm:2.3.2":
   version: 2.3.2
   resolution: "@shikijs/engine-javascript@npm:2.3.2"
@@ -2969,6 +2982,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@shikijs/transformers@npm:^3.2.2":
+  version: 3.4.1
+  resolution: "@shikijs/transformers@npm:3.4.1"
+  dependencies:
+    "@shikijs/core": "npm:3.4.1"
+    "@shikijs/types": "npm:3.4.1"
+  checksum: 10/87cffe931b5d4623fb6baa1b2aa3dea052a6e0afe6fbf88b6ab4acad2ec2919fd7cfd616795f7354d25d512e77173034882a0bbcfb33901a8c2a72887a5032af
+  languageName: node
+  linkType: hard
+
 "@shikijs/twoslash@npm:^2.0.0":
   version: 2.3.2
   resolution: "@shikijs/twoslash@npm:2.3.2"
@@ -2990,10 +3013,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@shikijs/types@npm:3.4.1":
+  version: 3.4.1
+  resolution: "@shikijs/types@npm:3.4.1"
+  dependencies:
+    "@shikijs/vscode-textmate": "npm:^10.0.2"
+    "@types/hast": "npm:^3.0.4"
+  checksum: 10/22f86b1e5e0a2ffc76b91af436c86d3f97ccf8e08cc03adbd04544a4374708cfe2f23901e5951059794d8bab0d0043c803d493167811ea0548490aa63583e941
+  languageName: node
+  linkType: hard
+
 "@shikijs/vscode-textmate@npm:^10.0.1":
   version: 10.0.1
   resolution: "@shikijs/vscode-textmate@npm:10.0.1"
   checksum: 10/8bb005efbf472a9cac19bb5fb0bb1a2b612e128122e5a9d7b2bb2af674c29912db0e59c547ec458e5333f8f7ac7a8f054a24cb653f11dc20951e299933b416e4
+  languageName: node
+  linkType: hard
+
+"@shikijs/vscode-textmate@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "@shikijs/vscode-textmate@npm:10.0.2"
+  checksum: 10/d924cba8a01cd9ca12f56ba097d628fdb81455abb85884c8d8a5ae85b628a37dd5907e7691019b97107bd6608c866adf91ba04a1c3bba391281c88e386c044ea
   languageName: node
   linkType: hard
 
@@ -11512,9 +11552,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hast-util-to-html@npm:^9.0.4":
-  version: 9.0.4
-  resolution: "hast-util-to-html@npm:9.0.4"
+"hast-util-to-html@npm:^9.0.4, hast-util-to-html@npm:^9.0.5":
+  version: 9.0.5
+  resolution: "hast-util-to-html@npm:9.0.5"
   dependencies:
     "@types/hast": "npm:^3.0.0"
     "@types/unist": "npm:^3.0.0"
@@ -11523,11 +11563,11 @@ __metadata:
     hast-util-whitespace: "npm:^3.0.0"
     html-void-elements: "npm:^3.0.0"
     mdast-util-to-hast: "npm:^13.0.0"
-    property-information: "npm:^6.0.0"
+    property-information: "npm:^7.0.0"
     space-separated-tokens: "npm:^2.0.0"
     stringify-entities: "npm:^4.0.0"
     zwitch: "npm:^2.0.4"
-  checksum: 10/a0b4ed9058e57fa2ca010d10c077fda78d2ab2af99f5bd09fe4b9948970025ac4a2a1a03ec7e2e0f3b0444066b1b35d602fa3e9fbd9b7fc9cdd35d0cafa909ca
+  checksum: 10/4278e5246f43adf7a30bf3b87db4a4e628b5362b8c149eb4360bf7e0f731f81fa31e4e844e8090d1dd5f739d0884678f8165b28f97c14139e4da4f945f9ff5f7
   languageName: node
   linkType: hard
 
@@ -17312,6 +17352,13 @@ __metadata:
   version: 6.5.0
   resolution: "property-information@npm:6.5.0"
   checksum: 10/fced94f3a09bf651ad1824d1bdc8980428e3e480e6d01e98df6babe2cc9d45a1c52eee9a7736d2006958f9b394eb5964dedd37e23038086ddc143fc2fd5e426c
+  languageName: node
+  linkType: hard
+
+"property-information@npm:^7.0.0":
+  version: 7.1.0
+  resolution: "property-information@npm:7.1.0"
+  checksum: 10/896d38a52ad7170de73f832d277c69e76a9605d941ebb3f0d6e56271414a7fdf95ff6d2819e68036b8a0c7d2d4d88bf1d4a5765c032cb19c2343567ee3a14b15
   languageName: node
   linkType: hard
 

@@ -2,7 +2,7 @@ import { SvgIcon, type SvgIconProps } from './SvgIcon';
 
 export function LogoIcon(props: SvgIconProps) {
   return (
-    <SvgIcon width="65" height="36" fill="none" {...props}>
+    <SvgIcon width="73" height="36" fill="none" {...props}>
       <g>
         <path
           fill="#07F"
@@ -10,13 +10,13 @@ export function LogoIcon(props: SvgIconProps) {
         />
         <path
           fill="#fff"
-          d="M19.2 26c-8.3 0-13-5.7-13.1-15h4c.2 6.8 3.2 9.7 5.6 10.3V11h4v6c2.3-.3 4.8-3 5.6-6h3.9c-.7 3.7-3.4 6.4-5.3 7.5 2 1 5 3.3 6.2 7.5h-4.3c-.9-2.8-3.2-5-6.2-5.3v5.3h-.4Z"
+          d="M19 26C11 26 6.3 20.4 6 11h4.1c.1 6.9 3.2 9.8 5.6 10.4V11h3.8v6c2.4-.3 4.9-3 5.7-6h4c-.7 3.7-3.4 6.4-5.4 7.5 2 .9 5 3.2 6.2 7.5h-4.2c-1-2.9-3.2-5-6.3-5.4V26h-.4Z"
+        />
+        <path
+          fill="currentColor"
+          d="M55.3 29c-1.8 0-3.4-.4-4.8-1.1A8.5 8.5 0 0 1 46 20V7h4v13.1c0 1.7.4 3 1.4 4 1 1 2.3 1.5 3.9 1.5s3-.5 4-1.5 1.4-2.3 1.4-4V7h4v13.1c0 1.7-.5 3.3-1.3 4.6a8.2 8.2 0 0 1-3.3 3.2c-1.4.7-3 1.1-4.8 1.1ZM73 28.7h-4V7h4v21.7Z"
         />
       </g>
-      <path
-        fill="currentColor"
-        d="M53.9 25c-1.2 0-2.2-.2-3-.7a5.4 5.4 0 0 1-2.9-5V11h2.5v8.4c0 1 .3 1.8.9 2.5.6.6 1.4 1 2.5 1 1 0 1.8-.4 2.4-1 .7-.7 1-1.5 1-2.5V11h2.4v8.4c0 1-.2 2-.7 2.9-.5.8-1.2 1.5-2.1 2-.9.5-2 .7-3 .7ZM65 24.8h-2.5V11H65v13.8Z"
-      />
     </SvgIcon>
   );
 }

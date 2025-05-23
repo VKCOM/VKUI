@@ -23,14 +23,14 @@ export function Anchor({ href = '', children, ...props }: LinkProps) {
   if (newWindow) {
     return (
       <Link href={href} target="_blank" rel="noreferrer" {...props}>
-        {children}
+        {children}&nbsp;↗
       </Link>
     );
   }
 
   return (
-    <NextLink href={href} {...props} passHref legacyBehavior>
-      <Link>{children}</Link>
-    </NextLink>
+    <Link href={href} Component={NextLink}>
+      {children}
+    </Link>
   );
 }

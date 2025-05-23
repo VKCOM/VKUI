@@ -32,12 +32,12 @@ export function Pre({
           {copy === '' && <CopyButton getValue={getValue} />}
         </Flex>
       )}
-      <pre className={classNames(styles.pre, className)} ref={preRef} {...props}>
-        {children}
-      </pre>
-      {copy === '' && !filename && (
-        <CopyButton getValue={getValue} className={styles.buttonsAbsolute} />
-      )}
+      <Flex justify="space-between">
+        <pre className={classNames(styles.pre, className)} ref={preRef} {...props}>
+          {children}
+        </pre>
+        {copy === '' && !filename && <CopyButton getValue={getValue} />}
+      </Flex>
     </div>
   );
 }

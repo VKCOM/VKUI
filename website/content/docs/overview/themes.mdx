@@ -1,0 +1,115 @@
+<Overview>
+# Темы
+
+`VKUI` поддерживает три темы - `vkBase` (по умолчанию), `vkIOS` (на платформе `ios`) и `vkCom` (на платформе `vkcom`)
+в двух цветовых режимах (светлом и тёмном).
+Это позволяет компонентам визуально мимикрировать под соответствующую платформу и выглядеть неотличимо от нативных приложений.
+
+</Overview>
+
+Тема в библиотеке представляет из себя набор [дизайн-токенов](https://foundation.mozilla.org/en/docs/design/websites/design-tokens/)
+в виде [CSS-переменных](https://developer.mozilla.org/en-US/docs/Web/CSS/--*).
+Вот как это может выглядеть:
+
+```css
+.SomeComponent {
+  color: var(--vkui--color_text_primary);
+  background: var(--vkui--color_background_content);
+}
+```
+
+По умолчанию тема определяется автоматически в зависимости от используемого устройства, но вы можете
+задать поддержку только одной через свойство `platform` у [`ConfigProvider`](/docs/components/config-provider):
+
+```jsx
+import { ConfigProvider, AdaptivityProvider, AppRoot, SimpleCell } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+
+<ConfigProvider platform="ios">
+  <AdaptivityProvider>
+    <AppRoot>
+      <SimpleCell>Темным-темно</SimpleCell>
+    </AppRoot>
+  </AdaptivityProvider>
+</ConfigProvider>;
+```
+
+Стили библиотеки, которые подключаются через `import '@vkontakte/vkui/dist/vkui.css'`,
+содержат 3 темы, которые автоматически меняются в зависимости от платформы и режима:
+
+- `android` (используется по умолчанию)
+  - `light` – тема `vkBase` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css))
+  - `dark` – тема `vkBaseDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css))
+- `ios`
+  - `light` – тема `vkIOS` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css))
+  - `dark` – тема `vkIOSDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css))
+- `vkcom`
+  - `light` – тема `vkCom` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css))
+  - `dark` – тема `vkComDark` ([ссылка на CSS файл](https://unpkg.com/@vkontakte/vkui-tokens@4/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css))
+
+## Режимы [#modes]
+
+Каждая тема обычно поддерживает как <i>светлый (англ. `light`)</i>, так и <i>тёмный (англ. `dark`)</i> режим.
+За его определение отвечает свойство `colorScheme`, и также как `platform`, по умолчанию, определяется
+автоматически за счёт CSS медиа выражения [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
+
+Ручное определение будет выглядеть так:
+
+```jsx {4}
+import { ConfigProvider, AdaptivityProvider, AppRoot, SimpleCell } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+
+<ConfigProvider colorScheme="dark">
+  <AdaptivityProvider>
+    <AppRoot>
+      <SimpleCell>Темным-темно</SimpleCell>
+    </AppRoot>
+  </AdaptivityProvider>
+</ConfigProvider>;
+```
+
+Если вы хотите переопределить режим для отдельных компонентов приложения, воспользуйтесь
+[`ColorSchemeProvider`](/docs/components/color-scheme-provider). Убедитесь, что потомок `ColorSchemeProvider`
+принимает свойство `className`, иначе переопределить тему не получится.
+
+```jsx
+<ColorSchemeProvider value="dark">
+  <Snackbar action="Поделиться">Поделиться</Snackbar>
+</ColorSchemeProvider>
+```
+
+Чтобы получить значение текущего режима, используйте хук `useColorScheme`.
+Это может пригодиться для замены изображений на инвертированную версию в темных темах. Пример:
+
+```jsx
+const colorScheme = useColorScheme();
+<Div>{colorScheme === 'light' ? 'Out of the blue' : 'And into the black'}</Div>;
+```
+
+> Стоит иметь ввиду, что некоторые компоненты делегируют цвет фона родителю выше.
+> Например, это компонент [Cell](#/Cell) и его производные.
+>
+> На примере [SimpleCell](#/SimpleCell) рассмотрим решение проблемы через допустимое определение
+> фона посредством `className` или `style`:
+>
+> ```jsx
+> <Group header={<Header>Настройка тем</Header>}>
+>   <SimpleCell before={<Icon20PalleteOutline />}>Системная тема</SimpleCell>
+>   <ColorSchemeProvider value="dark">
+>     <SimpleCell
+>       before={<Icon20MoonOutline />}
+>       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+>     >
+>       Тёмная тема
+>     </SimpleCell>
+>   </ColorSchemeProvider>
+>   <ColorSchemeProvider value="light">
+>     <SimpleCell
+>       before={<Icon20SunOutline />}
+>       style={{ backgroundColor: 'var(--vkui--color_background_content)' }}
+>     >
+>       Светлая тема
+>     </SimpleCell>
+>   </ColorSchemeProvider>
+> </Group>
+> ```

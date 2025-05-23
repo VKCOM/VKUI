@@ -1,7 +1,11 @@
 .root {
   display: flex;
   margin-inline: auto;
-  color: var(--vkui--color_text_subhead);
+  font-family: var(--vkui--font_family_base);
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  font-weight: var(--vkui--font_weight_base3);
+  line-height: 24px;
+  color: var(--vkui_docs--color_text_primary);
   background-color: var(--vkui--color_background_content);
 }
 

@@ -23,7 +23,6 @@ export function ContentWrapper({ children }: React.PropsWithChildren) {
     >
       {themeContext.sidebar && <Sidebar />}
       {metadata?.type === 'post' && <PostHeader frontMatter={metadata} />}
-      {/* TODO [docs] (@BlackySoul): добавить компонент <TOC /> */}
       {/* TODO [docs] (@BlackySoul): <SkipNavContent /> */}
       {children}
       {metadata?.type === 'posts' && <PostsLayout />}

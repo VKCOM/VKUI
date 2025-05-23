@@ -6,3 +6,5 @@ export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { NavLinks } from './NavLinks/NavLinks';
 export { Navbar } from './Navbar/Navbar';
 export { ColorSchemeSwitch } from './ColorSchemeSwitch';
+export { TOC } from './TOC';
+export { Footer } from './Footer/Footer';

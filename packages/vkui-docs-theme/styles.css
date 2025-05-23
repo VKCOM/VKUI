@@ -14,7 +14,7 @@
 
 /* Docs styles */
 @import './styles/constants.css';
-@import './styles//colors.css';
+@import './styles/colors.css';
 
 /* Global styles */
 @import './styles/global.css';

@@ -3,12 +3,9 @@
   padding-block: var(--vkui--spacing_size_xl);
   padding-inline: var(--vkui--spacing_size_xl);
   margin: 0;
-  background: var(--vkui--color_background_warning);
-  border-radius: 8px;
-}
-
-.icon {
-  color: #edb055;
+  background-color: var(--vkui--color_background_tertiary_alpha);
+  border-inline-start: 4px solid var(--vkui--color_accent_orange);
+  border-radius: 6px;
 }
 
 .content {

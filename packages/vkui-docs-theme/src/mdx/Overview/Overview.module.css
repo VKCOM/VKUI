@@ -6,7 +6,7 @@
   margin-block-end: 32px;
   overflow: hidden;
   color: var(--vkui--color_text_primary);
-  background-color: var(--vkui--color_background_tertiary);
+  background-color: var(--vkui--color_background_tertiary_alpha);
   background-image: url('./background.png');
   border: 1px solid var(--vkui--color_separator_primary);
   border-radius: 16px;

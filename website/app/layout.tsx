@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Head, Layout, LogoIcon, Navbar } from '@vkontakte/vkui-docs-theme';
+import { Footer, Head, Layout, LogoIcon, Navbar } from '@vkontakte/vkui-docs-theme';
 import type { Metadata } from 'next';
 import { getPageMap } from 'nextra/page-map';
-import { ExtraButtons, Versions } from './_components';
+import { FooterLinks, Versions } from './_components';
 import '@vkontakte/vkui-docs-theme/styles.css';
 
 export const metadata: Metadata = {
@@ -12,11 +12,15 @@ export const metadata: Metadata = {
   },
 };
 
-const extraButtons = <ExtraButtons />;
-
 const versions = <Versions />;
 
 const navbar = <Navbar logo={<LogoIcon />} />;
+
+const footer = (
+  <Footer>
+    <FooterLinks />
+  </Footer>
+);
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
   const pageMap = await getPageMap();
@@ -24,7 +28,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children })
     <html lang="ru" dir="ltr" suppressHydrationWarning>
       <Head />
       <body>
-        <Layout pageMap={pageMap} navbar={navbar} extraButtons={extraButtons} versions={versions}>
+        <Layout pageMap={pageMap} navbar={navbar} versions={versions} footer={footer}>
           {children}
         </Layout>
       </body>

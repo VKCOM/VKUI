@@ -2,7 +2,7 @@
   position: fixed;
   inset-block-start: 0;
   inset-block-end: 0;
-  inset-inline-end: 0;
+  inset-inline-start: 0;
   /* TODO: move to the common file with all the sizes? */
   z-index: 30;
   display: flex;
@@ -63,18 +63,13 @@
 
 .inner {
   flex-grow: 1;
-  padding-block: var(--vkui--spacing_size_2xl);
-  padding-inline: var(--vkui--spacing_size_2xl);
+  padding-block-start: 0;
+  padding-block-end: var(--vkui--spacing_size_2xl);
+  padding-inline: var(--vkui--spacing_size_l);
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
-}
-
-@media (--viewWidth-smallTabletMinus) {
-  .inner {
-    padding-block-start: 4px;
-  }
 }
 
 /*
@@ -83,7 +78,7 @@
 
 @keyframes animation-sidebar-translate-in {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
 
   to {
@@ -96,7 +91,7 @@
   }
 
   to {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
 }
 @keyframes animation-sidebar-fade-in {
@@ -123,7 +118,7 @@
   inset-block-end: 0;
   display: flex;
   padding-block: var(--vkui--spacing_size_2xl);
-  padding-inline: var(--vkui--spacing_size_2xl);
+  padding-inline: var(--vkui--spacing_size_l);
 }
 
 /* stylelint-disable-next-line selector-max-universal */
@@ -133,9 +128,4 @@
 
 .extra > :first-child {
   flex: 1 1 auto;
-}
-
-.search {
-  padding-block-start: var(--vkui--spacing_size_2xl);
-  padding-inline: var(--vkui--spacing_size_2xl);
 }

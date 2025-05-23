@@ -1,0 +1,334 @@
+<Overview>
+# Серверный рендеринг
+
+По умолчанию VKUI-компоненты рендерятся одинаково что на клиенте, что на сервере. Но, как
+говорится, есть нюанс и не один. Если вы хотите настроить в своём проекте SSR, то вы попали
+на нужную страницу – здесь мы рассмотрим все нюансы.
+
+</Overview>
+
+## Что нужно сделать?
+
+Прежде чем перейдём к примерам, разберёмся какие задачи перед нами стоят.
+
+<Steps>
+
+### Подготовка HTML-страницы [#step1]
+
+Шаг необязательный, но важный для минимизирования `reflow` страницы после гидратации. Нужно добавить следующие VKUI-классы в
+базовый HTML-шаблон:
+
+- `class="vkui"` на `<html>`;
+- `class="vkui__root"` на точку монтирования (например, `<div id="root">` или `<body>` в случае Next.js).
+
+### Определение платформы и направления текста на сервере [#step2]
+
+Скорей всего вы уже успели ознакомиться с тем, что VKUI умеет мимикрировать под платформы `android` и `iOS`. На клиенте, если
+в `ConfigProvider` платформа не зашита в свойстве `platform`, то она автоматически определиться опираясь на `navigator.userAgent`.
+Это первый момент. Второй момент, направление текста `ltr`/`rtl`. Опять же, если в `ConfigProvider` в свойстве `direction` не зашито
+направление, то оно автоматически определиться через браузерное API.
+
+Если на клиенте платформу и направление текста можно вычислить по щелчку пальцев, то на сервере придётся немного исхитриться.
+Например, для определения платформы можно опираться на HTTP-заголовок `User-Agent`, а для определения направления языка
+на `Accept-Language`.
+
+</Steps>
+
+## Примеры
+
+Рассмотрим примеры для инструментов Next.js и Express. Также для простоты примеров будем ориентироваться на то, что мы пошли
+по пути базовой установки библиотеки (см. [Установка](/docs/overview/install)).
+
+<Callout>
+
+Определение платформы и направления текста в примерах носит исключительно ознакомительный характер, конечное решение, конечно же,
+за вами.
+
+</Callout>
+
+### Next.js
+
+Используем стартовую структуру из документации Next.js (на момент написания примера последняя версия – `15.3.2`).
+
+```
+/app
+  └─ layout.tsx
+  └─ page.tsx
+/client
+  └─ Layout.tsx
+  └─ Page.tsx
+```
+
+Представим наполнение каждого файла.
+
+```tsx filename="app/layout.tsx" {19-21,23-26,29-31}
+import { Viewport } from 'next';
+import { Layout } from '../client/Layout';
+import { detectIOS } from '@vkontakte/vkjs';
+import { headers } from 'next/headers';
+import '@vkontakte/vkui/dist/vkui.css';
+
+export const metadata = { title: 'SSR-ready!' };
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+};
+
+export default async function Root({ children }: React.PropsWithChildren) {
+  const headersList = await headers();
+
+  // Определяем платформу
+  const userAgent = headersList.get('user-agent') || '';
+  const platform = detectIOS(userAgent).isIOS ? 'ios' : 'android';
+
+  // Определяем направление текста
+  const acceptLanguage = headersList.get('accept-language') || 'en-US';
+  const lang = acceptLanguage.split('-')[0];
+  const direction = ['ar', 'he', 'fa', 'ur'].includes(lang) ? 'rtl' : 'ltr';
+
+  return (
+    <html lang={lang} dir={direction} className="vkui">
+      <body className="vkui__root">
+        <Layout platform={platform} direction={direction}>
+          {children}
+        </Layout>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/page.tsx"
+import { Page } from '../client/Page';
+
+export default Page;
+```
+
+Применяем переданные из `app/layout.tsx` свойства `platform` и `direction`, типы берём из `ConfigProviderProps`.
+
+```tsx filename="client/Layout.tsx" {4,10,14}
+'use client';
+
+import {
+  type ConfigProviderProps,
+  ConfigProvider,
+  AdaptivityProvider,
+  AppRoot,
+} from '@vkontakte/vkui';
+
+type LayoutProps = Pick<ConfigProviderProps, 'platform' | 'direction'> & React.PropsWithChildren;
+
+export function Layout({ platform, direction, children }: LayoutProps) {
+  return (
+    <ConfigProvider platform={platform} direction={direction}>
+      <AdaptivityProvider>
+        <AppRoot>{children}</AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
+  );
+}
+```
+
+```tsx filename="client/Pages.tsx"
+'use client';
+
+import { SelectionControl, Switch, Flex } from '@vkontakte/vkui';
+
+export function Page() {
+  return (
+    <div style={{ width: 320, padding: 24, margin: 'auto' }}>
+      <SelectionControl>
+        <SelectionControl.Label>Ознакомлен</SelectionControl.Label>
+        <Switch />
+      </SelectionControl>
+    </div>
+  );
+}
+```
+
+### Express
+
+Будем использовать шаблон https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-react. Перепишем следующие файлы из
+него.
+
+```
+/
+  └─ index.html
+  └─ server.tsx
+/src
+  └─ App.jsx
+  └─ entry-client.jsx
+  └─ entry-server.jsx
+```
+
+```html filename="index.html" {2,10,14}"
+<!doctype html>
+<html {{ lang }} {{ dir }} class="vkui">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+    />
+    <title>SSR-ready!</title>
+    <link rel="stylesheet" href="./node_modules/@vkontakte/vkui/dist/vkui.css" />
+    <!--app-head-->
+  </head>
+  <body>
+    <div id="root" class="vkui__root"><!--app-html--></div>
+    <script type="module" src="/src/entry-client.jsx"></script>
+  </body>
+</html>
+```
+
+```jsx filename=server.js {31-33,35-38,56-57}
+import fs from 'node:fs/promises';
+import express from 'express';
+import { detectIOS } from '@vkontakte/vkjs';
+
+const isProduction = process.env.NODE_ENV === 'production';
+const port = process.env.PORT || 5173;
+const base = process.env.BASE || '/';
+
+const templateHtml = isProduction ? await fs.readFile('./dist/client/index.html', 'utf-8') : '';
+
+const app = express();
+
+let vite;
+if (!isProduction) {
+  const { createServer } = await import('vite');
+  vite = await createServer({
+    server: { middlewareMode: true },
+    appType: 'custom',
+    base,
+  });
+  app.use(vite.middlewares);
+} else {
+  const compression = (await import('compression')).default;
+  const sirv = (await import('sirv')).default;
+  app.use(compression());
+  app.use(base, sirv('./dist/client', { extensions: [] }));
+}
+
+app.use('*all', async (req, res) => {
+  try {
+    // Определяем платформу
+    const userAgent = req.headers['user-agent'] || '';
+    const platform = detectIOS(userAgent).isIOS ? 'ios' : 'android';
+
+    // Определяем направление текста
+    const acceptLanguage = req.headers['accept-language'] || 'en-US';
+    const lang = acceptLanguage.split('-')[0];
+    const direction = ['ar', 'he', 'fa', 'ur'].includes(lang) ? 'rtl' : 'ltr';
+
+    const url = req.originalUrl.replace(base, '');
+
+    let template;
+    let render;
+    if (!isProduction) {
+      template = await fs.readFile('./index.html', 'utf-8');
+      template = await vite.transformIndexHtml(url, template);
+      render = (await vite.ssrLoadModule('/src/entry-server.jsx')).render;
+    } else {
+      template = templateHtml;
+      render = (await import('./dist/server/entry-server.js')).render;
+    }
+
+    const rendered = await render(url, platform, direction);
+
+    const html = template
+      .replace(`{{ lang }}`, `lang=${lang}`)
+      .replace(`{{ dir }}`, `dir=${direction}`)
+      .replace(`<!--app-head-->`, rendered.head ?? '')
+      .replace(`<!--app-html-->`, rendered.html ?? '');
+
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
+  } catch (e) {
+    vite?.ssrFixStacktrace(e);
+    console.log(e.stack);
+    res.status(500).end(e.stack);
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server started at http://localhost:${port}`);
+});
+```
+
+```jsx filename="src/entry-client.jsx"
+import { StrictMode } from 'react';
+import { hydrateRoot } from 'react-dom/client';
+import { ConfigProvider } from '@vkontakte/vkui';
+import App from './App';
+
+hydrateRoot(
+  document.getElementById('root'),
+  <StrictMode>
+    <ConfigProvider>
+      <App />
+    </ConfigProvider>
+  </StrictMode>,
+);
+```
+
+```jsx filename="src/entry-server.jsx"
+import { StrictMode } from 'react';
+import { renderToString } from 'react-dom/server';
+import { ConfigProvider } from '@vkontakte/vkui';
+import App from './App';
+
+export function render(_url, platform, direction) {
+  const html = renderToString(
+    <StrictMode>
+      <ConfigProvider platform={platform} direction={direction}>
+        <App />
+      </ConfigProvider>
+    </StrictMode>,
+  );
+  return { html };
+}
+```
+
+```jsx filename="src/App.tsx"
+import { AppRoot, SelectionControl, Switch } from '@vkontakte/vkui';
+
+export default function App() {
+  return (
+    <AppRoot>
+      <div style={{ width: 320, padding: 24, margin: 'auto' }}>
+        <SelectionControl>
+          <SelectionControl.Label>Ознакомлен</SelectionControl.Label>
+          <Switch />
+        </SelectionControl>
+      </div>
+    </AppRoot>
+  );
+}
+```
+
+## Всплывающие окна
+
+Контент компонентов по типу `ModalPage`, `ModalCard`, `Alert`, `Popover`, `Tooltip` и т.д. считаем необязательным для первого
+рендера, поэтому по умолчанию не рендерим его на сервере. Это позволяет упростить вёрстку за счёт использования медиа-выражений для
+переключения между мобильной и десктопной версиями.
+
+Тем не менее у некоторых таких компонентов можно найти свойство `keepMounted`, его включение потенциально приведёт к ошибку при
+гидрации. Использование этого свойства оправдано, если у вас клиент всегда в одной версии либо в мобильной, либо в десктопной.
+Также можно зашить конкретную версию обернув компонент в `AdaptivityProvider`.
+
+```tsx
+import { AdaptivityProvider, ViewWidth, ModalPage } from '@vkontakte/vkui';
+
+const App = () => {
+  return (
+    <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
+      <ModalPage open keepMounted>
+        Я мобильное модальное окно. И буду таким всегда!
+      </ModalPage>
+    </AdaptivityProvider>
+  );
+};
+```
