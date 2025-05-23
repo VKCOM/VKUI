@@ -3,15 +3,15 @@
 # ModalPageHeader
 
 Шапка в модальных страницах.
-Имеет очень похожую логику на [`PanelHeader`](#!/PanelHeader): два свойства `before` и `after` для иконок и
+Имеет очень похожую логику на [`PanelHeader`](/components/panel-header): два свойства `before` и `after` для иконок и
 название модальной страницы, передаваемое как `children`.
 
 </Overview>
 
 ## Требования по расположению кнопок
 
-- На Android **слева** может быть [`PanelHeaderClose`](#!/PanelHeaderButton).
-- На iOS **справа** должна быть кнопка закрытия. Это может быть либо [`PanelHeaderButton`](#!/PanelHeaderButton) с иконкой `<Icon24Dismiss />`, либо [`PanelHeaderClose`](#!/PanelHeaderButton) или [`PanelHeaderSubmit`](#!/PanelHeaderButton).
+- На Android **слева** может быть [`PanelHeaderClose`](/components/panel-header-button#panelheaderclose).
+- На iOS **справа** должна быть кнопка закрытия. Это может быть либо [`PanelHeaderButton`](/components/panel-header-button) с иконкой `<Icon24Dismiss />`, либо [`PanelHeaderClose`](/components/panel-header-button#panelheaderclose) или [`PanelHeaderSubmit`](/components/panel-header-button#panelheadersubmit).
 - Если произойдёт навигация вперёд внутри модального окна, то **слева** в шапке останется **только** кнопка назад.
 
 Также на Android могут быть какие-то дополнительные кнопки-иконки справа, а на iOS – слева.

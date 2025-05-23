@@ -11,7 +11,7 @@
 
 ## Шаг 1. Обертка `AdaptivityProvider`
 
-Для начала убедитесь, что ваше приложение обернуто в обязательный провайдер [`AdaptivityProvider`](#/AdaptivityProvider):
+Для начала убедитесь, что ваше приложение обернуто в обязательный провайдер [`AdaptivityProvider`](/components/adaptivity-provider):
 
 ```jsx {4,6}
 function App() {
@@ -27,7 +27,7 @@ function App() {
 
 ## Шаг 2. Добавление контента
 
-Добавьте [`SplitLayout`](#/SplitLayout) и хотя бы один [`SplitCol`](#/SplitCol).
+Добавьте [`SplitLayout`](/components/split-layout) и хотя бы один [`SplitCol`](/components/split-col).
 
 - **SplitLayout** — компонент-обертка для отрисовки макета с одной или несколькими колонками.
 - **SplitCol** — компонент для отрисовки колонки.
@@ -164,7 +164,7 @@ const App = () => {
 Адаптивность базируется на четырёх свойствах:
 
 - `sizeX` и `sizeY` принимают значения `'regular' | 'compact'`
-- `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`
-- `viewHeight` — `ViewHeight.SMALL | ViewHeight.MEDIUM`
+- `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`
+- `viewHeight` — `ViewHeight.SMALL | ViewHeight.MEDIUM`
 
 Эти свойства задаются в `AdaptivityProvider`.

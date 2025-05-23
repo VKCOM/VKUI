@@ -49,7 +49,7 @@ const Example = () => {
 - используя свойство `title`;
 - используя свойство `aria-label`;
 - используя свойство `aria-labelledby`;
-- используя внутри компонент [ModalPageHeader](#/ModalPageHeader). Этот компонент сам свяжется с `ModalPage` через контекст c помощью `aria-labelledby`.
+- используя внутри компонент [ModalPageHeader](/components/modal-page-header). Этот компонент сам свяжется с `ModalPage` через контекст c помощью `aria-labelledby`.
 
 ### Анатомия
 
@@ -57,7 +57,7 @@ const Example = () => {
 
 **Опциональные компоненты, передающиеся пользователем**:
 
-- [ModalPageHeader](#/ModalPageHeader) – передаётся через параметр `header`;
+- [ModalPageHeader](/components/modal-page-header) – передаётся через параметр `header`;
 - `ModalPageFooter` – передаётся через параметр `footer`.
 
 **Обязательные компоненты, задающиеся библиотекой**:
@@ -65,7 +65,7 @@ const Example = () => {
 - `ModalOutlet` – обёртка с фиксированной позицией для перекрытия других элементов в **DOM**;
 - `ModalOverlay` – интерактивный задний фон;
 - `ModalPageInternal` – инкапсулирует в себе всю логику поведения;
-- `ModalPageContent` – оборачивает переданный `children` в [CustomScrollView](#/CustomScrollView).
+- `ModalPageContent` – оборачивает переданный `children` в [CustomScrollView](/components/custom-scroll-view).
 
 ### Поведение
 
@@ -111,8 +111,8 @@ const Example = () => {
 
 При разрешении `<= 767px` компонент `ModalPage` имеет вид панели, выдвигающейся снизу вверх (далее **bottom sheet**).
 
-> При передаче `hasCustomPanelHeaderAfter` в [ConfigProvider](#/ConfigProvider) модальная страница
-> сверху будет смещена на высоту [PanelHeader](#/PanelHeader), чтобы кнопка закрытия модальной
+> При передаче `hasCustomPanelHeaderAfter` в [ConfigProvider](/components/config-provider) модальная страница
+> сверху будет смещена на высоту [PanelHeader](/components/panel-header), чтобы кнопка закрытия модальной
 > страницы не перекрывалась пользовательским "плавающим" элементом (например, панелью управления
 > webview).
 
