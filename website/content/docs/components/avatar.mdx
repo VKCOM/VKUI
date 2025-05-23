@@ -48,13 +48,13 @@
 
 А также можно использовать кастомный градиент:
 
-```jsx stati
+```jsx
 <Avatar gradientColor="custom" style={{ backgroundImage: 'linear-gradient(...)' }} />
 ```
 
 Для динамического определения цвета по ID пользователя:
 
-```jsx static
+```jsx
 import { calcInitialsAvatarColor } from '@vkontakte/vkui';
 
 <Avatar initials="ИП" gradientColor={calcInitialsAvatarColor(userId)} />;
