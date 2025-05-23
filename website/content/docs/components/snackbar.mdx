@@ -98,3 +98,21 @@
 значение будет равно `vertical`, в остальных случаях — `horizontal`.
 
 Обработать нажатие на кнопку действия можно с помощью свойства `onActionClick`.
+
+## Snackbar.Basic
+
+Если вам нужен только визуальный компонент без позиционирования и логики смахивания, то используйте `Snackbar.Basic`.
+Он будет полезен, если вы используете стороннюю систему уведомлений.
+
+```jsx
+<Snackbar.Basic
+  before={<Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)" />}
+  after={
+    <Button mode="link" appearance="accent" size="s">
+      Поделиться
+    </Button>
+  }
+>
+  Ссылка скопирована
+</Snackbar.Basic>
+```

@@ -31,6 +31,50 @@
 > не будет закрываться при повторном нажатии на целевой элемент. Для закрытия необходимо нажать
 > на область вне целевого элемента и всплывающего окна.
 
+## Хука usePopover
+
+Вы можете использовать хук `usePopover`, который позволяет устанавливать якорный элемент для `Popover`,
+не прокидывая его в качестве `children`.
+
+```jsx
+const Example = () => {
+  const { anchorRef, anchorProps, popover } = usePopover({
+    'trigger': 'click',
+    'role': 'dialog',
+    'id': 'menupopup',
+    'aria-labelledby': 'menubutton',
+    'content': ({ onClose }) => (
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    ),
+  });
+
+  return (
+    <View activePanel="popover">
+      <Panel id="popover">
+        <PanelHeader>usePopover</PanelHeader>
+        <Group>
+          {popover}
+          <FormItem>
+            <Button
+              getRootRef={anchorRef}
+              id="menubutton"
+              aria-controls="menupopup"
+              {...anchorProps}
+            >
+              Нажми на меня
+            </Button>
+          </FormItem>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
+
+<Example />;
+```
+
 ## Цифровая доступность (a11y)
 
 Старайтесь сопровождать элемент текстовым описанием для корректной работы скринридеров. Для этого
