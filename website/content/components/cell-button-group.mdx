@@ -1,0 +1,111 @@
+<Overview>
+
+# CellButtonGroup
+
+Компонент для группировки [`CellButton`](/components/cell-button) с разделителями. Обеспечивает визуальное объединение связанных действий в списке.
+
+Связанные компоненты:
+
+- CellButton
+
+</Overview>
+
+```jsx
+<CellButtonGroup>
+  <CellButton appearance="negative">Пожаловаться</CellButton>
+  <CellButtonGroup.Separator />
+  <CellButton>Отмена</CellButton>
+</CellButtonGroup>
+```
+
+## Основные возможности
+
+### Группировка кнопок
+
+Компонент обеспечивает следующие возможности:
+
+- автоматическое растяжение кнопок на всю ширину;
+- удаление стандартных отступов между элементами;
+- поддержка всех свойств HTML-элемента `<div>`.
+
+```jsx
+<CellButtonGroup>
+  <CellButton>Действие 1</CellButton>
+  <CellButtonGroup.Separator />
+  <CellButton>Действие 2</CellButton>
+</CellButtonGroup>
+```
+
+## Подкомпоненты
+
+### CellButtonGroup.Separator
+
+Разделитель между кнопками. Поддерживает все свойства [`Separator`](/components/separator), кроме:
+
+- `direction` (фиксированно `horizontal`);
+- `padding` (автоматически адаптирован).
+
+```jsx
+<CellButtonGroup>
+  <CellButton>Действие 1</CellButton>
+  <CellButtonGroup.Separator />
+  <CellButton>Действие 2</CellButton>
+</CellButtonGroup>
+```
+
+## Особенности
+
+### Автоматическое выравнивание
+
+Все кнопки растягиваются на всю ширину контейнера.
+
+### Гибкие разделители
+
+Разделители можно кастомизировать через пропсы:
+
+```jsx
+<CellButtonGroup.Separator style={{ backgroundColor: 'var(--accent)' }} />
+```
+
+### Сочетание с другими компонентами
+
+Внутри группы можно использовать любые вариации `CellButton`:
+
+```jsx
+<CellButtonGroup>
+  <CellButton centered>Центрированная</CellButton>
+  <CellButtonGroup.Separator />
+  <CellButton before={<Icon24Add />}>С иконкой</CellButton>
+</CellButtonGroup>
+```
+
+## Ограничения
+
+Компонент имеет следующие ограничения:
+
+- не поддерживает вертикальное расположение;
+- не управляет состоянием вложенных кнопок;
+- для сложных сценариев используйте [`ButtonGroup`](/components/button-group).
+
+## Доступность (a11y)
+
+### Рекомендации
+
+Для обеспечения доступности рекомендуется:
+
+- группировать логически связанные действия;
+- использовать семантические заголовки при необходимости:
+
+  ```jsx
+  <Group header={<Header>Действия с профилем</Header>}>
+    <CellButtonGroup> {/* ...*/}</CellButtonGroup>
+  </Group>
+  ```
+
+- добавлять пояснения для скринридеров:
+
+  ```jsx
+  <CellButtonGroup role="group" aria-label="Действия с заказом">
+    {/* ...*/}
+  </CellButtonGroup>
+  ```

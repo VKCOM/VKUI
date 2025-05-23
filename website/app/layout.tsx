@@ -14,7 +14,12 @@ export const metadata: Metadata = {
 
 const versions = <Versions />;
 
-const navbar = <Navbar logo={<LogoIcon />} />;
+const fakeNavbarItem = {
+  title: 'Компоненты',
+  href: '/overview/about',
+};
+
+const navbar = <Navbar logo={<LogoIcon />} fakeNavbarItem={fakeNavbarItem} />;
 
 const footer = (
   <Footer>
