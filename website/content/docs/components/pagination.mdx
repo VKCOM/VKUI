@@ -49,7 +49,7 @@ function Example() {
 
 С помощью свойств `renderPageButton` и `renderNavigationButton` можно отрисовать кастомные кнопки навигации и кнопки перехода по страницам.
 
-- в `renderPageButton` прокидывается объект с пропсами типа `CustomPaginationPageButtonProps` - наследует API [Tappable](https://vkcom.github.io/VKUI/#/Tappable).
+- В `renderPageButton` прокидывается объект с пропсами типа `CustomPaginationPageButtonProps` - наследует API [Tappable](https://vkcom.github.io/VKUI/#/Tappable).
 - в `renderNavigationButton` прокидывается объект с пропсами типа `CustomPaginationNavigationButton` наследует API [Button](https://vkcom.github.io/VKUI/#/Button).
 
 ```jsx
@@ -107,32 +107,31 @@ function Example() {
 <Example />;
 ```
 
-### Когда использовать хук:
+### Когда использовать хук
 
-- Нестандартный UI пагинации
-- Интеграция с кастомной логикой
-- Сложные анимации переходов
+- Нестандартный UI пагинации.
+- Интеграция с кастомной логикой.
+- Сложные анимации переходов.
 
 ## Доступность (a11y)
 
-### Обязательные требования
+Компонент использует `<nav role="navigation">` и связывает элементы через `aria-labelledby`,
+поддерживая семантику навигации.
 
-1. **Уникальные метки**
-   Если на странице несколько компонентов:
+Дополнительно убедитесь, что:
 
-```jsx
-// ❌ Плохо (дублирующиеся метки)
-<Pagination navigationLabel="Страницы" />
-<Pagination navigationLabel="Страницы" />
+- заданы уникальные метки, если на странице несколько компонентов:
 
-// ✅ Хорошо
-<Pagination navigationLabel="Страницы статей" />
-<Pagination navigationLabel="Страницы комментариев" />
-```
+  ```jsx
+  // ❌ Плохо (дублирующиеся метки)
+  <Pagination navigationLabel="Страницы" />
+  <Pagination navigationLabel="Страницы" />
 
-2. **Семантика навигации**
+  // ✅ Хорошо
+  <Pagination navigationLabel="Страницы статей" />
+  <Pagination navigationLabel="Страницы комментариев" />
+  ```
 
-- Автоматически использует `<nav role="navigation">`
-- Связывает элементы через `aria-labelledby`
-
-3. В `navigationLabel` стоит избегать слова "Навигация" или слов близких по значению, так как скринридер и так зачитывает это видя тег `nav` или `role="navigation"`. Лучше ограничиться чем-то вроде "Страницы".
+- в `navigationLabel` не используется слова "Навигация" или слова близких по значению,
+  так как скринридер и так зачитывает это видя тег `nav` или `role="navigation"`.
+  Лучше ограничиться чем-то вроде "Страницы".
