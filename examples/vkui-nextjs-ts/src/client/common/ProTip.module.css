@@ -1,0 +1,10 @@
+.proTip {
+  margin-block-start: 6px;
+  margin-block-end: 3px;
+}
+
+.proTipIcon {
+  display: inline;
+  margin-inline-end: 2px;
+  vertical-align: bottom;
+}
