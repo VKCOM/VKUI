@@ -15,6 +15,7 @@ const Example = () => {
   const [disablePickers, setDisablePickers] = useState(false);
   const [closeOnChange, setCloseOnChange] = useState(true);
   const [disableCalendar, setDisableCalendar] = useState(false);
+  const [accessible, setAccessible] = useState(false);
   const [locale, setLocale] = useState('ru');
 
   return (
@@ -41,6 +42,11 @@ const Example = () => {
       </FormItem>
       <FormItem top="Отключить отображение выпадающего календаря">
         <Checkbox checked={disableCalendar} onChange={(e) => setDisableCalendar(e.target.checked)}>
+          Включено
+        </Checkbox>
+      </FormItem>
+      <FormItem top="Включить режим, в котором DateRangeInput доступен для ассистивных технологий">
+        <Checkbox checked={accessible} onChange={(e) => setAccessible(e.target.checked)}>
           Включено
         </Checkbox>
       </FormItem>
@@ -74,6 +80,7 @@ const Example = () => {
           <LocaleProvider value={locale}>
             <DateRangeInput
               id="date-range"
+              aria-label="Результат"
               value={value}
               onChange={setValue}
               disablePast={disablePast}
@@ -81,6 +88,7 @@ const Example = () => {
               closeOnChange={closeOnChange}
               disablePickers={disablePickers}
               disableCalendar={disableCalendar}
+              accessible={accessible}
             />
           </LocaleProvider>
         </Flex>
