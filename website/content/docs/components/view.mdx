@@ -33,7 +33,7 @@ function Example() {
 > Чтобы анимация переходов происходила правильно, порядок [Panel](#/Panel) в вёрстке должен соответствовать их
 > подразумеваемому роутингу. Рассмотрим на примере ниже.
 >
-> ```jsx static
+> ```jsx
 > <View activePanel="1">
 >   <Panel id="1" />
 >   <Panel id="2" />
@@ -117,7 +117,7 @@ function transitionHandler({
 
 Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()` (см. **Свойства и методы**)
 
-```jsx static
+```jsx
 import * as React from 'react';
 import { type ViewProps, View } from '@vkontakte/vkui';
 

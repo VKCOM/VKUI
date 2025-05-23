@@ -25,7 +25,7 @@
 
 ### Базовый сценарий (без внешнего ref)
 
-```jsx static
+```jsx
 const Component = ({ children }) => {
   const [childRef, patchedChild] = usePatchChildren(children);
 
@@ -41,7 +41,7 @@ const Component = ({ children }) => {
 
 ### Интеграция с внешним ref
 
-```jsx static
+```jsx
 const SmartWrapper = ({ children }) => {
   const internalRef = useRef < HTMLDivElement > null;
   const [, patchedChild] = usePatchChildren(
