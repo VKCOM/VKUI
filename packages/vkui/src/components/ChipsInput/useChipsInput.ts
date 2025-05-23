@@ -36,6 +36,29 @@ export const transformValue = <O extends ChipOption>(
     value: getOptionValue(option),
   }));
 
+function getRegExpFromArray(separators: string[]) {
+  const validSeparators = separators.filter((s) => s.length > 0);
+  if (validSeparators.length === 0) {
+    return null;
+  }
+  const escaped = validSeparators.map((s) => escapeRegExp(s));
+  return new RegExp(`(?:${escaped.join('|')})`);
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getRegexFromDelimiter(delimiter: string | RegExp | string[]): RegExp | null {
+  if (delimiter instanceof RegExp) {
+    return delimiter;
+  }
+  if (typeof delimiter === 'string') {
+    return new RegExp(escapeRegExp(delimiter));
+  }
+  return getRegExpFromArray(delimiter);
+}
+
 interface ToggleOption<O extends ChipOption> {
   (optionsForAdd: Array<O | string>, isNewValue: true): void;
   (optionsForRemove: Array<O | ChipOptionValue>, isNewValue: false): void;
@@ -178,13 +201,14 @@ export const useChipsInput = <O extends ChipOption>({
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, canCreate = true) => {
       const newInputValue = e.target.value;
-      if (!delimiter || !newInputValue.includes(delimiter) || !canCreate) {
+      const delimiterRegex = delimiter ? getRegexFromDelimiter(delimiter) : null;
+      if (!delimiterRegex || !delimiterRegex.test(newInputValue) || !canCreate) {
         setInputChange(e);
         return;
       }
       const values = newInputValue
         .trim()
-        .split(delimiter)
+        .split(delimiterRegex)
         .map((v) => v.trim())
         .filter(Boolean);
 

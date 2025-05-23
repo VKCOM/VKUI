@@ -628,7 +628,44 @@ describe('ChipsSelect', () => {
     fireEvent.click(getDropdownIcon());
     expect(screen.queryByTestId('dropdown')).toBeFalsy();
   });
+});
 
+describe.each<{
+  delimiter: string | RegExp | string[];
+  str: string;
+  expectedValues: string[];
+}>([
+  {
+    delimiter: ',',
+    str: 'Зеленый,Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: new RegExp(','),
+    str: 'Зеленый,Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: /\./,
+    str: 'Зеленый.Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: [',', '.'],
+    str: 'Зеленый,Фиолетовый.Красный',
+    expectedValues: ['Зеленый', 'Фиолетовый', 'Красный'],
+  },
+  {
+    delimiter: '.',
+    str: 'Зеленый.Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: [' ', ',', '.', '|'],
+    str: 'Зеленый.Фиолетовый,Красный|Розовый Синий',
+    expectedValues: ['Зеленый', 'Фиолетовый', 'Красный', 'Розовый', 'Синий'],
+  },
+])('should correct use delimiter $delimiter', ({ delimiter, str, expectedValues }) => {
   it('should add some options by splitting by delimiter when creatable', async () => {
     const onChange = jest.fn();
     render(
@@ -637,21 +674,19 @@ describe('ChipsSelect', () => {
         defaultValue={[]}
         data-testid="input"
         onChange={onChange}
-        delimiter=","
+        delimiter={delimiter}
         creatable
       />,
     );
-    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
-    expect(onChange).toBeCalledWith([
-      {
-        value: 'Зеленый',
-        label: 'Зеленый',
-      },
-      {
-        value: 'Фиолетовый',
-        label: 'Фиолетовый',
-      },
-    ]);
+    fireEvent.input(screen.getByTestId('input'), {
+      target: { value: str },
+    });
+    expect(onChange).toBeCalledWith(
+      expectedValues.map((value) => ({
+        value,
+        label: value,
+      })),
+    );
     expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
   });
 
@@ -663,11 +698,13 @@ describe('ChipsSelect', () => {
         defaultValue={[]}
         data-testid="input"
         onChange={onChange}
-        delimiter=","
+        delimiter={delimiter}
       />,
     );
-    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
+    fireEvent.input(screen.getByTestId('input'), {
+      target: { value: str },
+    });
     expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('Зеленый,Фиолетовый');
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
   });
 });
