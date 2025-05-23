@@ -15,6 +15,11 @@ export const metadata: Metadata = {
 
 const versions = <Versions />;
 
+const fakeNavbarItem = {
+  title: 'Компоненты',
+  href: '/overview/about',
+};
+
 const navbar = (
   <Navbar
     logo={
@@ -23,6 +28,7 @@ const navbar = (
         <LogoIconUwu />
       </>
     }
+    fakeNavbarItem={fakeNavbarItem}
   />
 );
 
