@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Removable } from './Removable';
+import styles from './Removable.module.css';
 
 describe('Removable', () => {
   baselineComponent(Removable);
@@ -58,5 +59,32 @@ describe('Removable', () => {
 
     await userEvent.click(screen.getByTestId('content'));
     expect(screen.queryByText(/сдвинут/)).toBeFalsy();
+  });
+
+  it('should not render remove button when indent mode', () => {
+    const { container } = render(
+      <Removable indent removeButtonTestId="removeButtonTestId">
+        <div>Контент для удаления</div>
+      </Removable>,
+    );
+    expect(screen.queryByTestId('removeButtonTestId')).toBeNull();
+    expect(container.getElementsByClassName(styles.indentation)).toHaveLength(1);
+  });
+
+  it('[IOS] should not render remove button when indent mode', () => {
+    const { container } = render(
+      <ConfigProvider platform="ios">
+        <Removable
+          indent
+          removeButtonTestId="removeButtonTestId"
+          toggleButtonTestId="toggleButtonTestId"
+        >
+          <div>Контент для удаления</div>
+        </Removable>
+      </ConfigProvider>,
+    );
+    expect(screen.queryByTestId('removeButtonTestId')).toBeNull();
+    expect(screen.queryByTestId('toggleButtonTestId')).toBeNull();
+    expect(container.getElementsByClassName(styles.indentation)).toHaveLength(1);
   });
 });
