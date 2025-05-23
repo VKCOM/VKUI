@@ -24,11 +24,18 @@ export interface NavbarProps {
    * Лого документации
    */
   logo: React.ReactElement;
+  /**
+   * Временное :) решение для роутинга
+   */
+  fakeNavbarItem?: {
+    title: string;
+    href: string;
+  };
 }
 
 const isMenu = (page: PageItem | MenuItem): page is MenuItem => page.type === 'menu';
 
-export function Navbar({ logo }: NavbarProps): React.ReactElement {
+export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElement {
   const themeConfig = useThemeConfig();
   const activeRoute = useFSRoute();
   const { setMenu } = useMenu();
@@ -62,6 +69,9 @@ export function Navbar({ logo }: NavbarProps): React.ReactElement {
             <div className={styles.versions}>{themeConfig.versions}</div>
           </Flex>
           <ButtonGroup gap="space" className={classNames(styles.links)}>
+            {fakeNavbarItem && (
+              <NavBarLink title={fakeNavbarItem.title} href={fakeNavbarItem.href} activated />
+            )}
             {items.map((page) => {
               if (('display' in page && page.display === 'hidden') || isMenu(page)) {
                 return null;
