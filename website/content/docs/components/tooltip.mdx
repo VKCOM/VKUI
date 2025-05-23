@@ -7,10 +7,54 @@
 
 </Overview>
 
-```jsx { "props": { "layout": false, "iframe": false } }
+```jsx
 <Tooltip placement="right" description="Привет">
-  <Button style={{ margin: 20 }}>Наведи</Button>
+  <Button>Наведи</Button>
 </Tooltip>
+```
+
+## Пользовательская стрелка
+
+Воспользуйтесь свойством `ArrowIcon`, чтобы переопределить иконку, которая используется по умолчанию.
+
+Пользовательский компонент иконки должен удовлетворять следующим требованиям:
+
+1. Иконка по умолчанию должна быть отрисована в направлении вверх.
+2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
+   растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
+   (смотри https://github.com/VKCOM/VKUI/pull/4496).
+3. Убедитесь, что компонент принимает все валидные для SVG параметры.
+4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
+5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
+
+```jsx
+const ARROW_HEIGHT = 11;
+
+const CustomIcon = (props) => {
+  return (
+    <svg
+      width="80"
+      height={ARROW_HEIGHT}
+      viewBox={`0 0 80 ${ARROW_HEIGHT}`}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M40 0C33 5.5 20 10 0 10v1h80v-1C60 10 47 5.5 40 0Z" fill="currentColor" />
+    </svg>
+  );
+};
+
+return (
+  <Tooltip
+    description="У этого тултипа кастомная стрелка"
+    offsetByCrossAxis={ARROW_HEIGHT}
+    arrowPadding={6}
+    ArrowIcon={CustomIcon}
+    shown
+  >
+    <Button>Якорь</Button>
+  </Tooltip>
+);
 ```
 
 ## Хука useTooltip

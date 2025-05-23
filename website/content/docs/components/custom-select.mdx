@@ -20,6 +20,24 @@
 />
 ```
 
+## CustomSelectOption
+
+```jsx
+<CustomSelectOption selected>Иван Иванов</CustomSelectOption>
+```
+
+Универсальный компонент для отрисовки одного из значений в выпадающем списке.
+Помимо `CustomSelect` используется и в `ChipsSelect`.
+
+### Вложенные CustomSelectOption
+
+Для реализации многоуровневых `CustomSelectOption` используйте свойство `hierarchy`,
+которое позволяет создать нужный отступ в зависимости от уровня вложенности.
+
+```jsx
+<CustomSelectOption hierarchy={3}>Файл 1</CustomSelectOption>
+```
+
 ## Тестирование (e2e) [#e2e]
 
 Для поиска компонента и его элементов на странице cуществует ряд вспомогательных свойств:
