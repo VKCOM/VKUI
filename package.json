@@ -30,7 +30,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.14",
     "@types/jest-axe": "^3.5.9",
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.21",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
     "@types/webpack": "^5.28.5",
@@ -99,7 +99,7 @@
     "swc-plugin-transform-remove-imports": "4.0.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
-    "webpack": "^5.99.8",
+    "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
     "webpack-merge": "^6.0.1",
     "yargs": "^17.7.2"
