@@ -155,7 +155,7 @@ export interface DateRangeInputProps
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
   /**
-   * Включает режим в котором DateInput доступен
+   * Включает режим в котором DateRangeInput доступен
    * для ассистивных технологий.
    * В этом режиме:
    * - календарь больше не открывает при фокусе на DateRangeInput;
