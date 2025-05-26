@@ -68,7 +68,9 @@ export interface PanelHeaderProps
    */
   transparent?: boolean;
   /**
-   * Добавление теней для компонента.
+   * @deprecated Since 7.4.0.
+   *
+   * Свойство будет удалено в `v8` (не используется).
    */
   shadow?: boolean;
   /**
