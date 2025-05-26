@@ -207,6 +207,13 @@ const getInternalValue = (value: CalendarRangeProps['value']) => {
   return newValue;
 };
 
+const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['tabindex'],
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/DateRangeInput
  */
@@ -231,9 +238,8 @@ export const DateRangeInput = ({
   calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
-  changeDayLabel = 'Изменить день',
-  changeMonthLabel = 'Изменить месяц',
-  changeYearLabel = 'Изменить год',
+  changeMonthLabel = 'Месяц',
+  changeYearLabel = 'Год',
   changeStartDayLabel = 'День начала',
   changeStartMonthLabel = 'Месяц начала',
   changeStartYearLabel = 'Год начала',
@@ -556,6 +562,7 @@ export const DateRangeInput = ({
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
             captureEscapeKeyboardEvent={false}
+            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <CalendarRange
               value={value}
@@ -571,7 +578,6 @@ export const DateRangeInput = ({
               nextMonthLabel={nextMonthLabel}
               changeMonthLabel={changeMonthLabel}
               changeYearLabel={changeYearLabel}
-              changeDayLabel={changeDayLabel}
               prevMonthIcon={prevMonthIcon}
               nextMonthIcon={nextMonthIcon}
               renderDayContent={renderDayContent}
