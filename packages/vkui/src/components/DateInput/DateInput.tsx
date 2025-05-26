@@ -208,6 +208,13 @@ const getInternalValue = (value: CalendarProps['value']) => {
   return newValue;
 };
 
+const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['tabindex'],
+};
+
 /**
  * @see https://vkcom.github.io/VKUI/#/DateInput
  */
@@ -560,6 +567,7 @@ export const DateInput = ({
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
             captureEscapeKeyboardEvent={false}
+            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <Calendar
               aria-label={calendarLabel}
