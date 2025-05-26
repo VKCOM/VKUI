@@ -22,7 +22,7 @@
     "@storybook/addon-console": "^3.0.0",
     "@storybook/addon-designs": "^8.2.1",
     "@swc/cli": "^0.7.7",
-    "@swc/core": "1.11.24",
+    "@swc/core": "1.11.29",
     "@swc/jest": "^0.2.38",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
