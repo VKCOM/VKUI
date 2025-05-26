@@ -1,4 +1,5 @@
 import { getFirstTouchEventData } from '../dom';
+import { distance } from '../math';
 
 export type Direction = { axis: 'x' | 'y'; direction: -1 | 1 | null };
 
@@ -45,8 +46,7 @@ export class UIPanGestureRecognizer {
   }
 
   distance(): number {
-    const { x, y } = this.delta();
-    return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    return distance(this.x1, this.y1, this.x2, this.y2);
   }
 
   velocity(): Coords {
