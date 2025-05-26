@@ -5,7 +5,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasComponent } from '../../types';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -79,7 +79,7 @@ export interface SimpleCellOwnProps extends HasComponent {
   multiline?: boolean;
 }
 
-export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
+export interface SimpleCellProps extends SimpleCellOwnProps, TappableOmitProps {}
 
 /**
  * @see https://vkcom.github.io/VKUI/#/SimpleCell

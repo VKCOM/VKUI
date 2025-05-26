@@ -2,7 +2,7 @@ import { Icon28ChevronRightCircle } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import type { HasRef, HasRootRef, LiteralUnion } from '../../../types';
 import type { ImageBaseSize } from '../../ImageBase/ImageBase';
-import { Tappable, type TappableProps } from '../../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../../Tappable/Tappable';
 import { Subhead, type SubheadProps } from '../../Typography/Subhead/Subhead';
 import styles from './HorizontalCellShowMore.module.css';
 
@@ -12,7 +12,7 @@ const sizeClassNames = {
 };
 
 export interface HorizontalCellShowMoreProps
-  extends Omit<TappableProps, 'getRootRef' | 'size' | 'borderRadiusMode'>,
+  extends Omit<TappableOmitProps, 'getRootRef' | 'size' | 'borderRadiusMode'>,
     HasRef<HTMLElement>,
     HasRootRef<HTMLDivElement> {
   /**

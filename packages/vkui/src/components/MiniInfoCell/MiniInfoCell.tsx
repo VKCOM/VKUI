@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Icon16Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';
@@ -88,13 +87,9 @@ export const MiniInfoCell = ({
     </React.Fragment>
   );
 
-  return restProps.onClick ? (
-    <Tappable Component="div" role="button" {...restProps} baseClassName={cellClasses}>
+  return (
+    <Tappable {...restProps} baseClassName={cellClasses}>
       {cellContent}
     </Tappable>
-  ) : (
-    <RootComponent {...restProps} baseClassName={cellClasses}>
-      {cellContent}
-    </RootComponent>
   );
 };
