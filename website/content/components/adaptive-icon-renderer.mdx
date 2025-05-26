@@ -2,24 +2,35 @@
 
 # AdaptiveIconRenderer
 
-Компонент для автоматического выбора иконок в зависимости от размера интерфейса.
-Позволяет легко переключаться между `regular`/`compact`-режимами.
+Компонент для автоматического рендера иконок в зависимости от [размера интерфейса](/overview/adaptivity#sizes) – `compact` или `regular`.
+
+Связанные страницы:
+
+- [Адаптивность](/overview/adaptivity)
 
 </Overview>
 
-## Использование
+## Пример использования
 
 ```jsx
-<>
-  <AdaptivityProvider sizeY="regular">
-    <Text>Icon size 28</Text>
-    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
-  </AdaptivityProvider>
-  <AdaptivityProvider sizeY="compact">
-    <Text>Icon size 24</Text>
-    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
-  </AdaptivityProvider>
-</>
+import { AdaptivityProvider, AdaptivityProvider, Text } from '@vkontakte/vkui';
+import { Icon24SmileOutline, Icon28SmileOutline } from '@vkontakte/icons';
+
+export function App() {
+  return (
+    <>
+      <AdaptivityProvider sizeY="compact">
+        <Text>Icon size 24</Text>
+        <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+      </AdaptivityProvider>
+
+      <AdaptivityProvider sizeY="regular">
+        <Text>Icon size 28</Text>
+        <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+      </AdaptivityProvider>
+    </>
+  );
+}
 ```
 
 ## Передача свойств в иконки
