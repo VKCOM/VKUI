@@ -32,7 +32,6 @@ const meta: MetaRecord = {
   'separator': 'Separator',
   'simple-grid': 'SimpleGrid',
   'spacing': 'Spacing',
-  'split-col': 'SplitCol',
   'split-layout': 'SplitLayout',
   '###': {
     type: 'separator',
@@ -166,6 +165,8 @@ const meta: MetaRecord = {
   'selection-control': 'SelectionControl',
   'touch': 'Touch',
   'unstyled-text-field': 'UnstyledTextField',
+  'use-adaptivity-conditional-render': 'useAdaptivityConditionalRender',
+  'use-adaptivity-with-js-media-queries': 'useAdaptivityWithJSMediaQueries',
   'use-focus-visible': 'useFocusVisible',
   'use-patch-children': 'usePatchChildren',
   'use-scroll': 'useScroll',
