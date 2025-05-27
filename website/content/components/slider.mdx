@@ -11,6 +11,40 @@
 <Slider defaultValue={30} />
 ```
 
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+const colors = [
+  {
+    value: 'red',
+    label: 'Красный',
+  },
+  {
+    value: 'green',
+    label: 'Зелёный',
+  },
+  {
+    value: 'blue',
+    label: 'Синий',
+  },
+];
+
+// Неконтролируемое состояние
+<Slider step={0.2} min={0} max={1} defaultValue={0.4} />;
+
+// Контролируемое состояние
+const [valueStep, setValueStep] = useState(0.4);
+
+<Slider step={0.2} min={0} max={1} value={valueStep} onChange={setValueStep} />;
+```
+
 ## Диапазон значений
 
 Для возможности задать диапазон значений, передавайте свойство `multiple={true}`.

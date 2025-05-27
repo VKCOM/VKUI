@@ -17,6 +17,42 @@
 />
 ```
 
+> Используйте компонент [`CustomSelect`](/components/custom-select), чтобы вид компонента был всегда кастомный.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+const colors = [
+  {
+    value: 'red',
+    label: 'Красный',
+  },
+  {
+    value: 'green',
+    label: 'Зелёный',
+  },
+  {
+    value: 'blue',
+    label: 'Синий',
+  },
+];
+
+// Неконтролируемое состояние
+<Select options={colors} defaultValue="red" />;
+
+// Контролируемое состояние
+const [color, setColor] = React.useState('red');
+
+<Select options={colors} value={color} onChange={(_, newColor) => setColor(newColor)} />;
+```
+
 ## Тестирование (e2e) [#e2e]
 
 Если `Select` отрисовывает `NativeSelect`, то достаточно передать `testId` через `data-*` аттрибут для поиска элемента на странице.
