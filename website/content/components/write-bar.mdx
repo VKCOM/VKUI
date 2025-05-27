@@ -7,9 +7,28 @@
 
 Связанные компоненты:
 
-- WriteBarIcon
+- [`WriteBarIcon`](#icons)
 
 </Overview>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<WriteBar defaultValue="Текст" />;
+
+// Контролируемое состояние
+const [text, setText] = React.useState('Текст');
+
+<WriteBar value={text} onChange={(event) => setText(event.target.value)} />;
+```
 
 ## Основные элементы
 
@@ -17,7 +36,7 @@
 - `after` — элементы справа.
 - `inlineAfter` — элементы поверх поля (актуально для iOS).
 
-## Использование иконок
+## Использование иконок [#icons]
 
 Все боковые элементы рекомендуется оборачивать в `WriteBarIcon`. Также для адптирования размеров иконок стоит использовать
 компонент [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer):

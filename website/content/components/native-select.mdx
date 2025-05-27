@@ -19,8 +19,34 @@
 </NativeSelect>
 ```
 
-> Используйте данный компонент на мобильных устройствах или отдайте предпочтение `Select`,
+> Используйте данный компонент на мобильных устройствах или отдайте предпочтение [`Select`](/components/select),
 > который автоматически выберет наилучший для отображения компонент.
+> Используйте компонент [`CustomSelect`](/components/custom-select), чтобы вид компонента был всегда кастомный.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<NativeSelect defaultValue="f">
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+
+// Контролируемое состояние
+const [gender, setGender] = React.useState('f');
+
+<NativeSelect value={gender} onChange={(_, newGender) => setGender(newGender)}>
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+```
 
 ## Доступность (a11y)
 
