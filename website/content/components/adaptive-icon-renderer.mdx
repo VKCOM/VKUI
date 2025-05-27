@@ -10,7 +10,12 @@
 
 </Overview>
 
-## Пример использования
+## Когда использовать? [#when-to-use]
+
+В зависимости от размера экрана, желательно использовать тот или иной размер иконок. На настольных экранах стоит использовать иконки
+меньшего размера, для мобильных большего. Предложения по конкретным размерам можно найти в документациях компонентов.
+
+## Пример использования [#example]
 
 ```jsx
 import { AdaptivityProvider, AdaptivityProvider, Text } from '@vkontakte/vkui';
@@ -33,7 +38,7 @@ export function App() {
 }
 ```
 
-## Передача свойств в иконки
+## Передача свойств в иконки [#providing-props-to-icons]
 
 ```jsx
 const StyledIcon24 = (props) => <Icon24SmileOutline {...props} className="my-class-24" />;

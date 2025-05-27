@@ -2,37 +2,99 @@
 
 # AdaptivityProvider
 
-[Обязательный компонент](/overview/usage#required-wrapper), оборачивающий всё приложение. Используется для управления отображением
-компонентов в зависимости [параметров адаптивности](/overview/adaptivity#adaptivity-props).
-
-Связанные страницы:
-
-- [Адаптивность](/overview/adaptivity)
+Переопределяет базовую [адаптивность](/overview/adaptivity) компонента – глобально или локально. Принимает все доступные
+[параметры адаптивности](/overview/adaptivity#adaptivity-props).
 
 </Overview>
 
-## Автоматическое определение свойств
+## Когда использовать? [#when-to-use]
 
-`AdaptivityProvider` автоматически определяет некоторые свойства на основе других:
+- Если вам нужно зафиксировать размер компонента на `compact` или `regular` (см. [Адаптивность | Размеры элементов интерфейса](/overview/adaptivity#sizes)).
+- Если вам нужно зафиксировать конкретный брейкпоинт на мобильный, планшетный, настольный и т.п. (см. [Адаптивность | Размеры экрана](/overview/adaptivity#breakpoints)).
+- Если вам нужно зафиксировать поведение компонента (см. [Адаптивность | Наличие точного указателя](/overview/adaptivity#pointer)).
 
-- если `sizeX` не задан, но задан `viewWidth`, то `sizeX` будет вычислен автоматически;
-- если `sizeY` не задан, то он будет определен на основе `viewWidth`, `viewHeight` и `hasPointer`.
+## Логика работы
+
+`AdaptivityProvider` всегда перебивает свой вышестоящий экземпляр – это значит, что свойства не наследуются из контекста.
+
+Говоря о свойствах, по умолчанию они определяются как `undefined`. Автоматически определение есть только у свойств `sizeX` и `sizeY`
+при следующих условиях:
+
+- если `sizeX` не задан, но задан `viewWidth`;
+- если `sizeY` не задан, но заданы `viewWidth` и `viewHeight` или `viewWidth` и `hasPointer` или только `viewHeight`.
+
+## Глобальное переопределение [#override-global]
+
+Оборачиваем в `AdaptivityProvider` всё приложение.
+
+```jsx filename="index.js" {9}
+import { ConfigProvider, AdaptivityProvider, AppRoot, ViewWidth } from '@vkontakte/vkui';
+
+/**
+ * Зашили верстку и поведение под настольные экраны.
+ */
+export function AlwaysDesktopWithMouse() {
+  return (
+    <ConfigProvider>
+      <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
+        <AppRoot>{/* приложение */}</AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
+  );
+}
+```
+
+## Локальное переопределение [#override-local]
+
+В необходимом месте отдельно оборачиваем компонент или ряд компонентов в `AdaptivityProvider`.
+
+```jsx {8}
+import { AdaptivityProvider, Button } from '@vkontakte/vkui';
+
+/**
+ * Зашили высоту кнопки в "regular" размере.
+ */
+export function ReallyBigButton() {
+  return (
+    <AdaptivityProvider sizeY="regular">
+      <Button size="l">Я действительно большая кнопка</Button>
+    </AdaptivityProvider>
+  );
+}
+```
 
 ## Хук useAdaptivity
 
-Хук возвращает текущие "сырых" значения адаптивности.
+Хук возвращает из контекста свойства, переданные в `AdaptivityProvider`.
 
-```jsx
-import { useAdaptivity } from '@vkontakte/vkui';
+```jsx filename="example.jsx"
+import { AdaptivityProvider, useAdaptivity } from '@vkontakte/vkui';
 
-export function App() {
-  const { sizeX, sizeY, viewWidth, viewHeight, hasPointer } = useAdaptivity();
+function AdaptivityPropsByContext() {
+  const {
+    sizeX = 'undefined',
+    sizeY = 'undefined',
+    viewWidth = 'undefined',
+    viewHeight = 'undefined',
+    hasPointer = 'undefined',
+  } = useAdaptivity();
 
   return (
     <pre>
       sizeX: {sizeX}, sizeY: {sizeY}, viewWidth: {viewWidth}, viewHeight: {viewHeight}, hasPointer:{' '}
       {hasPointer}
     </pre>
+  );
+}
+
+// На странице увидим такой вывод
+//
+// sizeX: compact, sizeY: undefined, viewWidth: undefined, viewHeight: undefined, hasPointer: undefined
+export function App() {
+  return (
+    <AdaptivityProvider sizeX="compact">
+      <AdaptivityPropsByContext />
+    </AdaptivityProvider>
   );
 }
 ```
