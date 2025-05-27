@@ -10,6 +10,25 @@
 <Switch />
 ```
 
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `checked` или передавать `defaultChecked`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `checked`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние, по умолчанию в состоянии "выбран"
+<Switch defaultChecked />;
+
+// Контролируемое состояние, значение "не выбран"
+const [checked, setChecked] = React.useState(false);
+
+<Switch checked={checked} onChange={(event) => setChecked(event.target.checked)} />;
+```
+
 ## Доступность (a11y)
 
 Доступность реализована на основе рекомендаций из [Switch WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/).
