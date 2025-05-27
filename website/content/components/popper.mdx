@@ -37,7 +37,7 @@ return (
 > Чтобы не задавать все свойства координат вручную,
 > можно использовать [DOMRect.fromRect](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect/fromRect_static)
 
-```jsx { "props": { "layout": false, "iframe": true } }
+```jsx
 const [virtualElement, setVirtualElement] = React.useState(() =>
   DOMRect.fromRect({
     x: -200,

@@ -138,7 +138,7 @@ const Example = () => {
   на `<OnboardingTooltipContainer>` и добавьте ему css-свойство `position: relative` (или другую не-`static`).
 - внутри `position: fixed` — `<OnboardingTooltipContainer fixed>`
 
-```jsx { "props": { "layout": false } }
+```jsx
 <>
   <OnboardingTooltipContainer style={{ minHeight: '120vh' }}>
     <OnboardingTooltip description="Я скроллюсь">
@@ -240,7 +240,7 @@ const Example = () => {
 
 ## Цветовые варианты
 
-```jsx { "props": { "layout": false } }
+```jsx
 <OnboardingTooltipContainer>
   <OnboardingTooltip placement="right" description={`appearance="accent"`} appearance="accent">
     <div style={{ width: 50, margin: 10 }}>
