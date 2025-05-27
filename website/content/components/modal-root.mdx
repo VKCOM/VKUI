@@ -13,8 +13,8 @@
 
 Свойство `activeModal` переключает между модальными окнами.
 
-- при смене значения свойства `activeModal` происходит плавный переход от одного модального окна к другому;
-- при установке `activeModal` как `null` текущее модальное окно закрывается.
+- При смене значения свойства `activeModal` происходит плавный переход от одного модального окна к другому.
+- При установке `activeModal` как `null` текущее модальное окно закрывается.
 
 `ModalRoot` принимает свойство `onClose`, которое будет вызвано с идентификатором текущего активного модального окна
 или карточки после смахивания вниз или нажатия на крестик или нажатия на оверлей. Приложение должно установить в качестве нового
@@ -24,7 +24,7 @@
 Также при использовании `ModalRoot` создаётся общий `ModalOverlay` для переданных компонентов, чтобы избегать моргания при
 переключении модальных окон.
 
-> ⚠️ **Safari**
+> **Safari**
 >
 > В браузере **Safari < 16** на **iOS** сворачивание вниз [`ModalPage`](/components/modal-page) и [`ModalCard`](/components/modal-card) может вызвать функцию
 > **pull-to-refresh**. Попытка блокировать это поведение приводит к другим проблемам, например, к блокированию скролла (cм. https://github.com/VKCOM/VKUI/issues/335),
@@ -33,7 +33,7 @@
 > При этом в **Safari >= 16** такой проблему нет, т.к. в нём блокирование **pull-to-refresh** решается в одно свойство [`overscroll-behavior-y: none;`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y).
 > Это свойство автоматически выставляется на `html` при открытии модального окна и удаляется при закрытии.
 
-```jsx { "props": { "layout": false, "adaptivity": true, "showCustomPanelHeaderAfterProps": true } }
+```jsx
 const MODAL_PAGE_FILTERS = 'filters';
 const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
