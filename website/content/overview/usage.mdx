@@ -1,152 +1,130 @@
 <Overview>
 # Использование
 
-На данной странице представлены примеры с минимальной структурой приложения.
+После выполнения шагов из предыдущей страницы [Установка](/overview/install), у вас уже должно запускаться минимально работающее
+приложение. На данной странице рассмотрим простой пример использования и рекомендации по дальнейшим шагам.
+
+Примеры продолжим создавать в контексте шаблона [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
 
 </Overview>
 
-## Обязательная конфигурация [#required-wrapper]
+## Быстрый старт [#quick-start]
 
-После выполнения шагов в разделе [Установка](/overview/install), у вас уже должно запускаться работающее минимальное приложение.
-Рассмотрим его структуру:
+Предлагаем начать с импортирования компонента [`Button`](/components/button) и поиграть с его свойствами.
 
-```jsx
-<ConfigProvider>
-  <AdaptivityProvider>
-    <AppRoot>{/* приложение */}</AppRoot>
-  </AdaptivityProvider>
-</ConfigProvider>
+{/* TODO: для этого кода нужно превью, код должен быть виден по умолчанию */}
+
+```jsx filename="src/App.tsx"
+import { Button } from '@vkontakte/vkui';
+
+export default function App() {
+  return (
+    <Button mode="outline" size="l">
+      Привет, мир!
+    </Button>
+  );
+}
 ```
 
-- [`ConfigProvider`](/components/config-provider) позволяет конфигурировать приложение под разные платформы и темы.
+И уже далее погружаться в дивный мир создания приложений. Мы постараемся помочь вам с этим.
 
-- [`AdaptivityProvider`](/components/adaptivity-provider) позволяет приложению корректно адаптироваться под разные размеры и типы экранов.
+## Навигационные слои [#navigation]
 
-- [`AppRoot`](/components/app-root) позволяет управлять режимами встраивания, скроллом, безопасными отступами и порталами.
+Каждое приложение так или иначе состоит из нескольких экранов с информацией. В VKUI есть специальные компоненты для реализации
+этих экранов и навигации между ними. С такими компонентами вы подробней ознакомитесь далее на странице [Навигация](/overview/navigation),
+а сейчас лишь посмотрим на простой пример как это вообще выглядит.
 
-> Обертки `ConfigProvider`, `AdaptivityProvider` и `AppRoot` обязательны для приложения,
-> остальная структура остается на ваше усмотрение.
+{/* TODO: для этого кода нужно превью, код должен быть скрыт по умолчанию */}
 
-## Многоколоночная структура
+```jsx filename="src/App.tsx"
+import { useState } from 'react';
+import {
+  SplitLayout,
+  SplitCol,
+  View,
+  Panel,
+  PanelHeader,
+  Group,
+  CellButton,
+} from '@vkontakte/vkui';
 
-VKUI позволяет создавать многоколоночные интерфейсы (например, как сайт `vk.com`).
-Для этого используйте компоненты [`SplitLayout`](/components/split-layout) и [`SplitCol`](/components/split-col).
-
-> Компонент `SplitLayout` должен быть один на всё приложение.
->
-> Если ваше приложение не подразумевает использование многоколоночного интерфейса, то достаточно сделать обёртку в виде
-> одного `SplitLayout` и одного `SplitCol`.
-
-```jsx
-<ConfigProvider>
-  <AdaptivityProvider>
-    <AppRoot>
-      <SplitLayout>
-        <SplitCol width={280} maxWidth={280}>
-          Колонка слева
-        </SplitCol>
-        <SplitCol>Колонка справа</SplitCol>
-      </SplitLayout>
-    </AppRoot>
-  </AdaptivityProvider>
-</ConfigProvider>
-```
-
-В реальном приложении ваша структура будет выглядеть несколько сложнее. Например, в колонку справа вы
-можете передавать коллекцию `Panel` или `View`, для организации постраничной навигации, а в колонке слева
-держать только один компонент `Panel` с навигационным меню.
-
-## Навигационные слои (экраны)
-
-Обычно приложение состоит из нескольких экранов с информацией (навигационных слоёв).
-В библиотеке VKUI организация навигационных слоёв осуществляется с помощью нескольких компонентов:
-
-- [`Panel`](/components/panel) - минимальный навигационный слой, представляющий собой страницу с контентом;
-- [`View`](/components/view) - позволяет создавать коллекцию компонентов `Panel`;
-- [`Root`](/components/root) - позволяет создавать коллекцию компонентов `View`;
-- [`Epic`](/components/epic) - позволяет создавать либо коллекцию компонентов `Root`, либо коллекцию `View`.
-
-Подробнее про компоненты можно почитать на соответствующих страницах, а увидеть примеры и рекомендации по
-использованию конкретных навигационных слоёв на странице [Навигация](/overview/navigation).
-
-Минимальный пример с одной страницей будет выглядеть следующим образом
-(используйте компонент `PageExample` внутри [Обязательной обёртки](#required-wrapper)):
-
-```jsx
-import { SplitLayout, SplitCol, Panel, PanelHeader, usePlatform } from '@vkontakte/vkui';
-
-export function PageExample() {
-  // хук позволяет получить значение текущей платформы
-  const platform = usePlatform();
-  // Необходимо для создания сквозной шапки
-  const hasHeader = platform !== 'vkcom';
+export default function App() {
+  const [activePanel, setActivePanel] = useState('panel-1');
 
   return (
-    <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+    <SplitLayout header={<PanelHeader delimiter="none" />}>
       <SplitCol width="100%" stretchedOnMobile autoSpaced>
-        <Panel id="main">
-          <PanelHeader>VKUI</PanelHeader>
-          Контент
-        </Panel>
+        <View activePanel={activePanel}>
+          <Panel id="panel-1">
+            <PanelHeader>panel-1</PanelHeader>
+            <Group>
+              <CellButton onClick={() => setActivePanel('panel-2')}>Перейти к panel-2</CellButton>
+            </Group>
+          </Panel>
+          <Panel id="panel-2">
+            <PanelHeader>panel-2</PanelHeader>
+            <Group>
+              <CellButton onClick={() => setActivePanel('panel-1')}>Вернуться к panel-1</CellButton>
+            </Group>
+          </Panel>
+        </View>
       </SplitCol>
     </SplitLayout>
   );
 }
 ```
 
-## Платформы
+## Многоколоночный интерфейс [#multiple-columns]
 
-На данный момент поддерживаются 2 платформы — _android_ и _iOS_.
-Также есть платформа _vkcom_, подробнее читайте в разделе [О vkcom](#vkcom).
+Если на мобильных устройствах приходится ограничивать количество элементов в одной области, то на настольных, напротив, можно
+размещать их значительно больше. Для этого интерфейс, как правило, делится на колонки. Для этого в библиотеке есть компонент
+[`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Детали будут также
+на странице [Навигация](/overview/navigation).
 
-Платформа влияет на внешний вид компонентов, анимации и поведение интерфейса.
+Приведём адаптивный пример работы `SplitLayout`.
 
-По умолчанию на вебе и мобильных устройствах под управлением системы Android, используется платформа _android_. На
-мобильных устройствах или планшетах с системой `iOS/iPadOS`, используется платформа _iOS_.
+{/* TODO: для этого кода нужно превью, код должен быть скрыт по умолчанию */}
 
-Передавать платформу в компонент [`ConfigProvider`](/components/config-provider) необязательно,
-так как она по умолчанию определяется автоматически и специфичные компоненты подстраиваются под неё сами.
+```jsx filename="src/App.tsx"
+import { SplitLayout, SplitCol, useAdaptivityConditionalRender } from '@vkontakte/vkui';
 
-Если вы хотите, чтобы платформенных различий в приложении не было, вы можете передать в `ConfigProvider` свойство
-`platform` с нужным значением:
+export default function App() {
+  const { viewWidth } = useAdaptivityConditionalRender();
 
-```jsx
-<ConfigProvider platform="ios">
-  <AdaptivityProvider>
-    <AppRoot>
-      <SimpleCell>
-        Эта ячейка будет иметь поведение и стилизацию как в iOS на любой платформе
-      </SimpleCell>
-    </AppRoot>
-  </AdaptivityProvider>
-</ConfigProvider>
+  return (
+    <SplitLayout>
+      {viewWidth.tabletPlus && (
+        <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+          <div
+            style={{
+              padding: 12,
+              height: 80,
+              color: 'white',
+              backgroundColor: 'tomato',
+            }}
+          >
+            Фиксированная колонка слева
+          </div>
+        </SplitCol>
+      )}
+      <SplitCol>
+        <div
+          style={{
+            padding: 12,
+            height: 'calc(100% - 24px)',
+            color: 'white',
+            backgroundColor: 'steelblue',
+          }}
+        >
+          Колонка справа
+          {viewWidth.tabletMinus && (
+            <p className={viewWidth.tabletMinus.className}>
+              ⚠️ колонка слева спрятана по условию адаптивности
+            </p>
+          )}
+        </div>
+      </SplitCol>
+    </SplitLayout>
+  );
+}
 ```
-
-Или, если вам необходимо переопределить платформу точечно для отдельных компонентов приложения, то
-вы можете сделать это с помощью `PlatformProvider`:
-
-```jsx
-<PlatformProvider value="ios">
-  <Snackbar action="Поделиться">Поделиться</Snackbar>
-</PlatformProvider>
-```
-
-### О платформе `vkcom` [#vkcom]
-
-Такое название платформа имеет по историческим причинам и используется командой ВКонтакте.
-
-Она не предназначена для адаптивного интерфейса, используйте её только в том случае, если ваше приложение встроено в [vk.com](https://vk.com).
-
-## Режимы подключения
-
-Библиотека VKUI поддерживает три режима подключения. В зависимости от выбранного режима подключения
-вам будут доступны или не доступны некоторые возможности VKUI.
-
-- **full** — ваше приложение полностью реализовано с помощью библиотеки VKUI и контролируется ей;
-- **embedded** — ваше приложение будет реализовано в виде блока, встроенного в основное приложение (например, Марусю или базовое приложение ВКонтакте);
-- **partial** — ваше приложение реализовано с помощью сторонних решений и использует некоторые компоненты библиотеки VKUI.
-
-> Вне зависимости от выбранного режима, ваше приложение всё равно должно содержать [обязательную обёртку](#required-wrapper).
-
-Режим выставляется в компоненте `AppRoot` с помощью свойства `mode`. Подробнее о вариантах использования
-можно прочитать на странице компонента [`AppRoot`](/components/app-root).
