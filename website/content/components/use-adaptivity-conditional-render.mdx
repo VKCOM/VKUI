@@ -38,12 +38,12 @@ import {
 } from '@vkontakte/vkui';
 
 export function App() {
-  const { deviceType } = useAdaptivityConditionalRender();
+  const { viewWidth } = useAdaptivityConditionalRender();
 
   return (
     <SplitLayout header={<PanelHeader delimiter="none" />}>
-      {deviceType.desktop && (
-        <SplitCol fixed width={280} maxWidth={280} className={deviceType.desktop.className}>
+      {viewWidth.tabletPlus && (
+        <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
           {/* ... */}
         </SplitCol>
       )}
