@@ -60,7 +60,7 @@
 ### Подключите VKUI [#step4]
 
 Для этого нужно обернуть приложение в обязательные провайдеры и импортировать CSS-бандл `'@vkontakte/vkui/dist/vkui.css'`.
-Рекомендуем это делать в корне приложения.
+Рекомендуем это делать в корне приложения (обычно это `main.tsx` или `index.tsx`).
 
 Пример для проекта с шаблоном [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
 
@@ -83,7 +83,7 @@ createRoot(document.getElementById('root')!).render(
 ```
 
 - [`ConfigProvider`](/components/config-provider) – конфигурирует приложение под разные платформы и темы.
-- [`AppRoot`](/components/app-root) – управляет режимами встраивания, скроллом, безопасными отступами и порталами.
+- [`AppRoot`](/components/app-root) – управляет режимами встраивания, полосой прокрутки, безопасными отступами и порталами.
 - см. [Vite | CSS](https://vite.dev/guide/features#css)
 - см. [Next.js | External stylesheets](https://nextjs.org/docs/app/getting-started/css#external-stylesheets)
 
