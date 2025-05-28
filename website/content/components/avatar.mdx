@@ -1,0 +1,110 @@
+<Overview>
+# Avatar
+
+Компонент для отображения аватара пользователя — фотографии, инициалов или графики. Наследует все свойства HTML-элемента `<img>`.
+
+</Overview>
+
+```jsx
+<Avatar src="/user.jpg" alt="Фото пользователя" />
+```
+
+## Основные варианты
+
+### Изображение
+
+Основной вариант, использует стандартный `<img>` под капотом.
+
+```jsx
+<Avatar src="/user.jpg" alt="Фото пользователя" />
+```
+
+### Инициалы
+
+Отображаются если изображение не загрузилось.
+
+```jsx
+<Avatar initials="ИП" src="/user.jpg" alt="Фото пользователя" />
+```
+
+Рекомендации по использованию инициалов:
+
+- рекомендуемая длина — не более 2 символов;
+- размер шрифта автоматически адаптируется под размер аватара.
+
+### Градиентный фон
+
+Используется при отсутствии изображения.
+
+```jsx
+<Avatar initials="ИП" gradientColor={5} />
+```
+
+## Визуальное оформление
+
+### Градиенты
+
+Задаются свойством `gradientColor`. Можно использовать предопределенные цвета:
+
+- `1`: `"red"`;
+- `2`: `"orange"`;
+- `3`: `"yellow"`;
+- `4`: `"green"`;
+- `5`: `"l-blue"`;
+- `6`: `"violet"`.
+
+А также можно использовать кастомный градиент:
+
+```jsx
+<Avatar gradientColor="custom" style={{ backgroundImage: 'linear-gradient(...)' }} />
+```
+
+Для динамического определения цвета по ID пользователя:
+
+```jsx
+import { calcInitialsAvatarColor } from '@vkontakte/vkui';
+
+<Avatar initials="ИП" gradientColor={calcInitialsAvatarColor(userId)} />;
+```
+
+## Дополнительные элементы
+
+### Бейдж
+
+```jsx
+<Avatar src="/user.jpg" size={48}>
+  <Avatar.Badge background="stroke">
+    <Icon20OnlineMobile />
+  </Avatar.Badge>
+</Avatar>
+```
+
+### Готовый пресет бейджа
+
+Подкомпонент `Avatar.BadgeWithPreset` предоставляет готовые пресеты `Avatar.Badge`.
+При прокидывании в свойство `preset` значения `online` используется иконка `Icon12Circle`,
+а при значении `online-mobile` иконка `Icon12OnlineMobile`.
+
+```jsx
+<Avatar src="/user.jpg" size={48}>
+  <Avatar.BadgeWithPreset preset="online" />
+</Avatar>
+```
+
+### Наложение
+
+```jsx
+<Avatar src="/user.jpg" size={48}>
+  <Avatar.Overlay theme="dark">
+    <Icon24Camera />
+  </Avatar.Overlay>
+</Avatar>
+```
+
+## Особенности
+
+Компонент поддерживает следующие возможности:
+
+- автоматическая адаптация размера шрифта для инициалов;
+- поддержка всех стандартных HTML-атрибутов `<img>`;
+- сохранение пропорций изображения при изменении размеров.

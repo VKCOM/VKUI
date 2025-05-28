@@ -1,0 +1,29 @@
+<Overview>
+
+# LocaleProvider
+
+Компонент, позволяющий переопределить локаль.
+
+</Overview>
+
+## Локаль
+
+Задаётся свойством `value`. В качестве значений принимает строку с [языковой меткой BCP 47](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+
+```jsx
+<LocaleProvider value="en">
+  {/* часть вашего приложения, требующая переопределения локали */}
+</LocaleProvider>
+```
+
+## Хук useLocale
+
+Для получения значения текущей локали используйте хук `useLocale`:
+
+```jsx
+import { useLocale } from '@vkontakte/vkui';
+```
+
+```jsx
+const locale = useLocale();
+```
