@@ -120,6 +120,7 @@ export const Clickable = <T,>(props: ClickableProps<T>): React.ReactNode => {
   const {
     baseClassName,
     disabled, // Игнорируем disabled из пропсов, т.к. он обрабатывается в commonProps
+    Component: ignore,
     ...restProps
   } = props;
 
