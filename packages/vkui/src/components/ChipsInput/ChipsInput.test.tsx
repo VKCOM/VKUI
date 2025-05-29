@@ -3,18 +3,12 @@ import { baselineComponent, userEvent } from '../../testing/utils';
 import { ChipsInput } from './ChipsInput';
 
 describe(ChipsInput, () => {
-  baselineComponent(ChipsInput, {
-    a11yConfig: {
-      rules: {
-        // TODO: listbox не имеет label/title/labelledby
-        // https://dequeuniversity.com/rules/axe/4.9/aria-input-field-name?application=axeAPI
-        'aria-input-field-name': { enabled: false },
-        // TODO: real input has no assiciated label
-        // https://dequeuniversity.com/rules/axe/4.9/label?application=axeAPI
-        'label': { enabled: false },
-      },
-    },
-  });
+  baselineComponent((props) => (
+    <>
+      <label htmlFor="chips">Chips Input</label>
+      <ChipsInput {...props} id="chips" />
+    </>
+  ));
 
   it('check reset form event', async () => {
     const onChange = jest.fn();

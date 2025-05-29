@@ -40,18 +40,12 @@ describe('ChipsSelect', () => {
   afterEach(() => {
     placementStub = undefined;
   });
-  baselineComponent(ChipsSelect, {
-    a11yConfig: {
-      rules: {
-        // TODO: listbox не имеет label/title/labelledby
-        // https://dequeuniversity.com/rules/axe/4.9/aria-input-field-name?application=axeAPI
-        'aria-input-field-name': { enabled: false },
-        // TODO: real input has no assiciated label
-        // https://dequeuniversity.com/rules/axe/4.9/label?application=axeAPI
-        'label': { enabled: false },
-      },
-    },
-  });
+  baselineComponent((props) => (
+    <>
+      <label htmlFor="chips">Chips Input</label>
+      <ChipsSelect id="chips" {...props} />
+    </>
+  ));
 
   fakeTimers();
 

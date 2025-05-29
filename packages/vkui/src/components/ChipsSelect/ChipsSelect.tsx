@@ -195,6 +195,9 @@ export const ChipsSelect = <Option extends ChipOption>({
   allowClearButton,
   clearButtonTestId,
   delimiter,
+
+  // a11y
+  chipsListLabel,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
   const {
@@ -595,6 +598,7 @@ export const ChipsSelect = <Option extends ChipOption>({
         aria-controls={opened ? dropdownId : undefined}
         aria-activedescendant={opened ? dropdownCurrentItemId : undefined}
         aria-haspopup="listbox"
+        chipsListLabel={chipsListLabel}
       />
       {opened && (
         <CustomSelectDropdown

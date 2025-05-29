@@ -9,7 +9,7 @@ import type {
 import { type FormFieldProps } from '../FormField/FormField';
 import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 
-export type NavigateTo = 'prev' | 'next' | 'last';
+export type NavigateTo = 'prev' | 'next' | 'last' | 'first';
 
 export type ChipOptionValue = string | number;
 
@@ -187,6 +187,10 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
    * Должна принимать обязательное свойство `onClick`.
    */
   ClearButton?: React.ComponentType<FormFieldClearButtonProps>;
+  /**
+   * `aria-label` для списка выбранных опций.
+   */
+  chipsListLabel?: string;
 }
 
 /**

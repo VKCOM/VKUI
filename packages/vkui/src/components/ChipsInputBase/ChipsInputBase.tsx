@@ -66,6 +66,9 @@ export const ChipsInputBase = <O extends ChipOption>({
   clearButtonShown,
   clearButtonTestId,
   onClear,
+
+  // a11y
+  chipsListLabel = 'Выбранные опции',
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -157,6 +160,8 @@ export const ChipsInputBase = <O extends ChipOption>({
         }
         break;
       }
+      case Keys.HOME:
+      case Keys.END:
       case Keys.ARROW_UP:
       case Keys.ARROW_LEFT:
       case Keys.ARROW_DOWN:
@@ -222,6 +227,8 @@ export const ChipsInputBase = <O extends ChipOption>({
     return undefined;
   }, [after, clearButton]);
 
+  const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
+
   const inputWidth = useInputWidth({
     containerRef,
     listBoxRef: listboxRef,
@@ -262,6 +269,8 @@ export const ChipsInputBase = <O extends ChipOption>({
           aria-orientation="horizontal"
           aria-disabled={disabled}
           aria-readonly={readOnly}
+          aria-label={chipsListLabel}
+          aria-describedby={inputId}
         >
           {value.map((option, index) => (
             <React.Fragment key={`${typeof option.value}-${option.value}`}>
@@ -296,12 +305,16 @@ export const ChipsInputBase = <O extends ChipOption>({
           autoCorrect="off"
           spellCheck={false}
           {...restProps}
-          style={{
-            maxWidth: inputWidth,
-          }}
+          style={
+            inputWidth !== undefined
+              ? {
+                  maxWidth: inputWidth,
+                }
+              : undefined
+          }
           Component="input"
           type="text"
-          id={idProp || `chips-input-base-generated-id-${idGenerated}`}
+          id={inputId}
           getRootRef={inputRef}
           className={styles.el}
           disabled={disabled}

@@ -66,6 +66,8 @@ export const getNextChipOptionIndexByNavigateToProp = (
       return nextIndex > LAST_INDEX ? 0 : nextIndex;
     case 'last':
       return LAST_INDEX;
+    case 'first':
+      return 0;
     default:
       /* istanbul ignore next */
       return -1;
@@ -87,8 +89,8 @@ export const useInputWidth = ({
   listBoxRef,
   valuesLength,
 }: UseInputPositionArgs) => {
-  const [width, setWidth] = React.useState<number | undefined>(undefined);
   const direction = useConfigDirection();
+  const [width, setWidth] = React.useState<number | undefined>(undefined);
 
   const recalculateInputWidth = React.useCallback(() => {
     if (!inputRef.current || !containerRef.current || !listBoxRef.current) {
@@ -107,14 +109,16 @@ export const useInputWidth = ({
       left: listBoxRef.current.offsetLeft + foundOption.offsetLeft,
     };
     const containerWidth = containerRef.current.offsetWidth;
-    const paddings = parseInt(getComputedStyle(containerRef.current).padding);
+    const paddings = parseInt(getComputedStyle(containerRef.current).padding) || 0;
     const inputStyles = getComputedStyle(inputRef.current);
-    const inputMarginInlineStart = parseInt(
-      inputStyles.getPropertyValue('--vkui_internal--chips_input_base_input_margin-inline-start'),
-    );
-    const inputMarginInlineEnd = parseInt(
-      inputStyles.getPropertyValue('--vkui_internal--chips_input_base_input_margin-inline-end'),
-    );
+    const inputMarginInlineStart =
+      parseInt(
+        inputStyles.getPropertyValue('--vkui_internal--chips_input_base_input_margin-inline-start'),
+      ) || 0;
+    const inputMarginInlineEnd =
+      parseInt(
+        inputStyles.getPropertyValue('--vkui_internal--chips_input_base_input_margin-inline-end'),
+      ) || 0;
     const isRtl = direction === 'rtl';
 
     const freeSpaceWidth = isRtl
