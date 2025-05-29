@@ -36,6 +36,15 @@ describe(Tappable, () => {
     expect(tappable().tagName.toLowerCase()).toMatch('div');
   });
 
+  it('Component: if Component is undefined it should respect component autodetect', () => {
+    render(
+      <TappableTest href="https://vk.com" Component={undefined}>
+        VK Link
+      </TappableTest>,
+    );
+    expect(tappable().tagName.toLowerCase()).toMatch('a');
+  });
+
   it('a11y(role): role gets set for custom button', () => {
     render(<TappableTest onClick={noop}>Custom Button</TappableTest>);
     expect(tappable()).toHaveAttribute('role', 'button');
