@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { SegmentedControl, type SegmentedControlProps } from '@vkontakte/vkui';
+import { Tabs, TabsItem } from '@vkontakte/vkui';
 import { Pre } from '../Pre/Pre';
 import styles from './PackageManagers.module.css';
 
@@ -13,29 +13,29 @@ interface PackageManagersClientProps {
 }
 
 export function PackageManagersClient({ packageManagers }: PackageManagersClientProps) {
-  const [activeTab, setActiveTab] = React.useState<string | undefined>('npm');
-
-  const options: SegmentedControlProps['options'] = packageManagers.map((manager) => ({
-    'label': manager.id,
-    'value': manager.id,
-    'aria-controls': `tab-content-${manager.id}`,
-    'id': `tab-${manager.id}`,
-    'className': styles['pkg-manager'],
-  }));
+  const [activeTab, setActiveTab] = React.useState<string>(packageManagers[0].id);
 
   return (
     <div className={styles.root}>
       <Pre
         data-copy=""
         header={
-          <SegmentedControl
-            role="tablist"
-            value={activeTab}
-            // @ts-expect-error: TS2322 VKUI fix typing?
-            onChange={setActiveTab}
-            options={options}
-            size="m"
-          />
+          <Tabs
+            selectedId={activeTab}
+            onSelectedIdChange={setActiveTab}
+            mode="secondary"
+            layoutFillMode="shrinked"
+          >
+            {packageManagers.map((manager) => (
+              <TabsItem
+                key={manager.id}
+                id={manager.id}
+                aria-controls={`tab-content-${manager.id}`}
+              >
+                {manager.id}
+              </TabsItem>
+            ))}
+          </Tabs>
         }
       >
         {packageManagers.map(
@@ -44,7 +44,7 @@ export function PackageManagersClient({ packageManagers }: PackageManagersClient
               <div
                 key={manager.id}
                 id={`tab-content-${manager.id}`}
-                aria-labelledby={`tab-${manager.id}`}
+                aria-labelledby={manager.id}
                 role="tabpanel"
                 tabIndex={0}
               >
