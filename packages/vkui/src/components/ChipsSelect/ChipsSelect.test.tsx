@@ -46,9 +46,6 @@ describe('ChipsSelect', () => {
         // TODO: listbox не имеет label/title/labelledby
         // https://dequeuniversity.com/rules/axe/4.9/aria-input-field-name?application=axeAPI
         'aria-input-field-name': { enabled: false },
-        // TODO: combobox is not allowed as children of listbox
-        // https://dequeuniversity.com/rules/axe/4.9/aria-required-children?application=axeAPI
-        'aria-required-children': { enabled: false },
         // TODO: real input has no assiciated label
         // https://dequeuniversity.com/rules/axe/4.9/label?application=axeAPI
         'label': { enabled: false },

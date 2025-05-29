@@ -21,6 +21,7 @@ import {
   getChipOptionValueByHTMLElement,
   getNextChipOptionIndexByNavigateToProp,
   isInputValueEmpty,
+  useInputWidth,
 } from './helpers';
 import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps, NavigateTo } from './types';
 import styles from './ChipsInputBase.module.css';
@@ -29,6 +30,8 @@ const sizeYClassNames = {
   none: styles.sizeYNone,
   compact: styles.sizeYCompact,
 } as const;
+
+const MIN_INPUT_WIDTH = 64;
 
 export const ChipsInputBase = <O extends ChipOption>({
   // FormFieldProps
@@ -68,6 +71,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   const { sizeY = 'none' } = useAdaptivity();
   const idGenerated = React.useId();
   const inputRef = useExternRef(getRef);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const listboxRef = React.useRef<HTMLDivElement>(null);
 
   const valueLength = value.length;
@@ -218,6 +222,13 @@ export const ChipsInputBase = <O extends ChipOption>({
     return undefined;
   }, [after, clearButton]);
 
+  const inputWidth = useInputWidth({
+    containerRef,
+    listBoxRef: listboxRef,
+    inputRef,
+    valuesLength: value?.length || 0,
+  });
+
   return (
     <FormField
       Component="div"
@@ -237,47 +248,57 @@ export const ChipsInputBase = <O extends ChipOption>({
           styles.host,
           sizeY !== 'regular' && sizeYClassNames[sizeY],
           withPlaceholder && styles.hasPlaceholder,
+          inputValue && styles.hasInputValue,
+          inputWidth && inputWidth < MIN_INPUT_WIDTH && styles.inputNewLine,
         )}
-        // для a11y
-        ref={listboxRef}
-        role="listbox"
-        aria-orientation="horizontal"
-        aria-disabled={disabled}
-        aria-readonly={readOnly}
+        ref={containerRef}
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
       >
-        {value.map((option, index) => (
-          <React.Fragment key={`${typeof option.value}-${option.value}`}>
-            {renderChip(
-              {
-                'Component': 'div',
-                'value': option.value,
-                'label': option.label,
-                'disabled': option.disabled || disabled,
-                'readOnly': option.readOnly || readOnly,
-                'className': styles.chip,
-                'onRemove': handleChipRemove,
-                // чтобы можно было легче найти этот чип в DOM
-                'data-index': index,
-                'data-value': option.value,
-                'data-value-type': typeof option.value,
-                // для a11y
-                'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
-                'role': 'option',
-                'aria-selected': true,
-                'aria-posinset': index + 1,
-                'aria-setsize': valueLength,
-              },
-              option,
-            )}
-          </React.Fragment>
-        ))}
+        <div
+          className={styles.listBox}
+          // для a11y
+          ref={listboxRef}
+          role="listbox"
+          aria-orientation="horizontal"
+          aria-disabled={disabled}
+          aria-readonly={readOnly}
+        >
+          {value.map((option, index) => (
+            <React.Fragment key={`${typeof option.value}-${option.value}`}>
+              {renderChip(
+                {
+                  'Component': 'div',
+                  'value': option.value,
+                  'label': option.label,
+                  'disabled': option.disabled || disabled,
+                  'readOnly': option.readOnly || readOnly,
+                  'className': styles.chip,
+                  'onRemove': handleChipRemove,
+                  // чтобы можно было легче найти этот чип в DOM
+                  'data-index': index,
+                  'data-value': option.value,
+                  'data-value-type': typeof option.value,
+                  // для a11y
+                  'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
+                  'role': 'option',
+                  'aria-selected': true,
+                  'aria-posinset': index + 1,
+                  'aria-setsize': valueLength,
+                },
+                option,
+              )}
+            </React.Fragment>
+          ))}
+        </div>
         <Text
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
           {...restProps}
+          style={{
+            maxWidth: inputWidth,
+          }}
           Component="input"
           type="text"
           id={idProp || `chips-input-base-generated-id-${idGenerated}`}

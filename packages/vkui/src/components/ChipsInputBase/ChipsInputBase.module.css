@@ -3,13 +3,19 @@
 
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
-  display: flex;
+  display: inline;
   flex-grow: 1;
   flex-shrink: 1;
-  flex-wrap: wrap;
   max-inline-size: 100%;
   padding: var(--vkui_internal--chips_input_base_container_gap);
   margin: 0;
+  overflow: hidden;
+}
+
+.listBox {
+  position: relative;
+  display: inline;
+  max-inline-size: 100%;
   overflow: hidden;
   list-style: none;
 }
@@ -17,15 +23,27 @@
 .chip {
   max-inline-size: calc(100% - var(--vkui_internal--chips_input_base_container_gap));
   margin: 2px;
+  vertical-align: middle;
 }
 
 .el {
+  --vkui_internal--chips_input_base_input_margin-inline-start: 10px;
+  --vkui_internal--chips_input_base_input_margin-inline-end: 2px;
+  --vkui_internal--chips_input_base_input_margin-block-start: 2px;
+  --vkui_internal--chips_input_base_input_margin-block-end: 4px;
+
   position: relative;
-  flex: 1;
-  inline-size: 100%;
+  display: inline;
+  inline-size: calc(
+    100% - var(--vkui_internal--chips_input_base_input_margin-inline-start) -
+      var(--vkui_internal--chips_input_base_input_margin-inline-end)
+  );
   padding: 0;
-  margin-block: 2px 4px;
-  margin-inline: 10px 2px;
+  margin-block: var(--vkui_internal--chips_input_base_input_margin-block-start)
+    var(--vkui_internal--chips_input_base_input_margin-block-end);
+  margin-inline: var(--vkui_internal--chips_input_base_input_margin-inline-start)
+    var(--vkui_internal--chips_input_base_input_margin-inline-end);
+  vertical-align: middle;
   color: var(--vkui--color_text_primary);
   appearance: none;
   background: transparent;
@@ -33,8 +51,16 @@
   box-shadow: none;
 }
 
-.el:not(:read-only):focus {
-  min-inline-size: 64px;
+/* Растягиваем input на всю ширину */
+/* Когда отображается плейсхолдер */
+.hasPlaceholder .el,
+/* Когда инпут не помещается, переносится на новую строку и в него уже введен текст */
+.inputNewLine.hasInputValue .el,
+/* Когда инпут не помещается, переносится на новую строку и находится в фокусе */
+.inputNewLine .el:not(:read-only):focus {
+  /* important нужен, чтобы перебить maxWidth установленный через стили */
+  /* stylelint-disable-next-line declaration-no-important */
+  max-inline-size: 100% !important;
 }
 
 .el::-ms-clear {
@@ -56,7 +82,15 @@
 }
 
 .hasPlaceholder .el {
-  margin-inline: calc(12px - var(--vkui_internal--chips_input_base_container_gap)) 0;
+  --vkui_internal--chips_input_base_input_margin-inline-start: calc(
+    12px - var(--vkui_internal--chips_input_base_container_gap)
+  );
+  --vkui_internal--chips_input_base_input_margin-inline-end: 0px;
+
+  block-size: calc(
+    100% - var(--vkui_internal--chips_input_base_input_margin-block-start) -
+      var(--vkui_internal--chips_input_base_input_margin-block-end)
+  );
   text-overflow: ellipsis;
   white-space: nowrap;
 }
