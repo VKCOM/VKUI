@@ -14,8 +14,8 @@
 
 .pre {
   flex: 1;
-  padding-block: var(--vkui--spacing_size_2xl);
-  padding-inline: var(--vkui--spacing_size_4xl);
+  padding-block: var(--vkui--spacing_size_xl);
+  padding-inline: var(--vkui--spacing_size_xl);
   overflow-x: auto;
   font-size: 14px;
   contain: paint;
@@ -33,7 +33,7 @@
 }
 
 .header {
-  padding-inline: var(--vkui--spacing_size_4xl) var(--vkui--spacing_size_m);
+  padding-inline: var(--vkui--spacing_size_m) 0;
   background-color: rgb(127, 143, 160, 0.05);
   border-block-end: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
 }

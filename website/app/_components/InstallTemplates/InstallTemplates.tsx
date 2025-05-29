@@ -12,7 +12,7 @@ const appearanceClassNames = {
 
 export function InstallTemplates() {
   return (
-    <SimpleGrid gap="2xl" minColWidth={330} margin="auto-block">
+    <SimpleGrid gap="2xl" minColWidth={245} margin="auto-block">
       <InstallTemplate
         title="Vite"
         before={<ViteLogo />}

@@ -1,6 +1,7 @@
 .root {
   padding-block: 2px;
   padding-inline: var(--vkui_docs--code-inline-padding, 4px);
+  overflow-wrap: break-word;
   background-color: var(
     --vkui_docs--code-background,
     var(--vkui--color_background_secondary_alpha)

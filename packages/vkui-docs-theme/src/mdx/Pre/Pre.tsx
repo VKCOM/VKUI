@@ -29,7 +29,7 @@ export function Pre({
   return (
     <div className={styles.root}>
       {(filename || header) && (
-        <Flex className={styles.header} align="center" justify="space-between">
+        <Flex className={styles.header} align="center" justify="space-between" noWrap>
           {header || filename}
           {copy === '' && <CopyButton getValue={getValue} />}
         </Flex>
