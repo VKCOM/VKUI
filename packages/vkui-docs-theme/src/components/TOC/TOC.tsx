@@ -46,7 +46,7 @@ export function TOC({ toc }: TOCProps) {
   } = useConfig();
   const { toc: tocVisible } = themeContext;
 
-  if (!tocVisible) {
+  if (!tocVisible || !toc.length) {
     return <div className={styles.root} />;
   }
 

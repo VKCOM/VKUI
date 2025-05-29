@@ -1,0 +1,50 @@
+.background {
+  background-image: radial-gradient(
+    ellipse at 0 50px,
+    transparent 60%,
+    var(--vkui_docs--install_templates_bkg)
+  );
+  opacity: 0.1;
+  transition: opacity 0.35s ease-in;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkui--vkBase--dark) .background {
+  background-image: radial-gradient(
+    ellipse at 0 50px,
+    transparent 60%,
+    var(--vkui_docs--install_templates_bkg)
+  );
+  opacity: 0.4;
+}
+
+.purple {
+  --vkui_docs--install_templates_bkg: var(--vkui--color_accent_purple);
+}
+
+.lime {
+  --vkui_docs--install_templates_bkg: var(--vkui--color_accent_blue);
+}
+
+.hover .background {
+  opacity: 0.2;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkui--vkBase--dark) .hover .background {
+  opacity: 0.6;
+}
+
+.externalLink {
+  display: inline-block;
+}
+
+.hover .externalLink {
+  animation: link-shift 0.35s ease-out;
+}
+
+@keyframes link-shift {
+  100% {
+    transform: translateX(2px) translateY(-2px);
+  }
+}
