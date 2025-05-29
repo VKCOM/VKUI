@@ -1,20 +1,17 @@
 <Overview>
 # Установка
 
-За четыре простых шага можно начать создавать приложения с помощью VKUI.
-На данной странице также можно ознакомиться с разными вариантами конфигурации приложения.
+На этой странице представлены пошаговые инструкции по настройке окружения,
+установке зависимостей и непосредственное подключение VKUI.
+
+Если вы разработчик мини-приложений ВКонтакте, то рекомендуем также ознакомиться со
+страницей [Интеграции | VK Mini Apps](https://www.npmjs.com/package/@vkontakte/create-vk-mini-app).
 
 </Overview>
 
-<Callout>
-  Если вы разработчик мини-приложений Вконтакте, используйте [библиотеку
-  `create-vk-mini-app`](https://www.npmjs.com/package/@vkontakte/create-vk-mini-app). На данной
-  странице вам будет полезен только раздел с [CSS Modules](#css-modules).
-</Callout>
+<InstallTemplates />
 
 ## Базовая установка [#base-install]
-
-> TODO: оставить ссылку на темплейты
 
 <Steps>
 
@@ -28,20 +25,17 @@
 
 Установите библиотеку, воспользовавшись нужной командой в соответствии с вашим пакетным менеджером:
 
-```sh
-# npm
-npm i --save @vkontakte/vkui
-# yarn
-yarn add @vkontakte/vkui
-# or pnpm
-pnpm add @vkontakte/vkui
-```
+<PackageManagers
+  npm="npm i --save @vkontakte/vkui"
+  yarn="yarn add @vkontakte/vkui"
+  pnpm="pnpm add @vkontakte/vkui"
+/>
 
 #### Peer Dependencies
 
 Если вы не используете никакие стартовые пакеты, то убедитесь, что у вас установлены следующие обязательные зависимости:
 
-```jsx
+```json
 "peerDependencies": {
   "react": "^18.2.0 || ^19.0.0",
   "react-dom": "^18.2.0 || ^19.0.0"
@@ -224,29 +218,7 @@ module.exports = {
 
 В зависимости от вашего пакетного менеджера вам необходимо будет выполнить следующую команду:
 
-**npm - [npm dedupe](https://docs.npmjs.com/cli/v6/commands/npm-dedupe)**
-
-```sh
-npm dedupe
-```
-
-**Yarn Classic - [yarn-deduplicate](https://www.npmjs.com/package/yarn-deduplicate)**
-
-```sh
-npx yarn-deduplicate --packages @vkontakte/icons
-```
-
-**Yarn Modern - [yarn dedupe](https://yarnpkg.com/cli/dedupe)**
-
-```sh
-yarn dedupe @vkontakte/icons
-```
-
-**pnpm - [pnpm dedupe](https://pnpm.io/cli/dedupe)**
-
-```sh
-pnpm dedupe
-```
+<PackageManagers npm="npm dedupe" yarn="yarn dedupe @vkontakte/icons" pnpm="pnpm dedupe" />
 
 ## CDN
 
