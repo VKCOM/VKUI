@@ -6,7 +6,7 @@ describe(ChipsInput, () => {
   baselineComponent((props) => (
     <>
       <label htmlFor="chips">Chips Input</label>
-      <ChipsInput {...props} id="chips" />
+      <ChipsInput {...props} id="chips" chipsListLabel="Выбранные опции" />
     </>
   ));
 

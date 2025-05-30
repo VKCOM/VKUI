@@ -39,6 +39,7 @@ describe(ChipsInputBase, () => {
         <label htmlFor="chips">Chips Input</label>
         <ChipsInputBaseTest
           id="chips"
+          chipsListLabel="Выбранные опции"
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
           onClear={onClearOptions}
@@ -50,6 +51,7 @@ describe(ChipsInputBase, () => {
     {
       a11yConfig: {
         rules: {
+          // Внутри Chip c role="option" находится кнопка удаления
           'nested-interactive': { enabled: false },
         },
       },
@@ -270,6 +272,12 @@ describe(ChipsInputBase, () => {
 
       await userEvent.type(chipBlueLocator, '{ArrowRight}');
       expect(chipYellowLocator).toHaveFocus();
+
+      await userEvent.type(chipYellowLocator, '{Home}');
+      expect(chipRedLocator).toHaveFocus();
+
+      await userEvent.type(chipRedLocator, '{End}');
+      expect(chipYellowLocator).toHaveFocus();
     });
 
     it('navigates with {Tab}', async () => {
@@ -429,6 +437,23 @@ describe(ChipsInputBase, () => {
     fireEvent.click(screen.getByTestId('clear-button'));
 
     expect(onClearOptions).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call focus to input when click clear button', () => {
+    render(
+      <ChipsInputBaseTest
+        value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
+        clearButtonTestId="clear-button"
+        clearButtonShown={true}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+      />,
+    );
+    expect(screen.getByTestId('clear-button')).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('clear-button'));
+
+    expect(screen.getByTestId('chips-input')).toHaveFocus();
   });
 
   it('remove option by backspace when option value is number', async () => {

@@ -68,7 +68,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   onClear,
 
   // a11y
-  chipsListLabel = 'Выбранные опции',
+  chipsListLabel = '',
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -208,12 +208,21 @@ export const ChipsInputBase = <O extends ChipOption>({
     }
   };
 
+  const handleClear = React.useCallback(() => {
+    if (inputRef.current) {
+      resetChipOptionFocusToInputEl(inputRef.current);
+    }
+    onClear();
+  }, [inputRef, onClear]);
+
   const clearButton = React.useMemo(() => {
     if (clearButtonShown) {
-      return <ClearButton onClick={onClear} disabled={disabled} data-testid={clearButtonTestId} />;
+      return (
+        <ClearButton onClick={handleClear} disabled={disabled} data-testid={clearButtonTestId} />
+      );
     }
     return undefined;
-  }, [ClearButton, clearButtonShown, clearButtonTestId, disabled, onClear]);
+  }, [ClearButton, clearButtonShown, clearButtonTestId, disabled, handleClear]);
 
   const afterItems = React.useMemo(() => {
     if (clearButton || after) {
