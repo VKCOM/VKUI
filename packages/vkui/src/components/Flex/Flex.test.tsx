@@ -28,6 +28,20 @@ describe(Flex, () => {
     expect(screen.getByTestId('flex')).not.toHaveStyle('--vkui_internal--column_gap: 15px');
   });
 
+  it('should reset gap in nested flex', () => {
+    render(
+      <Flex gap={20} data-testid="parent">
+        <div />
+        <Flex data-testid="child">
+          <div />
+          <div />
+        </Flex>
+      </Flex>,
+    );
+    expect(screen.getByTestId('parent')).toHaveStyle('--vkui_internal--row_gap: 20px');
+    expect(screen.getByTestId('child')).toHaveStyle('--vkui_internal--row_gap: 0px');
+  });
+
   describe('check correct classNames', () => {
     it.each<{ props: Partial<FlexProps>; className: string }>([
       {
