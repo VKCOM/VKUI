@@ -11,8 +11,8 @@ const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
 
-  const triggerKeyDownEvent = (key: string) => {
-    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[0], {
+  const triggerKeyDownEvent = (key: string, first: boolean) => {
+    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[first ? 0 : 1], {
       key,
       code: key,
     });
@@ -126,25 +126,28 @@ describe('CalendarRange', () => {
 
     expect(screen.getByTestId(`left-month-picker-8`));
 
-    triggerKeyDownEvent('ArrowLeft');
+    triggerKeyDownEvent('ArrowLeft', true);
 
     expect(screen.getByTestId(`left-month-picker-7`));
     checkActiveDay(new Date(2023, 7, 31));
 
-    triggerKeyDownEvent('ArrowRight');
+    triggerKeyDownEvent('ArrowRight', true);
 
     expect(screen.getByTestId(`left-month-picker-7`));
     checkActiveDay(new Date(2023, 8, 1));
 
-    triggerKeyDownEvent('ArrowUp');
+    triggerKeyDownEvent('ArrowRight', false);
+    checkActiveDay(new Date(2023, 8, 2));
+
+    triggerKeyDownEvent('ArrowUp', false);
 
     expect(screen.getByTestId(`left-month-picker-7`));
-    checkActiveDay(new Date(2023, 7, 25));
+    checkActiveDay(new Date(2023, 7, 26));
 
-    triggerKeyDownEvent('ArrowDown');
+    triggerKeyDownEvent('ArrowDown', true);
 
     expect(screen.getByTestId(`left-month-picker-7`));
-    checkActiveDay(new Date(2023, 8, 1));
+    checkActiveDay(new Date(2023, 8, 2));
   });
 
   it('checks day selection by keyboard', async () => {
