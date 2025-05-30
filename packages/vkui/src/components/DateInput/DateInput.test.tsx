@@ -202,13 +202,13 @@ describe('DateInput', () => {
 
     await userEvent.click(dates);
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-    expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
 
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(subDays(date, 1))));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-    expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
 
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
@@ -361,13 +361,13 @@ describe('DateInput', () => {
     await act(() => userEvent.click(calendarIcon));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-    expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
     await act(() => userEvent.click(calendarIcon));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-    expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
 
