@@ -29,6 +29,7 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   label,
   customIcon,
   usePortal,
+  delayVisibility,
   ...restProps
 }: ScreenSpinnerProps): React.ReactNode => {
   useScrollLock();
@@ -36,7 +37,13 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   return (
     <AppRootPortal usePortal={usePortal}>
       <PopoutWrapper className={className} style={style} noBackground strategy="fixed">
-        <ScreenSpinnerContainer state={state} mode={mode} label={label} customIcon={customIcon}>
+        <ScreenSpinnerContainer
+          state={state}
+          mode={mode}
+          label={label}
+          customIcon={customIcon}
+          delayVisibility={delayVisibility}
+        >
           <ScreenSpinnerLoader {...restProps} />
           <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
         </ScreenSpinnerContainer>

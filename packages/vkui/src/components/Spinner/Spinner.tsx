@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
+import { animationDelayVisibilityStyles } from '../../styles/animationDelayVisibility';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { SpinnerAnimation } from './SpinnerAnimation';
 import { Icon16Spinner, Icon24Spinner, Icon32Spinner, Icon44Spinner } from './icons';
 import styles from './Spinner.module.css';
+import stylesDelay from '../../styles/animationDelayVisibility.module.css';
 
 const spinnerIconMap = {
   s: Icon16Spinner,
@@ -28,6 +30,10 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
    * Задать цвет можно будет через свойство color родителя.
    */
   noColor?: boolean;
+  /**
+   * Задерживает отрисовку элемента на заданное количество миллисекунд.
+   */
+  delayVisibility?: number;
 }
 
 /**
@@ -40,6 +46,7 @@ export const Spinner = React.memo(
     children = 'Загружается...',
     disableAnimation = false,
     noColor = false,
+    delayVisibility,
     ...restProps
   }: SpinnerProps) => {
     const SpinnerIcon = spinnerIconMap[size];
@@ -49,7 +56,12 @@ export const Spinner = React.memo(
         Component="span"
         role="status"
         {...restProps}
-        baseClassName={classNames(styles.host, noColor && styles.noColor)}
+        baseClassName={classNames(
+          styles.host,
+          noColor && styles.noColor,
+          delayVisibility && stylesDelay.delayVisibility,
+        )}
+        baseStyle={animationDelayVisibilityStyles(delayVisibility)}
       >
         <SpinnerIcon>{disableAnimation ? null : <SpinnerAnimation size={size} />}</SpinnerIcon>
         {hasReactNode(children) && <VisuallyHidden>{children}</VisuallyHidden>}

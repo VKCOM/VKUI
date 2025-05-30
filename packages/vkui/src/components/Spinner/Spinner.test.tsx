@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import { REDUCE_MOTION_MEDIA_QUERY } from '../../lib/animation';
 import { baselineComponent, matchMediaMock } from '../../testing/utils';
 import { Spinner } from './Spinner';
+import stylesDelay from '../../styles/animationDelayVisibility.module.css';
 
 describe('Spinner', () => {
   baselineComponent(Spinner);
@@ -34,6 +35,12 @@ describe('Spinner', () => {
 
       expect(svgEl.querySelector('animate')).not.toBeInTheDocument();
       expect(svgEl.querySelector('animateTransform')).not.toBeInTheDocument();
+    });
+
+    it('should delay visibility', () => {
+      render(<Spinner delayVisibility={200} />);
+
+      expect(document.querySelector(`.${stylesDelay.delayVisibility}`)).not.toBeNull();
     });
   });
 });
