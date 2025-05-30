@@ -1,4 +1,5 @@
 import analyzer from '@next/bundle-analyzer';
+import { transformerNotationDiff } from '@shikijs/transformers';
 import nextra from 'nextra';
 
 const basePath =
@@ -11,6 +12,11 @@ const withBundleAnalyzer = analyzer({
 const withNextra = nextra({
   defaultShowCopyCode: true,
   staticImage: false,
+  mdxOptions: {
+    rehypePrettyCodeOptions: {
+      transformers: [transformerNotationDiff()],
+    },
+  },
   // ... your Nextra config
 });
 

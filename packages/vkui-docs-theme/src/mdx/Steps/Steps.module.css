@@ -1,0 +1,30 @@
+.root {
+  padding-inline-start: 40px;
+  margin-inline-start: 14px;
+  border-inline-start: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.root h2,
+/* stylelint-disable-next-line selector-max-type */
+.root h3 {
+  counter-increment: steps;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.root h2::before,
+/* stylelint-disable-next-line selector-max-type */
+.root h3::before {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 28px;
+  block-size: 28px;
+  margin-inline-start: calc(-1 * 54px);
+  font-size: 14px;
+  content: counter(steps);
+  background-color: var(--vkui--color_background_contrast_themed--hover);
+  border: 1px solid var(--vkui--color_separator_primary_alpha);
+  border-radius: 50%;
+}

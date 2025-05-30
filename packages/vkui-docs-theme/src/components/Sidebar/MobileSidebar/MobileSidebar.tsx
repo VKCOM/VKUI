@@ -1,13 +1,12 @@
 'use client';
 
 import * as React from 'react';
+import { Icon24CancelOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import {
   AdaptivityProvider,
-  ButtonGroup,
-  Separator,
+  Button,
   SizeType,
-  Spacing,
   useAdaptivityWithJSMediaQueries,
   unstable_useCSSKeyframesAnimationController as useCSSKeyframesAnimationController,
   useScrollLock,
@@ -15,25 +14,26 @@ import {
 } from '@vkontakte/vkui';
 import { useFSRoute, useHash } from 'nextra/hooks';
 import { useConfig, useMenu, useThemeConfig } from '../../../contexts';
-import { ProjectButton } from '../../ProjectButton';
 import { Menu } from '../Menu/Menu';
 import styles from './MobileSidebar.module.css';
 
 export function MobileSidebar() {
   const {
-    normalizePagesResult: { directories },
+    normalizePagesResult: { docsDirectories },
   } = useConfig();
   const themeConfig = useThemeConfig();
   const { menu, setMenu } = useMenu();
   const pathname = useFSRoute();
   const hash = useHash();
+  const { viewWidth } = useAdaptivityWithJSMediaQueries();
+
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     menu ? 'enter' : 'exit',
     undefined,
     true,
   );
+
   const visible = animationState !== 'exited';
-  const { viewWidth } = useAdaptivityWithJSMediaQueries();
 
   React.useEffect(() => {
     setMenu(false);
@@ -61,23 +61,22 @@ export function MobileSidebar() {
         className={classNames(styles.root, menu ? styles.rootShow : styles.rootHide)}
         {...animationHandlers}
       >
-        <div className={classNames(styles.mobileHidden, styles.search)}>{themeConfig.search}</div>
-        <Spacing size={15} className={styles.mobileHidden} />
-        <Separator className={styles.mobileHidden} />
-        <nav className={styles.inner}>
-          <Menu directories={directories} mobileView />
-        </nav>
-        <AdaptivityProvider sizeY={SizeType.REGULAR}>
+        <AdaptivityProvider sizeY={SizeType.COMPACT}>
           <div className={classNames(styles.extra)}>
             {themeConfig.versions}
-            <ButtonGroup gap="m">
-              {themeConfig.extraButtons}
-              {themeConfig.projectLink ? (
-                <ProjectButton projectLink={themeConfig.projectLink} />
-              ) : null}
-            </ButtonGroup>
+            <Button
+              mode="secondary"
+              appearance="neutral"
+              size="l"
+              title="Закрыть"
+              onClick={() => setMenu(false)}
+              before={<Icon24CancelOutline />}
+            />
           </div>
         </AdaptivityProvider>
+        <nav className={styles.inner}>
+          <Menu directories={docsDirectories} mobileView />
+        </nav>
       </aside>
     </>
   );

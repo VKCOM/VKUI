@@ -1,7 +1,16 @@
 'use client';
 
-import { Search as VKUISearch } from '@vkontakte/vkui';
+import { Icon24Search } from '@vkontakte/icons';
+import { Button } from '@vkontakte/vkui';
 
 export function Search() {
-  return <VKUISearch noPadding />;
+  return (
+    <Button
+      mode="secondary"
+      appearance="neutral"
+      before={<Icon24Search />}
+      size="l"
+      label="Поиск"
+    />
+  );
 }
