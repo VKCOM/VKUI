@@ -67,6 +67,8 @@ export interface ChipProps
    * Обработчик удаления чипа.
    */
   onRemove?: (event: React.MouseEvent, value: ChipOptionValue) => void;
+
+  onResize?: () => void;
 }
 
 export interface RenderChipProps extends ChipProps {

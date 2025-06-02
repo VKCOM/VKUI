@@ -4,8 +4,10 @@ import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
+import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { Footnote } from '../../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -34,8 +36,11 @@ export const Chip = ({
   className,
   onFocus: onFocusProp,
   onBlur: onBlurProp,
+  onResize,
+  getRootRef,
   ...restProps
 }: ChipProps): React.ReactNode => {
+  const rootRef = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onFocus, onBlur } = useFocusVisible();
   const focusVisibleClassName = useFocusVisibleClassName({ focusVisible });
@@ -61,9 +66,12 @@ export const Chip = ({
     [onRemove, value],
   );
 
+  useResizeObserver(rootRef, onResize);
+
   return (
     <RootComponent
       {...restProps}
+      getRootRef={rootRef}
       Component={Component}
       className={classNames(
         styles.host,

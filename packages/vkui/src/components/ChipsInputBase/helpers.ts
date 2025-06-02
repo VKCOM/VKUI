@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { DEFAULT_INPUT_VALUE } from './constants';
 import type { ChipOption, ChipOptionValue, NavigateTo } from './types';
@@ -88,9 +87,10 @@ export const useInputWidth = ({
   inputRef,
   listBoxRef,
   valuesLength,
-}: UseInputPositionArgs) => {
+}: UseInputPositionArgs): [number | undefined, () => void] => {
   const direction = useConfigDirection();
-  const [width, setWidth] = React.useState<number | undefined>(undefined);
+  const animationFrameRef = React.useRef<number | null>(null);
+  const [width, setWidth] = React.useState<number | undefined>(0);
 
   const recalculateInputWidth = React.useCallback(() => {
     if (!inputRef.current || !containerRef.current || !listBoxRef.current) {
@@ -103,22 +103,24 @@ export const useInputWidth = ({
     if (!foundOption) {
       return;
     }
+    const foundOptionsBounds = foundOption.getBoundingClientRect();
+    const containerBounds = containerRef.current.getBoundingClientRect();
+
+    const containerStyles = getComputedStyle(containerRef.current);
+    const inputStyles = getComputedStyle(inputRef.current);
+    const optionStyles = getComputedStyle(foundOption);
+
+    const containerPadding = parseInt(containerStyles.padding) || 0;
 
     const lastOptionBounds = {
-      width: foundOption.offsetWidth,
-      left: listBoxRef.current.offsetLeft + foundOption.offsetLeft,
+      width: foundOptionsBounds.width,
+      left: foundOptionsBounds.left - containerBounds.left - containerPadding,
     };
-    const containerWidth = containerRef.current.offsetWidth;
-    const paddings = parseInt(getComputedStyle(containerRef.current).padding) || 0;
-    const inputStyles = getComputedStyle(inputRef.current);
-    const inputMarginInlineStart =
-      parseInt(
-        inputStyles.getPropertyValue('--vkui_internal--chips_input_base_input_margin-inline-start'),
-      ) || 0;
-    const inputMarginInlineEnd =
-      parseInt(
-        inputStyles.getPropertyValue('--vkui_internal--chips_input_base_input_margin-inline-end'),
-      ) || 0;
+    const containerWidth = containerBounds.width;
+
+    const optionMarginInlineEnd = parseInt(optionStyles.marginInlineEnd) || 0;
+    const inputMarginInlineStart = parseInt(inputStyles.marginInlineStart) || 0;
+    const inputMarginInlineEnd = parseInt(inputStyles.marginInlineEnd) || 0;
     const isRtl = direction === 'rtl';
 
     const freeSpaceWidth = isRtl
@@ -131,19 +133,21 @@ export const useInputWidth = ({
       inputMarginInlineStart -
       inputMarginInlineEnd -
       // Вычитаем padding-и контейнера
-      paddings * 2 -
-      // у контейнера с display: inline по бокам появляются отступы от содержимого, которые никак не убрать
-      // Для корректного расчета их тоже нужно вычесть
-      4;
+      containerPadding * 2 -
+      // Вычитаем margin-right последнего чипа
+      optionMarginInlineEnd;
 
-    setWidth(inputWidth);
+    setWidth(Math.max(Math.floor(inputWidth), 0));
   }, [containerRef, direction, inputRef, listBoxRef, valuesLength]);
 
-  useIsomorphicLayoutEffect(() => {
-    recalculateInputWidth();
+  const recalculateInputWidthDeferred = React.useCallback(() => {
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    animationFrameRef.current = requestAnimationFrame(() => recalculateInputWidth());
   }, [recalculateInputWidth]);
 
-  useResizeObserver(containerRef, recalculateInputWidth);
+  useIsomorphicLayoutEffect(() => recalculateInputWidth(), [recalculateInputWidth]);
 
-  return width;
+  return [width, recalculateInputWidthDeferred];
 };

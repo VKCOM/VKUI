@@ -6,6 +6,7 @@ import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
+import { callMultiple } from '../../lib/callMultiple';
 import {
   contains as checkTargetIsInputEl,
   contains,
@@ -238,7 +239,7 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
 
-  const inputWidth = useInputWidth({
+  const [inputWidth, recalculateInputWidth] = useInputWidth({
     containerRef,
     listBoxRef: listboxRef,
     inputRef,
@@ -265,7 +266,7 @@ export const ChipsInputBase = <O extends ChipOption>({
           sizeY !== 'regular' && sizeYClassNames[sizeY],
           withPlaceholder && styles.hasPlaceholder,
           inputValue && styles.hasInputValue,
-          inputWidth && inputWidth < MIN_INPUT_WIDTH && styles.inputNewLine,
+          inputWidth !== undefined && inputWidth < MIN_INPUT_WIDTH && styles.inputNewLine,
         )}
         ref={containerRef}
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
@@ -292,6 +293,7 @@ export const ChipsInputBase = <O extends ChipOption>({
                   'readOnly': option.readOnly || readOnly,
                   'className': styles.chip,
                   'onRemove': handleChipRemove,
+                  'onResize': recalculateInputWidth,
                   // чтобы можно было легче найти этот чип в DOM
                   'data-index': index,
                   'data-value': option.value,
@@ -315,9 +317,9 @@ export const ChipsInputBase = <O extends ChipOption>({
           spellCheck={false}
           {...restProps}
           style={
-            inputWidth !== undefined
+            inputWidth
               ? {
-                  maxWidth: inputWidth,
+                  width: inputWidth,
                 }
               : undefined
           }
@@ -331,6 +333,7 @@ export const ChipsInputBase = <O extends ChipOption>({
           placeholder={withPlaceholder ? placeholder : undefined}
           value={inputValue}
           onChange={onInputChange}
+          onFocus={callMultiple(restProps.onFocus, recalculateInputWidth)}
           onBlur={handleInputBlur}
         />
       </div>
