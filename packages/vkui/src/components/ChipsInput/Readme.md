@@ -5,6 +5,38 @@
 
 Компонент может быть как контролируемым (`value`, `onChange`), так и неконтролируемым (`defaultValue`).
 
+## Цифровая доступность (a11y)
+
+Для корректной работы со скринридерами компонент `ChipsInput` должен быть связан с текстовым описанием. Доступно несколько способов:
+
+```jsx static
+// Компонент вложен в `<label>`
+<label>
+  Список исполнителей
+  <ChipsInput placeholder="Введите название" />
+</label>
+
+// Связывание через `<label>` с `htmlFor`
+<label htmlFor="chips">Список исполнителей</label>
+<ChipsInput placeholder="Введите название" id="chips" />
+
+// Связывание с использование компонента `FormItem`
+<FormItem top="Список исполнителей" htmlFor="chips">
+  <ChipsInput placeholder="Введите название" id="chips" />
+</FormItem>
+
+// Указание `label` через `aria-label`
+<ChipsInput placeholder="Введите название" aria-label="Список исполнителей" />
+
+// Связывание через `aria-labelledby`
+<label htmlFor="chips">Список исполнителей</label>
+<ChipsInput placeholder="Введите название" aria-labelledby="chips" />
+```
+
+### Описание списка выбранных опций
+
+Используйте свойство `chipsListLabel` для описания списка выбранных опций, если это необходимо.
+
 ```jsx
 const DEFAULT_VALUE = [
   {

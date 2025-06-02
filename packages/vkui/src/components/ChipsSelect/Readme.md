@@ -6,6 +6,39 @@
 
 Компонент может быть как контролируемым (`value`, `onChange`), так и неконтролируемым (`defaultValue`).
 
+## Цифровая доступность (a11y)
+
+Для корректной работы со скринридерами компонент `ChipsSelect` должен быть связан с текстовым описанием. Доступно несколько способов:
+
+```jsx static
+// Компонент вложен в `<label>`
+
+<label>
+  Список исполнителей
+  <ChipsSelect options={colors} placeholder="Введите название"/>
+</label>
+
+// Связывание через `<label>` с `htmlFor`
+<label htmlFor="chips">Список исполнителей</label>
+<ChipsSelect options={colors} placeholder="Введите название" id="chips"/>
+
+// Связывание с использование компонента `FormItem`
+<FormItem top="Список исполнителей" htmlFor="chips">
+  <ChipsSelect options={colors} placeholder="Введите название" id="chips"/>
+</FormItem>
+
+// Указание `label` через `aria-label`
+<ChipsSelect options={colors} placeholder="Введите название" aria-label="Список исполнителей"/>
+
+// Связывание через `aria-labelledby`
+<label htmlFor="chips">Список исполнителей</label>
+<ChipsSelect options={colors} placeholder="Введите название" aria-labelledby="chips"/>
+```
+
+### Описание списка выбранных опций
+
+Используйте свойство `chipsListLabel` для описания списка выбранных опций, если это необходимо.
+
 ```jsx { "props": { "layout": false, "iframe": false } }
 const Uncontrolled = () => {
   const groups = React.useMemo(

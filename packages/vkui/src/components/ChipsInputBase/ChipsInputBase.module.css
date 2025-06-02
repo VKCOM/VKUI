@@ -58,7 +58,8 @@
   /* stylelint-disable-next-line declaration-no-important */
   inline-size: calc(
     100% - var(--vkui_internal--chips_input_base_input_margin-inline-start) -
-    var(--vkui_internal--chips_input_base_input_margin-inline-end)
+      var(--vkui_internal--chips_input_base_input_margin-inline-end)
+      /* stylelint-disable-next-line declaration-no-important */
   ) !important;
 }
 
