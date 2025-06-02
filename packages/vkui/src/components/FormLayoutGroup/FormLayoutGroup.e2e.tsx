@@ -7,5 +7,7 @@ test('FormLayoutGroup', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<FormLayoutGroupPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await expectScreenshotClippedToContent({
+    forceTimeoutBeforeScreenshot: true,
+  });
 });
