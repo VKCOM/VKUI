@@ -37,7 +37,7 @@ export type GapsProp = GapProp | [GapProp, GapProp];
 export function calculateGap(
   gap: GapsProp | undefined,
 ): [GapProp, GapProp] | [undefined, undefined] {
-  if (!gap) {
+  if (gap === undefined) {
     return [undefined, undefined];
   }
   if (typeof gap === 'number' || typeof gap === 'string') {
