@@ -3,10 +3,10 @@ import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/pl
 import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsSelect, type ChipsSelectProps } from './ChipsSelect';
 
-export const ChipsSelectPlayground = (props: ComponentPlaygroundProps) => {
+export const ChipsSelectPlayground = (playgroundProps: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
-      {...props}
+      {...playgroundProps}
       propSets={[
         {
           value: [
@@ -36,17 +36,23 @@ export const ChipsSelectPlayground = (props: ComponentPlaygroundProps) => {
       ]}
     >
       {(props: ChipsSelectProps<ChipOption>) => (
-        <ChipsSelect {...props} placeholder="Введите название и нажмите Enter" />
+        <div
+          style={{
+            width: playgroundProps.platform === 'vkcom' ? 450 : undefined,
+          }}
+        >
+          <ChipsSelect {...props} placeholder="Введите название и нажмите Enter" />
+        </div>
       )}
     </ComponentPlayground>
   );
 };
 
-export const ChipsSelectWithDropdownPlayground = (props: ComponentPlaygroundProps) => {
+export const ChipsSelectWithDropdownPlayground = (playgroundProps: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground {...props}>
+    <ComponentPlayground {...playgroundProps}>
       {(props: ChipsSelectProps<ChipOption>) => (
-        <div style={{ height: 300 }}>
+        <div style={{ height: 300, width: playgroundProps.platform === 'vkcom' ? 450 : undefined }}>
           <ChipsSelect
             {...props}
             placeholder="Введите название и нажмите Enter"

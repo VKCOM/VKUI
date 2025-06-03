@@ -3,10 +3,10 @@ import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/pl
 import type { ChipOption } from '../ChipsInputBase/types';
 import { ChipsInput, type ChipsInputProps } from './ChipsInput';
 
-export const ChipsInputPlayground = (props: ComponentPlaygroundProps) => {
+export const ChipsInputPlayground = (playgroundProps: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
-      {...props}
+      {...playgroundProps}
       propSets={[
         {
           value: [
@@ -39,7 +39,13 @@ export const ChipsInputPlayground = (props: ComponentPlaygroundProps) => {
       ]}
     >
       {(props: ChipsInputProps<ChipOption>) => (
-        <ChipsInput {...props} placeholder="Введите название и нажмите Enter" />
+        <div
+          style={{
+            width: playgroundProps.platform === 'vkcom' ? 450 : undefined,
+          }}
+        >
+          <ChipsInput {...props} placeholder="Введите название и нажмите Enter" />
+        </div>
       )}
     </ComponentPlayground>
   );
