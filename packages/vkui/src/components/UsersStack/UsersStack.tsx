@@ -162,7 +162,8 @@ export const UsersStack = ({
   avatarsPosition = 'inline-start',
   ...restProps
 }: UsersStackProps): React.ReactNode => {
-  const cmpId = React.useId();
+  const generatedId = React.useId();
+  const cmpId = `${generatedId}${size}:`;
   const direction = useConfigDirection();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
