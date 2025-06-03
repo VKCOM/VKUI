@@ -32,12 +32,16 @@ export const AccordionContent = ({
   children,
   ...restProps
 }: AccordionContentProps) => {
-  const { expanded, labelId, contentId } = React.useContext(AccordionContext);
+  const { expanded, labelId, contentId, onExpandStart, onCollapseEnd } =
+    React.useContext(AccordionContext);
 
   const inRef = useExternRef(getRef);
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     expanded ? 'enter' : 'exit',
-    undefined,
+    {
+      onEnter: onExpandStart,
+      onExited: onCollapseEnd,
+    },
     true,
   );
 

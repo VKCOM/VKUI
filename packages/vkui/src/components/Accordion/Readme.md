@@ -31,10 +31,14 @@ const AccordionVKID = () => {
       expanded={openId === id}
       onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
     >
-      <Accordion.Summary>{title}</Accordion.Summary>
-      <Accordion.Content>
-        <Div style={infoStyle}>{detail}</Div>
-      </Accordion.Content>
+      {({ isExpanded }) => (
+        <>
+          <Accordion.Summary>{title}</Accordion.Summary>
+          <Accordion.Content>
+            {isExpanded ? <Div style={infoStyle}>{detail}</Div> : undefined}
+          </Accordion.Content>
+        </>
+      )}
     </Accordion>
   ));
 };

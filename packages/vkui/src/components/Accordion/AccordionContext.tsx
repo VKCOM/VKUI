@@ -19,6 +19,14 @@ export interface AccordionContextProps {
    * Обработчик изменения состояния аккордеона.
    */
   onChange: (e: boolean) => void;
+  /**
+   * Обработчик, срабатывающий в начала анимации разворачивания.
+   */
+  onExpandStart: () => void;
+  /**
+   * Обработчик, срабатывающий в концу анимации сворачивания.
+   */
+  onCollapseEnd: () => void;
 }
 
 export const AccordionContext: React.Context<AccordionContextProps> =
@@ -27,4 +35,6 @@ export const AccordionContext: React.Context<AccordionContextProps> =
     contentId: '',
     expanded: false,
     onChange: noop,
+    onCollapseEnd: noop,
+    onExpandStart: noop,
   });
