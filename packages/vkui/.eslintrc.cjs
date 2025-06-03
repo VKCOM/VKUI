@@ -46,7 +46,6 @@ module.exports = {
           'styles',
           'testing',
           'types',
-          'storybook',
         ],
         patterns: [
           '@vkontakte/icons/dist/*',
@@ -59,7 +58,6 @@ module.exports = {
           'styles/*',
           'testing/*',
           'types/*',
-          'storybook/*',
         ],
       },
     ],

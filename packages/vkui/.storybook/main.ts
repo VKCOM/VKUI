@@ -1,35 +1,28 @@
-import { Configuration, DefinePlugin } from 'webpack';
-import type { Options } from '@swc/core';
-import path from 'path';
-import { readFileSync } from 'fs';
-import type { StorybookConfig } from '@storybook/react-webpack5';
-import WebpackCommonConfig from '../../../webpack.common.config';
+import path from 'node:path';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+import type { StorybookConfig } from '@storybook/react-vite';
+import postcssGlobalData from '@csstools/postcss-global-data';
+import restructureVariable from '@project-tools/postcss-restructure-variable';
+import autoprefixer from 'autoprefixer';
+import postcssCustomMedia from 'postcss-custom-media';
+import postcssGapProperties from 'postcss-gap-properties';
+import cssImport from 'postcss-import';
 import { getStyleGuideComponents } from './helpers';
 
-const cssRegExpString = /\.css$/.toString();
-
-function getCssRulesFromConfig(config: Configuration) {
-  return config.module!.rules?.filter((rule) =>
-    rule === '...' ? false : rule.test?.toString() === cssRegExpString,
-  );
-}
-
-function excludeCssRulesFromConfig(config: Configuration) {
-  return config.module!.rules?.filter((rule) =>
-    rule === '...' ? false : rule.test?.toString() !== cssRegExpString,
-  );
-}
+const require = createRequire(import.meta.url);
+const getAbsolutePath = (value) => path.dirname(require.resolve(path.join(value, 'package.json')));
+const rootDirectory = path.join(fileURLToPath(import.meta.url), '../../../..');
 
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-
   addons: [
     './addons/source-tab',
     getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-essentials'),
-    getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('@storybook/addon-designs'),
+    getAbsolutePath('@storybook/addon-docs'),
     getAbsolutePath('@project-tools/storybook-addon-cartesian'),
     './addons/colorScheme',
     './addons/pointer',
@@ -37,62 +30,65 @@ const config: StorybookConfig = {
     './addons/source-button',
     './addons/documentation-button',
     './addons/storybook-theme',
-    getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
   ],
-
-  framework: {
-    name: getAbsolutePath('@storybook/react-webpack5'),
-    options: {
-      fastRefresh: true,
-      builder: {
-        useSWC: true,
-        fsCache: true,
-      },
-    },
-  },
-
-  swc: (config: Options): Options => ({
-    ...config,
-    jsc: {
-      ...config.jsc,
-      transform: {
-        react: {
-          runtime: 'automatic',
-        },
-      },
-    },
-  }),
-
-  webpackFinal: async (config) => {
-    const commonCssRules = getCssRulesFromConfig(WebpackCommonConfig) ?? [];
-    const rulesWithoutCss = excludeCssRulesFromConfig(config) ?? [];
-
-    config.module!.rules = [...rulesWithoutCss, ...commonCssRules];
+  framework: getAbsolutePath('@storybook/react-vite'),
+  viteFinal: async (config) => {
+    const { mergeConfig } = await import('vite');
     const packageJSON = JSON.parse(readFileSync('./package.json', 'utf-8'));
-    config.plugins.push(
-      new DefinePlugin({
+
+    return mergeConfig(config, {
+      define: {
         __STYLEGUIDE_COMPONENTS_CONFIG__: JSON.stringify(getStyleGuideComponents()),
         __STYLEGUIDE_URL__: JSON.stringify(packageJSON.homepage),
         __COMPONENTS_SOURCE_BASE_URL__: JSON.stringify(
           `${packageJSON.repository.url.replace('.git', '')}/tree/master/${packageJSON.repository.directory}`,
         ),
-      }),
-    );
+      },
+      css: {
+        postcss: {
+          plugins: [
+            cssImport(),
 
-    return config;
+            restructureVariable(
+              [
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
+                './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
+              ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
+            ),
+
+            // Сбор данных для работы некоторых postcss плагинов
+            postcssGlobalData({
+              files: [
+                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
+                'packages/vkui/src/styles/dynamicTokens.css',
+                'packages/vkui/src/styles/constants.css',
+                'packages/vkui/src/styles/customMedias.generated.css',
+              ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
+            }),
+
+            // Автопрефиксер
+            autoprefixer(),
+
+            // Обработка CustomMedia
+            postcssCustomMedia(),
+
+            // TODO [>=8]: Проверить браузерную поддержку
+            //
+            // https://caniuse.com/mdn-css_properties_gap_grid_context
+            postcssGapProperties(),
+          ],
+        },
+      },
+    });
   },
-
   typescript: {
     reactDocgen: 'react-docgen-typescript',
   },
-
-  docs: {
-    autodocs: false,
-  },
 };
 
-module.exports = config;
-
-function getAbsolutePath(value: string): any {
-  return path.dirname(require.resolve(path.join(value, 'package.json')));
-}
+export default config;

@@ -1,5 +1,5 @@
-import { addons, types } from '@storybook/manager-api';
 import { jsx as _jsx } from 'react/jsx-runtime';
+import { addons, types } from 'storybook/manager-api';
 import { Tool } from '../Tool';
 import { ADDON_ID, TOOL_ID } from '../constants';
 
