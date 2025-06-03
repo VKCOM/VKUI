@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Icon28SmileOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { WriteBarIcon } from '../WriteBarIcon/WriteBarIcon';

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IconButton, WithTooltipPure } from '@storybook/components';
 import { GridIcon } from '@storybook/icons';
-import { useArgs, useArgTypes, useParameter } from '@storybook/manager-api';
-import type { ArgTypes } from '@storybook/types';
+import { IconButton, WithTooltipPure } from 'storybook/internal/components';
+import type { ArgTypes } from 'storybook/internal/types';
+import { useArgs, useArgTypes, useParameter } from 'storybook/manager-api';
 import { OptionsContainer } from './OptionsContainer';
 import { BooleanOpts } from './constants';
 import type { CartesianConfigParameter, OptionNamesProp, OptionsProp } from './types';
