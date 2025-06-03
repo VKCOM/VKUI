@@ -32,8 +32,6 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 } as const;
 
-const MIN_INPUT_WIDTH = 64;
-
 export const ChipsInputBase = <O extends ChipOption>({
   // FormFieldProps
   getRootRef,
@@ -239,7 +237,7 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
 
-  const [inputWidth, recalculateInputWidth] = useInputWidth({
+  const [inputWidth, inputWidthClassName, recalculateInputWidth] = useInputWidth({
     containerRef,
     listBoxRef: listboxRef,
     inputRef,
@@ -266,7 +264,6 @@ export const ChipsInputBase = <O extends ChipOption>({
           sizeY !== 'regular' && sizeYClassNames[sizeY],
           withPlaceholder && styles.hasPlaceholder,
           inputValue && styles.hasInputValue,
-          inputWidth !== undefined && inputWidth < MIN_INPUT_WIDTH && styles.inputNewLine,
         )}
         ref={containerRef}
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
@@ -316,18 +313,12 @@ export const ChipsInputBase = <O extends ChipOption>({
           autoCorrect="off"
           spellCheck={false}
           {...restProps}
-          style={
-            inputWidth
-              ? {
-                  width: inputWidth,
-                }
-              : undefined
-          }
+          style={{ width: inputWidth }}
           Component="input"
           type="text"
           id={inputId}
           getRootRef={inputRef}
-          className={styles.el}
+          className={classNames(styles.el, inputWidthClassName)}
           disabled={disabled}
           readOnly={readOnly}
           placeholder={withPlaceholder ? placeholder : undefined}

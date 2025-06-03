@@ -34,6 +34,7 @@
 
   position: relative;
   display: inline;
+  inline-size: 0;
   padding: 0;
   margin-block: var(--vkui_internal--chips_input_base_input_margin-block-start)
     var(--vkui_internal--chips_input_base_input_margin-block-end);
@@ -51,9 +52,11 @@
 /* Когда отображается плейсхолдер */
 .hasPlaceholder .el,
 /* Когда инпут не помещается, переносится на новую строку и в него уже введен текст */
-.inputNewLine.hasInputValue .el,
+.hasInputValue .el.newLineInput,
+/* Когда нужно растянуть на всю ширину */
+.el.stretchInput,
 /* Когда инпут не помещается, переносится на новую строку и находится в фокусе */
-.inputNewLine .el:not(:read-only):focus {
+.el.newLineInput:not(:read-only):focus {
   /* important нужен, чтобы перебить maxWidth установленный через стили */
   /* stylelint-disable-next-line declaration-no-important */
   inline-size: calc(

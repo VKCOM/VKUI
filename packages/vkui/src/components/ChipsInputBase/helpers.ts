@@ -3,6 +3,7 @@ import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { DEFAULT_INPUT_VALUE } from './constants';
 import type { ChipOption, ChipOptionValue, NavigateTo } from './types';
+import styles from './ChipsInputBase.module.css';
 
 /**
  * @private
@@ -82,15 +83,18 @@ interface UseInputPositionArgs {
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
+const MIN_INPUT_WIDTH = 64;
+
 export const useInputWidth = ({
   containerRef,
   inputRef,
   listBoxRef,
   valuesLength,
-}: UseInputPositionArgs): [number | undefined, () => void] => {
+}: UseInputPositionArgs): [number | undefined, string | undefined, () => void] => {
   const direction = useConfigDirection();
   const animationFrameRef = React.useRef<number | null>(null);
-  const [width, setWidth] = React.useState<number | undefined>(0);
+  const [className, setClassName] = React.useState<string | undefined>(undefined);
+  const [width, setWidth] = React.useState<number | undefined>(undefined);
 
   const recalculateInputWidth = React.useCallback(() => {
     if (!inputRef.current || !containerRef.current || !listBoxRef.current) {
@@ -127,17 +131,25 @@ export const useInputWidth = ({
       ? lastOptionBounds.left
       : containerWidth - lastOptionBounds.left - lastOptionBounds.width;
 
-    const inputWidth =
+    const inputWidth = Math.floor(
       freeSpaceWidth -
-      // Вычитаем margin-ы самого инпута для корректного расчета ширины
-      inputMarginInlineStart -
-      inputMarginInlineEnd -
-      // Вычитаем padding-и контейнера
-      containerPadding * 2 -
-      // Вычитаем margin-right последнего чипа
-      optionMarginInlineEnd;
+        // Вычитаем margin-ы самого инпута для корректного расчета ширины
+        inputMarginInlineStart -
+        inputMarginInlineEnd -
+        // Вычитаем padding-и контейнера
+        containerPadding * 2 -
+        // Вычитаем margin-right последнего чипа
+        optionMarginInlineEnd,
+    );
 
-    setWidth(Math.max(Math.floor(inputWidth), 0));
+    if (inputWidth < 0) {
+      setClassName(styles.stretchInput);
+    } else if (inputWidth < MIN_INPUT_WIDTH) {
+      setClassName(styles.newLineInput);
+    } else {
+      setClassName(undefined);
+    }
+    setWidth(Math.max(inputWidth, 0));
   }, [containerRef, direction, inputRef, listBoxRef, valuesLength]);
 
   const recalculateInputWidthDeferred = React.useCallback(() => {
@@ -149,5 +161,5 @@ export const useInputWidth = ({
 
   useIsomorphicLayoutEffect(() => recalculateInputWidth(), [recalculateInputWidth]);
 
-  return [width, recalculateInputWidthDeferred];
+  return [width, className, recalculateInputWidthDeferred];
 };
