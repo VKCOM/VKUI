@@ -37,7 +37,7 @@ export const StyleGuideHeader = ({ switchStyleGuideColorScheme }) => {
     },
     {
       title: 'Storybook',
-      href: `${VKUI_PACKAGE.URLS.HOMEPAGE}playground`,
+      href: `${VKUI_PACKAGE.URLS.HOMEPAGE}${VKUI_PACKAGE.VERSION}/playground`,
     },
     {
       title: 'Релизы',

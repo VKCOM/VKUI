@@ -6,7 +6,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasRootRef } from '../../types';
 import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { SelectionControlLabel } from './SelectionControlLabel/SelectionControlLabel';
 import styles from './SelectionControl.module.css';
 
@@ -19,7 +19,7 @@ export interface SelectionControlProps
   extends React.ComponentProps<'label'>,
     HasRootRef<HTMLLabelElement>,
     Pick<
-      TappableProps,
+      TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode' | 'disabled'
     > {}
 

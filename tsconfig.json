@@ -32,6 +32,8 @@
     "**/coverage/**",
     "**/storybook-static",
     "**/__testfixtures__",
-    "**/__tests__"
+    "**/__tests__",
+    "**/vkui-date-fns-tz",
+    "examples/**"
   ]
 }

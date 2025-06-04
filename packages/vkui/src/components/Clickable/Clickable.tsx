@@ -9,7 +9,12 @@ import styles from './Clickable.module.css';
 export interface ClickableProps<T = HTMLElement>
   extends RootComponentProps<T>,
     FocusVisibleModeProps,
-    StateProps {}
+    StateProps {
+  /**
+   * Компонент который будет при передаче `onClick`. По умолчанию `"div"`.
+   */
+  DefaultComponent?: React.ElementType;
+}
 
 /**
  * Некликабельный компонент. Отключаем возможность нажимать на компонент.
@@ -27,8 +32,10 @@ const NonClickable = <T,>({
   activated,
   activeEffectDelay,
   focusVisibleMode,
+  DefaultComponent,
+  Component,
   ...restProps
-}: ClickableProps<T>) => <RootComponent {...restProps} />;
+}: ClickableProps<T>) => <RootComponent Component={Component || DefaultComponent} {...restProps} />;
 
 /**
  * Проверяем, является ли компонент кликабельным.
@@ -56,11 +63,12 @@ export function checkClickable<T>(props: ClickableProps<T>): boolean {
  */
 function component<T>({
   Component,
+  DefaultComponent = 'div',
   onClick,
   onClickCapture,
   href,
   disabled,
-}: RootComponentProps<T>): RootComponentProps<T> {
+}: ClickableProps<T>): RootComponentProps<T> {
   if (Component !== undefined) {
     return { Component, disabled };
   } else if (href !== undefined) {
@@ -83,7 +91,7 @@ function component<T>({
     };
   } else if (onClick !== undefined || onClickCapture !== undefined) {
     return {
-      Component: 'div',
+      Component: DefaultComponent,
       role: 'button',
       ...(disabled ? { 'aria-disabled': true } : { tabIndex: 0 }),
     };
@@ -112,6 +120,7 @@ export const Clickable = <T,>(props: ClickableProps<T>): React.ReactNode => {
   const {
     baseClassName,
     disabled, // Игнорируем disabled из пропсов, т.к. он обрабатывается в commonProps
+    Component: ignore,
     ...restProps
   } = props;
 

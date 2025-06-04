@@ -52,7 +52,7 @@ const ReactComponent = ({ component, exampleMode, ...rest }) => {
       <Link
         target="_blank"
         className="ReactComponent__src"
-        href={`${VKUI_PACKAGE.URLS.HOMEPAGE}playground?path=${encodeURIComponent(
+        href={`${VKUI_PACKAGE.URLS.HOMEPAGE}${VKUI_PACKAGE.VERSION}/playground?path=${encodeURIComponent(
           storybooComponentUrl,
         )}`}
       >

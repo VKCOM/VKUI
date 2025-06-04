@@ -5,6 +5,7 @@
     "browser": true,
     "node": true
   },
+  "ignorePatterns": ["examples/**"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["import", "unicorn", "eslint-plugin-react-compiler"],
   "parserOptions": {
