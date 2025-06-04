@@ -178,6 +178,8 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   option: T;
 }
 
+export type InputChangeReason = 'input' | 'close-dropdown' | 'clear-by-button';
+
 type PopupDirectionSide = Extract<Side, 'top' | 'bottom'>;
 
 type PopupDirection = PopupDirectionSide | `${PopupDirectionSide}-${Alignment}`;
@@ -206,7 +208,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля.
    */
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>, reason: InputChangeReason) => void;
   /**
    * Список опций в списке.
    */
@@ -363,6 +365,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
   const scrollPerformedRef = React.useRef(false);
   const selectInputRef = useExternRef(getSelectInputRef);
+
+  const inputValueChangeReason = React.useRef<InputChangeReason>('input');
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -542,28 +546,33 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [keyboardInput, opened, resetFocusedOption],
   );
 
-  const nativeResetInputValue = React.useCallback(() => {
-    const input = selectInputRef.current;
-    if (!input) {
-      return;
-    }
+  const nativeResetInputValue = React.useCallback(
+    (reason: Extract<InputChangeReason, 'close-dropdown' | 'clear-by-button'>) => {
+      const input = selectInputRef.current;
+      if (!input || !input.value) {
+        return;
+      }
 
-    // eslint-disable-next-line react-compiler/react-compiler
-    input.value = '';
+      // eslint-disable-next-line react-compiler/react-compiler
+      input.value = '';
 
-    const event = new InputEvent('input', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-    });
+      inputValueChangeReason.current = reason;
 
-    input.dispatchEvent(event);
-  }, [selectInputRef]);
+      const event = new InputEvent('input', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      });
+
+      input.dispatchEvent(event);
+    },
+    [selectInputRef],
+  );
 
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
-    nativeResetInputValue();
+    nativeResetInputValue('close-dropdown');
     setOpened(false);
     resetFocusedOption();
     onClose?.();
@@ -700,8 +709,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
-      onInputChangeProp && onInputChangeProp(e);
+      onInputChangeProp && onInputChangeProp(e, inputValueChangeReason.current);
       setInputValue(e.target.value);
+      inputValueChangeReason.current = 'input';
     },
     [onInputChangeProp],
   );
@@ -874,7 +884,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
           setNativeSelectValue(NOT_SELECTED.NATIVE);
-          nativeResetInputValue();
+          nativeResetInputValue('clear-by-button');
           selectInputRef.current && selectInputRef.current.focus();
         }}
         disabled={restProps.disabled}

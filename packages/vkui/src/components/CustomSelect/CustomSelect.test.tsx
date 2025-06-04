@@ -11,7 +11,12 @@ import {
 } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
-import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
+import {
+  CustomSelect,
+  type CustomSelectRenderOption,
+  type InputChangeReason,
+  type SelectProps,
+} from './CustomSelect';
 import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;
@@ -1323,24 +1328,31 @@ describe('CustomSelect', () => {
         defaultValue="0"
       />,
     );
-    const checkInputValue = (callIndex: number, value: string) => {
-      const event = onInputChange.mock.calls[callIndex][0];
+    const checkInputValue = (
+      callIndex: number,
+      value: string,
+      expectedReason: InputChangeReason,
+    ) => {
+      const params = onInputChange.mock.calls[callIndex];
+      const event = params[0];
+      const reason = params[1];
       expect(event.target.value).toBe(value);
+      expect(reason).toBe(expectedReason);
     };
 
     await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
     checkDropdownOpened();
 
     fireEvent.input(inputRef.current!, { target: { value: 'Ка' } });
-    checkInputValue(0, 'Ка');
+    checkInputValue(0, 'Ка', 'input');
 
     fireEvent.input(inputRef.current!, { target: { value: 'Кат' } });
-    checkInputValue(1, 'Кат');
+    checkInputValue(1, 'Кат', 'input');
 
     await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
     checkDropdownOpened(false);
 
-    checkInputValue(2, '');
+    checkInputValue(2, '', 'close-dropdown');
   });
 
   it('check scroll to bottom to element', async () => {
