@@ -3,6 +3,7 @@
 import { type AllHTMLAttributes } from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusTrap, type UseFocusTrapProps } from '../../hooks/useFocusTrap';
+import { DEFAULT_MUTATION_OBSERVER_OPTIONS } from '../../hooks/useMutationObserver';
 import type { HasComponent, HasRootRef } from '../../types';
 
 export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
@@ -10,11 +11,6 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
     Omit<AllHTMLAttributes<T>, keyof UseFocusTrapProps>,
     HasRootRef<T>,
     HasComponent {}
-
-const DEFAULT_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
-  subtree: true,
-  childList: true,
-};
 
 /**
  * @see https://vkcom.github.io/VKUI/#/FocusTrap

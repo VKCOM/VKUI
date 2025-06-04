@@ -2,7 +2,7 @@ import type * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useStableCallback } from './useStableCallback';
 
-const DEFAULT_OPTIONS: MutationObserverInit = {
+export const DEFAULT_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
   subtree: true,
   childList: true,
 };
@@ -10,7 +10,7 @@ const DEFAULT_OPTIONS: MutationObserverInit = {
 export const useMutationObserver = (
   ref: React.RefObject<HTMLElement | null> | null,
   callback: () => void,
-  options: MutationObserverInit = DEFAULT_OPTIONS,
+  options: MutationObserverInit = DEFAULT_MUTATION_OBSERVER_OPTIONS,
 ): void => {
   const stableCallback = useStableCallback(callback);
 
