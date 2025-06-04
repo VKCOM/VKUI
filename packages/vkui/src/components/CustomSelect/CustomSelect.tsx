@@ -362,6 +362,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectElRef = useExternRef(getRef);
   const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
   const scrollPerformedRef = React.useRef(false);
+  const selectInputRef = useExternRef(getSelectInputRef);
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -541,14 +542,32 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [keyboardInput, opened, resetFocusedOption],
   );
 
+  const nativeResetInputValue = React.useCallback(() => {
+    const input = selectInputRef.current;
+    if (!input) {
+      return;
+    }
+
+    // eslint-disable-next-line react-compiler/react-compiler
+    input.value = '';
+
+    const event = new InputEvent('input', {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    });
+
+    input.dispatchEvent(event);
+  }, [selectInputRef]);
+
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
-    setInputValue('');
+    nativeResetInputValue();
     setOpened(false);
     resetFocusedOption();
     onClose?.();
-  }, [onClose, resetKeyboardInput, resetFocusedOption]);
+  }, [resetKeyboardInput, nativeResetInputValue, resetFocusedOption, onClose]);
 
   const selectOption = React.useCallback(
     (index: number) => {
@@ -840,8 +859,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
-  const selectInputRef = useExternRef(getSelectInputRef);
-
   const controlledValueSet = isControlledOutside && props.value !== NOT_SELECTED.CUSTOM;
   const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== NOT_SELECTED.NATIVE;
   const clearButtonShown =
@@ -857,7 +874,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
           setNativeSelectValue(NOT_SELECTED.NATIVE);
-          setInputValue('');
+          nativeResetInputValue();
           selectInputRef.current && selectInputRef.current.focus();
         }}
         disabled={restProps.disabled}
@@ -871,6 +888,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     restProps.disabled,
     clearButtonTestId,
     setNativeSelectValue,
+    nativeResetInputValue,
     selectInputRef,
   ]);
 
@@ -1002,7 +1020,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         value={inputValue}
         onKeyUp={handleKeyUp}
         onKeyDown={!readOnly ? _onInputKeyDown : undefined}
-        onChange={onInputChange}
+        onInput={onInputChange}
         onClick={!readOnly ? onClick : undefined}
         before={before}
         after={afterIcons}
