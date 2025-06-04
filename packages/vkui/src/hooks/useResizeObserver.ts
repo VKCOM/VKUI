@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import type * as React from 'react';
+import { noop } from '@vkontakte/vkjs';
 import { useDOM } from '../lib/dom';
 import { CustomResizeObserver } from '../lib/floating/customResizeObserver';
 import { isRefObject } from '../lib/isRefObject';
@@ -10,14 +11,15 @@ import { useStableCallback } from './useStableCallback';
  */
 export function useResizeObserver(
   ref: React.RefObject<HTMLElement | null> | Window | null | undefined,
-  callback: (element: HTMLElement | Window) => void,
+  callback?: (element: HTMLElement | Window) => void,
 ): void {
-  const stableCallback = useStableCallback(callback);
+  const callbackNotEmpty = callback !== undefined;
+  const stableCallback = useStableCallback(callback || noop);
   const { window } = useDOM();
 
   useEffect(
     function addResizeObserverHandler() {
-      if (!ref || !window) {
+      if (!ref || !window || !callbackNotEmpty) {
         return;
       }
 
@@ -49,6 +51,6 @@ export function useResizeObserver(
 
       return () => observer.disconnect();
     },
-    [ref, stableCallback, window],
+    [ref, stableCallback, window, callbackNotEmpty],
   );
 }
