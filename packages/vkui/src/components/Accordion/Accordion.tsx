@@ -40,6 +40,10 @@ export interface AccordionProps {
    * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
    */
   children?: React.ReactNode | ((props: { isExpanded: boolean }) => React.ReactNode);
+  /**
+   * Нужно ли удалять из DOM контент при сворачивании.
+   */
+  unmountOnCollapsed?: boolean;
 }
 
 export const Accordion: React.FC<AccordionProps> & {
@@ -51,6 +55,7 @@ export const Accordion: React.FC<AccordionProps> & {
   defaultExpanded = false,
   onChange: onChangeProp,
   children,
+  unmountOnCollapsed = false,
   ...restProps
 }: AccordionProps) => {
   const { labelId, contentId } = useAccordionId(id);
@@ -68,11 +73,12 @@ export const Accordion: React.FC<AccordionProps> & {
       labelId,
       contentId,
       expanded: expanded || false,
+      unmountOnCollapsed,
       onChange,
       onExpandStart: () => setChildrenIsExpanded(true),
       onCollapseEnd: () => setChildrenIsExpanded(false),
     }),
-    [contentId, expanded, labelId, onChange],
+    [contentId, expanded, labelId, onChange, unmountOnCollapsed],
   );
 
   return (

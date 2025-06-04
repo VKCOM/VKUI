@@ -16,6 +16,10 @@ export interface AccordionContextProps {
    */
   expanded: boolean;
   /**
+   * Нужно ли удалять из DOM контент при сворачивании.
+   */
+  unmountOnCollapsed: boolean;
+  /**
    * Обработчик изменения состояния аккордеона.
    */
   onChange: (e: boolean) => void;
@@ -34,6 +38,7 @@ export const AccordionContext: React.Context<AccordionContextProps> =
     labelId: '',
     contentId: '',
     expanded: false,
+    unmountOnCollapsed: false,
     onChange: noop,
     onCollapseEnd: noop,
     onExpandStart: noop,
