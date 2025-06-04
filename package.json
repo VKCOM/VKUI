@@ -108,7 +108,7 @@
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
     "webpack-merge": "^6.0.1",
-    "yargs": "^17.7.2"
+    "yargs": "^18.0.0"
   },
   "resolutions": {
     "markdown-to-jsx@npm:^6.11.4": "^7.5.0",
