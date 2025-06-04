@@ -1,4 +1,3 @@
-import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon16Dropdown,
@@ -7,6 +6,7 @@ import {
   Icon20ThumbsUpOutline,
   Icon20UsersOutline,
 } from '@vkontakte/icons';
+import { useArgs } from 'storybook/preview-api';
 import { withSinglePanel } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';

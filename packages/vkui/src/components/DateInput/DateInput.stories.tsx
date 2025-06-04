@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';

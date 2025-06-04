@@ -1,0 +1,11 @@
+/* Глобальные стили, которые не импортируются самими компонентами. */
+@import '../src/styles/themes.css';
+@import '../src/styles/constants.css';
+@import '../src/styles/dynamicTokens.css';
+@import '../src/styles/adaptivity.module.css';
+@import '../src/styles/common.css';
+
+/* stylelint-disable-next-line selector-max-id */
+#root {
+  block-size: 100%;
+}

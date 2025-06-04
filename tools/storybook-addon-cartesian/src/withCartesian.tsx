@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { Decorator, ReactRenderer } from '@storybook/react';
-import type { StoryContext, StrictArgs, StrictArgTypes } from '@storybook/types';
+import type { StoryContext, StrictArgs, StrictArgTypes } from 'storybook/internal/types';
 
 const CartesianContainerStyle: React.CSSProperties = {
   display: 'flex',
