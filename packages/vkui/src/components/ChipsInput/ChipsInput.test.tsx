@@ -139,7 +139,8 @@ describe(ChipsInput, () => {
   it.each<{
     delimiter: string | RegExp | string[];
     str: string;
-    expectedValues: string[];
+    expectedValues?: string[];
+    expectedInputValue?: string;
   }>([
     {
       delimiter: ',',
@@ -171,11 +172,37 @@ describe(ChipsInput, () => {
       str: 'Зеленый.Фиолетовый,Красный|Розовый Синий',
       expectedValues: ['Зеленый', 'Фиолетовый', 'Красный', 'Розовый', 'Синий'],
     },
-  ])('should correct use delimiter $delimiter', ({ delimiter, str, expectedValues }) => {
-    const onChange = jest.fn();
-    render(
-      <ChipsInput
-        value={[
+    {
+      delimiter: ['', ''],
+      str: 'Зеленый,Фиолетовый.Красный',
+      expectedInputValue: 'Зеленый,Фиолетовый.Красный',
+    },
+  ])(
+    'should correct use delimiter $delimiter',
+    ({ delimiter, str, expectedValues, expectedInputValue }) => {
+      const onChange = jest.fn();
+      render(
+        <ChipsInput
+          value={[
+            {
+              value: 'navarin',
+              label: 'Наваринского пламени с дымом',
+            },
+            {
+              value: 'red',
+              label: 'Красный',
+            },
+          ]}
+          data-testid="input"
+          onChange={onChange}
+          delimiter={delimiter}
+        />,
+      );
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      if (expectedValues) {
+        expect(onChange).toBeCalledWith([
           {
             value: 'navarin',
             label: 'Наваринского пламени с дымом',
@@ -184,29 +211,15 @@ describe(ChipsInput, () => {
             value: 'red',
             label: 'Красный',
           },
-        ]}
-        data-testid="input"
-        onChange={onChange}
-        delimiter={delimiter}
-      />,
-    );
-    fireEvent.input(screen.getByTestId('input'), {
-      target: { value: str },
-    });
-    expect(onChange).toBeCalledWith([
-      {
-        value: 'navarin',
-        label: 'Наваринского пламени с дымом',
-      },
-      {
-        value: 'red',
-        label: 'Красный',
-      },
-      ...expectedValues.map((value) => ({
-        value,
-        label: value,
-      })),
-    ]);
-    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
-  });
+          ...expectedValues.map((value) => ({
+            value,
+            label: value,
+          })),
+        ]);
+      } else {
+        expect(onChange).not.toHaveBeenCalled();
+      }
+      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+    },
+  );
 });

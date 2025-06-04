@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { escapeRegExp } from '@vkontakte/vkjs';
 import { useCustomEnsuredControl, useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { simulateReactInput, type SimulateReactInputTargetState } from '../../lib/react';
@@ -43,10 +44,6 @@ function getRegExpFromArray(separators: string[]) {
   }
   const escaped = validSeparators.map((s) => escapeRegExp(s));
   return new RegExp(`(?:${escaped.join('|')})`);
-}
-
-function escapeRegExp(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function getRegexFromDelimiter(delimiter: string | RegExp | string[]): RegExp | null {
