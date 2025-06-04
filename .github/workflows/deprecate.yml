@@ -10,7 +10,6 @@ on:
           - '@vkontakte/vkui'
           - '@vkontakte/vkui-floating-ui'
           - '@vkontakte/vkui-date-fns-tz'
-          - '@vkontakte/vkui-token-translator'
         required: true
       version:
         description: 'type version: x.y.z (without "v")'
