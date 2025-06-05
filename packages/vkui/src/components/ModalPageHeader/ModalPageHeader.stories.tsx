@@ -41,7 +41,7 @@ export const Playground: Story = {
             <ModalPageHeader
               before={
                 <React.Fragment>
-                  {(platform === 'android' || platform === 'vkcom') && (
+                  {platform !== 'ios' && (
                     <HeaderButton>
                       <Icon24Cancel />
                     </HeaderButton>
@@ -50,12 +50,13 @@ export const Playground: Story = {
               }
               after={
                 <React.Fragment>
-                  {(platform === 'android' || platform === 'vkcom') && (
+                  {platform !== 'ios' ? (
                     <HeaderButton>
                       <Icon24Done />
                     </HeaderButton>
+                  ) : (
+                    <HeaderButton>Готово</HeaderButton>
                   )}
-                  {platform === 'ios' && <HeaderButton>Готово</HeaderButton>}
                 </React.Fragment>
               }
               {...args}
