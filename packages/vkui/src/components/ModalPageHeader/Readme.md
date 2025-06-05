@@ -16,7 +16,7 @@ return (
   <ModalPageHeader
     before={
       <Fragment>
-        {(platform === 'android' || platform === 'vkcom') && (
+        {platform !== 'ios' && (
           <PanelHeaderButton onClick={this.backModal}>
             <Icon24Cancel />
           </PanelHeaderButton>
@@ -25,7 +25,7 @@ return (
     }
     after={
       <Fragment>
-        {(platform === 'android' || platform === 'vkcom') && (
+        {platform !== 'ios' && (
           <PanelHeaderButton onClick={this.backModal}>
             <Icon24Done />
           </PanelHeaderButton>

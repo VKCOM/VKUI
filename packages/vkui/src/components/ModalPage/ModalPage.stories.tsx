@@ -99,7 +99,7 @@ export const Playground: Story = {
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === 'android' && (
+              platform === 'material' && (
                 <AndroidCloseButton className={sizeX.compact.className} onClick={close} />
               )
             }
@@ -142,7 +142,7 @@ export const FullscreenModalPage: Story = {
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === 'android' && (
+              platform === 'material' && (
                 <AndroidCloseButton className={sizeX.compact.className} onClick={close} />
               )
             }
@@ -277,7 +277,7 @@ export const Sandbox: Story = {
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === 'android' && (
+              platform === 'material' && (
                 <AndroidCloseButton
                   className={sizeX.compact.className}
                   onClick={() => handleModalClose('close-custom')}
