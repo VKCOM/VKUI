@@ -64,17 +64,17 @@
 }
 
 /*
- * Android
+ * Material
  */
 
-.android.notPrimitive {
+.material.notPrimitive {
   border-radius: 50%;
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.android :global(.vkuiIcon--24),
+.material :global(.vkuiIcon--24),
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.android :global(.vkuiIcon--28) {
+.material :global(.vkuiIcon--28) {
   padding: 10px;
 }
 

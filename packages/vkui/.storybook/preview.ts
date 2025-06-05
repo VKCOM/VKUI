@@ -92,10 +92,10 @@ const preview: Preview = {
     platform: {
       name: 'Platform',
       description: 'Platform for components',
-      defaultValue: 'android',
+      defaultValue: 'material',
       toolbar: {
         icon: 'mobile',
-        items: ['android', 'ios', 'vkcom'],
+        items: ['material', 'ios', 'vkcom'],
         title: 'Platform',
         dynamicTitle: true,
       },

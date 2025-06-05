@@ -11,7 +11,7 @@ const story: Meta<PlatformProviderProps> = {
       control: {
         type: 'select',
       },
-      options: ['android', 'ios', 'vkcom'],
+      options: ['material', 'ios', 'vkcom'],
     },
   },
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },

@@ -82,21 +82,21 @@
 }
 
 /**
- * Android
+ * Material
  */
 
-.android .tappable {
+.material .tappable {
   inline-size: calc(100% + 16px);
   padding-block-end: calc(100% + 16px);
   border-radius: 50%;
 }
 
-.android:first-child {
+.material:first-child {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
 }
 
-.android:last-child {
+.material:last-child {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }

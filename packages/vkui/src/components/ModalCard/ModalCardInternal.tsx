@@ -24,7 +24,7 @@ import styles from './ModalCard.module.css';
 const sizeByPlatformClassNames = {
   vkcom: styles['hostMaxWidthS'],
   ios: styles['hostMaxWidthM'],
-  android: styles['hostMaxWidthL'],
+  material: styles['hostMaxWidthL'],
 };
 
 const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> = {
@@ -164,7 +164,7 @@ export const ModalCardInternal = ({
         className={classNames(
           styles.host,
           isDesktop ? styles.hostDesktop : styles.hostMobile,
-          sizeByPlatformClassNames[platform],
+          sizeByPlatformClassNames[platform === 'android' ? 'material' : platform],
           transitionStateClassNames[transitionState],
           className,
         )}

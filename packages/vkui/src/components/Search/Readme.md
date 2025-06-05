@@ -145,7 +145,7 @@ const SearchExample = () => {
           header={
             <ModalPageHeader
               before={
-                platform === 'android' && (
+                platform === 'material' && (
                   <PanelHeaderButton onClick={hideModal}>
                     <VisuallyHidden>Отмена</VisuallyHidden>
                     <Icon24Cancel />

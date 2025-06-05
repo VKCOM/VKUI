@@ -61,7 +61,7 @@ const App = () => {
 
 ### Определение платформы и направления текста на сервере [#step2]
 
-Скорей всего вы уже успели ознакомиться с тем, что VKUI умеет мимикрировать под платформы `android` и `iOS`. На клиенте, если
+Скорей всего вы уже успели ознакомиться с тем, что VKUI умеет мимикрировать под платформы Android и iOS. На клиенте, если
 в `ConfigProvider` платформа не зашита в свойстве `platform`, то она автоматически определится, опираясь на `navigator.userAgent`.
 Это первый момент. Второй момент, направление текста `ltr`/`rtl`. Опять же, если в `ConfigProvider` в свойстве `direction` не зашито
 направление, то оно автоматически определится через браузерное API.
@@ -120,7 +120,7 @@ export default async function Root({ children }: React.PropsWithChildren) {
 
   // Определяем платформу
   const userAgent = headersList.get('user-agent') || '';
-  const platform = detectIOS(userAgent).isIOS ? 'ios' : 'android';
+  const platform = detectIOS(userAgent).isIOS ? 'ios' : 'material';
 
   // Определяем направление текста
   const acceptLanguage = headersList.get('accept-language') || 'en-US';
@@ -256,7 +256,7 @@ app.use('*all', async (req, res) => {
   try {
     // Определяем платформу
     const userAgent = req.headers['user-agent'] || '';
-    const platform = detectIOS(userAgent).isIOS ? 'ios' : 'android';
+    const platform = detectIOS(userAgent).isIOS ? 'ios' : 'material';
 
     // Определяем направление текста
     const acceptLanguage = req.headers['accept-language'] || 'en-US';

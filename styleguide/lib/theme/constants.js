@@ -22,7 +22,7 @@ export const DEFAULT_THEME_NAMES = ['vkBase', 'vkIOS', 'vkCom'];
 export const LEGACY_PLATFORM = Platform.VKCOM;
 
 export const DEFAULT_THEME_FOR_PLATFORM = new Map([
-  [Platform.ANDROID, 'vkBase'],
+  ['material', 'vkBase'],
   [Platform.IOS, 'vkIOS'],
-  [LEGACY_PLATFORM, 'vkCom'],
+  [Platform.VKCOM, 'vkCom'],
 ]);

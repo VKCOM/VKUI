@@ -330,7 +330,7 @@ class ViewInfiniteComponent extends React.Component<
       }
       this.transitionFinishTimeout = setTimeout(
         eventHandler,
-        this.props.platform === 'android' || this.props.platform === 'vkcom' ? 300 : 600,
+        this.props.platform === 'ios' ? 600 : 300,
       );
     }
   }

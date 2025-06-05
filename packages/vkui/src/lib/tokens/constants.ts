@@ -3,6 +3,10 @@ export const DEFAULT_TOKENS_CLASS_NAMES = {
     light: 'vkui--vkBase--light',
     dark: 'vkui--vkBase--dark',
   },
+  material: {
+    light: 'vkui--vkBase--light',
+    dark: 'vkui--vkBase--dark',
+  },
   ios: {
     light: 'vkui--vkIOS--light',
     dark: 'vkui--vkIOS--dark',

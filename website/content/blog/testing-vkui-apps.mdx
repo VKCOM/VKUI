@@ -89,19 +89,18 @@ test('check if prevButton disabled', () => {
 ### Select
 
 Так как VKUI стремится к мимикрии под различные платформы, некоторые компоненты могут существенно отличаться
-в структуре. Например, это справедливо для компонента `Select`, который на мобильных платформах (`android/iOS`)
+в структуре. Например, это справедливо для компонента `Select`, который на мобильных устройствах (Android и iOS)
 представляет собой нативный элемент и на десктопе его кастомную реализацию.
 
 Из-за поддержки SSR мы не всегда можем заранее знать, какое представление необходимо отрисовать.
 Если попытаться отрендерить `Select` без указания платформы, то в DOM-представлении у нас окажется две реализации.
-Чтобы избежать ошибок, проще всего обернуть `Select` в `PlatformProvider` с указанием `vkcom` платформы для
-`web`-реализации или android для мобильной платформы.
+Чтобы избежать ошибок, проще всего обернуть `Select` в `PlatformProvider` с указанием необходимой платформы
 
 ```jsx
 import { render } from '@testing-library/react';
 import { PlatformProvider, Select } from '@vkontakte/vkui';
 
-test('test web view', () => {
+test('test vkcom view', () => {
   render(
     <PlatformProvider value="vkcom">
       <Select id="select-id" options={[]} {...props} />
@@ -111,9 +110,9 @@ test('test web view', () => {
   // write your test...
 });
 
-test('test mobile view', () => {
+test('test material view', () => {
   render(
-    <PlatformProvider value="android">
+    <PlatformProvider value="material">
       <Select id="select-id" options={[]} {...props} />
     </PlatformProvider>,
   );
@@ -131,7 +130,7 @@ import { PlatformProvider, Select } from '@vkontakte/vkui';
 
 test('test is value selected on mobile', () => {
   render(
-    <PlatformProvider value="android">
+    <PlatformProvider value="material">
       <Select
         data-testid="target"
         defaultValue="1"
@@ -170,7 +169,7 @@ export const userEvent = userEventLib.setup({ advanceTimers: jest.advanceTimersB
 import { render, fireEvent, screen } from '@testing-library/react';
 import { PlatformProvider, Select } from '@vkontakte/vkui';
 
-test('test is value selected on web', () => {
+test('test is value selected on vkcom', () => {
   render(
     <PlatformProvider value="vkcom">
       <Select

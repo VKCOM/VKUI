@@ -23,7 +23,7 @@ import styles from './PanelHeader.module.css';
 
 const platformClassNames = {
   ios: styles.ios,
-  android: styles.android,
+  material: styles.material,
   vkcom: classNames(styles.vkcom, 'vkuiInternalPanelHeader--vkcom'),
 };
 
@@ -165,7 +165,7 @@ export const PanelHeader = ({
         'vkuiInternalPanelHeader',
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
-          : platformClassNames.android,
+          : platformClassNames.material,
         transparent && styles.trnsp,
         shadow && styles.shadow,
         !float && classNames(styles.static, 'vkuiInternalPanelHeader--static'),

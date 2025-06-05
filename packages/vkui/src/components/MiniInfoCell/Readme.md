@@ -17,7 +17,7 @@ function MiniInfoCellExample() {
         header={
           <ModalPageHeader
             before={
-              (platform === 'android' || platform === 'vkcom') && (
+              platform !== 'ios' && (
                 <PanelHeaderButton onClick={closeModal}>
                   <Icon24Cancel />
                 </PanelHeaderButton>

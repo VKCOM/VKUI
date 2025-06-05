@@ -27,7 +27,7 @@ export const ModalPageHeaderPreview = () => {
           <ModalPageHeader
             before={
               <React.Fragment>
-                {(platform === 'android' || platform === 'vkcom') && (
+                {platform !== 'ios' && (
                   <HeaderButton>
                     <Icon24Cancel />
                   </HeaderButton>
@@ -36,7 +36,7 @@ export const ModalPageHeaderPreview = () => {
             }
             after={
               <React.Fragment>
-                {(platform === 'android' || platform === 'vkcom') && (
+                {platform !== 'ios' && (
                   <HeaderButton>
                     <Icon24Done />
                   </HeaderButton>

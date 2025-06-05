@@ -13,7 +13,7 @@ import styles from './PanelHeaderContent.module.css';
 
 const platformClassNames = {
   ios: styles.ios,
-  android: styles.android,
+  material: styles.material,
   vkcom: styles.vkcom,
 };
 
@@ -96,14 +96,17 @@ export const PanelHeaderContent = ({
         styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
-          : platformClassNames.android,
+          : platformClassNames.material,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
     >
       {hasReactNode(before) && <div className={styles.before}>{before}</div>}
       <InComponent
         {...inProps}
-        className={classNames(styles.in, !before && platform !== 'android' && styles.inCentered)}
+        className={classNames(
+          styles.in,
+          !before && platform !== 'android' && platform !== 'material' && styles.inCentered,
+        )}
       >
         {hasReactNode(subtitle) && <Footnote className={styles.subtitle}>{subtitle}</Footnote>}
         <div className={styles.children}>

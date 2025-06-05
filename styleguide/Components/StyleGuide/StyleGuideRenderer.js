@@ -15,7 +15,7 @@ import './StyleGuideRenderer.css';
 const { themeName, colorScheme, colorSchemeOptions } = getDefaultByThemesPresets();
 
 let initialState = {
-  platform: 'android',
+  platform: 'material',
   width: BREAKPOINTS.MOBILE,
   height: SMALL_HEIGHT,
   hasPointer: true,
@@ -35,6 +35,10 @@ try {
       ...initialState,
       ...JSON.parse(lsState),
     };
+
+    if (initialState.platform === 'android') {
+      initialState.platform = 'material';
+    }
   }
 } catch (e) {
   console.log(e);
@@ -161,7 +165,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
   return (
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider
-        platform="android"
+        platform="material"
         colorScheme={styleguideColorScheme}
         transitionMotionEnabled={false}
         hasCustomPanelHeaderAfter={false}

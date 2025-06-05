@@ -141,26 +141,26 @@
 }
 
 /**
- * Android
+ * Material
  */
-.android .before:not(:empty) {
+.material .before:not(:empty) {
   padding-block: 4px;
   padding-inline: 4px 0;
   margin-inline-end: -8px;
 }
 
-.android .content {
+.material .content {
   flex-grow: 1;
   align-items: center;
   max-inline-size: 100%;
 }
 
-.android .contentIn {
+.material .contentIn {
   font-size: 23px;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.android .content > * {
+.material .content > * {
   padding-block: 0;
   padding-inline: 12px;
 }
@@ -184,7 +184,7 @@
  */
 /* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
-  .android.noBefore:not(:global(.vkuiInternalModalPageHeader__in))
+  .material.noBefore:not(:global(.vkuiInternalModalPageHeader__in))
   .content {
   padding-inline-start: 0;
 }
@@ -193,7 +193,7 @@
 @media (--viewWidth-smallTabletPlus) {
   /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
-    .android.noBefore:not(:global(.vkuiInternalModalPageHeader__in))
+    .material.noBefore:not(:global(.vkuiInternalModalPageHeader__in))
     .content {
     padding-inline-start: 0;
   }
@@ -201,23 +201,23 @@
 }
 
 /* stylelint-disable selector-max-universal */
-.android.noAfter .content > *,
+.material.noAfter .content > *,
 .vkcom.noAfter .content > * {
   padding-inline-end: 0;
 }
 /* stylelint-enable selector-max-universal */
 
-.android.noAfter .content {
+.material.noAfter .content {
   padding-inline-end: 16px;
 }
 
-.android.noBefore .content {
+.material.noBefore .content {
   padding-inline-start: 16px;
 }
 
 /* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalSplitCol--viewWidth-tabletPlus):global(.vkuiInternalSplitCol--spaced-auto)
-  .android.noAfter:not(:global(.vkuiInternalModalPageHeader__in))
+  .material.noAfter:not(:global(.vkuiInternalModalPageHeader__in))
   .content {
   padding-inline-end: 0;
 }
@@ -226,14 +226,14 @@
 @media (--viewWidth-smallTabletPlus) {
   /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalSplitCol--viewWidth-none):global(.vkuiInternalSplitCol--spaced-auto)
-    .android.noAfter:not(:global(.vkuiInternalModalPageHeader__in))
+    .material.noAfter:not(:global(.vkuiInternalModalPageHeader__in))
     .content {
     padding-inline-end: 0;
   }
   /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
-.android .after:not(:empty),
+.material .after:not(:empty),
 .vkcom .after:not(:empty) {
   padding-block: 4px;
   padding-inline: 0 4px;

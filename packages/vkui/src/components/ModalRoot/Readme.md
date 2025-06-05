@@ -59,7 +59,7 @@ const DynamicModalPage = ({ onClose, ...props }) => {
         <ModalPageHeader
           before={
             sizeX.compact &&
-            platform === 'android' && (
+            platform === 'material' && (
               <PanelHeaderClose className={sizeX.compact.className} onClick={onClose} />
             )
           }
@@ -158,7 +158,7 @@ const App = () => {
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === 'android' && (
+              platform === 'material' && (
                 <PanelHeaderClose className={sizeX.compact.className} onClick={modalBack} />
               )
             }
@@ -187,7 +187,7 @@ const App = () => {
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === 'android' && (
+              platform === 'material' && (
                 <PanelHeaderClose className={sizeX.compact.className} onClick={modalBack} />
               )
             }
