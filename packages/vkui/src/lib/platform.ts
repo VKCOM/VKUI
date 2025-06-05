@@ -1,5 +1,5 @@
 /**
- * android - базовая платформа
+ * material - базовая платформа, подстраивается под android
  * ios - платформа которая подстраивается под ios
  * vkcom - платформа предназначенная для миниприложений которые встраиваются в vk.com
  */
@@ -12,7 +12,7 @@ export const Platform = {
   VKCOM: 'vkcom',
 } as const;
 
-export type PlatformType = 'android' | 'ios' | 'vkcom';
+export type PlatformType = 'material' | 'android' | 'ios' | 'vkcom';
 
 export function platform(browserInfo?: BrowserInfo): PlatformType {
   if (!browserInfo) {
