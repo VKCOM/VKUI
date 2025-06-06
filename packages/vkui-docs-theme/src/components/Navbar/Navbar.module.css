@@ -16,27 +16,21 @@
   align-items: center;
   justify-content: space-between;
   max-inline-size: var(--vkui_docs--max-width);
-  padding-block: var(--vkui--spacing_size_xl);
-  padding-inline: var(--vkui--spacing_size_2xl);
+  padding-block: var(--vkui--spacing_size_m);
+  padding-inline: var(--vkui--spacing_size_m);
   margin-inline: auto;
 }
 
 @media (--viewWidth-desktopPlus) {
   .navbar {
-    padding-block: var(--vkui--spacing_size_4xl);
-    padding-inline: 40px;
+    padding-block: var(--vkui--spacing_size_xl);
+    padding-inline: var(--vkui--spacing_size_2xl);
   }
 }
 
 .extraContent {
-  display: none;
-}
-
-@media (--viewWidth-desktopPlus) {
-  .extraContent {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
@@ -44,30 +38,14 @@
   margin-inline-start: var(--vkui--spacing_size_m);
 }
 
-.navbarLink {
-  padding-block: var(--vkui--spacing_size_m);
-  padding-inline: var(--vkui--spacing_size_l);
-  color: var(--vkui--color_text_primary);
-  text-decoration: none;
-}
-
-.navbarLink:not(:last-child) {
-  margin-inline-end: var(--vkui--spacing_size_m);
-}
-
-.navbarLinkActive {
-  background-color: var(--vkui--color_field_background);
-}
-
-.links {
-  display: none;
-}
-
-@media (--viewWidth-desktopPlus) {
+@media (--viewWidth-tabletMinus) {
   .links {
-    display: flex;
-    align-items: stretch;
-    block-size: 36px;
+    display: none;
+  }
+}
+@media (--viewWidth-tablet) {
+  .links {
+    display: none;
   }
 }
 
@@ -80,6 +58,10 @@
   color: var(--vkui--color_text_primary);
 }
 
+.menuButton {
+  margin-inline-end: var(--vkui--spacing_size_m);
+}
+
 @media (--viewWidth-desktopPlus) {
   .menuButton {
     display: none;
@@ -90,12 +72,13 @@
   box-sizing: initial;
 }
 
-.search {
-  inline-size: 200px;
+.versions {
+  display: none;
 }
 
-@media (--viewWidth-smallTabletMinus) {
-  .search {
-    display: none;
+@media (--viewWidth-desktopPlus) {
+  .versions {
+    display: block;
+    margin-inline-start: var(--vkui--spacing_size_xl);
   }
 }

@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { Icon24ChevronDown } from '@vkontakte/icons';
-import { SelectMimicry } from '@vkontakte/vkui';
+import { Icon16ArticleBoxOutline } from '@vkontakte/icons';
+import { AdaptivityProvider, Button, VisuallyHidden } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import vkuiPgk from '../../../../packages/vkui/package.json';
 import { VersionsModal } from './VersionsModal';
@@ -14,14 +14,17 @@ export function Versions() {
 
   return (
     <>
-      <SelectMimicry
-        style={{ width: 128 }}
-        after={<Icon24ChevronDown />}
-        onClick={() => setOpen((o) => !o)}
-        readOnly
-      >
-        v{vkuiPgk.version}
-      </SelectMimicry>
+      <AdaptivityProvider sizeY="compact">
+        <Button
+          mode="secondary"
+          appearance="neutral"
+          size="l"
+          after={<Icon16ArticleBoxOutline />}
+          onClick={() => setOpen((isOpen) => !isOpen)}
+        >
+          <VisuallyHidden>Версия</VisuallyHidden>v{vkuiPgk.version}
+        </Button>
+      </AdaptivityProvider>
       {mounted &&
         ReactDOM.createPortal(<VersionsModal open={open} setOpen={setOpen} />, document.body)}
     </>
