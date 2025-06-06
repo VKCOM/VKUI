@@ -44,8 +44,7 @@ const SnackBarCommon = ({
       ]}
     >
       {({ placement }: Pick<SnackbarProps, 'placement'>) => {
-        const offsetY =
-          platform === 'ios' || platform === 'android' ? offsetYByPlacement[placement!] : 0;
+        const offsetY = platform !== 'vkcom' ? offsetYByPlacement[placement!] : 0;
         return (
           <Snackbar placement={placement} action="Action" offsetY={offsetY} onClose={noop}>
             placement=&quot;{placement}&quot; offsetY=&#123;{offsetY}&#125;

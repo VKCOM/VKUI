@@ -16,7 +16,11 @@ export const useMaybeNeedRipple = (
 ): boolean => {
   const platform = usePlatform();
 
-  return platform === 'android' && !hasPointer && activeMode === 'background';
+  return (
+    (platform === 'android' || platform === 'material') &&
+    !hasPointer &&
+    activeMode === 'background'
+  );
 };
 
 interface Wave {

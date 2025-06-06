@@ -12,7 +12,7 @@ import styles from './PanelHeaderButton.module.css';
 
 const platformClassNames = {
   ios: styles.ios,
-  android: styles.android,
+  material: styles.material,
   vkcom: styles.vkcom,
 };
 
@@ -108,7 +108,7 @@ export const PanelHeaderButton = ({
         styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
-          : platformClassNames.android,
+          : platformClassNames.material,
         onlyPrimitive && styles.primitive,
         !isPrimitive && !isPrimitiveLabel && styles.notPrimitive,
       )}

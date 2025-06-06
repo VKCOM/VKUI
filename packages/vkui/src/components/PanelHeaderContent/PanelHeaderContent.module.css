@@ -78,10 +78,10 @@
 }
 
 /**
- * Android
+ * Material
  */
 
-.android .childrenIn {
+.material .childrenIn {
   font-family: var(--vkui--font_family_accent);
   font-size: 23px;
   font-weight: 500;
