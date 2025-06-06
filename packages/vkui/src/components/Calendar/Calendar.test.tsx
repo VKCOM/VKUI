@@ -113,7 +113,7 @@ describe('Calendar', () => {
         monthDropdownTestId={monthDropdownTestId}
       />,
     );
-    fireEvent.click(screen.getByTestId(dayTestId(lastDayDate)));
+    await userEvent.click(screen.getByTestId(dayTestId(lastDayDate)));
     await userEvent.keyboard('{ArrowRight}');
 
     expect(screen.getByTestId(monthDropdownTestId(9))).toBeInTheDocument();
