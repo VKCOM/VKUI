@@ -14,3 +14,24 @@
   <Spinner size="s">Кастомный текст вместо "Загружается...", который озвучит скринридер</Spinner>
 </Flex>
 ```
+
+<br>
+
+## unstable_ExpressiveSpinner
+
+Нестабильный компонент индикации загрузки в стиле
+[M3 Expressive](https://m3.material.io/components/loading-indicator/overview).
+Принимает все свойства, которые принимает компонент `Spinner`.
+Для платформы `ios` используется обычный `Spinner`.
+
+```jsx { "props": { "layout": false, "iframe": false } }
+<Flex
+  aria-busy={true}
+  aria-live="polite"
+  direction="column"
+  justify="center"
+  style={{ minHeight: 300 }}
+>
+  <ExpressiveSpinner size="xl" />
+</Flex>
+```
