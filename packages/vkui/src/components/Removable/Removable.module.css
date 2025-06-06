@@ -29,6 +29,15 @@
   border: 0;
 }
 
+.ios .action.indentation,
+.action.indentation {
+  inline-size: 44px;
+}
+
+.ios .action.indentation {
+  margin-inline: 2px;
+}
+
 .alignStart .action {
   align-self: flex-start;
 }
