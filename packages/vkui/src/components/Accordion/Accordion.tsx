@@ -3,9 +3,8 @@
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import type { HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
-import { AccordionContext } from './AccordionContext';
+import { AccordionContext, type AccordionContextProps } from './AccordionContext';
 import { AccordionSummary } from './AccordionSummary';
 
 function useAccordionId(id: AccordionProps['id']) {
@@ -16,7 +15,7 @@ function useAccordionId(id: AccordionProps['id']) {
   return { labelId, contentId };
 }
 
-export interface AccordionProps extends HasChildren {
+export interface AccordionProps {
   /**
    * Используется для генерации id для заголовка и контента(a11y).
    */
@@ -37,6 +36,14 @@ export interface AccordionProps extends HasChildren {
    * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
+  /**
+   * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
+   */
+  children?: React.ReactNode | ((props: { isExpanded: boolean }) => React.ReactNode);
+  /**
+   * Нужно ли удалять из DOM контент при сворачивании.
+   */
+  unmountOnCollapsed?: boolean;
 }
 
 export const Accordion: React.FC<AccordionProps> & {
@@ -48,6 +55,7 @@ export const Accordion: React.FC<AccordionProps> & {
   defaultExpanded = false,
   onChange: onChangeProp,
   children,
+  unmountOnCollapsed = false,
   ...restProps
 }: AccordionProps) => {
   const { labelId, contentId } = useAccordionId(id);
@@ -58,18 +66,26 @@ export const Accordion: React.FC<AccordionProps> & {
     onChange: onChangeProp,
     disabled: restProps.disabled,
   });
+  const [childrenIsExpanded, setChildrenIsExpanded] = React.useState(expanded);
 
-  const context = React.useMemo(
+  const context = React.useMemo<AccordionContextProps>(
     () => ({
       labelId,
       contentId,
       expanded: expanded || false,
+      unmountOnCollapsed,
       onChange,
+      onExpandStart: () => setChildrenIsExpanded(true),
+      onCollapseEnd: () => setChildrenIsExpanded(false),
     }),
-    [contentId, expanded, labelId, onChange],
+    [contentId, expanded, labelId, onChange, unmountOnCollapsed],
   );
 
-  return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
+  return (
+    <AccordionContext.Provider value={context}>
+      {typeof children === 'function' ? children({ isExpanded: childrenIsExpanded }) : children}
+    </AccordionContext.Provider>
+  );
 };
 
 Accordion.Summary = AccordionSummary;
