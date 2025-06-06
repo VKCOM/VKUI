@@ -10,6 +10,7 @@ import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { callMultiple } from '../../lib/callMultiple';
 import { touchEnabled } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -19,6 +20,15 @@ import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
 import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
+
+const controlsAnimationStateClassNames = {
+  enter: styles.controlsStateEnter,
+  entering: styles.controlsStateEnter,
+  entered: styles.controlsStateEnter,
+  exit: styles.controlsStateExit,
+  exiting: styles.controlsStateExit,
+  exited: undefined,
+};
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
@@ -120,6 +130,12 @@ export const Search = ({
   );
   const checkHasValue: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setHasValue(Boolean(e.currentTarget.value));
+
+  const [controlsAnimationState, controlsAnimationHandlers] = useCSSKeyframesAnimationController(
+    hasValue ? 'enter' : 'exit',
+    {},
+    true,
+  );
 
   const { sizeY = 'none' } = useAdaptivity();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
@@ -231,37 +247,45 @@ export const Search = ({
             onChange={callMultiple(onChange, checkHasValue)}
           />
         </div>
-        <div className={styles.controls}>
-          {iconProp &&
-            (typeof iconProp === 'function'
-              ? iconProp(renderIconButton)
-              : renderIconButton(iconProp))}
-          <IconButton
-            hoverMode="opacity"
-            onPointerDown={onIconCancelClickStart}
-            onClick={onCancel}
-            className={styles.icon}
-            tabIndex={hasValue ? undefined : -1}
-            disabled={inputProps.disabled}
-            data-testid={clearButtonTestId}
+        {controlsAnimationState !== 'exited' && (
+          <div
+            {...controlsAnimationHandlers}
+            className={classNames(
+              styles.controls,
+              controlsAnimationStateClassNames[controlsAnimationState],
+            )}
           >
-            <VisuallyHidden>{clearLabel}</VisuallyHidden>
-            {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
-          </IconButton>
-          {adaptiveSizeY.compact && onFindButtonClick && (
-            <Button
-              mode="primary"
-              size="m"
-              className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
-              focusVisibleMode="inside"
-              onClick={onFindButtonClick}
+            {iconProp &&
+              (typeof iconProp === 'function'
+                ? iconProp(renderIconButton)
+                : renderIconButton(iconProp))}
+            <IconButton
+              hoverMode="opacity"
+              onPointerDown={onIconCancelClickStart}
+              onClick={onCancel}
+              className={styles.icon}
               tabIndex={hasValue ? undefined : -1}
-              data-testid={findButtonTestId}
+              disabled={inputProps.disabled}
+              data-testid={clearButtonTestId}
             >
-              {findButtonText}
-            </Button>
-          )}
-        </div>
+              <VisuallyHidden>{clearLabel}</VisuallyHidden>
+              {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
+            </IconButton>
+            {adaptiveSizeY.compact && onFindButtonClick && (
+              <Button
+                mode="primary"
+                size="m"
+                className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
+                focusVisibleMode="inside"
+                onClick={onFindButtonClick}
+                tabIndex={hasValue ? undefined : -1}
+                data-testid={findButtonTestId}
+              >
+                {findButtonText}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
       {hasAfter && (
         <div className={styles.after}>
