@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
-import type { TappableProps } from '../Tappable/Tappable';
+import type { TappableOmitProps } from '../Tappable/Tappable';
 import { RadioInput } from './RadioInput/RadioInput';
 import styles from './Radio.module.css';
 
@@ -12,7 +12,7 @@ export interface RadioProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
     Pick<
-      TappableProps,
+      TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
   /**

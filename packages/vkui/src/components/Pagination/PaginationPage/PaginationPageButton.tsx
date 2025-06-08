@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { type SizeTypeValues } from '../../../lib/adaptivity';
-import { Tappable, type TappableProps } from '../../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../../Tappable/Tappable';
 import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import type { PaginationProps } from '../Pagination';
@@ -24,7 +24,7 @@ export interface PaginationPageButtonProps extends PaginationPageButtonOpts {
 
 const getTappablePropsFromPaginationPage = (
   opts: PaginationPageButtonOpts,
-): TappableProps & { 'data-page': number } => {
+): TappableOmitProps & { 'data-page': number } => {
   const {
     isCurrent = false,
     getPageLabel,

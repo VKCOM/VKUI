@@ -1,0 +1,86 @@
+{
+  "name": "@vkontakte/vkui-date-fns-tz",
+  "version": "0.0.4",
+  "description": "date-fns timezone utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/vkui-date-fns-tz"
+  },
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "files": [
+    "index.cjs",
+    "index.js",
+    "index.d.ts",
+    "tzOffset/",
+    "tzScan/",
+    "date/",
+    "tz/",
+    "constants/"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./index.d.ts",
+      "require": "./index.cjs",
+      "import": "./index.js",
+      "default": "./index.js"
+    },
+    "./tzOffset": {
+      "types": "./tzOffset/index.d.ts",
+      "require": "./tzOffset/index.cjs",
+      "import": "./tzOffset/index.js",
+      "default": "./tzOffset/index.js"
+    },
+    "./tzScan": {
+      "types": "./tzScan/index.d.ts",
+      "require": "./tzScan/index.cjs",
+      "import": "./tzScan/index.js",
+      "default": "./tzScan/index.js"
+    },
+    "./date": {
+      "types": "./date/index.d.ts",
+      "require": "./date/index.cjs",
+      "import": "./date/index.js",
+      "default": "./date/index.js"
+    },
+    "./date/mini": {
+      "types": "./date/mini.d.ts",
+      "require": "./date/mini.cjs",
+      "import": "./date/mini.js",
+      "default": "./date/mini.js"
+    },
+    "./tz": {
+      "types": "./tz/index.d.ts",
+      "require": "./tz/index.cjs",
+      "import": "./tz/index.js",
+      "default": "./tz/index.js"
+    },
+    "./constants": {
+      "types": "./constants/index.d.ts",
+      "require": "./constants/index.cjs",
+      "import": "./constants/index.js",
+      "default": "./constants/index.js"
+    }
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "node": "node --experimental-transform-types",
+    "build": "yarn run node build.ts",
+    "test": "yarn run node --test '**/*.test.*'",
+    "test:ci": "yarn run test",
+    "lint:types": "tsc",
+    "prepack": "yarn run build"
+  },
+  "devDependencies": {
+    "@date-fns/tz": "1.2.0",
+    "@swc/core": "^1.11.29",
+    "typescript": "^5.8.3"
+  }
+}

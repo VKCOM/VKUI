@@ -1,9 +1,9 @@
 import type { ReactElement } from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import styles from './Link.module.css';
 
-export interface LinkProps extends TappableProps {
+export interface LinkProps extends TappableOmitProps {
   /**
    * Иконка слева.
    */
@@ -41,6 +41,7 @@ export const Link = ({
       activeMode="opacity"
       hoverMode={styles.hover}
       focusVisibleMode="outside"
+      DefaultComponent="span"
       {...restProps}
       baseClassName={classNames(
         styles.host,
