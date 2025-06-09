@@ -2,18 +2,17 @@
 
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { type SnackbarProps } from '../../components/Snackbar/Snackbar';
 import { type SnackbarPlacement } from '../../components/Snackbar/types';
 import { SnackbarAnimatedWrapper } from './SnackbarAnimatedWrapper';
+import { type SnackbarData } from './types';
 import styles from './SnackbarsContainer.module.css';
 /* eslint-disable jsdoc/require-jsdoc */
-
-type SnackbarData = { props: SnackbarProps; id: string };
 
 interface SnackbarsContainerProps {
   snackbars: SnackbarData[];
   placement: SnackbarPlacement;
-  onSnackbarContainerClosed: (id: string, placement: SnackbarPlacement) => void;
+  onSnackbarShow: (id: string) => void;
+  onSnackbarContainerClosed: (id: string) => void;
 }
 
 const placementClassNames = {
@@ -28,16 +27,19 @@ const placementClassNames = {
 type SnackbarsContainerContextData = {
   isInsideSnackbarContainer: boolean;
   onSnackbarClosed: (id: string) => void;
+  onSnackbarShow: (id: string) => void;
 };
 
 export const SnackbarsContainerContext = React.createContext<SnackbarsContainerContextData>({
   isInsideSnackbarContainer: false,
   onSnackbarClosed: noop,
+  onSnackbarShow: noop,
 });
 
 export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
   snackbars,
   placement,
+  onSnackbarShow,
   onSnackbarContainerClosed: onSnackbarContainerClosedProp,
 }) => {
   const [snackbarsWrappersToClose, setSnackbarsWrappersToClose] = React.useState<Set<string>>(
@@ -53,17 +55,18 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
         oldState.delete(id);
         return new Set(oldState);
       });
-      onSnackbarContainerClosedProp(id, placement);
+      onSnackbarContainerClosedProp(id);
     },
-    [onSnackbarContainerClosedProp, placement],
+    [onSnackbarContainerClosedProp],
   );
 
   const contextValue: SnackbarsContainerContextData = React.useMemo(
     () => ({
       isInsideSnackbarContainer: true,
       onSnackbarClosed,
+      onSnackbarShow,
     }),
-    [onSnackbarClosed],
+    [onSnackbarClosed, onSnackbarShow],
   );
 
   if (!snackbars.length) {

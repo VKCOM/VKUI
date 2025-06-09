@@ -55,7 +55,7 @@ export const SnackbarAnimatedWrapper: React.FC<{
       )}
       {...animationHandlers}
     >
-      <Snackbar key={snackbarData.id} {...snackbarData.props} id={snackbarData.id} />
+      <Snackbar key={snackbarData.id} {...snackbarData} />
     </div>
   );
 };

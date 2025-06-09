@@ -76,9 +76,6 @@ export const Playground: Story = {
           <Button appearance="negative" stretched onClick={snackbarApi.closeAll}>
             Закрыть все
           </Button>
-          <Button appearance="negative" stretched onClick={() => snackbarApi.clearQueue()}>
-            Очистить очередь
-          </Button>
         </Flex>
       </>
     );

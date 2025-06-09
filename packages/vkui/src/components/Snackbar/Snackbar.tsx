@@ -123,7 +123,8 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
-  const { isInsideSnackbarContainer, onSnackbarClosed } = useContext(SnackbarsContainerContext);
+  const { isInsideSnackbarContainer, onSnackbarShow, onSnackbarClosed } =
+    useContext(SnackbarsContainerContext);
 
   const [open, setOpen] = React.useState(true);
   const [touched, setTouched] = React.useState(false);
@@ -144,6 +145,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
     {
+      onEnter: id ? () => onSnackbarShow(id) : undefined,
       onExited: callMultiple(onClose, id ? () => onSnackbarClosed(id) : undefined),
     },
     false,

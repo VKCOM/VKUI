@@ -29,71 +29,20 @@ const resolveMobilePlacement = (
 const MAX_VISIBLE_SNACKBARS = 4;
 
 export const useSnackbar = (): UseSnackbarResult => {
-  const [snackbars, setSnackbars] = React.useState<SnackbarsMap>({});
+  const [snackbars, setSnackbars] = React.useState<SnackbarData[]>([]);
   const [snackbarsToClose, setSnackbarsToClose] = React.useState(new Set<string>());
-  const visibleSnackbarsIds = React.useRef<Set<string>>(new Set());
-
-  const snackbarsQueue = React.useRef<SnackbarsMap>({});
-  const snackbarsIdsInQueue = React.useRef<Record<string, SnackbarPlacement>>({});
+  const showedSnackbars = React.useRef<Set<string>>(new Set());
 
   const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
 
-  const popFromQueue = React.useCallback(
-    (placement: SnackbarPlacement, snackbarsMap: SnackbarsMap): SnackbarData | null => {
-      const snackbarsPlacementQueue = snackbarsQueue.current[placement] || [];
-      const validPlacesCount = Math.min(
-        snackbarsPlacementQueue.length,
-        Math.max(0, MAX_VISIBLE_SNACKBARS - snackbarsMap[placement].length),
-      );
-      if (validPlacesCount > 0) {
-        const firstFromQueue = snackbarsPlacementQueue.pop();
-        if (firstFromQueue) {
-          delete snackbarsIdsInQueue.current[firstFromQueue.id];
-          return firstFromQueue;
-        }
-      }
-      return null;
-    },
-    [],
-  );
-
-  const addToQueue = React.useCallback(
-    (snackbarData: SnackbarData, placement: SnackbarPlacement) => {
-      const queueSnackbars = snackbarsQueue.current[placement] || [];
-      queueSnackbars.push(snackbarData);
-      snackbarsQueue.current[placement] = queueSnackbars;
-      snackbarsIdsInQueue.current[snackbarData.id] = placement;
-    },
-    [],
-  );
-
-  const removeSnackbar = React.useCallback(
-    (id: string, placement: SnackbarPlacement) => {
-      setSnackbars((oldSnackbars) => {
-        const newSnackbars: SnackbarsMap = { ...oldSnackbars };
-        newSnackbars[placement] = newSnackbars[placement].filter((snackbar) => snackbar.id !== id);
-        visibleSnackbarsIds.current.delete(id);
-
-        const firstFromQueue = popFromQueue(placement, newSnackbars);
-
-        if (firstFromQueue) {
-          newSnackbars[placement].push(firstFromQueue);
-          visibleSnackbarsIds.current.add(firstFromQueue.id);
-        }
-
-        if (!newSnackbars[placement].length) {
-          delete newSnackbars[placement];
-        }
-
-        return newSnackbars;
-      });
-      setSnackbarsToClose((oldSnackbars) => {
-        oldSnackbars.delete(id);
-        return new Set(oldSnackbars);
-      });
-    },
-    [popFromQueue],
-  );
+  const removeSnackbar = React.useCallback((id: string) => {
+    setSnackbars((oldSnackbars) => oldSnackbars.filter((snackbar) => snackbar.id !== id));
+    setSnackbarsToClose((oldSnackbars) => {
+      oldSnackbars.delete(id);
+      return new Set(oldSnackbars);
+    });
+    showedSnackbars.current.delete(id);
+  }, []);
 
   const onOpenSnackbar: SnackbarApi['open'] = React.useCallback(
     (config) => {
@@ -101,67 +50,45 @@ export const useSnackbar = (): UseSnackbarResult => {
       const resolvedPlacement = isDesktop ? placement : resolveMobilePlacement(placement);
 
       const id = config.id || uuidv4();
-      setSnackbars((oldSnackbars) => {
-        const currentSnackbars = oldSnackbars[resolvedPlacement] || [];
-
-        const snackbarData = {
+      setSnackbars((oldSnackbars) => [
+        ...oldSnackbars,
+        {
+          ...config,
           id,
-          props: {
-            ...config,
-            placement: resolvedPlacement,
-            onClose: () => {
-              config.onClose?.();
-            },
+          placement: resolvedPlacement,
+          onClose: () => {
+            config.onClose?.();
           },
-        };
-
-        if (currentSnackbars.length >= MAX_VISIBLE_SNACKBARS) {
-          addToQueue(snackbarData, placement);
-          return oldSnackbars;
-        } else {
-          currentSnackbars.push(snackbarData);
-          const newSnackbars = {
-            ...oldSnackbars,
-            [resolvedPlacement]: currentSnackbars,
-          };
-          visibleSnackbarsIds.current.add(snackbarData.id);
-          return newSnackbars;
-        }
-      });
+        },
+      ]);
       return id;
     },
-    [addToQueue, isDesktop],
+    [isDesktop],
   );
 
-  const onUpdateSnackbar: SnackbarApi['update'] = React.useCallback((id, config) => {}, []);
-
-  const onCloseSnackbar: SnackbarApi['close'] = React.useCallback((id) => {
-    if (visibleSnackbarsIds.current.has(id)) {
-      setSnackbarsToClose((oldSnackbars) => {
-        oldSnackbars.add(id);
-        return new Set(oldSnackbars);
-      });
-    } else if (snackbarsIdsInQueue.current[id]) {
-      const snackbarPlacement = snackbarsIdsInQueue.current[id];
-      snackbarsQueue.current[snackbarPlacement] = snackbarsQueue.current[snackbarPlacement].filter(
-        (snackbar) => snackbar.id !== id,
-      );
-      delete snackbarsIdsInQueue.current[id];
-    }
+  const onUpdateSnackbar: SnackbarApi['update'] = React.useCallback((id, config) => {
+    setSnackbars((oldSnackbars) =>
+      oldSnackbars.map((snackbar) => (snackbar.id === id ? { ...snackbar, ...config } : snackbar)),
+    );
   }, []);
 
-  const onClearQueue: SnackbarApi['clearQueue'] = React.useCallback((placement) => {
-    if (placement) {
-      snackbarsQueue.current[placement] = [];
-    } else {
-      snackbarsQueue.current = {};
-    }
-  }, []);
+  const onCloseSnackbar: SnackbarApi['close'] = React.useCallback(
+    (id) => {
+      if (showedSnackbars.current.has(id)) {
+        setSnackbarsToClose((oldSnackbars) => {
+          oldSnackbars.add(id);
+          return new Set(oldSnackbars);
+        });
+      } else {
+        removeSnackbar(id);
+      }
+    },
+    [removeSnackbar],
+  );
 
   const onCloseAllSnackbars: SnackbarApi['closeAll'] = React.useCallback(() => {
-    setSnackbarsToClose(visibleSnackbarsIds.current);
-    onClearQueue();
-  }, [onClearQueue]);
+    setSnackbarsToClose(new Set(snackbars.map(({ id }) => id)));
+  }, [snackbars]);
 
   const api = React.useMemo<SnackbarApi>(() => {
     return {
@@ -169,33 +96,47 @@ export const useSnackbar = (): UseSnackbarResult => {
       update: onUpdateSnackbar,
       close: onCloseSnackbar,
       closeAll: onCloseAllSnackbars,
-      clearQueue: onClearQueue,
     };
-  }, [onClearQueue, onCloseAllSnackbars, onCloseSnackbar, onOpenSnackbar, onUpdateSnackbar]);
+  }, [onCloseAllSnackbars, onCloseSnackbar, onOpenSnackbar, onUpdateSnackbar]);
+
+  const snackbarsMap: SnackbarsMap = React.useMemo(() => {
+    const map: SnackbarsMap = {};
+    snackbars.forEach((snackbar) => {
+      const placement = snackbar.placement;
+      const placementSnackbars = map[placement] || [];
+      if (placementSnackbars.length < MAX_VISIBLE_SNACKBARS) {
+        placementSnackbars.push({
+          ...snackbar,
+          open: snackbarsToClose.has(snackbar.id) ? false : undefined,
+        });
+      }
+      map[placement] = placementSnackbars;
+    });
+    return map;
+  }, [snackbars, snackbarsToClose]);
+
+  const onSnackbarShow = React.useCallback((id: string) => {
+    showedSnackbars.current.add(id);
+  }, []);
 
   const holder = React.useMemo(() => {
-    if (!Object.keys(snackbars).length) {
+    if (!Object.keys(snackbarsMap).length) {
       return null;
     }
     return (
       <>
-        {Object.entries(snackbars).map(([placement, snackbars]) => (
+        {Object.entries(snackbarsMap).map(([placement, snackbars]) => (
           <SnackbarsContainer
             key={placement}
-            snackbars={snackbars.map((snackbar) => ({
-              id: snackbar.id,
-              props: {
-                ...snackbar.props,
-                open: snackbarsToClose.has(snackbar.id) ? false : undefined,
-              },
-            }))}
+            snackbars={snackbars}
             placement={placement as SnackbarPlacement}
             onSnackbarContainerClosed={removeSnackbar}
+            onSnackbarShow={onSnackbarShow}
           />
         ))}
       </>
     );
-  }, [removeSnackbar, snackbars, snackbarsToClose]);
+  }, [onSnackbarShow, removeSnackbar, snackbarsMap]);
 
   return [api, holder];
 };
