@@ -12,6 +12,7 @@ const SnackbarApiContext = React.createContext<SnackbarApi>({
   update: noop,
   close: noop,
   closeAll: noop,
+  getSnackbars: () => [],
 });
 
 export const useSnackbarApi = () => {

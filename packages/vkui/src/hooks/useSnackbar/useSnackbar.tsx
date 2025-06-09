@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { BREAKPOINTS } from '../../lib/adaptivity';
@@ -11,6 +12,7 @@ import {
   type SnackbarData,
   type SnackbarPlacement,
   type SnackbarsMap,
+  type UseSnackbarParameters,
   type UseSnackbarResult,
 } from './types';
 /* eslint-disable jsdoc/require-jsdoc */
@@ -26,21 +28,34 @@ const resolveMobilePlacement = (
   return 'bottom';
 };
 
-const MAX_VISIBLE_SNACKBARS = 4;
+const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 
-export const useSnackbar = (): UseSnackbarResult => {
-  const [snackbars, setSnackbars] = React.useState<SnackbarData[]>([]);
-  const [snackbarsToClose, setSnackbarsToClose] = React.useState(new Set<string>());
+export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResult => {
+  const { maxSnackbarsCount = DEFAULT_MAX_VISIBLE_SNACKBARS } = params;
+  const [data, setData] = React.useState<{
+    snackbars: SnackbarData[];
+    snackbarsToClose: Set<string>;
+  }>({
+    snackbars: [],
+    snackbarsToClose: new Set<string>(),
+  });
+  const snackbarsRef = React.useRef<SnackbarData[]>([]);
   const showedSnackbars = React.useRef<Set<string>>(new Set());
 
   const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
 
+  useEffect(() => {
+    snackbarsRef.current = data.snackbars;
+  }, [data.snackbars]);
+
   const removeSnackbar = React.useCallback((id: string) => {
-    setSnackbars((oldSnackbars) => oldSnackbars.filter((snackbar) => snackbar.id !== id));
-    setSnackbarsToClose((oldSnackbars) => {
-      oldSnackbars.delete(id);
-      return new Set(oldSnackbars);
-    });
+    setData((data) => ({
+      snackbars: data.snackbars.filter((snackbar) => snackbar.id !== id),
+      snackbarsToClose: (() => {
+        data.snackbarsToClose.delete(id);
+        return new Set(data.snackbarsToClose);
+      })(),
+    }));
     showedSnackbars.current.delete(id);
   }, []);
 
@@ -50,34 +65,43 @@ export const useSnackbar = (): UseSnackbarResult => {
       const resolvedPlacement = isDesktop ? placement : resolveMobilePlacement(placement);
 
       const id = config.id || uuidv4();
-      setSnackbars((oldSnackbars) => [
-        ...oldSnackbars,
-        {
-          ...config,
-          id,
-          placement: resolvedPlacement,
-          onClose: () => {
-            config.onClose?.();
+      setData((oldData) => ({
+        ...oldData,
+        snackbars: [
+          ...oldData.snackbars,
+          {
+            ...config,
+            id,
+            placement: resolvedPlacement,
+            onClose: () => {
+              config.onClose?.();
+            },
           },
-        },
-      ]);
+        ],
+      }));
       return id;
     },
     [isDesktop],
   );
 
   const onUpdateSnackbar: SnackbarApi['update'] = React.useCallback((id, config) => {
-    setSnackbars((oldSnackbars) =>
-      oldSnackbars.map((snackbar) => (snackbar.id === id ? { ...snackbar, ...config } : snackbar)),
-    );
+    setData((oldData) => ({
+      ...oldData,
+      snackbars: oldData.snackbars.map((snackbar) =>
+        snackbar.id === id ? { ...snackbar, ...config } : snackbar,
+      ),
+    }));
   }, []);
 
   const onCloseSnackbar: SnackbarApi['close'] = React.useCallback(
     (id) => {
       if (showedSnackbars.current.has(id)) {
-        setSnackbarsToClose((oldSnackbars) => {
-          oldSnackbars.add(id);
-          return new Set(oldSnackbars);
+        setData((oldData) => {
+          oldData.snackbarsToClose.add(id);
+          return {
+            ...oldData,
+            snackbarsToClose: new Set(oldData.snackbarsToClose),
+          };
         });
       } else {
         removeSnackbar(id);
@@ -87,8 +111,11 @@ export const useSnackbar = (): UseSnackbarResult => {
   );
 
   const onCloseAllSnackbars: SnackbarApi['closeAll'] = React.useCallback(() => {
-    setSnackbarsToClose(new Set(snackbars.map(({ id }) => id)));
-  }, [snackbars]);
+    setData((oldData) => ({
+      ...oldData,
+      snackbarsToClose: new Set(oldData.snackbars.map(({ id }) => id)),
+    }));
+  }, []);
 
   const api = React.useMemo<SnackbarApi>(() => {
     return {
@@ -96,24 +123,25 @@ export const useSnackbar = (): UseSnackbarResult => {
       update: onUpdateSnackbar,
       close: onCloseSnackbar,
       closeAll: onCloseAllSnackbars,
+      getSnackbars: () => snackbarsRef.current,
     };
   }, [onCloseAllSnackbars, onCloseSnackbar, onOpenSnackbar, onUpdateSnackbar]);
 
   const snackbarsMap: SnackbarsMap = React.useMemo(() => {
     const map: SnackbarsMap = {};
-    snackbars.forEach((snackbar) => {
+    data.snackbars.forEach((snackbar) => {
       const placement = snackbar.placement;
       const placementSnackbars = map[placement] || [];
-      if (placementSnackbars.length < MAX_VISIBLE_SNACKBARS) {
+      if (placementSnackbars.length < maxSnackbarsCount) {
         placementSnackbars.push({
           ...snackbar,
-          open: snackbarsToClose.has(snackbar.id) ? false : undefined,
+          open: data.snackbarsToClose.has(snackbar.id) ? false : undefined,
         });
       }
       map[placement] = placementSnackbars;
     });
     return map;
-  }, [snackbars, snackbarsToClose]);
+  }, [data.snackbars, data.snackbarsToClose, maxSnackbarsCount]);
 
   const onSnackbarShow = React.useCallback((id: string) => {
     showedSnackbars.current.add(id);

@@ -62,6 +62,16 @@ export const Playground: Story = {
       snackbarApi.open({ ...args, placement });
     };
 
+    const _onUpdate = () => {
+      const snackbars = snackbarApi.getSnackbars();
+      snackbars.forEach((snackbar) => {
+        snackbarApi.update(snackbar.id, {
+          action: 'Обновлен',
+          children: 'Текст и всякое другое',
+        });
+      });
+    };
+
     return (
       <>
         <Flex direction="column" gap="2xl">
@@ -75,6 +85,9 @@ export const Playground: Story = {
           ))}
           <Button appearance="negative" stretched onClick={snackbarApi.closeAll}>
             Закрыть все
+          </Button>
+          <Button appearance="negative" stretched onClick={_onUpdate}>
+            Обновить все
           </Button>
         </Flex>
       </>

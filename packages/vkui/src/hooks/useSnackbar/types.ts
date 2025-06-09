@@ -11,6 +11,11 @@ export interface SnackbarApi {
   update: (id: string, config: Omit<SnackbarConfig, 'id' | 'placement'>) => void;
   close: (id: string) => void;
   closeAll: () => void;
+  getSnackbars: () => SnackbarData[];
+}
+
+export interface UseSnackbarParameters {
+  maxSnackbarsCount?: number;
 }
 
 export type UseSnackbarResult = [SnackbarApi, React.ReactElement | null];
