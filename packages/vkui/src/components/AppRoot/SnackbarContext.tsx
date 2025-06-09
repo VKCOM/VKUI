@@ -9,8 +9,10 @@ import { type HasChildren } from '../../types';
 
 const SnackbarApiContext = React.createContext<SnackbarApi>({
   open: () => '',
+  update: noop,
   close: noop,
   closeAll: noop,
+  clearQueue: noop,
 });
 
 export const useSnackbarApi = () => {
