@@ -7,7 +7,8 @@ import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { TabsItem, type TabsItemProps } from '../TabsItem/TabsItem';
-import { Tabs, TabsModeContext, type TabsProps } from './Tabs';
+import { Tabs, type TabsProps } from './Tabs';
+import { TabsModeContext } from './TabsModeContext';
 
 function useIconByMode() {
   const { mode } = React.useContext(TabsModeContext);
