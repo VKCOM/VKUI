@@ -81,7 +81,7 @@ export interface SnackbarProps
   /**
    * Время в миллисекундах, через которое плашка скроется.
    */
-  duration?: number;
+  duration?: number | null;
   /**
    * Обработчик закрытия уведомления.
    */
@@ -258,7 +258,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   useIsomorphicLayoutEffect(
     function closeAfterDelay() {
-      if (!open || focused || touched || animationState !== 'entered') {
+      if (!open || focused || touched || animationState !== 'entered' || !duration) {
         return;
       }
       const onTimeout = () => {

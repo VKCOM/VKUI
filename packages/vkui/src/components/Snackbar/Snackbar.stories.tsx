@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
@@ -7,6 +8,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { useSnackbarApi } from '../AppRoot/SnackbarContext';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
+import { Checkbox } from '../Checkbox/Checkbox';
 import { Flex } from '../Flex/Flex';
 import { FlexItem } from '../Flex/FlexItem/FlexItem';
 import { Image } from '../Image/Image';
@@ -57,9 +59,10 @@ const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
 export const Playground: Story = {
   render: function Render({ onClose, ...args }) {
     const snackbarApi = useSnackbarApi();
+    const [autoHide, setAutoHide] = useState(true);
 
     const _onOpen = (placement: SnackbarPlacement) => {
-      snackbarApi.open({ ...args, placement });
+      snackbarApi.open({ duration: autoHide ? undefined : null, ...args, placement });
     };
 
     const _onUpdate = () => {
@@ -83,6 +86,9 @@ export const Playground: Story = {
               </FlexItem>
             </Flex>
           ))}
+          <Checkbox checked={autoHide} onChange={() => setAutoHide((v) => !v)}>
+            Автоскрытие
+          </Checkbox>
           <Button appearance="negative" stretched onClick={snackbarApi.closeAll}>
             Закрыть все
           </Button>
