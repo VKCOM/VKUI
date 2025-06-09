@@ -136,12 +136,73 @@ describe(ChipsInput, () => {
     expect(onChange).toBeCalledWith(resultValue);
   });
 
-  it('should add some options by splitting by delimiter', async () => {
-    const onChange = jest.fn();
-    render(
-      <ChipsInput
-        data-testid="input"
-        value={[
+  it.each<{
+    delimiter: string | RegExp | string[];
+    str: string;
+    expectedValues?: string[];
+    expectedInputValue?: string;
+  }>([
+    {
+      delimiter: ',',
+      str: 'Зеленый,Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: new RegExp(','),
+      str: 'Зеленый,Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: /\./,
+      str: 'Зеленый.Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: [',', '.'],
+      str: 'Зеленый,Фиолетовый.Красный',
+      expectedValues: ['Зеленый', 'Фиолетовый', 'Красный'],
+    },
+    {
+      delimiter: '.',
+      str: 'Зеленый.Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: [' ', ',', '.', '|'],
+      str: 'Зеленый.Фиолетовый,Красный|Розовый Синий',
+      expectedValues: ['Зеленый', 'Фиолетовый', 'Красный', 'Розовый', 'Синий'],
+    },
+    {
+      delimiter: ['', ''],
+      str: 'Зеленый,Фиолетовый.Красный',
+      expectedInputValue: 'Зеленый,Фиолетовый.Красный',
+    },
+  ])(
+    'should correct use delimiter $delimiter',
+    ({ delimiter, str, expectedValues, expectedInputValue }) => {
+      const onChange = jest.fn();
+      render(
+        <ChipsInput
+          value={[
+            {
+              value: 'navarin',
+              label: 'Наваринского пламени с дымом',
+            },
+            {
+              value: 'red',
+              label: 'Красный',
+            },
+          ]}
+          data-testid="input"
+          onChange={onChange}
+          delimiter={delimiter}
+        />,
+      );
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      if (expectedValues) {
+        expect(onChange).toBeCalledWith([
           {
             value: 'navarin',
             label: 'Наваринского пламени с дымом',
@@ -150,30 +211,15 @@ describe(ChipsInput, () => {
             value: 'red',
             label: 'Красный',
           },
-        ]}
-        onChange={onChange}
-        delimiter=","
-      />,
-    );
-    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
-    expect(onChange).toBeCalledWith([
-      {
-        value: 'navarin',
-        label: 'Наваринского пламени с дымом',
-      },
-      {
-        value: 'red',
-        label: 'Красный',
-      },
-      {
-        value: 'Зеленый',
-        label: 'Зеленый',
-      },
-      {
-        value: 'Фиолетовый',
-        label: 'Фиолетовый',
-      },
-    ]);
-    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
-  });
+          ...expectedValues.map((value) => ({
+            value,
+            label: value,
+          })),
+        ]);
+      } else {
+        expect(onChange).not.toHaveBeenCalled();
+      }
+      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+    },
+  );
 });
