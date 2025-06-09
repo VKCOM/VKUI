@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act, render, screen } from '@testing-library/react';
+import { type SnackbarApi } from '../../hooks/useSnackbar/types';
 import { waitCSSKeyframesAnimation } from '../../testing/utils';
-import { type SnackbarApi } from '../Snackbar/useSnackbar';
 import { SnackbarsController, useSnackbarApi } from './SnackbarContext';
 
 const TestComponent: React.FC<{ apiRef: React.RefObject<SnackbarApi | null> }> = ({ apiRef }) => {

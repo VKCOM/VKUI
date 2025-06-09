@@ -1,5 +1,6 @@
 'use client';
 
+import { useContext } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
@@ -8,7 +9,9 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SnackbarsContainerContext } from '../../hooks/useSnackbar/SnackbarsContainer';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { callMultiple } from '../../lib/callMultiple';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -68,11 +71,11 @@ export interface SnackbarProps
    */
   onActionClick?: (event: React.MouseEvent) => void;
   /**
-   * Обработчик, срабатывающий при окончании свайпа снекбара, когда он должен закрыться
+   * Обработчик, срабатывающий при окончании свайпа снекбара, когда он должен закрыться.
    */
   onSwipeEnd?: () => void;
   /**
-   * Обработчик, срабатывающий при окончании таймера, длительность, которого задана свойством `duration`
+   * Обработчик, срабатывающий при окончании таймера, длительность, которого задана свойством `duration`.
    */
   onDurationEnd?: () => void;
   /**
@@ -91,7 +94,7 @@ export interface SnackbarProps
    * Управление состоянием открытия снекбара:
    * При `open = undefined` - работает как обычно
    * При `open = true` - снекбар будет открыт при любых действиях со снекбаром
-   * При `open = false` - запустится анимация закрытия снекбара, и в конце анимации вызовется `onClose`
+   * При `open = false` - запустится анимация закрытия снекбара, и в конце анимации вызовется `onClose`.
    */
   open?: boolean;
 }
@@ -116,9 +119,11 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   open: openProp,
   onSwipeEnd,
   onDurationEnd,
+  id,
   ...restProps
 }: SnackbarProps) => {
   const platform = usePlatform();
+  const { isInsideSnackbarContainer, onSnackbarClosed } = useContext(SnackbarsContainerContext);
 
   const [open, setOpen] = React.useState(true);
   const [touched, setTouched] = React.useState(false);
@@ -139,8 +144,10 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
     {
-      onExited: onClose,
+      onExited: callMultiple(onClose, id ? () => onSnackbarClosed(id) : undefined),
     },
+    false,
+    true,
   );
 
   useIsomorphicLayoutEffect(
@@ -291,9 +298,11 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   return (
     <RootComponent
       {...restProps}
+      id={id}
       role="presentation"
       baseClassName={classNames(
         styles.host,
+        !isInsideSnackbarContainer && styles.fixed,
         platform === 'ios' && styles.ios,
         touched && styles.touched,
         placementClassNames[placement],

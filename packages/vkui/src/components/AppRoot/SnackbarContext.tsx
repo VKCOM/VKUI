@@ -3,8 +3,9 @@
 import { useContext } from 'react';
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
+import { useSnackbar } from '../../hooks/useSnackbar';
+import { type SnackbarApi } from '../../hooks/useSnackbar/types';
 import { type HasChildren } from '../../types';
-import { type SnackbarApi, useSnackbar } from '../Snackbar/useSnackbar';
 
 const SnackbarApiContext = React.createContext<SnackbarApi>({
   open: () => '',

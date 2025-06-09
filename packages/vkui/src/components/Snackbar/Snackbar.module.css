@@ -9,11 +9,14 @@
   --vkui_internal--snackbar_animation_duration: 340ms;
   --vkui_internal--snackbar_animation_text_direction: 1;
 
-  position: fixed;
   inset-inline: var(--vkui_internal--safe_area_inset_left)
     var(--vkui_internal--safe_area_inset_right);
   z-index: var(--vkui--z_index_popout);
   user-select: none;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .ios {

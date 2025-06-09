@@ -54,7 +54,7 @@ export interface ModalCardBaseProps
    * - `size="l" mode="primary" stretched`
    * - `size="l" mode="secondary" stretched`.
    *
-   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtousenGroup) с параметрами:
    *
    * - `gap="s" mode="horizontal" stretched`
    * - `gap="m" mode="vertical" stretched`.

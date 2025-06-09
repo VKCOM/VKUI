@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
@@ -58,19 +57,9 @@ const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
 export const Playground: Story = {
   render: function Render({ onClose, ...args }) {
     const snackbarApi = useSnackbarApi();
-    const [placementSnackbar, setPlacementSnackbar] = useState<Record<string, string>>({});
 
     const _onOpen = (placement: SnackbarPlacement) => {
-      const id = snackbarApi.open({ ...args, placement });
-      setPlacementSnackbar((v) => ({
-        ...v,
-        [placement]: id,
-      }));
-    };
-
-    const _onClose = (placement: SnackbarPlacement) => {
-      const id = placementSnackbar[placement] || 'bottom-start';
-      snackbarApi.close(id);
+      snackbarApi.open({ ...args, placement });
     };
 
     return (
@@ -81,11 +70,6 @@ export const Playground: Story = {
               <FlexItem flexBasis={100}>{placement}</FlexItem>
               <FlexItem flex="grow">
                 <Button onClick={() => _onOpen(placement)}>Открыть</Button>
-              </FlexItem>
-              <FlexItem flex="grow">
-                <Button appearance="negative" onClick={() => _onClose(placement)}>
-                  Закрыть
-                </Button>
               </FlexItem>
             </Flex>
           ))}

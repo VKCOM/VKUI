@@ -1,0 +1,36 @@
+.host {
+  --vkui_internal--snackbars_container_safe_area_inset_bottom: var(
+    --vkui_internal--safe_area_inset_bottom
+  );
+
+  position: fixed;
+}
+
+.placementTop,
+.placementBottom {
+  inset-inline: auto;
+}
+
+.placementTop,
+.placementTopStart,
+.placementTopEnd {
+  inset-block-start: var(--vkui_internal--safe_area_inset_top);
+}
+
+.placementBottom,
+.placementBottomStart,
+.placementBottomEnd {
+  inset-block-end: var(--vkui_internal--snackbars_container_safe_area_inset_bottom);
+}
+
+.placementTopStart,
+.placementBottomStart {
+  inset-inline-start: var(--vkui_internal--safe_area_inset_left);
+  inset-inline-end: auto;
+}
+
+.placementTopEnd,
+.placementBottomEnd {
+  inset-inline-start: auto;
+  inset-inline-end: var(--vkui_internal--safe_area_inset_right);
+}

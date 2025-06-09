@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import { waitCSSKeyframesAnimation } from '../../testing/utils';
-import { type SnackbarApi, useSnackbar } from './useSnackbar';
+import { type SnackbarApi } from './types';
+import { useSnackbar } from './useSnackbar';
 
 const TestComponent: React.FC<{ apiRef: React.RefObject<SnackbarApi | null> }> = ({ apiRef }) => {
   const [snackbarApi, snackbar] = useSnackbar();
@@ -15,7 +16,9 @@ describe('useSnackbar', () => {
   const apiRef: React.RefObject<SnackbarApi | null> = {
     current: null,
   };
-
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   afterEach(() => {
     apiRef.current = null;
   });
@@ -34,7 +37,7 @@ describe('useSnackbar', () => {
     await act(() => apiRef.current?.open({ children: 'Test Snackbar 1' }));
     await act(() => apiRef.current?.open({ children: 'Test Snackbar 2' }));
 
-    expect(screen.queryByText('Test Snackbar 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Test Snackbar 1')).toBeInTheDocument();
     expect(screen.queryByText('Test Snackbar 2')).toBeInTheDocument();
   });
 

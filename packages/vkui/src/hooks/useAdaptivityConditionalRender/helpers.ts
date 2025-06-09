@@ -54,6 +54,7 @@ export const getAdaptiveDeviceType = (
   platform: PlatformType,
   deviceTypeMapProps: Record<DeviceTypeCSSBreakpoints, ElementProps>,
 ): AdaptiveDeviceType => {
+  debugger;
   const isDesktop = tryToCheckIsDesktop(viewWidth, viewHeight, hasPointer, platform);
 
   if (isDesktop === null) {
