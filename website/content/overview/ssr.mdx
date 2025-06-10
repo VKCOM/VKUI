@@ -16,14 +16,14 @@
 
 ### Всплывающие окна [#floating-elements]
 
-Контент компонентов по типу [ModalPage](/components/modal-page), [ModalCard](/components/modal-card), [Alert](/components/alert),
-[Popover](/components/popover), [Tooltip](/components/tooltip) и т.д. считаем необязательным для первого рендера, поэтому
+Контент компонентов по типу [`ModalPage`](/components/modal-page), [`ModalCard`](/components/modal-card), [`Alert`](/components/alert),
+[`Popover`](/components/popover), [`Tooltip`](/components/tooltip) и т.д. считаем необязательным для первого рендера, поэтому
 по умолчанию не рендерим его на сервере. Это позволяет упростить вёрстку за счёт использования медиавыражений для переключения
 между мобильной и настольной версиями.
 
 Тем не менее у некоторых таких компонентов можно найти свойство `keepMounted`, его включение потенциально приведёт к ошибку при
 гидрации. Использование этого свойства оправдано, если у вас клиент всегда в одной версии либо в мобильной, либо в настольной.
-Также можно зашить конкретную версию обернув компонент в [AdaptivityProvider](/components/adaptivity-provider).
+Также можно зашить конкретную версию обернув компонент в [`AdaptivityProvider`](/components/adaptivity-provider).
 
 ```tsx
 import { AdaptivityProvider, ViewWidth, ModalPage } from '@vkontakte/vkui';
@@ -53,7 +53,7 @@ const App = () => {
 - `class="vkui"` на `<html>`;
 - `class="vkui__root"` на точку монтирования (например, `<div id="root">` или `<body>` в случае Next.js).
 
-Позже отключим установку этих атрибутов компонентом [AppRoot](/components/app-root) через свойство `disableSettingVKUIClassesInRuntime`.
+Позже отключим установку этих атрибутов компонентом [`AppRoot`](/components/app-root) через свойство `disableSettingVKUIClassesInRuntime`.
 
 ### Определение платформы и направления текста на сервере [#step2]
 
@@ -142,7 +142,7 @@ export default Page;
 ```
 
 Применяем переданные из `app/layout.tsx` свойства `platform` и `direction`, типы берём из `ConfigProviderProps`. Также применяем
-свойство `disableSettingVKUIClassesInRuntime` у [AppRoot](/components/app-root).
+свойство `disableSettingVKUIClassesInRuntime` у [`AppRoot`](/components/app-root).
 
 ```tsx showLineNumbers filename="client/Layout.tsx" {4,10,14,16}
 'use client';
@@ -329,7 +329,7 @@ export function render(_url, platform, direction) {
 }
 ```
 
-Применяем свойство `disableSettingVKUIClassesInRuntime` у [AppRoot](/components/app-root).
+Применяем свойство `disableSettingVKUIClassesInRuntime` у [`AppRoot`](/components/app-root).
 
 ```jsx showLineNumbers filename="src/App.tsx" {5}
 import { AppRoot, SelectionControl, Switch } from '@vkontakte/vkui';
