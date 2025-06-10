@@ -9,7 +9,14 @@ interface LayoutProps extends Partial<DocsThemeConfig> {
   pageMap: PageMapItem[];
 }
 
-export function Layout({ children, pageMap, colorScheme, navbar, ...themeProps }: LayoutProps) {
+export function Layout({
+  children,
+  pageMap,
+  colorScheme,
+  navbar,
+  footer,
+  ...themeProps
+}: LayoutProps) {
   return (
     <ThemeConfigProvider value={themeProps}>
       <ConfigProvider value={pageMap}>
@@ -19,6 +26,7 @@ export function Layout({ children, pageMap, colorScheme, navbar, ...themeProps }
               {/* TODO [docs] (@BlackySoul): добавить компонент <Banner /> */}
               {navbar}
               <ContentWrapper>{children}</ContentWrapper>
+              {footer}
             </VKUIWrapper>
           </ColorSchemeProvider>
         </MenuProvider>

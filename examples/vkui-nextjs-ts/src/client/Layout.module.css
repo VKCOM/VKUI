@@ -1,0 +1,8 @@
+.layout {
+  block-size: 100%;
+}
+
+.header {
+  padding-block: 5px;
+  padding-inline: 5px;
+}

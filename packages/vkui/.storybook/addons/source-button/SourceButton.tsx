@@ -1,5 +1,5 @@
-import { IconButton } from '@storybook/components';
-import { useGlobals, useStorybookState } from '@storybook/manager-api';
+import { IconButton } from 'storybook/internal/components';
+import { useGlobals, useStorybookState } from 'storybook/manager-api';
 import { GithubIcon } from '@storybook/icons';
 import * as React from 'react';
 
