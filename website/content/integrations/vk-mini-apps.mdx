@@ -26,10 +26,11 @@
 - [`@vkontakte/vk-bridge`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 - [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge)
 
-```sh
-# для примера используется пакетный менеджер yarn
-yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react
-```
+<PackageManagers
+  npm="npm i --save @vkontakte/vk-bridge @vkontakte/vk-bridge-react"
+  yarn="yarn add @vkontakte/vk-bridge @vkontakte/vk-bridge-react"
+  pnpm="pnpm add @vkontakte/vk-bridge @vkontakte/vk-bridge-react"
+/>
 
 Далее подписываемся на изменения из **VK Bridge** и передаём их в компонент `ConfigProvider` из VKUI.
 Для этого используем готовые хуки из [`@vkontakte/vk-bridge-react`](https://www.npmjs.com/package/@vkontakte/vk-bridge).
