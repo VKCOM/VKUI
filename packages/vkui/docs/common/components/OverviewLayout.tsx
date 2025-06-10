@@ -9,9 +9,11 @@ import {
   useCallback,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import { Counter, Flex, Footer, Group, Search, Spinner, Title } from '../../../src';
 import { useStableCallback } from '../../../src/hooks/useStableCallback';
+import { filterObject } from '../../../src/lib/object';
 import { type HasChildren } from '../../../src/types';
 import { useGetConfigByQuery } from '../hooks/useGetConfigByQuery';
 import { useInfiniteList } from '../hooks/useInfiniteList';
@@ -45,27 +47,32 @@ export const OverviewLayout = <CONFIG, ITEM>({
   additionalHeaderItem,
 }: OverviewLayoutProps<CONFIG, ITEM>) => {
   const sectionsContainerRef = useRef<HTMLElement | null>(null);
-  const sectionsRefs = useRef<Record<string, RefObject<HTMLDivElement | null>>>({});
+  const [sectionsRefs, setSectionsRefs] = useState<
+    Record<string, RefObject<HTMLDivElement | null>>
+  >({});
   const remapConfigToSections = useStableCallback(remapConfigToSectionsProp);
   const renderSectionItem = useStableCallback(renderSectionItemProp);
 
   const { config, loading, onUpdateQuery, query } = useGetConfigByQuery(configProp, filterConfig);
 
-  const sections = useMemo(() => {
-    sectionsRefs.current = {};
-    return remapConfigToSections(config);
-  }, [config, remapConfigToSections]);
+  const sections = useMemo(() => remapConfigToSections(config), [config, remapConfigToSections]);
 
   const { remappedSections, showMoreElement } = useInfiniteList(
     sections,
-    sectionsRefs.current,
+    sectionsRefs,
     sectionsContainerRef,
   );
 
   const onSectionRef = useCallback((element: HTMLElement | null, id: string) => {
     const ref = createRef<HTMLDivElement>();
     ref.current = element as HTMLDivElement;
-    sectionsRefs.current[id] = ref;
+    setSectionsRefs((oldState) => {
+      const newState = {
+        ...oldState,
+        [id]: ref,
+      };
+      return filterObject(newState, (ref) => !!ref.current);
+    });
   }, []);
 
   return (
@@ -80,26 +87,29 @@ export const OverviewLayout = <CONFIG, ITEM>({
         {additionalHeaderItem}
       </Flex>
 
-      <Flex direction="column" gap="3xl" getRootRef={sectionsContainerRef}>
+      <Flex direction="column" gap="3xl">
         {loading && <Spinner />}
         {!loading && sections.length === 0 && <Footer>Ничего не найдено</Footer>}
-        {remappedSections.map(({ minHeight, hidden, ...section }) => (
-          <Section
-            key={section.id}
-            hidden={hidden}
-            sectionData={section}
-            onSectionRef={onSectionRef}
-            style={{ minHeight }}
-            ItemsRenderer={({ section }) => (
-              <ItemsContainer>
-                {section.items.map((item) => renderSectionItem(item, section))}
-              </ItemsContainer>
-            )}
-          />
-        ))}
+        <Flex direction="column" gap="3xl" getRootRef={sectionsContainerRef}>
+          {remappedSections.map(({ minHeight, hidden, ...section }) => (
+            <Section
+              key={section.id}
+              hidden={hidden}
+              sectionData={section}
+              onSectionRef={onSectionRef}
+              style={{ minHeight }}
+              ItemsRenderer={({ section }) => (
+                <ItemsContainer>
+                  {section.items.map((item) => renderSectionItem(item, section))}
+                </ItemsContainer>
+              )}
+            />
+          ))}
+
+          {showMoreElement}
+        </Flex>
       </Flex>
       <GoToUpButton />
-      {showMoreElement}
     </OverviewLayoutContext.Provider>
   );
 };
