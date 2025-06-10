@@ -37,4 +37,38 @@ describe(Accordion, () => {
     await waitCSSKeyframesAnimation(contentIn);
     expect(content.getAttribute('aria-hidden')).toBe('true');
   });
+
+  it('render prop function', async () => {
+    const result = render(
+      <Accordion unmountOnCollapsed>
+        <Accordion.Summary data-testid="summary">Title</Accordion.Summary>
+        <Accordion.Content data-testid="content">Content</Accordion.Content>
+      </Accordion>,
+    );
+
+    const summary = result.getByTestId('summary');
+
+    // Изначально контент не отображается
+    expect(result.queryByTestId('content')).toBeNull();
+
+    // Кликаем на разворачивание
+    fireEvent.click(summary);
+
+    // Контент отображается сразу не дожидаясь анимации
+    expect(result.queryByTestId('content')).not.toBeNull();
+
+    // Кликаем на сворачивание
+    fireEvent.click(summary);
+
+    // content не исчезает из DOM до окончания анимации сворачивания
+
+    expect(result.queryByTestId('content')).not.toBeNull();
+
+    // Дожидаемя окончания анимации сворачивания
+    const contentIn = result.getByTestId('content').firstElementChild as HTMLElement;
+    await waitCSSKeyframesAnimation(contentIn);
+
+    // content исчез из DOM после окончания анимации сворачивания
+    expect(result.queryByTestId('content')).toBeNull();
+  });
 });

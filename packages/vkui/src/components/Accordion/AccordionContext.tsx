@@ -16,9 +16,21 @@ export interface AccordionContextProps {
    */
   expanded: boolean;
   /**
+   * Нужно ли удалять из DOM контент при сворачивании.
+   */
+  unmountOnCollapsed: boolean;
+  /**
    * Обработчик изменения состояния аккордеона.
    */
   onChange: (e: boolean) => void;
+  /**
+   * Обработчик, срабатывающий в начала анимации разворачивания.
+   */
+  onExpandStart: () => void;
+  /**
+   * Обработчик, срабатывающий в концу анимации сворачивания.
+   */
+  onCollapseEnd: () => void;
 }
 
 export const AccordionContext: React.Context<AccordionContextProps> =
@@ -26,5 +38,8 @@ export const AccordionContext: React.Context<AccordionContextProps> =
     labelId: '',
     contentId: '',
     expanded: false,
+    unmountOnCollapsed: false,
     onChange: noop,
+    onCollapseEnd: noop,
+    onExpandStart: noop,
   });
