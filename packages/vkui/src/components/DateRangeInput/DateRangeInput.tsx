@@ -492,7 +492,6 @@ export const DateRangeInput = ({
             onElementSelect={setFocusedElement}
             label={changeStartDayLabel}
             data-testid={startDateTestsProps?.day}
-            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <NumberInputLike
@@ -507,7 +506,6 @@ export const DateRangeInput = ({
             readOnly={readOnly}
             label={changeStartMonthLabel}
             data-testid={startDateTestsProps?.month}
-            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <NumberInputLike
@@ -522,7 +520,6 @@ export const DateRangeInput = ({
             readOnly={readOnly}
             label={changeStartYearLabel}
             data-testid={startDateTestsProps?.year}
-            aria-readonly={readOnly}
           />
           <InputLikeDivider>{' — '}</InputLikeDivider>
           <NumberInputLike
@@ -537,7 +534,6 @@ export const DateRangeInput = ({
             readOnly={readOnly}
             label={changeEndDayLabel}
             data-testid={endDateTestsProps?.day}
-            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <NumberInputLike
@@ -552,7 +548,6 @@ export const DateRangeInput = ({
             readOnly={readOnly}
             label={changeEndMonthLabel}
             data-testid={endDateTestsProps?.month}
-            aria-readonly={readOnly}
           />
           <InputLikeDivider>.</InputLikeDivider>
           <NumberInputLike
@@ -567,7 +562,6 @@ export const DateRangeInput = ({
             readOnly={readOnly}
             label={changeEndYearLabel}
             data-testid={endDateTestsProps?.year}
-            aria-readonly={readOnly}
           />
         </Text>
       </div>
