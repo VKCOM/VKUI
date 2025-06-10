@@ -5,4 +5,4 @@ export { getStaticPathsTags } from './src/blog/tags';
 
 export { Head, Navbar, TOC, Footer } from './src/components';
 export { Layout } from './src/layout';
-export { getMdxComponents } from './src/mdx';
+export { getMdxComponents, Callout, Code } from './src/mdx';

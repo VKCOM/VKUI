@@ -15,7 +15,10 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@components/*": ["components/*"]
+    }
   },
   "include": [
     "**/*.ts",

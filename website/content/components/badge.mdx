@@ -7,23 +7,31 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <Badge mode="prominent">Требуется подтверждение</Badge>
+  <Badge>Есть новые</Badge>
+  ```
+</Playground>
+
 ## Использование
 
 - Старайтесь снабжать компонент _кратким_ текстом или числом.
 - Размещайте компонент в непосредственной близости от целевого элемента.
 - Для важных уведомлений дублируйте информацию в полноценной системе уведомлений.
 
-```jsx
-// В шапке раздела
-<Cell
-  chevron
-  before={<Icon28Notifications />}
-  badgeAfterTitle={<Badge>Есть новые</Badge>}
-  onClick={noop}
->
-  Уведомления
-</Cell>
-```
+<Playground>
+  ```jsx
+  <Tabs selectedId="messages" layoutFillMode="shrinked">
+    <TabsItem id="dialogs" after={<Badge mode="prominent">Требуется подтверждение</Badge>}>
+      Настройки
+    </TabsItem>
+    <TabsItem id="messages" after={<Badge>Есть новые</Badge>}>
+      Уведомления
+    </TabsItem>
+  </Tabs>
+  ```
+</Playground>
 
 ## Доступность (a11y)
 
