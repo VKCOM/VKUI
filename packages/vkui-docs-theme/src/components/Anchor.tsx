@@ -38,5 +38,6 @@ export function Anchor({ href = '', as, children, ...props }: AnchorProps) {
       </Link>
     );
   }
+
   return <NextLink href={href} as={as} {...props} />;
 }

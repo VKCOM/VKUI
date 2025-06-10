@@ -1,0 +1,124 @@
+<Overview>
+
+# SplitLayout
+
+Компонент-контейнер для реализации интерфейса с навигационными слоями и многоколоночной структурой. За реализацию колонки отвечает
+[`SplitCol`](#split-col).
+
+<Callout>Компонент должен быть один на всё приложение.</Callout>
+
+Связанные страницы и компоненты:
+
+- [Навигация](/overview/navigation)
+- [`View`](/components/view)
+- [`PanelHeader`](/components/panel-header)
+- [`useAdaptivityConditionalRender`](/components/use-adaptivity-conditional-render)
+
+</Overview>
+
+## Выравнивание
+
+За выравнивание контента по горизонтали отвечает свойство `center`.
+
+- `true` — весь контент выравнивается по центру;
+- `false` — выравнивание не применяется.
+
+## Сквозная шапка
+
+Для реализации сквозной шапки между колонками используется свойство `header` с передачей в него компонента [`PanelHeader`](/components/panel-header).
+
+{/* TODO: для этого кода нужно превью, код должен быть скрыт по умолчанию */}
+
+```jsx
+import {
+  SplitLayout,
+  SplitCol,
+  Panel,
+  PanelHeader,
+  Group,
+  Div,
+  useAdaptivityConditionalRender,
+} from '@vkontakte/vkui';
+
+export default function App() {
+  const { viewWidth } = useAdaptivityConditionalRender();
+
+  return (
+    <SplitLayout header={<PanelHeader delimiter="none" />} center>
+      {viewWidth.tabletPlus && (
+        <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
+          <Panel>
+            <PanelHeader />
+            <Group>
+              <Div>Колонка слева</Div>
+            </Group>
+          </Panel>
+        </SplitCol>
+      )}
+
+      <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
+        <Panel>
+          <PanelHeader>Шапка</PanelHeader>
+          <Group>
+            <Div>Колонка справа</Div>
+          </Group>
+        </Panel>
+      </SplitCol>
+    </SplitLayout>
+  );
+}
+```
+
+<Callout>
+Для платформы `vkcom` шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).
+
+```jsx
+import { SplitLayout, SplitCol, usePlatform } from '@vkontakte/vkui';
+
+export default function App() {
+  const platform = usePlatform();
+  const hasHeader = platform !== 'vkcom';
+
+  return (
+    <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+      {/* остальной контент */}
+    </SplitLayout>
+  );
+}
+```
+
+</Callout>
+
+## SplitCol [#split-col]
+
+Подкомпонент для отрисовки колонки в многоколоночном интерфейсе.
+
+### Позиционирование
+
+Свойство `fixed` даёт возможность задать стиль `position: fixed` для колонки.
+Обычно используется для боковых колонок, не позволяя им прокручиваться с основным контентом и всегда оставаться в области видимости.
+
+- `true` — стиль применяется;
+- `false` — стиль не применяется.
+
+### Размеры
+
+С помощью свойств `width`, `minWidth` и `maxWidth` можно управлять шириной колонки. Принимаются либо числовое (в пикселях), либо
+строковое (токены или другие единицы измерения) значения.
+
+```jsx
+<SplitCol width="100%" maxWidth={560}>
+  {/* контент */}
+</SplitCol>
+```
+
+Свойство `stretchedOnMobile` позволит колонке растягиваться на всю доступную ширину на устройствах шириной меньше `tablet`.
+
+### Отступы
+
+Свойство `autoSpaced` добавляет фиксированные боковые отступы колонке на устройствах с шириной больше `smallTablet`.
+
+### Анимации
+
+Через свойство `animate` можно управлять включением/отключением анимаций при переходах во [`View`](/components/view). По умолчанию
+анимации при переходах включены только для мобильных устройств.

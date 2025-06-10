@@ -55,3 +55,5 @@ export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
     ...components,
   };
 };
+
+export { Callout, Code };
