@@ -83,22 +83,27 @@ export function useDateInput<T extends HTMLElement, D>({
     }
   }, [onCalendarOpenChanged, open, openCalendar, accessible]);
 
-  const toggleCalendar = useCallback(() => {
-    if (open) {
-      _onCalendarClose();
-    } else {
-      _onCalendarOpen();
-    }
-  }, [open, _onCalendarOpen, _onCalendarClose]);
-
-  const removeFocusFromField = React.useCallback(() => {
+  const resetFocusedElement = React.useCallback(() => {
     if (focusedElement !== null) {
       setFocusedElement(null);
       window!.getSelection()?.removeAllRanges();
       setInternalValue(getInternalValue(value));
     }
+  }, [focusedElement, getInternalValue, value, window]);
+
+  const removeFocusFromField = React.useCallback(() => {
+    resetFocusedElement();
     _onCalendarClose();
-  }, [_onCalendarClose, window, getInternalValue, value, focusedElement]);
+  }, [resetFocusedElement, _onCalendarClose]);
+
+  const toggleCalendar = useCallback(() => {
+    resetFocusedElement();
+    if (open) {
+      _onCalendarClose();
+    } else {
+      _onCalendarOpen();
+    }
+  }, [resetFocusedElement, open, _onCalendarClose, _onCalendarOpen]);
 
   const handleClickOutside = React.useCallback(
     (e: MouseEvent) => {
@@ -212,13 +217,17 @@ export function useDateInput<T extends HTMLElement, D>({
         ).padStart(config.length, '0');
       } else if (e.key === 'ArrowLeft' || e.key === 'Left' || (e.key === 'Tab' && e.shiftKey)) {
         if (focusedElement <= 0) {
-          removeFocusFromField();
+          if (e.key === 'Tab') {
+            removeFocusFromField();
+          }
           return;
         }
         setFocusedElement(focusedElement - 1);
       } else if (e.key === 'ArrowRight' || e.key === 'Right' || e.key === 'Tab') {
         if (focusedElement >= maxElement) {
-          removeFocusFromField();
+          if (e.key === 'Tab') {
+            removeFocusFromField();
+          }
           return;
         }
 
