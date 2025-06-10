@@ -264,9 +264,9 @@ export const DateRangeInput = ({
   showCalendarButtonTestId,
   id,
   accessible,
-  allowClearButton: allowClearButtonProp = true,
+  'allowClearButton': allowClearButtonProp = true,
   readOnly,
-  disableCalendar: disableCalendarProp = false,
+  'disableCalendar': disableCalendarProp = false,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -468,10 +468,7 @@ export const DateRangeInput = ({
           Component="input"
           readOnly
           aria-hidden
-          tabIndex={-1}
           name={name}
-          readOnly
-          aria-hidden
           tabIndex={readOnly ? 0 : -1}
           value={
             value
