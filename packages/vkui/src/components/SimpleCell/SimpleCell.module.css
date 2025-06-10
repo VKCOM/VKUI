@@ -123,6 +123,7 @@
   flex-shrink: 0;
   align-items: center;
   align-self: stretch;
+  padding-inline-start: var(--vkui--spacing_size_xl);
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
@@ -138,8 +139,11 @@
 }
 
 .chevronIcon {
-  padding-inline-start: var(--vkui--spacing_size_xl);
   color: var(--vkui--color_icon_tertiary);
+}
+
+.chevronIcon:not(:first-child) {
+  padding-inline-start: var(--vkui--spacing_size_xl);
 }
 
 /**

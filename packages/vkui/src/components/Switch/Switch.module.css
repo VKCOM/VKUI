@@ -261,12 +261,3 @@
     --vkui_internal--Switch__handleRipple_opacity_duration: 105ms;
   }
 }
-
-/**
- * CMP:
- * SimpleCell
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalSimpleCell__after) > .host {
-  margin-inline-start: 12px;
-}
