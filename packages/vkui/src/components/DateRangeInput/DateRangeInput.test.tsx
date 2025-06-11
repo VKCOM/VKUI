@@ -233,20 +233,6 @@ describe('DateRangeInput', () => {
     expect(onChange).toHaveBeenCalledWith(undefined);
   });
 
-  it('should not show clear button when allowClearButton=false', async () => {
-    const onChange = jest.fn();
-    render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        onChange={onChange}
-        allowClearButton={false}
-        {...testsProps}
-      />,
-    );
-
-    expect(screen.queryByTestId(testsProps.clearButtonTestId)).toBeNull();
-  });
-
   it('should toggle calendar open state on calendar icon click', async () => {
     jest.useFakeTimers();
     const onCalendarOpenChanged = jest.fn();

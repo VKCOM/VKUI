@@ -166,10 +166,6 @@ export interface DateInputProps
    * Позволяет отключить захват фокуса при появлении календаря.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
-  /**
-   * Показывать ли кнопку очистки поля.
-   */
-  allowClearButton?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -278,7 +274,6 @@ export const DateInput = ({
   timezone,
   restoreFocus,
   disableFocusTrap,
-  'allowClearButton': allowClearButtonProp = true,
   readOnly,
   'disableCalendar': disableCalendarProp = false,
   'aria-label': ariaLabel = '',
@@ -291,7 +286,6 @@ export const DateInput = ({
   const minutesRef = React.useRef<HTMLSpanElement>(null);
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
-  const allowClearButton = readOnly ? false : allowClearButtonProp;
 
   const { value, updateValue, setInternalValue, getLastUpdatedValue, clearValue } =
     useDateInputValue({
@@ -450,7 +444,7 @@ export const DateInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value && allowClearButton ? (
+          {value ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}

@@ -165,10 +165,6 @@ export interface DateRangeInputProps
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
   accessible?: boolean; // TODO [>=8]: включить по умолчанию.
-  /**
-   * Показывать ли кнопку очистки поля.
-   */
-  allowClearButton?: boolean;
 }
 
 const elementsConfig = (index: number) => {
@@ -264,7 +260,6 @@ export const DateRangeInput = ({
   showCalendarButtonTestId,
   id,
   accessible,
-  'allowClearButton': allowClearButtonProp = true,
   readOnly,
   'disableCalendar': disableCalendarProp = false,
   ...props
@@ -277,7 +272,6 @@ export const DateRangeInput = ({
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
-  const allowClearButton = readOnly ? false : allowClearButtonProp;
 
   const _onChange = React.useCallback(
     (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
@@ -443,7 +437,7 @@ export const DateRangeInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {allowClearButton && value ? (
+          {value ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}
