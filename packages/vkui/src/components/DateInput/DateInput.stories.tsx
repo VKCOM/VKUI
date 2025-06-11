@@ -15,6 +15,9 @@ const story: Meta<DateInputProps> = {
   parameters: createStoryParameters('DateInput', CanvasFullLayout, DisableCartesianParam),
   args: { onChange: fn() },
   argTypes: {
+    readOnly: {
+      control: { type: 'boolean' },
+    },
     value: {
       control: { type: 'date' },
     },

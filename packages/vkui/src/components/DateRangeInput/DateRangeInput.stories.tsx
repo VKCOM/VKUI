@@ -15,6 +15,9 @@ const story: Meta<StoryDateRangeInputProps> = {
   component: DateRangeInput,
   parameters: createStoryParameters('DateRangeInput', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
+    readOnly: {
+      control: { type: 'boolean' },
+    },
     value: {
       description: 'Используйте startDate и endDate для задания периода',
       control: false,

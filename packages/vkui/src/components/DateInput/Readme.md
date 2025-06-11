@@ -74,6 +74,7 @@ const Example = () => {
   const [showNeighboringMonth, setShowNeighboringMonth] = useState(false);
   const [disableCalendar, setDisableCalendar] = useState(false);
   const [accessible, setAccessible] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
   const [locale, setLocale] = useState('ru');
 
   return (
@@ -121,6 +122,11 @@ const Example = () => {
           Включено
         </Checkbox>
       </FormItem>
+      <FormItem top="Readonly режим">
+        <Checkbox checked={readOnly} onChange={(e) => setReadOnly(e.target.checked)}>
+          Включено
+        </Checkbox>
+      </FormItem>
       <FormItem top="Локаль">
         <Select
           style={{ width: 100 }}
@@ -162,6 +168,7 @@ const Example = () => {
               showNeighboringMonth={showNeighboringMonth}
               disableCalendar={disableCalendar}
               accessible={accessible}
+              readOnly={readOnly}
             />
           </LocaleProvider>
         </Flex>
