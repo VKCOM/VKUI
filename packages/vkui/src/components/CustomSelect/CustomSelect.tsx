@@ -299,6 +299,14 @@ export interface SelectProps<
    * Обработчик события `keyDown` в поле ввода.
    */
   onInputKeyDown?: (e: React.KeyboardEvent, isOpen: boolean) => void;
+  /**
+   * [a11y] Текстовая подпись для скринридеров, которая озвучивается перед текстом выбранной опции.
+   * Помогает пользователям с ограниченными возможностями понять, какая опция сейчас выбрана.
+   *
+   * По умолчанию: "Выбранная опция".
+   * Пример: "Выбранная опция: Москва" при фокусе на поле выбора города.
+   */
+  selectedOptionLabelPrefix?: string;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -340,6 +348,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     noMaxHeight = false,
     'aria-labelledby': ariaLabelledBy,
     'aria-describedby': ariaDescribedBy,
+    selectedOptionLabelPrefix = 'Выбранная опция',
     clearButtonTestId,
     nativeSelectTestId,
     defaultValue,
@@ -953,7 +962,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'aria-activedescendant':
       ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
     'aria-labelledby': ariaLabelledBy,
-    'aria-describedby': `${ariaDescribedBy} ${selectedOptionLabelId}`,
+    'aria-describedby':
+      ariaDescribedBy || selectedOptionLabelId
+        ? [ariaDescribedBy, selectedOptionLabelId].filter(Boolean).join(' ')
+        : undefined,
     'aria-haspopup': 'listbox',
     'aria-autocomplete': 'none',
   };
@@ -989,7 +1001,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     >
       {focusWithin && selected && !opened && (
         <VisuallyHidden aria-live="polite" id={selectedOptionLabelId}>
-          {selected.label}
+          {selectedOptionLabelPrefix}: {selected.label}
         </VisuallyHidden>
       )}
       <CustomSelectInput

@@ -124,6 +124,33 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Josh');
   });
 
+  it('check selectedOptionLabelPrefix should be in the document', () => {
+    render(
+      <CustomSelect
+        labelTextTestId="labelTextTestId"
+        data-testid="input"
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        selectedOptionLabelPrefix="Выбранное имя"
+      />,
+    );
+
+    expect(getCustomSelectValue()).toEqual('');
+
+    fireEvent.click(screen.getByTestId('labelTextTestId'));
+    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
+    fireEvent.mouseEnter(unselectedOption);
+    fireEvent.click(unselectedOption);
+
+    const hiddenLabel = screen.getByText('Выбранное имя: Josh');
+    expect(hiddenLabel).toBeInTheDocument();
+
+    const input = screen.getByTestId('input');
+    expect(input).toHaveAttribute('aria-describedby', hiddenLabel.id);
+  });
+
   it('works correctly as controlled component', () => {
     const SelectController = () => {
       const [value, setValue] = useState<SelectProps['value']>(0);
