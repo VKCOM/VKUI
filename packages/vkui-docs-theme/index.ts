@@ -3,6 +3,6 @@ export { StorybookIcon, GithubIcon, FigmaIcon, LogoIcon } from './src/icons';
 
 export { getStaticPathsTags } from './src/blog/tags';
 
-export { Head, Navbar } from './src/components';
+export { Head, Navbar, TOC, Footer } from './src/components';
 export { Layout } from './src/layout';
 export { getMdxComponents } from './src/mdx';

@@ -132,6 +132,10 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
   onInputChange?: OnInputChange;
   /**
    * Символ или строка, которая будет использоваться как разделитель для автоматического создания опций из текста, введенного в поле ввода.
+   * Принимает:
+   * - `string` - простая строка
+   * - `RegExp` - регулярное выражение
+   * - `string[]` - массив строк, по которым нужно разелять ввод.
    *
    * Работает в двух сценариях:
    * 1. При вводе разделителя - текст до разделителя автоматически преобразуется в новую опцию.
@@ -142,7 +146,7 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
    *    Например, при `delimiter=","` вставка "опция1,опция2,опция3" создаст
    *    три отдельные опции: "опция1", "опция2" и "опция3".
    */
-  delimiter?: string;
+  delimiter?: string | RegExp | string[];
 }
 
 /**

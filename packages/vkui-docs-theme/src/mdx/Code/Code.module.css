@@ -1,7 +1,7 @@
 .root {
-  padding-block: 0;
+  padding-block: 2px;
   padding-inline: var(--vkui_docs--code-inline-padding, 4px);
-  color: var(--vkui--color_text_primary);
+  overflow-wrap: break-word;
   background-color: var(
     --vkui_docs--code-background,
     var(--vkui--color_background_secondary_alpha)
@@ -39,4 +39,48 @@ pre .root {
 /* stylelint-disable-next-line selector-max-universal,selector-max-type */
 .root > span[data-highlighted-line]:is(html[class~='vkui--vkBase--dark'] *) {
   background-color: rgb(90, 90, 197, 0.1);
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.root :global(.diff) {
+  padding-inline: var(--vkui--spacing_size_4xl);
+  margin-inline: calc(-1 * var(--vkui--spacing_size_4xl));
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.root :global(.diff)::before {
+  position: absolute;
+  inset-inline-start: 4px;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.root :global(.diff.remove) {
+  background-color: var(--vkui--color_background_negative_tint);
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.root :global(.diff.remove)::before {
+  content: '-';
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.root :global(.diff.add) {
+  background-color: var(--vkui--color_background_positive_tint);
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.root :global(.diff.add)::before {
+  content: '+';
+}
+
+.root[data-line-numbers] {
+  counter-reset: line;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.root[data-line-numbers] > span::before {
+  padding-inline-end: var(--vkui--spacing_size_xl);
+  color: var(--vkui--color_text_secondary);
+  content: counter(line);
+  counter-increment: line;
 }
