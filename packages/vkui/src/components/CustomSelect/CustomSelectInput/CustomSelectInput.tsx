@@ -78,7 +78,6 @@ export const CustomSelectInput = ({
       )}
       getRootRef={getRef}
       placeholder={children ? '' : placeholder}
-      aria-describedby={id}
     />
   );
 

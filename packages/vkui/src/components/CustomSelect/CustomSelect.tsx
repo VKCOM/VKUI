@@ -339,6 +339,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     dropdownAutoWidth = false,
     noMaxHeight = false,
     'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
     clearButtonTestId,
     nativeSelectTestId,
     defaultValue,
@@ -378,6 +379,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     });
 
   const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
+
+  const selectedOptionLabelId = React.useId();
 
   const options = React.useMemo(() => {
     return filter(optionsProp, inputValue, filterFn);
@@ -950,6 +953,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'aria-activedescendant':
       ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
     'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': `${ariaDescribedBy} ${selectedOptionLabelId}`,
     'aria-haspopup': 'listbox',
     'aria-autocomplete': 'none',
   };
@@ -984,7 +988,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       }}
     >
       {focusWithin && selected && !opened && (
-        <VisuallyHidden aria-live="polite">{selected.label}</VisuallyHidden>
+        <VisuallyHidden aria-live="polite" id={selectedOptionLabelId}>
+          {selected.label}
+        </VisuallyHidden>
       )}
       <CustomSelectInput
         autoComplete="off"
