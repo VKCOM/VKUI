@@ -83,6 +83,16 @@ interface UseInputPositionArgs {
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
+function getMarginInlineEnd(styles: CSSStyleDeclaration, isRtl: boolean) {
+  return parseInt(styles.marginInlineEnd || (isRtl ? styles.marginLeft : styles.marginRight)) || 0;
+}
+
+function getMarginInlineStart(styles: CSSStyleDeclaration, isRtl: boolean) {
+  return (
+    parseInt(styles.marginInlineStart || (isRtl ? styles.marginRight : styles.marginLeft)) || 0
+  );
+}
+
 const MIN_INPUT_WIDTH = 64;
 
 export const useInputWidth = ({
@@ -121,11 +131,11 @@ export const useInputWidth = ({
       left: foundOptionsBounds.left - containerBounds.left - containerPadding,
     };
     const containerWidth = containerBounds.width;
-
-    const optionMarginInlineEnd = parseInt(optionStyles.marginInlineEnd) || 0;
-    const inputMarginInlineStart = parseInt(inputStyles.marginInlineStart) || 0;
-    const inputMarginInlineEnd = parseInt(inputStyles.marginInlineEnd) || 0;
     const isRtl = direction === 'rtl';
+
+    const optionMarginInlineEnd = getMarginInlineEnd(optionStyles, isRtl);
+    const inputMarginInlineStart = getMarginInlineStart(inputStyles, isRtl);
+    const inputMarginInlineEnd = getMarginInlineEnd(inputStyles, isRtl);
 
     const freeSpaceWidth = isRtl
       ? lastOptionBounds.left
