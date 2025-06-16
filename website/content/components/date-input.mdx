@@ -59,7 +59,8 @@ const [date, setDate] = React.useState(new Date());
 Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
 или успешной валидации (значение `"valid"`).
 
-> Если вы используете `DateInput` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+> Если вы используете `DateInput` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
 
 <Playground style={{ maxWidth: 200 }}>
   ```jsx
@@ -73,6 +74,16 @@ const [date, setDate] = React.useState(new Date());
 Компонент поддерживает настройку текстов через `changeMonthLabel`, `changeYearLabel` и остальные `*Label` свойства.
 
 > Название месяцев и дней недели определяется исходя из значения `locale` в `ConfigProvider`.
+
+## Тестирование (e2e) [#e2e]
+
+Для тестирования компонента можно использовать следующие `data-testid` атрибуты:
+
+- `dayFieldTestId` — поле ввода дня;
+- `monthFieldTestId` — поле ввода месяца;
+- `yearFieldTestId` — поле ввода года;
+- `hourFieldTestId` — поле ввода часа;
+- `minuteFieldTestId` — поле ввода минут.
 
 ## Доступность (a11y) [#a11y]
 
@@ -113,13 +124,3 @@ const [date, setDate] = React.useState(new Date());
   <DateInput id="date" aria-label="День рождения" />
 </FormItem>
 ```
-
-### Тестирование
-
-Для тестирования компонента можно использовать следующие `data-testid` атрибуты:
-
-- `dayFieldTestId` — поле ввода дня;
-- `monthFieldTestId` — поле ввода месяца;
-- `yearFieldTestId` — поле ввода года;
-- `hourFieldTestId` — поле ввода часа;
-- `minuteFieldTestId` — поле ввода минут.

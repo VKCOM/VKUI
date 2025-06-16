@@ -50,7 +50,8 @@ const [text, setText] = React.useState('Текст');
 Свойство `status` используется для состояния валидации компонента - некорректности заполненного поля (значение `"error"`)
 или успешной валидации (значение `"valid"`).
 
-> Если вы используете `Textarea` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+> Если вы используете `Textarea` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
 
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
@@ -59,7 +60,7 @@ const [text, setText] = React.useState('Текст');
   ```
 </Playground>
 
-## Доступность (a11y)
+## Доступность (a11y) [#a11y]
 
 Компонент обеспечивает базовую доступность, используя нативный элемент `<textarea>`,
 поддерживая все стандартные `HTML`- и `aria`-атрибуты.

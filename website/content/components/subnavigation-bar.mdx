@@ -6,10 +6,6 @@
 Используется как элемент вторичной навигации внутри раздела. Поддерживает горизонтальную прокрутку контента
 с индикацией наличия скрытых элементов (стрелки навигации).
 
-Связанные компоненты:
-
-- [`SubnavigationButton`](#subnavigationbutton)
-
 </Overview>
 
 import { BlockWrapper } from '@/components/wrappers';
@@ -51,7 +47,7 @@ import { BlockWrapper } from '@/components/wrappers';
 - `getScrollToLeft`/`getScrollToRight` — кастомная логика прокрутки;
 - `scrollAnimationDuration` — скорость анимации.
 
-## Доступность (a11y)
+## Доступность (a11y) [#a11y]
 
 - Список элементов реализован с использованием семантического тега `ul`.
 - Элементы списка оборачиваются в семантические теги `li`.
@@ -69,9 +65,22 @@ import { BlockWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-### Стилизация
+### Состояния
 
-#### Режимы отображения
+`selected` — выделяет кнопку как активную. Используйте для индикации текущего раздела или применённого фильтра.
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton selected onClick={() => {}}>
+      Выбран
+    </SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Не выбран</SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+### Режимы отображения
 
 Задается свойством `mode`:
 
@@ -79,39 +88,69 @@ import { BlockWrapper } from '@/components/wrappers';
 - `outline` — вид с обводкой;
 - `tertiary` — третичный вид без фона.
 
-#### Внешний вид
+### Внешний вид
 
-Задается свойством `appearance`:
+Задается свойством `appearance`.
 
-- `accent` — акцентный цвет;
+#### `accent`
 
 <Playground style={{ width: 270 }}>
   ```jsx
-  <SubnavigationButton mode="primary" appearance="accent" selected onClick={() => {}}>
-    mode="primary"
-  </SubnavigationButton>
-  <SubnavigationButton mode="outline" appearance="accent" selected onClick={() => {}}>
-    mode="outline"
-  </SubnavigationButton>
-  <SubnavigationButton mode="tertiary" appearance="accent" selected onClick={() => {}}>
-    mode="tertiary"
-  </SubnavigationButton>
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="accent" selected onClick={() => {}}>
+      primary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="accent" onClick={() => {}}>
+      primary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="accent" selected onClick={() => {}}>
+      outline accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="accent" onClick={() => {}}>
+      outline accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="accent" selected onClick={() => {}}>
+      tertiary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="accent" onClick={() => {}}>
+      tertiary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
   ```
 </Playground>
 
-- `neutral` — базовый цвет.
+#### `neutral`
 
 <Playground style={{ width: 270 }}>
   ```jsx
-  <SubnavigationButton mode="primary" appearance="neutral" selected onClick={() => {}}>
-    mode="primary"
-  </SubnavigationButton>
-  <SubnavigationButton mode="outline" appearance="neutral" selected onClick={() => {}}>
-    mode="outline"
-  </SubnavigationButton>
-  <SubnavigationButton mode="tertiary" appearance="neutral" selected onClick={() => {}}>
-    mode="tertiary"
-  </SubnavigationButton>
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="neutral" selected onClick={() => {}}>
+      primary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="neutral" onClick={() => {}}>
+      primary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="neutral" selected onClick={() => {}}>
+      outline neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="neutral" onClick={() => {}}>
+      outline neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="neutral" selected onClick={() => {}}>
+      tertiary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="neutral" onClick={() => {}}>
+      tertiary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
   ```
 </Playground>
 
@@ -139,10 +178,6 @@ import { BlockWrapper } from '@/components/wrappers';
   </SubnavigationButton>
   ```
 </Playground>
-
-### Состояния
-
-`selected` — выделяет кнопку как активную. Используйте для индикации текущего раздела или применённого фильтра.
 
 ### Дополнительные элементы
 

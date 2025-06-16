@@ -8,7 +8,6 @@
 Связанные компоненты:
 
 - [`HorizontalCell`](/components/horizontal-cell)
-- [`HorizontalCellShowMore`](#horizontalcellshowmore)
 
 </Overview>
 
@@ -105,7 +104,7 @@ function handleScrollToRight(currentPosition) {
 Если вам требуется изменить тэг компонента (по умолчанию `div`), который оборачивает ваш контент, например, для
 реализации нативного списка (тэги `ul`/`li`), используйте свойство `ContentWrapperComponent`.
 
-Также с помощью свойства `contentWrapperClassName` можно передать свой `css`-класс на эту обёртку,
+Также с помощью свойства `contentWrapperClassName` можно передать свой `CSS`-класс на эту обёртку,
 а с помощью свойства `contentWrapperRef` получить ссылку на `DOM`-элемент этой обёртки ([`ref`-объект](https://react.dev/learn/manipulating-the-dom-with-refs))
 
 ```jsx
@@ -127,7 +126,7 @@ const refContainer = React.useRef(null);
 Компонент автоматически поддерживает `RTL`-режим, в котором стрелки меняют своё направление,
 а прокрутка работает в обратном направлении.
 
-## Тестирование
+## Тестирование (e2e) [#e2e]
 
 Для возможности тестирования доступны свойства с постфиксом `*TestId`, которые вы можете использовать,
 чтобы находить необходимые части компонента:
@@ -135,7 +134,7 @@ const refContainer = React.useRef(null);
 - `nextButtonTestId` — `id` стрелки навигации в направлении следующего элемента;
 - `prevButtonTestId` — `id` стрелки навигации в направлении предыдущего элемента.
 
-## HorizontalCellShowMore
+## HorizontalCellShowMore [#horizontal-cell-show-more]
 
 Компонент для отображения кнопки "Показать все", используется в `HorizontalScroll` в конце списка.
 
