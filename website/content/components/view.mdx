@@ -1,78 +1,118 @@
 <Overview>
+
 # View
 
-Компонент-контейнер, представляющий собой навигационный слой, содержащий коллекцию `Panel`.
+Компонент для создания набора экранов из [`Panel`](/components/panel) и возможностью переключаться между ними.
+
+Связанные страницы:
+
+- [Root](/components/root)
+- [Epic](/components/epic)
+- [Навигация](/overview/navigation)
 
 </Overview>
 
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+
 ```jsx
-import { View, Panel, PanelHeader, Group } from '@vkontakte/vkui';
-
-function Example() {
-  const [activePanel, setActivePanel] = React.useState('panel1');
-
-  return (
-    <View activePanel={activePanel}>
-      <Panel id="panel1">
-        <PanelHeader>Panel1</PanelHeader>
-        <Group>Panel1 content</Group>
-      </Panel>
-      <Panel id="panel2">
-        <PanelHeader before={<PanelHeaderBack onClick={() => setActivePanel('panel1')} />}>
-          Panel2
-        </PanelHeader>
-        <Group>Panel2 content</Group>
-      </Panel>
-    </View>
-  );
-}
+const [activePanel, setActivePanel] = useState('panel-1');
+return (
+  <View activePanel={activePanel}>
+    <Panel id="panel-1">
+      <PanelHeader>Panel 1</PanelHeader>
+      <Placeholder stretched>
+        <Button appearance="positive" onClick={() => setActivePanel('panel-2')}>
+          Перейти к Panel 2
+        </Button>
+      </Placeholder>
+    </Panel>
+    <Panel id="panel-2">
+      <PanelHeader>Panel 2</PanelHeader>
+      <Placeholder stretched>
+        <ButtonGroup mode="vertical" align="center">
+          <Button appearance="positive" onClick={() => setActivePanel('panel-3')}>
+            Перейти к Panel 3
+          </Button>
+          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+            Вернуться к Panel 1
+          </Button>
+        </ButtonGroup>
+      </Placeholder>
+    </Panel>
+    <Panel id="panel-3">
+      <PanelHeader>Panel 3</PanelHeader>
+      <Placeholder stretched>
+        <ButtonGroup mode="vertical" align="center">
+          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+            Вернуться к Panel 1
+          </Button>
+          <Button appearance="negative" onClick={() => setActivePanel('panel-2')}>
+            Вернуться к Panel 2
+          </Button>
+        </ButtonGroup>
+      </Placeholder>
+    </Panel>
+  </View>
+);
 ```
 
-> **Важно**
->
-> Чтобы анимация переходов происходила правильно, порядок [Panel](/components/panel) в вёрстке должен соответствовать их
-> подразумеваемому роутингу. Рассмотрим на примере ниже.
->
-> ```jsx
-> <View activePanel="1">
->   <Panel id="1" />
->   <Panel id="2" />
->   <Panel id="3" />
-> </View>
-> ```
->
-> В примере навигация между панелями должна быть в порядке 1 -> 2 -> 3.
+</Playground>
 
-## Уникальный идентификатор
+## Применение компонента
 
-Уникальный идентификатор для `View` можно задать либо с помощью свойства `nav`, либо `id`.
-Обязательно указывайте идентификатор, когда используете компонент внутри `Root`.
+Принимает необходимое количество [`Panel`](/components/panel) с уникальным `id`. Далее `id` с нужным экраном передаётся в свойство
+`activePanel`.
 
-> Обратите внимание, что при использовании внутри `Root` идентификатор для `View` должен присутствовать
-> на элементе, непосредственно переданном в `Root`. Если вы выносите реализацию `View` в отдельный компонент, учитывайте
-> это при разработке.
+```
+View
+  └─ Panel N
+    └─ PanelHeader
+    └─ <content>
+```
+
+> Если вы выносите экран с [`Panel`](/components/panel) в отдельный компонент, то `id` должен передаваться непосредственно в
+> компонент-обёртку и уже после проксироваться в [`Panel`](/components/panel).
 >
-> ```jsx
-> function ExternalView({ id }) {
->   // Пробрасываем id далее во View
->   return <View id={id}>{/* panels */}</View>;
+> ```jsx showLineNumbers {2-3,9-10}
+> const MyPanel = ({ id }) => {
+>   // проксируем `id` в Panel */
+>   return <Panel id={id}>...</Panel>;
+> };
+>
+> export default function App() {
+>   return (
+>     <View activePanel="my-panel">
+>       {/* передаём `id` в компонент-обёртку */}
+>       <MyPanel id="my-panel" />
+>     </View>
+>   );
 > }
->
-> <Root activeView="external">
->   {/* Передаем id на прямого потомка Root */}
->   <ExternalView id="external" />
-> </Root>;
 > ```
+>
+> Иначе `View` не сможет найти `id` из `activePanel` среди прямых потомков в `children`.
 
-## Управление `Panel`
+## Особенности анимации
 
-Свойство `activePanel` принимает уникальный идентификатор (`id`/`nav`) активного компонента `Panel`.
+Чтобы анимация переходов происходила правильно, порядок [`Panel`](/components/panel) в вёрстке должен соответствовать их
+последовательности переходов.
+
+```jsx
+<View activePanel="1">
+  <Panel id="1" />
+  <Panel id="2" />
+  <Panel id="3" />
+</View>
+```
+
+В примере навигация между панелями должна быть в порядке 1 -> 2 -> 3.
 
 ## Обработчики событий
 
 ### Окончание анимации смены
 
-Свойство `onTransition` принимает обработчик, который вызывается при завершении анимации смены активной `Panel`.
+Свойство `onTransition` принимает обработчик, который вызывается при завершении анимации смены активной [`Panel`](/components/panel).
 
 ```jsx
 function transitionHandler({
@@ -91,18 +131,16 @@ function transitionHandler({
 
 ### iOS Swipe Back
 
-Свойство `onSwipeBack` Обработчик свайпа назад.
-Свойство `onSwipeBackCancel` Обработчик завершения анимации отмененного пользователем свайпа.
-Свойство `onSwipeBackStart` Обработчик начала анимации свайпа назад. Чтобы остановить свайп назад, возвращайте "prevent".
+- `onSwipeBack` – обработчик свайпа назад.
+- `onSwipeBackCancel` – обработчик завершения анимации отмененного пользователем свайпа.
+- `onSwipeBackStart` – обработчик начала анимации свайпа назад. Чтобы остановить свайп назад, возвращайте `"prevent"`.
 
-В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
-повторить такое поведение в VKUI, нужно:
+В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы повторить такое поведение
+в VKUI, нужно:
 
 - передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`;
 - передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`;
-- обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в `webview` клиента **VK** или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение `webview`: `<ConfigProvider isWebView>`.
-
-<br />
+- обернуть ваше приложение в [`ConfigProvider`](/components/config-provider) — он определит, открыто приложение в `webview` клиента **VK** или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение `webview`: `<ConfigProvider isWebView>`.
 
 #### Блокировка свайпа (вариант #1)
 
@@ -111,13 +149,11 @@ function transitionHandler({
 - либо повесьте на них свойство `data-vkui-swipe-back={false}`;
 - либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](/components/touch).
 
-<br />
-
 #### Блокировка свайпа (вариант #2)
 
-Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()` (см. **Свойства и методы**)
+Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()`.
 
-```jsx
+```tsx
 import * as React from 'react';
 import { type ViewProps, View } from '@vkontakte/vkui';
 
@@ -280,7 +316,9 @@ const SettingsPanelContent = ({ name, onChangeName, onBack }) => {
   );
 };
 
-<ConfigProvider platform={'ios'} isWebView>
-  <App />
-</ConfigProvider>;
+export default () => (
+  <ConfigProvider platform={'ios'} isWebView>
+    <App />
+  </ConfigProvider>
+);
 ```
