@@ -2,67 +2,85 @@
 
 # Root
 
-Компонент-контейнер, представляющий собой навигационный слой, содержащий коллекцию `View`.
+Компонент для создания набора сценариев из [`View`](/components/view) и возможностью переключаться между ними.
+
+Связанные страницы:
+
+- [Навигация](/overview/navigation)
 
 </Overview>
 
-```jsx
-import { Root, View, Panel, PanelHeader, Group, CellButton } from '@vkontakte/vkui';
+import { FixedLayoutWrapper } from '@/components/wrappers';
 
-function Example() {
-  const [activeView, setActiveView] = React.useState('messages');
-
-  return (
-    <Root activeView={activeView}>
-      <View id="messages" activePanel="messages">
-        <Panel id="messages">
-          <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Сообщения</PanelHeader>
-          <Group>
-            <CellButton onClick={() => setActiveView('profile')}>Open View 2</CellButton>
-          </Group>
-        </Panel>
-      </View>
-      <View id="profile" activePanel="profile">
-        <Panel id="profile">
-          <PanelHeader before={<PanelHeaderBack onClick={noop} />}>Профиль</PanelHeader>
-          <Group>Информация о пользователе</Group>
-        </Panel>
-      </View>
-    </Root>
-  );
-}
-```
-
-## Уникальный идентификатор
-
-Уникальный идентификатор для `Root` можно задать либо с помощью свойства `nav`, либо `id`.
-Обязательно указывайте идентификатор, когда используете компонент внутри `Epic`.
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
 
 ```jsx
-<Root id="profile">{/* views */}</Root>
+const [activeView, setActiveView] = useState('view-1');
+return (
+  <Root activeView={activeView}>
+    <View id="view-1" activePanel="view-1-panel">
+      <Panel id="view-1-panel">
+        <PanelHeader>View 1</PanelHeader>
+        <Placeholder stretched>
+          <Button appearance="positive" onClick={() => setActiveView('view-2')}>
+            Перейти к View 2
+          </Button>
+        </Placeholder>
+      </Panel>
+    </View>
+    <View id="view-2" activePanel="view-2-panel">
+      <Panel id="view-2-panel">
+        <PanelHeader>View 2</PanelHeader>
+        <Placeholder stretched>
+          <Button appearance="negative" onClick={() => setActiveView('view-1')}>
+            Вернуться к View 1
+          </Button>
+        </Placeholder>
+      </Panel>
+    </View>
+  </Root>
+);
 ```
 
-> Обратите внимание, что при использовании внутри `Epic` идентификатор для `Root` должен присутствовать
-> на элементе, непосредственно переданном в `Epic`. Если вы выносите реализацию `Root` в отдельный компонент, учитывайте
-> это при разработке.
+</Playground>
+
+## Применение компонента
+
+Принимает необходимое количество [`View`](/components/view) с уникальным `id`. Далее `id` с нужным сценарием передаётся в свойство
+`activeView`.
+
+```
+Root
+  └─ View N
+    └─ Panel N
+      └─ PanelHeader
+      └─ <content>
+```
+
+> Если вы выносите сценарий с [`View`](/components/view) в отдельный компонент, то `id` должен передаваться непосредственно в
+> компонент-обёртку и уже после проксироваться во [`View`](/components/view).
 >
-> ```jsx
-> function ExternalRoot({ id }) {
->   // Пробрасываем id далее в Root
->   return <Root id={id}>{/* views */}</Root>;
+> ```jsx showLineNumbers {2-4,13-14}
+> const MyView = ({ id }) => {
+>   // проксируем `id` в View */
+>   return (
+>     <View id={id} activePanel="<panel-id>">
+>       ...
+>     </View>
+>   );
+> };
+>
+> export default function App() {
+>   return (
+>     <Root activeView="my-view">
+>       {/* передаём `id` в компонент-обёртку */}
+>       <MyView id="my-view" />
+>     </Root>
+>   );
 > }
->
-> <Epic activeStory="external">
->   {/* Передаем id на прямого потомка Epic */}
->   <ExternalRoot id="external" />
-> </Epic>;
 > ```
-
-## Управление `View`
-
-Коллекцию `View` следует передавать в свойстве `children`.
-
-Свойство `activeView` принимает уникальный идентификатор (`id`/`nav`) активного компонента `View`.
+>
+> Иначе `Root` не сможет найти `id` из `activeView` среди прямых потомков в `children`.
 
 ## Обработчики событий
 
