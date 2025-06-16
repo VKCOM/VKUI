@@ -8,11 +8,20 @@
 
 ## Использование
 
-Передавайте массив изображений в свойство `src`:
+Передавайте массив ссылок на изображения в свойство `src`:
 
-```jsx
-<GridAvatar src={['/user1.jpg', '/user2.jpg', '/user3.jpg', '/user4.jpg']} />
-```
+<Playground>
+  ```jsx
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  />
+  ```
+</Playground>
 
 **Особенности отображения:**
 
@@ -21,17 +30,51 @@
 - 3 элемента — один элемент занимает половину, два остальных по четверти;
 - 4 элемента — занимают равные четверти.
 
+<Playground>
+  ```jsx
+  <GridAvatar src={['https://avatars.githubusercontent.com/u/61377022?s=50']} />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+    ]}
+  />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+    ]}
+  />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  />
+  ```
+</Playground>
+
 ## Добавление индикатора
 
 Используйте подкомпонент `Badge` для индикаторов:
 
-```jsx
-<GridAvatar src={['/user1.jpg', '/user2.jpg']}>
-  <GridAvatar.Badge background="stroke">
-    <Icon20AddCircleFill />
-  </GridAvatar.Badge>
-</GridAvatar>
-```
+<Playground>
+  ```jsx
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  >
+    <GridAvatar.Badge background="stroke">
+      <Icon20GiftCircleFillRed />
+    </GridAvatar.Badge>
+  </GridAvatar>
+  ```
+</Playground>
 
 ## Важные ограничения
 

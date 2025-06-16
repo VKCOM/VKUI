@@ -2,29 +2,27 @@
 
 # PanelSpinner
 
-Компонент-обёртка для индикатора загрузки, оптимизированный для использования внутри панелей.
+Компонент-обёртка для индикатора загрузки, оптимизированный для использования внутри панелей ([`Panel`](/components/panel)).
 Автоматически добавляет стандартные отступы и центрирование.
 
 Связанные компоненты:
 
-- Spinner
-
-- ScreenSpinner
+- [`Spinner`](/components/spinner)
+- [`ScreenSpinner`](/components/screen-spinner)
 
 </Overview>
 
-## Основное использование
-
-```jsx
-<Panel>
-  <PanelHeader>Профиль</PanelHeader>
-  {isLoading ? <PanelSpinner /> : <UserContent />}
-</Panel>
-```
+<Playground>
+  ```jsx
+  <PanelSpinner />
+  ```
+</Playground>
 
 ## Свойства
 
-### Наследует все свойства [`Spinner`](/components/spinner)
+### `Spinner`
+
+Наследует все свойства компонента [`Spinner`](/components/spinner).
 
 - `size` — размер индикатора.
 - `disableAnimation` — отключение анимации.

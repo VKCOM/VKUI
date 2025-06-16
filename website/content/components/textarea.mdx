@@ -6,9 +6,11 @@
 
 </Overview>
 
-```jsx
-<Textarea placeholder="Введите текст" />
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Textarea name="text" placeholder="Введите текст" />
+  ```
+</Playground>
 
 ## Режим работы
 
@@ -29,18 +31,33 @@ const [text, setText] = React.useState('Текст');
 <Textarea value={text} onChange={(event) => setText(event.target.value)} />;
 ```
 
-## Визуальное оформление
+## Состояния
 
-### Состояние
+### `disabled`
+
+Свойство `disabled` позволяет пометить компонент, как недоступный для взаимодействия.
+
+> Если вы используете `Textarea` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Textarea`, и у `FormItem`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Textarea name="text" defaultValue="Недоступно" disabled />
+  ```
+</Playground>
+
+## Валидация
 
 Свойство `status` используется для состояния валидации компонента - некорректности заполненного поля (значение `"error"`)
 или успешной валидации (значение `"valid"`).
 
 > Если вы используете `Textarea` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
 
-Свойство `disabled` позволяет пометить компонент, как недоступный для взаимодействия.
-
-> Если вы используете `Textarea` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Textarea`, и у `FormItem`.
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Textarea name="text" placeholder="Введите текст" status="error" />
+  <Textarea name="text" placeholder="Введите текст" status="valid" />
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

@@ -1,8 +1,16 @@
 import * as React from 'react';
-import { classNames, ConfigProvider, Flex, type FlexProps, PanelSpinner } from '@vkontakte/vkui';
+import {
+  AppRoot,
+  classNames,
+  ConfigProvider,
+  Flex,
+  type FlexProps,
+  PanelSpinner,
+} from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import { LiveContext, LiveError, LivePreview } from 'react-live';
-import { usePlaygroundContext } from '../context';
+import { usePlaygroundStore } from '@/providers/playgroundStoreProvider';
+import { useResolvedColorScheme } from '../hooks/useResolvedColorScheme';
 import { makeTokenClassName } from '../vkuiThemes/helpers';
 import styles from './PlaygroundPreview.module.css';
 
@@ -12,9 +20,17 @@ function DefaultWrapper({
   align = 'center',
   justify = 'center',
   className,
+  ...restProps
 }: React.PropsWithChildren<Pick<FlexProps, 'direction' | 'align' | 'justify' | 'className'>>) {
   return (
-    <Flex gap="m" direction={direction} align={align} justify={justify} className={className}>
+    <Flex
+      gap="m"
+      direction={direction}
+      align={align}
+      justify={justify}
+      className={classNames(className, styles.wrapper)}
+      {...restProps}
+    >
       {children}
     </Flex>
   );
@@ -28,13 +44,12 @@ export interface PlaygroundPreviewProps extends Pick<FlexProps, 'direction' | 'a
 export function PlaygroundPreview({
   className,
   Wrapper = DefaultWrapper,
-  direction,
-  align,
-  justify,
+  ...restProps
 }: PlaygroundPreviewProps) {
   const { error } = React.useContext(LiveContext);
   const mounted = useMounted();
-  const { platform, colorScheme, themeName, isLoading } = usePlaygroundContext();
+  const colorScheme = useResolvedColorScheme();
+  const { platform, themeName, playgroundLoading } = usePlaygroundStore((store) => store);
 
   return (
     <div
@@ -46,19 +61,20 @@ export function PlaygroundPreview({
       )}
     >
       {error && <LiveError />}
-      {isLoading && <PanelSpinner />}
-      {mounted && !isLoading && (
-        <ConfigProvider
-          platform={platform}
-          colorScheme={colorScheme}
-          tokensClassNames={{
-            light: makeTokenClassName(themeName, 'light'),
-            dark: makeTokenClassName(themeName, 'dark'),
-          }}
-        >
-          {/* @ts-expect-error: TS2769 props passing throw */}
-          <LivePreview direction={direction} align={align} justify={justify} Component={Wrapper} />
-        </ConfigProvider>
+      {playgroundLoading && <PanelSpinner />}
+      {mounted && !playgroundLoading && (
+        <AppRoot style={{ height: '100%', width: '100%' }} mode="partial" scroll="contain">
+          <ConfigProvider
+            platform={platform}
+            colorScheme={colorScheme}
+            tokensClassNames={{
+              light: makeTokenClassName(themeName, 'light'),
+              dark: makeTokenClassName(themeName, 'dark'),
+            }}
+          >
+            <LivePreview Component={Wrapper} {...restProps} />
+          </ConfigProvider>
+        </AppRoot>
       )}
     </div>
   );

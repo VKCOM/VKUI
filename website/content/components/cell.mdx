@@ -7,101 +7,51 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <Cell mode="selectable" before={<Avatar />}>
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
+
 ## Основные режимы
 
 ### `mode="removable"`
 
 Добавляет кнопку удаления:
 
-```jsx
-function Example() {
-  const [removeList, updateRemoveList] = React.useState([
-    'Михаил Андриевский',
-    'Вадим Дорохов',
-    'Саша Колобов',
-  ]);
-  const removeFromList = (idx, list, updateListFn) => {
-    const _list = [...list];
-    _list.splice(idx, 1);
-    updateListFn(_list);
-  };
-  return (
-    <Group header={<Header subtitle={<code>mode="removable"</code>}>Удаление</Header>}>
-      <List>
-        {removeList.map((item, idx) => (
-          <Cell
-            key={item}
-            mode="removable"
-            onRemove={() => removeFromList(idx, removeList, updateRemoveList)}
-          >
-            {item}
-          </Cell>
-        ))}
-      </List>
-    </Group>
-  );
-}
-
-<Example />;
-```
+<Playground>
+  ```jsx
+  <Cell
+    mode="selectable"
+    before={<Avatar />}
+    mode="removable"
+    onRemove={() => alert('Обработчик удаления')}
+  >
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
 
 ### `mode="selectable"`
 
 Добавляет чекбокс выбора:
 
-```jsx
-<Group header={<Header subtitle={<code>mode="selectable"</code>}>Выделение</Header>}>
+<Playground>
+  ```jsx
   <Cell mode="selectable" before={<Avatar />}>
-    Артур Стамбульцян
+    Пётр Кузнецов
   </Cell>
-  <Cell mode="selectable" before={<Avatar />}>
-    Игорь Федоров
-  </Cell>
-  <Cell mode="selectable" disabled before={<Avatar />}>
-    Михаил Лихачев
-  </Cell>
-</Group>
-```
+  ```
+</Playground>
 
 ### `draggable`
 
-Включает возможность перетаскивания:
+Включает возможность перетаскивания. При использовании данного режима обязательно
+оборачивайте `Cell` в компонент `List`.
 
-```jsx
-function Example() {
-  const reorderList = ({ from, to }, list, updateListFn) => {
-    const _list = [...list];
-    _list.splice(from, 1);
-    _list.splice(to, 0, list[from]);
-    updateListFn(_list);
-  };
-  const [draggingList, updateDraggingList] = React.useState([
-    'Say',
-    'Hello',
-    'To',
-    'My',
-    'Little',
-    'Friend',
-  ]);
-  return (
-    <List>
-      {draggingList.map((item) => (
-        <Cell
-          key={item}
-          before={<Avatar />}
-          draggable
-          onDragFinish={({ from, to }) =>
-            reorderList({ from, to }, draggingList, updateDraggingList)
-          }
-        >
-          {item}
-        </Cell>
-      ))}
-    </List>
-  );
-}
-<Example />;
-```
+Пример можно увидеть в документации компонента [`List`](/components/list).
 
 ### Ограничения
 
@@ -110,62 +60,21 @@ function Example() {
 
 ## Комбинирование режимов
 
-```jsx
-function Example() {
-  const [dragAndRemoveList, updateDragAndRemoveList] = React.useState([
-    'Евгения Полозова',
-    'Артур Стамбульцян',
-    'Владимир Клепов',
-  ]);
-  const reorderList = ({ from, to }, list, updateListFn) => {
-    const _list = [...list];
-    _list.splice(from, 1);
-    _list.splice(to, 0, list[from]);
-    updateListFn(_list);
-  };
-  const removeFromList = (idx, list, updateListFn) => {
-    const _list = [...list];
-    _list.splice(idx, 1);
-    updateListFn(_list);
-  };
-  return (
-    <Group
-      header={
-        <Header subtitle={<code>draggable mode="removable"</code>}>
-          Перетаскивание c удалением
-        </Header>
-      }
-    >
-      <List>
-        {dragAndRemoveList.map((item, idx) => (
-          <Cell
-            key={item}
-            mode="removable"
-            draggable
-            before={<Avatar />}
-            onRemove={() => removeFromList(idx, dragAndRemoveList, updateDragAndRemoveList)}
-            onDragFinish={({ from, to }) =>
-              reorderList({ from, to }, dragAndRemoveList, updateDragAndRemoveList)
-            }
-          >
-            {item}
-          </Cell>
-        ))}
-      </List>
-    </Group>
-  );
-}
-<Example />;
-```
+Одноврменно вы можете использовать перетаскиваемые ячейки либо с `mode="removable"`, либо с `mode="selectable"`.
+Одновременно удалять, перетаскивать и выбирать ячейки нельзя.
 
 ## Подкомпоненты
 
 ### Cell.Checkbox
 
-Кастомный чекбокс для режима выбора:
+Используйте подкомпонент `Cell.Checkbox` для возможности размещать чекбокс по бокам
+(передавайте его в свойства `before` или `after`). С помощью данного подкомпонента также можно изменить
+внешний вид чекбоксов.
 
-```jsx
-<Cell Component="label" after={<Cell.Checkbox />}>
-  Элемент с чекбоксом
-</Cell>
-```
+<Playground>
+  ```jsx
+  <Cell Component="label" after={<Cell.Checkbox />}>
+    Элемент с чекбоксом
+  </Cell>
+  ```
+</Playground>

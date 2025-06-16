@@ -5,100 +5,187 @@
 
 </Overview>
 
-```jsx
-<Avatar src="/user.jpg" alt="Фото пользователя" />
-```
-
 ## Основные варианты
 
 ### Изображение
 
 Основной вариант, использует стандартный `<img>` под капотом.
 
-```jsx
-<Avatar src="/user.jpg" alt="Фото пользователя" />
-```
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/61377022?s=50" alt="Фото пользователя" />
+  ```
+</Playground>
 
 ### Инициалы
 
-Отображаются если изображение не загрузилось.
+Отображаются, если изображение не удалось загрузить или передано пустое свойство `src`.
 
-```jsx
-<Avatar initials="ИП" src="/user.jpg" alt="Фото пользователя" />
-```
+<Playground>
+  ```jsx
+  <Avatar initials="ВК" />
+  ```
+</Playground>
 
 Рекомендации по использованию инициалов:
 
 - рекомендуемая длина — не более 2 символов;
 - размер шрифта автоматически адаптируется под размер аватара.
 
-### Градиентный фон
+#### Градиентный фон
 
-Используется при отсутствии изображения.
+Помимо стандартного фона инициалы можно размещать на градиентном фоне.
+Всего поддерживается 6 видов разных градиентов.
 
-```jsx
-<Avatar initials="ИП" gradientColor={5} />
-```
+<Playground>
+  ```jsx
+  <Avatar initials="ВК" gradientColor={6} />
+  ```
+</Playground>
 
-## Визуальное оформление
-
-### Градиенты
-
-Задаются свойством `gradientColor`. Можно использовать предопределенные цвета:
-
-- `1`: `"red"`;
-- `2`: `"orange"`;
-- `3`: `"yellow"`;
-- `4`: `"green"`;
-- `5`: `"l-blue"`;
-- `6`: `"violet"`.
-
-А также можно использовать кастомный градиент:
+При необходимости можно использовать кастомный градиент (с помощью `className`/`style`):
 
 ```jsx
 <Avatar gradientColor="custom" style={{ backgroundImage: 'linear-gradient(...)' }} />
 ```
 
-Для динамического определения цвета по ID пользователя:
+> Может быть полезна функция [`calcInitialsAvatarColor`](#calcinitialsavatarcolor).
 
-```jsx
-import { calcInitialsAvatarColor } from '@vkontakte/vkui';
+## Размеры
 
-<Avatar initials="ИП" gradientColor={calcInitialsAvatarColor(userId)} />;
-```
+<Playground>
+  ```jsx
+  {return [16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
+    <Avatar key={size} src="https://avatars.githubusercontent.com/u/32414396?s=100" size={size} />
+  ))}
+  ```
+</Playground>
 
 ## Дополнительные элементы
 
 ### Бейдж
 
-```jsx
-<Avatar src="/user.jpg" size={48}>
-  <Avatar.Badge background="stroke">
-    <Icon20OnlineMobile />
-  </Avatar.Badge>
-</Avatar>
-```
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/26322098?s=56" size={56}>
+    <Avatar.Badge background="stroke">
+      <Icon20GiftCircleFillRed />
+    </Avatar.Badge>
+  </Avatar>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](#getbadgeiconsizebyimagebasesize).
 
 ### Готовый пресет бейджа
 
 Подкомпонент `Avatar.BadgeWithPreset` предоставляет готовые пресеты `Avatar.Badge`.
-При прокидывании в свойство `preset` значения `online` используется иконка `Icon12Circle`,
+При передаче в свойство `preset` значения `online` используется иконка `Icon12Circle`,
 а при значении `online-mobile` иконка `Icon12OnlineMobile`.
 
-```jsx
-<Avatar src="/user.jpg" size={48}>
-  <Avatar.BadgeWithPreset preset="online" />
-</Avatar>
-```
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/14944123?s=50" size={48}>
+    <Avatar.BadgeWithPreset preset="online" />
+  </Avatar>
+  <Avatar src="https://avatars.githubusercontent.com/u/7431217?s=50" size={48}>
+    <Avatar.BadgeWithPreset preset="online-mobile" />
+  </Avatar>
+  ```
+</Playground>
 
 ### Наложение
 
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/91548592?s=50">
+    <Avatar.Overlay theme="dark" visibility="always">
+      <Icon24Camera />
+    </Avatar.Overlay>
+  </Avatar>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](#getoverlayiconsizebyimagebasesize).
+
+> Обратите внимание, что свойство `visibility` подкомпонента `Avatar.Overlay` по умолчанию
+> зависит от наличия указателя на устройстве. Так, на мобильных устройствах наложение будет
+> показано всегда, а например, на десктопах наложение активно только при наведении на аватар.
+
+## Вспомогательные функции
+
+### getBadgeIconSizeByImageBaseSize
+
+Размер иконки для бейджа необходимо подстраивать под разные значения свойства `size` компонента `Avatar`.
+Например, для аватаров размером `28x28` лучше смотрятся иконки бейджа размером `12x12`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getBadgeIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
 ```jsx
-<Avatar src="/user.jpg" size={48}>
-  <Avatar.Overlay theme="dark">
-    <Icon24Camera />
-  </Avatar.Overlay>
-</Avatar>
+import { ImageBaseContext, getBadgeIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `Avatar`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getBadgeIconSizeByImageBaseSize(size);
+// ИЛИ если размер аватара статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+### getOverlayIconSizeByImageBaseSize
+
+Размер иконки для наложения необходимо подстраивать под разные значения свойства `size` компонента `Avatar`.
+Например, для аватаров размером `28x28` лучше смотрятся иконки наложения размером `20x20`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getOverlayIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getOverlayIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `Avatar`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getOverlayIconSizeByImageBaseSize(size);
+// ИЛИ если размер аватара статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+### getFallbackIconSizeByImageBaseSize
+
+Размер иконки, которая будет отрисована, если изображение не удалось загрузить,
+необходимо подстраивать под разные значения свойства `size` компонента `Avatar`.
+Например, для аватаров размером `28x28` лучше смотрятся иконки размером `20x20`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getFallbackIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getFallbackIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `Avatar`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getFallbackIconSizeByImageBaseSize(size);
+// ИЛИ если размер аватара статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+### calcInitialsAvatarColor
+
+Для динамического определения градиента под пользователя используйте функцию `calcInitialsAvatarColor`.
+Она генерирует значение градиента по формуле `user_id % 6 + 1`.
+Например, у пользователя с `user_id={106}` будет 5-й (`"l-blue"`) цвет градиента.
+
+```jsx
+import { calcInitialsAvatarColor } from '@vkontakte/vkui';
+
+// userId определён где-то выше
+<Avatar initials="ВК" gradientColor={calcInitialsAvatarColor(userId)} />;
 ```
 
 ## Особенности

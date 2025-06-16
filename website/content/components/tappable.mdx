@@ -8,9 +8,18 @@
 - Визуальную обратную связь через фоновые эффекты;
 - Ripple-эффект на Android;
 - Автоматическую установку `cursor: pointer`;
-- Основу для интерактивных компонентов вроде `Button`, `Cell`, `ActionSheetItem`;
+- Основу для интерактивных компонентов вроде [`Button`](/components/button),
+  [`Cell`](/components/cell), [`ActionSheetItem`](/components/action-sheet-item);
 
 </Overview>
+
+<Playground>
+  ```jsx
+  <Tappable onClick={() => alert('Обработчик нажатия')}>
+    <Text>Я - кнопка</Text>
+  </Tappable>
+  ```
+</Playground>
 
 ## Логика выбора элемента
 
@@ -113,7 +122,7 @@
 
   // Хорошо
   <Tappable aria-label="Закрыть">
-  <Icon16Close />
+    <Icon16Close />
   </Tappable>
   ```
 

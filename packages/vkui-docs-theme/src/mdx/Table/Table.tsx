@@ -17,5 +17,7 @@ export const Td = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
 };
 
 export const Table = (props: React.HTMLAttributes<HTMLTableElement>) => (
-  <table {...props} className={classNames(styles.table, props.className)} />
+  <div className={styles.root}>
+    <table {...props} className={classNames(styles.table, props.className)} />
+  </div>
 );

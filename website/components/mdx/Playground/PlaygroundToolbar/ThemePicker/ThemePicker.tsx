@@ -5,13 +5,13 @@ import ReactDOM from 'react-dom';
 import { Icon20BrushOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
-import { usePlaygroundContext } from '../../context';
+import { usePlaygroundStore } from '@/providers/playgroundStoreProvider';
 import { ThemesModal } from './ThemesModal';
 
 export function ThemePicker() {
   const [open, setOpen] = React.useState(false);
   const mounted = useMounted();
-  const { themeName } = usePlaygroundContext();
+  const themeName = usePlaygroundStore((store) => store.themeName);
 
   return (
     <>

@@ -8,15 +8,17 @@
 
 </Overview>
 
-```jsx
-<ChipsInput
-  value={[
-    { value: 'red', label: 'Красный' },
-    { value: 'blue', label: 'Синий' },
-  ]}
-  placeholder="Введите значение"
-/>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput
+    defaultValue={[
+      { value: 'red', label: 'Красный' },
+      { value: 'blue', label: 'Синий' },
+    ]}
+    placeholder="Введите значение"
+  />
+  ```
+</Playground>
 
 ## Режим работы
 
@@ -56,65 +58,84 @@ const [colors, setColors] = React.useState([]);
 
 Пока поддерживаются только строковые символы.
 
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput placeholder="Используйте запятую" delimiter="," />
+  ```
+</Playground>
+
 ### Потеря фокуса
 
 По умолчанию при потере полем фокуса добавления в список опций не происходит.
 С помощью свойства `addOnBlur` можно включить поведение, при котором потеря фокуса будет приводить к добавлению нового элемента.
 
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput
+    defaultValue={[
+      {
+        value: 'red',
+        label: 'Красный',
+      },
+    ]}
+    placeholder="Введите значение"
+    addOnBlur
+  />
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput defaultValue={[{ value: 'red', label: 'Красный' }]} disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `ChipsInput` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput defaultValue={[{ value: 'red', label: 'Красный' }]} status="error" />
+  <ChipsInput defaultValue={[{ value: 'green', label: 'Зелёный' }]} status="valid" />
+  ```
+</Playground>
+
 ## Кастомизация
-
-### Модель данных
-
-С помощью свойств `getOptionValue`, `getOptionLabel` и `getNewOptionData` поддерживаются любые модели данных.
-
-- `getOptionValue` - позволяет определить, какое значение использовать как уникальный ключ опции (по умолчанию поле `value`);
-- `getOptionLabel` - позволяет определить, какой текст отображать для опции (по умолчанию поле `label`);
-- `getNewOptionData` - используется для создания новой опции, позволяя менять параметры.
-
-```jsx
-// Функция для создания новой опции (при вводе текста, которого нет в списке)
-const getNewOptionData = (inputValue) => {
-  return {
-    value: inputValue,
-    id: inputValue,
-    name: inputValue,
-  };
-};
-
-return (
-  <div>
-    <ChipsInput
-      // В качестве уникального идентификатора используем `id`
-      getOptionValue={(option) => option.id}
-      // В качестве отображаемого текста используем `name`
-      getOptionLabel={(option) => option.name}
-      getNewOptionData={getNewOptionData}
-      placeholder="Добавьте пользователей"
-      renderChip={(_, { name }) => <Chip>{name}</Chip>}
-    />
-  </div>
-);
-```
 
 ### Визуальное оформление
 
 С помощью свойства `renderChip` можно влиять на отображение конкретного значения. Вы можете изменить
 стандартный компонент `Chip` или использовать свой компонент:
 
-```jsx
-<ChipsInput
-  renderChip={({ value, label, ...rest }, { src }) => (
-    <Chip
-      value={value}
-      removable={false}
-      before={<Avatar size={20} src={src} aria-hidden />}
-      {...rest}
-    >
-      {label}
-    </Chip>
-  )}
-/>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput
+    defaultValue={[
+      {
+        value: '1',
+        label: 'Алексей',
+        src: 'https://avatars.githubusercontent.com/u/91548592?s=50',
+      },
+      { value: '2', label: 'Никита', src: 'https://avatars.githubusercontent.com/u/32414396?s=50' },
+    ]}
+    renderChip={({ value, label, ...rest }, { src }) => (
+      <Chip value={value} before={<Avatar src={src} size={20} aria-hidden />} {...rest}>
+        {label}
+      </Chip>
+    )}
+  />
+  ```
+</Playground>
 
 Важно отметить, что первым параметром в обработчике `renderChip` идёт объект со свойствами, необходимыми для
 корректной работы `a11y`. Если для отображения опции вы используете свой компонент, убедитесь, что все эти свойства

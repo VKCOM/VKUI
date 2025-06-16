@@ -1,0 +1,6 @@
+.root {
+  inline-size: 100%;
+  overflow: auto;
+  border-radius: 8px;
+  transform: translate(0);
+}

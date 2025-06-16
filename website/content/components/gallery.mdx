@@ -6,32 +6,48 @@
 
 </Overview>
 
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" align="center">
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
+
 ## Автопрокрутка
 
 Компонент поддерживает автопрокрутку слайдов. Для этого нужно использовать свойство `timeout` (в миллисекундах)
 отличное от нуля.
 
-```jsx
-<Gallery slideWidth="90%" align="center" timeout={3000}>
-  <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-  <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-  <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-</Gallery>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" align="center" timeout={3000}>
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
 
 ## Зацикленная галерея
 
 Используйте свойство `looped`, чтобы список слайдов прокручивался зацикленно.
 
-```jsx
-<Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows looped>
-  <Slide backgroundColor="var(--vkui--color_background_negative)">1</Slide>
-  <Slide backgroundColor="var(--vkui--color_background_positive)">2</Slide>
-  <Slide backgroundColor="var(--vkui--color_background_accent)">3</Slide>
-  <Slide backgroundColor="var(--vkui--color_background_negative)">4</Slide>
-  <Slide backgroundColor="var(--vkui--color_background_positive)">5</Slide>
-</Gallery>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" bullets="dark" showArrows looped>
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
+  </Gallery>
+  ```
+</Playground>
 
 ## Кастомизация стрелок навигации
 
@@ -44,13 +60,15 @@
 - `showArrows` - флаг, определяющий нужно ли показывать стрелки. Видимость стрелок также зависит
   от параметра адаптивности `hasPointer`. Например, на мобильных устройствах стрелки отображаться никогда не будут.
 
-```jsx
-<Gallery slideWidth="90%" style={{ height: 350 }} showArrows arrowAreaHeight="fit" arrowSize="s">
-  <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-  <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-  <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-</Gallery>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" showArrows arrowAreaHeight="fit" arrowSize="s">
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
 
 ## Индикатор прогресса
 
@@ -60,78 +78,76 @@
 - `light` - включает отображение в светлом варианте;
 - `dark` - включает отображение в светлом варианте.
 
-```jsx
-<Gallery slideWidth="90%" style={{ height: 150 }} bullets="dark" showArrows>
-  <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-  <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-  <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-</Gallery>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" bullets="dark" showArrows>
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
 
 ## Контролируемое состояние
 
 Используйте `slideIndex` и `onChange` для ручного управления состоянием.
 
-```jsx
-function Example() {
-  const [slideIndex, setSlideIndex] = React.useState(0);
-  return (
-    <>
-      <Gallery
-        slideWidth="90%"
-        align="center"
-        style={{ height: 150 }}
-        slideIndex={slideIndex}
-        onChange={setSlideIndex}
-      >
-        <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
-        <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
-        <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
-      </Gallery>
-      <Flex gap="m">
-        <Button size="l" onClick={() => setSlideIndex((slideIndex + 1) % 3)}>
-          Next slide
-        </Button>
-        <Button size="l" onClick={() => setSlideIndex((slideIndex + 2) % 3)}>
-          Prev slide
-        </Button>
-      </Flex>
-    </>
-  );
-}
+<Playground Wrapper={BlockWrapper}>
 
-<Example />;
+```jsx
+const [slideIndex, setSlideIndex] = React.useState(0);
+return (
+  <>
+    <Gallery slideWidth="90%" align="center" slideIndex={slideIndex} onChange={setSlideIndex}>
+      <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+      <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+      <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+    </Gallery>
+    <Flex gap="m" margin="auto" justify="center">
+      <Button size="s" onClick={() => setSlideIndex((slideIndex + 2) % 3)}>
+        Предыдущий
+      </Button>
+      <Button size="s" onClick={() => setSlideIndex((slideIndex + 1) % 3)}>
+        Следующий
+      </Button>
+    </Flex>
+  </>
+);
 ```
+
+</Playground>
 
 ## Слайды разных размеров
 
 Если необходимо сделать так, чтобы у каждого слайда была своя ширина, необходимо задать свойство `slideWidth="custom"`:
 
-```jsx
-<Gallery slideWidth="custom" style={{ height: 150 }}>
-  <div
-    style={{
-      width: 200,
-      backgroundColor: 'var(--vkui--color_background_negative)',
-    }}
-  />
-  <div
-    style={{
-      width: 120,
-      backgroundColor: 'var(--vkui--color_background_positive)',
-    }}
-  />
-  <div
-    style={{
-      width: 70,
-      backgroundColor: 'var(--vkui--color_background_accent)',
-    }}
-  />
-  <div
-    style={{
-      width: 220,
-      backgroundColor: 'var(--vkui--color_icon_secondary)',
-    }}
-  />
-</Gallery>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="custom">
+    <div
+      style={{
+        width: 200,
+        backgroundColor: 'var(--vkui--color_background_negative)',
+      }}
+    />
+    <div
+      style={{
+        width: 120,
+        backgroundColor: 'var(--vkui--color_background_positive)',
+      }}
+    />
+    <div
+      style={{
+        width: 70,
+        backgroundColor: 'var(--vkui--color_background_accent)',
+      }}
+    />
+    <div
+      style={{
+        width: 220,
+        backgroundColor: 'var(--vkui--color_icon_secondary)',
+      }}
+    />
+  </Gallery>
+  ```
+</Playground>

@@ -6,31 +6,61 @@
 
 </Overview>
 
-## Кастомные цвета
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress value={25} />
+  ```
+</Playground>
+
+## Предустановленные цвета
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormItem id="progresslabel" top="Прогресс">
+    <Progress aria-labelledby="progresslabel" value={40} />
+  </FormItem>
+  <FormItem id="progresslabelNegative" top="Ошибка">
+    <Progress appearance="negative" aria-labelledby="progresslabelNegative" value={75} />
+  </FormItem>
+  <FormItem id="progresslabelPositive" top="Завершено">
+    <Progress appearance="positive" aria-labelledby="progresslabelPositive" value={100} />
+  </FormItem>
+  ```
+</Playground>
+
+## Пользовательские цвета
 
 Используйте свойство `appearance` для задания произвольного цвета полоски прогресса. Поддерживаются:
 
 ### HEX-коды
 
-```jsx
-<Progress appearance="#FFA500" value={45} />
-```
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress appearance="#FFA500" value={45} />
+  ```
+</Playground>
 
 ### CSS-переменные
 
-```jsx
-<div style={{ '--custom-progress': '#00FF00' }}>
-  <Progress appearance="var(--custom-progress)" value={80} />
-</div>
-```
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <div style={{ '--custom-progress': '#00FF00' }}>
+    <Progress appearance="var(--custom-progress)" value={80} />
+  </div>
+  ```
+</Playground>
 
 ## Прозрачный фон
 
 Для отключения фона можно использовать свойство `trackDisable`:
 
-```jsx
-<Progress appearance="#FFA500" trackDisable value={65} />
-```
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress appearance="#FFA500" trackDisable value={65} />
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

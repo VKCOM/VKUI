@@ -7,23 +7,48 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <ActionSheetItem>Сохранить</ActionSheetItem>
+  ```
+</Playground>
+
 ## Внешний вид
 
 ### Цвет
 
 Задаётся свойством `mode`.
 
-- `"default"` — стандартный цвет отображения текста, используется в действиях,
-  где нет необходимости в привлечении дополнительного внимания;
-- `"destructive"` — цвет критических действий (чаще всего красный), старайтесь располагать такие действия сверху списка,
-  где они наиболее заметны;
-- `"cancel"` — цвет действия отмены.
+#### `"default"`
 
-```jsx
-<ActionSheetItem>Сохранить</ActionSheetItem>
-<ActionSheetItem mode="destructive">Удалить</ActionSheetItem>
-<ActionSheetItem mode="cancel">Отмена</ActionSheetItem>
-```
+Стандартный цвет отображения текста, используется в действиях, где нет необходимости в привлечении дополнительного внимания.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem>Сохранить</ActionSheetItem>
+  ```
+</Playground>
+
+#### `"destructive"`
+
+Цвет критических действий (чаще всего красный), старайтесь располагать такие действия сверху списка,
+где они наиболее заметны.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem mode="destructive">Удалить</ActionSheetItem>
+  ```
+</Playground>
+
+#### `"cancel"`
+
+Цвет действия отмены.
+
+<Playground>
+  ```jsx
+  <ActionSheetItem mode="cancel">Отмена</ActionSheetItem>
+  ```
+</Playground>
 
 ### Кнопка "Отмена"
 
@@ -37,44 +62,46 @@
 
 Подробнее с использованием можно ознакомиться на странице [`ActionSheet`](/components/action-sheet#cancel-item).
 
-```jsx
-<ActionSheetItem mode="cancel" isCancelItem>
-  Отмена
-</ActionSheetItem>
-```
-
 ## Текстовые элементы
 
 Основной контент компонента (заголовок) можно задать, передав в свойство `children` необходимый текст:
 
-```jsx
-<ActionSheetItem>Скорость воспроизведения</ActionSheetItem>
-```
+<Playground>
+  ```jsx
+  <ActionSheetItem>Скорость воспроизведения</ActionSheetItem>
+  ```
+</Playground>
 
 Свойство `subtitle` позволяет отобразить дополнительный текст под заголовком:
 
-```jsx
-<ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
-```
+<Playground>
+  ```jsx
+  <ActionSheetItem subtitle="Обычная">Скорость воспроизведения</ActionSheetItem>
+  ```
+</Playground>
 
 Свойство `meta` даёт возможность отобразить небольшой пояснительный текст или индикатор рядом с заголовком:
 
-```jsx
-<ActionSheetItem meta={<Icon12Circle fill="var(--vkui--color_icon_negative)" />}>
-  Закрепить запись
-</ActionSheetItem>
-```
+<Playground>
+  ```jsx
+  <ActionSheetItem meta={<Icon12Circle fill="var(--vkui--color_icon_negative)" />}>
+    Закрепить запись
+  </ActionSheetItem>
+  ```
+</Playground>
 
 ### Многострочный режим
 
 По умолчанию большое количество текста обрезается и заменяется на многоточие, поддерживая однострочный режим отображения.
 Это поведение можно отключить (_для всех текстовых элементов_) с помощью свойства `multiline`:
 
-```jsx
-<ActionSheetItem multiline>
-  Очень длинный заголовок просто для примера, старайтесь избегать такого
-</ActionSheetItem>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ActionSheetItem multiline>
+    Очень длинный заголовок просто для примера, старайтесь избегать такого
+  </ActionSheetItem>
+  ```
+</Playground>
 
 ## Контент в начале/в конце
 
@@ -84,18 +111,19 @@
 
 В соответствии с рекомендациями дизайн-системы, для десктопного представления (`compact`-режим) следует
 использовать иконки размером `20px`, для мобильного представления (`regular`-режим) — `28px`.
-Проще всего это сделать, используя компонент `AdaptiveIconRenderer`.
+Проще всего это сделать, используя компонент [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer).
 
-```jsx
-import { Icon20WriteOutline, Icon28EditOutline } from '@vkontakte/icons';
-import { ActionSheetItem, AdaptiveIconRenderer } from '@vkontakte/vkui';
-
-<ActionSheetItem
-  before={<AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />}
->
-  Редактировать профиль
-</ActionSheetItem>;
-```
+<Playground>
+  ```jsx
+  <ActionSheetItem
+    before={
+      <AdaptiveIconRenderer IconCompact={Icon20WriteOutline} IconRegular={Icon28EditOutline} />
+    }
+  >
+    Редактировать профиль
+  </ActionSheetItem>
+  ```
+</Playground>
 
 ## Состояния
 
@@ -103,11 +131,13 @@ import { ActionSheetItem, AdaptiveIconRenderer } from '@vkontakte/vkui';
 
 Свойство позволяет отключить возможность взаимодействия с пунктом меню.
 
-```jsx
-<ActionSheetItem subtitle="Отсутствуют" disabled>
-  Субтитры
-</ActionSheetItem>
-```
+<Playground>
+  ```jsx
+  <ActionSheetItem subtitle="Отсутствуют" disabled>
+    Субтитры
+  </ActionSheetItem>
+  ```
+</Playground>
 
 ### `selectable`
 
@@ -119,6 +149,8 @@ import { ActionSheetItem, AdaptiveIconRenderer } from '@vkontakte/vkui';
 - `defaultChecked` — установить выбранным по умолчанию;
 - `checked` и [`onChange`](#onchange) — для контролируемого извне использования выбранного значения;
 
+<Playground direction="column">
+
 ```jsx
 const [filter, setFilter] = useState('Нормальная');
 
@@ -127,38 +159,38 @@ const onChange = (e) => {
   setFilter(e.target.value);
 };
 
-<ActionSheet title="Изменить скорость видео" onClose={onClose} toggleRef={selectableTargetRef}>
-  {['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x', '3x'].map((speed) => (
-    <ActionSheetItem
-      onChange={onChange}
-      checked={filter === speed}
-      name="filter"
-      value={speed}
-      selectable
-    >
-      {speed}
-    </ActionSheetItem>
-  ))}
-</ActionSheet>;
+return ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x', '3x'].map((speed) => (
+  <ActionSheetItem
+    key={speed}
+    onChange={onChange}
+    checked={filter === speed}
+    name="filter"
+    value={speed}
+    selectable
+  >
+    {speed}
+  </ActionSheetItem>
+));
 ```
+
+</Playground>
 
 Дополнительно через свойство `iconChecked` есть возможность изменить иконки радиокнопки, которая рисуется по умолчанию.
 
-```jsx
-import { Icon20CheckBoxOn, Icon24CheckBoxOn } from '@vkontakte/icons';
-import { ActionSheetItem, AdaptiveIconRenderer } from '@vkontakte/vkui';
-
-<ActionSheetItem
-  checked
-  selectable
-  iconChecked={
-    // квадратные иконки выбора
-    <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOn} IconRegular={Icon24CheckBoxOn} />
-  }
->
-  {speed}
-</ActionSheetItem>;
-```
+<Playground>
+  ```jsx
+  <ActionSheetItem
+    defaultChecked
+    selectable
+    iconChecked={
+      // квадратные иконки выбора
+      <AdaptiveIconRenderer IconCompact={Icon20CheckBoxOn} IconRegular={Icon24CheckBoxOn} />
+    }
+  >
+    0.75x
+  </ActionSheetItem>
+  ```
+</Playground>
 
 ## Обработчики событий
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Footer, Head, Layout, LogoIcon, LogoIconUwu, Navbar } from '@vkontakte/vkui-docs-theme';
 import type { Metadata } from 'next';
 import { getPageMap } from 'nextra/page-map';
+import { PlaygroundStoreProvider } from '@/providers/playgroundStoreProvider';
 import uwuCode from '../uwu.js?raw';
 import { FooterLinks, Versions } from './_components';
 import '@vkontakte/vkui-docs-theme/styles.css';
@@ -50,7 +51,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children })
           }}
         />
         <Layout pageMap={pageMap} navbar={navbar} versions={versions} footer={footer}>
-          {children}
+          <PlaygroundStoreProvider>{children}</PlaygroundStoreProvider>
         </Layout>
       </body>
     </html>

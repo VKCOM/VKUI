@@ -8,6 +8,38 @@
 
 </Overview>
 
+<Playground>
+
+```jsx
+const [snackbar, setSnackbar] = React.useState(null);
+
+const showSnackbar = () => {
+  if (snackbar) return;
+  setSnackbar(
+    <Snackbar
+      onClose={() => setSnackbar(null)}
+      action="Поделиться"
+      before={
+        <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
+          <Icon16Done fill="#fff" width={14} height={14} />
+        </Avatar>
+      }
+    >
+      Ссылка скопирована
+    </Snackbar>,
+  );
+};
+
+return (
+  <>
+    <Button onClick={showSnackbar}>Показать уведомление</Button>
+    {snackbar}
+  </>
+);
+```
+
+</Playground>
+
 ## Обязательные свойства
 
 ### `onClose`
@@ -40,6 +72,23 @@
 
 - кнопки `Button` размером `size="s"`;
 - иконки размером `24px`.
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Snackbar.Basic
+    before={<Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)" />}
+    after={
+      <Button mode="link" appearance="accent" size="s">
+        Поделиться
+      </Button>
+    }
+  >
+    Ссылка скопирована
+  </Snackbar.Basic>
+  ```
+</Playground>
 
 ## Стили отображения
 
@@ -86,16 +135,18 @@
 > Свойство `action` не может использоваться одновременно со свойством [`subtitle`](#text).
 
 ```jsx
-<Snackbar action="Перейти в раздел «Понравилось»">Ссылка сохранена в закладки</Snackbar>
+<Snackbar action="Перейти в раздел «Понравилось»" onActionClick={() => alert('Ты - молодец!')}>
+  Ссылка сохранена в закладки
+</Snackbar>
 ```
 
 Задать вариант расположения кнопки действия можно с помощью свойства `layout`:
 
-- `vertical` — кнопка располагается справа от основного текста;
-- `horizontal` — кнопка располагается под основным текстом.
+- `"vertical"` — кнопка располагается справа от основного текста;
+- `"horizontal"` — кнопка располагается под основным текстом.
 
 По умолчанию на устройствах с шириной больше или равно `ViewWidth.SMALL_TABLET` или при наличии свойства `after`
-значение будет равно `vertical`, в остальных случаях — `horizontal`.
+значение будет равно `"vertical"`, в остальных случаях — `"horizontal"`.
 
 Обработать нажатие на кнопку действия можно с помощью свойства `onActionClick`.
 
@@ -104,15 +155,17 @@
 Если вам нужен только визуальный компонент без позиционирования и логики смахивания, то используйте `Snackbar.Basic`.
 Он будет полезен, если вы используете стороннюю систему уведомлений.
 
-```jsx
-<Snackbar.Basic
-  before={<Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)" />}
-  after={
-    <Button mode="link" appearance="accent" size="s">
-      Поделиться
-    </Button>
-  }
->
-  Ссылка скопирована
-</Snackbar.Basic>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Snackbar.Basic
+    before={<Icon28CheckCircleOutline fill="var(--vkui--color_icon_positive)" />}
+    after={
+      <Button mode="link" appearance="accent" size="s">
+        Поделиться
+      </Button>
+    }
+  >
+    Ссылка скопирована
+  </Snackbar.Basic>
+  ```
+</Playground>

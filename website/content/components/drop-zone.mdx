@@ -6,23 +6,28 @@
 
 </Overview>
 
+<Playground>
+
 ```jsx
-const dragOverHandler = (event) => {
-  event.preventDefault();
-};
-
-const dropHandler = (event) => {
-  event.preventDefault();
-
-  console.table(event.dataTransfer.files);
-};
-
 <DropZone.Grid>
-  <DropZone onDragOver={dragOverHandler} onDrop={dropHandler}>
-    <Placeholder>Перенесите файл сюда для быстрой отправки.</Placeholder>
+  <DropZone
+    onDragOver={(event) => {
+      event.preventDefault();
+    }}
+    onDrop={(event) => {
+      event.preventDefault();
+
+      const files = event.dataTransfer.files;
+      const fileNames = Array.from(files).map((file) => file.name);
+      alert(`Файлы: \n${fileNames.join('\n')}`);
+    }}
+  >
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
   </DropZone>
-</DropZone.Grid>;
+</DropZone.Grid>
 ```
+
+</Playground>
 
 ## Структура
 
@@ -30,13 +35,43 @@ const dropHandler = (event) => {
 Можно выбрать направление расположения в строку или столбец с помощью свойства `direction`.
 При расположении в столбец первый компонент `DropZone` растягивается на всю доступную ширину.
 
+<Playground>
+
+```jsx
+<DropZone.Grid direction="row">
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+</DropZone.Grid>
+```
+
+</Playground>
+
 ## Функция-рендер
 
 Для более гибкой настройки внешнего вида можно использовать функцию-рендер, которая даёт доступ к свойству `active`,
 позволяющему определить, находится ли файл над специальной областью:
 
+<Playground>
+
 ```jsx
-<DropZone>
+<DropZone
+  onDragOver={(event) => {
+    event.preventDefault();
+  }}
+  onDrop={(event) => {
+    event.preventDefault();
+  }}
+>
   {({ active }) => (
     <Placeholder
       icon={<Icon56CameraOutline fill={active ? 'var(--vkui--color_icon_accent)' : undefined} />}
@@ -47,3 +82,5 @@ const dropHandler = (event) => {
   )}
 </DropZone>
 ```
+
+</Playground>

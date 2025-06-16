@@ -3,15 +3,18 @@
 # SelectionControl
 
 Компонент, который представляет собой базовую обертку для переключателей (`checkbox`, `radio`, `switch`).
-Лежит в основе таких компонентов как `Radio`, `Checkbox` и `Switch`.
+Лежит в основе таких компонентов как [`Radio`](/components/radio), [`Checkbox`](/components/checkbox) и [`Switch`](/components/switch).
 
 </Overview>
 
-```jsx
-<SelectionControl>
-  <SelectionControl.Label>Элемент выбора</SelectionControl.Label>
-</SelectionControl>
-```
+<Playground>
+  ```jsx
+  <SelectionControl>
+    <Checkbox.Input />
+    <SelectionControl.Label>Согласен</SelectionControl.Label>
+  </SelectionControl>
+  ```
+</Playground>
 
 ## Применение компонента
 
@@ -35,8 +38,10 @@
 
 Переключатели и подкомпонент `SelectionControl.Label` можно располагать в любом порядке.
 
-```jsx
-<>
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ width: 270 }}>
+  ```jsx
   <SelectionControl>
     <Checkbox.Input />
     <SelectionControl.Label titleAfter={<Icon12Lock />}>Заголовок</SelectionControl.Label>
@@ -49,5 +54,5 @@
     <SelectionControl.Label description="Описание">Заголовок</SelectionControl.Label>
     <Switch />
   </SelectionControl>
-</>
-```
+  ```
+</Playground>

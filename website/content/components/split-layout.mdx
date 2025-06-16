@@ -2,19 +2,66 @@
 
 # SplitLayout
 
-Компонент-контейнер для реализации интерфейса с навигационными слоями и многоколоночной структурой. За реализацию колонки отвечает
-[`SplitCol`](#split-col).
+Компонент-контейнер для реализации интерфейса с навигационными слоями и многоколоночной структурой.
+За реализацию колонки отвечает `SplitCol`.
 
 <Callout>Компонент должен быть один на всё приложение.</Callout>
 
 Связанные страницы и компоненты:
 
 - [Навигация](/overview/navigation)
+- [`SplitCol`](#split-col)
 - [`View`](/components/view)
 - [`PanelHeader`](/components/panel-header)
 - [`useAdaptivityConditionalRender`](/components/use-adaptivity-conditional-render)
 
 </Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            height: 80,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          height: 'calc(100% - 24px)',
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
 
 ## Выравнивание
 
@@ -27,47 +74,38 @@
 
 Для реализации сквозной шапки между колонками используется свойство `header` с передачей в него компонента [`PanelHeader`](/components/panel-header).
 
-{/* TODO: для этого кода нужно превью, код должен быть скрыт по умолчанию */}
+<Playground Wrapper={FixedLayoutWrapper}>
 
 ```jsx
-import {
-  SplitLayout,
-  SplitCol,
-  Panel,
-  PanelHeader,
-  Group,
-  Div,
-  useAdaptivityConditionalRender,
-} from '@vkontakte/vkui';
+const platform = usePlatform();
+const hasHeader = platform !== 'vkcom';
+const { viewWidth } = useAdaptivityConditionalRender();
 
-export default function App() {
-  const { viewWidth } = useAdaptivityConditionalRender();
-
-  return (
-    <SplitLayout header={<PanelHeader delimiter="none" />} center>
-      {viewWidth.tabletPlus && (
-        <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
-          <Panel>
-            <PanelHeader />
-            <Group>
-              <Div>Колонка слева</Div>
-            </Group>
-          </Panel>
-        </SplitCol>
-      )}
-
-      <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
-        <Panel>
-          <PanelHeader>Шапка</PanelHeader>
+return (
+  <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+    {viewWidth.tabletPlus && (
+      <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
+        <Panel mode="card">
+          {hasHeader && <PanelHeader />}
           <Group>
-            <Div>Колонка справа</Div>
+            <Div>Колонка слева</Div>
           </Group>
         </Panel>
       </SplitCol>
-    </SplitLayout>
-  );
-}
+    )}
+    <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
+      <Panel mode="card">
+        <PanelHeader>Шапка</PanelHeader>
+        <Group mode="card">
+          <Div>Колонка справа</Div>
+        </Group>
+      </Panel>
+    </SplitCol>
+  </SplitLayout>
+);
 ```
+
+</Playground>
 
 <Callout>
 Для платформы `vkcom` шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).

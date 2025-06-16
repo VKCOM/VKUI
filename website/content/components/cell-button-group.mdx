@@ -2,7 +2,8 @@
 
 # CellButtonGroup
 
-Компонент для группировки [`CellButton`](/components/cell-button) с разделителями. Обеспечивает визуальное объединение связанных действий в списке.
+Компонент для группировки [`CellButton`](/components/cell-button) с разделителями.
+Обеспечивает визуальное объединение связанных действий в списке.
 
 Связанные компоненты:
 
@@ -10,74 +11,53 @@
 
 </Overview>
 
-```jsx
-<CellButtonGroup>
-  <CellButton appearance="negative">Пожаловаться</CellButton>
-  <CellButtonGroup.Separator />
-  <CellButton>Отмена</CellButton>
-</CellButtonGroup>
-```
+<Playground>
+  ```jsx
+  <CellButtonGroup>
+    <CellButton appearance="negative" centered onClick={() => {}}>
+      Пожаловаться
+    </CellButton>
+    <CellButtonGroup.Separator />
+    <CellButton centered onClick={() => {}}>
+      Отмена
+    </CellButton>
+  </CellButtonGroup>
+  ```
+</Playground>
 
-## Основные возможности
+## Особенности использования
 
-### Группировка кнопок
-
-Компонент обеспечивает следующие возможности:
-
-- автоматическое растяжение кнопок на всю ширину;
-- удаление стандартных отступов между элементами;
-- поддержка всех свойств HTML-элемента `<div>`.
-
-```jsx
-<CellButtonGroup>
-  <CellButton>Действие 1</CellButton>
-  <CellButtonGroup.Separator />
-  <CellButton>Действие 2</CellButton>
-</CellButtonGroup>
-```
-
-## Подкомпоненты
-
-### CellButtonGroup.Separator
-
-Разделитель между кнопками. Поддерживает все свойства [`Separator`](/components/separator), кроме:
-
-- `direction` (фиксированно `horizontal`);
-- `padding` (автоматически адаптирован).
-
-```jsx
-<CellButtonGroup>
-  <CellButton>Действие 1</CellButton>
-  <CellButtonGroup.Separator />
-  <CellButton>Действие 2</CellButton>
-</CellButtonGroup>
-```
-
-## Особенности
-
-### Автоматическое выравнивание
-
-Все кнопки растягиваются на всю ширину контейнера.
-
-### Гибкие разделители
-
-Разделители можно кастомизировать через пропсы:
-
-```jsx
-<CellButtonGroup.Separator style={{ backgroundColor: 'var(--accent)' }} />
-```
+- `CellButtonGroup` не управляет свойствами вложенных кнопок или групп кнопок.
+  Параметры, такие как размер, цвет или состояние кнопок, должны быть установлены на самих кнопках.
+- Автоматически растягивается на всю доступную ширину, а его дочерние элементы занимают равное пространство.
+- В качестве разделителя используйте подкомпонент [`CellButtonGroup.Separator`](#separator).
 
 ### Сочетание с другими компонентами
 
 Внутри группы можно использовать любые вариации `CellButton`:
 
-```jsx
-<CellButtonGroup>
-  <CellButton centered>Центрированная</CellButton>
-  <CellButtonGroup.Separator />
-  <CellButton before={<Icon24Add />}>С иконкой</CellButton>
-</CellButtonGroup>
-```
+<Playground>
+  ```jsx
+  <CellButtonGroup>
+    <CellButton appearance="negative" centered onClick={() => {}}>
+      Центрированная
+    </CellButton>
+    <CellButtonGroup.Separator />
+    <CellButton before={<Icon24Add />} centered onClick={() => {}}>
+      С иконкой
+    </CellButton>
+  </CellButtonGroup>
+  ```
+</Playground>
+
+## Подкомпоненты
+
+### CellButtonGroup.Separator [#separator]
+
+Разделитель между кнопками. Поддерживает все свойства [`Separator`](/components/separator), кроме:
+
+- `direction` (фиксированно `horizontal`);
+- `padding` (автоматически адаптирован).
 
 ## Ограничения
 
@@ -98,7 +78,7 @@
 
   ```jsx
   <Group header={<Header>Действия с профилем</Header>}>
-    <CellButtonGroup> {/* ...*/}</CellButtonGroup>
+    <CellButtonGroup>{/* ...*/}</CellButtonGroup>
   </Group>
   ```
 

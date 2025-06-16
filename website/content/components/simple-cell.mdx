@@ -7,17 +7,15 @@
 
 </Overview>
 
-## Базовое использование
+import { BlockWrapper } from '@/components/wrappers';
 
-```jsx
-<SimpleCell
-  before={<Avatar size={28} src={userAvatar} />}
-  after={<Icon24Chevron />}
-  subtitle="Должность"
->
-  Иван Иванов
-</SimpleCell>
-```
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 320 }}>
+  ```jsx
+  <SimpleCell before={<Avatar size={28} />} subtitle="Должность" onClick={() => {}}>
+    Иван Иванов
+  </SimpleCell>
+  ```
+</Playground>
 
 ## Дополнительные элементы
 
@@ -29,52 +27,53 @@
 - `badgeBeforeTitle`/`badgeAfterTitle`/`badgeBeforeSubtitle`/`badgeAfterSubtitle`: `12px` (иконки/индикаторы)
 - `after`: `24`-`28px` (иконки) или `<Switch />`
 
-```jsx
-<SimpleCell
-  badgeBeforeTitle={<Icon12Online />}
-  badgeAfterTitle={<Badge mode="prominent">New</Badge>}
-  indicator="15:30"
-  subtitle={
-    <>
-      <Icon12Message />
-      Последнее сообщение
-    </>
-  }
->
-  Чат с поддержкой
-</SimpleCell>
-```
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 320 }}>
+  ```jsx
+  <SimpleCell
+    badgeBeforeTitle={<Icon12OnlineMobile />}
+    badgeAfterTitle={<Badge>Есть новые</Badge>}
+    indicator="15:30"
+    subtitle="Последнее сообщение"
+    onClick={() => {}}
+  >
+    Чат с поддержкой
+  </SimpleCell>
+  ```
+</Playground>
 
 ### Многострочный текст
 
-Для того, чтобы длинный текст мог отображаться в несколько строк можно использовать свойство `multiline`.
-По умолчанию текст скрывается под многоточием.
+Для того, чтобы длинный текст мог отображаться в несколько строк, используйте свойство `multiline`.
+По умолчанию текст скрывается многоточием.
 
-```jsx
-<SimpleCell
-  overTitle="Переговорная"
-  subtitle="3 этаж"
-  extraSubtitle="Вместимость: 10 человек"
-  multiline
->
-  Конференц-зал «Солнечный»
-</SimpleCell>
-```
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 200 }}>
+  ```jsx
+  <SimpleCell
+    overTitle="Переговорная"
+    subtitle="3 этаж"
+    extraSubtitle="Вместимость: 10 человек"
+    multiline
+  >
+    Конференц-зал «Солнечный»
+  </SimpleCell>
+  <SimpleCell overTitle="Переговорная" subtitle="3 этаж" extraSubtitle="Вместимость: 10 человек">
+    Конференц-зал «Солнечный»
+  </SimpleCell>
+  ```
+</Playground>
 
 ## Визуальные настройки
 
 ### Шеврон
 
 Для управления видимостью иконки шеврона `›` можно использовать свойство `chevron`.
-Для управления размерами иконки - свойством `chevronSize`
+Для управления размерами иконки - свойством `chevronSize`.
+По умолчанию шеврон отображается только при заданном свойстве `chevron="auto"` только на `iOS`,
+для отображения шеврона на всех платформах используйте `chevron="always"`.
 
 ```jsx
-<Group>
-  // Автоматическое отображение только на iOS
-  <SimpleCell chevron="auto" />
-  // Принудительное отображение
-  <SimpleCell chevron="always" chevronSize="m" />
-</Group>
+<SimpleCell chevron="auto" /> // По умолчанию отображение только на iOS
+<SimpleCell chevron="always" chevronSize="m" /> // Принудительное отображение
 ```
 
 ## Состояния
@@ -83,8 +82,10 @@
 
 Задается свойством `disabled`:
 
-```jsx
-<SimpleCell disabled subtitle="Недоступно для редактирования">
-  Заблокированный элемент
-</SimpleCell>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SimpleCell disabled subtitle="Недоступно для взаимодействия">
+    Заблокированный элемент
+  </SimpleCell>
+  ```
+</Playground>

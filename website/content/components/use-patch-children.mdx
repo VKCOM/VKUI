@@ -2,7 +2,7 @@
 
 # usePatchChildren
 
-Хук для модификации дочерних элементов с возможностью получения ссылки на `DOM`-узел и инъекции дополнительных пропсов.
+Хук для модификации дочерних элементов с возможностью получения ссылки на `DOM`-узел и инъекции дополнительных свойств.
 
 </Overview>
 
@@ -23,31 +23,15 @@
 
 ## Примеры использования
 
-### Базовый сценарий (без внешнего ref)
-
-```jsx
-const Component = ({ children }) => {
-  const [childRef, patchedChild] = usePatchChildren(children);
-
-  React.useEffect(() => {
-    if (childRef.current) {
-      console.log('DOM node:', childRef.current);
-    }
-  }, []);
-
-  return <div>{patchedChild}</div>;
-};
-```
-
 ### Интеграция с внешним ref
 
 ```jsx
 const SmartWrapper = ({ children }) => {
-  const internalRef = useRef < HTMLDivElement > null;
+  const internalRef = React.useRef(null);
   const [, patchedChild] = usePatchChildren(
     children,
-    { 'data-wrapper': 'true' }, // Инжект пропсов
-    internalRef, // Синхронизация рефов
+    { 'data-wrapper': 'true' }, // Дополнительные свойства для children
+    internalRef, // Ссылка на DOM-элемент children сохраняется в internalRef
   );
 
   // Использование общего ref
@@ -73,8 +57,8 @@ const FocusableContainer = ({ children }) => {
 
 ## Особенности
 
-- Работает только с элементами, принимающими стандартные `DOM`-пропсы.
-- Автоматически мержит переданные `injectProps` с существующими пропсами элемента.
+- Работает только с элементами, принимающими стандартные `DOM`-свойства.
+- Автоматически мержит переданные `injectProps` с существующими свойствами элемента.
 - Гарантирует сохранение оригинальной функциональности `ref`.
 
 ## Рекомендации
@@ -84,7 +68,7 @@ const FocusableContainer = ({ children }) => {
 - получения доступа к `DOM`-узлам в композитных компонентах;
 - добавления кастомных обработчиков событий;
 - динамической модификации стилей дочерних элементов;
-- интеграции с библиотеками, требующими `DOM`-референсы.
+- интеграции с библиотеками, требующими `DOM`-ссылок.
 
 Избегайте:
 

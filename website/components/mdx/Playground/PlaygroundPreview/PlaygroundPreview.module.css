@@ -33,6 +33,10 @@
   color: var(--vkui--color_accent_red);
 }
 
+.wrapper {
+  inline-size: 100%;
+}
+
 .appRoot {
   inline-size: 100%;
   max-inline-size: inherit;

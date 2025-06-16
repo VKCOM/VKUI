@@ -7,20 +7,15 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
 ## Адаптивные размеры
 
 Используйте предопределённые размеры (`16`-`96px`) или пользовательские значения:
-
-```jsx
-<div style={{ width: 70 }}>
-  <Image
-    keepAspectRatio
-    src={getAvatarUrl('app_shorm_online')}
-    widthSize="100%"
-    alt="Адаптивное изображение"
-  />
-</div>
-```
 
 **Особенности `keepAspectRatio`:**
 
@@ -33,20 +28,23 @@
 
 ### Единое скругление
 
-```jsx
-<Image borderRadius="m" src={getAvatarUrl('app_shorm_online')} alt="Скруглённое" />
-```
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} borderRadius="m" />
+  ```
+</Playground>
 
 ### Индивидуальные углы
 
-```jsx
-<Image
-  borderStartStartRadius="l"
-  borderEndEndRadius="l"
-  src={getAvatarUrl('app_shorm_online')}
-  alt="Кастомные скругления"
-/>
-```
+<Playground>
+  ```jsx
+  <Image
+    fallbackIcon={<Icon3218CircleOutline />}
+    borderStartStartRadius="l"
+    borderEndEndRadius="l"
+  />
+  ```
+</Playground>
 
 ## Дополнительные элементы
 
@@ -56,34 +54,40 @@
 
 Индикатор в правом нижнем углу компонента:
 
-```jsx
-<Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение">
-  <Image.Badge background="stroke">
-    <Icon20GiftCircleFillRed />
-  </Image.Badge>
-</Image>
-```
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} borderStartStartRadius="l" borderEndEndRadius="l">
+    <Image.Badge background="stroke">
+      <Icon20PrivacyCircleFillRed />
+    </Image.Badge>
+  </Image>
+  ```
+</Playground>
 
 ### Наложение
 
 Перекрывающий картинку элемент задаётся через `Image.Overlay`:
 
-```jsx
-<Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение">
-  <Image.Overlay theme="dark" visibility="on-hover">
-    <Icon24AddOutline />
-  </Image.Overlay>
-</Image>
-```
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />}>
+    <Image.Overlay theme="dark" visibility="always">
+      <Icon24AddOutline />
+    </Image.Overlay>
+  </Image>
+  ```
+</Playground>
 
 ### Позиционированный компонент
 
 Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `Image.FloatElement`:
 
-```jsx
-<Image size={96} src={getAvatarUrl('app_shorm_online')} alt="Приложение">
-  <Image.FloatElement placement="top-end" inlineIndent="l" blockIndent="l">
-    <Button mode="primary" after={<Icon16MoreHorizontal />} />
-  </Image.FloatElement>
-</Image>
-```
+<Playground>
+  ```jsx
+  <Image size={96} fallbackIcon={<Icon3218CircleOutline />}>
+    <Image.FloatElement placement="top-end" inlineIndent="l" blockIndent="l">
+      <Button size="s" mode="primary" after={<Icon16MoreHorizontal />} />
+    </Image.FloatElement>
+  </Image>
+  ```
+</Playground>

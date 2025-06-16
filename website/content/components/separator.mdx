@@ -11,28 +11,35 @@
 
 ### Горизонтальный разделитель
 
-```jsx
-<Group header={<Header size="s">direction="horizontal"</Header>}>
-  <Cell before={<Icon28Notifications />}>Уведомления</Cell>
-  <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
+import { BlockWrapper } from '@/components/wrappers';
 
-  <Separator size="4xl" />
-
-  <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
-  <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
-</Group>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Separator />
+  ```
+</Playground>
 
 ### Вертикальный разделитель
 
 Для использования вертикального разделителя необходимо _обязательно_ обернуть в `flex`-контейнер
 
+<Playground>
+  ```jsx
+  <Link href="#news">Новости</Link>
+  <Separator direction="vertical" size="xl" />
+  <Link href="#calls">Звонки</Link>
+  <Separator direction="vertical" size="xl" />
+  <Link href="#friends">Друзья</Link>
+  ```
+</Playground>
+
+## Отступы
+
+Если помимо самого разделителя вам необходимы отступы вокруг него, то используйте свойство `size`,
+оно принимает значения дизайн-системы (например, `"s"`, `"m"`, `"l"`), числовые значения и `css`-переменные.
+
 ```jsx
-<Flex margin="auto">
-  <Link>Новости</Link>
-  <Separator direction="vertical" size="xl" />
-  <Link>Звонки</Link>
-  <Separator direction="vertical" size="xl" />
-  <Link>Друзья</Link>
-</Flex>
+<Separator size="xs" /> // 4px
+<Separator size={32} /> // 32px
+<Separator size="var(--custom-spacing)" /> // Кастомная CSS-переменная
 ```

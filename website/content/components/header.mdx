@@ -3,15 +3,23 @@
 # Header
 
 Компонент для создания заголовков контентных блоков.
-Чаще всего используется внутри [`Group`](/components/group) для оформления секций страницы.
+Чаще всего используется внутри `Group` для оформления секций страницы.
 
 Связанные компоненты:
 
-- Group
+- [`Group`](/components/group)
 
 </Overview>
 
-## Реомендуемые размеры иконок
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Indicator>} after={<Switch />}>Уведомления</Header>
+  ```
+</Playground>
+
+## Рекомендуемые размеры иконок
 
 | Свойство         | Расположение            | Рекомендуемый размер |
 | ---------------- | ----------------------- | -------------------- |
@@ -25,12 +33,46 @@
 
 - `indicator` — отображает счётчик/статус:
 
-```jsx
-<Header indicator={<Indicator mode="prominent">12</Indicator>}>Уведомления</Header>
-```
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Badge>}>Уведомления</Header>
+  ```
 
 - `after` — контент справа от всего заголовка:
 
-```jsx
-<Header after={<Switch />}>Настройки</Header>
-```
+  ```jsx
+  <Header after={<Switch />}>Настройки</Header>
+  ```
+
+## Пример использования
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group
+    mode="card"
+    separator="hide"
+    header={
+      <Header
+        before={<Icon28UserCircleFillBlue />}
+        beforeTitle={<Icon16LockOutline />}
+        afterTitle={<Icon16UnlockOutline />}
+        beforeSubtitle={<Icon12Tag />}
+        afterSubtitle={<Icon12Fire />}
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        indicator={
+          <Counter size="s" mode="primary" appearance="accent-red">
+            3
+          </Counter>
+        }
+        after={<Link href="#">Показать все</Link>}
+      >
+        Плейлисты
+      </Header>
+    }
+  >
+    <Div>
+      <Text>Контент</Text>
+    </Div>
+  </Group>
+  ```
+</Playground>

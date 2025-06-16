@@ -7,11 +7,17 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <Footer>Copyright © vk.com</Footer>
+  ```
+</Playground>
+
 ## Доступность (a11y)
 
 ### Семантическая роль
 
-По умолчанию использует HTML-тег `<footer>` с ролью `contentinfo`.
+По умолчанию использует HTML-тег `<footer>`, дополнительно задаётся роль `role="contentinfo"` ([для поддержки Safari\<=13](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer#accessibility)).
 
 Предназначен для:
 
@@ -30,34 +36,40 @@
 
 ### Контекст использования
 
-```jsx
-// ✅ Правильно: внутри секционного контента
-<Group> // ← Тег <section>
-<Content>
-<Footer>Копирайт 2024</Footer>
-</Group>
+В данном примере первый `Footer` "локальный", потому что находится внутри секционного контента (компонент `Group`)
+и содержит мета-информацию, а второй `Footer` - глобальный, потому что относится ко всей странице.
 
-// ❌ Опасный пример: глобальный подвал
-<Panel>
-<Content>
-<Footer>Контакты</Footer> // ← Может считаться глобальным
-</Panel>
-```
+<Playground>
+  ```jsx
+  <Panel mode="plain">
+    <Group header={<Header size="s">Статьи</Header>}>
+      <SimpleCell onClick={() => {}}>
+        Связь между употреблением шоколада и получением Нобелевской премии
+      </SimpleCell>
+      <SimpleCell onClick={() => {}}>Кошка как нелинейный элемент в квантовой системе</SimpleCell>
+      <SimpleCell onClick={() => {}}>Алгоритм оптимального поедания пиццы</SimpleCell>
+      <Footer>Теги: наука, исследования</Footer>
+    </Group>
+    <Footer>
+      <Link href="#about">О нас</Link> | <Link href="#contact">Контакты</Link>
+    </Footer>
+  </Panel>
+  ```
+</Playground>
 
 ### Множество Footer
 
 Несколько подвалов без контекста скринридеры воспринимают как дубли, чтобы этого избежать,
-добавляйте `aria-label` каждому компоненту.
+добавляйте `aria-label` каждому компоненту:
 
 ```jsx
-// Добавляем явные метки
 <Footer aria-label="Навигация">
-<Link>О нас</Link>
-<Link>Контакты</Link>
+  <Link href="#about">О нас</Link>
+  <Link href="#contacts">Контакты</Link>
 </Footer>
 
 <Footer aria-label="Юридическая информация">
-<Text>© 2024 Компания</Text>
+  <Text>© 2025 Компания</Text>
 </Footer>
 ```
 
@@ -71,7 +83,5 @@
 
 ```jsx
 // Декоративный раздел
-<Footer Component="div" className="custom-style">
-  <RatingStars value={4} />
-</Footer>
+<Footer Component="div">Информация на данной странице является конфиденциальной.</Footer>
 ```

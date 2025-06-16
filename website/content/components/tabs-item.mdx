@@ -2,19 +2,42 @@
 
 # TabsItem
 
-Элемент вкладки для использования внутри компонента [`Tabs`](/components/tabs).
+Элемент вкладки для использования внутри компонента `Tabs`.
 Автоматически наследует режим отображения (`mode`) от родительского компонента `Tabs`.
 
 Связанные компоненты:
 
-- Tabs
+- [`Tabs`](/components/tabs)
 
 </Overview>
 
-## Основные свойства
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem>Фото</TabsItem>
+  ```
+</Playground>
 
-- `selected` — отмечает текущую активную вкладку;
-- `disabled` — блокирует взаимодействие с вкладкой.
+## Состояния
+
+### `selected`
+
+Свойство `selected` помечает вкладку выбранной.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem selected>Фото</TabsItem>
+  ```
+</Playground>
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem disabled>Фото</TabsItem>
+  ```
+</Playground>
 
 ## Дополнительный контент
 
@@ -27,16 +50,38 @@
   - Для других режимов (`accent`, `secondary`) — иконки `20px`.
 - `after` — иконка после текста (например, `<Icon16Dropdown />`).
 
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem before={<Icon24BugOutline />} after={<Icon16Dropdown />}>
+    Фото
+  </TabsItem>
+  ```
+</Playground>
+
 ### Статус
 
-`status` — добавляет элемент для отображения состояния:
+Свойство `status` — добавляет элемент для отображения состояния:
 
-- `React.ReactElement` — компонент `Badge` (с `mode="prominent"`) или `Counter` (с `mode="prominent" size="s"`).
+- `React.ReactElement` — компонент `Badge` или `Counter` (с `size="s"`).
 - `number` — отображает текстовый блок с числом.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem
+    status={
+      <Counter mode="primary" appearance="accent-red" size="s">
+        12
+      </Counter>
+    }
+  >
+    Фото
+  </TabsItem>
+  ```
+</Playground>
 
 ## Состояния взаимодействия
 
-Компонент поддерживает все стандартные состояния из `Tappable`:
+Компонент поддерживает все стандартные состояния из [`Tappable`](/components/tappable):
 
 - `hoverMode` — стиль при наведении;
 - `activeMode` — стиль при активации;
@@ -48,22 +93,4 @@
 2. Для корректной работы доступности (a11y) необходимо:
 
    - Указать `id` для вкладки
-   - Связать с контентом через `aria-controls` (см. документацию `Tabs`)
-
-   Пример:
-
-   ```jsx
-   <Tabs>
-     <TabsItem
-       before={<Icon24Picture />}
-       status={
-         <Counter mode="prominent" size="s">
-           3
-         </Counter>
-       }
-       selected
-     >
-       Фото
-     </TabsItem>
-   </Tabs>
-   ```
+   - Связать с контентом через `aria-controls` (см. документацию [`Tabs`](/components/tabs))

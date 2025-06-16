@@ -11,15 +11,20 @@
 >
 > `undefined` ипользуется только для неконтролируемого компонента.
 
-```jsx
-<CustomSelect
-  options={[
-    { value: 0, label: 'Москва' },
-    { value: 1, label: 'Санкт-Петербург' },
-    { value: 2, label: 'Новосибирск' },
-  ]}
-/>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CustomSelect
+    options={[
+      { value: 0, label: 'Москва' },
+      { value: 1, label: 'Санкт-Петербург' },
+      { value: 2, label: 'Новосибирск' },
+      { value: 3, label: 'Йошкар-Ола' },
+    ]}
+    placeholder="Выберите город"
+    allowClearButton
+  />
+  ```
+</Playground>
 
 ## Режим работы
 
@@ -55,23 +60,90 @@ const [color, setColor] = React.useState('red');
 <CustomSelect options={colors} value={color} onChange={(_, newColor) => setColor(newColor)} />;
 ```
 
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `CustomSelect` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
+  <CustomSelect
+    options={[{ value: 'green', label: 'Зеленый' }]}
+    defaultValue="green"
+    status="valid"
+  />
+  ```
+</Playground>
+
+## Кастомизация
+
+### Визуальное оформление
+
+С помощью свойства `renderOption` можно влиять на отображение конкретного элемента выпадающего списка.
+Вы можете изменить стандартный компонент [`CustomSelectOption`](#customselectoption) или использовать свой компонент.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CustomSelect
+    options={[
+      { value: 0, label: 'Москва', country: 'Россия' },
+      { value: 1, label: 'Санкт-Петербург', country: 'Россия' },
+      { value: 2, label: 'Новосибирск', country: 'Россия' },
+      { value: 3, label: 'Йошкар-Ола', country: 'Россия' },
+    ]}
+    placeholder="Выберите город"
+    allowClearButton
+    renderOption={({ option, ...restProps }) => (
+      <CustomSelectOption {...restProps} description={option.country} />
+    )}
+  />
+  ```
+</Playground>
+
 ## CustomSelectOption
 
-```jsx
-<CustomSelectOption selected>Иван Иванов</CustomSelectOption>
-```
-
 Универсальный компонент для отрисовки одного из значений в выпадающем списке.
+Передавайте данный компонент в свойство `renderOption`, для кастомизации значений выпадающего списка.
 Помимо `CustomSelect` используется и в `ChipsSelect`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CustomSelectOption before={<Avatar initials="ИИ" size={20} aria-hidden />} after={<Icon16Pin />}>
+    Иван Иванов
+  </CustomSelectOption>
+  ```
+</Playground>
 
 ### Вложенные CustomSelectOption
 
 Для реализации многоуровневых `CustomSelectOption` используйте свойство `hierarchy`,
 которое позволяет создать нужный отступ в зависимости от уровня вложенности.
 
-```jsx
-<CustomSelectOption hierarchy={3}>Файл 1</CustomSelectOption>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CustomSelectOption>Диск</CustomSelectOption>
+  <CustomSelectOption hierarchy={1}>Папка</CustomSelectOption>
+  <CustomSelectOption hierarchy={2}>Файл 1</CustomSelectOption>
+  <CustomSelectOption hierarchy={2} selected>
+    Файл 2
+  </CustomSelectOption>
+  ```
+</Playground>
 
 ## Тестирование (e2e) [#e2e]
 

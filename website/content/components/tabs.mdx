@@ -7,9 +7,22 @@
 
 Связанные компоненты:
 
-- TabsItem
+- [`TabsItem`](/components/tabs-item)
 
 </Overview>
+
+<Playground>
+  ```jsx
+  <Tabs defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24ThumbsUpOutline />} id="recommendations">
+      Рекомендации
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  ```
+</Playground>
 
 ## Режимы отображения
 
@@ -18,6 +31,35 @@
 - `default` — стандартное отображение вкладок;
 - `accent` — акцентный вариант, выделяет активную вкладку;
 - `secondary` — более сдержанный стиль для второстепенных разделов.
+
+<Playground direction="column">
+  ```jsx
+  <Tabs defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24UsersOutline />} id="friends">
+      Друзья
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  <Tabs mode="accent" defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24UsersOutline />} id="friends">
+      Друзья
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  <Tabs mode="secondary" defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24UsersOutline />} id="friends">
+      Друзья
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  ```
+</Playground>
 
 ## Распределение вкладок
 
@@ -48,62 +90,10 @@
 Управлять активной вкладкой можно вручную задавая `selected` у необходимой вкладки:
 
 ```jsx
-const Example = () => {
-  const [selected, setSelected] = React.useState('news');
-
-  return (
-    <Group>
-      <Tabs withScrollToSelectedTab scrollBehaviorToSelectedTab="center">
-        <HorizontalScroll arrowSize="m">
-          <TabsItem selected={selected === 'groups'} onClick={() => setSelected('groups')}>
-            Сообщества
-          </TabsItem>
-          <TabsItem
-            before={<Icon24NewsfeedOutline />}
-            after={<Icon16Dropdown />}
-            selected={selected === 'news'}
-            onClick={() => setSelected('news')}
-          >
-            Лента
-          </TabsItem>
-          <TabsItem
-            before={<Icon24ThumbsUpOutline />}
-            status={<Badge mode="prominent">Есть новые</Badge>}
-            after={<Icon16Dropdown />}
-            selected={selected === 'recommendations'}
-            onClick={() => setSelected('recommendations')}
-          >
-            Рекомендации
-          </TabsItem>
-          <TabsItem
-            before={<Icon24UsersOutline />}
-            status={
-              <Counter mode="primary" appearance="accent-red" size="s">
-                3
-              </Counter>
-            }
-            after={<Icon16Dropdown />}
-            selected={selected === 'friends'}
-            onClick={() => setSelected('friends')}
-          >
-            Друзья
-          </TabsItem>
-          <TabsItem
-            before={<Icon24PictureOutline />}
-            status={23}
-            after={<Icon16Dropdown />}
-            selected={selected === 'photos'}
-            onClick={() => setSelected('photos')}
-          >
-            Фотографии
-          </TabsItem>
-        </HorizontalScroll>
-      </Tabs>
-    </Group>
-  );
-};
-
-<Example />;
+<Tabs>
+  <TabsItem>Рекомендации</TabsItem>
+  <TabsItem selected>Лента</TabsItem>
+</Tabs>
 ```
 
 ### Использование `selectedId`/`defaultSelectedId` у `Tabs`
@@ -112,55 +102,22 @@ const Example = () => {
 Для того, чтобы этот подход работал, нужно, чтобы у каждой вкладки `TabsItem` был выставлено свойство `id`:
 
 ```jsx
-const Example = () => {
-  const [selected, setSelected] = React.useState('news');
-
-  return (
-    <Group>
-      <Tabs withScrollToSelectedTab scrollBehaviorToSelectedTab="center">
-        <HorizontalScroll arrowSize="m">
-          <TabsItem id="groups">Сообщества</TabsItem>
-          <TabsItem id="news" before={<Icon24NewsfeedOutline />} after={<Icon16Dropdown />}>
-            Лента
-          </TabsItem>
-          <TabsItem
-            id="recommendations"
-            before={<Icon24ThumbsUpOutline />}
-            status={<Badge mode="prominent">Есть новые</Badge>}
-            after={<Icon16Dropdown />}
-          >
-            Рекомендации
-          </TabsItem>
-          <TabsItem
-            id="friends"
-            before={<Icon24UsersOutline />}
-            status={
-              <Counter mode="primary" appearance="accent-red" size="s">
-                3
-              </Counter>
-            }
-            after={<Icon16Dropdown />}
-          >
-            Друзья
-          </TabsItem>
-          <TabsItem
-            id="photos"
-            before={<Icon24PictureOutline />}
-            status={23}
-            after={<Icon16Dropdown />}
-          >
-            Фотографии
-          </TabsItem>
-        </HorizontalScroll>
-      </Tabs>
-    </Group>
-  );
-};
-
-<Example />;
+<Tabs defaultSelectedId="news">
+  <TabsItem id="recommendations">Рекомендации</TabsItem>
+  <TabsItem id="news">Лента</TabsItem>
+</Tabs>
 ```
 
-## Доступность (a11y)
+```jsx
+const [selected, setSelected] = React.useState('news');
+
+<Tabs selectedId={selected} onSelectedIdChange={setSelected}>
+  <TabsItem id="recommendations">Рекомендации</TabsItem>
+  <TabsItem id="news">Лента</TabsItem>
+</Tabs>;
+```
+
+## Доступность (a11y) [#a11y]
 
 Для корректной работы со скринридерами необходимо:
 

@@ -7,19 +7,29 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="full">
+    ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с
+    безграничными возможностями и миллионами пользователей.
+  </MiniInfoCell>
+  ```
+</Playground>
+
 ## Основные свойства
 
-```jsx
-<MiniInfoCell
-  before={<Icon20ArticleOutline />}
-  after={<Avatar size={24} src={userAvatar} />}
-  mode="accent"
-  textWrap="short"
-  chevron
->
-  Место работы: Команда ВКонтакте
-</MiniInfoCell>
-```
+<Playground>
+  ```jsx
+  <MiniInfoCell
+    before={<Icon20ArticleOutline />}
+    after={<Avatar size={24} initials="СД" />}
+    mode="accent"
+    textWrap="short"
+  >
+    Место работы: Команда ВКонтакте
+  </MiniInfoCell>
+  ```
+</Playground>
 
 ## Структура элемента
 
@@ -42,41 +52,47 @@
 
 Стандартный стиль для информации:
 
-```jsx
-<MiniInfoCell before={<Icon20GlobeOutline />}>
-  <Link href="https://vk.com/team">vk.com/team</Link>
-</MiniInfoCell>
-```
+<Playground>
+  ```jsx
+  <MiniInfoCell before={<Icon20GlobeOutline />}>vk.com/team</MiniInfoCell>
+  ```
+</Playground>
 
 ### `mode="accent"`
 
 Акцентное выделение:
 
-```jsx
-<MiniInfoCell mode="accent" before={<Icon20WorkOutline />} after={<Avatar size={24} />}>
-  Место работы: Команда ВКонтакте
-</MiniInfoCell>
-```
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="accent" before={<Icon20WorkOutline />}>
+    Место работы: Команда ВКонтакте
+  </MiniInfoCell>
+  ```
+</Playground>
 
 ### `mode="add"`
 
 Призыв к действию:
 
-```jsx
-<MiniInfoCell mode="add" before={<Icon20EducationOutline />} onClick={handleAddEducation} chevron>
-  Укажите место учёбы
-</MiniInfoCell>
-```
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="add" before={<Icon20EducationOutline />} onClick={() => {}} chevron>
+    Укажите место учёбы
+  </MiniInfoCell>
+  ```
+</Playground>
 
 ### `mode="more"`
 
 Индикатор дополнительной информации:
 
-```jsx
-<MiniInfoCell mode="more" before={<Icon20InfoOutline />} onClick={showDetails} chevron>
-  Подробная информация
-</MiniInfoCell>
-```
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="more" before={<Icon20InfoCircleOutline />} onClick={() => {}} chevron>
+    Подробная информация
+  </MiniInfoCell>
+  ```
+</Playground>
 
 ## Особенности
 
@@ -84,11 +100,13 @@
 
 Используйте для интерактивных элементов:
 
-```jsx
-<MiniInfoCell chevron onClick={handleClick} before={<Icon20SettingsOutline />}>
-  Настройки профиля
-</MiniInfoCell>
-```
+<Playground>
+  ```jsx
+  <MiniInfoCell chevron onClick={() => {}} before={<Icon20GearOutline />}>
+    Настройки профиля
+  </MiniInfoCell>
+  ```
+</Playground>
 
 ## Рекомендации
 
@@ -105,6 +123,6 @@
 
   ```jsx
   <MiniInfoCell Component="a" href="/settings">
-    ...
+    {/*...*/}
   </MiniInfoCell>
   ```

@@ -2,16 +2,18 @@
 
 # Tooltip
 
-Небольшое всплывающее окно, открывающееся при наведении мыши на `children`.
+Небольшое всплывающее окно, открывающееся при наведении мыши на `children` (или при нажатии на мобильных устройствах).
 В качестве содержимого рекомендуется использовать только текст.
 
 </Overview>
 
-```jsx
-<Tooltip placement="right" description="Привет">
-  <Button>Наведи</Button>
-</Tooltip>
-```
+<Playground>
+  ```jsx
+  <Tooltip placement="right" description="Привет">
+    <Button>Наведи</Button>
+  </Tooltip>
+  ```
+</Playground>
 
 ## Пользовательская стрелка
 
@@ -26,6 +28,8 @@
 3. Убедитесь, что компонент принимает все валидные для SVG параметры.
 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
+
+<Playground>
 
 ```jsx
 const ARROW_HEIGHT = 11;
@@ -57,34 +61,29 @@ return (
 );
 ```
 
+</Playground>
+
 ## Хука useTooltip
 
 Вы можете использовать хук `useTooltip`, который позволяет устанавливать якорный элемент для `Tooltip`,
-не прокидывая его в качестве `children`
+не прокидывая его в качестве `children`:
+
+<Playground>
 
 ```jsx
-const Example = () => {
-  const { anchorRef, anchorProps, tooltip } = useTooltip({
-    placement: 'right',
-    description: 'Привет',
-  });
+const { anchorRef, anchorProps, tooltip } = useTooltip({
+  placement: 'right',
+  description: 'Привет',
+});
 
-  return (
-    <View activePanel="tooltip">
-      <Panel id="tooltip">
-        <PanelHeader>useTooltip</PanelHeader>
-        <Group>
-          {tooltip}
-          <FormItem>
-            <Button getRootRef={anchorRef} {...anchorProps}>
-              Наведи на меня
-            </Button>
-          </FormItem>
-        </Group>
-      </Panel>
-    </View>
-  );
-};
-
-<Example />;
+return (
+  <>
+    {tooltip}
+    <Button getRootRef={anchorRef} {...anchorProps}>
+      Наведи на меня
+    </Button>
+  </>
+);
 ```
+
+</Playground>

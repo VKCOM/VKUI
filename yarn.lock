@@ -2672,6 +2672,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-live: "npm:^4.1.8"
     typescript: "npm:*"
+    zustand: "npm:^5.0.5"
   languageName: unknown
   linkType: soft
 
@@ -22069,6 +22070,27 @@ __metadata:
   version: 3.24.1
   resolution: "zod@npm:3.24.1"
   checksum: 10/54e25956495dec22acb9399c168c6ba657ff279801a7fcd0530c414d867f1dcca279335e160af9b138dd70c332e17d548be4bc4d2f7eaf627dead50d914fec27
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "zustand@npm:5.0.5"
+  peerDependencies:
+    "@types/react": ">=18.0.0"
+    immer: ">=9.0.6"
+    react: ">=18.0.0"
+    use-sync-external-store: ">=1.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+    use-sync-external-store:
+      optional: true
+  checksum: 10/ae10e1da74e0abbc669401f30baa1088b779c54a2a9c30f1c62d03a4f4d1b9ac9b60933eca01e3d3871d644d387a289005b45607339f253cd3fadf7e3a390724
   languageName: node
   linkType: hard
 

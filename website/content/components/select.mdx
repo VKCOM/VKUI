@@ -7,15 +7,18 @@
 
 </Overview>
 
-```jsx
-<Select
-  options={[
-    { value: '1', label: 'Опция 1' },
-    { value: '2', label: 'Опция 2' },
-    { value: '3', label: 'Опция 3' },
-  ]}
-/>
-```
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <Select
+    defaultValue="2"
+    options={[
+      { value: '1', label: 'Опция 1' },
+      { value: '2', label: 'Опция 2' },
+      { value: '3', label: 'Опция 3' },
+    ]}
+  />
+  ```
+</Playground>
 
 > Используйте компонент [`CustomSelect`](/components/custom-select), чтобы вид компонента был всегда кастомный.
 
@@ -52,6 +55,32 @@ const [color, setColor] = React.useState('red');
 
 <Select options={colors} value={color} onChange={(_, newColor) => setColor(newColor)} />;
 ```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Select options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `Select` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Select options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
+  <Select options={[{ value: 'green', label: 'Зеленый' }]} defaultValue="green" status="valid" />
+  ```
+</Playground>
 
 ## Тестирование (e2e) [#e2e]
 
@@ -112,57 +141,57 @@ const [color, setColor] = React.useState('red');
 - вместе с `label`
 
 ```jsx
-<label htmlFor="select-id">Администратор</label>
+<label htmlFor="select-id">Цвет</label>
 <Select
   id="select-id"
   placeholder="Не выбран"
-  options={users}
+  options={[ id: 'red', name: 'Красный' ]}
 />
 ```
 
 - вместе с `FormItem`
 
 ```jsx
-<FormItem top="Администратор" htmlFor="select-id">
-  <Select id="select-id" placeholder="Не выбран" options={users} />
+<FormItem top="Цвет" htmlFor="select-id">
+  <Select id="select-id" placeholder="Не выбран" options={[ id: 'red', name: 'Красный' ]} />
 </FormItem>
 ```
 
 - вместе с `VisuallyHidden` (используя `label` и `htmlFor`)
 
 ```jsx
-<VisuallyHidden Component="label" htmlFor="select-id">Администратор</VisuallyHidden>
+<VisuallyHidden Component="label" htmlFor="select-id">Цвет</VisuallyHidden>
 <Select
   id="select-id"
   placeholder="Не выбран"
-  options={users}
+  options={[ id: 'red', name: 'Красный' ]}
 />
 ```
 
 - вместе с [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
 
 ```jsx
-<span id="select-label-id">Администратор</span>
+<span id="select-label-id">Цвет</span>
 <Select
   aria-labelledby="select-label-id"
   placeholder="Не выбран"
-  options={users}
+  options={[ id: 'red', name: 'Красный' ]}
 />
 ```
 
 - вместе с `VisuallyHidden` (используя [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby))
 
 ```jsx
-<VisuallyHidden Component="span" id="select-label-id">Администратор</VisuallyHidden>
+<VisuallyHidden Component="span" id="select-label-id">Цвет</VisuallyHidden>
 <Select
   aria-labelledby="select-label-id"
   placeholder="Не выбран"
-  options={users}
+  options={[ id: 'red', name: 'Красный' ]}
 />
 ```
 
 - вместе с [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
 
 ```jsx
-<Select aria-label="Администратор" placeholder="Не выбран" options={users} />
+<Select aria-label="Цвет" placeholder="Не выбран" options={[ id: 'red', name: 'Красный' ]} />
 ```

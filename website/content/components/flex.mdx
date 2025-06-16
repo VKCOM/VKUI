@@ -20,6 +20,17 @@
 > Для более старых версий браузеров автоматически применяется альтернативное решение с использованием `margin`,
 > но в таком случае у вас могут появляться визуальные артефакты (например, если вы задаёте фоновый цвет).
 
+<Playground>
+  ```jsx
+  <Flex gap="m" justify="center">
+    <Avatar size={48} initials="ДС" gradientColor="orange" />
+    <Avatar size={48} initials="ИМ" gradientColor="yellow" />
+    <Avatar size={48} initials="ВЖ" gradientColor="violet" />
+    <Avatar size={48} initials="ЭМ" gradientColor="green" />
+  </Flex>
+  ```
+</Playground>
+
 ## Направление главной оси
 
 Свойство `direction` эквивалентно `css`-свойству `flex-direction` и контролирует расположение дочерних элементов.
@@ -76,7 +87,7 @@
 Свойство `noWrap` позволяет отключить перенос контента (позволяет выходить за пределы родителя).
 
 - `true` — перенос отключен;
-- `false` — перенос включен, эквивалентно `flex-wrap=nowrap` (по умолчанию).
+- `false` — перенос включен, эквивалентно `flex-wrap: nowrap` (по умолчанию).
 
 ## Отступы вокруг контейнера
 
@@ -86,5 +97,18 @@
 - `"auto"` — включены платформенные отступы.
 
 Значение `margin="auto"` нужно для того, чтобы визуально выравнивать контент во `Flex` с остальными компонентами
-VKUI (например, `SimpleCell`, `FormItem`). Поэтому его использование обычно актуально только для верхнеуровневых
-компонентов `Flex`.
+VKUI (например, [`Header`](/components/header) и [`SimpleCell`](/components/simple-cell)).
+Поэтому его использование обычно актуально только для верхнеуровневых компонентов `Flex`.
+
+<Playground>
+  ```jsx
+  <Group mode="card" header={<Header size="s">Друзья</Header>}>
+    <Flex gap="m" justify="center" margin="auto">
+      <Avatar size={48} src="#" initials="ДС" gradientColor="orange" />
+      <Avatar size={48} src="#" initials="ИМ" gradientColor="yellow" />
+      <Avatar size={48} src="#" initials="ВЖ" gradientColor="violet" />
+      <Avatar size={48} src="#" initials="ЭМ" gradientColor="green" />
+    </Flex>
+  </Group>
+  ```
+</Playground>
