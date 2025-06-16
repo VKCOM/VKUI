@@ -1,6 +1,6 @@
 import { fireEvent, getByRole, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, mockTouchStartDisabled, userEvent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { List } from '../List/List';
 import { Cell } from './Cell';
@@ -103,7 +103,7 @@ describe('Cell', () => {
       const el = screen.getByTestId('test');
 
       expect(el.tagName.toLowerCase()).toBe('div');
-      expect(el.role).toBeUndefined();
+      expect(el.role).toBeNull();
       expect(el.getAttribute('disabled')).toBeNull();
       expect(el.getAttribute('aria-disabled')).toBeNull();
     });
@@ -206,6 +206,8 @@ describe('Cell', () => {
       expect(checkbox).not.toBeChecked();
     });
   });
+
+  mockTouchStartDisabled();
 
   it('check dragging className add when dragging cell', async () => {
     render(

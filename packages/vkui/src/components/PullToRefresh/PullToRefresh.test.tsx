@@ -3,7 +3,7 @@ import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Platform, type PlatformType } from '../../lib/platform';
-import { baselineComponent, fakeTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimers, mockTouchStartDisabled } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
 import pullToRefreshStyles from './PullToRefresh.module.css';
@@ -45,6 +45,7 @@ function renderRefresher(
 }
 
 describe(PullToRefresh, () => {
+  mockTouchStartDisabled();
   baselineComponent(PullToRefresh);
 
   fakeTimers();
