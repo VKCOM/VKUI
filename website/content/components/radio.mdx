@@ -12,6 +12,9 @@
   <Radio name="pay" value="cash">
     Оплата наличными
   </Radio>
+  <Radio name="pay" value="card">
+    Оплата картой
+  </Radio>
   ```
 </Playground>
 
@@ -63,9 +66,9 @@ const [checked, setChecked] = React.useState(false);
   (при большем количестве опций рассмотрите возможность использования компонента [`Select`](/components/select));
 - если вам необходим компонент с индикацией отмечен/не отмечен,
   то используйте [`Checkbox`](/components/checkbox) или [`Switch`](/components/switch);
-- для выбора нескольких значений из списка используйте `Checkbox`.
+- для выбора нескольких значений из списка используйте [`Checkbox`](/components/checkbox).
 
-## Доступность (a11y)
+## Доступность (a11y) [#a11y]
 
 Компонент `Radio` обеспечивает базовую доступность, используя нативные HTML-элементы `input[type="radio"]` и `label`.
 
