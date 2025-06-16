@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "build": "next build && yarn pagefind",
+    "start": "next start",
+    "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "15.3.5",
@@ -14,6 +15,7 @@
     "@vkontakte/vkui-docs-theme": "workspace:^",
     "next": "^15.3.5",
     "nextra": "^4.2.17",
+    "pagefind": "^1.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-live": "^4.1.8",
