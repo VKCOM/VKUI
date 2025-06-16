@@ -2,8 +2,13 @@
 
 # Select
 
-Компонент для выбора одного значения из списка опций.
-На мобильных устройствах использует `NativeSelect`, в остальных случаях `CustomSelect`.
+Адаптивный компонент для выбора одного значения из списка опций. Автоматически переключается между компонентом
+[`NativeSelect`](/components/native-select) (для мобильных устройств) и [`CustomSelect`](/components/custom-select) (в остальных случаях).
+
+Связанные компоненты:
+
+- [`NativeSelect`](/components/native-select)
+- [`CustomSelect`](/components/custom-select)
 
 </Overview>
 
@@ -19,8 +24,6 @@
   />
   ```
 </Playground>
-
-> Используйте компонент [`CustomSelect`](/components/custom-select), чтобы вид компонента был всегда кастомный.
 
 ## Режим работы
 
@@ -73,7 +76,8 @@ const [color, setColor] = React.useState('red');
 Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
 или успешной валидации (значение `"valid"`).
 
-> Если вы используете `Select` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+> Если вы используете `Select` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
 
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
