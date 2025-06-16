@@ -76,8 +76,6 @@ const meta: MetaRecord = {
   'panel-spinner': 'PanelSpinner',
   'root': 'Root',
   'subnavigation-bar': 'SubnavigationBar',
-  'tabbar': 'Tabbar',
-  'tabbar-item': 'TabbarItem',
   'tabs': 'Tabs',
   'tabs-item': 'TabsItem',
   'view': 'View',
