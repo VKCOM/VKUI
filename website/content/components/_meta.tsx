@@ -70,8 +70,6 @@ const meta: MetaRecord = {
   'pagination': 'Pagination',
   'panel': 'Panel',
   'panel-header': 'PanelHeader',
-  'panel-header-button': 'PanelHeaderButton',
-  'panel-header-content': 'PanelHeaderContent',
   'panel-header-context': 'PanelHeaderContext',
   'root': 'Root',
   'subnavigation-bar': 'SubnavigationBar',
