@@ -95,7 +95,6 @@ const meta: MetaRecord = {
     title: 'Модальные окна',
   },
   'action-sheet': 'ActionSheet',
-  'action-sheet-item': 'ActionSheetItem',
   'modal-card': 'ModalCard',
   'modal-card-base': 'ModalCardBase',
   'modal-dismiss-button': 'ModalDismissButton',
