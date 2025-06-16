@@ -7,28 +7,43 @@
 
 </Overview>
 
+<Playground>
+
+```jsx
+const [open, setOpen] = React.useState(false);
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Открыть</Button>
+    <ModalCard
+      open={open}
+      onClose={() => setOpen(false)}
+      icon={<Icon56NotificationOutline />}
+      title="Приложение запрашивает разрешение на отправку Вам уведомлений"
+      actions={
+        <React.Fragment>
+          <Spacing size={16} />
+          <ButtonGroup gap="m" stretched>
+            <Button key="deny" size="l" mode="secondary" stretched onClick={() => setOpen(false)}>
+              Запретить
+            </Button>
+            <Button key="allow" size="l" mode="primary" stretched onClick={() => setOpen(false)}>
+              Разрешить
+            </Button>
+          </ButtonGroup>
+        </React.Fragment>
+      }
+    />
+  </>
+);
+```
+
+</Playground>
+
 ## Область применения
 
 - показ уведомления (например, о новом функционале);
 - отображение формы ввода (например, ввод СМС-кода).
-
-```jsx
-const Example = () => {
-  const [open, setOpen] = React.useState(true);
-  return (
-    <>
-      <Div>
-        <Button onClick={() => setOpen(true)}>Открыть</Button>
-      </Div>
-      <ModalCard open={open} onClose={() => setOpen(false)}>
-        <div style={{ width: '100%', height: 100 }} />
-      </ModalCard>
-    </>
-  );
-};
-
-<Example />;
-```
 
 ## Спецификация
 
@@ -139,41 +154,39 @@ const Example = () => {
 
 Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус вручную при событии `onOpened`.
 
+<Playground>
+
 ```jsx
-const App = () => {
-  const [open, setOpen] = React.useState(false);
+const [open, setOpen] = React.useState(false);
 
-  const inputRef = React.useRef(null);
+const inputRef = React.useRef(null);
 
-  const handleOpen = React.useCallback(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
+const handleOpen = React.useCallback(() => {
+  if (inputRef.current) {
+    inputRef.current.focus();
+  }
+}, []);
 
-  return (
-    <>
-      <Div>
-        <Button onClick={() => setOpen(true)}>Открыть</Button>
-      </Div>
-      <ModalCard
-        id="modal-with-auto-focus"
-        title="Введите ПИН-код"
-        open={open}
-        onOpened={handleOpen}
-        onClose={() => setOpen(false)}
-      >
-        <Spacing size="xl" />
-        <Flex direction="row" gap={24} noWrap>
-          <Input type="number" min={0} max={9} pattern="[0-9]{2}" getRootRef={inputRef} />
-          <Input type="number" min={0} max={9} pattern="[0-9]{2}" />
-          <Input type="number" min={0} max={9} pattern="[0-9]{2}" />
-          <Input type="number" min={0} max={9} pattern="[0-9]{2}" />
-        </Flex>
-      </ModalCard>
-    </>
-  );
-};
-
-<App />;
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Открыть</Button>
+    <ModalCard
+      id="modal-with-auto-focus"
+      title="Введите ПИН-код"
+      open={open}
+      onOpened={handleOpen}
+      onClose={() => setOpen(false)}
+    >
+      <Spacing size="xl" />
+      <Flex direction="row" gap={24} noWrap>
+        <Input type="number" min={0} max={9} pattern="[0-9]{2}" getRootRef={inputRef} />
+        <Input type="number" min={0} max={9} pattern="[0-9]{2}" />
+        <Input type="number" min={0} max={9} pattern="[0-9]{2}" />
+        <Input type="number" min={0} max={9} pattern="[0-9]{2}" />
+      </Flex>
+    </ModalCard>
+  </>
+);
 ```
+
+</Playground>

@@ -6,7 +6,24 @@
 Используется как элемент вторичной навигации внутри раздела. Поддерживает горизонтальную прокрутку контента
 с индикацией наличия скрытых элементов (стрелки навигации).
 
+Связанные компоненты:
+
+- [`SubnavigationButton`](#subnavigationbutton)
+
 </Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton onClick={() => {}}>Мой размер</SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>В наличии</SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Высокий рейтинг</SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Избранное</SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
 
 ## Когда использовать
 
@@ -44,6 +61,14 @@
 Кнопка/ссылка для использования внутри `SubnavigationBar`. Предназначена для навигации между подразделами или управления
 контентом (активация фильтров, открытие модальных окон).
 
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton onClick={() => {}} before={<Icon24FavoriteOutline />}>
+    Избранное
+  </SubnavigationButton>
+  ```
+</Playground>
+
 ### Стилизация
 
 #### Режимы отображения
@@ -59,7 +84,36 @@
 Задается свойством `appearance`:
 
 - `accent` — акцентный цвет;
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton mode="primary" appearance="accent" selected onClick={() => {}}>
+    mode="primary"
+  </SubnavigationButton>
+  <SubnavigationButton mode="outline" appearance="accent" selected onClick={() => {}}>
+    mode="outline"
+  </SubnavigationButton>
+  <SubnavigationButton mode="tertiary" appearance="accent" selected onClick={() => {}}>
+    mode="tertiary"
+  </SubnavigationButton>
+  ```
+</Playground>
+
 - `neutral` — базовый цвет.
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton mode="primary" appearance="neutral" selected onClick={() => {}}>
+    mode="primary"
+  </SubnavigationButton>
+  <SubnavigationButton mode="outline" appearance="neutral" selected onClick={() => {}}>
+    mode="outline"
+  </SubnavigationButton>
+  <SubnavigationButton mode="tertiary" appearance="neutral" selected onClick={() => {}}>
+    mode="tertiary"
+  </SubnavigationButton>
+  ```
+</Playground>
 
 ### Размеры и контент
 
@@ -72,6 +126,20 @@
 `textLevel` — отдельно настраивает размер текста (1 — крупный, 3 — мелкий).
 Полезно в режиме `fixed` у родительского `SubnavigationBar`.
 
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton size="s" onClick={() => {}}>
+    size="s"
+  </SubnavigationButton>
+  <SubnavigationButton size="m" onClick={() => {}}>
+    size="m"
+  </SubnavigationButton>
+  <SubnavigationButton size="l" onClick={() => {}}>
+    size="l"
+  </SubnavigationButton>
+  ```
+</Playground>
+
 ### Состояния
 
 `selected` — выделяет кнопку как активную. Используйте для индикации текущего раздела или применённого фильтра.
@@ -81,3 +149,21 @@
 - `before` — иконка перед текстом (рекомендуемый размер `24px`).
 - `after` — счётчик или бейдж (рекомендуется использовать только `Counter size="s"` или `Badge`).
 - `chevron` — добавляет стрелку-индикатор справа.
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton
+    before={<Icon24Filter />}
+    selected
+    chevron
+    after={
+      <Counter size="s">
+        <VisuallyHidden>Применено: </VisuallyHidden>3
+      </Counter>
+    }
+    onClick={() => {}}
+  >
+    Фильтры
+  </SubnavigationButton>
+  ```
+</Playground>

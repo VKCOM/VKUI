@@ -8,6 +8,37 @@
 
 </Overview>
 
+<Playground>
+
+```jsx
+const [alert, setAlert] = React.useState(null);
+
+const showAlert = () => {
+  if (alert) return;
+  setAlert(
+    <Alert
+      onClose={() => setAlert(null)}
+      dismissLabel="Отмена"
+      actions={[
+        { title: 'Отмена', mode: 'cancel' },
+        { title: 'Удалить', mode: 'destructive' },
+      ]}
+      title="Удаление документа"
+      description="Вы уверены, что хотите удалить этот документ?"
+    />,
+  );
+};
+
+return (
+  <>
+    <Button onClick={showAlert}>Показать оповещение</Button>
+    {alert}
+  </>
+);
+```
+
+</Playground>
+
 ## Обязательные свойства
 
 ### `onClose`
@@ -21,11 +52,7 @@
 В компоненте есть возможность задать заголовок и описание для уведомления с помощью свойств `title` и `description` соответственно:
 
 ```jsx
-<Alert
-  title="Удаление документа"
-  description="Вы уверены что хотите 
-удалить этот документ?"
-/>
+<Alert title="Удаление документа" description="Вы уверены что хотите удалить этот документ?" />
 ```
 
 ## Кнопки действий

@@ -6,9 +6,15 @@
 
 Связанные компоненты:
 
-- ScreenSpinner
+- [`ScreenSpinner`](/components/screen-spinner)
 
 </Overview>
+
+<Playground>
+  ```jsx
+  <Spinner />
+  ```
+</Playground>
 
 ## Настройка отображения
 
@@ -16,22 +22,24 @@
 
 Задаются свойством `size`:
 
-```jsx
-<Flex aria-busy={true} aria-live="polite" direction="column" gap={32} margin="auto">
+<Playground aria-busy={true} aria-live="polite">
+  ```jsx
   <Spinner size="xl" />
   <Spinner size="l" />
   <Spinner size="m" />
   <Spinner size="s" />
-</Flex>
-```
+  ```
+</Playground>
 
 ### Анимация
 
 Можно отключить анимацию с помощью свойства `disableAnimation`:
 
-```jsx
-<Spinner disableAnimation />
-```
+<Playground>
+  ```jsx
+  <Spinner disableAnimation />
+  ```
+</Playground>
 
 ### Цвет
 
@@ -39,11 +47,13 @@
 
 Для ручного управления цветом используйте свойство `noColor`:
 
-```jsx
-<div style={{ color: '#FF0000' }}>
-  <Spinner noColor />
-</div>
-```
+<Playground>
+  ```jsx
+  <div style={{ color: '#FF0000' }}>
+    <Spinner noColor />
+  </div>
+  ```
+</Playground>
 
 ## Когда использовать
 

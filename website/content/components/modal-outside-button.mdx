@@ -11,20 +11,26 @@
 
 </Overview>
 
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
+  ```jsx
+  <ModalOutsideButton aria-label="Больше" onClick={() => {}}>
+    <Icon20More />
+  </ModalOutsideButton>
+  <ModalOutsideButton aria-label="Нравится" onClick={() => {}}>
+    <Icon20Like />
+  </ModalOutsideButton>
+  ```
+</Playground>
+
 ## Цифровая доступность (a11y)
 
 Чтобы кнопка была доступной для ассистивных технологий, нужно передать в нее скрытый визуально текст
 через стандартное свойство `aria-label`, который сможет прочитать скринридер.
 
 ```jsx
-<ModalCard
-  open
-  outsideButtons={
-    <ModalOutsideButton aria-label="Больше" onClick={() => {}}>
-      <Icon20More />
-    </ModalOutsideButton>
-  }
->
-  <div style={{ width: '100%', height: 100 }} />
-</ModalCard>
+<ModalOutsideButton aria-label="Больше" onClick={() => {}}>
+  <Icon20More />
+</ModalOutsideButton>
 ```

@@ -13,6 +13,16 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <ButtonGroup>
+    <Button>Button</Button>
+    <Button>Button</Button>
+    <Button>Button</Button>
+  </ButtonGroup>
+  ```
+</Playground>
+
 ## Особенности использования
 
 - `ButtonGroup` не управляет свойствами вложенных кнопок или групп кнопок.
@@ -22,26 +32,42 @@
 
 ## Вложенные `ButtonGroup`
 
-`ButtonGroup` может содержать вложенные `ButtonGroup` для создания более сложных структур.
+`ButtonGroup` поддерживает вложенные `ButtonGroup` для создания более сложных структур.
 
-```jsx
-<ButtonGroup mode="vertical" gap="m" style={{ minWidth: 328 }}>
-  <Button onClick={() => {}} size="l" appearance="accent" stretched>
-    Разрешить
-  </Button>
-  <Button onClick={() => {}} size="l" appearance="accent" stretched>
-    Завершить
-  </Button>
-  <ButtonGroup mode="horizontal" gap="m" stretched>
-    <Button onClick={() => {}} size="l" appearance="negative" stretched>
-      Не сейчас
+<Playground>
+  ```jsx
+  <ButtonGroup mode="vertical" gap="m">
+    <Button size="l" appearance="accent" stretched>
+      Разрешить
     </Button>
-    <Button onClick={() => {}} size="l" appearance="positive" stretched>
-      Продолжить
+    <Button size="l" appearance="accent" stretched>
+      Завершить
     </Button>
+    <ButtonGroup mode="horizontal" gap="s" stretched>
+      <Button size="l" appearance="negative" stretched>
+        Не сейчас
+      </Button>
+      <Button size="l" appearance="positive" stretched>
+        Продолжить
+      </Button>
+    </ButtonGroup>
   </ButtonGroup>
-</ButtonGroup>
-```
+  ```
+</Playground>
+
+## Выравнивание кнопок
+
+Если вы используете свойство `stretched` для `ButtonGroup`, то можно указать свойство `align`,
+которое позволит управлять выравниванием кнопок по горизонтали.
+
+<Playground>
+  ```jsx
+  <ButtonGroup gap="s" stretched align="right">
+    <Button before={<Icon12Add />} aria-label="Добавить" />
+    <Button before={<Icon12Favorite />} aria-label="В Избранное" />
+  </ButtonGroup>
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

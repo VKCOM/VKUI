@@ -6,6 +6,26 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <Popover
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
 ## Функциональность
 
 Компонент позволяет отобразить всплывающее окно, позиционированное рядом с якорным элементом.
@@ -14,18 +34,127 @@
 > Обратите внимание, что если вы используете в качестве якорного элемента пользовательский компонент, то
 > он должен передавать либо свойство `getRootRef`, либо реализовывать [forwardRef](https://react.dev/reference/react/forwardRef)
 > на корневой `DOM`-элемент.
-> Также передавайте на корневой элемент все `DOM`-атрибуты и обработчики событий (в частности, `onMouseOver`, `onMouseLeave`, `onClick`, `onFocus`, `onBlur`).
+> Также передавайте на корневой элемент все `DOM`-атрибуты и обработчики событий
+> (в частности, `onMouseOver`, `onMouseLeave`, `onClick`, `onFocus`, `onBlur`).
 
 ## Механизм вызова всплывающего окна
 
 Свойство `trigger` определяет способ взаимодействия, при котором всплывающее окно будет отображаться или скрываться.
 
 - `"click"` – показ/скрытие происходит при нажатии на якорный элемент;
+
+  <Playground>
+    ```jsx
+    <Popover
+      placement="bottom"
+      role="tooltip"
+      aria-describedby="tooltip-1"
+      content={
+        <Div>
+          <Text>Привет</Text>
+        </Div>
+      }
+      restoreFocus="anchor-element"
+    >
+      <Button id="tooltip-1" mode="outline">
+        Нажми на меня
+      </Button>
+    </Popover>
+    ```
+  </Playground>
+
 - `"hover"` – показ происходит при наведении мыши на якорных элемент, скрытие - при отведении;
+
+  <Playground>
+    ```jsx
+    <Popover
+      trigger="hover"
+      placement="bottom"
+      role="tooltip"
+      aria-describedby="tooltip-1"
+      content={
+        <Div>
+          <Text>Привет</Text>
+        </Div>
+      }
+      restoreFocus="anchor-element"
+    >
+      <Button id="tooltip-1" mode="outline">
+        Наведи на меня
+      </Button>
+    </Popover>
+    ```
+  </Playground>
+
 - `"focus"` – показ происходит при фокусе на якорном элементе, скрытие - при потере фокуса;
+
+  <Playground>
+    ```jsx
+    <Popover
+      trigger="focus"
+      placement="bottom"
+      role="tooltip"
+      aria-describedby="tooltip-1"
+      content={
+        <Div>
+          <Text>Привет</Text>
+        </Div>
+      }
+      restoreFocus="anchor-element"
+    >
+      <Button id="tooltip-1" mode="outline">
+        Сфокусируйся на меня (Tab или клик)
+      </Button>
+    </Popover>
+    ```
+  </Playground>
+
 - `"manual"` – показ/скрытие контролируется только через свойство `shown`.
   Обработчик, переданный в свойство `onShownChange`, будет вызываться при нажатии за пределами якорного и всплывающего элементов,
   а также по кнопке `ESC`.
+
+  <Playground>
+
+  ```jsx
+  const [shown, setShown] = React.useState(false);
+
+  const handleShownChange = React.useCallback((value, reason) => {
+    if (!value) {
+      switch (reason) {
+        case 'callback':
+        case 'escape-key':
+        case 'click-outside':
+          setShown(false);
+          break;
+        default:
+          break;
+      }
+    }
+  }, []);
+
+  return (
+    <Popover
+      trigger="manual"
+      shown={shown}
+      placement="bottom"
+      role="tooltip"
+      aria-describedby="tooltip-1"
+      onShownChange={handleShownChange}
+      content={
+        <Div>
+          <Text>Привет</Text>
+        </Div>
+      }
+      restoreFocus="anchor-element"
+    >
+      <Button id="tooltip-1" onClick={() => setShown((prev) => !prev)} mode="outline">
+        Нажми на меня
+      </Button>
+    </Popover>
+  );
+  ```
+
+  </Playground>
 
 > `"hover"` на сенсорных экранах (тач-устройствах) будет работать как `"click"`, с единственным отличием, что всплывающее окно
 > не будет закрываться при повторном нажатии на целевой элемент. Для закрытия необходимо нажать
@@ -36,45 +165,32 @@
 Вы можете использовать хук `usePopover`, который позволяет устанавливать якорный элемент для `Popover`,
 не прокидывая его в качестве `children`.
 
+<Playground>
+
 ```jsx
-const Example = () => {
-  const { anchorRef, anchorProps, popover } = usePopover({
-    'trigger': 'click',
-    'role': 'dialog',
-    'id': 'menupopup',
-    'aria-labelledby': 'menubutton',
-    'content': ({ onClose }) => (
-      <Div>
-        <Text>Привет</Text>
-      </Div>
-    ),
-  });
+const { anchorRef, anchorProps, popover } = usePopover({
+  'trigger': 'click',
+  'role': 'dialog',
+  'id': 'menupopup',
+  'aria-labelledby': 'menubutton',
+  'content': ({ onClose }) => (
+    <Div>
+      <Text>Привет</Text>
+    </Div>
+  ),
+});
 
-  return (
-    <View activePanel="popover">
-      <Panel id="popover">
-        <PanelHeader>usePopover</PanelHeader>
-        <Group>
-          {popover}
-          <FormItem>
-            <Button
-              getRootRef={anchorRef}
-              id="menubutton"
-              aria-controls="menupopup"
-              {...anchorProps}
-            >
-              Нажми на меня
-            </Button>
-          </FormItem>
-        </Group>
-      </Panel>
-    </View>
-  );
-};
-
-<Example />;
+return (
+  <>
+    {popover}
+    <Button getRootRef={anchorRef} id="menubutton" aria-controls="menupopup" {...anchorProps}>
+      Нажми на меня
+    </Button>
+  </>
+);
 ```
 
+</Playground>
 ## Цифровая доступность (a11y)
 
 Старайтесь сопровождать элемент текстовым описанием для корректной работы скринридеров. Для этого

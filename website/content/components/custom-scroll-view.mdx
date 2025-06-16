@@ -10,6 +10,18 @@
 > Важно, что данная стилизация не работает для браузера `Firefox` < `64` версии,
 > и в нём будет показана стандартная полоса прокрутки.
 
+<Playground style={{ height: 150 }}>
+  ```jsx
+  <CustomScrollView>
+    {['Say', 'Hello', 'To', 'My', 'Little', 'Friend'].map((item) => (
+      <Cell key={item} before={<Avatar />}>
+        {item}
+      </Cell>
+    ))}
+  </CustomScrollView>
+  ```
+</Playground>
+
 ## Прокручиваемый контент
 
 Контент, который требует полосы прокрутки, необходимо передавать в свойство `children`.
@@ -39,6 +51,18 @@
 
 - `true` — горизонтальная полоса прокрутки видна;
 - `false` — горизонтальная полоса прокрутки скрыта (по умолчанию).
+
+<Playground>
+  ```jsx
+  <CustomScrollView enableHorizontalScroll>
+    <Flex gap="m" noWrap>
+      {Array.from({ length: 20 }).map((_, index) => (
+        <Avatar key={index} size={56} />
+      ))}
+    </Flex>
+  </CustomScrollView>
+  ```
+</Playground>
 
 ## Обработчики событий
 

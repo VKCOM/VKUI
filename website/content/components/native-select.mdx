@@ -11,13 +11,15 @@
 >
 > `undefined` ипользуется только для неконтролируемого компонента.
 
-```jsx
-<NativeSelect placeholder="Не выбрано">
-  <option value="1">Опция 1</option>
-  <option value="2">Опция 2</option>
-  <option value="3">Опция 3</option>
-</NativeSelect>
-```
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <NativeSelect>
+    <option value="1">Опция 1</option>
+    <option value="2">Опция 2</option>
+    <option value="3">Опция 3</option>
+  </NativeSelect>
+  ```
+</Playground>
 
 > Используйте данный компонент на мобильных устройствах или отдайте предпочтение [`Select`](/components/select),
 > который автоматически выберет наилучший для отображения компонент.
@@ -47,6 +49,40 @@ const [gender, setGender] = React.useState('f');
   <option value="m">Мужской</option>
 </NativeSelect>;
 ```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `NativeSelect` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <NativeSelect disabled>
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `FormField` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <NativeSelect status="error">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  <NativeSelect status="valid">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

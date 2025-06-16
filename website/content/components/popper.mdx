@@ -1,11 +1,13 @@
 <Overview>
 
-# Popover
+# Popper
 
 Низкоуровневый компонент для отрисовки выпадающего блока.
 Единственная его задача — корректно позиционироваться рядом с целевым элементом.
 
 </Overview>
+
+<Playground>
 
 ```jsx
 const [shown, setShown] = React.useState(false);
@@ -13,21 +15,19 @@ const buttonRef = React.useRef(null);
 
 return (
   <React.Fragment>
-    <Button getRootRef={buttonRef} onClick={() => setShown(!shown)} style={{ margin: 50 }}>
+    <Button getRootRef={buttonRef} onClick={() => setShown(!shown)}>
       {shown ? 'Закрыть' : 'Открыть'}
     </Button>
     {shown && (
-      <Popper
-        usePortal={false}
-        style={{ padding: '9px 12px', backgroundColor: 'green', color: '#fff' }}
-        targetRef={buttonRef}
-      >
+      <Popper usePortal={false} targetRef={buttonRef}>
         Привет
       </Popper>
     )}
   </React.Fragment>
 );
 ```
+
+</Playground>
 
 ## Виртуальный элемент
 
@@ -36,6 +36,8 @@ return (
 
 > Чтобы не задавать все свойства координат вручную,
 > можно использовать [DOMRect.fromRect](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect/fromRect_static)
+
+<Playground>
 
 ```jsx
 const [virtualElement, setVirtualElement] = React.useState(() =>
@@ -59,8 +61,8 @@ const handleClick = (event) => {
 };
 
 return (
-  <div style={{ position: 'relative', width: '100vw', height: '100vh' }} onClick={handleClick}>
-    <Div>Нажми в любое место в этом окне</Div>
+  <>
+    <Div onClick={handleClick}>Нажми в любое место этого текста</Div>
     <Popper
       arrow
       arrowProps={{ iconStyle: { color: 'green' } }}
@@ -75,6 +77,8 @@ return (
     >
       Привет
     </Popper>
-  </div>
+  </>
 );
 ```
+
+</Playground>

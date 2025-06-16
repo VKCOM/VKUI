@@ -5,7 +5,26 @@
 Компонент для показа большого количества элементов с горизонтальной прокруткой.
 Поддерживается навигация жестами и с клавиатуры. Лучше всего подходит для отображения множества компонентов `HorizontalCell`.
 
+Связанные компоненты:
+
+- [`HorizontalCell`](/components/horizontal-cell)
+- [`HorizontalCellShowMore`](#horizontalcellshowmore)
+
 </Overview>
+
+<Playground>
+  ```jsx
+  <HorizontalScroll getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+    {Array.from({ length: 20 }).map((_, index) => {
+      return (
+        <HorizontalCell onClick={() => {}} key={index} title={index}>
+          <Avatar size={56} />
+        </HorizontalCell>
+      );
+    })}
+  </HorizontalScroll>
+  ```
+</Playground>
 
 ## Параметры прокрутки
 
@@ -119,6 +138,20 @@ const refContainer = React.useRef(null);
 ## HorizontalCellShowMore
 
 Компонент для отображения кнопки "Показать все", используется в `HorizontalScroll` в конце списка.
+
+<Playground>
+  ```jsx
+  <HorizontalScroll getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+    <HorizontalCell size="m" onClick={() => {}} title="Первый">
+      <Image size={88} borderRadius="l" />
+    </HorizontalCell>
+    <HorizontalCell size="m" onClick={() => {}} title="Второй">
+      <Image size={88} borderRadius="l" />
+    </HorizontalCell>
+    <HorizontalCellShowMore onClick={() => {}} size="m" height={56} centered />
+  </HorizontalScroll>
+  ```
+</Playground>
 
 ### Размеры
 

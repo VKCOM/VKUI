@@ -3,13 +3,19 @@
 # WriteBar
 
 Компонент для создания поля ввода сообщений с поддержкой иконок действий.
-Аналог строки ввода в мессенджерах и соцсетях. Принимает все свойства нативного `<textarea>`
+Аналог строки ввода в мессенджерах и соцсетях. Принимает все свойства нативного `<textarea>`.
 
 Связанные компоненты:
 
 - [`WriteBarIcon`](#icons)
 
 </Overview>
+
+<Playground>
+  ```jsx
+  <WriteBar before={<WriteBarIcon mode="attach" />} placeholder="Введите сообщение..." />
+  ```
+</Playground>
 
 ## Режим работы
 
@@ -36,86 +42,92 @@ const [text, setText] = React.useState('Текст');
 - `after` — элементы справа.
 - `inlineAfter` — элементы поверх поля (актуально для iOS).
 
+<Playground>
+  ```jsx
+  <WriteBar
+    before={<WriteBarIcon mode="attach" />}
+    after={
+      <WriteBarIcon label="Записать голосовое сообщение">
+        <Icon24VoiceOutline />
+      </WriteBarIcon>
+    }
+    inlineAfter={
+      <WriteBarIcon label="Смайлы и стикеры">
+        <Icon24SmileOutline />
+      </WriteBarIcon>
+    }
+    placeholder="Введите сообщение..."
+  />
+  ```
+</Playground>
+
 ## Использование иконок [#icons]
 
-Все боковые элементы рекомендуется оборачивать в `WriteBarIcon`. Также для адптирования размеров иконок стоит использовать
-компонент [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer):
+Все боковые элементы рекомендуется оборачивать в `WriteBarIcon`.
+Также для адаптирования размеров иконок стоит использовать компонент [`AdaptiveIconRenderer`](/components/adaptive-icon-renderer).
+
+По правилам дизайн-системы в `"regular"`-режиме используются кнопки размером `28px`, в `"compact"`-режиме — `24px`.
+Исключение: на платформе `iOS` допускается использование иконок размером `28px` в `"compact"`-режиме.
+
+<Playground style={{ width: 290 }}>
 
 ```jsx
-const WriteBarExample = (props) => {
-  const [text, setText] = React.useState('');
-  const platform = usePlatform();
+const [text, setText] = React.useState('');
+const platform = usePlatform();
 
-  const SmileOutlineIcon = (
-    <AdaptiveIconRenderer
-      IconCompact={platform === 'ios' ? Icon28SmileOutline : Icon24SmileOutline}
-      IconRegular={Icon28SmileOutline}
-    />
-  );
+const SmileOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28SmileOutline : Icon24SmileOutline}
+    IconRegular={Icon28SmileOutline}
+  />
+);
 
-  const VoiceOutlineIcon = (
-    <AdaptiveIconRenderer
-      IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
-      IconRegular={Icon28VoiceOutline}
-    />
-  );
+const VoiceOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
+    IconRegular={Icon28VoiceOutline}
+  />
+);
 
-  const KeyboardBotsOutlineIcon = (
-    <AdaptiveIconRenderer
-      IconCompact={platform === 'ios' ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline}
-      IconRegular={Icon28KeyboardBotsOutline}
-    />
-  );
+const KeyboardBotsOutlineIcon = (
+  <AdaptiveIconRenderer
+    IconCompact={platform === 'ios' ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline}
+    IconRegular={Icon28KeyboardBotsOutline}
+  />
+);
 
-  return (
-    <View activePanel="writebar">
-      <Panel id="writebar">
-        <PanelHeader>WriteBar</PanelHeader>
-
-        <Group>
-          <WriteBar
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            before={<WriteBarIcon onClick={noop} mode="attach" />}
-            inlineAfter={
-              <>
-                {text.length === 0 && (
-                  <WriteBarIcon onClick={noop} label="Открыть меню бота">
-                    {KeyboardBotsOutlineIcon}
-                  </WriteBarIcon>
-                )}
-                {text.length > 0 && (
-                  <WriteBarIcon onClick={noop} label="Эмоджи и стикеры">
-                    {SmileOutlineIcon}
-                  </WriteBarIcon>
-                )}
-              </>
-            }
-            after={
-              <>
-                {text.length === 0 && (
-                  <WriteBarIcon onClick={noop} label="Эмоджи и стикеры">
-                    {SmileOutlineIcon}
-                  </WriteBarIcon>
-                )}
-                {text.length === 0 && (
-                  <WriteBarIcon onClick={noop} label="Записать голосовое сообщение">
-                    {VoiceOutlineIcon}
-                  </WriteBarIcon>
-                )}
-                {text.length > 0 && <WriteBarIcon onClick={noop} mode="send" />}
-              </>
-            }
-            placeholder="Сообщение"
-          />
-        </Group>
-      </Panel>
-    </View>
-  );
-};
-
-<WriteBarExample />;
+return (
+  <WriteBar
+    value={text}
+    onChange={(e) => setText(e.target.value)}
+    before={<WriteBarIcon mode="attach" />}
+    inlineAfter={
+      <>
+        {text.length === 0 && (
+          <WriteBarIcon label="Открыть меню бота">{KeyboardBotsOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length > 0 && (
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+        )}
+      </>
+    }
+    after={
+      <>
+        {text.length === 0 && (
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length === 0 && (
+          <WriteBarIcon label="Записать голосовое сообщение">{VoiceOutlineIcon}</WriteBarIcon>
+        )}
+        {text.length > 0 && <WriteBarIcon mode="send" />}
+      </>
+    }
+    placeholder="Сообщение"
+  />
+);
 ```
+
+</Playground>
 
 ## WriteBarIcon
 
@@ -132,29 +144,42 @@ const WriteBarExample = (props) => {
 - `send` — иконка отправки с текстом "Отправить".
 - `done` — иконка подтверждения с текстом "Готово".
 
-```jsx
-<Flex gap="m">
+<Playground>
+  ```jsx
   <WriteBarIcon mode="attach" />
   <WriteBarIcon mode="send" />
   <WriteBarIcon mode="done" />
-</Flex>
-```
+  ```
+</Playground>
 
 ### Использование кастомных иконки
 
+<Playground>
+
 ```jsx
-<WriteBarIcon label="Голосовое сообщение">
-  <Icon28VoiceOutline />
-</WriteBarIcon>
+const platform = usePlatform();
+
+return (
+  <WriteBarIcon label="Голосовое сообщение">
+    <AdaptiveIconRenderer
+      IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
+      IconRegular={Icon28VoiceOutline}
+    />
+  </WriteBarIcon>
+);
 ```
+
+</Playground>
 
 ### Отображение счётчика
 
 Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
 
-```jsx
-<WriteBarIcon mode="attach" count={3} label="Прикреплённые файлы" />
-```
+<Playground>
+  ```jsx
+  <WriteBarIcon mode="attach" count={3} label="Прикреплённые файлы" />
+  ```
+</Playground>
 
 ### Доступность (a11y)
 
@@ -189,8 +214,8 @@ const WriteBarExample = (props) => {
 
   ```jsx
   <VisuallyHidden id="write_bar_icon_voice">Записать голосовое сообщение</VisuallyHidden>
-  <WriteBarIcon aria-labelledby="write_bar_icon_voice">
-  <Icon28VoiceOutline />
+    <WriteBarIcon aria-labelledby="write_bar_icon_voice">
+    <Icon28VoiceOutline />
   </WriteBarIcon>
   ```
 

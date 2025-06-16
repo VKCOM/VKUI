@@ -9,7 +9,7 @@ import {
   INVERTED_THEME_NAME,
   VKUI_TOKENS_THEMES_META_URL,
 } from './constants';
-import { onlyVariablesLocalURL } from './helpers';
+import { getThemeCSSUrl } from './helpers';
 import type { ColorSchemeOptionProps, ThemeValues, TokensInfoProps } from './types';
 
 const vkuiTokensVersion = pkg.devDependencies['@vkontakte/vkui-tokens'];
@@ -69,7 +69,7 @@ export const useLoadThemeNames = () => {
         if (appearanceData.value === currentAppearance && appearanceData.disabled) {
           return {
             ...appearanceData,
-            url: onlyVariablesLocalURL(themeNameRaw),
+            url: getThemeCSSUrl(themeNameRaw),
             disabled: false,
           };
         }

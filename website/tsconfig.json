@@ -17,7 +17,9 @@
       }
     ],
     "paths": {
-      "@components/*": ["components/*"]
+      "@/components/*": ["components/*"],
+      "@/stores/*": ["stores/*"],
+      "@/providers/*": ["providers/*"]
     }
   },
   "include": [

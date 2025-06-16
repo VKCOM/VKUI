@@ -9,16 +9,8 @@ import {
   type PlaygroundPreviewProps,
 } from './PlaygroundPreview/PlaygroundPreview';
 import { PlaygroundToolbar } from './PlaygroundToolbar/PlaygroundToolbar';
-import {
-  initialState,
-  PlaygroundContext,
-  type PlaygroundContextProps,
-  type PlaygroundContextStateProps,
-} from './context';
 import { darkTheme, lightTheme } from './editorThemes';
 import { scope } from './scope';
-import { resolveThemeProps } from './vkuiThemes/helpers';
-import { useThemeLoader } from './vkuiThemes/useThemeLoader';
 import styles from './Playground.module.css';
 
 // eslint-disable-next-line new-cap
@@ -37,75 +29,35 @@ export function Playground({
   ...restProps
 }: PlaygroundProps) {
   const websiteColorScheme = useColorScheme();
-  const [state, setState] = React.useState<PlaygroundContextStateProps>(() => {
-    return {
-      ...initialState,
-      colorScheme: websiteColorScheme,
-    };
-  });
-  const { playgroundLoading, loadTheme } = useThemeLoader();
-
   const [codeVisible, setCodeVisible] = React.useState(defaultExpanded);
 
-  const toggleCodeVisibility = () => {
-    setCodeVisible((current) => !current);
-  };
-
-  const setContext = React.useCallback(
-    async (data: Partial<PlaygroundContextProps>) => {
-      const newState = {
-        ...state,
-        ...data,
-        ...resolveThemeProps(state, data),
-      };
-      if (newState.themeName !== state.themeName) {
-        await loadTheme(newState.themeName, newState.colorSchemeOptions);
-      }
-      setState(newState);
-    },
-    [state],
-  );
-
-  React.useLayoutEffect(() => {
-    void setContext({ colorScheme: websiteColorScheme });
-  }, [websiteColorScheme]);
-
-  const context: PlaygroundContextProps = React.useMemo(
-    () => ({
-      ...state,
-      setContext,
-      isLoading: playgroundLoading,
-    }),
-    [state, playgroundLoading, setContext],
-  );
-
   return (
-    <PlaygroundContext value={context}>
-      <div className={classNames(styles.root, jetBrainsMono.className)}>
-        <LiveProvider
-          code={defaultCode}
-          scope={scope}
-          theme={websiteColorScheme === 'dark' ? darkTheme : lightTheme}
-          transformCode={transformCode}
-        >
-          <PlaygroundPreview {...restProps} />
-          <PlaygroundToolbar
-            onToggleCodeVisibility={toggleCodeVisibility}
-            codeVisible={codeVisible}
-          />
-          {codeVisible && (
-            <div className={styles.code}>
-              <LiveEditor />
-            </div>
-          )}
-        </LiveProvider>
-      </div>
-    </PlaygroundContext>
+    <div className={classNames(styles.root, jetBrainsMono.className)}>
+      <LiveProvider
+        code={defaultCode}
+        scope={scope}
+        theme={websiteColorScheme === 'dark' ? darkTheme : lightTheme}
+        transformCode={transformCode}
+      >
+        <PlaygroundPreview {...restProps} />
+        <PlaygroundToolbar setCodeVisible={setCodeVisible} codeVisible={codeVisible} />
+        {codeVisible && (
+          <div className={styles.code}>
+            <LiveEditor style={{ whiteSpace: 'nowrap' }} />
+          </div>
+        )}
+      </LiveProvider>
+    </div>
   );
 }
 
+const IMPORT_REGEXP = /^import\s+(?:{[\s\S]*?}|\S+)\s+from\s+['"][^'"]+['"];?$\n?/gm;
+const JSX_START_REGEXP = /^</;
+
 function transformCode(code: string) {
-  if (!!code.trim().match(/^</)) {
+  code = code.replace(IMPORT_REGEXP, '');
+
+  if (!!code.trim().match(JSX_START_REGEXP)) {
     return `<React.Fragment>\n${code}\n</React.Fragment>;`;
   }
 

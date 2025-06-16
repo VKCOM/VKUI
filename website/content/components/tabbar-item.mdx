@@ -4,6 +4,10 @@
 
 Компонент позволяет создать навигационный элемент внутри компонента `Tabbar`.
 
+Связанные компоненты:
+
+- [`Tabbar`](/components/tabbar)
+
 </Overview>
 
 Чаще всего `TabbarItem` представлен иконкой размером `28px`, допускается использовать текст рядом с иконкой.
@@ -13,19 +17,44 @@
 > Обратите внимание, что иконка и текст могут располагаться либо горизонтально, либо вертикально.
 > Управлять этим поведением можно с помощью свойства `mode` у `Tabbar`.
 
+<Playground>
+  ```jsx
+  <TabbarItem label="Профиль">
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
+
 ## Состояния
 
 ### Активность
 
 Используйте свойство `selected`, чтобы показать текущий активный раздел.
 
-- `true` - к компонент применяются стили активности;
-- `false` - обычное состояние компонента (по умолчанию).
+<Playground>
+  ```jsx
+  <TabbarItem selected>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
 
 ## Индикатор
 
 С помощью свойства `indicator` можно задать для компонента счётчик или индикатор уведомления.
 Передавайте компоненты `Counter` с `size="s"` или `Badge`.
+
+<Playground>
+  ```jsx
+  <TabbarItem indicator={<Badge />}>
+    {/* Данный текст будет озвучен скринридером */}
+    <VisuallyHidden>Профиль</VisuallyHidden>
+    <Icon28UserCircleOutline />
+  </TabbarItem>
+  ```
+</Playground>
 
 ## Тэг компонента
 

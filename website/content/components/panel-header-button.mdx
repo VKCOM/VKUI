@@ -3,24 +3,21 @@
 
 Компонент для отрисовки кнопок в шапке панели (`PanelHeader`).
 
+Связанные компоненты:
+
+- [`PanelHeader`](/components/panel-header)
+
 </Overview>
 
 Сами кнопки могут быть переданы в `before` и/или `after` компонента `PanelHeader`:
 
-```jsx
-<PanelHeader
-  before={
-    <PanelHeaderButton>
-      <Icon28Notifications />
-    </PanelHeaderButton>
-  }
-  after={
-    <PanelHeaderButton>
-      <Icon28SettingsOutline />
-    </PanelHeaderButton>
-  }
-/>
-```
+<Playground>
+  ```jsx
+  <PanelHeaderButton aria-label="Уведомления">
+    <Icon28Notifications />
+  </PanelHeaderButton>
+  ```
+</Playground>
 
 ## Контент
 
@@ -32,29 +29,30 @@
 
 Если нужно несколько кнопок в ряд, то используйте `React.Fragment`:
 
-```jsx
-<PanelHeader
-  after={
-    <React.Fragment>
-      <PanelHeaderButton>
-        <Icon28SettingsOutline />
-      </PanelHeaderButton>
-      <PanelHeaderButton>
-        <Icon28Notifications />
-      </PanelHeaderButton>
-    </React.Fragment>
-  }
-/>
-```
+<Playground>
+  ```jsx
+  <React.Fragment>
+    <PanelHeaderButton aria-label="Настройки">
+      <Icon28SettingsOutline />
+    </PanelHeaderButton>
+    <PanelHeaderButton aria-label="Уведомления">
+      <Icon28Notifications />
+    </PanelHeaderButton>
+  </React.Fragment>
+  ```
+</Playground>
 
 ## Внешний вид
 
 ## Первичные кнопки
 
-С помощью свойства `primary` можно визуально отметить кнопку с главным действием.
+С помощью булевого свойства `primary` можно визуально отметить кнопку с главным действием.
 
-- `true` - применяются стили главной кнопки (меняется `font-weight` текста);
-- `false` - применяются стандартные стили (по умолчанию).
+<Playground>
+  ```jsx
+  <PanelHeaderButton primary>Первичная кнопка</PanelHeaderButton>
+  ```
+</Playground>
 
 ## Пресеты
 
@@ -64,41 +62,41 @@
 Также можно передать свойство `label`, для отображения текста, который будет виден на платформах vkcom и iOS, но будет скрыт на Android.
 С помощью свойств `hideLabelOnVKCom` и `hideLabelOnIOS` можно также визуально скрыть `label` на соответствующих платформах, он будет виден только для скринридеров.
 
-```jsx
-<PanelHeader before={<PanelHeaderBack onClick={this.props.onBackClick} />}>
-  Заголовок панели
-</PanelHeader>
-```
+<Playground>
+  ```jsx
+  <PanelHeaderBack />
+  ```
+</Playground>
 
 ### PanelHeaderClose
 
 Этот компонент используется для показа кнопки "Отмена" в модальных окнах для закрытия текущего `View` в рамках `Root`. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`:
 Если передать свойство `label`, то на Android и Desktop он будет скрыт, но виден для скринридеров.
 
-```jsx
-<PanelHeader before={<PanelHeaderClose onClick={this.props.onCloseClick} />}>
-  Заголовок модального окна
-</PanelHeader>
-```
+<Playground>
+  ```jsx
+  <PanelHeaderClose />
+  ```
+</Playground>
 
 ### PanelHeaderEdit
 
 Компонент для отрисовки кнопки **Редактировать** в шапке. Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
 Для указания кастомных текстов для состояний можно использовать соответствующие свойства `doneLabel` и `editLabel`. Данные тексты будут видны на iOS, а на Android и Desktop они будет скрыты, но видны для скринридеров.
 
-```jsx
-<PanelHeader after={<PanelHeaderEdit onClick={this.props.onEdit}>Готово</PanelHeaderSubmit>}>
-  Заголовок модального окна
-</PanelHeader>;
-```
+<Playground>
+  ```jsx
+  <PanelHeaderEdit />
+  ```
+</Playground>
 
 ### PanelHeaderSubmit
 
 Этот компонент используется для показа кнопки "Готово" в модальных окнах для закрытия текущего `View` в рамках `Root` и сохранения какого-либо результата. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28DoneOutline />` или `<Icon24DoneOutline />`:
 Если передать свойство `label`, то на Android и Desktop он будет скрыт, но виден для скринридеров.
 
-```jsx
-<PanelHeader after={<PanelHeaderSubmit onClick={this.props.onSubmit}>Готово</PanelHeaderSubmit>}>
-  Заголовок модального окна
-</PanelHeader>
-```
+<Playground>
+  ```jsx
+  <PanelHeaderSubmit />
+  ```
+</Playground>

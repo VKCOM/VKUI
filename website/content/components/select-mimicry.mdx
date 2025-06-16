@@ -4,13 +4,41 @@
 
 Компонент, который визуально имитирует компонент выбора из списка.
 Используется в случаях, когда нужно создать элемент, похожий на `Select`,
-но с пользовательским поведением при нажатии.
+но с пользовательским поведением при нажатии (например, вызов модального окна).
 
 </Overview>
 
-```jsx
-<SelectMimicry placeholder="Выберите значение">Значение</SelectMimicry>
-```
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SelectMimicry>Значение</SelectMimicry>
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <SelectMimicry placeholder="Выберите значение" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `SelectMimicry` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <SelectMimicry status="error">Значение</SelectMimicry>
+  <SelectMimicry status="valid">Значение</SelectMimicry>
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

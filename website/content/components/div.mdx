@@ -3,21 +3,60 @@
 # Div
 
 Компонент с установленными отступами, которые отличаются в зависимости от платформы.
-Необходим, когда есть какой-то блок с информацией, у которого должны быть стандартные отступы.
+Необходим, когда есть какой-то блок с информацией, у которого должны быть стандартные отступы,
+чтобы визуально выровнять его с другими элементами на странице.
 
 </Overview>
 
-```jsx
-<View activePanel="div">
-  <Panel id="div">
-    <PanelHeader>Div</PanelHeader>
-    <Group>
-      <Div>
-        <Button stretched mode="secondary" size="m">
-          Edit Info
-        </Button>
-      </Div>
-    </Group>
-  </Panel>
-</View>
+<Playground>
+  ```jsx
+  <Div style={{ border: '1px dashed blue' }}>
+    {/** !!! свойство style используется в демонстрационных целях !!! **/}
+    <Div style={{ border: '1px dashed green' }}>Контент</Div>
+  </Div>
+  ```
+</Playground>
+
+## Пример использования
+
+В компоненты [`Header`](/components/header) и [`SimpleCell`](/components/simple-cell) уже заложены
+стандартные платформенные отступы, поэтому не требуется никакой дополнительной конфигурации,
+чтобы выравнять эти элементы. Но если вы просто добавляете на страницу текстовый элемент
+(или свой пользовательский компонент) и хотите добиться визуального выравнивания, то
+используйте компонент `Div`.
+
+<Playground>
+  ```jsx
+  <Group mode="card" header={<Header size="s">Разделы</Header>}>
+    <Text>Примечание к странице без стандартных отступов</Text>
+    <Div>
+      <Text>Примечание к странице с отступами</Text>
+    </Div>
+    <SimpleCell onClick={() => {}}>Аккаунт</SimpleCell>
+    <SimpleCell onClick={() => {}}>Настройки</SimpleCell>
+  </Group>
+  ```
+</Playground>
+
+## Альтернатива
+
+Если вы не хотите использовать дополнительную обёртку, то можно задать отступы с помощью
+`css`-переменных `--vkui--size_base_padding_vertical--regular` для верхнего и нижнего отступа
+и `--vkui--size_base_padding_horizontal--regular` для боковых отступов.
+
+```jsx filename="MyComponent.tsx"
+import styles from './MyComponent.module.css';
+
+function MyComponent({ children }) {
+  return <div className={styles.paddings}>{children}</div>;
+}
+```
+
+```css filename="MyComponent.module.css"
+.paddings {
+  padding-top: var(--vkui--size_base_padding_vertical--regular);
+  padding-bottom: var(--vkui--size_base_padding_vertical--regular);
+  padding-left: var(--vkui--size_base_padding_horizontal--regular);
+  padding-right: var(--vkui--size_base_padding_horizontal--regular);
+}
 ```
