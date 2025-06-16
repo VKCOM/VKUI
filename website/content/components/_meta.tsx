@@ -77,7 +77,6 @@ const meta: MetaRecord = {
   'root': 'Root',
   'subnavigation-bar': 'SubnavigationBar',
   'tabs': 'Tabs',
-  'tabs-item': 'TabsItem',
   'view': 'View',
   '###': {
     type: 'separator',
