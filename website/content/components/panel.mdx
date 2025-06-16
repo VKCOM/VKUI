@@ -1,14 +1,27 @@
 <Overview>
 # Panel
 
-Компонент-контейнер, представляющий собой навигационный слой, содержащий основной контент страницы.
+Компонент, представляющий собой отдельное состояние интерфейса, отображающееся в один момент времени.
+
+Связанные страницы:
+
+- [View](/components/view)
+- [Навигация](/overview/navigation)
 
 </Overview>
 
-## Уникальный идентификатор
+import { FixedLayoutWrapper } from '@/components/wrappers';
 
-Уникальный идентификатор для `Panel` можно задать либо с помощью свойства `nav`, либо `id`.
-Обязательно указывайте идентификатор, когда используете компонент внутри `View`.
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+
+```jsx
+<Panel>
+  <PanelHeader>Заголовок панели</PanelHeader>
+  <Placeholder stretched>Контент панели</Placeholder>
+</Panel>
+```
+
+</Playground>
 
 ## Визуальное оформление
 
@@ -19,9 +32,27 @@
 - `"card"` — карточный дизайн с тенями и скруглениями;
 - `"plain"` — плоский дизайн без теней и скруглений.
 
+По умолчанию переключение между типами отображения зависит от [`sizeY`](/overview/adaptivity#sizex)
+
+| `sizeX`     | `mode`    |
+| ----------- | --------- |
+| `"regular"` | `"card"`  |
+| `"compact"` | `"plain"` |
+
 ### Центрирование контента
 
 Задаётся свойством `centered`.
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+
+```jsx
+<Panel centered>
+  <PanelHeader>Заголовок панели</PanelHeader>
+  <div>Отцентрованный контент</div>
+</Panel>
+```
+
+</Playground>
 
 ### Фон страницы
 
@@ -29,3 +60,60 @@
 
 - `true` — задаёт прозрачный цвет фона;
 - `false` — стандартный цвет фона.
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+
+```jsx
+<Panel disableBackground>
+  <PanelHeader>Заголовок панели</PanelHeader>
+  <Placeholder stretched>За мной нет фона</Placeholder>
+</Panel>
+```
+
+</Playground>
+
+## PanelSpinner
+
+Индикатора загрузки внутри панели. Автоматически добавляет стандартные отступы и центрирование.
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+
+```jsx
+<Panel>
+  <PanelHeader>PanelSpinner</PanelHeader>
+  <PanelSpinner />
+</Panel>
+```
+
+</Playground>
+
+### Свойства
+
+Наследует все свойства компонента [`Spinner`](/components/spinner).
+
+- `size` — размер индикатора.
+- `disableAnimation` — отключение анимации.
+- `noColor` — наследование цвета.
+
+#### Высота компонента
+
+Задается с помощью свойства `height`:
+
+```jsx
+<PanelSpinner height={300} />
+```
+
+### Когда использовать
+
+- При загрузке контента внутри панели.
+- Когда нужен центрированный спиннер с отступами.
+- Для полностраничной загрузки (в сочетании с кастомной высотой).
+
+### Альтернативы
+
+- [`Spinner`](/components/spinner) — для встроенной загрузки внутри элементов.
+- [`ScreenSpinner`](/components/screen-spinner) — для модальной загрузки поверх интерфейса.
+
+### Доступность (a11y) [#a11y]
+
+Следует придерживаться тех же правил, что и для компонента [`Spinner`](/components/spinner)
