@@ -36,6 +36,6 @@ export const Playground: Story = {
     </FormItem>
   ),
   args: {
-    value: DEFAULT_TAGS,
+    defaultValue: DEFAULT_TAGS,
   },
 };

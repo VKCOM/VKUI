@@ -47,7 +47,7 @@ export const Playground: Story = {
   ),
   args: {
     options: groups,
-    value: [
+    defaultValue: [
       {
         value: '1',
         label: 'Arctic Monkeys',
