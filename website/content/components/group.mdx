@@ -13,6 +13,16 @@ Cвязанные компоненты:
 
 </Overview>
 
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group header={<Header>Заголовок группы</Header>} description="Подвал группы" separator="hide">
+    <Div>
+      <Text>Контент группы</Text>
+    </Div>
+  </Group>
+  ```
+</Playground>
+
 ## Структура
 
 - `Group` – компонент с параметрами.
@@ -34,16 +44,55 @@ Cвязанные компоненты:
 
 ### Подкомпонентный подход
 
-```jsx
-<Group.Container>
-  <Group.Header>
-    <Header>Адреса</Header>
-  </Group.Header>
-  <CellButton onClick={noop}>Добавить домашний адрес</CellButton>
-  <CellButton onClick={noop}>Добавить рабочий адрес</CellButton>
-  <Group.Description>
-    Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах ВКонтакте. Эти
-    адреса видны только Вам.
-  </Group.Description>
-</Group.Container>
-```
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group.Container separator="hide">
+    <Group.Header>
+      <Header>Адреса</Header>
+    </Group.Header>
+    <CellButton onClick={() => {}}>Добавить домашний адрес</CellButton>
+    <CellButton onClick={() => {}}>Добавить рабочий адрес</CellButton>
+    <Group.Description>
+      Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах ВКонтакте. Эти
+      адреса видны только Вам.
+    </Group.Description>
+  </Group.Container>
+  ```
+</Playground>
+
+## Вложенные Group
+
+Компонент `Group` можно вкладывать в другой компонент `Group`. Обратите внимание, что чаще всего вложенные
+компоненты должны иметь свойство `mode="plain"`, это задаёт им прозрачный фон и скрывает рамки.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group separator="hide">
+    <Group mode="plain">
+      <SimpleCell indicator="+7 ••• •• •• 96" before={<Icon28PhoneOutline />} onClick={() => {}}>
+        Номер телефона
+      </SimpleCell>
+      <SimpleCell indicator="g•••@gmail.com" before={<Icon28MailOutline />} onClick={() => {}}>
+        Email
+      </SimpleCell>
+    </Group>
+    <Group mode="plain">
+      <SimpleCell
+        indicator="Обновлён 3 года назад"
+        before={<Icon28KeyOutline />}
+        onClick={() => {}}
+      >
+        Пароль
+      </SimpleCell>
+      <SimpleCell indicator="Вкл." before={<Icon28CheckShieldDeviceOutline />} onClick={() => {}}>
+        Подтверждение входа
+      </SimpleCell>
+      <SimpleCell indicator="2" before={<Icon28DevicesOutline />} onClick={() => {}}>
+        Привязанные устройства
+      </SimpleCell>
+    </Group>
+  </Group>
+  ```
+</Playground>

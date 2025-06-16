@@ -10,9 +10,7 @@
 
 ## Быстрый старт [#quick-start]
 
-Предлагаем начать с импортирования компонента [`Button`](/components/button).
-
-{/* TODO: для этого кода нужно превью, код должен быть виден по умолчанию */}
+Предлагаем начать с импортирования компонента [`Button`](/components/button):
 
 ```jsx filename="src/App.tsx"
 import { Button } from '@vkontakte/vkui';
@@ -26,7 +24,17 @@ export default function App() {
 }
 ```
 
-И уже далее погружаться в дивный мир создания приложений. Мы постараемся помочь вам с этим.
+На странице должно появиться что-то похожее:
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Button mode="outline" size="l">
+    Привет, мир!
+  </Button>
+  ```
+</Playground>
 
 ## Навигационные слои [#navigation]
 
@@ -34,9 +42,9 @@ export default function App() {
 экранов и организации навигации между ними. Подробное описание этих компонентов представлено в разделе [Навигация](/overview/navigation).
 Ниже приведён базовый пример их использования.
 
-{/* TODO: для этого кода нужно превью, код должен быть скрыт по умолчанию */}
+<Playground Wrapper={FixedLayoutWrapper}>
 
-```jsx filename="src/App.tsx"
+```jsx
 import { useState } from 'react';
 import {
   SplitLayout,
@@ -48,31 +56,31 @@ import {
   CellButton,
 } from '@vkontakte/vkui';
 
-export default function App() {
-  const [activePanel, setActivePanel] = useState('panel-1');
+const [activePanel, setActivePanel] = useState('panel-1');
 
-  return (
-    <SplitLayout header={<PanelHeader delimiter="none" />}>
-      <SplitCol width="100%" stretchedOnMobile autoSpaced>
-        <View activePanel={activePanel}>
-          <Panel id="panel-1">
-            <PanelHeader>panel-1</PanelHeader>
-            <Group>
-              <CellButton onClick={() => setActivePanel('panel-2')}>Перейти к panel-2</CellButton>
-            </Group>
-          </Panel>
-          <Panel id="panel-2">
-            <PanelHeader>panel-2</PanelHeader>
-            <Group>
-              <CellButton onClick={() => setActivePanel('panel-1')}>Вернуться к panel-1</CellButton>
-            </Group>
-          </Panel>
-        </View>
-      </SplitCol>
-    </SplitLayout>
-  );
-}
+return (
+  <SplitLayout header={<PanelHeader delimiter="none" />}>
+    <SplitCol width="100%" stretchedOnMobile autoSpaced>
+      <View activePanel={activePanel}>
+        <Panel id="panel-1">
+          <PanelHeader>panel-1</PanelHeader>
+          <Group>
+            <CellButton onClick={() => setActivePanel('panel-2')}>Перейти к panel-2</CellButton>
+          </Group>
+        </Panel>
+        <Panel id="panel-2">
+          <PanelHeader>panel-2</PanelHeader>
+          <Group>
+            <CellButton onClick={() => setActivePanel('panel-1')}>Вернуться к panel-1</CellButton>
+          </Group>
+        </Panel>
+      </View>
+    </SplitCol>
+  </SplitLayout>
+);
 ```
+
+</Playground>
 
 ## Многоколоночный интерфейс [#multiple-columns]
 
@@ -81,50 +89,50 @@ export default function App() {
 [`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Детали будут также
 на странице [Навигация](/overview/navigation).
 
-Приведём адаптивный пример работы `SplitLayout`.
+Приведём адаптивный пример работы `SplitLayout`:
 
-{/* TODO: для этого кода нужно превью, код должен быть скрыт по умолчанию */}
+import { FixedLayoutWrapper } from '@/components/wrappers';
 
-```jsx filename="src/App.tsx"
-import { SplitLayout, SplitCol, useAdaptivityConditionalRender } from '@vkontakte/vkui';
+<Playground Wrapper={FixedLayoutWrapper}>
 
-export default function App() {
-  const { viewWidth } = useAdaptivityConditionalRender();
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
 
-  return (
-    <SplitLayout>
-      {viewWidth.tabletPlus && (
-        <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
-          <div
-            style={{
-              padding: 12,
-              height: 80,
-              color: 'white',
-              backgroundColor: 'tomato',
-            }}
-          >
-            Фиксированная колонка слева
-          </div>
-        </SplitCol>
-      )}
-      <SplitCol>
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
         <div
           style={{
             padding: 12,
-            height: 'calc(100% - 24px)',
+            height: 80,
             color: 'white',
-            backgroundColor: 'steelblue',
+            backgroundColor: 'tomato',
           }}
         >
-          Колонка справа
-          {viewWidth.tabletMinus && (
-            <p className={viewWidth.tabletMinus.className}>
-              ⚠️ колонка слева спрятана по условию адаптивности
-            </p>
-          )}
+          Фиксированная колонка слева
         </div>
       </SplitCol>
-    </SplitLayout>
-  );
-}
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          height: 'calc(100% - 24px)',
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
 ```
+
+</Playground>

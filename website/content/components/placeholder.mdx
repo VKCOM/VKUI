@@ -7,6 +7,14 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <Placeholder title="Находите друзей">
+    Здесь будут отображаться люди, которых вы добавите в друзья
+  </Placeholder>
+  ```
+</Playground>
+
 ## Полноэкранный режим (stretched)
 
 Используется когда:
@@ -19,21 +27,23 @@
 
 Чтобы отобразить несколько кнопок, в свойство `action` можно прокинуть несколько кнопок обернутых в [`ButtonGroup`](/components/button-group):
 
-```jsx
-<Placeholder
-  title="Находите друзей"
-  action={
-    <ButtonGroup mode="vertical" align="center">
-      <Button size="m">Найти друзей</Button>
-      <Button size="m" mode="tertiary">
-        Подробнее
-      </Button>
-    </ButtonGroup>
-  }
->
-  Здесь будут отображаться люди, которых вы добавите в друзья
-</Placeholder>
-```
+<Playground>
+  ```jsx
+  <Placeholder
+    title="Находите друзей"
+    action={
+      <ButtonGroup mode="vertical" align="center">
+        <Button size="m">Найти друзей</Button>
+        <Button size="m" mode="tertiary">
+          Подробнее
+        </Button>
+      </ButtonGroup>
+    }
+  >
+    Здесь будут отображаться люди, которых вы добавите в друзья.
+  </Placeholder>
+  ```
+</Playground>
 
 > Используйте не более 3-х кнопок.
 >
@@ -53,22 +63,24 @@
 
 Компонент можно использовать в подкомпонентном подходе:
 
-```jsx
-<Placeholder.Container>
-  <Placeholder.Icon>
-    <Icon56UserAddOutline />
-  </Placeholder.Icon>
-  <Placeholder.Title>Find friends</Placeholder.Title>
-  <Placeholder.Description>
-    The people you add as your friends will be displayed here
-  </Placeholder.Description>
-  <Placeholder.Actions>
-    <ButtonGroup mode="vertical" align="center">
-      <Button size="m">Button</Button>
-      <Button size="m" mode="tertiary">
-        Button
-      </Button>
-    </ButtonGroup>
-  </Placeholder.Actions>
-</Placeholder.Container>
-```
+<Playground>
+  ```jsx
+  <Placeholder.Container>
+    <Placeholder.Icon>
+      <Icon56UserAddOutline />
+    </Placeholder.Icon>
+    <Placeholder.Title>Находите друзей</Placeholder.Title>
+    <Placeholder.Description>
+      Здесь будут отображаться люди, которых вы добавите в друзья.
+    </Placeholder.Description>
+    <Placeholder.Actions>
+      <ButtonGroup mode="vertical" align="center">
+        <Button size="m">Найти друзей</Button>
+        <Button size="m" mode="tertiary">
+          Скрыть
+        </Button>
+      </ButtonGroup>
+    </Placeholder.Actions>
+  </Placeholder.Container>
+  ```
+</Playground>

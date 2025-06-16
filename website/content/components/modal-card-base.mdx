@@ -3,30 +3,34 @@
 # ModalCardBase
 
 Базовый компонент для создания модальных карточек с гибким содержимым.
-Используется как основа для [`ModalCard`](/components/modal-card).
+Используется как основа для `ModalCard`.
+
+Связанные компоненты:
+
+- [`ModalCard`](/components/modal-card)
 
 </Overview>
 
-## Основная структура
-
-```jsx
-<ModalCardBase
-  icon={<Icon56MoneyTransferOutline />}
-  title="Подтверждение перевода"
-  description="Сумма: 5 000 ₽ · Получатель: Иван Петров"
-  actions={
-    <ButtonGroup mode="horizontal" gap="s" stretched>
-      <Button size="l" mode="primary" stretched>
-        Подтвердить
-      </Button>
-      <Button size="l" mode="secondary" stretched>
-        Отмена
-      </Button>
-    </ButtonGroup>
-  }
-  dismissLabel="Закрыть"
-/>
-```
+<Playground>
+  ```jsx
+  <ModalCardBase
+    icon={<Icon56MoneyTransferOutline />}
+    title="Подтверждение перевода"
+    description="Сумма: 5 000 ₽ · Получатель: Иван Петров"
+    actions={
+      <ButtonGroup mode="horizontal" gap="s" stretched>
+        <Button size="l" mode="primary" stretched>
+          Подтвердить
+        </Button>
+        <Button size="l" mode="secondary" stretched>
+          Отмена
+        </Button>
+      </ButtonGroup>
+    }
+    dismissLabel="Закрыть"
+  />
+  ```
+</Playground>
 
 ## Ключевые элементы
 
@@ -75,23 +79,24 @@
 больше в зависимости от того какие данные отображаются внутри `ModalCardBase`.
 Если необходимо увеличить отступ, то передавайте в `actions` компонент [Spacing](/components/spacing).
 
-```jsx
-<ModalCardBase
-  dismissButtonMode="inside"
-  dismissLabel="Закрыть"
-  style={{ width: 450, marginBottom: 20 }}
-  title="Десктопная и планшетная версии с крестиком внутри"
-  description="Сверху будет безопасный отступ до иконки"
-  actions={
-    <React.Fragment>
-      <Spacing size={16} />
-      <Button size="l" mode="primary" stretched>
-        Некая кнопка
-      </Button>
-    </React.Fragment>
-  }
-/>
-```
+<Playground>
+  ```jsx
+  <ModalCardBase
+    dismissButtonMode="inside"
+    dismissLabel="Закрыть"
+    title="Десктопная и планшетная версии с крестиком внутри"
+    description="Сверху будет безопасный отступ до иконки"
+    actions={
+      <React.Fragment>
+        <Spacing size={16} />
+        <Button size="l" mode="primary" stretched>
+          Некая кнопка
+        </Button>
+      </React.Fragment>
+    }
+  />
+  ```
+</Playground>
 
 ## Цифровая доступность (a11y)
 

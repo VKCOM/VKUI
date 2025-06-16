@@ -7,6 +7,20 @@
 
 </Overview>
 
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <AspectRatio ratio={16 / 9}>
+    <img
+      src="https://sun9-35.userapi.com/TH0O6TfKR2O5W8hjgSdzQzHvV_2TGRAXhLHuog/Js_f2L5EMYM.jpg"
+      loading="lazy"
+      alt="Лаунж зона в розовом неоне"
+    />
+  </AspectRatio>
+  ```
+</Playground>
+
 ## Контент
 
 Элемент, который должен сохранять свои пропорции при изменении родительского контейнера, передаётся в свойство `children`.

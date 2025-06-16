@@ -5,7 +5,27 @@
 Компонент для организации навигации внутри `Epic`, принимает компонент `TabbarItem` в качестве дочерних элементов.
 Используется на мобильных устройствах и планшетах.
 
+Связанные компоненты:
+
+- [`Epic`](/components/epic)
+- [`TabbarItem`](/components/tabbar-item)
+
 </Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
+  ```jsx
+  <Tabbar>
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>
 
 ## `TabbarItem`
 
@@ -32,6 +52,19 @@
 - `"vertical"` — задаёт всегда вертикальное расположение;
 - `"horizontal"` — задаёт всегда горизонтальное расположение.
 
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
+  ```jsx
+  <Tabbar mode="vertical">
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>
+
 ## Внешний вид
 
 Свойство `plain` позволяет убрать границы компонента (на android-платформе это тень, на iOS-платформе обводка).
@@ -39,5 +72,15 @@
 Используйте данное свойство в случае, если выше `Tabbar` располагается какой-то фиксированный контент
 (например, `FixedLayout` c `vertical="bottom"`).
 
-- `false` — границы компонента присутствуют (по умолчанию);
-- `true` — границы компонента отсутствуют.
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
+  ```jsx
+  <Tabbar mode="vertical" plain>
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>

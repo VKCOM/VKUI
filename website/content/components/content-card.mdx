@@ -8,25 +8,42 @@
 
 Связанные компоненты:
 
-- CardScroll
-
-- CardGrid
+- [CardGrid](/components/card-grid)
+- [CardScroll](/components/card-scroll)
 
 </Overview>
+
+<Playground>
+  ```jsx
+  <ContentCard
+    onClick={() => {}}
+    src="https://images.unsplash.com/photo-1603988492906-4fb0fb251cf8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80"
+    alt="Picture of brown and gray mountains under blue sky during daytime photo"
+    overTitle="unsplash"
+    title="brown and gray mountains under blue sky during daytime photo"
+    description="Mountain changji"
+    caption="Photo by Siyuan on Unsplash"
+    maxHeight={100}
+  />
+  ```
+</Playground>
 
 ## Распределение свойств
 
 ### Свойства изображения
 
-`getRef`, `maxHeight`, `imageObjectFit`, `src`, `srcSet`, `alt`, `width`, `height`, `crossOrigin`, `decoding`, `loading`, `referrerPolicy`, `sizes`, `useMap`, `fetchPriority`
+Внутренний тэг `img` получает следующие свойства: `getRef`, `maxHeight`, `imageObjectFit`, `src`, `srcSet`, `alt`,
+`width`, `height`, `crossOrigin`, `decoding`, `loading`, `referrerPolicy`, `sizes`, `useMap`, `fetchPriority`
 
 ### Свойства корневого компонента `Card`
 
-`mode`, `getRootRef`, `Component`, `style`, `className`
+Внутренний компонент [`Card`](/components/card) получает следующие свойства: `mode`, `getRootRef`, `Component`,
+`style`, `className`.
 
 ### Свойства `Tappable`
 
-Внутренний `Tappable` получает все остальные свойства (кроме `subhead`, `header`, `text`и `caption`).
+Внутренний компонент [`Tappable`](/components/tappable) получает все остальные свойства (кроме `subhead`,
+`header`, `text` и `caption`).
 
 ## Семантическая настройка
 

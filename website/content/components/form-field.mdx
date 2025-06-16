@@ -8,11 +8,18 @@
 
 </Overview>
 
-```jsx
-<FormField>
-  <input type="text" />
-</FormField>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField>
+    <UnstyledTextField
+      as="input"
+      name="location"
+      placeholder="Введите локацию"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  ```
+</Playground>
 
 ## Режимы отображения
 
@@ -20,6 +27,17 @@
 
 - `"default"` — стандартный режим отображения с фоном, обводкой и текстом-подсказкой;
 - `"plain"` — упрощенный режим, который показывает только текст-подсказку без фона и обводки.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField before={<Icon20LocationMapOutline />} mode="default">
+    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+  </FormField>
+  <FormField before={<Icon20LocationMapOutline />} mode="plain">
+    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+  </FormField>
+  ```
+</Playground>
 
 ## Контент в начале/в конце
 
@@ -30,6 +48,21 @@
 
 - используйте иконки следующих размеров: `12px`, `16px`, `20px`, `24px` и `28px`;
 - для интерактивных иконок используйте компонент [`IconButton`](/components/icon-button).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField
+    before={<Icon20LocationMapOutline />}
+    after={
+      <IconButton aria-label="Выбрать локацию" onClick={() => alert('Диалог с локациями')}>
+        <Icon16DropdownOutline />
+      </IconButton>
+    }
+  >
+    <UnstyledTextField as="input" name="location" placeholder="Введите локацию" />
+  </FormField>
+  ```
+</Playground>
 
 ### Выравнивание иконок
 
@@ -44,15 +77,61 @@
 - `"start"` — по верхнему краю;
 - `"end"` — по нижнему краю.
 
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField after={<Icon20CopyOutline />} afterAlign="center">
+    <UnstyledTextField
+      as="textarea"
+      name="location"
+      rows={3}
+      placeholder="Введите локацию"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  ```
+</Playground>
+
 ## Состояния
 
-- свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности;
-- свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
-  или успешной валидации (значение `"valid"`).
+### `disabled`
 
-> **Обратите внимание**
->
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField disabled>
+    <UnstyledTextField
+      as="input"
+      name="location"
+      placeholder="Введите локацию"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
 > Если вы используете `FormField` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormField status="valid">
+    <UnstyledTextField
+      as="input"
+      name="location"
+      defaultValue="Санкт-Петербург"
+      style={{ padding: 8 }}
+    />
+  </FormField>
+  <FormField status="error">
+    <UnstyledTextField as="input" name="location" defaultValue="Москва" style={{ padding: 8 }} />
+  </FormField>
+  ```
+</Playground>
 
 ## Доступность (a11y) [#a11y]
 

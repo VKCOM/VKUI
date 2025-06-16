@@ -7,29 +7,46 @@
 
 </Overview>
 
+<Playground>
+
+```jsx
+const [open, setOpen] = React.useState(false);
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Открыть</Button>
+    <ModalPage
+      open={open}
+      onClose={() => setOpen(false)}
+      header={
+        <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => setOpen(false)} />}>
+          Информация о пользователе
+        </ModalPageHeader>
+      }
+    >
+      <Group>
+        <Cell>
+          <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+        </Cell>
+      </Group>
+    </ModalPage>
+  </>
+);
+```
+
+</Playground>
+
 ## Область применения
 
 - Формы для редактирования.
 - Детали профиля пользователя.
 - Разделы настроек, которые должны удерживать пользователя в текущем контексте приложения.
-
-```jsx
-const Example = () => {
-  const [open, setOpen] = React.useState(true);
-  return (
-    <>
-      <Div>
-        <Button onClick={() => setOpen(true)}>Открыть</Button>
-      </Div>
-      <ModalPage open={open} onClose={() => setOpen(false)}>
-        <div style={{ width: '100%', height: 100 }} />
-      </ModalPage>
-    </>
-  );
-};
-
-<Example />;
-```
 
 ## Спецификация
 
@@ -188,36 +205,34 @@ const Example = () => {
 
 Чтобы исправить проблему, следует отказаться от `autoFocus` и выставлять фокус вручную при событии `onOpened`.
 
+<Playground>
+
 ```jsx
-const App = () => {
-  const [open, setOpen] = React.useState(false);
+const [open, setOpen] = React.useState(false);
 
-  const inputRef = React.useRef(null);
+const inputRef = React.useRef(null);
 
-  const handleOpen = React.useCallback(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
+const handleOpen = React.useCallback(() => {
+  if (inputRef.current) {
+    inputRef.current.focus();
+  }
+}, []);
 
-  return (
-    <>
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Открыть</Button>
+    <ModalPage
+      id="modal-with-auto-focus"
+      open={open}
+      onOpened={handleOpen}
+      onClose={() => setOpen(false)}
+    >
       <Div>
-        <Button onClick={() => setOpen(true)}>Открыть</Button>
+        <Input getRootRef={inputRef} />
       </Div>
-      <ModalPage
-        id="modal-with-auto-focus"
-        open={open}
-        onOpened={handleOpen}
-        onClose={() => setOpen(false)}
-      >
-        <Div>
-          <Input getRootRef={inputRef} />
-        </Div>
-      </ModalPage>
-    </>
-  );
-};
-
-<App />;
+    </ModalPage>
+  </>
+);
 ```
+
+</Playground>

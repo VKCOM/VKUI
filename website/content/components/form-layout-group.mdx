@@ -5,6 +5,19 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal">
+    <FormItem htmlFor="name" top="Имя">
+      <Input id="name" />
+    </FormItem>
+    <FormItem htmlFor="lastName" top="Фамилия">
+      <Input id="lastName" />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
 ## Вариант группировки
 
 Задаётся свойством `mode`.
@@ -14,6 +27,26 @@
 
 Обратите внимание, что при недостатке места (например, на мобильных устройствах) поля формы сжимаются пропорционально,
 поэтому не рекомендуется в `mode="horizontal"` располагать более трёх `FormItem`.
+
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="vertical" segmented>
+    <FormItem htmlFor="doctype" top="Документ, удостоверяющий личность">
+      <Select
+        id="doctype"
+        options={['Паспорт гражданина РФ', 'Загранпаспорт'].map((i) => ({
+          label: i,
+          value: i,
+        }))}
+        defaultValue={'Загранпаспорт'}
+      />
+    </FormItem>
+    <FormItem htmlFor="docnumber">
+      <Input id="docnumber" placeholder="Номер документа" />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
 
 ## Удаление группы
 
@@ -30,12 +63,44 @@
   при взаимодействии с кнопкой удаления (по умолчанию "Удалить");
 - `onRemove` — функция-обработчик, которая будет вызвана при нажатии на кнопку удаления.
 
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal" removable onRemove={() => alert('Обработчик удаления')}>
+    <FormItem top="Дата начала поездки" htmlFor="start" topMultiline>
+      <DateInput id="start" disableCalendar />
+    </FormItem>
+    <FormItem top="Дата конца поездки" htmlFor="end" topMultiline>
+      <DateInput id="end" disableCalendar />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
 ## Сегментированный вид
 
 Свойство `segmented` позволяет визуально склеить несколько `FormItem`, объединенные в одну `FormLayoutGroup`.
 Работает для `mode="vertical"` и `mode="horizontal"`.
 Используйте данное свойство, когда хотите показать, что элементы формы логически связаны между собой.
 Особое внимание уделите [`a11y`](#a11y) для `FormItem`, которые не определяют свойства `htmlFor` или `top`.
+
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal" segmented>
+    <FormItem htmlFor="email" top="E-mail">
+      <Input id="email" />
+    </FormItem>
+    <FormItem>
+      <Select
+        options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
+          label: i,
+          value: i,
+        }))}
+        defaultValue="@mail.ru"
+      />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
 
 ## Тестирование
 

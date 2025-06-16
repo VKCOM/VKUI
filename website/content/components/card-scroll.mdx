@@ -7,16 +7,45 @@
 
 Связанные компоненты:
 
-- Card
-
-- ContentCard
+- [Card](/components/card)
+- [ContentCard](/components/content-card)
 
 </Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardScroll size="s">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardScroll>
+  ```
+</Playground>
 
 ## Размер карточек
 
 Свойство `size` задаёт ширину каждой карточки и накладывает определённые ограничения на её пропорции.
-Пропорции необходимо будет соблюсти самостоятельно.
+Соблюдение пропорций осуществляется самостоятельно
+(например, с помощью компонента [`AspectRatio`](/components/aspect-ratio), как в примере выше).
 
 | Размер  | Пропорции                      | Особенности                   |
 | ------- | ------------------------------ | ----------------------------- |
@@ -27,33 +56,37 @@
 
 ## Управление видимостью стрелок
 
-В реализации компонента используется компонент [`HorizontalScroll`](/components/horizontal-scroll).
-Поэтому для управления видимостью стрелочек можно использовать свойство `showArrows` компонента `HorizontalScroll`:
+В реализации `CardScroll` используется компонент [`HorizontalScroll`](/components/horizontal-scroll).
+Поэтому для управления видимостью стрелок можно использовать свойство `showArrows` компонента `HorizontalScroll`:
 
-```jsx
-<CardScroll size="s" showArrows="always">
-  <Card>
-    <div style={{ paddingBottom: '66%' }} />
-  </Card>
-  <Card>
-    <div style={{ paddingBottom: '66%' }} />
-  </Card>
-  <Card>
-    <div style={{ paddingBottom: '66%' }} />
-  </Card>
-  <Card>
-    <div style={{ paddingBottom: '66%' }} />
-  </Card>
-  <Card>
-    <div style={{ paddingBottom: '66%' }} />
-  </Card>
-  <Card>
-    <div style={{ paddingBottom: '66%' }} />
-  </Card>
-</CardScroll>
-```
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardScroll size="m" showArrows="always">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardScroll>
+  ```
+</Playground>
 
 ## Доступность (a11y)
 
 - По умолчанию используется семантический список (`<ul>`).
-- Для несписочных структур меняйте тег через `CardsListComponent`.
+- Для несписочных структур меняйте тег через свойство `CardsListComponent`.

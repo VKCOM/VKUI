@@ -6,88 +6,104 @@
 
 </Overview>
 
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
+  ```jsx
+  <Accordion>
+    <Accordion.Summary>Новый дизайн профиля</Accordion.Summary>
+    <Accordion.Content>
+      <Div>
+        Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
+        получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
+        формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
+      </Div>
+    </Accordion.Content>
+  </Accordion>
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `expanded` или передавать `defaultExpanded`, если
+требуется задать значение по умолчанию.
+
+Используйте свойства `expanded` и `onChange` для контролируемого управления состоянием компонента.
+
 ```jsx
-<Accordion>
-  <Accordion.Summary>Новый дизайн профиля</Accordion.Summary>
+// Неконтролируемое состояние, раскрыт по умолчанию
+<Accordion defaultExpanded>
+  <Accordion.Summary>Заголовок</Accordion.Summary>
   <Accordion.Content>
-    <Div>
-      Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
-      получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый формат
-      профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
-    </Div>
+    <Div>Контент</Div>
   </Accordion.Content>
-</Accordion>
-```
+</Accordion>;
 
-## Контролируемое состояние
-
-Используйте свойства `expanded` и `onChange` для ручного управления состоянием компонента.
-
-```jsx
-function Example() {
-  const [expanded, setExpanded] = React.useState();
-  return (
-    <Accordion expanded={expanded} onChange={setExpanded}>
-      <Accordion.Summary iconPosition="before">Новый дизайн профиля</Accordion.Summary>
-      <Accordion.Content>
-        <Div>
-          Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже
-          не получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
-          формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
-        </Div>
-      </Accordion.Content>
-    </Accordion>
-  );
-}
-
-<Example />;
+// Контролируемое состояние, раскрыт по умолчанию
+const [expanded, setExpanded] = React.useState(true);
+return (
+  <Accordion expanded={expanded} onChange={setExpanded}>
+    <Accordion.Summary>Заголовок</Accordion.Summary>
+    <Accordion.Content>
+      <Div>Контент</Div>
+    </Accordion.Content>
+  </Accordion>
+);
 ```
 
 ## Группа аккордеонов
 
 Компонент `Group` позволяет отображать несколько `Accordion`.
 
+<Playground Wrapper={BlockWrapper}>
+
 ```jsx
-function Example() {
-  const data = [
-    {
-      id: 1,
-      title: 'Как сменить номер телефона?',
-      detail:
-        'Зайдите в раздел Безопасность и вход. Укажите новый номер телефона и подтвердите его.',
-    },
-    {
-      id: 2,
-      title: 'Как изменить пароль?',
-      detail:
-        'Для входа во многие сервисы экосистемы VK используется один пароль. Если вы беспокоитесь по поводу безопасности, этот пароль можно изменить.',
-    },
-    {
-      id: 3,
-      title: 'Как усилить защиту аккаунта?',
-      detail:
-        'Используйте сложный пароль и регулярно меняйте его. Обновить пароль можно в разделе Пароль.',
-    },
-  ];
+const data = [
+  {
+    id: 1,
+    title: 'Как сменить номер телефона?',
+    detail: 'Зайдите в раздел Безопасность и вход. Укажите новый номер телефона и подтвердите его.',
+  },
+  {
+    id: 2,
+    title: 'Как изменить пароль?',
+    detail:
+      'Для входа во многие сервисы экосистемы VK используется один пароль. Если вы беспокоитесь по поводу безопасности, этот пароль можно изменить.',
+  },
+  {
+    id: 3,
+    title: 'Как усилить защиту аккаунта?',
+    detail:
+      'Используйте сложный пароль и регулярно меняйте его. Обновить пароль можно в разделе Пароль.',
+  },
+];
 
-  const [openId, setOpenId] = React.useState(2);
+const [openId, setOpenId] = React.useState(2);
 
-  return data.map(({ id, title, detail }) => (
-    <Accordion
-      key={id}
-      expanded={openId === id}
-      onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
-    >
-      <Accordion.Summary>{title}</Accordion.Summary>
-      <Accordion.Content>
-        <Div style={infoStyle}>{detail}</Div>
-      </Accordion.Content>
-    </Accordion>
-  ));
-}
-
-<Example />;
+return (
+  <Group mode="card" separator="hide">
+    {data.map(({ id, title, detail }) => (
+      <Accordion
+        key={id}
+        expanded={openId === id}
+        onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
+      >
+        <Accordion.Summary>{title}</Accordion.Summary>
+        <Accordion.Content>
+          <Div>
+            <Text>{detail}</Text>
+          </Div>
+        </Accordion.Content>
+      </Accordion>
+    ))}
+  </Group>
+);
 ```
+
+</Playground>
 
 ## Визуальное оформление
 
@@ -95,31 +111,26 @@ function Example() {
 
 Используйте свойства `ExpandIcon` и `CollapseIcon` для кастомизации иконок раскрытия/сворачивания.
 
-```jsx
-function Example() {
-  const [expanded, setExpanded] = React.useState();
-  return (
-    <Accordion expanded={expanded} onChange={setExpanded}>
-      <Accordion.Summary
-        iconPosition="before"
-        ExpandIcon={Icon28AddCircleOutline}
-        CollapseIcon={Icon28RemoveCircleOutline}
-      >
-        Новый дизайн профиля
-      </Accordion.Summary>
-      <Accordion.Content>
-        <Div>
-          Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже
-          не получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
-          формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
-        </Div>
-      </Accordion.Content>
-    </Accordion>
-  );
-}
-
-<Example />;
-```
+<Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
+  ```jsx
+  <Accordion>
+    <Accordion.Summary
+      iconPosition="before"
+      ExpandIcon={Icon28AddCircleOutline}
+      CollapseIcon={Icon28RemoveCircleOutline}
+    >
+      Новый дизайн профиля
+    </Accordion.Summary>
+    <Accordion.Content>
+      <Div>
+        Внешний вид профиля ВКонтакте действительно обновился. К прежнему варианту вернуться уже не
+        получится. В центре внимания нового дизайна — личность человека и его увлечения. Новый
+        формат профиля особенно удобен для авторов контента и станет для них цифровой визиткой.
+      </Div>
+    </Accordion.Content>
+  </Accordion>
+  ```
+</Playground>
 
 ## Анимация
 

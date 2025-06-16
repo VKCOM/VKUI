@@ -6,22 +6,29 @@
 
 </Overview>
 
-## Контролируемое состояние
+<Playground>
+  ```jsx
+  <Search />
+  ```
+</Playground>
 
-Используйте `value` и `onChange` для ручного управления состоянием.
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
 
 ```jsx
-function Example() {
-  const [value, setValue] = React.useState('');
+// Неконтролируемое состояние
+<Search defaultValue="Поиск" />;
 
-  const onChange = (e) => {
-    setSearch(e.target.value);
-  };
+// Контролируемое состояние
+const [value, setValue] = React.useState('Поиск');
 
-  return <Search value={value} onChange={onChange} />;
-}
-
-<Example />;
+<Search value={value} onChange={setValue} />;
 ```
 
 ## Пользовательская иконка поиска
@@ -31,32 +38,46 @@ function Example() {
 В качестве параметра эта функция принимает другую функцию отрисовки иконки
 (тип ее можно посмотреть, импортировав `RenderIconButtonFn`);
 
-```jsx
-<Search
-  defaultValue="value"
-  icon={(renderButton) => (
-    <Popover
-      content={({ onClose }) => (
-        <div style={popoverStyle}>
-          <CellButton before={<Icon28TagOutline />} onClick={onClose}>
-            По тегам
-          </CellButton>
-          <CellButton before={<Icon28CalendarOutline />} onClick={onClose}>
-            По дате
-          </CellButton>
-        </div>
-      )}
-    >
-      {renderButton(<Icon24Filter />)}
-    </Popover>
-  )}
-/>
-```
+<Playground>
+  ```jsx
+  <Search
+    defaultValue="value"
+    icon={(renderButton) => (
+      <Popover
+        content={({ onClose }) => (
+          <Div>
+            <CellButton before={<Icon28TagOutline />} onClick={onClose}>
+              По тегам
+            </CellButton>
+            <CellButton before={<Icon28CalendarOutline />} onClick={onClose}>
+              По дате
+            </CellButton>
+          </Div>
+        )}
+      >
+        {renderButton(<Icon24Filter />)}
+      </Popover>
+    )}
+  />
+  ```
+</Playground>
+
+## Кнопка "Найти"
+
+Кнопка "Найти" отображается, если передать обработчик `onFindButtonClick`:
+
+<Playground>
+  ```jsx
+  <Search defaultValue="Поиск" onFindButtonClick={() => alert('Кто ищет, тот всегда найдёт.')} />
+  ```
+</Playground>
 
 ## iOS-специфика
 
 Свойство `after` позволяет поменять текст кнопки сброса:
 
-```jsx
-<Search after="Сброс" icon={<Icon28SearchAppleOutline />} noPadding />
-```
+<Playground>
+  ```jsx
+  <Search after="Сброс" />
+  ```
+</Playground>

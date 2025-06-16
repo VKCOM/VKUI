@@ -1,14 +1,42 @@
 <Overview>
 # ScreenSpinner
 
-Компонент-обертка над Spinner. Используется в случаях, когда требуется заблокировать весь интерфейс до завершения асинхронного процесса.
+Компонент-обертка над [`Spinner`](/components/spinner). Используется в случаях, когда требуется заблокировать весь интерфейс до завершения асинхронного процесса.
 
 </Overview>
+
+<Playground>
+
+```jsx
+const [spinner, setSpinner] = React.useState(null);
+
+const showSpinner = () => {
+  setSpinner(<ScreenSpinner state="cancelable" mode="overlay" onClick={() => setSpinner(null)} />);
+};
+
+return (
+  <>
+    <Button onClick={showSpinner}>Показать индикатор</Button>
+    {spinner}
+  </>
+);
+```
+
+</Playground>
 
 ## Подкомпоненты
 
 Для возможности собрать компонент по частям доступны подкомпоненты. Это позволит более гибко влиять на эти части, а также
 отвязаться от логики порталов и всплывающих окон (например, при появлении компонента блокируется скролл).
+
+<Playground>
+  ```jsx
+  <ScreenSpinner.Container>
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  ```
+</Playground>
 
 ### ScreenSpinner.Container
 
@@ -22,19 +50,21 @@
 
 Подкомпонент для иконок.
 
-```jsx
-<ScreenSpinner.Container>
-  <ScreenSpinner.Loader />
-  <ScreenSpinner.SwapIcon />
-</ScreenSpinner.Container>
-```
-
 ## Внешний вид
 
 Задаётся свойством `mode`.
 
-- `"shadow"` — стандартны стиль компонента с тенью (по умолчанию);
-- `"overlay"` — стиль для использования поверх цветных элементов или фотографий.
+Помимо стандартного стиля компонента (`mode="shadow"`), есть возможность задать `mode="overlay"`,
+для использования индикатора загрузки поверх цветных элементов или фотографий.
+
+<Playground>
+  ```jsx
+  <ScreenSpinner.Container mode="overlay">
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  ```
+</Playground>
 
 ## Состояния
 
@@ -49,6 +79,31 @@
 Состояние отвечает за иконку, которая будет отрисована. Если вам не подходит ни одно из представленных состояний,
 то используйте `state="custom"`. Задать пользовательскую иконку в таком случае можно через свойство [`customIcon`](#custom-icon).
 
+<Playground>
+  ```jsx
+  <ScreenSpinner.Container>
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  <ScreenSpinner.Container state="cancelable">
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  <ScreenSpinner.Container state="done">
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  <ScreenSpinner.Container state="error">
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  <ScreenSpinner.Container state="custom" customIcon={<Icon56CheckCircleOutline />}>
+    <ScreenSpinner.Loader />
+    <ScreenSpinner.SwapIcon />
+  </ScreenSpinner.Container>
+  ```
+</Playground>
+
 ## Сопроводительный текст
 
 Задаётся свойством `label`. Текст располагается под иконкой. Если вы хотите использовать просто иконку
@@ -56,8 +111,7 @@
 
 ## Пользовательские иконки [#custom-icon]
 
-Задаётся свойством `customIcon` и работает совместно со `state="custom"`, принимает любой `React`-элемент,
-но хорошо подходят иконки из `@vkontakte/icons` размером `48px` и `56px`.
+Задаётся свойством `customIcon` и работает совместно со `state="custom"`, .
 
 ```jsx
 import { ScreenSpinner } from '@vkontakte/vkui';

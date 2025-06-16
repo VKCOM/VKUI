@@ -7,16 +7,18 @@
 
 </Overview>
 
-```jsx
-<Checkbox>Checkbox</Checkbox>
-```
+<Playground>
+  ```jsx
+  <Checkbox name="notifications">Уведомления включены</Checkbox>
+  ```
+</Playground>
 
 ## Применение компонента
 
 - если вы используете компонент `Checkbox` для глобального управления состоянием другой группы компонентов `Checkbox`, используйте
-  свойство `indeterminate` для индикации разного состояния дочерних `Checkbox`;
+  свойство `indeterminate` для индикации разного состояния дочерних переключателей;
 - если вам необходим компонент, который предоставляет выбор более чем из двух взаимоисключающих значений,
-  используйте группу компонентов `Radio`;
+  используйте группу компонентов [`Radio`](/components/radio);
 
 ## Режим работы
 
@@ -43,6 +45,20 @@ const [checked, setChecked] = React.useState(false);
 <Checkbox checked={checked} onChange={(event) => setChecked(event.target.checked)} />;
 ```
 
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground>
+  ```jsx
+  <Checkbox name="notifications" disabled>
+    Уведомления включены
+  </Checkbox>
+  ```
+</Playground>
+
 ## Визуальное оформление
 
 По умолчанию компонент использует для визуализации два набора (для `"regular"` и `"compact"` режима) стандартных иконок,
@@ -55,6 +71,19 @@ const [checked, setChecked] = React.useState(false);
 - `IconOnRegular` - иконка для выбранного состояния в режиме `"regular"` (мобильные устройства).
 
 Рекомендуется использовать иконки размером `24px` для режима `"regular"` и `20px` для режима `"compact"`.
+
+<Playground>
+  ```jsx
+  <Checkbox
+    IconOffCompact={Icon20LikeOutline}
+    IconOffRegular={Icon24LikeOutline}
+    IconOnCompact={Icon20Like}
+    IconOnRegular={Icon24Like}
+  >
+    Пицца с ананасами
+  </Checkbox>
+  ```
+</Playground>
 
 ## Доступность (a11y) [#a11y]
 

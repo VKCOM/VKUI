@@ -8,21 +8,20 @@
 
 ## Основное использование
 
-```jsx
-<Group header={<Header size="s">Default Spacing (empty, 8px)</Header>}>
-  <SimpleCell before={<Icon28Notifications />}>Уведомления</SimpleCell>
-  <SimpleCell before={<Icon28BlockOutline />}>Не беспокоить</SimpleCell>
+import { BlockWrapper } from '@/components/wrappers';
 
-  <Spacing />
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Text>Текст над отступом</Text>
+  <Spacing size="4xl" />
+  <Text>Текст под отступом</Text>
+  ```
+</Playground>
 
-  <SimpleCell before={<Icon28UserOutline />}>Учётная запись</SimpleCell>
-  <SimpleCell before={<Icon28SlidersOutline />}>Основные</SimpleCell>
-</Group>
-```
+## Размеры отступа
 
-## Размеры отступов
-
-Задаются свойством `size`. Принимает значения дизайн-системы, числовые значения и css-переменные.
+Задаются свойством `size`.
+Принимает значения дизайн-системы (например, `"s"`, `"m"`, `"l"`), числовые значения и `css`-переменные.
 
 ```jsx
 <Spacing size="xs" /> // 4px

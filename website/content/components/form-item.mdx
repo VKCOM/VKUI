@@ -9,6 +9,14 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <FormItem htmlFor="email" top="E-mail">
+    <Input type="email" id="email" name="email" />
+  </FormItem>
+  ```
+</Playground>
+
 ## Структура компонента
 
 `FormItem` состоит из трёх основных частей:
@@ -17,11 +25,18 @@
 - `children` — основной контент (поле ввода);
 - `bottom` — подсказка или сообщение о статусе валидации.
 
-```jsx
-<FormItem top="Email" bottom="Мы никогда не передадим вашу почту третьим лицам">
-  <Input type="email" />
-</FormItem>
-```
+<Playground>
+  ```jsx
+  <FormItem
+    htmlFor="email"
+    top="E-mail"
+    bottom="Мы не передаём вашу почту третьим лицам"
+    bottomId="email-type"
+  >
+    <Input type="email" id="email" name="email" aria-labelledby="email-type" />
+  </FormItem>
+  ```
+</Playground>
 
 ### Подкомпоненты
 
@@ -34,20 +49,39 @@
   если передано свойство `htmlFor`. Можно переопределить через свойство `Component`;
 - `<FormItem.TopAside>` отвечает за отрисовку дополнительного контента справа от заголовка поля.
 
-```jsx
-<FormItem
-  top={
-    <FormItem.Top>
-      <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
-      <FormItem.TopAside>0/100</FormItem.TopAside>
-    </FormItem.Top>
-  }
->
-  <Textarea id="about" name="about" />
-</FormItem>
-```
+<Playground>
+  ```jsx
+  <FormItem
+    top={
+      <FormItem.Top>
+        <FormItem.TopLabel htmlFor="about">Дополнительная информация</FormItem.TopLabel>
+        <FormItem.TopAside>0/100</FormItem.TopAside>
+      </FormItem.Top>
+    }
+  >
+    <Textarea id="about" name="about" />
+  </FormItem>
+  ```
+</Playground>
 
-## Состояние
+## Состояния
+
+#### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Свойство `disabled` необходимо передавать и компоненту `FormItem`, и вложенному в него полю, потому что
+> свойство влияет на разные части компонентов. Например, недоступные поля ввода по умолчанию нельзя [удалить](#removable).
+
+<Playground>
+  ```jsx
+  <FormItem htmlFor="email" top="E-mail" disabled>
+    <Input type="email" id="email" name="email" disabled />
+  </FormItem>
+  ```
+</Playground>
+
+## Валидация
 
 Задаётся свойством `status`.
 
@@ -58,6 +92,25 @@
 Если вы используете значения `"error"` (реже `"valid"`), старайтесь сопровождать состояние поясняющим сообщением, например,
 используя свойство `bottom`.
 
+<Playground direction="column">
+  ```jsx
+  <FormItem
+    htmlFor="email"
+    top="E-mail"
+    status="error"
+    bottom="Пожалуйста, введите e-mail"
+    bottomId="email-type"
+    required
+    noPadding
+  >
+    <Input aria-labelledby="email-type" id="email" type="email" name="email" required />
+  </FormItem>
+  <FormItem htmlFor="text" top="Описание" status="valid" noPadding>
+    <Input id="text" name="text" />
+  </FormItem>
+  ```
+</Playground>
+
 ## Обязательность поля
 
 Свойство `required` позволяет пометить поле как обязательное для заполнения.
@@ -67,11 +120,11 @@
 
 ```jsx
 <FormItem top="Email" required>
-  <Input type="email" required />
+  <Input type="email" name="email" required />
 </FormItem>
 ```
 
-## Удаление поля
+## Удаление поля [#removable]
 
 Добавить возможность удалить поле можно с помощью свойства `removable`,
 которое добавит кнопку удаления, стилизованную под используемую платформу.
@@ -83,6 +136,21 @@
 - `removePlaceholder` — текст, который будет зачитан скринридером или показан на платформе iOS
   при взаимодействии с кнопкой удаления (по умолчанию "Удалить");
 - `onRemove` — функция-обработчик, которая будет вызвана при нажатии на кнопку удаления.
+
+<Playground>
+  ```jsx
+  <FormItem
+    htmlFor="patronymic"
+    removable
+    onRemove={() => alert('Обработчик удаления')}
+    top="Отчество"
+    bottom="Если у вас нет отчества — удалите этот пункт"
+    bottomId="patronymicDescription"
+  >
+    <Input id="patronymic" aria-labelledby="patronymicDescription" />
+  </FormItem>
+  ```
+</Playground>
 
 ## Отступы
 

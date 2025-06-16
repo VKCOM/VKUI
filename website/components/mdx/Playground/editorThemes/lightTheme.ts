@@ -2,6 +2,8 @@ export const lightTheme = {
   plain: {
     color: '#24292e',
     backgroundColor: 'transparent',
+    whiteSpace: 'nowrap',
+    overflow: 'auto',
   },
   styles: [
     {

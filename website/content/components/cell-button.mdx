@@ -7,35 +7,69 @@
 
 Связанные компоненты:
 
-- CellButtonGroup
+- [`CellButtonGroup`](/components/cell-button-group)
 
 </Overview>
 
-## Цветовые схемы
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}}>Добавить родственника</CellButton>
+  ```
+</Playground>
 
-Задается свойством `appearance`.
+## Визуальное оформление
 
-```jsx
-<Group header={<Header size="s">Разные цветовые схемы</Header>}>
-  <CellButton appearance="accent">Основное действие</CellButton>
-  <CellButton appearance="neutral">Нейтральное действие</CellButton>
-  <CellButton appearance="negative">Критичное действие</CellButton>
-</Group>
-```
+### Цвет
+
+Задаётся свойством `appearance`.
+
+#### `"neutral"`
+
+Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="neutral">
+    Скрыть раздел
+  </CellButton>
+  ```
+</Playground>
+
+#### `"accent"`
+
+Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="accent">
+    Добавить родственника
+  </CellButton>
+  ```
+</Playground>
+
+#### `"negative"`
+
+Значение задаёт кнопке цвет критических действий (чаще всего красный).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="negative">
+    Удалить беседу
+  </CellButton>
+  ```
+</Playground>
 
 ## Выравнивание
 
 Задается свойством `centered`.
 
-```jsx
-<Group header={<Header size="s">Центрирование</Header>}>
-  <CellButton before={<Icon24Add />}>Создать</CellButton>
-
-  <CellButton centered before={<Icon24Add />}>
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} centered before={<Icon24Add />}>
     Центрированная кнопка
   </CellButton>
-</Group>
-```
+  ```
+</Playground>
 
 ## Особенности
 
@@ -50,11 +84,18 @@
 
 Пример с дополнительным контентом:
 
-```jsx
-<CellButton before={<Icon28WalletOutline />} subtitle="Баланс: 500 ₽" after={<Counter>3</Counter>}>
-  Кошелёк
-</CellButton>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton
+    before={<Icon28WalletOutline />}
+    subtitle="Баланс: 500 ₽"
+    after={<Counter>3</Counter>}
+    onClick={() => {}}
+  >
+    Кошелёк
+  </CellButton>
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

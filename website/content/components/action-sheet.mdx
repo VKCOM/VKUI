@@ -9,6 +9,38 @@
 
 </Overview>
 
+<Playground>
+
+```jsx
+const [actionSheet, setActionSheet] = React.useState(null);
+const targetRef = React.useRef(null);
+
+function handleClose() {
+  setActionSheet(null);
+}
+
+function handleOpen() {
+  setActionSheet(
+    <ActionSheet toggleRef={targetRef} onClose={handleClose}>
+      <ActionSheetItem>Слушать далее</ActionSheetItem>
+      <ActionSheetItem>Поделиться</ActionSheetItem>
+      <ActionSheetItem>Скопировать ссылку</ActionSheetItem>
+    </ActionSheet>,
+  );
+}
+
+return (
+  <>
+    {actionSheet}
+    <Button getRootRef={targetRef} onClick={handleOpen} aria-expanded={Boolean(actionSheet)}>
+      Туц-туц
+    </Button>
+  </>
+);
+```
+
+</Playground>
+
 При использовании данного компонента отталкивайтесь от контекста и количества действий.
 Использование `ActionSheet` хорошо подходит для отображения вариантов в ответ на осознанное действие.
 Например, при отмене редактирования электронного письма среди доступных вариантов могут быть такие действия как "Удалить изменения",
@@ -45,34 +77,6 @@ function handleClose({ closedBy }) {
 В данное свойство следует передавать элемент, относительно которого будет позиционироваться
 компонент в `mode="menu"` (учитывая автоматическое определение режима).
 В качестве значения лучше передавать [ref-объект](https://react.dev/learn/manipulating-the-dom-with-refs).
-
-```jsx
-const [actionSheet, setActionSheet] = React.useState(null);
-const targetRef = React.useRef(null);
-
-function handleClose() {
-  setActionSheet(null);
-}
-
-function handleOpen() {
-  setActionSheet(
-    <ActionSheet toggleRef={targetRef} onClose={handleClose}>
-      <ActionSheetItem>Слушать далее</ActionSheetItem>
-      <ActionSheetItem>Поделиться</ActionSheetItem>
-      <ActionSheetItem>Скопировать ссылку</ActionSheetItem>
-    </ActionSheet>,
-  );
-}
-
-return (
-  <div>
-    {actionSheet}
-    <Button getRootRef={targetRef} onClick={handleOpen} aria-expanded={Boolean(actionSheet)}>
-      Ещё
-    </Button>
-  </div>
-);
-```
 
 ## Режимы отображения
 

@@ -7,22 +7,30 @@
 
 </Overview>
 
+<Playground>
+  ```jsx
+  <Link href="https://vk.cc/cMPb66">Я — ссылка</Link>
+  ```
+</Playground>
+
 ## Использование иконок
 
-Для отображения дополнительных иконок перед и после текст можно использовать свойства `before` и `after` соответственно.
-Рекомендуется использовать иконки размера `16px`.
+Для отображения дополнительных иконок перед и после текста можно использовать свойства `before` и `after` соответственно.
+Рекомендуется использовать иконки размером `16px`.
 
-```jsx
-<Link
-  href="https://vk.com/video807566_169118280"
-  target="_blank"
-  before={<Icon16ChainOutline />}
-  after={<Icon24ExternalLinkOutline width={16} height={16} />}
->
-  Главная в новом окне
-</Link>
-```
+<Playground>
+  ```jsx
+  <Link
+    href="https://vkui.io"
+    target="_blank"
+    before={<Icon16ChainOutline />}
+    after={<Icon16LinkOutline />}
+  >
+    Главная в новом окне
+  </Link>
+  ```
+</Playground>
 
 ## Доступность (a11y)
 
-Для обеспечения доступности автоматически выбирает HTML-тег (`<a>` при наличии `href`, `<button>` иначе).
+Для обеспечения доступности автоматически выбирает HTML-тег (`<a>` при наличии `href`, иначе `<button>`).

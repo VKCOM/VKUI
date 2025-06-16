@@ -5,54 +5,46 @@
 
 </Overview>
 
-```jsx
-<Banner
-  before={<Avatar size={48} src={userAvatar} />}
-  title="Новое уведомление"
-  subtitle="У вас 5 новых сообщений"
-  actions={<Button mode="primary">Просмотреть</Button>}
-/>
-```
+<Playground>
+  ```jsx
+  <Banner
+    before={<Avatar size={48} initials="ЕХ" />}
+    title="Новое уведомление"
+    subtitle="У вас 5 новых сообщений"
+    actions={<Button mode="primary">Просмотреть</Button>}
+  />
+  ```
+</Playground>
 
 ## Режимы отображения
 
-### `mode="tint"` (по умолчанию)
+Задаётся свойством `mode`.
 
-Стандартный режим с цветным фоном.
+Помимо стандартного режима (`mode="tint"`), поддерживается `mode="image"`, предназначенный для
+отображения компонента с фоновым изображением.
 
-```jsx
-<Banner
-  before={<Avatar size={48} src={userAvatar} />}
-  title="Новое уведомление"
-  subtitle="У вас 5 новых сообщений"
-  actions={<Button mode="primary">Просмотреть</Button>}
-/>
-```
-
-### `mode="image"`
-
-Режим с фоновым изображением.
-
-```jsx
-<Banner
-  mode="image"
-  title="Мои достижения"
-  subtitle="Разблокировано 9 из 36"
-  background={
-    <div
-      style={{
-        backgroundColor: '#65c063',
-        backgroundImage:
-          'url(https://sun9-59.userapi.com/7J6qHkTa_P8VKRTO5gkh6MizcCEefz04Y0gDmA/y6dSjdtPU4U.jpg)',
-        backgroundPosition: 'right bottom',
-        backgroundSize: 320,
-        backgroundRepeat: 'no-repeat',
-      }}
-    />
-  }
-  actions={<Button appearance="overlay">Подробнее</Button>}
-/>
-```
+<Playground>
+  ```jsx
+  <Banner
+    mode="image"
+    title="Мои достижения"
+    subtitle="Разблокировано 9 из 36"
+    background={
+      <div
+        style={{
+          backgroundColor: '#65c063',
+          backgroundImage:
+            'url(https://sun9-59.userapi.com/7J6qHkTa_P8VKRTO5gkh6MizcCEefz04Y0gDmA/y6dSjdtPU4U.jpg)',
+          backgroundPosition: 'right bottom',
+          backgroundSize: 320,
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+    }
+    actions={<Button appearance="overlay">Подробнее</Button>}
+  />
+  ```
+</Playground>
 
 ## Контентные блоки
 
@@ -64,32 +56,34 @@
 - `chevron` — индикатор перехода;
 - `ReactNode` — пользовательский элемент.
 
-```jsx
-<Banner
-  title="Больше интересных подкастов в каталоге"
-  subtitle="Найдите интересующие именно вас подкасты!"
-  after="chevron"
-  onClick={() => console.log('[Podcast banner] onClick')}
-/>
-```
+<Playground>
+  ```jsx
+  <Banner
+    title="Больше интересных подкастов в каталоге"
+    subtitle="Найдите интересующие именно вас подкасты!"
+    after="chevron"
+  />
+  ```
+</Playground>
 
 ### Левая секция (`before`)
 
-```jsx
-<Banner
-  before={
-    <Image
-      size={96}
-      src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
-    />
-  }
-  title="Баста в Ледовом"
-  subtitle="Большой концерт"
-  after="dismiss"
-  onDismiss={noop}
-  actions={<Button>Подробнее</Button>}
-/>
-```
+<Playground>
+  ```jsx
+  <Banner
+    before={
+      <Image
+        size={96}
+        src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
+      />
+    }
+    title="Баста в Ледовом"
+    subtitle="Большой концерт"
+    after="dismiss"
+    actions={<Button>Подробнее</Button>}
+  />
+  ```
+</Playground>
 
 ### Текстовые элементы
 
@@ -99,17 +93,40 @@
 - `subtitle` — дополнительный текст;
 - `extraSubtitle` — расширенное описание.
 
+<Playground>
+  ```jsx
+  <Banner
+    title="Телефон ожидает подтверждения"
+    subtitle={
+      <React.Fragment>
+        Новый номер +7 ••• ••• •• 96 будет сохранён через семь дней.
+        <br />
+        <Link href="#">Ускорьте процесс</Link>, если у Вас есть
+        <br />
+        доступ к старому номеру.
+      </React.Fragment>
+    }
+  />
+  ```
+</Playground>
+
 ## Действия
 
 Для добавления действий используйте свойство `actions`.
 
-```jsx
-<Banner
-  actions={
-    <ButtonGroup mode="vertical" gap="m">
-      <Button mode="primary">Принять</Button>
-      <Button mode="secondary">Отклонить</Button>
-    </ButtonGroup>
-  }
-/>
-```
+<Playground>
+  ```jsx
+  <Banner
+    before={
+      <Avatar src="https://sun9-7.userapi.com/q9qBUh4kGND1pTUytY4LwljtRLWoCXaIzN7C2A/52lM85R5kus.jpg" />
+    }
+    extraSubtitle="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
+    actions={
+      <ButtonGroup mode="horizontal" gap="m">
+        <Button>Включить</Button>
+        <Button mode="link">Подробнее</Button>
+      </ButtonGroup>
+    }
+  />
+  ```
+</Playground>

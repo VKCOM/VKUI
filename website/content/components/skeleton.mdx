@@ -7,13 +7,16 @@
 
 </Overview>
 
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Skeleton width="100%" />
+  ```
+</Playground>
+
 ## Пример использования
 
-```jsx
-<>
-  <PanelHeader>
-    <Skeleton width="100%" />
-  </PanelHeader>
+<Playground>
+  ```jsx
   <Group>
     <SimpleCell
       before={<Skeleton width={36} height={36} borderRadius="50%" />}
@@ -27,23 +30,8 @@
       <Skeleton width="75%" />
     </Div>
   </Group>
-</>
-```
-
-## Элементы интерфейса
-
-Примеры использования для разных элементов интерфейса:
-
-```jsx
-<>
-  {/* Аватар */}
-  <Skeleton width={48} height={48} borderRadius="50%" />
-  {/* Кнопка */}
-  <Skeleton width={120} height={36} borderRadius={8} />
-  {/* Карточка */}
-  <Skeleton width={300} height={200} borderRadius={12} />
-</>
-```
+  ```
+</Playground>
 
 ## Настройка анимации
 
@@ -59,19 +47,23 @@
 
 Отключить анимацию можно с помощью свойства `noAnimation`:
 
-```jsx
-<Skeleton noAnimation />
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Skeleton noAnimation />
+  ```
+</Playground>
 
 ## Особенности
 
 - Поддерживается автоматическая высота для текстовых блоков:
 
-```jsx
-<div style={{ fontSize: 16 }}>
-  <Skeleton />
-</div>
-```
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Title style={{ width: '100%' }}>
+    <Skeleton />
+  </Title>
+  ```
+</Playground>
 
 - Собственные размеры можно задавать через CSS-переменные:
 

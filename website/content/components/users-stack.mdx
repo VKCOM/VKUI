@@ -2,74 +2,95 @@
 
 # UsersStack
 
-Компонент для отображения группы аватарок пользователей с возможностью добавления сопроводительного текста.
+Компонент для отображения группы аватаров пользователей с возможностью добавления сопроводительного текста.
 Оптимален для визуализации участников чата, подписчиков или коллаборативной работы.
 
 </Overview>
 
-## Режимы отображения
+<Playground>
+  ```jsx
+  <UsersStack
+    photos={[
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+    ]}
+  >
+    Даниил и Ином подписаны
+  </UsersStack>
+  ```
+</Playground>
 
-### Горизонтальный (inline)
+## Использование
 
-```jsx
-<UsersStack photos={userPhotos} size="l">
-  <Text>Последние участники</Text>
-</UsersStack>
-```
+Для отображения аватаров передавайте ссылки на изображения в свойство `photos`, которое принимает массив ссылок.
+Дополнительно есть возможность передать массив объектов, каждый объект состоит также из ссылки на изображение и
+пользовательского [компонента-обёртки](#wrappers) для каждого элемента.
 
-### Вертикальный (block)
+## Положение аватаров [#avatar-position]
 
-```jsx
-<UsersStack photos={userPhotos} avatarsPosition="block-start" size="m">
-  <Text>Команда проекта</Text>
-</UsersStack>
-```
+Помимо положения аватаров перед или после текста (`avatarsPosition="inline-start"` и `avatarsPosition="inline-end"` соответственно),
+есть возможность задать блочное расположение - аватары над текстом (`avatarsPosition="block-start"`).
+В таком случае оптимальным будет совместное использование со свойством `size="m"`:
 
-## Кастомизация аватарок
+<Playground>
+  ```jsx
+  <UsersStack
+    avatarsPosition="block-start"
+    size="m"
+    visibleCount={2}
+    count={3}
+    photos={[
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+    ]}
+  >
+    Виктория, Эльдар и ещё 3 человека пойдут на это мероприятие
+  </UsersStack>
+  ```
+</Playground>
+
+## Счётчик
+
+Если в свойство `photos` передаётся количество элементов большее, чем указано в свойстве `visibleCount`,
+то рядом с аватарами появляется счётчик, который по умолчанию отображает количество оставшихся элементов.
+С помощью числового свойства `count` можно переопределить число, которое будет показано.
+Если число окажется больше `99`, то счётчик скрывается.
+Пример можно увидеть в разделе [Положение аватаров](#avatar-position).
+
+## Кастомизация аватаров [#wrappers]
 
 Аватарки можно оборачивать в кастомный компонент для добавления дополнительного функционала
-с помощью свойства `renderWrapper` у элемента списка `photos`:
+с помощью свойства `renderWrapper` у элемента списка `photos`. В примере ниже при наведении на
+аватар появляется подсказка с именем пользователя:
 
-```jsx
-function AvatarWrapper(props) {
-  const user = getRandomUser();
-
-  return (
-    <Tooltip description={`${user.first_name} ${user.last_name}`}>
-      <div
-        style={{
-          cursor: 'pointer',
-        }}
-        onClick={() => window.open(props['data-src'], '_blank')}
-      >
-        {props.children}
-      </div>
-    </Tooltip>
-  );
-}
-
-function Example() {
-  return (
-    <UsersStack
-      photos={[
-        { src: getAvatarUrl('user_ox'), renderWrapper: AvatarWrapper },
-        { src: getAvatarUrl('user_vitalyavolyn'), renderWrapper: AvatarWrapper },
-        { src: getAvatarUrl('user_eee'), renderWrapper: AvatarWrapper },
-        { src: getAvatarUrl('user_wayshev'), renderWrapper: AvatarWrapper },
-        { src: getAvatarUrl('user_arthurstam'), renderWrapper: AvatarWrapper },
-        { src: getAvatarUrl('user_xyz'), renderWrapper: AvatarWrapper },
-      ]}
-      size="l"
-      avatarsPosition="block-start"
-    >
-      Иван и ещё 2 ваших друга подписаны
-    </UsersStack>
-  );
-}
-```
+<Playground>
+  ```jsx
+  <UsersStack
+    size="l"
+    photos={[
+      {
+        src: 'https://avatars.githubusercontent.com/u/14944123?s=50',
+        renderWrapper: (props) => (
+          <Tooltip description="Даниил Суворов">
+            <Tappable onClick={() => {}}>{props.children}</Tappable>
+          </Tooltip>
+        ),
+      },
+      {
+        src: 'https://avatars.githubusercontent.com/u/5850354?s=50',
+        renderWrapper: (props) => (
+          <Tooltip description="Ином Мирджамолов">
+            <Tappable onClick={() => {}}>{props.children}</Tappable>
+          </Tooltip>
+        ),
+      },
+    ]}
+  />
+  ```
+</Playground>
 
 ## Ограничения
 
-- Максимальное число в счётчике: 99.
+- Максимальное число в счётчике: 99, иначе счётчик скрывается.
 - При `size="s"` счётчик не отображается.
-- Не используйте с `avatarsPosition="block-start"` и `size="l"`.
+- Рекомендуется использовать `avatarsPosition="block-start"` вместе с `size="m"`.

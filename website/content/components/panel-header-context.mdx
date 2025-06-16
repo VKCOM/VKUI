@@ -5,7 +5,40 @@
 Может быть полезен для реализации дополнительной навигации по разделам приложения.
 Размещайте данный компонент _рядом_ с компонентом `PanelHeader`.
 
+Связанные компоненты:
+
+- [`PanelHeader`](/components/panel-header)
+
 </Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const [contextOpened, setContextOpened] = React.useState(false);
+
+const toggleContext = () => {
+  setContextOpened((prev) => !prev);
+};
+
+return (
+  <Panel>
+    <PanelHeader>
+      <PanelHeaderContent onClick={toggleContext}>Нажми</PanelHeaderContent>
+    </PanelHeader>
+    <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
+      <SimpleCell onClick={() => setContextOpened(false)}>Пункт один</SimpleCell>
+      <SimpleCell onClick={() => setContextOpened(false)}>Пункт два</SimpleCell>
+    </PanelHeaderContext>
+    <Group>
+      <div style={{ height: 150 }} />
+    </Group>
+  </Panel>
+);
+```
+
+</Playground>
 
 ## Контент
 

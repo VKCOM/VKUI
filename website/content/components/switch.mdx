@@ -2,13 +2,17 @@
 
 # Switch
 
+Переключатель, позволяющий пользователям выбрать между парой противоположных состояний,
+например, включено/выключено.
 Наследует все свойства нативного `<input type="checkbox">` с дополнительными возможностями кастомизации.
 
 </Overview>
 
-```jsx
-<Switch />
-```
+<Playground>
+  ```jsx
+  <Switch />
+  ```
+</Playground>
 
 ## Режим работы
 
@@ -28,6 +32,18 @@ const [checked, setChecked] = React.useState(false);
 
 <Switch checked={checked} onChange={(event) => setChecked(event.target.checked)} />;
 ```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground>
+  ```jsx
+  <Switch defaultChecked disabled />
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

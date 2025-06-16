@@ -6,9 +6,11 @@
 
 </Overview>
 
-```jsx
-<Input placeholder="Введите текст" />
-```
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input name="input" placeholder="Введите текст" />
+  ```
+</Playground>
 
 ## Режим работы
 
@@ -21,26 +23,41 @@ React-компонентов, прочитать про это можно в [д
 
 ```jsx
 // Неконтролируемое состояние
-<Input defaultValue="Текст" />;
+<Input name="name" defaultValue="Текст" />;
 
 // Контролируемое состояние
 const [text, setText] = React.useState('Текст');
 
-<Input value={text} onChange={(event) => setText(event.target.value)} />;
+<Input name="input" value={text} onChange={(event) => setText(event.target.value)} />;
 ```
 
-## Визуальное оформление
+## Состояния
 
-### Состояние
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `Input` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input name="input" defaultValue="Недоступно" disabled />
+  ```
+</Playground>
+
+## Валидация
 
 Свойство `status` используется для состояния валидации компонента - некорректности заполненного поля (значение `"error"`)
 или успешной валидации (значение `"valid"`).
 
 > Если вы используете `Input` вместе с `FormItem`, вам достаточно указать свойство `status` только у `FormItem`.
 
-Свойство `disabled` позволяет пометить компонент, как недоступный для взаимодействия.
-
-> Если вы используете `Input` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input status="valid" name="valid" placeholder="Введите текст" />
+  <Input status="error" name="error" placeholder="Введите текст" />
+  ```
+</Playground>
 
 ## Доступность (a11y)
 

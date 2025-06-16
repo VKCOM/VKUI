@@ -6,29 +6,34 @@
 
 </Overview>
 
-```jsx
-<SegmentedControl
-  name="report-type"
-  options={[
-    {
-      label: 'Баг',
-      value: 'bug',
-    },
-    {
-      label: 'Идея',
-      value: 'idea',
-    },
-    {
-      label: 'Другое',
-      value: 'other',
-    },
-  ]}
-/>
-```
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SegmentedControl
+    name="report-type"
+    options={[
+      {
+        label: 'Баг',
+        value: 'bug',
+      },
+      {
+        label: 'Идея',
+        value: 'idea',
+      },
+      {
+        label: 'Другое',
+        value: 'other',
+      },
+    ]}
+  />
+  ```
+</Playground>
 
 ## Применение компонента
 
-Компонент может использоваться как навигационный элемент (аналог `Tabs`) или как элемент формы (аналог `RadioGroup`).
+Компонент может использоваться как навигационный элемент (аналог [`Tabs`](/components/tabs)) или
+как элемент формы (аналог [`RadioGroup`](/components/radio-group)).
 
 Избегайте использования слишком большого числа сегментированных кнопок, рекомендуется использовать от трёх до семи кнопок
 для планшетов и десктопов и до пяти кнопок в мобильном представлении.
@@ -90,46 +95,49 @@ const [color, setColor] = React.useState('red');
 
 Это обеспечит правильную семантику и доступность компонента для пользователей ассистивных технологий.
 
+<Playground Wrapper={BlockWrapper}>
+
 ```jsx
 const [selected, setSelected] = React.useState('news');
 
-<Panel id="panel">
-  <PanelHeader>Пример навигационного элемента</PanelHeader>
-
-  <SegmentedControl
-    role="tablist"
-    value={selected}
-    onChange={(value) => setSelected(value)}
-    options={[
-      {
-        'label': 'Новости',
-        'value': 'news',
-        'aria-controls': 'tab-content-news',
-        'id': 'tab-news',
-      },
-      {
-        'label': 'Интересное',
-        'value': 'recommendations',
-        'aria-controls': 'tab-content-recommendations',
-        'id': 'tab-recommendations',
-      },
-    ]}
-  />
-
-  {selected === 'news' && (
-    <Group id="tab-content-news" aria-labelledby="tab-news" role="tabpanel" tabIndex={0}>
-      <Div>Контент новостей</Div>
-    </Group>
-  )}
-  {selected === 'recommendations' && (
-    <Group
-      id="tab-content-recommendations"
-      aria-labelledby="tab-recommendations"
-      role="tabpanel"
-      tabIndex={0}
-    >
-      <Div>Контент рекомендаций</Div>
-    </Group>
-  )}
-</Panel>;
+return (
+  <Group>
+    <SegmentedControl
+      role="tablist"
+      value={selected}
+      onChange={(value) => setSelected(value)}
+      options={[
+        {
+          'label': 'Новости',
+          'value': 'news',
+          'aria-controls': 'tab-content-news',
+          'id': 'tab-news',
+        },
+        {
+          'label': 'Интересное',
+          'value': 'recommendations',
+          'aria-controls': 'tab-content-recommendations',
+          'id': 'tab-recommendations',
+        },
+      ]}
+    />
+    {selected === 'news' && (
+      <Div id="tab-content-news" aria-labelledby="tab-news" role="tabpanel" tabIndex={0}>
+        Контент новостей
+      </Div>
+    )}
+    {selected === 'recommendations' && (
+      <Div
+        id="tab-content-recommendations"
+        aria-labelledby="tab-recommendations"
+        role="tabpanel"
+        tabIndex={0}
+      >
+        Контент рекомендаций
+      </Div>
+    )}
+  </Group>
+);
 ```
+
+</Playground>

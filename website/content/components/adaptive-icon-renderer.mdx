@@ -17,26 +17,23 @@
 
 ## Пример использования [#example]
 
-```jsx
-import { AdaptivityProvider, AdaptivityProvider, Text } from '@vkontakte/vkui';
-import { Icon24SmileOutline, Icon28SmileOutline } from '@vkontakte/icons';
+В примере ниже мы "искусственно" переопределяем адаптивность через [`AdaptivityProvider`](/components/adaptivity-provider),
+для того, чтобы наглядно убедиться в разном размере отображаемых иконок.
+В реальных условиях достаточно просто использовать `AdaptiveIconRenderer`, который будет самостоятельно
+определять, когда необходимо показать тот или иной размер иконки.
 
-export function App() {
-  return (
-    <>
-      <AdaptivityProvider sizeY="compact">
-        <Text>Icon size 24</Text>
-        <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
-      </AdaptivityProvider>
-
-      <AdaptivityProvider sizeY="regular">
-        <Text>Icon size 28</Text>
-        <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
-      </AdaptivityProvider>
-    </>
-  );
-}
-```
+<Playground direction="column">
+  ```jsx
+  <AdaptivityProvider sizeY="compact">
+    <Text>Icon size 24</Text>
+    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+  </AdaptivityProvider>
+  <AdaptivityProvider sizeY="regular">
+    <Text>Icon size 28</Text>
+    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+  </AdaptivityProvider>
+  ```
+</Playground>
 
 ## Передача свойств в иконки [#providing-props-to-icons]
 
