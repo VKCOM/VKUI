@@ -75,7 +75,7 @@
     "jest-preset-stylelint": "^7.3.0",
     "lint-staged": "^16.1.0",
     "mini-css-extract-plugin": "^2.9.2",
-    "postcss": "^8.5.4",
+    "postcss": "^8.5.5",
     "postcss-cli": "^11.0.1",
     "postcss-custom-media": "^11.0.6",
     "postcss-gap-properties": "^6.0.0",
