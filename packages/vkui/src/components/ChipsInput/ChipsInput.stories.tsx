@@ -32,7 +32,7 @@ const DEFAULT_TAGS = [
 export const Playground: Story = {
   render: (args) => (
     <FormItem top="Добавьте любимые теги" htmlFor="chips-input" style={{ width: 320 }}>
-      <ChipsInput {...args} id="chips-input" />
+      <ChipsInput {...args} aria-label="Добавьте любимые теги" id="chips-input" />
     </FormItem>
   ),
   args: {

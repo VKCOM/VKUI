@@ -42,7 +42,7 @@ const groups = [
 export const Playground: Story = {
   render: (args) => (
     <FormItem top="Выберите музыкальные группы" htmlFor="chips-select" style={{ width: 320 }}>
-      <ChipsSelect {...args} id="chips-select" />
+      <ChipsSelect aria-label="Выберите музыкальные группы" {...args} id="chips-select" />
     </FormItem>
   ),
   args: {

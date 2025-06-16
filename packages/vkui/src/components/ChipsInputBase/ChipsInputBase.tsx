@@ -15,6 +15,7 @@ import {
 import { FormField } from '../FormField/FormField';
 import { FormFieldClearButton } from '../FormFieldClearButton/FormFieldClearButton';
 import { Text } from '../Typography/Text/Text';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { DEFAULT_INPUT_VALUE, DEFAULT_VALUE, renderChipDefault } from './constants';
 import {
   getChipOptionIndexByHTMLElement,
@@ -46,12 +47,12 @@ export const ChipsInputBase = <O extends ChipOption>({
   // option
   value = DEFAULT_VALUE,
   onAddChipOption,
-  onRemoveChipOption: onRemoveChipOptionProp,
+  'onRemoveChipOption': onRemoveChipOptionProp,
   renderChip = renderChipDefault,
 
   // input
   getRef,
-  id: idProp,
+  'id': idProp,
   inputValue = DEFAULT_INPUT_VALUE,
   placeholder,
   disabled,
@@ -68,10 +69,12 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   // a11y
   chipsListLabel = '',
+  'aria-label': ariaLabel,
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const idGenerated = React.useId();
+  const ariaLabelId = React.useId();
   const inputRef = useExternRef(getRef);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const listboxRef = React.useRef<HTMLDivElement>(null);
@@ -248,6 +251,7 @@ export const ChipsInputBase = <O extends ChipOption>({
     <FormField
       Component="div"
       getRootRef={getRootRef}
+      aria-labelledby={ariaLabelId}
       style={style}
       disabled={disabled}
       before={before}
@@ -268,6 +272,7 @@ export const ChipsInputBase = <O extends ChipOption>({
         ref={containerRef}
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
       >
+        {ariaLabel && <VisuallyHidden id={ariaLabelId}>{ariaLabel}</VisuallyHidden>}
         <div
           className={styles.listBox}
           // для a11y
