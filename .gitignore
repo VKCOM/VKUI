@@ -5,6 +5,7 @@ PUBLISHING.md
 dist/
 storybook-static/
 out/
+_pagefind/
 
 # Next
 .next/
