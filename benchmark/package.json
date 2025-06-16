@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@playwright/test": "1.52.0",
-    "@swc/core": "^1.11.31",
+    "@swc/core": "^1.12.1",
     "@vkontakte/vkui": "workspace:packages/vkui",
     "cli-table3": "^0.6.1",
     "css-loader": "7.1.2",
