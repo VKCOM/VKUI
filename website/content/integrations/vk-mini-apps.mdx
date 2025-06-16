@@ -173,11 +173,11 @@ const SomeViews = () => {
 Мини-приложению доступна почти вся площадь экрана, поэтому для корректной работы навигации
 необходимо использовать компонент [`PanelHeader`](/components/panel-header) на каждом
 экране приложения. Он должен содержать название приложения и значок **Назад** (см.
-[`PanelHeaderBack`](/components/panel-header-button#panelheaderback)) на тех экранах, где тот
+[`PanelHeaderBack`](/components/panel-header#panel-header-back)) на тех экранах, где тот
 требуется.
 
 <Callout>
-_Правый верхний угол_ `PanelHeader` зарезервирован для нативного бара с кнопками управления мини-приложением, 
+_Правый верхний угол_ `PanelHeader` зарезервирован для нативного бара с кнопками управления мини-приложением,
 поэтому не рекомендуем использовать параметр `after`.
 
 Чтобы автоматически скрывать `after` у `PanelHeader`, в [`ConfigProvider`](/components/config-provider) есть параметр `hasCustomPanelHeaderAfter`.
