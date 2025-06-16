@@ -60,7 +60,7 @@ describe('ContentCard', () => {
     const el = screen.getByTestId('card');
 
     expect(el.tagName.toLowerCase()).toBe('div');
-    expect(el.role).toBeUndefined();
+    expect(el.role).toBeNull();
     expect(el.getAttribute('disabled')).toBeNull();
     expect(el.getAttribute('aria-disabled')).toBeNull();
   });

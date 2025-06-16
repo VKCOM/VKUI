@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, setNodeEnv } from '../../testing/utils';
+import { baselineComponent, mockTouchStartDisabled, setNodeEnv } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../CarouselBase/constants';
 import { revertRtlValue } from '../CarouselBase/helpers';
@@ -221,6 +221,7 @@ const setup = ({
 };
 
 describe('Gallery', () => {
+  mockTouchStartDisabled();
   baselineComponent(Gallery);
   describe('handles slide count', () => {
     it('prevents slideIndex outside slide count', () => {

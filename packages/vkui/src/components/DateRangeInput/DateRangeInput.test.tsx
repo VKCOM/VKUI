@@ -95,7 +95,7 @@ describe('DateRangeInput', () => {
     const normalized = convertInputsToNumbers(inputLikes);
     expect(normalized).toEqual([10, 4, 2023, 15, 6, 2024]);
 
-    expect(onChange).toBeCalledTimes(6);
+    expect(onChange).toHaveBeenCalledTimes(6);
   });
 
   it('should call onChange callback when change data by calendar', async () => {
@@ -157,7 +157,7 @@ describe('DateRangeInput', () => {
     await userEvent.type(startDates, '40');
     await userEvent.type(endDates, '32');
 
-    expect(onChange).toBeCalledTimes(0);
+    expect(onChange).toHaveBeenCalledTimes(0);
   });
 
   it('should call onCalendarClose callback when calendar was closed', async () => {
