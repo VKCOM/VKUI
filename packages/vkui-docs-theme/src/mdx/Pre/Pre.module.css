@@ -16,9 +16,9 @@
   flex: 1;
   padding-block: var(--vkui--spacing_size_xl);
   padding-inline: var(--vkui--spacing_size_xl);
+  contain: paint;
   overflow-x: auto;
   font-size: 14px;
-  contain: paint;
   -webkit-font-smoothing: auto;
 }
 
