@@ -73,7 +73,6 @@ const meta: MetaRecord = {
   'panel-header-button': 'PanelHeaderButton',
   'panel-header-content': 'PanelHeaderContent',
   'panel-header-context': 'PanelHeaderContext',
-  'panel-spinner': 'PanelSpinner',
   'root': 'Root',
   'subnavigation-bar': 'SubnavigationBar',
   'tabs': 'Tabs',
