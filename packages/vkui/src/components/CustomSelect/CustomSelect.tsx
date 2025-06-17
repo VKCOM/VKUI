@@ -4,9 +4,9 @@ import * as React from 'react';
 import { classNames, debounce } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { callMultiple } from '../../lib/callMultiple';
+import { getTextFromChildren } from '../../lib/children';
 import { useDOM } from '../../lib/dom';
 import type { Alignment, Placement, Side } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
@@ -43,7 +43,6 @@ import {
   type CustomSelectInputProps,
 } from './CustomSelectInput/CustomSelectInput';
 import styles from './CustomSelect.module.css';
-import { getTextFromChildren } from '../../lib/children';
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
