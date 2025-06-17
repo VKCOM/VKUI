@@ -26,7 +26,7 @@ type Story = StoryObj<SelectProps>;
 export const Playground: Story = {
   render: (args) => (
     <FormItem top="Выберите город" htmlFor="custom-select" style={{ width: 320 }}>
-      <CustomSelect {...args} id="custom-select" />
+      <CustomSelect {...args} aria-label="Выберите город" id="custom-select" />
     </FormItem>
   ),
   args: {
