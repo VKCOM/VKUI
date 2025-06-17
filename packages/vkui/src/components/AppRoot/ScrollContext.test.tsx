@@ -53,10 +53,11 @@ describe(useScrollLock, () => {
       expect(beforeScrollLockFn).toHaveBeenCalled();
 
       expect(getStyleAttributeObject(document.documentElement)).toEqual({
-        position: 'fixed',
-        top: `-${0}px`,
-        left: `-${0}px`,
-        right: '0px',
+        'position': 'fixed',
+        'top': `${0}px`,
+        'left': `${0}px`,
+        'right': '0px',
+        'overscroll-behavior': 'none',
         ...(withScroll
           ? {
               'overflow-x': 'scroll',
@@ -83,11 +84,12 @@ describe(useScrollLock, () => {
 
       expect(getStyleAttributeObject(document.documentElement)).toEqual({
         'position': 'fixed',
-        'top': `-${0}px`,
-        'left': `-${0}px`,
+        'top': `${0}px`,
+        'left': `${0}px`,
         'right': '0px',
         'overflow-x': 'scroll',
         'overflow-y': 'scroll',
+        'overscroll-behavior': 'none',
       });
       expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
 
@@ -215,8 +217,8 @@ describe(useScrollLock, () => {
 
       expect(getStyleAttributeObject(elRef.current)).toEqual({
         position: 'absolute',
-        top: `-${0}px`,
-        left: `-${0}px`,
+        top: `${0}px`,
+        left: `${0}px`,
         right: '0px',
         ...(withScroll
           ? {

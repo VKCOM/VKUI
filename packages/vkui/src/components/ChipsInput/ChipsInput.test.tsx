@@ -48,7 +48,7 @@ describe(ChipsInput, () => {
 
     fireEvent(screen.getByTestId('form'), new Event('reset'));
 
-    expect(onChange).toBeCalledWith([]);
+    expect(onChange).toHaveBeenCalledWith([]);
   });
 
   it('should clear value when click on remove button', async () => {
@@ -81,7 +81,7 @@ describe(ChipsInput, () => {
       />,
     );
     await userEvent.click(screen.getByTestId('delete'));
-    expect(onChange).toBeCalledWith([]);
+    expect(onChange).toHaveBeenCalledWith([]);
   });
 
   it('should show clear button when inputValue !== ""', () => {
@@ -133,7 +133,7 @@ describe(ChipsInput, () => {
 
     const resultValue = [...initialOptions];
     resultValue.pop();
-    expect(onChange).toBeCalledWith(resultValue);
+    expect(onChange).toHaveBeenCalledWith(resultValue);
   });
 
   it.each<{
@@ -202,7 +202,7 @@ describe(ChipsInput, () => {
         target: { value: str },
       });
       if (expectedValues) {
-        expect(onChange).toBeCalledWith([
+        expect(onChange).toHaveBeenCalledWith([
           {
             value: 'navarin',
             label: 'Наваринского пламени с дымом',

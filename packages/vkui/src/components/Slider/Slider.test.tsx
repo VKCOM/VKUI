@@ -7,6 +7,7 @@ import {
   baselineComponent,
   fakeTimers,
   mockRect,
+  mockTouchStartDisabled,
   userEvent,
   waitForFloatingPosition,
 } from '../../testing/utils';
@@ -28,6 +29,8 @@ const Slider = ({
 };
 
 describe(Slider, () => {
+  mockTouchStartDisabled();
+
   baselineComponent((props) => <Slider getAriaLabel={() => 'Slider'} {...props} />);
 
   describe('uncontrolled', () => {

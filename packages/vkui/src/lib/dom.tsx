@@ -95,7 +95,13 @@ export function getTransformedParentCoords(element: Element): {
   let parentNode = element.parentNode;
   while (parentNode !== null) {
     if (isHTMLElement(parentNode)) {
-      const { transform, willChange } = getComputedStyle(parentNode);
+      let { transform, willChange } = getComputedStyle(parentNode);
+      if (transform === '') {
+        transform = 'unset';
+      }
+      if (willChange === '') {
+        willChange = 'unset';
+      }
       if (
         !TRANSFORM_DEFAULT_VALUES.includes(transform) ||
         !WILL_CHANGE_DEFAULT_VALUES.includes(willChange)
