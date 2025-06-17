@@ -34,7 +34,6 @@ import {
 } from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import {
   CustomSelectClearButton,
   type CustomSelectClearButtonProps,
@@ -44,6 +43,7 @@ import {
   type CustomSelectInputProps,
 } from './CustomSelectInput/CustomSelectInput';
 import styles from './CustomSelect.module.css';
+import { getTextFromChildren } from '../../lib/children';
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -347,7 +347,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     dropdownAutoWidth = false,
     noMaxHeight = false,
     'aria-labelledby': ariaLabelledBy,
-    'aria-describedby': ariaDescribedBy,
+    'aria-description': ariaDescription,
     selectedOptionLabelPrefix = 'Выбранная опция',
     clearButtonTestId,
     nativeSelectTestId,
@@ -388,8 +388,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     });
 
   const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
-
-  const selectedOptionLabelId = React.useId();
 
   const options = React.useMemo(() => {
     return filter(optionsProp, inputValue, filterFn);
@@ -954,6 +952,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ? options[ariaActiveDescendantOptionIndex] && options[ariaActiveDescendantOptionIndex].value
       : null;
 
+  const selectedOptionLabel = selected
+    ? `${selectedOptionLabelPrefix}: ${getTextFromChildren(selected.label)}`
+    : undefined;
+
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',
     'aria-controls': popupAriaId,
@@ -961,12 +963,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'aria-activedescendant':
       ariaActiveDescendantId && opened ? `${popupAriaId}-${ariaActiveDescendantId}` : undefined,
     'aria-labelledby': ariaLabelledBy,
-    'aria-describedby': [ariaDescribedBy, selectedOptionLabelId].filter(Boolean).join(' '),
+    'aria-description': [selectedOptionLabel, ariaDescription].filter(Boolean).join(' '),
     'aria-haspopup': 'listbox',
     'aria-autocomplete': 'none',
   };
-
-  const focusWithin = useFocusWithin(handleRootRef);
 
   const resetOptionFocusOnMouseLeave = React.useCallback(
     (event: React.MouseEvent) => {
@@ -995,11 +995,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
       }}
     >
-      {focusWithin && selected && !opened && (
-        <VisuallyHidden aria-live="polite" id={selectedOptionLabelId}>
-          {selectedOptionLabelPrefix}: {selected.label}
-        </VisuallyHidden>
-      )}
       <CustomSelectInput
         autoComplete="off"
         autoCapitalize="none"
