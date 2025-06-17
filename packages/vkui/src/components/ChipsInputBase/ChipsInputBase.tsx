@@ -315,7 +315,6 @@ export const ChipsInputBase = <O extends ChipOption>({
           autoCorrect="off"
           spellCheck={false}
           {...restProps}
-          aria-label={ariaLabel}
           style={{ width: inputWidth }}
           Component="input"
           type="text"
