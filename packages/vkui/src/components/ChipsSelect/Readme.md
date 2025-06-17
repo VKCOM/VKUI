@@ -68,6 +68,7 @@ const Uncontrolled = () => {
         options={groups}
         placeholder="Не выбраны"
         emptyText="Совсем ничего не найдено"
+        aria-label="Выберите группы"
         selectedBehavior="hide"
         closeAfterSelect={false}
         allowClearButton={true}
@@ -114,6 +115,7 @@ const ControlledCreatable = () => {
     <FormItem htmlFor="colors" top="Выберите или добавьте цвета">
       <ChipsSelect
         id="colors"
+        aria-label="Выберите или добавьте цвета"
         value={selectedColors}
         onChange={setSelectedColors}
         options={colors}
@@ -143,6 +145,7 @@ const ControlledCreatableWithoutCreateButton = () => {
     >
       <ChipsSelect
         id="colorsWithoutButton"
+        aria-label="Выберите или добавьте цвета"
         value={selectedColorsCopy}
         onChange={setSelectedColorsCopy}
         options={colors}

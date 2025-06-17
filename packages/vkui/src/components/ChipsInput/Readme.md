@@ -98,6 +98,7 @@ const Example = () => {
           <FormItem htmlFor="color" top="Цвет (контролируемый компонент)">
             <ChipsInput
               id="color"
+              aria-label="Цвет (контролируемый компонент)"
               placeholder="Введите цвета"
               ClearButton={ClearButton}
               allowClearButton
@@ -108,6 +109,7 @@ const Example = () => {
           <FormItem htmlFor="list" top="Список">
             <ChipsInput
               id="list"
+              aria-label="Список"
               placeholder="Введите название и нажмите Enter"
               allowClearButton={true}
             />
@@ -115,6 +117,7 @@ const Example = () => {
           <FormItem htmlFor="favoriteGroups" top="Любимые группы (неконтролируемый компонент)">
             <ChipsInput
               id="favoriteGroups"
+              aria-label="Любимые группы"
               readOnly
               defaultValue={DEFAULT_VALUE}
               renderChip={({ value, label, ...rest }, { src }) => (

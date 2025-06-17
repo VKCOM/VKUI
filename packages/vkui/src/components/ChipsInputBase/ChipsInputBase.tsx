@@ -15,7 +15,6 @@ import {
 import { FormField } from '../FormField/FormField';
 import { FormFieldClearButton } from '../FormFieldClearButton/FormFieldClearButton';
 import { Text } from '../Typography/Text/Text';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { DEFAULT_INPUT_VALUE, DEFAULT_VALUE, renderChipDefault } from './constants';
 import {
   getChipOptionIndexByHTMLElement,
@@ -69,12 +68,11 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   // a11y
   chipsListLabel = '',
-  'aria-label': ariaLabel,
+  'aria-label': ariaLabel = '',
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const idGenerated = React.useId();
-  const ariaLabelId = React.useId();
   const inputRef = useExternRef(getRef);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const listboxRef = React.useRef<HTMLDivElement>(null);
@@ -251,7 +249,8 @@ export const ChipsInputBase = <O extends ChipOption>({
     <FormField
       Component="div"
       getRootRef={getRootRef}
-      aria-labelledby={ariaLabelId}
+      role="group"
+      aria-label={ariaLabel}
       style={style}
       disabled={disabled}
       before={before}
@@ -272,7 +271,6 @@ export const ChipsInputBase = <O extends ChipOption>({
         ref={containerRef}
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
       >
-        {ariaLabel && <VisuallyHidden id={ariaLabelId}>{ariaLabel}</VisuallyHidden>}
         <div
           className={styles.listBox}
           // для a11y
@@ -282,7 +280,6 @@ export const ChipsInputBase = <O extends ChipOption>({
           aria-disabled={disabled}
           aria-readonly={readOnly}
           aria-label={chipsListLabel}
-          aria-describedby={inputId}
         >
           {value.map((option, index) => (
             <React.Fragment key={`${typeof option.value}-${option.value}`}>
@@ -318,6 +315,7 @@ export const ChipsInputBase = <O extends ChipOption>({
           autoCorrect="off"
           spellCheck={false}
           {...restProps}
+          aria-label={ariaLabel}
           style={{ width: inputWidth }}
           Component="input"
           type="text"
