@@ -595,7 +595,6 @@ export const ChipsSelect = <Option extends ChipOption>({
         role="combobox"
         aria-expanded={opened}
         aria-autocomplete="list"
-        aria-controls={opened ? dropdownId : undefined}
         aria-activedescendant={opened ? dropdownCurrentItemId : undefined}
         aria-haspopup="listbox"
         chipsListLabel={chipsListLabel}
