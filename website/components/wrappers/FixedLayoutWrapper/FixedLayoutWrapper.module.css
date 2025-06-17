@@ -11,7 +11,3 @@
     background: var(--vkui--color_background_content);
   }
 }
-
-.noBackground {
-  background: transparent;
-}
