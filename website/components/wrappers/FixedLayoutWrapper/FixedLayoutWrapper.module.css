@@ -5,3 +5,13 @@
   border-radius: 8px;
   transform: translate(0);
 }
+
+@media (--viewWidth-smallTabletMinus) {
+  .root {
+    background: var(--vkui--color_background_content);
+  }
+}
+
+.noBackground {
+  background: transparent;
+}

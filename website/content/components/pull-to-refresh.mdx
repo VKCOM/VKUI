@@ -7,7 +7,7 @@
 
 </Overview>
 
-<Playground style={{ userSelect: 'none', height: 150, overflow: 'auto' }}>
+<Playground style={{ userSelect: 'none', alignItems: 'unset', height: 150, overflow: 'auto' }}>
 
 ```jsx
 const [users, setUsers] = React.useState([]);
@@ -23,20 +23,18 @@ const onRefresh = React.useCallback(() => {
 }, []);
 
 return (
-  <Flex style={{ width: '100%', height: '100%' }}>
-    <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
-      <Div>
-        {!users.length && <Text>Потяните вниз</Text>}
-        {users.map((_, i) => {
-          return (
-            <Cell key={i} before={<Avatar />}>
-              {i}
-            </Cell>
-          );
-        })}
-      </Div>
-    </PullToRefresh>
-  </Flex>
+  <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
+    <Div>
+      {!users.length && <Text>Потяните вниз</Text>}
+      {users.map((_, i) => {
+        return (
+          <Cell key={i} before={<Avatar />}>
+            {i}
+          </Cell>
+        );
+      })}
+    </Div>
+  </PullToRefresh>
 );
 ```
 

@@ -18,43 +18,49 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 ```jsx
 const [activePanel, setActivePanel] = useState('panel-1');
+const platform = usePlatform();
+
 return (
-  <View activePanel={activePanel}>
-    <Panel id="panel-1">
-      <PanelHeader>Panel 1</PanelHeader>
-      <Placeholder stretched>
-        <Button appearance="positive" onClick={() => setActivePanel('panel-2')}>
-          Перейти к Panel 2
-        </Button>
-      </Placeholder>
-    </Panel>
-    <Panel id="panel-2">
-      <PanelHeader>Panel 2</PanelHeader>
-      <Placeholder stretched>
-        <ButtonGroup mode="vertical" align="center">
-          <Button appearance="positive" onClick={() => setActivePanel('panel-3')}>
-            Перейти к Panel 3
-          </Button>
-          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
-            Вернуться к Panel 1
-          </Button>
-        </ButtonGroup>
-      </Placeholder>
-    </Panel>
-    <Panel id="panel-3">
-      <PanelHeader>Panel 3</PanelHeader>
-      <Placeholder stretched>
-        <ButtonGroup mode="vertical" align="center">
-          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
-            Вернуться к Panel 1
-          </Button>
-          <Button appearance="negative" onClick={() => setActivePanel('panel-2')}>
-            Вернуться к Panel 2
-          </Button>
-        </ButtonGroup>
-      </Placeholder>
-    </Panel>
-  </View>
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
+    <SplitCol width="100%" stretchedOnMobile autoSpaced>
+      <View activePanel={activePanel}>
+        <Panel id="panel-1">
+          <PanelHeader>Панель 1</PanelHeader>
+          <Placeholder stretched>
+            <Button appearance="positive" onClick={() => setActivePanel('panel-2')}>
+              Перейти к Панель 2
+            </Button>
+          </Placeholder>
+        </Panel>
+        <Panel id="panel-2">
+          <PanelHeader>Панель 2</PanelHeader>
+          <Placeholder stretched>
+            <ButtonGroup mode="vertical" align="center">
+              <Button appearance="positive" onClick={() => setActivePanel('panel-3')}>
+                Перейти к Панель 3
+              </Button>
+              <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+                Вернуться к Панель 1
+              </Button>
+            </ButtonGroup>
+          </Placeholder>
+        </Panel>
+        <Panel id="panel-3">
+          <PanelHeader>Панель 3</PanelHeader>
+          <Placeholder stretched>
+            <ButtonGroup mode="vertical" align="center">
+              <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+                Вернуться к Панель 1
+              </Button>
+              <Button appearance="negative" onClick={() => setActivePanel('panel-2')}>
+                Вернуться к Панель 2
+              </Button>
+            </ButtonGroup>
+          </Placeholder>
+        </Panel>
+      </View>
+    </SplitCol>
+  </SplitLayout>
 );
 ```
 

@@ -20,10 +20,18 @@ return (
     activeStory={activeStory}
     tabbar={
       <Tabbar>
-        <TabbarItem label="Лента" selected onClick={() => setActiveStory('feed')}>
+        <TabbarItem
+          label="Лента"
+          selected={activeStory === 'feed'}
+          onClick={() => setActiveStory('feed')}
+        >
           <Icon28NewsfeedOutline />
         </TabbarItem>
-        <TabbarItem label="Профиль" onClick={() => setActiveStory('profile')}>
+        <TabbarItem
+          label="Профиль"
+          selected={activeStory === 'profile'}
+          onClick={() => setActiveStory('profile')}
+        >
           <Icon28UserCircleOutline />
         </TabbarItem>
       </Tabbar>
@@ -33,7 +41,7 @@ return (
       <Panel id="feed-panel">
         <PanelHeader>Лента</PanelHeader>
         <Placeholder stretched>
-          <Icon28NewsfeedOutline />
+          <Icon56NewsfeedOutline />
         </Placeholder>
       </Panel>
     </View>
@@ -41,7 +49,7 @@ return (
       <Panel id="profile-panel">
         <PanelHeader>Профиль</PanelHeader>
         <Placeholder stretched>
-          <Icon28UserCircleOutline />
+          <Icon56UserCircleOutline />
         </Placeholder>
       </Panel>
     </View>
