@@ -84,6 +84,7 @@ export const Chip = ({
       {!readOnly && removable && (
         <div className={styles.removable}>
           <button
+            type="button"
             tabIndex={-1} // [reason]: чтобы можно было выставлять состояние фокуса только программно через `*.focus()`
             disabled={disabled}
             className={styles.remove}

@@ -1,6 +1,6 @@
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
-import type { PartialStoryFn } from '@storybook/types';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';
+import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Flex } from '../Flex/Flex';

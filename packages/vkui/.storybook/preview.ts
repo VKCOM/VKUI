@@ -1,13 +1,9 @@
-import '../src/styles/constants.css';
-import '../src/styles/themes.css';
-import '../src/styles/common.css';
-import '../src/styles/dynamicTokens.css';
-import '../src/styles/adaptivity.module.css';
-
 import { Preview } from '@storybook/react';
-import { withConsole } from '@storybook/addon-console';
+// TODO [@storybook/addon-console>3.0.0] https://github.com/storybookjs/storybook-addon-console/issues/86
+// import { withConsole } from '@storybook/addon-console';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
+import './preview.css';
 
 declare global {
   const __STYLEGUIDE_COMPONENTS_CONFIG__: Record<string, boolean>;
@@ -41,7 +37,8 @@ const customViewports = Object.entries(BREAKPOINTS).reduce<Record<string, Custom
   {},
 );
 
-const withConsoleWrapper = (Story, context) => withConsole()(Story)(context);
+// TODO [@storybook/addon-console>3.0.0] https://github.com/storybookjs/storybook-addon-console/issues/86
+// const withConsoleWrapper = (Story, context) => withConsole()(Story)(context);
 
 const preview: Preview = {
   parameters: {
@@ -57,29 +54,24 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    viewport: { viewports: customViewports },
+    viewport: {
+      options: customViewports,
+    },
     backgrounds: { disable: true },
     cartesian: { disabled: true },
   },
+  initialGlobals: {
+    styleguideComponents: __STYLEGUIDE_COMPONENTS_CONFIG__,
+    styleguideBaseUrl: __STYLEGUIDE_URL__,
+    componentsSourceBaseUrl: __COMPONENTS_SOURCE_BASE_URL__,
+    colorScheme: 'light',
+    hasPointer: true,
+    storybookTheme: 'light',
+    hasCustomPanelHeaderAfter: false,
+    direction: 'ltr',
+    writingMode: 'horizontal-tb',
+  },
   globalTypes: {
-    styleguideComponents: {
-      defaultValue: __STYLEGUIDE_COMPONENTS_CONFIG__,
-    },
-    styleguideBaseUrl: {
-      defaultValue: __STYLEGUIDE_URL__,
-    },
-    componentsSourceBaseUrl: {
-      defaultValue: __COMPONENTS_SOURCE_BASE_URL__,
-    },
-    colorScheme: {
-      defaultValue: 'light',
-    },
-    hasPointer: {
-      defaultValue: true,
-    },
-    storybookTheme: {
-      defaultValue: 'light',
-    },
     platform: {
       name: 'Platform',
       description: 'Platform for components',
@@ -93,12 +85,10 @@ const preview: Preview = {
     },
     hasCustomPanelHeaderAfter: {
       description: 'Hide "after" prop of PanelHeader for custom floating "after" element',
-      defaultValue: false,
     },
     direction: {
       name: 'Direction',
       description: "Attribute indicating the directionality of the element's text",
-      defaultValue: 'ltr',
       toolbar: {
         items: [
           { value: 'ltr', icon: 'menu', title: 'ltr' },
@@ -110,7 +100,6 @@ const preview: Preview = {
       name: 'Writing mode',
       description:
         'Sets whether lines of text are laid out horizontally or vertically, as well as the direction in which blocks progress',
-      defaultValue: 'horizontal-tb',
       toolbar: {
         icon: 'redirect',
         items: ['horizontal-tb', 'vertical-rl', 'vertical-lr'],
@@ -121,7 +110,11 @@ const preview: Preview = {
     getRef: { control: false },
     getRootRef: { control: false },
   },
-  decorators: [withVKUIWrapper, withConsoleWrapper],
+  decorators: [
+    withVKUIWrapper,
+    // TODO [@storybook/addon-console>3.0.0] https://github.com/storybookjs/storybook-addon-console/issues/86
+    // withConsoleWrapper,
+  ],
 };
 
 export default preview;
