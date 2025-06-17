@@ -43,8 +43,13 @@ export function TOC({ toc }: TOCProps) {
   const activeAnchorId = useActiveAnchor(anchorIds);
   const {
     normalizePagesResult: { activeThemeContext: themeContext },
+    isBlog,
   } = useConfig();
   const { toc: tocVisible } = themeContext;
+
+  if (isBlog) {
+    return null;
+  }
 
   if (!tocVisible || !toc.length) {
     return <div className={styles.root} />;
