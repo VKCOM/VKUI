@@ -42,7 +42,7 @@ import { BlockWrapper } from '@/components/wrappers';
 экранов и организации навигации между ними. Подробное описание этих компонентов представлено в разделе [Навигация](/overview/navigation).
 Ниже приведён базовый пример их использования.
 
-<Playground Wrapper={FixedLayoutWrapper}>
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415 }}>
 
 ```jsx
 import { useState } from 'react';
@@ -54,25 +54,35 @@ import {
   PanelHeader,
   Group,
   CellButton,
+  usePlatform,
 } from '@vkontakte/vkui';
 
-const [activePanel, setActivePanel] = useState('panel-1');
+const [activePanel, setActivePanel] = useState('feed-panel');
+const platform = usePlatform();
 
 return (
-  <SplitLayout header={<PanelHeader delimiter="none" />}>
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
     <SplitCol width="100%" stretchedOnMobile autoSpaced>
       <View activePanel={activePanel}>
-        <Panel id="panel-1">
-          <PanelHeader>panel-1</PanelHeader>
-          <Group>
-            <CellButton onClick={() => setActivePanel('panel-2')}>Перейти к panel-2</CellButton>
-          </Group>
+        <Panel id="feed-panel">
+          <PanelHeader>Лента</PanelHeader>
+          <Placeholder
+            action={
+              <Button onClick={() => setActivePanel('profile-panel')}>Перейти в Профиль</Button>
+            }
+            stretched
+          >
+            <Icon56NewsfeedOutline />
+          </Placeholder>
         </Panel>
-        <Panel id="panel-2">
-          <PanelHeader>panel-2</PanelHeader>
-          <Group>
-            <CellButton onClick={() => setActivePanel('panel-1')}>Вернуться к panel-1</CellButton>
-          </Group>
+        <Panel id="profile-panel">
+          <PanelHeader>Профиль</PanelHeader>
+          <Placeholder
+            action={<Button onClick={() => setActivePanel('feed-panel')}>Вернуться в Ленту</Button>}
+            stretched
+          >
+            <Icon56UserCircleOutline />
+          </Placeholder>
         </Panel>
       </View>
     </SplitCol>

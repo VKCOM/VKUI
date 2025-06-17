@@ -27,13 +27,13 @@ VKUI предоставляет компоненты для организаци
 
 ### Предварительная настройка
 
-Прежде чем начинать организовывать навигационную структуру, следует обязательно обернуть ваше приложение
-в [`SplitLayout`](/components/split-layout) с хотя бы одним [`SplitCol`](/components/split-layout#split-col) – это обеспечит
-безопасные боковые отступы.
+> Прежде чем начинать организовывать навигационную структуру, следует обязательно обернуть ваше приложение
+> в [`SplitLayout`](/components/split-layout) с хотя бы одним [`SplitCol`](/components/split-layout#split-col) – это обеспечит
+> безопасные боковые отступы и корректную работу анимаций.
 
-Так так эта обёртка должна быть одна на всё приложение, его достаточно разместить ближе к корню — в точке входа приложения.
+Так так эта обёртка должна быть одна на всё приложение, её достаточно разместить ближе к корню — в точке входа приложения.
 
-```tsx filename="src/App.tsx"
+```jsx filename="src/App.tsx"
 import { SplitLayout, SplitCol } from '@vkontakte/vkui';
 
 export default function App() {
@@ -60,7 +60,7 @@ Panel
 
 Ниже пример с описанием начального экрана приложения в отдельном файле.
 
-```tsx showLineNumbers filename="src/panels/home.tsx" {4-6}
+```jsx showLineNumbers filename="src/panels/home.tsx" {4-6}
 import { type PanelProps, Panel, PanelHeader } from '@vkontakte/vkui';
 
 /**
@@ -92,7 +92,7 @@ View
 
 Представим простой пример в отдельном файле.
 
-```tsx filename="src/router.tsx"
+```jsx filename="src/router.tsx"
 import { useState } from 'react';
 import { View, Panel, PanelHeader, Button } from '@vkontakte/vkui';
 
@@ -131,7 +131,7 @@ Root
       └─ <content>
 ```
 
-```tsx filename="src/scenarios.tsx"
+```jsx filename="src/scenarios.tsx"
 import { useState } from 'react';
 import { View, Panel, PanelHeader, PanelHeaderBack, Button } from '@vkontakte/vkui';
 
@@ -168,7 +168,7 @@ export const SecondScenario = ({ onBack }) => {
 };
 ```
 
-```tsx filename="src/router.tsx"
+```jsx filename="src/router.tsx"
 import { useState } from 'react';
 import { Root } from '@vkontakte/vkui';
 import { FirstScenario, SecondScenario } from './scenarios';
@@ -220,7 +220,7 @@ Epic
         └─ <content>
 ```
 
-```tsx filename="src/scenarios.tsx"
+```jsx filename="src/scenarios.tsx"
 import { useState } from 'react';
 import { View, Panel, PanelHeader, Button } from '@vkontakte/vkui';
 
@@ -257,7 +257,7 @@ export const SecondScenario = () => {
 };
 ```
 
-```tsx filename="src/router.tsx"
+```jsx filename="src/router.tsx"
 import { useState } from 'react';
 import { Epic } from '@vkontakte/vkui';
 import { FirstScenario, SecondScenario } from './scenarios';
@@ -305,7 +305,7 @@ export const Router = () => {
 };
 ```
 
-## Пример [#example-app]
+## Интерактивный пример [#example-app]
 
 Создадим приложение вот с такой структурой:
 
@@ -329,6 +329,10 @@ app (Epic)
 
 Для навигации по основным разделам на мобильных экранах используется ([`Tabbar`](/components/tabbar)), а на настольных —
 ([`SplitCol`](/components/split-layout#split-col)) c [`Cell`](/components/cell) в роли бокового меню.
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ minHeight: 440 }}>
 
 ```jsx showLineNumbers filename="src/App.tsx"
 import { useState } from 'react';
@@ -365,6 +369,7 @@ import {
   TabbarItem,
   useAdaptivityConditionalRender,
   View,
+  usePlatform,
 } from '@vkontakte/vkui';
 
 const tabConfig = [
@@ -401,10 +406,11 @@ const tabConfig = [
 
 const SettingsScenario = ({ id, goBack }) => {
   const [activePanel, setActivePanel] = useState('notification-main-panel');
+  const platform = usePlatform();
 
   return (
     <View id={id} activePanel={activePanel}>
-      <Panel id="notification-main-panel">
+      <Panel disableBackground={platform === 'vkcom'} id="notification-main-panel">
         <PanelHeader before={<PanelHeaderBack onClick={goBack} />}>Уведомления</PanelHeader>
         <Group>
           <SimpleCell Component="label" after={<Switch />}>
@@ -436,7 +442,7 @@ const SettingsScenario = ({ id, goBack }) => {
           </SimpleCell>
         </Group>
       </Panel>
-      <Panel id="notification-messenger-panel">
+      <Panel disableBackground={platform === 'vkcom'} id="notification-messenger-panel">
         <PanelHeader
           before={<PanelHeaderBack onClick={() => setActivePanel('notification-main-panel')} />}
         >
@@ -457,13 +463,17 @@ const SettingsScenario = ({ id, goBack }) => {
 };
 
 const AboutScenario = ({ id, goBack }) => {
+  const platform = usePlatform();
+
   return (
     <View id={id} activePanel="about-version-panel">
-      <Panel id="about-version-panel">
+      <Panel disableBackground={platform === 'vkcom'} id="about-version-panel">
         <PanelHeader before={<PanelHeaderBack onClick={goBack} />}>О приложении</PanelHeader>
         <Group>
           <Group mode="plain">
             <SimpleCell indicator="0.0.0">Версия</SimpleCell>
+            <SimpleCell indicator="Русский">Язык приложения</SimpleCell>
+            <Footer Component="div">Все права защищены.</Footer>
           </Group>
         </Group>
       </Panel>
@@ -474,11 +484,12 @@ const AboutScenario = ({ id, goBack }) => {
 const MoreTab = ({ id, label }) => {
   const [activeScenario, setActiveScenario] = useState('main-scenario');
   const goBack = () => setActiveScenario('main-scenario');
+  const platform = usePlatform();
 
   return (
     <Root id={id} activeView={activeScenario}>
       <View id="main-scenario" activePanel="main-menu-panel">
-        <Panel id="main-menu-panel">
+        <Panel disableBackground={platform === 'vkcom'} id="main-menu-panel">
           <PanelHeader>{label}</PanelHeader>
           <Group>
             <Cell
@@ -493,6 +504,7 @@ const MoreTab = ({ id, label }) => {
             >
               О приложении
             </Cell>
+            <Footer Component="div">2 раздела</Footer>
           </Group>
         </Panel>
       </View>
@@ -502,73 +514,74 @@ const MoreTab = ({ id, label }) => {
   );
 };
 
-export default function App() {
-  const { viewWidth } = useAdaptivityConditionalRender();
-  const [activeTab, setActiveTab] = useState('profile');
+const { viewWidth } = useAdaptivityConditionalRender();
+const [activeTab, setActiveTab] = useState('profile');
+const platform = usePlatform();
 
-  return (
-    <SplitLayout header={<PanelHeader delimiter="none" />} center>
-      {viewWidth.tabletPlus && (
-        <SplitCol className={viewWidth.tabletPlus.className} width={280} maxWidth={280} fixed>
-          <Panel>
-            <PanelHeader />
-            <Group>
+return (
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />} center>
+    {viewWidth.tabletPlus && (
+      <SplitCol className={viewWidth.tabletPlus.className} width={280} maxWidth={280} fixed>
+        <Panel disableBackground={platform === 'vkcom'}>
+          {platform !== 'vkcom' && <PanelHeader />}
+          <Group>
+            {tabConfig.map(({ id, label, Icon, Indicator }) => (
+              <Cell
+                key={id}
+                before={<Icon />}
+                indicator={Indicator ? <Indicator /> : null}
+                activated={activeTab === id}
+                onClick={() => setActiveTab(id)}
+              >
+                {label}
+              </Cell>
+            ))}
+          </Group>
+        </Panel>
+      </SplitCol>
+    )}
+    <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
+      <Epic
+        activeStory={activeTab}
+        tabbar={
+          viewWidth.tabletMinus && (
+            <Tabbar className={viewWidth.tabletMinus.className}>
               {tabConfig.map(({ id, label, Icon, Indicator }) => (
-                <Cell
+                <TabbarItem
                   key={id}
-                  before={<Icon />}
+                  label={label}
+                  selected={activeTab === id}
                   indicator={Indicator ? <Indicator /> : null}
-                  activated={activeTab === id}
                   onClick={() => setActiveTab(id)}
                 >
-                  {label}
-                </Cell>
+                  <Icon />
+                </TabbarItem>
               ))}
-            </Group>
-          </Panel>
-        </SplitCol>
-      )}
-      <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
-        <Epic
-          activeStory={activeTab}
-          tabbar={
-            viewWidth.tabletMinus && (
-              <Tabbar className={viewWidth.tabletMinus.className}>
-                {tabConfig.map(({ id, label, Icon, Indicator }) => (
-                  <TabbarItem
-                    key={id}
-                    label={label}
-                    selected={activeTab === id}
-                    indicator={Indicator ? <Indicator /> : null}
-                    onClick={() => setActiveTab(id)}
-                  >
-                    <Icon />
-                  </TabbarItem>
-                ))}
-              </Tabbar>
-            )
+            </Tabbar>
+          )
+        }
+      >
+        {tabConfig.map(({ id, label, PlaceholderIcon }) => {
+          switch (id) {
+            case 'more':
+              return <MoreTab key={id} id={id} label={label} />;
+            default:
+              return (
+                <View key={id} id={id} activePanel={`${id}-panel`}>
+                  <Panel disableBackground={platform === 'vkcom'} id={`${id}-panel`}>
+                    <PanelHeader>{label}</PanelHeader>
+                    <Group>
+                      <Placeholder icon={PlaceholderIcon ? <PlaceholderIcon /> : null} />
+                    </Group>
+                  </Panel>
+                </View>
+              );
           }
-        >
-          {tabConfig.map(({ id, label, PlaceholderIcon }) => {
-            switch (id) {
-              case 'more':
-                return <MoreTab key={id} id={id} label={label} />;
-              default:
-                return (
-                  <View key={id} id={id} activePanel={`${id}-panel`}>
-                    <Panel id={`${id}-panel`}>
-                      <PanelHeader>{label}</PanelHeader>
-                      <Group>
-                        <Placeholder icon={PlaceholderIcon ? <PlaceholderIcon /> : null} />
-                      </Group>
-                    </Panel>
-                  </View>
-                );
-            }
-          })}
-        </Epic>
-      </SplitCol>
-    </SplitLayout>
-  );
-}
+        })}
+      </Epic>
+    </SplitCol>
+  </SplitLayout>
+);
 ```
+
+</Playground>
