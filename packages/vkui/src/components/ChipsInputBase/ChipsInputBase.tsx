@@ -67,7 +67,8 @@ export const ChipsInputBase = <O extends ChipOption>({
   onClear,
 
   // a11y
-  chipsListLabel = '',
+  chipsListLabel = 'Выбранные элементы',
+  chipsListDescription = 'Для удаления используйте Backspace или Delete',
   'aria-label': ariaLabel = '',
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
@@ -280,6 +281,7 @@ export const ChipsInputBase = <O extends ChipOption>({
           aria-disabled={disabled}
           aria-readonly={readOnly}
           aria-label={chipsListLabel}
+          aria-description={chipsListDescription}
         >
           {value.map((option, index) => (
             <React.Fragment key={`${typeof option.value}-${option.value}`}>
