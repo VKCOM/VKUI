@@ -144,11 +144,8 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(unselectedOption);
     fireEvent.click(unselectedOption);
 
-    const hiddenLabel = screen.getByText('Выбранное имя: Josh');
-    expect(hiddenLabel).toBeInTheDocument();
-
     const input = screen.getByTestId('input');
-    expect(input).toHaveAttribute('aria-describedby', hiddenLabel.id);
+    expect(input).toHaveAttribute('aria-description', 'Выбранное имя: Josh');
   });
 
   it('works correctly as controlled component', () => {
