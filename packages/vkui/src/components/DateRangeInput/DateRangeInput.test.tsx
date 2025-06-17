@@ -97,6 +97,8 @@ describe('DateRangeInput', () => {
 
     const normalizedDate = convertInputsToNumbers(inputLikes);
     expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
+
+    expect(screen.queryByTestId(testsProps.clearButtonTestId)).toBeNull();
   });
 
   it('should correct update value when typing text in input', async () => {

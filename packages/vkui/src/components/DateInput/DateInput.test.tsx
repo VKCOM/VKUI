@@ -73,6 +73,8 @@ describe('DateInput', () => {
     expect(normalizedDate).toEqual([31, 7, 2024]);
 
     expect(onChange).toHaveBeenCalledTimes(0);
+
+    expect(screen.queryByTestId(testIds.clearButtonTestId)).toBeNull();
   });
 
   it('should be correct input value', () => {

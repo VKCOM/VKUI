@@ -444,7 +444,7 @@ export const DateInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value ? (
+          {value && !readOnly ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}
