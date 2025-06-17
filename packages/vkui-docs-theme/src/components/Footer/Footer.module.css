@@ -1,6 +1,6 @@
 .root {
   max-inline-size: calc(var(--vkui_docs--max-width) - 40px);
-  block-size: 100px;
+  block-size: var(--vkui_docs--footer-height);
   padding-inline-start: var(--vkui_docs--sidebar-width);
   margin-inline: auto;
   border-block-start: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
