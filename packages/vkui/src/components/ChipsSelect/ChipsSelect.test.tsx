@@ -681,7 +681,7 @@ describe.each<{
         target: { value: str },
       });
       if (expectedValues) {
-        expect(onChange).toBeCalledWith(
+        expect(onChange).toHaveBeenCalledWith(
           expectedValues.map((value) => ({
             value,
             label: value,
