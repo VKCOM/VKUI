@@ -70,7 +70,11 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
           </Flex>
           <ButtonGroup gap="space" className={classNames(styles.links)}>
             {fakeNavbarItem && (
-              <NavBarLink title={fakeNavbarItem.title} href={fakeNavbarItem.href} activated />
+              <NavBarLink
+                title={fakeNavbarItem.title}
+                href={fakeNavbarItem.href}
+                activated={!activeRoute.includes('/blog')}
+              />
             )}
             {items.map((page) => {
               if (('display' in page && page.display === 'hidden') || isMenu(page)) {
