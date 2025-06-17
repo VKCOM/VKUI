@@ -155,8 +155,8 @@ const _getScroll = ({
     ? [-parseFloat(elementStyles.left || '0'), -parseFloat(elementStyles.top || '0')]
     : [xOffset, yOffset];
   return {
-    x: scrollLeft,
-    y: customCalcY(scrollTop),
+    x: scrollLeft || 0,
+    y: customCalcY(scrollTop) || 0,
   };
 };
 
