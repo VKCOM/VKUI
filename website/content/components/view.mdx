@@ -18,49 +18,43 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 ```jsx
 const [activePanel, setActivePanel] = useState('panel-1');
-const platform = usePlatform();
-
 return (
-  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
-    <SplitCol width="100%" stretchedOnMobile autoSpaced>
-      <View activePanel={activePanel}>
-        <Panel id="panel-1">
-          <PanelHeader>Панель 1</PanelHeader>
-          <Placeholder stretched>
-            <Button appearance="positive" onClick={() => setActivePanel('panel-2')}>
-              Перейти к Панель 2
-            </Button>
-          </Placeholder>
-        </Panel>
-        <Panel id="panel-2">
-          <PanelHeader>Панель 2</PanelHeader>
-          <Placeholder stretched>
-            <ButtonGroup mode="vertical" align="center">
-              <Button appearance="positive" onClick={() => setActivePanel('panel-3')}>
-                Перейти к Панель 3
-              </Button>
-              <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
-                Вернуться к Панель 1
-              </Button>
-            </ButtonGroup>
-          </Placeholder>
-        </Panel>
-        <Panel id="panel-3">
-          <PanelHeader>Панель 3</PanelHeader>
-          <Placeholder stretched>
-            <ButtonGroup mode="vertical" align="center">
-              <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
-                Вернуться к Панель 1
-              </Button>
-              <Button appearance="negative" onClick={() => setActivePanel('panel-2')}>
-                Вернуться к Панель 2
-              </Button>
-            </ButtonGroup>
-          </Placeholder>
-        </Panel>
-      </View>
-    </SplitCol>
-  </SplitLayout>
+  <View activePanel={activePanel}>
+    <Panel id="panel-1">
+      <PanelHeader>Панель 1</PanelHeader>
+      <Placeholder stretched>
+        <Button appearance="positive" onClick={() => setActivePanel('panel-2')}>
+          Перейти к Панель 2
+        </Button>
+      </Placeholder>
+    </Panel>
+    <Panel id="panel-2">
+      <PanelHeader>Панель 2</PanelHeader>
+      <Placeholder stretched>
+        <ButtonGroup mode="vertical" align="center">
+          <Button appearance="positive" onClick={() => setActivePanel('panel-3')}>
+            Перейти к Панель 3
+          </Button>
+          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+            Вернуться к Панель 1
+          </Button>
+        </ButtonGroup>
+      </Placeholder>
+    </Panel>
+    <Panel id="panel-3">
+      <PanelHeader>Панель 3</PanelHeader>
+      <Placeholder stretched>
+        <ButtonGroup mode="vertical" align="center">
+          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+            Вернуться к Панель 1
+          </Button>
+          <Button appearance="negative" onClick={() => setActivePanel('panel-2')}>
+            Вернуться к Панель 2
+          </Button>
+        </ButtonGroup>
+      </Placeholder>
+    </Panel>
+  </View>
 );
 ```
 
@@ -81,13 +75,13 @@ View
 > Если вы выносите экран с [`Panel`](/components/panel) в отдельный компонент, то `id` должен передаваться непосредственно в
 > компонент-обёртку и уже после проксироваться в [`Panel`](/components/panel).
 >
-> ```jsx showLineNumbers {2-3,9-10}
+> ```jsx showLineNumbers filename="src/router.tsx" {2-3,9-10}
 > const MyPanel = ({ id }) => {
 >   // проксируем `id` в Panel */
 >   return <Panel id={id}>...</Panel>;
 > };
 >
-> export default function App() {
+> export function Router() {
 >   return (
 >     <View activePanel="my-panel">
 >       {/* передаём `id` в компонент-обёртку */}
@@ -144,13 +138,18 @@ function transitionHandler({
 В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы повторить такое поведение
 в VKUI, нужно:
 
-- передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`;
-- передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`;
-- обернуть ваше приложение в [`ConfigProvider`](/components/config-provider) — он определит, открыто приложение в `webview` клиента **VK** или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение `webview`: `<ConfigProvider isWebView>`.
+- передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите
+  `history`;
+- передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел
+  в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`;
+- обернуть ваше приложение в [`ConfigProvider`](/components/config-provider) — он определит, открыто приложение в `webview` клиента
+  VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение
+  `webview`: `<ConfigProvider isWebView>`.
 
 #### Блокировка свайпа (вариант #1)
 
-Компоненты, которые сами обрабатывают жесты (например, карта или кастомный компонент по типу карусели), могут конфликтовать со свайпбеком. Вот как можно это решить:
+Компоненты, которые сами обрабатывают жесты (например, карта или кастомный компонент по типу карусели), могут конфликтовать со
+свайпбеком. Вот как можно это решить:
 
 - либо повесьте на них свойство `data-vkui-swipe-back={false}`;
 - либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](/components/touch).
@@ -160,111 +159,65 @@ function transitionHandler({
 Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()`.
 
 ```tsx
-import * as React from 'react';
+import { useCallback } from 'react';
 import { type ViewProps, View } from '@vkontakte/vkui';
 
 type ViewOnSwipeBackStartProp = Required<ViewProps>['onSwipeBackStart'];
 
-const App = () => {
-  const handleSwipeBackStart = React.useCallback<ViewOnSwipeBackStartProp>((activePanel) => {}, []);
-  return <View onSwipeBackStart={handleSwipeBackStart} />;
+export const ViewWithRestriction = ({
+  children,
+  ...props
+}: Omit<ViewProps, 'onSwipeBackStart'>) => {
+  const handleSwipeBackStart = useCallback<ViewOnSwipeBackStartProp>((activePanel) => {}, []);
+  return (
+    <View {...props} onSwipeBackStart={handleSwipeBackStart}>
+      {children}
+    </View>
+  );
 };
 ```
 
 ```jsx
-const App = () => {
-  const [history, setHistory] = React.useState(['main']);
-  const activePanel = history[history.length - 1];
+import { useCallback, useState } from 'react';
+import {
+  AppRoot,
+  ConfigProvider,
+  SplitLayout,
+  SplitCol,
+  View,
+  Alert,
+  Panel,
+  PanelHeader,
+  HorizontalScroll,
+  Header,
+  Group,
+  Gallery,
+  CellButton,
+  Placeholder,
+  PanelHeaderBack,
+  HorizontalCell,
+  Avatar,
+  FormItem,
+  Input,
+  Div,
+} from '@vkontakte/vkui';
 
-  const go = React.useCallback((panel) => {
-    setHistory((prevHistory) => [...prevHistory, panel]);
-  }, []);
-  const goBack = React.useCallback(() => {
-    setHistory((prevHistory) => prevHistory.slice(0, -1));
-  }, []);
-
-  const handleProfileClick = React.useCallback(() => go('profile'), [go]);
-  const handleSettingsClick = React.useCallback(() => go('settings'), [go]);
-
-  const [userName, setUserName] = React.useState('');
-  const [popoutWithRestriction, setPopoutWithRestriction] = React.useState(null);
-
-  const validateUserName = React.useCallback(() => {
-    if (userName !== '') {
-      return true;
-    }
-
-    setPopoutWithRestriction(
-      <Alert
-        title="Поле Имя не заполнено"
-        description="Пожалуйста, заполните его."
-        onClose={() => setPopoutWithRestriction(null)}
-      />,
-    );
-
-    return false;
-  }, [userName]);
-
-  const handleSwipeBackStartForPreventIfNeeded = React.useCallback(
-    (activePanel) => {
-      if (activePanel === 'settings') {
-        const isValid = validateUserName();
-        return isValid ? undefined : 'prevent';
-      }
-      return;
-    },
-    [validateUserName],
-  );
-
-  const handleBackForPreventIfNeeded = React.useCallback(() => {
-    if (validateUserName()) {
-      goBack();
-    }
-  }, [validateUserName, goBack]);
-
+const MainPanelContent = ({ id, onProfileClick }) => {
   return (
-    <React.Fragment>
-      <View
-        history={history}
-        activePanel={activePanel}
-        onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
-        onSwipeBack={goBack}
-      >
-        <Panel id="main">
-          <MainPanelContent onProfileClick={handleProfileClick} />
-        </Panel>
-        <Panel id="profile">
-          <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
-        </Panel>
-        <Panel id="settings">
-          <SettingsPanelContent
-            name={userName}
-            onChangeName={setUserName}
-            onBack={handleBackForPreventIfNeeded}
-          />
-        </Panel>
-      </View>
-      {popoutWithRestriction}
-    </React.Fragment>
-  );
-};
-
-const MainPanelContent = ({ onProfileClick }) => {
-  return (
-    <React.Fragment>
+    <Panel id={id}>
       <PanelHeader>Main</PanelHeader>
       <Group>
         <div style={{ height: 200 }} />
         <CellButton onClick={onProfileClick}>Профиль</CellButton>
         <div style={{ height: 600 }} />
       </Group>
-    </React.Fragment>
+    </Panel>
   );
 };
 
-const ProfilePanelContent = ({ onSettingsClick, onBack }) => {
+const ProfilePanelContent = ({ id, onSettingsClick, onBack }) => {
   return (
-    <React.Fragment>
+    <Panel id={id}>
       <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Профиль</PanelHeader>
       <Group>
         <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
@@ -290,27 +243,24 @@ const ProfilePanelContent = ({ onSettingsClick, onBack }) => {
         description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
       >
         <HorizontalScroll>
-          {getRandomUsers(15).map((user) => (
-            <HorizontalCell key={user.id} size="s" title={user.first_name}>
-              <Avatar size={56} src={user.photo_100} />
+          {Array.from({ length: 15 }).map((_, i) => (
+            <HorizontalCell key={i} size="s" title={i}>
+              <Avatar size={56} initials={`${i}`} />
             </HorizontalCell>
           ))}
         </HorizontalScroll>
       </Group>
-    </React.Fragment>
+    </Panel>
   );
 };
 
-const SettingsPanelContent = ({ name, onChangeName, onBack }) => {
-  const handleNameChange = React.useCallback(
-    (event) => {
-      onChangeName(event.target.value.trim());
-    },
-    [onChangeName],
-  );
+const SettingsPanelContent = ({ id, name, onChangeName, onBack }) => {
+  const handleNameChange = (event) => {
+    onChangeName(event.target.value.trim());
+  };
 
   return (
-    <React.Fragment>
+    <Panel id={id}>
       <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Настройки</PanelHeader>
       <Group>
         <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
@@ -318,13 +268,87 @@ const SettingsPanelContent = ({ name, onChangeName, onBack }) => {
           <Input id="name" value={name} onChange={handleNameChange} />
         </FormItem>
       </Group>
-    </React.Fragment>
+    </Panel>
   );
 };
 
-export default () => (
-  <ConfigProvider platform={'ios'} isWebView>
-    <App />
-  </ConfigProvider>
-);
+const App = () => {
+  const [history, setHistory] = useState(['main']);
+  const activePanel = history[history.length - 1];
+
+  const go = (panel) => setHistory((prevHistory) => [...prevHistory, panel]);
+  const goBack = () => setHistory((prevHistory) => prevHistory.slice(0, -1));
+
+  const handleProfileClick = () => go('profile');
+  const handleSettingsClick = () => go('settings');
+
+  const [userName, setUserName] = useState('');
+  const [popoutWithRestriction, setPopoutWithRestriction] = useState(null);
+
+  const validateUserName = useCallback(() => {
+    if (userName !== '') {
+      return true;
+    }
+
+    setPopoutWithRestriction(
+      <Alert
+        title="Поле Имя не заполнено"
+        description="Пожалуйста, заполните его."
+        onClose={() => setPopoutWithRestriction(null)}
+      />,
+    );
+
+    return false;
+  }, [userName]);
+
+  const handleSwipeBackStartForPreventIfNeeded = useCallback(
+    (activePanel) => {
+      if (activePanel === 'settings') {
+        const isValid = validateUserName();
+        return isValid ? undefined : 'prevent';
+      }
+      return;
+    },
+    [validateUserName],
+  );
+
+  const handleBackForPreventIfNeeded = () => {
+    if (validateUserName()) {
+      goBack();
+    }
+  };
+
+  return (
+    <SplitLayout>
+      <SplitCol>
+        <View
+          history={history}
+          activePanel={activePanel}
+          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+          onSwipeBack={goBack}
+        >
+          <MainPanelContent id="main" onProfileClick={handleProfileClick} />
+          <ProfilePanelContent id="profile" onSettingsClick={handleSettingsClick} onBack={goBack} />
+          <SettingsPanelContent
+            id="settings"
+            name={userName}
+            onChangeName={setUserName}
+            onBack={handleBackForPreventIfNeeded}
+          />
+        </View>
+        {popoutWithRestriction}
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+export default function Root() {
+  return (
+    <ConfigProvider platform="ios" isWebView>
+      <AppRoot>
+        <App />
+      </AppRoot>
+    </ConfigProvider>
+  );
+}
 ```

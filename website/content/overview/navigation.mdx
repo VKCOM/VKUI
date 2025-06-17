@@ -25,21 +25,30 @@ VKUI предоставляет компоненты для организаци
 
 **Раздел** — крупная часть приложения со своими сценариями. Например, например "Профиль" или "Сообщения".
 
-### Предварительная настройка
+### Предварительная настройка [#initial-setup]
 
-> Прежде чем начинать организовывать навигационную структуру, следует обязательно обернуть ваше приложение
-> в [`SplitLayout`](/components/split-layout) с хотя бы одним [`SplitCol`](/components/split-layout#split-col) – это обеспечит
-> безопасные боковые отступы и корректную работу анимаций.
+Для обеспечения безопасных боковых отступов и корректную работу анимаций навигационных компонентов, рекомендуем обернуть ваше
+приложение в следующие компоненты:
 
-Так так эта обёртка должна быть одна на всё приложение, её достаточно разместить ближе к корню — в точке входа приложения.
+- [`SplitLayout`](/components/split-layout) с передачей в свойство `header` заглушки в виде [`PanelHeader`](/components/panel-header),
+  чтобы компенсировать боковые отступы для видимых [`PanelHeader`](/components/panel-header) (при использовании платформы vkcom
+  заглушку можно не создавать).
+- [`SplitCol`](/components/split-layout#split-col) с передачей свойств `stretchedOnMobile` и `autoSpaced`. В зависимости от ширины
+  экрана:
 
-```jsx filename="src/App.tsx"
+  - `stretchedOnMobile` растягивает колонку на всю ширину на мобильных устройствах;
+  - `autoSpaced` включает автоматические боковые отступы на широких экранах, в частности, это нужно при применении компонента
+    [`Group`](/components/group).
+
+Так как эта обёртка должна быть одна на всё приложение, её достаточно разместить ближе к корню — в точке входа приложения.
+
+```jsx showLineNumbers filename="src/App.tsx" {5,6}
 import { SplitLayout, SplitCol } from '@vkontakte/vkui';
 
 export default function App() {
   return (
-    <SplitLayout>
-      <SplitCol>
+    <SplitLayout header={<PanelHeader delimiter="none" />}>
+      <SplitCol stretchedOnMobile autoSpaced>
         {/* ... */}
       </SplitCol>
     </Panel>
@@ -332,7 +341,7 @@ app (Epic)
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 
-<Playground Wrapper={FixedLayoutWrapper} style={{ minHeight: 440 }}>
+<Playground Wrapper={FixedLayoutWrapper} style={{ minHeight: 440, overflow: 'hidden' }}>
 
 ```jsx showLineNumbers filename="src/App.tsx"
 import { useState } from 'react';
@@ -410,7 +419,7 @@ const SettingsScenario = ({ id, goBack }) => {
 
   return (
     <View id={id} activePanel={activePanel}>
-      <Panel disableBackground={platform === 'vkcom'} id="notification-main-panel">
+      <Panel id="notification-main-panel">
         <PanelHeader before={<PanelHeaderBack onClick={goBack} />}>Уведомления</PanelHeader>
         <Group>
           <SimpleCell Component="label" after={<Switch />}>
@@ -442,7 +451,7 @@ const SettingsScenario = ({ id, goBack }) => {
           </SimpleCell>
         </Group>
       </Panel>
-      <Panel disableBackground={platform === 'vkcom'} id="notification-messenger-panel">
+      <Panel id="notification-messenger-panel">
         <PanelHeader
           before={<PanelHeaderBack onClick={() => setActivePanel('notification-main-panel')} />}
         >
@@ -467,7 +476,7 @@ const AboutScenario = ({ id, goBack }) => {
 
   return (
     <View id={id} activePanel="about-version-panel">
-      <Panel disableBackground={platform === 'vkcom'} id="about-version-panel">
+      <Panel id="about-version-panel">
         <PanelHeader before={<PanelHeaderBack onClick={goBack} />}>О приложении</PanelHeader>
         <Group>
           <Group mode="plain">
@@ -489,7 +498,7 @@ const MoreTab = ({ id, label }) => {
   return (
     <Root id={id} activeView={activeScenario}>
       <View id="main-scenario" activePanel="main-menu-panel">
-        <Panel disableBackground={platform === 'vkcom'} id="main-menu-panel">
+        <Panel id="main-menu-panel">
           <PanelHeader>{label}</PanelHeader>
           <Group>
             <Cell
@@ -522,7 +531,7 @@ return (
   <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />} center>
     {viewWidth.tabletPlus && (
       <SplitCol className={viewWidth.tabletPlus.className} width={280} maxWidth={280} fixed>
-        <Panel disableBackground={platform === 'vkcom'}>
+        <Panel>
           {platform !== 'vkcom' && <PanelHeader />}
           <Group>
             {tabConfig.map(({ id, label, Icon, Indicator }) => (
@@ -568,7 +577,7 @@ return (
             default:
               return (
                 <View key={id} id={id} activePanel={`${id}-panel`}>
-                  <Panel disableBackground={platform === 'vkcom'} id={`${id}-panel`}>
+                  <Panel id={`${id}-panel`}>
                     <PanelHeader>{label}</PanelHeader>
                     <Group>
                       <Placeholder icon={PlaceholderIcon ? <PlaceholderIcon /> : null} />

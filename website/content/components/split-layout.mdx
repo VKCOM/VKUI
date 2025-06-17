@@ -2,10 +2,10 @@
 
 # SplitLayout
 
-Компонент-контейнер для реализации интерфейса с навигационными слоями и многоколоночной структурой.
-За реализацию колонки отвечает `SplitCol`.
+Контейнер для реализации интерфейса многоколоночной структурой – за реализацию колонки отвечает [`SplitCol`](#split-col).
 
-<Callout>Компонент должен быть один на всё приложение.</Callout>
+Помимо многоколоночной структуры, за счёт [`SplitCol`](#split-col) со свойством `autoSpaced`, обеспечивает боковые отступы для
+экранов на базе [`Panel`](/components/panel).
 
 Связанные страницы и компоненты:
 
@@ -61,6 +61,12 @@ return (
 
 </Playground>
 
+## Применение компонента
+
+<Callout>Компонент должен быть один на всё приложение.</Callout>
+
+Достаточно будет объявить `SplitLayout` один раз ближе к корню приложения (см. [Навигация | Предварительная настройка](/overview/navigation#initial-setup)).
+
 ## Выравнивание
 
 За выравнивание контента по горизонтали отвечает свойство `center`.
@@ -106,9 +112,9 @@ return (
 </Playground>
 
 <Callout>
-Для платформы `vkcom` шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).
+Для платформы vkcom шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).
 
-```jsx
+```jsx showLineNumbers filename="src/App.tsx"
 import { SplitLayout, SplitCol, usePlatform } from '@vkontakte/vkui';
 
 export default function App() {
