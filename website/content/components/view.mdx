@@ -14,42 +14,42 @@
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 
-<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
 
 ```jsx
 const [activePanel, setActivePanel] = useState('panel-1');
 return (
   <View activePanel={activePanel}>
     <Panel id="panel-1">
-      <PanelHeader>Панель 1</PanelHeader>
+      <PanelHeader>Экран 1</PanelHeader>
       <Placeholder stretched>
         <Button appearance="positive" onClick={() => setActivePanel('panel-2')}>
-          Перейти к Панель 2
+          Перейти к Экрану 2
         </Button>
       </Placeholder>
     </Panel>
     <Panel id="panel-2">
-      <PanelHeader>Панель 2</PanelHeader>
+      <PanelHeader>Экран 2</PanelHeader>
       <Placeholder stretched>
         <ButtonGroup mode="vertical" align="center">
           <Button appearance="positive" onClick={() => setActivePanel('panel-3')}>
-            Перейти к Панель 3
+            Перейти к Экрану 3
           </Button>
           <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
-            Вернуться к Панель 1
+            Вернуться к Экрану 1
           </Button>
         </ButtonGroup>
       </Placeholder>
     </Panel>
     <Panel id="panel-3">
-      <PanelHeader>Панель 3</PanelHeader>
+      <PanelHeader>Экран 3</PanelHeader>
       <Placeholder stretched>
         <ButtonGroup mode="vertical" align="center">
           <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
-            Вернуться к Панель 1
+            Вернуться к Экрану 1
           </Button>
           <Button appearance="negative" onClick={() => setActivePanel('panel-2')}>
-            Вернуться к Панель 2
+            Вернуться к Экрану 2
           </Button>
         </ButtonGroup>
       </Placeholder>
@@ -135,7 +135,7 @@ function transitionHandler({
 - `onSwipeBackCancel` – обработчик завершения анимации отмененного пользователем свайпа.
 - `onSwipeBackStart` – обработчик начала анимации свайпа назад. Чтобы остановить свайп назад, возвращайте `"prevent"`.
 
-В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы повторить такое поведение
+В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущий экран. Для того, чтобы повторить такое поведение
 в VKUI, нужно:
 
 - передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите
