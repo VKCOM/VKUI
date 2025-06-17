@@ -12,7 +12,7 @@
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 
-<Playground Wrapper={FixedLayoutWrapper} style={{ height: 415, overflow: 'hidden' }}>
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
 
 ```jsx
 const [activeView, setActiveView] = useState('view-1');
@@ -20,20 +20,20 @@ return (
   <Root activeView={activeView}>
     <View id="view-1" activePanel="view-1-panel">
       <Panel id="view-1-panel">
-        <PanelHeader>View 1</PanelHeader>
+        <PanelHeader>Сценарий 1</PanelHeader>
         <Placeholder stretched>
           <Button appearance="positive" onClick={() => setActiveView('view-2')}>
-            Перейти к View 2
+            Перейти к Сценарию 2
           </Button>
         </Placeholder>
       </Panel>
     </View>
     <View id="view-2" activePanel="view-2-panel">
       <Panel id="view-2-panel">
-        <PanelHeader>View 2</PanelHeader>
+        <PanelHeader>Сценарий 2</PanelHeader>
         <Placeholder stretched>
           <Button appearance="negative" onClick={() => setActiveView('view-1')}>
-            Вернуться к View 1
+            Вернуться к Сценарию 1
           </Button>
         </Placeholder>
       </Panel>
