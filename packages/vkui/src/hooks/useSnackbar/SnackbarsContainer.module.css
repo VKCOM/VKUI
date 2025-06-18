@@ -4,6 +4,7 @@
   );
 
   position: fixed;
+  display: flex;
 }
 
 .placementTop,
@@ -15,12 +16,14 @@
 .placementTopStart,
 .placementTopEnd {
   inset-block-start: var(--vkui_internal--safe_area_inset_top);
+  flex-direction: column-reverse;
 }
 
 .placementBottom,
 .placementBottomStart,
 .placementBottomEnd {
   inset-block-end: var(--vkui_internal--snackbars_container_safe_area_inset_bottom);
+  flex-direction: column;
 }
 
 .placementTopStart,

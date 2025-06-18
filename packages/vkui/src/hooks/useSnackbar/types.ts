@@ -20,10 +20,7 @@ export interface UseSnackbarParameters {
 
 export type UseSnackbarResult = [SnackbarApi, React.ReactElement | null];
 
-export type SnackbarData = RequiredFields<
-  Omit<SnackbarProps, 'offsetY'>,
-  'id' | 'onClose' | 'placement'
->;
+export type SnackbarData = RequiredFields<Omit<SnackbarProps, 'offsetY'>, 'id' | 'placement'>;
 
 export { type SnackbarPlacement } from '../../components/Snackbar/types';
 export { SnackbarProps };

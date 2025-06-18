@@ -112,8 +112,8 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
 
   const onCloseAllSnackbars: SnackbarApi['closeAll'] = React.useCallback(() => {
     setData((oldData) => ({
-      ...oldData,
-      snackbarsToClose: new Set(oldData.snackbars.map(({ id }) => id)),
+      snackbars: oldData.snackbars.filter(({ id }) => showedSnackbars.current.has(id)),
+      snackbarsToClose: new Set(showedSnackbars.current),
     }));
   }, []);
 
