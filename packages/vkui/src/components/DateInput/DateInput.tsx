@@ -258,7 +258,6 @@ export const DateInput = ({
   onPrevMonth,
   prevMonthIcon,
   nextMonthIcon,
-  disableCalendar = false,
   renderDayContent,
   onCalendarOpenChanged,
   calendarTestsProps,
@@ -275,6 +274,8 @@ export const DateInput = ({
   timezone,
   restoreFocus,
   disableFocusTrap,
+  readOnly,
+  'disableCalendar': disableCalendarProp = false,
   'aria-label': ariaLabel = '',
   ...props
 }: DateInputProps): React.ReactNode => {
@@ -283,6 +284,8 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
+
+  const disableCalendar = readOnly ? true : disableCalendarProp;
 
   const { value, updateValue, setInternalValue, getLastUpdatedValue, clearValue } =
     useDateInputValue({
@@ -342,7 +345,7 @@ export const DateInput = ({
     maxElement,
     refs,
     autoFocus,
-    disabled,
+    disabled: disabled || readOnly,
     elementsConfig,
     onClear: clearValue,
     onInternalValueChange,
@@ -441,7 +444,7 @@ export const DateInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value ? (
+          {value && !readOnly ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}
@@ -466,7 +469,7 @@ export const DateInput = ({
           Component="input"
           readOnly
           aria-hidden
-          tabIndex={-1}
+          tabIndex={readOnly ? 0 : -1}
           name={name}
           value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
           onFocus={handleFieldEnter}
@@ -489,6 +492,7 @@ export const DateInput = ({
             onKeyDown={handleKeyDown}
             onElementSelect={setFocusedElement}
             label={changeDayLabel}
+            readOnly={readOnly}
             data-testid={dayFieldTestId}
           />
           <InputLikeDivider>.</InputLikeDivider>
@@ -501,6 +505,7 @@ export const DateInput = ({
             index={1}
             onElementSelect={setFocusedElement}
             onKeyDown={handleKeyDown}
+            readOnly={readOnly}
             label={changeMonthLabel}
             data-testid={monthFieldTestId}
           />
@@ -513,6 +518,7 @@ export const DateInput = ({
             getRootRef={yearsRef}
             index={2}
             onElementSelect={setFocusedElement}
+            readOnly={readOnly}
             label={changeYearLabel}
             onKeyDown={handleKeyDown}
             data-testid={yearFieldTestId}
@@ -528,6 +534,7 @@ export const DateInput = ({
                 getRootRef={hoursRef}
                 index={3}
                 onElementSelect={setFocusedElement}
+                readOnly={readOnly}
                 label={changeHoursLabel}
                 onKeyDown={handleKeyDown}
                 data-testid={hourFieldTestId}
@@ -541,6 +548,7 @@ export const DateInput = ({
                 getRootRef={minutesRef}
                 index={4}
                 onElementSelect={setFocusedElement}
+                readOnly={readOnly}
                 label={changeMinutesLabel}
                 onKeyDown={handleKeyDown}
                 data-testid={minuteFieldTestId}
