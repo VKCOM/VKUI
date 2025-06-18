@@ -1,4 +1,4 @@
-import { addons, types } from '@storybook/manager-api';
+import { addons, types } from 'storybook/manager-api';
 import { HasCustomPanelHeaderAfter } from './HasCustomPanelHeaderAfter';
 import { ADDON_ID } from './constants';
 

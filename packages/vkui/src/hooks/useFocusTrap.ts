@@ -114,6 +114,10 @@ export type UseFocusTrapProps = {
    * @default true
    */
   captureEscapeKeyboardEvent?: boolean;
+  /**
+   * Пользовательские опции для MutationObserver, который отслеживает изменения DOM внутри компонента и пересчитывает ноды для фокуса.
+   */
+  mutationObserverOptions?: MutationObserverInit;
 };
 
 /**
@@ -129,6 +133,7 @@ export const useFocusTrap = (
     timeout = 0,
     onClose,
     captureEscapeKeyboardEvent = true,
+    mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
   const { document } = useDOM();
@@ -189,7 +194,11 @@ export const useFocusTrap = (
     }
   };
 
-  useMutationObserver(ref, () => ref.current && onMutateParentHandler(ref.current));
+  useMutationObserver(
+    ref,
+    () => ref.current && onMutateParentHandler(ref.current),
+    mutationObserverOptions,
+  );
 
   useIsomorphicLayoutEffect(() => {
     ref.current && recalculateFocusableNodesRef(ref.current);

@@ -13,7 +13,7 @@
     "lodash-es": "^4.17.21",
     "react": "^18.3.1",
     "react-children-utilities": "^2.10.0",
-    "react-docgen-typescript": "^2.2.2",
+    "react-docgen-typescript": "^2.4.0",
     "react-dom": "^18.3.1",
     "react-frame-component": "^5.2.7",
     "react-styleguidist": "^13.1.2",

@@ -69,7 +69,7 @@ describe('CustomSelectDropdown', () => {
 
     expect(screen.getByTestId('dropdown')).toHaveClass(styles.top);
 
-    expect(onPlacementChange).toBeCalledTimes(1);
+    expect(onPlacementChange).toHaveBeenCalledTimes(1);
   });
 
   it('should not have className when noMaxHeight = true', () => {

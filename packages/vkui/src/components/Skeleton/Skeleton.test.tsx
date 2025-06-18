@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Skeleton, type SkeletonProps } from './Skeleton';
 import styles from './Skeleton.module.css';
+import stylesDelay from '../../styles/animationVisibilityDelay.module.css';
 
 describe('Skeleton', () => {
   baselineComponent(Skeleton);
@@ -49,4 +50,10 @@ describe('Skeleton', () => {
       className && expect(screen.getByTestId('skeleton')).toHaveClass(className);
     },
   );
+
+  it('should delay visibility', () => {
+    render(<Skeleton visibilityDelay={200} />);
+
+    expect(document.querySelector(`.${stylesDelay.visibilityDelay}`)).not.toBeNull();
+  });
 });

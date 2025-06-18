@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DocsContext } from '@storybook/addon-docs';
+import { DocsContext } from '@storybook/addon-docs/blocks';
 import { type ColorSchemeType, type PlatformType } from '../../../src';
 import { type Direction } from '../../../src/lib/direction';
 

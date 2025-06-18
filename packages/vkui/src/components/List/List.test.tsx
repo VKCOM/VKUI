@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, mockTouchStartDisabled } from '../../testing/utils';
 import { Cell } from '../Cell/Cell';
 import { List } from './List';
 import draggerStyles from '../Cell/CellDragger/CellDragger.module.css';
@@ -184,6 +184,7 @@ const dragCell = ({
 };
 
 describe('List', () => {
+  mockTouchStartDisabled();
   baselineComponent(List);
 
   beforeEach(() => {

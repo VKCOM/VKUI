@@ -1,14 +1,13 @@
 .root {
   position: relative;
-  padding-block: 32px;
-  padding-inline: 32px;
-  margin-block-start: var(--vkui--spacing_size_3xl);
-  margin-block-end: 32px;
+  padding-block: var(--vkui--spacing_size_2xl);
+  padding-inline: var(--vkui--spacing_size_2xl);
+  margin-block-start: 0;
+  margin-block-end: var(--vkui--spacing_size_4xl);
   overflow: hidden;
   color: var(--vkui--color_text_primary);
-  background-color: var(--vkui--color_background_tertiary);
-  background-image: url('./background.png');
-  border: 1px solid var(--vkui--color_separator_primary);
+  background-color: var(--vkui--color_background_tertiary_alpha);
+  border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
   border-radius: 16px;
   isolation: isolate;
 }
@@ -22,13 +21,26 @@
     linear-gradient(to right, var(--vkui--color_separator_primary) 1px, transparent 1px),
     linear-gradient(to bottom, var(--vkui--color_separator_primary) 1px, transparent 1px);
   background-size: 32px 32px;
-  mask-image: linear-gradient(to right, rgb(0, 0, 0, 0) 30%, #000 100%);
+  opacity: 0.2;
+  mask-image: linear-gradient(to right, rgb(0, 0, 0, 0) 10%, #000 100%);
 }
 
-/* No classes for markdown content */
-/* stylelint-disable-next-line selector-max-type */
-.root > h1 {
-  color: var(--vkui--color_text_contrast);
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkui--vkBase--dark) .root::before {
+  opacity: 0.6;
+}
+
+.root::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  background-image: radial-gradient(
+    ellipse at 0 50px,
+    transparent 60%,
+    var(--vkui--color_background_accent_tint)
+  );
+  opacity: 0.2;
 }
 
 /* stylelint-disable-next-line selector-max-type */
@@ -38,6 +50,5 @@
 }
 
 .tags {
-  /* margin-block-start: 44px; */
   margin-block-start: 20px;
 }

@@ -16,6 +16,10 @@ export interface DocsThemeConfig {
    */
   navbar?: React.ReactElement<NavbarProps>;
   /**
+   * Компонент внизу страницы
+   */
+  footer?: React.ReactElement;
+  /**
    * Компонент для дополнительных кнопок
    */
   extraButtons?: React.ReactElement;

@@ -35,7 +35,6 @@ export const InputLike = ({
   length,
   index,
   onElementSelect,
-  onClick,
   onFocus,
   label,
   ...restProps
@@ -53,7 +52,6 @@ export const InputLike = ({
       Component="span"
       baseClassName={value?.length === length ? styles.host : undefined}
       tabIndex={0}
-      onClick={onClick}
       onFocus={callMultiple(onFocus, handleElementSelect)}
       {...restProps}
     >
