@@ -3,18 +3,11 @@ import { baselineComponent } from '../../testing/utils';
 import { CustomSelectOption } from './CustomSelectOption';
 
 describe('CustomSelectOption', () => {
-  baselineComponent(
-    (props) => <CustomSelectOption {...props}>CustomSelectOption</CustomSelectOption>,
-    {
-      a11yConfig: {
-        rules: {
-          // TODO [a11y]: "Certain ARIA roles must be contained by particular parents (aria-required-parent)"
-          //              https://dequeuniversity.com/rules/axe/4.5/aria-required-parent?application=axeAPI
-          'aria-required-parent': { enabled: false },
-        },
-      },
-    },
-  );
+  baselineComponent((props) => (
+    <div role="listbox" aria-label="Listbox">
+      <CustomSelectOption {...props}>CustomSelectOption</CustomSelectOption>
+    </div>
+  ));
 
   it('does not handle onClick when disabled', () => {
     const onClick = jest.fn();
