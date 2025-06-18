@@ -8,7 +8,7 @@ import { useMounted } from 'nextra/hooks';
 import { usePlaygroundStore } from '@/providers/playgroundStoreProvider';
 import { ThemesModal } from './ThemesModal';
 
-export function ThemePicker() {
+export function ThemePicker({ className }: { className?: string }) {
   const [open, setOpen] = React.useState(false);
   const mounted = useMounted();
   const themeName = usePlaygroundStore((store) => store.themeName);
@@ -21,6 +21,7 @@ export function ThemePicker() {
         appearance="neutral"
         onClick={() => setOpen((isOpen) => !isOpen)}
         before={<Icon20BrushOutline />}
+        className={className}
       >
         {themeName}
       </Button>
