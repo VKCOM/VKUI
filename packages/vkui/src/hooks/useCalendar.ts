@@ -35,11 +35,8 @@ export function useCalendar({
   setNextMonth: () => void;
   focusedDay: Date | undefined;
   setFocusedDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  focusableDay: Date | undefined;
-  setFocusableDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
   isDayFocused: (day: Date) => boolean;
   isDayDisabled: (day: Date, withTime?: boolean) => boolean;
-  resetSelectedDay: () => void;
   isMonthDisabled: (month: number, year?: number) => boolean;
   isYearDisabled: (year: number) => boolean;
 } {
@@ -49,8 +46,6 @@ export function useCalendar({
   // соответствует дню, на котором сейчас есть фокус
   // меняется при переключении дней с помощью стрелок
   const [focusedDay, setFocusedDay] = React.useState<Date>();
-  // соотвествует дню, на котором можно сфокусироваться с помощью Tab
-  const [focusableDay, setFocusableDay] = React.useState<Date>();
 
   const setPrevMonth = React.useCallback(() => {
     onPrevMonth?.();
@@ -144,10 +139,6 @@ export function useCalendar({
     [disableFuture, disablePast, minDateTime, maxDateTime],
   );
 
-  const resetSelectedDay = React.useCallback(() => {
-    setFocusedDay(undefined);
-  }, [setFocusedDay]);
-
   return {
     viewDate,
     setViewDate: handleSetViewDate,
@@ -155,11 +146,8 @@ export function useCalendar({
     setNextMonth,
     focusedDay,
     setFocusedDay,
-    focusableDay,
-    setFocusableDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   };

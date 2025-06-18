@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Icon12Download } from '@vkontakte/icons';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';

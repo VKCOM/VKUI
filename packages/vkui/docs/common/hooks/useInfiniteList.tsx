@@ -1,13 +1,4 @@
-import {
-  type Dispatch,
-  type ReactNode,
-  type RefObject,
-  type SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { type ReactNode, type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { Spinner } from '../../../src';
 import { useGlobalEventListener } from '../../../src/hooks/useGlobalEventListener';
 import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
@@ -36,30 +27,30 @@ type UseInfiniteListResult<Section extends { id: string }> = {
   remappedSections: Array<RemappedSection<Section>>;
 };
 
-const updateWithCheckEqual = <T,>(array: T[], setter: Dispatch<SetStateAction<T[]>>) => {
-  setter((oldArray) => (JSON.stringify(oldArray) !== JSON.stringify(array) ? array : oldArray));
-};
-
 export const useInfiniteList = <Section extends { id: string }>(
   sections: Section[],
   sectionsRefs: Record<string, RefObject<HTMLDivElement | null>>,
   containerRef: RefObject<HTMLElement | null>,
 ): UseInfiniteListResult<Section> => {
-  const [remappedSections, setRemappedSections] = useState<Array<RemappedSection<Section>>>(
-    sections.slice(0, 1),
-  );
-  const sectionsDataRef = useRef<Record<string, SectionData<Section>>>({});
-  const sectionsRef = useRef(sections);
-
   const { window, document } = useDOM();
 
-  const recalculateSectionsBounds = useCallback(() => {
-    sectionsDataRef.current = {};
+  const [data, setData] = useState<{
+    mountedSections: string[];
+    sectionsVisibilityData: Record<string, RemappedSection<Section>>;
+  }>({
+    mountedSections: [],
+    sectionsVisibilityData: {},
+  });
+
+  const sectionsDataRef = useRef<Record<string, SectionData<Section>>>({});
+
+  const recalculateSectionsBounds = () => {
+    const newSectionsData: Record<string, SectionData<Section>> = {};
     Object.entries(sectionsRefs).forEach(([sectionId, sectionRef]) => {
       if (sectionRef && sectionRef.current) {
         const sectionData = sections.find((section) => section.id === sectionId);
         if (sectionData) {
-          sectionsDataRef.current[sectionId] = {
+          newSectionsData[sectionId] = {
             data: sectionData,
             bounds: {
               height: sectionRef.current.offsetHeight,
@@ -69,68 +60,97 @@ export const useInfiniteList = <Section extends { id: string }>(
         }
       }
     });
-  }, [sections, sectionsRefs]);
+    sectionsDataRef.current = newSectionsData;
+  };
 
-  useEffect(
-    function resetShowedConfig() {
-      sectionsRef.current = sections;
-      setRemappedSections(sections.slice(0, 1));
-    },
-    [sections],
-  );
-
-  const recalculateVisibleSections = useCallback(() => {
+  const showMoreVisible = () => {
     if (!window || !document) {
       return;
     }
     const pageYOffset = window.pageYOffset;
 
-    const newRemappedSections: Array<RemappedSection<Section>> = [];
+    setData((oldData) => {
+      const { mountedSections, sectionsVisibilityData } = oldData;
+      if (mountedSections.length < sections.length) {
+        const maxScrollTop =
+          document.documentElement.scrollHeight -
+          window.innerHeight -
+          SPINNER_HEIGHT -
+          WINDOW_PADDING_BOTTOM;
+        const isLoaderVisible = pageYOffset >= maxScrollTop;
+        if (isLoaderVisible) {
+          const section = sections[mountedSections.length];
 
-    Object.values(sectionsDataRef.current).forEach(({ bounds, data }) => {
-      if (
-        bounds.offsetTop + bounds.height <= pageYOffset ||
-        bounds.offsetTop >= pageYOffset + window.innerHeight
-      ) {
-        newRemappedSections.push({
-          ...data,
-          minHeight: bounds.height,
-          hidden: true,
-        });
-        return;
+          return {
+            mountedSections: [...mountedSections, section.id],
+            sectionsVisibilityData: {
+              ...sectionsVisibilityData,
+              [section.id]: section,
+            },
+          };
+        }
       }
-      newRemappedSections.push(data);
+      return oldData;
+    });
+  };
+
+  const recalculateVisibleSections = () => {
+    const sectionsData = sectionsDataRef.current;
+
+    if (!window || !document) {
+      return;
+    }
+    const pageYOffset = window.pageYOffset;
+
+    setData((oldData) => {
+      const { mountedSections } = oldData;
+      const newSectionsVisibilityData: Record<string, RemappedSection<Section>> = {};
+
+      mountedSections.forEach((sectionId) => {
+        const sectionData = sectionsData[sectionId];
+        if (!sectionData) {
+          return;
+        }
+        const { bounds, data } = sectionData;
+        if (
+          bounds.offsetTop + bounds.height <= pageYOffset ||
+          bounds.offsetTop >= pageYOffset + window.innerHeight
+        ) {
+          newSectionsVisibilityData[sectionId] = {
+            ...data,
+            minHeight: bounds.height,
+            hidden: true,
+          };
+          return;
+        }
+        newSectionsVisibilityData[sectionId] = data;
+      });
+
+      return {
+        mountedSections,
+        sectionsVisibilityData: newSectionsVisibilityData,
+      };
     });
 
-    if (newRemappedSections.length < sectionsRef.current.length) {
-      const maxScrollTop =
-        document.documentElement.scrollHeight -
-        window.innerHeight -
-        SPINNER_HEIGHT -
-        WINDOW_PADDING_BOTTOM;
-      const isLoaderVisible = pageYOffset >= maxScrollTop;
+    showMoreVisible();
+  };
 
-      if (isLoaderVisible) {
-        newRemappedSections.push(sectionsRef.current[newRemappedSections.length]);
-      }
-    }
+  useEffect(() => setData({ mountedSections: [], sectionsVisibilityData: {} }), [sections]);
 
-    updateWithCheckEqual(newRemappedSections, setRemappedSections);
-  }, [document, window]);
+  useEffect(recalculateSectionsBounds, [sectionsRefs]);
+
+  useResizeObserver(containerRef, () => requestAnimationFrame(showMoreVisible));
 
   useGlobalEventListener(window, 'scroll', recalculateVisibleSections);
 
-  const onResize = useCallback(() => {
-    recalculateSectionsBounds();
-    recalculateVisibleSections();
-  }, [recalculateSectionsBounds, recalculateVisibleSections]);
-
-  useResizeObserver(window, onResize);
-  useResizeObserver(containerRef, onResize);
-  useEffect(onResize, [onResize]);
+  const remappedSections: Array<RemappedSection<Section>> = useMemo(() => {
+    return data.mountedSections
+      .map((sectionId) => data.sectionsVisibilityData[sectionId])
+      .filter(Boolean);
+  }, [data.mountedSections, data.sectionsVisibilityData]);
 
   return {
     remappedSections,
-    showMoreElement: remappedSections.length < sectionsRef.current.length && <Spinner />,
+    showMoreElement: data.mountedSections.length < sections.length && <Spinner />,
   };
 };

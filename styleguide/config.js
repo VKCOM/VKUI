@@ -1,7 +1,10 @@
 const path = require('path');
-const { argv } = require('yargs');
+const yargs = require('yargs');
+const { hideBin } = require('yargs/helpers');
 const { VKUI_PACKAGE } = require('../shared');
 const { reactDocgenTypescript } = require('./propsParser.config');
+
+const argv = yargs(hideBin(process.argv)).parse();
 
 /**
  * @type {import('react-styleguidist').StyleguidistConfig}

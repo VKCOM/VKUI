@@ -97,6 +97,8 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
       mode="shadow"
       className={classNames(styles.card, direction === 'rtl' && styles.rtl)}
       style={style}
+      aria-label={`${componentName} превью компонента`}
+      tabIndex={0}
     >
       {searchedQuery ? (
         <TitleWithSearch searchedQuery={searchedQuery} name={componentName} />
@@ -108,7 +110,6 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
       <div
         className={styles.componentWrapper}
         ref={containerRef}
-        aria-label={`${componentName} component preview`}
         // @ts-expect-error: TS2322 пока react нормально не поддерживает этот атрибут
         inert=""
       >

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import type { StoryId } from '@storybook/types';
-import { AddonPanel, SyntaxHighlighter } from '@storybook/components';
-import { SNIPPET_RENDERED } from '@storybook/docs-tools';
-import { useChannel } from '@storybook/manager-api';
+import type { StoryId } from 'storybook/internal/types';
+import { AddonPanel, SyntaxHighlighter } from 'storybook/internal/components';
+import { SNIPPET_RENDERED } from 'storybook/internal/docs-tools';
+import { useChannel } from 'storybook/manager-api';
 
 type SnippetRenderedArgs = {
   id: StoryId;

@@ -1,4 +1,4 @@
-import { create } from '@storybook/theming';
+import { create } from 'storybook/theming';
 import darkLogo from './vkui-logo-dark.svg';
 import lightLogo from './vkui-logo-light.svg';
 

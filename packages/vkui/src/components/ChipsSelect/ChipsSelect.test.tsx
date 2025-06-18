@@ -628,46 +628,96 @@ describe('ChipsSelect', () => {
     fireEvent.click(getDropdownIcon());
     expect(screen.queryByTestId('dropdown')).toBeFalsy();
   });
-
-  it('should add some options by splitting by delimiter when creatable', async () => {
-    const onChange = jest.fn();
-    render(
-      <ChipsSelect
-        options={[]}
-        defaultValue={[]}
-        data-testid="input"
-        onChange={onChange}
-        delimiter=","
-        creatable
-      />,
-    );
-    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
-    expect(onChange).toBeCalledWith([
-      {
-        value: 'Зеленый',
-        label: 'Зеленый',
-      },
-      {
-        value: 'Фиолетовый',
-        label: 'Фиолетовый',
-      },
-    ]);
-    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
-  });
-
-  it('should not add some options by splitting by delimiter when not creatable', async () => {
-    const onChange = jest.fn();
-    render(
-      <ChipsSelect
-        options={[]}
-        defaultValue={[]}
-        data-testid="input"
-        onChange={onChange}
-        delimiter=","
-      />,
-    );
-    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
-    expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('Зеленый,Фиолетовый');
-  });
 });
+
+describe.each<{
+  delimiter: string | RegExp | string[];
+  str: string;
+  expectedValues?: string[];
+  expectedInputValue?: string;
+}>([
+  {
+    delimiter: ',',
+    str: 'Зеленый,Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: new RegExp(','),
+    str: 'Зеленый,Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: /\./,
+    str: 'Зеленый.Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: [',', '.'],
+    str: 'Зеленый,Фиолетовый.Красный',
+    expectedValues: ['Зеленый', 'Фиолетовый', 'Красный'],
+  },
+  {
+    delimiter: '.',
+    str: 'Зеленый.Фиолетовый',
+    expectedValues: ['Зеленый', 'Фиолетовый'],
+  },
+  {
+    delimiter: [' ', ',', '.', '|'],
+    str: 'Зеленый.Фиолетовый,Красный|Розовый Синий',
+    expectedValues: ['Зеленый', 'Фиолетовый', 'Красный', 'Розовый', 'Синий'],
+  },
+  {
+    delimiter: ['', ''],
+    str: 'Зеленый,Фиолетовый.Красный',
+    expectedInputValue: 'Зеленый,Фиолетовый.Красный',
+  },
+])(
+  'should correct use delimiter $delimiter',
+  ({ delimiter, str, expectedValues, expectedInputValue }) => {
+    it('should add some options by splitting by delimiter when creatable', async () => {
+      const onChange = jest.fn();
+      render(
+        <ChipsSelect
+          options={[]}
+          defaultValue={[]}
+          data-testid="input"
+          onChange={onChange}
+          delimiter={delimiter}
+          creatable
+        />,
+      );
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      if (expectedValues) {
+        expect(onChange).toHaveBeenCalledWith(
+          expectedValues.map((value) => ({
+            value,
+            label: value,
+          })),
+        );
+      } else {
+        expect(onChange).not.toHaveBeenCalled();
+      }
+      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+    });
+
+    it('should not add some options by splitting by delimiter when not creatable', async () => {
+      const onChange = jest.fn();
+      render(
+        <ChipsSelect
+          options={[]}
+          defaultValue={[]}
+          data-testid="input"
+          onChange={onChange}
+          delimiter={delimiter}
+        />,
+      );
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      expect(onChange).not.toHaveBeenCalled();
+      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
+    });
+  },
+);

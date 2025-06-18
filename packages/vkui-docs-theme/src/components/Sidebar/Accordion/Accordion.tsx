@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Icon20ChevronUp, Icon20Dropdown } from '@vkontakte/icons';
+import { Icon24ChevronDown } from '@vkontakte/icons';
 import {
   AccordionContext,
-  Flex,
+  classNames,
+  Headline,
   Tappable,
   type TappableProps,
   Accordion as VKUIAccordion,
@@ -12,7 +13,7 @@ import styles from './Accordion.module.css';
 
 export interface AccordionProps extends Omit<TappableProps, 'onChange' | 'title'> {
   expanded: VKUIAccordionProps['expanded'];
-  onChange: (e?: React.MouseEvent<HTMLElement>, toggle?: boolean) => void;
+  onChange: React.MouseEventHandler<HTMLElement>;
   children?: React.ReactNode;
   className?: string;
   title: React.ReactNode;
@@ -32,14 +33,12 @@ function AccordionSummary({ title, className, onChange, ...restProps }: Accordio
       aria-expanded={expanded}
       aria-controls={contentId}
       activeMode="opacity"
-      hoverMode="opacity"
+      borderRadiusMode="inherit"
       onClick={onChange}
       {...restProps}
     >
-      <Flex align="center">{title}</Flex>
-      <Tappable className={styles.icon} onClick={(e) => onChange(e, true)}>
-        {expanded ? <Icon20ChevronUp /> : <Icon20Dropdown />}
-      </Tappable>
+      <Icon24ChevronDown className={classNames(styles.icon, expanded && styles.iconActive)} />
+      <Headline level="1">{title}</Headline>
     </Tappable>
   );
 }
