@@ -6,8 +6,16 @@
 
 .platformPicker {
   flex: 0 0 128px;
+  margin-inline-end: auto;
 }
 
 .rotateIcon {
   transform: rotate(90deg);
+}
+
+@media (max-width: 420px) {
+  .themePicker {
+    order: 1;
+    inline-size: 100%;
+  }
 }
