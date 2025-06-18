@@ -3,7 +3,7 @@ import {
   Icon20ArrowLeftRightCornersOutline,
   Icon20ArrowRightLeftCornersOutline,
 } from '@vkontakte/icons';
-import { AdaptivityProvider, Button, ButtonGroup, Flex } from '@vkontakte/vkui';
+import { AdaptivityProvider, Button, Flex } from '@vkontakte/vkui';
 import { ColorSchemePicker } from './ColorSchemePicker';
 import { CopyCodeButton } from './CopyCodeButton';
 import { PlatformPicker } from './PlatformPicker/PlatformPicker';
@@ -21,23 +21,21 @@ export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToo
     : Icon20ArrowLeftRightCornersOutline;
 
   return (
-    <Flex justify="space-between" align="center" className={styles.root}>
+    <Flex align="center" gap="s" className={styles.root}>
       <AdaptivityProvider sizeY="compact">
         <PlatformPicker className={styles.platformPicker} />
       </AdaptivityProvider>
       <AdaptivityProvider sizeY="regular">
-        <ButtonGroup gap="s">
-          <ThemePicker />
-          <ColorSchemePicker />
-          <CopyCodeButton />
-          <Button
-            size="s"
-            mode="secondary"
-            appearance="neutral"
-            onClick={() => setCodeVisible(!codeVisible)}
-            before={<CodeExpandedIcon className={styles.rotateIcon} />}
-          />
-        </ButtonGroup>
+        <ThemePicker className={styles.themePicker} />
+        <ColorSchemePicker />
+        <CopyCodeButton />
+        <Button
+          size="s"
+          mode="secondary"
+          appearance="neutral"
+          onClick={() => setCodeVisible(!codeVisible)}
+          before={<CodeExpandedIcon className={styles.rotateIcon} />}
+        />
       </AdaptivityProvider>
     </Flex>
   );
