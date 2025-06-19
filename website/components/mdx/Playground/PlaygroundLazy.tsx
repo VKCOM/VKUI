@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import { PanelSpinner, Placeholder } from '@vkontakte/vkui';
 import dynamic from 'next/dynamic';
 import { type PlaygroundProps } from './Playground';
