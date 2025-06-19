@@ -1,0 +1,1 @@
+import{r as t}from"./iframe-k6odcVfq.js";function o(r,c){const s=t.useRef(null),n=t.useRef(void 0),u=t.useCallback(e=>{c&&e.offsetParent&&(e.style.height="",e.style.height=`${e.scrollHeight}px`,e.scrollHeight!==n.current&&r&&(r(e),n.current=e.scrollHeight))},[c,r]),i=t.useCallback(()=>{const e=s.current;e&&u(e)},[s,u]);return[s,i]}export{o as u};

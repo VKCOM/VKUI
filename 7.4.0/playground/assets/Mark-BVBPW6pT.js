@@ -1,0 +1,2 @@
+import{j as o,R as t}from"./iframe-k6odcVfq.js";const s="_host_s1czg_1",a={host:s},e=u=>o.jsx(t,{baseClassName:a.host,Component:"mark",...u});try{e.displayName="Mark",e.__docgenInfo={description:`Компонент используется для выделения фрагментов текста,
+например при поиске определенных слов или выделения текста в цитате.`,displayName:"Mark",props:{getRootRef:{defaultValue:null,description:"",name:"getRootRef",required:!1,type:{name:"Ref<HTMLDivElement>"}}}}}catch{}export{e as M};
