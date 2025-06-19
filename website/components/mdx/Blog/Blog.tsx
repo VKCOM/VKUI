@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { PostsLayout } from '@vkontakte/vkui-docs-theme';
 import type { MdxFile } from 'nextra';
 import { getPageMap } from 'nextra/page-map';

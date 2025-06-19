@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon20MoonOutline, Icon20SunOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { usePlaygroundStore } from '@/providers/playgroundStoreProvider';
