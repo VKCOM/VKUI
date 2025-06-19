@@ -32,12 +32,16 @@ export const AccordionContent = ({
   children,
   ...restProps
 }: AccordionContentProps) => {
-  const { expanded, labelId, contentId } = React.useContext(AccordionContext);
+  const { expanded, labelId, contentId, unmountOnCollapsed, onExpandStart, onCollapseEnd } =
+    React.useContext(AccordionContext);
 
   const inRef = useExternRef(getRef);
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     expanded ? 'enter' : 'exit',
-    undefined,
+    {
+      onEnter: onExpandStart,
+      onExited: onCollapseEnd,
+    },
     true,
   );
 
@@ -60,6 +64,10 @@ export const AccordionContent = ({
         break;
     }
   }, [animationState, inRef]);
+
+  if (unmountOnCollapsed && animationState === 'exited') {
+    return null;
+  }
 
   return (
     <div
