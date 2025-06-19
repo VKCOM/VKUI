@@ -4,6 +4,7 @@ import nextra from 'nextra';
 
 const basePath =
   process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH : undefined;
+const distDir = process.env.NEXT_PUBLIC_VKUI_DOCS_DIST_DIR || 'out';
 
 const withBundleAnalyzer = analyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -38,5 +39,6 @@ export default withBundleAnalyzer(
     images: {
       unoptimized: true,
     },
+    distDir,
   }),
 );
