@@ -55,6 +55,7 @@ export const CustomSelectInput = ({
   labelTextTestId,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
+  const id = React.useId();
   const { sizeY = 'none' } = useAdaptivity();
 
   const title = children || placeholder;
@@ -109,6 +110,7 @@ export const CustomSelectInput = ({
           tabIndex={-1}
           aria-hidden
           data-testid={labelTextTestId}
+          id={id}
         >
           <SelectTypography selectType={selectType} className={styles.title}>
             {showLabelOrPlaceholder && title}
