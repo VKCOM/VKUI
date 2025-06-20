@@ -298,14 +298,6 @@ export interface SelectProps<
    * Обработчик события `keyDown` в поле ввода.
    */
   onInputKeyDown?: (e: React.KeyboardEvent, isOpen: boolean) => void;
-  /**
-   * [a11y] Текстовая подпись для скринридеров, которая озвучивается перед текстом выбранной опции.
-   * Помогает пользователям с ограниченными возможностями понять, какая опция сейчас выбрана.
-   *
-   * По умолчанию: "Выбранная опция".
-   * Пример: "Выбранная опция: Москва" при фокусе на поле выбора города.
-   */
-  selectedOptionLabelPrefix?: string;
 }
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
@@ -347,7 +339,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     noMaxHeight = false,
     'aria-labelledby': ariaLabelledBy,
     'aria-description': ariaDescription,
-    selectedOptionLabelPrefix = 'Выбранная опция',
     clearButtonTestId,
     nativeSelectTestId,
     defaultValue,
@@ -951,9 +942,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       ? options[ariaActiveDescendantOptionIndex] && options[ariaActiveDescendantOptionIndex].value
       : null;
 
-  const selectedOptionLabel = selected
-    ? `${selectedOptionLabelPrefix}: ${getTextFromChildren(selected.label)}`
-    : undefined;
+  const selectedOptionLabel = selected ? getTextFromChildren(selected.label) : undefined;
 
   const selectInputAriaProps: React.HTMLAttributes<HTMLElement> = {
     'role': 'combobox',

@@ -124,7 +124,7 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Josh');
   });
 
-  it('check selectedOptionLabelPrefix should be in the document', () => {
+  it('check selected option should be in the input aria-description attribute', () => {
     render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
@@ -133,7 +133,6 @@ describe('CustomSelect', () => {
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
-        selectedOptionLabelPrefix="Выбранное имя"
       />,
     );
 
@@ -145,7 +144,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOption);
 
     const input = screen.getByTestId('input');
-    expect(input).toHaveAttribute('aria-description', 'Выбранное имя: Josh');
+    expect(input).toHaveAttribute('aria-description', 'Josh');
   });
 
   it('works correctly as controlled component', () => {
