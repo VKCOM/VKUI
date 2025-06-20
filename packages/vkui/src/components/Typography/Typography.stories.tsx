@@ -24,7 +24,7 @@ interface TypographyOverview {
 }
 
 const story: Meta<TypographyOverview> = {
-  title: 'Typography',
+  title: 'Typography/Typography',
   parameters: createStoryParameters('Typography', CanvasFullLayout),
   argTypes: {
     weight: {

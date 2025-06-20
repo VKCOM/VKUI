@@ -14,7 +14,7 @@ import { Avatar, type AvatarProps } from './Avatar';
 type AvatarStoryProps = AvatarProps & { badge: React.ReactNode; overlay: React.ReactNode };
 
 const story: Meta<AvatarStoryProps> = {
-  title: 'Blocks/Avatar',
+  title: 'Data Display/Avatar',
   component: Avatar,
   parameters: createStoryParameters('Avatar', CanvasFullLayout),
   argTypes: {

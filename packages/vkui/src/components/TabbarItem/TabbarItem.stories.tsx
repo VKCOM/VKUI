@@ -9,7 +9,7 @@ import { Tabbar } from '../Tabbar/Tabbar';
 import { TabbarItem, type TabbarItemProps } from './TabbarItem';
 
 const story: Meta<TabbarItemProps> = {
-  title: 'Layout/TabbarItem',
+  title: 'Navigation/Epic/Tabbar/TabbarItem',
   component: TabbarItem,
   parameters: createStoryParameters('TabbarItem', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

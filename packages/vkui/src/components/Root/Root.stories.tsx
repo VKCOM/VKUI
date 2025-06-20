@@ -11,7 +11,7 @@ import { View } from '../View/View';
 import { Root, type RootProps } from './Root';
 
 const story: Meta<RootProps> = {
-  title: 'Layout/Root',
+  title: 'Navigation/Root',
   component: Root,
   parameters: createStoryParameters('Root', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],

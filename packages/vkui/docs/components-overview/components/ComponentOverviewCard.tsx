@@ -81,8 +81,8 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
       return '';
     }
     const baseUrl = `${window.location.href.split('iframe')[0]}`;
-    const componentUrl = customPath ? customPath.replace('/', '-') : componentName;
-    return `${baseUrl}?path=/story/${groupTitle.toLowerCase()}-${componentUrl.toLowerCase()}--playground`;
+    const componentUrl = customPath ? customPath.replace(/[\/ ]/g, '-') : componentName;
+    return `${baseUrl}?path=/story/${groupTitle.replace(/\s/g, '-').toLowerCase()}-${componentUrl.toLowerCase()}--playground`;
   }, [componentName, groupTitle, customPath, window]);
 
   const style: CSSCustomProperties = {

@@ -7,7 +7,7 @@ import { Group } from '../Group/Group';
 import { AspectRatio, type AspectRatioProps } from './AspectRatio';
 
 const story: Meta<AspectRatioProps> = {
-  title: 'Layout/AspectRatio',
+  title: 'Utils/AspectRatio',
   component: AspectRatio,
   parameters: createStoryParameters('AspectRatio', CanvasFullLayout),
   argTypes: {

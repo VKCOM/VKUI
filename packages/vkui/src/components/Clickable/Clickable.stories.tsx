@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Clickable, type ClickableProps } from './Clickable';
 
 const story: Meta<ClickableProps> = {
-  title: 'Blocks/Clickable',
+  title: 'Utils/Clickable',
   component: Clickable,
   parameters: createStoryParameters('Clickable', CanvasFullLayout, DisableCartesianParam),
 };

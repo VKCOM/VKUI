@@ -9,7 +9,7 @@ import { Group } from '../Group/Group';
 import { List, type ListProps } from './List';
 
 const story: Meta<ListProps> = {
-  title: 'Blocks/List',
+  title: 'Buttons/Cell/List',
   component: List,
   parameters: createStoryParameters('List', CanvasFullLayout, DisableCartesianParam),
 };

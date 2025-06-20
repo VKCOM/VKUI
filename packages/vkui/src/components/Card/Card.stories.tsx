@@ -6,7 +6,7 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Card, type CardProps } from './Card';
 
 const story: Meta<CardProps> = {
-  title: 'Blocks/Card',
+  title: 'Data Display/Card',
   component: Card,
   parameters: createStoryParameters('Card', CanvasFullLayout, DisableCartesianParam),
   decorators: [withSinglePanel, withVKUILayout],

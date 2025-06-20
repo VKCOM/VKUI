@@ -13,7 +13,7 @@ import { View } from '../View/View';
 import { SplitCol, type SplitColProps } from './SplitCol';
 
 const story: Meta<SplitColProps> = {
-  title: 'Layout/SplitCol',
+  title: 'Layout/SplitLayout/SplitCol',
   component: SplitCol,
   parameters: createStoryParameters('SplitCol', CanvasFullLayout, DisableCartesianParam),
 };

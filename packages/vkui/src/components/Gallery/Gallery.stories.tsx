@@ -4,7 +4,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Gallery, type GalleryProps } from './Gallery';
 
 const story: Meta<GalleryProps> = {
-  title: 'Blocks/Gallery',
+  title: 'Data Display/Gallery',
   component: Gallery,
   parameters: createStoryParameters('Gallery', CanvasFullLayout, DisableCartesianParam),
 };

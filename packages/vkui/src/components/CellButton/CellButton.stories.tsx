@@ -9,7 +9,7 @@ import { Switch } from '../Switch/Switch';
 import { CellButton, type CellButtonProps } from './CellButton';
 
 const story: Meta<CellButtonProps> = {
-  title: 'Blocks/CellButton',
+  title: 'Buttons/CellButton',
   component: CellButton,
   parameters: createStoryParameters('CellButton', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

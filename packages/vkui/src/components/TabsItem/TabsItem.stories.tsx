@@ -8,7 +8,7 @@ import { Counter } from '../Counter/Counter';
 import { TabsItem, type TabsItemProps } from './TabsItem';
 
 const story: Meta<TabsItemProps> = {
-  title: 'Blocks/TabsItem',
+  title: 'Navigation/Tabs/TabsItem',
   component: TabsItem,
   parameters: createStoryParameters('TabsItem', CanvasFullLayout, DisableCartesianParam),
   args: {
