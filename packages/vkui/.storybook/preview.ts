@@ -46,6 +46,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'Layout',
+          ['Group', ['*', 'Header', 'Footer']],
           'Forms',
           'Dates',
           'Buttons',

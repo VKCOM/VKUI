@@ -428,7 +428,6 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     maxWidth: 600,
   },
   HorizontalScroll: {
-    customPath: 'HorizontalScroll/HorizontalScroll',
     component: HorizontalScrollPreview,
     decorator: Group,
   },
