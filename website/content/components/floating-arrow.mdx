@@ -1,0 +1,23 @@
+<Overview>
+
+# FloatingArrow
+
+Иконка-стрелка для всплывающих окон.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
+  ```jsx
+  <FloatingArrow coords={{ x: 5, y: 10 }} />
+  ```
+</Playground>
+
+## Использование
+
+Компонент `FloatingArrow` следует использовать в случае реализации своего компонента всплывающей подсказки или
+компонента онбординга.
+
+`FloatingArrow` отвечает только визуальную составляющую, передавайте соответствующие параметры (свойство `coords`) для
+корректного позиционирования компонента рядом с нужным элементом самостоятельно.

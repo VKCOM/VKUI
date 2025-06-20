@@ -1,0 +1,93 @@
+<Overview>
+
+# Image
+
+Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов.
+Наследует все свойства HTML-элемента `<img>`.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+## Адаптивные размеры
+
+Используйте предопределённые размеры (`16`-`96px`) или пользовательские значения:
+
+**Особенности `keepAspectRatio`:**
+
+- Требует указания `widthSize` или `heightSize`.
+- Сохраняет оригинальное соотношение сторон.
+
+## Скругления
+
+Контролируйте радиус скругления углов:
+
+### Единое скругление
+
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} borderRadius="m" />
+  ```
+</Playground>
+
+### Индивидуальные углы
+
+<Playground>
+  ```jsx
+  <Image
+    fallbackIcon={<Icon3218CircleOutline />}
+    borderStartStartRadius="l"
+    borderEndEndRadius="l"
+  />
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+Добавляйте дополнительные элементы поверх изображения:
+
+### Индикатор
+
+Индикатор в правом нижнем углу компонента:
+
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} borderStartStartRadius="l" borderEndEndRadius="l">
+    <Image.Badge background="stroke">
+      <Icon20PrivacyCircleFillRed />
+    </Image.Badge>
+  </Image>
+  ```
+</Playground>
+
+### Наложение
+
+Перекрывающий картинку элемент задаётся через `Image.Overlay`:
+
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />}>
+    <Image.Overlay theme="dark" visibility="always">
+      <Icon24AddOutline />
+    </Image.Overlay>
+  </Image>
+  ```
+</Playground>
+
+### Позиционированный компонент
+
+Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `Image.FloatElement`:
+
+<Playground>
+  ```jsx
+  <Image size={96} fallbackIcon={<Icon3218CircleOutline />}>
+    <Image.FloatElement placement="top-end" inlineIndent="l" blockIndent="l">
+      <Button size="s" mode="primary" after={<Icon16MoreHorizontal />} />
+    </Image.FloatElement>
+  </Image>
+  ```
+</Playground>

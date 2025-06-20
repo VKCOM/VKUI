@@ -23,12 +23,12 @@ export function HeadingLink({
             h4: styles.heading4,
           }[Tag],
       )}
+      id={id}
       {...props}
     >
       {id ? (
         <a
           href={`#${id}`}
-          id={id}
           className={styles.anchor}
           aria-label={`Постоянная ссылка на секцию ${children}`}
         >

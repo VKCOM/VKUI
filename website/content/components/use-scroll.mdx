@@ -1,0 +1,87 @@
+<Overview>
+
+# useScroll
+
+Хук для ручного управления позицией прокрутки, даже при активной блокировке через `useScrollLock`.
+Позволяет реализовывать пользовательскую прокрутку фона под модальными окнами.
+
+</Overview>
+
+## Возвращаемое значение
+
+Объект с методами:
+
+| Метод       | Тип                                                        | Описание                                |
+| ----------- | ---------------------------------------------------------- | --------------------------------------- |
+| `getScroll` | `(options?: GetScrollOptions) => { x: number; y: number }` | Возвращает текущие координаты прокрутки |
+| `scrollTo`  | `(x?: number, y?: number) => void`                         | Прокручивает к указанным координатам    |
+
+## Практический пример
+
+```jsx
+// Главный компонент приложения
+const App = () => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const { scrollTo, getScroll } = useManualScroll();
+
+  // Прокрутка фона на 100px вниз
+  const scrollBackground = () => {
+    const currentY = getScroll().y;
+    scrollTo(0, currentY + 100);
+  };
+
+  return (
+    <>
+      <button onClick={() => setIsModalOpen(true)}>Открыть модалку</button>
+
+      {isModalOpen && (
+        <PopoutWrapper>
+          <div>
+            <button onClick={scrollBackground}>Скроллить фон ↓</button>
+            <button onClick={() => setIsModalOpen(false)}>Закрыть</button>
+          </div>
+        </PopoutWrapper>
+      )}
+    </>
+  );
+};
+
+const Example = () => (
+  <AppRoot>
+    {/* или scroll="contain" */}
+    <App />
+  </AppRoot>
+);
+
+<Example />;
+```
+
+## Режимы работы в зависимости от параметра `scroll` в AppRoot
+
+| Режим       | Поведение                                               |
+| ----------- | ------------------------------------------------------- |
+| `"contain"` | Управляет прокруткой внутреннего контейнера (SPA-режим) |
+| `"global"`  | Работает с глобальной полосой прокрутки окна браузера   |
+
+## Обязательные условия
+
+> Убедитесь, что ваше приложение обёрнуто в компонент [`AppRoot`](/components/app-root).
+
+## Использование с блокировкой прокрутки
+
+```jsx
+const Modal = () => {
+  const [opened, setOpened] = useState(false);
+
+  // Блокируем прокрутку при открытии
+  useScrollLock(opened);
+
+  // Получаем доступ к ручному управлению
+  const { scrollTo, getScroll } = useManualScroll();
+
+  // Пользовательская прокрутка фона
+  const handleScroll = () => scrollTo(0, getScroll() + 200);
+
+  return <>{/* Код компонента */}</>;
+};
+```

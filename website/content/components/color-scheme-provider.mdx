@@ -1,0 +1,66 @@
+<Overview>
+
+# ColorSchemeProvider
+
+Компонент, позволяющий переопределить цветовую схему сайта.
+
+</Overview>
+
+## Цветовая схема
+
+Задаётся свойством `value`.
+
+- `"light"` — светлая схема;
+- `"dark"` — тёмная схема.
+
+```jsx
+<ColorSchemeProvider value="dark">
+  {/* часть вашего приложения, требующая переопределения цветовой схемы */}
+</ColorSchemeProvider>
+```
+
+Вставить часть про кастомизацию.
+
+> При переопределении цветовой схемы убедитесь, что компонент, обёрнутый в `ColorSchemeProvider`,
+> принимает свойство `className`, иначе визуальные изменения соответствующей схемы не будут применены.
+>
+> ```jsx
+> function BadComponent({ children }) {
+>   return (
+>     <Div>
+>       <Button mode="primary" appearance="accent">
+>         Акцентная кнопка светлой схемы 😔
+>       </Button>
+>     </Div>
+>   );
+> }
+> function GoodComponent({ className, children }) {
+>   return (
+>     <Div className={className}>
+>       <Button mode="primary" appearance="accent">
+>         Акцентная кнопка тёмной схемы 😎
+>       </Button>
+>     </Div>
+>   );
+> }
+> function InfoBoard({ children }) {
+>   return (
+>     <ColorSchemeProvider value="dark">
+>       <BadComponent /> {/* схема "dark" не применяется */}
+>       <GoodComponent /> {/* схема "dark" применяется */}
+>     </ColorSchemeProvider>
+>   );
+> }
+> ```
+
+## Хук useColorScheme [#use-color-scheme]
+
+Для получения значения текущей цветовой схемы используйте хук `useColorScheme`:
+
+```jsx
+import { useColorScheme } from '@vkontakte/vkui';
+```
+
+```jsx
+const colorScheme = useColorScheme();
+```

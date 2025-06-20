@@ -1,0 +1,596 @@
+<Overview>
+# Навигация
+
+Почти любое приложение — это набор экранов. Переходы между ними могут быть как плоскими, так и вложенными, с возможностью возврата
+на предыдущий экран. Помимо этого, есть платформенные различия анимаций и стилей элементов навигации.
+
+VKUI предоставляет компоненты для организации набора экранов, абстрагируя платформенные различия. На этой страннице рассмотрим как
+с помощью них:
+
+- построить иерархию экранов внутри одного сценария;
+- разделить приложение на независимые сценарии (например, по разделам или фичам).
+
+В завершение соберём адаптивный пример с использованием всех навигационных компонентов.
+
+</Overview>
+
+## Предисловие
+
+### Термины
+
+**Экран** — отдельное состояние интерфейса, отображающееся в один момент времени.
+
+**Сценарий** — последовательность экранов, объединённых одной задачей пользователя. Например, экран "Настройки", откуда можно
+перейти на экраны "Уведомления", "Конфиденциональность и безопасность" и другие связанные экраны.
+
+**Раздел** — крупная часть приложения со своими сценариями. Например, например "Профиль" или "Сообщения".
+
+### Предварительная настройка [#initial-setup]
+
+Для обеспечения безопасных боковых отступов и корректную работу анимаций навигационных компонентов, рекомендуем обернуть ваше
+приложение в следующие компоненты:
+
+- [`SplitLayout`](/components/split-layout) с передачей в свойство `header` заглушки в виде [`PanelHeader`](/components/panel-header),
+  чтобы компенсировать боковые отступы для видимых [`PanelHeader`](/components/panel-header) (при использовании платформы vkcom
+  заглушку можно не создавать).
+- [`SplitCol`](/components/split-layout#split-col) с передачей свойств `stretchedOnMobile` и `autoSpaced`. В зависимости от ширины
+  экрана:
+
+  - `stretchedOnMobile` растягивает колонку на всю ширину на мобильных устройствах;
+  - `autoSpaced` включает автоматические боковые отступы на широких экранах, в частности, это нужно при применении компонента
+    [`Group`](/components/group).
+
+Так как эта обёртка должна быть одна на всё приложение, её достаточно разместить ближе к корню — в точке входа приложения.
+
+```jsx showLineNumbers filename="src/App.tsx" {5,6}
+import { SplitLayout, SplitCol } from '@vkontakte/vkui';
+
+export default function App() {
+  return (
+    <SplitLayout header={<PanelHeader delimiter="none" />}>
+      <SplitCol stretchedOnMobile autoSpaced>
+        {/* ... */}
+      </SplitCol>
+    </Panel>
+  );
+};
+```
+
+## Экран
+
+Описывается с помощью компонента [`Panel`](/components/panel). Также, чтобы пользователь знал на каком экране он находится,
+рекомендуется добавлять заголовок с помощью компонента [`PanelHeader`](/components/panel-header).
+
+```
+Panel
+  └─ PanelHeader
+  └─ <content>
+```
+
+Ниже пример с описанием начального экрана приложения в отдельном файле.
+
+```jsx showLineNumbers filename="src/panels/home.tsx" {4-6}
+import { type PanelProps, Panel, PanelHeader } from '@vkontakte/vkui';
+
+/**
+ * Как пример, наследуем весь `PanelProps`, но достаточно будет
+ * передавать только идентификатор (`Pick<PanelProps, 'id'>`),
+ * а остальные свойства определять тут при необходимости.
+ */
+export const Home = (props: PanelProps) => {
+  return (
+    <Panel {...props}>
+      <PanelHeader>Главная</PanelHeader>
+      Привет, Мир!
+    </Panel>
+  );
+};
+```
+
+## Сценарий
+
+За переключение экранов отвечает компонент [`View`](/components/view). Принимает необходимое количество [`Panel`](/components/panel)
+с уникальным `id`. Далее `id` с нужным экраном передаётся в свойство `activePanel`.
+
+```
+View
+  └─ Panel N
+    └─ PanelHeader
+    └─ <content>
+```
+
+Представим простой пример в отдельном файле.
+
+```jsx filename="src/router.tsx"
+import { useState } from 'react';
+import { View, Panel, PanelHeader, Button } from '@vkontakte/vkui';
+
+export const Router = () => {
+  const [activePanel, setActivePanel] = useState('panel-1');
+  return (
+    <View activePanel={activePanel}>
+      <Panel id="panel-1">
+        <PanelHeader>Панель 1</PanelHeader>
+        <Button onClick={() => setActivePanel('panel-2')}>Перейти к панели 2</Button>
+      </Panel>
+      <Panel id="panel-2">
+        <PanelHeader>Панель 2</PanelHeader>
+        <Button onClick={() => setActivePanel('panel-1')}>Перейти к панели 1</Button>
+      </Panel>
+    </View>
+  );
+};
+```
+
+## Раздел
+
+Для создания разделов есть два компонента: [`Root`](/components/root) и [`Epic`](/components/epic). Использование того или другого
+зависит от требований к приложению и к дизайну.
+
+### `Root`
+
+[`Root`](/components/root) – универсальный вариант для организации разделов. Принимает необходимое количество [`View`](/components/view)
+с уникальным `id`. Далее `id` с нужным сценарием передаётся в свойство `activeView`.
+
+```
+Root
+  └─ View N
+    └─ Panel N
+      └─ PanelHeader
+      └─ <content>
+```
+
+```jsx filename="src/scenarios.tsx"
+import { useState } from 'react';
+import { View, Panel, PanelHeader, PanelHeaderBack, Button } from '@vkontakte/vkui';
+
+export const FirstScenario = ({ onBack }) => {
+  const [activePanel, setActivePanel] = useState('first-panel-1');
+  return (
+    <View activePanel={activePanel}>
+      <Panel id="first-panel-1">
+        <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Панель 1</PanelHeader>
+        <Button onClick={() => setActivePanel('first-panel-2')}>Перейти к панели 2</Button>
+      </Panel>
+      <Panel id="first-panel-2">
+        <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Панель 2</PanelHeader>
+        <Button onClick={() => setActivePanel('first-panel-1')}>Перейти к панели 1</Button>
+      </Panel>
+    </View>
+  );
+};
+
+export const SecondScenario = ({ onBack }) => {
+  const [activePanel, setActivePanel] = useState('second-panel-1');
+  return (
+    <View activePanel={activePanel}>
+      <Panel id="second-panel-1">
+        <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Панель 1</PanelHeader>
+        <Button onClick={() => setActivePanel('second-panel-2')}>Перейти к панели 2</Button>
+      </Panel>
+      <Panel id="second-panel-2">
+        <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Панель 2</PanelHeader>
+        <Button onClick={() => setActivePanel('second-panel-1')}>Перейти к панели 1</Button>
+      </Panel>
+    </View>
+  );
+};
+```
+
+```jsx filename="src/router.tsx"
+import { useState } from 'react';
+import { Root } from '@vkontakte/vkui';
+import { FirstScenario, SecondScenario } from './scenarios';
+
+export const Router = () => {
+  const [activeView, setActiveView] = useState('main');
+  const onBack = () => setActiveView('main');
+  return (
+    <Root activeView={activeView}>
+      <View id="main" activePanel="main-panel">
+        <Panel id="main-panel">
+          <PanelHeader>Главный экран</PanelHeader>
+          <Button onClick={() => setActiveView('first')}>Перейти к сценарию 1</Button>
+          <Button onClick={() => setActiveView('second')}>Перейти к сценарию 2</Button>
+        </Panel>
+      </View>
+      <FirstScenario id="first" onBack={onBack} />
+      <SecondScenario id="second" onBack={onBack} />
+    </Root>
+  );
+};
+```
+
+### `Epic`
+
+[`Epic`](/components/epic) используется для мобильных приложений, которые по дизайну требуют наличия классической нижней панели
+с основными разделами. Применение можно увидеть на [m.vk.com](https://m.vk.com) или в нативном приложении VK.
+
+Отличия от [`Root`](/components/root) следующие:
+
+- принимает [`Tabbar`](/components/tabbar) через одноимённое свойство `tabbar`;
+- может содержать в качестве потомков не только [`View`](/components/view), но и [`Root`](/components/root) для создания более
+  глубокой иерархии сценариев;
+- переключает разделы без анимаций.
+
+Принимает необходимое количество [`View`](/components/view) и/или [`Root`](/components/root) с уникальным `id`. Далее `id` с нужным
+сценарием передаётся в свойство `activeStory`.
+
+```
+Epic
+  └─ View N
+    └─ Panel N
+      └─ PanelHeader
+      └─ <content>
+  └─ Root N
+    └─ View N
+      └─ Panel N
+        └─ PanelHeader
+        └─ <content>
+```
+
+```jsx filename="src/scenarios.tsx"
+import { useState } from 'react';
+import { View, Panel, PanelHeader, Button } from '@vkontakte/vkui';
+
+export const FirstScenario = () => {
+  const [activePanel, setActivePanel] = useState('first-panel-1');
+  return (
+    <View activePanel={activePanel}>
+      <Panel id="first-panel-1">
+        <PanelHeader>Панель 1</PanelHeader>
+        <Button onClick={() => setActivePanel('first-panel-2')}>Перейти к панели 2</Button>
+      </Panel>
+      <Panel id="first-panel-2">
+        <PanelHeader>Панель 2</PanelHeader>
+        <Button onClick={() => setActivePanel('first-panel-1')}>Перейти к панели 1</Button>
+      </Panel>
+    </View>
+  );
+};
+
+export const SecondScenario = () => {
+  const [activePanel, setActivePanel] = useState('second-panel-1');
+  return (
+    <View activePanel={activePanel}>
+      <Panel id="second-panel-1">
+        <PanelHeader>Панель 1</PanelHeader>
+        <Button onClick={() => setActivePanel('second-panel-2')}>Перейти к панели 2</Button>
+      </Panel>
+      <Panel id="second-panel-2">
+        <PanelHeader>Панель 2</PanelHeader>
+        <Button onClick={() => setActivePanel('second-panel-1')}>Перейти к панели 1</Button>
+      </Panel>
+    </View>
+  );
+};
+```
+
+```jsx filename="src/router.tsx"
+import { useState } from 'react';
+import { Epic } from '@vkontakte/vkui';
+import { FirstScenario, SecondScenario } from './scenarios';
+
+export const Router = () => {
+  const [activeStory, setActiveStory] = useState('main');
+  return (
+    <Epic
+      activeStory={activeStory}
+      tabbar={
+        <Tabbar>
+          <TabbarItem
+            label="Главный экран"
+            selected={activeStory === id}
+            onClick={() => setActiveStory('main')}
+          >
+            🏠
+          </TabbarItem>
+          <TabbarItem
+            label="Перейти к сценарию 1"
+            selected={activeStory === id}
+            onClick={() => setActiveStory('first')}
+          >
+            1️⃣
+          </TabbarItem>
+          <TabbarItem
+            label="Перейти к сценарию 2"
+            selected={activeStory === id}
+            onClick={() => setActiveStory('second')}
+          >
+            2️⃣
+          </TabbarItem>
+        </Tabbar>
+      }
+    >
+      <View id="main" activePanel="main-panel">
+        <Panel id="main-panel">
+          <PanelHeader>Главный экран</PanelHeader>
+        </Panel>
+      </View>
+      <FirstScenario id="first" />
+      <SecondScenario id="second" />
+    </Epic>
+  );
+};
+```
+
+## Интерактивный пример [#example-app]
+
+Создадим приложение вот с такой структурой:
+
+```
+app (Epic)
+  └─ profile (View)
+    └─ profile-panel (Panel)
+  └─ feed (View)
+    └─ feed-panel (Panel)
+  └─ messenger (View)
+    └─ messenger-panel (Panel)
+  └─ more (Root)
+    └─ main-scenario (View)
+      └─ main-menu-panel (Panel)
+    └─ notification-scenario (View)
+      └─ notification-main-panel (Panel)
+      └─ notification-messenger-panel (Panel)
+    └─ about-scenario (View)
+      └─ about-version-panel (Panel)
+```
+
+Для навигации по основным разделам на мобильных экранах используется ([`Tabbar`](/components/tabbar)), а на настольных —
+([`SplitCol`](/components/split-layout#split-col)) c [`Cell`](/components/cell) в роли бокового меню.
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ minHeight: 440, overflow: 'hidden' }}>
+
+```jsx showLineNumbers filename="src/App.tsx"
+import { useState } from 'react';
+import {
+  Icon28MessageOutline,
+  Icon28NewsfeedOutline,
+  Icon28MoreHorizontal,
+  Icon28UserCircleOutline,
+  Icon56MessagesOutline,
+  Icon56NewsfeedOutline,
+  Icon56UserCircleOutline,
+  Icon24NotificationOutline,
+  Icon24InfoCircleOutline,
+  Icon24MessageOutline,
+} from '@vkontakte/icons';
+import {
+  Badge,
+  Cell,
+  Counter,
+  Epic,
+  Group,
+  Header,
+  Panel,
+  PanelHeader,
+  PanelHeaderBack,
+  Placeholder,
+  Root,
+  Separator,
+  SimpleCell,
+  SplitCol,
+  SplitLayout,
+  Switch,
+  Tabbar,
+  TabbarItem,
+  useAdaptivityConditionalRender,
+  View,
+  usePlatform,
+} from '@vkontakte/vkui';
+
+const tabConfig = [
+  {
+    id: 'profile',
+    label: 'Профиль',
+    Icon: Icon28UserCircleOutline,
+    PlaceholderIcon: Icon56UserCircleOutline,
+    Indicator: () => <Badge mode="prominent">Есть обновления</Badge>,
+  },
+  {
+    id: 'feed',
+    label: 'Лента',
+    Icon: Icon28NewsfeedOutline,
+    PlaceholderIcon: Icon56NewsfeedOutline,
+  },
+  {
+    id: 'messenger',
+    label: 'Сообщения',
+    Icon: Icon28MessageOutline,
+    PlaceholderIcon: Icon56MessagesOutline,
+    Indicator: () => (
+      <Counter size="s" mode="primary" appearance="accent-red">
+        12
+      </Counter>
+    ),
+  },
+  {
+    id: 'more',
+    label: 'Ещё',
+    Icon: Icon28MoreHorizontal,
+  },
+];
+
+const SettingsScenario = ({ id, goBack }) => {
+  const [activePanel, setActivePanel] = useState('notification-main-panel');
+  const platform = usePlatform();
+
+  return (
+    <View id={id} activePanel={activePanel}>
+      <Panel id="notification-main-panel">
+        <PanelHeader before={<PanelHeaderBack onClick={goBack} />}>Уведомления</PanelHeader>
+        <Group>
+          <SimpleCell Component="label" after={<Switch />}>
+            Выключить все уведомления
+          </SimpleCell>
+          <Separator size="2xl" />
+          <Cell
+            before={<Icon24MessageOutline />}
+            chevron="always"
+            onClick={() => setActivePanel('notification-messenger-panel')}
+          >
+            Мессенджер
+          </Cell>
+        </Group>
+        <Group header={<Header size="s">Системные настройки</Header>}>
+          <SimpleCell
+            Component="label"
+            subtitle="Push-уведомления не приходят, пока приложение открыто"
+            after={<Switch defaultChecked />}
+          >
+            Баннер
+          </SimpleCell>
+          <SimpleCell
+            Component="label"
+            subtitle="Для push-уведомления и баннеров"
+            after={<Switch />}
+          >
+            Звук и вибрация
+          </SimpleCell>
+        </Group>
+      </Panel>
+      <Panel id="notification-messenger-panel">
+        <PanelHeader
+          before={<PanelHeaderBack onClick={() => setActivePanel('notification-main-panel')} />}
+        >
+          Мессенджер
+        </PanelHeader>
+        <Group>
+          <SimpleCell
+            before={<Icon24NotificationOutline />}
+            Component="label"
+            after={<Switch defaultChecked />}
+          >
+            Уведомления о сообщениях
+          </SimpleCell>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
+
+const AboutScenario = ({ id, goBack }) => {
+  const platform = usePlatform();
+
+  return (
+    <View id={id} activePanel="about-version-panel">
+      <Panel id="about-version-panel">
+        <PanelHeader before={<PanelHeaderBack onClick={goBack} />}>О приложении</PanelHeader>
+        <Group>
+          <Group mode="plain">
+            <SimpleCell indicator="0.0.0">Версия</SimpleCell>
+            <SimpleCell indicator="Русский">Язык приложения</SimpleCell>
+            <Footer Component="div">Все права защищены.</Footer>
+          </Group>
+        </Group>
+      </Panel>
+    </View>
+  );
+};
+
+const MoreTab = ({ id, label }) => {
+  const [activeScenario, setActiveScenario] = useState('main-scenario');
+  const goBack = () => setActiveScenario('main-scenario');
+  const platform = usePlatform();
+
+  return (
+    <Root id={id} activeView={activeScenario}>
+      <View id="main-scenario" activePanel="main-menu-panel">
+        <Panel id="main-menu-panel">
+          <PanelHeader>{label}</PanelHeader>
+          <Group>
+            <Cell
+              before={<Icon24NotificationOutline />}
+              onClick={() => setActiveScenario('notification-scenario')}
+            >
+              Уведомления
+            </Cell>
+            <Cell
+              before={<Icon24InfoCircleOutline />}
+              onClick={() => setActiveScenario('about-scenario')}
+            >
+              О приложении
+            </Cell>
+            <Footer Component="div">2 раздела</Footer>
+          </Group>
+        </Panel>
+      </View>
+      <SettingsScenario id="notification-scenario" goBack={goBack} />
+      <AboutScenario id="about-scenario" goBack={goBack} />
+    </Root>
+  );
+};
+
+const { viewWidth } = useAdaptivityConditionalRender();
+const [activeTab, setActiveTab] = useState('profile');
+const platform = usePlatform();
+
+return (
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />} center>
+    {viewWidth.tabletPlus && (
+      <SplitCol className={viewWidth.tabletPlus.className} width={280} maxWidth={280} fixed>
+        <Panel>
+          {platform !== 'vkcom' && <PanelHeader />}
+          <Group>
+            {tabConfig.map(({ id, label, Icon, Indicator }) => (
+              <Cell
+                key={id}
+                before={<Icon />}
+                indicator={Indicator ? <Indicator /> : null}
+                activated={activeTab === id}
+                onClick={() => setActiveTab(id)}
+              >
+                {label}
+              </Cell>
+            ))}
+          </Group>
+        </Panel>
+      </SplitCol>
+    )}
+    <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
+      <Epic
+        activeStory={activeTab}
+        tabbar={
+          viewWidth.tabletMinus && (
+            <Tabbar className={viewWidth.tabletMinus.className}>
+              {tabConfig.map(({ id, label, Icon, Indicator }) => (
+                <TabbarItem
+                  key={id}
+                  label={label}
+                  selected={activeTab === id}
+                  indicator={Indicator ? <Indicator /> : null}
+                  onClick={() => setActiveTab(id)}
+                >
+                  <Icon />
+                </TabbarItem>
+              ))}
+            </Tabbar>
+          )
+        }
+      >
+        {tabConfig.map(({ id, label, PlaceholderIcon }) => {
+          switch (id) {
+            case 'more':
+              return <MoreTab key={id} id={id} label={label} />;
+            default:
+              return (
+                <View key={id} id={id} activePanel={`${id}-panel`}>
+                  <Panel id={`${id}-panel`}>
+                    <PanelHeader>{label}</PanelHeader>
+                    <Group>
+                      <Placeholder icon={PlaceholderIcon ? <PlaceholderIcon /> : null} />
+                    </Group>
+                  </Panel>
+                </View>
+              );
+          }
+        })}
+      </Epic>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>

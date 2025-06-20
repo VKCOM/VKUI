@@ -15,7 +15,12 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/stores/*": ["stores/*"],
+      "@/providers/*": ["providers/*"]
+    }
   },
   "include": [
     "postcss.config.js",
