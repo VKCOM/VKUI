@@ -65,6 +65,42 @@ describe('DateRangeInput', () => {
     expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
   });
 
+  it('check correct readonly state', async () => {
+    jest.useFakeTimers();
+    render(
+      <DateRangeInput
+        value={[startDate, endDate]}
+        changeStartDayLabel=""
+        changeStartMonthLabel=""
+        changeStartYearLabel=""
+        changeEndDayLabel=""
+        changeEndMonthLabel=""
+        changeEndYearLabel=""
+        readOnly={true}
+        {...testsProps}
+      />,
+    );
+    const inputLikes = getInputsLike();
+    const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
+
+    inputLikes.forEach((inputLike) => {
+      expect(inputLike).toHaveAttribute('aria-readonly', 'true');
+    });
+
+    await userEvent.type(startDates, '10');
+    await userEvent.type(startMonths, '04');
+    await userEvent.type(startYears, '2023');
+
+    await userEvent.type(endDates, '15');
+    await userEvent.type(endMonths, '06');
+    await userEvent.type(endYears, '2024');
+
+    const normalizedDate = convertInputsToNumbers(inputLikes);
+    expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
+
+    expect(screen.queryByTestId(testsProps.clearButtonTestId)).toBeNull();
+  });
+
   it('should correct update value when typing text in input', async () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
