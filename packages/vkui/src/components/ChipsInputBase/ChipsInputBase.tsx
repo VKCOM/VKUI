@@ -68,7 +68,6 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   // a11y
   chipsListLabel = 'Выбранные элементы',
-  chipsListDescription = 'Для удаления используйте Backspace или Delete',
   'aria-label': ariaLabel = '',
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
@@ -281,7 +280,6 @@ export const ChipsInputBase = <O extends ChipOption>({
           aria-disabled={disabled}
           aria-readonly={readOnly}
           aria-label={chipsListLabel}
-          aria-description={chipsListDescription}
         >
           {value.map((option, index) => (
             <React.Fragment key={`${typeof option.value}-${option.value}`}>
@@ -305,6 +303,7 @@ export const ChipsInputBase = <O extends ChipOption>({
                   'aria-selected': true,
                   'aria-posinset': index + 1,
                   'aria-setsize': valueLength,
+                  'aria-description': 'Для удаления используйте Backspace или Delete',
                 },
                 option,
               )}

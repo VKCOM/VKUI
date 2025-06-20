@@ -199,10 +199,6 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
    * `aria-label` для списка выбранных опций.
    */
   chipsListLabel?: string;
-  /**
-   * `aria-description` для списка выбранных опций.
-   */
-  chipsListDescription?: string;
 }
 
 /**
