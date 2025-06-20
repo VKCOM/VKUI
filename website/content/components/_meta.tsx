@@ -58,9 +58,7 @@ const meta: MetaRecord = {
   'cell': 'Cell',
   'cell-button': 'CellButton',
   'icon-button': 'IconButton',
-  'list': 'List',
   'simple-cell': 'SimpleCell',
-  'tappable': 'Tappable',
   'tool-button': 'ToolButton',
   '####': {
     type: 'separator',
@@ -155,6 +153,7 @@ const meta: MetaRecord = {
   'popout-wrapper': 'PopoutWrapper',
   'scroll-arrow': 'ScrollArrow',
   'selection-control': 'SelectionControl',
+  'tappable': 'Tappable',
   'touch': 'Touch',
   'unstyled-text-field': 'UnstyledTextField',
   'use-adaptivity-conditional-render': 'useAdaptivityConditionalRender',

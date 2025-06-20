@@ -51,7 +51,7 @@
 Включает возможность перетаскивания. При использовании данного режима обязательно
 оборачивайте `Cell` в компонент `List`.
 
-Пример можно увидеть в документации компонента [`List`](/components/list).
+Пример можно увидеть в документации компонента [`List`](#list).
 
 ### Ограничения
 
@@ -76,3 +76,56 @@
   </Cell>
   ```
 </Playground>
+
+## List [#list]
+
+Специализированный контейнер для работы с компонентами `<Cell draggable />`.
+Обеспечивает правильное отображение и взаимодействие элементов.
+Также можно использовать как семантический контейнер для обычных `Cell`.
+
+<Playground style={{ height: 250, overflowY: 'auto' }}>
+
+```jsx
+const [draggingList, updateDraggingList] = React.useState([
+  'Say',
+  'Hello',
+  'To',
+  'My',
+  'Little',
+  'Friend',
+]);
+
+const onDragFinish = ({ from, to }) => {
+  const _list = [...draggingList];
+  _list.splice(from, 1);
+  _list.splice(to, 0, draggingList[from]);
+  updateDraggingList(_list);
+};
+
+return (
+  <List gap={5}>
+    {draggingList.map((item) => (
+      <Cell key={item} before={<Avatar />} draggable onDragFinish={onDragFinish}>
+        {item}
+      </Cell>
+    ))}
+  </List>
+);
+```
+
+</Playground>
+
+### Отступы между элементами
+
+Контролируется свойством `gap`:
+
+```jsx
+<List gap={16}>
+  <Cell before={<Icon28User />}>Профиль</Cell>
+  <Cell before={<Icon28Settings />}>Настройки</Cell>
+</List>
+```
+
+### Доступность (a11y) [#a11y]
+
+- Автоматически добавляет `role="list"`.
