@@ -11,7 +11,7 @@ import { Switch } from '../Switch/Switch';
 import { Cell, type CellProps } from './Cell';
 
 const story: Meta<CellProps> = {
-  title: 'Blocks/Cell',
+  title: 'Buttons/Cell',
   component: Cell,
   parameters: createStoryParameters('Cell', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

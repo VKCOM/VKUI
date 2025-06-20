@@ -11,7 +11,7 @@ import { CardGrid, type CardGridProps } from './CardGrid';
 type StoryCardGridProps = CardGridProps & { count: number };
 
 const story: Meta<StoryCardGridProps> = {
-  title: 'Blocks/CardGrid',
+  title: 'Layout/CardGrid',
   component: CardGrid,
   parameters: createStoryParameters('CardGrid', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

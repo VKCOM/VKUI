@@ -107,6 +107,7 @@ const IconsOverview = () => {
           config.map((configItem) => ({
             id: configItem.size,
             title: configItem.size,
+            displayTitle: configItem.size,
             items: configItem.icons,
           }))
         }

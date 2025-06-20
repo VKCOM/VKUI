@@ -11,7 +11,7 @@ type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDa
 const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<StoryDateRangeInputProps> = {
-  title: 'Forms/DateRangeInput',
+  title: 'Dates/DateRangeInput',
   component: DateRangeInput,
   parameters: createStoryParameters('DateRangeInput', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

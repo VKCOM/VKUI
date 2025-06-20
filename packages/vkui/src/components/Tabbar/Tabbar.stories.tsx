@@ -16,7 +16,7 @@ import { TabbarItem } from '../TabbarItem/TabbarItem';
 import { Tabbar, type TabbarProps } from './Tabbar';
 
 const story: Meta<TabbarProps> = {
-  title: 'Layout/Tabbar',
+  title: 'Navigation/Epic/Tabbar',
   component: Tabbar,
   parameters: createStoryParameters('Tabbar', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],

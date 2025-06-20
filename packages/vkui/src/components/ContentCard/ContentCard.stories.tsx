@@ -4,7 +4,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { ContentCard, type ContentCardProps } from './ContentCard';
 
 const story: Meta<ContentCardProps> = {
-  title: 'Blocks/ContentCard',
+  title: 'Data Display/ContentCard',
   component: ContentCard,
   parameters: createStoryParameters('ContentCard', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
