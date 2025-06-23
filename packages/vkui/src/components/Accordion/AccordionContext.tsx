@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 
@@ -23,14 +24,6 @@ export interface AccordionContextProps {
    * Обработчик изменения состояния аккордеона.
    */
   onChange: (e: boolean) => void;
-  /**
-   * Обработчик, срабатывающий в начала анимации разворачивания.
-   */
-  onExpandStart: () => void;
-  /**
-   * Обработчик, срабатывающий в концу анимации сворачивания.
-   */
-  onCollapseEnd: () => void;
 }
 
 export const AccordionContext: React.Context<AccordionContextProps> =
@@ -40,6 +33,15 @@ export const AccordionContext: React.Context<AccordionContextProps> =
     expanded: false,
     unmountOnCollapsed: false,
     onChange: noop,
-    onCollapseEnd: noop,
-    onExpandStart: noop,
   });
+
+export const useAccordionContext = (): Pick<AccordionContextProps, 'expanded' | 'onChange'> => {
+  const { expanded, onChange } = useContext(AccordionContext);
+  return React.useMemo(
+    () => ({
+      expanded,
+      onChange,
+    }),
+    [onChange, expanded],
+  );
+};

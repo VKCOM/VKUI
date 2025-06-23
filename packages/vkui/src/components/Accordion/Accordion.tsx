@@ -39,9 +39,7 @@ export interface AccordionProps {
   /**
    * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
    */
-  children?:
-    | React.ReactNode
-    | ((props: { isExpanded: boolean; collapse: () => void }) => React.ReactNode);
+  children?: React.ReactNode;
   /**
    * Нужно ли удалять из DOM контент при сворачивании.
    */
@@ -68,7 +66,6 @@ export const Accordion: React.FC<AccordionProps> & {
     onChange: onChangeProp,
     disabled: restProps.disabled,
   });
-  const [childrenIsExpanded, setChildrenIsExpanded] = React.useState(expanded);
 
   const context = React.useMemo<AccordionContextProps>(
     () => ({
@@ -77,21 +74,11 @@ export const Accordion: React.FC<AccordionProps> & {
       expanded: expanded || false,
       unmountOnCollapsed,
       onChange,
-      onExpandStart: () => setChildrenIsExpanded(true),
-      onCollapseEnd: () => setChildrenIsExpanded(false),
     }),
     [contentId, expanded, labelId, onChange, unmountOnCollapsed],
   );
 
-  const collapse = React.useCallback(() => onChange(false), [onChange]);
-
-  return (
-    <AccordionContext.Provider value={context}>
-      {typeof children === 'function'
-        ? children({ isExpanded: childrenIsExpanded, collapse })
-        : children}
-    </AccordionContext.Provider>
-  );
+  return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
 };
 
 Accordion.Summary = AccordionSummary;

@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import { a11yTest, baselineComponent, waitCSSKeyframesAnimation } from '../../testing/utils';
-import { Button } from '../Button/Button';
 import { Accordion } from './Accordion';
+import { useAccordionContext } from './AccordionContext';
 
 describe(Accordion, () => {
   a11yTest(() => (
@@ -73,50 +73,28 @@ describe(Accordion, () => {
     expect(result.queryByTestId('content')).toBeNull();
   });
 
-  it('render prop function', async () => {
-    const result = render(
-      <Accordion>
-        {({ isExpanded, collapse }) => (
-          <>
-            <Accordion.Summary data-testid="summary">Title</Accordion.Summary>
-            <Accordion.Content data-testid="content">
-              {isExpanded ? (
-                <Button onClick={collapse} data-testid="collapse">
-                  Collapse
-                </Button>
-              ) : undefined}
-            </Accordion.Content>
-          </>
-        )}
+  it('useAccordionContext', () => {
+    let accordionContextRef: React.RefObject<null | ReturnType<typeof useAccordionContext>> = {
+      current: null,
+    };
+
+    const Content = () => {
+      const context = useAccordionContext();
+      // eslint-disable-next-line react-compiler/react-compiler
+      accordionContextRef.current = context;
+
+      return <div>Content</div>;
+    };
+
+    render(
+      <Accordion defaultExpanded>
+        <Accordion.Summary data-testid="summary">Title</Accordion.Summary>
+        <Accordion.Content data-testid="content">
+          <Content />
+        </Accordion.Content>
       </Accordion>,
     );
 
-    const content = result.getByTestId('content');
-    const contentIn = content.firstElementChild as HTMLElement;
-    const summary = result.getByTestId('summary');
-
-    // Изначально контент не отображается
-    expect(result.queryByText('Content')).toBeNull();
-    expect(content.getAttribute('aria-hidden')).toBe('true');
-
-    // Кликаем на разворачивание
-    fireEvent.click(summary);
-
-    // Контент отображается сразу не дожидаясь анимации
-    expect(result.queryByTestId('collapse')).not.toBeNull();
-    await waitCSSKeyframesAnimation(contentIn);
-
-    // Кликаем на сворачивание
-    fireEvent.click(result.getByTestId('collapse'));
-
-    // aria-hidden поменялся сразу
-    expect(content.getAttribute('aria-hidden')).toBe('true');
-    // content не исчезает из DOM до окончания анимации скрытия
-    expect(result.queryByTestId('collapse')).not.toBeNull();
-
-    await waitCSSKeyframesAnimation(contentIn);
-
-    // content исчез из DOM после окончания анимации скрытия
-    expect(result.queryByTestId('collapse')).toBeNull();
+    expect(accordionContextRef.current?.expanded).toBeTruthy();
   });
 });
