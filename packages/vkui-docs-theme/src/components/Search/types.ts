@@ -18,7 +18,15 @@ export interface PagefindResultProps {
 
 export interface PagefindAPIProps {
   options: (config: { baseUrl: string; excerptLength: number }) => Promise<void>;
-  debouncedSearch: (query: string) => Promise<{
+  debouncedSearch: (
+    query: string,
+    options?: object,
+  ) => Promise<{
     results: Array<{ data: () => Promise<PagefindResultProps> }>;
   } | null>;
+}
+
+export interface PagefindFilterProp {
+  label: string;
+  value: string;
 }

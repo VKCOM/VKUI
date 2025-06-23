@@ -1,5 +1,6 @@
 <Overview>
-# PanelHeader
+
+# PanelHeader [tag:component]
 
 Компонент, предназначенный для создания заголовочной секции (шапки) внутри компонента [`Panel`](/components/panel).
 
@@ -113,7 +114,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-## PanelHeaderButton [#panel-header-button]
+## PanelHeaderButton [#panel-header-button] [tag:component]
 
 Подкомпонент для отрисовки кнопки в шапке – передаётся в свойство `before` и/или `after`.
 
@@ -150,7 +151,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 ### Пресеты
 
-#### PanelHeaderBack [#panel-header-back]
+#### PanelHeaderBack [#panel-header-back] [tag:component]
 
 Кнопка назад в экранах в рамках одного сценария ([`View`](/components/view)). Внутри инкапсулирована логика показа нужной иконки для платформы.
 Также можно передать свойство `label`, для отображения текста, который будет виден на платформах vkcom и iOS, но будет скрыт на Android.
@@ -162,7 +163,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-#### PanelHeaderClose [#panel-header-close]
+#### PanelHeaderClose [#panel-header-close] [tag:component]
 
 Кнопка "Отмена" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root). На iOS будет
 показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`. Если
@@ -174,7 +175,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-#### PanelHeaderEdit [#panel-header-edit]
+#### PanelHeaderEdit [#panel-header-edit] [tag:component]
 
 Кнопка "Редактировать". Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
 Для указания кастомных текстов для состояний можно использовать соответствующие свойства `doneLabel` и `editLabel`. Данные тексты
@@ -186,7 +187,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-#### PanelHeaderSubmit [#panel-header-submit]
+#### PanelHeaderSubmit [#panel-header-submit] [tag:component]
 
 Кнопка "Готово" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root) и сохранения
 какого-либо результата. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28DoneOutline />`
@@ -198,7 +199,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-## PanelHeaderContent [#panel-header-content]
+## PanelHeaderContent [#panel-header-content] [tag:component]
 
 Подкомпонент, предназначенный для создания сложного контента, включая добавление аватаров и подзаголовков.
 
