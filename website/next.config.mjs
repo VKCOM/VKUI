@@ -1,6 +1,7 @@
 import analyzer from '@next/bundle-analyzer';
 import { transformerNotationDiff } from '@shikijs/transformers';
 import nextra from 'nextra';
+import { transformer as headingTransformer } from './remark-plugins/remarkHeading.mjs';
 import { transformer as playgroundTransformer } from './remark-plugins/remarkPlayground.mjs';
 
 const basePath =
@@ -15,7 +16,7 @@ const withNextra = nextra({
   defaultShowCopyCode: true,
   staticImage: false,
   mdxOptions: {
-    remarkPlugins: [playgroundTransformer],
+    remarkPlugins: [playgroundTransformer, headingTransformer],
     rehypePrettyCodeOptions: {
       transformers: [transformerNotationDiff()],
     },

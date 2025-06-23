@@ -152,6 +152,7 @@ const meta: MetaRecord = {
   'onboarding-tooltip': 'OnboardingTooltip',
   'popout-wrapper': 'PopoutWrapper',
   'scroll-arrow': 'ScrollArrow',
+  'search': 'Search',
   'selection-control': 'SelectionControl',
   'tappable': 'Tappable',
   'touch': 'Touch',

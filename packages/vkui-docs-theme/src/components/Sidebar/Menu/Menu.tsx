@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Caption, Subhead, Tappable } from '@vkontakte/vkui';
+import { Caption, Search, Subhead, Tappable } from '@vkontakte/vkui';
 import NextLink from 'next/link';
 import { useFSRoute } from 'nextra/hooks';
 import type { Item, PageItem } from 'nextra/normalize-pages';
+import scrollIntoView from 'scroll-into-view-if-needed';
+import { useThemeConfig } from '../../../contexts';
 import { Accordion, type AccordionProps } from '../Accordion/Accordion';
 import styles from './Menu.module.css';
 
@@ -24,6 +26,7 @@ export interface FolderProps {
 }
 
 function Folder({ item }: FolderProps) {
+  const { searchableNavbarItems = [] } = useThemeConfig();
   const routeOriginal = useFSRoute();
   const [route] = routeOriginal.split('#');
   const active = route === item.route;
@@ -81,11 +84,13 @@ function Folder({ item }: FolderProps) {
     [item, open, handleChange, isLink],
   );
 
+  const MenuComponent = searchableNavbarItems.includes(item.name) ? SearchableMenu : Menu;
+
   return (
     <li className={styles.listItem}>
       <Accordion {...props}>
         {Array.isArray(item.children) ? (
-          <Menu className={styles.nestedMenu} directories={item.children} />
+          <MenuComponent className={styles.nestedMenu} directories={item.children} />
         ) : null}
       </Accordion>
     </li>
@@ -100,9 +105,19 @@ function File({ item }: FileProps): React.ReactElement {
   const route = useFSRoute();
   const active = Boolean(item.route && route === item.route);
   const href = (item as PageItem).href || item.route;
+  const ref = React.useRef<HTMLLIElement>(null);
+
+  React.useEffect(() => {
+    if (ref.current && active) {
+      scrollIntoView(ref.current, {
+        block: 'center',
+        scrollMode: 'if-needed',
+      });
+    }
+  }, [active]);
 
   return (
-    <li className={styles.listItem}>
+    <li className={styles.listItem} ref={ref}>
       <Tappable
         href={href}
         className={classNames(styles.menuItem, active && styles.activeMenuItem)}
@@ -140,4 +155,38 @@ export function Menu({
       })}
     </ul>
   );
+}
+
+function SearchableMenu(props: MenuProps): React.ReactElement {
+  const [search, setSearch] = React.useState<string>('');
+
+  const filteredDirectories = search
+    ? filterDirectories(props.directories, search)
+    : props.directories;
+
+  return (
+    <>
+      <Search value={search} onChange={(e) => setSearch(e.currentTarget.value.trim())} noPadding />
+      <Menu {...props} directories={filteredDirectories} />
+    </>
+  );
+}
+
+function filterDirectories(directories: Array<PageItem | Item>, search: string) {
+  let lastSeparator: PageItem | Item | null = null;
+  let itemsAfterSeparator = 0;
+
+  return directories.reduce<Array<PageItem | Item>>((data, item) => {
+    if (item.type === 'separator') {
+      lastSeparator = item;
+      itemsAfterSeparator = 0;
+    } else if (item.title.toLowerCase().includes(search.toLowerCase())) {
+      ++itemsAfterSeparator;
+      if (lastSeparator && itemsAfterSeparator === 1) {
+        data.push(lastSeparator);
+      }
+      data.push(item);
+    }
+    return data;
+  }, []);
 }
