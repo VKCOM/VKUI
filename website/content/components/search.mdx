@@ -1,5 +1,6 @@
 <Overview>
-# Search
+
+# Search [tag:component]
 
 Компонент для реализации поисковых интерфейсов. Наследует все свойства нативного `<input type="search">`
 с расширенными возможностями кастомизации.
@@ -28,7 +29,7 @@ React-компонентов, прочитать про это можно в [д
 // Контролируемое состояние
 const [value, setValue] = React.useState('Поиск');
 
-<Search value={value} onChange={setValue} />;
+<Search value={value} onChange={(event) => setValue(event.target.value)} />;
 ```
 
 ## Пользовательская иконка поиска

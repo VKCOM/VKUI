@@ -49,12 +49,16 @@ const footer = (
   </Footer>
 );
 
+const searchableNavbarItems = ['components'];
+
+const searchFilters = [{ label: 'Искать только по Компонентам', value: 'component' }];
+
 const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
   const pageMap = await getPageMap();
 
   const predefinedSearchResults = getPredefinedSearchResults(pageMap);
 
-  const search = <Search predefinedResults={predefinedSearchResults} />;
+  const search = <Search filters={searchFilters} predefinedResults={predefinedSearchResults} />;
 
   return (
     <html lang="ru" dir="ltr" suppressHydrationWarning>
@@ -71,6 +75,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children })
           versions={versions}
           footer={footer}
           search={search}
+          searchableNavbarItems={searchableNavbarItems}
         >
           <PlaygroundStoreProvider>{children}</PlaygroundStoreProvider>
         </Layout>
