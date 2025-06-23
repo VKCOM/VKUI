@@ -93,7 +93,7 @@
     "size-limit": "^11.2.0",
     "storybook": "9.0.10",
     "style-loader": "^4.0.0",
-    "stylelint": "^16.20.0",
+    "stylelint": "^16.21.0",
     "stylelint-config-recess-order": "^7.1.0",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-media-use-custom-media": "^4.0.0",
