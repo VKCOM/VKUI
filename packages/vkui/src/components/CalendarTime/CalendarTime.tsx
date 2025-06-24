@@ -134,9 +134,13 @@ export const CalendarTime = ({
 
   const onPickerValueChange = (
     e: ChangeEvent<HTMLInputElement>,
+    reason: Parameters<Exclude<SelectProps['onInputChange'], undefined>>[1],
     validate: (numericValue: string) => boolean,
     setter: (value: Date, numericValue: number) => Date,
   ) => {
+    if (reason !== 'input') {
+      return;
+    }
     const numericValue = e.target.value.replace(/\D/g, '');
     e.target.value = numericValue;
     if (validate(numericValue)) {
@@ -144,12 +148,12 @@ export const CalendarTime = ({
     }
   };
 
-  const onHoursInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateValue(numValue, localHours), setHours);
+  const onHoursInputChange: SelectProps['onInputChange'] = (e, reason) => {
+    onPickerValueChange(e, reason, (numValue) => validateValue(numValue, localHours), setHours);
   };
 
-  const onMinutesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateValue(numValue, localMinutes), setMinutes);
+  const onMinutesInputChange: SelectProps['onInputChange'] = (e, reason) => {
+    onPickerValueChange(e, reason, (numValue) => validateValue(numValue, localMinutes), setMinutes);
   };
 
   const onHoursChange = React.useCallback(
