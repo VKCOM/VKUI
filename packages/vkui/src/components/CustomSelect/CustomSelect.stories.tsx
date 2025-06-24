@@ -99,6 +99,7 @@ export const QAPlayground: Story = {
               placeholder="Не выбран"
               options={users}
               defaultValue={users[2].value}
+              aria-label="Администратор"
               selectType={selectType}
               allowClearButton
               accessible
@@ -120,6 +121,7 @@ export const QAPlayground: Story = {
               renderOption={({ option, ...restProps }) => (
                 <CustomSelectOption {...restProps} description={`"${option.value}"`} />
               )}
+              aria-label="Вид выпадающего списка"
               accessible
             />
           </FormItem>
@@ -141,6 +143,7 @@ export const QAPlayground: Story = {
                 description={option.description}
               />
             )}
+            aria-label="Кастомный дизайн элементов списка"
             accessible
           />
         </FormItem>
@@ -155,6 +158,7 @@ export const QAPlayground: Story = {
             placeholder="Не выбран"
             options={users}
             selectType={selectType}
+            aria-label="Администратор"
             accessible
           />
         </FormItem>
@@ -172,6 +176,7 @@ export const QAPlayground: Story = {
             id="administrator-select-searchable-id-3"
             options={users}
             allowClearButton
+            aria-label="Администратор"
             accessible
           />
         </FormItem>
