@@ -112,7 +112,10 @@ export function useSelectKeyboardController({
     },
     [opened, onInputKeyDown],
   );
-  const _onInputKeyDown = callMultiple(handleKeyDownSelect, handleInputKeydown);
+  const _onInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void = callMultiple(
+    handleKeyDownSelect,
+    handleInputKeydown,
+  );
 
   return {
     onInputChange,
