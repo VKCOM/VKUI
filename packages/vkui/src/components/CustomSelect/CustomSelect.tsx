@@ -364,7 +364,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       return;
     }
     if (!opened) {
-      setInputValue(calculateInputValueFromOptions(options, selected?.value || null));
+      setInputValue(calculateInputValueFromOptions(options, selected ? selected.value : null));
     }
   }, [accessible, selected, options, opened]);
 

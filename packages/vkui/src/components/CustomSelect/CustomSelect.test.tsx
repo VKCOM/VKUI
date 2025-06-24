@@ -32,7 +32,11 @@ jest.mock('../../lib/floating', () => {
   };
 });
 
+const INPUT_TEST_ID = 'inputTestId';
+
 const getCustomSelectValue = () => screen.getByTestId('labelTextTestId').textContent;
+
+const getInputValue = () => screen.getByTestId<HTMLInputElement>(INPUT_TEST_ID).value;
 
 const CustomSelectControlled = ({
   options,
@@ -102,6 +106,33 @@ describe('CustomSelect', () => {
     });
     const h = render(<CustomSelect value={NaN} options={[]} />);
     expect(() => h.rerender(<CustomSelect value={NaN} options={[]} />)).not.toThrow();
+  });
+
+  it('should input value not empty with flag accessible', () => {
+    const { rerender } = render(
+      <CustomSelect
+        data-testid={INPUT_TEST_ID}
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        defaultValue={0}
+      />,
+    );
+    expect(getInputValue()).toBe('');
+
+    rerender(
+      <CustomSelect
+        data-testid={INPUT_TEST_ID}
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        defaultValue={0}
+        accessible
+      />,
+    );
+    expect(getInputValue()).toBe('Mike');
   });
 
   it('works correctly as uncontrolled component', () => {
@@ -256,33 +287,39 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Josh');
   });
 
-  it('is searchable', async () => {
+  it.each([false, true])('is searchable with accessible=%s', async (accessible) => {
     render(
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        accessible={accessible}
       />,
     );
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
-    await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
+    await waitFor(() => expect(screen.getByTestId(INPUT_TEST_ID)).toHaveFocus());
 
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
-    expect(screen.getByTestId<HTMLInputElement>('inputTestId').value).toBe('Mi');
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Mi' } });
+    expect(screen.getByTestId<HTMLInputElement>(INPUT_TEST_ID).value).toBe('Mi');
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
     expect(getCustomSelectValue()).toEqual('Mike');
+    if (accessible) {
+      expect(getInputValue()).toEqual('Mike');
+    } else {
+      expect(getInputValue()).toEqual('');
+    }
   });
 
   it('is custom searchable', () => {
@@ -290,7 +327,7 @@ describe('CustomSelect', () => {
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'SPb', country: 'Russia' },
           { value: 1, label: 'Moscow', country: 'Russia' },
@@ -303,15 +340,15 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
-    fireEvent.change(screen.getByTestId('inputTestId'), {
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), {
       target: { value: 'usa' },
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -322,7 +359,7 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -330,8 +367,8 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Mi' } });
 
     await waitForFloatingPosition();
 
@@ -340,7 +377,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -356,7 +393,7 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         value={1}
         options={[
           { value: 0, label: 'Mike' },
@@ -365,20 +402,20 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
 
     await waitForFloatingPosition();
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Jo' } });
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Jo' } });
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     rerender(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         value={1}
         options={[
           { value: 0, label: 'Mike' },
@@ -393,7 +430,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         value={3}
         options={[
           { value: 3, label: 'Joe' },
@@ -413,7 +450,7 @@ describe('CustomSelect', () => {
       <CustomSelectControlled
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         initialValue="3"
         options={[
           { value: '0', label: 'Не выбрано' },
@@ -424,11 +461,11 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Кат' } });
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Кат' } });
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
@@ -446,7 +483,7 @@ describe('CustomSelect', () => {
       <CustomSelect
         onOpen={openCb}
         onClose={closeCb}
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -454,30 +491,30 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
 
     await waitForFloatingPosition();
 
     expect(openCb).toHaveBeenCalledTimes(1);
 
-    fireEvent.blur(screen.getByTestId('inputTestId'));
+    fireEvent.blur(screen.getByTestId(INPUT_TEST_ID));
 
     expect(closeCb).toHaveBeenCalledTimes(1);
 
-    fireEvent.focus(screen.getByTestId('inputTestId'));
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.focus(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
 
     expect(openCb).toHaveBeenCalledTimes(2);
 
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -489,7 +526,7 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -498,24 +535,24 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.focus(screen.getByTestId('inputTestId'));
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.focus(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -524,16 +561,16 @@ describe('CustomSelect', () => {
 
     expect(getCustomSelectValue()).toEqual('Bob');
 
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -543,7 +580,7 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { disabled: true, value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -552,16 +589,16 @@ describe('CustomSelect', () => {
       />,
     );
 
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -626,7 +663,7 @@ describe('CustomSelect', () => {
     const { unmount } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         clearButtonTestId="clearButtonTestId"
         options={[
           { value: 0, label: 'Mike' },
@@ -640,11 +677,11 @@ describe('CustomSelect', () => {
 
     expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
-    expect(screen.getByTestId('inputTestId')).not.toHaveFocus();
+    expect(screen.getByTestId(INPUT_TEST_ID)).not.toHaveFocus();
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
     // focus goes to select input
-    await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
+    await waitFor(() => expect(screen.getByTestId(INPUT_TEST_ID)).toHaveFocus());
 
     expect(onChange).toHaveBeenCalledTimes(1);
 
@@ -966,7 +1003,7 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -981,7 +1018,7 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('');
 
     // первый клик по не выбранной опции без изменения value
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
     const unselectedOptionFirstClick = screen.getByRole('option', {
       selected: false,
       name: 'Mike',
@@ -994,7 +1031,7 @@ describe('CustomSelect', () => {
     expect(onChange.mock.calls[0][1]).toBe('0');
 
     // второй клик по другой опции без изменения value
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
     const unselectedOptionSecondClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -1007,7 +1044,7 @@ describe('CustomSelect', () => {
     expect(onChange.mock.calls[1][1]).toBe('1');
 
     // третий клик по той же опции что и в предыдущий раз
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
     const unselectedOptionThirdClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -1177,7 +1214,7 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         nativeSelectTestId="nativeSelectTestId"
-        data-testid="inputTestId"
+        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1192,7 +1229,7 @@ describe('CustomSelect', () => {
     const nativeSelect = screen.getByTestId<HTMLSelectElement>('nativeSelectTestId');
     expect(nativeSelect.required).toBeTruthy();
 
-    const input = screen.getByTestId<HTMLInputElement>('inputTestId');
+    const input = screen.getByTestId<HTMLInputElement>(INPUT_TEST_ID);
     expect(input.required).toBeFalsy();
   });
 

@@ -36,7 +36,9 @@ export function useSelectedOptionController({
       return NOT_SELECTED.NATIVE;
     });
 
-  const [selectedOptionValue, setSelectedOptionValue] = React.useState<SelectValue>(null);
+  const [selectedOptionValue, setSelectedOptionValue] = React.useState<SelectValue>(() =>
+    remapFromNativeValueToSelectValue(nativeSelectValue),
+  );
 
   React.useEffect(
     function syncNativeSelectValueWithPropValue() {
