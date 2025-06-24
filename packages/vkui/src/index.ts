@@ -343,10 +343,12 @@ export type { NativeSelectProps } from './components/NativeSelect/NativeSelect';
 export { CustomSelect } from './components/CustomSelect/CustomSelect';
 export type {
   SelectProps,
-  CustomSelectOptionInterface,
-  CustomSelectRenderOption,
   CustomSelectClearButtonProps,
 } from './components/CustomSelect/CustomSelect';
+export type {
+  CustomSelectOptionInterface,
+  CustomSelectRenderOption,
+} from './components/CustomSelect/types';
 export { CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';

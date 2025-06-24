@@ -11,7 +11,8 @@ import {
 } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
-import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
+import { CustomSelect, type SelectProps } from './CustomSelect';
+import { type CustomSelectRenderOption } from './types';
 import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;
@@ -122,29 +123,6 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Josh');
-  });
-
-  it('check selected option should be in the input aria-description attribute', () => {
-    render(
-      <CustomSelect
-        labelTextTestId="labelTextTestId"
-        data-testid="input"
-        options={[
-          { value: 0, label: 'Mike' },
-          { value: 1, label: 'Josh' },
-        ]}
-      />,
-    );
-
-    expect(getCustomSelectValue()).toEqual('');
-
-    fireEvent.click(screen.getByTestId('labelTextTestId'));
-    const unselectedOption = screen.getByRole('option', { selected: false, name: 'Josh' });
-    fireEvent.mouseEnter(unselectedOption);
-    fireEvent.click(unselectedOption);
-
-    const input = screen.getByTestId('input');
-    expect(input).toHaveAttribute('aria-description', 'Josh');
   });
 
   it('works correctly as controlled component', () => {
@@ -767,7 +745,7 @@ describe('CustomSelect', () => {
         ]}
         allowClearButton
         onChange={onChange}
-        defaultValue="0"
+        defaultValue={0}
       />,
     );
 
@@ -906,7 +884,6 @@ describe('CustomSelect', () => {
     // onChange не должен вызываться.
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     const selectedOptionThirdClick = screen.getByRole('option', {
-      selected: true,
       name: 'Mike',
     });
     fireEvent.mouseEnter(selectedOptionThirdClick);

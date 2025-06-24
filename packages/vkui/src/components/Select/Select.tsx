@@ -4,11 +4,8 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import type { HasOnlyExpectedProps } from '../../types';
-import {
-  CustomSelect,
-  type CustomSelectOptionInterface,
-  type SelectProps,
-} from '../CustomSelect/CustomSelect';
+import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
+import { type CustomSelectOptionInterface } from '../CustomSelect/types';
 import { NativeSelect, type NativeSelectProps } from '../NativeSelect/NativeSelect';
 export type SelectType = 'default' | 'plain' | 'accent';
 
@@ -53,6 +50,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     beforeAlign,
     afterAlign,
     onInputKeyDown,
+    accessible,
     ...restProps
   } = props;
 
