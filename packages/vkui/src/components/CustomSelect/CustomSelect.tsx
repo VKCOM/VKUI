@@ -26,7 +26,6 @@ import {
   type CustomSelectInputProps,
 } from './CustomSelectInput/CustomSelectInput';
 import {
-  calculateInputValueFromOptions,
   checkMixControlledAndUncontrolledState,
   checkOptionsValueType,
   filter,
@@ -36,6 +35,7 @@ import {
 import { useAfterItems } from './hooks/useAfterItems';
 import { useDropdownOpenedController } from './hooks/useDropdownOpenedController';
 import { useFocusedOptionController } from './hooks/useFocusedOptionController';
+import { useInputValueController } from './hooks/useInputValueController';
 import { useScrollListController } from './hooks/useScrollListController';
 import { useSelectKeyboardController } from './hooks/useSelectKeyboardController';
 import { useSelectedOptionController } from './hooks/useSelectedOptionController';
@@ -254,6 +254,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   }, [options, props.value]);
 
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
+  const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
 
   const {
     nativeSelectValue,
@@ -269,11 +270,17 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     onChange,
   });
 
-  const [inputValue, setInputValue] = React.useState(() =>
-    accessible ? calculateInputValueFromOptions(options, nativeSelectValue) : '',
+  const selected = React.useMemo(
+    () => options.find((option) => option.value === selectedOptionValue),
+    [options, selectedOptionValue],
   );
 
-  const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
+  const { inputValue, setInputValue, resetInputValue, resetInputValueBySelectedOption } =
+    useInputValueController({
+      options,
+      accessible,
+      selectedValue: selected ? selected.value : null,
+    });
 
   const filteredOptions = React.useMemo(
     () => filter(options, searchable ? inputValue : '', filterFn),
@@ -298,8 +305,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const { opened, open, close, toggleOpened } = useDropdownOpenedController({
     onOpen: callMultiple(selectFocusedValue, onOpen),
     onOpened: () => scrollToElement(findSelectedIndex(filteredOptions, selectedOptionValue), true),
-    onClose,
-    onClosed: () => !accessible && setInputValue(''),
+    onClose: callMultiple(resetInputValueBySelectedOption, onClose),
+    onClosed: !accessible ? resetInputValue : undefined,
   });
 
   React.useEffect(
@@ -335,23 +342,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       selectElRef.current?.dispatchEvent(event);
     }
   }, [nativeSelectValue]);
-
-  const selected = React.useMemo(
-    () => options.find((option) => option.value === selectedOptionValue),
-    [options, selectedOptionValue],
-  );
-
-  useIsomorphicLayoutEffect(
-    function resetInputValueBySelectedOption() {
-      if (!accessible) {
-        return;
-      }
-      if (!opened) {
-        setInputValue(calculateInputValueFromOptions(options, selected ? selected.value : null));
-      }
-    },
-    [accessible, selected, options, opened],
-  );
 
   const openedClassNames = React.useMemo(
     () =>
@@ -501,7 +491,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ClearButton,
     onClearButtonClick: () => {
       setNativeSelectValue(NOT_SELECTED.NATIVE);
-      setInputValue('');
+      resetInputValue();
       selectInputRef.current && selectInputRef.current.focus();
     },
     clearButtonTestId,
