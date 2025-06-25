@@ -16,10 +16,7 @@ import {
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import type { FormFieldProps } from '../FormField/FormField';
 import type { NativeSelectProps, SelectValue } from '../NativeSelect/NativeSelect';
-import {
-  NOT_SELECTED,
-  remapFromNativeValueToSelectValue,
-} from '../NativeSelect/NativeSelect';
+import { NOT_SELECTED, remapFromNativeValueToSelectValue } from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { type CustomSelectClearButtonProps } from './CustomSelectClearButton';
@@ -185,9 +182,10 @@ export interface SelectProps<
    */
   onInputKeyDown?: (e: React.KeyboardEvent, isOpen: boolean) => void;
   /**
-   *
+   * Включает режим в котором выбранное значение CustomSelect читается скринридерами корректно.
+   * В данном режиме введенное в поле ввода значение не сбрасывается при потере фокуса.
    */
-  accessible?: boolean;
+  accessible?: boolean /* TODO [>=v8] включить по умолчанию */;
 }
 
 /**
