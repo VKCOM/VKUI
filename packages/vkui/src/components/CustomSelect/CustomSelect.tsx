@@ -16,7 +16,10 @@ import {
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import type { FormFieldProps } from '../FormField/FormField';
 import type { NativeSelectProps, SelectValue } from '../NativeSelect/NativeSelect';
-import { NOT_SELECTED, remapFromNativeValueToSelectValue } from '../NativeSelect/NativeSelect';
+import {
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+} from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { type CustomSelectClearButtonProps } from './CustomSelectClearButton';
@@ -311,7 +314,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   });
 
   React.useEffect(
-    function updateOptionsIndexes() {
+    function updateOptionsValue() {
       const value =
         propsValue !== undefined
           ? propsValue
@@ -319,14 +322,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       setSelectedOptionValue(value);
       setFocusedOptionValue(value);
     },
-    [
-      propsValue,
-      nativeSelectValue,
-      filteredOptions,
-      filterFn,
-      setFocusedOptionValue,
-      setSelectedOptionValue,
-    ],
+    [propsValue, nativeSelectValue, setFocusedOptionValue, setSelectedOptionValue],
   );
 
   React.useEffect(
@@ -351,22 +347,22 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [nativeSelectValue]);
 
-  const selected = React.useMemo(() => {
-    if (!filteredOptions.length) {
-      return null;
-    }
+  const selected = React.useMemo(
+    () => options.find((option) => option.value === selectedOptionValue),
+    [options, selectedOptionValue],
+  );
 
-    return options.find((option) => option.value === selectedOptionValue);
-  }, [filteredOptions.length, options, selectedOptionValue]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!accessible) {
-      return;
-    }
-    if (!opened) {
-      setInputValue(calculateInputValueFromOptions(options, selected ? selected.value : null));
-    }
-  }, [accessible, selected, options, opened]);
+  useIsomorphicLayoutEffect(
+    function resetInputValueBySelectedOption() {
+      if (!accessible) {
+        return;
+      }
+      if (!opened) {
+        setInputValue(calculateInputValueFromOptions(options, selected ? selected.value : null));
+      }
+    },
+    [accessible, selected, options, opened],
+  );
 
   const openedClassNames = React.useMemo(
     () =>

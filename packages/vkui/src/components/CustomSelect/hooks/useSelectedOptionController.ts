@@ -35,18 +35,37 @@ export function useSelectedOptionController({
       }
       return NOT_SELECTED.NATIVE;
     });
+  const nativeSelectValueRef = React.useRef<NativeSelectValue>(nativeSelectValue);
 
   const [selectedOptionValue, setSelectedOptionValue] = React.useState<SelectValue>(() =>
     remapFromNativeValueToSelectValue(nativeSelectValue),
   );
 
+  const _setNativeSelectValue = React.useCallback(
+    (newValue: NativeSelectValue) => {
+      setNativeSelectValue(newValue);
+      nativeSelectValueRef.current = newValue;
+    },
+    [setNativeSelectValue],
+  );
+
   React.useEffect(
     function syncNativeSelectValueWithPropValue() {
       if (value !== undefined) {
-        setNativeSelectValue(remapFromSelectValueToNativeValue(value));
+        _setNativeSelectValue(remapFromSelectValueToNativeValue(value));
       }
     },
-    [value, setNativeSelectValue],
+    [value, _setNativeSelectValue],
+  );
+
+  React.useEffect(
+    function syncNativeSelectValueWithSelectedOptionValue() {
+      const remappedSelectedValue = remapFromSelectValueToNativeValue(selectedOptionValue);
+      if (nativeSelectValueRef.current !== remappedSelectedValue) {
+        setNativeSelectValue(remappedSelectedValue);
+      }
+    },
+    [selectedOptionValue, setNativeSelectValue],
   );
 
   const onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -100,7 +119,7 @@ export function useSelectedOptionController({
     selectedOptionValue,
     setSelectedOptionValue,
     nativeSelectValue,
-    setNativeSelectValue,
+    setNativeSelectValue: _setNativeSelectValue,
     onNativeSelectChange,
   };
 }
