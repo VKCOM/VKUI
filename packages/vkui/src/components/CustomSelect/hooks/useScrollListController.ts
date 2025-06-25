@@ -16,7 +16,13 @@ export function useScrollListController(): UseScrollListControllerReturn {
     (index: number, center = false) => {
       const dropdown = scrollBoxRef.current;
       const optionsWrapper = optionsWrapperRef.current;
-      if (index < 0 || index > (optionsWrapper?.children.length || 0)) {
+
+      if (
+        !dropdown ||
+        !optionsWrapper ||
+        index < 0 ||
+        index > (optionsWrapper?.children.length || 0)
+      ) {
         return;
       }
       const item =

@@ -5,6 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { preventDefault } from '../../helpers/event';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
@@ -287,28 +288,18 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     resetFocusedOption,
     focusOptionByIndex,
     focusOption,
+    selectFocusedValue,
   } = useFocusedOptionController({
+    selectedOptionValue,
     filteredOptions,
     scrollToElement,
   });
 
   const { opened, open, close, toggleOpened } = useDropdownOpenedController({
-    onOpen: () => {
-      setFocusedOptionValue(selectedOptionValue);
-      onOpen?.();
-    },
-    onOpened: () => {
-      const selectedOptionIndex = findSelectedIndex(filteredOptions, selectedOptionValue);
-      if (scrollBoxRef.current) {
-        scrollToElement(selectedOptionIndex, true);
-      }
-    },
-    onClose: () => {
-      if (!accessible) {
-        setInputValue('');
-      }
-      onClose?.();
-    },
+    onOpen: callMultiple(selectFocusedValue, onOpen),
+    onOpened: () => scrollToElement(findSelectedIndex(filteredOptions, selectedOptionValue), true),
+    onClose,
+    onClosed: () => !accessible && setInputValue(''),
   });
 
   React.useEffect(
@@ -373,9 +364,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const selectOption = React.useCallback(
     (value: Exclude<SelectValue, null>) => {
-      close();
-      setSelectedOptionValue(value);
       setNativeSelectValue(value ?? NOT_SELECTED.NATIVE);
+      close();
 
       const shouldTriggerOnChangeWhenControlledAndInnerValueIsOutOfSync =
         isControlledOutside && propsValue !== nativeSelectValue && nativeSelectValue === value;
@@ -385,15 +375,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         selectElRef.current?.dispatchEvent(event);
       }
     },
-    [
-      close,
-      setSelectedOptionValue,
-      setNativeSelectValue,
-      isControlledOutside,
-      propsValue,
-      nativeSelectValue,
-      selectElRef,
-    ],
+    [close, setNativeSelectValue, isControlledOutside, propsValue, nativeSelectValue, selectElRef],
   );
 
   const selectFocused = React.useCallback(() => {

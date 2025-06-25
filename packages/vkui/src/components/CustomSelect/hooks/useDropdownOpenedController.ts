@@ -5,17 +5,20 @@ import { type SelectProps } from '../CustomSelect';
 /* eslint-disable jsdoc/require-jsdoc */
 type UseDropdownOpenedControllerProps = Pick<SelectProps, 'onOpen' | 'onClose'> & {
   onOpened: () => void;
+  onClosed: () => void;
 };
 /* eslint-enable jsdoc/require-jsdoc */
 export function useDropdownOpenedController({
   onClose,
   onOpen,
   onOpened,
+  onClosed,
 }: UseDropdownOpenedControllerProps) {
   const [opened, setOpened] = React.useState(false);
   const onCloseCb = useStableCallback(onClose || noop);
   const onOpenCb = useStableCallback(onOpen || noop);
   const onOpenedCb = useStableCallback(onOpened || noop);
+  const onClosedCb = useStableCallback(onClosed || noop);
 
   const close = React.useCallback(() => {
     if (!opened) {
@@ -44,8 +47,10 @@ export function useDropdownOpenedController({
   React.useEffect(() => {
     if (opened) {
       onOpenedCb();
+    } else {
+      onClosedCb();
     }
-  }, [onOpenedCb, opened]);
+  }, [onClosedCb, onOpenedCb, opened]);
 
   return {
     opened,

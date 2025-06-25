@@ -11,6 +11,7 @@ import { type CustomSelectOptionInterface } from '../types';
 interface UseFocusedOptionControllerProps<OptionInterfaceT extends CustomSelectOptionInterface> {
   filteredOptions: SelectProps<OptionInterfaceT>['options'];
   scrollToElement: (index: number, center?: boolean) => void;
+  selectedOptionValue: SelectValue;
 }
 
 export interface UseFocusedOptionControllerReturn {
@@ -19,10 +20,12 @@ export interface UseFocusedOptionControllerReturn {
   focusOptionByIndex: (index: number | undefined, scrollTo: boolean) => void;
   resetFocusedOption: () => void;
   focusOption: (type: 'next' | 'prev') => void;
+  selectFocusedValue: () => void;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
 export function useFocusedOptionController<OptionInterfaceT extends CustomSelectOptionInterface>({
+  selectedOptionValue,
   filteredOptions,
   scrollToElement,
 }: UseFocusedOptionControllerProps<OptionInterfaceT>): UseFocusedOptionControllerReturn {
@@ -70,11 +73,17 @@ export function useFocusedOptionController<OptionInterfaceT extends CustomSelect
     [filteredOptions, focusedOptionValue, focusOptionByIndex],
   );
 
+  const selectFocusedValue = React.useCallback(
+    () => setFocusedOptionValue(selectedOptionValue),
+    [selectedOptionValue],
+  );
+
   return {
     focusedOptionValue,
     setFocusedOptionValue,
     focusOptionByIndex,
     resetFocusedOption,
     focusOption,
+    selectFocusedValue,
   };
 }
