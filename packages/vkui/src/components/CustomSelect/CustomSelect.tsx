@@ -35,7 +35,7 @@ import {
 import { useAfterItems } from './hooks/useAfterItems';
 import { useDropdownOpenedController } from './hooks/useDropdownOpenedController';
 import { useFocusedOptionController } from './hooks/useFocusedOptionController';
-import { useSelectKeyboardController } from './hooks/useInputKeyboardController';
+import { useInputKeyboardController } from './hooks/useInputKeyboardController';
 import { useInputValueController } from './hooks/useInputValueController';
 import { useScrollListController } from './hooks/useScrollListController';
 import { useSelectedOptionController } from './hooks/useSelectedOptionController';
@@ -381,7 +381,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     selectOption(focusedOptionValue);
   }, [focusedOptionValue, selectOption]);
 
-  const onInputKeyDown = useSelectKeyboardController({
+  const onInputKeyDown = useInputKeyboardController({
     opened,
     open,
     close,

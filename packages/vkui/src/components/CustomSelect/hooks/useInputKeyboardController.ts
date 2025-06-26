@@ -17,7 +17,7 @@ interface UseInputKeyboardController
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
-export function useSelectKeyboardController({
+export function useInputKeyboardController({
   opened,
   resetFocusedOption,
   focusOption,
