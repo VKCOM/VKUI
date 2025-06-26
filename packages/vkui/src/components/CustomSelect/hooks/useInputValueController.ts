@@ -8,7 +8,7 @@ import { type CustomSelectOptionInterface } from '../types';
 /* eslint-disable jsdoc/require-jsdoc */
 type UseInputValueControllerProps<OptionInterfaceT extends CustomSelectOptionInterface> = Pick<
   SelectProps<OptionInterfaceT>,
-  'options' | 'onInputChange'
+  'options' | 'onInputChange' | 'accessible'
 > & {
   selectedValue: SelectValue;
 };
@@ -16,6 +16,7 @@ type UseInputValueControllerProps<OptionInterfaceT extends CustomSelectOptionInt
 
 export function useInputValueController<OptionInterfaceT extends CustomSelectOptionInterface>({
   options,
+  accessible,
   selectedValue,
   onInputChange: onInputChangeProp,
 }: UseInputValueControllerProps<OptionInterfaceT>) {
@@ -28,7 +29,9 @@ export function useInputValueController<OptionInterfaceT extends CustomSelectOpt
   }, [options, selectedValue]);
 
   useIsomorphicLayoutEffect(() => {
-    resetInputValueBySelectedOption();
+    if (accessible) {
+      resetInputValueBySelectedOption();
+    }
   }, [resetInputValueBySelectedOption]);
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(

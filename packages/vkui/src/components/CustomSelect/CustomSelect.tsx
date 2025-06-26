@@ -278,6 +278,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const { inputValue, onInputChange, resetInputValue, resetInputValueBySelectedOption } =
     useInputValueController({
       options,
+      accessible,
       selectedValue: selected ? selected.value : null,
       onInputChange: onInputChangeProp,
     });
