@@ -35,9 +35,9 @@ import {
 import { useAfterItems } from './hooks/useAfterItems';
 import { useDropdownOpenedController } from './hooks/useDropdownOpenedController';
 import { useFocusedOptionController } from './hooks/useFocusedOptionController';
+import { useSelectKeyboardController } from './hooks/useInputKeyboardController';
 import { useInputValueController } from './hooks/useInputValueController';
 import { useScrollListController } from './hooks/useScrollListController';
-import { useSelectKeyboardController } from './hooks/useSelectKeyboardController';
 import { useSelectedOptionController } from './hooks/useSelectedOptionController';
 import type {
   CustomSelectOptionInterface,
@@ -230,7 +230,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     required,
     getSelectInputRef,
     overscrollBehavior,
-    onInputKeyDown,
+    'onInputKeyDown': onInputKeyDownProp,
     readOnly,
     accessible = false,
     ...restProps
@@ -275,11 +275,11 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [options, selectedOptionValue],
   );
 
-  const { inputValue, setInputValue, resetInputValue, resetInputValueBySelectedOption } =
+  const { inputValue, onInputChange, resetInputValue, resetInputValueBySelectedOption } =
     useInputValueController({
       options,
-      accessible,
       selectedValue: selected ? selected.value : null,
+      onInputChange: onInputChangeProp,
     });
 
   const filteredOptions = React.useMemo(
@@ -302,11 +302,15 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     scrollToElement,
   });
 
+  const scrollToSelectedOption = () => {
+    scrollToElement(findSelectedIndex(filteredOptions, selectedOptionValue), true);
+  };
+
   const { opened, open, close, toggleOpened } = useDropdownOpenedController({
     onOpen: callMultiple(selectFocusedValue, onOpen),
-    onOpened: () => scrollToElement(findSelectedIndex(filteredOptions, selectedOptionValue), true),
-    onClose: callMultiple(resetInputValueBySelectedOption, onClose),
-    onClosed: !accessible ? resetInputValue : undefined,
+    onOpened: scrollToSelectedOption,
+    onClose,
+    onClosed: accessible ? resetInputValueBySelectedOption : resetInputValue,
   });
 
   React.useEffect(
@@ -376,17 +380,15 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     selectOption(focusedOptionValue);
   }, [focusedOptionValue, selectOption]);
 
-  const { onInputKeyDown: _onInputKeyDown, onInputChange } = useSelectKeyboardController({
+  const onInputKeyDown = useSelectKeyboardController({
     opened,
     open,
     close,
-    setInputValue,
     resetFocusedOption,
     selectFocused,
     focusOption,
     scrollBoxRef,
-    onInputChange: onInputChangeProp,
-    onInputKeyDown,
+    onInputKeyDown: onInputKeyDownProp,
   });
 
   const onBlur = React.useCallback(() => {
@@ -597,7 +599,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         searchable={searchable}
         accessible={accessible}
         value={inputValue}
-        onKeyDown={!readOnly ? _onInputKeyDown : undefined}
+        onKeyDown={!readOnly ? onInputKeyDown : undefined}
         onChange={onInputChange}
         onClick={!readOnly ? toggleOpened : undefined}
         before={before}

@@ -6,13 +6,12 @@ import { type SelectProps } from '../CustomSelect';
 import { type UseFocusedOptionControllerReturn } from './useFocusedOptionController';
 
 /* eslint-disable jsdoc/require-jsdoc */
-interface UseSelectKeyboardController
+interface UseInputKeyboardController
   extends Pick<UseFocusedOptionControllerReturn, 'resetFocusedOption' | 'focusOption'>,
-    Pick<SelectProps, 'onInputKeyDown' | 'onInputChange'> {
+    Pick<SelectProps, 'onInputKeyDown'> {
   opened: boolean;
   scrollBoxRef: React.RefObject<HTMLDivElement | null>;
   selectFocused: () => void;
-  setInputValue: (str: string) => void;
   open: () => void;
   close: () => void;
 }
@@ -25,23 +24,13 @@ export function useSelectKeyboardController({
   scrollBoxRef,
   selectFocused,
   onInputKeyDown,
-  onInputChange: onInputChangeProp,
-  setInputValue,
   open,
   close,
-}: UseSelectKeyboardController) {
+}: UseInputKeyboardController) {
   const onKeyboardInput = React.useCallback(() => {
     open();
     resetFocusedOption();
   }, [open, resetFocusedOption]);
-
-  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
-    (e) => {
-      onInputChangeProp && onInputChangeProp(e);
-      setInputValue(e.target.value);
-    },
-    [onInputChangeProp, setInputValue],
-  );
 
   const areOptionsShown = React.useCallback(() => {
     return scrollBoxRef.current !== null;
@@ -117,8 +106,5 @@ export function useSelectKeyboardController({
     handleInputKeydown,
   );
 
-  return {
-    onInputChange,
-    onInputKeyDown: _onInputKeyDown,
-  };
+  return _onInputKeyDown;
 }

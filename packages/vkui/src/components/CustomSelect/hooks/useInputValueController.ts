@@ -8,7 +8,7 @@ import { type CustomSelectOptionInterface } from '../types';
 /* eslint-disable jsdoc/require-jsdoc */
 type UseInputValueControllerProps<OptionInterfaceT extends CustomSelectOptionInterface> = Pick<
   SelectProps<OptionInterfaceT>,
-  'options' | 'accessible'
+  'options' | 'onInputChange'
 > & {
   selectedValue: SelectValue;
 };
@@ -16,30 +16,33 @@ type UseInputValueControllerProps<OptionInterfaceT extends CustomSelectOptionInt
 
 export function useInputValueController<OptionInterfaceT extends CustomSelectOptionInterface>({
   options,
-  accessible,
   selectedValue,
+  onInputChange: onInputChangeProp,
 }: UseInputValueControllerProps<OptionInterfaceT>) {
-  const [inputValue, setInputValue] = React.useState(() =>
-    accessible ? calculateInputValueFromOptions(options, selectedValue) : '',
-  );
+  const [inputValue, setInputValue] = React.useState('');
 
   const resetInputValue = React.useCallback(() => setInputValue(''), []);
 
   const resetInputValueBySelectedOption = React.useCallback(() => {
-    if (!accessible) {
-      return;
-    }
     setInputValue(calculateInputValueFromOptions(options, selectedValue));
-  }, [accessible, options, selectedValue]);
+  }, [options, selectedValue]);
 
   useIsomorphicLayoutEffect(() => {
     resetInputValueBySelectedOption();
   }, [resetInputValueBySelectedOption]);
 
+  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+    (e) => {
+      onInputChangeProp && onInputChangeProp(e);
+      setInputValue(e.target.value);
+    },
+    [onInputChangeProp, setInputValue],
+  );
+
   return {
     inputValue,
-    setInputValue,
     resetInputValue,
     resetInputValueBySelectedOption,
+    onInputChange,
   };
 }
