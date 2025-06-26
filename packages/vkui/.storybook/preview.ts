@@ -55,7 +55,7 @@ const preview: Preview = {
           'Modals',
           'Data Display',
           'Typography',
-          'Service',
+          'Configuration',
           'Utils',
         ],
       },

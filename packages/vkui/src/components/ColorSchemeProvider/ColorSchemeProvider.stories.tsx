@@ -3,7 +3,7 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { ColorSchemeProvider, type ColorSchemeProviderProps } from './ColorSchemeProvider';
 
 const story: Meta<ColorSchemeProviderProps> = {
-  title: 'Service/ColorSchemeProvider',
+  title: 'Configuration/ColorSchemeProvider',
   component: ColorSchemeProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
