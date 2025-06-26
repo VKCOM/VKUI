@@ -5,6 +5,7 @@ export { getStaticPathsTags } from './src/blog/tags';
 
 export { Head, Navbar, TOC, Footer, Search } from './src/components';
 export type { SearchProps } from './src/components';
+export { useConfig } from './src/contexts';
 export { Layout } from './src/layout';
 export { getMdxComponents, Callout, Code } from './src/mdx';
 
