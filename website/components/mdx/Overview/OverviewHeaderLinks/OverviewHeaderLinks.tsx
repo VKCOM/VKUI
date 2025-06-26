@@ -2,32 +2,25 @@ import * as React from 'react';
 import { Flex, Link, Subhead } from '@vkontakte/vkui';
 import { useConfig } from '@vkontakte/vkui-docs-theme';
 import { createSourceUrl, createStorybookUrl, getComponentName } from './helpers';
+import type { OverviewHeaderLinkProps, OverviewHeaderLinksProps } from './types';
 import styles from '../Overview.module.css';
 
-export interface OverviewHeaderProps {
-  group?:
-    | 'layout'
-    | 'forms'
-    | 'dates'
-    | 'buttons'
-    | 'navigation'
-    | 'feedback'
-    | 'modals'
-    | 'data-display'
-    | 'typography'
-    | 'configuration'
-    | 'utils';
-}
+export function OverviewHeaderLinks({
+  group,
+  type = 'component',
+  forcedPath,
+}: OverviewHeaderLinksProps) {
+  const {
+    normalizePagesResult: { activeMetadata },
+  } = useConfig();
 
-export function OverviewHeader({ group }: OverviewHeaderProps) {
-  const config = useConfig();
-  const componentName = getComponentName(config.normalizePagesResult.activeMetadata);
+  const componentName = getComponentName(activeMetadata);
 
   if (!componentName) {
     return null;
   }
 
-  const sourceUrl = createSourceUrl(componentName);
+  const sourceUrl = createSourceUrl(componentName, type, forcedPath);
   const storybookUrl = group ? createStorybookUrl(componentName, group) : undefined;
 
   return (
@@ -40,7 +33,7 @@ export function OverviewHeader({ group }: OverviewHeaderProps) {
   );
 }
 
-function OverviewHeaderLink({ href, children }: { href: string; children: React.ReactNode }) {
+function OverviewHeaderLink({ href, children }: OverviewHeaderLinkProps) {
   return (
     <Link target="_blank" rel="noreferrer" href={href}>
       {children}&nbsp;↗
