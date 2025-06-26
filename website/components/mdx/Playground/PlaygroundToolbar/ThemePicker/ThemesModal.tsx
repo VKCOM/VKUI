@@ -24,6 +24,20 @@ interface ThemesModalProps {
 }
 
 export function ThemesModal({ open, setOpen }: ThemesModalProps) {
+  return (
+    <ModalPage
+      open={open}
+      id="themes-modal"
+      header={<ModalPageHeader>Темы</ModalPageHeader>}
+      onClose={() => setOpen(false)}
+      height="640px"
+    >
+      <ThemesModalInner setOpen={setOpen} />
+    </ModalPage>
+  );
+}
+
+function ThemesModalInner({ setOpen }: Pick<ThemesModalProps, 'setOpen'>) {
   const store = React.useContext(PlaygroundStoreContext);
   const { themeNames, isLoading, error } = useLoadThemeNames();
   const [snackbar, setSnackbar] = React.useState<React.ReactElement | null>(null);
@@ -74,71 +88,62 @@ export function ThemesModal({ open, setOpen }: ThemesModalProps) {
   return (
     <>
       {snackbar}
-      <ModalPage
-        open={open}
-        aria-live="polite"
-        id="themes-modal"
-        header={<ModalPageHeader>Темы</ModalPageHeader>}
-        onClose={() => setOpen(false)}
-        height="640px"
-      >
+      <Div>
+        Ниже представлены все темы из{' '}
+        <Link href="https://github.com/VKCOM/vkui-tokens" target="_blank" rel="noreferrer">
+          @vkontakte/vkui-tokens&nbsp;↗
+        </Link>
+        . Выберите любую из них, чтобы посмотреть, как компонент будет отображаться.
+        <Callout>
+          <span>
+            Узнать, как подключить тему в своём приложении, можно на странице{' '}
+            <Link href="/overview/themes" onClick={() => setOpen(false)}>
+              Кастомизация
+            </Link>
+            .
+          </span>
+        </Callout>
+      </Div>
+      {error && (
         <Div>
-          Ниже представлены все темы из{' '}
-          <Link href="https://github.com/VKCOM/vkui-tokens" target="_blank" rel="noreferrer">
-            @vkontakte/vkui-tokens&nbsp;↗
-          </Link>
-          . <br /> Выберите любую из них, чтобы посмотреть, как компонент будет отображаться.
-          <Callout>
-            <span>
-              Узнать, как подключить тему в своём приложении, можно на странице{' '}
-              <Link href="/overview/themes" onClick={() => setOpen(false)}>
-                Кастомизация
-              </Link>
-              .
-            </span>
-          </Callout>
+          <FormStatus mode="error">Произошла ошибка</FormStatus>
         </Div>
-        {error && (
-          <Div>
-            <FormStatus mode="error">Произошла ошибка</FormStatus>
-          </Div>
-        )}
-        {isLoading && <PanelSpinner />}
-        {themeNames.map(([themeName, { colorSchemeOptions, baseForPlatform }]) => (
-          <SimpleCell
-            key={themeName}
-            badgeAfterTitle={
-              <Flex Component="span" gap="s" role="list">
-                <VisuallyHidden>Поддерживает темы</VisuallyHidden>
-                {colorSchemeOptions.map(({ value, disabled }) => {
-                  const Icon = value === 'dark' ? Icon20MoonOutline : Icon20SunOutline;
-                  if (disabled) {
-                    return null;
-                  }
-                  return (
-                    <span key={value} role="listitem">
-                      <VisuallyHidden>{value === 'dark' ? 'светлую' : 'тёмную'}</VisuallyHidden>
-                      <Icon display="inline" />
-                    </span>
-                  );
-                })}
-              </Flex>
-            }
-            subtitle={
-              baseForPlatform ? (
-                <span>
-                  Используется по умолчанию для <Code>{`platform="${baseForPlatform}"`}</Code>
-                </span>
-              ) : undefined
-            }
-            onClick={() => {
-              void handleThemeSelect(themeName, colorSchemeOptions);
-            }}
-          >
-            {themeName}
-          </SimpleCell>
-        ))}
-      </ModalPage>
+      )}
+      {isLoading && <PanelSpinner />}
+      {themeNames.map(([themeName, { colorSchemeOptions, baseForPlatform }]) => (
+        <SimpleCell
+          key={themeName}
+          badgeAfterTitle={
+            <Flex Component="span" gap="s" role="list">
+              <VisuallyHidden>Поддерживает темы</VisuallyHidden>
+              {colorSchemeOptions.map(({ value, disabled }) => {
+                const Icon = value === 'dark' ? Icon20MoonOutline : Icon20SunOutline;
+                if (disabled) {
+                  return null;
+                }
+                return (
+                  <span key={value} role="listitem">
+                    <VisuallyHidden>{value === 'dark' ? 'светлую' : 'тёмную'}</VisuallyHidden>
+                    <Icon display="inline" />
+                  </span>
+                );
+              })}
+            </Flex>
+          }
+          subtitle={
+            baseForPlatform ? (
+              <span>
+                Используется по умолчанию для <Code>{`platform="${baseForPlatform}"`}</Code>
+              </span>
+            ) : undefined
+          }
+          onClick={() => {
+            void handleThemeSelect(themeName, colorSchemeOptions);
+          }}
+        >
+          {themeName}
+        </SimpleCell>
+      ))}
     </>
   );
 }

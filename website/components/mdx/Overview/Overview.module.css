@@ -52,3 +52,9 @@
 .tags {
   margin-block-start: 20px;
 }
+
+.header {
+  --vkui_internal--link-color: var(--vkui--color_text_secondary);
+
+  margin-block-end: var(--vkui--spacing_size_2xl);
+}
