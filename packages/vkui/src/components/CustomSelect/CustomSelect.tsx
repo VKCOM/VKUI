@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { preventDefault } from '../../helpers/event';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
@@ -10,6 +9,7 @@ import { useDOM } from '../../lib/dom';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { preventDefault } from '../../lib/utils';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
