@@ -14,7 +14,10 @@
 }
 
 .searchField {
-  max-inline-size: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  inline-size: 150px;
   padding-block: var(--vkui--spacing_size_xs);
   padding-inline-start: var(--vkui--spacing_size_xl);
   padding-inline-end: var(--vkui--spacing_size_s);
