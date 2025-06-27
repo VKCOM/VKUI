@@ -43,12 +43,11 @@
   opacity: 0;
 }
 
-.host:hover .arrow {
+.host:hover .arrow,
+.withConstArrows .arrow {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.withConstArrows .arrow,
-.withConstArrows:hover .arrow,
 .host .arrow:hover {
   opacity: 1;
 }
