@@ -71,3 +71,7 @@
   inline-size: 1px;
   block-size: 12px;
 }
+
+.search {
+  margin-block: var(--vkui--spacing_size_xs);
+}
