@@ -35,6 +35,9 @@ export function multiRef<T>(...refs: Array<React.Ref<T> | undefined>): React.Ref
 export const stopPropagation = <T extends React.SyntheticEvent>(event: T): void =>
   event.stopPropagation();
 
+export const preventDefault = <T extends React.SyntheticEvent>(event: T): void =>
+  event.preventDefault();
+
 export function addClassNameToElement(element: HTMLElement, className: string): void {
   const elementClassName = element.getAttribute('class') || '';
   const updatedClassName = `${elementClassName}${elementClassName ? ' ' : ''}${className}`;
