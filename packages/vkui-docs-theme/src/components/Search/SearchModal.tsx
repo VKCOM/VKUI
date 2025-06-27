@@ -142,6 +142,15 @@ export function SearchModal({
     setSearch('');
   };
 
+  const handleClosed = () => {
+    setTimeout(() => {
+      // Делаем грязюку, потому что Next не скроллит к хэшу в рамках одной страницы
+      if (location.hash) {
+        location.href = location.hash;
+      }
+    }, 100);
+  };
+
   return (
     <ModalPage
       open={open}
@@ -150,6 +159,7 @@ export function SearchModal({
       id="search-modal"
       header={<SearchHeader value={search} onChange={handleSearchChange} />}
       onClose={handleClose}
+      onClosed={handleClosed}
       height="640px"
     >
       <SearchFilters filters={filters} activeFilters={activeFilters} toggleFilter={toggleFilter} />

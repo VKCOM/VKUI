@@ -6,24 +6,12 @@ import { useFSRoute } from 'nextra/hooks';
 import type { Item, PageItem } from 'nextra/normalize-pages';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { useThemeConfig } from '../../../contexts';
-import { Accordion, type AccordionProps } from '../Accordion/Accordion';
+import { Accordion, type AccordionProps } from './Accordion/Accordion';
+import { filterDirectories } from './helpers';
+import type { FileProps, FolderProps, MenuProps } from './types';
 import styles from './Menu.module.css';
 
 const TreeState: Record<string, boolean> = Object.create(null);
-
-function Separator({ title }: { title: string }) {
-  return (
-    <div className={styles.separator} role="separator">
-      <Caption level="3" caps>
-        {title}
-      </Caption>
-    </div>
-  );
-}
-
-export interface FolderProps {
-  item: PageItem | Item;
-}
 
 function Folder({ item }: FolderProps) {
   const { searchableNavbarItems = [] } = useThemeConfig();
@@ -97,10 +85,6 @@ function Folder({ item }: FolderProps) {
   );
 }
 
-export interface FileProps {
-  item: PageItem | Item;
-}
-
 function File({ item }: FileProps): React.ReactElement {
   const route = useFSRoute();
   const active = Boolean(item.route && route === item.route);
@@ -108,10 +92,17 @@ function File({ item }: FileProps): React.ReactElement {
   const ref = React.useRef<HTMLLIElement>(null);
 
   React.useEffect(() => {
+    const container = document.getElementById('vkui-docs-sidebar');
+
+    if (!container) {
+      return;
+    }
+
     if (ref.current && active) {
       scrollIntoView(ref.current, {
         block: 'center',
         scrollMode: 'if-needed',
+        boundary: (parent) => Boolean(container.contains(parent)),
       });
     }
   }, [active]);
@@ -133,10 +124,33 @@ function File({ item }: FileProps): React.ReactElement {
   );
 }
 
-export interface MenuProps {
-  directories: PageItem[] | Item[];
-  className?: string;
-  mobileView?: boolean;
+function SearchableMenu(props: MenuProps): React.ReactElement {
+  const [search, setSearch] = React.useState<string>('');
+
+  const filteredDirectories = search
+    ? filterDirectories(props.directories, search)
+    : props.directories;
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.currentTarget.value.trim());
+  };
+
+  return (
+    <>
+      <Search className={styles.search} value={search} onChange={handleSearch} noPadding />
+      <Menu {...props} directories={filteredDirectories} />
+    </>
+  );
+}
+
+function Separator({ title }: { title: string }) {
+  return (
+    <div className={styles.separator} role="separator">
+      <Caption level="3" caps>
+        {title}
+      </Caption>
+    </div>
+  );
 }
 
 export function Menu({
@@ -150,43 +164,9 @@ export function Menu({
         if (item.type === 'separator') {
           return <Separator key={item.name} title={item.title} />;
         }
-        const Component = item.type === 'menu' || item.children?.length ? Folder : File;
+        const Component = item.children?.length ? Folder : File;
         return <Component key={item.name} item={item} />;
       })}
     </ul>
   );
-}
-
-function SearchableMenu(props: MenuProps): React.ReactElement {
-  const [search, setSearch] = React.useState<string>('');
-
-  const filteredDirectories = search
-    ? filterDirectories(props.directories, search)
-    : props.directories;
-
-  return (
-    <>
-      <Search value={search} onChange={(e) => setSearch(e.currentTarget.value.trim())} noPadding />
-      <Menu {...props} directories={filteredDirectories} />
-    </>
-  );
-}
-
-function filterDirectories(directories: Array<PageItem | Item>, search: string) {
-  let lastSeparator: PageItem | Item | null = null;
-  let itemsAfterSeparator = 0;
-
-  return directories.reduce<Array<PageItem | Item>>((data, item) => {
-    if (item.type === 'separator') {
-      lastSeparator = item;
-      itemsAfterSeparator = 0;
-    } else if (item.title.toLowerCase().includes(search.toLowerCase())) {
-      ++itemsAfterSeparator;
-      if (lastSeparator && itemsAfterSeparator === 1) {
-        data.push(lastSeparator);
-      }
-      data.push(item);
-    }
-    return data;
-  }, []);
 }
