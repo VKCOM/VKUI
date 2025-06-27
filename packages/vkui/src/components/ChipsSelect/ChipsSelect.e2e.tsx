@@ -10,7 +10,9 @@ test('ChipsSelect', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<ChipsSelectPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent();
+  await expectScreenshotClippedToContent({
+    forceTimeoutBeforeScreenshot: true,
+  });
 });
 
 test('ChipsSelect with dropdown', async ({
@@ -20,6 +22,7 @@ test('ChipsSelect with dropdown', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<ChipsSelectWithDropdownPlayground {...componentPlaygroundProps} />);
+  await page.getByRole('combobox').focus();
   await page.getByRole('combobox').click();
   await expectScreenshotClippedToContent();
 });

@@ -21,6 +21,7 @@ export interface InternalVKUITestOptions {
 
 export interface ScreenshotWithClipToContentOptions {
   cropToContentSelector?: string;
+  forceTimeoutBeforeScreenshot?: boolean | number;
 }
 
 export interface VKUITestHelpers {
