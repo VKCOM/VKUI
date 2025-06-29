@@ -8,7 +8,7 @@ import { Button } from '../Button/Button';
 import { ButtonGroup, type ButtonGroupProps } from './ButtonGroup';
 
 const story: Meta<ButtonGroupProps> = {
-  title: 'Blocks/ButtonGroup',
+  title: 'Layout/ButtonGroup',
   component: ButtonGroup,
   parameters: createStoryParameters('ButtonGroup', CanvasFullLayout),
   decorators: [withCartesian],

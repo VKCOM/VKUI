@@ -4,7 +4,7 @@ import { ConfigProvider, type ConfigProviderProps } from './ConfigProvider';
 import { useConfigProvider } from './ConfigProviderContext';
 
 const story: Meta<ConfigProviderProps> = {
-  title: 'Service/ConfigProvider',
+  title: 'Configuration/ConfigProvider',
   component: ConfigProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };

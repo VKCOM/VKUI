@@ -12,7 +12,7 @@ import {
 } from './UsersStack';
 
 const story: Meta<UsersStackProps> = {
-  title: 'Blocks/UsersStack',
+  title: 'Data Display/UsersStack',
   component: UsersStack,
   parameters: createStoryParameters('UsersStack', CanvasFullLayout),
   decorators: [withCartesian],

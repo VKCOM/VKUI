@@ -22,7 +22,7 @@ import { View } from '../View/View';
 import { PanelHeaderContext, type PanelHeaderContextProps } from './PanelHeaderContext';
 
 const story: Meta<PanelHeaderContextProps> = {
-  title: 'Layout/PanelHeaderContext',
+  title: 'Navigation/PanelHeaderContext',
   component: PanelHeaderContext,
   parameters: createStoryParameters('PanelHeaderContext', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],

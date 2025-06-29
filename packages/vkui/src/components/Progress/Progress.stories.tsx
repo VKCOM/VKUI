@@ -4,7 +4,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Progress, type ProgressProps } from './Progress';
 
 const story: Meta<ProgressProps> = {
-  title: 'Blocks/Progress',
+  title: 'Feedback/Progress',
   component: Progress,
   parameters: createStoryParameters('Progress', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

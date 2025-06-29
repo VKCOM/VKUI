@@ -4,7 +4,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { ScrollArrow, type ScrollArrowProps } from './ScrollArrow';
 
 const story: Meta<ScrollArrowProps> = {
-  title: 'Blocks/ScrollArrow',
+  title: 'Utils/ScrollArrow',
   component: ScrollArrow,
   parameters: createStoryParameters('ScrollArrow', CanvasFullLayout, DisableCartesianParam),
 };

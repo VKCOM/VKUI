@@ -8,7 +8,7 @@ import { Counter } from '../Counter/Counter';
 import { SubnavigationButton, type SubnavigationButtonProps } from './SubnavigationButton';
 
 const story: Meta<SubnavigationButtonProps> = {
-  title: 'Blocks/SubnavigationButton',
+  title: 'Navigation/SubnavigationBar/SubnavigationButton',
   component: SubnavigationButton,
   parameters: createStoryParameters('SubnavigationButton', CanvasFullLayout, DisableCartesianParam),
   args: {

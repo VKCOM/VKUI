@@ -5,7 +5,7 @@ import { ImageBase } from '../ImageBase';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay';
 
 const story: Meta<ImageBaseOverlayProps> = {
-  title: 'Blocks/ImageBaseOverlay',
+  title: 'Data Display/Image/ImageBaseOverlay',
   component: ImageBaseOverlay,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [

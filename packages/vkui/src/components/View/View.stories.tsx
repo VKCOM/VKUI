@@ -22,7 +22,7 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { View, type ViewProps } from './View';
 
 const story: Meta<ViewProps> = {
-  title: 'Layout/View',
+  title: 'Navigation/View',
   component: View,
   parameters: createStoryParameters('View', CanvasFullLayout, DisableCartesianParam),
 };

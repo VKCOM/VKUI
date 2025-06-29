@@ -4,7 +4,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Gradient, type GradientProps } from './Gradient';
 
 const story: Meta<GradientProps> = {
-  title: 'Blocks/Gradient',
+  title: 'Utils/Gradient',
   component: Gradient,
   parameters: createStoryParameters('Gradient', CanvasFullLayout, DisableCartesianParam),
 };

@@ -14,7 +14,7 @@ import { Image } from '../Image/Image';
 import { Banner, type BannerProps } from './Banner';
 
 const story: Meta<BannerProps> = {
-  title: 'Blocks/Banner',
+  title: 'Data Display/Banner',
   component: Banner,
   parameters: createStoryParameters('Banner', CanvasFullLayout),
   argTypes: {

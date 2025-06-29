@@ -7,7 +7,7 @@ import type { ChipProps } from '../types';
 import { Chip } from './Chip';
 
 const story: Meta<ChipProps> = {
-  title: 'Forms/Chip',
+  title: 'Data Display/Chip',
   component: Chip,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {

@@ -6,7 +6,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { IconButton, type IconButtonProps } from './IconButton';
 
 const story: Meta<IconButtonProps> = {
-  title: 'Blocks/IconButton',
+  title: 'Buttons/IconButton',
   component: IconButton,
   parameters: createStoryParameters('IconButton', CanvasFullLayout, DisableCartesianParam),
 };

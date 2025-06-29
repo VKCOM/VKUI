@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { PanelSpinner, type PanelSpinnerProps } from './PanelSpinner';
 
 const story: Meta<PanelSpinnerProps> = {
-  title: 'Blocks/PanelSpinner',
+  title: 'Navigation/Panel/PanelSpinner',
   component: PanelSpinner,
   parameters: createStoryParameters('PanelSpinner', CanvasFullLayout),
   decorators: [withCartesian],

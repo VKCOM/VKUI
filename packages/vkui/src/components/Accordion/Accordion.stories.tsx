@@ -7,7 +7,7 @@ import { Group } from '../Group/Group';
 import { Accordion, type AccordionProps } from './Accordion';
 
 const story: Meta<AccordionProps> = {
-  title: 'Blocks/Accordion',
+  title: 'Data Display/Accordion',
   component: Accordion,
   args: { onChange: fn() },
   parameters: createStoryParameters('Accordion', CanvasFullLayout, DisableCartesianParam),

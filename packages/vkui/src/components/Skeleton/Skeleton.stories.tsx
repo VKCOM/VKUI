@@ -4,7 +4,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Skeleton, type SkeletonProps } from './Skeleton';
 
 const story: Meta<SkeletonProps> = {
-  title: 'Blocks/Skeleton',
+  title: 'Feedback/Skeleton',
   component: Skeleton,
   parameters: createStoryParameters('Skeleton', CanvasFullLayout, DisableCartesianParam),
 };

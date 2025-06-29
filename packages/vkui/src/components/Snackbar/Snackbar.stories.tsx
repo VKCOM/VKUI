@@ -10,7 +10,7 @@ import { Image } from '../Image/Image';
 import { Snackbar, type SnackbarProps } from './Snackbar';
 
 const story: Meta<SnackbarProps> = {
-  title: 'Popouts/Snackbar',
+  title: 'Feedback/Snackbar',
   component: Snackbar,
   parameters: createStoryParameters('Snackbar', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

@@ -24,6 +24,7 @@ import styles from './OverviewLayout.module.css';
 interface Section<T> {
   id: string;
   title: string;
+  displayTitle: string;
   items: T[];
 }
 
@@ -134,7 +135,7 @@ const Section = memo<{
         {hidden ? null : (
           <>
             <Flex align="center" gap="m">
-              <Title level="2">{sectionData.title}</Title>
+              <Title level="2">{sectionData.displayTitle}</Title>
               <Counter size="m" mode="primary" appearance="accent-red">
                 {sectionData.items.length}
               </Counter>

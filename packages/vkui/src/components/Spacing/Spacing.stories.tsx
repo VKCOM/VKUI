@@ -7,7 +7,7 @@ import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Spacing, type SpacingProps } from './Spacing';
 
 const story: Meta<SpacingProps> = {
-  title: 'Blocks/Spacing',
+  title: 'Layout/Spacing',
   component: Spacing,
   parameters: createStoryParameters('Spacing', CanvasFullLayout, DisableCartesianParam),
 };

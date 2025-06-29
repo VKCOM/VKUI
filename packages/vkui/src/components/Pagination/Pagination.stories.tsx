@@ -5,7 +5,7 @@ import { useCustomArgs } from '../../testing/useCustomArgs';
 import { Pagination, type PaginationProps } from './Pagination';
 
 const story: Meta<PaginationProps> = {
-  title: 'Blocks/Pagination',
+  title: 'Navigation/Pagination',
   component: Pagination,
   parameters: createStoryParameters('Pagination', CanvasFullLayout, DisableCartesianParam),
 };

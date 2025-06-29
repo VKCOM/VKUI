@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useStyleGuideContext } from '@rsg-components/Context';
 import Examples from '@rsg-components/Examples';
 import Markdown from '@rsg-components/Markdown';
 import Slot from '@rsg-components/Slot';
@@ -13,20 +12,13 @@ import './ReactComponent.css';
 const toKebabCase = (str) =>
   str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`).replace(/^-/, '');
 
-const getSectionName = (sections) => {
-  return sections[0].slug?.split('-')[1];
-};
-
 const ReactComponent = ({ component, exampleMode, ...rest }) => {
   const { name, visibleName, pathLine } = component;
   const { description = '', examples = [] } = component.props || {};
   const deprecated = getDeprecatedFromComponentTags(component);
-  const { sections } = useStyleGuideContext();
 
   const githubTag = `cmp:${toKebabCase(visibleName)}`;
   const issuesQuery = `is:open is:issue label:${githubTag}`;
-  const sectionName = getSectionName(sections);
-  const storybooComponentUrl = `/story/${sectionName}-${visibleName.toLowerCase()}`;
 
   return (
     <div className="ReactComponent">
@@ -47,16 +39,6 @@ const ReactComponent = ({ component, exampleMode, ...rest }) => {
         href={`${VKUI_PACKAGE.URLS.ISSUES}?q=${encodeURIComponent(issuesQuery)}`}
       >
         <Caption>Issues</Caption>
-      </Link>
-      <div className="ReactComponent__divider">•</div>
-      <Link
-        target="_blank"
-        className="ReactComponent__src"
-        href={`${VKUI_PACKAGE.URLS.HOMEPAGE}${VKUI_PACKAGE.VERSION}/playground?path=${encodeURIComponent(
-          storybooComponentUrl,
-        )}`}
-      >
-        <Caption>Storybook</Caption>
       </Link>
       <Heading
         level={1}

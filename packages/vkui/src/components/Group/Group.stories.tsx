@@ -18,7 +18,7 @@ import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Group, type GroupProps } from './Group';
 
 const story: Meta<GroupProps> = {
-  title: 'Blocks/Group',
+  title: 'Layout/Group',
   component: Group,
   parameters: createStoryParameters('Group', CanvasFullLayout, DisableCartesianParam),
 };

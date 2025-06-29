@@ -12,9 +12,9 @@ function getVersionFromUrl() {
 const getComponentUrl = (docsBaseUrl: string, componentName: string): string => {
   const version = getVersionFromUrl();
   if (version) {
-    return `${docsBaseUrl}${version}/#/${componentName}/`;
+    return `${docsBaseUrl}${version}/components/${componentName}/`;
   }
-  return `${docsBaseUrl}#/${componentName}/`;
+  return `${docsBaseUrl}/components/${componentName}/`;
 };
 
 function extractComponentName(path: string): string {
@@ -23,25 +23,14 @@ function extractComponentName(path: string): string {
 }
 
 export const DocumentationButton = () => {
-  const { index, storyId } = useStorybookState();
-  const [globals] = useGlobals();
-  const story = index?.[storyId];
-  const importPath = story && 'importPath' in story && story.importPath;
-
-  if (!importPath || !globals.styleguideComponents || !globals.styleguideBaseUrl) {
-    return null;
-  }
-
-  const componentName = extractComponentName(importPath);
-  const hasDocumentation = globals.styleguideComponents.includes(componentName);
+  // TODO: После https://github.com/VKCOM/VKUI/pull/8598 вернуть логику открытия страницы документации
+  const hasDocumentation = false;
   if (!hasDocumentation) {
     return null;
   }
 
-  const documentationUrl = getComponentUrl(globals.styleguideBaseUrl, componentName);
-
   return (
-    <a href={documentationUrl} target="_blank" rel="noreferrer">
+    <a href="/" target="_blank" rel="noreferrer">
       <IconButton>
         <DocumentIcon />
       </IconButton>

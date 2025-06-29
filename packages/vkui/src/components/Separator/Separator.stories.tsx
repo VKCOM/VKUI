@@ -9,7 +9,7 @@ import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Separator, type SeparatorProps } from './Separator';
 
 const story: Meta<SeparatorProps> = {
-  title: 'Blocks/Separator',
+  title: 'Layout/Separator',
   component: Separator,
   parameters: createStoryParameters('Separator', CanvasFullLayout, DisableCartesianParam),
 };

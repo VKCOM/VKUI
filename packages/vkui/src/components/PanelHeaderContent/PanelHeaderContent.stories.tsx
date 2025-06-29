@@ -13,7 +13,7 @@ import { View } from '../View/View';
 import { PanelHeaderContent, type PanelHeaderContentProps } from './PanelHeaderContent';
 
 const story: Meta<PanelHeaderContentProps> = {
-  title: 'Layout/PanelHeaderContent',
+  title: 'Navigation/PanelHeader/PanelHeaderContent',
   component: PanelHeaderContent,
   parameters: createStoryParameters('PanelHeaderContent', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],

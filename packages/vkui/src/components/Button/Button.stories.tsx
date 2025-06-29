@@ -16,7 +16,7 @@ const iconsPresets = createFieldWithPresets({
 });
 
 const story: Meta<StoryButtonProps> = {
-  title: 'Blocks/Button',
+  title: 'Buttons/Button',
   component: Button,
   parameters: createStoryParameters('Button', CanvasFullLayout),
   argTypes: {
