@@ -30,6 +30,7 @@ const AccordionVKID = () => {
       key={id}
       expanded={openId === id}
       onChange={(e) => (e ? setOpenId(id) : setOpenId(null))}
+      unmountOnCollapsed
     >
       <Accordion.Summary>{title}</Accordion.Summary>
       <Accordion.Content>
