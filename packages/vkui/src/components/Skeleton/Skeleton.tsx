@@ -3,13 +3,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { millisecondsInSecond } from 'date-fns/constants';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { useDOM } from '../../lib/dom';
+import { animationVisibilityDelayStyles } from '../../styles/animationVisibilityDelay';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Skeleton.module.css';
+import stylesDelay from '../../styles/animationVisibilityDelay.module.css';
 
 const CUSTOM_PROPERTY_GRADIENT_LEFT = '--vkui_internal--skeleton_gradient_left';
 
@@ -118,6 +121,11 @@ export interface SkeletonProps
    * Длительность анимации в секундах.
    */
   duration?: number;
+
+  /**
+   * Задерживает отрисовку элемента на заданное количество миллисекунд.
+   */
+  visibilityDelay?: number;
 }
 
 /**
@@ -146,6 +154,7 @@ export const Skeleton = ({
   duration,
   margin,
   getRootRef,
+  visibilityDelay,
   ...restProps
 }: SkeletonProps): React.ReactNode => {
   const rootRef = useExternRef(getRootRef);
@@ -181,8 +190,12 @@ export const Skeleton = ({
     <RootComponent
       getRootRef={rootRef}
       Component="span"
-      baseClassName={classNames(styles.host, disableAnimation && styles.disableAnimation)}
-      baseStyle={skeletonStyle}
+      baseClassName={classNames(
+        styles.host,
+        disableAnimation && styles.disableAnimation,
+        visibilityDelay && stylesDelay.visibilityDelay,
+      )}
+      baseStyle={mergeStyle(skeletonStyle, animationVisibilityDelayStyles(visibilityDelay))}
       {...restProps}
     >
       {children || <>&zwnj;</>}

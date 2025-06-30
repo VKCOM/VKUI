@@ -495,3 +495,22 @@ export function setNodeEnv(value: 'development' | 'production' | 'test') {
     value,
   });
 }
+
+export function mockTouchStartDisabled() {
+  let originalOntouchstart: unknown;
+
+  beforeEach(() => {
+    if ('ontouchstart' in window) {
+      originalOntouchstart = window.ontouchstart;
+      delete window.ontouchstart;
+    }
+  });
+
+  afterEach(() => {
+    // Восстанавливаем либо исходное значение, либо удаляем, если его не было
+    if (originalOntouchstart !== undefined) {
+      // @ts-expect-error: TS2322 Нужно вернуть оригинально значение
+      window.ontouchstart = originalOntouchstart;
+    }
+  });
+}

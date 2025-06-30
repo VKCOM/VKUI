@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Button, ButtonGroup, ColorSchemeProvider } from '@vkontakte/vkui';
+import { Button, ButtonGroup } from '@vkontakte/vkui';
 import { FigmaIcon, GithubIcon, StorybookIcon } from '../../icons';
 import styles from './Overview.module.css';
 
@@ -55,11 +55,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export function Overview({ children }: OverviewProps) {
-  return (
-    <ColorSchemeProvider value="dark">
-      <div className={styles.root}>{children}</div>
-    </ColorSchemeProvider>
-  );
+  return <div className={styles.root}>{children}</div>;
 }
 
 if (process.env.NODE_ENV !== 'production') {

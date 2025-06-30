@@ -1,33 +1,29 @@
 'use client';
 
 import { Icon20MoonOutline, Icon20SunOutline } from '@vkontakte/icons';
-import { SegmentedControl, Skeleton } from '@vkontakte/vkui';
+import { Button, Skeleton } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import { useColorScheme } from '../contexts';
-
-const options = [
-  { 'value': 'light', 'label': <Icon20SunOutline />, 'aria-label': 'Переключить на светлую тему' },
-  { 'value': 'dark', 'label': <Icon20MoonOutline />, 'aria-label': 'Переключить на тёмную тему' },
-];
-
-const SWITCH_WIDTH = 94;
 
 export function ColorSchemeSwitch() {
   const { setColorScheme, resolvedColorScheme } = useColorScheme();
   const mounted = useMounted();
 
   if (!mounted) {
-    return <Skeleton width={SWITCH_WIDTH} height={36} />;
+    return <Skeleton width={36} height={36} />;
   }
 
+  const isDark = resolvedColorScheme === 'dark';
+  const Icon = isDark ? Icon20MoonOutline : Icon20SunOutline;
+
   return (
-    <SegmentedControl
+    <Button
       size="l"
-      style={{ width: SWITCH_WIDTH }}
-      value={resolvedColorScheme}
-      // @ts-expect-error: TS2322 VKUI fix types?
-      onChange={setColorScheme}
-      options={options}
+      before={<Icon />}
+      mode="secondary"
+      appearance="neutral"
+      label={isDark ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'}
+      onClick={() => setColorScheme(isDark ? 'light' : 'dark')}
     />
   );
 }

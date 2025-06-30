@@ -61,6 +61,11 @@
             "position": "before"
           },
           {
+            "group": "external",
+            "pattern": "@/**",
+            "position": "after"
+          },
+          {
             "pattern": "*.css",
             "group": "index",
             "patternOptions": { "matchBase": true },

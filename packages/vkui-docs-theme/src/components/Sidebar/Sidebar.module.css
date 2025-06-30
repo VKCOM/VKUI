@@ -1,6 +1,7 @@
 .root {
   display: flex;
   flex-direction: column;
+  inline-size: var(--vkui_docs--sidebar-width);
 }
 
 @media (--viewWidth-desktopPlus) {
@@ -9,7 +10,6 @@
     inset-block-start: var(--vkui_docs--navbar-height);
     flex-shrink: 0;
     align-self: flex-start;
-    inline-size: 310px;
     border-inline-end: var(--vkui--size_border--regular) solid
       var(--vkui_docs--color_stroke_separator_secondary);
   }
@@ -22,7 +22,6 @@
     inset-inline-end: 0;
     /* TODO: move to the common file with all the sizes? */
     z-index: 30;
-    inline-size: 320px;
     background-color: var(--vkui_docs--color_background_content);
     border-radius: var(--vkui--size_border_radius--regular);
     will-change: transform;
@@ -30,10 +29,9 @@
 }
 
 .inner {
-  flex-grow: 1;
   block-size: calc(100vh - var(--vkui_docs--navbar-height));
   padding-block: 32px var(--vkui--spacing_size_4xl);
-  padding-inline: var(--vkui--spacing_size_3xl);
+  padding-inline: var(--vkui--spacing_size_m);
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-gutter: stable;

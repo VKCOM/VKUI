@@ -42,6 +42,41 @@ describe('DateInput', () => {
     </React.Fragment>
   ));
 
+  it('check correct readonly state', async () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+    render(
+      <DateInput
+        value={date}
+        onChange={onChange}
+        changeMonthLabel=""
+        changeYearLabel=""
+        changeDayLabel=""
+        changeHoursLabel=""
+        changeMinutesLabel=""
+        readOnly={true}
+        {...testIds}
+      />,
+    );
+    const inputLikes = getInputsLike();
+    inputLikes.forEach((inputLike) => {
+      expect(inputLike).toHaveAttribute('aria-readonly', 'true');
+    });
+
+    const [dates, months, years] = inputLikes;
+
+    await userEvent.type(dates, '30');
+    await userEvent.type(months, '06');
+    await userEvent.type(years, '2023');
+
+    const normalizedDate = convertInputsToNumbers(inputLikes);
+    expect(normalizedDate).toEqual([31, 7, 2024]);
+
+    expect(onChange).toHaveBeenCalledTimes(0);
+
+    expect(screen.queryByTestId(testIds.clearButtonTestId)).toBeNull();
+  });
+
   it('should be correct input value', () => {
     const onChange = jest.fn();
     render(
@@ -202,13 +237,13 @@ describe('DateInput', () => {
 
     await userEvent.click(dates);
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-    expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
 
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
     fireEvent.click(screen.getByTestId(dayTestId(subDays(date, 1))));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-    expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
 
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
@@ -361,13 +396,13 @@ describe('DateInput', () => {
     await act(() => userEvent.click(calendarIcon));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-    expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
     await act(() => userEvent.click(calendarIcon));
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-    expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
+    expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
   });
 

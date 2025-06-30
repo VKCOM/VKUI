@@ -1,5 +1,5 @@
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
-import type { PartialStoryFn } from '@storybook/types';
+import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';

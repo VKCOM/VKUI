@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon16Moon, Icon16Sun } from '@vkontakte/icons';
-import { useGlobals } from '@storybook/manager-api';
-import { IconButton } from '@storybook/components';
+import { useGlobals } from 'storybook/manager-api';
+import { IconButton } from 'storybook/internal/components';
 import { PARAM_KEY } from './constants';
 
 export const ColorSchemeSwitch = () => {

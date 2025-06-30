@@ -11,14 +11,48 @@ const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
 
-  const triggerKeyDownEvent = (key: string) => {
-    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[0], {
+  const triggerKeyDownEvent = (key: string, first: boolean) => {
+    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[first ? 0 : 1], {
       key,
       code: key,
     });
   };
 
   const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+
+  it('checks aria roles', async () => {
+    const targetDate = new Date('2023-09-20T07:40:00.000Z');
+
+    jest.useFakeTimers({ now: targetDate });
+    render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
+
+    expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
+    expect(screen.getByRole('grid', { name: 'октябрь 2023 г.' })).toBeDefined();
+    expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
+    expect(screen.getAllByRole('columnheader', { name: 'понедельник' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'вторник' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'среда' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'четверг' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'пятница' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'суббота' })).toHaveLength(2);
+    expect(screen.getAllByRole('columnheader', { name: 'воскресенье' })).toHaveLength(2);
+
+    let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+    expect(currentDate.getAttribute('aria-current')).toBe('date');
+    expect(currentDate.getAttribute('aria-selected')).toBe('true');
+
+    await act(() =>
+      userEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' })),
+    );
+
+    currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+    expect(currentDate.getAttribute('aria-current')).toBe('date');
+    expect(currentDate.getAttribute('aria-selected')).toBe('false');
+
+    const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
+    expect(selectedDate.getAttribute('aria-current')).toBe(null);
+    expect(selectedDate.getAttribute('aria-selected')).toBe('true');
+  });
 
   it('calls onChange when initial value is [null, null]', () => {
     const onChangeStub = jest.fn();
@@ -92,25 +126,28 @@ describe('CalendarRange', () => {
 
     expect(screen.getByTestId(`left-month-picker-8`));
 
-    triggerKeyDownEvent('ArrowLeft');
+    triggerKeyDownEvent('ArrowLeft', true);
 
     expect(screen.getByTestId(`left-month-picker-7`));
     checkActiveDay(new Date(2023, 7, 31));
 
-    triggerKeyDownEvent('ArrowRight');
+    triggerKeyDownEvent('ArrowRight', true);
 
     expect(screen.getByTestId(`left-month-picker-7`));
     checkActiveDay(new Date(2023, 8, 1));
 
-    triggerKeyDownEvent('ArrowUp');
+    triggerKeyDownEvent('ArrowRight', false);
+    checkActiveDay(new Date(2023, 8, 2));
+
+    triggerKeyDownEvent('ArrowUp', false);
 
     expect(screen.getByTestId(`left-month-picker-7`));
-    checkActiveDay(new Date(2023, 7, 25));
+    checkActiveDay(new Date(2023, 7, 26));
 
-    triggerKeyDownEvent('ArrowDown');
+    triggerKeyDownEvent('ArrowDown', true);
 
     expect(screen.getByTestId(`left-month-picker-7`));
-    checkActiveDay(new Date(2023, 8, 1));
+    checkActiveDay(new Date(2023, 8, 2));
   });
 
   it('checks day selection by keyboard', async () => {
@@ -138,6 +175,58 @@ describe('CalendarRange', () => {
     // выбираем день с помощью Enter
     await act(() => userEvent.keyboard('{Enter}'));
     expect(onChangeStub).toHaveBeenCalledTimes(3);
+  });
+
+  it('checks focusable days on each part of calendar', async () => {
+    jest.useFakeTimers();
+    const startDate = new Date(2024, 2, 1);
+    const endDate = new Date(2024, 3, 10);
+    const onChangeStub = jest.fn();
+    render(
+      <CalendarRange
+        defaultValue={[startDate, endDate]}
+        onChange={onChangeStub}
+        dayTestId={dayTestId}
+      />,
+    );
+
+    // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(startDate))));
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(endDate))));
+
+    // выбранные в данный момент дни диапазона имеют tabIndex = 0
+    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
+    expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+
+    // выбираем новый диапазон в пределах левого календаря
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(startDate))));
+    const sameMonthDate = addDays(startDate, 10);
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(sameMonthDate))));
+
+    // уйдём с календаря и вернёмся
+    await act(() => userEvent.tab());
+    await act(() => userEvent.tab({ shift: true }));
+
+    // только последний выбранный день диапазона имеет tabIndex="0"
+    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('-1');
+    expect(screen.getByTestId(dayTestId(sameMonthDate)).getAttribute('tabindex')).toBe('0');
+
+    // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(startDate))));
+    await act(() => userEvent.click(screen.getByTestId(dayTestId(endDate))));
+
+    // уйдём с календаря и вернёмся
+    await act(() => userEvent.tab());
+    await act(() => userEvent.tab({ shift: true }));
+
+    // на каждом календре дни на которые пришлись последние клики имеют tabIndex="0"
+    expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+    await act(() => userEvent.tab({ shift: true }));
+    await act(() => userEvent.tab({ shift: true }));
+    await act(() => userEvent.tab({ shift: true }));
+    await act(() => userEvent.tab({ shift: true }));
+    expect(document.activeElement).toBe(screen.getByTestId(dayTestId(startDate)));
+    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
   });
 
   it('check click on same day', () => {

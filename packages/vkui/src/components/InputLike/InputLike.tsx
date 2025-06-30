@@ -35,9 +35,10 @@ export const InputLike = ({
   length,
   index,
   onElementSelect,
-  onClick,
   onFocus,
   label,
+  readOnly,
+  onKeyDown,
   ...restProps
 }: InputLikeProps) => {
   const handleElementSelect = React.useCallback(
@@ -52,9 +53,9 @@ export const InputLike = ({
     <RootComponent
       Component="span"
       baseClassName={value?.length === length ? styles.host : undefined}
-      tabIndex={0}
-      onClick={onClick}
+      tabIndex={readOnly ? -1 : 0}
       onFocus={callMultiple(onFocus, handleElementSelect)}
+      onKeyDown={readOnly ? undefined : onKeyDown}
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}

@@ -202,6 +202,8 @@ export { SimpleCell } from './components/SimpleCell/SimpleCell';
 export type { SimpleCellProps } from './components/SimpleCell/SimpleCell';
 export { CellButton } from './components/CellButton/CellButton';
 export type { CellButtonProps } from './components/CellButton/CellButton';
+export { CellButtonGroup } from './components/CellButtonGroup/CellButtonGroup';
+export type { CellButtonGroupProps } from './components/CellButtonGroup/CellButtonGroup';
 export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';
 export type { HorizontalCellProps } from './components/HorizontalCell/HorizontalCell';
 export { HorizontalCellShowMore } from './components/HorizontalScroll/HorizontalCellShowMore/HorizontalCellShowMore';
