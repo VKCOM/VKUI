@@ -84,7 +84,7 @@
     "postcss-logical": "^8.1.0",
     "postcss-modules": "^6.0.1",
     "postcss-value-parser": "^4.2.0",
-    "prettier": "^3.6.0",
+    "prettier": "^3.6.2",
     "process": "^0.11.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
