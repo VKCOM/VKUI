@@ -83,7 +83,7 @@
     "@swc/helpers": "^0.5.17"
   },
   "devDependencies": {
-    "@swc/core": "^1.12.5",
+    "@swc/core": "^1.12.7",
     "@swc/jest": "^0.2.38",
     "@types/jest": "^30.0.0",
     "jest": "^30.0.3",
