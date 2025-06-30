@@ -1,6 +1,6 @@
-import type { PagefindResultProps } from './types';
+import type { SearchResultProps } from './types';
 
-export function prepareData(data: PagefindResultProps[]) {
+export function prepareData(data: SearchResultProps[]) {
   const preparedData = data.map((newData) => ({
     ...newData,
     url: newData.url.replace(/\.html(?=#|$)/, ''),
@@ -16,4 +16,8 @@ export function prepareData(data: PagefindResultProps[]) {
 
     return bMaxWeight - aMaxWeight;
   });
+}
+
+export function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
 }
