@@ -68,7 +68,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "happy-css-modules": "^4.0.0",
     "husky": "^9.1.6",
-    "jest": "^30.0.2",
+    "jest": "^30.0.3",
     "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^30.0.2",
     "jest-environment-node": "^30.0.2",
