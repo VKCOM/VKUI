@@ -16,7 +16,8 @@ menu {
   list-style: none;
 }
 
-html {
+/* :not(:has(*:focus)) позволяет не триггерить скролл при потере фокуса с модальных окон */
+html:not(:has(*:focus)) {
   scroll-padding-block-start: var(--vkui_docs--navbar-height);
 }
 

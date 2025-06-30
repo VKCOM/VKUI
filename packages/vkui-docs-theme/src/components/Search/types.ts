@@ -1,4 +1,4 @@
-export interface PagefindResultProps {
+export interface SearchResultProps {
   excerpt: string;
   meta: {
     title: string;
@@ -16,17 +16,17 @@ export interface PagefindResultProps {
   }>;
 }
 
-export interface PagefindAPIProps {
+export interface PagefindModuleProps {
   options: (config: { baseUrl: string; excerptLength: number }) => Promise<void>;
   debouncedSearch: (
     query: string,
     options?: object,
   ) => Promise<{
-    results: Array<{ data: () => Promise<PagefindResultProps> }>;
+    results: Array<{ data: () => Promise<SearchResultProps> }>;
   } | null>;
 }
 
-export interface PagefindFilterProp {
+export interface SearchFilterProp {
   label: string;
   value: string;
 }
