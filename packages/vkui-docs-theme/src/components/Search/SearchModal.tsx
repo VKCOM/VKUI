@@ -1,60 +1,25 @@
 'use client';
 
 import * as React from 'react';
-import { Icon20ArrowTurnRightOutline, Icon20ArticleBoxOutline } from '@vkontakte/icons';
+import { ModalPage, PanelSpinner } from '@vkontakte/vkui';
+import SearchEngine from './SearchEngine';
 import {
-  ContentBadge,
-  Div,
-  FormStatus,
-  ModalPage,
-  ModalPageHeader,
-  PanelSpinner,
-  Placeholder,
-  SelectionControl,
-  Separator,
-  SimpleCell,
-  Switch,
-  Search as VKUISearch,
-} from '@vkontakte/vkui';
-import { addBasePath } from 'next/dist/client/add-base-path';
-import NextLink from 'next/link';
-import { prepareData } from './helpers';
-import type { PagefindAPIProps, PagefindFilterProp, PagefindResultProps } from './types';
-import styles from './Search.module.css';
+  SearchError,
+  SearchFilters,
+  SearchHeader,
+  SearchPlaceholder,
+  SearchPredefinedResults,
+  SearchResults,
+} from './components';
+import { getErrorMessage, prepareData } from './helpers';
+import { initialState, searchReducer } from './searchReducer';
+import type { SearchFilterProp, SearchResultProps } from './types';
 
 export interface SearchModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  predefinedResults?: PagefindResultProps[];
-  filters?: PagefindFilterProp[];
-}
-
-let pagefind: PagefindAPIProps;
-
-interface UsePagefindProps {
-  setError: React.Dispatch<React.SetStateAction<Error | null>>;
-}
-
-function usePagefind({ setError }: UsePagefindProps) {
-  const initialize = React.useCallback(async () => {
-    if (pagefind) {
-      return;
-    }
-
-    try {
-      pagefind = await import(/* webpackIgnore: true */ addBasePath('/_pagefind/pagefind.js'));
-      await pagefind.options({
-        baseUrl: '/',
-        excerptLength: 15,
-      });
-    } catch (error) {
-      setError(
-        error instanceof Error ? error : new Error('Не удалось инициализировать поисковой движок.'),
-      );
-    }
-  }, []);
-
-  return { initialize };
+  predefinedResults?: SearchResultProps[];
+  filters?: SearchFilterProp[];
 }
 
 export function SearchModal({
@@ -63,13 +28,11 @@ export function SearchModal({
   predefinedResults = [],
   filters = [],
 }: SearchModalProps) {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<Error | null>(null);
-  const [results, setResults] = React.useState<PagefindResultProps[]>([]);
+  const [state, dispatch] = React.useReducer(searchReducer, initialState);
   const [search, setSearch] = React.useState('');
   const deferredSearch = React.useDeferredValue(search);
-  const { initialize } = usePagefind({ setError });
   const [activeFilters, setActiveFilters] = React.useState<string[]>([]);
+  const needNavigation = React.useRef(false);
 
   const toggleFilter = (value: string) => {
     setActiveFilters((prev) =>
@@ -81,53 +44,35 @@ export function SearchModal({
     if (!open) {
       return;
     }
-    void initialize();
-  }, [open, initialize]);
+    try {
+      void SearchEngine.init();
+    } catch (error) {
+      dispatch({ type: 'error', payload: getErrorMessage(error) });
+    }
+  }, [open]);
 
   React.useLayoutEffect(() => {
     let stale = false;
-    async function handleSearch(value: string) {
-      if (!value) {
-        setIsLoading(false);
-        setResults([]);
-        setError(null);
+    async function handleSearch(query: string) {
+      if (!query) {
+        dispatch({ type: 'reset' });
         return;
       }
-
-      if (!pagefind.debouncedSearch || value.length < 3) {
+      if (query.length < 3) {
         return;
       }
-
-      setIsLoading(true);
-      setError(null);
-
+      dispatch({ type: 'loading' });
       try {
-        const options = activeFilters.length ? { filters: { tag: activeFilters } } : undefined;
-        const response = await pagefind.debouncedSearch(value, options);
-
-        if (!response || stale) {
-          return;
-        }
-
-        const data = await Promise.all(
-          response.results.slice(0, 20).map((result: any) => result.data()),
-        );
-
+        const data = await SearchEngine.search(query, activeFilters);
         if (stale) {
           return;
         }
-
-        setResults(prepareData(data));
-        setError(null);
-      } catch (err) {
-        !stale && setError(err instanceof Error ? err : new Error('Не удалось выполнить поиск.'));
-      } finally {
-        !stale && setIsLoading(false);
+        dispatch({ type: 'success', payload: prepareData(data) });
+      } catch (error) {
+        !stale && dispatch({ type: 'error', payload: getErrorMessage(error) });
       }
     }
-
     void handleSearch(deferredSearch);
-
     return () => {
       stale = true;
     };
@@ -143,18 +88,30 @@ export function SearchModal({
   };
 
   const handleClosed = () => {
-    setTimeout(() => {
-      // Делаем грязюку, потому что Next не скроллит к хэшу в рамках одной страницы
-      if (location.hash) {
-        location.href = location.hash;
-      }
-    }, 100);
+    if (needNavigation.current) {
+      needNavigation.current = false;
+      setTimeout(() => {
+        // Делаем грязюку, потому что Next не скроллит к хэшу в рамках одной страницы
+        if (location.hash) {
+          location.href = location.hash;
+        }
+      }, 100);
+    }
   };
+
+  const handleResultClick = (hasHash: boolean) => {
+    if (hasHash) {
+      needNavigation.current = true;
+    }
+    handleClose();
+  };
+
+  const { loading, error, data } = state;
 
   return (
     <ModalPage
       open={open}
-      aria-busy={isLoading}
+      aria-busy={loading}
       aria-live="polite"
       id="search-modal"
       header={<SearchHeader value={search} onChange={handleSearchChange} />}
@@ -167,11 +124,11 @@ export function SearchModal({
         <SearchPredefinedResults results={predefinedResults} onClick={handleClose} />
       )}
       {error ? (
-        <SearchError error={error} />
-      ) : isLoading ? (
+        <SearchError message={error} />
+      ) : loading ? (
         <PanelSpinner />
-      ) : results.length ? (
-        <SearchResults flat={activeFilters.length > 0} results={results} onClick={handleClose} />
+      ) : data.length ? (
+        <SearchResults flat={activeFilters.length > 0} results={data} onClick={handleResultClick} />
       ) : deferredSearch && deferredSearch.length < 3 ? (
         <SearchPlaceholder>Введите не менее трёх символов.</SearchPlaceholder>
       ) : (
@@ -179,117 +136,4 @@ export function SearchModal({
       )}
     </ModalPage>
   );
-}
-
-interface SearchHeaderProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-function SearchHeader({ value, onChange }: SearchHeaderProps) {
-  return (
-    <ModalPageHeader>
-      <VKUISearch value={value} onChange={onChange} placeholder="Начните искать..." noPadding />
-    </ModalPageHeader>
-  );
-}
-interface SearchFiltersProps {
-  filters: PagefindFilterProp[];
-  activeFilters: string[];
-  toggleFilter: (value: string) => void;
-}
-
-function SearchFilters({ filters, activeFilters, toggleFilter }: SearchFiltersProps) {
-  if (!filters.length) {
-    return null;
-  }
-  return (
-    <div className={styles.filters}>
-      {filters.map((filter) => (
-        <SelectionControl key={filter.value}>
-          <SelectionControl.Label>{filter.label}</SelectionControl.Label>
-          <Switch
-            checked={activeFilters.includes(filter.value)}
-            onChange={() => toggleFilter(filter.value)}
-          />
-        </SelectionControl>
-      ))}
-    </div>
-  );
-}
-
-interface SearchPredefinedResultsProps {
-  results: PagefindResultProps[];
-  onClick: () => void;
-}
-
-function SearchPredefinedResults({ results, onClick }: SearchPredefinedResultsProps) {
-  return results.map((result) => (
-    <SimpleCell
-      before={<Icon20ArticleBoxOutline fill="var(--vkui--color_icon_primary)" />}
-      key={result.url}
-      Component={NextLink}
-      onClick={onClick}
-      href={result.url}
-    >
-      {result.meta.title}
-    </SimpleCell>
-  ));
-}
-
-function SearchError({ error }: { error: Error }) {
-  return (
-    <Div>
-      <FormStatus title={error.name} mode="error">
-        {error.message}
-      </FormStatus>
-    </Div>
-  );
-}
-
-interface SearchResultsProps {
-  results: PagefindResultProps[];
-  onClick: () => void;
-  flat?: boolean;
-}
-
-function SearchResults({ results, flat = false, onClick }: SearchResultsProps) {
-  return results.map((result) => (
-    <ol key={result.url}>
-      <SimpleCell
-        after={
-          result.url.includes('/components/') && (
-            <ContentBadge appearance="neutral" mode="outline" size="s">
-              Component
-            </ContentBadge>
-          )
-        }
-        Component={NextLink}
-        onClick={onClick}
-        href={result.url}
-      >
-        {result.meta.title}
-      </SimpleCell>
-      <Separator padding />
-      {!flat &&
-        result.sub_results.map((subResult) => (
-          <SimpleCell
-            before={<Icon20ArrowTurnRightOutline fill="var(--vkui--color_icon_primary)" />}
-            multiline
-            Component={NextLink}
-            className={styles.result}
-            href={subResult.url}
-            key={subResult.url}
-            onClick={onClick}
-            subtitle={<div dangerouslySetInnerHTML={{ __html: subResult.excerpt }} />}
-          >
-            {subResult.title}
-          </SimpleCell>
-        ))}
-    </ol>
-  ));
-}
-
-function SearchPlaceholder({ children }: { children: React.ReactNode }) {
-  return <Placeholder>{children}</Placeholder>;
 }

@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import { Icon24Search } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
-import { SearchField } from './SearchField/SearchField';
 import { SearchModal, type SearchModalProps } from './SearchModal';
+import { SearchField } from './components';
 import styles from './Search.module.css';
 
 export type SearchProps = Pick<SearchModalProps, 'predefinedResults' | 'filters'>;

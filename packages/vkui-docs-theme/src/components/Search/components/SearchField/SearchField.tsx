@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AdaptivityProvider, ContentBadge, Tappable } from '@vkontakte/vkui';
 import { useModifierKey } from './useModifierKey';
-import styles from '../Search.module.css';
+import styles from '../../Search.module.css';
 
 interface SearchFieldProps {
   searchOpen?: boolean;
