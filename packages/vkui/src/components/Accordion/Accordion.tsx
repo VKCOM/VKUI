@@ -37,10 +37,6 @@ export interface AccordionProps {
    */
   disabled?: boolean;
   /**
-   * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
-   */
-  children?: React.ReactNode;
-  /**
    * Нужно ли удалять из DOM контент при сворачивании.
    */
   unmountOnCollapsed?: boolean;
