@@ -178,6 +178,8 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   option: T;
 }
 
+export type InputChangeReason = 'input' | 'close-dropdown' | 'clear-by-button';
+
 type PopupDirectionSide = Extract<Side, 'top' | 'bottom'>;
 
 type PopupDirection = PopupDirectionSide | `${PopupDirectionSide}-${Alignment}`;
@@ -206,7 +208,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля.
    */
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>, reason: InputChangeReason) => void;
   /**
    * Список опций в списке.
    */
@@ -362,6 +364,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectElRef = useExternRef(getRef);
   const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
   const scrollPerformedRef = React.useRef(false);
+  const selectInputRef = useExternRef(getSelectInputRef);
+
+  const inputValueChangeReason = React.useRef<InputChangeReason>('input');
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -541,14 +546,37 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [keyboardInput, opened, resetFocusedOption],
   );
 
+  const nativeResetInputValue = React.useCallback(
+    (reason: Extract<InputChangeReason, 'close-dropdown' | 'clear-by-button'>) => {
+      const input = selectInputRef.current;
+      if (!input || !input.value) {
+        return;
+      }
+
+      // eslint-disable-next-line react-compiler/react-compiler
+      input.value = '';
+
+      inputValueChangeReason.current = reason;
+
+      const event = new InputEvent('input', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      });
+
+      input.dispatchEvent(event);
+    },
+    [selectInputRef],
+  );
+
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
-    setInputValue('');
+    nativeResetInputValue('close-dropdown');
     setOpened(false);
     resetFocusedOption();
     onClose?.();
-  }, [onClose, resetKeyboardInput, resetFocusedOption]);
+  }, [resetKeyboardInput, nativeResetInputValue, resetFocusedOption, onClose]);
 
   const selectOption = React.useCallback(
     (index: number) => {
@@ -681,8 +709,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
-      onInputChangeProp && onInputChangeProp(e);
+      onInputChangeProp && onInputChangeProp(e, inputValueChangeReason.current);
       setInputValue(e.target.value);
+      inputValueChangeReason.current = 'input';
     },
     [onInputChangeProp],
   );
@@ -840,8 +869,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
-  const selectInputRef = useExternRef(getSelectInputRef);
-
   const controlledValueSet = isControlledOutside && props.value !== NOT_SELECTED.CUSTOM;
   const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== NOT_SELECTED.NATIVE;
   const clearButtonShown =
@@ -857,7 +884,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
           setNativeSelectValue(NOT_SELECTED.NATIVE);
-          setInputValue('');
+          nativeResetInputValue('clear-by-button');
           selectInputRef.current && selectInputRef.current.focus();
         }}
         disabled={restProps.disabled}
@@ -871,6 +898,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     restProps.disabled,
     clearButtonTestId,
     setNativeSelectValue,
+    nativeResetInputValue,
     selectInputRef,
   ]);
 
@@ -1002,7 +1030,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         value={inputValue}
         onKeyUp={handleKeyUp}
         onKeyDown={!readOnly ? _onInputKeyDown : undefined}
-        onChange={onInputChange}
+        onInput={onInputChange}
         onClick={!readOnly ? onClick : undefined}
         before={before}
         after={afterIcons}
