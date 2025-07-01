@@ -84,5 +84,28 @@ describe('floating/functions', () => {
         left: 0,
       });
     });
+
+    it('should return style with opacity: 0, when reference hidden', () => {
+      expect(
+        convertFloatingDataToReactCSSProperties({
+          strategy: 'absolute',
+          x: 0,
+          y: 0,
+          middlewareData: {
+            hide: {
+              referenceHidden: true,
+            },
+          },
+        }),
+      ).toEqual({
+        position: 'absolute',
+        top: 0,
+        right: 'auto',
+        bottom: 'auto',
+        left: 0,
+        width: 'max-content',
+        opacity: '0',
+      });
+    });
   });
 });
