@@ -251,7 +251,6 @@ export const DateRangeInput = ({
   'aria-label': ariaLabel = '',
   prevMonthIcon,
   nextMonthIcon,
-  disableCalendar = false,
   onCalendarOpenChanged,
   renderDayContent,
   calendarTestsProps,
@@ -261,6 +260,8 @@ export const DateRangeInput = ({
   showCalendarButtonTestId,
   id,
   accessible,
+  readOnly,
+  'disableCalendar': disableCalendarProp = false,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -269,6 +270,8 @@ export const DateRangeInput = ({
   const daysEndRef = React.useRef<HTMLSpanElement>(null);
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
+
+  const disableCalendar = readOnly ? true : disableCalendarProp;
 
   const _onChange = React.useCallback(
     (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
@@ -349,7 +352,7 @@ export const DateRangeInput = ({
     maxElement: 5,
     refs,
     autoFocus,
-    disabled,
+    disabled: disabled || readOnly,
     elementsConfig,
     onClear,
     onInternalValueChange,
@@ -434,7 +437,7 @@ export const DateRangeInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value ? (
+          {value && !readOnly ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}
@@ -459,8 +462,8 @@ export const DateRangeInput = ({
           Component="input"
           readOnly
           aria-hidden
-          tabIndex={-1}
           name={name}
+          tabIndex={readOnly ? 0 : -1}
           value={
             value
               ? `${value[0] ? format(value[0], 'dd.MM.yyyy') : ''} - ${
@@ -475,10 +478,11 @@ export const DateRangeInput = ({
             value={internalValue[0]}
             minValue={1}
             maxValue={31}
-            onKeyDown={handleKeyDown}
+            onKeyDown={readOnly ? undefined : handleKeyDown}
             length={2}
             getRootRef={daysStartRef}
             index={0}
+            readOnly={readOnly}
             onElementSelect={setFocusedElement}
             label={changeStartDayLabel}
             data-testid={startDateTestsProps?.day}
@@ -493,6 +497,7 @@ export const DateRangeInput = ({
             getRootRef={monthsStartRef}
             index={1}
             onElementSelect={setFocusedElement}
+            readOnly={readOnly}
             label={changeStartMonthLabel}
             data-testid={startDateTestsProps?.month}
           />
@@ -506,6 +511,7 @@ export const DateRangeInput = ({
             getRootRef={yearsStartRef}
             index={2}
             onElementSelect={setFocusedElement}
+            readOnly={readOnly}
             label={changeStartYearLabel}
             data-testid={startDateTestsProps?.year}
           />
@@ -519,6 +525,7 @@ export const DateRangeInput = ({
             getRootRef={daysEndRef}
             index={3}
             onElementSelect={setFocusedElement}
+            readOnly={readOnly}
             label={changeEndDayLabel}
             data-testid={endDateTestsProps?.day}
           />
@@ -532,6 +539,7 @@ export const DateRangeInput = ({
             getRootRef={monthsEndRef}
             index={4}
             onElementSelect={setFocusedElement}
+            readOnly={readOnly}
             label={changeEndMonthLabel}
             data-testid={endDateTestsProps?.month}
           />
@@ -545,6 +553,7 @@ export const DateRangeInput = ({
             getRootRef={yearsEndRef}
             index={5}
             onElementSelect={setFocusedElement}
+            readOnly={readOnly}
             label={changeEndYearLabel}
             data-testid={endDateTestsProps?.year}
           />
