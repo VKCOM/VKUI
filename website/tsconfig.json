@@ -18,14 +18,16 @@
     ]
   },
   "include": [
-    "postcss.config.js",
-    "*.mjs",
     "**/*.ts",
     "**/*.tsx",
+    "*.mjs",
+    ".next/types/**/*.ts",
     "content/_app.tsx",
     "next-env.d.ts",
+    "postcss.config.js",
+    "raw.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
-    ".next/types/**/*.ts"
+    "out/types/**/*.ts"
   ]
 }

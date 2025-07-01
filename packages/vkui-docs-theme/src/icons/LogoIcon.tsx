@@ -1,8 +1,15 @@
+import { classNames } from '@vkontakte/vkjs';
 import { SvgIcon, type SvgIconProps } from './SvgIcon';
 
 export function LogoIcon(props: SvgIconProps) {
   return (
-    <SvgIcon width="73" height="36" fill="none" {...props}>
+    <SvgIcon
+      width="73"
+      height="36"
+      fill="none"
+      className={classNames(props.className, 'no-uwu')}
+      {...props}
+    >
       <g>
         <path
           fill="#07F"
