@@ -11,8 +11,8 @@ import {
 } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
-import { CustomSelect, type SelectProps, type InputChangeReason, } from './CustomSelect';
-import { type CustomSelectRenderOption } from './types';
+import { CustomSelect, type SelectProps } from './CustomSelect';
+import { type CustomSelectRenderOption, type InputChangeReason } from './types';
 import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;

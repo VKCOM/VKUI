@@ -34,5 +34,7 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   option: T;
 }
 
+export type InputChangeReason = 'input' | 'close-dropdown' | 'clear-by-button';
+
 type PopupDirectionSide = Extract<Side, 'top' | 'bottom'>;
 export type PopupDirection = PopupDirectionSide | `${PopupDirectionSide}-${Alignment}`;

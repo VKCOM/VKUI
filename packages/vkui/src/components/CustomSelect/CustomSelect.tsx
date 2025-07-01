@@ -42,6 +42,7 @@ import { useSelectedOptionController } from './hooks/useSelectedOptionController
 import type {
   CustomSelectOptionInterface,
   CustomSelectRenderOption,
+  InputChangeReason,
   MousePosition,
   PopupDirection,
 } from './types';
@@ -64,7 +65,6 @@ function isMousePositionChanged(event: React.MouseEvent, prevPosition: MousePosi
     Math.abs(prevPosition.x - event.clientX) >= 1 || Math.abs(prevPosition.y - event.clientY) >= 1
   );
 }
-export type InputChangeReason = 'input' | 'close-dropdown' | 'clear-by-button';
 
 export type { CustomSelectClearButtonProps };
 
@@ -247,7 +247,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const handleRootRef = useExternRef(containerRef, getRootRef);
   const selectElRef = useExternRef(getRef);
   const selectInputRef = useExternRef(getSelectInputRef);
-  const inputValueChangeReason = React.useRef<InputChangeReason>('input');
 
   const propsValue = React.useMemo<SelectValue | undefined>(() => {
     if (props.value === undefined) {
@@ -284,6 +283,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       accessible,
       selectedValue: selected ? selected.value : null,
       onInputChange: onInputChangeProp,
+      selectInputRef,
     });
 
   const filteredOptions = React.useMemo(
@@ -310,34 +310,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     scrollToElement(findSelectedIndex(filteredOptions, selectedOptionValue), true);
   };
 
-
-  const nativeResetInputValue = React.useCallback(
-    (reason: Extract<InputChangeReason, 'close-dropdown' | 'clear-by-button'>) => {
-      const input = selectInputRef.current;
-      if (!input || !input.value) {
-        return;
-      }
-
-      // eslint-disable-next-line react-compiler/react-compiler
-      input.value = '';
-
-      inputValueChangeReason.current = reason;
-
-      const event = new InputEvent('input', {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-      });
-
-      input.dispatchEvent(event);
-    },
-    [selectInputRef],
-  );
-
   const { opened, open, close, toggleOpened } = useDropdownOpenedController({
     onOpen: callMultiple(selectFocusedValue, onOpen),
     onOpened: scrollToSelectedOption,
-    onClose: callMultiple(onClose, () => nativeResetInputValue('close-dropdown')),
+    onClose,
     onClosed: accessible ? resetInputValueBySelectedOption : resetInputValue,
   });
 
@@ -519,7 +495,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ClearButton,
     onClearButtonClick: () => {
       setNativeSelectValue(NOT_SELECTED.NATIVE);
-      nativeResetInputValue('clear-by-button');
+      resetInputValue('clear-by-button');
       selectInputRef.current && selectInputRef.current.focus();
     },
     clearButtonTestId,
