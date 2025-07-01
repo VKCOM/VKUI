@@ -1,0 +1,192 @@
+<Overview group="data-display">
+
+# ImageBase [tag:component]
+
+Базовый компонент по работе с изображениями, лежит в основе [`Avatar`](/components/avatar) и [`Image`](/image).
+Наследует все свойства HTML-элемента `<img>` и добавляет возможность накладывать различные элементы поверх изображения.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  />
+  ```
+</Playground>
+
+## Адаптивные размеры [#sizes]
+
+Задать размеры изображения можно через свойства `size` (если ширина и высота равны) или `widthSize` и `heightSize`
+(если ширина и высота отличаются).
+
+> Обратите внимание, что нативные свойства `width`/`height` позволяют задавать размеры непосредственно
+> самого изображения.
+> Чаще всего вам нужны именно `size` или `widthSize`/`heightSize` для задания размеров всего контейнера с изображением.
+
+Используйте предопределённые размеры (`16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 56 | 64 | 72 | 80 | 88 | 96`).
+
+Пользовательские значения свойствам `size` или `widthSize`/`heightSize` задаются только числами,
+либо строками с указанием пикселей (`33px`), другие единицы измерения не допускаются дизайн-системой
+для сохранения возможности рассчитывать радиус скругления.
+
+### Сохранение пропорций
+
+С заданным свойством `keepAspectRatio` можно не указывать либо ширину, либо высоту картинки - оригинальные
+соотношения сторон сохраняются.
+
+Если вам необходимо растянуть изображение на всю ширину или высоту контейнера, то допускается `widthSize` или `heightSize`
+указать `100%`.
+
+<Playground>
+  ```jsx
+  <ImageBase
+    keepAspectRatio
+    widthSize="200px"
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  />
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+Добавляйте дополнительные элементы поверх изображения:
+
+### Иконка-заглушка
+
+На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
+Размер иконки-заглушки должен зависеть от размеров изображения.
+
+<Playground>
+  ```jsx
+  <ImageBase size={96} fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+> Может быть полезна функция [`getFallbackIconSizeByImageBaseSize`](#getfallbackiconsizebyimagebasesize).
+
+### Индикатор
+
+Индикатор в правом нижнем углу компонента:
+
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  >
+    <ImageBase.Badge background="stroke">
+      <Icon24StarCircleFillGreen />
+    </ImageBase.Badge>
+  </ImageBase>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](#getbadgeiconsizebyimagebasesize).
+
+### Наложение
+
+Перекрывающий картинку элемент задаётся через `Image.Overlay`:
+
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  >
+    <ImageBase.Overlay visibility="always">
+      <Icon24AddOutline />
+    </ImageBase.Overlay>
+  </ImageBase>
+  ```
+</Playground>
+
+Особенность компонента заключается в способе его отображения через свойство `visibility`.
+Если оно явно не задано, то по умолчанию на устройствах с указателем (например, мышь) применяется `on-hover`,
+позволяющее показывать наложение при наведении на картинку, на остальных устройствах (например, мобильные)
+наложение показывается всегда.
+
+С помощью свойства `theme` можно задать цвет наложения, по умолчанию наследуется тема приложения.
+
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](#getoverlayiconsizebyimagebasesize).
+
+### Позиционированный компонент
+
+Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `ImageBase.FloatElement`:
+
+<Playground>
+  ```jsx
+  <ImageBase
+    size={96}
+    src="https://sun9-26.userapi.com/YZ5-1A6cVgL7g1opJGQIWg1Bl5ynfPi8p41SkQ/IYIUDqGkkBE.jpg"
+  >
+    <ImageBase.FloatElement placement="top-end" inlineIndent="xs" blockIndent="xs">
+      <Button size="s" mode="primary" after={<Icon16MoreHorizontal />} />
+    </ImageBase.FloatElement>
+  </ImageBase>
+  ```
+</Playground>
+
+## Вспомогательные функции
+
+### getBadgeIconSizeByImageBaseSize
+
+Размер иконки для бейджа необходимо подстраивать под разные значения свойства `size` компонента.
+Например, для изображений размером `28x28` лучше смотрятся иконки бейджа размером `12x12`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getBadgeIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getBadgeIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `ImageBase`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getBadgeIconSizeByImageBaseSize(size);
+// ИЛИ если размер изображения статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+### getOverlayIconSizeByImageBaseSize
+
+Размер иконки для наложения необходимо подстраивать под разные значения свойства `size` компонента.
+Например, для изображений размером `28x28` лучше смотрятся иконки наложения размером `20x20`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getOverlayIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getOverlayIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `ImageBase`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getOverlayIconSizeByImageBaseSize(size);
+// ИЛИ если размер изображения статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```
+
+### getFallbackIconSizeByImageBaseSize
+
+Размер иконки, которая будет отрисована, если изображение не удалось загрузить,
+необходимо подстраивать под разные значения свойства `size` компонента.
+Например, для изображений размером `28x28` лучше смотрятся иконки размером `20x20`.
+Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
+ручного подбора вы можете использовать функцию `getFallbackIconSizeByImageBaseSize` и на её основе реализовать
+рендер иконки:
+
+```jsx
+import { ImageBaseContext, getFallbackIconSizeByImageBaseSize } from '@vkontakte/vkui';
+
+// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `ImageBase`.
+const { size } = React.useContext(ImageBaseContext);
+const iconSize = getFallbackIconSizeByImageBaseSize(size);
+// ИЛИ если размер изображения статичный и всегда равен одному значению
+const iconSize = getFallbackIconSizeByImageBaseSize(56);
+
+// Теперь используйте iconSize для выбора иконки в нужном размере
+```

@@ -151,7 +151,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 ### Пресеты
 
-#### PanelHeaderBack [#panel-header-back] [tag:component]
+#### PanelHeaderBack [#panel-header-back]
 
 Кнопка назад в экранах в рамках одного сценария ([`View`](/components/view)). Внутри инкапсулирована логика показа нужной иконки для платформы.
 Также можно передать свойство `label`, для отображения текста, который будет виден на платформах vkcom и iOS, но будет скрыт на Android.
@@ -163,7 +163,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-#### PanelHeaderClose [#panel-header-close] [tag:component]
+#### PanelHeaderClose [#panel-header-close]
 
 Кнопка "Отмена" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root). На iOS будет
 показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`. Если
@@ -175,7 +175,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-#### PanelHeaderEdit [#panel-header-edit] [tag:component]
+#### PanelHeaderEdit [#panel-header-edit]
 
 Кнопка "Редактировать". Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
 Для указания кастомных текстов для состояний можно использовать соответствующие свойства `doneLabel` и `editLabel`. Данные тексты
@@ -187,7 +187,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-#### PanelHeaderSubmit [#panel-header-submit] [tag:component]
+#### PanelHeaderSubmit [#panel-header-submit]
 
 Кнопка "Готово" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root) и сохранения
 какого-либо результата. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28DoneOutline />`
@@ -199,7 +199,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
-## PanelHeaderContent [#panel-header-content] [tag:component]
+## PanelHeaderContent [#panel-header-content]
 
 Подкомпонент, предназначенный для создания сложного контента, включая добавление аватаров и подзаголовков.
 
