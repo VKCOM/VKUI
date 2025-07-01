@@ -1,6 +1,7 @@
-import { type ModalCardProps } from '../../ModalCard/types';
-import { type ModalPageProps } from '../../ModalPage/types';
-import { type ModalRootProps } from '../types';
+import { type ModalCardProps } from '../../components/ModalCard/types';
+import { type ModalPageProps } from '../../components/ModalPage/types';
+import { type ModalRootProps } from '../../components/ModalRoot/types';
+import { type HasDataAttribute } from '../../types';
 
 /* eslint-disable jsdoc/require-jsdoc */
 export type UseModalRootProps = Omit<
@@ -8,9 +9,9 @@ export type UseModalRootProps = Omit<
   'activeModal' | 'children' | 'onOverlayClosed'
 >;
 
-type OpenModalPageProps = Omit<ModalPageProps, 'open' | 'keepMounted'>;
+type OpenModalPageProps = Omit<ModalPageProps, 'open' | 'keepMounted'> & HasDataAttribute;
 
-type OpenModalCardProps = Omit<ModalCardProps, 'open' | 'keepMounted'>;
+type OpenModalCardProps = Omit<ModalCardProps, 'open' | 'keepMounted'> & HasDataAttribute;
 
 export type ModalPageItem = OpenModalPageProps & {
   type: 'page';
@@ -26,12 +27,17 @@ export type OpenModalReturn<T> = {
   id: string;
   close: () => void;
   update: (props: T) => void;
-  then: <R>(resolve: () => R, reject: VoidFunction) => Promise<R>;
+  onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>;
 };
+
+type UpdateArgs =
+  | [id: string, type: 'card', props: Omit<OpenModalCardProps, 'id'>]
+  | [id: string, type: 'page', props: Omit<OpenModalPageProps, 'id'>];
 
 export type ModalRootApi = {
   openCard: (props: OpenModalCardProps) => OpenModalReturn<Omit<OpenModalCardProps, 'id'>>;
   openPage: (props: OpenModalPageProps) => OpenModalReturn<Omit<OpenModalPageProps, 'id'>>;
+  update: (...args: UpdateArgs) => void;
   close: (id: string) => void;
   closeAll: () => void;
 };

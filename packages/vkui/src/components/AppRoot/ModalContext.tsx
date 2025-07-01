@@ -1,16 +1,15 @@
 'use client';
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
+import { type ModalRootApi, useModalRoot } from '../../hooks/useModalRoot';
 import { type HasChildren } from '../../types';
-import { useModalRoot } from '../ModalRoot/useModalRoot';
-import { type ModalRootApi } from '../ModalRoot/useModalRoot/types';
 
 const ModalsApiContext = React.createContext<ModalRootApi>({
   openCard: () => ({
     id: '',
     close: noop,
     update: noop,
-    then: <R,>(resolve: () => R) => {
+    onClose: <R,>(resolve?: () => R) => {
       return Promise.resolve().then(resolve);
     },
   }),
@@ -18,10 +17,11 @@ const ModalsApiContext = React.createContext<ModalRootApi>({
     id: '',
     close: noop,
     update: noop,
-    then: <R,>(resolve: () => R) => {
+    onClose: <R,>(resolve?: () => R) => {
       return Promise.resolve().then(resolve);
     },
   }),
+  update: noop,
   close: noop,
   closeAll: noop,
 });
@@ -31,7 +31,7 @@ export const useModalsApi = () => {
 };
 
 export const ModalsController = ({ children }: HasChildren) => {
-  const [api, modalsHolder] = useModalRoot({});
+  const [api, modalsHolder] = useModalRoot();
 
   return (
     <ModalsApiContext.Provider value={api}>
