@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Flex, Link, Subhead } from '@vkontakte/vkui';
 import { useConfig } from '@vkontakte/vkui-docs-theme';
 import { createSourceUrl, createStorybookUrl, getComponentName } from './helpers';
