@@ -1,5 +1,5 @@
 export { useFetch } from './src/hooks/useFetch';
-export { StorybookIcon, GithubIcon, FigmaIcon, LogoIcon } from './src/icons';
+export { StorybookIcon, GithubIcon, FigmaIcon, LogoIcon, LogoIconUwu } from './src/icons';
 
 export { getStaticPathsTags } from './src/blog/tags';
 
