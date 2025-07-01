@@ -11,7 +11,12 @@ import {
 } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
-import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
+import {
+  CustomSelect,
+  type CustomSelectRenderOption,
+  type InputChangeReason,
+  type SelectProps,
+} from './CustomSelect';
 import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;
@@ -50,11 +55,7 @@ const CustomSelectControlled = ({
 };
 
 const checkDropdownOpened = (opened = true) => {
-  if (opened) {
-    expect(screen.getByRole('listbox')).toBeInTheDocument();
-  } else {
-    expect(() => screen.getByRole('listbox')).toThrow();
-  }
+  expect(!!screen.queryByRole('listbox')).toBe(opened);
 };
 
 const triggerKeydownEvent = async (input: HTMLElement, key: string, code: string) => {
@@ -271,7 +272,7 @@ describe('CustomSelect', () => {
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
 
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
+    fireEvent.input(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
     expect(screen.getByTestId<HTMLInputElement>('inputTestId').value).toBe('Mi');
     fireEvent.keyDown(screen.getByTestId('inputTestId'), {
       key: 'ArrowUp',
@@ -330,7 +331,7 @@ describe('CustomSelect', () => {
     );
 
     fireEvent.click(screen.getByTestId('inputTestId'));
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
+    fireEvent.input(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
 
     await waitForFloatingPosition();
 
@@ -1327,11 +1328,31 @@ describe('CustomSelect', () => {
         defaultValue="0"
       />,
     );
-    fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
-    expect(onInputChange).toHaveBeenCalledTimes(1);
+    const checkInputValue = (
+      callIndex: number,
+      value: string,
+      expectedReason: InputChangeReason,
+    ) => {
+      const params = onInputChange.mock.calls[callIndex];
+      const event = params[0];
+      const reason = params[1];
+      expect(event.target.value).toBe(value);
+      expect(reason).toBe(expectedReason);
+    };
 
-    fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
-    expect(onInputChange).toHaveBeenCalledTimes(2);
+    await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
+    checkDropdownOpened();
+
+    fireEvent.input(inputRef.current!, { target: { value: 'Ка' } });
+    checkInputValue(0, 'Ка', 'input');
+
+    fireEvent.input(inputRef.current!, { target: { value: 'Кат' } });
+    checkInputValue(1, 'Кат', 'input');
+
+    await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
+    checkDropdownOpened(false);
+
+    checkInputValue(2, '', 'close-dropdown');
   });
 
   it('check scroll to bottom to element', async () => {
