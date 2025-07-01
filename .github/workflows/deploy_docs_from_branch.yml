@@ -31,4 +31,5 @@ jobs:
           clean: true
           clean-exclude: |
             [0-9].[0-9].[0-9]/
+            playground/
           force: false
