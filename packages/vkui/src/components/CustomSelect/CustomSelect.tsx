@@ -64,6 +64,7 @@ function isMousePositionChanged(event: React.MouseEvent, prevPosition: MousePosi
     Math.abs(prevPosition.x - event.clientX) >= 1 || Math.abs(prevPosition.y - event.clientY) >= 1
   );
 }
+export type InputChangeReason = 'input' | 'close-dropdown' | 'clear-by-button';
 
 export type { CustomSelectClearButtonProps };
 
@@ -89,7 +90,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля.
    */
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>, reason: InputChangeReason) => void;
   /**
    * Список опций в списке.
    */
@@ -245,6 +246,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const containerRef = React.useRef<HTMLDivElement>(null);
   const handleRootRef = useExternRef(containerRef, getRootRef);
   const selectElRef = useExternRef(getRef);
+  const selectInputRef = useExternRef(getSelectInputRef);
+  const inputValueChangeReason = React.useRef<InputChangeReason>('input');
 
   const propsValue = React.useMemo<SelectValue | undefined>(() => {
     if (props.value === undefined) {
@@ -307,10 +310,34 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     scrollToElement(findSelectedIndex(filteredOptions, selectedOptionValue), true);
   };
 
+
+  const nativeResetInputValue = React.useCallback(
+    (reason: Extract<InputChangeReason, 'close-dropdown' | 'clear-by-button'>) => {
+      const input = selectInputRef.current;
+      if (!input || !input.value) {
+        return;
+      }
+
+      // eslint-disable-next-line react-compiler/react-compiler
+      input.value = '';
+
+      inputValueChangeReason.current = reason;
+
+      const event = new InputEvent('input', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      });
+
+      input.dispatchEvent(event);
+    },
+    [selectInputRef],
+  );
+
   const { opened, open, close, toggleOpened } = useDropdownOpenedController({
     onOpen: callMultiple(selectFocusedValue, onOpen),
     onOpened: scrollToSelectedOption,
-    onClose,
+    onClose: callMultiple(onClose, () => nativeResetInputValue('close-dropdown')),
     onClosed: accessible ? resetInputValueBySelectedOption : resetInputValue,
   });
 
@@ -483,8 +510,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, filteredOptions, optionsWrapperRef, renderDropdown, renderOption]);
 
-  const selectInputRef = useExternRef(getSelectInputRef);
-
   const afterItems = useAfterItems({
     value: propsValue,
     nativeSelectValue,
@@ -494,7 +519,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ClearButton,
     onClearButtonClick: () => {
       setNativeSelectValue(NOT_SELECTED.NATIVE);
-      resetInputValue();
+      nativeResetInputValue('clear-by-button');
       selectInputRef.current && selectInputRef.current.focus();
     },
     clearButtonTestId,
@@ -601,7 +626,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         accessible={accessible}
         value={inputValue}
         onKeyDown={!readOnly ? onInputKeyDown : undefined}
-        onChange={onInputChange}
+        onInput={onInputChange}
         onClick={!readOnly ? toggleOpened : undefined}
         before={before}
         after={afterItems}
