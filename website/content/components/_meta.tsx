@@ -116,6 +116,7 @@ const meta: MetaRecord = {
   'horizontal-cell': 'HorizontalCell',
   'horizontal-scroll': 'HorizontalScroll',
   'image': 'Image',
+  'image-base': 'ImageBase',
   'info-row': 'InfoRow',
   'mini-info-cell': 'MiniInfoCell',
   'placeholder': 'Placeholder',

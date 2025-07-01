@@ -131,6 +131,10 @@ function transitionHandler({
 
 ### iOS Swipe Back
 
+> Для корректной работы `swipe back` убедитесь, что у вас разрешены анимации через
+> свойство [animate](/components/split-layout#animation) компонента `SplitCol`
+> или [transitionMotionEnabled](/components/config-provider#animation) компонента `ConfigProvider`.
+
 - `onSwipeBack` – обработчик свайпа назад.
 - `onSwipeBackCancel` – обработчик завершения анимации отмененного пользователем свайпа.
 - `onSwipeBackStart` – обработчик начала анимации свайпа назад. Чтобы остановить свайп назад, возвращайте `"prevent"`.

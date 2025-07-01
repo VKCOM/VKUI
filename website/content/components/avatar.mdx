@@ -75,7 +75,7 @@
   ```
 </Playground>
 
-> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](#getbadgeiconsizebyimagebasesize).
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](/components/image-base#getbadgeiconsizebyimagebasesize).
 
 ### Готовый пресет бейджа
 
@@ -94,6 +94,19 @@
   ```
 </Playground>
 
+### Иконка-заглушка
+
+На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
+Размер иконки-заглушки должен зависеть от размеров аватара.
+
+<Playground>
+  ```jsx
+  <Avatar fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+> Может быть полезна функция [`getFallbackIconSizeByImageBaseSize`](/components/image-base#getfallbackiconsizebyimagebasesize).
+
 ### Наложение
 
 <Playground>
@@ -106,74 +119,13 @@
   ```
 </Playground>
 
-> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](#getoverlayiconsizebyimagebasesize).
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](/components/image-base#getoverlayiconsizebyimagebasesize).
 
 > Обратите внимание, что свойство `visibility` подкомпонента `Avatar.Overlay` по умолчанию
 > зависит от наличия указателя на устройстве. Так, на мобильных устройствах наложение будет
 > показано всегда, а например, на десктопах наложение активно только при наведении на аватар.
 
 ## Вспомогательные функции
-
-### getBadgeIconSizeByImageBaseSize
-
-Размер иконки для бейджа необходимо подстраивать под разные значения свойства `size` компонента `Avatar`.
-Например, для аватаров размером `28x28` лучше смотрятся иконки бейджа размером `12x12`.
-Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
-ручного подбора вы можете использовать функцию `getBadgeIconSizeByImageBaseSize` и на её основе реализовать
-рендер иконки:
-
-```jsx
-import { ImageBaseContext, getBadgeIconSizeByImageBaseSize } from '@vkontakte/vkui';
-
-// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `Avatar`.
-const { size } = React.useContext(ImageBaseContext);
-const iconSize = getBadgeIconSizeByImageBaseSize(size);
-// ИЛИ если размер аватара статичный и всегда равен одному значению
-const iconSize = getFallbackIconSizeByImageBaseSize(56);
-
-// Теперь используйте iconSize для выбора иконки в нужном размере
-```
-
-### getOverlayIconSizeByImageBaseSize
-
-Размер иконки для наложения необходимо подстраивать под разные значения свойства `size` компонента `Avatar`.
-Например, для аватаров размером `28x28` лучше смотрятся иконки наложения размером `20x20`.
-Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
-ручного подбора вы можете использовать функцию `getOverlayIconSizeByImageBaseSize` и на её основе реализовать
-рендер иконки:
-
-```jsx
-import { ImageBaseContext, getOverlayIconSizeByImageBaseSize } from '@vkontakte/vkui';
-
-// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `Avatar`.
-const { size } = React.useContext(ImageBaseContext);
-const iconSize = getOverlayIconSizeByImageBaseSize(size);
-// ИЛИ если размер аватара статичный и всегда равен одному значению
-const iconSize = getFallbackIconSizeByImageBaseSize(56);
-
-// Теперь используйте iconSize для выбора иконки в нужном размере
-```
-
-### getFallbackIconSizeByImageBaseSize
-
-Размер иконки, которая будет отрисована, если изображение не удалось загрузить,
-необходимо подстраивать под разные значения свойства `size` компонента `Avatar`.
-Например, для аватаров размером `28x28` лучше смотрятся иконки размером `20x20`.
-Дизайн-система уже определяет наилучшие размеры иконок, поэтому вместо
-ручного подбора вы можете использовать функцию `getFallbackIconSizeByImageBaseSize` и на её основе реализовать
-рендер иконки:
-
-```jsx
-import { ImageBaseContext, getFallbackIconSizeByImageBaseSize } from '@vkontakte/vkui';
-
-// Убедитесь, что используете контекст в компоненте или хуке, который расположен ниже `Avatar`.
-const { size } = React.useContext(ImageBaseContext);
-const iconSize = getFallbackIconSizeByImageBaseSize(size);
-// ИЛИ если размер аватара статичный и всегда равен одному значению
-const iconSize = getFallbackIconSizeByImageBaseSize(56);
-
-// Теперь используйте iconSize для выбора иконки в нужном размере
-```
 
 ### calcInitialsAvatarColor
 
