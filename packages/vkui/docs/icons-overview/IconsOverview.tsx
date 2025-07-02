@@ -40,7 +40,7 @@ const filterConfig = (config: ConfigData[], query: string, sizes: string[]) => {
       return;
     }
     const icons: ConfigData['icons'] = sizeData.icons.filter((iconData) =>
-      iconData.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+      iconData.name.toLocaleLowerCase().includes(query),
     );
     if (icons.length) {
       resultConfig.push({

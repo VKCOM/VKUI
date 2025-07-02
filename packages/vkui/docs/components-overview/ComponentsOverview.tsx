@@ -14,7 +14,7 @@ const filterConfig = (config: typeof CONFIG, query: string) => {
   const resultConfig: typeof CONFIG = [];
   config.forEach((groupData) => {
     const validComponents = groupData.components.filter((componentName) => {
-      return componentName.toLowerCase().includes(query.toLowerCase());
+      return componentName.toLowerCase().includes(query);
     });
     if (validComponents.length) {
       resultConfig.push({
