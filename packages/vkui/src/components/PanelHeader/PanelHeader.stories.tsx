@@ -29,7 +29,7 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { PanelHeader, type PanelHeaderProps } from './PanelHeader';
 
 const story: Meta<PanelHeaderProps> = {
-  title: 'Layout/PanelHeader',
+  title: 'Navigation/PanelHeader',
   component: PanelHeader,
   parameters: createStoryParameters('PanelHeader', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],

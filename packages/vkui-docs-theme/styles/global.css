@@ -27,3 +27,15 @@ body {
   line-height: var(--vkui--font_paragraph--line_height--regular);
   background-color: var(--vkui--color_background_content);
 }
+
+.yes-uwu {
+  display: none;
+}
+
+.uwu .no-uwu {
+  display: none;
+}
+
+.uwu .yes-uwu {
+  display: block;
+}

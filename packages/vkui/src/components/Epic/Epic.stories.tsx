@@ -29,7 +29,7 @@ import { View } from '../View/View';
 import { Epic, type EpicProps } from './Epic';
 
 const story: Meta<EpicProps> = {
-  title: 'Layout/Epic',
+  title: 'Navigation/Epic',
   component: Epic,
   parameters: createStoryParameters('Epic', CanvasFullLayout, DisableCartesianParam),
 };

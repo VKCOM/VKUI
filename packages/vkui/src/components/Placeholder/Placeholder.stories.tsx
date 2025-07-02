@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Placeholder, type PlaceholderProps } from './Placeholder';
 
 const story: Meta<PlaceholderProps> = {
-  title: 'Blocks/Placeholder',
+  title: 'Data Display/Placeholder',
   component: Placeholder,
   parameters: createStoryParameters('Placeholder', CanvasFullLayout, DisableCartesianParam),
 };
