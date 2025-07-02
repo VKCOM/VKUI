@@ -85,7 +85,7 @@ describe('floating/functions', () => {
       });
     });
 
-    it('should return style with opacity: 0, when reference hidden', () => {
+    it('should return style with visibility: hidden, when reference hidden', () => {
       expect(
         convertFloatingDataToReactCSSProperties({
           strategy: 'absolute',
@@ -104,7 +104,7 @@ describe('floating/functions', () => {
         bottom: 'auto',
         left: 0,
         width: 'max-content',
-        opacity: '0',
+        visibility: 'hidden',
       });
     });
   });
