@@ -54,7 +54,7 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
               mode="tertiary"
               appearance="neutral"
               className={styles.menuButton}
-              label="Меню"
+              aria-label="Меню"
               onClick={() => setMenu(true)}
             />
             <Tappable
@@ -62,6 +62,7 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
               className={styles.logo}
               hoverMode="opacity"
               activeMode="opacity"
+              aria-label="Лого VKUI"
               href="/"
             >
               {logo}

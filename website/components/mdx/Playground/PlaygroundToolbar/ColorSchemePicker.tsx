@@ -7,13 +7,14 @@ export function ColorSchemePicker() {
   const colorScheme = useResolvedColorScheme();
   const colorSchemeOptions = usePlaygroundStore((store) => store.colorSchemeOptions);
   const updateColorScheme = usePlaygroundStore((store) => store.updateColorScheme);
-  const ColorSchemeIcon = colorScheme === 'light' ? Icon20SunOutline : Icon20MoonOutline;
+  const isDark = colorScheme === 'dark';
+  const ColorSchemeIcon = isDark ? Icon20MoonOutline : Icon20SunOutline;
 
   // disable color scheme picker for special themes
   const colorSchemeDisabled = colorSchemeOptions.some((scheme) => scheme.disabled);
 
   const toggleColorScheme = () => {
-    updateColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+    updateColorScheme(isDark ? 'light' : 'dark');
   };
 
   return (
@@ -25,6 +26,7 @@ export function ColorSchemePicker() {
       onClick={toggleColorScheme}
       disabled={colorSchemeDisabled}
       title={colorSchemeDisabled ? `Поддерживается только схема ${colorScheme}` : undefined}
+      aria-label={isDark ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'}
     />
   );
 }

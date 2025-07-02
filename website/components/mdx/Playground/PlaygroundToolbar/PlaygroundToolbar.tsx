@@ -34,6 +34,7 @@ export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToo
           appearance="neutral"
           onClick={() => setCodeVisible(!codeVisible)}
           before={<CodeExpandedIcon className={styles.rotateIcon} />}
+          aria-label={codeVisible ? 'Свернуть блок с кодом' : 'Развернуть блок с кодом'}
         />
       </AdaptivityProvider>
     </Flex>
