@@ -3,9 +3,9 @@
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import type { HasChildren } from '../../types';
+import { type HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
-import { AccordionContext } from './AccordionContext';
+import { AccordionContext, type AccordionContextProps } from './AccordionContext';
 import { AccordionSummary } from './AccordionSummary';
 
 function useAccordionId(id: AccordionProps['id']) {
@@ -37,6 +37,10 @@ export interface AccordionProps extends HasChildren {
    * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
+  /**
+   * Нужно ли удалять из DOM контент при сворачивании.
+   */
+  unmountOnCollapsed?: boolean;
 }
 
 export const Accordion: React.FC<AccordionProps> & {
@@ -48,6 +52,7 @@ export const Accordion: React.FC<AccordionProps> & {
   defaultExpanded = false,
   onChange: onChangeProp,
   children,
+  unmountOnCollapsed = false,
   ...restProps
 }: AccordionProps) => {
   const { labelId, contentId } = useAccordionId(id);
@@ -59,14 +64,15 @@ export const Accordion: React.FC<AccordionProps> & {
     disabled: restProps.disabled,
   });
 
-  const context = React.useMemo(
+  const context = React.useMemo<AccordionContextProps>(
     () => ({
       labelId,
       contentId,
       expanded: expanded || false,
+      unmountOnCollapsed,
       onChange,
     }),
-    [contentId, expanded, labelId, onChange],
+    [contentId, expanded, labelId, onChange, unmountOnCollapsed],
   );
 
   return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
