@@ -7,6 +7,7 @@ export function ProjectButton({ projectLink }: Pick<DocsThemeConfig, 'projectLin
     <Button
       before={<GithubIcon width="24" height="24" viewBox="0 0 20 20" verticalAlign="middle" />}
       href={projectLink}
+      aria-label="Github"
       appearance="neutral"
       mode="secondary"
       rel="noreferrer"

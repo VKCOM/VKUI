@@ -22,7 +22,7 @@ export function ColorSchemeSwitch() {
       before={<Icon />}
       mode="secondary"
       appearance="neutral"
-      label={isDark ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'}
+      aria-label={isDark ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'}
       onClick={() => setColorScheme(isDark ? 'light' : 'dark')}
     />
   );

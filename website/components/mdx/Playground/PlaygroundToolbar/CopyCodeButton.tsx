@@ -16,6 +16,7 @@ export function CopyCodeButton() {
         void copyTextToClipboard(newCode || '');
       }}
       before={<Icon20CopyOutline />}
+      aria-label="Скопировать код"
     />
   );
 }
