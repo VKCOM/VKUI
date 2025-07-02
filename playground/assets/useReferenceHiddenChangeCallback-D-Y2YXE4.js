@@ -1,0 +1,1 @@
+import{r as t,m as s}from"./iframe-BW2_2Sqh.js";function H(c,f){const n=t.useRef(c==null?void 0:c.referenceHidden);t.useEffect(()=>{n.current=c==null?void 0:c.referenceHidden}),s(function(){f&&(c==null?void 0:c.referenceHidden)!==n.current&&f((c==null?void 0:c.referenceHidden)||!1)},[c==null?void 0:c.referenceHidden,f])}export{H as u};

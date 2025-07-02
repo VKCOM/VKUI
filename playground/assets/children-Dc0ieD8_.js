@@ -1,0 +1,1 @@
+import{r as o}from"./iframe-BW2_2Sqh.js";const i=e=>typeof e>"u"||e===null||typeof e=="boolean"||JSON.stringify(e)==="{}"?"":e.toString(),f=e=>!(e instanceof Array)&&!o.isValidElement(e)?i(e):o.Children.toArray(e).reduce((a,r)=>{let t="";const n=o.isValidElement(r),s=n&&"children"in r.props;return n&&s?t=f(r.props.children):n&&!s?t="":t=i(r),a.concat(t)},"");export{f as g};
