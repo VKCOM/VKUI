@@ -9,7 +9,7 @@ import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { ModalCardBase, type ModalCardBaseProps } from './ModalCardBase';
 
 const story: Meta<ModalCardBaseProps> = {
-  title: 'Blocks/ModalCardBase',
+  title: 'Modals/ModalCardBase',
   component: ModalCardBase,
   parameters: createStoryParameters('ModalCardBase', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

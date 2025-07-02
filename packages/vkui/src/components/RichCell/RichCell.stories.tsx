@@ -12,7 +12,7 @@ import { UsersStack } from '../UsersStack/UsersStack';
 import { RichCell, type RichCellProps } from './RichCell';
 
 const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
-  title: 'Blocks/RichCell',
+  title: 'Data Display/RichCell',
   component: RichCell,
   parameters: createStoryParameters('RichCell', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

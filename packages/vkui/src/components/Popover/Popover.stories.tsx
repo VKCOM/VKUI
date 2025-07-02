@@ -19,7 +19,7 @@ import { Text } from '../Typography/Text/Text';
 import { Popover, type PopoverOnShownChange, type PopoverProps } from './Popover';
 
 const story: Meta<PopoverProps> = {
-  title: 'Poppers/Popover',
+  title: 'Modals/Popover',
   component: Popover,
   parameters: createStoryParameters('Popover', DisableCartesianParam),
 };

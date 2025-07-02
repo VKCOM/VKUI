@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../../testing/storybook/createStoryPar
 import { EllipsisText, type EllipsisTextProps } from './EllipsisText';
 
 const story: Meta<EllipsisTextProps> = {
-  title: 'Typography/EllipsisText',
+  title: 'Typography/Typography/EllipsisText',
   component: EllipsisText,
   parameters: createStoryParameters('EllipsisText', CanvasFullLayout),
   decorators: [withCartesian],

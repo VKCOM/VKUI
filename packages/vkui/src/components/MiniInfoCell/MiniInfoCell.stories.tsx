@@ -9,7 +9,7 @@ import { UsersStack } from '../UsersStack/UsersStack';
 import { MiniInfoCell, type MiniInfoCellProps } from './MiniInfoCell';
 
 const story: Meta<MiniInfoCellProps> = {
-  title: 'Blocks/MiniInfoCell',
+  title: 'Data Display/MiniInfoCell',
   component: MiniInfoCell,
   parameters: createStoryParameters('MiniInfoCell', CanvasFullLayout),
   decorators: [withCartesian],

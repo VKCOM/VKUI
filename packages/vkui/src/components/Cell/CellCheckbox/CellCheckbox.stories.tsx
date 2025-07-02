@@ -8,7 +8,7 @@ import { Cell } from '../Cell';
 import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox';
 
 const story: Meta<CellCheckboxProps> = {
-  title: 'Blocks/Cell/Checkbox',
+  title: 'Buttons/Cell/Checkbox',
   component: CellCheckbox,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withSinglePanel, withVKUILayout],

@@ -8,7 +8,7 @@ import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { InfoRow, type InfoRowProps } from './InfoRow';
 
 const story: Meta<InfoRowProps> = {
-  title: 'Blocks/InfoRow',
+  title: 'Data Display/InfoRow',
   component: InfoRow,
   parameters: createStoryParameters('InfoRow', CanvasFullLayout, DisableCartesianParam),
 };

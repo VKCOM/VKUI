@@ -23,7 +23,7 @@ const iconsPresets = createFieldWithPresets({
 });
 
 const story: Meta<CustomSelectOptionProps> = {
-  title: 'Forms/CustomSelectOption',
+  title: 'Forms/CustomSelect/CustomSelectOption',
   component: CustomSelectOption,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {

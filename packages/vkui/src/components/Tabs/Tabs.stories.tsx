@@ -26,7 +26,7 @@ import { Tabs, type TabsProps } from './Tabs';
 type StoryTabsProps = TabsProps & { selected: string };
 
 const story: Meta<StoryTabsProps> = {
-  title: 'Blocks/Tabs',
+  title: 'Navigation/Tabs',
   component: Tabs,
   parameters: createStoryParameters('Tabs', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
