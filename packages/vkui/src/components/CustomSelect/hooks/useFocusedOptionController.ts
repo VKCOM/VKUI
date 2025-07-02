@@ -33,13 +33,12 @@ export function useFocusedOptionController<OptionInterfaceT extends CustomSelect
 
   const focusOptionByIndex = React.useCallback(
     (index: number | undefined, scrollTo = true) => {
-      if (index === undefined || index < 0 || index > (filteredOptions.length ?? 0) - 1) {
+      if (index === undefined || index < 0 || index > filteredOptions.length - 1) {
         return;
       }
-
       const option = filteredOptions[index];
 
-      if (option?.disabled) {
+      if (!option || option.disabled) {
         return;
       }
 

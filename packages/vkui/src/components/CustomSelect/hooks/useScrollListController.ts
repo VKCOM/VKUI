@@ -17,18 +17,12 @@ export function useScrollListController(): UseScrollListControllerReturn {
       const dropdown = scrollBoxRef.current;
       const optionsWrapper = optionsWrapperRef.current;
 
-      if (
-        !dropdown ||
-        !optionsWrapper ||
-        index < 0 ||
-        index > (optionsWrapper?.children.length || 0)
-      ) {
+      if (!dropdown || !optionsWrapper || index < 0 || index > optionsWrapper.children.length) {
         return;
       }
-      const item =
-        dropdown && optionsWrapper ? (optionsWrapper.children[index] as HTMLElement) : null;
-
-      if (!item || !dropdown) {
+      const item = optionsWrapper.children[index] as HTMLElement | null;
+      /* istanbul ignore if: проверка для TS (ситуация, когда среди children нет элемента с index, маловероятна) */
+      if (!item) {
         return;
       }
 

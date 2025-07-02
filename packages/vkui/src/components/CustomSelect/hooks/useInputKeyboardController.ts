@@ -27,26 +27,18 @@ export function useInputKeyboardController({
   open,
   close,
 }: UseInputKeyboardController) {
-  const onKeyboardInput = React.useCallback(() => {
-    open();
-    resetFocusedOption();
-  }, [open, resetFocusedOption]);
-
-  const areOptionsShown = React.useCallback(() => {
-    return scrollBoxRef.current !== null;
-  }, [scrollBoxRef]);
-
   const handleKeyDownSelect = React.useCallback(
     (event: React.KeyboardEvent) => {
       if (event.key.length === 1 && event.key !== ' ') {
-        onKeyboardInput();
+        open();
+        resetFocusedOption();
         return;
       }
+      const areOptionsShown = () => scrollBoxRef.current !== null;
 
-      ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) &&
-        areOptionsShown() &&
+      if (['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) && areOptionsShown()) {
         event.preventDefault();
-
+      }
       switch (event.key) {
         case 'ArrowUp':
           if (opened) {
@@ -69,7 +61,6 @@ export function useInputKeyboardController({
         case 'Delete': {
           open();
           resetFocusedOption();
-
           break;
         }
         case 'Enter':
@@ -83,16 +74,7 @@ export function useInputKeyboardController({
           break;
       }
     },
-    [
-      areOptionsShown,
-      onKeyboardInput,
-      opened,
-      close,
-      focusOption,
-      open,
-      resetFocusedOption,
-      selectFocused,
-    ],
+    [scrollBoxRef, opened, close, focusOption, open, resetFocusedOption, selectFocused],
   );
 
   const handleInputKeydown = React.useCallback(
