@@ -40,5 +40,21 @@ export default withBundleAnalyzer(
       unoptimized: true,
     },
     distDir,
+    webpack: (config) => {
+      config.module.rules.forEach((element) => {
+        if (element.resourceQuery) {
+          return;
+        }
+
+        element.resourceQuery = { not: [/raw/] };
+      });
+
+      config.module.rules.push({
+        resourceQuery: /raw/,
+        type: 'asset/source',
+      });
+
+      return config;
+    },
   }),
 );
