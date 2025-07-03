@@ -14,6 +14,7 @@ dotenv.config({
     path.resolve(import.meta.dirname, '../.env'),
   ],
   override: true,
+  quiet: true,
 });
 
 const sourceRoot = path.resolve(import.meta.dirname, 'src');
