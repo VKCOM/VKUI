@@ -36,7 +36,7 @@ function Folder({ item }: FolderProps) {
 
   const isLink = 'withIndexPage' in item && item.withIndexPage;
 
-  const handleChange = React.useCallback(() => {
+  const handleClick = React.useCallback(() => {
     if (isLink) {
       if (active) {
         // eslint-disable-next-line react-compiler/react-compiler
@@ -60,7 +60,7 @@ function Folder({ item }: FolderProps) {
       className: styles.menuItem,
       hoverMode: styles.hoverMenuItem,
       expanded: open,
-      onChange: handleChange,
+      onClick: handleClick,
       ...(isLink
         ? {
             Component: NextLink,
@@ -69,7 +69,7 @@ function Folder({ item }: FolderProps) {
           }
         : {}),
     }),
-    [item, open, handleChange, isLink],
+    [item, open, handleClick, isLink],
   );
 
   const MenuComponent = searchableNavbarItems.includes(item.name) ? SearchableMenu : Menu;
@@ -145,11 +145,11 @@ function SearchableMenu(props: MenuProps): React.ReactElement {
 
 function Separator({ title }: { title: string }) {
   return (
-    <div className={styles.separator} role="separator">
+    <li className={styles.separator}>
       <Caption level="3" caps>
         {title}
       </Caption>
-    </div>
+    </li>
   );
 }
 

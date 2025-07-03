@@ -19,7 +19,7 @@ export function Search(props: SearchProps) {
     <>
       <Button
         size="l"
-        label="Поиск"
+        aria-label="Поиск"
         mode="secondary"
         appearance="neutral"
         before={<Icon24Search />}

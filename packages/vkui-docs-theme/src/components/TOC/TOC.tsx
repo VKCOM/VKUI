@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Icon24ChevronDown } from '@vkontakte/icons';
-import { classNames, Headline, Spacing, Subhead, Tappable } from '@vkontakte/vkui';
+import { classNames, Headline, Subhead, Tappable } from '@vkontakte/vkui';
 import type { Heading } from 'nextra';
 import { useConfig } from '../../contexts';
 import { calculateItemPadding } from './helpers';
@@ -71,7 +71,6 @@ export function TOC({ toc }: TOCProps) {
               isActive={id === activeAnchorId}
             />
           ))}
-          <Spacing size={32} />
         </ul>
       </nav>
     </aside>
