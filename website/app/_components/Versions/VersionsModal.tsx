@@ -16,7 +16,7 @@ interface PackageInfoProps {
 // Старая документация доступна с этой версии
 const MINIMUM_OLD_VERSION = '3.12.4';
 // Новая документация доступна с этой версии
-const MINIMUM_VERSION = '7.4.1';
+const MINIMUM_VERSION = '7.5.0';
 
 function filterPrereleaseVersion(version: string) {
   return !version.includes('-');
