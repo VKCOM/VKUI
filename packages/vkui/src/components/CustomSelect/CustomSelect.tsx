@@ -42,7 +42,6 @@ import { useSelectedOptionController } from './hooks/useSelectedOptionController
 import type {
   CustomSelectOptionInterface,
   CustomSelectRenderOption,
-  InputChangeReason,
   MousePosition,
   PopupDirection,
 } from './types';
@@ -90,7 +89,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля.
    */
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>, reason: InputChangeReason) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /**
    * Список опций в списке.
    */
@@ -283,7 +282,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       accessible,
       selectedValue: selectedOptionValue,
       onInputChange: onInputChangeProp,
-      selectInputRef,
     });
 
   const filteredOptions = React.useMemo(
@@ -495,7 +493,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     ClearButton,
     onClearButtonClick: () => {
       setNativeSelectValue(NOT_SELECTED.NATIVE);
-      resetInputValue('clear-by-button');
+      resetInputValue();
       selectInputRef.current && selectInputRef.current.focus();
     },
     clearButtonTestId,
@@ -602,7 +600,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         accessible={accessible}
         value={inputValue}
         onKeyDown={!readOnly ? onInputKeyDown : undefined}
-        onInput={onInputChange}
+        onChange={onInputChange}
         onClick={!readOnly ? toggleOpened : undefined}
         before={before}
         after={afterItems}
