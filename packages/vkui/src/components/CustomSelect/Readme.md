@@ -308,7 +308,10 @@ const AsyncCustomSelect = () => {
     }, 1500);
   };
 
-  const searchRemoteUsers = (e) => {
+  const searchRemoteUsers = (e, reason) => {
+    if (reason !== 'input') {
+        return;
+    }
     const _remoteQuery = e.target.value;
     cleanFetchingTimeout();
     setRemoteQuery(_remoteQuery);
