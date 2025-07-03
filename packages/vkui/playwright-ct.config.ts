@@ -3,7 +3,7 @@ import * as process from 'node:process';
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
 import { type ReporterDescription } from '@playwright/test';
 import dotenv from 'dotenv';
-import viteConfig from './vite.config.js';
+import viteConfig from './vite.config.ts';
 
 const env = process.env as unknown as Record<string, string>;
 
