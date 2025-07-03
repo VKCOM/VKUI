@@ -1,36 +1,21 @@
-// @ts-check
-/* eslint-disable no-console, import/no-default-export */
-
-import path from 'node:path';
-import postcssGlobalData from '@csstools/postcss-global-data';
+import * as path from 'node:path';
+import * as process from 'node:process';
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
-import restructureVariable from '@project-tools/postcss-restructure-variable';
-import autoprefixer from 'autoprefixer';
+import { type ReporterDescription } from '@playwright/test';
 import dotenv from 'dotenv';
-import postcssCustomMedia from 'postcss-custom-media';
-import postcssGapProperties from 'postcss-gap-properties';
-import cssImport from 'postcss-import';
-import tsconfig from './tsconfig.json' with { type: 'json' };
+import viteConfig from './vite.config.js';
 
-const rootDirectory = path.join(import.meta.dirname, '../..');
+const env = process.env as unknown as Record<string, string>;
 
 // см. `.env`
-dotenv.config();
+dotenv.config({ quiet: true });
 
-const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce(
-  (aliases, [name, paths]) => {
-    aliases[name] = path.join(import.meta.dirname, paths[0]);
-    return aliases;
-  },
-  {},
-);
-
-/** @type {import('@playwright/test').ReporterDescription}  */
-const DEFAULT_REPORTER = ['json', { outputFile: 'e2e-results.json' }];
+const DEFAULT_REPORTER: ReporterDescription = ['json', { outputFile: 'e2e-results.json' }];
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+// eslint-disable-next-line import/no-default-export -- требование playwright
 export default defineConfig({
   testDir: path.join(import.meta.dirname, './src'),
   testMatch: generateTestMatch(),
@@ -53,19 +38,19 @@ export default defineConfig({
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: !!env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 1 : 0,
+  retries: env.CI ? 1 : 0,
   /* Limit the number of failures on CI to save resources. */
-  maxFailures: process.env.CI ? 10 : undefined,
+  maxFailures: env.CI ? 10 : undefined,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI
+  workers: env.CI
     ? 1
-    : typeof process.env.PLAYWRIGHT_WORKERS === 'string'
-      ? Number(process.env.PLAYWRIGHT_WORKERS)
+    : typeof env.PLAYWRIGHT_WORKERS === 'string'
+      ? Number(env.PLAYWRIGHT_WORKERS)
       : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI
+  reporter: env.CI
     ? [['github'], ['dot'], ['blob'], [...DEFAULT_REPORTER]]
     : [['list'], ['html', { open: 'never' }], [...DEFAULT_REPORTER]],
 
@@ -79,53 +64,7 @@ export default defineConfig({
 
     deviceScaleFactor: 1,
 
-    ctViteConfig: {
-      build: { commonjsOptions: { include: [/node_modules/, /\.js/] }, sourcemap: false },
-
-      resolve: { alias: TS_CONFIG_ALIASES },
-
-      css: {
-        postcss: {
-          plugins: [
-            // Обработка css импортов
-            cssImport(),
-
-            restructureVariable(
-              [
-                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
-                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css',
-                './node_modules/@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css',
-                './node_modules/@vkontakte/vkui-tokens/themes/vkIOS/cssVars/declarations/onlyVariablesLocal.css',
-                './node_modules/@vkontakte/vkui-tokens/themes/vkIOSDark/cssVars/declarations/onlyVariablesLocal.css',
-                './node_modules/@vkontakte/vkui-tokens/themes/vkCom/cssVars/declarations/onlyVariablesLocal.css',
-                './node_modules/@vkontakte/vkui-tokens/themes/vkComDark/cssVars/declarations/onlyVariablesLocal.css',
-              ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
-            ),
-
-            // Сбор данных для работы некоторых postcss плагинов
-            postcssGlobalData({
-              files: [
-                './node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css',
-                'packages/vkui/src/styles/dynamicTokens.css',
-                'packages/vkui/src/styles/constants.css',
-                'packages/vkui/src/styles/customMedias.generated.css',
-              ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
-            }),
-
-            // Автопрефиксер
-            autoprefixer(),
-
-            // Обработка CustomMedia
-            postcssCustomMedia(),
-
-            // TODO [>=8]: Проверить браузерную поддержку
-            //
-            // https://caniuse.com/mdn-css_properties_gap_grid_context
-            postcssGapProperties(),
-          ],
-        },
-      },
-    },
+    ctViteConfig: viteConfig,
   },
 
   /* Configure projects for major browsers */
@@ -133,14 +72,15 @@ export default defineConfig({
 });
 
 function generateTestMatch() {
-  if (typeof process.env.PLAYWRIGHT_TEST_MATCH === 'string') {
+  if (typeof env.PLAYWRIGHT_TEST_MATCH === 'string') {
     try {
-      const testMatch = JSON.parse(process.env.PLAYWRIGHT_TEST_MATCH);
+      const testMatch = JSON.parse(env.PLAYWRIGHT_TEST_MATCH);
       if (!Array.isArray(testMatch)) {
         throw new Error('should be array');
       }
       return testMatch;
     } catch (error) {
+      // eslint-disable-next-line no-console -- необходимо для дебага
       console.error('PLAYWRIGHT_TEST_MATCH', error);
       process.exit(1);
     }
@@ -154,7 +94,7 @@ function generateProjects() {
    * Иначе перебивает `deviceScaleFactor` из общего конфига.
    * Можно решить через `page.screenshot({ scale: 'css' })`, но через функцию ниже получается прозрачнее.
    */
-  const getDeviceDescriptorWithoutScaleFactor = (deviceName) => {
+  const getDeviceDescriptorWithoutScaleFactor = (deviceName: string) => {
     const { deviceScaleFactor, ...restProps } = devices[deviceName];
     return restProps;
   };
@@ -209,9 +149,9 @@ function generateProjects() {
     ])
     .flat();
 
-  if (typeof process.env.PLAYWRIGHT_FORCE_PROJECTS === 'string') {
+  if (typeof env.PLAYWRIGHT_FORCE_PROJECTS === 'string') {
     try {
-      const forceProjects = JSON.parse(process.env.PLAYWRIGHT_FORCE_PROJECTS);
+      const forceProjects = JSON.parse(env.PLAYWRIGHT_FORCE_PROJECTS);
       if (!Array.isArray(forceProjects)) {
         throw new Error('should be array');
       }
@@ -220,13 +160,14 @@ function generateProjects() {
       if (!foundProjects.length) {
         const supportedProjects = projects.map((i) => i.name);
         throw new Error(`
-  "${process.env.PLAYWRIGHT_FORCE_PROJECTS}" doesn't exist in projects list.
+  "${env.PLAYWRIGHT_FORCE_PROJECTS}" doesn't exist in projects list.
   Supported projects are ${JSON.stringify(supportedProjects, null, 2)}
   `);
       }
 
       return foundProjects;
     } catch (error) {
+      // eslint-disable-next-line no-console -- нужно для логов
       console.error('PLAYWRIGHT_FORCE_PROJECTS', error);
       process.exit(1);
     }
