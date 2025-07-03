@@ -14,3 +14,4 @@ out/
 .next/
 next-env.d.ts
 *.css.d.ts
+_pagefind/
