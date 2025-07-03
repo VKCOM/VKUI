@@ -281,7 +281,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     useInputValueController({
       options,
       accessible,
-      selectedValue: selected ? selected.value : null,
+      selectedValue: selectedOptionValue,
       onInputChange: onInputChangeProp,
       selectInputRef,
     });

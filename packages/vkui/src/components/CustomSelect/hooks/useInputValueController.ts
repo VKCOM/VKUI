@@ -24,16 +24,21 @@ export function useInputValueController<OptionInterfaceT extends CustomSelectOpt
 }: UseInputValueControllerProps<OptionInterfaceT>) {
   const inputValueChangeReason = React.useRef<InputChangeReason>('input');
   const [inputValue, setInputValue] = React.useState('');
+  const optionsRef = React.useRef(options);
+
+  useIsomorphicLayoutEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
 
   const resetInputValueBySelectedOption = React.useCallback(() => {
-    setInputValue(calculateInputValueFromOptions(options, selectedValue));
-  }, [options, selectedValue]);
+    setInputValue(calculateInputValueFromOptions(optionsRef.current, selectedValue));
+  }, [selectedValue]);
 
   useIsomorphicLayoutEffect(() => {
     if (accessible) {
       resetInputValueBySelectedOption();
     }
-  }, [resetInputValueBySelectedOption]);
+  }, [accessible, resetInputValueBySelectedOption]);
 
   const nativeResetInputValue = React.useCallback(
     (

@@ -36,7 +36,7 @@ export function useInputKeyboardController({
       }
       const areOptionsShown = () => scrollBoxRef.current !== null;
 
-      if (['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) && areOptionsShown()) {
+      if (['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key)) {
         event.preventDefault();
       }
       switch (event.key) {

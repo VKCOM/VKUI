@@ -91,11 +91,11 @@ export const CustomSelectInput = ({
       if (!searchable) {
         return true;
       }
-      return !focusWithin || inputReadonly;
+      return !focusWithin || (inputReadonly && !fetching);
     } else {
       return false;
     }
-  }, [accessible, focusWithin, inputReadonly, searchable]);
+  }, [accessible, fetching, focusWithin, inputReadonly, searchable]);
 
   const labelHidden = showLabelOrPlaceholder ? false : !inputHidden;
 
