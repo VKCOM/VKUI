@@ -42,6 +42,8 @@ const EVENT_KEY_TO_COMMON_KEY_MAP = new Map([
   [' ', Keys.SPACE],
   ['Tab', Keys.TAB],
   ['Escape', Keys.ESCAPE],
+  ['Delete', Keys.DELETE],
+  ['Backspace', Keys.BACKSPACE],
   ['Home', Keys.HOME],
   ['End', Keys.END],
   ['ArrowLeft', Keys.ARROW_LEFT],
@@ -67,6 +69,8 @@ export function pressedKey<T extends KeyboardEvent | React.KeyboardEvent>(
   | 'ArrowDown'
   | 'PageUp'
   | 'PageDown'
+  | 'Backspace'
+  | 'Delete'
   | null {
   const foundKey = EVENT_KEY_TO_COMMON_KEY_MAP.get(event.key);
   return foundKey ? foundKey : null;
