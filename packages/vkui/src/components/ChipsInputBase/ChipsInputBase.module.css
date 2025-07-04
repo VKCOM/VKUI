@@ -3,13 +3,21 @@
 
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
-  display: flex;
+  display: inline-flex;
   flex-grow: 1;
   flex-shrink: 1;
   flex-wrap: wrap;
   max-inline-size: 100%;
   padding: var(--vkui_internal--chips_input_base_container_gap);
   margin: 0;
+  overflow: hidden;
+}
+
+.listBox {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-inline-size: 100%;
   overflow: hidden;
   list-style: none;
 }
@@ -21,11 +29,10 @@
 
 .el {
   position: relative;
-  flex: 1;
-  inline-size: 100%;
+  box-sizing: border-box;
+  display: inline-flex;
+  inline-size: 0;
   padding: 0;
-  margin-block: 2px 4px;
-  margin-inline: 10px 2px;
   color: var(--vkui--color_text_primary);
   appearance: none;
   background: transparent;
@@ -33,8 +40,14 @@
   box-shadow: none;
 }
 
+.hasPlaceholder .el,
+.hasInputValue .el,
 .el:not(:read-only):focus {
+  flex: 1;
+  inline-size: 100%;
   min-inline-size: 64px;
+  padding-block: 2px 4px;
+  padding-inline: 10px 2px;
 }
 
 .el::-ms-clear {
@@ -56,7 +69,7 @@
 }
 
 .hasPlaceholder .el {
-  margin-inline: calc(12px - var(--vkui_internal--chips_input_base_container_gap)) 0;
+  block-size: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

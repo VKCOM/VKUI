@@ -35,27 +35,24 @@ describe(ChipsInputBase, () => {
 
   baselineComponent(
     (props) => (
-      <ChipsInputBaseTest
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-        onClear={onClearOptions}
-        value={[RED_OPTION]}
-        {...props}
-      />
+      <>
+        <label htmlFor="chips">Chips Input</label>
+        <ChipsInputBaseTest
+          id="chips"
+          chipsListLabel="Выбранные опции"
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
+          value={[RED_OPTION]}
+          {...props}
+        />
+      </>
     ),
     {
       a11yConfig: {
         rules: {
+          // Внутри Chip c role="option" находится кнопка удаления
           'nested-interactive': { enabled: false },
-          // TODO: real input has no assiciated label
-          // https://dequeuniversity.com/rules/axe/4.9/label?application=axeAPI
-          'label': { enabled: false },
-          // TODO: listbox не имеет label/title/labelledby
-          // https://dequeuniversity.com/rules/axe/4.9/aria-input-field-name?application=axeAPI
-          'aria-input-field-name': { enabled: false },
-          // TODO: combobox is not allowed as children of listbox
-          // https://dequeuniversity.com/rules/axe/4.9/aria-required-children?application=axeAPI
-          'aria-required-children': { enabled: false },
         },
       },
     },
@@ -239,7 +236,9 @@ describe(ChipsInputBase, () => {
       expect(chipsInputLocator).toHaveFocus();
 
       await userEvent.type(chipsInputLocator, '{Backspace}');
-      expect(chipsInputLocator.previousSibling).toHaveFocus();
+      const listbox = chipsInputLocator.previousSibling;
+      const lastChip = listbox?.lastChild;
+      expect(lastChip).toHaveFocus();
     });
 
     it('navigates between chips with arrow buttons (it should be cycle)', async () => {
@@ -272,6 +271,12 @@ describe(ChipsInputBase, () => {
       expect(chipBlueLocator).toHaveFocus();
 
       await userEvent.type(chipBlueLocator, '{ArrowRight}');
+      expect(chipYellowLocator).toHaveFocus();
+
+      await userEvent.type(chipYellowLocator, '{Home}');
+      expect(chipRedLocator).toHaveFocus();
+
+      await userEvent.type(chipRedLocator, '{End}');
       expect(chipYellowLocator).toHaveFocus();
     });
 
@@ -432,6 +437,23 @@ describe(ChipsInputBase, () => {
     fireEvent.click(screen.getByTestId('clear-button'));
 
     expect(onClearOptions).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call focus to input when click clear button', () => {
+    render(
+      <ChipsInputBaseTest
+        value={[RED_OPTION, BLUE_OPTION, YELLOW_OPTION]}
+        clearButtonTestId="clear-button"
+        clearButtonShown={true}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+      />,
+    );
+    expect(screen.getByTestId('clear-button')).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('clear-button'));
+
+    expect(screen.getByTestId('chips-input')).toHaveFocus();
   });
 
   it('remove option by backspace when option value is number', async () => {
