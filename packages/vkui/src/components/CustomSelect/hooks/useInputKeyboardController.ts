@@ -1,9 +1,12 @@
 'use client';
 
 import * as React from 'react';
+import { Keys, pressedKey } from '../../../lib/accessibility';
 import { callMultiple } from '../../../lib/callMultiple';
 import { type SelectProps } from '../CustomSelect';
 import { type UseFocusedOptionControllerReturn } from './useFocusedOptionController';
+
+const KEYS_TO_PREVENT_DEFAULT: string[] = [Keys.ARROW_UP, Keys.ARROW_DOWN, Keys.ESCAPE, Keys.ENTER];
 
 /* eslint-disable jsdoc/require-jsdoc */
 interface UseInputKeyboardController
@@ -29,43 +32,46 @@ export function useInputKeyboardController({
 }: UseInputKeyboardController) {
   const handleKeyDownSelect = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (event.key.length === 1 && event.key !== ' ') {
+      const key = pressedKey(event);
+      if (event.key.length === 1 && key !== Keys.SPACE) {
         open();
         resetFocusedOption();
         return;
       }
+      if (!key) {
+        return;
+      }
       const areOptionsShown = () => scrollBoxRef.current !== null;
 
-      if (['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key)) {
+      if (KEYS_TO_PREVENT_DEFAULT.includes(key)) {
         event.preventDefault();
       }
-      switch (event.key) {
-        case 'ArrowUp':
+      switch (key) {
+        case Keys.ARROW_UP:
           if (opened) {
             areOptionsShown() && focusOption('prev');
           } else {
             open();
           }
           break;
-        case 'ArrowDown':
+        case Keys.ARROW_DOWN:
           if (opened) {
             areOptionsShown() && focusOption('next');
           } else {
             open();
           }
           break;
-        case 'Escape':
+        case Keys.ESCAPE:
           close();
           break;
-        case 'Backspace':
-        case 'Delete': {
+        case Keys.BACKSPACE:
+        case Keys.DELETE: {
           open();
           resetFocusedOption();
           break;
         }
-        case 'Enter':
-        case 'Spacebar':
-        case ' ':
+        case Keys.ENTER:
+        case Keys.SPACE:
           if (opened) {
             areOptionsShown() && selectFocused();
           } else {
