@@ -16,6 +16,7 @@
 .blog {
   flex-direction: column;
   max-inline-size: var(--vkui_docs_blog--max-width);
+  min-block-size: calc(100vh - var(--vkui_docs--footer-height) - var(--vkui_docs--navbar-height));
   padding-block-start: var(--vkui--spacing_size_4xl);
   padding-block-end: 60px;
   padding-inline: 40px;

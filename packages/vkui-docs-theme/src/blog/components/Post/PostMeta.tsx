@@ -1,5 +1,4 @@
 import { ContentBadge, Footnote } from '@vkontakte/vkui';
-import NextLink from 'next/link';
 import { DateFormatter } from '../../../helpers/date';
 import styles from './Post.module.css';
 
@@ -18,9 +17,9 @@ export function PostMeta({ publishDate, tags = [], className }: PostMetaProps) {
         </Footnote>
       )}
       {tags.map((tag) => (
-        <NextLink href={`/blog/tags/${tag}`} key={tag}>
-          <ContentBadge appearance="neutral"># {tag}</ContentBadge>
-        </NextLink>
+        <ContentBadge key={tag} appearance="neutral">
+          # {tag}
+        </ContentBadge>
       ))}
     </div>
   );

@@ -1,6 +1,8 @@
 import analyzer from '@next/bundle-analyzer';
 import { transformerNotationDiff } from '@shikijs/transformers';
 import nextra from 'nextra';
+import { transformer as headingTransformer } from './remark-plugins/remarkHeading.mjs';
+import { transformer as playgroundTransformer } from './remark-plugins/remarkPlayground.mjs';
 
 const basePath =
   process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_VKUI_DOCS_BASE_PATH : undefined;
@@ -14,6 +16,7 @@ const withNextra = nextra({
   defaultShowCopyCode: true,
   staticImage: false,
   mdxOptions: {
+    remarkPlugins: [playgroundTransformer, headingTransformer],
     rehypePrettyCodeOptions: {
       transformers: [transformerNotationDiff()],
     },

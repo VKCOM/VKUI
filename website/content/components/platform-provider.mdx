@@ -1,0 +1,67 @@
+---
+description: Компонент, позволяющий переопределить платформу.
+---
+
+<Overview group="configuration">
+# PlatformProvider [tag:component]
+
+Компонент, позволяющий переопределить платформу.
+
+</Overview>
+
+## Платформа
+
+Задаётся свойством `value`.
+
+- `"android"` – используется на настольных и мобильных устройствах под управлением системы Android.
+- `"ios"` – используется на мобильных устройствах или планшетах с системой iOS/iPadOS.
+- `"vkcom"` – используется командой ВКонтакте. На данный момент она не предназначена для адаптивного интерфейса, используйте её только
+  в том случае, если ваше приложение встроено в [vk.com](https://vk.com).
+
+```jsx
+<PlatformProvider value="ios">
+  {/* часть вашего приложения, требующая переопределения платформы */}
+</PlatformProvider>
+```
+
+> **Обратите внимание**
+>
+> При переопределении темы убедитесь, что компонент, обёрнутый в `PlatformProvider`, принимает свойство `className`,
+> иначе визуальные изменения соответствующей платформы не будут применены.
+>
+> ```jsx
+> function BadComponent({ children }) {
+>   return (
+>     <Div>
+>       <Button>I'm not ios 😔</Button>
+>     </Div>
+>   );
+> }
+> function GoodComponent({ className, children }) {
+>   return (
+>     <Div className={className}>
+>       <Button>I'm ios 😎</Button>
+>     </Div>
+>   );
+> }
+> function InfoBoard({ children }) {
+>   return (
+>     <PlatformProvider value="ios">
+>       <BadComponent /> {/* стили "ios" не применяются */}
+>       <GoodComponent /> {/* стили "ios" применяются */}
+>     </PlatformProvider>
+>   );
+> }
+> ```
+
+## Использование платформы [#use-platform]
+
+Для получения текущего значения платформы используйте хук `usePlatform`:
+
+```jsx
+import { usePlatform } from '@vkontakte/vkui';
+```
+
+```jsx
+const platform = usePlatform();
+```
