@@ -7,25 +7,17 @@ export async function screenshotWithClipToContent(
   options: ScreenshotWithClipToContentOptions = {},
   browserName: PlaywrightWorkerOptions['browserName'] | undefined = undefined,
 ) {
-  const {
-    cropToContentSelector = DEFAULT_CROP_TO_CONTENT_SELECTOR,
-    forceTimeoutBeforeScreenshot = false,
-  } = options;
+  const { cropToContentSelector = DEFAULT_CROP_TO_CONTENT_SELECTOR } = options;
 
   await page.evaluate(() => document.fonts.ready);
 
   // getBoundingClientRect в webkit возвращает некорректные значения, спасает timeout 500ms
   // см. https://github.com/VKCOM/VKUI/pull/3417
-  if (browserName === 'webkit' || forceTimeoutBeforeScreenshot) {
+  if (browserName === 'webkit') {
     await page.evaluate(
       () =>
         new Promise((resolve) => {
-          setTimeout(
-            resolve,
-            typeof forceTimeoutBeforeScreenshot === 'number' && forceTimeoutBeforeScreenshot
-              ? forceTimeoutBeforeScreenshot
-              : 500,
-          );
+          setTimeout(resolve, 500);
         }),
     );
   }

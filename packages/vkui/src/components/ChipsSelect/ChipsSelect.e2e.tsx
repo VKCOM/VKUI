@@ -10,9 +10,7 @@ test('ChipsSelect', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<ChipsSelectPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent({
-    forceTimeoutBeforeScreenshot: true,
-  });
+  await expectScreenshotClippedToContent();
 });
 
 test('ChipsSelect with dropdown', async ({

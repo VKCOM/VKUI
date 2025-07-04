@@ -6,7 +6,6 @@ import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
-import { callMultiple } from '../../lib/callMultiple';
 import {
   contains as checkTargetIsInputEl,
   contains,
@@ -22,7 +21,6 @@ import {
   getChipOptionValueByHTMLElement,
   getNextChipOptionIndexByNavigateToProp,
   isInputValueEmpty,
-  useInputWidth,
 } from './helpers';
 import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps, NavigateTo } from './types';
 import styles from './ChipsInputBase.module.css';
@@ -238,13 +236,6 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
 
-  const [inputWidth, inputWidthClassName, recalculateInputWidth] = useInputWidth({
-    containerRef,
-    listBoxRef: listboxRef,
-    inputRef,
-    valuesLength: value?.length || 0,
-  });
-
   return (
     <FormField
       Component="div"
@@ -292,7 +283,6 @@ export const ChipsInputBase = <O extends ChipOption>({
                   'readOnly': option.readOnly || readOnly,
                   'className': styles.chip,
                   'onRemove': handleChipRemove,
-                  'onResize': recalculateInputWidth,
                   // чтобы можно было легче найти этот чип в DOM
                   'data-index': index,
                   'data-value': option.value,
@@ -317,18 +307,16 @@ export const ChipsInputBase = <O extends ChipOption>({
           spellCheck={false}
           {...restProps}
           aria-label={ariaLabel}
-          style={{ width: inputWidth }}
           Component="input"
           type="text"
           id={inputId}
           getRootRef={inputRef}
-          className={classNames(styles.el, inputWidthClassName)}
+          className={styles.el}
           disabled={disabled}
           readOnly={readOnly}
           placeholder={withPlaceholder ? placeholder : undefined}
           value={inputValue}
           onChange={onInputChange}
-          onFocus={callMultiple(restProps.onFocus, recalculateInputWidth)}
           onBlur={handleInputBlur}
         />
       </div>

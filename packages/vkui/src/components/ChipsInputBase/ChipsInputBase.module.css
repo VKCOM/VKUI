@@ -3,9 +3,10 @@
 
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
-  display: inline;
+  display: inline-flex;
   flex-grow: 1;
   flex-shrink: 1;
+  flex-wrap: wrap;
   max-inline-size: 100%;
   padding: var(--vkui_internal--chips_input_base_container_gap);
   margin: 0;
@@ -14,7 +15,8 @@
 
 .listBox {
   position: relative;
-  display: inline;
+  display: inline-flex;
+  flex-wrap: wrap;
   max-inline-size: 100%;
   overflow: hidden;
   list-style: none;
@@ -23,24 +25,14 @@
 .chip {
   max-inline-size: calc(100% - var(--vkui_internal--chips_input_base_container_gap));
   margin: 2px;
-  vertical-align: middle;
 }
 
 .el {
-  --vkui_internal--chips_input_base_input_margin-inline-start: 10px;
-  --vkui_internal--chips_input_base_input_margin-inline-end: 2px;
-  --vkui_internal--chips_input_base_input_margin-block-start: 2px;
-  --vkui_internal--chips_input_base_input_margin-block-end: 4px;
-
   position: relative;
-  display: inline;
+  box-sizing: border-box;
+  display: inline-flex;
   inline-size: 0;
   padding: 0;
-  margin-block: var(--vkui_internal--chips_input_base_input_margin-block-start)
-    var(--vkui_internal--chips_input_base_input_margin-block-end);
-  margin-inline: var(--vkui_internal--chips_input_base_input_margin-inline-start)
-    var(--vkui_internal--chips_input_base_input_margin-inline-end);
-  vertical-align: middle;
   color: var(--vkui--color_text_primary);
   appearance: none;
   background: transparent;
@@ -48,22 +40,14 @@
   box-shadow: none;
 }
 
-/* Растягиваем input на всю ширину */
-/* Когда отображается плейсхолдер */
 .hasPlaceholder .el,
-/* Когда инпут не помещается, переносится на новую строку и в него уже введен текст */
-.hasInputValue .el.newLineInput,
-/* Когда нужно растянуть на всю ширину */
-.el.stretchInput,
-/* Когда инпут не помещается, переносится на новую строку и находится в фокусе */
-.el.newLineInput:not(:read-only):focus {
-  /* important нужен, чтобы перебить maxWidth установленный через стили */
-  /* stylelint-disable-next-line declaration-no-important */
-  inline-size: calc(
-    100% - var(--vkui_internal--chips_input_base_input_margin-inline-start) -
-      var(--vkui_internal--chips_input_base_input_margin-inline-end)
-      /* stylelint-disable-next-line declaration-no-important */
-  ) !important;
+.hasInputValue .el,
+.el:not(:read-only):focus {
+  flex: 1;
+  inline-size: 100%;
+  min-inline-size: 64px;
+  padding-block: 2px 4px;
+  padding-inline: 10px 2px;
 }
 
 .el::-ms-clear {
@@ -85,15 +69,7 @@
 }
 
 .hasPlaceholder .el {
-  --vkui_internal--chips_input_base_input_margin-inline-start: calc(
-    12px - var(--vkui_internal--chips_input_base_container_gap)
-  );
-  --vkui_internal--chips_input_base_input_margin-inline-end: 0px;
-
-  block-size: calc(
-    100% - var(--vkui_internal--chips_input_base_input_margin-block-start) -
-      var(--vkui_internal--chips_input_base_input_margin-block-end)
-  );
+  block-size: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

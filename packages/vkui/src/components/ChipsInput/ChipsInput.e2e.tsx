@@ -7,7 +7,5 @@ test('ChipsInput', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<ChipsInputPlayground {...componentPlaygroundProps} />);
-  await expectScreenshotClippedToContent({
-    forceTimeoutBeforeScreenshot: true,
-  });
+  await expectScreenshotClippedToContent();
 });
