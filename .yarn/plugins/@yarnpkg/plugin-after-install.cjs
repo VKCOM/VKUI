@@ -1,0 +1,9 @@
+/* eslint-disable */
+//prettier-ignore
+module.exports = {
+name: "@yarnpkg/plugin-after-install",
+factory: function (require) {
+"use strict";var plugin=(()=>{var l=Object.defineProperty;var g=Object.getOwnPropertyDescriptor;var x=Object.getOwnPropertyNames;var C=Object.prototype.hasOwnProperty;var r=(t=>typeof require<"u"?require:typeof Proxy<"u"?new Proxy(t,{get:(o,e)=>(typeof require<"u"?require:o)[e]}):t)(function(t){if(typeof require<"u")return require.apply(this,arguments);throw new Error('Dynamic require of "'+t+'" is not supported')});var I=(t,o)=>{for(var e in o)l(t,e,{get:o[e],enumerable:!0})},h=(t,o,e,a)=>{if(o&&typeof o=="object"||typeof o=="function")for(let n of x(o))!C.call(t,n)&&n!==e&&l(t,n,{get:()=>o[n],enumerable:!(a=g(o,n))||a.enumerable});return t};var k=t=>h(l({},"__esModule",{value:!0}),t);var P={};I(P,{default:()=>y});var d=r("@yarnpkg/core");var f=r("@yarnpkg/core"),c={afterInstall:{description:"Hook that will always run after install",type:f.SettingsType.STRING,default:""}};var m=r("clipanion"),u=r("@yarnpkg/core");var p=r("@yarnpkg/shell"),s=async(t,o)=>{let e=t.get("afterInstall"),a=!!t.projectCwd?.endsWith(`dlx-${process.pid}`);return e&&!a?(o&&console.log("Running `afterInstall` hook..."),(0,p.execute)(e,[],{cwd:t.projectCwd||void 0,env:{...process.env,_YARN_PLUGIN_AFTER_INSTALL_COMMAND_ARGV:JSON.stringify(process.argv.slice(2))}})):0};var i=class extends m.Command{async execute(){let o=await u.Configuration.find(this.context.cwd,this.context.plugins);return s(o,!1)}};i.paths=[["after-install"]];var w={configuration:c,commands:[i],hooks:{afterAllInstalled:async(t,o)=>{if(o?.mode===d.InstallMode.UpdateLockfile)return;if(await s(t.configuration,!0))throw new Error("The `afterInstall` hook failed, see output above.")}}},y=w;return k(P);})();
+return plugin;
+}
+};
