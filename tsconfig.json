@@ -2,9 +2,11 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "esnext",
+    "module": "esnext",
     "lib": ["es6", "dom", "dom.Iterable"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
