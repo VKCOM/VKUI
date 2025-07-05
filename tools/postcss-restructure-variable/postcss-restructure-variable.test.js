@@ -1,16 +1,21 @@
+/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты */
+const assert = require('node:assert/strict');
+const test = require('node:test');
 const postcss = require('postcss');
 const plugin = require('./index');
+
+const snapshotOptions = { serializers: [(value) => value] };
 
 async function run(input, opts = [undefined]) {
   let result = await postcss([plugin(opts)]).process(input, {
     from: undefined,
   });
-  expect(result.warnings()).toHaveLength(0);
+  assert.strictEqual(result.warnings().length, 0);
 
   return result.css;
 }
 
-it('rewrite custom property', async () => {
+test.test('rewrite custom property', async (t) => {
   const input = `.a {
     --color: #fff;
 }
@@ -25,10 +30,10 @@ it('rewrite custom property', async () => {
 }
 `;
 
-  expect(await run(input)).toMatchSnapshot();
+  t.assert.snapshot(await run(input), snapshotOptions);
 });
 
-it('merge one', async () => {
+test.test('merge one', async (t) => {
   const input = `:root {
     --color: #fff;
 }
@@ -40,10 +45,10 @@ it('merge one', async () => {
 }
 `;
 
-  expect(await run(input)).toMatchSnapshot();
+  t.assert.snapshot(await run(input), snapshotOptions);
 });
 
-it('merge three', async () => {
+test.test('merge three', async (t) => {
   const input = `:root {
     --color: #fff;
     --size: 1px;
@@ -57,11 +62,11 @@ it('merge three', async () => {
 }
 `;
 
-  expect(await run(input)).toMatchSnapshot();
+  t.assert.snapshot(await run(input), snapshotOptions);
 });
 
 // PS: по идеи @media в итоге не должно быть, но чтобы ничего не сломать оставлю так
-it('check cascading', async () => {
+test.test('check cascading', async (t) => {
   const input = `
 @media (min-resolution: 2dppx) {
     :root {
@@ -78,10 +83,10 @@ it('check cascading', async () => {
     --color: blue;
 }`;
 
-  expect(await run(input)).toMatchSnapshot();
+  t.assert.snapshot(await run(input), snapshotOptions);
 });
 
-it('check deep cascading', async () => {
+test.test('check deep cascading', async (t) => {
   const input = `
 @supports (display: flex) {
     @media screen and (min-width: 900px) {
@@ -94,19 +99,19 @@ it('check deep cascading', async () => {
     --color: blue;
 }`;
 
-  expect(await run(input)).toMatchSnapshot();
+  t.assert.snapshot(await run(input), snapshotOptions);
 });
 
-it('no custom properties', async () => {
+test.test('no custom properties', async (t) => {
   const input = `
 .b {
   color: var(--color);
 }`;
 
-  expect(await run(input)).toMatchSnapshot();
+  t.assert.snapshot(await run(input), snapshotOptions);
 });
 
-it('example', async () => {
+test.test('example', async (t) => {
   const input = `
 .a {
     --color1: #ff0000;
@@ -124,5 +129,5 @@ it('example', async () => {
 }
 `;
 
-  expect(await run(input)).toMatchSnapshot();
+  t.assert.snapshot(await run(input), snapshotOptions);
 });
