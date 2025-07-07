@@ -240,6 +240,8 @@ export const ChipsInputBase = <O extends ChipOption>({
     <FormField
       Component="div"
       getRootRef={getRootRef}
+      // role="group" добавлена, чтобы этот блок можно было найти с помощью стрелочек при использовании NVDA
+      // Если убрать, то aria-label не будет читаться
       role="group"
       aria-label={ariaLabel}
       style={style}
