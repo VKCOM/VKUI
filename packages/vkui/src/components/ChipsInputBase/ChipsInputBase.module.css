@@ -3,7 +3,7 @@
 
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
-  display: inline-flex;
+  display: flex;
   flex-grow: 1;
   flex-shrink: 1;
   flex-wrap: wrap;
