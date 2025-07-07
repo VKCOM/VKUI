@@ -31,7 +31,8 @@
   position: relative;
   box-sizing: border-box;
   display: inline-flex;
-  inline-size: 0;
+  flex: 1;
+  inline-size: 100%;
   padding: 0;
   color: var(--vkui--color_text_primary);
   appearance: none;
@@ -43,8 +44,6 @@
 .hasPlaceholder .el,
 .hasInputValue .el,
 .el:not(:read-only):focus {
-  flex: 1;
-  inline-size: 100%;
   min-inline-size: 64px;
   padding-block: 2px 4px;
   padding-inline: 10px 2px;
