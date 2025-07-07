@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { AdaptiveIconRenderer, type AdaptiveIconRendererProps } from './AdaptiveIconRenderer';
 
 const story: Meta<AdaptiveIconRendererProps> = {
-  title: 'Blocks/AdaptiveIconRenderer',
+  title: 'Utils/AdaptiveIconRenderer',
   component: AdaptiveIconRenderer,
   parameters: createStoryParameters(
     'AdaptiveIconRenderer',

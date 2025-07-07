@@ -6,7 +6,7 @@ import { Group } from '../Group/Group';
 import { Search, type SearchProps } from './Search';
 
 const story: Meta<SearchProps> = {
-  title: 'Blocks/Search',
+  title: 'Utils/Search',
   component: Search,
   parameters: createStoryParameters('Search', CanvasFullLayout, DisableCartesianParam),
 };

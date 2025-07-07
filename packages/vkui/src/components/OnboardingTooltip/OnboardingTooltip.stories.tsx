@@ -16,7 +16,7 @@ import { OnboardingTooltip, type OnboardingTooltipProps } from './OnboardingTool
 import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
 
 const story: Meta<OnboardingTooltipProps> = {
-  title: 'Poppers/OnboardingTooltip',
+  title: 'Utils/OnboardingTooltip',
   component: OnboardingTooltip,
   parameters: createStoryParameters('OnboardingTooltip', DisableCartesianParam),
 };

@@ -4,7 +4,7 @@ import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { LocaleProvider, type LocaleProviderProps } from './LocaleProvider';
 
 const story: Meta<LocaleProviderProps> = {
-  title: 'Service/LocaleProvider',
+  title: 'Configuration/LocaleProvider',
   component: LocaleProvider,
   argTypes: {
     value: {

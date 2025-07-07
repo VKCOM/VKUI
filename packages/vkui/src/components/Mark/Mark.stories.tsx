@@ -5,7 +5,7 @@ import { Group } from '../Group/Group';
 import { Mark, type MarkProps } from './Mark';
 
 const story: Meta<MarkProps> = {
-  title: 'Blocks/Mark',
+  title: 'Typography/Mark',
   component: Mark,
   parameters: createStoryParameters('Mark', CanvasFullLayout, DisableCartesianParam),
 };

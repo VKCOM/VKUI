@@ -42,6 +42,24 @@ const customViewports = Object.entries(BREAKPOINTS).reduce<Record<string, Custom
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: [
+          'Layout',
+          ['Group', ['*', 'Header', 'Footer']],
+          'Forms',
+          'Dates',
+          'Buttons',
+          'Navigation',
+          'Feedback',
+          'Modals',
+          'Data Display',
+          'Typography',
+          'Configuration',
+          'Utils',
+        ],
+      },
+    },
     docs: {
       source: {
         type: 'dynamic',

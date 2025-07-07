@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Link, type LinkProps } from './Link';
 
 const story: Meta<LinkProps> = {
-  title: 'Blocks/Link',
+  title: 'Typography/Link',
   component: Link,
   parameters: createStoryParameters('Link', CanvasFullLayout, DisableCartesianParam),
 };

@@ -15,7 +15,7 @@ import { View } from '../View/View';
 import { Panel, type PanelProps } from './Panel';
 
 const story: Meta<PanelProps> = {
-  title: 'Layout/Panel',
+  title: 'Navigation/Panel',
   component: Panel,
   parameters: createStoryParameters('Panel', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],

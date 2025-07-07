@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../../testing/storybook/createStoryPar
 import { Paragraph, type ParagraphProps } from './Paragraph';
 
 const story: Meta<ParagraphProps> = {
-  title: 'Typography/Paragraph',
+  title: 'Typography/Typography/Paragraph',
   component: Paragraph,
   parameters: createStoryParameters('Paragraph', CanvasFullLayout),
   decorators: [withCartesian],

@@ -11,16 +11,17 @@ const filterConfig = (config: typeof CONFIG, query: string) => {
   if (!query) {
     return config;
   }
-  const resultConfig: typeof CONFIG = {};
-  Object.entries(config).forEach(([groupKey, groupData]) => {
+  const resultConfig: typeof CONFIG = [];
+  config.forEach((groupData) => {
     const validComponents = groupData.components.filter((componentName) => {
-      return componentName.toLowerCase().includes(query.toLowerCase());
+      return componentName.toLowerCase().includes(query);
     });
     if (validComponents.length) {
-      resultConfig[groupKey] = {
+      resultConfig.push({
         title: groupData.title,
+        displayTitle: groupData.displayTitle,
         components: validComponents,
-      };
+      });
     }
   });
   return resultConfig;
@@ -33,9 +34,10 @@ const ComponentsOverview = () => {
       config={CONFIG}
       filterConfig={filterConfig}
       remapConfigToSections={(config) =>
-        Object.values(config).map((groupData) => ({
+        config.map((groupData) => ({
           id: groupData.title,
           title: groupData.title,
+          displayTitle: groupData.displayTitle,
           items: groupData.components,
         }))
       }

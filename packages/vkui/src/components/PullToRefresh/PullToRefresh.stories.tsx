@@ -11,7 +11,7 @@ import { List } from '../List/List';
 import { PullToRefresh, type PullToRefreshProps } from './PullToRefresh';
 
 const story: Meta<PullToRefreshProps> = {
-  title: 'Blocks/PullToRefresh',
+  title: 'Feedback/PullToRefresh',
   component: PullToRefresh,
   parameters: createStoryParameters('PullToRefresh', CanvasFullLayout, DisableCartesianParam),
   decorators: [withSinglePanel, withVKUILayout],

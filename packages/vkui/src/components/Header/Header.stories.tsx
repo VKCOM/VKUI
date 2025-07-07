@@ -9,7 +9,7 @@ import { Link } from '../Link/Link';
 import { Header, type HeaderProps } from './Header';
 
 const story: Meta<HeaderProps> = {
-  title: 'Blocks/Header',
+  title: 'Layout/Group/Header',
   component: Header,
   parameters: createStoryParameters('Header', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

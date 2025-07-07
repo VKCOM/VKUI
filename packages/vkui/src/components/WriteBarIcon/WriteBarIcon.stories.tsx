@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { WriteBarIcon, type WriteBarIconProps } from './WriteBarIcon';
 
 const story: Meta<WriteBarIconProps> = {
-  title: 'Blocks/WriteBarIcon',
+  title: 'Forms/WriteBar/WriteBarIcon',
   component: WriteBarIcon,
   parameters: createStoryParameters('WriteBarIcon', CanvasFullLayout, DisableCartesianParam),
 };
