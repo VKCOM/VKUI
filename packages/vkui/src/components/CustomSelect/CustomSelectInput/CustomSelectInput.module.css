@@ -63,6 +63,10 @@
   pointer-events: none;
 }
 
+.accessible:not(.hasInputValue):focus-within .container {
+  color: var(--vkui--color_text_tertiary)
+}
+
 .hasBefore .container {
   padding-inline-start: 0;
 }

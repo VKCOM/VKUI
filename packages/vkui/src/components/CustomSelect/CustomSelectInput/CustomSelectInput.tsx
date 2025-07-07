@@ -115,6 +115,8 @@ export const CustomSelectInput = ({
         after && styles.hasAfter,
         inputHidden && styles.inputHidden,
         labelHidden && styles.labelHidden,
+        accessible && styles.accessible,
+        restProps.value && styles.hasInputValue,
         className,
       )}
       getRootRef={handleRootRef}
