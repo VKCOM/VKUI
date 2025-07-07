@@ -20,7 +20,7 @@
 <label htmlFor="chips">Список исполнителей</label>
 <ChipsInput placeholder="Введите название" id="chips" />
 
-// Связывание с использование компонента `FormItem`
+// Связывание с использованием компонента `FormItem`
 <FormItem top="Список исполнителей" htmlFor="chips">
   <ChipsInput placeholder="Введите название" id="chips" />
 </FormItem>
