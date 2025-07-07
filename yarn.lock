@@ -4579,6 +4579,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/postcss-import@npm:^14.0.3":
+  version: 14.0.3
+  resolution: "@types/postcss-import@npm:14.0.3"
+  dependencies:
+    postcss: "npm:^8.0.0"
+  checksum: 10/f967b84c8921520e4ac7c481bc9ff90490139303796c940d4160621532f64c8be37e00bb3c2dddf322217001907bed6f886650585378dddbcdb596a40b09292b
+  languageName: node
+  linkType: hard
+
 "@types/prompts@npm:^2.4.9":
   version: 2.4.9
   resolution: "@types/prompts@npm:2.4.9"
@@ -5452,6 +5461,7 @@ __metadata:
   dependencies:
     "@swc/helpers": "npm:^0.5.17"
     "@types/node": "npm:*"
+    "@types/postcss-import": "npm:^14.0.3"
     "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
     "@vkontakte/vkui-date-fns-tz": "npm:^0.0.4"
@@ -16890,7 +16900,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.3, postcss@npm:^8.5.6":
+"postcss@npm:^8.0.0, postcss@npm:^8.4.33, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.3, postcss@npm:^8.5.6":
   version: 8.5.6
   resolution: "postcss@npm:8.5.6"
   dependencies:
