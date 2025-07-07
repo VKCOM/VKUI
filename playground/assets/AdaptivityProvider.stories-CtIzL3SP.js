@@ -1,0 +1,5 @@
+import{A as o,j as r,u as n}from"./iframe-DTUKIQpa.js";import{D as p,C as c}from"./constants-DdkjnEgz.js";import{c as l}from"./createStoryParameters-CcwS40kl.js";const g={title:"Service/AdaptivityProvider",component:o,parameters:l("AdaptivityProvider",c,p)},m=()=>{const{sizeX:e,sizeY:i}=n();return r.jsxs(r.Fragment,{children:[e.compact&&r.jsx("div",{style:{padding:5},children:"Size X: Compact"}),e.regular&&r.jsx("div",{style:{padding:5},children:"Size X: Regular"}),i.compact&&r.jsx("div",{style:{padding:5},children:"Size Y: Compact"}),i.regular&&r.jsx("div",{style:{padding:5},children:"Size Y: Regular"})]})},a={render:e=>r.jsx(o,{...e,children:r.jsx(m,{})})};var t,s,d;a.parameters={...a.parameters,docs:{...(t=a.parameters)==null?void 0:t.docs,source:{originalSource:`{
+  render: args => <AdaptivityProvider {...args}>
+      <DisplayAdaptivityProvider />
+    </AdaptivityProvider>
+}`,...(d=(s=a.parameters)==null?void 0:s.docs)==null?void 0:d.source}}};const x=["Playground"];export{a as Playground,x as __namedExportsOrder,g as default};

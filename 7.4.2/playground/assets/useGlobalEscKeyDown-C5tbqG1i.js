@@ -1,0 +1,1 @@
+import{p as u,m as E,q as a,K as d}from"./iframe-DTUKIQpa.js";const n={passive:!0,capture:!0},y=(o,s)=>{const{document:e}=u();E(()=>{if(!e||!o||!s)return;const t=r=>{a(r)===d.ESCAPE&&s(r)};return e.addEventListener("keydown",t,n),()=>{e.removeEventListener("keydown",t,n)}},[o,e,s])};export{y as u};
