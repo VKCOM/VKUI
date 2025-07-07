@@ -64,7 +64,7 @@
 }
 
 .accessible:not(.hasInputValue):focus-within .container {
-  color: var(--vkui--color_text_tertiary)
+  color: var(--vkui--color_text_tertiary);
 }
 
 .hasBefore .container {
