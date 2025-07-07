@@ -27,7 +27,7 @@
     "@storybook/addon-links": "9.0.14",
     "@storybook/react-vite": "9.0.14",
     "@swc/cli": "^0.7.7",
-    "@swc/core": "1.12.7",
+    "@swc/core": "1.12.9",
     "@swc/jest": "^0.2.38",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
