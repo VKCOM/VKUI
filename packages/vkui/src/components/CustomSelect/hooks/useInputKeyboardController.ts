@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { Keys, pressedKey } from '../../../lib/accessibility';
 import { callMultiple } from '../../../lib/callMultiple';

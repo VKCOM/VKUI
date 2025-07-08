@@ -1,5 +1,3 @@
-'use client';
-
 import { type Dispatch, type SetStateAction } from 'react';
 import * as React from 'react';
 import { type SelectValue } from '../../NativeSelect/NativeSelect';
