@@ -50,7 +50,7 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Tabs
+ * @see https://vkui.io/components/tabs
  */
 export const Tabs = ({
   children,

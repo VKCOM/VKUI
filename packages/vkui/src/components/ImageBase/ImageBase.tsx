@@ -152,7 +152,7 @@ const sizeToNumber = (size: number | string | undefined): number | undefined => 
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ImageBase
+ * @see https://vkui.io/components/image-base
  */
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;

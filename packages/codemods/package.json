@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Codemods for automatic VKUI major version upgrade",
   "repository": "https://github.com/VKCOM/VKUI",
-  "homepage": "https://vkcom.github.io/VKUI/",
+  "homepage": "https://vkui.io/",
   "license": "MIT",
   "bin": "./dist/index.js",
   "files": [

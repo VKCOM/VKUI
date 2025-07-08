@@ -123,7 +123,7 @@ export interface SliderMultipleProps extends SliderBaseProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Slider
+ * @see https://vkui.io/components/slider
  */
 export const Slider = ({
   step = 1,

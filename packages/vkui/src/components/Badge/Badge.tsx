@@ -16,7 +16,7 @@ export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Badge
+ * @see https://vkui.io/components/badge
  */
 export const Badge = ({ mode = 'new', children, ...restProps }: BadgeProps): React.ReactNode => (
   <RootComponent

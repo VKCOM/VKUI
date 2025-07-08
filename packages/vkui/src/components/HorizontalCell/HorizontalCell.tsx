@@ -68,7 +68,7 @@ export interface HorizontalCellProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/HorizontalCell
+ * @see https://vkui.io/components/horizontal-cell
  */
 export const HorizontalCell = ({
   className,

@@ -18,7 +18,7 @@ const sizeYClassNames = {
 } as const;
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Chip
+ * @see https://vkui.io/components/chip
  */
 export const Chip = ({
   Component = 'span',

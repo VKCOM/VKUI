@@ -15,7 +15,7 @@ export interface FootnoteProps extends TypographyProps, HasCaps {}
 /**
  * Используется для основных подписей.
  *
- * @see https://vkcom.github.io/VKUI/#/Footnote
+ * @see https://vkui.io/components/typography#footnote
  */
 export const Footnote = ({
   className,

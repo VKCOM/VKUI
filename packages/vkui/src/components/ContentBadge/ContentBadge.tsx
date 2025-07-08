@@ -80,7 +80,7 @@ export interface ContentBadgeProps
  * Используйте `ContentBadge.SlotIcon` для размещения иконок внутри `ContentBadge`.
  *
  * @since 6.1.0
- * @see https://vkcom.github.io/VKUI/#/ContentBadge
+ * @see https://vkui.io/components/content-badge
  */
 export const ContentBadge: React.FC<ContentBadgeProps> & {
   IconSlot: typeof ContentBadgeIconSlot;

@@ -206,7 +206,7 @@ export interface Gesture {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Touch
+ * @see https://vkui.io/components/touch
  */
 export const Touch = ({
   onStart,

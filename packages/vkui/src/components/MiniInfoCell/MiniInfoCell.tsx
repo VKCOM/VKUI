@@ -57,7 +57,7 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/MiniInfoCell
+ * @see https://vkui.io/components/mini-info-cell
  */
 export const MiniInfoCell = ({
   before,

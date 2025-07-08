@@ -86,7 +86,7 @@ export interface VKUIButtonProps extends HasAlign {
 export interface ButtonProps extends Omit<TappableOmitProps, 'size'>, VKUIButtonProps {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Button
+ * @see https://vkui.io/components/button
  */
 export const Button = ({
   size = 's',

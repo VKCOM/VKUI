@@ -24,7 +24,7 @@ export interface SelectionControlProps
     > {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SelectionControl
+ * @see https://vkui.io/components/selection-control
  */
 export const SelectionControl = (restProps: SelectionControlProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();

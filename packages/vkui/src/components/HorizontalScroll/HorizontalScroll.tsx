@@ -194,7 +194,7 @@ function doScroll({
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
+ * @see https://vkui.io/components/horizontal-scroll
  */
 export const HorizontalScroll = ({
   children,

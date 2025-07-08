@@ -67,7 +67,7 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PopoutWrapper
+ * @see https://vkui.io/components/popout-wrapper
  */
 export const PopoutWrapper = ({
   alignY = 'center',

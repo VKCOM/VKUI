@@ -143,7 +143,7 @@ export interface ChipsSelectProps<O extends ChipOption>
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ChipsSelect
+ * @see https://vkui.io/components/chips-select
  */
 export const ChipsSelect = <Option extends ChipOption>({
   // FormFieldProps

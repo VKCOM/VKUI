@@ -12,7 +12,7 @@ export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/RadioGroup
+ * @see https://vkui.io/components/radio-group
  */
 export const RadioGroup = ({
   mode = 'vertical',

@@ -55,8 +55,8 @@ export interface TabsItemProps
   /**
    * Добавляет элемент слева от `after`.
    *
-   * - `React.ReactElement` – либо [`Badge`](https://vkcom.github.io/VKUI/#/Badge) с параметром `mode="prominent"`.
-   *   Либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
+   * - `React.ReactElement` – либо [`Badge`](https://vkui.io/components/badge) с параметром `mode="prominent"`.
+   *   Либо [`Counter`](https://vkui.io/components/counter) с параметрами `mode="prominent" size="s"`.
    * - `number` – для показа текстового блока с переданным числом.
    */
   status?: React.ReactElement | number;
@@ -79,7 +79,7 @@ export interface TabsItemProps
 const warn = warnOnce('TabsItem');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/TabsItem
+ * @see https://vkui.io/components/tabs#tabs-item
  */
 export const TabsItem = ({
   before,

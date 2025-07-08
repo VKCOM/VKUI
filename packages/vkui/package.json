@@ -45,7 +45,7 @@
     "directory": "packages/vkui"
   },
   "bugs": "https://github.com/VKCOM/VKUI/issues",
-  "homepage": "https://vkcom.github.io/VKUI/",
+  "homepage": "https://vkui.io/",
   "scripts": {
     "prepack": "yarn copy-essensial-files && yarn build",
     "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",

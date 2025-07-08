@@ -111,7 +111,7 @@ export interface AlertProps
 const warn = warnOnce('Alert');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Alert
+ * @see https://vkui.io/components/alert
  */
 export const Alert = ({
   usePortal,

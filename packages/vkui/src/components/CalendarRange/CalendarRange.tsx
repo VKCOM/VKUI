@@ -115,7 +115,7 @@ const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CalendarRange
+ * @see https://vkui.io/components/calendar-range
  */
 export const CalendarRange = ({
   'value': valueProp,

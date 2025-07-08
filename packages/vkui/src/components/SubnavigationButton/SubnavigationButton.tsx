@@ -86,7 +86,7 @@ const SubnavigationButtonTypography = ({
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
+ * @see https://vkui.io/components/subnavigation-bar#subnavigation-button
  */
 export const SubnavigationButton = ({
   mode = 'primary',

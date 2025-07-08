@@ -28,7 +28,7 @@ export interface EpicProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
 const warn = warnOnce('Epic');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Epic
+ * @see https://vkui.io/components/epic
  */
 export const Epic = ({
   activeStory,

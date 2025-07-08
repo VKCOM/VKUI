@@ -118,7 +118,7 @@ export interface PopoverProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Popover
+ * @see https://vkui.io/components/popover
  */
 export const Popover = ({ children, ...restProps }: PopoverProps): React.ReactNode => {
   const { anchorRef, anchorProps, popover } = usePopover<HTMLDivElement>(restProps);

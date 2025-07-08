@@ -56,13 +56,13 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   disableParentTransformForPositionFixedElements?: boolean;
   /**
    * Глобально задаёт тип оформления макета для компонентов
-   * [Panel](https://vkcom.github.io/VKUI/#/Panel) и [Group](https://vkcom.github.io/VKUI/#/Group).
+   * [Panel](https://vkui.io/components/panel) и [Group](https://vkui.io/components/group).
    */
   layout?: AppRootLayout;
   /**
    * Задаёт режим выбора текста (выделения текста) для всего приложения.
    * По умолчанию, если режим не задан, запрещает выбор текста в приложениях,
-   * запущенных в webview (по значению свойства `isWebView` из [ConfigProvider](https://vkcom.github.io/VKUI/#/ConfigProvider)).
+   * запущенных в webview (по значению свойства `isWebView` из [ConfigProvider](https://vkui.io/components/config-provider)).
    *
    * - `enabled-with-pointer` – разрешает выбор текста, если устройство ввода типа `pointer` (например, `мышь`), в остальных случаях запрещает;
    * - `disabled` – запрещает выбор текста;
@@ -84,7 +84,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/AppRoot
+ * @see https://vkui.io/components/app-root
  */
 export const AppRoot = ({
   children,
