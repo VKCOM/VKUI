@@ -20,6 +20,10 @@ const base64Image =
 const base64ImageValue = withLabel(base64Image, 'base64');
 
 export const ImagePlayground = (props: ComponentPlaygroundProps) => {
+  const [removeSrc, setRemoveSrc] = React.useState(base64Image);
+
+  React.useEffect(() => setRemoveSrc(''), []);
+
   return (
     <ComponentPlayground
       {...props}
@@ -103,6 +107,10 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
         {
           src: [base64ImageValue],
           children: ['CH'],
+        },
+        {
+          // Проверяем что фон не убирается если убрать ссылку
+          src: [removeSrc],
         },
       ]}
     >

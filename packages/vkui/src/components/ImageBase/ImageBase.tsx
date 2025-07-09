@@ -286,7 +286,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
         baseStyle={{ width, height }}
         baseClassName={classNames(
           styles.host,
-          loaded && styles.loaded,
+          hasSrc && loaded && styles.loaded,
           withTransparentBackground && styles.transparentBackground,
         )}
         getRootRef={wrapperRef}
