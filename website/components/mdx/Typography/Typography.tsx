@@ -21,6 +21,7 @@ import {
   Title,
   type TypographyProps,
 } from '@vkontakte/vkui';
+import { HeadingLink } from '@vkontakte/vkui-docs-theme';
 import styles from './Typography.module.css';
 
 type SizeYType = (typeof SizeType)[keyof typeof SizeType] | '';
@@ -84,6 +85,10 @@ const TypographyArray = [
   },
 ] as const;
 
+function toKebabCase(componentName: string) {
+  return componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 function TypographyCard({
   title,
   description,
@@ -97,7 +102,9 @@ function TypographyCard({
 }) {
   return (
     <Card className={styles.card} mode="shadow">
-      <Title level="3">{title}</Title>
+      <HeadingLink Tag="h3" noMargin id={toKebabCase(title)}>
+        {title}
+      </HeadingLink>
       <Headline level="2" weight="3">
         {description}
       </Headline>

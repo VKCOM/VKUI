@@ -43,7 +43,18 @@ export default withBundleAnalyzer(
       unoptimized: true,
     },
     distDir,
-    webpack: (config) => {
+    webpack: (config, { isServer }) => {
+      if (!isServer) {
+        config.resolve = {
+          ...config.resolve,
+          fallback: {
+            ...config.resolve.fallback,
+            fs: false,
+            module: false,
+          },
+        };
+      }
+
       config.module.rules.forEach((element) => {
         if (element.resourceQuery) {
           return;

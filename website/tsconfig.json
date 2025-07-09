@@ -17,6 +17,7 @@
       }
     ],
     "paths": {
+      "@/docgen.json": [".docgen/docgen.json"],
       "@/components/*": ["components/*"],
       "@/stores/*": ["stores/*"],
       "@/providers/*": ["providers/*"]
@@ -31,6 +32,7 @@
     "next-env.d.ts",
     "postcss.config.js",
     "raw.d.ts",
+    "generated.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "out/types/**/*.ts"

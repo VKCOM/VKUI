@@ -6,6 +6,7 @@ dist/
 storybook-static/
 out/
 _pagefind/
+.docgen/
 
 # Next
 .next/

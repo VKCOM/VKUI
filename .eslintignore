@@ -15,3 +15,4 @@ out/
 next-env.d.ts
 *.css.d.ts
 _pagefind/
+.docgen/

@@ -1,7 +1,5 @@
-'use client';
-
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkui';
+import { classNames } from '@vkontakte/vkjs';
 import styles from './Table.module.css';
 
 export const Th = (props: React.HTMLAttributes<HTMLTableCellElement>) => {

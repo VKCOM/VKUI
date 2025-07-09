@@ -54,4 +54,4 @@ export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
   };
 };
 
-export { Callout, Code };
+export { Callout, Code, HeadingLink, Table, Td, Th, Tr };

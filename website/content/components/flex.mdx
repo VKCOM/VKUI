@@ -116,3 +116,29 @@ VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/
   </Group>
   ```
 </Playground>
+
+## Flex.Item [tag:component]
+
+Подкомпонент `Flex.Item` используется как обёртка для дочерних элементов компонента `Flex` в случае, когда нужно
+переопределить `flex`-свойства этих элементов, например, `flex-basis`:
+
+<Playground>
+  ```jsx
+  <Flex gap="m" justify="center" margin="auto">
+    <Card>Колонка</Card>
+    <Flex.Item flexBasis={100}>
+      <Card>Ширина 100px</Card>
+    </Flex.Item>
+    <Card>Колонка</Card>
+  </Flex>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Flex">
+### Flex [#flex-api]
+
+### Flex.Item [#flex-item-api]
+
+</PropsTable>

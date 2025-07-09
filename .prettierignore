@@ -23,6 +23,7 @@ blob-report/
 all-blob-reports/
 .next/
 out/
+.docgen/
 
 packages/vkui/**/*.css.d.ts
 packages/vkui-floating-ui/**/*.d.ts
