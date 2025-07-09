@@ -16,6 +16,7 @@ const story: Meta<TextareaProps> = {
     before: iconsPresets,
     after: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

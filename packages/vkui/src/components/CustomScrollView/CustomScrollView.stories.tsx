@@ -25,6 +25,7 @@ const story: Meta<CustomScrollViewProps> = {
   title: 'Utils/CustomScrollView',
   component: CustomScrollView,
   parameters: createStoryParameters('CustomScrollView', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

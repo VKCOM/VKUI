@@ -56,6 +56,7 @@ const story: Meta<ModalCardBaseProps> = {
       },
     }),
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;

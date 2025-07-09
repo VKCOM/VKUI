@@ -26,6 +26,7 @@ const story: Meta<CalendarProps> = {
     renderDayContent: createCalendarDayRenderField(),
     timezone: createCalendarTimezoneField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

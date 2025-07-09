@@ -9,6 +9,7 @@ const story: Meta<ParagraphProps> = {
   component: Paragraph,
   parameters: createStoryParameters('Paragraph', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

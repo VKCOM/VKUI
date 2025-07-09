@@ -14,6 +14,7 @@ const story: Meta<RadioGroupProps> = {
   title: 'Layout/RadioGroup',
   component: RadioGroup,
   parameters: createStoryParameters('RadioGroup', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

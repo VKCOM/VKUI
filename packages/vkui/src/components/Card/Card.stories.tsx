@@ -11,6 +11,7 @@ const story: Meta<CardProps> = {
   parameters: createStoryParameters('Card', CanvasFullLayout, DisableCartesianParam),
   decorators: [withSinglePanel, withVKUILayout],
   excludeStories: ['playgroundArgs'],
+  tags: ['Отображение данных'],
 };
 
 export default story;

@@ -48,6 +48,7 @@ const story: Meta<CellButtonProps> = {
     extraSubtitle: StringArg,
     overTitle: StringArg,
   },
+  tags: ['Кнопки'],
 };
 
 export default story;

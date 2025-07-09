@@ -21,6 +21,7 @@ const story: Meta<TouchProps> = {
     cantered: false,
     ...DisableCartesianParam,
   }),
+  tags: ['Утилиты'],
 };
 
 export default story;

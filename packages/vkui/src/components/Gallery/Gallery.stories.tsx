@@ -7,6 +7,7 @@ const story: Meta<GalleryProps> = {
   title: 'Data Display/Gallery',
   component: Gallery,
   parameters: createStoryParameters('Gallery', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Отображение данных'],
 };
 
 export default story;

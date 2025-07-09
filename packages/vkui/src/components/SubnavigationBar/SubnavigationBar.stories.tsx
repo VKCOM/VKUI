@@ -26,6 +26,7 @@ const story: Meta<StorySubnavigationBarProps> = {
       options: ['size', 'favorite', 'filters'],
     },
   },
+  tags: ['Навигация'],
 };
 
 export default story;

@@ -34,6 +34,7 @@ const story: Meta<TypographyOverview> = {
     accent: { control: 'boolean' },
   },
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

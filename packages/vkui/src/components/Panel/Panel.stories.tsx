@@ -19,6 +19,7 @@ const story: Meta<PanelProps> = {
   component: Panel,
   parameters: createStoryParameters('Panel', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Навигация'],
 };
 
 export default story;

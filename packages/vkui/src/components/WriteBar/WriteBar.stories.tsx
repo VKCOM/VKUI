@@ -12,6 +12,7 @@ const story: Meta<WriteBarProps> = {
   component: WriteBar,
   parameters: createStoryParameters('WriteBar', CanvasFullLayout, DisableCartesianParam),
   args: { onHeightChange: fn() },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

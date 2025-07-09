@@ -36,6 +36,7 @@ const story: Meta<StoryCalendarRangeProps> = {
     },
     renderDayContent: createCalendarDayRenderField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

@@ -8,6 +8,7 @@ const story: Meta<SimpleGridProps> = {
   title: 'Layout/SimpleGrid',
   component: SimpleGrid,
   parameters: createStoryParameters('SimpleGrid', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

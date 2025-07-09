@@ -9,6 +9,7 @@ const story: Meta<FormStatusProps> = {
   component: FormStatus,
   parameters: createStoryParameters('FormStatus', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

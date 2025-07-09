@@ -15,6 +15,7 @@ const story: Meta<SegmentedControlProps> = {
       options: ['radiogroup', 'tablist'],
     },
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

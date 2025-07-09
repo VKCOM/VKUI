@@ -7,6 +7,7 @@ const story: Meta<ScrollArrowProps> = {
   title: 'Utils/ScrollArrow',
   component: ScrollArrow,
   parameters: createStoryParameters('ScrollArrow', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

@@ -8,6 +8,7 @@ const story: Meta<TappableProps> = {
   title: 'Utils/Tappable',
   component: Tappable,
   parameters: createStoryParameters('Tappable', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

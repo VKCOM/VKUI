@@ -22,6 +22,7 @@ const story: Meta<PopoverProps> = {
   title: 'Modals/Popover',
   component: Popover,
   parameters: createStoryParameters('Popover', DisableCartesianParam),
+  tags: ['Модальные окна'],
 };
 
 export default story;

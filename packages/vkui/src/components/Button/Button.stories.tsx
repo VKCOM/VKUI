@@ -24,6 +24,7 @@ const story: Meta<StoryButtonProps> = {
     after: iconsPresets,
   },
   decorators: [withCartesian],
+  tags: ['Кнопки'],
 };
 
 export default story;

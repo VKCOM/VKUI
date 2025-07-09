@@ -73,6 +73,7 @@ const story: Meta<SimpleCellProps> = {
       },
     }),
   },
+  tags: ['Кнопки'],
 };
 
 export default story;

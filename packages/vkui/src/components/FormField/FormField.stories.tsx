@@ -16,6 +16,7 @@ const story: Meta<FormFieldProps> = {
     before: iconsPresets,
     after: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

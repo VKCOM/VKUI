@@ -9,6 +9,7 @@ const story: Meta<TitleProps> = {
   component: Title,
   parameters: createStoryParameters('Title', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

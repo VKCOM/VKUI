@@ -21,6 +21,7 @@ const story: Meta<ModalRootProps> = {
   title: 'Utils/ModalRoot',
   component: ModalRoot,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Утилиты'],
 };
 
 export default story;

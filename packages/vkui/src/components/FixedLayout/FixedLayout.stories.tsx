@@ -18,6 +18,7 @@ const story: Meta<FixedLayoutProps> = {
   component: FixedLayout,
   parameters: createStoryParameters('FixedLayout', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Раскладка'],
 };
 
 export default story;

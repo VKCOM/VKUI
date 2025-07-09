@@ -9,6 +9,7 @@ const story: Meta<HeadlineProps> = {
   component: Headline,
   parameters: createStoryParameters('Headline', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

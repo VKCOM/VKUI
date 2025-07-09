@@ -29,6 +29,7 @@ const story: Meta<HorizontalScrollProps> = {
     },
   },
   decorators: [withCartesian, withSinglePanel, withVKUILayout],
+  tags: ['Отображение данных'],
 };
 
 export default story;

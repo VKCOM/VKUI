@@ -9,6 +9,7 @@ const story: Meta<SpinnerProps> = {
   component: Spinner,
   parameters: createStoryParameters('Spinner', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Обратная связь'],
 };
 
 export default story;

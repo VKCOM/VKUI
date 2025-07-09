@@ -12,6 +12,7 @@ const story: Meta<AdaptiveIconRendererProps> = {
     CanvasFullLayout,
     DisableCartesianParam,
   ),
+  tags: ['Утилиты'],
 };
 
 export default story;

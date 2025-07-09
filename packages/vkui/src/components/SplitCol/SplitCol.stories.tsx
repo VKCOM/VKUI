@@ -16,6 +16,7 @@ const story: Meta<SplitColProps> = {
   title: 'Layout/SplitLayout/SplitCol',
   component: SplitCol,
   parameters: createStoryParameters('SplitCol', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;
