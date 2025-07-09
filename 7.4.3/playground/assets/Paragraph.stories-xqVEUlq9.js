@@ -1,0 +1,3 @@
+import{j as p}from"./iframe-C2_PECK0.js";import{w as m}from"./withCartesian-DAKMWDCJ.js";import{C as n}from"./constants-DdkjnEgz.js";import{c}from"./createStoryParameters-CcwS40kl.js";import{P as s}from"./Paragraph-BJiuCRl2.js";const u={title:"Typography/Paragraph",component:s,parameters:c("Paragraph",n),decorators:[m]},r={render:t=>p.jsx(s,{...t,children:"Paragraph"})};var a,o,e;r.parameters={...r.parameters,docs:{...(a=r.parameters)==null?void 0:a.docs,source:{originalSource:`{
+  render: args => <Paragraph {...args}>Paragraph</Paragraph>
+}`,...(e=(o=r.parameters)==null?void 0:o.docs)==null?void 0:e.source}}};const l=["Playground"];export{r as Playground,l as __namedExportsOrder,u as default};
