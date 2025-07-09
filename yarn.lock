@@ -1859,7 +1859,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/c418ea1719a7642706ac806abcd30e23562f2debaf16f0fe8b6d8037b113b8cab87e6afca159d5f4fa0321548bace93c266c6581af3e0341f5596b95be16747e
+  checksum: 10/a82b6005378ccda13250fcfeaa04ec2ba17d1c2923b5bba5907d5b2fd658c661b29c1215eb1c0fe305b390bee89ec77c684aa68506262734c3bb3cd76d8a6963
   languageName: node
   linkType: hard
 
@@ -2463,9 +2463,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:15.3.4":
-  version: 15.3.4
-  resolution: "@next/swc-darwin-arm64@npm:15.3.4"
+"@next/swc-darwin-arm64@npm:15.3.5":
+  version: 15.3.5
+  resolution: "@next/swc-darwin-arm64@npm:15.3.5"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
@@ -2704,13 +2704,14 @@ __metadata:
     "@shikijs/transformers": "npm:^3.7.0"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
-    next: "npm:^15.3.4"
+    next: "npm:^15.3.5"
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.2.17"
     pagefind: "npm:^1.3.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-live: "npm:^4.1.8"
+    slug: "npm:^11.0.0"
     typescript: "npm:*"
     zustand: "npm:^5.0.5"
   languageName: unknown
@@ -4632,19 +4633,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prismjs@npm:^1.26.0":
-  version: 1.26.5
-  resolution: "@types/prismjs@npm:1.26.5"
-  checksum: 10/617099479db9550119d0f84272dc79d64b2cf3e0d7a17167fe740d55fdf0f155697d935409464392d164e62080c2c88d649cf4bc4fdd30a87127337536657277
-  languageName: node
-  linkType: hard
-
 "@types/postcss-import@npm:^14.0.3":
   version: 14.0.3
   resolution: "@types/postcss-import@npm:14.0.3"
   dependencies:
     postcss: "npm:^8.0.0"
   checksum: 10/f967b84c8921520e4ac7c481bc9ff90490139303796c940d4160621532f64c8be37e00bb3c2dddf322217001907bed6f886650585378dddbcdb596a40b09292b
+  languageName: node
+  linkType: hard
+
+"@types/prismjs@npm:^1.26.0":
+  version: 1.26.5
+  resolution: "@types/prismjs@npm:1.26.5"
+  checksum: 10/617099479db9550119d0f84272dc79d64b2cf3e0d7a17167fe740d55fdf0f155697d935409464392d164e62080c2c88d649cf4bc4fdd30a87127337536657277
   languageName: node
   linkType: hard
 
@@ -15375,9 +15376,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^15.3.4":
-  version: 15.3.4
-  resolution: "next@npm:15.3.4"
+"next@npm:^15.3.5":
+  version: 15.3.5
+  resolution: "next@npm:15.3.5"
   dependencies:
     "@next/env": "npm:15.3.5"
     "@next/swc-darwin-arm64": "npm:15.3.5"
@@ -19213,6 +19214,15 @@ __metadata:
     ansi-styles: "npm:^6.2.1"
     is-fullwidth-code-point: "npm:^5.0.0"
   checksum: 10/10313dd3cf7a2e4b265f527b1684c7c568210b09743fd1bd74f2194715ed13ffba653dc93a5fa79e3b1711518b8990a732cb7143aa01ddafe626e99dfa6474b2
+  languageName: node
+  linkType: hard
+
+"slug@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "slug@npm:11.0.0"
+  bin:
+    slug: cli.js
+  checksum: 10/4d7470ebcc4aa49823d21b0f19ac25f7640dc5761af3c7d90a0dfe22eb4e10f78d6149fe5d0de752911ed8740f9c9796d27514e6c2043fd6d0236acb61681f95
   languageName: node
   linkType: hard
 
