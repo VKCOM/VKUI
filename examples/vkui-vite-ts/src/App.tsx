@@ -17,7 +17,7 @@ function Copyright() {
   return (
     <Caption>
       {'Авторские права © '}
-      <Link color="inherit" href="https://vkcom.github.io/VKUI/">
+      <Link color="inherit" href="https://vkui.io/">
         Ваш сайт
       </Link>{' '}
       {new Date().getFullYear()}.
@@ -30,7 +30,7 @@ function ProTip() {
     <Headline inline>
       <Icon24LightbulbOutline className={styles.tipIcon} />
       {'Совет: посмотрите другие '}
-      <Link href="https://vkcom.github.io/VKUI/">шаблоны</Link>
+      <Link href="https://github.com/VKCOM/VKUI/tree/master/examples">шаблоны</Link>
       {' в документации VKUI.'}
     </Headline>
   );

@@ -54,7 +54,7 @@ export interface CellProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Cell
+ * @see https://vkui.io/components/cell
  */
 export const Cell: React.FC<CellProps> & {
   Checkbox: typeof CellCheckbox;

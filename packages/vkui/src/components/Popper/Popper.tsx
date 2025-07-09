@@ -93,7 +93,7 @@ export interface PopperProps extends PopperCommonProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Popper
+ * @see https://vkui.io/components/popper
  */
 export const Popper = ({
   // UseFloatingMiddlewaresBootstrapProps

@@ -34,7 +34,7 @@ export interface EllipsisTextProps
 /** Компонент ограничивает текстовый контент, убирая его в многоточие.
  *
  * @since 6.1.0
- * @see https://vkcom.github.io/VKUI/#/EllipsisText
+ * @see https://vkui.io/components/ellipsis-text
  */
 const EllipsisText = ({
   Component = 'span',

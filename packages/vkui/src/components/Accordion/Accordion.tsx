@@ -43,6 +43,9 @@ export interface AccordionProps extends HasChildren {
   unmountOnCollapsed?: boolean;
 }
 
+/**
+ * @see https://vkui.io/components/accordion
+ */
 export const Accordion: React.FC<AccordionProps> & {
   Summary: typeof AccordionSummary;
   Content: typeof AccordionContent;

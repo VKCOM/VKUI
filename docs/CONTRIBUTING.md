@@ -99,7 +99,7 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
   ```
 
 - Для цветов, скруглений, размеров, отступов и теней используются css-переменные из [vkui-tokens](https://github.com/VKCOM/vkui-tokens)
-- Для типографии используются компоненты [Typography](https://vkcom.github.io/VKUI/#!/Typography) там, где это возможно
+- Для типографии используются компоненты [Typography](https://vkui.io/components/typography) там, где это возможно
 - Добавлен `export` компонента и его свойств в `packages/vkui/src/index.ts`
 - При описании свойств для тестирования (data-testid) следует придерживаться следующего соглашения:
   - Шаблон JSDoc комментария: "Передает атрибут `data-testid` для <кого>"

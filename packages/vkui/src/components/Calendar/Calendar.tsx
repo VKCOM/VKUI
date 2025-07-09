@@ -144,7 +144,7 @@ export interface CalendarProps
 const warn = warnOnce('Calendar');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Calendar
+ * @see https://vkui.io/components/calendar
  */
 export const Calendar = ({
   getRootRef,

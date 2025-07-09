@@ -11,7 +11,7 @@ export interface CardProps extends HTMLAttributesWithRootRef<HTMLDivElement>, Ha
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Card
+ * @see https://vkui.io/components/card
  */
 export const Card = ({
   mode = 'tint',

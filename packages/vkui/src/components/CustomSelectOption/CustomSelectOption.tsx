@@ -50,15 +50,15 @@ export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLD
   /**
    * Блокирует весь блок.
    *
-   * > ⚠️  Важно: если CustomSelectOption используется внутри [Select](https://vkcom.github.io/VKUI/#/Select), [CustomSelect](https://vkcom.github.io/VKUI/#/CustomSelect) или [ChipsSelect](https://vkcom.github.io/VKUI/#/ChipsSelect), то свойство явно должно выставляться только через структуру `options`.
-   * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkcom.github.io/VKUI/#/CustomSelect) и [ChipsSelect](https://vkcom.github.io/VKUI/#/ChipsSelect) не будут знать об актуальном состоянии
+   * > ⚠️  Важно: если CustomSelectOption используется внутри [Select](https://vkui.io/components/select), [CustomSelect](https://vkui.io/components/custom-select) или [ChipsSelect](https://vkui.io/components/chips-select), то свойство явно должно выставляться только через структуру `options`.
+   * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkui.io/components/custom-select) и [ChipsSelect](https://vkui.io/components/chips-select) не будут знать об актуальном состоянии
    * опции.
    */
   disabled?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CustomSelectOption
+ * @see https://vkui.io/components/custom-select#custom-select-option
  */
 export const CustomSelectOption = ({
   children,

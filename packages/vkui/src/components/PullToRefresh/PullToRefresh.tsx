@@ -45,7 +45,7 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PullToRefresh
+ * @see https://vkui.io/components/pull-to-refresh
  */
 export const PullToRefresh = ({
   children,

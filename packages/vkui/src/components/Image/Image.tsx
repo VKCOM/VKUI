@@ -104,7 +104,7 @@ const getBorderRadiusBySizeInPx = (
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Image
+ * @see https://vkui.io/components/image
  */
 export const Image: React.FC<ImageProps> & {
   Badge: typeof ImageBadge;

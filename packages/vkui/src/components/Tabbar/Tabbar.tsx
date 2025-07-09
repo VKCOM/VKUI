@@ -35,7 +35,7 @@ const getItemsLayoutClassName = (
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Tabbar
+ * @see https://vkui.io/components/epic#tabbar
  */
 export const Tabbar = ({ plain = false, mode, ...restProps }: TabbarProps): React.ReactNode => {
   const platform = usePlatform();

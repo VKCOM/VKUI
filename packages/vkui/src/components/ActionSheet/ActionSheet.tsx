@@ -73,7 +73,7 @@ export interface ActionSheetProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ActionSheet
+ * @see https://vkui.io/components/action-sheet
  */
 export const ActionSheet = ({
   children,

@@ -31,7 +31,7 @@ export interface PanelHeaderEditProps extends Omit<PanelHeaderButtonProps, 'labe
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ * @see https://vkui.io/components/panel-header#panel-header-edit
  */
 export const PanelHeaderEdit = ({
   isActive = false,

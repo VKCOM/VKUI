@@ -78,7 +78,7 @@ export interface OnboardingTooltipProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Tooltip
+ * @see https://vkui.io/components/onboarding-tooltip
  */
 export const OnboardingTooltip = ({
   'id': idProp,

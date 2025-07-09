@@ -14,7 +14,7 @@ export interface InfoRowProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/InfoRow
+ * @see https://vkui.io/components/info-row
  */
 export const InfoRow = ({
   header,

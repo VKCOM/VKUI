@@ -18,9 +18,6 @@ export interface SegmentedControlOptionProps
   before?: React.ReactNode;
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/SegmentedControl
- */
 export const SegmentedControlOption = ({
   getRef,
   children,

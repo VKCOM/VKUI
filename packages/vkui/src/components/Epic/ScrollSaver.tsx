@@ -11,9 +11,6 @@ export interface ScrollSaverProps extends HasChildren {
   saveScroll: (this: void, scroll: number) => any;
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/ScrollSaver
- */
 export const ScrollSaver = ({
   children,
   initialScroll,

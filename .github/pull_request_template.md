@@ -52,7 +52,7 @@
 
 или
 
-> - [CustomSelect](https://vkcom.github.io/VKUI/${version}/#/CustomSelect): поправил баг с неправильным позиционированием 
+> - [CustomSelect](https://vkui.io/${version}/components/custom-select): поправил баг с неправильным позиционированием 
 
 - Если изменений по одному компоненту несколько, их нужно указать в следующем формате
 > - CustomSelect:

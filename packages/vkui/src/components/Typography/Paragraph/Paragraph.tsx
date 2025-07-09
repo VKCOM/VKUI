@@ -15,7 +15,7 @@ export type ParagraphProps = TypographyProps;
 /**
  * Используется для основного текста.
  *
- * @see https://vkcom.github.io/VKUI/#/Paragraph
+ * @see https://vkui.io/components/typography#paragraph
  */
 export const Paragraph = ({
   className,

@@ -52,7 +52,7 @@ export interface ContentCardProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ContentCard
+ * @see https://vkui.io/components/content-card
  */
 export const ContentCard = ({
   overTitle,

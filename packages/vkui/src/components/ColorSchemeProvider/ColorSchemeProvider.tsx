@@ -16,7 +16,7 @@ export interface ColorSchemeProviderProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ColorSchemeProvider
+ * @see https://vkui.io/components/color-scheme-provider
  */
 export const ColorSchemeProvider = ({
   value,

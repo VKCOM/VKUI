@@ -151,7 +151,7 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/UsersStack
+ * @see https://vkui.io/components/users-stack
  */
 export const UsersStack = ({
   photos = [],

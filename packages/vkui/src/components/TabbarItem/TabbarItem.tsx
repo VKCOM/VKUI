@@ -34,7 +34,7 @@ export interface TabbarItemProps
 const warn = warnOnce('TabbarItem');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/TabbarItem
+ * @see https://vkui.io/components/epic#tabbar-item
  */
 export const TabbarItem = ({
   children,

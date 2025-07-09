@@ -94,13 +94,13 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   /**
    * Функция для кастомного рендера кнопок страниц.
    *
-   * > Note: `CustomPaginationPageButtonProps` наследует API [Tappable](https://vkcom.github.io/VKUI/#/Tappable).
+   * > Note: `CustomPaginationPageButtonProps` наследует API [Tappable](https://vkui.io/components/tappable).
    */
   renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
   /**
    Функция для кастомного рендера кнопок навигации `prev` и `next`.
    *
-   * > Note: `CustomPaginationNavigationButton` наследует API [Button](https://vkcom.github.io/VKUI/#/Button).
+   * > Note: `CustomPaginationNavigationButton` наследует API [Button](https://vkui.io/components/button).
    */
   renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
   /**
@@ -118,7 +118,7 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Pagination
+ * @see https://vkui.io/components/pagination
  */
 export const Pagination = ({
   currentPage = 1,

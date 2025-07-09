@@ -59,7 +59,7 @@ const getBackIcon = (platform: PlatformType) => {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ * @see https://vkui.io/components/panel-header#panel-header-back
  */
 export const PanelHeaderBack = ({
   label = 'Назад',

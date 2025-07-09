@@ -132,7 +132,7 @@ const PanelHeaderIn = ({ before, after, children, typographyProps = {} }: PanelH
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeader
+ * @see https://vkui.io/components/panel-header
  */
 export const PanelHeader = ({
   before,

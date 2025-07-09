@@ -66,7 +66,7 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
    */
   background?: React.ReactNode;
   /**
-   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button).
+   * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button).
    *
    * - В режиме `tint` или `image` со светлым фоном используйте только с параметрами:
    *    - `mode="primary"`
@@ -74,7 +74,7 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
    * - В режиме `image` с тёмным фоном используйте с параметрами:
    *    - `appearance="overlay"`.
    *
-   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkui.io/components/button-group) с параметрами:
    *
    * - `gap="m" mode="horizontal" stretched`
    * - `gap="m" mode="vertical" stretched`.
@@ -83,7 +83,7 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Banner
+ * @see https://vkui.io/components/banner
  */
 export const Banner = ({
   mode = 'tint',

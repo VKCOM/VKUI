@@ -72,6 +72,9 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
   reverse?: boolean;
 }
 
+/**
+ * @see https://vkui.io/components/flex
+ */
 export const Flex: React.FC<FlexProps> & {
   Item: typeof FlexItem;
 } = ({

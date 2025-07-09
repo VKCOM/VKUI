@@ -82,7 +82,7 @@ export interface SimpleCellOwnProps extends HasComponent {
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableOmitProps {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ * @see https://vkui.io/components/simple-cell
  */
 export const SimpleCell = ({
   badgeBeforeTitle,
