@@ -1,9 +1,7 @@
 import { IconButton } from 'storybook/internal/components';
-import { useStorybookState } from 'storybook/manager-api';
+import { useStorybookState, useGlobals } from 'storybook/manager-api';
 import { DocumentIcon } from '@storybook/icons';
 import * as React from 'react';
-
-const DOCS_BASE_URL = 'https://vkui.io/';
 
 const COMPONENTS_DOCS_PARENT_MAP: Record<string, string> = {
   Header: 'Group',
@@ -41,15 +39,15 @@ function getVersionFromUrl() {
   return match ? match[1] : '';
 }
 
-const getComponentUrl = (componentName: string, parent): string => {
+const getComponentUrl = (componentName: string, parent: string, docsBaseUrl: string): string => {
   const version = getVersionFromUrl();
   const url = parent
     ? `${toKebabCase(parent)}#${toKebabCase(componentName)}`
     : toKebabCase(componentName);
   if (version) {
-    return `${DOCS_BASE_URL}${version}/components/${url}`;
+    return `${docsBaseUrl}${version}/components/${url}`;
   }
-  return `${DOCS_BASE_URL}components/${url}`;
+  return `${docsBaseUrl}components/${url}`;
 };
 
 function extractComponentName(path: string): string {
@@ -59,6 +57,7 @@ function extractComponentName(path: string): string {
 
 export const DocumentationButton = () => {
   const { index, storyId } = useStorybookState();
+  const [{ docsBaseUrl }] = useGlobals();
   const story = index?.[storyId];
   const importPath = story && 'importPath' in story && story.importPath;
 
@@ -69,7 +68,11 @@ export const DocumentationButton = () => {
   }
   const parent = COMPONENTS_DOCS_PARENT_MAP[componentName];
 
-  const documentationUrl = getComponentUrl(componentName, parent);
+  if (!docsBaseUrl) {
+    return null;
+  }
+
+  const documentationUrl = getComponentUrl(componentName, parent, docsBaseUrl);
 
   return (
     <a href={documentationUrl} target="_blank" rel="noreferrer">

@@ -6,8 +6,7 @@ import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 import './preview.css';
 
 declare global {
-  const __STYLEGUIDE_COMPONENTS_CONFIG__: Record<string, boolean>;
-  const __STYLEGUIDE_URL__: string;
+  const __DOCS_BASE_URL__: string;
   const __COMPONENTS_SOURCE_BASE_URL__: string;
 }
 
@@ -79,8 +78,7 @@ const preview: Preview = {
     cartesian: { disabled: true },
   },
   initialGlobals: {
-    styleguideComponents: __STYLEGUIDE_COMPONENTS_CONFIG__,
-    styleguideBaseUrl: __STYLEGUIDE_URL__,
+    docsBaseUrl: __DOCS_BASE_URL__,
     componentsSourceBaseUrl: __COMPONENTS_SOURCE_BASE_URL__,
     colorScheme: 'light',
     hasPointer: true,
