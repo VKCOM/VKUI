@@ -7,6 +7,7 @@ const story: Meta<SkeletonProps> = {
   title: 'Feedback/Skeleton',
   component: Skeleton,
   parameters: createStoryParameters('Skeleton', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Обратная связь'],
 };
 
 export default story;

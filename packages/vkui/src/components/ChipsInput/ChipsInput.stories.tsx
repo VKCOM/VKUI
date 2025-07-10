@@ -18,6 +18,7 @@ const story: Meta<ChipsInputProps<ChipOption>> = {
     before: iconsPresets,
     after: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

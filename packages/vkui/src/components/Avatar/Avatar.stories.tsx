@@ -69,6 +69,7 @@ const story: Meta<AvatarStoryProps> = {
     },
   },
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

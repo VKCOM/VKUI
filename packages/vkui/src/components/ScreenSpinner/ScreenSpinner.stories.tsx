@@ -14,6 +14,7 @@ const story: Meta<ScreenSpinnerProps> = {
       sizeIconsCount: 50,
     }),
   },
+  tags: ['Обратная связь'],
 };
 
 export default story;

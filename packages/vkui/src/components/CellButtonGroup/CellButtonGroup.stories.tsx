@@ -8,6 +8,7 @@ const story: Meta<CellButtonGroupProps> = {
   title: 'Layout/CellButtonGroup',
   component: CellButtonGroup,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Раскладка'],
 };
 
 export default story;

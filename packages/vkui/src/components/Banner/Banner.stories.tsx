@@ -53,6 +53,7 @@ const story: Meta<BannerProps> = {
       },
     }),
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

@@ -21,6 +21,7 @@ const story: Meta<GroupProps> = {
   title: 'Layout/Group',
   component: Group,
   parameters: createStoryParameters('Group', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

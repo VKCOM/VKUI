@@ -10,6 +10,7 @@ const story: Meta<CheckboxProps> = {
   argTypes: {
     description: StringArg,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

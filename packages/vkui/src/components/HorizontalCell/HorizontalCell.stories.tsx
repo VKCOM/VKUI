@@ -17,6 +17,7 @@ const story: Meta<HorizontalCellProps> = {
     subtitle: StringArg,
     extraSubtitle: StringArg,
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

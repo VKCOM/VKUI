@@ -7,6 +7,7 @@ const story: Meta<ConfigProviderProps> = {
   title: 'Configuration/ConfigProvider',
   component: ConfigProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Конфигурация'],
 };
 
 export default story;

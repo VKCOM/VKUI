@@ -10,6 +10,7 @@ const story: Meta<SpacingProps> = {
   title: 'Layout/Spacing',
   component: Spacing,
   parameters: createStoryParameters('Spacing', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

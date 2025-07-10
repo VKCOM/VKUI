@@ -19,6 +19,7 @@ const story: Meta<OnboardingTooltipProps> = {
   title: 'Utils/OnboardingTooltip',
   component: OnboardingTooltip,
   parameters: createStoryParameters('OnboardingTooltip', DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

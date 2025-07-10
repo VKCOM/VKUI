@@ -27,6 +27,7 @@ const story: Meta<DateInputProps> = {
     renderCustomValue: StringArg,
     timezone: createCalendarTimezoneField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

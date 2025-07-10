@@ -15,6 +15,7 @@ const story: Meta<LocaleProviderProps> = {
     },
   },
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Конфигурация'],
 };
 
 export default story;

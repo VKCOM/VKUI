@@ -10,6 +10,7 @@ const story: Meta<CounterProps> = {
   component: Counter,
   parameters: createStoryParameters('Counter', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

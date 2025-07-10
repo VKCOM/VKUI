@@ -45,6 +45,7 @@ const story: Meta<CellProps> = {
   args: {
     onClick: noop,
   },
+  tags: ['Кнопки'],
 };
 
 export default story;

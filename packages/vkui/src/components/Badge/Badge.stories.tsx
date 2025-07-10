@@ -9,6 +9,7 @@ const story: Meta<BadgeProps> = {
   component: Badge,
   parameters: createStoryParameters('Badge', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

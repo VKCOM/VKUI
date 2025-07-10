@@ -8,6 +8,7 @@ const story: Meta<TooltipProps> = {
   title: 'Modals/Tooltip',
   component: Tooltip,
   parameters: createStoryParameters('Tooltip', DisableCartesianParam),
+  tags: ['Модальные окна'],
 };
 
 export default story;

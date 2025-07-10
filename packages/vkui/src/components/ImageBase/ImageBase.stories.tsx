@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { Image, type ImageProps } from './Image';
+import { ImageBase, type ImageBaseProps } from './ImageBase';
 
-const story: Meta<ImageProps> = {
-  title: 'Data Display/Image',
-  component: Image,
+const story: Meta<ImageBaseProps> = {
+  title: 'Data Display/ImageBase',
+  component: ImageBase,
   parameters: createStoryParameters('Image', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     filter: {
@@ -26,11 +26,12 @@ const story: Meta<ImageProps> = {
 
 export default story;
 
-type Story = StoryObj<ImageProps>;
+type Story = StoryObj<ImageBaseProps>;
 
 export const Playground: Story = {
   args: {
     src: getAvatarUrl('app_shorm_online'),
     alt: 'Приложение шторм онлайн',
+    size: 64,
   },
 };

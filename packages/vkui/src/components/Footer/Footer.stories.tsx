@@ -14,6 +14,7 @@ const story: Meta<FooterProps> = {
   title: 'Layout/Group/Footer',
   component: Footer,
   parameters: createStoryParameters('Footer', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

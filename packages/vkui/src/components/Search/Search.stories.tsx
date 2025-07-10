@@ -9,6 +9,7 @@ const story: Meta<SearchProps> = {
   title: 'Utils/Search',
   component: Search,
   parameters: createStoryParameters('Search', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

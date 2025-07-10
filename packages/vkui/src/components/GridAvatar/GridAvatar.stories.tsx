@@ -25,6 +25,7 @@ const story: Meta<StoryGridAvatarProps> = {
     },
   },
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

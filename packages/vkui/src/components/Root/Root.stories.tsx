@@ -15,6 +15,7 @@ const story: Meta<RootProps> = {
   component: Root,
   parameters: createStoryParameters('Root', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Навигация'],
 };
 
 export default story;

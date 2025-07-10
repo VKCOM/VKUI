@@ -18,6 +18,7 @@ const story: Meta<ChipsSelectProps<ChipOption>> = {
   argTypes: {
     before: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

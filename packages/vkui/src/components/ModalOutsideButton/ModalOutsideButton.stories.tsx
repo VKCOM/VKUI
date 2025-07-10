@@ -17,6 +17,7 @@ const story: Meta<ModalOutsideButtonProps> = {
   argTypes: {
     children: iconsPresets,
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;

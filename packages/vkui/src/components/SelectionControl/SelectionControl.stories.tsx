@@ -7,6 +7,7 @@ const story: Meta<SelectionControlProps> = {
   title: 'Utils/SelectionControl',
   component: SelectionControl,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Утилиты'],
 };
 
 export default story;

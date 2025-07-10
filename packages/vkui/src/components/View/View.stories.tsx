@@ -25,6 +25,7 @@ const story: Meta<ViewProps> = {
   title: 'Navigation/View',
   component: View,
   parameters: createStoryParameters('View', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Навигация'],
 };
 
 export default story;

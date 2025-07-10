@@ -22,6 +22,7 @@ const story: Meta<AspectRatioProps> = {
       },
     },
   },
+  tags: ['Утилиты'],
 };
 
 export default story;

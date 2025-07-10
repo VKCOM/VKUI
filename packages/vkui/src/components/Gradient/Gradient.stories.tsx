@@ -7,6 +7,7 @@ const story: Meta<GradientProps> = {
   title: 'Utils/Gradient',
   component: Gradient,
   parameters: createStoryParameters('Gradient', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

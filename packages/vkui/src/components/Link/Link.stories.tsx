@@ -8,6 +8,7 @@ const story: Meta<LinkProps> = {
   title: 'Typography/Link',
   component: Link,
   parameters: createStoryParameters('Link', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Типографика'],
 };
 
 export default story;

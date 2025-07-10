@@ -12,6 +12,7 @@ const story: Meta<ContentCardProps> = {
       control: { type: 'boolean' },
     },
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

@@ -37,6 +37,7 @@ const story: Meta<StoryTabsProps> = {
       options: ['groups', 'news', 'recommendations', 'friends', 'photos'],
     },
   },
+  tags: ['Навигация'],
 };
 
 export default story;

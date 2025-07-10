@@ -25,6 +25,7 @@ const story: Meta<ActionSheetProps> = {
     title: StringArg,
     description: StringArg,
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;

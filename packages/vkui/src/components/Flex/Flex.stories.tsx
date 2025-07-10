@@ -38,6 +38,7 @@ const story: Meta<StoryProps> = {
       control: 'number',
     },
   },
+  tags: ['Раскладка'],
 };
 
 export default story;

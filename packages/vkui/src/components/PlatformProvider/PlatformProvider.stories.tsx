@@ -15,6 +15,7 @@ const story: Meta<PlatformProviderProps> = {
     },
   },
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Конфигурация'],
 };
 
 export default story;

@@ -6,6 +6,7 @@ const story: Meta<ColorSchemeProviderProps> = {
   title: 'Configuration/ColorSchemeProvider',
   component: ColorSchemeProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Конфигурация'],
 };
 
 export default story;

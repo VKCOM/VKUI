@@ -8,6 +8,7 @@ const story: Meta<MarkProps> = {
   title: 'Typography/Mark',
   component: Mark,
   parameters: createStoryParameters('Mark', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Типографика'],
 };
 
 export default story;
