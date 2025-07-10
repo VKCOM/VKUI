@@ -7,12 +7,11 @@ export function createSourceUrl(
   componentType: OverviewHeaderLinksProps['type'],
   forcedPath: OverviewHeaderLinksProps['forcedPath'],
 ) {
-  const componentPath =
-    componentType === 'component'
+  const componentPath = forcedPath
+    ? forcedPath
+    : componentType === 'component'
       ? `components/${componentName}/${componentName}.tsx`
-      : forcedPath
-        ? forcedPath
-        : `hooks/${componentName}.ts`;
+      : `hooks/${componentName}.ts`;
 
   return `${VKUI_CONFIG.REPOSITORY}/blob/v${VKUI_CONFIG.VERSION}/${VKUI_CONFIG.VKUI_SRC_URL}/${componentPath}`;
 }

@@ -5,15 +5,15 @@ import { OverviewHeaderLinks } from './OverviewHeaderLinks/OverviewHeaderLinks';
 import type { OverviewHeaderLinksProps } from './OverviewHeaderLinks/types';
 import styles from './Overview.module.css';
 
-export interface OverviewProps extends Pick<OverviewHeaderLinksProps, 'group' | 'forcedPath'> {
+export interface OverviewProps extends Omit<OverviewHeaderLinksProps, 'type'> {
   children: React.ReactNode;
   type?: OverviewHeaderLinksProps['type'] | 'doc';
 }
 
-export function Overview({ children, group, type = 'component', forcedPath }: OverviewProps) {
+export function Overview({ children, type, ...restProps }: OverviewProps) {
   return (
     <div className={styles.root}>
-      {type !== 'doc' && <OverviewHeaderLinks group={group} type={type} forcedPath={forcedPath} />}
+      {type !== 'doc' && <OverviewHeaderLinks type={type} {...restProps} />}
       {children}
     </div>
   );

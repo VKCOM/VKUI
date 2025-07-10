@@ -13,6 +13,7 @@ export interface OverviewHeaderLinksProps {
     | 'utils';
   type?: 'component' | 'hook';
   forcedPath?: string;
+  forcedName?: string;
 }
 
 export interface OverviewHeaderLinkProps {

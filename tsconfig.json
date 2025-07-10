@@ -12,7 +12,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "bundler",
-    "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "strict": true,

@@ -21,6 +21,11 @@ function shouldIgnoreFile(filename) {
   );
 }
 
+/**
+ *
+ * @param {string} dirPath
+ * @returns {string[]} Массив абсолютных путей
+ */
 function scanDirectory(dirPath) {
   return fs.readdirSync(dirPath).reduce((files, item) => {
     const fullPath = path.join(dirPath, item);

@@ -8,6 +8,7 @@ export function OverviewHeaderLinks({
   group,
   type = 'component',
   forcedPath,
+  forcedName,
 }: OverviewHeaderLinksProps) {
   const {
     normalizePagesResult: { activeMetadata },
@@ -20,7 +21,7 @@ export function OverviewHeaderLinks({
   }
 
   const sourceUrl = createSourceUrl(componentName, type, forcedPath);
-  const storybookUrl = group ? createStorybookUrl(componentName, group) : undefined;
+  const storybookUrl = group ? createStorybookUrl(forcedName || componentName, group) : undefined;
 
   return (
     <Subhead>
