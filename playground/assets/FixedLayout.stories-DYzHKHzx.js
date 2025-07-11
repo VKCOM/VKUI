@@ -1,0 +1,34 @@
+import{b as g,L as s,j as e,V as c,h as p,P as x,S as b}from"./iframe-DDos8QSD.js";import{D as f,C as h}from"./constants-DdkjnEgz.js";import{c as q}from"./createStoryParameters-CcwS40kl.js";import{D as j}from"./Div-Cmg8g6jV.js";import{G as P}from"./Group-BdSAzhLh.js";import{S as y}from"./Search-DaKeo1B-.js";import{T as S}from"./Tabs-CCNPXhTd.js";import{T as r}from"./TabsItem-BuOc1SAr.js";import"./react_utils-CSZjvU4X.js";import"./Footnote-DolN14Rp.js";import"./useBooleanState-BPdqgwEs.js";import"./useConfigDirection-BVLc7CyO.js";import"./useNativeFormResetListener-q-APSa1c.js";import"./callMultiple-ChqatQlo.js";import"./Button-Ky5QsFrC.js";import"./Spinner-DXID7UE1.js";import"./animationVisibilityDelay.module-DjZYURHD.js";import"./VisuallyHidden-Bn0ixRRD.js";import"./Tappable-B0kWxOOO.js";import"./mergeCalls-Bc-HqyI0.js";import"./Clickable-CWxsm2KA.js";import"./type_checkers-CVMjkZjG.js";import"./InputUtils-Dyyzogrc.js";import"./IconButton-C3mRDxD7.js";import"./Headline-A5M31mJl.js";import"./clear_16-IEFZOITA.js";import"./_object_spread_props-DRD4qu7p.js";import"./SvgIconRoot-D7q7mL8J.js";import"./cancel_24-Cjk92GYx.js";import"./search_outline_16-BZN3qCIc.js";import"./useTabsNavigation-HpwDl1iF.js";import"./useGlobalEventListener-Cf-K_pnj.js";import"./useEventListener-B5lUY6Nx.js";import"./useEnsuredControl-DPf8E04f.js";import"./Subhead-94kqPIfE.js";const oe={title:"Layout/FixedLayout",component:s,parameters:q("FixedLayout",h,f),decorators:[g]},i={render:a=>e.jsx(c,{activePanel:"fixedLayout",children:e.jsxs(p,{id:"fixedLayout",children:[e.jsx(x,{children:"Fixed layout"}),e.jsxs(s,{...a,children:[e.jsx(b,{}),e.jsxs(S,{children:[e.jsx(r,{selected:!0,children:"176 сообществ"}),e.jsx(r,{children:"9 событий"})]})]}),e.jsx(v,{})]})}),args:{vertical:"bottom",filled:!0}},t={render:a=>e.jsx(c,{activePanel:"fixedLayout",children:e.jsxs(p,{id:"fixedLayout",children:[e.jsx(x,{children:"Fixed layout"}),e.jsxs(s,{...a,children:[e.jsx(y,{}),e.jsx(b,{})]}),e.jsx(v,{})]})}),args:{vertical:"bottom",filled:!0}},L={paddingTop:60,paddingBottom:60};function v(){return e.jsx(P,{children:e.jsxs(j,{style:L,children:["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit amet congue nunc. Aenean ullamcorper ex sem, sed interdum quam consequat et. Vestibulum a ex non diam fringilla feugiat. Nunc eu tellus sed leo elementum cursus. Mauris blandit porta egestas. Curabitur eget justo elementum, malesuada lacus ut, congue mauris. Integer orci nisi, convallis vitae dapibus sit amet, molestie a risus. Aenean ultricies lacus eros, sit amet condimentum urna malesuada et. Sed quis dolor tempus orci fringilla volutpat in sed velit. Aenean aliquet bibendum pretium.",e.jsx("br",{}),e.jsx("br",{}),"Cras pulvinar lobortis purus. Donec placerat suscipit leo vitae sodales. Phasellus convallis lorem vitae arcu finibus pellentesque. In imperdiet vel leo a euismod. Nam sed odio a neque venenatis suscipit a placerat magna. Mauris magna nisl, consequat nec augue vitae, ultricies scelerisque ante. Phasellus pharetra risus eget imperdiet sodales. Integer dignissim auctor semper. Nulla odio odio, euismod ut interdum in, bibendum sed massa. Proin rutrum molestie massa in ultrices. Donec eu euismod turpis, eget lobortis lorem. Nulla facilisi. Nam lacinia posuere turpis, sed laoreet turpis auctor nec.",e.jsx("br",{}),e.jsx("br",{}),"Curabitur eu fermentum mauris. Phasellus malesuada consectetur mollis. Pellentesque pulvinar mauris turpis. Integer neque dolor, semper quis neque et, gravida commodo eros. Duis efficitur ex a turpis blandit tincidunt. Mauris sem mi, imperdiet quis ligula sit amet, fermentum vulputate felis. Phasellus eu ullamcorper dolor, porttitor pulvinar diam. Aliquam euismod, mauris nec varius lacinia, ligula libero vulputate leo, ut tristique massa nisi vitae tortor. Phasellus purus elit, gravida sit amet neque id, aliquam rutrum dui. Maecenas luctus sem vitae molestie porttitor. Cras viverra mauris risus, at sollicitudin ipsum interdum eu. Sed sit amet tempor enim.",e.jsx("br",{}),e.jsx("br",{}),"In hac habitasse platea dictumst. Etiam luctus erat metus, quis efficitur quam vulputate quis. Duis ultricies non mauris condimentum molestie. Maecenas sollicitudin ex sem, quis ultrices libero blandit eu. Vivamus in turpis pulvinar, malesuada enim at, hendrerit magna. Proin eu nulla eget arcu pretium pharetra. Sed ullamcorper pulvinar est eu dapibus. Cras at varius justo. In ex odio, condimentum id pellentesque a, sodales ut diam.",e.jsx("br",{}),e.jsx("br",{}),"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam aliquet tempor laoreet. Maecenas eu pulvinar diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas et elit eros. Quisque ullamcorper sodales nisi, eleifend aliquet metus venenatis in. Aliquam ornare a lacus in tincidunt. Cras vel tristique metus. Sed vitae nisl at nisl imperdiet sollicitudin. Sed sit amet enim in lectus imperdiet interdum condimentum et diam. Proin venenatis sit amet diam ac vulputate. Donec mauris orci, semper volutpat nunc ut, efficitur condimentum dolor. Vivamus in quam eget quam lacinia pharetra. Phasellus ipsum magna, aliquet id elit eget, cursus tincidunt ex. In rhoncus turpis turpis, et viverra ex malesuada vel. Donec nisi tellus, mollis et posuere vel, dictum eget neque."]})})}var u,o,l;i.parameters={...i.parameters,docs:{...(u=i.parameters)==null?void 0:u.docs,source:{originalSource:`{
+  render: args => <View activePanel="fixedLayout">
+      <Panel id="fixedLayout">
+        <PanelHeader>Fixed layout</PanelHeader>
+        <FixedLayout {...args}>
+          <Separator />
+          <Tabs>
+            <TabsItem selected>176 сообществ</TabsItem>
+            <TabsItem>9 событий</TabsItem>
+          </Tabs>
+        </FixedLayout>
+        <StubContent />
+      </Panel>
+    </View>,
+  args: {
+    vertical: 'bottom',
+    filled: true
+  }
+}`,...(l=(o=i.parameters)==null?void 0:o.docs)==null?void 0:l.source}}};var n,m,d;t.parameters={...t.parameters,docs:{...(n=t.parameters)==null?void 0:n.docs,source:{originalSource:`{
+  render: args => <View activePanel="fixedLayout">
+      <Panel id="fixedLayout">
+        <PanelHeader>Fixed layout</PanelHeader>
+        <FixedLayout {...args}>
+          <Search />
+          <Separator />
+        </FixedLayout>
+        <StubContent />
+      </Panel>
+    </View>,
+  args: {
+    vertical: 'bottom',
+    filled: true
+  }
+}`,...(d=(m=t.parameters)==null?void 0:m.docs)==null?void 0:d.source}}};const le=["Playground","WithSearchAndContent"];export{i as Playground,t as WithSearchAndContent,le as __namedExportsOrder,oe as default};

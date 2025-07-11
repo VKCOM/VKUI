@@ -1,0 +1,1 @@
+import{o as u,m as a}from"./iframe-DDos8QSD.js";const c={subtree:!0,childList:!0},b=(t,r,o=c)=>{const e=u(r);a(()=>{if(!t||!t.current)return;const s=new MutationObserver(e);return s.observe(t.current,o),()=>s.disconnect()},[t,e])};export{c as D,b as u};

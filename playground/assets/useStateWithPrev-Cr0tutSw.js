@@ -1,0 +1,1 @@
+import{r as n}from"./iframe-DDos8QSD.js";function i(t){return t instanceof Function?t():t}function r(t){return[i(t),void 0]}function u(t,e){return e instanceof Function?e(t):e}function c([t],e){return[u(t,e),t]}function s(t){return n.useReducer(c,void 0,()=>r(t))}export{s as u};
