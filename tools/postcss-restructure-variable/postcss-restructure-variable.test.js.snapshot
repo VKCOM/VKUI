@@ -1,7 +1,5 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
 exports[`check cascading 1`] = `
-"
+
 @media (min-resolution: 2dppx) {
     :root {
         --color: blue;
@@ -15,11 +13,11 @@ exports[`check cascading 1`] = `
 }
 :root {
     --color: blue;
-}"
+}
 `;
 
 exports[`check deep cascading 1`] = `
-"
+
 @supports (display: flex) {
     @media screen and (min-width: 900px) {
         :root {
@@ -29,11 +27,11 @@ exports[`check deep cascading 1`] = `
 }
 :root {
     --color: blue;
-}"
+}
 `;
 
 exports[`example 1`] = `
-".a, .b {
+.a, .b {
     --color1: #ff0000;
     --color2: #ff0000
 }
@@ -46,21 +44,21 @@ exports[`example 1`] = `
 .c {
     --color: #0000ff
 }
-"
+
 `;
 
 exports[`merge one 1`] = `
-":root, .b {
+:root, .b {
     --color: #fff;
 }
 .b {
     color: var(--color);
 }
-"
+
 `;
 
 exports[`merge three 1`] = `
-":root, .b {
+:root, .b {
     --color: #fff;
 }
 :root {
@@ -72,19 +70,19 @@ exports[`merge three 1`] = `
 .b {
     color: var(--color);
 }
-"
+
 `;
 
 exports[`no custom properties 1`] = `
-"
+
 .b {
   color: var(--color);
-}"
+}
 `;
 
 exports[`rewrite custom property 1`] = `
-".a, .b {
+.a, .b {
     --color: #000
 }
-"
+
 `;
