@@ -44,7 +44,7 @@ const animationStateClassNames = {
 };
 
 const platformClassNames = {
-  android: styles.hostAndroid,
+  material: styles.hostMaterial,
   vkcom: styles.hostVKCOM,
 };
 
