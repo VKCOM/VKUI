@@ -100,13 +100,13 @@ const App = () => {
 Представим наполнение каждого файла.
 
 ```tsx showLineNumbers filename="app/layout.tsx" {19-21,23-26,29-31}
-import { Viewport } from 'next';
-import { Layout } from '../client/Layout';
-import { detectIOS } from '@vkontakte/vkjs';
+import { Metadata, Viewport } from 'next';
 import { headers } from 'next/headers';
+import { detectIOS } from '@vkontakte/vkjs';
 import '@vkontakte/vkui/dist/vkui.css';
+import { Layout } from '../client/Layout';
 
-export const metadata = { title: 'SSR-ready!' };
+export const metadata: Metadata = { title: 'SSR-ready!' };
 
 export const viewport: Viewport = {
   width: 'device-width',
