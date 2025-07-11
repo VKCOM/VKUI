@@ -1,0 +1,99 @@
+---
+description: Упрощённый вариант ячейки для отображения базовой информации с минимальным набором элементов.
+---
+
+<Overview group="buttons">
+
+# SimpleCell [tag:component]
+
+Упрощённый вариант ячейки для отображения базовой информации с минимальным набором элементов.
+Идеален для компактных интерфейсов и сценариев с ограниченным пространством.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 320 }}>
+  ```jsx
+  <SimpleCell before={<Avatar size={28} />} subtitle="Должность" onClick={() => {}}>
+    Иван Иванов
+  </SimpleCell>
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+### Иконки и индикаторы
+
+**Рекомендуемые размеры элементов:**
+
+- `before`: `28px` (иконки) / `28`-`72px` (`Avatar`)
+- `badgeBeforeTitle`/`badgeAfterTitle`/`badgeBeforeSubtitle`/`badgeAfterSubtitle`: `12px` (иконки/индикаторы)
+- `after`: `24`-`28px` (иконки) или `<Switch />`
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 320 }}>
+  ```jsx
+  <SimpleCell
+    badgeBeforeTitle={<Icon12OnlineMobile />}
+    badgeAfterTitle={<Badge>Есть новые</Badge>}
+    indicator="15:30"
+    subtitle="Последнее сообщение"
+    onClick={() => {}}
+  >
+    Чат с поддержкой
+  </SimpleCell>
+  ```
+</Playground>
+
+### Многострочный текст
+
+Для того, чтобы длинный текст мог отображаться в несколько строк, используйте свойство `multiline`.
+По умолчанию текст скрывается многоточием.
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 200 }}>
+  ```jsx
+  <SimpleCell
+    overTitle="Переговорная"
+    subtitle="3 этаж"
+    extraSubtitle="Вместимость: 10 человек"
+    multiline
+  >
+    Конференц-зал «Солнечный»
+  </SimpleCell>
+  <SimpleCell overTitle="Переговорная" subtitle="3 этаж" extraSubtitle="Вместимость: 10 человек">
+    Конференц-зал «Солнечный»
+  </SimpleCell>
+  ```
+</Playground>
+
+## Визуальные настройки
+
+### Шеврон
+
+Для управления видимостью иконки шеврона `›` можно использовать свойство `chevron`.
+Для управления размерами иконки - свойством `chevronSize`.
+По умолчанию шеврон отображается только при заданном свойстве `chevron="auto"` только на `iOS`,
+для отображения шеврона на всех платформах используйте `chevron="always"`.
+
+```jsx
+<SimpleCell chevron="auto" /> // По умолчанию отображение только на iOS
+<SimpleCell chevron="always" chevronSize="m" /> // Принудительное отображение
+```
+
+## Состояния
+
+### Блокировка
+
+Задается свойством `disabled`:
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SimpleCell disabled subtitle="Недоступно для взаимодействия">
+    Заблокированный элемент
+  </SimpleCell>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="SimpleCell" />

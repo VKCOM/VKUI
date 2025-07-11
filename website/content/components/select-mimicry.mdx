@@ -1,0 +1,55 @@
+---
+description: Компонент, который визуально имитирует компонент выбора из списка.
+---
+
+<Overview group="forms">
+
+# SelectMimicry [tag:component]
+
+Компонент, который визуально имитирует компонент выбора из списка.
+Используется в случаях, когда нужно создать элемент, похожий на [`Select`](/components/select),
+но с пользовательским поведением при нажатии (например, вызов модального окна).
+
+</Overview>
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SelectMimicry>Значение</SelectMimicry>
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <SelectMimicry placeholder="Выберите значение" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `SelectMimicry` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <SelectMimicry status="error">Значение</SelectMimicry>
+  <SelectMimicry status="valid">Значение</SelectMimicry>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент поддерживает все стандартные `aria`-атрибуты, если вам необходимо переопределить
+стандартное поведение.
+
+## Свойства и методы [#api]
+
+<PropsTable name="SelectMimicry" />

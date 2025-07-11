@@ -25,7 +25,10 @@
       //  Не выкупается `paths`, который указан в `./packages/vkui`
       "@vkui-e2e/test": ["./packages/vkui/src/testing/e2e/index.playwright"],
       "@vkui-e2e/playground-helpers": ["./packages/vkui/src/testing/e2e/index.playground"],
-      "@vkui-e2e/utils": ["./packages/vkui/src/testing/e2e/utils"]
+      "@vkui-e2e/utils": ["./packages/vkui/src/testing/e2e/utils"],
+      "@/components/*": ["./website/components/*"],
+      "@/stores/*": ["./website/stores/*"],
+      "@/providers/*": ["./website/providers/*"]
     }
   },
   "exclude": [

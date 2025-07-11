@@ -1,0 +1,58 @@
+---
+description: Переключатель, позволяющий пользователям выбрать между парой противоположных состояний, например, включено/выключено.
+---
+
+<Overview group="forms">
+
+# Switch [tag:component]
+
+Переключатель, позволяющий пользователям выбрать между парой противоположных состояний,
+например, включено/выключено.
+Наследует все свойства нативного `<input type="checkbox">` с дополнительными возможностями кастомизации.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Switch />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `checked` или передавать `defaultChecked`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `checked`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние, по умолчанию в состоянии "выбран"
+<Switch defaultChecked />;
+
+// Контролируемое состояние, значение "не выбран"
+const [checked, setChecked] = React.useState(false);
+
+<Switch checked={checked} onChange={(event) => setChecked(event.target.checked)} />;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground>
+  ```jsx
+  <Switch defaultChecked disabled />
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Доступность реализована на основе рекомендаций из [Switch WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/).
+
+## Свойства и методы [#api]
+
+<PropsTable name="Switch" />

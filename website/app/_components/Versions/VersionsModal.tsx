@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Div, ModalPage, ModalPageHeader, PanelSpinner, SimpleCell } from '@vkontakte/vkui';
 import { useFetch } from '@vkontakte/vkui-docs-theme';
+import semverGte from 'semver/functions/gte';
 import semverRcompare from 'semver/functions/rcompare';
 
 interface VersionsProps {
@@ -12,7 +13,10 @@ interface PackageInfoProps {
   versions: Record<string, unknown>;
 }
 
-const MINIMUM_VERSION = '3.12.4';
+// Старая документация доступна с этой версии
+const MINIMUM_OLD_VERSION = '3.12.4';
+// Новая документация доступна с этой версии
+const MINIMUM_VERSION = '7.5.0';
 
 function filterPrereleaseVersion(version: string) {
   return !version.includes('-');
@@ -23,7 +27,7 @@ function processData(data?: PackageInfoProps) {
     return null;
   }
   const allVersions = Object.keys(data.versions);
-  const fromIndex = allVersions.indexOf(MINIMUM_VERSION);
+  const fromIndex = allVersions.indexOf(MINIMUM_OLD_VERSION);
   return allVersions.slice(fromIndex).filter(filterPrereleaseVersion).sort(semverRcompare);
 }
 
@@ -33,6 +37,20 @@ interface VersionsModalProps extends VersionsProps {
 }
 
 export function VersionsModal({ open, setOpen }: VersionsModalProps) {
+  return (
+    <ModalPage
+      open={open}
+      id="versions-modal"
+      header={<ModalPageHeader>Версии</ModalPageHeader>}
+      onClose={() => setOpen(false)}
+      height="640px"
+    >
+      <VersionsModalInner />
+    </ModalPage>
+  );
+}
+
+function VersionsModalInner() {
   const { data: dataRaw, error } = useFetch('https://registry.npmjs.org/@vkontakte/vkui', {
     method: 'GET',
     headers: {
@@ -42,30 +60,22 @@ export function VersionsModal({ open, setOpen }: VersionsModalProps) {
 
   const data = React.useMemo(() => processData(dataRaw), [dataRaw]);
 
-  return (
-    <ModalPage
-      open={open}
-      aria-busy={!data}
-      aria-live="polite"
-      id="versions-modal"
-      header={<ModalPageHeader>Версии</ModalPageHeader>}
-      onClose={() => setOpen(false)}
-      height="640px"
+  if (error) {
+    return <Div>Произошла ошибка</Div>;
+  }
+
+  if (!data) {
+    return <PanelSpinner />;
+  }
+
+  return data.map((version) => (
+    <SimpleCell
+      key={version}
+      href={`https://vkcom.github.io/VKUI/${version}${location.hash}`}
+      target="_blank"
     >
-      {error && <Div>Произошла ошибка</Div>}
-      {data ? (
-        data.map((version) => (
-          <SimpleCell
-            key={version}
-            href={`https://vkcom.github.io/VKUI/${version}${location.hash}`}
-            target="_blank"
-          >
-            {version}
-          </SimpleCell>
-        ))
-      ) : (
-        <PanelSpinner />
-      )}
-    </ModalPage>
-  );
+      {version}
+      {semverGte(version, MINIMUM_VERSION) ? '' : ' ↗'}
+    </SimpleCell>
+  ));
 }

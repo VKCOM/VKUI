@@ -1,0 +1,240 @@
+---
+description: Компонент для организации контента в виде вкладок.
+---
+
+<Overview group="navigation">
+
+# Tabs [tag:component]
+
+Компонент для организации контента в виде вкладок. Позволяет пользователю переключаться между разными разделами информации в одном
+пространстве.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Tabs defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24ThumbsUpOutline />} id="recommendations">
+      Рекомендации
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  ```
+</Playground>
+
+## Режимы отображения
+
+Задаётся свойством `mode`:
+
+- `default` — стандартное отображение вкладок;
+- `accent` — акцентный вариант, выделяет активную вкладку;
+- `secondary` — более сдержанный стиль для второстепенных разделов.
+
+<Playground direction="column">
+  ```jsx
+  <Tabs defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24UsersOutline />} id="friends">
+      Друзья
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  <Tabs mode="accent" defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24UsersOutline />} id="friends">
+      Друзья
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  <Tabs mode="secondary" defaultSelectedId="news" layoutFillMode="shrinked">
+    <TabsItem before={<Icon24UsersOutline />} id="friends">
+      Друзья
+    </TabsItem>
+    <TabsItem id="news" before={<Icon24NewsfeedOutline />}>
+      Лента
+    </TabsItem>
+  </Tabs>
+  ```
+</Playground>
+
+## Распределение вкладок
+
+Задаётся свойством `layoutFillMode`:
+
+- `auto` — автоматическое распределение (по умолчанию):
+  - равномерно занимают всю ширину при использовании внутри `HorizontalScroll`;
+  - равномерное распределение в режиме `default` на всех платформах кроме VKCOM.
+- `stretched` — вкладки растягиваются на всю доступную ширину;
+- `shrinked` — вкладки сжимаются по размеру контента.
+
+## Прокрутка к активной вкладке
+
+По умолчанию автоматическая прокрутка к выбранной вкладке отключёна. Для включения:
+
+- `withScrollToSelectedTab` — включает прокрутку к активной вкладке;
+- `scrollBehaviorToSelectedTab` — контролирует горизонтальное выравнивание при прокрутке (соответствует параметрам [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)).
+
+### Особенности прокрутки
+
+- Вертикальная прокрутка автоматически отключается, если вкладка находится вне видимой области по вертикали.
+- В браузерах без поддержки параметров `scrollIntoView` прокрутка будет отключёна.
+
+## Способы управления активной вкладкой
+
+### Использование `selected` у `TabsItem`
+
+Управлять активной вкладкой можно вручную задавая `selected` у необходимой вкладки:
+
+```jsx
+<Tabs>
+  <TabsItem>Рекомендации</TabsItem>
+  <TabsItem selected>Лента</TabsItem>
+</Tabs>
+```
+
+### Использование `selectedId`/`defaultSelectedId` у `Tabs`
+
+Также можно управлять активной вкладкой через свойства `selectedId`/`defaultSelectedId` у `Tabs`.
+Для того, чтобы этот подход работал, нужно, чтобы у каждой вкладки `TabsItem` был выставлено свойство `id`:
+
+```jsx
+<Tabs defaultSelectedId="news">
+  <TabsItem id="recommendations">Рекомендации</TabsItem>
+  <TabsItem id="news">Лента</TabsItem>
+</Tabs>
+```
+
+```jsx
+const [selected, setSelected] = React.useState('news');
+
+<Tabs selectedId={selected} onSelectedIdChange={setSelected}>
+  <TabsItem id="recommendations">Рекомендации</TabsItem>
+  <TabsItem id="news">Лента</TabsItem>
+</Tabs>;
+```
+
+## TabsItem [#tabs-item] [tag:component]
+
+Элемент вкладки. Автоматически наследует режим отображения (`mode`) от родительского компонента `Tabs`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem>Фото</TabsItem>
+  ```
+</Playground>
+
+### Состояния
+
+#### `selected`
+
+Свойство `selected` помечает вкладку выбранной.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem selected>Фото</TabsItem>
+  ```
+</Playground>
+
+#### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem disabled>Фото</TabsItem>
+  ```
+</Playground>
+
+### Дополнительный контент
+
+Компонент поддерживает различные варианты оформления вкладок:
+
+#### Иконки
+
+- `before` — иконка перед текстом:
+  - Для `mode="default"` используйте иконки `24px`;
+  - Для других режимов (`accent`, `secondary`) — иконки `20px`.
+- `after` — иконка после текста (например, `<Icon16Dropdown />`).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem before={<Icon24BugOutline />} after={<Icon16Dropdown />}>
+    Фото
+  </TabsItem>
+  ```
+</Playground>
+
+#### Статус
+
+Свойство `status` — добавляет элемент для отображения состояния:
+
+- `React.ReactElement` — компонент `Badge` или `Counter` (с `size="s"`).
+- `number` — отображает текстовый блок с числом.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <TabsItem
+    status={
+      <Counter mode="primary" appearance="accent-red" size="s">
+        12
+      </Counter>
+    }
+  >
+    Фото
+  </TabsItem>
+  ```
+</Playground>
+
+### Состояния взаимодействия
+
+Компонент поддерживает все стандартные состояния из [`Tappable`](/components/tappable):
+
+- `hoverMode` — стиль при наведении;
+- `activeMode` — стиль при активации;
+- `focusVisibleMode` — стиль при фокусе.
+
+### Особенности использования
+
+1. Всегда используйте `TabsItem` внутри компонента `Tabs`.
+2. Для корректной работы доступности (a11y) необходимо:
+   - Указать `id` для вкладки
+   - Связать с контентом через `aria-controls` (см. документацию [`Tabs`](/components/tabs))
+
+## Доступность (a11y) [#a11y]
+
+Для корректной работы со скринридерами необходимо:
+
+1. В [`TabsItem`](#tabs-item) передать:
+   - `id` — уникальный идентификатор вкладки
+   - `aria-controls` — указывает на id связанной области контента
+
+2. В области контента указать:
+   - `id` — соответствует `aria-controls` вкладки
+   - `tabIndex="0"` — делает область фокусируемой
+   - `aria-labelledby` — ссылается на id соответствующей вкладки
+
+Пример корректной разметки:
+
+```jsx
+<Tabs>
+  <TabsItem id="tab1" aria-controls="content1">
+    Вкладка 1
+  </TabsItem>
+  <div id="content1" tabIndex={0} aria-labelledby="tab1">
+    Контент 1
+  </div>
+</Tabs>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name={["Tabs", "TabsItem"]}>
+### Tabs [#tabs-api]
+
+### TabsItem [#tabs-item-api]
+
+</PropsTable>

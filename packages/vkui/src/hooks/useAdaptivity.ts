@@ -7,7 +7,7 @@ import {
 export type { AdaptivityProps };
 
 /**
- * Возвращает сырые данные из AdaptivityProvider.
+ * Хук из контекста возвращает свойства, переданные в `AdaptivityProvider`.
  */
 export const useAdaptivity = (): AdaptivityProps => {
   return React.useContext(AdaptivityContext);

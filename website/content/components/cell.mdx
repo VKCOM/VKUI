@@ -1,0 +1,144 @@
+---
+description: Расширенная версия SimpleCell с поддержкой удаления, перетаскивания и выбора элементов.
+---
+
+<Overview group="buttons">
+
+# Cell [tag:component]
+
+Расширенная версия [`SimpleCell`](/components/simple-cell) с поддержкой удаления, перетаскивания и выбора элементов.
+Используется для создания интерактивных списков с расширенной функциональностью.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Cell mode="selectable" before={<Avatar />}>
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
+
+## Основные режимы
+
+### `mode="removable"`
+
+Добавляет кнопку удаления:
+
+<Playground>
+  ```jsx
+  <Cell
+    mode="selectable"
+    before={<Avatar />}
+    mode="removable"
+    onRemove={() => alert('Обработчик удаления')}
+  >
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
+
+### `mode="selectable"`
+
+Добавляет чекбокс выбора:
+
+<Playground>
+  ```jsx
+  <Cell mode="selectable" before={<Avatar />}>
+    Пётр Кузнецов
+  </Cell>
+  ```
+</Playground>
+
+### `draggable`
+
+Включает возможность перетаскивания. При использовании данного режима обязательно
+оборачивайте `Cell` в компонент `List`.
+
+Пример можно увидеть в документации компонента [`List`](#list).
+
+### Ограничения
+
+- Перетаскивание работает только внутри `List`.
+- Не меняет порядок `DOM`-элементов автоматически.
+
+## Комбинирование режимов
+
+Одноврменно вы можете использовать перетаскиваемые ячейки либо с `mode="removable"`, либо с `mode="selectable"`.
+Одновременно удалять, перетаскивать и выбирать ячейки нельзя.
+
+## Cell.Checkbox [tag:component]
+
+Используйте подкомпонент `Cell.Checkbox` для возможности размещать чекбокс по бокам
+(передавайте его в свойства `before` или `after`). С помощью данного подкомпонента также можно изменить
+внешний вид чекбоксов.
+
+<Playground>
+  ```jsx
+  <Cell Component="label" after={<Cell.Checkbox />}>
+    Элемент с чекбоксом
+  </Cell>
+  ```
+</Playground>
+
+## List [#list] [tag:component]
+
+Специализированный контейнер для работы с компонентами `<Cell draggable />`.
+Обеспечивает правильное отображение и взаимодействие элементов.
+Также можно использовать как семантический контейнер для обычных `Cell`.
+
+<Playground style={{ height: 250, overflowY: 'auto' }}>
+
+```jsx
+const [draggingList, updateDraggingList] = React.useState([
+  'Say',
+  'Hello',
+  'To',
+  'My',
+  'Little',
+  'Friend',
+]);
+
+const onDragFinish = ({ from, to }) => {
+  const _list = [...draggingList];
+  _list.splice(from, 1);
+  _list.splice(to, 0, draggingList[from]);
+  updateDraggingList(_list);
+};
+
+return (
+  <List gap={5}>
+    {draggingList.map((item) => (
+      <Cell key={item} before={<Avatar />} draggable onDragFinish={onDragFinish}>
+        {item}
+      </Cell>
+    ))}
+  </List>
+);
+```
+
+</Playground>
+
+### Отступы между элементами
+
+Контролируется свойством `gap`:
+
+```jsx
+<List gap={16}>
+  <Cell before={<Icon28User />}>Профиль</Cell>
+  <Cell before={<Icon28Settings />}>Настройки</Cell>
+</List>
+```
+
+### Доступность (a11y) [#a11y]
+
+- Автоматически добавляет `role="list"`.
+
+## Свойства и методы [#api]
+
+<PropsTable name={["Cell", "List"]}>
+### Cell [#cell-api]
+
+### List [#list-api]
+
+</PropsTable>

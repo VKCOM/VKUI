@@ -16,6 +16,10 @@ export interface DocsThemeConfig {
    */
   navbar?: React.ReactElement<NavbarProps>;
   /**
+   * Доступные для фильтрации разделы навигационного меню
+   */
+  searchableNavbarItems?: string[];
+  /**
    * Компонент внизу страницы
    */
   footer?: React.ReactElement;

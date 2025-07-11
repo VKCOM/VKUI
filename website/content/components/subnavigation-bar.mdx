@@ -1,0 +1,217 @@
+---
+description: Горизонтальная панель с кнопками-ссылками для быстрой навигации между подразделами или управления контентом.
+---
+
+<Overview group="navigation">
+
+# SubnavigationBar [tag:component]
+
+Горизонтальная панель с кнопками-ссылками для быстрой навигации между подразделами или управления контентом.
+Используется как элемент вторичной навигации внутри раздела. Поддерживает горизонтальную прокрутку контента
+с индикацией наличия скрытых элементов (стрелки навигации).
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton onClick={() => {}}>Мой размер</SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>В наличии</SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Высокий рейтинг</SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Избранное</SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+## Когда использовать
+
+- Переключение между связанными подразделами.
+- Активации фильтров или сортировок.
+- Быстрый доступ к модальным окнам.
+- Группировка действий в компактном пространстве.
+
+## Режимы работы
+
+### Фиксированная ширина
+
+`fixed={true}` — равномерно распределяет пространство между элементами:
+
+- Автоматически отключает горизонтальную прокрутку.
+- Требует точного контроля за содержимым (рекомендуется 2-5 элементов).
+- Для длинных текстов используйте `textLevel` у `SubnavigationButton`.
+
+### Горизонтальная прокрутка
+
+`fixed={false}` (по умолчанию) — активирует адаптивную прокрутку.
+Поддерживает [свойства из HorizontalScroll](/components/horizontal-scroll):
+
+- `showArrows` — управление видимостью стрелок;
+- `getScrollToLeft`/`getScrollToRight` — кастомная логика прокрутки;
+- `scrollAnimationDuration` — скорость анимации.
+
+## Доступность (a11y) [#a11y]
+
+- Список элементов реализован с использованием семантического тега `ul`.
+- Элементы списка оборачиваются в семантические теги `li`.
+
+## SubnavigationButton [#subnavigation-button] [tag:component]
+
+Кнопка/ссылка для использования внутри `SubnavigationBar`. Предназначена для навигации между подразделами или управления
+контентом (активация фильтров, открытие модальных окон).
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton onClick={() => {}} before={<Icon24FavoriteOutline />}>
+    Избранное
+  </SubnavigationButton>
+  ```
+</Playground>
+
+### Состояния
+
+`selected` — выделяет кнопку как активную. Используйте для индикации текущего раздела или применённого фильтра.
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton selected onClick={() => {}}>
+      Выбран
+    </SubnavigationButton>
+    <SubnavigationButton onClick={() => {}}>Не выбран</SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+### Режимы отображения
+
+Задается свойством `mode`:
+
+- `primary` — первичный вид для привлечения внимания;
+- `outline` — вид с обводкой;
+- `tertiary` — третичный вид без фона.
+
+### Внешний вид
+
+Задается свойством `appearance`.
+
+#### `accent`
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="accent" selected onClick={() => {}}>
+      primary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="accent" onClick={() => {}}>
+      primary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="accent" selected onClick={() => {}}>
+      outline accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="accent" onClick={() => {}}>
+      outline accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="accent" selected onClick={() => {}}>
+      tertiary accent selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="accent" onClick={() => {}}>
+      tertiary accent
+    </SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+#### `neutral`
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationBar>
+    <SubnavigationButton mode="primary" appearance="neutral" selected onClick={() => {}}>
+      primary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="primary" appearance="neutral" onClick={() => {}}>
+      primary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="outline" appearance="neutral" selected onClick={() => {}}>
+      outline neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="outline" appearance="neutral" onClick={() => {}}>
+      outline neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  <SubnavigationBar>
+    <SubnavigationButton mode="tertiary" appearance="neutral" selected onClick={() => {}}>
+      tertiary neutral selected
+    </SubnavigationButton>
+    <SubnavigationButton mode="tertiary" appearance="neutral" onClick={() => {}}>
+      tertiary neutral
+    </SubnavigationButton>
+  </SubnavigationBar>
+  ```
+</Playground>
+
+### Размеры и контент
+
+Размер самой кнопки задается свойством `size`:
+
+- `s` — компактный;
+- `m` — стандартный;
+- `l` — увеличенный.
+
+`textLevel` — отдельно настраивает размер текста (1 — крупный, 3 — мелкий).
+Полезно в режиме `fixed` у родительского `SubnavigationBar`.
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton size="s" onClick={() => {}}>
+    size="s"
+  </SubnavigationButton>
+  <SubnavigationButton size="m" onClick={() => {}}>
+    size="m"
+  </SubnavigationButton>
+  <SubnavigationButton size="l" onClick={() => {}}>
+    size="l"
+  </SubnavigationButton>
+  ```
+</Playground>
+
+### Дополнительные элементы
+
+- `before` — иконка перед текстом (рекомендуемый размер `24px`).
+- `after` — счётчик или бейдж (рекомендуется использовать только `Counter size="s"` или `Badge`).
+- `chevron` — добавляет стрелку-индикатор справа.
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <SubnavigationButton
+    before={<Icon24Filter />}
+    selected
+    chevron
+    after={
+      <Counter size="s">
+        <VisuallyHidden>Применено: </VisuallyHidden>3
+      </Counter>
+    }
+    onClick={() => {}}
+  >
+    Фильтры
+  </SubnavigationButton>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name={["SubnavigationBar", "SubnavigationButton"]}>
+### SubnavigationBar [#subnavigation-bar-api]
+
+### SubnavigationButton [#subnavigation-button-api]
+
+</PropsTable>

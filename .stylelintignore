@@ -6,3 +6,5 @@ coverage/
 tmp/
 storybook-static/
 out/
+_pagefind/
+.docgen/

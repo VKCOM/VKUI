@@ -1,0 +1,366 @@
+---
+description: Компонент для создания набора экранов из Panel и возможностью переключаться между ними.
+---
+
+<Overview group="navigation">
+
+# View [tag:component]
+
+Компонент для создания набора экранов из [`Panel`](/components/panel) и возможностью переключаться между ними.
+
+Связанные страницы:
+
+- [Root](/components/root)
+- [Epic](/components/epic)
+- [Навигация](/overview/navigation)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
+
+```jsx
+const [activePanel, setActivePanel] = useState('panel-1');
+return (
+  <View activePanel={activePanel}>
+    <Panel id="panel-1">
+      <PanelHeader>Экран 1</PanelHeader>
+      <Placeholder stretched>
+        <Button appearance="positive" onClick={() => setActivePanel('panel-2')}>
+          Перейти к Экрану 2
+        </Button>
+      </Placeholder>
+    </Panel>
+    <Panel id="panel-2">
+      <PanelHeader>Экран 2</PanelHeader>
+      <Placeholder stretched>
+        <ButtonGroup mode="vertical" align="center">
+          <Button appearance="positive" onClick={() => setActivePanel('panel-3')}>
+            Перейти к Экрану 3
+          </Button>
+          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+            Вернуться к Экрану 1
+          </Button>
+        </ButtonGroup>
+      </Placeholder>
+    </Panel>
+    <Panel id="panel-3">
+      <PanelHeader>Экран 3</PanelHeader>
+      <Placeholder stretched>
+        <ButtonGroup mode="vertical" align="center">
+          <Button appearance="negative" onClick={() => setActivePanel('panel-1')}>
+            Вернуться к Экрану 1
+          </Button>
+          <Button appearance="negative" onClick={() => setActivePanel('panel-2')}>
+            Вернуться к Экрану 2
+          </Button>
+        </ButtonGroup>
+      </Placeholder>
+    </Panel>
+  </View>
+);
+```
+
+</Playground>
+
+## Применение компонента
+
+Принимает необходимое количество [`Panel`](/components/panel) с уникальным `id`. Далее `id` с нужным экраном передаётся в свойство
+`activePanel`.
+
+```
+View
+  └─ Panel N
+    └─ PanelHeader
+    └─ <content>
+```
+
+> Если вы выносите экран с [`Panel`](/components/panel) в отдельный компонент, то `id` должен передаваться непосредственно в
+> компонент-обёртку и уже после проксироваться в [`Panel`](/components/panel).
+>
+> ```jsx showLineNumbers filename="src/router.tsx" {2-3,9-10}
+> const MyPanel = ({ id }) => {
+>   // проксируем `id` в Panel */
+>   return <Panel id={id}>...</Panel>;
+> };
+>
+> export function Router() {
+>   return (
+>     <View activePanel="my-panel">
+>       {/* передаём `id` в компонент-обёртку */}
+>       <MyPanel id="my-panel" />
+>     </View>
+>   );
+> }
+> ```
+>
+> Иначе `View` не сможет найти `id` из `activePanel` среди прямых потомков в `children`.
+
+## Особенности анимации
+
+Чтобы анимация переходов происходила правильно, порядок [`Panel`](/components/panel) в вёрстке должен соответствовать их
+последовательности переходов.
+
+```jsx
+<View activePanel="1">
+  <Panel id="1" />
+  <Panel id="2" />
+  <Panel id="3" />
+</View>
+```
+
+В примере навигация между панелями должна быть в порядке 1 -> 2 -> 3.
+
+## Обработчики событий
+
+### Окончание анимации смены
+
+Свойство `onTransition` принимает обработчик, который вызывается при завершении анимации смены активной [`Panel`](/components/panel).
+
+```jsx
+function transitionHandler({
+  // Произошел аыа
+  isBack: boolean;
+  // Уникальный идентификатор `Panel`, откуда произошел переход
+  from: string;
+  // Уникальный идентификатор `Panel`, куда произошел переход
+  to: string;
+}) {
+    // обработчик
+}
+
+<View onTransition={transitionHandler}>{/* panels */}</View>;
+```
+
+### iOS Swipe Back
+
+> Для корректной работы `swipe back` убедитесь, что у вас разрешены анимации через
+> свойство [animate](/components/split-layout#animation) компонента `SplitCol`
+> или [transitionMotionEnabled](/components/config-provider#animation) компонента `ConfigProvider`.
+
+- `onSwipeBack` – обработчик свайпа назад.
+- `onSwipeBackCancel` – обработчик завершения анимации отмененного пользователем свайпа.
+- `onSwipeBackStart` – обработчик начала анимации свайпа назад. Чтобы остановить свайп назад, возвращайте `"prevent"`.
+
+В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущий экран. Для того, чтобы повторить такое поведение
+в VKUI, нужно:
+
+- передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите
+  `history`;
+- передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел
+  в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`;
+- обернуть ваше приложение в [`ConfigProvider`](/components/config-provider) — он определит, открыто приложение в `webview` клиента
+  VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение
+  `webview`: `<ConfigProvider isWebView>`.
+
+#### Блокировка свайпа (вариант #1)
+
+Компоненты, которые сами обрабатывают жесты (например, карта или кастомный компонент по типу карусели), могут конфликтовать со
+свайпбеком. Вот как можно это решить:
+
+- либо повесьте на них свойство `data-vkui-swipe-back={false}`;
+- либо вызывайте `event.stopPropagation()` на событие `onStartX` компонента [Touch](/components/touch).
+
+#### Блокировка свайпа (вариант #2)
+
+Для блокирования свайпа по вашему условию есть коллбек `onSwipeBackStart()`.
+
+```tsx
+import { useCallback } from 'react';
+import { type ViewProps, View } from '@vkontakte/vkui';
+
+type ViewOnSwipeBackStartProp = Required<ViewProps>['onSwipeBackStart'];
+
+export const ViewWithRestriction = ({
+  children,
+  ...props
+}: Omit<ViewProps, 'onSwipeBackStart'>) => {
+  const handleSwipeBackStart = useCallback<ViewOnSwipeBackStartProp>((activePanel) => {}, []);
+  return (
+    <View {...props} onSwipeBackStart={handleSwipeBackStart}>
+      {children}
+    </View>
+  );
+};
+```
+
+```jsx
+import { useCallback, useState } from 'react';
+import {
+  AppRoot,
+  ConfigProvider,
+  SplitLayout,
+  SplitCol,
+  View,
+  Alert,
+  Panel,
+  PanelHeader,
+  HorizontalScroll,
+  Header,
+  Group,
+  Gallery,
+  CellButton,
+  Placeholder,
+  PanelHeaderBack,
+  HorizontalCell,
+  Avatar,
+  FormItem,
+  Input,
+  Div,
+} from '@vkontakte/vkui';
+
+const MainPanelContent = ({ id, onProfileClick }) => {
+  return (
+    <Panel id={id}>
+      <PanelHeader>Main</PanelHeader>
+      <Group>
+        <div style={{ height: 200 }} />
+        <CellButton onClick={onProfileClick}>Профиль</CellButton>
+        <div style={{ height: 600 }} />
+      </Group>
+    </Panel>
+  );
+};
+
+const ProfilePanelContent = ({ id, onSettingsClick, onBack }) => {
+  return (
+    <Panel id={id}>
+      <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Профиль</PanelHeader>
+      <Group>
+        <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
+        <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
+          Здесь свайпбек отключен
+        </Div>
+      </Group>
+      <Group>
+        <CellButton onClick={onSettingsClick}>Настройки</CellButton>
+      </Group>
+      <Group
+        header={<Header>Gallery</Header>}
+        description="Полностью блокирует свайпбэк (за счёт event.stopPropagation() на onStartX компонента Touch)"
+      >
+        <Gallery slideWidth="90%" bullets="dark">
+          <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+          <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+          <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+        </Gallery>
+      </Group>
+      <Group
+        header={<Header>HorizontalScroll</Header>}
+        description="Свайпбэк срабатывает либо если мы тянем за левый край экрана, либо если позиция горизонтального скролла равна нулю"
+      >
+        <HorizontalScroll>
+          {Array.from({ length: 15 }).map((_, i) => (
+            <HorizontalCell key={i} size="s" title={i}>
+              <Avatar size={56} initials={`${i}`} />
+            </HorizontalCell>
+          ))}
+        </HorizontalScroll>
+      </Group>
+    </Panel>
+  );
+};
+
+const SettingsPanelContent = ({ id, name, onChangeName, onBack }) => {
+  const handleNameChange = (event) => {
+    onChangeName(event.target.value.trim());
+  };
+
+  return (
+    <Panel id={id}>
+      <PanelHeader before={<PanelHeaderBack onClick={onBack} />}>Настройки</PanelHeader>
+      <Group>
+        <Placeholder>Пример с блокированием свайпбека пока не будет выполнено условие</Placeholder>
+        <FormItem htmlFor="name" top="Имя">
+          <Input id="name" value={name} onChange={handleNameChange} />
+        </FormItem>
+      </Group>
+    </Panel>
+  );
+};
+
+const App = () => {
+  const [history, setHistory] = useState(['main']);
+  const activePanel = history[history.length - 1];
+
+  const go = (panel) => setHistory((prevHistory) => [...prevHistory, panel]);
+  const goBack = () => setHistory((prevHistory) => prevHistory.slice(0, -1));
+
+  const handleProfileClick = () => go('profile');
+  const handleSettingsClick = () => go('settings');
+
+  const [userName, setUserName] = useState('');
+  const [popoutWithRestriction, setPopoutWithRestriction] = useState(null);
+
+  const validateUserName = useCallback(() => {
+    if (userName !== '') {
+      return true;
+    }
+
+    setPopoutWithRestriction(
+      <Alert
+        title="Поле Имя не заполнено"
+        description="Пожалуйста, заполните его."
+        onClose={() => setPopoutWithRestriction(null)}
+      />,
+    );
+
+    return false;
+  }, [userName]);
+
+  const handleSwipeBackStartForPreventIfNeeded = useCallback(
+    (activePanel) => {
+      if (activePanel === 'settings') {
+        const isValid = validateUserName();
+        return isValid ? undefined : 'prevent';
+      }
+      return;
+    },
+    [validateUserName],
+  );
+
+  const handleBackForPreventIfNeeded = () => {
+    if (validateUserName()) {
+      goBack();
+    }
+  };
+
+  return (
+    <SplitLayout>
+      <SplitCol>
+        <View
+          history={history}
+          activePanel={activePanel}
+          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+          onSwipeBack={goBack}
+        >
+          <MainPanelContent id="main" onProfileClick={handleProfileClick} />
+          <ProfilePanelContent id="profile" onSettingsClick={handleSettingsClick} onBack={goBack} />
+          <SettingsPanelContent
+            id="settings"
+            name={userName}
+            onChangeName={setUserName}
+            onBack={handleBackForPreventIfNeeded}
+          />
+        </View>
+        {popoutWithRestriction}
+      </SplitCol>
+    </SplitLayout>
+  );
+};
+
+export default function Root() {
+  return (
+    <ConfigProvider platform="ios" isWebView>
+      <AppRoot>
+        <App />
+      </AppRoot>
+    </ConfigProvider>
+  );
+}
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Panel" />
