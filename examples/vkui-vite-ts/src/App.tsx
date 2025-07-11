@@ -7,7 +7,6 @@ import {
   Flex,
   Headline,
   Link,
-  Spacing,
   Title,
 } from '@vkontakte/vkui';
 import { useColorSchemeSwitcher } from './ColorSchemeSwitcher';
@@ -41,20 +40,18 @@ export default function App() {
 
   return (
     <ColorSchemeProvider value={colorScheme}>
-      <AppRoot>
+      <AppRoot disableSettingVKUIClassesInRuntime>
         <Flex direction="column" justify="center" className={styles.layout}>
           <FixedLayout vertical="top">
             <Flex justify="end" className={styles.header}>
               <Flex.Item>{colorSchemeSwitcher}</Flex.Item>
             </Flex>
           </FixedLayout>
-          <Flex direction="column" justify="center" align="center">
+          <Flex direction="column" justify="center" align="center" gap={16}>
             <Title level="1" Component="h1">
               VKUI Vite.js пример на TypeScript
             </Title>
-            <Spacing />
             <ProTip />
-            <Spacing size="s" />
             <Copyright />
           </Flex>
         </Flex>
