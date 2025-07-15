@@ -1622,15 +1622,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/expect-utils@npm:30.0.3":
-  version: 30.0.3
-  resolution: "@jest/expect-utils@npm:30.0.3"
-  dependencies:
-    "@jest/get-type": "npm:30.0.1"
-  checksum: 10/762445f363a3293d9ad5c25b2c1a4063310492429705d6dc7d28692135e380593503643eed1846b4b274c9322154c313d98bd32f2be942b10974162a572bbb37
-  languageName: node
-  linkType: hard
-
 "@jest/expect-utils@npm:30.0.4":
   version: 30.0.4
   resolution: "@jest/expect-utils@npm:30.0.4"
@@ -4325,7 +4316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/estree@npm:*, @types/estree@npm:^1.0.0, @types/estree@npm:^1.0.6, @types/estree@npm:^1.0.8":
+"@types/estree@npm:*, @types/estree@npm:^1.0.0, @types/estree@npm:^1.0.8":
   version: 1.0.8
   resolution: "@types/estree@npm:1.0.8"
   checksum: 10/25a4c16a6752538ffde2826c2cc0c6491d90e69cd6187bef4a006dd2c3c45469f049e643d7e516c515f21484dc3d48fd5c870be158a5beb72f5baf3dc43e4099
@@ -4601,16 +4592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 24.0.7
-  resolution: "@types/node@npm:24.0.7"
-  dependencies:
-    undici-types: "npm:~7.8.0"
-  checksum: 10/1df93467fcd5cf178cc381babe58f8f8a504a097fd64297241bd63fd9dbe2b750b1b4ab2bd8b8f6a2dd431d0703da7a74dee8cca5113ae2421f9a4a1ec43d9c0
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^24.0.13":
+"@types/node@npm:*, @types/node@npm:^24.0.13":
   version: 24.0.13
   resolution: "@types/node@npm:24.0.13"
   dependencies:
@@ -9068,17 +9050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.16.1, enhanced-resolve@npm:^5.17.1":
-  version: 5.18.1
-  resolution: "enhanced-resolve@npm:5.18.1"
-  dependencies:
-    graceful-fs: "npm:^4.2.4"
-    tapable: "npm:^2.2.0"
-  checksum: 10/50e81c7fe2239fba5670ebce78a34709906ed3a79274aa416434f7307b252e0b7824d76a7dd403eca795571dc6afd9a44183fc45a68475e8f2fdfbae6e92fcc3
-  languageName: node
-  linkType: hard
-
-"enhanced-resolve@npm:^5.17.2":
+"enhanced-resolve@npm:^5.16.1, enhanced-resolve@npm:^5.17.2":
   version: 5.18.2
   resolution: "enhanced-resolve@npm:5.18.2"
   dependencies:
@@ -10114,7 +10086,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expect@npm:30.0.4":
+"expect@npm:30.0.4, expect@npm:^30.0.0":
   version: 30.0.4
   resolution: "expect@npm:30.0.4"
   dependencies:
@@ -10125,20 +10097,6 @@ __metadata:
     jest-mock: "npm:30.0.2"
     jest-util: "npm:30.0.2"
   checksum: 10/ae2f50eba05614060dbf0340dde110df4d659a10075d9d3a550bc6501ed24c00b379021fc56786a64259a39a30737ef73c51e9711e1cd2ff13f81606c059bd18
-  languageName: node
-  linkType: hard
-
-"expect@npm:^30.0.0":
-  version: 30.0.3
-  resolution: "expect@npm:30.0.3"
-  dependencies:
-    "@jest/expect-utils": "npm:30.0.3"
-    "@jest/get-type": "npm:30.0.1"
-    jest-matcher-utils: "npm:30.0.3"
-    jest-message-util: "npm:30.0.2"
-    jest-mock: "npm:30.0.2"
-    jest-util: "npm:30.0.2"
-  checksum: 10/4f15a21c1b6341d2dd3de78104601b2f594ee2c6b63e2f40be6e4deda589fad8b3873caa2cdb1452b87858b41964086c236e07826483127a7786c66d053dcb9f
   languageName: node
   linkType: hard
 
@@ -12785,18 +12743,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-diff@npm:30.0.3":
-  version: 30.0.3
-  resolution: "jest-diff@npm:30.0.3"
-  dependencies:
-    "@jest/diff-sequences": "npm:30.0.1"
-    "@jest/get-type": "npm:30.0.1"
-    chalk: "npm:^4.1.2"
-    pretty-format: "npm:30.0.2"
-  checksum: 10/ee196dc58bef790ddc9c2a91dd37363442530fd416630e5a2141b3ecf4ae5f0720dd2d69bb8e36ac5a0624e153da8e06df9d16d8b374212de18748d7cba99a63
-  languageName: node
-  linkType: hard
-
 "jest-diff@npm:30.0.4":
   version: 30.0.4
   resolution: "jest-diff@npm:30.0.4"
@@ -12924,18 +12870,6 @@ __metadata:
     jest-get-type: "npm:^29.2.0"
     pretty-format: "npm:^29.2.1"
   checksum: 10/e095739f450e5e0aa23106acb2be95af4c168bb4f77f27ad51e5f1b40e0b9f5453762c4ca26eaf70ef25776a657af3de56634bb6e8e9bc7fe549be07b1e34f7d
-  languageName: node
-  linkType: hard
-
-"jest-matcher-utils@npm:30.0.3":
-  version: 30.0.3
-  resolution: "jest-matcher-utils@npm:30.0.3"
-  dependencies:
-    "@jest/get-type": "npm:30.0.1"
-    chalk: "npm:^4.1.2"
-    jest-diff: "npm:30.0.3"
-    pretty-format: "npm:30.0.2"
-  checksum: 10/6cad6155335726d62b93c90830549bc38ef6e92d10fc353b34514c1c8ff5fb054b7d97951852dd1dbf62ce393a26a12cb6b2c9e3aa3227f8f746d8c34ceb2f03
   languageName: node
   linkType: hard
 
@@ -21742,13 +21676,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:^3.2.3":
-  version: 3.2.3
-  resolution: "webpack-sources@npm:3.2.3"
-  checksum: 10/a661f41795d678b7526ae8a88cd1b3d8ce71a7d19b6503da8149b2e667fc7a12f9b899041c1665d39e38245ed3a59ab68de648ea31040c3829aa695a5a45211d
-  languageName: node
-  linkType: hard
-
 "webpack-sources@npm:^3.3.3":
   version: 3.3.3
   resolution: "webpack-sources@npm:3.3.3"
@@ -21763,7 +21690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.100.1":
+"webpack@npm:^5.100.1, webpack@npm:^5.98.0":
   version: 5.100.1
   resolution: "webpack@npm:5.100.1"
   dependencies:
@@ -21798,43 +21725,6 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: 10/b89eca5072127e184f9d098e4295a276cfe5b36b5718970eb5e953bf0dec5477d189b6c30b14bc631f67e8e286c4869f2b602e516d1ac3e4664ecccc79895399
-  languageName: node
-  linkType: hard
-
-"webpack@npm:^5.98.0":
-  version: 5.99.9
-  resolution: "webpack@npm:5.99.9"
-  dependencies:
-    "@types/eslint-scope": "npm:^3.7.7"
-    "@types/estree": "npm:^1.0.6"
-    "@types/json-schema": "npm:^7.0.15"
-    "@webassemblyjs/ast": "npm:^1.14.1"
-    "@webassemblyjs/wasm-edit": "npm:^1.14.1"
-    "@webassemblyjs/wasm-parser": "npm:^1.14.1"
-    acorn: "npm:^8.14.0"
-    browserslist: "npm:^4.24.0"
-    chrome-trace-event: "npm:^1.0.2"
-    enhanced-resolve: "npm:^5.17.1"
-    es-module-lexer: "npm:^1.2.1"
-    eslint-scope: "npm:5.1.1"
-    events: "npm:^3.2.0"
-    glob-to-regexp: "npm:^0.4.1"
-    graceful-fs: "npm:^4.2.11"
-    json-parse-even-better-errors: "npm:^2.3.1"
-    loader-runner: "npm:^4.2.0"
-    mime-types: "npm:^2.1.27"
-    neo-async: "npm:^2.6.2"
-    schema-utils: "npm:^4.3.2"
-    tapable: "npm:^2.1.1"
-    terser-webpack-plugin: "npm:^5.3.11"
-    watchpack: "npm:^2.4.1"
-    webpack-sources: "npm:^3.2.3"
-  peerDependenciesMeta:
-    webpack-cli:
-      optional: true
-  bin:
-    webpack: bin/webpack.js
-  checksum: 10/cf4a217239bcaa892f93702639ac837a16510edb7a1326955fb042d499d297cbdb16f20a81f3be6ec041b22ab47c599c757e505fdee1dd89b7f7a1ce4337fbf3
   languageName: node
   linkType: hard
 
