@@ -61,7 +61,7 @@ export const ModalPageBase = ({
             ? function handleDismissButtonClick(event) {
                 onClose('click-close-button', event);
               }
-            : undefined
+            : noop
         }
         aria-label={modalDismissButtonLabel}
       >
