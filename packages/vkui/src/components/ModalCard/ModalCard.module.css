@@ -1,6 +1,4 @@
 .host {
-  inline-size: 100%;
-  padding: var(--vkui--spacing_size_m);
   margin-inline: auto;
 }
 
@@ -26,16 +24,20 @@
   --vkui_internal_ModalCard--safeAreaInsetBottom: var(--vkui_internal--safe_area_inset_bottom);
 
   position: absolute;
-  inset-block-end: 0;
-  inset-inline: 0;
+  /*
+   * Используем inset вместо padding, чтобы срабатывала логика с закрытие с Click Outside.
+   * Для этого также нужны `inline-size: auto` и `margin-inline: auto`.
+   */
+  inset-block-end: var(--vkui_internal_ModalCard--safeAreaInsetBottom);
+  inset-inline: var(--vkui--spacing_size_m);
   box-sizing: border-box;
-  margin-block-end: var(--vkui_internal_ModalCard--safeAreaInsetBottom);
+  inline-size: auto;
   transform: translate3d(0, calc(100% - var(--vkui_internal_ModalCard--translateY)), 0);
   transition: transform 0.4s var(--vkui_internal--spring-easing);
 }
 
 .hostMobile.hostStateEnter {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--safeAreaInsetBottom)), 0);
   transition: none;
 }
 
@@ -44,18 +46,20 @@
 }
 
 .hostMobile.hostStateExiting {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--safeAreaInsetBottom)), 0);
   transition: transform 0.2s ease;
 }
 
 .hostMobile.hostStateExited {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--safeAreaInsetBottom)), 0);
   transition: none;
 }
 
 /* Desktop */
 .hostDesktop {
   box-sizing: content-box;
+  inline-size: 100%;
+  padding: var(--vkui--spacing_size_m);
   margin-block: auto;
   opacity: 1;
   transition: opacity 340ms var(--vkui--animation_easing_platform);
