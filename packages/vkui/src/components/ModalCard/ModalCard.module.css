@@ -28,7 +28,9 @@
    * Используем inset вместо padding, чтобы срабатывала логика с закрытие с Click Outside.
    * Для этого также нужны `inline-size: auto` и `margin-inline: auto`.
    */
-  inset-block-end: var(--vkui_internal_ModalCard--safeAreaInsetBottom);
+  inset-block-end: calc(
+    var(--vkui--spacing_size_m) + var(--vkui_internal_ModalCard--safeAreaInsetBottom)
+  );
   inset-inline: var(--vkui--spacing_size_m);
   box-sizing: border-box;
   inline-size: auto;
