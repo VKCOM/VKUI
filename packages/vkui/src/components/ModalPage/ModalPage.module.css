@@ -89,7 +89,6 @@
   inset-inline-start: 0;
   block-size: var(--vkui_internal_ModalPageDocument--snapPoint);
   max-block-size: 100%;
-  padding-block-end: var(--vkui_internal_ModalPageDocument--safeAreaInsetBottom);
   pointer-events: auto;
   touch-action: pan-y;
   transform: translate3d(0, 0, 0);
@@ -139,6 +138,7 @@
 }
 
 .children {
+  box-sizing: border-box;
   /*
    * Удерживает высоту в пределах 100% родителя при переполнении контента.
    *
@@ -155,6 +155,10 @@
   background-color: var(--vkui--color_background_modal);
   border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
   border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+}
+
+.childrenMobile {
+  padding-block-end: var(--vkui_internal_ModalPageDocument--safeAreaInsetBottom);
 }
 
 /* Desktop */
