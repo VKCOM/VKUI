@@ -1,0 +1,6 @@
+import{j as r}from"./iframe-DSAhScPT.js";import{D as i,C as p}from"./constants-DdkjnEgz.js";import{C as m}from"./Checkbox-BMlRh-Jr.js";import{S as t}from"./SelectionControl-BLbyoyvH.js";import"./react_utils-CSZjvU4X.js";import"./VisuallyHidden-DIyQgeho.js";import"./check_box_on_24-DwZfeea6.js";import"./_object_spread_props-DRD4qu7p.js";import"./SvgIconRoot-CIYgEGRf.js";import"./check_box_indetermanate_20-CapJV14i.js";import"./Tappable-41du4Si_.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./Clickable-6oth1gD7.js";import"./type_checkers-CVMjkZjG.js";import"./InputUtils-CLCgtllv.js";import"./Footnote-BKhvF0_1.js";const E={title:"Utils/SelectionControl",component:t,parameters:{...p,...i},tags:["Утилиты"]},o={render:a=>r.jsxs(t,{...a,children:[r.jsx(m.Input,{}),r.jsx(t.Label,{children:"Согласен"})]})};var e,n,s;o.parameters={...o.parameters,docs:{...(e=o.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  render: props => <SelectionControl {...props}>
+      <Checkbox.Input />
+      <SelectionControl.Label>Согласен</SelectionControl.Label>
+    </SelectionControl>
+}`,...(s=(n=o.parameters)==null?void 0:n.docs)==null?void 0:s.source}}};const I=["Playground"];export{o as Playground,I as __namedExportsOrder,E as default};
