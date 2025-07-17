@@ -24,6 +24,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'usePortal'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'disableShiftMiddleware'
   | 'strategy'
 >;
 
