@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { type TabsProps } from './Tabs';
-import { type TabsController } from './TabsController';
 
 /* eslint-disable jsdoc/require-jsdoc */
 export interface TabsContextProps {
@@ -9,7 +8,6 @@ export interface TabsContextProps {
   layoutFillMode: NonNullable<TabsProps['layoutFillMode']>;
   withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
   scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
-  controller: TabsController | null;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
@@ -20,5 +18,4 @@ export const TabsModeContext: React.Context<TabsContextProps> =
     layoutFillMode: 'auto',
     withScrollToSelectedTab: false,
     scrollBehaviorToSelectedTab: 'nearest',
-    controller: null,
   });
