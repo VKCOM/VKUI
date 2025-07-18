@@ -8,7 +8,8 @@ import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
-import { type TabsContextProps, TabsModeContext } from '../Tabs/TabsModeContext';
+import { TabsControllerContext } from '../Tabs/TabsControllerContext';
+import { TabsModeContext } from '../Tabs/TabsModeContext';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -99,14 +100,9 @@ export const TabsItem = ({
   ...restProps
 }: TabsItemProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
-  const {
-    mode,
-    withGaps,
-    layoutFillMode,
-    scrollBehaviorToSelectedTab,
-    withScrollToSelectedTab,
-    controller,
-  }: TabsContextProps = React.useContext(TabsModeContext);
+  const { mode, withGaps, layoutFillMode, scrollBehaviorToSelectedTab, withScrollToSelectedTab } =
+    React.useContext(TabsModeContext);
+  const controller = React.useContext(TabsControllerContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';

@@ -3,7 +3,7 @@ import { useStableCallback } from '../../hooks/useStableCallback';
 import { type TabsProps } from './Tabs';
 
 /* eslint-disable jsdoc/require-jsdoc */
-export type TabsController = {
+export type TabsControllerProps = {
   onChange: (id: string) => void;
   selectedTab: string;
 };
@@ -16,7 +16,7 @@ export const useTabsController = ({
 }: Pick<
   TabsProps,
   'selectedId' | 'defaultSelectedId' | 'onSelectedIdChange'
->): TabsController | null => {
+>): TabsControllerProps | null => {
   const onSelectedIdChange = useStableCallback(
     (id: string | undefined) => id && onSelectedIdChangeProp?.(id),
   );
