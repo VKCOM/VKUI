@@ -23,8 +23,9 @@ const sizeYClassNames = {
 
 export type SegmentedControlValue = string | number | undefined;
 
-export interface SegmentedControlOptionInterface
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'label'> {
+export interface SegmentedControlOptionInterface<
+  VALUE extends SegmentedControlValue = SegmentedControlValue,
+> extends Omit<React.HTMLAttributes<HTMLElement>, 'label'> {
   /**
    * Вставляет элемент перед основным контентом.
    * Рекомендуется использовать только иконки с размером 20.
@@ -37,15 +38,15 @@ export interface SegmentedControlOptionInterface
   /**
    * Значение опции, которое будет передано в обработчик onChange при выборе.
    */
-  value: SegmentedControlValue;
+  value: VALUE;
 }
 
-export interface SegmentedControlProps
+export interface SegmentedControlProps<VALUE extends SegmentedControlValue = SegmentedControlValue>
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
   /**
    * Массив опций для отображения в компоненте.
    */
-  options: SegmentedControlOptionInterface[];
+  options: Array<SegmentedControlOptionInterface<VALUE>>;
   /**
    * Размер компонента.
    */
@@ -57,15 +58,15 @@ export interface SegmentedControlProps
   /**
    * Обработчик изменения выбранного значения.
    */
-  onChange?: (value: SegmentedControlValue) => void;
+  onChange?: (value: VALUE) => void;
   /**
    * Текущее выбранное значение (для контролируемого компонента).
    */
-  value?: SegmentedControlValue;
+  value?: VALUE;
   /**
    * Значение по умолчанию (для неконтролируемого компонента).
    */
-  defaultValue?: SegmentedControlValue;
+  defaultValue?: VALUE;
 }
 
 const warn = warnOnce('SegmentedControl');
@@ -73,7 +74,7 @@ const warn = warnOnce('SegmentedControl');
 /**
  * @see https://vkui.io/components/segmented-control
  */
-export const SegmentedControl = ({
+export const SegmentedControl = <VALUE extends SegmentedControlValue = SegmentedControlValue>({
   size = 'l',
   name,
   options,
@@ -83,15 +84,15 @@ export const SegmentedControl = ({
   value: valueProp,
   role = 'radiogroup',
   ...restProps
-}: SegmentedControlProps): React.ReactNode => {
+}: SegmentedControlProps<VALUE>): React.ReactNode => {
   const id = React.useId();
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
 
-  const [value, onChange] = useCustomEnsuredControl({
-    onChange: onChangeProp,
+  const [value, onChange] = useCustomEnsuredControl<VALUE>({
+    onChange: (newValue) => onChangeProp?.(newValue),
     value: valueProp,
-    defaultValue,
+    defaultValue: defaultValue as VALUE,
   });
 
   const { sizeY = 'none' } = useAdaptivity();

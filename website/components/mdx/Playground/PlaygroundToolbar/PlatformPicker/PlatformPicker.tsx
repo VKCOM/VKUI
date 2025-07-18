@@ -57,7 +57,6 @@ export function PlatformPicker({ className }: { className?: string }) {
         value={platform}
         className={className}
         options={PLATFORM_OPTIONS}
-        // @ts-expect-error: TS2232 fix SegmentedControl types?
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onChange={playgroundLoading ? undefined : handlePlatformChange}
       />
