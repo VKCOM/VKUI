@@ -5470,7 +5470,7 @@ __metadata:
     size-limit: "npm:^11.2.0"
     storybook: "npm:9.0.16"
     style-loader: "npm:^4.0.0"
-    stylelint: "npm:^16.21.1"
+    stylelint: "npm:^16.22.0"
     stylelint-config-recess-order: "npm:^7.1.0"
     stylelint-config-standard: "npm:^38.0.0"
     stylelint-media-use-custom-media: "npm:^4.0.0"
@@ -19901,9 +19901,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^16.21.1":
-  version: 16.21.1
-  resolution: "stylelint@npm:16.21.1"
+"stylelint@npm:^16.22.0":
+  version: 16.22.0
+  resolution: "stylelint@npm:16.22.0"
   dependencies:
     "@csstools/css-parser-algorithms": "npm:^3.0.5"
     "@csstools/css-tokenizer": "npm:^3.0.4"
@@ -19945,7 +19945,7 @@ __metadata:
     write-file-atomic: "npm:^5.0.1"
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 10/70b83480df80b7ff0685a86e472855b9f4a8f8506ffaaf9d7b1cdf88653b7f6c25697a21d2b5731f9ef1b9860f520bf368b58fb680a1e51fb6a6f5f08dab8159
+  checksum: 10/76896dc3e7310d319a27284d6f5996b9c0af07828f70354705bdd6181db3359e1f5218b1482823eb9296305be7e024ea7da76d493eb2606c17eae82168991ac5
   languageName: node
   linkType: hard
 
