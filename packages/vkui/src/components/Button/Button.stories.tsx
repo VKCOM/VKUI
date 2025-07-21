@@ -37,3 +37,12 @@ export const Playground: Story = {
     size: 's',
   },
 };
+
+export const WithHref: Story = {
+  args: {
+    children: 'Button',
+    size: 's',
+    href: 'https://vk.com',
+    target: '_blank'
+  },
+};

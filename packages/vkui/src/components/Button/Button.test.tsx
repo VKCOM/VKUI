@@ -1,11 +1,23 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { a11yTest, baselineComponent } from '../../testing/utils';
 import { Button, type ButtonProps } from './Button';
 
 const ButtonTest = (props: ButtonProps) => <Button data-testid="custom-btn" {...props} />;
 const button = () => screen.getByTestId('custom-btn');
 
 describe('Button', () => {
+  a11yTest(() => (
+    <>
+      <ButtonTest loading>
+        Button
+      </ButtonTest>
+
+      <ButtonTest href="#" loading>
+        Button with href
+      </ButtonTest>
+    </>
+  ));
+
   baselineComponent((props) => <Button {...props}>Button</Button>);
 
   it('Component: Button is handled as a native button', () => {
@@ -36,9 +48,9 @@ describe('Button', () => {
         0
       </ButtonTest>,
     );
-    // TODO: как будто не хватает expect и что мы хотим видеть тут? Сейчас мы просто элементы по айди получаем и все
-    screen.getByTestId('before');
-    screen.getByTestId('children');
-    screen.getByTestId('after');
+
+    expect(screen.getByTestId('before')).toHaveTextContent('0')
+    expect(screen.getByTestId('children')).toHaveTextContent('0')
+    expect(screen.getByTestId('after')).toHaveTextContent('0')
   });
 });
