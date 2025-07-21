@@ -8,9 +8,9 @@ import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { useTabsController } from './TabsController';
+import { TabsControllerContext } from './TabsControllerContext';
 import { TabsModeContext } from './TabsModeContext';
 import styles from './Tabs.module.css';
-
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Режим отображения компонента.
@@ -76,6 +76,17 @@ export const Tabs = ({
 
   const { tabsRef } = useTabsNavigation(isTabFlow, direction === 'rtl');
 
+  const tabsModeContext = React.useMemo(
+    () => ({
+      mode,
+      withGaps,
+      layoutFillMode,
+      withScrollToSelectedTab,
+      scrollBehaviorToSelectedTab,
+    }),
+    [mode, withGaps, layoutFillMode, withScrollToSelectedTab, scrollBehaviorToSelectedTab],
+  );
+
   return (
     <RootComponent
       {...restProps}
@@ -89,17 +100,10 @@ export const Tabs = ({
       role={role}
     >
       <div className={styles.in} ref={tabsRef}>
-        <TabsModeContext.Provider
-          value={{
-            mode,
-            withGaps,
-            layoutFillMode,
-            withScrollToSelectedTab,
-            scrollBehaviorToSelectedTab,
-            controller,
-          }}
-        >
-          {children}
+        <TabsModeContext.Provider value={tabsModeContext}>
+          <TabsControllerContext.Provider value={controller}>
+            {children}
+          </TabsControllerContext.Provider>
         </TabsModeContext.Provider>
       </div>
     </RootComponent>
