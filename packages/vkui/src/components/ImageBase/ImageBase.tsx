@@ -304,6 +304,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
               objectPosition && styles.withObjectPosition,
               filter && styles.withFilter,
               keepAspectRatio && styles.imgKeepRatio,
+              failed && styles.imgHiddenAlt,
             )}
             crossOrigin={crossOrigin}
             decoding={decoding}
