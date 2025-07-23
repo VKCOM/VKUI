@@ -124,13 +124,13 @@ export const SimpleCell = ({
       <div className={styles.middle}>
         {overTitle && (
           <Subhead Component="span" className={classNames(styles.text, styles.overTitle)}>
-            {overTitle}
+            {overTitle}&nbsp;
           </Subhead>
         )}
         <div className={styles.content}>
           {badgeBeforeTitle && <span className={styles.badge}>{badgeBeforeTitle}</span>}
           <Headline Component="span" className={styles.children} weight="3">
-            {children}
+            {children}&nbsp;
           </Headline>
           {hasReactNode(badgeAfterTitle) && <span className={styles.badge}>{badgeAfterTitle}</span>}
         </div>
@@ -138,14 +138,14 @@ export const SimpleCell = ({
           <div className={styles.content}>
             {badgeBeforeSubtitle && <span className={styles.badge}>{badgeBeforeSubtitle}</span>}
             <Footnote normalize={false} className={classNames(styles.text, styles.subtitle)}>
-              {subtitle}
+              {subtitle}&nbsp;
             </Footnote>
             {badgeAfterSubtitle && <span className={styles.badge}>{badgeAfterSubtitle}</span>}
           </div>
         )}
         {extraSubtitle && (
           <Footnote className={classNames(styles.text, styles.extraSubtitle)}>
-            {extraSubtitle}
+            {extraSubtitle}&nbsp;
           </Footnote>
         )}
       </div>
