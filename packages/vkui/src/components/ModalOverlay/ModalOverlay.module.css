@@ -1,7 +1,7 @@
 .host {
   inset: 0;
   user-select: none;
-  background-color: rgb(0, 0, 0, 0.4);
+  background-color: var(--vkui--color_overlay_primary);
   transition: opacity 0.3s linear;
   will-change: opacity;
   -webkit-tap-highlight-color: transparent;
