@@ -9,6 +9,7 @@ import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
 
@@ -124,13 +125,15 @@ export const SimpleCell = ({
       <div className={styles.middle}>
         {overTitle && (
           <Subhead Component="span" className={classNames(styles.text, styles.overTitle)}>
-            {overTitle}&nbsp;
+            {overTitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Subhead>
         )}
         <div className={styles.content}>
           {badgeBeforeTitle && <span className={styles.badge}>{badgeBeforeTitle}</span>}
           <Headline Component="span" className={styles.children} weight="3">
-            {children}&nbsp;
+            {children}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Headline>
           {hasReactNode(badgeAfterTitle) && <span className={styles.badge}>{badgeAfterTitle}</span>}
         </div>
@@ -138,14 +141,16 @@ export const SimpleCell = ({
           <div className={styles.content}>
             {badgeBeforeSubtitle && <span className={styles.badge}>{badgeBeforeSubtitle}</span>}
             <Footnote normalize={false} className={classNames(styles.text, styles.subtitle)}>
-              {subtitle}&nbsp;
+              {subtitle}
+              <VisuallyHidden>&nbsp;</VisuallyHidden>
             </Footnote>
             {badgeAfterSubtitle && <span className={styles.badge}>{badgeAfterSubtitle}</span>}
           </div>
         )}
         {extraSubtitle && (
           <Footnote className={classNames(styles.text, styles.extraSubtitle)}>
-            {extraSubtitle}&nbsp;
+            {extraSubtitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Footnote>
         )}
       </div>
