@@ -9,7 +9,7 @@ import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
 
