@@ -202,13 +202,11 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   const mouseOutHandlersRef = useRef<VoidFunction[]>([]);
 
   const hasSrc = src || srcSet;
-  const needShowFallbackIcon = (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
-
-  const fallbackIcon = needShowFallbackIcon ? fallbackIconProp : null;
+  const fallbackIcon = failed || !hasSrc ? fallbackIconProp : null;
 
   if (process.env.NODE_ENV === 'development') {
     validateSize(size);
-    if (fallbackIcon) {
+    if (React.isValidElement(fallbackIcon)) {
       validateFallbackIcon(size, { name: 'fallbackIcon', value: fallbackIcon });
     }
   }
