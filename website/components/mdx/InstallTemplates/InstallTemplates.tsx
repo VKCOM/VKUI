@@ -1,6 +1,13 @@
 'use client';
 
-import { Banner, type BannerProps, classNames, Headline, SimpleGrid } from '@vkontakte/vkui';
+import {
+  Banner,
+  type BannerProps,
+  classNames,
+  Headline,
+  SimpleGrid,
+  useColorScheme,
+} from '@vkontakte/vkui';
 import { NextjsLogo } from './NextjsLogo';
 import { ViteLogo } from './ViteLogo';
 import styles from './InstallTemplates.module.css';
@@ -51,6 +58,7 @@ function InstallTemplate({
 }: Pick<BannerProps, 'title' | 'subtitle' | 'before' | 'href'> & {
   appearance?: 'purple' | 'lime';
 }) {
+  const colorScheme = useColorScheme();
   return (
     <Banner
       before={before}
@@ -63,7 +71,7 @@ function InstallTemplate({
       className={styles.root}
       hoverMode={styles.hover}
       title={title}
-      imageTheme="light"
+      imageTheme={colorScheme}
       subtitle={subtitle}
       actions={
         <Headline>
