@@ -45,6 +45,13 @@
   display: block;
   inline-size: 100%;
   block-size: 100%;
+  /* Скрывает текст из атрибута alt. */
+  color: transparent;
+  /*
+  Скрывает альтернативную иконку, которая появляется когда нет атрибута alt.
+  Работает только в Chromium. В остальных ситуациях сработает `.imgHiddenAlt`, который добавляется на `onError`.
+  */
+  text-indent: 10000px;
   border: 0;
   border-radius: inherit;
 }
@@ -88,8 +95,8 @@
   );
 }
 
-.host:not(.loaded) .img {
-  visibility: hidden;
+.imgHiddenAlt {
+  opacity: 0;
 }
 
 .fallback {
