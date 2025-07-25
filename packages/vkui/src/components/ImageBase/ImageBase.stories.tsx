@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
+import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ImageBase, type ImageBaseProps } from './ImageBase';
 
@@ -20,6 +21,9 @@ const story: Meta<ImageBaseProps> = {
         'drop-shadow': 'drop-shadow(16px 16px 20px red) invert(75%)',
       },
     },
+    fallbackIcon: createFieldWithPresets({
+      iconSizes: ['12', '16', '20', '24', '28', '36'],
+    }),
   },
   tags: ['Отображение данных'],
 };
