@@ -103,10 +103,6 @@
   background-color: var(--vkui--color_background_secondary);
 }
 
-.modeImage {
-  color: var(--vkui--color_text_primary_invariably);
-}
-
 .inverted .dismiss,
 .inverted .chevron,
 .inverted {
