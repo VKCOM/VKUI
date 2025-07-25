@@ -79,12 +79,14 @@ export const Cell: React.FC<CellProps> & {
   style,
   toggleButtonTestId,
   removeButtonTestId,
+  href: hrefProp,
   ...restProps
 }: CellProps) => {
   const [dragging, setDragging] = React.useState(false);
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
   const Component = selectable ? 'label' : ComponentProps;
+  const href = selectable ? undefined : hrefProp;
 
   const platform = usePlatform();
 
@@ -132,6 +134,7 @@ export const Cell: React.FC<CellProps> & {
     hasActive: hasActive,
     hasHover: hasActive && !removable,
     disabled,
+    href,
     ...restProps,
     className: styles.content,
     // чтобы свойство, если не определено, не присутствовало в
