@@ -125,6 +125,9 @@ export interface BaseGalleryProps
    * Текст для кнопки-стрелки вправо (вперед). Делает ее доступной для ассистивных технологий.
    */
   arrowNextLabel?: string;
+
+  slideLabel?: string | ((index: number, slidesCount: number) => string);
+  slideRoleDescription?: string;
   /**
    * Передает атрибут `data-testid` для слайда.
    */

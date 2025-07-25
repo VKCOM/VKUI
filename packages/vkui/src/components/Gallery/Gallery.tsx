@@ -2,8 +2,11 @@
 
 import * as React from 'react';
 import { clamp } from '../../helpers/math';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useIsClient } from '../../hooks/useIsClient';
 import { callMultiple } from '../../lib/callMultiple';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { CarouselBase } from '../CarouselBase/CarouselBase';
 import type { BaseGalleryProps } from '../CarouselBase/types';
 import { useAutoPlay } from './hooks';
@@ -30,8 +33,12 @@ export const Gallery = ({
   bullets,
   onDragStart,
   onDragEnd,
+  getRootRef,
+  onMouseOver,
+  onMouseOut,
   ...props
 }: GalleryProps): React.ReactNode => {
+  const rootRef = useExternRef(getRootRef);
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? (props.slideIndex ?? 0) : localSlideIndex;
@@ -41,6 +48,7 @@ export const Gallery = ({
   );
   const childCount = slides.length;
   const isClient = useIsClient();
+  const focusWithin = useFocusWithin(rootRef);
 
   const handleChange: GalleryProps['onChange'] = React.useCallback(
     (current: number) => {
@@ -70,6 +78,11 @@ export const Gallery = ({
     setSlideIndex(safeSlideIndex);
   }, [onChange, safeSlideIndex, slideIndex]);
 
+  useIsomorphicLayoutEffect(
+    () => (focusWithin ? autoPlayControls.pause() : autoPlayControls.resume()),
+    [focusWithin, autoPlayControls.pause, autoPlayControls.resume],
+  );
+
   if (!isClient) {
     return null;
   }
@@ -77,9 +90,12 @@ export const Gallery = ({
   return (
     <CarouselBase
       dragDisabled={isControlled && !onChange}
+      getRootRef={rootRef}
       {...props}
       onDragStart={callMultiple(onDragStart, autoPlayControls.pause)}
       onDragEnd={callMultiple(onDragEnd, autoPlayControls.resume)}
+      onMouseEnter={callMultiple(onMouseOver, autoPlayControls.pause)}
+      onMouseLeave={callMultiple(onMouseOut, autoPlayControls.resume)}
       bullets={childCount > 0 && bullets}
       slideIndex={safeSlideIndex}
       onChange={handleChange}
