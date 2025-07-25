@@ -113,3 +113,13 @@ export const HorizontalScrollWithoutHasMousePlayground = ({
     </ConfigProvider>
   );
 };
+
+export const HorizontalScrollWithFocusVisible = (props: ComponentPlaygroundProps) => (
+  <ComponentPlayground {...props}>
+    {(props: HorizontalScrollProps) => (
+      <div style={{ padding: 10 }}>
+        <HorizontalScroll {...props}>{items}</HorizontalScroll>
+      </div>
+    )}
+  </ComponentPlayground>
+);

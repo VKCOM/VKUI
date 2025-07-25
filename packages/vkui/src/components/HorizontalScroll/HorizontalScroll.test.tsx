@@ -71,9 +71,18 @@ describe('HorizontalScroll', () => {
   it('disables navigation to arrows by keyboard', async () => {
     jest.useFakeTimers();
 
+    let scrollContainer: HTMLDivElement | null = null;
+
     const result = render(
       <AdaptivityProvider hasPointer>
-        <HorizontalScroll getRef={mockRef} data-testid="horizontal-scroll" showArrows="always">
+        <HorizontalScroll
+          getRef={(e) => {
+            scrollContainer = e;
+            mockRef(e);
+          }}
+          data-testid="horizontal-scroll"
+          showArrows="always"
+        >
           <button
             type="button"
             data-testid="focusable-element"
@@ -87,6 +96,9 @@ describe('HorizontalScroll', () => {
     );
 
     expect(document.activeElement).toBe(document.body);
+
+    await userEvent.tab();
+    expect(document.activeElement).toBe(scrollContainer);
 
     await userEvent.tab();
     expect(document.activeElement).toBe(result.getByTestId('focusable-element'));
@@ -236,7 +248,7 @@ describe('HorizontalScroll', () => {
   });
 });
 
-function mockRef(element: HTMLDivElement) {
+function mockRef(element: HTMLDivElement | null) {
   if (!element) {
     return;
   }
