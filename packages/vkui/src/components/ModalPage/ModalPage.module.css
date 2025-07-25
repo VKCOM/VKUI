@@ -30,27 +30,22 @@
 
 /* Desktop */
 .hostDesktop {
-  --vkui_internal_ModalPage--desktopSafeInsetBlock: calc(var(--vkui--spacing_size_2xl) * 2);
+  --vkui_internal_ModalPage--desktopStretchedSize: calc(100% - var(--vkui--spacing_size_2xl) * 2);
   --vkui_internal_ModalPage--desktopMaxWidth: 100%;
   --vkui_internal_ModalPage--desktopMaxHeight: 640px;
   --vkui_internal_ModalPage--userHeight: auto;
 
   position: relative;
   box-sizing: content-box;
-  max-inline-size: var(--vkui_internal_ModalPage--desktopMaxWidth);
-  max-block-size: var(--vkui_internal_ModalPage--desktopMaxHeight);
-  padding-block: var(--vkui_internal_ModalPage--desktopSafeInsetBlock);
-  padding-inline: var(--vkui--spacing_size_xl);
+  max-inline-size: min(
+    var(--vkui_internal_ModalPage--desktopMaxWidth),
+    var(--vkui_internal_ModalPage--desktopStretchedSize)
+  );
+  max-block-size: min(
+    var(--vkui_internal_ModalPage--desktopMaxHeight),
+    var(--vkui_internal_ModalPage--desktopStretchedSize)
+  );
   margin-block: auto;
-}
-
-/* Неизвестный брейкпоинт */
-@media (max-height: 672px) {
-  .hostDesktop {
-    --vkui_internal_ModalPage--desktopMaxHeight: calc(
-      100% - var(--vkui_internal_ModalPage--desktopSafeInsetBlock) * 2
-    );
-  }
 }
 
 .hostDesktopMaxWidthS {
