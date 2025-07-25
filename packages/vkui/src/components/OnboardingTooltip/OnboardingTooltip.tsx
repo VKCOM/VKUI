@@ -39,6 +39,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'children'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'disableShiftMiddleware'
   | 'disableFocusTrap'
 >;
 
@@ -98,6 +99,7 @@ export const OnboardingTooltip = ({
   disableArrow = false,
   onPlacementChange,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
   overlayLabel = 'Закрыть',
   title,
   'aria-label': ariaLabel,
@@ -124,6 +126,7 @@ export const OnboardingTooltip = ({
     arrowHeight,
     arrowPadding,
     disableFlipMiddleware,
+    disableShiftMiddleware,
   });
   const {
     x: floatingDataX,

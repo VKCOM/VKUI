@@ -43,6 +43,7 @@ export const useTooltip = ({
   offsetByCrossAxis = 0,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
   disableTriggerOnFocus = false,
   onReferenceHiddenChange,
 
@@ -151,6 +152,7 @@ export const useTooltip = ({
     offsetByCrossAxis,
     hideWhenReferenceHidden,
     disableFlipMiddleware,
+    disableShiftMiddleware,
 
     defaultShown,
     shown: shownProp,
