@@ -115,31 +115,33 @@ export const Button = ({
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
-  const disabledOptions: ButtonDisabledOptions = React.useMemo(() => {
-    const isLink = Boolean(href);
-    const isDisabled = loading || disabled;
+  const isLink = Boolean(href)
+  const isInteractive = !(loading || disabled)
 
-    if (!isDisabled) {
+  const disabledOptions: ButtonDisabledOptions = React.useMemo(() => {
+    if (isInteractive) {
       return {}
     }
 
-    if (isLink) {
-      return {
-        tabIndex: -1,
-        ...(loading && { 'aria-busy': true }),
-        ...(disabled && { 'aria-disabled': true }),
-      };
+    if (!isLink) {
+      return { disabled: true };
     }
 
-    return { disabled: true };
-  }, [disabled, loading, href]);
+    return {
+      tabIndex: -1,
+      role: 'link',
+      'aria-disabled': true,
+      ...(loading && { 'aria-busy': true }),
+    };
+  }, [isInteractive, loading, isLink]);
+
   return (
     <Tappable
       hoverMode={styles.hover}
       activeMode={styles.active}
       Component={href ? 'a' : 'button'}
       focusVisibleMode="outside"
-      href={href}
+      href={isInteractive ? href : undefined}
       {...disabledOptions}
       {...restProps}
       onClick={loading ? undefined : onClick}

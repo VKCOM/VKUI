@@ -1,36 +1,36 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { a11yTest, baselineComponent } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
 import { Button, type ButtonProps } from './Button';
 
 const ButtonTest = (props: ButtonProps) => <Button data-testid="custom-btn" {...props} />;
-const button = () => screen.getByTestId('custom-btn');
+const ButtonAsLinkLoading = () => <ButtonTest href="#" data-testid="loading-btn" loading>Loading Link</ButtonTest>
+const ButtonAsLinkDisabled = () => <ButtonTest href="#" data-testid="disabled-btn" disabled>Disabled Link</ButtonTest>
+
+const button = {
+  default: () => screen.getByTestId('custom-btn'),
+  loading: () => screen.getByTestId('loading-btn'),
+  disabled: () => screen.getByTestId('disabled-btn')
+}
 
 describe('Button', () => {
-  a11yTest(() => (
-    <>
-      <ButtonTest loading>
-        Button
-      </ButtonTest>
+  baselineComponent((props) => <>
+    <ButtonTest {...props}>Button</ButtonTest>
 
-      <ButtonTest href="#" loading>
-        Button with href
-      </ButtonTest>
-    </>
-  ));
+    <ButtonTest loading>
+      Button
+    </ButtonTest>
 
-  baselineComponent((props) => <Button {...props}>Button</Button>);
+    <ButtonTest href="#" loading>
+      Button with href
+    </ButtonTest>
+  </>);
 
-  it('Component: Button is handled as a native button', () => {
+  it('should be handled as a native button', () => {
     render(<ButtonTest>Native Button</ButtonTest>);
-    expect(button().tagName.toLowerCase()).toMatch('button');
+    expect(button.default().tagName.toLowerCase()).toMatch('button');
   });
 
-  it('Component: Button with valid href is handled as a native link', () => {
-    render(<ButtonTest href="#">Native Link</ButtonTest>);
-    expect(button().tagName.toLowerCase()).toMatch('a');
-  });
-
-  it('Component: Button with loading is not clickable', () => {
+  it('should not be clickable with loading prop', () => {
     const handleClick = jest.fn();
     render(
       <ButtonTest onClick={handleClick} loading>
@@ -38,7 +38,7 @@ describe('Button', () => {
       </ButtonTest>,
     );
 
-    fireEvent.click(button());
+    fireEvent.click(button.default());
     expect(handleClick).toHaveBeenCalledTimes(0);
   });
 
@@ -53,4 +53,31 @@ describe('Button', () => {
     expect(screen.getByTestId('children')).toHaveTextContent('0')
     expect(screen.getByTestId('after')).toHaveTextContent('0')
   });
+
+  describe('Button as a link', () => {
+    it('should be handled as a native link with valid href', () => {
+      render(<ButtonTest href="#">Native Link</ButtonTest>);
+      expect(button.default().tagName.toLowerCase()).toMatch('a');
+    });
+
+    it('should not have href with disabled or loading prop', () => {
+      render(<>
+        <ButtonAsLinkDisabled />
+        <ButtonAsLinkLoading />
+      </>);
+
+      expect(button.disabled()).not.toHaveAttribute('href')
+      expect(button.loading()).not.toHaveAttribute('href')
+    })
+
+    it('should have role="link" while being disabled or loading', () => {
+      render(<>
+        <ButtonAsLinkDisabled />
+        <ButtonAsLinkLoading />
+      </>);
+
+      expect(button.disabled()).toHaveAttribute('role', 'link')
+      expect(button.loading()).toHaveAttribute('role', 'link')
+    })
+  })
 });
