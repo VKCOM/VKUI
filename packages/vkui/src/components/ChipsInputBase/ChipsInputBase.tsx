@@ -242,8 +242,9 @@ export const ChipsInputBase = <O extends ChipOption>({
     ) {
       return;
     }
+    const activeElement = getActiveElementByAnotherElement(e.currentTarget);
     // Когда выделен текст чипа не нужно делать preventDefault, чтобы сбросить выделение
-    if (getActiveElementByAnotherElement(e.currentTarget) !== inputRef.current) {
+    if (contains(listboxRef.current, activeElement)) {
       return;
     }
     // Когда клик в сам инпут, не нужно делать preventDefault, так как не будет работать выделение текста
