@@ -39,6 +39,7 @@ export async function main() {
     process.stderr.write(`Для обновления запустите:\n`);
     process.stderr.write(`${chalk.blue('nvm install')}\n`);
     process.stderr.write(`${chalk.blue('nvm use')}\n`);
+    process.stderr.write(`${chalk.blue('corepack enable')}\n`);
   } else {
     process.stderr.write(`Для обновления обратитесь к инструкции:\n`);
     process.stderr.write(`${chalk.blue('https://nodejs.org/en/download')}\n`);
