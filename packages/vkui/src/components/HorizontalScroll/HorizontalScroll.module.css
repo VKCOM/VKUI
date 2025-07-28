@@ -1,5 +1,11 @@
 .host {
   position: relative;
+
+  /**
+   * ⚠️ WARNING ⚠️
+   * `overflow-y` мы не трогаем, т.к. из-за `hidden` могут обрезаться тени у потомков.
+   */
+  overflow-x: hidden;
   isolation: isolate;
 
   --vkui_internal--HorizontalScroll_shift_direction: 1;

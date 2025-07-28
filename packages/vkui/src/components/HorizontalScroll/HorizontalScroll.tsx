@@ -221,7 +221,6 @@ export const HorizontalScroll = ({
   const { focusVisible, ...focusEvents } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({
     focusVisible,
-    mode: 'outside',
   });
 
   const direction = useConfigDirection();
