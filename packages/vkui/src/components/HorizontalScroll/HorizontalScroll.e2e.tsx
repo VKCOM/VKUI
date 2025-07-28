@@ -3,6 +3,7 @@ import { ViewWidth } from '../../lib/adaptivity';
 import {
   HorizontalScrollMobilePlayground,
   HorizontalScrollSmallTabletPlayground,
+  HorizontalScrollWithFocusVisible,
   HorizontalScrollWithHasMousePlayground,
   HorizontalScrollWithoutHasMousePlayground,
 } from './HorizontalScroll.e2e-playground';
@@ -85,5 +86,27 @@ test.describe('HorizontalScroll', () => {
     await expectScreenshotClippedToContent({
       cropToContentSelector: CUSTOM_ROOT_SELECTOR,
     });
+  });
+});
+
+test.describe('HorizontalScroll', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      hasPointer: true,
+    },
+    onlyForPlatforms: ['android'],
+  });
+
+  test('State: Focus Visible', async ({
+    mount,
+    page,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<HorizontalScrollWithFocusVisible {...componentPlaygroundProps} />);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.keyboard.press('Tab');
+    await expectScreenshotClippedToContent();
   });
 });
