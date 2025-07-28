@@ -63,6 +63,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'children'
   | 'zIndex'
   | 'disableFlipMiddleware'
+  | 'disableShiftMiddleware'
   | 'customMiddlewares'
   | 'strategy'
   | 'disableFocusTrap'

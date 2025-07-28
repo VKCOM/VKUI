@@ -28,6 +28,11 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    */
   disableFlipMiddleware?: boolean;
   /**
+   * Позволяет отключить смещение по главной оси,
+   * которое не даёт всплывающему элементу выходить за границы видимой области.
+   */
+  disableShiftMiddleware?: boolean;
+  /**
    * Задаёт резервный вариант размещения по перпендикулярной оси.
    */
   flipMiddlewareFallbackAxisSideDirection?: FlipMiddlewareOptions['fallbackAxisSideDirection'];
@@ -78,6 +83,7 @@ export const useFloatingMiddlewaresBootstrap = ({
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
   flipMiddlewareFallbackAxisSideDirection = 'end',
 }: UseFloatingMiddlewaresBootstrapOptions): {
   middlewares: UseFloatingMiddleware[];
@@ -92,28 +98,34 @@ export const useFloatingMiddlewaresBootstrap = ({
       }),
     ];
 
-    const shiftMiddlewareInstance = shiftMiddleware();
+    const shift = disableShiftMiddleware ? null : shiftMiddleware();
 
     // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#conflict-with-autoplacementjs
     if (isAutoPlacement) {
-      middlewares.push(
-        autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }),
-        shiftMiddlewareInstance,
-      );
+      middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
+      if (shift) {
+        middlewares.push(shift);
+      }
     } else if (!disableFlipMiddleware) {
-      const flipMiddlewareInstance = flipMiddleware({
+      const flip = flipMiddleware({
         crossAxis: 'alignment',
         fallbackAxisSideDirection: flipMiddlewareFallbackAxisSideDirection,
       });
 
       // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#combining-with-shiftjs
       if (placement.includes('-')) {
-        middlewares.push(flipMiddlewareInstance, shiftMiddlewareInstance);
+        middlewares.push(flip);
+        if (shift) {
+          middlewares.push(shift);
+        }
       } else {
-        middlewares.push(shiftMiddlewareInstance, flipMiddlewareInstance);
+        if (shift) {
+          middlewares.push(shift);
+        }
+        middlewares.push(flip);
       }
-    } else {
-      middlewares.push(shiftMiddlewareInstance);
+    } else if (shift) {
+      middlewares.push(shift);
     }
 
     if (sameWidth) {
@@ -154,6 +166,7 @@ export const useFloatingMiddlewaresBootstrap = ({
     arrowHeight,
     offsetByMainAxis,
     disableFlipMiddleware,
+    disableShiftMiddleware,
     flipMiddlewareFallbackAxisSideDirection,
     sameWidth,
     customMiddlewares,
