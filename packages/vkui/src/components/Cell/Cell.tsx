@@ -129,7 +129,7 @@ export const Cell: React.FC<CellProps> & {
   );
 
   const simpleCellProps: SimpleCellProps = {
-    hasActive: hasActive,
+    hasActive: hasActive && !draggable,
     hasHover: hasActive && !removable,
     disabled,
     ...restProps,
