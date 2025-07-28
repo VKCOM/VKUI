@@ -5,6 +5,8 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { easeInOutSine } from '../../lib/fx';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
@@ -216,6 +218,11 @@ export const HorizontalScroll = ({
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollStart, setCanScrollStart] = React.useState(false);
   const [canScrollEnd, setCanScrollEnd] = React.useState(false);
+  const { focusVisible, ...focusEvents } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({
+    focusVisible,
+  });
+
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
 
@@ -346,7 +353,12 @@ export const HorizontalScroll = ({
           onClick={scrollToEnd}
         />
       )}
-      <div className={styles.in} ref={scrollerRef}>
+      <div
+        className={classNames(styles.in, focusVisibleClassNames)}
+        ref={scrollerRef}
+        tabIndex={0}
+        {...focusEvents}
+      >
         <ContentWrapperComponent
           className={classNames(styles.inWrapper, contentWrapperClassName)}
           ref={contentWrapperRef}
