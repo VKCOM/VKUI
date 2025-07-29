@@ -185,7 +185,7 @@ export const removeProps = (
         if (attr.type === 'JSXSpreadAttribute') {
           needToShowReport = true;
         }
-        return false;
+        return true;
       });
       path.node.openingElement.attributes = newAttributes;
     });
