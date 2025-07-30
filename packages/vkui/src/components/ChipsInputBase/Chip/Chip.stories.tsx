@@ -3,7 +3,7 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/cons
 import { getAvatarUrl } from '../../../testing/mock';
 import { createFieldWithPresets } from '../../../testing/presets';
 import { Avatar } from '../../Avatar/Avatar';
-import type { ChipProps } from '../types';
+import type { ChipProps } from './Chip';
 import { Chip } from './Chip';
 
 const story: Meta<ChipProps> = {

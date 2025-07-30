@@ -3,9 +3,17 @@
   display: inline-flex;
   align-items: center;
   block-size: 32px;
+  border-radius: 6px;
+}
+
+.modePrimary {
   background: var(--vkui--color_background_content);
   border: var(--vkui--size_border--regular) solid var(--vkui--color_image_border_alpha);
-  border-radius: 6px;
+}
+
+.modeSecondary {
+  background: var(--vkui--color_background_secondary);
+  border: 0;
 }
 
 .in,
