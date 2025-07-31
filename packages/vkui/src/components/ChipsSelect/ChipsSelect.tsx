@@ -441,10 +441,8 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   const onDropdownIconClick: MouseEventHandler<SVGSVGElement> = React.useCallback(
     (e) => {
-      if (opened) {
-        e.preventDefault();
-        setOpened(false);
-      }
+      e.preventDefault();
+      setOpened(!opened);
     },
     [opened, setOpened],
   );

@@ -472,4 +472,51 @@ describe(ChipsInputBase, () => {
     );
     expect(onRemoveChipOption).toHaveBeenCalledWith(1);
   });
+
+  it('check correct mouseDown event preventDefault', async () => {
+    let event: MouseEvent | null = null;
+
+    render(
+      <ChipsInputBaseTest
+        value={[{ value: 1, label: 'Красный' }]}
+        onAddChipOption={onAddChipOption}
+        onRemoveChipOption={onRemoveChipOption}
+        onClear={onClearOptions}
+      />,
+    );
+
+    const root = screen.getByRole('group');
+    root.addEventListener('mousedown', (e) => {
+      event = e;
+    });
+
+    const checkPreventDefault = (prevented = true) => {
+      expect(!!event && event.defaultPrevented).toBe(prevented);
+    };
+
+    const input = screen.getByTestId<HTMLInputElement>('chips-input');
+    // Проверяем, что при mouseDown в input не происходит preventDefault
+    fireEvent.mouseDown(input);
+    checkPreventDefault(false);
+
+    const option = screen.getByRole('option', {
+      name: new RegExp(RED_OPTION.label),
+    });
+    // Проверяем, что при mouseDown в option не происходит preventDefault
+    fireEvent.mouseDown(option);
+    checkPreventDefault(false);
+    option.focus();
+
+    // Проверяем, что при mouseDown в root, когда option в фокусе не происходит preventDefault
+    fireEvent.mouseDown(root);
+    checkPreventDefault(false);
+    option.blur();
+
+    // Проверяем, что при mouseDown в root, когда option не в фокусе происходит preventDefault
+    fireEvent.mouseDown(root);
+    checkPreventDefault(true);
+
+    fireEvent.mouseDown(screen.getByRole('listbox'));
+    checkPreventDefault(true);
+  });
 });
