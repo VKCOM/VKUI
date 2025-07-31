@@ -56,4 +56,6 @@ export interface ModalCardProps
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
+
+  disableModalOverlay?: boolean;
 }

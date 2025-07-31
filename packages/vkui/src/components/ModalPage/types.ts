@@ -131,4 +131,8 @@ export interface ModalPageProps
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
+  /**
+   * Отключает отображение и взаимодействие с фоном модалки.
+   */
+  disableModalOverlay?: boolean;
 }
