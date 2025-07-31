@@ -17,15 +17,13 @@ export const ModalRoot = ({
   children,
   modalOverlayTestId,
   noFocusToDialog,
-  disableModalOverlay: disableModalOverlayProp = false,
+  disableModalOverlay,
   usePortal,
   onOpen,
   onOpened,
   onClose,
   onClosed,
 }: ModalRootProps): React.ReactNode => {
-  const [disableModalOverlay, setDisableModalOverlay] = React.useState(disableModalOverlayProp);
-
   const contextValue = React.useMemo(
     () => ({
       isInsideModal: true,
@@ -34,14 +32,13 @@ export const ModalRoot = ({
       activeModal,
       modalOverlayTestId,
       noFocusToDialog,
-      disableModalOverlay: disableModalOverlayProp,
+      disableModalOverlay,
 
       // callbacks
       onOpen,
       onOpened,
       onClose,
       onClosed,
-      setDisableModalOverlay,
 
       // TODO [>=8] Удалить метод
       updateModalHeight:
@@ -63,7 +60,7 @@ export const ModalRoot = ({
     }),
     [
       activeModal,
-      disableModalOverlayProp,
+      disableModalOverlay,
       modalOverlayTestId,
       noFocusToDialog,
       onClose,

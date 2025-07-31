@@ -299,40 +299,4 @@ describe(ModalRoot, () => {
       expect(inputInnerModalPageRef.current).toHaveFocus();
     });
   });
-
-  it('check disableModalOverlay', async () => {
-    const onCloseRoot = jest.fn();
-
-    const Fixture = ({ activeModal = 'm-1' }: { activeModal?: string }) => {
-      return (
-        <ModalRoot onClose={onCloseRoot} activeModal={activeModal}>
-          <ModalCard id="m-1" data-testid="m-1" modalOverlayTestId="overlay-1" />
-          <ModalPage
-            id="m-2"
-            data-testid="m-2"
-            modalOverlayTestId="overlay-2"
-            disableModalOverlay
-          />
-          <ModalPage
-            id="m-3"
-            data-testid="m-3"
-            modalOverlayTestId="overlay-3"
-            disableModalOverlay
-          />
-        </ModalRoot>
-      );
-    };
-
-    const h = render(<Fixture activeModal="m-2" />);
-    await waitCSSTransitionEndConditionally(h.getByTestId('m-2'), 'ModalPage');
-    expect(h.queryByTestId('overlay-2')).toBeFalsy();
-
-    h.rerender(<Fixture activeModal="m-1" />);
-    await waitCSSTransitionEndConditionally(h.getByTestId('m-1'), 'ModalCard');
-    expect(h.queryByTestId('overlay-1')).toBeTruthy();
-
-    h.rerender(<Fixture activeModal="m-3" />);
-    await waitCSSTransitionEndConditionally(h.getByTestId('m-3'), 'ModalPage');
-    expect(h.queryByTestId('overlay-3')).toBeFalsy();
-  });
 });

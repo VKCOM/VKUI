@@ -22,7 +22,6 @@ describe(withModalRootContext, () => {
           isInsideModal: false,
           updateModalHeight: updateModalHeight,
           registerModal: noop,
-          setDisableModalOverlay: noop,
         }}
       >
         <ModalWithContext />

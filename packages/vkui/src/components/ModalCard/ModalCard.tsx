@@ -19,7 +19,6 @@ export const ModalCard = ({
   onClose,
   onClosed,
   keepMounted = false,
-  disableModalOverlay,
   ...restProps
 }: ModalCardProps): React.ReactNode => {
   const {
@@ -33,7 +32,6 @@ export const ModalCard = ({
     keepMounted,
     modalOverlayTestId,
     noFocusToDialog,
-    disableModalOverlay,
     onOpen,
     onOpened,
     onClose,
