@@ -135,6 +135,17 @@ const App = () => {
 > У `ModalPage` и `ModalCard` есть параметр `keepMounted`, при передаче этого параметра следует учитывать, что компонент будет
 > рендериться всегда, поэтому бизнес-логика будет срабатывать в любом случае.
 
+### Как правильно использовать `disableModalOverlay` для конкретного модального окна?
+
+Если вам необходимо отключить отображение фона для конкретной модалки в `ModalRoot` вы можете сделать так:
+
+```jsx
+<ModalRoot activeModal={activeModal} disableModalOverlay={activeModal === 'modal-1'}>
+  <ModalPage id="modal-1" />
+  <ModalPage id="modal-2" />
+</ModalRoot>
+```
+
 ## Свойства и методы [#api]
 
 <PropsTable name="ModalRoot" />
