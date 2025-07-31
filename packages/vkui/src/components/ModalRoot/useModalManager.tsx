@@ -47,7 +47,7 @@ export const useModalManager = ({
   keepMounted,
   modalOverlayTestId,
   noFocusToDialog,
-  disableModalOverlay,
+  disableModalOverlay: disableModalOverlayProp,
   onOpen,
   onOpened,
   onClose,
@@ -60,6 +60,17 @@ export const useModalManager = ({
   const shouldPreserveSnapPoint = context.isInsideModal ? context.activeModal !== null : false;
 
   const [unmounted, setUnmounted] = useState(keepMounted ? false : !opened);
+
+  const disableModalOverlay = disableModalOverlayProp || context.disableModalOverlay;
+
+  useIsomorphicLayoutEffect(
+    function setDisableModalOverlayWhenOpen() {
+      if (opened) {
+        context.setDisableModalOverlay(!!disableModalOverlay);
+      }
+    },
+    [opened, disableModalOverlay, context.setDisableModalOverlay],
+  );
 
   useIsomorphicLayoutEffect(
     function unsetUnmounted() {
@@ -81,7 +92,7 @@ export const useModalManager = ({
     shouldPreserveSnapPoint,
     noFocusToDialog: noFocusToDialog || context.noFocusToDialog,
     modalOverlayTestId: modalOverlayTestId || context.modalOverlayTestId,
-    disableModalOverlay: disableModalOverlay || context.disableModalOverlay,
+    disableModalOverlay,
     ModalOverlay: context.isInsideModal ? VisuallyHiddenModalOverlay : ModalOverlay,
     onOpen: onOpen || getContextCallback(id, context.onOpen),
     onOpened: onOpened || getContextCallback(id, context.onOpened),

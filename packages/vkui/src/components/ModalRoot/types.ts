@@ -158,7 +158,12 @@ type ModalRootContextBaseInterface = {
 
 export interface ModalRootContextInterface
   extends ModalRootContextBaseInterface,
-    ModalRootBaseProps {}
+    ModalRootBaseProps {
+  /**
+   * Колбэк для синхронизации `disableModalOverlay` отдельной модалки и общего для ModalRoot фона.
+   */
+  setDisableModalOverlay: (v: boolean) => void;
+}
 
 export interface UseModalRootContext extends ModalRootContextBaseInterface {
   activeModal?: string | null;

@@ -17,5 +17,6 @@ export const ModalRootOverlayContext = createContext<RefObject<HTMLDivElement | 
 export const ModalRootContext = createContext<ModalRootContextInterface>({
   updateModalHeight: noop,
   registerModal: noop,
+  setDisableModalOverlay: noop,
   isInsideModal: false,
 });
