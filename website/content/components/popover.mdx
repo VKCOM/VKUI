@@ -45,124 +45,162 @@ description: Компонент, предназначенный для отоб�
 
 Свойство `trigger` определяет способ взаимодействия, при котором всплывающее окно будет отображаться или скрываться.
 
-- `"click"` – показ/скрытие происходит при нажатии на якорный элемент;
+### `"click"`
 
-  <Playground>
-    ```jsx
-    <Popover
-      placement="bottom"
-      role="tooltip"
-      aria-describedby="tooltip-1"
-      content={
-        <Div>
-          <Text>Привет</Text>
-        </Div>
-      }
-      restoreFocus="anchor-element"
-    >
-      <Button id="tooltip-1" mode="outline">
-        Нажми на меня
-      </Button>
-    </Popover>
-    ```
-  </Playground>
+Показ/скрытие происходит при нажатии на якорный элемент;
 
-- `"hover"` – показ происходит при наведении мыши на якорных элемент, скрытие - при отведении;
-
-  <Playground>
-    ```jsx
-    <Popover
-      trigger="hover"
-      placement="bottom"
-      role="tooltip"
-      aria-describedby="tooltip-1"
-      content={
-        <Div>
-          <Text>Привет</Text>
-        </Div>
-      }
-      restoreFocus="anchor-element"
-    >
-      <Button id="tooltip-1" mode="outline">
-        Наведи на меня
-      </Button>
-    </Popover>
-    ```
-  </Playground>
-
-- `"focus"` – показ происходит при фокусе на якорном элементе, скрытие - при потере фокуса;
-
-  <Playground>
-    ```jsx
-    <Popover
-      trigger="focus"
-      placement="bottom"
-      role="tooltip"
-      aria-describedby="tooltip-1"
-      content={
-        <Div>
-          <Text>Привет</Text>
-        </Div>
-      }
-      restoreFocus="anchor-element"
-    >
-      <Button id="tooltip-1" mode="outline">
-        Сфокусируйся на меня (Tab или клик)
-      </Button>
-    </Popover>
-    ```
-  </Playground>
-
-- `"manual"` – показ/скрытие контролируется только через свойство `shown`.
-  Обработчик, переданный в свойство `onShownChange`, будет вызываться при нажатии за пределами якорного и всплывающего элементов,
-  а также по кнопке `ESC`.
-
-  <Playground>
-
+<Playground>
   ```jsx
-  const [shown, setShown] = React.useState(false);
-
-  const handleShownChange = React.useCallback((value, reason) => {
-    if (!value) {
-      switch (reason) {
-        case 'callback':
-        case 'escape-key':
-        case 'click-outside':
-          setShown(false);
-          break;
-        default:
-          break;
-      }
+  <Popover
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
     }
-  }, []);
-
-  return (
-    <Popover
-      trigger="manual"
-      shown={shown}
-      placement="bottom"
-      role="tooltip"
-      aria-describedby="tooltip-1"
-      onShownChange={handleShownChange}
-      content={
-        <Div>
-          <Text>Привет</Text>
-        </Div>
-      }
-      restoreFocus="anchor-element"
-    >
-      <Button id="tooltip-1" onClick={() => setShown((prev) => !prev)} mode="outline">
-        Нажми на меня
-      </Button>
-    </Popover>
-  );
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
   ```
+</Playground>
 
-  </Playground>
+### `"hover"`
+
+Показ происходит при наведении мыши на якорных элемент, скрытие - при отведении.
 
 > `"hover"` на сенсорных экранах (тач-устройствах) будет работать как `"click"`, с единственным отличием, что всплывающее окно
 > не будет закрываться при повторном нажатии на целевой элемент. Для закрытия необходимо нажать
 > на область вне целевого элемента и всплывающего окна.
+
+<Playground>
+  ```jsx
+  <Popover
+    trigger="hover"
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Наведи на меня
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
+**Избегайте использования `trigger="hover"` как единственного механизма активации**
+
+❌ Почему это недопустимо:
+
+1. **Скринридеры игнорируют hover:** События наведения не генерируются при клавиатурной навигации
+2. **Нарушение WCAG**
+3. **Контент становится недоступным:** Информация в Popover блокируется для ассистивных технологий
+
+✅ Обязательное решение:
+
+Всегда комбинируйте с триггером `focus`:
+
+```jsx
+<Popover trigger={['hover', 'focus']}>{children}</Popover>
+```
+
+⚠️ Крайне ограниченные исключения:
+
+Только для **чисто декоративных элементов** где:
+
+1. Контент дублируется в основном UI
+2. Нет уникальной информации
+3. Есть альтернативное текстовое описание
+
+```jsx
+<Popover trigger="hover" aria-label="Дублирующая текст подсказка">
+  <Icon decorative />
+</Popover>
+```
+
+### `"focus"`
+
+Показ происходит при фокусе на якорном элементе, скрытие - при потере фокуса;
+
+<Playground>
+  ```jsx
+  <Popover
+    trigger="focus"
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Сфокусируйся на меня (Tab или клик)
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
+### `"manual"`
+
+Показ/скрытие контролируется только через свойство `shown`.
+Обработчик, переданный в свойство `onShownChange`, будет вызываться при нажатии за пределами якорного и всплывающего элементов,
+а также по кнопке `ESC`.
+
+<Playground>
+
+```jsx
+const [shown, setShown] = React.useState(false);
+
+const handleShownChange = React.useCallback((value, reason) => {
+  if (!value) {
+    switch (reason) {
+      case 'callback':
+      case 'escape-key':
+      case 'click-outside':
+        setShown(false);
+        break;
+      default:
+        break;
+    }
+  }
+}, []);
+
+return (
+  <Popover
+    trigger="manual"
+    shown={shown}
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    onShownChange={handleShownChange}
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+  >
+    <Button id="tooltip-1" onClick={() => setShown((prev) => !prev)} mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+);
+```
+
+</Playground>
 
 ## Хук usePopover [#use-popover]
 
@@ -210,7 +248,7 @@ return (
 > **Исключение:** `aria-expanded` компонент выставляет самостоятельно в зависимости от `role`,
 > поэтому об этом атрибуте можно не беспокоиться.
 
-### 🚨 Критическое ограничение: Триггер "hover"
+### 🚨 Критическое ограничение: Триггер "hover" [#a11y-hover]
 
 **Избегайте использования `trigger="hover"` как единственного механизма активации.**
 
