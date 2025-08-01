@@ -18,19 +18,28 @@ export function CheckboxSimple({
   style,
   getRootRef,
   description,
-  hoverMode,
-  activeMode,
+  hoverMode: hoverModeProp,
+  activeMode: activeModeProp,
   hasHover,
   hasActive,
   focusVisibleMode,
   titleAfter,
+  noPadding,
   ...restProps
 }: CheckboxProps) {
   const { sizeY = 'none' } = useAdaptivity();
 
+  const hoverMode = hoverModeProp || (noPadding ? 'opacity' : 'background');
+  const activeMode = activeModeProp || (noPadding ? 'opacity' : 'background');
+
   return (
     <Tappable
-      className={classNames(className, styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
+      className={classNames(
+        className,
+        styles.host,
+        !noPadding && styles.withPadding,
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+      )}
       style={style}
       disabled={restProps.disabled}
       getRootRef={getRootRef}

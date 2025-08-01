@@ -2,6 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  inline-size: fit-content;
+  block-size: fit-content;
+}
+
+.withPadding {
   inline-size: var(--vkui--size_field_height--regular);
   block-size: var(--vkui--size_field_height--regular);
   border-radius: 50%;
@@ -15,13 +20,13 @@
  * sizeY COMPACT
  */
 
-.sizeYCompact {
+.withPadding.sizeYCompact {
   inline-size: var(--vkui--size_field_height--compact);
   block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .sizeYNone {
+  .withPadding.sizeYNone {
     inline-size: var(--vkui--size_field_height--compact);
     block-size: var(--vkui--size_field_height--compact);
   }

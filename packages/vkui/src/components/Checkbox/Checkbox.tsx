@@ -22,6 +22,10 @@ export interface CheckboxProps
    * Контент, идущий за основным текстом.
    */
   titleAfter?: React.ReactNode;
+  /**
+   * Отключает отступы у чекбокса. Работает только, когда в `children` ничего не передано.
+   */
+  noPadding?: boolean;
 }
 
 const CheckboxComponent = ({
