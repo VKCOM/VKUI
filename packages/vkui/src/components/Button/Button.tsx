@@ -113,7 +113,7 @@ export const Button = ({
     <Tappable
       hoverMode={styles.hover}
       activeMode={styles.active}
-      Component={restProps.href ? 'a' : 'button'}
+      {...(restProps.href === undefined && { Component: 'button' })}
       focusVisibleMode="outside"
       disabled={loading || disabled}
       {...restProps}
