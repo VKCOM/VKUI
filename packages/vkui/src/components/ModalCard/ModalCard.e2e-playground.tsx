@@ -40,6 +40,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
               </Button>
             </React.Fragment>,
           ],
+          disableModalOverlay: [false, true],
         },
         {
           nav: ['2'],

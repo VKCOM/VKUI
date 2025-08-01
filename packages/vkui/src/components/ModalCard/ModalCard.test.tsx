@@ -31,6 +31,27 @@ describe(ModalCard, () => {
     expect(result.queryByTestId('host')).not.toBeInTheDocument();
   });
 
+  test('should not find overlay when use disableModalOverlay', async () => {
+    const result = render(
+      <ModalCard id="host" data-testid="host" modalOverlayTestId="overlay" disableModalOverlay />,
+    );
+    expect(result.queryByTestId('host')).not.toBeInTheDocument();
+
+    result.rerender(
+      <ModalCard
+        open
+        id="host"
+        data-testid="host"
+        modalOverlayTestId="overlay"
+        disableModalOverlay
+      />,
+    );
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.getByTestId('host')).toBeInTheDocument();
+
+    expect(result.queryByTestId('overlay')).toBe(null);
+  });
+
   test('testid for modal card content', async () => {
     const result = render(<ModalCard key="host" nav="host" open data-testid="host" />);
     await waitModalCardCSSTransitionEnd(result.getByTestId('host'));

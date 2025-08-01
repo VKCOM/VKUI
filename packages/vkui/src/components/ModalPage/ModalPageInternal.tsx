@@ -74,6 +74,7 @@ export const ModalPageInternal = ({
   onClose = noop,
   onClosed,
   disableFocusTrap,
+  disableModalOverlay,
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
@@ -121,7 +122,7 @@ export const ModalPageInternal = ({
     isDesktop ? desktopMaxWidth : 's',
   );
 
-  const modalOverlay = (
+  const modalOverlay = !disableModalOverlay && (
     <ModalOverlay
       getRootRef={setBackdropEl}
       data-testid={modalOverlayTestId}
@@ -147,7 +148,12 @@ export const ModalPageInternal = ({
   useScrollLock(!hidden);
 
   return (
-    <ModalOutlet hidden={hidden} isDesktop={isDesktop} onKeyDown={handleEscKeyDown}>
+    <ModalOutlet
+      hidden={hidden}
+      isDesktop={isDesktop}
+      onKeyDown={handleEscKeyDown}
+      disableModalOverlay={disableModalOverlay}
+    >
       {modalOverlay}
       <FocusTrap
         {...restProps}

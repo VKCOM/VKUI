@@ -38,6 +38,27 @@ describe(ModalPage, () => {
     expect(result.queryByTestId('host')).not.toBeInTheDocument();
   });
 
+  test('should not find overlay when use disableModalOverlay', async () => {
+    const result = render(
+      <ModalPage id="host" data-testid="host" modalOverlayTestId="overlay" disableModalOverlay />,
+    );
+    expect(result.queryByTestId('host')).not.toBeInTheDocument();
+
+    result.rerender(
+      <ModalPage
+        open
+        id="host"
+        data-testid="host"
+        modalOverlayTestId="overlay"
+        disableModalOverlay
+      />,
+    );
+    await waitModalPageCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.getByTestId('host')).toBeInTheDocument();
+
+    expect(result.queryByTestId('overlay')).toBe(null);
+  });
+
   test('testid for modal page content', async () => {
     const result = render(
       <ModalPage key="host" open nav="host" data-testid="host" noFocusToDialog />,

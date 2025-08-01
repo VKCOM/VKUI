@@ -17,6 +17,7 @@ export interface UseModalManager {
   keepMounted: boolean;
   modalOverlayTestId?: string;
   noFocusToDialog?: boolean;
+  disableModalOverlay?: boolean;
   onOpen?: AnyFunction;
   onOpened?: AnyFunction;
   onClose?: AnyFunction;
@@ -27,6 +28,7 @@ export interface UseModalManagerResolvedProps {
   id: string;
   open: boolean;
   noFocusToDialog?: boolean;
+  disableModalOverlay?: boolean;
   modalOverlayTestId?: string;
   ModalOverlay: React.ComponentType<ModalOverlayProps>;
   onOpen?: AnyFunction;
@@ -45,6 +47,7 @@ export const useModalManager = ({
   keepMounted,
   modalOverlayTestId,
   noFocusToDialog,
+  disableModalOverlay,
   onOpen,
   onOpened,
   onClose,
@@ -78,6 +81,7 @@ export const useModalManager = ({
     shouldPreserveSnapPoint,
     noFocusToDialog: noFocusToDialog || context.noFocusToDialog,
     modalOverlayTestId: modalOverlayTestId || context.modalOverlayTestId,
+    disableModalOverlay: disableModalOverlay || context.disableModalOverlay,
     ModalOverlay: context.isInsideModal ? VisuallyHiddenModalOverlay : ModalOverlay,
     onOpen: onOpen || getContextCallback(id, context.onOpen),
     onOpened: onOpened || getContextCallback(id, context.onOpened),

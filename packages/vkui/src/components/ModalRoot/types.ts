@@ -124,6 +124,11 @@ type ModalRootBaseProps = {
    * Будет вызвано при окончательном закрытии активной модалки с её id.
    */
   onClosed?: ModalRootCallbackFunction;
+
+  /**
+   * Отключает отображение и взаимодействие с фоном модалки.
+   */
+  disableModalOverlay?: boolean;
 };
 
 export interface ModalRootProps extends ModalRootBaseProps {
