@@ -853,10 +853,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@date-fns/tz@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@date-fns/tz@npm:1.2.0"
-  checksum: 10/a9c2d32f98a5a5c655a7d3843046a5a36779b2ef0db803c608291976e6254e594a085777bf738379f50c7e9fc2ffebbf8bb836e9e9759a5ef2b703f91bb785de
+"@date-fns/tz@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@date-fns/tz@npm:1.3.1"
+  checksum: 10/e58623333c7a63269f734aac72856281940331d14825a1bd83fd4966694691badf51ba935dbc77ac769a6d0bd3b35c4afe086d3193aabf27c7d5f3162659f091
   languageName: node
   linkType: hard
 
@@ -5424,7 +5424,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-date-fns-tz@workspace:packages/vkui-date-fns-tz"
   dependencies:
-    "@date-fns/tz": "npm:1.2.0"
+    "@date-fns/tz": "npm:1.3.1"
     "@swc/core": "npm:^1.13.3"
     typescript: "npm:^5.8.3"
   languageName: unknown
