@@ -104,7 +104,6 @@
     "swc-loader": "^0.2.6",
     "swc-plugin-css-modules": "5.0.1",
     "swc-plugin-transform-remove-imports": "6.0.1",
-    "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "webpack": "^5.100.2",
     "webpack-cli": "^6.0.1",
