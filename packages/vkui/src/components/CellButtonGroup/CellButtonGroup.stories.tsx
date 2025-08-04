@@ -5,9 +5,10 @@ import { CellButton } from '../CellButton/CellButton';
 import { CellButtonGroup, type CellButtonGroupProps } from './CellButtonGroup';
 
 const story: Meta<CellButtonGroupProps> = {
-  title: 'Blocks/CellButtonGroup',
+  title: 'Layout/CellButtonGroup',
   component: CellButtonGroup,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Раскладка'],
 };
 
 export default story;

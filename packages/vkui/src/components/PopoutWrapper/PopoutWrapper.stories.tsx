@@ -4,9 +4,10 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 
 const story: Meta<PopoutWrapperProps> = {
-  title: 'Popouts/PopoutWrapper',
+  title: 'Utils/PopoutWrapper',
   component: PopoutWrapper,
   parameters: createStoryParameters('PopoutWrapper', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

@@ -85,11 +85,41 @@ jobs:
           cp -R styleguide/dist/* styleguide/${{ needs.payload.outputs.next_version }}
           mv styleguide/${{ needs.payload.outputs.next_version }} styleguide/dist
 
+      - name: Build vkui package
+        run: yarn run build:vkui
+
+      - name: Creating beta docs for release (default basePath)
+        if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
+        run: |
+          yarn run docs:beta:build
+          yarn workspace @project-docs/website run next-sitemap
+          mkdir -p website/out/playground
+          cp -R styleguide/dist/${{ needs.payload.outputs.next_version }}/playground/* website/out/playground/
+
+      - name: Creating beta docs for pre-release OR release (version basePath)
+        run: |
+          yarn run docs:beta:build
+          mkdir -p website/out/${{ needs.payload.outputs.next_version }}/playground
+          cp -R styleguide/dist/${{ needs.payload.outputs.next_version }}/playground/* website/out/${{ needs.payload.outputs.next_version }}/playground/
+        env:
+          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /${{ needs.payload.outputs.next_version }}
+          NEXT_PUBLIC_VKUI_DOCS_DIST_DIR: out/${{ needs.payload.outputs.next_version }}
+
       - name: Publishing doc
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: gh-pages
           folder: styleguide/dist
+          clean: false
+          force: false
+
+      - name: Publishing beta doc
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          repository-name: VKCOM/vkui.io
+          token: ${{ secrets.DOCS_REPO_TOKEN }}
+          branch: main
+          folder: website/out
           clean: false
           force: false

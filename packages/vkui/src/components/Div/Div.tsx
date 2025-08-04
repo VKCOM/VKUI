@@ -6,7 +6,7 @@ import styles from './Div.module.css';
 export type DivProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Div
+ * @see https://vkui.io/components/div
  */
 export const Div = (props: DivProps): React.ReactNode => (
   <RootComponent baseClassName={styles.host} {...props} />

@@ -32,6 +32,7 @@ const story: Meta<SliderProps> = {
       },
     },
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

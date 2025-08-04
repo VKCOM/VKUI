@@ -62,7 +62,7 @@ export interface ScrollArrowProps
  * Компонент стрелки. Используется в [HorizontalScroll](#/HorizontalScroll) и [Gallery](#/Gallery).
  *
  * @since 5.4.0
- * @see https://vkcom.github.io/VKUI/#/ScrollArrow
+ * @see https://vkui.io/components/scroll-arrow
  */
 export const ScrollArrow = ({
   size = 'm',

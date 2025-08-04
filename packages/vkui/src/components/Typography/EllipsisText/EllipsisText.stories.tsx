@@ -9,6 +9,7 @@ const story: Meta<EllipsisTextProps> = {
   component: EllipsisText,
   parameters: createStoryParameters('EllipsisText', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

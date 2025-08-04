@@ -8,9 +8,11 @@ export function HeadingLink({
   children,
   id,
   className,
+  noMargin = false,
   ...props
 }: React.ComponentProps<'h2'> & {
   Tag: `h${2 | 3 | 4 | 5 | 6}`;
+  noMargin?: boolean;
 }): React.ReactElement {
   return (
     <Tag
@@ -22,13 +24,14 @@ export function HeadingLink({
             h3: styles.heading3,
             h4: styles.heading4,
           }[Tag],
+        noMargin && styles.noMargin,
       )}
+      id={id}
       {...props}
     >
       {id ? (
         <a
           href={`#${id}`}
-          id={id}
           className={styles.anchor}
           aria-label={`Постоянная ссылка на секцию ${children}`}
         >

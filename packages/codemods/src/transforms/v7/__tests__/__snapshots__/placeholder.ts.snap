@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`placeholder transforms correctly 1`] = `
 "import { Button,ButtonGroup, Icon56UserAddOutline, Icon56UsersOutline, Placeholder } from '@vkontakte/vkui';

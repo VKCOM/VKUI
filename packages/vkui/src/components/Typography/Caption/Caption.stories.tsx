@@ -5,10 +5,11 @@ import { createStoryParameters } from '../../../testing/storybook/createStoryPar
 import { Caption, type CaptionProps } from './Caption';
 
 const story: Meta<CaptionProps> = {
-  title: 'Typography/Caption',
+  title: 'Typography/Typography/Caption',
   component: Caption,
   parameters: createStoryParameters('Caption', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

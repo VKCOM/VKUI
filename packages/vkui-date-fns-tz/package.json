@@ -71,7 +71,7 @@
     "provenance": true
   },
   "scripts": {
-    "node": "node --experimental-transform-types",
+    "node": "node --experimental-transform-types --disable-warning=ExperimentalWarning",
     "build": "yarn run node build.ts",
     "test": "yarn run node --test '**/*.test.*'",
     "test:ci": "yarn run test",
@@ -80,7 +80,7 @@
   },
   "devDependencies": {
     "@date-fns/tz": "1.2.0",
-    "@swc/core": "^1.12.5",
+    "@swc/core": "^1.13.2",
     "typescript": "^5.8.3"
   }
 }

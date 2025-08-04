@@ -7,7 +7,7 @@ import { useCustomArgs } from '../../testing/useCustomArgs';
 import { Calendar, type CalendarProps } from './Calendar';
 
 const story: Meta<CalendarProps> = {
-  title: 'Forms/Calendar',
+  title: 'Dates/Calendar',
   component: Calendar,
   parameters: createStoryParameters('Calendar', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -26,6 +26,7 @@ const story: Meta<CalendarProps> = {
     renderDayContent: createCalendarDayRenderField(),
     timezone: createCalendarTimezoneField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

@@ -6,7 +6,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { type CustomTouchEvent, Touch, type TouchProps } from './Touch';
 
 const story: Meta<TouchProps> = {
-  title: 'Service/Touch',
+  title: 'Utils/Touch',
   component: Touch,
   args: {
     onClick: fn(),
@@ -21,6 +21,7 @@ const story: Meta<TouchProps> = {
     cantered: false,
     ...DisableCartesianParam,
   }),
+  tags: ['Утилиты'],
 };
 
 export default story;

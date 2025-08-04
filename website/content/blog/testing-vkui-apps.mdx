@@ -1,11 +1,14 @@
 ---
-type: post
 title: Тестирование VKUI-приложений
 date: 2024/12/24
 description: Разберём основные принципы тестирования приложений на базе VKUI.
 tags: testing
 image: /blog/vkui-testing.png
 ---
+
+import { PostHeader } from '@vkontakte/vkui-docs-theme';
+
+<PostHeader frontMatter={metadata} />
 
 ## Тестирование с помощью Jest и React Testing Library
 
@@ -92,7 +95,7 @@ test('check if prevButton disabled', () => {
 Из-за поддержки SSR мы не всегда можем заранее знать, какое представление необходимо отрисовать.
 Если попытаться отрендерить `Select` без указания платформы, то в DOM-представлении у нас окажется две реализации.
 Чтобы избежать ошибок, проще всего обернуть `Select` в `PlatformProvider` с указанием `vkcom` платформы для
-`web`-реализации или `android` для мобильной платформы.
+`web`-реализации или android для мобильной платформы.
 
 ```jsx
 import { render } from '@testing-library/react';

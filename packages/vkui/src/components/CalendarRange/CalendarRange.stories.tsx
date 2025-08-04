@@ -8,7 +8,7 @@ import { CalendarRange, type CalendarRangeProps } from './CalendarRange';
 type StoryCalendarRangeProps = CalendarRangeProps & { startDate: number; endDate: number };
 
 const story: Meta<StoryCalendarRangeProps> = {
-  title: 'Forms/CalendarRange',
+  title: 'Dates/CalendarRange',
   component: CalendarRange,
   parameters: createStoryParameters('CalendarRange', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -36,6 +36,7 @@ const story: Meta<StoryCalendarRangeProps> = {
     },
     renderDayContent: createCalendarDayRenderField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

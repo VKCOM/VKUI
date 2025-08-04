@@ -76,7 +76,7 @@ export interface PlaceholderProps extends PlaceholderContainerProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Placeholder
+ * @see https://vkui.io/components/placeholder
  */
 export const Placeholder: React.FC<PlaceholderProps> & {
   Container: typeof PlaceholderContainer;

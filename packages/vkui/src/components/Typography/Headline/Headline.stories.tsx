@@ -5,10 +5,11 @@ import { createStoryParameters } from '../../../testing/storybook/createStoryPar
 import { Headline, type HeadlineProps } from './Headline';
 
 const story: Meta<HeadlineProps> = {
-  title: 'Typography/Headline',
+  title: 'Typography/Typography/Headline',
   component: Headline,
   parameters: createStoryParameters('Headline', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

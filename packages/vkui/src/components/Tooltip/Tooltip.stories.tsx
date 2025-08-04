@@ -5,9 +5,10 @@ import { Button } from '../Button/Button';
 import { Tooltip, type TooltipProps } from './Tooltip';
 
 const story: Meta<TooltipProps> = {
-  title: 'Poppers/Tooltip',
+  title: 'Modals/Tooltip',
   component: Tooltip,
   parameters: createStoryParameters('Tooltip', DisableCartesianParam),
+  tags: ['Модальные окна'],
 };
 
 export default story;

@@ -22,7 +22,7 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
   children?: React.ReactNode;
 }
 /**
- * @see https://vkcom.github.io/VKUI/#/Spacing
+ * @see https://vkui.io/components/spacing
  */
 export const Spacing = ({ size = 'm', ...restProps }: SpacingProps): React.ReactNode => {
   const [spacingSizeClassName, spacingSizeStyle] = resolveSpacingSize(

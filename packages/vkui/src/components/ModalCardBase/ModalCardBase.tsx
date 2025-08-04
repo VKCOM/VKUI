@@ -49,12 +49,12 @@ export interface ModalCardBaseProps
   descriptionComponent?: React.ElementType;
 
   /**
-   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
+   * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button) с параметрами:
    *
    * - `size="l" mode="primary" stretched`
    * - `size="l" mode="secondary" stretched`.
    *
-   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkui.io/components/button-group) с параметрами:
    *
    * - `gap="s" mode="horizontal" stretched`
    * - `gap="m" mode="vertical" stretched`.
@@ -105,7 +105,7 @@ export interface ModalCardBaseProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalCardBase
+ * @see https://vkui.io/components/modal-card-base
  */
 export const ModalCardBase = ({
   icon,

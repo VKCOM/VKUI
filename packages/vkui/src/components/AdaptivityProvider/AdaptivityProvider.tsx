@@ -8,7 +8,7 @@ import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 export interface AdaptivityProviderProps extends AdaptivityProps, HasChildren {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/AdaptivityProvider
+ * @see https://vkui.io/components/adaptivity-provider
  */
 export const AdaptivityProvider = ({
   viewWidth,

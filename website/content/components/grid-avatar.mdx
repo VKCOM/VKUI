@@ -1,0 +1,95 @@
+---
+description: Компонент для отображения нескольких аватаров в виде сетки. Поддерживает от 1 до 4 элементов.
+---
+
+<Overview group="data-display">
+
+# GridAvatar [tag:component]
+
+Компонент для отображения нескольких аватаров в виде сетки. Поддерживает от 1 до 4 элементов.
+
+</Overview>
+
+## Использование
+
+Передавайте массив ссылок на изображения в свойство `src`:
+
+<Playground>
+  ```jsx
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  />
+  ```
+</Playground>
+
+**Особенности отображения:**
+
+- 1 элемент — занимает всю область;
+- 2 элемента — области поделены на половину;
+- 3 элемента — один элемент занимает половину, два остальных по четверти;
+- 4 элемента — занимают равные четверти.
+
+<Playground>
+  ```jsx
+  <GridAvatar src={['https://avatars.githubusercontent.com/u/61377022?s=50']} />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+    ]}
+  />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+    ]}
+  />
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/61377022?s=50',
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/7431217?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  />
+  ```
+</Playground>
+
+## Добавление индикатора
+
+Используйте подкомпонент `Badge` для индикаторов:
+
+<Playground>
+  ```jsx
+  <GridAvatar
+    src={[
+      'https://avatars.githubusercontent.com/u/5850354?s=50',
+      'https://avatars.githubusercontent.com/u/14944123?s=50',
+    ]}
+  >
+    <GridAvatar.Badge background="stroke">
+      <Icon20GiftCircleFillRed />
+    </GridAvatar.Badge>
+  </GridAvatar>
+  ```
+</Playground>
+
+## Важные ограничения
+
+- Передавайте минимум 1 элемент в массиве `src`.
+- Передавайте максимум 4 элемента (лишние игнорируются).
+
+## Свойства и методы [#api]
+
+<PropsTable name="GridAvatar">
+### GridAvatar [#grid-avatar-api]
+
+### GridAvatar.Badge [#grid-avatar-badge-api]
+
+</PropsTable>

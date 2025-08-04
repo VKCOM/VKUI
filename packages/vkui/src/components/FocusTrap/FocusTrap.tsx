@@ -12,9 +12,6 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
     HasRootRef<T>,
     HasComponent {}
 
-/**
- * @see https://vkcom.github.io/VKUI/#/FocusTrap
- */
 export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   Component = 'div',
   onClose,

@@ -22,7 +22,7 @@ export function Sidebar({ asPopover = false }: SidebarProps): React.ReactElement
     <>
       {!asPopover && (
         <div className={classNames(styles.root, styles.lessThenDesktopHidden)}>
-          <nav className={styles.inner}>
+          <nav id="vkui-docs-sidebar" className={styles.inner}>
             <Menu directories={docsDirectories} />
           </nav>
         </div>

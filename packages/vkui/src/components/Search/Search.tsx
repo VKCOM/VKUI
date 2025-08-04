@@ -80,7 +80,7 @@ export interface SearchProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Search
+ * @see https://vkui.io/components/search
  */
 export const Search = ({
   id: idProp,

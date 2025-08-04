@@ -284,7 +284,7 @@ export type { CustomPaginationPageButtonProps } from './components/Pagination/Pa
 export type { CustomPaginationNavigationButton } from './components/Pagination/PaginationNavigationButton/PaginationNavigationButton';
 export { Accordion } from './components/Accordion/Accordion';
 export type { AccordionProps } from './components/Accordion/Accordion';
-export { AccordionContext } from './components/Accordion/AccordionContext';
+export { AccordionContext, useAccordionContext } from './components/Accordion/AccordionContext';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
 export type { AccordionContentProps } from './components/Accordion/AccordionContent';
 

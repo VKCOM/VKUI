@@ -10,6 +10,7 @@ const story: Meta<DropZoneProps> = {
   title: 'Forms/DropZone',
   component: DropZone,
   parameters: createStoryParameters('DropZone', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

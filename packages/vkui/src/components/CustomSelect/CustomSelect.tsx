@@ -221,7 +221,7 @@ export interface SelectProps<
   popupDirection?: PopupDirection;
   /**
    * Рендер-проп для кастомного рендера опции.
-   * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props).
+   * В объекте аргумента приходят [свойства опции](https://vkui.io/components/custom-select#custom-select-option-api).
    *
    * > ⚠️  Важно: cвойство опции `disabled` должно выставляться только через проп `options`.
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе `CustomSelect` не будет знать об актуальном состоянии
@@ -304,7 +304,7 @@ export interface SelectProps<
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CustomSelect
+ * @see https://vkui.io/components/custom-select
  */
 export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterface>(
   props: SelectProps<OptionInterfaceT>,
@@ -658,7 +658,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     const isNativeValueChanged =
       convertedNativeSelectValue !== prevNativeSelectValue && prevNativeSelectValue !== undefined;
 
-    const isTriggeredByClearButton = allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE;
+    const isTriggeredByClearButton =
+      allowClearButton &&
+      // Проверяем, что новое значение NOT_SELECTED.NATIVE
+      nativeSelectValue === NOT_SELECTED.NATIVE &&
+      // Проверяем, что предыдущее значение не undefined(кейс с первой отрисовкой, когда предыдущего значения не было)
+      prevNativeSelectValue !== undefined &&
+      // Проверяем, что предыдущее значение не NOT_SELECTED.NATIVE(если до этого было уже сброшенное значение)
+      prevNativeSelectValue !== NOT_SELECTED.NATIVE;
 
     const shouldCallOnChange =
       !isCalledWithSameControlledOptionValue && (isNativeValueChanged || isTriggeredByClearButton);

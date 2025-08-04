@@ -15,7 +15,7 @@ export type SubheadProps = TypographyProps;
 /**
  * Используется для подзаголовков 2 уровня.
  *
- * @see https://vkcom.github.io/VKUI/#/Subhead
+ * @see https://vkui.io/components/typography#subhead
  */
 export const Subhead = ({
   className,

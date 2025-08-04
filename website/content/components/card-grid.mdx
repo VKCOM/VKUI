@@ -1,0 +1,87 @@
+---
+description: Компонент-контейнер для создания адаптивных сеток из Card.
+---
+
+<Overview group="layout">
+
+# CardGrid [tag:component]
+
+Компонент-контейнер для создания адаптивных сеток из [`Card`](/components/card).
+Выбирает необходимую сетку в зависимости от указанного размера, обеспечивает семантически правильную разметку по умолчанию.
+
+Связанные компоненты:
+
+- [Card](/components/card)
+- [ContentCard](/components/content-card)
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardGrid size="s">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 92}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 92}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 92}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardGrid>
+  ```
+</Playground>
+
+## Размер карточек
+
+Свойство `size` задаёт нужную сетку и накладывает определённые ограничения на пропорции карточек.
+Соблюдение пропорций осуществляется самостоятельно
+(например, с помощью компонента [`AspectRatio`](/components/aspect-ratio), как в примере выше).
+
+| Размер | Пропорции                      | Сетка      | Типовое применение      |
+| :----: | ------------------------------ | ---------- | ----------------------- |
+|  `s`   | высота 92% (≈1:1.08) от ширины | Три в ряд  | Квадратные элементы     |
+|  `m`   | высота 62% (≈1:1.61) от ширины | Два в ряд  | Горизонтальные карточки |
+|  `l`   | высота 30% (≈1:3.33) от ширины | Один в ряд | Широкие баннеры         |
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardGrid size="m">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 62}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 62}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardGrid>
+  <CardGrid size="l">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 30}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardGrid>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- По умолчанию используется семантический тег `<ul>`.
+- Для одиночных сеток вне списков меняйте тег через `Component`.
+- Добавляйте `ARIA`-роли при необходимости.
+
+## Свойства и методы [#api]
+
+<PropsTable name="CardGrid" />

@@ -53,7 +53,7 @@ const WriteBarTypography = (props: TypographyProps) => {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/WriteBar
+ * @see https://vkui.io/components/write-bar
  */
 export const WriteBar = ({
   className,

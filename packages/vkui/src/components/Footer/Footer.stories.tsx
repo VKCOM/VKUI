@@ -11,9 +11,10 @@ import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Footer, type FooterProps } from './Footer';
 
 const story: Meta<FooterProps> = {
-  title: 'Blocks/Footer',
+  title: 'Layout/Group/Footer',
   component: Footer,
   parameters: createStoryParameters('Footer', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

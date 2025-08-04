@@ -13,7 +13,7 @@ import { Spinner } from '../Spinner/Spinner';
 import { HorizontalScroll, type HorizontalScrollProps } from './HorizontalScroll';
 
 const story: Meta<HorizontalScrollProps> = {
-  title: 'Layout/HorizontalScroll/HorizontalScroll',
+  title: 'Data Display/HorizontalScroll',
   component: HorizontalScroll,
   parameters: createStoryParameters('HorizontalScroll', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -29,6 +29,7 @@ const story: Meta<HorizontalScrollProps> = {
     },
   },
   decorators: [withCartesian, withSinglePanel, withVKUILayout],
+  tags: ['Отображение данных'],
 };
 
 export default story;

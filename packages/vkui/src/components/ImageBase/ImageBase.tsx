@@ -152,7 +152,7 @@ const sizeToNumber = (size: number | string | undefined): number | undefined => 
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ImageBase
+ * @see https://vkui.io/components/image-base
  */
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;
@@ -202,13 +202,11 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   const mouseOutHandlersRef = useRef<VoidFunction[]>([]);
 
   const hasSrc = src || srcSet;
-  const needShowFallbackIcon = (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
-
-  const fallbackIcon = needShowFallbackIcon ? fallbackIconProp : null;
+  const fallbackIcon = failed || !hasSrc ? fallbackIconProp : null;
 
   if (process.env.NODE_ENV === 'development') {
     validateSize(size);
-    if (fallbackIcon) {
+    if (React.isValidElement(fallbackIcon)) {
       validateFallbackIcon(size, { name: 'fallbackIcon', value: fallbackIcon });
     }
   }
@@ -286,7 +284,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
         baseStyle={{ width, height }}
         baseClassName={classNames(
           styles.host,
-          loaded && styles.loaded,
+          hasSrc && loaded && styles.loaded,
           withTransparentBackground && styles.transparentBackground,
         )}
         getRootRef={wrapperRef}
@@ -304,6 +302,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
               objectPosition && styles.withObjectPosition,
               filter && styles.withFilter,
               keepAspectRatio && styles.imgKeepRatio,
+              failed && styles.imgHiddenAlt,
             )}
             crossOrigin={crossOrigin}
             decoding={decoding}

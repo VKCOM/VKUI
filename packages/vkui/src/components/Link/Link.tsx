@@ -23,7 +23,7 @@ export interface LinkProps extends TappableOmitProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Link
+ * @see https://vkui.io/components/link
  */
 export const Link = ({
   before: beforeProp,

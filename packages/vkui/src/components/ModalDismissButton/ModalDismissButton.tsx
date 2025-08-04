@@ -16,7 +16,7 @@ export interface ModalDismissButtonProps extends Omit<ModalOutsideButtonProps, '
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalDismissButton
+ * @see https://vkui.io/components/modal-dismiss-button
  */
 export const ModalDismissButton = ({
   children = 'Закрыть',

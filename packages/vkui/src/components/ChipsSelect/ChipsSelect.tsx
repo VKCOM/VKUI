@@ -143,7 +143,7 @@ export interface ChipsSelectProps<O extends ChipOption>
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ChipsSelect
+ * @see https://vkui.io/components/chips-select
  */
 export const ChipsSelect = <Option extends ChipOption>({
   // FormFieldProps
@@ -195,6 +195,9 @@ export const ChipsSelect = <Option extends ChipOption>({
   allowClearButton,
   clearButtonTestId,
   delimiter,
+
+  // a11y
+  chipsListLabel,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
   const {
@@ -592,9 +595,9 @@ export const ChipsSelect = <Option extends ChipOption>({
         role="combobox"
         aria-expanded={opened}
         aria-autocomplete="list"
-        aria-controls={opened ? dropdownId : undefined}
         aria-activedescendant={opened ? dropdownCurrentItemId : undefined}
         aria-haspopup="listbox"
+        chipsListLabel={chipsListLabel}
       />
       {opened && (
         <CustomSelectDropdown

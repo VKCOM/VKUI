@@ -20,7 +20,7 @@ export interface GridAvatarProps extends Omit<ImageBaseProps, 'src' | 'fallbackI
 const warn = warnOnce('GridAvatar');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/GridAvatar
+ * @see https://vkui.io/components/grid-avatar
  */
 export const GridAvatar: React.FC<GridAvatarProps> & { Badge: typeof GridAvatarBadge } = ({
   src = [],

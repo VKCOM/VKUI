@@ -5,9 +5,10 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { AdaptivityProvider, type AdaptivityProviderProps } from './AdaptivityProvider';
 
 const story: Meta<AdaptivityProviderProps> = {
-  title: 'Service/AdaptivityProvider',
+  title: 'Configuration/AdaptivityProvider',
   component: AdaptivityProvider,
   parameters: createStoryParameters('AdaptivityProvider', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Конфигурация'],
 };
 
 export default story;

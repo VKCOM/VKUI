@@ -40,7 +40,7 @@ export interface TextareaProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Textarea
+ * @see https://vkui.io/components/textarea
  */
 export const Textarea = ({
   grow = true,

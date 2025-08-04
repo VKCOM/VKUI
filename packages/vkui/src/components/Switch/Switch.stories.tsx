@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Switch, type SwitchProps } from './Switch';
 
 const story: Meta<SwitchProps> = {
-  title: 'Blocks/Switch',
+  title: 'Forms/Switch',
   component: Switch,
   parameters: createStoryParameters('Switch', CanvasFullLayout, DisableCartesianParam),
   args: {
@@ -16,6 +16,7 @@ const story: Meta<SwitchProps> = {
       control: 'boolean',
     },
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

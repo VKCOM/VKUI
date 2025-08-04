@@ -1,0 +1,21 @@
+.root {
+  padding-block: var(--vkui--spacing_size_xs);
+  padding-inline: var(--vkui--spacing_size_xl);
+  border-block: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+}
+
+.platformPicker {
+  flex: 0 0 128px;
+  margin-inline-end: auto;
+}
+
+.rotateIcon {
+  transform: rotate(90deg);
+}
+
+@media (max-width: 420px) {
+  .themePicker {
+    order: 1;
+    inline-size: 100%;
+  }
+}

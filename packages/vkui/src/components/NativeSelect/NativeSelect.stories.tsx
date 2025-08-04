@@ -11,6 +11,7 @@ const story: Meta<NativeSelectProps> = {
   argTypes: {
     before: getFormFieldIconsPresets(),
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

@@ -26,7 +26,7 @@ const defaultScrollToLeft: ScrollPositionHandler = (x) => x - 240;
 const defaultScrollToRight: ScrollPositionHandler = (x) => x + 240;
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SubnavigationBar
+ * @see https://vkui.io/components/subnavigation-bar
  */
 export const SubnavigationBar = ({
   fixed = false,

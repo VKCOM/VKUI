@@ -103,6 +103,39 @@ describe('CustomSelect', () => {
     expect(() => h.rerender(<CustomSelect value={NaN} options={[]} />)).not.toThrow();
   });
 
+  it('should onChange not called when value=undefined and allowClearButton', () => {
+    const selectTypes = [
+      {
+        label: 'default',
+        value: 'default',
+      },
+      {
+        label: 'plain',
+        value: 'plain',
+      },
+      {
+        label: 'accent',
+        value: 'accent',
+      },
+    ];
+
+    const onChange = jest.fn();
+
+    render(
+      <CustomSelect
+        id="select-id"
+        placeholder="Не выбран"
+        options={selectTypes}
+        // Свойства для воспроизведения
+        allowClearButton
+        value={undefined}
+        onChange={onChange}
+      />,
+    );
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('works correctly as uncontrolled component', () => {
     render(
       <CustomSelect

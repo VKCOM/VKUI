@@ -16,7 +16,7 @@ export interface AdaptiveIconRendererProps {
 
 /**
  * @since 5.4.0
- * @see https://vkcom.github.io/VKUI/#/AdaptiveIconRenderer
+ * @see https://vkui.io/components/adaptive-icon-renderer
  */
 export const AdaptiveIconRenderer = ({
   IconCompact,

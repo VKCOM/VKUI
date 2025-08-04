@@ -9,6 +9,7 @@ const story: Meta<FormItemProps> = {
   title: 'Forms/FormItem',
   component: FormItem,
   parameters: createStoryParameters('FormItem', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

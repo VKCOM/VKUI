@@ -24,7 +24,7 @@ export interface IconButtonProps extends TappableOmitProps {
 const warn = warnOnce('IconButton');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/IconButton
+ * @see https://vkui.io/components/icon-button
  */
 export const IconButton = ({ label, children, ...restProps }: IconButtonProps): React.ReactNode => {
   const platform = usePlatform();

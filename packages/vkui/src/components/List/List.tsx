@@ -12,7 +12,7 @@ export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement> & {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/List
+ * @see https://vkui.io/components/cell#list
  */
 export const List = ({ children, gap = 0, ...restProps }: ListProps): React.ReactNode => {
   return (

@@ -1,0 +1,53 @@
+---
+description: Компонент для визуального разделения контента.
+---
+
+<Overview group="layout">
+
+# Separator [tag:component]
+
+Компонент для визуального разделения контента. Поддерживает горизонтальное и вертикальное расположение,
+различные стили оформления и настройку отступов.
+
+</Overview>
+
+## Основное использование
+
+### Горизонтальный разделитель
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Separator />
+  ```
+</Playground>
+
+### Вертикальный разделитель
+
+Для использования вертикального разделителя необходимо _обязательно_ обернуть в `flex`-контейнер
+
+<Playground>
+  ```jsx
+  <Link href="#news">Новости</Link>
+  <Separator direction="vertical" size="xl" />
+  <Link href="#calls">Звонки</Link>
+  <Separator direction="vertical" size="xl" />
+  <Link href="#friends">Друзья</Link>
+  ```
+</Playground>
+
+## Отступы
+
+Если помимо самого разделителя вам необходимы отступы вокруг него, то используйте свойство `size`,
+оно принимает значения дизайн-системы (например, `"s"`, `"m"`, `"l"`), числовые значения и `CSS`-переменные.
+
+```jsx
+<Separator size="xs" /> // 4px
+<Separator size={32} /> // 32px
+<Separator size="var(--custom-spacing)" /> // Кастомная CSS-переменная
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Separator" />

@@ -18,7 +18,7 @@ export interface LocaleProviderProps {
  * [реестре языковых подметок IANA](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
  *
  * @since 5.0.0
- * @see https://vkcom.github.io/VKUI/#/LocaleProvider
+ * @see https://vkui.io/components/locale-provider
  */
 export function LocaleProvider({ value, children }: LocaleProviderProps): React.ReactNode {
   return <ConfigProviderOverride locale={value}>{children}</ConfigProviderOverride>;

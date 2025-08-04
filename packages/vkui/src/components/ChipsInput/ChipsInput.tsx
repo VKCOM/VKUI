@@ -17,7 +17,7 @@ export interface ChipsInputProps<Option extends ChipOption>
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ChipsInput
+ * @see https://vkui.io/components/chips-input
  */
 export const ChipsInput = <Option extends ChipOption>({
   // option

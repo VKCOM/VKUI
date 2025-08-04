@@ -7,9 +7,10 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { Alert, type AlertProps } from './Alert';
 
 const story: Meta<AlertProps> = {
-  title: 'Popouts/Alert',
+  title: 'Feedback/Alert',
   component: Alert,
   parameters: createStoryParameters('Alert', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Обратная связь'],
 };
 
 export default story;

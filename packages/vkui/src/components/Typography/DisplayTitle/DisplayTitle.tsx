@@ -27,7 +27,7 @@ export interface DisplayTitleProps extends TypographyProps {
 /**
  * Используется для крупных заголовков.
  *
- * @see https://vkcom.github.io/VKUI/#/DisplayTitle
+ * @see https://vkui.io/components/typography#display-title
  */
 export const DisplayTitle = ({
   className,

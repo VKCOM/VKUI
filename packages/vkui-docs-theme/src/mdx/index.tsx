@@ -5,7 +5,6 @@ import { Code } from './Code/Code';
 import { H1 } from './H1';
 import { HeadingLink } from './HeadingLink/HeadingLink';
 import { Main } from './Main/Main';
-import { Overview } from './Overview/Overview';
 import { PackageManagers } from './PackageManagers/PackageManagers';
 import { Pre } from './Pre/Pre';
 import { Steps } from './Steps/Steps';
@@ -37,7 +36,6 @@ const DEFAULT_COMPONENTS: MDXComponents = {
       </>
     );
   },
-  Overview,
   Callout,
   Steps,
   PackageManagers,
@@ -55,3 +53,5 @@ export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
     ...components,
   };
 };
+
+export { Callout, Code, HeadingLink, Table, Td, Th, Tr };

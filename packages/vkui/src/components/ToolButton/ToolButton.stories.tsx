@@ -6,10 +6,11 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { ToolButton, type ToolButtonProps } from './ToolButton';
 
 const story: Meta<ToolButtonProps> = {
-  title: 'Blocks/ToolButton',
+  title: 'Buttons/ToolButton',
   component: ToolButton,
   parameters: createStoryParameters('ToolButton', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Кнопки'],
 };
 
 export default story;

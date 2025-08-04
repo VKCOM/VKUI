@@ -82,7 +82,7 @@ export interface FormItemProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/FormItem
+ * @see https://vkui.io/components/form-item
  */
 export const FormItem: React.FC<FormItemProps> & {
   Top: typeof FormItemTop;

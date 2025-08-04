@@ -20,7 +20,7 @@ export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Gradient
+ * @see https://vkui.io/components/gradient
  */
 export const Gradient = ({
   mode = 'default',

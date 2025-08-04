@@ -23,7 +23,7 @@ export interface SwitchProps
     HasRef<HTMLInputElement> {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Switch
+ * @see https://vkui.io/components/switch
  */
 export const Switch = ({
   style,
