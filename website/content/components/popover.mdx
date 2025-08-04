@@ -87,16 +87,15 @@ description: Компонент, предназначенный для отоб�
   <Popover
     trigger="hover"
     placement="bottom"
-    role="tooltip"
-    aria-describedby="tooltip-1"
     content={
       <Div>
         <Text>Привет</Text>
       </Div>
     }
+    aria-hidden="true"
     disableFocusTrap
   >
-    <Button id="tooltip-1" mode="outline">
+    <Button mode="outline">
       Наведи на меня
     </Button>
   </Popover>
