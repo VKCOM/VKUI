@@ -194,10 +194,8 @@ export const ChipsInputBase = <O extends ChipOption>({
   };
 
   const handleRootClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (
-      event.defaultPrevented ||
-      contains(event.currentTarget, getActiveElementByAnotherElement(event.currentTarget))
-    ) {
+    const activeElement = getActiveElementByAnotherElement(event.currentTarget);
+    if (event.defaultPrevented || contains(event.currentTarget, activeElement)) {
       return;
     }
 
@@ -236,6 +234,29 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
 
+  const handleRootMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Если клик был в один из чипов, то preventDefault делать не нужно, так как не будет срабатывать выделение текста
+    if (
+      isHTMLElement(e.target) &&
+      contains(listboxRef.current, e.target) &&
+      listboxRef.current !== e.target
+    ) {
+      return;
+    }
+    const activeElement = getActiveElementByAnotherElement(e.currentTarget);
+    // Когда выделен текст чипа не нужно делать preventDefault, чтобы сбросить выделение
+    if (contains(listboxRef.current, activeElement)) {
+      return;
+    }
+    // Когда клик в сам инпут, не нужно делать preventDefault, так как не будет работать выделение текста
+    if (e.target === inputRef.current) {
+      return;
+    }
+    // Делаем preventDefault, чтобы при клике в поле, вне инпута, высота поля не скакала от того,
+    // что фокус сначала пропадает из инпута, а потом возвращается
+    e.preventDefault();
+  };
+
   return (
     <FormField
       Component="div"
@@ -253,6 +274,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       className={className}
       maxHeight={maxHeight}
       onClick={disabled ? undefined : handleRootClick}
+      onMouseDown={handleRootMouseDown}
     >
       <div
         className={classNames(
