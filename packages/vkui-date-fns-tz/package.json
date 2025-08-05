@@ -16,6 +16,7 @@
     "index.d.ts",
     "tzOffset/",
     "tzScan/",
+    "tzName",
     "date/",
     "tz/",
     "constants/"
@@ -39,6 +40,12 @@
       "require": "./tzScan/index.cjs",
       "import": "./tzScan/index.js",
       "default": "./tzScan/index.js"
+    },
+    "./tzName": {
+      "types": "./tzName/index.d.ts",
+      "require": "./tzName/index.cjs",
+      "import": "./tzName/index.js",
+      "default": "./tzName/index.js"
     },
     "./date": {
       "types": "./date/index.d.ts",
