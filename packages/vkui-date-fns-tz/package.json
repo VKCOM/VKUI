@@ -71,9 +71,8 @@
     "provenance": true
   },
   "scripts": {
-    "node": "node --experimental-transform-types --disable-warning=ExperimentalWarning",
-    "build": "yarn run node build.ts",
-    "test": "yarn run node --test '**/*.test.*'",
+    "build": "node build.ts",
+    "test": "node --test '**/*.test.*'",
     "test:ci": "yarn run test",
     "lint:types": "tsc",
     "prepack": "yarn run build"
