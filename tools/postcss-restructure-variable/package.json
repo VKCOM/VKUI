@@ -4,10 +4,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "node": "node --experimental-transform-types --disable-warning=ExperimentalWarning",
     "build": "echo no build",
-    "test": "yarn run node --test '**/*.test.*'",
-    "test:update-snapshots": "yarn run node --test-update-snapshots --test '**/*.test.*'",
+    "test": "node --test '**/*.test.*'",
+    "test:update-snapshots": "node --test-update-snapshots --test '**/*.test.*'",
     "test:ci": "yarn test"
   }
 }

@@ -8,7 +8,10 @@ export function filterDirectories(directories: Array<PageItem | Item>, search: s
     if (item.type === 'separator') {
       lastSeparator = item;
       itemsAfterSeparator = 0;
-    } else if (item.title.toLowerCase().includes(search.toLowerCase())) {
+    } else if (
+      typeof item.title === 'string' &&
+      item.title.toLowerCase().includes(search.toLowerCase())
+    ) {
       ++itemsAfterSeparator;
       if (lastSeparator && itemsAfterSeparator === 1) {
         data.push(lastSeparator);

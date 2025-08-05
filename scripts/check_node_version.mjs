@@ -26,22 +26,22 @@ export async function main() {
   const used = usedVersion();
   const repository = await repositoryVersion();
 
-  if (semver.gte(used, repository)) {
+  if (semver.eq(used, repository)) {
     return;
   }
 
   process.stderr.write('────────────────────────────────────────────────────\n');
-  process.stderr.write(`${chalk.yellow('Обновите Node.js')}\n`);
+  process.stderr.write(`${chalk.yellow('Проверьте версию Node.js')}\n`);
   process.stderr.write(`➤ Версия в репозитории ${chalk.green(repository)}\n`);
   process.stderr.write(`➤ Используется ${chalk.red('v' + used)}\n`);
 
   if (!!process.env.NVM_DIR) {
-    process.stderr.write(`Для обновления запустите:\n`);
+    process.stderr.write(`Для использования требуемой версии запустите:\n`);
     process.stderr.write(`${chalk.blue('nvm install')}\n`);
     process.stderr.write(`${chalk.blue('nvm use')}\n`);
     process.stderr.write(`${chalk.blue('corepack enable')}\n`);
   } else {
-    process.stderr.write(`Для обновления обратитесь к инструкции:\n`);
+    process.stderr.write(`Для использования требуемой версии обратитесь к инструкции:\n`);
     process.stderr.write(`${chalk.blue('https://nodejs.org/en/download')}\n`);
   }
 

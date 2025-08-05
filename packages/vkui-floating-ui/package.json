@@ -79,11 +79,11 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.1.4",
+    "@floating-ui/react-dom": "^2.1.5",
     "@swc/helpers": "^0.5.17"
   },
   "devDependencies": {
-    "@swc/core": "^1.13.2",
+    "@swc/core": "^1.13.3",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
     "jest": "^30.0.5",

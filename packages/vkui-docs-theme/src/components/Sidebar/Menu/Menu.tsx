@@ -143,7 +143,7 @@ function SearchableMenu(props: MenuProps): React.ReactElement {
   );
 }
 
-function Separator({ title }: { title: string }) {
+function Separator({ title }: { title: React.ReactNode }) {
   return (
     <li className={styles.separator}>
       <Caption level="3" caps>
