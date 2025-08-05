@@ -10,7 +10,6 @@
   user-select: none;
   border: 0 !important;
   opacity: 0;
-  clip: rect(0, 0, 0, 0) !important;
   clip-path: inset(50%);
 }
 
@@ -22,7 +21,6 @@
   inline-size: 100% !important;
   block-size: 100% !important;
   pointer-events: none;
-  clip: auto !important;
   clip-path: none !important;
 }
 /* stylelint-enable declaration-no-important */
