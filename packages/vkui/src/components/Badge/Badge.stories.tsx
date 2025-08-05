@@ -5,10 +5,11 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Badge, type BadgeProps } from './Badge';
 
 const story: Meta<BadgeProps> = {
-  title: 'Blocks/Badge',
+  title: 'Data Display/Badge',
   component: Badge,
   parameters: createStoryParameters('Badge', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

@@ -16,6 +16,7 @@
     "index.d.ts",
     "tzOffset/",
     "tzScan/",
+    "tzName",
     "date/",
     "tz/",
     "constants/"
@@ -39,6 +40,12 @@
       "require": "./tzScan/index.cjs",
       "import": "./tzScan/index.js",
       "default": "./tzScan/index.js"
+    },
+    "./tzName": {
+      "types": "./tzName/index.d.ts",
+      "require": "./tzName/index.cjs",
+      "import": "./tzName/index.js",
+      "default": "./tzName/index.js"
     },
     "./date": {
       "types": "./date/index.d.ts",
@@ -71,16 +78,15 @@
     "provenance": true
   },
   "scripts": {
-    "node": "node --experimental-transform-types",
-    "build": "yarn run node build.ts",
-    "test": "yarn run node --test '**/*.test.*'",
+    "build": "node build.ts",
+    "test": "node --test '**/*.test.*'",
     "test:ci": "yarn run test",
     "lint:types": "tsc",
     "prepack": "yarn run build"
   },
   "devDependencies": {
-    "@date-fns/tz": "1.2.0",
-    "@swc/core": "^1.12.7",
-    "typescript": "^5.8.3"
+    "@date-fns/tz": "1.3.1",
+    "@swc/core": "^1.13.3",
+    "typescript": "^5.9.2"
   }
 }

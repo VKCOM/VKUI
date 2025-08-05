@@ -8,7 +8,8 @@ import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
-import { type TabsContextProps, TabsModeContext } from '../Tabs/TabsModeContext';
+import { TabsControllerContext } from '../Tabs/TabsControllerContext';
+import { TabsModeContext } from '../Tabs/TabsModeContext';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -55,8 +56,8 @@ export interface TabsItemProps
   /**
    * Добавляет элемент слева от `after`.
    *
-   * - `React.ReactElement` – либо [`Badge`](https://vkcom.github.io/VKUI/#/Badge) с параметром `mode="prominent"`.
-   *   Либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
+   * - `React.ReactElement` – либо [`Badge`](https://vkui.io/components/badge) с параметром `mode="prominent"`.
+   *   Либо [`Counter`](https://vkui.io/components/counter) с параметрами `mode="prominent" size="s"`.
    * - `number` – для показа текстового блока с переданным числом.
    */
   status?: React.ReactElement | number;
@@ -79,7 +80,7 @@ export interface TabsItemProps
 const warn = warnOnce('TabsItem');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/TabsItem
+ * @see https://vkui.io/components/tabs#tabs-item
  */
 export const TabsItem = ({
   before,
@@ -99,14 +100,9 @@ export const TabsItem = ({
   ...restProps
 }: TabsItemProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
-  const {
-    mode,
-    withGaps,
-    layoutFillMode,
-    scrollBehaviorToSelectedTab,
-    withScrollToSelectedTab,
-    controller,
-  }: TabsContextProps = React.useContext(TabsModeContext);
+  const { mode, withGaps, layoutFillMode, scrollBehaviorToSelectedTab, withScrollToSelectedTab } =
+    React.useContext(TabsModeContext);
+  const controller = React.useContext(TabsControllerContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';

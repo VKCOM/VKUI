@@ -69,7 +69,7 @@ export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavId
 const warn = warnOnce('View');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/View
+ * @see https://vkui.io/components/view
  */
 export const View = ({
   activePanel: activePanelProp,

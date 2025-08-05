@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { ScreenSpinner, type ScreenSpinnerProps } from './ScreenSpinner';
 
 const story: Meta<ScreenSpinnerProps> = {
-  title: 'Popouts/ScreenSpinner',
+  title: 'Feedback/ScreenSpinner',
   component: ScreenSpinner,
   parameters: createStoryParameters('ScreenSpinner', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -14,6 +14,7 @@ const story: Meta<ScreenSpinnerProps> = {
       sizeIconsCount: 50,
     }),
   },
+  tags: ['Обратная связь'],
 };
 
 export default story;

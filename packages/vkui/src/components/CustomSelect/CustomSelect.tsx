@@ -178,8 +178,6 @@ export interface CustomSelectRenderOption<T extends CustomSelectOptionInterface>
   option: T;
 }
 
-export type InputChangeReason = 'input' | 'close-dropdown' | 'clear-by-button';
-
 type PopupDirectionSide = Extract<Side, 'top' | 'bottom'>;
 
 type PopupDirection = PopupDirectionSide | `${PopupDirectionSide}-${Alignment}`;
@@ -208,7 +206,7 @@ export interface SelectProps<
   /**
    * Событие изменения текстового поля.
    */
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>, reason: InputChangeReason) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /**
    * Список опций в списке.
    */
@@ -223,7 +221,7 @@ export interface SelectProps<
   popupDirection?: PopupDirection;
   /**
    * Рендер-проп для кастомного рендера опции.
-   * В объекте аргумента приходят [свойства опции](https://vkcom.github.io/VKUI/#/CustomSelectOption?id=props).
+   * В объекте аргумента приходят [свойства опции](https://vkui.io/components/custom-select#custom-select-option-api).
    *
    * > ⚠️  Важно: cвойство опции `disabled` должно выставляться только через проп `options`.
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе `CustomSelect` не будет знать об актуальном состоянии
@@ -306,7 +304,7 @@ export interface SelectProps<
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CustomSelect
+ * @see https://vkui.io/components/custom-select
  */
 export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterface>(
   props: SelectProps<OptionInterfaceT>,
@@ -364,9 +362,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectElRef = useExternRef(getRef);
   const optionsWrapperRef = React.useRef<HTMLDivElement>(null);
   const scrollPerformedRef = React.useRef(false);
-  const selectInputRef = useExternRef(getSelectInputRef);
-
-  const inputValueChangeReason = React.useRef<InputChangeReason>('input');
 
   const [focusedOptionIndex, setFocusedOptionIndex] = React.useState<number | undefined>(-1);
   const [isControlledOutside, setIsControlledOutside] = React.useState(props.value !== undefined);
@@ -546,37 +541,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     [keyboardInput, opened, resetFocusedOption],
   );
 
-  const nativeResetInputValue = React.useCallback(
-    (reason: Extract<InputChangeReason, 'close-dropdown' | 'clear-by-button'>) => {
-      const input = selectInputRef.current;
-      if (!input || !input.value) {
-        return;
-      }
-
-      // eslint-disable-next-line react-compiler/react-compiler
-      input.value = '';
-
-      inputValueChangeReason.current = reason;
-
-      const event = new InputEvent('input', {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-      });
-
-      input.dispatchEvent(event);
-    },
-    [selectInputRef],
-  );
-
   const close = React.useCallback(() => {
     resetKeyboardInput();
 
-    nativeResetInputValue('close-dropdown');
+    setInputValue('');
     setOpened(false);
     resetFocusedOption();
     onClose?.();
-  }, [resetKeyboardInput, nativeResetInputValue, resetFocusedOption, onClose]);
+  }, [onClose, resetKeyboardInput, resetFocusedOption]);
 
   const selectOption = React.useCallback(
     (index: number) => {
@@ -686,7 +658,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     const isNativeValueChanged =
       convertedNativeSelectValue !== prevNativeSelectValue && prevNativeSelectValue !== undefined;
 
-    const isTriggeredByClearButton = allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE;
+    const isTriggeredByClearButton =
+      allowClearButton &&
+      // Проверяем, что новое значение NOT_SELECTED.NATIVE
+      nativeSelectValue === NOT_SELECTED.NATIVE &&
+      // Проверяем, что предыдущее значение не undefined(кейс с первой отрисовкой, когда предыдущего значения не было)
+      prevNativeSelectValue !== undefined &&
+      // Проверяем, что предыдущее значение не NOT_SELECTED.NATIVE(если до этого было уже сброшенное значение)
+      prevNativeSelectValue !== NOT_SELECTED.NATIVE;
 
     const shouldCallOnChange =
       !isCalledWithSameControlledOptionValue && (isNativeValueChanged || isTriggeredByClearButton);
@@ -709,9 +688,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
-      onInputChangeProp && onInputChangeProp(e, inputValueChangeReason.current);
+      onInputChangeProp && onInputChangeProp(e);
       setInputValue(e.target.value);
-      inputValueChangeReason.current = 'input';
     },
     [onInputChangeProp],
   );
@@ -869,6 +847,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     }
   }, [emptyText, options, renderDropdown, renderOption]);
 
+  const selectInputRef = useExternRef(getSelectInputRef);
+
   const controlledValueSet = isControlledOutside && props.value !== NOT_SELECTED.CUSTOM;
   const uncontrolledValueSet = !isControlledOutside && nativeSelectValue !== NOT_SELECTED.NATIVE;
   const clearButtonShown =
@@ -884,7 +864,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         className={iconProp === undefined ? styles.clearIcon : undefined}
         onClick={function clearSelectState() {
           setNativeSelectValue(NOT_SELECTED.NATIVE);
-          nativeResetInputValue('clear-by-button');
+          setInputValue('');
           selectInputRef.current && selectInputRef.current.focus();
         }}
         disabled={restProps.disabled}
@@ -898,7 +878,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     restProps.disabled,
     clearButtonTestId,
     setNativeSelectValue,
-    nativeResetInputValue,
     selectInputRef,
   ]);
 
@@ -1030,7 +1009,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         value={inputValue}
         onKeyUp={handleKeyUp}
         onKeyDown={!readOnly ? _onInputKeyDown : undefined}
-        onInput={onInputChange}
+        onChange={onInputChange}
         onClick={!readOnly ? onClick : undefined}
         before={before}
         after={afterIcons}

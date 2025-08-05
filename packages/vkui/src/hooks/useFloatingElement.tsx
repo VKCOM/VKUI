@@ -69,6 +69,7 @@ export const useFloatingElement = <
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
 
   // useFloatingWithInteractions
   trigger,
@@ -108,6 +109,7 @@ export const useFloatingElement = <
     arrowPadding,
     arrowHeight,
     disableFlipMiddleware,
+    disableShiftMiddleware,
   });
 
   const {

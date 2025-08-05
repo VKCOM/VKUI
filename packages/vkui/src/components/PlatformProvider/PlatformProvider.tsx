@@ -18,7 +18,7 @@ export interface PlatformProviderProps {
  * Компонент, позволяющий переопределить платформу для части приложения.
  *
  * @since 5.1.0
- * @see https://vkcom.github.io/VKUI/#/PlatformProvider
+ * @see https://vkui.io/components/platform-provider
  */
 export function PlatformProvider({ value, children }: PlatformProviderProps): React.ReactNode {
   return (

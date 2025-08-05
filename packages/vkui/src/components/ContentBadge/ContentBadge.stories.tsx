@@ -8,9 +8,10 @@ import { Group } from '../Group/Group';
 import { ContentBadge, type ContentBadgeProps } from './ContentBadge';
 
 const meta: Meta<ContentBadgeProps> = {
-  title: 'Blocks/ContentBadge',
+  title: 'Data Display/ContentBadge',
   component: ContentBadge,
   parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Отображение данных'],
 };
 
 export default meta;

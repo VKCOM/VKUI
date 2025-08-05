@@ -30,6 +30,7 @@ const story: Meta<SplitLayoutProps> = {
   title: 'Layout/SplitLayout',
   component: SplitLayout,
   parameters: createStoryParameters('SplitLayout', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

@@ -17,7 +17,7 @@ import { SubnavigationBar, type SubnavigationBarProps } from './SubnavigationBar
 type StorySubnavigationBarProps = SubnavigationBarProps & { selected: string };
 
 const story: Meta<StorySubnavigationBarProps> = {
-  title: 'Blocks/SubnavigationBar',
+  title: 'Navigation/SubnavigationBar',
   component: SubnavigationBar,
   parameters: createStoryParameters('SubnavigationBar', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -26,6 +26,7 @@ const story: Meta<StorySubnavigationBarProps> = {
       options: ['size', 'favorite', 'filters'],
     },
   },
+  tags: ['Навигация'],
 };
 
 export default story;

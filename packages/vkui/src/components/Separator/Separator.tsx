@@ -48,7 +48,7 @@ const alignClassNames = {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Separator
+ * @see https://vkui.io/components/separator
  */
 export const Separator = ({
   padding = false,

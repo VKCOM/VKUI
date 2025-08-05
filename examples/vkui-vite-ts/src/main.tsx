@@ -1,15 +1,15 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { AdaptivityProvider, ConfigProvider } from '@vkontakte/vkui';
-import App from './App';
 import '@vkontakte/vkui/dist/cssm/styles/themes.css';
+import App from './App';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
     <ConfigProvider>
       <AdaptivityProvider>
         <App />
       </AdaptivityProvider>
     </ConfigProvider>
-  </React.StrictMode>,
+  </StrictMode>,
 );

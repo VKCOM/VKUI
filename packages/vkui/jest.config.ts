@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { Config } from 'jest';
 
-const swcConfig = JSON.parse(fs.readFileSync(`${__dirname}/package.swcrc`, 'utf-8'));
+const swcConfig = JSON.parse(fs.readFileSync(`${import.meta.dirname}/package.swcrc`, 'utf-8'));
 swcConfig.exclude = [];
 swcConfig.module.resolveFully = false;
 
@@ -20,8 +20,8 @@ const config: Config = {
   },
   transformIgnorePatterns: [`/node_modules/(?!(${needTransformPackages.join('|')})/)`],
   displayName: 'unit',
-  roots: [path.join(__dirname, 'src')],
-  setupFilesAfterEnv: [path.join(__dirname, 'jest.setup.ts')],
+  roots: [path.join(import.meta.dirname, 'src')],
+  setupFilesAfterEnv: [path.join(import.meta.dirname, 'jest.setup.ts')],
   globalSetup: '<rootDir>/jest.global-setup.ts',
   testRegex: '\\.test\\.tsx?$',
   collectCoverage: true,

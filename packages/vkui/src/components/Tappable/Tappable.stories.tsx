@@ -5,9 +5,10 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Tappable, type TappableProps } from './Tappable';
 
 const story: Meta<TappableProps> = {
-  title: 'Blocks/Tappable',
+  title: 'Utils/Tappable',
   component: Tappable,
   parameters: createStoryParameters('Tappable', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

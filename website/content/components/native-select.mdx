@@ -1,0 +1,109 @@
+---
+description: Компонент для создания выпадающего списка на основе нативного HTML-элемента select.
+---
+
+<Overview group="forms">
+
+# NativeSelect [tag:component]
+
+Компонент для создания выпадающего списка на основе нативного HTML-элемента `select`.
+Используется для выбора одного значения из списка опций.
+
+Связанные компоненты:
+
+- [`Select`](/components/select)
+
+</Overview>
+
+> Важно: для отображения невыбранного состояния нужно использовать `value=null` вместо `undefined`.
+>
+> `undefined` ипользуется только для неконтролируемого компонента.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <NativeSelect>
+    <option value="1">Опция 1</option>
+    <option value="2">Опция 2</option>
+    <option value="3">Опция 3</option>
+  </NativeSelect>
+  ```
+</Playground>
+
+> Используйте данный компонент на мобильных устройствах или отдайте предпочтение [`Select`](/components/select),
+> который автоматически выберет наилучший для отображения компонент.
+> Используйте компонент [`CustomSelect`](/components/custom-select), чтобы вид компонента был всегда кастомный.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<NativeSelect defaultValue="f">
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+
+// Контролируемое состояние
+const [gender, setGender] = React.useState('f');
+
+<NativeSelect value={gender} onChange={(_, newGender) => setGender(newGender)}>
+  <option value="f">Женский</option>
+  <option value="m">Мужской</option>
+</NativeSelect>;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `NativeSelect` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <NativeSelect disabled>
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `FormField` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <NativeSelect status="error">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  <NativeSelect status="valid">
+    <option value="1">Опция 1</option>
+  </NativeSelect>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент построен на основе нативного HTML-элемента `select`, что обеспечивает базовую доступность. Для улучшения доступности рекомендуется:
+
+- всегда добавлять `label` для селекта;
+- использовать `aria-label` или `aria-labelledby`, если визуальный заголовок отсутствует;
+- добавлять `aria-describedby` для дополнительного описания, если оно есть.
+
+Для улучшения доступности рекомендуется использовать обёртку `FormItem` для компонента `NativeSelect` для
+поддержки заголовка и описания поля.
+
+## Свойства и методы [#api]
+
+<PropsTable name="NativeSelect" />

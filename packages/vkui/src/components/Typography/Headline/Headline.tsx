@@ -25,7 +25,7 @@ export interface HeadlineProps extends TypographyProps {
 /**
  * Используется для подзаголовков.
  *
- * @see https://vkcom.github.io/VKUI/#/Headline
+ * @see https://vkui.io/components/typography#headline
  */
 export const Headline = ({
   className,

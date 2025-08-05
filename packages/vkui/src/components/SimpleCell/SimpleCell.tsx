@@ -9,6 +9,7 @@ import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
 
@@ -82,7 +83,7 @@ export interface SimpleCellOwnProps extends HasComponent {
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableOmitProps {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ * @see https://vkui.io/components/simple-cell
  */
 export const SimpleCell = ({
   badgeBeforeTitle,
@@ -125,12 +126,14 @@ export const SimpleCell = ({
         {overTitle && (
           <Subhead Component="span" className={classNames(styles.text, styles.overTitle)}>
             {overTitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Subhead>
         )}
         <div className={styles.content}>
           {badgeBeforeTitle && <span className={styles.badge}>{badgeBeforeTitle}</span>}
           <Headline Component="span" className={styles.children} weight="3">
             {children}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Headline>
           {hasReactNode(badgeAfterTitle) && <span className={styles.badge}>{badgeAfterTitle}</span>}
         </div>
@@ -139,6 +142,7 @@ export const SimpleCell = ({
             {badgeBeforeSubtitle && <span className={styles.badge}>{badgeBeforeSubtitle}</span>}
             <Footnote normalize={false} className={classNames(styles.text, styles.subtitle)}>
               {subtitle}
+              <VisuallyHidden>&nbsp;</VisuallyHidden>
             </Footnote>
             {badgeAfterSubtitle && <span className={styles.badge}>{badgeAfterSubtitle}</span>}
           </div>
@@ -146,6 +150,7 @@ export const SimpleCell = ({
         {extraSubtitle && (
           <Footnote className={classNames(styles.text, styles.extraSubtitle)}>
             {extraSubtitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Footnote>
         )}
       </div>

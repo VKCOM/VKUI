@@ -16,6 +16,7 @@ const story: Meta<ModalPageHeaderProps> = {
   component: ModalPageHeader,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withVKUILayout],
+  tags: ['Модальные окна'],
 };
 
 export default story;

@@ -56,6 +56,10 @@
   border-inline-start: 1px solid var(--vkui--color_separator_primary_alpha);
 }
 
+.anchor:last-child {
+  margin-block-end: var(--vkui--spacing_size_4xl);
+}
+
 .hoverMenuItem {
   background-color: var(--vkui--color_background_secondary--hover);
 }

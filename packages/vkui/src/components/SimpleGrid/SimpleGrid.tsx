@@ -53,6 +53,9 @@ export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, '
   align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
 }
 
+/**
+ * @see https://vkui.io/components/simple-grid
+ */
 export const SimpleGrid = ({
   columns = 1,
   gap,

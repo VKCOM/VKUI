@@ -8,19 +8,16 @@ import {
   ConfigProvider,
   FixedLayout,
   Flex,
+  type ConfigProviderProps,
 } from '@vkontakte/vkui';
 import styles from './Layout.module.css';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-function LayoutContent({ children }: LayoutProps) {
+function LayoutContent({ children }: React.PropsWithChildren) {
   const [colorScheme, colorSchemeSwitcher] = useColorSchemeSwitcher();
 
   return (
     <ColorSchemeProvider value={colorScheme}>
-      <AppRoot>
+      <AppRoot disableSettingVKUIClassesInRuntime>
         <Flex direction="column" justify="center" className={styles.layout}>
           <FixedLayout vertical="top">
             <Flex justify="end" className={styles.header}>
@@ -34,9 +31,11 @@ function LayoutContent({ children }: LayoutProps) {
   );
 }
 
-export function Layout({ children }: LayoutProps) {
+type LayoutProps = Pick<ConfigProviderProps, 'platform' | 'direction'> & React.PropsWithChildren;
+
+export function Layout({ platform, direction, children }: LayoutProps) {
   return (
-    <ConfigProvider>
+    <ConfigProvider platform={platform} direction={direction}>
       <AdaptivityProvider>
         <LayoutContent>{children}</LayoutContent>
       </AdaptivityProvider>

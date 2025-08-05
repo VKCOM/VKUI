@@ -5,6 +5,38 @@
 
 Компонент может быть как контролируемым (`value`, `onChange`), так и неконтролируемым (`defaultValue`).
 
+## Цифровая доступность (a11y)
+
+Для корректной работы со скринридерами компонент `ChipsInput` должен быть связан с текстовым описанием. Доступно несколько способов:
+
+```jsx static
+// Компонент вложен в `<label>`
+<label>
+  Список исполнителей
+  <ChipsInput placeholder="Введите название" />
+</label>
+
+// Связывание через `<label>` с `htmlFor`
+<label htmlFor="chips">Список исполнителей</label>
+<ChipsInput placeholder="Введите название" id="chips" />
+
+// Связывание с использованием компонента `FormItem`
+<FormItem top="Список исполнителей" htmlFor="chips">
+  <ChipsInput placeholder="Введите название" id="chips" />
+</FormItem>
+
+// Указание `label` через `aria-label`
+<ChipsInput placeholder="Введите название" aria-label="Список исполнителей" />
+
+// Связывание через `aria-labelledby`
+<label htmlFor="chips">Список исполнителей</label>
+<ChipsInput placeholder="Введите название" aria-labelledby="chips" />
+```
+
+### Описание списка выбранных опций
+
+Используйте свойство `chipsListLabel` для описания списка выбранных опций, если это необходимо.
+
 ```jsx
 const DEFAULT_VALUE = [
   {
@@ -66,6 +98,7 @@ const Example = () => {
           <FormItem htmlFor="color" top="Цвет (контролируемый компонент)">
             <ChipsInput
               id="color"
+              aria-label="Цвет (контролируемый компонент)"
               placeholder="Введите цвета"
               ClearButton={ClearButton}
               allowClearButton
@@ -76,6 +109,7 @@ const Example = () => {
           <FormItem htmlFor="list" top="Список">
             <ChipsInput
               id="list"
+              aria-label="Список"
               placeholder="Введите название и нажмите Enter"
               allowClearButton={true}
             />
@@ -83,6 +117,7 @@ const Example = () => {
           <FormItem htmlFor="favoriteGroups" top="Любимые группы (неконтролируемый компонент)">
             <ChipsInput
               id="favoriteGroups"
+              aria-label="Любимые группы"
               readOnly
               defaultValue={DEFAULT_VALUE}
               renderChip={({ value, label, ...rest }, { src }) => (

@@ -9,9 +9,10 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { FormLayoutGroup, type FormLayoutGroupProps } from './FormLayoutGroup';
 
 const story: Meta<FormLayoutGroupProps> = {
-  title: 'Forms/FormLayoutGroup',
+  title: 'Layout/FormLayoutGroup',
   component: FormLayoutGroup,
   parameters: createStoryParameters('FormLayoutGroup', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

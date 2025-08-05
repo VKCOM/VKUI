@@ -46,7 +46,7 @@ export interface FormFieldProps {
    * Рекомендации:
    *
    * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
-   * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна иконка, реагирующая на нажатие.
+   * - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие.
    */
   before?: React.ReactNode;
   /**
@@ -59,7 +59,7 @@ export interface FormFieldProps {
    * Рекомендации:
    *
    * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
-   * - Используйте [IconButton](https://vkcom.github.io/VKUI/#/IconButton), если вам нужна иконка, реагируюущая на нажатие.
+   * - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие.
    */
   after?: React.ReactNode;
   /**
@@ -91,7 +91,7 @@ export interface FormFieldOwnProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/FormField
+ * @see https://vkui.io/components/form-field
  */
 export const FormField = ({
   Component = 'span',

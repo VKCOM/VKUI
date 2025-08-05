@@ -14,7 +14,7 @@ export interface SSRWrapperProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SSR
+ * @see https://vkui.io/overview/ssr
  */
 export const SSRWrapper: React.FC<SSRWrapperProps> = ({
   userAgent,

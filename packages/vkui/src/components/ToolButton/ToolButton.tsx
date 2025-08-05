@@ -57,7 +57,7 @@ export interface ToolButtonProps extends TappableOmitProps, AdaptiveIconRenderer
  * для форматирования. Их можно использовать как кнопки для разового действия
  * или для включения/выключения режима.
  *
- * @see https://vkcom.github.io/VKUI/#/ToolButton
+ * @see https://vkui.io/components/tool-button
  */
 export const ToolButton = ({
   mode = 'primary',

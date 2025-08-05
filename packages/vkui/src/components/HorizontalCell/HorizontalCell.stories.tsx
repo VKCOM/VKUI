@@ -10,13 +10,14 @@ import { Image } from '../Image/Image';
 import { HorizontalCell, type HorizontalCellProps } from './HorizontalCell';
 
 const story: Meta<HorizontalCellProps> = {
-  title: 'Blocks/HorizontalCell',
+  title: 'Data Display/HorizontalCell',
   component: HorizontalCell,
   parameters: createStoryParameters('HorizontalCell', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     subtitle: StringArg,
     extraSubtitle: StringArg,
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

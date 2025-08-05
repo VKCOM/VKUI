@@ -65,7 +65,7 @@ const PanelHeaderChildren = ({ hasSubtitle, hasBefore, children }: PanelHeaderCh
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
+ * @see https://vkui.io/components/panel-header#panel-header-content
  */
 export const PanelHeaderContent = ({
   aside,

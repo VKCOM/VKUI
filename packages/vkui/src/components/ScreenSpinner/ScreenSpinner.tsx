@@ -13,7 +13,7 @@ import type { ScreenSpinnerProps } from './types';
 export type { ScreenSpinnerProps };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ScreenSpinner
+ * @see https://vkui.io/components/screen-spinner
  */
 export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   Container: typeof ScreenSpinnerContainer;

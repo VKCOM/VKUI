@@ -54,7 +54,7 @@ export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Counter
+ * @see https://vkui.io/components/counter
  */
 export const Counter = ({
   mode = 'inherit',

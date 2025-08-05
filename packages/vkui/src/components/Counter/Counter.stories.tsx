@@ -6,10 +6,11 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Counter, type CounterProps } from './Counter';
 
 const story: Meta<CounterProps> = {
-  title: 'Blocks/Counter',
+  title: 'Data Display/Counter',
   component: Counter,
   parameters: createStoryParameters('Counter', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

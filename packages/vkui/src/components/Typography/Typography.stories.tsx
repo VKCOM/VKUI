@@ -24,7 +24,7 @@ interface TypographyOverview {
 }
 
 const story: Meta<TypographyOverview> = {
-  title: 'Typography',
+  title: 'Typography/Typography',
   parameters: createStoryParameters('Typography', CanvasFullLayout),
   argTypes: {
     weight: {
@@ -34,6 +34,7 @@ const story: Meta<TypographyOverview> = {
     accent: { control: 'boolean' },
   },
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

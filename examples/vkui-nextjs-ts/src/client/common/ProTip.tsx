@@ -7,7 +7,7 @@ export default function ProTip() {
     <Headline className={styles.proTip}>
       <Icon24LightbulbOutline className={styles.proTipIcon} />
       {'Совет: посмотрите другие '}
-      <Link href="https://vkcom.github.io/VKUI/">шаблоны</Link>
+      <Link href="https://github.com/VKCOM/VKUI/tree/master/examples">шаблоны</Link>
       {' в документации VKUI.'}
     </Headline>
   );

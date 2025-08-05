@@ -11,9 +11,10 @@ import {
 import { RadioGroup, type RadioGroupProps } from './RadioGroup';
 
 const story: Meta<RadioGroupProps> = {
-  title: 'Forms/RadioGroup',
+  title: 'Layout/RadioGroup',
   component: RadioGroup,
   parameters: createStoryParameters('RadioGroup', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

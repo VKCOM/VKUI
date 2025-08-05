@@ -12,7 +12,7 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 export type PanelHeaderSubmitProps = Omit<PanelHeaderButtonProps, 'children'>;
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ * @see https://vkui.io/components/panel-header#panel-header-submit
  */
 export const PanelHeaderSubmit = ({
   label = 'Готово',

@@ -61,6 +61,6 @@ yarn build
 
 ## Что дальше?
 
-1. Изучите [документацию VKUI](https://vkcom.github.io/VKUI) для работы с компонентами
+1. Изучите [документацию VKUI](https://vkui.io/) для работы с компонентами
 2. Ознакомьтесь с [официальной документацией Next.js](https://nextjs.org/docs)
 3. Посмотрите [другие примеры](https://github.com/VKCOM/VKUI/tree/master/examples) интеграций

@@ -42,7 +42,7 @@ const ContextMenu = () => {
 };
 
 const story: Meta<ImageBaseFloatElementProps> = {
-  title: 'Blocks/ImageBaseFloatElement',
+  title: 'Data Display/ImageBase/ImageBaseFloatElement',
   component: ImageBaseFloatElement,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [

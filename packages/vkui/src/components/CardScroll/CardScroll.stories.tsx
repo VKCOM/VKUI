@@ -11,7 +11,7 @@ import { CardScroll, type CardScrollProps } from './CardScroll';
 type StoryCardScrollProps = CardScrollProps & { count: number };
 
 const story: Meta<StoryCardScrollProps> = {
-  title: 'Blocks/CardScroll',
+  title: 'Layout/CardScroll',
   component: CardScroll,
   parameters: createStoryParameters('CardScroll', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -19,6 +19,7 @@ const story: Meta<StoryCardScrollProps> = {
       control: { type: 'number' },
     },
   },
+  tags: ['Раскладка'],
 };
 
 export default story;

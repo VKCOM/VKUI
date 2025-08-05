@@ -10,7 +10,7 @@ export interface PanelSpinnerProps extends SpinnerProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelSpinner
+ * @see https://vkui.io/components/panel#panel-spinner
  */
 // eslint-disable-next-line react/display-name -- используется defineComponentDisplayNames
 export const PanelSpinner = React.memo(

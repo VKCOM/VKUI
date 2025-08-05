@@ -4,7 +4,7 @@ import lightLogo from './vkui-logo-light.svg';
 
 const commonProps = {
   brandTitle: 'VKUI Storybook',
-  brandUrl: 'https://vkcom.github.io/VKUI',
+  brandUrl: 'https://vkui.io/',
   brandTarget: '_blank',
 };
 

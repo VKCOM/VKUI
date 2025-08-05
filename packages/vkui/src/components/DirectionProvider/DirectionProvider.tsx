@@ -15,7 +15,7 @@ export interface DirectionProviderProps {
 
 /**
  * Компонент, прокидывающий направление контента.
- * @see https://vkcom.github.io/VKUI/#/DirectionProvider
+ * @see https://vkui.io/components/direction-provider
  * @since 7.2.0
  */
 export function DirectionProvider({ value, children }: DirectionProviderProps): React.ReactNode {

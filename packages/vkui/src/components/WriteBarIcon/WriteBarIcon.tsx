@@ -52,7 +52,7 @@ export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButton
 const warn = warnOnce('WriteBarIcon');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/WriteBarIcon
+ * @see https://vkui.io/components/write-bar#write-bar-icon
  */
 export const WriteBarIcon = ({
   mode,

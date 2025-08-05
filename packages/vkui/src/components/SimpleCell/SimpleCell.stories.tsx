@@ -13,7 +13,7 @@ import { Switch } from '../Switch/Switch';
 import { SimpleCell, type SimpleCellProps } from './SimpleCell';
 
 const story: Meta<SimpleCellProps> = {
-  title: 'Blocks/SimpleCell',
+  title: 'Buttons/SimpleCell',
   component: SimpleCell,
   parameters: createStoryParameters('SimpleCell', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -73,6 +73,7 @@ const story: Meta<SimpleCellProps> = {
       },
     }),
   },
+  tags: ['Кнопки'],
 };
 
 export default story;

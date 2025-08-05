@@ -30,7 +30,7 @@ export interface RadioProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Radio
+ * @see https://vkui.io/components/radio
  */
 export const Radio = ({
   children,

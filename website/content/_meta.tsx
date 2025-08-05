@@ -1,9 +1,25 @@
 import type { MetaRecord } from 'nextra';
 
 const meta: MetaRecord = {
-  docs: {
-    type: 'page',
+  index: {
+    type: 'doc',
+    display: 'hidden',
+  },
+  overview: {
+    type: 'doc',
+    title: 'Начало работы',
+  },
+  components: {
+    type: 'doc',
     title: 'Компоненты',
+  },
+  integrations: {
+    type: 'doc',
+    title: 'Интеграции',
+  },
+  migrations: {
+    type: 'doc',
+    title: 'Миграции',
   },
   icons: {
     type: 'page',

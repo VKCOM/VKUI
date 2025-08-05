@@ -35,7 +35,7 @@ export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/FixedLayout
+ * @see https://vkui.io/components/fixed-layout
  */
 export const FixedLayout = ({
   children,

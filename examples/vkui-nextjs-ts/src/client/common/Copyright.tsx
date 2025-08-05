@@ -4,7 +4,7 @@ export default function Copyright() {
   return (
     <Text>
       {'Авторские права © '}
-      <Link color="inherit" href="https://vkcom.github.io/VKUI/">
+      <Link color="inherit" href="https://vkui.io/">
         Ваш сайт
       </Link>{' '}
       {new Date().getFullYear()}.

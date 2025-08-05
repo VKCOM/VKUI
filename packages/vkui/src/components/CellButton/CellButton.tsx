@@ -21,7 +21,7 @@ export interface CellButtonProps extends SimpleCellProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CellButton
+ * @see https://vkui.io/components/cell-button
  */
 export const CellButton = ({
   centered = false,

@@ -1,7 +1,12 @@
-import { Layout } from '@/client/Layout';
-import '@vkontakte/vkui/dist/cssm/styles/themes.css';
 import { Metadata, Viewport } from 'next';
-import * as React from 'react';
+import { headers } from 'next/headers';
+import { detectIOS } from '@vkontakte/vkjs';
+import '@vkontakte/vkui/dist/cssm/styles/themes.css';
+import { Layout } from '@/client/Layout';
+
+export const metadata: Metadata = {
+  title: 'NextJS + VKUI + TS',
+};
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -10,15 +15,29 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export const metadata: Metadata = {
-  title: 'NextJS + VKUI + TS',
-};
+/**
+ * Ознакомительный пример определения платформы и направления текста. Конечно решение за вами.
+ *
+ * @see https://vkui.io/overview/ssr
+ */
+export default async function RootLayout({ children }: React.PropsWithChildren) {
+  const headersList = await headers();
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Определяем платформу
+  const userAgent = headersList.get('user-agent') || '';
+  const platform = detectIOS(userAgent).isIOS ? 'ios' : 'android';
+
+  // Определяем направление текста
+  const acceptLanguage = headersList.get('accept-language') || 'en-US';
+  const lang = acceptLanguage.split('-')[0];
+  const direction = ['ar', 'he', 'fa', 'ur'].includes(lang) ? 'rtl' : 'ltr';
+
   return (
-    <html lang="ru" className="vkui" suppressHydrationWarning>
+    <html lang={lang} dir={direction} className="vkui">
       <body className="vkui__root">
-        <Layout>{children}</Layout>
+        <Layout platform={platform} direction={direction}>
+          {children}
+        </Layout>
       </body>
     </html>
   );

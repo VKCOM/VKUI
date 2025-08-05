@@ -138,6 +138,9 @@ export interface SkeletonProps
  * > вписывается в слоты компонентов, которые обычно ожидают текст.
  *
  * @since 6.1.0
+ *
+ * @see https://vkui.io/components/skeleton
+ *
  */
 export const Skeleton = ({
   width,

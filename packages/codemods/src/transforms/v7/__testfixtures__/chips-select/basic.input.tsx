@@ -24,6 +24,7 @@ const App = () => {
         placeholder="Не выбраны"
         creatable="Добавить цвет"
         allowClearButton={true}
+        {...props}
       />
     </React.Fragment>
   );

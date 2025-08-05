@@ -43,6 +43,9 @@ export interface HorizontalCellShowMoreProps
   centered?: boolean;
 }
 
+/**
+ * @see https://vkui.io/components/horizontal-scroll#horizontal-cell-show-more
+ */
 export const HorizontalCellShowMore = ({
   className,
   style,

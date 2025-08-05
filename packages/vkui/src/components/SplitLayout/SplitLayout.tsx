@@ -36,7 +36,7 @@ export interface SplitLayoutProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SplitLayout
+ * @see https://vkui.io/components/split-layout
  */
 export const SplitLayout = ({
   header,

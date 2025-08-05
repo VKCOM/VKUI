@@ -17,7 +17,7 @@ export interface ModalOutsideButtonProps extends TappableOmitProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalOutsideButton
+ * @see https://vkui.io/components/modal-outside-button
  */
 export const ModalOutsideButton = ({
   children,

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Icon24ChevronDown } from '@vkontakte/icons';
-import { classNames, Headline, Spacing, Subhead, Tappable } from '@vkontakte/vkui';
+import { classNames, Headline, Subhead, Tappable } from '@vkontakte/vkui';
 import type { Heading } from 'nextra';
 import { useConfig } from '../../contexts';
 import { calculateItemPadding } from './helpers';
@@ -43,8 +43,13 @@ export function TOC({ toc }: TOCProps) {
   const activeAnchorId = useActiveAnchor(anchorIds);
   const {
     normalizePagesResult: { activeThemeContext: themeContext },
+    isBlog,
   } = useConfig();
   const { toc: tocVisible } = themeContext;
+
+  if (isBlog) {
+    return null;
+  }
 
   if (!tocVisible || !toc.length) {
     return <div className={styles.root} />;
@@ -66,7 +71,6 @@ export function TOC({ toc }: TOCProps) {
               isActive={id === activeAnchorId}
             />
           ))}
-          <Spacing size={32} />
         </ul>
       </nav>
     </aside>

@@ -216,7 +216,7 @@ const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/DateInput
+ * @see https://vkui.io/components/date-input
  */
 export const DateInput = ({
   enableTime,

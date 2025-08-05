@@ -1,0 +1,49 @@
+.root {
+  display: grid;
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  padding-block: var(--vkui--spacing_size_l);
+  padding-inline: var(--vkui--spacing_size_xl);
+  color: var(--vkui--color_text_primary);
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  padding-block: var(--vkui--spacing_size_xl);
+  margin-block-start: var(--vkui--spacing_size_2xl);
+  background-color: var(--vkui--color_background);
+  border-radius: inherit;
+}
+
+.examples {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  padding-block: var(--vkui--spacing_size_xl);
+  padding-inline: var(--vkui--spacing_size_xl);
+  margin-block-start: var(--vkui--spacing_size_2xl);
+  background-color: var(--vkui--color_background);
+  border-radius: inherit;
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.example > * {
+  margin-block-end: var(--vkui--spacing_size_m);
+}
+
+.weight {
+  padding: var(--vkui--spacing_size_xs);
+}

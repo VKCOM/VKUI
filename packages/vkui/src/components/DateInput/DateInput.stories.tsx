@@ -10,7 +10,7 @@ import { DateInput, type DateInputProps } from './DateInput';
 const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<DateInputProps> = {
-  title: 'Forms/DateInput',
+  title: 'Dates/DateInput',
   component: DateInput,
   parameters: createStoryParameters('DateInput', CanvasFullLayout, DisableCartesianParam),
   args: { onChange: fn() },
@@ -27,6 +27,7 @@ const story: Meta<DateInputProps> = {
     renderCustomValue: StringArg,
     timezone: createCalendarTimezoneField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

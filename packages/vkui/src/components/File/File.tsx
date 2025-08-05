@@ -10,7 +10,7 @@ export interface FileProps
     HasRootRef<HTMLElement> {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/File
+ * @see https://vkui.io/components/file
  */
 export const File = ({
   children = 'Выберите файл',
