@@ -61,10 +61,6 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
     [onSnackbarClosed, onSnackbarShow],
   );
 
-  if (!snackbars.length) {
-    return null;
-  }
-
   return (
     <SnackbarsContainerContext.Provider value={contextValue}>
       <div className={classNames(styles.host, placementClassNames[placement])}>

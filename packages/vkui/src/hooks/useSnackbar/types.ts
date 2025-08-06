@@ -1,8 +1,9 @@
 import type * as React from 'react';
 import { type SnackbarProps } from '../../components/Snackbar/Snackbar';
-import { type PartialFields, type RequiredFields } from '../../types';
+import { type HasDataAttribute, type PartialFields, type RequiredFields } from '../../types';
 
-type SnackbarConfig = PartialFields<Omit<SnackbarProps, 'open' | 'offsetY'>, 'onClose'>;
+type SnackbarConfig = PartialFields<Omit<SnackbarProps, 'open' | 'offsetY'>, 'onClose'> &
+  HasDataAttribute;
 
 export type SnackbarsMap = Record<string, SnackbarData[]>;
 
