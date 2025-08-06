@@ -1214,7 +1214,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.1.2, @floating-ui/react-dom@npm:^2.1.4":
+"@floating-ui/react-dom@npm:^2.1.2":
   version: 2.1.4
   resolution: "@floating-ui/react-dom@npm:2.1.4"
   dependencies:
@@ -5368,10 +5368,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-date-fns-tz@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@vkontakte/vkui-date-fns-tz@npm:0.0.4"
-  checksum: 10/763bbbfbae5f6a50c11fa48de43ec1b4ee51bc8a2632af5d77f05edf698cd043998cb0a5edf0c95ebfa1dc6e2a25104079f0ebdae3e448a4cf146e71ede8df48
+"@vkontakte/vkui-date-fns-tz@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@vkontakte/vkui-date-fns-tz@npm:0.0.5"
+  checksum: 10/a4449ee2cd8768d297c0b60d3ada7f5168d1f2e87eddef424e83a068ed9b09d0568905410cc4494f803e9ade83a257ea80a15b0637af54047a7ce519ced86d15
   languageName: node
   linkType: hard
 
@@ -5406,16 +5406,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-floating-ui@npm:^0.2.5":
-  version: 0.2.5
-  resolution: "@vkontakte/vkui-floating-ui@npm:0.2.5"
+"@vkontakte/vkui-floating-ui@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "@vkontakte/vkui-floating-ui@npm:0.2.6"
   dependencies:
-    "@floating-ui/react-dom": "npm:^2.1.4"
+    "@floating-ui/react-dom": "npm:^2.1.5"
     "@swc/helpers": "npm:^0.5.17"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10/da645297c64957d5aa87cf24d5d59818226d391e07b7e5c9fbf0f4b5a2eaf20f5a0c243d9414d9401eeab678bf7adb7db9a00434da75ebecb69cdacb3b4d89e9
+  checksum: 10/dd71fb864cf45ac10c03353371c508279b0f70e7ede86f26f8cae4d1f2dbf1c46f1ab2632bcd47f6411b5219da65b64ea995e52458309665b0f6c46a6b1d1158
   languageName: node
   linkType: hard
 
@@ -5566,8 +5566,8 @@ __metadata:
     "@types/postcss-import": "npm:^14.0.3"
     "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
-    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.4"
-    "@vkontakte/vkui-floating-ui": "npm:^0.2.5"
+    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.5"
+    "@vkontakte/vkui-floating-ui": "npm:^0.2.6"
     date-fns: "npm:^4.1.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
