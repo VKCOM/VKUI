@@ -88,8 +88,8 @@
     "@swc/helpers": "^0.5.17",
     "@vkontakte/icons": "^3.0.0",
     "@vkontakte/vkjs": "^2.0.1",
-    "@vkontakte/vkui-date-fns-tz": "^0.0.4",
-    "@vkontakte/vkui-floating-ui": "^0.2.5",
+    "@vkontakte/vkui-date-fns-tz": "workspace:^",
+    "@vkontakte/vkui-floating-ui": "workspace:^",
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
