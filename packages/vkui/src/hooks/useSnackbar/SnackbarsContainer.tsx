@@ -1,9 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { classNames, noop } from '@vkontakte/vkjs';
+import { classNames } from '@vkontakte/vkjs';
 import { type SnackbarPlacement } from '../../components/Snackbar/types';
 import { SnackbarAnimatedWrapper } from './SnackbarAnimatedWrapper';
+import {
+  SnackbarsContainerContext,
+  type SnackbarsContainerContextData,
+} from './SnackbarsContainerContext';
 import { type SnackbarData } from './types';
 import styles from './SnackbarsContainer.module.css';
 /* eslint-disable jsdoc/require-jsdoc */
@@ -23,18 +27,6 @@ const placementClassNames = {
   'bottom-end': styles.placementBottomEnd,
   'bottom': styles.placementBottom,
 };
-
-type SnackbarsContainerContextData = {
-  isInsideSnackbarContainer: boolean;
-  onSnackbarClosed: (id: string) => void;
-  onSnackbarShow: (id: string) => void;
-};
-
-export const SnackbarsContainerContext = React.createContext<SnackbarsContainerContextData>({
-  isInsideSnackbarContainer: false,
-  onSnackbarClosed: noop,
-  onSnackbarShow: noop,
-});
 
 export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
   snackbars,

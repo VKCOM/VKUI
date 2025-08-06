@@ -9,7 +9,7 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SnackbarsContainerContext } from '../../hooks/useSnackbar/SnackbarsContainer';
+import { SnackbarsContainerContext } from '../../hooks/useSnackbar/SnackbarsContainerContext';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { callMultiple } from '../../lib/callMultiple';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
