@@ -94,7 +94,14 @@ export function useSelectedOptionController({
     const isNativeValueChanged =
       convertedNativeSelectValue !== prevNativeSelectValue && prevNativeSelectValue !== undefined;
 
-    const isTriggeredByClearButton = allowClearButton && nativeSelectValue === NOT_SELECTED.NATIVE;
+    const isTriggeredByClearButton =
+      allowClearButton &&
+      // Проверяем, что новое значение NOT_SELECTED.NATIVE
+      nativeSelectValue === NOT_SELECTED.NATIVE &&
+      // Проверяем, что предыдущее значение не undefined(кейс с первой отрисовкой, когда предыдущего значения не было)
+      prevNativeSelectValue !== undefined &&
+      // Проверяем, что предыдущее значение не NOT_SELECTED.NATIVE(если до этого было уже сброшенное значение)
+      prevNativeSelectValue !== NOT_SELECTED.NATIVE;
 
     const shouldCallOnChange =
       !isCalledWithSameControlledOptionValue && (isNativeValueChanged || isTriggeredByClearButton);
