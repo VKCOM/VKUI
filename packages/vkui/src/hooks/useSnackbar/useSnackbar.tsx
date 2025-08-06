@@ -31,7 +31,8 @@ const resolveMobilePlacement = (
 const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 
 export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResult => {
-  const { maxSnackbarsCount = DEFAULT_MAX_VISIBLE_SNACKBARS } = params;
+  const { maxSnackbarsCount: maxSnackbarsCountProp = DEFAULT_MAX_VISIBLE_SNACKBARS } = params;
+  const [maxSnackbarsCount, setMaxSnackbarsCount] = React.useState(maxSnackbarsCountProp);
   const [data, setData] = React.useState<{
     snackbars: SnackbarData[];
     snackbarsToClose: Set<string>;
@@ -124,6 +125,7 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
       close: onCloseSnackbar,
       closeAll: onCloseAllSnackbars,
       getSnackbars: () => snackbarsRef.current,
+      setMaxSnackbarsCount,
     };
   }, [onCloseAllSnackbars, onCloseSnackbar, onOpenSnackbar, onUpdateSnackbar]);
 

@@ -12,6 +12,7 @@ export interface SnackbarApi {
   close: (id: string) => void;
   closeAll: () => void;
   getSnackbars: () => SnackbarData[];
+  setMaxSnackbarsCount: (count: number) => void;
 }
 
 export interface UseSnackbarParameters {
