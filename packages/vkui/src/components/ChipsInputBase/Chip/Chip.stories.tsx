@@ -21,6 +21,7 @@ const story: Meta<ChipProps> = {
       iconSizes: ['16'],
     }),
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

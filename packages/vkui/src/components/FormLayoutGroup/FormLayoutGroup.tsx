@@ -35,7 +35,7 @@ export interface FormLayoutGroupProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/FormLayoutGroup
+ * @see https://vkui.io/components/form-layout-group
  */
 export const FormLayoutGroup = ({
   children,

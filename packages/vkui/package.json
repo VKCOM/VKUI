@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "7.4.0",
+  "version": "7.5.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
@@ -45,7 +45,7 @@
     "directory": "packages/vkui"
   },
   "bugs": "https://github.com/VKCOM/VKUI/issues",
-  "homepage": "https://vkcom.github.io/VKUI/",
+  "homepage": "https://vkui.io/",
   "scripts": {
     "prepack": "yarn copy-essensial-files && yarn build",
     "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",
@@ -67,8 +67,8 @@
     "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'",
     "test:e2e": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update": "../../scripts/generate_env_docker.sh -u && docker compose --env-file=./.env.docker up --abort-on-container-exit",
-    "test:e2e:ci": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --config playwright-ct.config.mjs",
-    "test:e2e:ci:ui": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --ui --ui-port=4300 --ui-host=0.0.0.0 --config playwright-ct.config.mjs",
+    "test:e2e:ci": "yarn run -T cross-env NODE_OPTIONS='--experimental-transform-types --disable-warning=ExperimentalWarning' playwright test --config playwright-ct.config.ts",
+    "test:e2e:ci:ui": "yarn run -T cross-env NODE_OPTIONS='--experimental-transform-types --disable-warning=ExperimentalWarning' playwright test --ui --ui-port=4300 --ui-host=0.0.0.0 --config playwright-ct.config.ts",
     "test:e2e:ui": "../../scripts/generate_env_docker.sh -r test:e2e:ci:ui && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
     "lint:generated-files": "yarn run -T concurrently 'yarn:lint:generated-files:*'",
@@ -94,9 +94,9 @@
   },
   "devDependencies": {
     "@types/node": "*",
+    "@types/postcss-import": "^14.0.3",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "ts-node": "*"
+    "react-dom": "^18.3.1"
   },
   "size-limit": [
     {

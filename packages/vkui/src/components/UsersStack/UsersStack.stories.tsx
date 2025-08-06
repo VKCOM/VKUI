@@ -16,6 +16,7 @@ const story: Meta<UsersStackProps> = {
   component: UsersStack,
   parameters: createStoryParameters('UsersStack', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

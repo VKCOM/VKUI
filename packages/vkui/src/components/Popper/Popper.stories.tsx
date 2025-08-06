@@ -10,6 +10,7 @@ const story: Meta<PopperProps> = {
   title: 'Modals/Popper',
   component: Popper,
   parameters: createStoryParameters('Popper', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Модальные окна'],
 };
 
 export default story;

@@ -92,6 +92,7 @@ jobs:
         if: ${{ fromJSON(needs.payload.outputs.is_for_prerelease) != true }}
         run: |
           yarn run docs:beta:build
+          yarn workspace @project-docs/website run next-sitemap
           mkdir -p website/out/playground
           cp -R styleguide/dist/${{ needs.payload.outputs.next_version }}/playground/* website/out/playground/
 

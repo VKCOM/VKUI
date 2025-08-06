@@ -74,6 +74,7 @@ const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
       },
     }),
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

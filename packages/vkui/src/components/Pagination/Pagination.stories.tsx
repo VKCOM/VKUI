@@ -8,6 +8,7 @@ const story: Meta<PaginationProps> = {
   title: 'Navigation/Pagination',
   component: Pagination,
   parameters: createStoryParameters('Pagination', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Навигация'],
 };
 
 export default story;

@@ -46,7 +46,7 @@
 
 .subtitle,
 .extraSubtitle {
-  color: var(--vkui--color_text_subhead);
+  opacity: 0.72;
 }
 
 .bg {
@@ -107,11 +107,6 @@
 .inverted .chevron,
 .inverted {
   color: var(--vkui--color_text_contrast);
-}
-
-.inverted .subtitle {
-  color: var(--vkui--color_text_contrast);
-  opacity: 0.72;
 }
 
 /**

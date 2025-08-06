@@ -2,6 +2,7 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { type SizeTypeValues } from '../../../lib/adaptivity';
 import { type HasCaps, Typography, type TypographyProps } from '../Typography';
 import styles from './Caption.module.css';
 
@@ -16,6 +17,18 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
+export function captionClassNames(
+  sizeY: 'none' | SizeTypeValues,
+  level: '1' | '2' | '3' | undefined = '1',
+  caps = false,
+) {
+  return classNames(
+    sizeY !== 'regular' && sizeYClassNames[sizeY],
+    caps && styles.caps,
+    stylesLevel[level],
+  );
+}
+
 export interface CaptionProps extends TypographyProps, HasCaps {
   /**
    * Уровень заголовка (от 1 до 3).
@@ -26,7 +39,7 @@ export interface CaptionProps extends TypographyProps, HasCaps {
 /**
  * Используется для мелких подписей.
  *
- * @see https://vkcom.github.io/VKUI/#/Caption
+ * @see https://vkui.io/components/typography#caption
  */
 export const Caption = ({
   className,
@@ -44,12 +57,7 @@ export const Caption = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(
-        className,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        caps && styles.caps,
-        stylesLevel[level],
-      )}
+      className={classNames(className, captionClassNames(sizeY, level, caps))}
       {...restProps}
     />
   );

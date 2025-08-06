@@ -170,8 +170,8 @@ export function hasAccessibleName({
  * @private
  */
 export const getHorizontalFocusGoTo = (
-  keys: Extract<KeysValues, 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight'>,
-): 'prev' | 'next' => {
+  keys: Extract<KeysValues, 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight' | 'Home' | 'End'>,
+): 'prev' | 'next' | 'first' | 'last' => {
   switch (keys) {
     case Keys.ARROW_UP:
     case Keys.ARROW_LEFT:
@@ -179,5 +179,9 @@ export const getHorizontalFocusGoTo = (
     case Keys.ARROW_DOWN:
     case Keys.ARROW_RIGHT:
       return 'next';
+    case Keys.HOME:
+      return 'first';
+    case Keys.END:
+      return 'last';
   }
 };

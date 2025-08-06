@@ -16,7 +16,7 @@ export interface FormStatusProps extends Omit<HTMLAttributesWithRootRef<HTMLDivE
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/FormStatus
+ * @see https://vkui.io/components/form-status
  */
 export const FormStatus = ({
   mode,

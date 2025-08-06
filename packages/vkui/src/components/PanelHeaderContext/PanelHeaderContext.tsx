@@ -31,7 +31,7 @@ export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLD
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderContext
+ * @see https://vkui.io/components/panel-header-context
  */
 export const PanelHeaderContext = ({
   children,

@@ -27,7 +27,7 @@ export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 
  * Его можно использовать для отображения изображений, карт, видео и других медиафайлов.
 
  * @since 5.5.0
- * @see https://vkcom.github.io/VKUI/#/AspectRatio
+ * @see https://vkui.io/components/aspect-ratio
  */
 export function AspectRatio({
   ratio,

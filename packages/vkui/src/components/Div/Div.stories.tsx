@@ -8,6 +8,7 @@ const story: Meta<DivProps> = {
   title: 'Layout/Div',
   component: Div,
   parameters: createStoryParameters('Div', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

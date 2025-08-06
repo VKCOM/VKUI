@@ -25,6 +25,7 @@ const story: Meta<SelectProps> = {
   argTypes: {
     before: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

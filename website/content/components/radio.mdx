@@ -1,0 +1,110 @@
+---
+description: Компонент для выбора одного значения из списка опций.
+---
+
+<Overview group="forms">
+
+# Radio [tag:component]
+
+Компонент для выбора одного значения из списка опций.
+Компонент представляет собой переключатель с круглой меткой, который может быть в двух состояниях: выбранном и невыбранном.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Radio name="pay" value="cash">
+    Оплата наличными
+  </Radio>
+  <Radio name="pay" value="card">
+    Оплата картой
+  </Radio>
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `checked` или передавать `defaultChecked`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `checked`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние, по умолчанию в состоянии "выбран"
+<Radio name="pay" value="card" defaultChecked>
+  Оплата картой
+</Radio>;
+
+// Контролируемое состояние, значение "не выбран"
+const [checked, setChecked] = React.useState(false);
+
+<Radio name="pay" value="card" checked={checked} onChange={(event) => setChecked(true)}>
+  Оплата картой
+</Radio>;
+```
+
+> Обратите внимание, что свойство `value` в данном контексте служит для идентификации поля (например, при передаче его
+> в форму). В данном примере в поле формы "pay" будет значение "card".
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `NativeSelect` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+<Playground>
+  ```jsx
+  <Radio name="pay" value="card" defaultChecked disabled>
+    Оплата картой
+  </Radio>
+  ```
+</Playground>
+
+## Применение компонента
+
+- используйте от двух до пяти компонентов `Radio`, объединенных в группу
+  (при большем количестве опций рассмотрите возможность использования компонента [`Select`](/components/select));
+- если вам необходим компонент с индикацией отмечен/не отмечен,
+  то используйте [`Checkbox`](/components/checkbox) или [`Switch`](/components/switch);
+- для выбора нескольких значений из списка используйте [`Checkbox`](/components/checkbox).
+
+## Доступность (a11y) [#a11y]
+
+Компонент `Radio` обеспечивает базовую доступность, используя нативные HTML-элементы `input[type="radio"]` и `label`.
+
+Для улучшения доступности рекомендуется:
+
+- группировать связанные `Radio` с помощью компонента [`RadioGroup`](/components/radio-group) (или любую другую обёртку с `role="radiogroup"`);
+- использовать свойство `description` для предоставления дополнительной информации;
+- при необходимости добавлять `aria-label` или `aria-labelledby` для более подробного описания.
+
+<Playground>
+  ```jsx
+  <FormItem top="Выберите посадку" topId="placement">
+    <RadioGroup aria-labelledby="placement">
+      <Radio name="fit" value="classic">
+        Classic
+      </Radio>
+      <Radio name="fit" value="regular">
+        Regular
+      </Radio>
+      <Radio name="fit" value="slim" disabled description="Нет в наличии">
+        Slim
+      </Radio>
+    </RadioGroup>
+  </FormItem>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Radio">
+### Radio [#radio-api]
+
+### Radio.Input [#radio-input-api]
+
+</PropsTable>

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`header transforms correctly 1`] = `
 "import { Header, Icon12ChevronOutline, Link } from '@vkontakte/vkui';

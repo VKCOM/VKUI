@@ -21,7 +21,7 @@ export interface InputProps
     Omit<FormFieldProps, 'maxHeight'> {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Input
+ * @see https://vkui.io/components/input
  */
 export const Input = ({
   type = 'text',

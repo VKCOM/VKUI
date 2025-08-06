@@ -10,6 +10,7 @@ const story: Meta<ToolButtonProps> = {
   component: ToolButton,
   parameters: createStoryParameters('ToolButton', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Кнопки'],
 };
 
 export default story;

@@ -9,6 +9,7 @@ const story: Meta<IconButtonProps> = {
   title: 'Buttons/IconButton',
   component: IconButton,
   parameters: createStoryParameters('IconButton', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Кнопки'],
 };
 
 export default story;

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`chips-select transforms correctly 1`] = `
 "import { ChipsSelect } from '@vkontakte/vkui';
@@ -24,7 +24,8 @@ const App = () => {
         options={colors}
         placeholder="Не выбраны"
         creatable="Добавить цвет"
-        allowClearButton={true} />
+        allowClearButton={true}
+        {...props} />
     </React.Fragment>
   );
 };"

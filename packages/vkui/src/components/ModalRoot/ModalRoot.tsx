@@ -10,7 +10,7 @@ import type { ModalRootProps } from './types';
 
 const warn = warnOnce('ModalRoot');
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalRoot
+ * @see https://vkui.io/components/modal-root
  */
 export const ModalRoot = ({
   activeModal,

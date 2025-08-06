@@ -34,11 +34,11 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
    * Тип оформления панели.
    *
    * Позволяет переопределить тип оформления панели,
-   * заданный через адаптивность или свойство layout у [AppRoot](https://vkcom.github.io/VKUI/#/AppRoot),
+   * заданный через адаптивность или свойство layout у [AppRoot](https://vkui.io/components/app-root),
    * глобально задающим тип оформления макета.
    *
    * Если установлен `card` - Panel имеет фон отличный от фона контента.
-   * Позволяет компоненту [Group](https://vkcom.github.io/VKUI/#/Group) со свойством mode='card' точечно выглядеть как карточка.
+   * Позволяет компоненту [Group](https://vkui.io/components/group) со свойством mode='card' точечно выглядеть как карточка.
    * Тип `plain` — соответствует фону по умолчанию.
    */
   mode?: 'plain' | 'card';
@@ -49,7 +49,7 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Panel
+ * @see https://vkui.io/components/panel
  */
 export const Panel = ({
   centered = false,

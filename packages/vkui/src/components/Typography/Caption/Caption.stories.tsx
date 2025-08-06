@@ -9,6 +9,7 @@ const story: Meta<CaptionProps> = {
   component: Caption,
   parameters: createStoryParameters('Caption', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

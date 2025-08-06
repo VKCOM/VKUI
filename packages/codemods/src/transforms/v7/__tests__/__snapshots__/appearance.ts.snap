@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`appearance transforms correctly 1`] = `
 "import { ColorScheme, type ColorSchemeType, useColorScheme } from '@vkontakte/vkui';

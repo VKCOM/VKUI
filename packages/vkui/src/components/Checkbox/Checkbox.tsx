@@ -59,7 +59,7 @@ const CheckboxComponent = ({
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Checkbox
+ * @see https://vkui.io/components/checkbox
  */
 export const Checkbox = (props: CheckboxProps): React.ReactNode => {
   const simple = !(hasReactNode(props.children) || hasReactNode(props.description));

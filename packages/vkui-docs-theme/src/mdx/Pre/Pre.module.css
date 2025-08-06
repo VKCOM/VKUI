@@ -14,6 +14,7 @@
 
 .pre {
   flex: 1;
+  max-block-size: 460px;
   padding-block: var(--vkui--spacing_size_xl);
   padding-inline: var(--vkui--spacing_size_xl);
   contain: paint;

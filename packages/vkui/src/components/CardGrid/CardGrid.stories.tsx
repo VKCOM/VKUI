@@ -19,6 +19,7 @@ const story: Meta<StoryCardGridProps> = {
       control: { type: 'number' },
     },
   },
+  tags: ['Раскладка'],
 };
 
 export default story;

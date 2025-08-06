@@ -22,7 +22,7 @@ export interface ModalPageHeaderProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalPageHeader
+ * @see https://vkui.io/components/modal-page-header
  */
 export const ModalPageHeader = ({
   children,

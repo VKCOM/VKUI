@@ -33,6 +33,7 @@ const story: Meta<PanelHeaderProps> = {
   component: PanelHeader,
   parameters: createStoryParameters('PanelHeader', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Навигация'],
 };
 
 export default story;

@@ -51,6 +51,7 @@ const story: Meta<HeaderProps> = {
       },
     }),
   },
+  tags: ['Раскладка'],
 };
 
 export default story;

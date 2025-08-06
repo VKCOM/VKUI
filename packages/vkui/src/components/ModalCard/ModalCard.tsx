@@ -6,7 +6,7 @@ import { ModalCardInternal } from './ModalCardInternal';
 import type { ModalCardProps } from './types';
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalCard
+ * @see https://vkui.io/components/modal-card
  */
 export const ModalCard = ({
   id: idProp,

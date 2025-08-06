@@ -88,7 +88,7 @@ export interface NativeSelectProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/NativeSelect
+ * @see https://vkui.io/components/native-select
  */
 export const NativeSelect = ({
   style,

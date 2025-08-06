@@ -11,6 +11,7 @@ const story: Meta<AccordionProps> = {
   component: Accordion,
   args: { onChange: fn() },
   parameters: createStoryParameters('Accordion', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Отображение данных'],
 };
 
 export default story;

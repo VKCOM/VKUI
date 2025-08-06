@@ -23,11 +23,14 @@
   line-height: var(--vkui--font_title3--line_height--regular);
 }
 
+.noMargin {
+  margin-block-start: 0;
+}
+
 .anchor {
   vertical-align: middle;
   color: currentColor;
   text-decoration: none;
-  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .anchorIcon {
@@ -38,7 +41,21 @@
   opacity: 0;
 }
 
+.heading:target {
+  animation: highlight 1.2s ease;
+}
+
 .anchor:focus .anchorIcon,
 :hover > .anchorIcon {
   opacity: 1;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: var(--vkui--color_background_accent_themed_alpha);
+  }
+
+  100% {
+    background-color: transparent;
+  }
 }

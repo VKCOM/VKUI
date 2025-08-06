@@ -35,6 +35,7 @@ const story: Meta<SnackbarProps> = {
     subtitle: StringArg,
     offsetY: StringArg,
   },
+  tags: ['Обратная связь'],
 };
 
 export default story;

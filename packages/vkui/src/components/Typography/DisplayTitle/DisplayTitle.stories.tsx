@@ -9,6 +9,7 @@ const story: Meta<DisplayTitleProps> = {
   component: DisplayTitle,
   parameters: createStoryParameters('DisplayTitle', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

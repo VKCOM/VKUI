@@ -9,6 +9,7 @@ const story: Meta<FootnoteProps> = {
   component: Footnote,
   parameters: createStoryParameters('Footnote', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

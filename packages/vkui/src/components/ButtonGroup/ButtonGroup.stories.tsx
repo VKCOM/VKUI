@@ -12,6 +12,7 @@ const story: Meta<ButtonGroupProps> = {
   component: ButtonGroup,
   parameters: createStoryParameters('ButtonGroup', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Раскладка'],
 };
 
 export default story;

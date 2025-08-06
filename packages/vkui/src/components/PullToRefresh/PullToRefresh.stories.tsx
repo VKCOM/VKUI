@@ -15,6 +15,7 @@ const story: Meta<PullToRefreshProps> = {
   component: PullToRefresh,
   parameters: createStoryParameters('PullToRefresh', CanvasFullLayout, DisableCartesianParam),
   decorators: [withSinglePanel, withVKUILayout],
+  tags: ['Обратная связь'],
 };
 
 export default story;

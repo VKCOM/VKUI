@@ -19,7 +19,9 @@ jobs:
         run: yarn build:vkui
 
       - name: Build docs
-        run: yarn docs:beta:build
+        run: |
+          yarn docs:beta:build
+          yarn workspace @project-docs/website next-sitemap
 
       - name: Publishing docs
         uses: JamesIves/github-pages-deploy-action@v4

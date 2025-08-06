@@ -1,9 +1,10 @@
 /* stylelint-disable declaration-property-value-disallowed-list */
 :root {
   --vkui_docs--navbar-height: 52px;
+  --vkui_docs--footer-height: 100px;
   --vkui_docs--sidebar-width: 260px;
   --vkui_docs--max-width: 1440px;
-  --vkui_docs_blog--max-width: 1024px;
+  --vkui_docs_blog--max-width: 960px;
 }
 
 @media (--viewWidth-desktopPlus) {

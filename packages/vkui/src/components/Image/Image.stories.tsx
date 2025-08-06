@@ -21,6 +21,7 @@ const story: Meta<ImageProps> = {
       },
     },
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

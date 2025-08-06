@@ -1,0 +1,104 @@
+---
+description: Компонент для отрисовки подсказки, когда пользователю хочется представить новый функционал.
+---
+
+<Overview group="utils">
+
+# OnboardingTooltip [tag:component]
+
+Компонент для отрисовки подсказки, как правило в случаях, когда
+пользователю хочется представить новый функционал.
+
+</Overview>
+
+> Для показа всплывающей подсказки по нажатию или наведению воспользуйтесь [`Tooltip`](/components/tooltip).
+
+import { OnboardingTooltipWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={OnboardingTooltipWrapper}>
+  ```jsx
+  <OnboardingTooltip shown description="Обновлённый раздел поможет найти друзей">
+    <Icon20UserCheckOutline />
+  </OnboardingTooltip>
+  ```
+</Playground>
+
+## Концепция
+
+Показывать данные подсказки пользователю следует один раз, запоминая факт показа между
+сессиями. Рекомендуется показывать подсказку сразу после того, как нужный элемент появился в зоне видимости.
+Воспользуйтесь [Intersection Observer API](https://developer.mozilla.org/ru/docs/Web/API/Intersection_Observer_API) для реализации
+такого поведения.
+
+> На странице не может быть две одновременно показанных подсказки. Они всегда должны показываться
+> последовательно: следующая показывается при закрытии текущей и так далее.
+
+## Использование
+
+Если хочется снабдить какой-то элемент интерфейса подсказкой,
+достаточно просто обернуть его в компонент `OnboardingTooltip`.
+
+## OnboardingTooltipContainer [tag:component]
+
+Обычно компонент используется в контексте [`Panel`](/components/panel),
+[`PanelHeader`](/components/panel-header) или [`FixedLayout`](/components/fixed-layout), поэтому вам
+не нужно задумываться о позиционировании подсказки.
+
+Если возникла потребность использовать `OnboardingTooltip` вне контекста перечисленных компонентов,
+следуйте следующим инструкциям:
+
+- в контейнере с прокруткой — замените какой-нибудь элемент, внутри которого нет прокрутки,
+  на `<OnboardingTooltipContainer>` и добавьте ему css-свойство `position: relative` (или другую не-`static`);
+- внутри `position: fixed` используйте `<OnboardingTooltipContainer fixed>`.
+
+## Цветовые варианты
+
+<Playground Wrapper={OnboardingTooltipWrapper}>
+  ```jsx
+  <OnboardingTooltip placement="bottom" description={`appearance="accent"`} appearance="accent">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip placement="top" description={`appearance="neutral"`} appearance="neutral">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip placement="bottom" description={`appearance="white`} appearance="white">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip placement="top" description={`appearance="black"`} appearance="black">
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  <OnboardingTooltip
+    placement="bottom"
+    description={`appearance="inversion"`}
+    appearance="inversion"
+  >
+    <div style={{ width: 50, margin: 10 }}>
+      <Avatar />
+    </div>
+  </OnboardingTooltip>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+`OnboardingTooltip` технически является модальным окном (`role="dialog"`),
+а значит у него обязательно должно быть имя — его краткое название.
+Благодаря этому пользователи вспомогательных технологий знают, что это за элемент и какое у него содержимое.
+
+Задать имя можно с помощью следующих способов:
+
+- используя свойство `title`;
+- используя свойство `aria-label`;
+- используя свойство `aria-labelledby`;
+
+## Свойства и методы [#api]
+
+<PropsTable name="OnboardingTooltip" />

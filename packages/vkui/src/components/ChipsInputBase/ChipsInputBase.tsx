@@ -44,12 +44,12 @@ export const ChipsInputBase = <O extends ChipOption>({
   // option
   value = DEFAULT_VALUE,
   onAddChipOption,
-  onRemoveChipOption: onRemoveChipOptionProp,
+  'onRemoveChipOption': onRemoveChipOptionProp,
   renderChip = renderChipDefault,
 
   // input
   getRef,
-  id: idProp,
+  'id': idProp,
   inputValue = DEFAULT_INPUT_VALUE,
   placeholder,
   disabled,
@@ -63,11 +63,16 @@ export const ChipsInputBase = <O extends ChipOption>({
   clearButtonShown,
   clearButtonTestId,
   onClear,
+
+  // a11y
+  chipsListLabel = 'Выбранные элементы',
+  'aria-label': ariaLabel = '',
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const idGenerated = React.useId();
   const inputRef = useExternRef(getRef);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const listboxRef = React.useRef<HTMLDivElement>(null);
 
   const valueLength = value.length;
@@ -153,6 +158,8 @@ export const ChipsInputBase = <O extends ChipOption>({
         }
         break;
       }
+      case Keys.HOME:
+      case Keys.END:
       case Keys.ARROW_UP:
       case Keys.ARROW_LEFT:
       case Keys.ARROW_DOWN:
@@ -187,10 +194,8 @@ export const ChipsInputBase = <O extends ChipOption>({
   };
 
   const handleRootClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (
-      event.defaultPrevented ||
-      contains(event.currentTarget, getActiveElementByAnotherElement(event.currentTarget))
-    ) {
+    const activeElement = getActiveElementByAnotherElement(event.currentTarget);
+    if (event.defaultPrevented || contains(event.currentTarget, activeElement)) {
       return;
     }
 
@@ -199,12 +204,21 @@ export const ChipsInputBase = <O extends ChipOption>({
     }
   };
 
+  const handleClear = React.useCallback(() => {
+    if (inputRef.current) {
+      resetChipOptionFocusToInputEl(inputRef.current);
+    }
+    onClear();
+  }, [inputRef, onClear]);
+
   const clearButton = React.useMemo(() => {
     if (clearButtonShown) {
-      return <ClearButton onClick={onClear} disabled={disabled} data-testid={clearButtonTestId} />;
+      return (
+        <ClearButton onClick={handleClear} disabled={disabled} data-testid={clearButtonTestId} />
+      );
     }
     return undefined;
-  }, [ClearButton, clearButtonShown, clearButtonTestId, disabled, onClear]);
+  }, [ClearButton, clearButtonShown, clearButtonTestId, disabled, handleClear]);
 
   const afterItems = React.useMemo(() => {
     if (clearButton || after) {
@@ -218,10 +232,39 @@ export const ChipsInputBase = <O extends ChipOption>({
     return undefined;
   }, [after, clearButton]);
 
+  const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
+
+  const handleRootMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Если клик был в один из чипов, то preventDefault делать не нужно, так как не будет срабатывать выделение текста
+    if (
+      isHTMLElement(e.target) &&
+      contains(listboxRef.current, e.target) &&
+      listboxRef.current !== e.target
+    ) {
+      return;
+    }
+    const activeElement = getActiveElementByAnotherElement(e.currentTarget);
+    // Когда выделен текст чипа не нужно делать preventDefault, чтобы сбросить выделение
+    if (contains(listboxRef.current, activeElement)) {
+      return;
+    }
+    // Когда клик в сам инпут, не нужно делать preventDefault, так как не будет работать выделение текста
+    if (e.target === inputRef.current) {
+      return;
+    }
+    // Делаем preventDefault, чтобы при клике в поле, вне инпута, высота поля не скакала от того,
+    // что фокус сначала пропадает из инпута, а потом возвращается
+    e.preventDefault();
+  };
+
   return (
     <FormField
       Component="div"
       getRootRef={getRootRef}
+      // role="group" добавлена, чтобы этот блок можно было найти с помощью стрелочек при использовании NVDA
+      // Если убрать, то aria-label не будет читаться
+      role="group"
+      aria-label={ariaLabel}
       style={style}
       disabled={disabled}
       before={before}
@@ -231,56 +274,66 @@ export const ChipsInputBase = <O extends ChipOption>({
       className={className}
       maxHeight={maxHeight}
       onClick={disabled ? undefined : handleRootClick}
+      onMouseDown={handleRootMouseDown}
     >
       <div
         className={classNames(
           styles.host,
           sizeY !== 'regular' && sizeYClassNames[sizeY],
           withPlaceholder && styles.hasPlaceholder,
+          inputValue && styles.hasInputValue,
         )}
-        // для a11y
-        ref={listboxRef}
-        role="listbox"
-        aria-orientation="horizontal"
-        aria-disabled={disabled}
-        aria-readonly={readOnly}
+        ref={containerRef}
         onKeyDown={disabled ? undefined : handleListboxKeyDown}
       >
-        {value.map((option, index) => (
-          <React.Fragment key={`${typeof option.value}-${option.value}`}>
-            {renderChip(
-              {
-                'Component': 'div',
-                'value': option.value,
-                'label': option.label,
-                'disabled': option.disabled || disabled,
-                'readOnly': option.readOnly || readOnly,
-                'className': styles.chip,
-                'onRemove': handleChipRemove,
-                // чтобы можно было легче найти этот чип в DOM
-                'data-index': index,
-                'data-value': option.value,
-                'data-value-type': typeof option.value,
-                // для a11y
-                'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
-                'role': 'option',
-                'aria-selected': true,
-                'aria-posinset': index + 1,
-                'aria-setsize': valueLength,
-              },
-              option,
-            )}
-          </React.Fragment>
-        ))}
+        <div
+          className={styles.listBox}
+          // для a11y
+          ref={listboxRef}
+          role="listbox"
+          aria-orientation="horizontal"
+          aria-disabled={disabled}
+          aria-readonly={readOnly}
+          aria-label={chipsListLabel}
+        >
+          {value.map((option, index) => (
+            <React.Fragment key={`${typeof option.value}-${option.value}`}>
+              {renderChip(
+                {
+                  'Component': 'div',
+                  'value': option.value,
+                  'label': option.label,
+                  'disabled': option.disabled || disabled,
+                  'readOnly': option.readOnly || readOnly,
+                  'className': styles.chip,
+                  'onRemove': handleChipRemove,
+                  // чтобы можно было легче найти этот чип в DOM
+                  'data-index': index,
+                  'data-value': option.value,
+                  'data-value-type': typeof option.value,
+                  // для a11y
+                  'tabIndex': lastFocusedChipOptionIndex === index ? 0 : -1,
+                  'role': 'option',
+                  'aria-selected': true,
+                  'aria-posinset': index + 1,
+                  'aria-setsize': valueLength,
+                  'aria-description': 'Для удаления используйте Backspace или Delete',
+                },
+                option,
+              )}
+            </React.Fragment>
+          ))}
+        </div>
         <Text
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
           {...restProps}
+          aria-label={ariaLabel}
           Component="input"
           type="text"
-          id={idProp || `chips-input-base-generated-id-${idGenerated}`}
+          id={inputId}
           getRootRef={inputRef}
           className={styles.el}
           disabled={disabled}

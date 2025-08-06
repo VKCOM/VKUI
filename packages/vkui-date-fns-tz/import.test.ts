@@ -19,6 +19,10 @@ test.it('should import like ES6 module', async () => {
   );
   assert.ok(
     // @ts-ignore
+    await import('./tzName/index.js'),
+  );
+  assert.ok(
+    // @ts-ignore
     await import('./date/index.js'),
   );
   assert.ok(

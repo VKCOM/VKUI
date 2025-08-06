@@ -6,6 +6,7 @@ const story: Meta<FloatingArrowProps> = {
   title: 'Utils/FloatingArrow',
   component: FloatingArrow,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Утилиты'],
 };
 
 export default story;

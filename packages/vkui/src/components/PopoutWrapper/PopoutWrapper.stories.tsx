@@ -7,6 +7,7 @@ const story: Meta<PopoutWrapperProps> = {
   title: 'Utils/PopoutWrapper',
   component: PopoutWrapper,
   parameters: createStoryParameters('PopoutWrapper', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

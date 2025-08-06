@@ -9,6 +9,7 @@ const story: Meta<SubheadProps> = {
   component: Subhead,
   parameters: createStoryParameters('Subhead', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

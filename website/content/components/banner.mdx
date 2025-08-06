@@ -1,0 +1,140 @@
+---
+description: Компонент для отображения важных уведомлений и промо-блоков с возможностью взаимодействия.
+---
+
+<Overview group="data-display">
+# Banner [tag:component]
+
+Компонент для отображения важных уведомлений и промо-блоков с возможностью взаимодействия. Поддерживает различные режимы отображения и типы контента.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Banner
+    before={<Avatar size={48} initials="ЕХ" />}
+    title="Новое уведомление"
+    subtitle="У вас 5 новых сообщений"
+    actions={<Button mode="primary">Просмотреть</Button>}
+  />
+  ```
+</Playground>
+
+## Режимы отображения
+
+Задаётся свойством `mode`.
+
+Помимо стандартного режима (`mode="tint"`), поддерживается `mode="image"`, предназначенный для
+отображения компонента с фоновым изображением.
+
+<Playground>
+  ```jsx
+  <Banner
+    mode="image"
+    title="Мои достижения"
+    subtitle="Разблокировано 9 из 36"
+    background={
+      <div
+        style={{
+          backgroundColor: '#65c063',
+          backgroundImage:
+            'url(https://sun9-59.userapi.com/7J6qHkTa_P8VKRTO5gkh6MizcCEefz04Y0gDmA/y6dSjdtPU4U.jpg)',
+          backgroundPosition: 'right bottom',
+          backgroundSize: 320,
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+    }
+    actions={<Button appearance="overlay">Подробнее</Button>}
+  />
+  ```
+</Playground>
+
+## Контентные блоки
+
+### Правая секция (`after`)
+
+Поддерживает следующие варианты:
+
+- `dismiss` — кнопка закрытия;
+- `chevron` — индикатор перехода;
+- `ReactNode` — пользовательский элемент.
+
+<Playground>
+  ```jsx
+  <Banner
+    title="Больше интересных подкастов в каталоге"
+    subtitle="Найдите интересующие именно вас подкасты!"
+    after="chevron"
+  />
+  ```
+</Playground>
+
+### Левая секция (`before`)
+
+<Playground>
+  ```jsx
+  <Banner
+    before={
+      <Image
+        size={96}
+        src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg"
+      />
+    }
+    title="Баста в Ледовом"
+    subtitle="Большой концерт"
+    after="dismiss"
+    actions={<Button>Подробнее</Button>}
+  />
+  ```
+</Playground>
+
+### Текстовые элементы
+
+Компонент поддерживает следующие текстовые элементы:
+
+- `title` — основной заголовок;
+- `subtitle` — дополнительный текст;
+- `extraSubtitle` — расширенное описание.
+
+<Playground>
+  ```jsx
+  <Banner
+    title="Телефон ожидает подтверждения"
+    subtitle={
+      <React.Fragment>
+        Новый номер +7 ••• ••• •• 96 будет сохранён через семь дней.
+        <br />
+        <Link href="#">Ускорьте процесс</Link>, если у Вас есть
+        <br />
+        доступ к старому номеру.
+      </React.Fragment>
+    }
+  />
+  ```
+</Playground>
+
+## Действия
+
+Для добавления действий используйте свойство `actions`.
+
+<Playground>
+  ```jsx
+  <Banner
+    before={
+      <Avatar src="https://sun9-7.userapi.com/q9qBUh4kGND1pTUytY4LwljtRLWoCXaIzN7C2A/52lM85R5kus.jpg" />
+    }
+    extraSubtitle="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
+    actions={
+      <ButtonGroup mode="horizontal" gap="m">
+        <Button>Включить</Button>
+        <Button mode="link">Подробнее</Button>
+      </ButtonGroup>
+    }
+  />
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Banner" />

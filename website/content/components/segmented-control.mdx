@@ -1,0 +1,151 @@
+---
+description: Компонент, который позволяет пользователю выбрать одно значение из набора опций.
+---
+
+<Overview group="forms">
+# SegmentedControl [tag:component]
+
+Компонент, который позволяет пользователю выбрать одно значение из набора опций.
+Визуально представляет собой группу сегментированных кнопок, где активная опция выделяется с помощью ползунка.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <SegmentedControl
+    name="report-type"
+    options={[
+      {
+        label: 'Баг',
+        value: 'bug',
+      },
+      {
+        label: 'Идея',
+        value: 'idea',
+      },
+      {
+        label: 'Другое',
+        value: 'other',
+      },
+    ]}
+  />
+  ```
+</Playground>
+
+## Применение компонента
+
+Компонент может использоваться как навигационный элемент (аналог [`Tabs`](/components/tabs)) или
+как элемент формы (аналог [`RadioGroup`](/components/radio-group)).
+
+Избегайте использования слишком большого числа сегментированных кнопок, рекомендуется использовать от трёх до семи кнопок
+для планшетов и десктопов и до пяти кнопок в мобильном представлении.
+
+В качестве контента используйте либо только иконки, либо только текст, это позволит вашему дизайну оставаться
+консистентным и простым.
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+const colors = [
+  {
+    value: 'red',
+    label: 'Красный',
+  },
+  {
+    value: 'green',
+    label: 'Зелёный',
+  },
+  {
+    value: 'blue',
+    label: 'Синий',
+  },
+];
+
+// Неконтролируемое состояние
+<SegmentedControl options={colors} defaultValue="red" />;
+
+// Контролируемое состояние
+const [color, setColor] = React.useState('red');
+
+<SegmentedControl options={colors} value={color} onChange={setColor} />;
+```
+
+## Доступность (a11y) [#a11y]
+
+По умолчанию компонент использует `role="radiogroup"`, обеспечивая поддержку соответствующего данной роли поведения.
+
+### Использование как навигационного элемента [#tabs-usage]
+
+Компонент `SegmentedControl` может использоваться для создания навигации (аналог `Tabs`). В этом случае необходимо:
+
+1. Установить свойство `role="tablist"`;
+2. Для каждой опции указать:
+   - `id` - уникальный идентификатор;
+   - `aria-controls` - идентификатор области с контентом, который становится доступен при выборе данной опции.
+3. Для области с контентом указать:
+   - `role="tabpanel"` - роль панели с контентом;
+   - `aria-labelledby` - идентификатор опции, который управляет этой областью;
+   - `tabIndex={0}` - чтобы сделать область фокусируемой;
+   - `id`- идентификатор панели, который соответствует `aria-controls` в конкретной области.
+
+Это обеспечит правильную семантику и доступность компонента для пользователей ассистивных технологий.
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [selected, setSelected] = React.useState('news');
+
+return (
+  <Group>
+    <SegmentedControl
+      role="tablist"
+      value={selected}
+      onChange={(value) => setSelected(value)}
+      options={[
+        {
+          'label': 'Новости',
+          'value': 'news',
+          'aria-controls': 'tab-content-news',
+          'id': 'tab-news',
+        },
+        {
+          'label': 'Интересное',
+          'value': 'recommendations',
+          'aria-controls': 'tab-content-recommendations',
+          'id': 'tab-recommendations',
+        },
+      ]}
+    />
+    {selected === 'news' && (
+      <Div id="tab-content-news" aria-labelledby="tab-news" role="tabpanel" tabIndex={0}>
+        Контент новостей
+      </Div>
+    )}
+    {selected === 'recommendations' && (
+      <Div
+        id="tab-content-recommendations"
+        aria-labelledby="tab-recommendations"
+        role="tabpanel"
+        tabIndex={0}
+      >
+        Контент рекомендаций
+      </Div>
+    )}
+  </Group>
+);
+```
+
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="SegmentedControl" />

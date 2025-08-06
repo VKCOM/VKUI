@@ -1,0 +1,129 @@
+---
+description: Компонент, помогающий сгруппировать несколько полей формы FormItem, расположив их по вертикали или по горизонтали.
+---
+
+<Overview group="layout">
+# FormLayoutGroup [tag:component]
+
+Компонент, помогающий сгруппировать несколько полей формы (`FormItem`), расположив их по вертикали или по горизонтали.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal">
+    <FormItem htmlFor="name" top="Имя">
+      <Input id="name" />
+    </FormItem>
+    <FormItem htmlFor="lastName" top="Фамилия">
+      <Input id="lastName" />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Вариант группировки
+
+Задаётся свойством `mode`.
+
+- `"vertical"` — поля располагаются вертикально друг под другом (по умолчанию);
+- `"horizontal"` — поля располагаются горизонтально по линии.
+
+Обратите внимание, что при недостатке места (например, на мобильных устройствах) поля формы сжимаются пропорционально,
+поэтому не рекомендуется в `mode="horizontal"` располагать более трёх `FormItem`.
+
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="vertical" segmented>
+    <FormItem htmlFor="doctype" top="Документ, удостоверяющий личность">
+      <Select
+        id="doctype"
+        options={['Паспорт гражданина РФ', 'Загранпаспорт'].map((i) => ({
+          label: i,
+          value: i,
+        }))}
+        defaultValue={'Загранпаспорт'}
+      />
+    </FormItem>
+    <FormItem htmlFor="docnumber">
+      <Input id="docnumber" placeholder="Номер документа" />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Удаление группы
+
+> Поддерживается только для `mode="horizontal"`.
+
+Добавить возможность удалять сгруппированные поля можно с помощью свойства `removable`,
+которое добавит кнопку удаления, стилизованную под используемую платформу.
+Помимо значений `true`/`false`, также принимает значение `"indent"`, которое бывает полезно, когда
+не все группы полей можно удалить, но есть необходимость поддерживать выравнивание, добавляя визуальный отступ.
+
+При `removable={true}` можно использовать следующие свойства:
+
+- `removePlaceholder` — текст, который будет зачитан скринридером или показан на платформе iOS
+  при взаимодействии с кнопкой удаления (по умолчанию "Удалить");
+- `onRemove` — функция-обработчик, которая будет вызвана при нажатии на кнопку удаления.
+
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal" removable onRemove={() => alert('Обработчик удаления')}>
+    <FormItem top="Дата начала поездки" htmlFor="start" topMultiline>
+      <DateInput id="start" disableCalendar />
+    </FormItem>
+    <FormItem top="Дата конца поездки" htmlFor="end" topMultiline>
+      <DateInput id="end" disableCalendar />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Сегментированный вид
+
+Свойство `segmented` позволяет визуально склеить несколько `FormItem`, объединенные в одну `FormLayoutGroup`.
+Работает для `mode="vertical"` и `mode="horizontal"`.
+Используйте данное свойство, когда хотите показать, что элементы формы логически связаны между собой.
+Особое внимание уделите [`a11y`](#a11y) для `FormItem`, которые не определяют свойства `htmlFor` или `top`.
+
+<Playground>
+  ```jsx
+  <FormLayoutGroup mode="horizontal" segmented>
+    <FormItem htmlFor="email" top="E-mail">
+      <Input id="email" />
+    </FormItem>
+    <FormItem>
+      <Select
+        options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
+          label: i,
+          value: i,
+        }))}
+        defaultValue="@mail.ru"
+      />
+    </FormItem>
+  </FormLayoutGroup>
+  ```
+</Playground>
+
+## Тестирование
+
+Для возможности тестирования доступны свойства с постфиксом `*TestId`, которые вы можете использовать,
+чтобы находить необходимые части компонента:
+
+- `removeButtonTestId` — `id` кнопки удаления при `removable={true}`;
+- `toggleButtonTestId` — `id` кнопки подтверждения удаления (**только для iOS**).
+
+## Доступность (a11y) [#a11y]
+
+- в компоненте используется тэг `fieldset`, что позволяет скринридеру автоматически определить роль [`group`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/group_role);
+- рекомендуется предавать в компонент атрибуты `aria-labelledby`, `aria-label` и `aria-describedby` для предоставления
+  дополнительной информации об элементе;
+- если по дизайну требуется использовать сегментированный режим `segmented={true}`,
+  без возможности задать свойства `htmlFor` и `top` у [FormItem](/components/form-item), то стоит добавить скрытый текст,
+  используя сервисный компонент [VisuallyHidden](/components/visually-hidden), и связать его с полем формы через `id` и `htmlFor`,
+  дублируя текст, заданный в `placeholder`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="FormLayoutGroup" />

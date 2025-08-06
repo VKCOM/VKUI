@@ -1,0 +1,35 @@
+---
+description: Кнопка для закрытия модальных окон на широком экране.
+---
+
+<Overview group="modals">
+
+# ModalDismissButton [tag:component]
+
+Кнопка для закрытия модальных окон на широком экране.
+Для правильной отрисовки нужно расположить в контейнере с `position: "relative"` и отображать при достаточной ширине экрана
+(от `ViewWidth.SMALL_TABLET`).
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
+  ```jsx
+  <ModalDismissButton onClick={() => {}}>Закрыть модальное окно</ModalDismissButton>
+  ```
+</Playground>
+
+## Доступность (a11y)
+
+Чтобы кнопка была доступной для ассистивных технологий, мы передаем в нее скрытый визуально текст,
+который сможет прочитать скринридер. Сейчас по умолчанию это — "Закрыть".
+Чтобы заменить текст, передайте его в `children`.
+
+```jsx
+<ModalDismissButton>Закрыть кастомное модальное окно</ModalDismissButton>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="ModalDismissButton" />

@@ -26,6 +26,7 @@ const story: Meta<PanelHeaderContextProps> = {
   component: PanelHeaderContext,
   parameters: createStoryParameters('PanelHeaderContext', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Навигация'],
 };
 
 export default story;

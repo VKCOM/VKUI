@@ -10,6 +10,7 @@ const story: Meta<AlertProps> = {
   title: 'Feedback/Alert',
   component: Alert,
   parameters: createStoryParameters('Alert', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Обратная связь'],
 };
 
 export default story;

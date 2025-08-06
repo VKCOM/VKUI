@@ -52,7 +52,48 @@ const story: Meta<BannerProps> = {
         ),
       },
     }),
+    background: createFieldWithPresets({
+      additionalPresets: {
+        image1: (
+          <div
+            style={{
+              backgroundColor: '#65c063',
+              backgroundImage:
+                'url(https://sun9-59.userapi.com/7J6qHkTa_P8VKRTO5gkh6MizcCEefz04Y0gDmA/y6dSjdtPU4U.jpg)',
+              backgroundPosition: 'right bottom',
+              backgroundSize: 320,
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+        ),
+        image2: (
+          <div
+            style={{
+              backgroundColor: '#5b9be6',
+              backgroundImage:
+                'url(https://sun9-31.userapi.com/PQ4UCzqE_jue9hAINefBMorYCdfGXvcuV5nSjA/eYugcFYzdW8.jpg)',
+              backgroundPosition: 'right bottom',
+              backgroundSize: '102%',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+        ),
+        image3: (
+          <div
+            style={{
+              backgroundColor: '#000',
+              backgroundImage:
+                'url(https://sun9-53.userapi.com/m-ygfKiLKLkEMAQVTToO2l9LyC6GgqWoGXpw8A/-zm6_XLECTU.jpg)',
+              backgroundPosition: 'right bottom',
+              backgroundSize: 340,
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+        ),
+      },
+    }),
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

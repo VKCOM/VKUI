@@ -9,6 +9,7 @@ const story: Meta<DirectionProviderProps> = {
   title: 'Configuration/DirectionProvider',
   component: DirectionProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Конфигурация'],
 };
 
 export default story;

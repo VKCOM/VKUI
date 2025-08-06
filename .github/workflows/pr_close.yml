@@ -148,6 +148,7 @@ jobs:
       issues: write
       pull-requests: write
       contents: write
+      actions: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -195,12 +196,12 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'publish.yml',
-              ref: ${{ env.RELEASE_BRANCH_NAME }},
+              ref: "${{ env.RELEASE_BRANCH_NAME }}",
               inputs: {
                 package_name: '@vkontakte/vkui-floating-ui',
-                custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
+                custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}",
                 latest: true,
-                close_milestone: false,
+                close_milestone: false
               }
             })
 

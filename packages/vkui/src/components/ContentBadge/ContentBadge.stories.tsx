@@ -11,6 +11,7 @@ const meta: Meta<ContentBadgeProps> = {
   title: 'Data Display/ContentBadge',
   component: ContentBadge,
   parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Отображение данных'],
 };
 
 export default meta;

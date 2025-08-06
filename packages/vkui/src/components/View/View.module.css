@@ -4,7 +4,7 @@
   position: relative;
   inline-size: 100%;
   block-size: 100%;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 @media (--reduce-motion) {

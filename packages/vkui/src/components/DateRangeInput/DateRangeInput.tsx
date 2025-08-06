@@ -215,7 +215,7 @@ const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/DateRangeInput
+ * @see https://vkui.io/components/date-range-input
  */
 export const DateRangeInput = ({
   shouldDisableDate,

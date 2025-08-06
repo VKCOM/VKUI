@@ -10,7 +10,7 @@ import { NativeSelect, type NativeSelectProps } from '../NativeSelect/NativeSele
 export type SelectType = 'default' | 'plain' | 'accent';
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Select
+ * @see https://vkui.io/components/select
  */
 export const Select = <OptionT extends CustomSelectOptionInterface>({
   children,

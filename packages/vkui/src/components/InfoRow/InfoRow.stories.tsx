@@ -11,6 +11,7 @@ const story: Meta<InfoRowProps> = {
   title: 'Data Display/InfoRow',
   component: InfoRow,
   parameters: createStoryParameters('InfoRow', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Отображение данных'],
 };
 
 export default story;

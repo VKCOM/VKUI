@@ -37,7 +37,7 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Spinner
+ * @see https://vkui.io/components/spinner
  */
 // eslint-disable-next-line react/display-name -- используется defineComponentDisplayNames
 export const Spinner = React.memo(

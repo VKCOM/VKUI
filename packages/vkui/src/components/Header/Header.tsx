@@ -98,7 +98,7 @@ const Subtitle: React.FC<
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Header
+ * @see https://vkui.io/components/group#header
  */
 export const Header = ({
   size = 'm',

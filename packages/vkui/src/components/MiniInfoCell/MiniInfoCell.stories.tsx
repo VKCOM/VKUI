@@ -32,6 +32,7 @@ const story: Meta<MiniInfoCellProps> = {
       },
     }),
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

@@ -1,0 +1,132 @@
+---
+description: Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов.
+---
+
+<Overview group="data-display">
+
+# Image [tag:component]
+
+Компонент для отображения изображений с поддержкой адаптивных размеров, скруглений и позиционированных элементов.
+Наследует все свойства HTML-элемента `<img>`. Главное отличие от `ImageBase` заключается в поддержке
+скруглений, определённых дизайн-системой и позиционирование индикаторов в зависимости от размеров.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Image size={96} src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg" />
+  ```
+</Playground>
+
+## Адаптивные размеры
+
+Справедливы все рекомендации, что и для [`ImageBase`](/components/image-base#sizes).
+
+## Скругления
+
+Контролируйте радиус скругления углов:
+
+### Единое скругление
+
+<Playground>
+  ```jsx
+  <Image
+    size={96}
+    borderRadius="m"
+    src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg"
+  />
+  ```
+</Playground>
+
+### Индивидуальные углы
+
+<Playground>
+  ```jsx
+  <Image
+    size={64}
+    borderStartStartRadius="l"
+    borderEndEndRadius="l"
+    src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg"
+  />
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+Добавляйте дополнительные элементы поверх изображения:
+
+### Иконка-заглушка
+
+На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
+Размер иконки-заглушки должен зависеть от размеров изображения.
+
+<Playground>
+  ```jsx
+  <Image fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+> Может быть полезна функция [`getFallbackIconSizeByImageBaseSize`](/components/image-base#getfallbackiconsizebyimagebasesize).
+
+### Индикатор
+
+Индикатор в правом нижнем углу компонента:
+
+<Playground>
+  ```jsx
+  <Image src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
+    <Image.Badge background="stroke">
+      <Icon20PrivacyCircleFillRed />
+    </Image.Badge>
+  </Image>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](/components/image-base#getbadgeiconsizebyimagebasesize).
+
+### Наложение
+
+Перекрывающий картинку элемент задаётся через `Image.Overlay`:
+
+<Playground>
+  ```jsx
+  <Image src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
+    <Image.Overlay theme="dark" visibility="always">
+      <Icon24AddOutline />
+    </Image.Overlay>
+  </Image>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](/components/image-base#getoverlayiconsizebyimagebasesize).
+
+> Обратите внимание, что свойство `visibility` подкомпонента `Avatar.Overlay` по умолчанию
+> зависит от наличия указателя на устройстве. Так, на мобильных устройствах наложение будет
+> показано всегда, а например, на десктопах наложение активно только при наведении на аватар.
+
+### Позиционированный компонент
+
+Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `Image.FloatElement`:
+
+<Playground>
+  ```jsx
+  <Image size={96} src="https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg">
+    <Image.FloatElement placement="top-end" inlineIndent="xs" blockIndent="xs">
+      <Button size="s" mode="primary" after={<Icon16MoreHorizontal />} />
+    </Image.FloatElement>
+  </Image>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Image">
+### Image [#image-api]
+
+### Image.Badge [#image-badge-api]
+
+### Image.Overlay [#image-overlay-api]
+
+### Image.FloatElement [#image-float-element-api]
+
+</PropsTable>

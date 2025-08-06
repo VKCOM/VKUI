@@ -8,6 +8,7 @@ const story: Meta<AdaptivityProviderProps> = {
   title: 'Configuration/AdaptivityProvider',
   component: AdaptivityProvider,
   parameters: createStoryParameters('AdaptivityProvider', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Конфигурация'],
 };
 
 export default story;

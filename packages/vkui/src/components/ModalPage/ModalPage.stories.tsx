@@ -55,6 +55,7 @@ const story: Meta<ModalPageProps> = {
       </>
     );
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;

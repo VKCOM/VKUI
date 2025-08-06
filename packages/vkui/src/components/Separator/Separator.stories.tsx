@@ -12,6 +12,7 @@ const story: Meta<SeparatorProps> = {
   title: 'Layout/Separator',
   component: Separator,
   parameters: createStoryParameters('Separator', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

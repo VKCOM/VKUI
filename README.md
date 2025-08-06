@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://vkcom.github.io/VKUI/">
+  <a href="https://vkui.io/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/VKCOM/VKUI/d72dcc219bc4b441b2740b69d9343aea14d66c7f/docs/assets/vkui-logo-light.svg">
       <img src="https://raw.githubusercontent.com/VKCOM/VKUI/d72dcc219bc4b441b2740b69d9343aea14d66c7f/docs/assets/vkui-logo-dark.svg" width="150" alt="VKUI logo" />
@@ -102,7 +102,7 @@ root.render(
 
 ## Документация
 
-В [документации](https://vkcom.github.io/VKUI/) вы сможете найти информацию об использовании компонентов и утилит.
+В [документации](https://vkui.io/) вы сможете найти информацию об использовании компонентов и утилит.
 
 ## Сообщить о проблеме
 

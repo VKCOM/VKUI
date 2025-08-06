@@ -22,8 +22,12 @@ export function ThemeConfigProvider({
       Object.fromEntries(
         Object.entries(value).map(([key, value]) => [
           key,
-          // @ts-expect-error: TS7053 value always there
-          value && typeof value === 'object' ? { ...DEFAULT_THEME[key], ...value } : value,
+          value && typeof value === 'object'
+            ? Array.isArray(value)
+              ? value
+              : // @ts-expect-error: TS7053 value always there
+                { ...DEFAULT_THEME[key], ...value }
+            : value,
         ]),
       )),
   };

@@ -78,7 +78,7 @@ export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightS
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Avatar
+ * @see https://vkui.io/components/avatar
  */
 export const Avatar: React.FC<AvatarProps> & {
   Badge: typeof AvatarBadge;
