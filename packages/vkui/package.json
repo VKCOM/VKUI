@@ -90,7 +90,8 @@
     "@vkontakte/vkjs": "^2.0.1",
     "@vkontakte/vkui-date-fns-tz": "^0.0.4",
     "@vkontakte/vkui-floating-ui": "^0.2.5",
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "*",
