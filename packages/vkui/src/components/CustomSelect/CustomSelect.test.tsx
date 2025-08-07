@@ -1528,6 +1528,38 @@ describe('CustomSelect', () => {
     expect(option.getAttribute('data-hovered')).toBe(expectedHover);
   });
 
+  it('check correct fetching status label', async () => {
+    jest.useFakeTimers();
+    const Fixture = ({ fetching }: { fetching: boolean }) => (
+      <CustomSelect
+        data-testid="select"
+        fetching={fetching}
+        fetchingInProgressLabel="Список категорий загружается..."
+        fetchingCompletedLabel="Список категорий загружен."
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+      />
+    );
+
+    const { rerender } = render(<Fixture fetching />);
+
+    expect(screen.queryByText('Список категорий загружается...')).toBeTruthy();
+
+    rerender(<Fixture fetching={false} />);
+
+    expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
+    expect(screen.queryByText('Список категорий загружен.')).toBeTruthy();
+
+    React.act(() => jest.runAllTimers());
+
+    expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
+    expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+  });
+
   it('should not call select option when not focus to option', async () => {
     const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,

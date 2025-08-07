@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { getRequiredValueByKey } from '../../helpers/getValueByKey';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
@@ -20,6 +21,7 @@ import type { NativeSelectProps, SelectValue } from '../NativeSelect/NativeSelec
 import { NOT_SELECTED, remapFromNativeValueToSelectValue } from '../NativeSelect/NativeSelect';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { type CustomSelectClearButtonProps } from './CustomSelectClearButton';
 import {
   CustomSelectInput,
@@ -65,6 +67,40 @@ function isMousePositionChanged(event: React.MouseEvent, prevPosition: MousePosi
   );
 }
 
+const FETCH_STATUS_RESET_DELAY = 2000;
+
+const FetchingStatus = ({
+  fetching = false,
+  options,
+  fetchingInProgressLabel = 'Список опций загружается...',
+  fetchingCompletedLabel = `Загружено опций: ${options.length}`,
+}: Pick<
+  SelectProps,
+  'fetching' | 'fetchingInProgressLabel' | 'fetchingCompletedLabel' | 'options'
+>) => {
+  const [status, setStatus] = React.useState<'fetching' | 'loaded' | 'none'>('none');
+
+  const content = getRequiredValueByKey(status, {
+    fetching: fetchingInProgressLabel,
+    loaded: fetchingCompletedLabel,
+    none: '',
+  });
+
+  useIsomorphicLayoutEffect(
+    function updateStatus() {
+      if (fetching) {
+        setStatus('fetching');
+      } else {
+        setStatus('loaded');
+        setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
+      }
+    },
+    [fetching],
+  );
+
+  return <VisuallyHidden aria-live="polite">{content}</VisuallyHidden>;
+};
+
 export type { CustomSelectClearButtonProps };
 
 export interface SelectProps<
@@ -106,7 +142,7 @@ export interface SelectProps<
    * Рендер-проп для кастомного рендера опции.
    * В объекте аргумента приходят [свойства опции](https://vkui.io/components/custom-select#custom-select-option-api).
    *
-   * > ⚠️  Важно: cвойство опции `disabled` должно выставляться только через проп `options`.
+   * > ⚠️  Важно: свойство опции `disabled` должно выставляться только через проп `options`.
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе `CustomSelect` не будет знать об актуальном состоянии
    * опции.
    */
@@ -183,10 +219,18 @@ export interface SelectProps<
    */
   onInputKeyDown?: (e: React.KeyboardEvent, isOpen: boolean) => void;
   /**
-   * Включает режим в котором выбранное значение CustomSelect читается скринридерами корректно.
+   * Включает режим в котором выбранное значение `CustomSelect` читается скринридерами корректно.
    * В данном режиме введенное в поле ввода значение не сбрасывается при потере фокуса.
    */
   accessible?: boolean /* TODO [>=v8] включить по умолчанию */;
+  /**
+   * Текстовая метка для индикации процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Список опций загружается..."`.
+   */
+  fetchingInProgressLabel?: string;
+  /**
+   * Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Опций загружено: ${options.length}"`.
+   */
+  fetchingCompletedLabel?: string;
 }
 
 /**
@@ -233,6 +277,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'onInputKeyDown': onInputKeyDownProp,
     readOnly,
     accessible = false,
+    fetchingInProgressLabel,
+    fetchingCompletedLabel,
     ...restProps
   } = props;
 
@@ -608,6 +654,13 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       >
         {selected?.label}
       </CustomSelectInput>
+
+      <FetchingStatus
+        fetching={fetching}
+        options={filteredOptions}
+        fetchingInProgressLabel={fetchingInProgressLabel}
+        fetchingCompletedLabel={fetchingCompletedLabel}
+      />
       <select
         tabIndex={-1}
         ref={selectElRef}

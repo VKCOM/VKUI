@@ -51,6 +51,8 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     afterAlign,
     onInputKeyDown,
     accessible,
+    fetchingCompletedLabel,
+    fetchingInProgressLabel,
     ...restProps
   } = props;
 
