@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Flex } from '../../components/Flex/Flex.tsx';
+import { Flex } from '../../components/Flex/Flex';
 import { type SnackbarPlacement } from '../../components/Snackbar/types';
 import { SnackbarAnimatedWrapper } from './SnackbarAnimatedWrapper';
 import {
