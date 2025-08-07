@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { Flex } from '../../components/Flex/Flex.tsx';
 import { type SnackbarPlacement } from '../../components/Snackbar/types';
 import { SnackbarAnimatedWrapper } from './SnackbarAnimatedWrapper';
 import {
@@ -63,7 +64,7 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
 
   return (
     <SnackbarsContainerContext.Provider value={contextValue}>
-      <div className={classNames(styles.host, placementClassNames[placement])}>
+      <Flex className={classNames(styles.host, placementClassNames[placement])} gap="2xl">
         {snackbars.map((snackbarData) => (
           <SnackbarAnimatedWrapper
             key={snackbarData.id}
@@ -72,7 +73,7 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
             close={snackbarsWrappersToClose.has(snackbarData.id)}
           />
         ))}
-      </div>
+      </Flex>
     </SnackbarsContainerContext.Provider>
   );
 };

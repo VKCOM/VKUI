@@ -1,10 +1,11 @@
 .host {
+  --vkui_internal--snackbars_container_in_padding: 8px;
   --vkui_internal--snackbars_container_safe_area_inset_bottom: var(
     --vkui_internal--safe_area_inset_bottom
   );
 
   position: fixed;
-  display: flex;
+  padding: var(--vkui_internal--snackbars_container_in_padding);
 }
 
 .placementTop,
@@ -36,4 +37,10 @@
 .placementBottomEnd {
   inset-inline-start: auto;
   inset-inline-end: var(--vkui_internal--safe_area_inset_right);
+}
+
+@media (--desktop) {
+  .host {
+    --vkui_internal--snackbars_container_in_padding: 12px;
+  }
 }

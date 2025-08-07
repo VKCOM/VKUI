@@ -117,10 +117,13 @@
 }
 
 .in {
-  padding: var(--vkui_internal--snackbar_in_padding);
   animation-duration: var(--vkui_internal--snackbar_animation_duration);
   animation-timing-function: var(--vkui--animation_easing_platform);
   animation-fill-mode: both;
+}
+
+.fixed .in {
+  padding: var(--vkui_internal--snackbar_in_padding);
 }
 
 .placementTopStart .in,
