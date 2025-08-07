@@ -82,7 +82,10 @@ const FetchingStatus = ({
 
   const content = getRequiredValueByKey(status, {
     fetching: fetchingInProgressLabel,
-    loaded: fetchingCompletedLabel,
+    loaded:
+      typeof fetchingCompletedLabel === 'function'
+        ? fetchingCompletedLabel(options.length)
+        : fetchingCompletedLabel,
     none: '',
   });
 
@@ -230,7 +233,7 @@ export interface SelectProps<
   /**
    * Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Опций загружено: ${options.length}"`.
    */
-  fetchingCompletedLabel?: string;
+  fetchingCompletedLabel?: string | ((optionsCount: number) => string);
 }
 
 /**
