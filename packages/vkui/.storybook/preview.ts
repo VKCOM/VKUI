@@ -44,6 +44,7 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
+          'Introduction',
           'Layout',
           ['Group', ['*', 'Header', 'Footer']],
           'Forms',
