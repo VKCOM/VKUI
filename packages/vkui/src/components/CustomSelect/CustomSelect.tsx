@@ -231,7 +231,7 @@ export interface SelectProps<
    */
   fetchingInProgressLabel?: string;
   /**
-   * Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Опций загружено: ${options.length}"`.
+   * Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Загружено опций: ${options.length}"`.
    */
   fetchingCompletedLabel?: string | ((optionsCount: number) => string);
 }
