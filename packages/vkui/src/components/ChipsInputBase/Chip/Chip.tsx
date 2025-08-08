@@ -6,10 +6,15 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
+import {
+  type HasComponent,
+  type HasDataAttribute,
+  type HTMLAttributesWithRootRef,
+} from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { Footnote } from '../../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
-import type { ChipProps } from '../types';
+import { type ChipOptionValue } from '../types';
 import styles from './Chip.module.css';
 
 const sizeYClassNames = {
@@ -17,10 +22,58 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 } as const;
 
+const modeClassNames = {
+  primary: styles.modePrimary,
+  secondary: styles.modeSecondary,
+} as const;
+
+export interface ChipProps
+  extends HasComponent,
+    HasDataAttribute,
+    HTMLAttributesWithRootRef<HTMLElement> {
+  /**
+   * Режим отображения компонента.
+   */
+  mode?: 'primary' | 'secondary';
+  /**
+   * Значение чипа.
+   */
+  value?: ChipOptionValue;
+  /**
+   * Можно ли удалить чип.
+   */
+  removable?: boolean;
+  /**
+   * Блокировка взаимодействия с чипом.
+   */
+  disabled?: boolean;
+  /**
+   * Режим только для чтения.
+   */
+  readOnly?: boolean;
+  /**
+   * Текст для кнопки удаления.
+   */
+  removeLabel?: string;
+  /**
+   * Контент перед основным содержимым.
+   */
+  before?: React.ReactNode;
+  /**
+   * Контент после основного содержимого.
+   */
+  after?: React.ReactNode;
+  /**
+   * Обработчик удаления чипа.
+   */
+  onRemove?: (event: React.MouseEvent, value: ChipOptionValue) => void;
+}
+
 /**
  * @see https://vkui.io/components/chip
  */
 export const Chip = ({
+  mode = 'primary',
   Component = 'span',
   value = '',
   removable = true,
@@ -68,6 +121,7 @@ export const Chip = ({
       className={classNames(
         styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
+        modeClassNames[mode],
         focusVisibleClassName,
         className,
       )}

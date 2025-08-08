@@ -309,9 +309,9 @@ export { DropZone } from './components/DropZone/DropZone';
 export type { DropZoneProps } from './components/DropZone/DropZone';
 export { Input } from './components/Input/Input';
 export type { InputProps } from './components/Input/Input';
+export type { ChipProps } from './components/ChipsInputBase/Chip/Chip';
 export { Chip } from './components/ChipsInputBase/Chip/Chip';
 export type {
-  ChipProps,
   ChipOption,
   RenderChipProps,
   ChipOptionValue,
