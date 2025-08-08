@@ -22,6 +22,10 @@ export interface CheckboxProps
    * Контент, идущий за основным текстом.
    */
   titleAfter?: React.ReactNode;
+  /**
+   * Отключает отступы у чекбокса. При использовании этого свойства, значение по умолчанию для свойств `hoverMode` и `activeMode` становится `"opacity"`.
+   */
+  noPadding?: boolean;
 }
 
 const CheckboxComponent = ({
@@ -36,6 +40,7 @@ const CheckboxComponent = ({
   hasActive,
   focusVisibleMode,
   titleAfter,
+  noPadding,
   ...restProps
 }: CheckboxProps): React.ReactNode => {
   return (
@@ -49,6 +54,7 @@ const CheckboxComponent = ({
       hasHover={hasHover}
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
+      noPadding={noPadding}
     >
       <CheckboxInput {...restProps} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>

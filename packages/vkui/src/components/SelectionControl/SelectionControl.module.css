@@ -3,9 +3,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  font-family: var(--vkui--font_family_base);
+}
+
+.withPadding {
   min-block-size: var(--vkui--size_field_height--regular);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
-  font-family: var(--vkui--font_family_base);
 }
 
 /**
@@ -22,12 +25,12 @@
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.sizeYCompact {
+.withPadding.sizeYCompact {
   min-block-size: var(--vkui--size_field_height--compact);
 }
 
 @media (--sizeY-compact) {
-  .sizeYNone {
+  .withPadding.sizeYNone {
     min-block-size: var(--vkui--size_field_height--compact);
   }
 }
