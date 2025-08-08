@@ -13,12 +13,10 @@ import {
   type UseModalRootReturn,
 } from './types';
 
-/* eslint-disable jsdoc/require-jsdoc */
 type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
   modals: ModalRootItem[];
   activeModal: string | null;
 };
-/* eslint-enable jsdoc/require-jsdoc */
 
 function ContextHolder({ modals, ...modalRootProps }: ContextHolderProps) {
   return (
