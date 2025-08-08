@@ -6,6 +6,10 @@
   isolation: isolate;
 }
 
+.disableModalOverlay {
+  pointer-events: none;
+}
+
 /* Desktop */
 .hostDesktop:not([hidden]) {
   display: flex;

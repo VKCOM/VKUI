@@ -13,7 +13,7 @@ import styles from './ContentCard.module.css';
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
-    Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title'>,
+    Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
   /**
