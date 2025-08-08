@@ -234,12 +234,17 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
   }, [close, closeAll, openCard, openPage, update]);
 
   const contextHolder: React.ReactElement | null = React.useMemo(() => {
+    const onOverlayClosed = () => {
+      setOverlayShowed(false);
+      props.onOverlayClosed?.();
+    };
+
     return state.modals.length || overlayShowed ? (
       <ContextHolder
+        {...props}
         modals={state.modals}
         activeModal={state.activeModal}
-        onOverlayClosed={() => setOverlayShowed(false)}
-        {...props}
+        onOverlayClosed={onOverlayClosed}
       />
     ) : null;
   }, [state.modals, state.activeModal, overlayShowed, props]);
