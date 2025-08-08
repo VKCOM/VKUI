@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-codemods",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Codemods for automatic VKUI major version upgrade",
   "repository": "https://github.com/VKCOM/VKUI",
   "homepage": "https://vkui.io/",
