@@ -233,21 +233,35 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
     };
   }, [close, closeAll, openCard, openPage, update]);
 
+  const activeModalDisableModalOverlay = React.useMemo(() => {
+    if (!state.activeModal) {
+      return false;
+    }
+    const activeModalProps = state.modals.find((modal) => modal.id === state.activeModal);
+    if (!activeModalProps) {
+      return false;
+    }
+    return activeModalProps.disableModalOverlay || false;
+  }, [state.activeModal, state.modals]);
+
+  const disableModalOverlay = props.disableModalOverlay || activeModalDisableModalOverlay;
+
   const contextHolder: React.ReactElement | null = React.useMemo(() => {
     const onOverlayClosed = () => {
       setOverlayShowed(false);
       props.onOverlayClosed?.();
     };
 
-    return state.modals.length || overlayShowed ? (
+    return state.modals.length || (!disableModalOverlay && overlayShowed) ? (
       <ContextHolder
         {...props}
+        disableModalOverlay={disableModalOverlay}
         modals={state.modals}
         activeModal={state.activeModal}
         onOverlayClosed={onOverlayClosed}
       />
     ) : null;
-  }, [state.modals, state.activeModal, overlayShowed, props]);
+  }, [state.modals, state.activeModal, disableModalOverlay, overlayShowed, props]);
 
   return [api, contextHolder];
 };

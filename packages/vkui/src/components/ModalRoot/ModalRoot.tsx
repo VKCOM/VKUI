@@ -75,12 +75,14 @@ export const ModalRoot = ({
     <AppRootPortal usePortal={usePortal}>
       <ModalRootContext.Provider value={contextValue}>
         <ModalRootOverlayContext.Provider value={modalOverlayRef}>
-          {!disableModalOverlay && (<ModalOverlay
-            position="fixed"
-            visible={typeof activeModal === 'string'}
-            getRootRef={modalOverlayRef}
-            onClosed={onOverlayClosed}
-          />)}
+          {!disableModalOverlay && (
+            <ModalOverlay
+              position="fixed"
+              visible={typeof activeModal === 'string'}
+              getRootRef={modalOverlayRef}
+              onClosed={onOverlayClosed}
+            />
+          )}
           {children}
         </ModalRootOverlayContext.Provider>
       </ModalRootContext.Provider>

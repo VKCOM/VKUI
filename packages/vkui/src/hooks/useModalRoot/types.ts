@@ -3,7 +3,6 @@ import { type ModalPageProps } from '../../components/ModalPage/types';
 import { type ModalRootProps } from '../../components/ModalRoot/types';
 import { type HasDataAttribute } from '../../types';
 
-/* eslint-disable jsdoc/require-jsdoc */
 export type UseModalRootProps = Omit<ModalRootProps, 'activeModal' | 'children'>;
 
 type OpenModalPageProps = Omit<ModalPageProps, 'open' | 'keepMounted'> & HasDataAttribute;
