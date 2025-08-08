@@ -8,4 +8,7 @@
   --vkui_internal--snackbar_safe_area_inset_bottom: calc(
     var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
   );
+  --vkui_internal--snackbars_container_safe_area_inset_bottom: calc(
+    var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
+  );
 }
