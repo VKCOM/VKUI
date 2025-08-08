@@ -20,7 +20,7 @@ export type TokensClassNamesByAppearances = {
  * @example
  * ```ts
  * const tokensClassNames = {
- *  android: {
+ *  material: {
  *   light: 'vkui--vkBase-light',
  *   dark: 'vkui--vkBase-dark',
  *  },
