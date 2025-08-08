@@ -68,6 +68,7 @@ export const CustomSelectDropdown = ({
         className={noMaxHeight ? undefined : styles.inWithMaxHeight}
         overscrollBehavior={overscrollBehavior}
         tabIndex={-1}
+        aria-busy={fetching}
       >
         {fetching ? (
           <div className={styles.fetching}>
