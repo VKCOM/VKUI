@@ -9,5 +9,5 @@ export type DivProps = HTMLAttributesWithRootRef<HTMLDivElement>;
  * @see https://vkui.io/components/div
  */
 export const Div = (props: DivProps): React.ReactNode => (
-  <RootComponent baseClassName={styles.host} {...props} />
+  <RootComponent baseClassName={styles.host} data-a {...props} />
 );
