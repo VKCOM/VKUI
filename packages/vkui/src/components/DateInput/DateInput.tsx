@@ -557,7 +557,7 @@ export const DateInput = ({
           )}
         </Text>
         {customValue && (
-          <Text className={styles.customValue} aria-hidden>
+          <Text className={styles.customValue} aria-hidden normalize={false}>
             {customValue}
           </Text>
         )}
