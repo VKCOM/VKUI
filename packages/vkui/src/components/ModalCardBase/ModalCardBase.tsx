@@ -66,7 +66,7 @@ export interface ModalCardBaseProps
   onClose?: VoidFunction;
 
   /**
-   * @deprecated Будет удалён в **VKUI v8**
+   * @deprecated Будет удалён в **VKUI v9**
    * Используйте `modalDismissButtonLabel` вместо этого свойства.
    *
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
