@@ -1,13 +1,8 @@
 import type * as React from 'react';
-import type {
-  HasAlign,
-  HasComponent,
-  HasDataAttribute,
-  HasRef,
-  HTMLAttributesWithRootRef,
-} from '../../types';
+import type { HasAlign, HasRef } from '../../types';
 import { type FormFieldProps } from '../FormField/FormField';
 import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
+import { type ChipProps } from './Chip/Chip';
 
 export type NavigateTo = 'prev' | 'next' | 'last' | 'first';
 
@@ -30,44 +25,6 @@ export type ChipOption = {
   disabled?: boolean;
   [index: string]: any;
 };
-
-export interface ChipProps
-  extends HasComponent,
-    HasDataAttribute,
-    HTMLAttributesWithRootRef<HTMLElement> {
-  /**
-   * Значение чипа.
-   */
-  value?: ChipOptionValue;
-  /**
-   * Можно ли удалить чип.
-   */
-  removable?: boolean;
-  /**
-   * Блокировка взаимодействия с чипом.
-   */
-  disabled?: boolean;
-  /**
-   * Режим только для чтения.
-   */
-  readOnly?: boolean;
-  /**
-   * Текст для кнопки удаления.
-   */
-  removeLabel?: string;
-  /**
-   * Контент перед основным содержимым.
-   */
-  before?: React.ReactNode;
-  /**
-   * Контент после основного содержимого.
-   */
-  after?: React.ReactNode;
-  /**
-   * Обработчик удаления чипа.
-   */
-  onRemove?: (event: React.MouseEvent, value: ChipOptionValue) => void;
-}
 
 export interface RenderChipProps extends ChipProps {
   /**
