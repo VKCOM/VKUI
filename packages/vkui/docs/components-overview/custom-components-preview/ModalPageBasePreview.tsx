@@ -32,7 +32,7 @@ export const ModalPageBasePreview = () => {
       }}
     >
       <ModalPageBase
-        hideCloseButton={platform === 'ios'}
+        modalDismissButtonMode={platform === 'ios' ? 'none' : 'outside'}
         isDesktop
         header={
           <ModalPageHeader

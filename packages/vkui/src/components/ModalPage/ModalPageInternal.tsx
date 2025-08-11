@@ -61,6 +61,7 @@ export const ModalPageInternal = ({
   ModalOverlay = ModalOverlayDefault,
   modalOverlayTestId,
   modalContentTestId,
+  modalDismissButtonMode: modalDismissButtonModeProp,
   modalDismissButtonTestId,
   modalDismissButtonLabel = 'Закрыть',
   outsideButtons,
@@ -90,6 +91,8 @@ export const ModalPageInternal = ({
       onClosed?.();
     },
   });
+  const modalDismissButtonMode =
+    modalDismissButtonModeProp || (hideCloseButton ? 'none' : 'outside');
   const opened = transitionState === 'appeared' || transitionState === 'entered';
   const hidden = transitionState === 'exited';
   const closable = !preventClose && opened;
@@ -193,7 +196,7 @@ export const ModalPageInternal = ({
           modalContentTestId={modalContentTestId}
           modalDismissButtonTestId={modalDismissButtonTestId}
           modalDismissButtonLabel={modalDismissButtonLabel}
-          hideCloseButton={hideCloseButton}
+          modalDismissButtonMode={modalDismissButtonMode}
           closable={closable}
           onClose={onClose}
         >

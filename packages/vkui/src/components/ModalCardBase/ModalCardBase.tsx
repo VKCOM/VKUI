@@ -66,6 +66,9 @@ export interface ModalCardBaseProps
   onClose?: VoidFunction;
 
   /**
+   * @deprecated Будет удалён в **VKUI v8**
+   * Используйте `modalDismissButtonLabel` вместо этого свойства.
+   *
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
   dismissLabel?: string;
@@ -76,10 +79,29 @@ export interface ModalCardBaseProps
   size?: number;
 
   /**
+   * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
+   */
+  modalDismissButtonLabel?: string;
+
+  /**
    * Передает атрибут `data-testid` для кнопки закрытия.
    */
   modalDismissButtonTestId?: string;
   /**
+   * Расположение кнопки закрытия (внутри и вне `popout'a`).
+   *
+   * Доступно только в `compact`-режиме.
+   *
+   * На `iOS` в `regular`-режиме всегда включен `inside`.
+   *
+   * ⚠️ ВНИМАНИЕ: использование `none` скрывает крестик, это негативно сказывается на пользовательском опыте.
+   */
+  modalDismissButtonMode?: 'inside' | 'outside' | 'none';
+
+  /**
+   * @deprecated Будет удалён в **VKUI v8**
+   * Используйте `modalDismissButtonMode` вместо этого свойства.
+   *
    * Расположение кнопки закрытия (внутри и вне `popout'a`).
    *
    * Доступно только в `compact`-режиме.
@@ -117,9 +139,11 @@ export const ModalCardBase = ({
   actions,
   onClose,
   dismissLabel = 'Закрыть',
+  modalDismissButtonLabel: modalDismissButtonLabelProp,
   size: sizeProp,
   modalDismissButtonTestId,
   dismissButtonMode = 'outside',
+  modalDismissButtonMode: modalDismissButtonModeProp,
   preventClose,
   outsideButtons,
   titleId,
@@ -128,11 +152,14 @@ export const ModalCardBase = ({
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
 
+  const modalDismissButtonLabel = modalDismissButtonLabelProp || dismissLabel;
+  const modalDismissButtonMode = modalDismissButtonModeProp || dismissButtonMode;
+
   const size = isDesktop ? sizeProp : undefined;
   const withSafeZone =
     !icon &&
-    (dismissButtonMode === 'inside' ||
-      (platform === 'ios' && !isDesktop && dismissButtonMode !== 'none'));
+    (modalDismissButtonMode === 'inside' ||
+      (platform === 'ios' && !isDesktop && modalDismissButtonMode !== 'none'));
 
   const hasTitle = hasReactNode(title);
   const hasDescription = hasReactNode(description);
@@ -175,11 +202,11 @@ export const ModalCardBase = ({
 
         {hasReactNode(actions) && <div className={styles.actions}>{actions}</div>}
 
-        {isDesktop && (dismissButtonMode === 'outside' || outsideButtons) && (
+        {isDesktop && (modalDismissButtonMode === 'outside' || outsideButtons) && (
           <ModalOutsideButtons>
-            {dismissButtonMode === 'outside' && (
+            {modalDismissButtonMode === 'outside' && (
               <ModalOutsideButton
-                aria-label={dismissLabel}
+                aria-label={modalDismissButtonLabel}
                 data-testid={modalDismissButtonTestId}
                 onClick={onClose}
               >
@@ -190,8 +217,8 @@ export const ModalCardBase = ({
           </ModalOutsideButtons>
         )}
 
-        {(dismissButtonMode === 'inside' ||
-          (platform === 'ios' && !isDesktop && dismissButtonMode !== 'none')) && (
+        {(modalDismissButtonMode === 'inside' ||
+          (platform === 'ios' && !isDesktop && modalDismissButtonMode !== 'none')) && (
           <Tappable
             className={styles.dismiss}
             onClick={onClose}
@@ -199,7 +226,7 @@ export const ModalCardBase = ({
             activeMode="opacity"
             data-testid={modalDismissButtonTestId}
           >
-            <VisuallyHidden>{dismissLabel}</VisuallyHidden>
+            <VisuallyHidden>{modalDismissButtonLabel}</VisuallyHidden>
             {platform === 'ios' ? <Icon24Dismiss /> : <Icon20Cancel />}
           </Tappable>
         )}

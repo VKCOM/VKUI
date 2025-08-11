@@ -69,6 +69,9 @@ export interface ModalPageProps
    */
   noFocusToDialog?: boolean;
   /**
+   * @deprecated Будет удалён в **VKUI v8**
+   * Используйте `modalDismissButtonMode` вместо этого свойства.
+   *
    * Скрывает кнопку закрытия (актуально для iOS, так как можно отрисовать кнопку закрытия внутри модалки).
    */
   hideCloseButton?: boolean;
@@ -84,6 +87,12 @@ export interface ModalPageProps
    * `data-testid` для оверлея.
    */
   modalOverlayTestId?: string;
+  /**
+   * Режим отображения кнопки закрытия модального окна:
+   * - `"outside"`: кнопка отображается снаружи;
+   * - `"none"`: кнопка не отображается. Актуально для iOS, так как можно отрисовать кнопку закрытия внутри модалки.
+   */
+  modalDismissButtonMode?: 'outside' | 'none';
   /**
    * `data-testid` для кнопки закрытия.
    */

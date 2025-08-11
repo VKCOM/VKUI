@@ -25,7 +25,7 @@ export interface ModalPageBaseProps
       | 'modalContentTestId'
       | 'modalDismissButtonTestId'
       | 'modalDismissButtonLabel'
-      | 'hideCloseButton'
+      | 'modalDismissButtonMode'
       | 'onClose'
     > {
   isDesktop?: boolean;
@@ -43,7 +43,7 @@ export const ModalPageBase = ({
   modalContentTestId,
   modalDismissButtonTestId,
   modalDismissButtonLabel,
-  hideCloseButton,
+  modalDismissButtonMode,
   closable,
   onClose = noop,
   ...restProps
@@ -53,7 +53,7 @@ export const ModalPageBase = ({
     : undefined;
 
   const closeButton =
-    hideCloseButton || !isDesktop ? null : (
+    modalDismissButtonMode === 'none' || !isDesktop ? null : (
       <ModalOutsideButton
         data-testid={modalDismissButtonTestId}
         onClick={
