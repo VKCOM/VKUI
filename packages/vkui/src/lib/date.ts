@@ -148,3 +148,5 @@ export function format(date: Date | number, format: string): string {
 export function isMatch(input: string, format: string): boolean {
   return !isNaN(+parse(input, format));
 }
+
+export const millisecondsInSecond = 1000;
