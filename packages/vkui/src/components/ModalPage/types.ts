@@ -69,7 +69,7 @@ export interface ModalPageProps
    */
   noFocusToDialog?: boolean;
   /**
-   * @deprecated Будет удалён в **VKUI v8**
+   * @deprecated Будет удалён в **VKUI v9**
    * Используйте `modalDismissButtonMode` вместо этого свойства.
    *
    * Скрывает кнопку закрытия (актуально для iOS, так как можно отрисовать кнопку закрытия внутри модалки).
