@@ -4,7 +4,13 @@
 - Если нужен выбор одной даты, используйте [Calendar](#!/Calendar).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { addDays, format } from 'date-fns';
+import { addDays } from 'date-fns';
+
+const formatter = new Intl.DateTimeFormat('ru-RU', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+});
 
 const Example = () => {
   const [value, setValue] = useState([new Date(), addDays(new Date(), 10)]);
@@ -16,7 +22,7 @@ const Example = () => {
   return (
     <FormLayoutGroup mode="vertical">
       <FormItem top="Выбранная дата">
-        {format(value[0], 'yyyy-MM-dd')} - {format(value[1], 'yyyy-MM-dd')}
+        {formatter.format(value[0])} - {formatter.format(value[1])}
       </FormItem>
       <FormItem top="Запрет выбора прошлых дат">
         <Checkbox checked={disablePast} onChange={(e) => setDisablePast(e.target.checked)}>

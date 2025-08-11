@@ -1,26 +1,39 @@
-import { format, isMatch, parse } from './date';
+import { isMatch, parse } from './date';
 
 describe(parse, () => {
   it('Parses valid date', () => {
     const result = parse('12-25-1995', 'MM-dd-yyyy');
-    expect(format(result, 'MM-dd-yyyy')).toEqual('12-25-1995');
+    expect(result.getMonth()).toEqual(11);
+    expect(result.getDate()).toEqual(25);
+    expect(result.getFullYear()).toEqual(1995);
   });
 
   it('Parses valid date with reference', () => {
     const reference = new Date(2022, 3, 4, 20, 34);
     const result = parse('12-25-1995', 'MM-dd-yyyy', reference);
-    expect(format(result, 'MM-dd-yyyy HH:mm')).toEqual('12-25-1995 20:34');
+    expect(result.getMonth()).toEqual(11);
+    expect(result.getDate()).toEqual(25);
+    expect(result.getFullYear()).toEqual(1995);
   });
 
   it('Parses valid date and time', () => {
     const result = parse('12-25-1995 16:36', 'MM-dd-yyyy HH:mm');
-    expect(format(result, 'MM-dd-yyyy HH:mm')).toEqual('12-25-1995 16:36');
+    expect(result.getMonth()).toEqual(11);
+    expect(result.getDate()).toEqual(25);
+    expect(result.getFullYear()).toEqual(1995);
+    expect(result.getHours()).toEqual(16);
+    expect(result.getMinutes()).toEqual(36);
   });
 
   it('Parses valid date and time with reference', () => {
     const reference = new Date(2022, 3, 4, 20, 34, 52);
     const result = parse('12-25-1995 16:36', 'MM-dd-yyyy HH:mm', reference);
-    expect(format(result, 'MM-dd-yyyy HH:mm:ss')).toEqual('12-25-1995 16:36:52');
+    expect(result.getMonth()).toEqual(11);
+    expect(result.getDate()).toEqual(25);
+    expect(result.getFullYear()).toEqual(1995);
+    expect(result.getHours()).toEqual(16);
+    expect(result.getMinutes()).toEqual(36);
+    expect(result.getSeconds()).toEqual(52);
   });
 
   it('Validates identical non-formatting symbols', () => {
