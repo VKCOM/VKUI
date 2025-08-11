@@ -99,7 +99,7 @@ export interface ModalCardBaseProps
   modalDismissButtonMode?: 'inside' | 'outside' | 'none';
 
   /**
-   * @deprecated Будет удалён в **VKUI v8**
+   * @deprecated Будет удалён в **VKUI v9**
    * Используйте `modalDismissButtonMode` вместо этого свойства.
    *
    * Расположение кнопки закрытия (внутри и вне `popout'a`).
