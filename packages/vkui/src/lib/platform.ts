@@ -8,6 +8,7 @@ import { type BrowserInfo, computeBrowserInfo } from './browser';
 
 export const Platform = {
   MATERIAL: 'material',
+  // TODO [>=9] удалить алиас https://github.com/VKCOM/VKUI/issues/8706
   ANDROID: 'android',
   IOS: 'ios',
   VKCOM: 'vkcom',

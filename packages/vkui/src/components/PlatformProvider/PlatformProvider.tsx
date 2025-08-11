@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { PlatformType } from '../../lib/platform';
 import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';
+import { warnOnce } from '../../lib/warnOnce';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface PlatformProviderProps {
@@ -14,6 +15,8 @@ export interface PlatformProviderProps {
   children: React.ReactNode;
 }
 
+const warn = warnOnce('PlatformProvider');
+
 /**
  * Компонент, позволяющий переопределить платформу для части приложения.
  *
@@ -21,6 +24,10 @@ export interface PlatformProviderProps {
  * @see https://vkui.io/components/platform-provider
  */
 export function PlatformProvider({ value, children }: PlatformProviderProps): React.ReactNode {
+  if (value === 'android') {
+    warn('Платформа "android" будет удалена, используйте "material"');
+  }
+
   return (
     <ConfigProviderOverride platform={value}>
       <TokensClassProvider>{children}</TokensClassProvider>

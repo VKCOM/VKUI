@@ -6,6 +6,7 @@ import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
 import { useAutoDetectDirection } from '../../hooks/useAutoDetectDirection';
 import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';
 import { excludeKeysWithUndefined } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 import {
   ConfigProviderContext,
   type ConfigProviderContextInterface,
@@ -20,10 +21,16 @@ export interface ConfigProviderProps extends Partial<ConfigProviderContextInterf
   children: React.ReactNode;
 }
 
+const warn = warnOnce('ConfigProvider');
+
 /**
  * @see https://vkui.io/components/config-provider
  */
 export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode => {
+  if (propsRaw.platform === 'android') {
+    warn('Платформа "android" будет удалена, используйте "material"');
+  }
+
   const props = excludeKeysWithUndefined(propsRaw);
   const parentConfig = useConfigProvider();
 
