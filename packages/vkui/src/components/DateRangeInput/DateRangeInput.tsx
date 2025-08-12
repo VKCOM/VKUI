@@ -473,7 +473,11 @@ export const DateRangeInput = ({
           }
           onFocus={handleFieldEnter}
         />
-        <Text className={dateInputStyles.input} onClick={showCalendarOnInputAreaClick}>
+        <Text
+          className={dateInputStyles.input}
+          onClick={showCalendarOnInputAreaClick}
+          normalize={false}
+        >
           <NumberInputLike
             value={internalValue[0]}
             minValue={1}

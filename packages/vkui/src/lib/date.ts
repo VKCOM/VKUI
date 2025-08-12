@@ -169,3 +169,5 @@ export const dateTimeFormatter = /*#__PURE__*/ new DateTimeFormat();
 export function isMatch(input: string, format: string): boolean {
   return !isNaN(+parse(input, format));
 }
+
+export const millisecondsInSecond = 1000;
