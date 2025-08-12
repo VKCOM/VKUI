@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { addDays, endOfDay, format, startOfDay } from 'date-fns';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
+import { dateFormatter } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
@@ -18,7 +19,7 @@ describe('CalendarRange', () => {
     });
   };
 
-  const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+  const dayTestId = (day: Date) => dateFormatter.format(day);
 
   it('checks aria roles', async () => {
     const targetDate = new Date('2023-09-20T07:40:00.000Z');

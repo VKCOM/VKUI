@@ -1148,7 +1148,6 @@ export const CONFIG: Array<{ title: string; displayTitle: string; components: st
     components: sortByAlphabet([
       'Checkbox',
       'ChipsInput',
-      'Chip',
       'ChipsSelect',
       'DropZone',
       'File',
@@ -1234,6 +1233,7 @@ export const CONFIG: Array<{ title: string; displayTitle: string; components: st
       'Badge',
       'Banner',
       'Card',
+      'Chip',
       'Counter',
       'Gallery',
       'GridAvatar',

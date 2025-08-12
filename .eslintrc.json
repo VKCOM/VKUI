@@ -89,6 +89,8 @@
     "unicorn/expiring-todo-comments": ["error"],
     "no-console": "error",
     "react-compiler/react-compiler": 2,
-    "no-useless-computed-key": "error"
+    "no-useless-computed-key": "error",
+
+    "spaced-comment": ["error", "always", { "exceptions": ["#__PURE__"] }]
   }
 }
