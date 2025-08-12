@@ -9,7 +9,7 @@ import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
-import { format, isMatch, parse } from '../../lib/date';
+import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import type { HasRootRef } from '../../types';
 import {
@@ -466,8 +466,8 @@ export const DateRangeInput = ({
           tabIndex={readOnly ? 0 : -1}
           value={
             value
-              ? `${value[0] ? format(value[0], 'dd.MM.yyyy') : ''} - ${
-                  value[1] ? format(value[1], 'dd.MM.yyyy') : ''
+              ? `${value[0] ? dateFormatter.format(value[0]) : ''} - ${
+                  value[1] ? dateFormatter.format(value[1]) : ''
                 }`
               : ''
           }

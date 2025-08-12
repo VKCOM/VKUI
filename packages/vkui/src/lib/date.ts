@@ -1,5 +1,4 @@
 import { TZDateMini } from '@vkontakte/vkui-date-fns-tz';
-import { lightFormat } from 'date-fns';
 
 export function parse(input: string, format: string, referenceDate: Date = new Date()): Date {
   const match2 = /^\d\d/; // 00 - 99
@@ -141,9 +140,31 @@ export const convertDateFromTimeZone = (
   return date ? TZDateMini.tz(systemTimezone, date) : undefined;
 };
 
-export function format(date: Date | number, format: string): string {
-  return lightFormat(date, format);
+const dateOptions: Intl.DateTimeFormatOptions = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+};
+
+// dd.MM.yyyy
+export const dateFormatter = /*#__PURE__*/ new Intl.DateTimeFormat('ru-RU', dateOptions);
+
+class DateTimeFormat extends Intl.DateTimeFormat {
+  constructor() {
+    super('ru-RU', {
+      ...dateOptions,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  format(date?: Date | number): string {
+    return super.format(date).replace(',', '');
+  }
 }
+
+// dd.MM.yyyy HH:mm
+export const dateTimeFormatter = /*#__PURE__*/ new DateTimeFormat();
 
 export function isMatch(input: string, format: string): boolean {
   return !isNaN(+parse(input, format));
