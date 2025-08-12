@@ -1,15 +1,10 @@
+import { isSameDate } from '@vkontakte/vkjs';
 import {
   addDays,
   addMonths,
   addWeeks,
   eachDayOfInterval,
-  endOfMonth,
   endOfWeek,
-  isAfter,
-  isBefore,
-  isFirstDayOfMonth,
-  isLastDayOfMonth,
-  isSameDay,
   startOfMonth,
   startOfWeek,
   subDays,
@@ -18,6 +13,7 @@ import {
 } from 'date-fns';
 import { clamp as clampNumber } from '../helpers/math';
 import { Keys, type KeysValues } from './accessibility';
+import { endOfMonth, isLastDayOfMonth } from './date';
 
 export const DEFAULT_MAX_YEAR = 9999;
 // 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
@@ -138,7 +134,7 @@ export const getWeeks = (viewDate: Date, weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
   let current = start;
   const nestedWeeks: Date[][] = [];
   let lastDay = null;
-  while (isBefore(current, end)) {
+  while (current < end) {
     const weekNumber = Math.floor(count / 7);
     nestedWeeks[weekNumber] = nestedWeeks[weekNumber] || [];
     const day = current.getDay();
@@ -164,7 +160,7 @@ export const setTimeEqual = (to: Date, from?: Date | null): Date => {
 };
 
 export const isFirstDay = (day: Date, dayOfWeek: number): boolean =>
-  dayOfWeek === 0 || isFirstDayOfMonth(day);
+  dayOfWeek === 0 || day.getDate() === 1;
 
 export const isLastDay = (day: Date, dayOfWeek: number): boolean =>
   dayOfWeek === 6 || isLastDayOfMonth(day);
@@ -174,10 +170,10 @@ export const isLastDay = (day: Date, dayOfWeek: number): boolean =>
  */
 export function clamp(day: Date, options: { min?: Date; max?: Date } = {}): Date {
   const { min, max } = options;
-  if (min && isBefore(day, min)) {
+  if (min && day < min) {
     return min;
   }
-  if (max && isAfter(day, max)) {
+  if (max && day > max) {
     return max;
   }
   return day;
@@ -191,8 +187,8 @@ export function isDayMinMaxRestricted(
   options: { min?: Date; max?: Date; withTime?: boolean } = {},
 ): boolean {
   const { min, max, withTime = false } = options;
-  if (!withTime && ((min && isSameDay(day, min)) || (max && isSameDay(day, max)))) {
+  if (!withTime && ((min && isSameDate(day, min)) || (max && isSameDate(day, max)))) {
     return false;
   }
-  return Boolean((min && isBefore(day, min)) || (max && isAfter(day, max)));
+  return Boolean((min && day < min) || (max && day > max));
 }
