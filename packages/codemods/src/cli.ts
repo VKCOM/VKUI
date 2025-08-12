@@ -77,7 +77,7 @@ export const runCli = async (): Promise<Cli> => {
     .option('-l --list', 'list available codemods')
     .option('--all', 'apply all available codemods')
     .option(
-      '-tv --transforms-version <transformsVersion>',
+      '--tv, --transforms-version <transformsVersion>',
       'vkui major version transforms (available versions: "6", "7")',
     )
     .option(
