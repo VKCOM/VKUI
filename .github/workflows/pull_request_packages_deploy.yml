@@ -221,6 +221,68 @@ jobs:
         id: url
         run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/pkg/@vkontakte/vkui/_pkg.tgz" >> $GITHUB_OUTPUT
 
+  deploy_diff:
+    needs: pr_workflow_payload
+    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
+    runs-on: ubuntu-latest
+    name: Deploy diff
+    outputs:
+      url: ${{ steps.url.outputs.value }}
+    steps:
+      - name: Download package artifact
+        id: artifact
+        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
+        with:
+          name: diff-report
+          path: diff/
+
+      - name: Upload
+        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: diff/
+          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/diff
+
+      - name: Create doc url
+        if: ${{ steps.deploy.outcome == 'success' }}
+        id: url
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/diff/diff-report.html" >> $GITHUB_OUTPUT
+
+  diff_comment:
+    needs:
+      - deploy_diff
+    if: needs.deploy_diff.outputs.url != ''
+    runs-on: ubuntu-latest
+    name: Diff comment
+    steps:
+      - name: Find docs URLs comment
+        uses: peter-evans/find-comment@v3
+        id: find_url_comment
+        with:
+          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: <!-- diff_report_url -->
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          body: |
+            <!-- diff_report_url -->
+            ## 👀 Diff deployed
+
+            [Diff Report](${{ needs.deploy_diff.outputs.url }})
+
+            Commit ${{ env.PR_HEAD_SHA }}
+          edit-mode: replace
+
   docs_comment:
     needs:
       - deploy_storybook
