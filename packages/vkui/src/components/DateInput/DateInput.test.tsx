@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { isToday, isYesterday, subDays } from 'date-fns';
-import { dateFormatter } from '../../lib/date';
+import { subDays } from 'date-fns';
+import { dateFormatter, isToday, isYesterday } from '../../lib/date';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { DateInput, type DateInputPropsTestsProps } from './DateInput';

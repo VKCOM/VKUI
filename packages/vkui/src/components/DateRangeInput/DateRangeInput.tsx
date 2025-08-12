@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { isAfter } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
@@ -321,7 +320,7 @@ export const DateRangeInput = ({
       const end = isEndValid
         ? parse(formattedEndValue, mask, (valueExists && value?.[1]) || now)
         : null;
-      if (start && end && isAfter(end, start)) {
+      if (start && end && end > start) {
         updateValue([start, end]);
       }
     },
