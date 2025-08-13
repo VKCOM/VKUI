@@ -3,12 +3,18 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
-import { dateFormatter, dateTimeFormatter, isMatch, parse } from '../../lib/date';
+import {
+  dateFormatter,
+  dateTimeFormatter,
+  isMatch,
+  parse,
+  startOfDay,
+  startOfMinute,
+} from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
