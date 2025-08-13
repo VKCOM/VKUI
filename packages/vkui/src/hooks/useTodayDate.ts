@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { differenceInMilliseconds, isSameDay, startOfTomorrow } from 'date-fns';
+import { isSameDate } from '@vkontakte/vkjs';
+import { differenceInMilliseconds, startOfTomorrow } from 'date-fns';
 import { useDOM } from '../lib/dom';
 
 /**
@@ -38,7 +39,7 @@ export function useTodayDate(listenDayChangesForUpdate = false): Date {
           }, timeToDayChange);
 
           // Если todayDate не обновился в таймаут - обновить при заходе на вкладку
-          if (!isSameDay(todayDate, now)) {
+          if (!isSameDate(todayDate, now)) {
             setTodayDate(now);
           }
         }
