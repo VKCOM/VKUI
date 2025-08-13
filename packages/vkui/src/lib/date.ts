@@ -1,3 +1,4 @@
+import { isSameDate } from '@vkontakte/vkjs';
 import { TZDateMini } from '@vkontakte/vkui-date-fns-tz';
 
 export function parse(input: string, format: string, referenceDate: Date = new Date()): Date {
@@ -166,6 +167,63 @@ class DateTimeFormat extends Intl.DateTimeFormat {
 // dd.MM.yyyy HH:mm
 export const dateTimeFormatter = /*#__PURE__*/ new DateTimeFormat();
 
+/**
+ * Возвращает дату конца месяца
+ */
+export function endOfMonth(date: Date): Date {
+  const result = new Date(date);
+  const month = result.getMonth();
+  result.setFullYear(result.getFullYear(), month + 1, 0);
+  result.setHours(23, 59, 59, 999);
+  return result;
+}
+
+export function endOfDay(date: Date): Date {
+  const result = new Date(date);
+  result.setHours(23, 59, 59, 999);
+  return result;
+}
+
+/**
+ * Проверяет, что переданные даты относятся к одному и тому же месяцу
+ *
+ * @example
+ * ```ts
+ * import assert from 'node:assert';
+ * import { isSameMonth } from './date.ts';
+ *
+ * const d1 = new Date();
+ * const d2 = new Date();
+ * assert.ok(isSameMonth(d1, d2));
+ * ```
+ */
+export function isSameMonth(d1: Date, d2: Date): boolean {
+  return d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear();
+}
+
+export function isLastDayOfMonth(date: Date) {
+  return +endOfDay(date) === +endOfMonth(date);
+}
+
+export function isWithinInterval(date: Date, interval: [Date, Date]) {
+  const [startTime, endTime] = interval.sort((a, b) => +a - +b);
+
+  return date >= startTime && date <= endTime;
+}
+
+export function isToday(date: Date) {
+  return isSameDate(date, new Date());
+}
+
+export function isYesterday(date: Date) {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  return isSameDate(date, yesterday);
+}
+
 export function isMatch(input: string, format: string): boolean {
   return !isNaN(+parse(input, format));
 }
+
+export const millisecondsInSecond = 1000;
