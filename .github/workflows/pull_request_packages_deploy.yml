@@ -276,7 +276,7 @@ jobs:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
           body: |
             <!-- diff_report_url -->
-            ## 👀 Diff deployed
+            ## Diff deployed
 
             [Diff Report](${{ needs.deploy_diff.outputs.url }})
 
