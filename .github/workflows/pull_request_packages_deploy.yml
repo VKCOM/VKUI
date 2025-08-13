@@ -269,6 +269,12 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: <!-- diff_report_url -->
 
+      - name: Generate comment body message
+        id: comment_message
+        uses: VKCOM/gh-actions/VKUI/generate-diff-message@main
+        with:
+          diff_report_url: ${{ needs.deploy_diff.outputs.url }}
+
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -276,9 +282,7 @@ jobs:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
           body: |
             <!-- diff_report_url -->
-            ## Diff deployed
-
-            [Diff Report](${{ needs.deploy_diff.outputs.url }})
+            ${{ steps.comment_message.outputs.diff_message }}
 
             Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace

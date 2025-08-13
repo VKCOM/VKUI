@@ -217,6 +217,7 @@ jobs:
         id: generate-diff
         run: |
           git diff --no-index packages/vkui/pr_dist/ packages/vkui/dist/ > code_diff.dif || true
+          git diff --no-index --name-status packages/vkui/pr_dist/ packages/vkui/dist/ > changed_files.txt || true
           if [ -s code_diff.dif ]; then
             echo "has_diff=true" >> $GITHUB_OUTPUT
           else
