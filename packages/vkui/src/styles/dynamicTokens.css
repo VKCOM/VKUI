@@ -4,7 +4,16 @@
   --vkui--size_border--regular: var(--vkui--size_border1x--regular);
 }
 
-@media (min-resolution: 2dppx) {
+/*
+В Windows можно менять общий масштаб интерфейса на 125%, 150% или 175%. Так как `--vkui--size_border--regular`
+используется не только для свойства `border`, но и для `height`, то первая отрендеренная подобная линия
+в `1px` будет больше чем остальные.
+
+Используем 1.25dppx вместо 2dppx, чтобы смена 1px на субпиксель срабатывал уже при 125%.
+
+@see https://github.com/VKCOM/VKUI/issues/8864
+*/
+@media (min-resolution: 1.25dppx) {
   :root {
     --vkui--size_border--regular: var(--vkui--size_border2x--regular);
   }
