@@ -40,7 +40,7 @@ jobs:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
         id: artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           name: publish_workflow_payload

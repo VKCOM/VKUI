@@ -1,10 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { classNames, isSameDate } from '@vkontakte/vkjs';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
+import { isSameMonth } from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDay,
@@ -216,7 +216,7 @@ export const CalendarDays = ({
             {week.map((day, i) => {
               const sameMonth = isSameMonth(day, viewDate);
               const isHidden = !showNeighboringMonth && !sameMonth;
-              const isToday = isSameDay(day, now);
+              const isToday = isSameDate(day, now);
               const isActive = isDayActive(day);
               const isFocused = isDayFocused(day);
               return (

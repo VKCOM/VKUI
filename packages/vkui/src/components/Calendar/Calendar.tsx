@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames, isSameDate } from '@vkontakte/vkjs';
-import { isSameDay, isSameMonth, startOfMonth } from 'date-fns';
+import { startOfMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { Keys, pressedKey } from '../../lib/accessibility';
@@ -14,7 +14,7 @@ import {
   NAVIGATION_KEYS,
   setTimeEqual,
 } from '../../lib/calendar';
-import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
+import { convertDateFromTimeZone, convertDateToTimeZone, isSameMonth } from '../../lib/date';
 import { isHTMLElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -297,7 +297,7 @@ export const Calendar = ({
 
   const onDayFocus = React.useCallback(
     (date: Date) => {
-      if (focusedDay && isSameDay(focusedDay, date)) {
+      if (focusedDay && isSameDate(focusedDay, date)) {
         return;
       }
 
@@ -311,7 +311,7 @@ export const Calendar = ({
 
   // activeDay это день в календаре соответствующий значению в инпуте
   const isDayActive = React.useCallback(
-    (day: Date) => Boolean(timeZonedValue && isSameDay(day, timeZonedValue)),
+    (day: Date) => Boolean(timeZonedValue && isSameDate(day, timeZonedValue)),
     [timeZonedValue],
   );
 
@@ -327,7 +327,7 @@ export const Calendar = ({
     (day: Date) => {
       // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
       if (isFocusableDayInViewDateMonth) {
-        return isSameDay(focusableDay, day);
+        return isSameDate(focusableDay, day);
       }
 
       // при открытии календаря focusableDay не определён,
@@ -338,7 +338,7 @@ export const Calendar = ({
 
       // при переключении месяца любая навигация с помощью Tab начинается
       // с первого дня месяца.
-      return isSameDay(startOfMonth(viewDate), day);
+      return isSameDate(startOfMonth(viewDate), day);
     },
     [
       focusableDay,

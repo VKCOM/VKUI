@@ -8,7 +8,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
-import { format, isMatch, parse } from '../../lib/date';
+import { dateFormatter, dateTimeFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
@@ -471,7 +471,13 @@ export const DateInput = ({
           aria-hidden
           tabIndex={readOnly ? 0 : -1}
           name={name}
-          value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
+          value={
+            value
+              ? enableTime
+                ? dateTimeFormatter.format(value)
+                : dateFormatter.format(value)
+              : ''
+          }
           onFocus={handleFieldEnter}
         />
         <Text
@@ -557,7 +563,7 @@ export const DateInput = ({
           )}
         </Text>
         {customValue && (
-          <Text className={styles.customValue} aria-hidden>
+          <Text className={styles.customValue} aria-hidden normalize={false}>
             {customValue}
           </Text>
         )}

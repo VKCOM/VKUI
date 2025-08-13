@@ -31,6 +31,8 @@ export interface CustomSelectInputProps
   multiline?: boolean;
   labelTextTestId?: string;
   fetching?: boolean;
+  searchable?: boolean;
+  accessible?: boolean;
 }
 
 /**
@@ -53,6 +55,8 @@ export const CustomSelectInput = ({
   disabled,
   fetching,
   labelTextTestId,
+  searchable,
+  accessible,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -63,12 +67,14 @@ export const CustomSelectInput = ({
   const handleRootRef = useExternRef(getRootRef);
   const focusWithin = useFocusWithin(handleRootRef);
 
+  const inputReadonly = restProps.readOnly || (disabled && fetching);
+
   const input = (
     <Text
       type="text"
       {...restProps}
       disabled={disabled && !fetching}
-      readOnly={restProps.readOnly || (disabled && fetching)}
+      readOnly={inputReadonly}
       Component="input"
       normalize={false}
       className={classNames(
@@ -79,6 +85,19 @@ export const CustomSelectInput = ({
       placeholder={children ? '' : placeholder}
     />
   );
+
+  const inputHidden = React.useMemo(() => {
+    if (accessible) {
+      if (!searchable) {
+        return true;
+      }
+      return !focusWithin || (inputReadonly && !fetching);
+    } else {
+      return false;
+    }
+  }, [accessible, fetching, focusWithin, inputReadonly, searchable]);
+
+  const labelHidden = showLabelOrPlaceholder ? false : !inputHidden;
 
   const platform = usePlatform();
   return (
@@ -94,6 +113,10 @@ export const CustomSelectInput = ({
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         before && styles.hasBefore,
         after && styles.hasAfter,
+        inputHidden && styles.inputHidden,
+        labelHidden && styles.labelHidden,
+        accessible && styles.accessible,
+        restProps.value && styles.hasInputValue,
         className,
       )}
       getRootRef={handleRootRef}
@@ -111,7 +134,7 @@ export const CustomSelectInput = ({
           data-testid={labelTextTestId}
         >
           <SelectTypography selectType={selectType} className={styles.title}>
-            {showLabelOrPlaceholder && title}
+            {title}
           </SelectTypography>
         </div>
         {/* Чтобы отключить autosuggestion в iOS, тултипы которого начинают всплывать даже когда input

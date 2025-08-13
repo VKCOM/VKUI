@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
-import { isAfter, isBefore, isSameDay, isSameMonth, startOfMonth } from 'date-fns';
+import { startOfMonth } from 'date-fns';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
+import { isSameMonth } from '../../lib/date';
 import { isHTMLElement } from '../../lib/dom';
 import type { DateRangeType } from './types';
 
@@ -46,13 +47,13 @@ export function useCalendarKeyboardNavigation({
         if (isFirst) {
           if (isSameMonth(newFocusedDay, firstCalendarViewDate)) {
             setFocusableDayOnFirstCalendar(newFocusedDay);
-          } else if (isAfter(newFocusedDay, firstCalendarViewDate)) {
+          } else if (newFocusedDay > firstCalendarViewDate) {
             setFocusableDayOnSecondCalendar(newFocusedDay);
           }
         } else {
           if (isSameMonth(newFocusedDay, secondCalendarViewDate)) {
             setFocusableDayOnSecondCalendar(newFocusedDay);
-          } else if (isBefore(newFocusedDay, secondCalendarViewDate)) {
+          } else if (newFocusedDay < secondCalendarViewDate) {
             setFocusableDayOnFirstCalendar(newFocusedDay);
           }
         }
@@ -162,8 +163,8 @@ export function useIsDayFocusable({
       // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
       if (isCalendarHasFocusableDay) {
         return Boolean(
-          (focusableDayOnFirstCalendar && isSameDay(focusableDayOnFirstCalendar, day)) ||
-            (focusableDayOnSecondCalendar && isSameDay(focusableDayOnSecondCalendar, day)),
+          (focusableDayOnFirstCalendar && isSameDate(focusableDayOnFirstCalendar, day)) ||
+            (focusableDayOnSecondCalendar && isSameDate(focusableDayOnSecondCalendar, day)),
         );
       }
 
@@ -175,7 +176,7 @@ export function useIsDayFocusable({
 
       // при переключении месяца любая навигация с помощью Tab начинается
       // с первого дня месяца.
-      return isSameDay(startOfMonth(viewDate), day);
+      return isSameDate(startOfMonth(viewDate), day);
     },
     [
       isCalendarHasFocusableDay,
