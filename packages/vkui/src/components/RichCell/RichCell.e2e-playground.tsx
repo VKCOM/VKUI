@@ -119,6 +119,18 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
             </Flex>,
           ],
         },
+        {
+          before: [<Avatar size={72} key="48" />],
+          children: ['Михаил Лихачев'],
+          contentAlign: ['start', 'end'],
+        },
+        {
+          before: [<Avatar size={72} key="48" />],
+          children: ['Михаил Лихачев'],
+          after: ['After'],
+          afterAlign: ['start'],
+          contentAlign: ['start', 'end'],
+        },
       ]}
     >
       {(props: RichCellProps) => <RichCell {...props} />}
