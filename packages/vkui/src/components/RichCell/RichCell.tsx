@@ -118,7 +118,6 @@ export const RichCell: React.FC<RichCellProps> & {
 }: RichCellProps) => {
   const { sizeY = 'none' } = useAdaptivity();
   const withAfter = after || afterCaption;
-  const withBottom = bottom || actions;
 
   const afterRender = () => {
     if (!withAfter) {
@@ -140,7 +139,6 @@ export const RichCell: React.FC<RichCellProps> & {
         !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         withAfter && styles.withAfter,
-        withBottom && styles.withBottom,
         withAfter && alignAfterClassNames[afterAlign],
         before && alignBeforeClassNames[beforeAlign],
         alignContentClassNames[contentAlign],

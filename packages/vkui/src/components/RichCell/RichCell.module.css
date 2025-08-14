@@ -32,18 +32,14 @@
   max-inline-size: 100%;
 }
 
-.host.withAfter:not(.alignAfterStart).withBottom.contentAlignStart .in,
+.host.withAfter:not(.alignAfterStart).contentAlignStart .in,
 .host:not(.withAfter).contentAlignStart .in {
   justify-content: flex-start;
 }
 
-.host.withAfter:not(.alignAfterStart).withBottom.contentAlignEnd .in,
+.host.withAfter:not(.alignAfterStart).contentAlignEnd .in,
 .host:not(.withAfter).contentAlignEnd .in {
   justify-content: flex-end;
-}
-
-.host:not(.withBottom) .content {
-  flex-grow: 1;
 }
 
 .content {
@@ -58,18 +54,15 @@
   min-inline-size: 0;
 }
 
-.alignAfterStart.contentAlignStart .contentBefore,
-.host:not(.withBottom).contentAlignStart .contentBefore {
+.alignAfterStart.contentAlignStart .contentBefore {
   justify-content: flex-start;
 }
 
-.alignAfterStart.contentAlignCenter .contentBefore,
-.host:not(.withBottom).contentAlignCenter .contentBefore {
+.alignAfterStart.contentAlignCenter .contentBefore {
   justify-content: center;
 }
 
-.alignAfterStart.contentAlignEnd .contentBefore,
-.host:not(.withBottom).contentAlignEnd .contentBefore {
+.alignAfterStart.contentAlignEnd .contentBefore {
   justify-content: flex-end;
 }
 
