@@ -140,6 +140,8 @@ import {
   useAdaptivityConditionalRender,
   useAdaptivityWithJSMediaQueries,
   useFocusVisible,
+  useModalRoot,
+  useModalsApi,
   usePagination,
   usePatchChildren,
   usePlatform,
@@ -311,4 +313,6 @@ export const scope: Record<string, unknown> = {
   useTooltip,
   usePagination,
   usePopover,
+  useModalRoot,
+  useModalsApi,
 };
