@@ -1,8 +1,10 @@
 import { isSameDate } from '@vkontakte/vkjs';
-import { addDays, addMonths, addWeeks, subDays, subMonths, subWeeks } from 'date-fns';
 import { clamp as clampNumber } from '../helpers/math';
 import { Keys, type KeysValues } from './accessibility';
 import {
+  addDays,
+  addMonths,
+  addWeeks,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
@@ -10,6 +12,9 @@ import {
   MONDAY,
   startOfMonth,
   startOfWeek,
+  subDays,
+  subMonths,
+  subWeeks,
 } from './date';
 
 export const DEFAULT_MAX_YEAR = 9999;

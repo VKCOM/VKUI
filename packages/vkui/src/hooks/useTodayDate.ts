@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
-import { differenceInMilliseconds } from 'date-fns';
 import { startOfTomorrow } from '../lib/date';
 import { useDOM } from '../lib/dom';
 
@@ -29,7 +28,7 @@ export function useTodayDate(listenDayChangesForUpdate = false): Date {
         if (document.visibilityState === 'visible') {
           const now = new Date();
 
-          const timeToDayChange = differenceInMilliseconds(startOfTomorrow(), now);
+          const timeToDayChange = +startOfTomorrow() - +now;
 
           // Удаляем старый таймаут
           window.clearTimeout(timeout);
