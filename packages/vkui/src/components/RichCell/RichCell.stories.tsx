@@ -103,14 +103,14 @@ export const Playground: Story = {
   ],
   render: ({ maxAfterWidth, afterCaption: afterCaptionProp, after: afterProp, ...args }) => {
     const after =
-      maxAfterWidth !== undefined ? (
+      maxAfterWidth !== undefined && afterProp ? (
         <div style={{ maxWidth: maxAfterWidth }}>{afterProp}</div>
       ) : (
         afterProp
       );
 
     const afterCaption =
-      maxAfterWidth !== undefined ? (
+      maxAfterWidth !== undefined && afterCaptionProp ? (
         <div style={{ maxWidth: maxAfterWidth }}>{afterCaptionProp}</div>
       ) : (
         afterCaptionProp
