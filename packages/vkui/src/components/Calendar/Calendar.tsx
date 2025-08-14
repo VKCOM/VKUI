@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { classNames, isSameDate } from '@vkontakte/vkjs';
-import { startOfMonth } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { Keys, pressedKey } from '../../lib/accessibility';
@@ -14,7 +13,12 @@ import {
   NAVIGATION_KEYS,
   setTimeEqual,
 } from '../../lib/calendar';
-import { convertDateFromTimeZone, convertDateToTimeZone, isSameMonth } from '../../lib/date';
+import {
+  convertDateFromTimeZone,
+  convertDateToTimeZone,
+  isSameMonth,
+  startOfMonth,
+} from '../../lib/date';
 import { isHTMLElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
