@@ -74,10 +74,13 @@
 - `calendarLabel`.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-import { addDays } from 'date-fns';
-
 const Example = () => {
-  const [value, setValue] = useState([new Date(), addDays(new Date(), 10)]);
+  const [value, setValue] = useState(() => {
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate + 10);
+
+    return [new Date(), endDate];
+  });
   const [disablePast, setDisablePast] = useState(false);
   const [disableFuture, setDisableFuture] = useState(false);
   const [disablePickers, setDisablePickers] = useState(false);
