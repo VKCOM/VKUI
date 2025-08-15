@@ -30,7 +30,7 @@ jobs:
       dependencies: ${{ steps.changes.outputs.dependencies }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Find changes
         uses: dorny/paths-filter@v3
@@ -44,7 +44,7 @@ jobs:
     name: Run linters
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -135,7 +135,7 @@ jobs:
     name: Build package
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -162,7 +162,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -244,7 +244,7 @@ jobs:
     name: Upload docs dist artifact (styleguide)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -265,7 +265,7 @@ jobs:
     name: Upload docs dist artifact (storybook)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -286,7 +286,7 @@ jobs:
     name: Upload docs dist artifact (beta)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -323,7 +323,7 @@ jobs:
     name: Check dependencies
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Enable Corepack
         run: corepack enable

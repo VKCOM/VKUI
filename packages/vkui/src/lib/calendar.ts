@@ -1,19 +1,16 @@
 import { isSameDate } from '@vkontakte/vkjs';
-import {
-  addDays,
-  addMonths,
-  addWeeks,
-  eachDayOfInterval,
-  endOfWeek,
-  startOfMonth,
-  startOfWeek,
-  subDays,
-  subMonths,
-  subWeeks,
-} from 'date-fns';
+import { addDays, addMonths, addWeeks, subDays, subMonths, subWeeks } from 'date-fns';
 import { clamp as clampNumber } from '../helpers/math';
 import { Keys, type KeysValues } from './accessibility';
-import { endOfMonth, isLastDayOfMonth } from './date';
+import {
+  eachDayOfInterval,
+  endOfMonth,
+  endOfWeek,
+  isLastDayOfMonth,
+  MONDAY,
+  startOfMonth,
+  startOfWeek,
+} from './date';
 
 export const DEFAULT_MAX_YEAR = 9999;
 // 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
@@ -76,10 +73,10 @@ export const getDaysNames = (
   const longFormatter = new Intl.DateTimeFormat(locale, {
     weekday: 'long',
   });
-  return eachDayOfInterval({
-    start: startOfWeek(now, { weekStartsOn }),
-    end: endOfWeek(now, { weekStartsOn }),
-  }).map((day) => ({ short: shortFormatter.format(day), long: longFormatter.format(day) }));
+  return eachDayOfInterval(
+    startOfWeek(now, { weekStartsOn }),
+    endOfWeek(now, { weekStartsOn }),
+  ).map((day) => ({ short: shortFormatter.format(day), long: longFormatter.format(day) }));
 };
 
 export const NAVIGATION_KEYS: KeysValues[] = [
@@ -110,10 +107,10 @@ export const navigateDate = (date?: Date | null, key?: (typeof NAVIGATION_KEYS)[
       newDate = addWeeks(newDate, 1);
       break;
     case Keys.HOME:
-      newDate = startOfWeek(newDate, { weekStartsOn: 1 });
+      newDate = startOfWeek(newDate, { weekStartsOn: MONDAY });
       break;
     case Keys.END:
-      newDate = endOfWeek(newDate, { weekStartsOn: 1 });
+      newDate = endOfWeek(newDate, { weekStartsOn: MONDAY });
       break;
     case Keys.PAGE_UP:
       newDate = subMonths(newDate, 1);
