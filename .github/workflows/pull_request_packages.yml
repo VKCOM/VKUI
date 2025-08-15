@@ -216,8 +216,8 @@ jobs:
       - name: Generate diff
         id: generate-diff
         run: |
-          git diff --no-index packages/vkui/pr_dist/ packages/vkui/dist/ > code_diff.dif || true
-          git diff --no-index --name-status packages/vkui/pr_dist/ packages/vkui/dist/ > changed_files.txt || true
+          git diff --no-index packages/vkui/dist/ packages/vkui/pr_dist/ > code_diff.dif || true
+          git diff --no-index --name-status packages/vkui/dist/ packages/vkui/pr_dist/ > changed_files.txt || true
           if [ -s code_diff.dif ]; then
             echo "has_diff=true" >> $GITHUB_OUTPUT
           else
@@ -228,7 +228,7 @@ jobs:
         if: steps.generate-diff.outputs.has_diff == 'true'
         run: |
           mkdir diff
-          diff2html -i file -F diff/diff-report.html --style side -- code_diff.dif
+          diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
 
       - name: Upload report
         if: steps.generate-diff.outputs.has_diff == 'true'
