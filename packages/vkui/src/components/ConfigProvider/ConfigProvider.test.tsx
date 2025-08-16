@@ -59,7 +59,7 @@ describe(ConfigProvider, () => {
       direction: 'ltr',
     };
     it.each([
-      ['platform', 'android'],
+      ['platform', 'material'],
       ['hasCustomPanelHeaderAfter', false],
       ['customPanelHeaderAfterMinWidth', 100],
       ['transitionMotionEnabled', true],

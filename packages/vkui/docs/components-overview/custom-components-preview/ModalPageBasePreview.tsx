@@ -38,7 +38,7 @@ export const ModalPageBasePreview = () => {
           <ModalPageHeader
             before={
               sizeX.compact &&
-              platform === 'android' && (
+              platform !== 'ios' && (
                 <PanelHeaderClose className={sizeX.compact.className} onClick={close} />
               )
             }
