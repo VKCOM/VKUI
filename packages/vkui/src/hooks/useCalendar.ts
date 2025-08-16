@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
-import { addMonths, subMonths } from 'date-fns';
 import type { CalendarProps } from '../components/Calendar/Calendar';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, isDayMinMaxRestricted } from '../lib/calendar';
-import { endOfDay, startOfDay } from '../lib/date';
+import { addMonths, endOfDay, startOfDay, subMonths } from '../lib/date';
 
 export interface UseCalendarDependencies
   extends Pick<

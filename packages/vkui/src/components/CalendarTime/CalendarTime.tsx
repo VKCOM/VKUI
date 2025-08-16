@@ -3,9 +3,9 @@
 import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { setHours, setMinutes } from 'date-fns';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { callMultiple } from '../../lib/callMultiple';
+import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';

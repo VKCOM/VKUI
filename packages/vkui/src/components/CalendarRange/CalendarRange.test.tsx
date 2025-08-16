@@ -1,6 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { addDays } from 'date-fns';
-import { dateFormatter, endOfDay, startOfDay } from '../../lib/date';
+import { addDays, dateFormatter, endOfDay, startOfDay } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';

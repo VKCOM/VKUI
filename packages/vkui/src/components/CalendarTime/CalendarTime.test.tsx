@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import { setHours, setMinutes } from 'date-fns';
+import { setHours, setMinutes } from '../../lib/date';
 import { userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { CalendarTime } from './CalendarTime';
