@@ -44,6 +44,11 @@ const sizeYClassNames = {
   regular: styles.sizeYRegular,
 };
 
+type ButtonDisabledOptions =
+  | Record<never, never>
+  | Pick<React.HTMLAttributes<HTMLAnchorElement>, 'tabIndex' | 'aria-disabled' | 'aria-busy'>
+  | { disabled: boolean }
+
 export interface VKUIButtonProps extends HasAlign {
   /**
    * Режим отображения кнопки.
@@ -83,7 +88,7 @@ export interface VKUIButtonProps extends HasAlign {
   rounded?: boolean;
 }
 
-export interface ButtonProps extends Omit<TappableOmitProps, 'size'>, VKUIButtonProps {}
+export interface ButtonProps extends Omit<TappableOmitProps, 'size'>, VKUIButtonProps { }
 
 /**
  * @see https://vkui.io/components/button
@@ -103,19 +108,41 @@ export const Button = ({
   disableSpinnerAnimation,
   rounded,
   disabled,
+  href,
   ...restProps
 }: ButtonProps): React.ReactNode => {
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
+  const isLink = Boolean(href)
+  const isInteractive = !(loading || disabled)
+
+  const disabledOptions: ButtonDisabledOptions = React.useMemo(() => {
+    if (isInteractive) {
+      return {}
+    }
+
+    if (!isLink) {
+      return { disabled: true };
+    }
+
+    return {
+      tabIndex: -1,
+      role: 'link',
+      'aria-disabled': true,
+      ...(loading && { 'aria-busy': true }),
+    };
+  }, [isInteractive, loading, isLink]);
+
   return (
     <Tappable
       hoverMode={styles.hover}
       activeMode={styles.active}
-      Component={restProps.href ? 'a' : 'button'}
+      Component={href ? 'a' : 'button'}
       focusVisibleMode="outside"
-      disabled={loading || disabled}
+      href={isInteractive ? href : undefined}
+      {...disabledOptions}
       {...restProps}
       onClick={loading ? undefined : onClick}
       baseClassName={classNames(
