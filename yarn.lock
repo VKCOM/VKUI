@@ -5415,10 +5415,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vkontakte/vkui-date-fns-tz@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "@vkontakte/vkui-date-fns-tz@npm:0.0.5"
-  checksum: 10/a4449ee2cd8768d297c0b60d3ada7f5168d1f2e87eddef424e83a068ed9b09d0568905410cc4494f803e9ade83a257ea80a15b0637af54047a7ce519ced86d15
+"@vkontakte/vkui-date-fns-tz@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@vkontakte/vkui-date-fns-tz@npm:0.0.6"
+  checksum: 10/35a0bd4f90fe1df0e13487bafe1d41d4d89db4f2f80ec7b1a52c75e7fef3c0a09ac2ba04213c7aa618fe8cef3c0f5ebb631fa2db62d8844b51647bd9dfafb9bb
   languageName: node
   linkType: hard
 
@@ -5613,7 +5613,7 @@ __metadata:
     "@types/postcss-import": "npm:^14.0.3"
     "@vkontakte/icons": "npm:^3.0.0"
     "@vkontakte/vkjs": "npm:^2.0.1"
-    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.5"
+    "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.6"
     date-fns: "npm:^4.1.0"
     react: "npm:^18.3.1"
