@@ -3,6 +3,7 @@
   inline-size: 100%;
   block-size: var(--vkui_internal_ModalPage--userHeight);
   margin-inline: auto;
+  pointer-events: initial;
   outline: none;
 }
 

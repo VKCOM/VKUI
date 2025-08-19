@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
+import { millisecondsInSecond } from '../../lib/date';
 import { canUseDOM, type DOMProps, withDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
@@ -501,7 +502,7 @@ class ViewInfiniteComponent extends React.Component<
     this.swipeBackPrevented = false;
 
     if (this.state.swipingBack && this.window) {
-      const speed = (this.state.swipeBackShift / event.duration) * 1000;
+      const speed = (this.state.swipeBackShift / event.duration) * millisecondsInSecond;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {

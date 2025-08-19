@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-date-fns-tz",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "date-fns timezone utils",
   "repository": {
     "type": "git",
@@ -85,7 +85,7 @@
     "prepack": "yarn run build"
   },
   "devDependencies": {
-    "@date-fns/tz": "1.3.1",
+    "@date-fns/tz": "1.4.1",
     "@swc/core": "^1.13.3",
     "typescript": "^5.9.2"
   }

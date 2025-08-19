@@ -1,19 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import {
-  addMonths,
-  endOfDay,
-  isAfter,
-  isBefore,
-  isSameDay,
-  isWithinInterval,
-  startOfDay,
-  subMonths,
-} from 'date-fns';
+import { isSameDate } from '@vkontakte/vkjs';
+import { addMonths, subMonths } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { isFirstDay, isLastDay } from '../../lib/calendar';
+import { endOfDay, isWithinInterval, MONDAY, startOfDay } from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -111,7 +104,7 @@ const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
     return false;
   }
 
-  return isWithinInterval(day, { start: startOfDay(value[0]), end: endOfDay(value[1]) });
+  return isWithinInterval(day, [startOfDay(value[0]), endOfDay(value[1])]);
 };
 
 /**
@@ -124,7 +117,7 @@ export const CalendarRange = ({
   disablePast,
   disableFuture,
   shouldDisableDate,
-  weekStartsOn = 1,
+  weekStartsOn = MONDAY,
   disablePickers,
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
@@ -191,11 +184,11 @@ export const CalendarRange = ({
       }
 
       const [start] = value;
-      if (start && isSameDay(date, start)) {
+      if (start && isSameDate(date, start)) {
         return [startOfDay(start), endOfDay(start)];
-      } else if (start && isBefore(date, start)) {
+      } else if (start && date < start) {
         return [startOfDay(date), endOfDay(start)];
-      } else if (start && isAfter(date, start)) {
+      } else if (start && date > start) {
         return [start, endOfDay(date)];
       }
       return value;
@@ -215,31 +208,33 @@ export const CalendarRange = ({
 
   const isDayActive = React.useCallback(
     (day: Date) =>
-      Boolean((value?.[0] && isSameDay(day, value[0])) || (value?.[1] && isSameDay(day, value[1]))),
+      Boolean(
+        (value?.[0] && isSameDate(day, value[0])) || (value?.[1] && isSameDate(day, value[1])),
+      ),
     [value],
   );
 
   const isDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDay(day, value[1]))),
+      Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDate(day, value[1]))),
     [value],
   );
 
   const isHintedDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDay(day, hintedDate[1]))),
+      Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDate(day, hintedDate[1]))),
     [hintedDate],
   );
 
   const isDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))),
+      Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDate(day, value[0]))),
     [value],
   );
 
   const isHintedDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDay(day, hintedDate[0]))),
+      Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDate(day, hintedDate[0]))),
     [hintedDate],
   );
 
@@ -278,7 +273,7 @@ export const CalendarRange = ({
 
   const onDayFocus = React.useCallback(
     (date: Date) => {
-      if (focusedDay && isSameDay(focusedDay, date)) {
+      if (focusedDay && isSameDate(focusedDay, date)) {
         return;
       }
 

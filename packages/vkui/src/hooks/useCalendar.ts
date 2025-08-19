@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { addMonths, endOfDay, isAfter, isBefore, isSameDay, startOfDay, subMonths } from 'date-fns';
+import { isSameDate } from '@vkontakte/vkjs';
+import { addMonths, subMonths } from 'date-fns';
 import type { CalendarProps } from '../components/Calendar/Calendar';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, isDayMinMaxRestricted } from '../lib/calendar';
+import { endOfDay, startOfDay } from '../lib/date';
 
 export interface UseCalendarDependencies
   extends Pick<
@@ -65,7 +67,7 @@ export function useCalendar({
   );
 
   const isDayFocused = React.useCallback(
-    (day: Date) => Boolean(focusedDay && isSameDay(day, focusedDay)),
+    (day: Date) => Boolean(focusedDay && isSameDate(day, focusedDay)),
     [focusedDay],
   );
 
@@ -76,10 +78,10 @@ export function useCalendar({
         return shouldDisableDate(day);
       }
       if (disableFuture) {
-        return isAfter(startOfDay(day), now);
+        return startOfDay(day) > now;
       }
       if (disablePast) {
-        return isBefore(endOfDay(day), now);
+        return endOfDay(day) < now;
       }
       if (minDateTime || maxDateTime) {
         return isDayMinMaxRestricted(day, { min: minDateTime, max: maxDateTime, withTime });

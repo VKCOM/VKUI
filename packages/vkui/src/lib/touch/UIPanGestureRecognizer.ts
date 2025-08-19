@@ -1,3 +1,4 @@
+import { millisecondsInSecond } from '../date';
 import { getFirstTouchEventData } from '../dom';
 
 export type Direction = { axis: 'x' | 'y'; direction: -1 | 1 | null };
@@ -5,7 +6,6 @@ export type Direction = { axis: 'x' | 'y'; direction: -1 | 1 | null };
 export type Coords = { x: number; y: number };
 
 const DEFAULT_INITIAL_TIME = 0;
-const MILLISECONDS = 1000;
 
 /**
  * JS имплементация класса из UIKIt iOS.
@@ -50,7 +50,7 @@ export class UIPanGestureRecognizer {
   }
 
   velocity(): Coords {
-    const deltaTime = (Date.now() - this.initialTime) / MILLISECONDS;
+    const deltaTime = (Date.now() - this.initialTime) / millisecondsInSecond;
 
     if (deltaTime <= 0) {
       return { x: 0, y: 0 };

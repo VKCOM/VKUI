@@ -1,10 +1,13 @@
 .host {
   flex-grow: 1;
   min-inline-size: 0; /* см. https://github.com/VKCOM/VKUI/issues/5687 */
-  margin-block: var(--vkui--spacing_size_xl);
   margin-inline-start: 12px;
   color: var(--vkui--color_text_primary);
   word-break: break-word;
+}
+
+.withPadding {
+  margin-block: var(--vkui--spacing_size_xl);
 }
 
 .host:first-child {
@@ -33,12 +36,12 @@
   color: var(--vkui--color_icon_tertiary);
 }
 
-.sizeYCompact {
+.withPadding.sizeYCompact {
   margin-block: var(--vkui--spacing_size_m);
 }
 
 @media (--sizeY-compact) {
-  .sizeYNone {
+  .withPadding.sizeYNone {
     margin-block: var(--vkui--spacing_size_m);
   }
 }

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { format, isToday, isYesterday, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
+import { dateFormatter, isToday, isYesterday } from '../../lib/date';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { DateInput, type DateInputPropsTestsProps } from './DateInput';
@@ -28,7 +29,7 @@ const getInputsLike = () => {
   ].filter(Boolean) as HTMLElement[];
 };
 
-const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+const dayTestId = (day: Date) => dateFormatter.format(day);
 
 const convertInputsToNumbers = (inputs: HTMLElement[]) => {
   return inputs.map((input) => Number(input.textContent));

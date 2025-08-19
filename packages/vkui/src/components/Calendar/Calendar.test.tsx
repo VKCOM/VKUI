@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { format } from 'date-fns';
+import { dateFormatter } from '../../lib/date';
 import { baselineComponent, setNodeEnv, userEvent } from '../../testing/utils';
 import { Calendar } from './Calendar';
 
@@ -9,7 +9,7 @@ const lastDayDate = new Date('2023-09-30T07:40:00.000Z');
 const minDate = new Date('2023-09-15T10:35:00.000Z');
 const maxDate = new Date('2023-09-29T07:20:00.000Z');
 
-const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+const dayTestId = (day: Date) => dateFormatter.format(day);
 
 describe('Calendar', () => {
   baselineComponent(Calendar);

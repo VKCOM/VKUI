@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { addDays, format } from 'date-fns';
+import { addDays } from 'date-fns';
+import { dateFormatter } from '../../lib/date';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { DateRangeInput } from './DateRangeInput';
 
 const startDate = new Date(2024, 6, 20);
 const endDate = new Date(2024, 6, 31);
 
-const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+const dayTestId = (day: Date) => dateFormatter.format(day);
 
 const testsProps = {
   startDateTestsProps: {
