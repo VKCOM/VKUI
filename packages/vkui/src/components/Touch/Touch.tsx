@@ -266,8 +266,7 @@ export const Touch = ({
   const [isTouchEnabled] = React.useState(touchEnabled);
   const gestureRef = React.useRef<Gesture | null>(null);
   const didSlide = React.useRef(false);
-  const { active: isTouchStartActive, setActive: setTouchStartActive } =
-    useTouchActiveWithAutoReset();
+  const touchStart = useTouchActiveWithAutoReset();
   const disposeTargetNativeGestureEvents = React.useRef<VoidFunction | null>(null);
 
   const cleanupTargetNativeGestureEvents = () => {
@@ -301,7 +300,7 @@ export const Touch = ({
     }
 
     if (isTouchEvent) {
-      setTouchStartActive(false);
+      touchStart.setActive(false);
       // https://github.com/VKCOM/VKUI/issues/4414
       // если тач-устройство и был зафиксирован touchmove,
       // то событие клика не вызывается
@@ -374,12 +373,12 @@ export const Touch = ({
 
   const handlePointerDown = useStableCallback((event: TouchEvent | MouseEvent) => {
     const isTouchEvent = checkTouchEvent(event);
-    if (!isTouchEvent && isTouchStartActive) {
+    if (!isTouchEvent && touchStart.active) {
       return;
     }
 
     if (isTouchEvent) {
-      setTouchStartActive(true);
+      touchStart.setActive(true);
     }
 
     gestureRef.current = initGesture(coordX(event), coordY(event));
