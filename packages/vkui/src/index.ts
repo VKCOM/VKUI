@@ -139,6 +139,7 @@ export type {
   SnackbarApi,
   UseSnackbarParameters,
   SnackbarsQueueStrategy,
+  SnackbarsVerticalOffset,
 } from './hooks/useSnackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';

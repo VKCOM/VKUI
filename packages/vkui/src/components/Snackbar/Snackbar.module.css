@@ -189,6 +189,13 @@
   }
 } /* stylelint-disable-next-line at-rule-empty-line-before */
 
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalEpic--hasTabbar) .host {
+  --vkui_internal--snackbar_safe_area_inset_bottom: calc(
+    var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
+  );
+}
+
 @keyframes animation-snackbar-slide-in {
   from {
     opacity: 0;

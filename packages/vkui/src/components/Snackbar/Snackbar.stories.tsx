@@ -51,20 +51,19 @@ type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
 
 const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
   'top-start',
-  'top',
-  'top-end',
   'bottom-start',
+  'top',
   'bottom',
+  'top-end',
   'bottom-end',
 ];
 
-const COLUMNS = [PLACEMENT.slice(0, 3), PLACEMENT.slice(3)];
+const COLUMNS = [PLACEMENT.slice(0, 2), PLACEMENT.slice(2, 4), PLACEMENT.slice(4)];
 
 export const Playground: Story = {
   render: function Render({ onClose, ...args }) {
-    const [queueStrategy, setQueueStrategy] = React.useState<SnackbarsQueueStrategy>('queue');
     const [snackbarApi, contextHolder] = useSnackbar({
-      queueStrategy,
+      queueStrategy: 'queue',
     });
     const [autoHide, setAutoHide] = React.useState(true);
 
@@ -105,8 +104,8 @@ export const Playground: Story = {
                 { value: 'queue', label: 'queue' },
                 { value: 'shift', label: 'shift' },
               ]}
-              value={queueStrategy}
-              onChange={(_, v) => setQueueStrategy(v as SnackbarsQueueStrategy)}
+              defaultValue="queue"
+              onChange={(_, v) => snackbarApi.setQueueStrategy(v as SnackbarsQueueStrategy)}
               id="custom-select"
             />
           </FormItem>

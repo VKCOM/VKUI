@@ -18,11 +18,17 @@ const animationStateClassNames = {
   exited: undefined,
 };
 
+const placementClassNames = {
+  top: styles.placementTop,
+  bottom: styles.placementBottom,
+};
+
 export const SnackbarAnimatedWrapper: React.FC<{
   snackbarData: SnackbarData;
   close: boolean;
   onClosed: (id: string) => void;
-}> = ({ snackbarData, close = false, onClosed }) => {
+  placement: 'top' | 'bottom';
+}> = ({ snackbarData, close = false, onClosed, placement }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const platform = usePlatform();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
@@ -52,6 +58,7 @@ export const SnackbarAnimatedWrapper: React.FC<{
         styles.host,
         animationStateClassNames[animationState],
         platform === 'ios' && styles.ios,
+        placementClassNames[placement],
       )}
       {...animationHandlers}
     >

@@ -1,2 +1,7 @@
 export { useSnackbar } from './useSnackbar';
-export type { SnackbarApi, UseSnackbarParameters, SnackbarsQueueStrategy } from './types';
+export type {
+  SnackbarApi,
+  UseSnackbarParameters,
+  SnackbarsQueueStrategy,
+  SnackbarsVerticalOffset,
+} from './types';

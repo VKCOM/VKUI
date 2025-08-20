@@ -178,6 +178,9 @@ import { BlockWrapper } from '@/components/wrappers';
 
 Хук `useSnackbar` предоставляет API для управления уведомлениями. Он возвращает массив, где первый элемент — это объект API, а второй элемент — это React-элемент, представляющий контейнер для уведомлений.
 Принимает объект со свойствами:
+
+- `verticalOffsetTop: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
+- `verticalOffsetBottom: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
 - `maxSnackbarsCount: number` - Максимальное число открытых на одном `placement` уведомлений.
 - `queueStrategy: "queue" | "shift"` - Поведение переполнения очереди снекбаров.
   `"queue"` - снекбары не откроются, пока для них не появится место. Значение по умолчанию.
@@ -191,13 +194,12 @@ import { BlockWrapper } from '@/components/wrappers';
 const [snackbarApi, snackbarHolder] = useSnackbar();
 
 const showSnackbar = () => {
-snackbarApi.open({
-children: 'Уведомление показано!',
-});
+  snackbarApi.open({
+    children: 'Уведомление показано!',
+  });
 };
 
 return (
-
   <>
     <Button onClick={showSnackbar}>Показать уведомление</Button>
     {snackbarHolder}
@@ -230,20 +232,18 @@ return (
 const snackbarApi = useSnackbarApi();
 
 const showSnackbar = () => {
-snackbarApi.open({
-children: 'Уведомление показано!',
-});
+  snackbarApi.open({
+    children: 'Уведомление показано!',
+  });
 };
 
 return <Button onClick={showSnackbar}>Показать уведомление</Button>;
-
 ```
 
 </Playground>
 
 > **Важно**:
 > Убедитесь, что ваше приложение обернуто в `AppRoot`, иначе `useSnackbarApi` не будет работать.
-
 
 ## Свойства и методы [#api]
 

@@ -34,6 +34,8 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
   const {
     maxSnackbarsCount: maxSnackbarsCountProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
     queueStrategy: queueStrategyProp = 'queue',
+    verticalOffsetTop,
+    verticalOffsetBottom,
   } = params;
   const [maxSnackbarsCount, setMaxSnackbarsCount] = React.useState(maxSnackbarsCountProp);
   const [queueStrategy, setQueueStrategy] = React.useState(queueStrategyProp);
@@ -188,11 +190,13 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
             placement={placement as SnackbarPlacement}
             onSnackbarContainerClosed={removeSnackbar}
             onSnackbarShow={onSnackbarShow}
+            verticalOffsetTop={verticalOffsetTop}
+            verticalOffsetBottom={verticalOffsetBottom}
           />
         ))}
       </>
     );
-  }, [onSnackbarShow, removeSnackbar, snackbarsMap]);
+  }, [onSnackbarShow, removeSnackbar, snackbarsMap, verticalOffsetBottom, verticalOffsetTop]);
 
   return [api, holder];
 };

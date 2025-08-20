@@ -1,8 +1,7 @@
 .host {
   --vkui_internal--snackbars_container_in_padding: 8px;
-  --vkui_internal--snackbars_container_safe_area_inset_bottom: var(
-    --vkui_internal--safe_area_inset_bottom
-  );
+  --vkui_internal--snackbars_container_offset_top: 0px;
+  --vkui_internal--snackbars_container_offset_bottom: 0px;
 
   position: fixed;
   padding: var(--vkui_internal--snackbars_container_in_padding);
@@ -10,20 +9,26 @@
 
 .placementTop,
 .placementBottom {
-  inset-inline: auto;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
 }
 
 .placementTop,
 .placementTopStart,
 .placementTopEnd {
-  inset-block-start: var(--vkui_internal--safe_area_inset_top);
+  inset-block-start: calc(
+    var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--snackbars_container_offset_top)
+  );
   flex-direction: column-reverse;
 }
 
 .placementBottom,
 .placementBottomStart,
 .placementBottomEnd {
-  inset-block-end: var(--vkui_internal--snackbars_container_safe_area_inset_bottom);
+  inset-block-end: calc(
+    var(--vkui_internal--safe_area_inset_bottom) +
+      var(--vkui_internal--snackbars_container_offset_bottom)
+  );
   flex-direction: column;
 }
 
@@ -43,4 +48,13 @@
   .host {
     --vkui_internal--snackbars_container_in_padding: 12px;
   }
+}
+
+/**
+ * CMP:
+ * Epic
+ */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalEpic--hasTabbar) .host {
+  --vkui_internal--snackbars_container_offset_bottom: var(--vkui_internal--tabbar_height);
 }

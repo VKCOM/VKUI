@@ -27,6 +27,8 @@ export interface SnackbarApi {
 
 export type SnackbarsQueueStrategy = 'queue' | 'shift';
 
+export type SnackbarsVerticalOffset = number | string;
+
 export interface UseSnackbarParameters {
   // Максимальное число открытых на одном `placement` снекбаров
   maxSnackbarsCount?: number;
@@ -34,6 +36,10 @@ export interface UseSnackbarParameters {
   // - `"queue"` - снекбары не откроются, пока для них не появится место. Значение по умолчанию.
   // - `"shift"` - снекбары форсируют закрытие более старых снекбаров, чтобы освободить место.
   queueStrategy?: SnackbarsQueueStrategy;
+  // Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда на странице используется компонент `FixedLayout`
+  verticalOffsetTop?: SnackbarsVerticalOffset;
+  // Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда на странице используется компонент `FixedLayout`
+  verticalOffsetBottom?: SnackbarsVerticalOffset;
 }
 
 export type UseSnackbarResult = [SnackbarApi, React.ReactElement | null];
