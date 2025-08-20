@@ -28,7 +28,7 @@ export function useTodayDate(listenDayChangesForUpdate = false): Date {
         if (document.visibilityState === 'visible') {
           const now = new Date();
 
-          const timeToDayChange = +startOfTomorrow() - +now;
+          const timeToDayChange = Number(startOfTomorrow()) - Number(now);
 
           // Удаляем старый таймаут
           window.clearTimeout(timeout);
