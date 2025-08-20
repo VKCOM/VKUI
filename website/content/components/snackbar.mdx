@@ -177,11 +177,16 @@ import { BlockWrapper } from '@/components/wrappers';
 ## Хук `useSnackbar`
 
 Хук `useSnackbar` предоставляет API для управления уведомлениями. Он возвращает массив, где первый элемент — это объект API, а второй элемент — это React-элемент, представляющий контейнер для уведомлений.
-Принимает объект со свойством `maxSnackbarsCount`: Максимальное число открытых на одном `placement` уведомлений. Уведомления, которые не поместились, откроются, когда для них будет место.
+Принимает объект со свойствами:
+- `maxSnackbarsCount: number` - Максимальное число открытых на одном `placement` уведомлений.
+- `queueStrategy: "queue" | "shift"` - Поведение переполнения очереди снекбаров.
+  `"queue"` - снекбары не откроются, пока для них не появится место. Значение по умолчанию.
+  `"shift"` - снекбары форсируют закрытие более старых снекбаров, чтобы освободить место.
 
 ### Пример использования
 
 <Playground Wrapper={BlockWrapper}>
+
 ```jsx
 const [snackbarApi, snackbarHolder] = useSnackbar();
 
@@ -199,6 +204,7 @@ return (
   </>
 );
 ```
+
 </Playground>
 
 ### API
@@ -209,6 +215,8 @@ return (
 - `update(id: string, config: Omit<SnackbarConfig, 'id' | 'placement'>): void` - Метод для обновления свойств уведомления. Можно поменять любое свойство, кроме 'id' и 'placement'.
 - `getSnackbars(): SnackbarData[]` - Метод для получения списка всех открытых снекбаров.
 - `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
+- `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
+- `setQueueStrategy: (behavior: SnackbarsQueueStrategy) => void` - Метод для изменения поведения переполнения очереди снекбаров.
 
 ## Хук `useSnackbarApi`
 
@@ -217,6 +225,7 @@ return (
 ### Пример использования
 
 <Playground Wrapper={BlockWrapper}>
+
 ```jsx
 const snackbarApi = useSnackbarApi();
 
@@ -229,6 +238,7 @@ children: 'Уведомление показано!',
 return <Button onClick={showSnackbar}>Показать уведомление</Button>;
 
 ```
+
 </Playground>
 
 > **Важно**:
