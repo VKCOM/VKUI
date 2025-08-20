@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useSnackbar } from '../../hooks/useSnackbar';
-import { type SnackbarApi } from '../../hooks/useSnackbar/types';
+import { type SnackbarApi } from '../../hooks/useSnackbar';
 import { type HasChildren } from '../../types';
 
 const SnackbarApiContext = React.createContext<SnackbarApi>({
@@ -15,6 +15,8 @@ const SnackbarApiContext = React.createContext<SnackbarApi>({
   getSnackbars: () => [],
   setMaxSnackbarsCount: noop,
   setQueueStrategy: noop,
+  setVerticalOffsetTop: noop,
+  setVerticalOffsetBottom: noop,
 });
 
 export const useSnackbarApi = () => {

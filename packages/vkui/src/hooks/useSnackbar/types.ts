@@ -23,6 +23,10 @@ export interface SnackbarApi {
   setMaxSnackbarsCount: (count: number) => void;
   // Метод для изменения поведения переполнения очереди снекбаров
   setQueueStrategy: (behavior: SnackbarsQueueStrategy) => void;
+  // Метод для изменения отступа контейнера снекбаров от верха
+  setVerticalOffsetTop: (offset: SnackbarsVerticalOffset) => void;
+  // Метод для изменения отступа контейнера снекбаров от низа
+  setVerticalOffsetBottom: (offset: SnackbarsVerticalOffset) => void;
 }
 
 export type SnackbarsQueueStrategy = 'queue' | 'shift';

@@ -218,7 +218,9 @@ return (
 - `getSnackbars(): SnackbarData[]` - Метод для получения списка всех открытых снекбаров.
 - `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
 - `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
-- `setQueueStrategy: (behavior: SnackbarsQueueStrategy) => void` - Метод для изменения поведения переполнения очереди снекбаров.
+- `setQueueStrategy(behavior: SnackbarsQueueStrategy): void` - Метод для изменения поведения переполнения очереди снекбаров.
+- `setVerticalOffsetTop(offset: SnackbarsVerticalOffset): void` - Метод для изменения отступа контейнера снекбаров от верха.
+- `setVerticalOffsetBottom(offset: SnackbarsVerticalOffset): void` - Метод для изменения отступа контейнера снекбаров с низу.
 
 ## Хук `useSnackbarApi`
 

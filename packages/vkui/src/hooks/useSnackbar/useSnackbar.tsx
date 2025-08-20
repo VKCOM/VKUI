@@ -5,6 +5,7 @@ import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { heightPlus, widthPlus } from '../../lib/adaptivity/breakpoints';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect.ts';
 import { useMediaQuery } from '../useMediaQuery';
 import { SnackbarsContainer } from './SnackbarsContainer';
 import {
@@ -30,15 +31,49 @@ const resolveMobilePlacement = (
 
 const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 
-export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResult => {
+const useSnackbarConfig = (params: UseSnackbarParameters = {}) => {
   const {
     maxSnackbarsCount: maxSnackbarsCountProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
     queueStrategy: queueStrategyProp = 'queue',
-    verticalOffsetTop,
-    verticalOffsetBottom,
+    verticalOffsetTop: verticalOffsetTopProp,
+    verticalOffsetBottom: verticalOffsetBottomProp,
   } = params;
+
   const [maxSnackbarsCount, setMaxSnackbarsCount] = React.useState(maxSnackbarsCountProp);
   const [queueStrategy, setQueueStrategy] = React.useState(queueStrategyProp);
+  const [verticalOffsetTop, setVerticalOffsetTop] = React.useState(verticalOffsetTopProp);
+  const [verticalOffsetBottom, setVerticalOffsetBottom] = React.useState(verticalOffsetBottomProp);
+
+  useIsomorphicLayoutEffect(
+    () => setMaxSnackbarsCount(maxSnackbarsCountProp),
+    [maxSnackbarsCountProp],
+  );
+  useIsomorphicLayoutEffect(() => setQueueStrategy(queueStrategyProp), [queueStrategyProp]);
+  useIsomorphicLayoutEffect(
+    () => setVerticalOffsetTop(verticalOffsetTopProp),
+    [verticalOffsetTopProp],
+  );
+  useIsomorphicLayoutEffect(
+    () => setVerticalOffsetBottom(verticalOffsetBottomProp),
+    [verticalOffsetBottomProp],
+  );
+
+  return {
+    maxSnackbarsCount: [maxSnackbarsCount, setMaxSnackbarsCount] as const,
+    queueStrategy: [queueStrategy, setQueueStrategy] as const,
+    verticalOffsetTop: [verticalOffsetTop, setVerticalOffsetTop] as const,
+    verticalOffsetBottom: [verticalOffsetBottom, setVerticalOffsetBottom] as const,
+  };
+};
+
+export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResult => {
+  const {
+    maxSnackbarsCount: [maxSnackbarsCount, setMaxSnackbarsCount],
+    queueStrategy: [queueStrategy, setQueueStrategy],
+    verticalOffsetTop: [verticalOffsetTop, setVerticalOffsetTop],
+    verticalOffsetBottom: [verticalOffsetBottom, setVerticalOffsetBottom],
+  } = useSnackbarConfig(params);
+
   const [data, setData] = React.useState<{
     snackbars: SnackbarData[];
     snackbarsToClose: Set<string>;
@@ -150,8 +185,19 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
       getSnackbars: () => snackbarsRef.current,
       setMaxSnackbarsCount,
       setQueueStrategy,
+      setVerticalOffsetTop,
+      setVerticalOffsetBottom,
     };
-  }, [onCloseAllSnackbars, onCloseSnackbar, onOpenSnackbar, onUpdateSnackbar]);
+  }, [
+    onCloseAllSnackbars,
+    onCloseSnackbar,
+    onOpenSnackbar,
+    onUpdateSnackbar,
+    setMaxSnackbarsCount,
+    setQueueStrategy,
+    setVerticalOffsetBottom,
+    setVerticalOffsetTop,
+  ]);
 
   const onSnackbarShow = React.useCallback((id: string) => {
     showedSnackbars.current.add(id);
