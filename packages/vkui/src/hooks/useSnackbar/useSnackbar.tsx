@@ -5,7 +5,7 @@ import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { heightPlus, widthPlus } from '../../lib/adaptivity/breakpoints';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect.ts';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useMediaQuery } from '../useMediaQuery';
 import { SnackbarsContainer } from './SnackbarsContainer';
 import {

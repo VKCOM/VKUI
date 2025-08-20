@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Flex } from '../../components/Flex/Flex';
 import { type SnackbarPlacement } from '../../components/Snackbar/types';
-import { type CSSCustomProperties } from '../../types.ts';
+import { type CSSCustomProperties } from '../../types';
 import { SnackbarAnimatedWrapper } from './SnackbarAnimatedWrapper';
 import {
   SnackbarsContainerContext,

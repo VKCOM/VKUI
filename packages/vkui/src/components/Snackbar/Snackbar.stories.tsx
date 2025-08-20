@@ -10,7 +10,7 @@ import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { Flex } from '../Flex/Flex';
-import { FormItem } from '../FormItem/FormItem.tsx';
+import { FormItem } from '../FormItem/FormItem';
 import { Image } from '../Image/Image';
 import { Select } from '../Select/Select';
 import { Snackbar, type SnackbarProps } from './Snackbar';
