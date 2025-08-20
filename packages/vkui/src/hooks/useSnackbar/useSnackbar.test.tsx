@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import { waitCSSKeyframesAnimation } from '../../testing/utils';
-import { type SnackbarApi } from './types';
+import { type SnackbarApi, type UseSnackbarParameters } from './types';
 import { useSnackbar } from './useSnackbar';
 
-const TestComponent: React.FC<{
-  apiRef: React.RefObject<SnackbarApi | null>;
-  maxSnackbarsCount?: number;
-}> = ({ apiRef, maxSnackbarsCount }) => {
-  const [snackbarApi, snackbar] = useSnackbar({ maxSnackbarsCount });
+const TestComponent: React.FC<
+  UseSnackbarParameters & {
+    apiRef: React.RefObject<SnackbarApi | null>;
+  }
+> = ({ apiRef, maxSnackbarsCount, queueStrategy }) => {
+  const [snackbarApi, snackbar] = useSnackbar({ maxSnackbarsCount, queueStrategy });
 
   React.useImperativeHandle(apiRef, () => snackbarApi);
 
@@ -141,7 +142,7 @@ describe('useSnackbar', () => {
     expect(screen.queryByText('Updated test Snackbar to close')).toBeInTheDocument();
   });
 
-  it('12should open multiple snackbars in different placements', async () => {
+  it('check maxSnackbarsCount with queueStrategy="queue"', async () => {
     render(<TestComponent apiRef={apiRef} maxSnackbarsCount={1} />);
 
     let snackbar2: string | null = null;
@@ -161,6 +162,38 @@ describe('useSnackbar', () => {
     act(() => {
       apiRef.current?.close(snackbar2!);
     });
+
+    expect(apiRef.current?.getSnackbars()).toHaveLength(1);
+  });
+
+  it('check maxSnackbarsCount with queueStrategy="shift"', async () => {
+    render(<TestComponent apiRef={apiRef} queueStrategy="shift" maxSnackbarsCount={1} />);
+
+    act(() => {
+      apiRef.current?.open({
+        'children': 'Test Snackbar 1',
+        'data-testid': 'snackbar-1',
+        'placement': 'top-start',
+      });
+    });
+    act(() => {
+      apiRef.current?.open({
+        'children': 'Test Snackbar 2',
+        'data-testid': 'snackbar-2',
+        'placement': 'top-start',
+      });
+    });
+
+    expect(screen.queryByText('Test Snackbar 1')).toBeInTheDocument();
+    expect(screen.queryByText('Test Snackbar 2')).toBeInTheDocument();
+
+    expect(apiRef.current?.getSnackbars()).toHaveLength(2);
+
+    const snackbar = screen.getByTestId('snackbar-1').firstElementChild as HTMLElement;
+    const snackbarWrapper = snackbar.parentElement!.parentElement!;
+
+    await waitCSSKeyframesAnimation(snackbar, { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(snackbarWrapper, { runOnlyPendingTimers: true });
 
     expect(apiRef.current?.getSnackbars()).toHaveLength(1);
   });

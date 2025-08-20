@@ -31,8 +31,12 @@ const resolveMobilePlacement = (
 const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 
 export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResult => {
-  const { maxSnackbarsCount: maxSnackbarsCountProp = DEFAULT_MAX_VISIBLE_SNACKBARS } = params;
+  const {
+    maxSnackbarsCount: maxSnackbarsCountProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
+    queueStrategy: queueStrategyProp = 'queue',
+  } = params;
   const [maxSnackbarsCount, setMaxSnackbarsCount] = React.useState(maxSnackbarsCountProp);
+  const [queueStrategy, setQueueStrategy] = React.useState(queueStrategyProp);
   const [data, setData] = React.useState<{
     snackbars: SnackbarData[];
     snackbarsToClose: Set<string>;
@@ -41,6 +45,7 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
     snackbarsToClose: new Set<string>(),
   });
   const snackbarsRef = React.useRef<SnackbarData[]>([]);
+  const snackbarsMapRef = React.useRef<SnackbarsMap>({});
   const showedSnackbars = React.useRef<Set<string>>(new Set());
 
   const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
@@ -65,24 +70,40 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
       const placement: SnackbarPlacement = config.placement || 'bottom-start';
       const resolvedPlacement = isDesktop ? placement : resolveMobilePlacement(placement);
 
+      const placementSnackbars = snackbarsMapRef.current[resolvedPlacement] || [];
+
+      const withOverflow =
+        queueStrategy === 'shift' && placementSnackbars.length >= maxSnackbarsCount;
+
       const id = config.id || uuidv4();
-      setData((oldData) => ({
-        ...oldData,
-        snackbars: [
-          ...oldData.snackbars,
-          {
-            ...config,
-            id,
-            placement: resolvedPlacement,
-            onClose: () => {
-              config.onClose?.();
+      setData((oldData) => {
+        let snackbarsToClose = oldData.snackbarsToClose;
+
+        if (withOverflow) {
+          const snackbarToClose = placementSnackbars.find(
+            (snackbar) => !snackbarsToClose.has(snackbar.id),
+          );
+          snackbarToClose && snackbarsToClose.add(snackbarToClose.id);
+        }
+
+        return {
+          snackbarsToClose,
+          snackbars: [
+            ...oldData.snackbars,
+            {
+              ...config,
+              id,
+              placement: resolvedPlacement,
+              onClose: () => {
+                config.onClose?.();
+              },
             },
-          },
-        ],
-      }));
+          ],
+        };
+      });
       return id;
     },
-    [isDesktop],
+    [isDesktop, maxSnackbarsCount, queueStrategy],
   );
 
   const onUpdateSnackbar: SnackbarApi['update'] = React.useCallback((id, config) => {
@@ -126,15 +147,23 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
       closeAll: onCloseAllSnackbars,
       getSnackbars: () => snackbarsRef.current,
       setMaxSnackbarsCount,
+      setQueueStrategy,
     };
   }, [onCloseAllSnackbars, onCloseSnackbar, onOpenSnackbar, onUpdateSnackbar]);
+
+  const onSnackbarShow = React.useCallback((id: string) => {
+    showedSnackbars.current.add(id);
+  }, []);
 
   const snackbarsMap: SnackbarsMap = React.useMemo(() => {
     const map: SnackbarsMap = {};
     data.snackbars.forEach((snackbar) => {
       const placement = snackbar.placement;
       const placementSnackbars = map[placement] || [];
-      if (placementSnackbars.length < maxSnackbarsCount) {
+      if (
+        placementSnackbars.length <
+        (queueStrategy === 'shift' ? maxSnackbarsCount + 1 : maxSnackbarsCount)
+      ) {
         placementSnackbars.push({
           ...snackbar,
           open: data.snackbarsToClose.has(snackbar.id) ? false : undefined,
@@ -142,12 +171,9 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
       }
       map[placement] = placementSnackbars;
     });
+    snackbarsMapRef.current = map;
     return map;
-  }, [data.snackbars, data.snackbarsToClose, maxSnackbarsCount]);
-
-  const onSnackbarShow = React.useCallback((id: string) => {
-    showedSnackbars.current.add(id);
-  }, []);
+  }, [data.snackbars, data.snackbarsToClose, maxSnackbarsCount, queueStrategy]);
 
   const holder = React.useMemo(() => {
     if (!Object.keys(snackbarsMap).length) {

@@ -5588,7 +5588,6 @@ __metadata:
     swc-plugin-css-modules: "npm:5.0.1"
     swc-plugin-transform-remove-imports: "npm:6.0.1"
     typescript: "npm:^5.9.2"
-    uuid: "npm:^11.1.0"
     webpack: "npm:^5.101.2"
     webpack-cli: "npm:^6.0.1"
     webpack-merge: "npm:^6.0.1"
@@ -5619,6 +5618,7 @@ __metadata:
     date-fns: "npm:^4.1.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    uuid: "npm:^11.1.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
@@ -21204,15 +21204,6 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: 10/5d6949693d58cb2e636a84f3ee1c6e7b2f9c16cb1d42d0ecb386d8c025c69e327205aa1c69e2868cc06a01e5e20681fbba55a4e0ed0cce913d60334024eae798
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^11.1.0":
-  version: 11.1.0
-  resolution: "uuid@npm:11.1.0"
-  bin:
-    uuid: dist/esm/bin/uuid
-  checksum: 10/d2da43b49b154d154574891ced66d0c83fc70caaad87e043400cf644423b067542d6f3eb641b7c819224a7cd3b4c2f21906acbedd6ec9c6a05887aa9115a9cf5
   languageName: node
   linkType: hard
 

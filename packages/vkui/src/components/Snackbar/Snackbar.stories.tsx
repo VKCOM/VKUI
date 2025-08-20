@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
+import { type SnackbarsQueueStrategy, useSnackbar } from '../../hooks/useSnackbar';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { useSnackbarApi } from '../AppRoot/SnackbarContext';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { Flex } from '../Flex/Flex';
-import { FlexItem } from '../Flex/FlexItem/FlexItem';
+import { FormItem } from '../FormItem/FormItem.tsx';
 import { Image } from '../Image/Image';
+import { Select } from '../Select/Select';
 import { Snackbar, type SnackbarProps } from './Snackbar';
 import { type SnackbarPlacement } from './types';
 
@@ -57,10 +58,15 @@ const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
   'bottom-end',
 ];
 
+const COLUMNS = [PLACEMENT.slice(0, 3), PLACEMENT.slice(3)];
+
 export const Playground: Story = {
   render: function Render({ onClose, ...args }) {
-    const snackbarApi = useSnackbarApi();
-    const [autoHide, setAutoHide] = useState(true);
+    const [queueStrategy, setQueueStrategy] = React.useState<SnackbarsQueueStrategy>('queue');
+    const [snackbarApi, contextHolder] = useSnackbar({
+      queueStrategy,
+    });
+    const [autoHide, setAutoHide] = React.useState(true);
 
     const _onOpen = (placement: SnackbarPlacement) => {
       snackbarApi.open({ duration: autoHide ? undefined : null, ...args, placement });
@@ -79,17 +85,31 @@ export const Playground: Story = {
     return (
       <>
         <Flex direction="column" gap="2xl">
-          {PLACEMENT.map((placement) => (
-            <Flex gap="2xl" justify="space-between" key={placement} noWrap>
-              <FlexItem flexBasis={100}>{placement}</FlexItem>
-              <FlexItem flex="grow">
-                <Button onClick={() => _onOpen(placement)}>Открыть</Button>
-              </FlexItem>
-            </Flex>
-          ))}
+          <Flex gap="2xl">
+            {COLUMNS.map((placements) => (
+              <Flex direction="column" gap="xl" key={placements.join('_')}>
+                {placements.map((placement) => (
+                  <Button key={placement} onClick={() => _onOpen(placement)}>
+                    {placement}
+                  </Button>
+                ))}
+              </Flex>
+            ))}
+          </Flex>
           <Checkbox checked={autoHide} onChange={() => setAutoHide((v) => !v)}>
             Автоскрытие
           </Checkbox>
+          <FormItem top="Overflow behavior" htmlFor="custom-select" noPadding>
+            <Select
+              options={[
+                { value: 'queue', label: 'queue' },
+                { value: 'shift', label: 'shift' },
+              ]}
+              value={queueStrategy}
+              onChange={(_, v) => setQueueStrategy(v as SnackbarsQueueStrategy)}
+              id="custom-select"
+            />
+          </FormItem>
           <Button appearance="negative" stretched onClick={snackbarApi.closeAll}>
             Закрыть все
           </Button>
@@ -97,6 +117,7 @@ export const Playground: Story = {
             Обновить все
           </Button>
         </Flex>
+        {contextHolder}
       </>
     );
   },

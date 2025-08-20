@@ -14,6 +14,7 @@ const SnackbarApiContext = React.createContext<SnackbarApi>({
   closeAll: noop,
   getSnackbars: () => [],
   setMaxSnackbarsCount: noop,
+  setQueueStrategy: noop,
 });
 
 export const useSnackbarApi = () => {
