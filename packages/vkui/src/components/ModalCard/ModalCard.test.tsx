@@ -150,6 +150,17 @@ describe(ModalCard, () => {
     expect(onClose).toHaveBeenCalledWith('click-close-button');
   });
 
+  test('close by esc button', async () => {
+    const onClose = jest.fn();
+    const h = render(<ModalCard key="host" id="host" open data-testid="host" onClose={onClose} />);
+    await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
+    act(() => {
+      fireEvent.keyDown(document, { key: 'Escape', code: 'Escape' });
+    });
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledWith('escape-key');
+  });
+
   test('check disable focus trap', async () => {
     const Fixture = () => {
       const [open, setOpen] = useState(false);

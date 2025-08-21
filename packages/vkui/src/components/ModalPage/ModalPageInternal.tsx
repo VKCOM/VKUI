@@ -1,14 +1,16 @@
 'use client';
 /* eslint-disable jsdoc/require-jsdoc */
 
-import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
+import { type ComponentType, useCallback } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener.ts';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
+import { useDOM } from '../../lib/dom.tsx';
 import { type SnapPoint, type SnapPointChange, useBottomSheet } from '../../lib/sheet';
 import type { CSSCustomProperties } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
@@ -78,6 +80,7 @@ export const ModalPageInternal = ({
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
+  const { document } = useDOM();
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
     enableAppear: true,
     onEnter() {
@@ -137,7 +140,7 @@ export const ModalPageInternal = ({
     />
   );
   const handleEscKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLElement>) => {
+    (event: KeyboardEvent) => {
       if (closable && pressedKey(event) === Keys.ESCAPE) {
         onClose('escape-key');
       }
@@ -145,15 +148,12 @@ export const ModalPageInternal = ({
     [closable, onClose],
   );
 
+  useGlobalEventListener(document, 'keydown', handleEscKeyDown);
+
   useScrollLock(!hidden);
 
   return (
-    <ModalOutlet
-      hidden={hidden}
-      isDesktop={isDesktop}
-      onKeyDown={handleEscKeyDown}
-      disableModalOverlay={disableModalOverlay}
-    >
+    <ModalOutlet hidden={hidden} isDesktop={isDesktop} disableModalOverlay={disableModalOverlay}>
       {modalOverlay}
       <FocusTrap
         {...restProps}

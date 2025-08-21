@@ -160,6 +160,19 @@ describe(ModalPage, () => {
     expect(onClose).toHaveBeenCalledWith('click-close-button', expect.any(Object));
   });
 
+  test('close by esc button', async () => {
+    const onClose = jest.fn();
+    const h = render(
+      <ModalPage key="host" id="host" open noFocusToDialog data-testid="host" onClose={onClose} />,
+    );
+    await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+    act(() => {
+      fireEvent.keyDown(document, { key: 'Escape', code: 'Escape' });
+    });
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledWith('escape-key');
+  });
+
   test('check disable focus trap', async () => {
     const Fixture = () => {
       const [open, setOpen] = useState(false);

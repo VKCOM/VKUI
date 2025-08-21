@@ -1,15 +1,17 @@
 'use client';
 /* eslint-disable jsdoc/require-jsdoc */
 
-import { type ComponentType, type KeyboardEvent, type ReactNode, useCallback } from 'react';
+import { type ComponentType, type ReactNode, useCallback } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener.ts';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
+import { useDOM } from '../../lib/dom.tsx';
 import { useBottomSheet } from '../../lib/sheet';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { ModalCardBase } from '../ModalCardBase/ModalCardBase';
@@ -77,6 +79,7 @@ export const ModalCardInternal = ({
   ...restProps
 }: ModalCardInternalProps): ReactNode => {
   const platform = usePlatform();
+  const { document } = useDOM();
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
     enableAppear: true,
     onEnter() {
@@ -131,13 +134,15 @@ export const ModalCardInternal = ({
     />
   );
   const handleEscKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLElement>) => {
+    (event: KeyboardEvent) => {
       if (closable && pressedKey(event) === Keys.ESCAPE) {
         onClose('escape-key');
       }
     },
     [closable, onClose],
   );
+
+  useGlobalEventListener(document, 'keydown', handleEscKeyDown);
 
   useScrollLock(!hidden);
   useFocusTrap(ref, {
@@ -147,12 +152,7 @@ export const ModalCardInternal = ({
   });
 
   return (
-    <ModalOutlet
-      hidden={hidden}
-      isDesktop={isDesktop}
-      onKeyDown={handleEscKeyDown}
-      disableModalOverlay={disableModalOverlay}
-    >
+    <ModalOutlet hidden={hidden} isDesktop={isDesktop} disableModalOverlay={disableModalOverlay}>
       {modalOverlay}
       <ModalCardBase
         {...restProps}
