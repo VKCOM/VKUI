@@ -11,7 +11,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
-import { useDOM } from '../../lib/dom.tsx';
+import { useDOM } from '../../lib/dom';
 import { useBottomSheet } from '../../lib/sheet';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { ModalCardBase } from '../ModalCardBase/ModalCardBase';

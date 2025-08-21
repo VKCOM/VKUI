@@ -10,7 +10,7 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
-import { useDOM } from '../../lib/dom.tsx';
+import { useDOM } from '../../lib/dom';
 import { type SnapPoint, type SnapPointChange, useBottomSheet } from '../../lib/sheet';
 import type { CSSCustomProperties } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
