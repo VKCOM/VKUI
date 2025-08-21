@@ -6,7 +6,7 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener.ts';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';

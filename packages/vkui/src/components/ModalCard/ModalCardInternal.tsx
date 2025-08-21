@@ -6,7 +6,7 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener.ts';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
