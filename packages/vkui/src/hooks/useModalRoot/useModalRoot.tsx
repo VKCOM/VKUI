@@ -7,8 +7,13 @@ import { ModalPage } from '../../components/ModalPage/ModalPage';
 import { ModalRoot } from '../../components/ModalRoot/ModalRoot';
 import { type ModalRootProps } from '../../components/ModalRoot/types';
 import {
+  type ModalCardItem,
   type ModalRootApi,
   type ModalRootItem,
+  type OpenCardReturn,
+  type OpenModalCardProps,
+  type OpenModalPageProps,
+  type OpenPageReturn,
   type UseModalRootProps,
   type UseModalRootReturn,
 } from './types';
@@ -21,13 +26,18 @@ type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
 function ContextHolder({ modals, ...modalRootProps }: ContextHolderProps) {
   return (
     <ModalRoot {...modalRootProps}>
-      {modals.map((modalProps) =>
-        modalProps.type === 'card' ? (
+      {modals.map((modalProps) => {
+        if (modalProps.component) {
+          const Modal = modalProps.component;
+          const { type, component, ...currentModalProps } = modalProps;
+          return <Modal key={modalProps.id} {...currentModalProps} />;
+        }
+        return modalProps.type === 'card' ? (
           <ModalCard key={modalProps.id} {...modalProps} />
         ) : (
           <ModalPage key={modalProps.id} {...modalProps} />
-        ),
-      )}
+        );
+      })}
     </ModalRoot>
   );
 }
@@ -221,15 +231,54 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
     [open, update],
   );
 
+  const openCustomModal: ModalRootApi['openCustomModal'] = React.useCallback(
+    (...args) => {
+      const [type, props] = args;
+
+      if (type === 'card') {
+        const { id, component, props: modalProps } = props;
+        const result: Omit<OpenCardReturn, 'update'> = open<ModalCardItem>({
+          type: 'card',
+          id,
+          component,
+          close: () => result.close(),
+          update: (newProps: any) => update(result.id, 'card', newProps),
+          ...(modalProps as OpenModalCardProps),
+        });
+        return {
+          ...result,
+          update: (newProps) => update(result.id, 'card', newProps as any),
+        };
+      } else {
+        const { id, component, props: modalProps } = props;
+        const result: Omit<OpenPageReturn, 'update'> = open({
+          type: 'page',
+          id,
+          component,
+          close: () => result.close(),
+          update: (newProps: any) => update(result.id, 'page', newProps),
+          ...(modalProps as OpenModalPageProps),
+        });
+
+        return {
+          ...result,
+          update: (newProps) => update(result.id, 'page', newProps as any),
+        };
+      }
+    },
+    [open, update],
+  );
+
   const api: ModalRootApi = React.useMemo(() => {
     return {
       openPage,
       openCard,
+      openCustomModal,
       close,
       update,
       closeAll,
     };
-  }, [close, closeAll, openCard, openPage, update]);
+  }, [close, closeAll, openCard, openCustomModal, openPage, update]);
 
   const activeModalDisableModalOverlay = React.useMemo(() => {
     if (!state.activeModal) {

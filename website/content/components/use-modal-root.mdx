@@ -25,6 +25,7 @@ description: Хук для работы с модальными окнами([`M
 
 - `openCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
 - `openPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
+- `openCustomModal: OpenModal` - Метод для открытия пользовательского модального окна. Более подробео можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals)
 - `update: (id: string, type: 'card' | 'page', props: T) => void` - Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
 - `close: (id: string) => void` - Метод для закрытия определенной модальных окон. Принимает id модального окна.
 - `closeAll: () => void` - Метод для закрытия всех созданных модальных окон.
@@ -170,16 +171,195 @@ return (
       <Checkbox checked={saveHistory} onChange={(e) => setSaveHistory(e.target.checked)}>
         Сохранять историю открытия
       </Checkbox>
-      <Button appearance="overlay" onClick={() => openModal('page')}>
+      <Button appearance="overlay" onClick={() => openCustomModal('page')}>
         Открыть ModalPage
       </Button>
-      <Button appearance="overlay" onClick={() => openModal('card')}>
+      <Button appearance="overlay" onClick={() => openCustomModal('card')}>
         Открыть ModalCard
       </Button>
     </Flex>
     {contextHolder}
   </>
 )
+```
+
+</Playground>
+
+## Пользовательские модальные окна [#custom-modals]
+
+Иногда нужно, чтобы место вызова модального окна и его верстка были независимы друг от друга.
+Для этого в `useModalRoot` есть метод **`openCustomModal`**, который позволяет отрисовать модальное окно произвольного вида на базе `ModalCard` или `ModalPage`.
+
+### Параметры `openCustomModal`
+
+- **`type: 'card' | 'page'`** – базовый тип модального окна, от которого будет наследоваться пользовательское.
+- **`props: CustomModalProps`** – настройки модального окна (см. ниже).
+
+### `CustomModalProps` [#custom-modal-props]
+
+`CustomModalProps` описывает свойства вашего модального окна.
+Это **дженерик с двумя параметрами**:
+
+- **`BaseProps extends OpenModalCardProps | OpenModalPageProps`** – базовые свойства `ModalCard` или `ModalPage`;
+- **`AdditionalProps extends object`** – любые дополнительные свойства, которые вы хотите передать в свой компонент.
+
+#### Свойства `CustomModalProps`:
+
+- **`id?: string`** – идентификатор окна (если не указать, будет сгенерирован автоматически);
+- **`props?: BaseProps & AdditionalProps`** – объединение базовых и дополнительных свойств, которые будут проброшены в компонент модалки;
+- **`component: ReactComponent<OpenModalComponentsProps<BaseProps, AdditionalProps>>`** – React-компонент, который будет рендерить содержимое окна.
+
+В компонент автоматически передаются:
+
+- все базовые свойства модального окна,
+- ваши `AdditionalProps`,
+- а также служебные методы:
+  - **`update(newProps)`** – обновляет свойства модалки «на лету»;
+  - **`close()`** – закрывает текущее окно.
+
+> ⚠️ **Важно:**
+>
+> 1. Следите за корректной типизацией компонентов. Все нужные типы экспортируются вместе с хуком.
+> 2. Не используйте в `AdditionalProps` ключи `update` и `close` – они зарезервированы системой.
+
+### Как это работает
+
+1. Вы пишете **свой компонент модалки**, который внутри использует `ModalCard` или `ModalPage`. В него автоматически попадут все свойства + методы `update` и `close`.
+2. Через `api.openCustomModal(type, { component, props })` вы «регистрируете» это окно и открываете его.
+3. При необходимости можно передавать **дополнительные props** и управлять логикой изнутри (например, открывать следующую модалку или обновлять заголовок).
+
+<Playground>
+
+```jsx
+const ModalCardComponent = ({
+  close,
+  update,
+  openNextModal,
+  ...restProps
+}: OpenModalComponentsProps<
+  OpenModalCardProps,
+  { openNextModal: (type: 'card' | 'page') => void }
+>) => {
+  return (
+    <ModalCard
+      icon={<Icon56NotificationOutline />}
+      title="Modal Card Title"
+      actions={
+        <ButtonGroup stretched mode="vertical">
+          <Button size="l" mode="primary" stretched onClick={() => openNextModal('page')}>
+            Открыть ModalPage
+          </Button>
+          <Button size="l" mode="primary" stretched onClick={() => openNextModal('card')}>
+            Открыть ModalCard
+          </Button>
+          <Button size="l" mode="secondary" stretched onClick={() => close()}>
+            Закрыть
+          </Button>
+        </ButtonGroup>
+      }
+      {...restProps}
+    >
+      <FormItem top="Заголовок модалки">
+        <Input
+          defaultValue="Modal Card Title"
+          onChange={(e) => update({ title: e.target.value })}
+        />
+      </FormItem>
+    </ModalCard>
+  );
+};
+
+const ModalPageComponent = ({
+  openNextModal,
+  close,
+  update,
+  ...restProps
+}: OpenModalComponentsProps<
+  OpenModalPageProps,
+  { openNextModal: (type: 'card' | 'page') => void }
+>) => {
+  const platform = usePlatform();
+  const { sizeX } = useAdaptivityConditionalRender();
+
+  return (
+    <ModalPage
+      header={
+        <ModalPageHeader
+          before={
+            sizeX.compact &&
+            platform === 'android' && (
+              <PanelHeaderClose className={sizeX.compact.className} onClick={() => close()} />
+            )
+          }
+          after={
+            sizeX.compact &&
+            platform === 'ios' && (
+              <PanelHeaderButton onClick={() => close()} className={sizeX.compact.className}>
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            )
+          }
+        >
+          Dynamic modal
+        </ModalPageHeader>
+      }
+      {...restProps}
+    >
+      <Group>
+        <CellButton onClick={() => openNextModal('page')}>Open ModalPage</CellButton>
+        <CellButton onClick={() => openNextModal('card')}>Open ModalCard</CellButton>
+      </Group>
+    </ModalPage>
+  );
+};
+
+const [api, contextHolder] = useModalRoot();
+const [saveHistory, setSaveHistory] = React.useState(true);
+
+const openCustomModal = (type: 'card' | 'page') => {
+  let modalId = '';
+  const openNextModal = (type: 'card' | 'page') => {
+    if (!saveHistory && modalId) {
+      api.close(modalId);
+    }
+    openCustomModal(type);
+  };
+
+  if (type === 'card') {
+    const { id } = api.openCustomModal('card', {
+      component: ModalCardComponent,
+      props: {
+        openNextModal,
+      },
+    });
+    modalId = id;
+  } else {
+    const { id } = api.openCustomModal('page', {
+      component: ModalPageComponent,
+      props: {
+        openNextModal,
+      },
+    });
+    modalId = id;
+  }
+};
+
+return (
+  <>
+    <Flex direction="column" gap="m">
+      <Checkbox checked={saveHistory} onChange={(e) => setSaveHistory(e.target.checked)}>
+        Сохранять историю открытия
+      </Checkbox>
+      <Button appearance="overlay" onClick={() => openCustomModal('page')}>
+        Открыть ModalPage
+      </Button>
+      <Button appearance="overlay" onClick={() => openCustomModal('card')}>
+        Открыть ModalCard
+      </Button>
+    </Flex>
+    {contextHolder}
+  </>
+);
 ```
 
 </Playground>

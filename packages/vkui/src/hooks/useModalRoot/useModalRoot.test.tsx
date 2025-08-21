@@ -1,8 +1,16 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { Button } from '../../components/Button/Button';
+import { ModalCard } from '../../components/ModalCard/ModalCard';
+import { ModalPage } from '../../components/ModalPage/ModalPage';
 import { waitCSSTransitionEndConditionally } from '../../components/ModalRoot/ModalRoot.test';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { type ModalRootApi } from './types';
+import {
+  type ModalRootApi,
+  type OpenModalCardProps,
+  type OpenModalComponentsProps,
+  type OpenModalPageProps,
+} from './types';
 import { useModalRoot } from './useModalRoot';
 
 const Fixture = ({ setApi }: { setApi: (api: ModalRootApi) => void }) => {
@@ -179,5 +187,97 @@ describe('useModalRoot', () => {
 
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(closePromiseResolved).toBeTruthy();
+  });
+
+  it('should correct render custom modal card', async () => {
+    const additionalAction = jest.fn();
+
+    const ModalCardComponent = ({
+      additionalAction,
+      update,
+      close,
+      ...restProps
+    }: OpenModalComponentsProps<OpenModalCardProps, { additionalAction: VoidFunction }>) => {
+      return (
+        <ModalCard title="Ininital Title" data-testid="modal-card" {...restProps}>
+          <Button data-testid="update-button" onClick={() => update({ title: 'Updated Title' })}>
+            Update
+          </Button>
+          <Button data-testid="close-button" onClick={close}>
+            Close
+          </Button>
+          <Button data-testid="additional-button" onClick={additionalAction}>
+            Additional action
+          </Button>
+        </ModalCard>
+      );
+    };
+
+    render(<Fixture setApi={setApi} />);
+    React.act(() => {
+      getApi().openCustomModal('card', {
+        id: 'modal-1',
+        component: ModalCardComponent,
+        props: {
+          additionalAction,
+        },
+      });
+    });
+
+    fireEvent.click(screen.getByTestId('additional-button'));
+    expect(additionalAction).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('update-button'));
+    expect(screen.getByText('Updated Title')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('close-button'));
+    await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
+    expect(screen.queryByTestId('modal-card')).not.toBeInTheDocument();
+  });
+
+  it('should correct render custom modal page', async () => {
+    const additionalAction = jest.fn();
+
+    const ModalPageComponent = ({
+      additionalAction,
+      update,
+      close,
+      ...restProps
+    }: OpenModalComponentsProps<OpenModalPageProps, { additionalAction: VoidFunction }>) => {
+      return (
+        <ModalPage data-testid="modal-page" header="Initial header" {...restProps}>
+          <Button data-testid="update-button" onClick={() => update({ header: 'Updated header' })}>
+            Update
+          </Button>
+          <Button data-testid="close-button" onClick={close}>
+            Close
+          </Button>
+          <Button data-testid="additional-button" onClick={additionalAction}>
+            Additional action
+          </Button>
+        </ModalPage>
+      );
+    };
+
+    render(<Fixture setApi={setApi} />);
+    React.act(() => {
+      getApi().openCustomModal('page', {
+        id: 'modal-1',
+        component: ModalPageComponent,
+        props: {
+          additionalAction,
+        },
+      });
+    });
+
+    fireEvent.click(screen.getByTestId('additional-button'));
+    expect(additionalAction).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('update-button'));
+    expect(screen.getByText('Updated header')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('close-button'));
+    await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
+    expect(screen.queryByTestId('modal-page')).not.toBeInTheDocument();
   });
 });

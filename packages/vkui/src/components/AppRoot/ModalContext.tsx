@@ -21,6 +21,14 @@ const ModalsApiContext = React.createContext<ModalRootApi>({
       return Promise.resolve().then(resolve);
     },
   }),
+  openCustomModal: () => ({
+    id: '',
+    close: noop,
+    update: noop,
+    onClose: <R,>(resolve?: () => R) => {
+      return Promise.resolve().then(resolve);
+    },
+  }),
   update: noop,
   close: noop,
   closeAll: noop,
