@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
-import { differenceInMilliseconds, startOfTomorrow } from 'date-fns';
+import { differenceInMilliseconds } from 'date-fns';
+import { startOfTomorrow } from '../lib/date';
 import { useDOM } from '../lib/dom';
 
 /**

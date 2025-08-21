@@ -168,6 +168,16 @@ class DateTimeFormat extends Intl.DateTimeFormat {
 export const dateTimeFormatter = /*#__PURE__*/ new DateTimeFormat();
 
 /**
+ * Возвращает дату начала месяца
+ */
+export function startOfMonth(date: Date): Date {
+  const result = new Date(date);
+  result.setDate(1);
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
+/**
  * Возвращает дату конца месяца
  */
 export function endOfMonth(date: Date): Date {
@@ -178,10 +188,99 @@ export function endOfMonth(date: Date): Date {
   return result;
 }
 
+type WeekOptions = { weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6 };
+
+export const MONDAY = 1;
+
+/**
+ * Возвращает дату начала недели
+ */
+export function startOfWeek(date: Date, { weekStartsOn = MONDAY }: WeekOptions = {}): Date {
+  const result = new Date(date);
+  const day = result.getDay();
+  const diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+
+  result.setDate(result.getDate() - diff);
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
+/**
+ * Возвращает дату конца недели
+ */
+export function endOfWeek(date: Date, { weekStartsOn = MONDAY }: WeekOptions = {}): Date {
+  const result = new Date(date);
+  const day = result.getDay();
+  const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+
+  result.setDate(result.getDate() + diff);
+  result.setHours(23, 59, 59, 999);
+  return result;
+}
+
+/**
+ * Возвращает дату начала дня
+ */
+export function startOfDay(date: Date): Date {
+  const result = new Date(date);
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
+/**
+ * Возвращает дату конца дня
+ */
 export function endOfDay(date: Date): Date {
   const result = new Date(date);
   result.setHours(23, 59, 59, 999);
   return result;
+}
+
+export function startOfTomorrow() {
+  const date = new Date();
+  const day = date.getDate();
+
+  date.setDate(day + 1);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
+/**
+ * Возвращает дату начала минуты
+ */
+export function startOfMinute(date: Date): Date {
+  const result = new Date(date);
+  result.setSeconds(0, 0);
+  return result;
+}
+
+export function eachDayOfInterval(
+  startDate: Date,
+  endDate: Date,
+  { step = 1 }: { step?: number } = {},
+): Date[] {
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  const date = new Date(reversed ? endDate : startDate);
+  date.setHours(0, 0, 0, 0);
+
+  if (!step) {
+    return [];
+  }
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
+  }
+
+  const dates = [];
+
+  while (+date <= endTime) {
+    dates.push(new Date(date));
+    date.setDate(date.getDate() + 1);
+    date.setHours(0, 0, 0, 0);
+  }
+
+  return reversed ? dates.reverse() : dates;
 }
 
 /**

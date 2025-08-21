@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "7.5.0",
+  "version": "7.6.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
@@ -88,7 +88,7 @@
     "@swc/helpers": "^0.5.17",
     "@vkontakte/icons": "^3.0.0",
     "@vkontakte/vkjs": "^2.0.1",
-    "@vkontakte/vkui-date-fns-tz": "^0.0.5",
+    "@vkontakte/vkui-date-fns-tz": "^0.0.6",
     "@vkontakte/vkui-floating-ui": "^0.2.6",
     "date-fns": "^4.1.0"
   },

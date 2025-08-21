@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Find changes
         uses: dorny/paths-filter@v3
@@ -49,7 +49,7 @@ jobs:
     needs: changed_files
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -81,7 +81,7 @@ jobs:
     needs: changed_files
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -113,7 +113,7 @@ jobs:
     needs: changed_files
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
         uses: ./.github/actions/node-setup

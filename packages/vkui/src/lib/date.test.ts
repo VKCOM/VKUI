@@ -1,6 +1,8 @@
 import {
+  eachDayOfInterval,
   endOfDay,
   endOfMonth,
+  endOfWeek,
   isLastDayOfMonth,
   isMatch,
   isSameMonth,
@@ -8,6 +10,10 @@ import {
   isWithinInterval,
   isYesterday,
   parse,
+  startOfDay,
+  startOfMinute,
+  startOfMonth,
+  startOfWeek,
 } from './date';
 
 describe(parse, () => {
@@ -134,6 +140,51 @@ describe('isSameMonth', () => {
   });
 });
 
+describe('startOfMonth', () => {
+  it('returns first day of month with time set to 0:0:0.0', () => {
+    const input = new Date(2021, 6, 15, 12, 30, 45, 123);
+    const result = startOfMonth(input);
+
+    expect(result.getFullYear()).toBe(2021);
+    expect(result.getMonth()).toBe(6);
+    expect(result.getDate()).toBe(1);
+    expect(result.getHours()).toBe(0);
+    expect(result.getMinutes()).toBe(0);
+    expect(result.getSeconds()).toBe(0);
+    expect(result.getMilliseconds()).toBe(0);
+  });
+
+  it('handles last day of month correctly', () => {
+    const input = new Date(2021, 6, 30, 12, 30, 45, 123);
+    const result = startOfMonth(input);
+
+    expect(result.getFullYear()).toBe(2021);
+    expect(result.getMonth()).toBe(6);
+    expect(result.getDate()).toBe(1);
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30);
+    const copy = new Date(original.getTime());
+    startOfMonth(original);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const input = new Date(2019, 11, 1);
+    const result = startOfMonth(input);
+    expect(result).not.toBe(input);
+  });
+
+  it('handles month end at year boundary', () => {
+    const input = new Date(2021, 11, 31);
+    const result = startOfMonth(input);
+    expect(result.getFullYear()).toBe(2021);
+    expect(result.getMonth()).toBe(11);
+    expect(result.getDate()).toBe(1);
+  });
+});
+
 describe('endOfMonth', () => {
   it('returns last day of month with full time', () => {
     const input = new Date(2021, 6, 15);
@@ -199,6 +250,124 @@ describe('endOfMonth', () => {
   });
 });
 
+describe('startOfWeek', () => {
+  it('returns start of week with default weekStartsOn=1 (Monday)', () => {
+    const date = new Date(2023, 9, 4);
+    const result = startOfWeek(date);
+    expect(result).toEqual(new Date(2023, 9, 2));
+  });
+
+  it('returns start of week with weekStartsOn=0 (Sunday)', () => {
+    const date = new Date(2023, 9, 4);
+    const result = startOfWeek(date, { weekStartsOn: 0 });
+    expect(result).toEqual(new Date(2023, 9, 1));
+  });
+
+  it('returns start of week with weekStartsOn=6 (Saturday)', () => {
+    const date = new Date(2023, 9, 4);
+    const result = startOfWeek(date, { weekStartsOn: 6 });
+    expect(result).toEqual(new Date(2023, 8, 30));
+  });
+
+  it('handles Sunday as start of week correctly', () => {
+    const date = new Date(2023, 9, 1);
+    const result = startOfWeek(date, { weekStartsOn: 0 });
+    expect(result).toEqual(new Date(2023, 9, 1));
+  });
+
+  it('handles Monday as start of week correctly', () => {
+    const date = new Date(2023, 9, 2);
+    const result = startOfWeek(date, { weekStartsOn: 1 });
+    expect(result).toEqual(new Date(2023, 9, 2));
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30);
+    const copy = new Date(original.getTime());
+    startOfWeek(original);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const input = new Date(2019, 11, 1);
+    const result = startOfWeek(input);
+    expect(result).not.toBe(input);
+  });
+});
+
+describe('endOfWeek', () => {
+  it('returns end of week with default weekStartsOn=1 (Monday)', () => {
+    const date = new Date(2023, 9, 4);
+    const result = endOfWeek(date);
+    expect(result).toEqual(new Date(2023, 9, 8, 23, 59, 59, 999));
+  });
+
+  it('returns end of week with weekStartsOn=0 (Sunday)', () => {
+    const date = new Date(2023, 9, 4);
+    const result = endOfWeek(date, { weekStartsOn: 0 });
+    expect(result).toEqual(new Date(2023, 9, 7, 23, 59, 59, 999));
+  });
+
+  it('returns end of week with weekStartsOn=6 (Saturday)', () => {
+    const date = new Date(2023, 9, 4);
+    const result = endOfWeek(date, { weekStartsOn: 6 });
+    expect(result).toEqual(new Date(2023, 9, 6, 23, 59, 59, 999));
+  });
+
+  it('handles Sunday as end of week correctly', () => {
+    const date = new Date(2023, 9, 1);
+    const result = endOfWeek(date, { weekStartsOn: 0 });
+    expect(result).toEqual(new Date(2023, 9, 7, 23, 59, 59, 999));
+  });
+
+  it('handles Monday as end of week correctly', () => {
+    const date = new Date(2023, 9, 2);
+    const result = endOfWeek(date, { weekStartsOn: 1 });
+    expect(result).toEqual(new Date(2023, 9, 8, 23, 59, 59, 999));
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30);
+    const copy = new Date(original.getTime());
+    endOfWeek(original);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const input = new Date(2019, 11, 1);
+    const result = endOfWeek(input);
+    expect(result).not.toBe(input);
+  });
+});
+
+describe('startOfDay', () => {
+  it('returns date with time set to 0:0:0.0', () => {
+    const input = new Date(2021, 6, 15, 12, 30, 45, 123);
+    const result = startOfDay(input);
+
+    expect(result.getFullYear()).toBe(2021);
+    expect(result.getMonth()).toBe(6);
+    expect(result.getDate()).toBe(15);
+    expect(result.getHours()).toBe(0);
+    expect(result.getMinutes()).toBe(0);
+    expect(result.getSeconds()).toBe(0);
+    expect(result.getMilliseconds()).toBe(0);
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30, 45);
+    const copy = new Date(original.getTime());
+    startOfDay(original);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const input = new Date(2019, 11, 1);
+    const result = startOfDay(input);
+    expect(result).not.toBe(input);
+  });
+});
+
 describe('endOfDay', () => {
   it('returns date with time set to 23:59:59.999', () => {
     const input = new Date(2021, 6, 15, 12, 30, 45, 123);
@@ -224,6 +393,148 @@ describe('endOfDay', () => {
     const input = new Date(2019, 11, 1);
     const result = endOfDay(input);
     expect(result).not.toBe(input);
+  });
+});
+
+describe('startOfMinute', () => {
+  it('returns date with seconds and milliseconds set to 0', () => {
+    const input = new Date(2023, 9, 5, 14, 30, 45, 678);
+    const result = startOfMinute(input);
+
+    expect(result.getHours()).toBe(14);
+    expect(result.getMinutes()).toBe(30);
+    expect(result.getSeconds()).toBe(0);
+    expect(result.getMilliseconds()).toBe(0);
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2023, 9, 5, 14, 30, 45, 678);
+    const copy = new Date(original.getTime());
+    startOfMinute(original);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const input = new Date(2023, 9, 5, 14, 30, 45, 678);
+    const result = startOfMinute(input);
+    expect(result).not.toBe(input);
+  });
+
+  it('handles date with seconds and milliseconds already zero', () => {
+    const input = new Date(2023, 9, 5, 14, 30, 0, 0);
+    const result = startOfMinute(input);
+    expect(result).toEqual(input);
+    expect(result).not.toBe(input);
+  });
+});
+
+describe('eachDayOfInterval', () => {
+  it('returns all days between start and end, inclusive', () => {
+    const start = new Date(2023, 0, 1);
+    const end = new Date(2023, 0, 3);
+
+    const result = eachDayOfInterval(start, end);
+
+    expect(result).toHaveLength(3);
+    expect(result[0]).toEqual(new Date(2023, 0, 1));
+    expect(result[2]).toEqual(new Date(2023, 0, 3));
+  });
+
+  it('returns a single date when start equals end', () => {
+    const d = new Date(2023, 4, 15);
+
+    const result = eachDayOfInterval(d, d);
+
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual(d);
+  });
+
+  it('handles reversed intervals correctly', () => {
+    const start = new Date(2023, 0, 3);
+    const end = new Date(2023, 0, 1);
+
+    const result = eachDayOfInterval(start, end);
+
+    expect(result).toEqual([new Date(2023, 0, 3), new Date(2023, 0, 2), new Date(2023, 0, 1)]);
+  });
+
+  it('returns an empty array when step is zero', () => {
+    const start = new Date(2023, 0, 1);
+    const end = new Date(2023, 0, 3);
+
+    const result = eachDayOfInterval(start, end, { step: 0 });
+
+    expect(result).toEqual([]);
+  });
+
+  it('normalises start and end times to midnight', () => {
+    const start = new Date(2023, 0, 1, 15, 30);
+    const end = new Date(2023, 0, 2, 10, 0);
+
+    const result = eachDayOfInterval(start, end);
+
+    expect(result).toEqual([new Date(2023, 0, 1, 0, 0, 0, 0), new Date(2023, 0, 2, 0, 0, 0, 0)]);
+  });
+
+  it('step greater than one does not affect the number of days', () => {
+    const start = new Date(2023, 0, 1);
+    const end = new Date(2023, 0, 4);
+
+    const resultStep1 = eachDayOfInterval(start, end, { step: 1 });
+    const resultStep2 = eachDayOfInterval(start, end, { step: 2 });
+
+    expect(resultStep1).toEqual(resultStep2);
+  });
+
+  it('negative step reverses the order of dates', () => {
+    const start = new Date(2023, 0, 1);
+    const end = new Date(2023, 0, 3);
+
+    const result = eachDayOfInterval(start, end, { step: -1 });
+
+    expect(result).toEqual([new Date(2023, 0, 3), new Date(2023, 0, 2), new Date(2023, 0, 1)]);
+  });
+
+  it('negative step with reversed interval gives ascending order', () => {
+    const start = new Date(2023, 0, 3);
+    const end = new Date(2023, 0, 1);
+
+    const result = eachDayOfInterval(start, end, { step: -1 });
+
+    expect(result).toEqual([new Date(2023, 0, 1), new Date(2023, 0, 2), new Date(2023, 0, 3)]);
+  });
+
+  it('uses the default step of 1 when step is not provided', () => {
+    const start = new Date(2023, 0, 1);
+    const end = new Date(2023, 0, 3);
+
+    const resultWithStep = eachDayOfInterval(start, end, { step: 1 });
+    const resultDefault = eachDayOfInterval(start, end);
+
+    expect(resultWithStep).toEqual(resultDefault);
+  });
+
+  it('does not mutate the original start and end dates', () => {
+    const start = new Date(2023, 0, 1, 15, 30);
+    const end = new Date(2023, 0, 2, 10, 0);
+
+    const startCopy = new Date(start);
+    const endCopy = new Date(end);
+
+    eachDayOfInterval(start, end);
+
+    expect(start).toEqual(startCopy);
+    expect(end).toEqual(endCopy);
+  });
+
+  it('returns new Date objects, not references to the input dates', () => {
+    const start = new Date(2023, 0, 1);
+    const end = new Date(2023, 0, 3);
+
+    const result = eachDayOfInterval(start, end);
+
+    expect(result[0] === start).toBe(false);
+    expect(result[result.length - 1] === end).toBe(false);
   });
 });
 

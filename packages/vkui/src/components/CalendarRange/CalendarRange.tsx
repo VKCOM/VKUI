@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
-import { addMonths, startOfDay, subMonths } from 'date-fns';
+import { addMonths, subMonths } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { isFirstDay, isLastDay } from '../../lib/calendar';
-import { endOfDay, isWithinInterval } from '../../lib/date';
+import { endOfDay, isWithinInterval, MONDAY, startOfDay } from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -117,7 +117,7 @@ export const CalendarRange = ({
   disablePast,
   disableFuture,
   shouldDisableDate,
-  weekStartsOn = 1,
+  weekStartsOn = MONDAY,
   disablePickers,
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',

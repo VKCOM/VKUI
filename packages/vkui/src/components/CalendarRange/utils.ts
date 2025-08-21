@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
-import { startOfMonth } from 'date-fns';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
-import { isSameMonth } from '../../lib/date';
+import { isSameMonth, startOfMonth } from '../../lib/date';
 import { isHTMLElement } from '../../lib/dom';
 import type { DateRangeType } from './types';
 
