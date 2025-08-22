@@ -177,7 +177,7 @@ jobs:
           build_script: 'size:ci'
           script: yarn run -T size-limit --json"
 
-  diff-build:
+  diff_build:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     runs-on: ubuntu-latest
     name: Generate Diff
