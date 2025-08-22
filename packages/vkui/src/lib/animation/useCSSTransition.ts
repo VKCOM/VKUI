@@ -2,6 +2,7 @@ import { type TransitionEvent, type TransitionEventHandler, useEffect, useRef } 
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
+import { millisecondsInSecond } from '../date.ts';
 
 /* istanbul ignore next: особенность рендера в браузере когда меняется className, в Jest не воспроизвести */
 const forceReflowForFixNewMountedElement = (node: Element | null) => void node?.scrollTop;
@@ -64,6 +65,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
   const onExit = useStableCallback(onExitProp || noop);
   const onExiting = useStableCallback(onExitingProp || noop);
   const onExited = useStableCallback(onExitedProp || noop);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ref = useRef<Ref | null>(null);
   const [[state, prevState], setState] = useStateWithPrev<UseCSSTransitionState>(() => {
@@ -78,6 +80,13 @@ export const useCSSTransition = <Ref extends Element = Element>(
 
     return 'entered';
   });
+
+  const clearTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  };
 
   useEffect(
     function updateState() {
@@ -166,27 +175,49 @@ export const useCSSTransition = <Ref extends Element = Element>(
     ],
   );
 
-  const onTransitionEnd = (event: TransitionEvent) => {
-    /* istanbul ignore if: на всякий случай предупреждаем всплытие, нет смысла проверять условие */
-    if (event.target !== ref.current) {
-      return;
-    }
+  const completeTransition = useStableCallback((event?: TransitionEvent) => {
+    clearTimer();
 
     switch (state) {
       case 'appearing':
         setState('appeared');
-        onEntered(event.propertyName, true);
+        onEntered(event?.propertyName, true);
         break;
       case 'entering':
         setState('entered');
-        onEntered(event.propertyName);
+        onEntered(event?.propertyName);
         break;
       case 'exiting':
         setState('exited');
-        onExited(event.propertyName);
+        onExited(event?.propertyName);
         break;
     }
-  };
+  });
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
+
+    if (state === 'appearing' || state === 'entering' || state === 'exiting') {
+      const style = getComputedStyle(el);
+
+      const parseTime = (s: string) =>
+        s.includes('ms') ? parseFloat(s) : parseFloat(s) * millisecondsInSecond;
+
+      const duration =
+        Math.max(...style.transitionDuration.split(',').map(parseTime)) +
+        Math.max(...style.transitionDelay.split(',').map(parseTime));
+
+      timerRef.current = setTimeout(() => {
+        completeTransition(); // fallback если onTransitionEnd не пришёл
+      }, duration + 50);
+
+      return () => clearTimer();
+    }
+    return;
+  }, [completeTransition, state]);
 
   return [
     state,
@@ -194,7 +225,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
       ref,
       onTransitionEnd:
         state !== 'appeared' && state !== 'entered' && state !== 'exited'
-          ? onTransitionEnd
+          ? completeTransition
           : undefined,
     },
   ];
