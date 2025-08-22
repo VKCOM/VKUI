@@ -227,6 +227,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy diff
     outputs:
+      has_diff: ${{ steps.artifact.outputs.found_artifact }}
       url: ${{ steps.url.outputs.value }}
     steps:
       - name: Download package artifact
@@ -257,7 +258,6 @@ jobs:
   diff_comment:
     needs:
       - deploy_diff
-    if: needs.deploy_diff.outputs.url != ''
     runs-on: ubuntu-latest
     name: Diff comment
     steps:
@@ -269,11 +269,14 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: <!-- diff_report_url -->
 
-      - name: Generate comment body message
+      - name: Set comment message
         id: comment_message
-        uses: VKCOM/gh-actions/VKUI/generate-diff-message@main
-        with:
-          diff_report_url: ${{ needs.deploy_diff.outputs.url }}
+        run: |
+          if [ "${{ needs.deploy_diff.outputs.has_diff }}" = "true" ]; then
+            echo "body=<!-- diff_report_url -->\n📊 Найдены изменения в собранных файлах:\n[Отчет](${{ needs.deploy_diff.outputs.url }})\n\nCommit ${{ env.PR_HEAD_SHA }}" >> $GITHUB_OUTPUT
+          else
+            echo "body=<!-- diff_report_url -->\n✅ Изменений в собранных файлах нет\n\nCommit ${{ env.PR_HEAD_SHA }}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v4
@@ -282,7 +285,7 @@ jobs:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
           body: |
             <!-- diff_report_url -->
-            ${{ steps.comment_message.outputs.diff_message }}
+            ${{ steps.comment_message.outputs.body }}
 
             Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace
