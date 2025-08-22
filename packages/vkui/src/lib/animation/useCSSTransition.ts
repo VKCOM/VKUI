@@ -2,7 +2,7 @@ import { type TransitionEvent, type TransitionEventHandler, useEffect, useRef } 
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
-import { millisecondsInSecond } from '../date.ts';
+import { millisecondsInSecond } from '../date';
 
 /* istanbul ignore next: особенность рендера в браузере когда меняется className, в Jest не воспроизвести */
 const forceReflowForFixNewMountedElement = (node: Element | null) => void node?.scrollTop;
