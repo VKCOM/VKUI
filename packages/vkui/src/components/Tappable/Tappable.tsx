@@ -25,7 +25,7 @@ function hasPointerClassName(hasPointer: boolean | undefined) {
   return undefined;
 }
 
-export interface TappableProps<T = HTMLElement> extends ClickableProps<T>, StateProps {
+export interface TappableProps extends ClickableProps, StateProps {
   /**
    * Задает border-radius элементу
    * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`.
@@ -48,7 +48,7 @@ export interface TappableProps<T = HTMLElement> extends ClickableProps<T>, State
 // TODO [>=8]: = React.AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>
 //
 // NOTE: Возможно стоит вообще запретить компонентам расширяться от TappableProps?
-export type TappableOmitProps<T = HTMLElement> = Omit<TappableProps<T>, 'DefaultComponent'>;
+export type TappableOmitProps = Omit<TappableProps, 'DefaultComponent'>;
 
 export const Tappable = ({
   baseClassName,

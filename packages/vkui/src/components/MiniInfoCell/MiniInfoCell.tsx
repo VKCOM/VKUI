@@ -20,7 +20,7 @@ const stylesTextWrap = {
 
 export interface MiniInfoCellProps
   extends Pick<
-      TappableOmitProps<HTMLDivElement>,
+      TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hovered' | 'activated' | 'hasHover' | 'hasActive'
     >,
     RootComponentProps<HTMLDivElement> {
