@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Icon16Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { type RootComponentProps } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';
@@ -17,7 +18,12 @@ const stylesTextWrap = {
   short: styles.textWrapShort,
 };
 
-export interface MiniInfoCellProps extends TappableOmitProps<HTMLDivElement> {
+export interface MiniInfoCellProps
+  extends Pick<
+      TappableOmitProps<HTMLDivElement>,
+      'hoverMode' | 'activeMode' | 'hovered' | 'activated' | 'hasHover' | 'hasActive'
+    >,
+    RootComponentProps<HTMLDivElement> {
   /**
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
