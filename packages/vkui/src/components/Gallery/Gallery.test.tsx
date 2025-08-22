@@ -324,7 +324,7 @@ describe('Gallery', () => {
     });
   });
 
-  it('check root scroll reset', () => {
+  it('check that scroll reset when using screen reader VoiceOver', () => {
     jest.useFakeTimers();
     const onChange = jest.fn();
 

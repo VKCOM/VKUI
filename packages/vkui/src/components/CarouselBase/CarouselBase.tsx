@@ -528,11 +528,10 @@ export const CarouselBase = ({
 
   const { isDraggable, canSlideRight, canSlideLeft } = controlElementsState;
 
-  const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    restProps.onScroll?.(e);
+  const handleScrollForFixVoiceOverBehavior = (event: React.UIEvent<HTMLDivElement>) => {
+    restProps.onScroll?.(event);
     if (rootRef.current) {
-      // eslint-disable-next-line react-compiler/react-compiler
-      rootRef.current.scrollLeft = 0;
+      event.currentTarget.scrollLeft = 0;
     }
   };
 
@@ -540,7 +539,7 @@ export const CarouselBase = ({
     <RootComponent
       {...restProps}
       role="region"
-      onScroll={onScroll}
+      onScroll={handleScrollForFixVoiceOverBehavior}
       aria-roledescription={ariaRoleDescription}
       baseClassName={classNames(
         styles.host,
