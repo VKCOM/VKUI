@@ -2,11 +2,17 @@
 
 import * as React from 'react';
 import { isSameDate } from '@vkontakte/vkjs';
-import { addMonths, subMonths } from 'date-fns';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { isFirstDay, isLastDay } from '../../lib/calendar';
-import { endOfDay, isWithinInterval, MONDAY, startOfDay } from '../../lib/date';
+import {
+  addMonths,
+  endOfDay,
+  isWithinInterval,
+  MONDAY,
+  startOfDay,
+  subMonths,
+} from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
