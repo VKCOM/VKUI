@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, mockTouchStartDisabled, setNodeEnv } from '../../testing/utils';
+import {
+  baselineComponent,
+  mockTouchStartDisabled,
+  setNodeEnv,
+  userEvent,
+} from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ANIMATION_DURATION } from '../CarouselBase/constants';
 import { revertRtlValue } from '../CarouselBase/helpers';
 import { type BaseGalleryProps } from '../CarouselBase/types';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
-import { Gallery } from './Gallery';
+import { Gallery, type GalleryProps } from './Gallery';
 
 const mockRAF = () => {
   let lastTime = 0;
@@ -292,6 +297,66 @@ describe('Gallery', () => {
     });
   });
 
+  describe('check a11y', () => {
+    it('check slide labels', () => {
+      const onChange = jest.fn();
+      const slideLabel: GalleryProps['slideLabel'] = (index, count) =>
+        `Слайд ${index + 1} из ${count}`;
+
+      render(
+        <Gallery
+          onChange={onChange}
+          slideIndex={0}
+          slideLabel={slideLabel}
+          slideRoleDescription="Кастомный слайд"
+        >
+          <div />
+          <div />
+        </Gallery>,
+      );
+      const slides = screen.getAllByRole('group');
+      expect(slides).toHaveLength(2);
+      slides.forEach((slide, index) => {
+        expect(slide).toHaveAttribute('aria-roledescription', 'Кастомный слайд');
+        expect(slide).toHaveAttribute('aria-label', slideLabel(index, 2));
+        expect(slide).toHaveAttribute('tabindex', '0');
+      });
+    });
+  });
+
+  it('check that scroll reset when using screen reader VoiceOver', () => {
+    jest.useFakeTimers();
+    const onChange = jest.fn();
+
+    let scrollLeft = 0;
+
+    render(
+      <Gallery
+        onChange={onChange}
+        slideIndex={0}
+        data-testid="gallery"
+        getRootRef={(element) => {
+          if (!element) {
+            return;
+          }
+          jest.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
+          jest.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
+            scrollLeft = newValue;
+          });
+        }}
+      >
+        <div />
+        <div />
+      </Gallery>,
+    );
+
+    const root = screen.getByTestId('gallery');
+    root.scrollLeft = 100;
+
+    fireEvent.scroll(root);
+    expect(root.scrollLeft).toBe(0);
+  });
+
   describe.each([true, false])('check correct working gallery with lopped %s', (looped) => {
     it('check rendering one slide correct', () => {
       const mockedData = setup({
@@ -348,6 +413,35 @@ describe('Gallery', () => {
       rerender({ slideIndex: 1 });
       checkActiveSlide(1);
       checkTransformX(mockedData.layerTransform, -200);
+    });
+
+    it('should change activeSlide by focus', async () => {
+      const onChange = jest.fn();
+
+      const { rerender } = setup({
+        looped,
+        defaultSlideIndex: 0,
+        slideWidth: 200,
+        containerWidth: 200,
+        viewPortWidth: 200,
+        onChange,
+      });
+
+      screen.getByTestId('slide-1').focus();
+
+      await userEvent.tab();
+      expect(document.activeElement).toBe(screen.getByTestId('slide-2'));
+      expect(onChange).toHaveBeenCalledWith(1);
+      rerender({ slideIndex: 1 });
+
+      await userEvent.tab();
+      expect(document.activeElement).toBe(screen.getByTestId('slide-3'));
+      expect(onChange).toHaveBeenCalledWith(2);
+      rerender({ slideIndex: 2 });
+
+      await userEvent.tab({ shift: true });
+      expect(document.activeElement).toBe(screen.getByTestId('slide-2'));
+      expect(onChange).toHaveBeenCalledWith(1);
     });
 
     it('should not change slide when slide too small', () => {
