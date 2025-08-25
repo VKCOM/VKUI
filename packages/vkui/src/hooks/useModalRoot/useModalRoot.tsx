@@ -261,9 +261,9 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
     [updateModalProps],
   );
 
-  const openCard: ModalRootApi['openCard'] = React.useCallback(
+  const openModalCard: ModalRootApi['openModalCard'] = React.useCallback(
     (props) => {
-      const result: Omit<ReturnType<ModalRootApi['openCard']>, 'update'> = open({
+      const result: Omit<ReturnType<ModalRootApi['openModalCard']>, 'update'> = open({
         ...props,
         type: 'card',
       });
@@ -275,9 +275,9 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
     [open, update],
   );
 
-  const openPage: ModalRootApi['openPage'] = React.useCallback(
+  const openModalPage: ModalRootApi['openModalPage'] = React.useCallback(
     (props) => {
-      const result: Omit<ReturnType<ModalRootApi['openPage']>, 'update'> = open({
+      const result: Omit<ReturnType<ModalRootApi['openModalPage']>, 'update'> = open({
         ...props,
         type: 'page',
       });
@@ -350,14 +350,14 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
 
   const api: ModalRootApi = React.useMemo(() => {
     return {
-      openPage,
-      openCard,
+      openModalPage,
+      openModalCard,
       openCustomModal,
       close,
       update,
       closeAll,
     };
-  }, [close, closeAll, openCard, openCustomModal, openPage, update]);
+  }, [close, closeAll, openModalCard, openCustomModal, openModalPage, update]);
 
   const activeModalDisableModalOverlay = React.useMemo(() => {
     if (!state.activeModal) {

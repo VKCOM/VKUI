@@ -5,7 +5,7 @@ import { type ModalRootApi, useModalRoot } from '../../hooks/useModalRoot';
 import { type HasChildren } from '../../types';
 
 const ModalsApiContext = React.createContext<ModalRootApi>({
-  openCard: () => ({
+  openModalCard: () => ({
     id: '',
     close: noop,
     update: noop,
@@ -13,7 +13,7 @@ const ModalsApiContext = React.createContext<ModalRootApi>({
       return Promise.resolve().then(resolve);
     },
   }),
-  openPage: () => ({
+  openModalPage: () => ({
     id: '',
     close: noop,
     update: noop,

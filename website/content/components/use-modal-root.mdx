@@ -23,8 +23,8 @@ description: Хук для работы с модальными окнами([`M
 
 ### ModalRootApi [#modal-root-api]
 
-- `openCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
-- `openPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
+- `openModalCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
+- `openModalPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
 - `openCustomModal: (type: 'card' | 'page', props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals)
 - `update: (id: string, type: 'card' | 'page', props: T) => void` - Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
 - `close: (id: string) => void` - Метод для закрытия определенной модальных окон. Принимает id модального окна.
@@ -32,7 +32,7 @@ description: Хук для работы с модальными окнами([`M
 
 #### OpenModalReturn [#open-modal-return]
 
-API возвращаемое методами `openCard` и `openPage`, которое добавляет дополнительные возможности для взаимодействия с открытыми модальными окнами.
+API возвращаемое методами `openModalCard` и `openModalPage`, которое добавляет дополнительные возможности для взаимодействия с открытыми модальными окнами.
 
 - `id: string` - Идентификатор созданного модального окна. Либо переданный при открытии в `props`, либо сгенерированный автоматически `uuidv4`.
 - `close: () => void;` - Метод для закрытия созданного модального окна.
@@ -47,7 +47,7 @@ API возвращаемое методами `openCard` и `openPage`, кото
 const [api, contextHolder] = useModalRoot();
 
 const openModalCard = () => {
-  const { close } = api.openCard({
+  const { close } = api.openModalCard({
     icon: <Icon56NotificationOutline />,
     title: 'Приложение запрашивает разрешение на отправку Вам уведомлений',
     actions: (
@@ -67,7 +67,7 @@ const openModalCard = () => {
 };
 
 const openModalPage = () => {
-  const { close } = api.openPage({
+  const { close } = api.openModalPage({
     dynamicContentHeight: true,
     header: (
       <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
@@ -129,7 +129,7 @@ const openModal = (type: 'card' | 'page') => {
   };
 
   if (type === 'card') {
-    const { close, id } = api.openCard({
+    const { close, id } = api.openModalCard({
       icon: <Icon56NotificationOutline />,
       title: 'Modal Card Title',
       actions: (
@@ -148,7 +148,7 @@ const openModal = (type: 'card' | 'page') => {
     });
     modalId = id;
   } else {
-    const { close, id } = api.openPage({
+    const { close, id } = api.openModalPage({
       header: (
         <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
            Вложенная модальная страница
@@ -470,7 +470,7 @@ return (
 const api = useModalsApi();
 
 const openModalCard = () => {
-  const { close } = api.openCard({
+  const { close } = api.openModalCard({
     icon: <Icon56NotificationOutline />,
     title: 'Приложение запрашивает разрешение на отправку Вам уведомлений',
     actions: (
@@ -490,7 +490,7 @@ const openModalCard = () => {
 };
 
 const openModalPage = () => {
-  const { close } = api.openPage({
+  const { close } = api.openModalPage({
     dynamicContentHeight: true,
     header: (
       <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>

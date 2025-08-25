@@ -36,7 +36,7 @@ describe('useModalRoot', () => {
   it('check open ModalPage and ModalCard with history', async () => {
     render(<Fixture setApi={setApi} />);
     await React.act(() =>
-      getApi().openCard({
+      getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
@@ -46,7 +46,7 @@ describe('useModalRoot', () => {
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
 
     await React.act(() =>
-      getApi().openPage({
+      getApi().openModalPage({
         'id': 'modal-page',
         'data-testid': 'modal-page',
         'children': 'Content',
@@ -74,7 +74,7 @@ describe('useModalRoot', () => {
   it('check open ModalPage and ModalCard without history', async () => {
     render(<Fixture setApi={setApi} />);
     await React.act(() =>
-      getApi().openCard({
+      getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
@@ -85,7 +85,7 @@ describe('useModalRoot', () => {
 
     React.act(() => {
       getApi().close('modal-card');
-      getApi().openPage({
+      getApi().openModalPage({
         'id': 'modal-page',
         'data-testid': 'modal-page',
         'children': 'Content',
@@ -107,7 +107,7 @@ describe('useModalRoot', () => {
   it('check closeAll modals', async () => {
     render(<Fixture setApi={setApi} />);
     await React.act(() =>
-      getApi().openCard({
+      getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
@@ -117,7 +117,7 @@ describe('useModalRoot', () => {
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
 
     await React.act(() =>
-      getApi().openPage({
+      getApi().openModalPage({
         'id': 'modal-page',
         'data-testid': 'modal-page',
         'children': 'Content',
@@ -139,7 +139,7 @@ describe('useModalRoot', () => {
   it('check open update props', async () => {
     render(<Fixture setApi={setApi} />);
     await React.act(() =>
-      getApi().openCard({
+      getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
@@ -161,9 +161,9 @@ describe('useModalRoot', () => {
 
   it('check working with return data', async () => {
     render(<Fixture setApi={setApi} />);
-    let cardApi: ReturnType<ModalRootApi['openCard']>;
+    let cardApi: ReturnType<ModalRootApi['openModalCard']>;
     React.act(() => {
-      cardApi = getApi().openCard({
+      cardApi = getApi().openModalCard({
         'title': 'Title',
         'data-testid': 'modal-card',
       });

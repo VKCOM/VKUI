@@ -93,10 +93,10 @@ type OpenCustomModal = {
 export type ModalRootApi = {
   // Метод для открытия ModalCard, принимает свойства ModalCard.
   // Возращает  объект типа OpenModalReturn
-  openCard: (props: OpenModalCardProps) => OpenCardReturn;
+  openModalCard: (props: OpenModalCardProps) => OpenCardReturn;
   // Метод для открытия ModalPage, принимает свойства ModalPage.
   // Возращает  объект типа OpenModalReturn
-  openPage: (props: OpenModalPageProps) => OpenPageReturn;
+  openModalPage: (props: OpenModalPageProps) => OpenPageReturn;
   // Метод для открытия кастомного модального окна на базе `ModalCard` или `ModalPage`.
   openCustomModal: OpenCustomModal;
   // Метод для изменения свойств уже созданных модалок. Принимает id и новые свойства, которые нужно переопределить.
