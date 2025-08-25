@@ -12,17 +12,33 @@ export type OpenModalCardProps = Omit<ModalCardProps, 'open' | 'keepMounted'> & 
 
 export type ModalPageItem = OpenModalPageProps & {
   type: 'page';
-  component?: React.ComponentType<any>;
-  [index: string]: any;
 };
 
 export type ModalCardItem = OpenModalCardProps & {
   type: 'card';
-  component?: React.ComponentType<any>;
-  [index: string]: any;
 };
 
-export type ModalRootItem = ModalPageItem | ModalCardItem;
+export type CustomModalPageItem = Pick<OpenPageReturn, 'update' | 'close'> & {
+  type: 'custom-page';
+  id?: string;
+  component: React.ComponentType<any>;
+  additionalProps?: any;
+  modalProps?: OpenModalPageProps;
+};
+
+export type CustomModalCardItem = Pick<OpenCardReturn, 'update' | 'close'> & {
+  type: 'custom-card';
+  id?: string;
+  component: React.ComponentType<any>;
+  additionalProps?: any;
+  modalProps?: OpenModalCardProps;
+};
+
+export type ModalRootItem =
+  | ModalPageItem
+  | ModalCardItem
+  | CustomModalPageItem
+  | CustomModalCardItem;
 
 export type OpenModalReturn<T> = {
   id: string;
@@ -39,29 +55,33 @@ export type OpenCardReturn = OpenModalReturn<Omit<OpenModalCardProps, 'id'>>;
 
 export type OpenPageReturn = OpenModalReturn<Omit<OpenModalPageProps, 'id'>>;
 
-export type OpenModalComponentsProps<
+export type CustomModalProps<
   BaseProps extends OpenModalCardProps | OpenModalPageProps,
   AdditionalProps extends object = object,
-> = BaseProps & AdditionalProps & Pick<OpenModalReturn<Omit<BaseProps, 'id'>>, 'close' | 'update'>;
+> = AdditionalProps &
+  Pick<OpenModalReturn<Omit<BaseProps, 'id'>>, 'close' | 'update'> & {
+    modalProps: BaseProps;
+  };
 
-export type CustomModalProps<
+export type CustomModalPayload<
   BaseProps extends OpenModalCardProps | OpenModalPageProps,
   AdditionalProps extends object,
 > = {
   id?: string;
-  component: React.ComponentType<OpenModalComponentsProps<BaseProps, AdditionalProps>>;
-  props?: BaseProps & AdditionalProps;
+  component: React.ComponentType<CustomModalProps<BaseProps, AdditionalProps>>;
+  baseProps?: BaseProps;
+  additionalProps?: AdditionalProps;
 };
 
 type OpenCustomModal = {
   <AdditionalProps extends object>(
     type: 'card',
-    props: CustomModalProps<OpenModalCardProps, AdditionalProps>,
+    props: CustomModalPayload<OpenModalCardProps, AdditionalProps>,
   ): OpenCardReturn;
 
   <AdditionalProps extends object>(
     type: 'page',
-    props: CustomModalProps<OpenModalPageProps, AdditionalProps>,
+    props: CustomModalPayload<OpenModalPageProps, AdditionalProps>,
   ): OpenPageReturn;
 };
 
@@ -73,11 +93,13 @@ export type ModalRootApi = {
   // Метод для открытия ModalPage, принимает свойства ModalPage.
   // Возращает  объект типа OpenModalReturn
   openPage: (props: OpenModalPageProps) => OpenPageReturn;
+  // Метод для открытия кастомного модального окна на базе `ModalCard` или `ModalPage`.
   openCustomModal: OpenCustomModal;
   // Метод для изменения свойств уже созданных модалок. Принимает id и новые свойства, которые нужно переопределить.
   update: (...args: UpdateArgs) => void;
   // Метод для закрытия определенной модальных окон. Принимает id модального окна.
   close: (id: string) => void;
+  // Метод для закрытия всех модальных окон.
   closeAll: () => void;
 };
 

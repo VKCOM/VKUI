@@ -21,8 +21,8 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constan
 import { useAdaptivityConditionalRender } from '../useAdaptivityConditionalRender';
 import { usePlatform } from '../usePlatform';
 import {
+  type CustomModalProps,
   type OpenModalCardProps,
-  type OpenModalComponentsProps,
   type OpenModalPageProps,
   type UseModalRootProps,
 } from './types';
@@ -42,11 +42,8 @@ const ModalCardComponent = ({
   close,
   update,
   openNextModal,
-  ...restProps
-}: OpenModalComponentsProps<
-  OpenModalCardProps,
-  { openNextModal: (type: 'card' | 'page') => void }
->) => {
+  modalProps,
+}: CustomModalProps<OpenModalCardProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
   return (
     <ModalCard
       icon={<Icon56NotificationOutline />}
@@ -64,7 +61,7 @@ const ModalCardComponent = ({
           </Button>
         </ButtonGroup>
       }
-      {...restProps}
+      {...modalProps}
     >
       <FormItem top="Заголовок модалки">
         <Input
@@ -79,12 +76,8 @@ const ModalCardComponent = ({
 const ModalPageComponent = ({
   openNextModal,
   close,
-  update,
-  ...restProps
-}: OpenModalComponentsProps<
-  OpenModalPageProps,
-  { openNextModal: (type: 'card' | 'page') => void }
->) => {
+  modalProps,
+}: CustomModalProps<OpenModalPageProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivityConditionalRender();
 
@@ -110,7 +103,7 @@ const ModalPageComponent = ({
           Dynamic modal
         </ModalPageHeader>
       }
-      {...restProps}
+      {...modalProps}
     >
       <Group>
         <CellButton onClick={() => openNextModal('page')}>Open ModalPage</CellButton>
@@ -137,7 +130,7 @@ export const Playground: Story = {
       if (type === 'card') {
         const { id } = api.openCustomModal('card', {
           component: ModalCardComponent,
-          props: {
+          additionalProps: {
             openNextModal,
           },
         });
@@ -145,7 +138,7 @@ export const Playground: Story = {
       } else {
         const { id } = api.openCustomModal('page', {
           component: ModalPageComponent,
-          props: {
+          additionalProps: {
             openNextModal,
           },
         });

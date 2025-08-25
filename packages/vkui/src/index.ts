@@ -460,10 +460,10 @@ export { useTodayDate } from './hooks/useTodayDate';
 export {
   useModalRoot,
   type ModalRootApi,
-  type OpenModalComponentsProps,
+  type CustomModalProps,
   type OpenModalCardProps,
   type OpenModalPageProps,
-  type CustomModalProps,
+  type CustomModalPayload,
 } from './hooks/useModalRoot';
 export { useScrollLock, useManualScroll as useScroll } from './components/AppRoot/ScrollContext';
 export { useModalsApi } from './components/AppRoot/ModalContext';

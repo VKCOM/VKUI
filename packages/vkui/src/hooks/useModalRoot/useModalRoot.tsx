@@ -7,7 +7,7 @@ import { ModalPage } from '../../components/ModalPage/ModalPage';
 import { ModalRoot } from '../../components/ModalRoot/ModalRoot';
 import { type ModalRootProps } from '../../components/ModalRoot/types';
 import {
-  type ModalCardItem,
+  type CustomModalCardItem,
   type ModalRootApi,
   type ModalRootItem,
   type OpenCardReturn,
@@ -26,17 +26,26 @@ type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
 function ContextHolder({ modals, ...modalRootProps }: ContextHolderProps) {
   return (
     <ModalRoot {...modalRootProps}>
-      {modals.map((modalProps) => {
-        if (modalProps.component) {
-          const Modal = modalProps.component;
-          const { type, component, ...currentModalProps } = modalProps;
-          return <Modal key={modalProps.id} {...currentModalProps} />;
+      {modals.map((modalData) => {
+        switch (modalData.type) {
+          case 'custom-page':
+          case 'custom-card':
+            const Modal = modalData.component;
+            return (
+              <Modal
+                key={modalData.id}
+                id={modalData.id}
+                modalProps={modalData.modalProps}
+                {...modalData.additionalProps}
+                update={modalData.update}
+                close={modalData.close}
+              />
+            );
+          case 'card':
+            return <ModalCard key={modalData.id} {...modalData} />;
+          case 'page':
+            return <ModalPage key={modalData.id} {...modalData} />;
         }
-        return modalProps.type === 'card' ? (
-          <ModalCard key={modalProps.id} {...modalProps} />
-        ) : (
-          <ModalPage key={modalProps.id} {...modalProps} />
-        );
       })}
     </ModalRoot>
   );
@@ -61,7 +70,7 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
     };
   };
 
-  const updateModalProps = React.useCallback((id: string, props: ModalRootItem) => {
+  const updateModalProps = React.useCallback((id: string, { type, ...props }: ModalRootItem) => {
     setState((oldState) => {
       const { modals } = oldState;
       if ('id' in props) {
@@ -71,7 +80,26 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
       if (modalIndex === -1) {
         return oldState;
       }
-      const newModalProps: ModalRootItem = Object.assign(modals[modalIndex], props);
+      const currentModal = modals[modalIndex];
+      const newModalProps = (() => {
+        switch (currentModal.type) {
+          case 'custom-page':
+          case 'custom-card':
+            return {
+              ...currentModal,
+              modalProps: {
+                ...currentModal.modalProps,
+                ...props,
+              },
+            };
+          case 'card':
+          case 'page':
+            return {
+              ...currentModal,
+              ...props,
+            };
+        }
+      })() as ModalRootItem;
       return {
         ...oldState,
         modals: modals
@@ -137,8 +165,11 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
   }, []);
 
   const open = React.useCallback(
-    <T extends ModalRootItem>(props: T) => {
-      const id = props.id || uuidv4();
+    <T extends ModalRootItem>(item: T) => {
+      const modalProps: OpenModalPageProps | OpenModalCardProps =
+        (item.type === 'custom-card' || item.type === 'custom-page' ? item.modalProps : item) || {};
+
+      const id = modalProps.id || uuidv4();
       setOverlayShowed(true);
 
       let resolvePromise: () => void;
@@ -146,30 +177,56 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
         resolvePromise = resolve;
       });
 
+      const onClose: OpenModalPageProps['onClose'] = (reason, event) => {
+        setPrevActiveModal(id);
+        modalProps.onClose?.(reason, event);
+      };
+
+      const onClosed = () => {
+        if (needCloseModals.current.has(id)) {
+          removeModal(id);
+          needCloseModals.current.delete(id);
+          resolvePromise();
+        }
+        modalProps.onClosed?.();
+      };
+
+      const newModalData = (() => {
+        switch (item.type) {
+          case 'custom-card':
+          case 'custom-page':
+            return {
+              type: item.type,
+              id,
+              component: item.component,
+              additionalProps: item.additionalProps,
+              update: item.update,
+              close: item.close,
+              modalProps: {
+                ...item.modalProps,
+                id,
+                onClose,
+                onClosed,
+              },
+            };
+          case 'page':
+          case 'card':
+            return {
+              type: item.type,
+              ...modalProps,
+              id,
+              onClose,
+              onClosed,
+            };
+        }
+      })() as ModalRootItem;
+
       setState((oldState) => {
         if (oldState.modals.find((modal) => modal.id === id)) {
           return oldState;
         }
         return {
-          modals: [
-            ...oldState.modals,
-            {
-              ...props,
-              id,
-              onClose: (reason, event) => {
-                setPrevActiveModal(id);
-                props.onClose?.(reason, event);
-              },
-              onClosed: () => {
-                if (needCloseModals.current.has(id)) {
-                  removeModal(id);
-                  needCloseModals.current.delete(id);
-                  resolvePromise();
-                }
-                props.onClosed?.();
-              },
-            },
-          ],
+          modals: [...oldState.modals, newModalData],
           activeModal: id,
         };
       });
@@ -236,28 +293,30 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
       const [type, props] = args;
 
       if (type === 'card') {
-        const { id, component, props: modalProps } = props;
-        const result: Omit<OpenCardReturn, 'update'> = open<ModalCardItem>({
-          type: 'card',
+        const { id, component, baseProps: modalProps, additionalProps } = props;
+        const result: Omit<OpenCardReturn, 'update'> = open<CustomModalCardItem>({
+          type: 'custom-card',
           id,
           component,
+          additionalProps,
+          modalProps: modalProps as OpenModalCardProps,
           close: () => result.close(),
-          update: (newProps: any) => update(result.id, 'card', newProps),
-          ...(modalProps as OpenModalCardProps),
+          update: (newProps) => update(result.id, 'card', newProps),
         });
         return {
           ...result,
           update: (newProps) => update(result.id, 'card', newProps as any),
         };
       } else {
-        const { id, component, props: modalProps } = props;
+        const { id, component, baseProps: modalProps, additionalProps } = props;
         const result: Omit<OpenPageReturn, 'update'> = open({
-          type: 'page',
+          type: 'custom-page',
           id,
           component,
+          additionalProps,
+          modalProps: modalProps as OpenModalPageProps,
           close: () => result.close(),
-          update: (newProps: any) => update(result.id, 'page', newProps),
-          ...(modalProps as OpenModalPageProps),
+          update: (newProps) => update(result.id, 'page', newProps),
         });
 
         return {
@@ -288,7 +347,9 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
     if (!activeModalProps) {
       return false;
     }
-    return activeModalProps.disableModalOverlay || false;
+    return activeModalProps.type === 'custom-card' || activeModalProps.type === 'custom-page'
+      ? activeModalProps.modalProps?.disableModalOverlay
+      : activeModalProps.disableModalOverlay;
   }, [state.activeModal, state.modals]);
 
   const disableModalOverlay = props.disableModalOverlay || activeModalDisableModalOverlay;

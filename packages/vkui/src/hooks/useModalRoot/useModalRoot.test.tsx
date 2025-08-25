@@ -6,9 +6,9 @@ import { ModalPage } from '../../components/ModalPage/ModalPage';
 import { waitCSSTransitionEndConditionally } from '../../components/ModalRoot/ModalRoot.test';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {
+  type CustomModalProps,
   type ModalRootApi,
   type OpenModalCardProps,
-  type OpenModalComponentsProps,
   type OpenModalPageProps,
 } from './types';
 import { useModalRoot } from './useModalRoot';
@@ -196,10 +196,10 @@ describe('useModalRoot', () => {
       additionalAction,
       update,
       close,
-      ...restProps
-    }: OpenModalComponentsProps<OpenModalCardProps, { additionalAction: VoidFunction }>) => {
+      modalProps,
+    }: CustomModalProps<OpenModalCardProps, { additionalAction: VoidFunction }>) => {
       return (
-        <ModalCard title="Ininital Title" data-testid="modal-card" {...restProps}>
+        <ModalCard title="Ininital Title" data-testid="modal-card" {...modalProps}>
           <Button data-testid="update-button" onClick={() => update({ title: 'Updated Title' })}>
             Update
           </Button>
@@ -218,7 +218,7 @@ describe('useModalRoot', () => {
       getApi().openCustomModal('card', {
         id: 'modal-1',
         component: ModalCardComponent,
-        props: {
+        additionalProps: {
           additionalAction,
         },
       });
@@ -242,10 +242,10 @@ describe('useModalRoot', () => {
       additionalAction,
       update,
       close,
-      ...restProps
-    }: OpenModalComponentsProps<OpenModalPageProps, { additionalAction: VoidFunction }>) => {
+      modalProps,
+    }: CustomModalProps<OpenModalPageProps, { additionalAction: VoidFunction }>) => {
       return (
-        <ModalPage data-testid="modal-page" header="Initial header" {...restProps}>
+        <ModalPage data-testid="modal-page" header="Initial header" {...modalProps}>
           <Button data-testid="update-button" onClick={() => update({ header: 'Updated header' })}>
             Update
           </Button>
@@ -264,7 +264,7 @@ describe('useModalRoot', () => {
       getApi().openCustomModal('page', {
         id: 'modal-1',
         component: ModalPageComponent,
-        props: {
+        additionalProps: {
           additionalAction,
         },
       });

@@ -25,7 +25,7 @@ description: Хук для работы с модальными окнами([`M
 
 - `openCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
 - `openPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
-- `openCustomModal: OpenModal` - Метод для открытия пользовательского модального окна. Более подробео можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals)
+- `openCustomModal: (type: 'card' | 'page', props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals)
 - `update: (id: string, type: 'card' | 'page', props: T) => void` - Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
 - `close: (id: string) => void` - Метод для закрытия определенной модальных окон. Принимает id модального окна.
 - `closeAll: () => void` - Метод для закрытия всех созданных модальных окон.
@@ -171,10 +171,10 @@ return (
       <Checkbox checked={saveHistory} onChange={(e) => setSaveHistory(e.target.checked)}>
         Сохранять историю открытия
       </Checkbox>
-      <Button appearance="overlay" onClick={() => openCustomModal('page')}>
+      <Button appearance="overlay" onClick={() => openModal('page')}>
         Открыть ModalPage
       </Button>
-      <Button appearance="overlay" onClick={() => openCustomModal('card')}>
+      <Button appearance="overlay" onClick={() => openModal('card')}>
         Открыть ModalCard
       </Button>
     </Flex>
@@ -193,25 +193,27 @@ return (
 ### Параметры `openCustomModal`
 
 - **`type: 'card' | 'page'`** – базовый тип модального окна, от которого будет наследоваться пользовательское.
-- **`props: CustomModalProps`** – настройки модального окна (см. ниже).
+- **`props: CustomModalPayload`** – настройки модального окна (см. ниже).
 
-### `CustomModalProps` [#custom-modal-props]
+### `CustomModalPayload` [#custom-modal-props]
 
-`CustomModalProps` описывает свойства вашего модального окна.
+`CustomModalPayload` описывает свойства вашего модального окна.
 Это **дженерик с двумя параметрами**:
 
 - **`BaseProps extends OpenModalCardProps | OpenModalPageProps`** – базовые свойства `ModalCard` или `ModalPage`;
 - **`AdditionalProps extends object`** – любые дополнительные свойства, которые вы хотите передать в свой компонент.
 
-#### Свойства `CustomModalProps`:
+#### Свойства `CustomModalPayload`:
 
 - **`id?: string`** – идентификатор окна (если не указать, будет сгенерирован автоматически);
-- **`props?: BaseProps & AdditionalProps`** – объединение базовых и дополнительных свойств, которые будут проброшены в компонент модалки;
-- **`component: ReactComponent<OpenModalComponentsProps<BaseProps, AdditionalProps>>`** – React-компонент, который будет рендерить содержимое окна.
+- **`baseProps?: BaseProps`** – базовык свойства, которые будут проброшены в компонент модалки;
+- **`additionalProps?: AdditionalProps`** – дополнительные свойства, которые будут проброшены в компонент модалки;
+- **`component: ReactComponent<CustomModalProps<BaseProps, AdditionalProps>>`** – React-компонент, который будет рендерить содержимое окна.
 
 В компонент автоматически передаются:
 
-- все базовые свойства модального окна,
+- все базовые и необходимые свойства модального окна в свойстве `modalProps`,
+- `id` модального окна,
 - ваши `AdditionalProps`,
 - а также служебные методы:
   - **`update(newProps)`** – обновляет свойства модалки «на лету»;
@@ -226,7 +228,7 @@ return (
 
 1. Вы пишете **свой компонент модалки**, который внутри использует `ModalCard` или `ModalPage`. В него автоматически попадут все свойства + методы `update` и `close`.
 2. Через `api.openCustomModal(type, { component, props })` вы «регистрируете» это окно и открываете его.
-3. При необходимости можно передавать **дополнительные props** и управлять логикой изнутри (например, открывать следующую модалку или обновлять заголовок).
+3. При необходимости можно передавать **дополнительные props** и управлять логикой изнутри.
 
 <Playground>
 
@@ -235,8 +237,8 @@ const ModalCardComponent = ({
   close,
   update,
   openNextModal,
-  ...restProps
-}: OpenModalComponentsProps<
+  modalProps,
+}: CustomModalProps<
   OpenModalCardProps,
   { openNextModal: (type: 'card' | 'page') => void }
 >) => {
@@ -257,7 +259,7 @@ const ModalCardComponent = ({
           </Button>
         </ButtonGroup>
       }
-      {...restProps}
+      {...modalProps}
     >
       <FormItem top="Заголовок модалки">
         <Input
@@ -272,9 +274,8 @@ const ModalCardComponent = ({
 const ModalPageComponent = ({
   openNextModal,
   close,
-  update,
-  ...restProps
-}: OpenModalComponentsProps<
+  modalProps,
+}: CustomModalProps<
   OpenModalPageProps,
   { openNextModal: (type: 'card' | 'page') => void }
 >) => {
@@ -303,7 +304,7 @@ const ModalPageComponent = ({
           Dynamic modal
         </ModalPageHeader>
       }
-      {...restProps}
+      {...modalProps}
     >
       <Group>
         <CellButton onClick={() => openNextModal('page')}>Open ModalPage</CellButton>
@@ -328,7 +329,7 @@ const openCustomModal = (type: 'card' | 'page') => {
   if (type === 'card') {
     const { id } = api.openCustomModal('card', {
       component: ModalCardComponent,
-      props: {
+      additionalProps: {
         openNextModal,
       },
     });
@@ -336,7 +337,7 @@ const openCustomModal = (type: 'card' | 'page') => {
   } else {
     const { id } = api.openCustomModal('page', {
       component: ModalPageComponent,
-      props: {
+      additionalProps: {
         openNextModal,
       },
     });
