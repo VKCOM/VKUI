@@ -65,7 +65,7 @@ export type CustomModalProps<
 
 export type CustomModalPayload<
   BaseProps extends OpenModalCardProps | OpenModalPageProps,
-  AdditionalProps extends object,
+  AdditionalProps extends object = object,
 > = {
   id?: string;
   component: React.ComponentType<CustomModalProps<BaseProps, AdditionalProps>>;
@@ -76,12 +76,16 @@ export type CustomModalPayload<
 type OpenCustomModal = {
   <AdditionalProps extends object>(
     type: 'card',
-    props: CustomModalPayload<OpenModalCardProps, AdditionalProps>,
+    props:
+      | CustomModalPayload<OpenModalCardProps, AdditionalProps>
+      | React.ComponentType<CustomModalProps<OpenModalCardProps, AdditionalProps>>,
   ): OpenCardReturn;
 
   <AdditionalProps extends object>(
     type: 'page',
-    props: CustomModalPayload<OpenModalPageProps, AdditionalProps>,
+    props:
+      | CustomModalPayload<OpenModalPageProps, AdditionalProps>
+      | React.ComponentType<CustomModalProps<OpenModalPageProps, AdditionalProps>>,
   ): OpenPageReturn;
 };
 

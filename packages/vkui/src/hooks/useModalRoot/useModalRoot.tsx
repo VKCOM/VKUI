@@ -8,6 +8,7 @@ import { ModalRoot } from '../../components/ModalRoot/ModalRoot';
 import { type ModalRootProps } from '../../components/ModalRoot/types';
 import {
   type CustomModalCardItem,
+  type CustomModalPayload,
   type ModalRootApi,
   type ModalRootItem,
   type OpenCardReturn,
@@ -292,14 +293,28 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
     (...args) => {
       const [type, props] = args;
 
+      const resolveProps = (rawProps: typeof props) => {
+        if ('component' in rawProps) {
+          return props;
+        }
+        return {
+          component: props as React.ComponentType,
+        };
+      };
+
       if (type === 'card') {
-        const { id, component, baseProps: modalProps, additionalProps } = props;
+        const {
+          id,
+          component,
+          baseProps: modalProps,
+          additionalProps,
+        } = resolveProps(props) as CustomModalPayload<OpenModalCardProps>;
         const result: Omit<OpenCardReturn, 'update'> = open<CustomModalCardItem>({
           type: 'custom-card',
           id,
           component,
           additionalProps,
-          modalProps: modalProps as OpenModalCardProps,
+          modalProps: modalProps,
           close: () => result.close(),
           update: (newProps) => update(result.id, 'card', newProps),
         });
@@ -308,13 +323,18 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
           update: (newProps) => update(result.id, 'card', newProps as any),
         };
       } else {
-        const { id, component, baseProps: modalProps, additionalProps } = props;
+        const {
+          id,
+          component,
+          baseProps: modalProps,
+          additionalProps,
+        } = resolveProps(props) as CustomModalPayload<OpenModalPageProps>;
         const result: Omit<OpenPageReturn, 'update'> = open({
           type: 'custom-page',
           id,
           component,
           additionalProps,
-          modalProps: modalProps as OpenModalPageProps,
+          modalProps: modalProps,
           close: () => result.close(),
           update: (newProps) => update(result.id, 'page', newProps),
         });

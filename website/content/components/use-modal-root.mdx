@@ -365,6 +365,95 @@ return (
 
 </Playground>
 
+### Модальные окна без дополнительных свойств
+
+Если вы хотите показать модальное окно, не прокидывая ничего в него снаружи, то можете в качестве второго параметра в `openCustomModal` прокинуть саму функцию отрисовки компонента.
+
+<Playground>
+
+```jsx
+
+const ModalCardComponent = ({
+  close,
+  modalProps,
+}: CustomModalProps<OpenModalCardProps>) => {
+  return (
+    <ModalCard
+      icon={<Icon56NotificationOutline />}
+      title="Приложение запрашивает разрешение на отправку Вам уведомлений"
+      actions={
+        <React.Fragment>
+          <Spacing size={16} />
+          <ButtonGroup gap="m" stretched>
+            <Button key="deny" size="l" mode="secondary" stretched onClick={() => close()}>
+              Запретить
+            </Button>
+            <Button key="allow" size="l" mode="primary" stretched onClick={() => close()}>
+              Разрешить
+            </Button>
+          </ButtonGroup>
+        </React.Fragment>
+      }
+      {...modalProps}
+    />
+  );
+};
+
+const ModalPageComponent = ({
+  close,
+  modalProps,
+}: CustomModalProps<OpenModalPageProps>) => {
+  return (
+    <ModalPage
+      dynamicContentHeight
+      header={
+        <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
+          Информация о пользователе
+        </ModalPageHeader>
+      }
+      {...modalProps}
+    >
+      <Group>
+        <Cell>
+          <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
+        </Cell>
+        <Cell>
+          <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
+        </Cell>
+      </Group>
+    </ModalPage>
+  );
+};
+
+
+const [api, contextHolder] = useModalRoot();
+
+const openModalCard = () => {
+  api.openCustomModal('card', ModalCardComponent);
+};
+
+const openModalPage = () => {
+  api.openCustomModal('page', ModalPageComponent);
+};
+
+return (
+  <Flex gap="2xl">
+    <Button mode="primary" appearance="overlay" onClick={openModalPage}>
+      Открыть ModalPage
+    </Button>
+    <Button mode="secondary" onClick={openModalCard}>
+      Открыть ModalCard
+    </Button>
+    {contextHolder}
+  </Flex>
+);
+```
+
+</Playground>
+
 # useModalsApi
 
 Хук для еще большего упрощения работы с модальными окнами.
