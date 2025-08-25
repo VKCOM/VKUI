@@ -22,7 +22,7 @@ export const ModalPageHeaderPreview = () => {
     >
       <ModalPageBase
         isDesktop
-        hideCloseButton
+        modalDismissButtonMode="none"
         header={
           <ModalPageHeader
             before={
