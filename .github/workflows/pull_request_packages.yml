@@ -179,6 +179,7 @@ jobs:
 
   diff_build:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
+    needs: changed_files
     runs-on: ubuntu-latest
     name: Generate Diff
     steps:
