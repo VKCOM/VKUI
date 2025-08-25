@@ -19,6 +19,7 @@ export const IGNORE_TOKENS_WITH_PREFIX = ['octavius'];
 export const DEFAULT_THEME_NAMES = ['vkBase', 'vkIOS', 'vkCom'] as const;
 
 export const DEFAULT_THEME_FOR_PLATFORM = {
+  [Platform.MATERIAL]: 'vkBase',
   [Platform.ANDROID]: 'vkBase',
   [Platform.IOS]: 'vkIOS',
   [Platform.VKCOM]: 'vkCom',

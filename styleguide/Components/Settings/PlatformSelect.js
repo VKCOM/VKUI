@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from '@vkui';
 import { Setting } from '../Setting/Setting';
 
-const platforms = ['android', 'ios', 'vkcom'];
+const platforms = ['material', 'ios', 'vkcom'];
 
 export const PlatformSelect = ({ onChange, value }) => {
   return (
