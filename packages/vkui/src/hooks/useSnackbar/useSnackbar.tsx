@@ -208,10 +208,12 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
     data.snackbars.forEach((snackbar) => {
       const placement = snackbar.placement;
       const placementSnackbars = map[placement] || [];
-      if (
-        placementSnackbars.length <
-        (queueStrategy === 'shift' ? maxSnackbarsCount + 1 : maxSnackbarsCount)
-      ) {
+
+      const notCloseSnackbars = placementSnackbars.filter(
+        (snackbar) => !data.snackbarsToClose.has(snackbar.id),
+      );
+
+      if (notCloseSnackbars.length < maxSnackbarsCount) {
         placementSnackbars.push({
           ...snackbar,
           open: data.snackbarsToClose.has(snackbar.id) ? false : undefined,
@@ -221,7 +223,7 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
     });
     snackbarsMapRef.current = map;
     return map;
-  }, [data.snackbars, data.snackbarsToClose, maxSnackbarsCount, queueStrategy]);
+  }, [data.snackbars, data.snackbarsToClose, maxSnackbarsCount]);
 
   const holder = React.useMemo(() => {
     if (!Object.keys(snackbarsMap).length) {
