@@ -5589,7 +5589,7 @@ __metadata:
     swc-plugin-css-modules: "npm:5.0.1"
     swc-plugin-transform-remove-imports: "npm:6.0.1"
     typescript: "npm:^5.9.2"
-    webpack: "npm:^5.101.2"
+    webpack: "npm:^5.101.3"
     webpack-cli: "npm:^6.0.1"
     webpack-merge: "npm:^6.0.1"
     yargs: "npm:^18.0.0"
@@ -6701,7 +6701,7 @@ __metadata:
     serve-static: "npm:2.2.0"
     swc-loader: "npm:^0.2.6"
     terser-webpack-plugin: "npm:^5.3.14"
-    webpack: "npm:^5.101.2"
+    webpack: "npm:^5.101.3"
   languageName: unknown
   linkType: soft
 
@@ -21783,9 +21783,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.101.2":
-  version: 5.101.2
-  resolution: "webpack@npm:5.101.2"
+"webpack@npm:^5.101.3":
+  version: 5.101.3
+  resolution: "webpack@npm:5.101.3"
   dependencies:
     "@types/eslint-scope": "npm:^3.7.7"
     "@types/estree": "npm:^1.0.8"
@@ -21817,7 +21817,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 10/d042ceb6e43c6de5be9ed39ea011b3fb28eed3f526974f10d6d3c324cbbaa01994167bd0fda394216d9929168489614fb8234dfeac6a363fc28e1b4ae6142747
+  checksum: 10/c4740e9c59d1e0562d1e5654e12559e6308acd60fc639cf3089657c85e946c8910ba06cbd9d74b08daa7f28b5ff786c0482617415a7c1fa8e4637a88b20b76a6
   languageName: node
   linkType: hard
 
