@@ -820,12 +820,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/postcss-global-data@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@csstools/postcss-global-data@npm:3.0.0"
+"@csstools/postcss-global-data@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@csstools/postcss-global-data@npm:3.1.0"
   peerDependencies:
     postcss: ^8.4
-  checksum: 10/e9eace3246c6fb8122e4586f37abd5b5f44b9b5ad989f85cacb05d771f4c5fbe3f43f397d59fd443e5dbeac88f71ea3af558e260a0275759b64db6331a17ddf4
+  checksum: 10/763c9a8c6794b2720d541f42df9aad732345a168c7e7d54b4cd8d712dc6bbe650663beed203a28a8e65d1bd97706da13752be1e9495debb08bd70a89f72f88f7
   languageName: node
   linkType: hard
 
@@ -5488,7 +5488,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkontakte/vkui-monorepo@workspace:."
   dependencies:
-    "@csstools/postcss-global-data": "npm:3.0.0"
+    "@csstools/postcss-global-data": "npm:3.1.0"
     "@playwright/experimental-ct-react": "npm:1.54.2"
     "@playwright/test": "npm:1.54.2"
     "@project-docs/styleguide": "workspace:1.0.0"

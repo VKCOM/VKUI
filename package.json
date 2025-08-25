@@ -11,7 +11,7 @@
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
   },
   "devDependencies": {
-    "@csstools/postcss-global-data": "3.0.0",
+    "@csstools/postcss-global-data": "3.1.0",
     "@playwright/experimental-ct-react": "1.54.2",
     "@playwright/test": "1.54.2",
     "@rspack/cli": "^v1.4.11",
