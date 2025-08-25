@@ -5641,6 +5641,7 @@ __metadata:
     date-fns: "npm:^4.1.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    uuid: "npm:^11.1.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
