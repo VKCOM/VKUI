@@ -280,4 +280,43 @@ describe('useModalRoot', () => {
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
     expect(screen.queryByTestId('modal-page')).not.toBeInTheDocument();
   });
+
+  it('should correct render custom modal page 2', async () => {
+    const additionalAction = jest.fn();
+
+    const ModalPageComponent = ({
+      update,
+      close,
+      modalProps,
+    }: CustomModalProps<OpenModalPageProps>) => {
+      return (
+        <ModalPage data-testid="modal-page" header="Initial header" {...modalProps}>
+          <Button data-testid="update-button" onClick={() => update({ header: 'Updated header' })}>
+            Update
+          </Button>
+          <Button data-testid="close-button" onClick={close}>
+            Close
+          </Button>
+          <Button data-testid="additional-button" onClick={additionalAction}>
+            Additional action
+          </Button>
+        </ModalPage>
+      );
+    };
+
+    render(<Fixture setApi={setApi} />);
+    React.act(() => {
+      getApi().openCustomModal('page', ModalPageComponent);
+    });
+
+    fireEvent.click(screen.getByTestId('additional-button'));
+    expect(additionalAction).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('update-button'));
+    expect(screen.getByText('Updated header')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('close-button'));
+    await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
+    expect(screen.queryByTestId('modal-page')).not.toBeInTheDocument();
+  });
 });
