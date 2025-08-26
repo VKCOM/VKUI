@@ -184,7 +184,7 @@ jobs:
     name: Generate Diff
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup (pr)
         uses: ./.github/actions/node-setup
