@@ -176,76 +176,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Хук `useSnackbar`
 
-Хук `useSnackbar` предоставляет API для управления уведомлениями. Он возвращает массив, где первый элемент — это объект API, а второй элемент — это React-элемент, представляющий контейнер для уведомлений.
-Принимает объект со свойствами:
-
-- `verticalOffsetTop: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
-- `verticalOffsetBottom: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
-- `maxSnackbarsCount: number` - Максимальное число открытых на одном `placement` уведомлений.
-- `queueStrategy: "queue" | "shift"` - Поведение переполнения очереди снекбаров.
-  `"queue"` - снекбары не откроются, пока для них не появится место. Значение по умолчанию.
-  `"shift"` - снекбары форсируют закрытие более старых снекбаров, чтобы освободить место.
-
-### Пример использования
-
-<Playground Wrapper={BlockWrapper}>
-
-```jsx
-const [snackbarApi, snackbarHolder] = useSnackbar();
-
-const showSnackbar = () => {
-  snackbarApi.open({
-    children: 'Уведомление показано!',
-  });
-};
-
-return (
-  <>
-    <Button onClick={showSnackbar}>Показать уведомление</Button>
-    {snackbarHolder}
-  </>
-);
-```
-
-</Playground>
-
-### API
-
-- `open(config: SnackbarConfig): string` — Метод для открытия уведомления. Принимает конфиг, возвращает `id` снекбара(если передан в конфиг, то вернет его, если нет, то сгенерирует `uuid`).
-- `close(id: string): void` — Метод для закрытия снекбара по `id`.
-- `closeAll(): void` — Метод для закрытия всех снекбаров.
-- `update(id: string, config: Omit<SnackbarConfig, 'id' | 'placement'>): void` - Метод для обновления свойств уведомления. Можно поменять любое свойство, кроме 'id' и 'placement'.
-- `getSnackbars(): SnackbarData[]` - Метод для получения списка всех открытых снекбаров.
-- `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
-- `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
-- `setQueueStrategy(behavior: SnackbarsQueueStrategy): void` - Метод для изменения поведения переполнения очереди снекбаров.
-- `setVerticalOffsetTop(offset: SnackbarsVerticalOffset): void` - Метод для изменения отступа контейнера снекбаров от верха.
-- `setVerticalOffsetBottom(offset: SnackbarsVerticalOffset): void` - Метод для изменения отступа контейнера снекбаров с низу.
-
-## Хук `useSnackbarApi`
-
-Хук `useSnackbarApi` позволяет получить доступ к API Snackbar в приложениях, обернутых в `AppRoot`.
-
-### Пример использования
-
-<Playground Wrapper={BlockWrapper}>
-
-```jsx
-const snackbarApi = useSnackbarApi();
-
-const showSnackbar = () => {
-  snackbarApi.open({
-    children: 'Уведомление показано!',
-  });
-};
-
-return <Button onClick={showSnackbar}>Показать уведомление</Button>;
-```
-
-</Playground>
-
-> **Важно**:
-> Убедитесь, что ваше приложение обернуто в `AppRoot`, иначе `useSnackbarApi` не будет работать.
+Для более удобного управления снекбарами вы можете использовать менеджер в виде хука [`useSnackbar`](/components/use-snackbar)
 
 ## Свойства и методы [#api]
 

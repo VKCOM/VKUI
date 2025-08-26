@@ -9,7 +9,7 @@ export type SnackbarsMap = Record<string, SnackbarItem[]>;
 
 export type SnackbarData = RequiredFields<Omit<SnackbarProps, 'offsetY'>, 'id' | 'placement'>;
 
-type UpdateSnackbarProps = Omit<SnackbarConfig, 'id' | 'placement'>;
+export type UpdateSnackbarProps = Omit<SnackbarConfig, 'id' | 'placement'>;
 
 export type OpenSnackbarReturn = {
   id: string;

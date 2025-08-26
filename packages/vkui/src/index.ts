@@ -140,6 +140,7 @@ export type {
   CustomSnackbarProps,
   OpenCustomPayload,
   OpenSnackbarReturn,
+  UpdateSnackbarProps,
   UseSnackbarParameters,
   SnackbarsQueueStrategy,
   SnackbarsVerticalOffset,
