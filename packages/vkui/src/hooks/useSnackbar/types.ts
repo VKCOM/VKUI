@@ -5,20 +5,47 @@ import { type HasDataAttribute, type PartialFields, type RequiredFields } from '
 type SnackbarConfig = PartialFields<Omit<SnackbarProps, 'open' | 'offsetY'>, 'onClose'> &
   HasDataAttribute;
 
-export type SnackbarsMap = Record<string, SnackbarData[]>;
+export type SnackbarsMap = Record<string, SnackbarItem[]>;
+
+export type SnackbarData = RequiredFields<Omit<SnackbarProps, 'offsetY'>, 'id' | 'placement'>;
+
+type UpdateSnackbarProps = Omit<SnackbarConfig, 'id' | 'placement'>;
+
+export type OpenSnackbarReturn = {
+  id: string;
+  close: () => void;
+  update: (props: UpdateSnackbarProps) => void;
+  onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>;
+};
+
+export type CustomSnackbarProps<AdditionalProps extends object = object> = AdditionalProps &
+  Pick<OpenSnackbarReturn, 'close' | 'update'> & {
+    id: string;
+    snackbarProps: SnackbarData;
+  };
+
+export type OpenCustomPayload<AdditionalProps extends object = object> = {
+  id?: string;
+  component: React.ComponentType<CustomSnackbarProps<AdditionalProps>>;
+  baseProps?: SnackbarConfig;
+  additionalProps?: AdditionalProps;
+};
 
 export interface SnackbarApi {
   // Метод для открытия снекбара. Принимает конфиг
-  // Возвращает `id` снекбара(если передан в конфиг, то вернет его, если нет, то сгенерирует uuid)
-  open: (config: SnackbarConfig) => string;
+  open: (config: SnackbarConfig) => OpenSnackbarReturn;
+  // Метод для открытия кастомного снекбара.
+  openCustom: <AdditionalProps extends object = object>(
+    config:
+      | OpenCustomPayload<AdditionalProps>
+      | React.ComponentType<CustomSnackbarProps<AdditionalProps>>,
+  ) => OpenSnackbarReturn;
   // Метод для обновления свойств снекбара. Можно поменять любое свойство, кроме 'id' и 'placement'
-  update: (id: string, config: Omit<SnackbarConfig, 'id' | 'placement'>) => void;
+  update: (id: string, config: UpdateSnackbarProps) => void;
   // Метод для закрытия снекбара по id
   close: (id: string) => void;
   // Метод для закрытия всех снекбаров
   closeAll: () => void;
-  // Метод для получения списка всех открытых снекбаров
-  getSnackbars: () => SnackbarData[];
   // Метод для изменения максимального числа открытых снекбаров в один момент
   setMaxSnackbarsCount: (count: number) => void;
   // Метод для изменения поведения переполнения очереди снекбаров
@@ -48,7 +75,35 @@ export interface UseSnackbarParameters {
 
 export type UseSnackbarResult = [SnackbarApi, React.ReactElement | null];
 
-export type SnackbarData = RequiredFields<Omit<SnackbarProps, 'offsetY'>, 'id' | 'placement'>;
+export type SimpleSnackbarItem = {
+  type: 'simple';
+  id: string;
+  snackbarProps: SnackbarData;
+};
+
+export type CustomSnackbarItem = Pick<OpenSnackbarReturn, 'close' | 'update'> & {
+  type: 'custom';
+  id: string;
+  component: React.ComponentType<any>;
+  additionalProps?: any;
+  snackbarProps: SnackbarData;
+};
+
+export type SnackbarItem = SimpleSnackbarItem | CustomSnackbarItem;
+
+export type CommonOnOpenPayload =
+  | {
+      type: 'simple';
+      id?: string;
+      snackbarProps: SnackbarConfig;
+    }
+  | ({
+      type: 'custom';
+      id?: string;
+      component: React.ComponentType<CustomSnackbarProps<any>>;
+      snackbarProps?: SnackbarConfig;
+      additionalProps?: any;
+    } & Pick<OpenSnackbarReturn, 'close' | 'update'>);
 
 export { type SnackbarPlacement } from '../../components/Snackbar/types';
 export { SnackbarProps };

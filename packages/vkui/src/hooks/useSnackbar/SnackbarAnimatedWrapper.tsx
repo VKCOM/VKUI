@@ -6,7 +6,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { Snackbar } from '../../components/Snackbar/Snackbar';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { usePlatform } from '../usePlatform';
-import { type SnackbarData } from './types';
+import { type SnackbarItem } from './types';
 import styles from './SnackbarAnimatedWrapper.module.css';
 
 const animationStateClassNames = {
@@ -24,17 +24,17 @@ const placementClassNames = {
 };
 
 export const SnackbarAnimatedWrapper: React.FC<{
-  snackbarData: SnackbarData;
+  snackbarItem: SnackbarItem;
   close: boolean;
   onClosed: (id: string) => void;
   placement: 'top' | 'bottom';
-}> = ({ snackbarData, close = false, onClosed, placement }) => {
+}> = ({ snackbarItem, close = false, onClosed, placement }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const platform = usePlatform();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     close ? 'exit' : 'enter',
     {
-      onExited: () => onClosed(snackbarData.id),
+      onExited: () => onClosed(snackbarItem.id),
     },
   );
 
@@ -62,7 +62,17 @@ export const SnackbarAnimatedWrapper: React.FC<{
       )}
       {...animationHandlers}
     >
-      <Snackbar key={snackbarData.id} {...snackbarData} />
+      {snackbarItem.type === 'simple' ? (
+        <Snackbar {...snackbarItem.snackbarProps} />
+      ) : (
+        <snackbarItem.component
+          {...snackbarItem.additionalProps}
+          id={snackbarItem.id}
+          snackbarProps={snackbarItem.snackbarProps}
+          close={snackbarItem.close}
+          update={snackbarItem.update}
+        />
+      )}
     </div>
   );
 };

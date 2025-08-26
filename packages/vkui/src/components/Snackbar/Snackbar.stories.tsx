@@ -65,16 +65,27 @@ export const Playground: Story = {
     const [snackbarApi, contextHolder] = useSnackbar({
       queueStrategy: 'queue',
     });
+    const [snackbars, setSnackbars] = React.useState<Set<string>>(new Set());
     const [autoHide, setAutoHide] = React.useState(true);
 
     const _onOpen = (placement: SnackbarPlacement) => {
-      snackbarApi.open({ duration: autoHide ? undefined : null, ...args, placement });
+      const { id } = snackbarApi.open({
+        duration: autoHide ? undefined : null,
+        ...args,
+        placement,
+        onClose: () => {
+          setSnackbars((oldState) => {
+            oldState.delete(id);
+            return new Set([...oldState]);
+          });
+        },
+      });
+      setSnackbars((oldState) => new Set([...oldState, id]));
     };
 
     const _onUpdate = () => {
-      const snackbars = snackbarApi.getSnackbars();
-      snackbars.forEach((snackbar) => {
-        snackbarApi.update(snackbar.id, {
+      [...snackbars].forEach((snackbarId) => {
+        snackbarApi.update(snackbarId, {
           action: 'Обновлен',
           children: 'Текст и всякое другое',
         });

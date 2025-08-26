@@ -8,11 +8,25 @@ import { type SnackbarApi } from '../../hooks/useSnackbar';
 import { type HasChildren } from '../../types';
 
 const SnackbarApiContext = React.createContext<SnackbarApi>({
-  open: () => '',
+  open: () => ({
+    id: '',
+    close: noop,
+    update: noop,
+    onClose: <R,>(resolve?: () => R) => {
+      return Promise.resolve().then(resolve);
+    },
+  }),
+  openCustom: () => ({
+    id: '',
+    close: noop,
+    update: noop,
+    onClose: <R,>(resolve?: () => R) => {
+      return Promise.resolve().then(resolve);
+    },
+  }),
   update: noop,
   close: noop,
   closeAll: noop,
-  getSnackbars: () => [],
   setMaxSnackbarsCount: noop,
   setQueueStrategy: noop,
   setVerticalOffsetTop: noop,

@@ -137,6 +137,9 @@ export { Snackbar } from './components/Snackbar/Snackbar';
 export { useSnackbar } from './hooks/useSnackbar';
 export type {
   SnackbarApi,
+  CustomSnackbarProps,
+  OpenCustomPayload,
+  OpenSnackbarReturn,
   UseSnackbarParameters,
   SnackbarsQueueStrategy,
   SnackbarsVerticalOffset,

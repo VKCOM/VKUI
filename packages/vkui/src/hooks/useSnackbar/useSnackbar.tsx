@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { BREAKPOINTS } from '../../lib/adaptivity';
@@ -9,8 +8,10 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useMediaQuery } from '../useMediaQuery';
 import { SnackbarsContainer } from './SnackbarsContainer';
 import {
+  type CommonOnOpenPayload,
+  type OpenSnackbarReturn,
   type SnackbarApi,
-  type SnackbarData,
+  type SnackbarItem,
   type SnackbarPlacement,
   type SnackbarsMap,
   type UseSnackbarParameters,
@@ -75,21 +76,16 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
   } = useSnackbarConfig(params);
 
   const [data, setData] = React.useState<{
-    snackbars: SnackbarData[];
+    snackbars: SnackbarItem[];
     snackbarsToClose: Set<string>;
   }>({
     snackbars: [],
     snackbarsToClose: new Set<string>(),
   });
-  const snackbarsRef = React.useRef<SnackbarData[]>([]);
   const snackbarsMapRef = React.useRef<SnackbarsMap>({});
   const showedSnackbars = React.useRef<Set<string>>(new Set());
 
   const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
-
-  useEffect(() => {
-    snackbarsRef.current = data.snackbars;
-  }, [data.snackbars]);
 
   const removeSnackbar = React.useCallback((id: string) => {
     setData((data) => ({
@@ -102,52 +98,13 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
     showedSnackbars.current.delete(id);
   }, []);
 
-  const onOpenSnackbar: SnackbarApi['open'] = React.useCallback(
-    (config) => {
-      const placement: SnackbarPlacement = config.placement || 'bottom-start';
-      const resolvedPlacement = isDesktop ? placement : resolveMobilePlacement(placement);
-
-      const placementSnackbars = snackbarsMapRef.current[resolvedPlacement] || [];
-
-      const withOverflow =
-        queueStrategy === 'shift' && placementSnackbars.length >= maxSnackbarsCount;
-
-      const id = config.id || uuidv4();
-      setData((oldData) => {
-        let snackbarsToClose = oldData.snackbarsToClose;
-
-        if (withOverflow) {
-          const snackbarToClose = placementSnackbars.find(
-            (snackbar) => !snackbarsToClose.has(snackbar.id),
-          );
-          snackbarToClose && snackbarsToClose.add(snackbarToClose.id);
-        }
-
-        return {
-          snackbarsToClose,
-          snackbars: [
-            ...oldData.snackbars,
-            {
-              ...config,
-              id,
-              placement: resolvedPlacement,
-              onClose: () => {
-                config.onClose?.();
-              },
-            },
-          ],
-        };
-      });
-      return id;
-    },
-    [isDesktop, maxSnackbarsCount, queueStrategy],
-  );
-
   const onUpdateSnackbar: SnackbarApi['update'] = React.useCallback((id, config) => {
     setData((oldData) => ({
       ...oldData,
       snackbars: oldData.snackbars.map((snackbar) =>
-        snackbar.id === id ? { ...snackbar, ...config } : snackbar,
+        snackbar.id === id
+          ? { ...snackbar, snackbarProps: { ...snackbar.snackbarProps, ...config } }
+          : snackbar,
       ),
     }));
   }, []);
@@ -169,6 +126,64 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
     [removeSnackbar],
   );
 
+  const onOpenSnackbarImpl: (item: CommonOnOpenPayload) => OpenSnackbarReturn = React.useCallback(
+    (item) => {
+      const placement: SnackbarPlacement = item.snackbarProps?.placement || 'bottom-start';
+      const resolvedPlacement = isDesktop ? placement : resolveMobilePlacement(placement);
+
+      const placementSnackbars = snackbarsMapRef.current[resolvedPlacement] || [];
+
+      const withOverflow =
+        queueStrategy === 'shift' && placementSnackbars.length >= maxSnackbarsCount;
+
+      let resolvePromise: () => void;
+      const promise = new Promise<void>((resolve) => {
+        resolvePromise = resolve;
+      });
+
+      const id = item.id || uuidv4();
+      setData((oldData) => {
+        let snackbarsToClose = oldData.snackbarsToClose;
+
+        if (withOverflow) {
+          const snackbarToClose = placementSnackbars.find(
+            (snackbar) => !snackbarsToClose.has(snackbar.id),
+          );
+          snackbarToClose && snackbarsToClose.add(snackbarToClose.id);
+        }
+
+        return {
+          snackbarsToClose,
+          snackbars: [
+            ...oldData.snackbars,
+            {
+              ...item,
+              id,
+              snackbarProps: {
+                ...item.snackbarProps,
+                id,
+                placement: resolvedPlacement,
+                onClose: () => {
+                  resolvePromise();
+                  item.snackbarProps?.onClose?.();
+                },
+              },
+            },
+          ],
+        };
+      });
+      return {
+        id,
+        close: () => onCloseSnackbar(id),
+        update: (newProps) => onUpdateSnackbar(id, newProps),
+        onClose: <R,>(resolve?: () => R) => {
+          return promise.then(resolve);
+        },
+      };
+    },
+    [isDesktop, maxSnackbarsCount, onCloseSnackbar, onUpdateSnackbar, queueStrategy],
+  );
+
   const onCloseAllSnackbars: SnackbarApi['closeAll'] = React.useCallback(() => {
     setData((oldData) => ({
       snackbars: oldData.snackbars.filter(({ id }) => showedSnackbars.current.has(id)),
@@ -176,13 +191,50 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
     }));
   }, []);
 
+  const onOpenSnackbar: SnackbarApi['open'] = React.useCallback(
+    (config) => {
+      return onOpenSnackbarImpl({
+        type: 'simple',
+        id: config.id,
+        snackbarProps: config,
+      });
+    },
+    [onOpenSnackbarImpl],
+  );
+
+  const onOpenCustomSnackbar: SnackbarApi['openCustom'] = React.useCallback(
+    (config) => {
+      if ('component' in config) {
+        const result = onOpenSnackbarImpl({
+          type: 'custom',
+          id: config.id,
+          component: config.component,
+          snackbarProps: config.baseProps,
+          additionalProps: config.additionalProps,
+          close: () => result.close(),
+          update: (newProps) => result.update(newProps),
+        });
+        return result;
+      } else {
+        const result = onOpenSnackbarImpl({
+          type: 'custom',
+          component: config,
+          close: () => result.close(),
+          update: (newProps) => result.update(newProps),
+        });
+        return result;
+      }
+    },
+    [onOpenSnackbarImpl],
+  );
+
   const api = React.useMemo<SnackbarApi>(() => {
     return {
       open: onOpenSnackbar,
+      openCustom: onOpenCustomSnackbar,
       update: onUpdateSnackbar,
       close: onCloseSnackbar,
       closeAll: onCloseAllSnackbars,
-      getSnackbars: () => snackbarsRef.current,
       setMaxSnackbarsCount,
       setQueueStrategy,
       setVerticalOffsetTop,
@@ -191,6 +243,7 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
   }, [
     onCloseAllSnackbars,
     onCloseSnackbar,
+    onOpenCustomSnackbar,
     onOpenSnackbar,
     onUpdateSnackbar,
     setMaxSnackbarsCount,
@@ -206,7 +259,7 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
   const snackbarsMap: SnackbarsMap = React.useMemo(() => {
     const map: SnackbarsMap = {};
     data.snackbars.forEach((snackbar) => {
-      const placement = snackbar.placement;
+      const placement = snackbar.snackbarProps.placement;
       const placementSnackbars = map[placement] || [];
 
       const notCloseSnackbars = placementSnackbars.filter(
@@ -216,7 +269,10 @@ export const useSnackbar = (params: UseSnackbarParameters = {}): UseSnackbarResu
       if (notCloseSnackbars.length < maxSnackbarsCount) {
         placementSnackbars.push({
           ...snackbar,
-          open: data.snackbarsToClose.has(snackbar.id) ? false : undefined,
+          snackbarProps: {
+            ...snackbar.snackbarProps,
+            open: data.snackbarsToClose.has(snackbar.id) ? false : undefined,
+          },
         });
       }
       map[placement] = placementSnackbars;

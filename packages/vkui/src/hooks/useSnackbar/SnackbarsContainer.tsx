@@ -11,7 +11,7 @@ import {
   type SnackbarsContainerContextData,
 } from './SnackbarsContainerContext';
 import {
-  type SnackbarData,
+  type SnackbarItem,
   type SnackbarsVerticalOffset,
   type UseSnackbarParameters,
 } from './types';
@@ -20,7 +20,7 @@ import styles from './SnackbarsContainer.module.css';
 
 interface SnackbarsContainerProps
   extends Pick<UseSnackbarParameters, 'verticalOffsetTop' | 'verticalOffsetBottom'> {
-  snackbars: SnackbarData[];
+  snackbars: SnackbarItem[];
   placement: SnackbarPlacement;
   onSnackbarShow: (id: string) => void;
   onSnackbarContainerClosed: (id: string) => void;
@@ -88,12 +88,12 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
         className={classNames(styles.host, placementClassNames[placement])}
         style={containerStyles}
       >
-        {snackbars.map((snackbarData) => (
+        {snackbars.map((snackbar) => (
           <SnackbarAnimatedWrapper
-            key={snackbarData.id}
-            snackbarData={snackbarData}
+            key={snackbar.id}
+            snackbarItem={snackbar}
             onClosed={onSnackbarContainerClosed}
-            close={snackbarsWrappersToClose.has(snackbarData.id)}
+            close={snackbarsWrappersToClose.has(snackbar.id)}
             placement={placement.startsWith('top') ? 'top' : 'bottom'}
           />
         ))}

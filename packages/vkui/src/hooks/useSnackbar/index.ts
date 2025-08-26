@@ -4,4 +4,7 @@ export type {
   UseSnackbarParameters,
   SnackbarsQueueStrategy,
   SnackbarsVerticalOffset,
+  CustomSnackbarProps,
+  OpenCustomPayload,
+  OpenSnackbarReturn,
 } from './types';

@@ -1,7 +1,15 @@
 import * as React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { Button } from '../../components/Button/Button.tsx';
+import { Flex } from '../../components/Flex/Flex.tsx';
+import { Snackbar } from '../../components/Snackbar/Snackbar.tsx';
 import { waitCSSKeyframesAnimation } from '../../testing/utils';
-import { type SnackbarApi, type UseSnackbarParameters } from './types';
+import {
+  type CustomSnackbarProps,
+  type OpenSnackbarReturn,
+  type SnackbarApi,
+  type UseSnackbarParameters,
+} from './types';
 import { useSnackbar } from './useSnackbar';
 
 const TestComponent: React.FC<
@@ -58,8 +66,6 @@ describe('useSnackbar', () => {
     expect(screen.queryByText('Test Snackbar 1')).toBeInTheDocument();
     expect(screen.queryByText('Test Snackbar 2')).toBeInTheDocument();
 
-    expect(apiRef.current?.getSnackbars()).toHaveLength(2);
-
     act(() => {
       apiRef.current?.closeAll();
     });
@@ -80,12 +86,13 @@ describe('useSnackbar', () => {
     let snackbarId: string | null = null;
 
     act(() => {
-      snackbarId =
-        apiRef.current?.open({ 'children': 'Test Snackbar to close', 'data-testid': 'snackbar' }) ||
-        null;
+      const { id } = apiRef.current!.open({
+        'children': 'Test Snackbar to close',
+        'data-testid': 'snackbar',
+      });
+      snackbarId = id;
     });
     expect(screen.queryByTestId('snackbar')).toBeInTheDocument();
-    expect(apiRef.current?.getSnackbars()).toHaveLength(1);
 
     act(() => apiRef.current?.close(snackbarId!));
 
@@ -94,12 +101,10 @@ describe('useSnackbar', () => {
     await waitCSSKeyframesAnimation(snackbar, { runOnlyPendingTimers: true });
     expect(snackbar).not.toBeInTheDocument();
     expect(snackbarWrapper).toBeInTheDocument();
-    expect(apiRef.current?.getSnackbars()).toHaveLength(1);
 
     await waitCSSKeyframesAnimation(snackbarWrapper, { runOnlyPendingTimers: true });
     expect(snackbar).not.toBeInTheDocument();
     expect(snackbarWrapper).not.toBeInTheDocument();
-    expect(apiRef.current?.getSnackbars()).toHaveLength(0);
   });
 
   it('should close snackbar automatically after duration', async () => {
@@ -128,9 +133,11 @@ describe('useSnackbar', () => {
     let snackbarId: string | null = null;
 
     act(() => {
-      snackbarId =
-        apiRef.current?.open({ 'children': 'Test Snackbar to close', 'data-testid': 'snackbar' }) ||
-        null;
+      const { id } = apiRef.current!.open({
+        'children': 'Test Snackbar to close',
+        'data-testid': 'snackbar',
+      });
+      snackbarId = id;
     });
     expect(screen.queryByText('Test Snackbar to close')).toBeInTheDocument();
 
@@ -142,6 +149,37 @@ describe('useSnackbar', () => {
     expect(screen.queryByText('Updated test Snackbar to close')).toBeInTheDocument();
   });
 
+  it('check working with return data', async () => {
+    render(<TestComponent apiRef={apiRef} />);
+
+    let snackbarApi: OpenSnackbarReturn | null = null;
+
+    act(() => {
+      snackbarApi = apiRef.current!.open({
+        'children': 'Test Snackbar to close',
+        'data-testid': 'snackbar',
+      });
+    });
+    expect(screen.queryByText('Test Snackbar to close')).toBeInTheDocument();
+
+    act(() => {
+      snackbarApi?.update({ children: 'Updated test Snackbar to close' });
+    });
+
+    expect(screen.queryByText('Test Snackbar to close')).not.toBeInTheDocument();
+    expect(screen.queryByText('Updated test Snackbar to close')).toBeInTheDocument();
+
+    let closePromiseResolved = false;
+    void snackbarApi!.onClose().then(() => {
+      closePromiseResolved = true;
+    });
+
+    React.act(() => snackbarApi!.close());
+
+    await waitCSSKeyframesAnimation(screen.getByRole('alert'), { runOnlyPendingTimers: true });
+    expect(closePromiseResolved).toBeTruthy();
+  });
+
   it('check maxSnackbarsCount with queueStrategy="queue"', async () => {
     render(<TestComponent apiRef={apiRef} maxSnackbarsCount={1} />);
 
@@ -150,20 +188,19 @@ describe('useSnackbar', () => {
       apiRef.current?.open({ children: 'Test Snackbar 1', placement: 'top-start' });
     });
     act(() => {
-      snackbar2 =
-        apiRef.current?.open({ children: 'Test Snackbar 2', placement: 'top-start' }) || null;
+      const { id } = apiRef.current!.open({ children: 'Test Snackbar 2', placement: 'top-start' });
+      snackbar2 = id;
     });
 
     expect(screen.queryByText('Test Snackbar 1')).toBeInTheDocument();
     expect(screen.queryByText('Test Snackbar 2')).not.toBeInTheDocument();
 
-    expect(apiRef.current?.getSnackbars()).toHaveLength(2);
-
     act(() => {
       apiRef.current?.close(snackbar2!);
     });
 
-    expect(apiRef.current?.getSnackbars()).toHaveLength(1);
+    expect(screen.queryByText('Test Snackbar 1')).toBeInTheDocument();
+    expect(screen.queryByText('Test Snackbar 2')).not.toBeInTheDocument();
   });
 
   it('check maxSnackbarsCount with queueStrategy="shift"', async () => {
@@ -187,14 +224,84 @@ describe('useSnackbar', () => {
     expect(screen.queryByText('Test Snackbar 1')).toBeInTheDocument();
     expect(screen.queryByText('Test Snackbar 2')).toBeInTheDocument();
 
-    expect(apiRef.current?.getSnackbars()).toHaveLength(2);
-
     const snackbar = screen.getByTestId('snackbar-1').firstElementChild as HTMLElement;
     const snackbarWrapper = snackbar.parentElement!.parentElement!;
 
     await waitCSSKeyframesAnimation(snackbar, { runOnlyPendingTimers: true });
     await waitCSSKeyframesAnimation(snackbarWrapper, { runOnlyPendingTimers: true });
+  });
 
-    expect(apiRef.current?.getSnackbars()).toHaveLength(1);
+  it('should open custom modal', async () => {
+    const additionalAction = jest.fn();
+    render(<TestComponent apiRef={apiRef} />);
+
+    const SnackbarComponent = ({
+      additionalAction,
+      snackbarProps,
+      update,
+      close,
+    }: CustomSnackbarProps<{ additionalAction: VoidFunction }>) => {
+      return (
+        <Snackbar data-testid="snackbar" action="Поделиться" {...snackbarProps}>
+          Test Snackbar
+          <Flex>
+            <Button data-testid="update" onClick={() => update({ action: 'Измененный' })}>
+              Update
+            </Button>
+            <Button data-testid="close" onClick={() => close()}>
+              Close
+            </Button>
+            <Button data-testid="action" onClick={() => additionalAction()}>
+              Action
+            </Button>
+          </Flex>
+        </Snackbar>
+      );
+    };
+
+    act(() => {
+      apiRef.current?.openCustom({
+        component: SnackbarComponent,
+        additionalProps: {
+          additionalAction,
+        },
+      });
+    });
+
+    expect(screen.queryByText('Test Snackbar')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('action'));
+    expect(additionalAction).toHaveBeenCalled();
+
+    expect(screen.queryByText('Поделиться')).toBeInTheDocument();
+    act(() => {
+      fireEvent.click(screen.getByTestId('update'));
+    });
+    expect(screen.queryByText('Измененный')).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.click(screen.getByTestId('close'));
+    });
+    const snackbar = screen.getByRole('alert');
+    await waitCSSKeyframesAnimation(snackbar, { runOnlyPendingTimers: true });
+    expect(snackbar).not.toBeInTheDocument();
+  });
+
+  it('should open custom modal without props', async () => {
+    render(<TestComponent apiRef={apiRef} />);
+
+    const SnackbarComponent = ({ snackbarProps }: CustomSnackbarProps) => {
+      return (
+        <Snackbar data-testid="snackbar" action="Поделиться" {...snackbarProps}>
+          Test Snackbar
+        </Snackbar>
+      );
+    };
+
+    act(() => {
+      apiRef.current?.openCustom(SnackbarComponent);
+    });
+
+    expect(screen.queryByText('Test Snackbar')).toBeInTheDocument();
   });
 });
