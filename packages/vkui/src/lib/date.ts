@@ -326,3 +326,91 @@ export function isMatch(input: string, format: string): boolean {
 }
 
 export const millisecondsInSecond = 1000;
+
+export function addDays(date: Date, amount: number): Date {
+  const result = new Date(date);
+
+  if (!amount) {
+    return result;
+  }
+
+  result.setDate(result.getDate() + amount);
+  return result;
+}
+
+export function subDays(date: Date, amount: number): Date {
+  return addDays(date, -amount);
+}
+
+export function addWeeks(date: Date, amount: number): Date {
+  return addDays(date, amount * 7);
+}
+
+export function subWeeks(date: Date, amount: number): Date {
+  return addWeeks(date, -amount);
+}
+
+export function addMonths(date: Date, amount: number): Date {
+  const result = new Date(date);
+
+  if (!amount) {
+    return result;
+  }
+
+  const dayOfMonth = result.getDate();
+
+  const endOfDesiredMonth = new Date(date);
+  endOfDesiredMonth.setMonth(result.getMonth() + amount + 1, 0); // Конец месяца
+  const daysInMonth = endOfDesiredMonth.getDate();
+  if (dayOfMonth >= daysInMonth) {
+    // Если мы уже находимся в конце месяца, то это нужная дата
+    return endOfDesiredMonth;
+  }
+
+  result.setFullYear(endOfDesiredMonth.getFullYear(), endOfDesiredMonth.getMonth(), dayOfMonth);
+  return result;
+}
+
+export function subMonths(date: Date, amount: number): Date {
+  return addMonths(date, -amount);
+}
+
+export function setYear(date: Date, year: number): Date {
+  const result = new Date(date);
+  result.setFullYear(year);
+  return result;
+}
+
+function getDaysInMonth(date: Date): number {
+  const result = new Date(date);
+  const lastDayOfMonth = new Date(result);
+  lastDayOfMonth.setFullYear(result.getFullYear(), result.getMonth() + 1, 0);
+  lastDayOfMonth.setHours(0, 0, 0, 0);
+  return lastDayOfMonth.getDate();
+}
+
+export function setMonth(date: Date, month: number): Date {
+  const result = new Date(date);
+  const year = result.getFullYear();
+  const day = result.getDate();
+
+  const midMonth = new Date(date);
+  midMonth.setFullYear(year, month, 15);
+  midMonth.setHours(0, 0, 0, 0);
+  const daysInMonth = getDaysInMonth(midMonth);
+
+  result.setMonth(month, Math.min(day, daysInMonth));
+  return result;
+}
+
+export function setHours(date: Date, hours: number): Date {
+  const result = new Date(date);
+  result.setHours(hours);
+  return result;
+}
+
+export function setMinutes(date: Date, minutes: number): Date {
+  const result = new Date(date);
+  result.setMinutes(minutes);
+  return result;
+}

@@ -177,6 +177,66 @@ jobs:
           build_script: 'size:ci'
           script: yarn run -T size-limit --json"
 
+  diff_build:
+    if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
+    needs: changed_files
+    runs-on: ubuntu-latest
+    name: Generate Diff
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+
+      - name: Node setup (pr)
+        uses: ./.github/actions/node-setup
+
+      - name: Build vkui PR (pr)
+        working-directory: packages/vkui
+        run: |
+          yarn run build
+          prettier ./dist --write
+
+      - name: Checkout target
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1
+          git checkout -f ${{ github.base_ref }}
+
+      - name: Node setup (target)
+        uses: ./.github/actions/node-setup
+
+      - name: Rename dist folder from pr
+        working-directory: packages/vkui
+        run: |
+          mv dist pr_dist
+
+      - name: Build vkui (target)
+        working-directory: packages/vkui
+        run: |
+          yarn run build
+          prettier ./dist --write
+
+      - name: Generate diff
+        id: generate-diff
+        run: |
+          git diff --no-index packages/vkui/dist/ packages/vkui/pr_dist/ > code_diff.dif || true
+          if [ -s code_diff.dif ]; then
+            echo "has_diff=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_diff=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate HTML report
+        if: steps.generate-diff.outputs.has_diff == 'true'
+        run: |
+          mkdir diff
+          diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
+
+      - name: Upload report
+        if: steps.generate-diff.outputs.has_diff == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: diff-report
+          path: diff/
+
   docs_styleguide_upload:
     if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
     needs: changed_files

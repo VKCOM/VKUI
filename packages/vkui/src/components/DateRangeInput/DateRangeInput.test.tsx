@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { addDays } from 'date-fns';
-import { dateFormatter } from '../../lib/date';
+import { addDays, dateFormatter } from '../../lib/date';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { DateRangeInput } from './DateRangeInput';
 

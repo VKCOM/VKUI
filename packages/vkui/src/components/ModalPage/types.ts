@@ -66,6 +66,8 @@ export interface ModalPageProps
   dynamicContentHeight?: boolean;
   /**
    * Отключает фокус на интерактивный элемент после открытия модалки.
+   *
+   * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
   noFocusToDialog?: boolean;
   /**
