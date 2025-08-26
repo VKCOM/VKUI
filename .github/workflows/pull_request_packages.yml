@@ -193,7 +193,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-           ../../node_modules/.bin/prettier ./dist --write
+          yarn run -T prettier ./dist --write
 
       - name: Checkout target
         run: |
@@ -212,7 +212,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-           ../../node_modules/.bin/prettier ./dist --write
+          yarn run -T prettier ./dist --write
 
       - name: Generate diff
         id: generate-diff
