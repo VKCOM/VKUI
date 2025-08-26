@@ -1,4 +1,7 @@
 import {
+  addDays,
+  addMonths,
+  addWeeks,
   eachDayOfInterval,
   endOfDay,
   endOfMonth,
@@ -10,10 +13,17 @@ import {
   isWithinInterval,
   isYesterday,
   parse,
+  setHours,
+  setMinutes,
+  setMonth,
+  setYear,
   startOfDay,
   startOfMinute,
   startOfMonth,
   startOfWeek,
+  subDays,
+  subMonths,
+  subWeeks,
 } from './date';
 
 describe(parse, () => {
@@ -441,12 +451,12 @@ describe('eachDayOfInterval', () => {
   });
 
   it('returns a single date when start equals end', () => {
-    const d = new Date(2023, 4, 15);
+    const date = new Date(2023, 4, 15);
 
-    const result = eachDayOfInterval(d, d);
+    const result = eachDayOfInterval(date, date);
 
     expect(result).toHaveLength(1);
-    expect(result[0]).toEqual(d);
+    expect(result[0]).toEqual(date);
   });
 
   it('handles reversed intervals correctly', () => {
@@ -709,5 +719,245 @@ describe('isYesterday', () => {
     const copy = new Date(original.getTime());
     isYesterday(original);
     expect(original).toEqual(copy);
+  });
+});
+
+describe('addDays', () => {
+  it('adds days to a date', () => {
+    const date = new Date(2023, 0, 1);
+    const result = addDays(date, 5);
+    expect(result).toEqual(new Date(2023, 0, 6));
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30);
+    const copy = new Date(original.getTime());
+    addDays(original, 5);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const date = new Date(2019, 11, 1);
+    const result = addDays(date, 5);
+    expect(result).not.toBe(date);
+  });
+
+  it('handles adding days across months', () => {
+    const date = new Date(2023, 0, 31);
+    const result = addDays(date, 1);
+    expect(result).toEqual(new Date(2023, 1, 1));
+  });
+
+  it('handles adding days across years', () => {
+    const date = new Date(2023, 11, 31);
+    const result = addDays(date, 1);
+    expect(result).toEqual(new Date(2024, 0, 1));
+  });
+
+  it('returns the same date when adding zero days', () => {
+    const date = new Date(2023, 0, 15);
+    const result = addDays(date, 0);
+    expect(result).toEqual(date);
+    expect(result).not.toBe(date);
+  });
+});
+
+describe('subDays', () => {
+  it('subtracts days from a date', () => {
+    const date = new Date(2023, 0, 6);
+    const result = subDays(date, 5);
+    expect(result).toEqual(new Date(2023, 0, 1));
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30);
+    const copy = new Date(original.getTime());
+    subDays(original, 5);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const date = new Date(2019, 11, 1);
+    const result = subDays(date, 5);
+    expect(result).not.toBe(date);
+  });
+
+  it('handles subtracting days across months', () => {
+    const date = new Date(2023, 0, 1);
+    const result = subDays(date, 2);
+    expect(result).toEqual(new Date(2022, 11, 30));
+  });
+
+  it('handles subtracting days across years', () => {
+    const date = new Date(2023, 0, 1);
+    const result = subDays(date, 365);
+    expect(result).toEqual(new Date(2022, 0, 1));
+  });
+
+  it('returns the same date when subtracting zero days', () => {
+    const date = new Date(2023, 0, 15);
+    const result = subDays(date, 0);
+    expect(result).toEqual(date);
+    expect(result).not.toBe(date);
+  });
+});
+
+describe('addWeeks', () => {
+  it('adds weeks to a date', () => {
+    const date = new Date(2023, 0, 1);
+    const result = addWeeks(date, 2);
+    expect(result).toEqual(new Date(2023, 0, 15));
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30);
+    const copy = new Date(original.getTime());
+    addWeeks(original, 2);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const date = new Date(2019, 11, 1);
+    const result = addWeeks(date, 2);
+    expect(result).not.toBe(date);
+  });
+
+  it('handles adding weeks across months', () => {
+    const date = new Date(2023, 0, 28);
+    const result = addWeeks(date, 1);
+    expect(result).toEqual(new Date(2023, 1, 4));
+  });
+});
+
+describe('subWeeks', () => {
+  it('subtracts weeks from a date', () => {
+    const date = new Date(2023, 0, 15);
+    const result = subWeeks(date, 2);
+    expect(result).toEqual(new Date(2023, 0, 1));
+  });
+
+  it('does not mutate the original date', () => {
+    const original = new Date(2020, 1, 10, 8, 30);
+    const copy = new Date(original.getTime());
+    subWeeks(original, 2);
+    expect(original).toEqual(copy);
+  });
+
+  it('returns a new Date instance', () => {
+    const date = new Date(2019, 11, 1);
+    const result = subWeeks(date, 2);
+    expect(result).not.toBe(date);
+  });
+
+  it('handles subtracting weeks across months', () => {
+    const date = new Date(2023, 0, 4);
+    const result = subWeeks(date, 1);
+    expect(result).toEqual(new Date(2022, 11, 28));
+  });
+});
+
+describe('addMonths', () => {
+  it('returns same date when amount is 0', () => {
+    const date = new Date(2024, 0, 15, 12, 30);
+    const result = addMonths(date, 0);
+    expect(result.getTime()).toBe(date.getTime());
+  });
+
+  it('adds months normally', () => {
+    const date = new Date(2024, 0, 15);
+    const result = addMonths(date, 2);
+    expect(result.getFullYear()).toBe(2024);
+    expect(result.getMonth()).toBe(2);
+    expect(result.getDate()).toBe(15);
+  });
+
+  it('handles month end dates correctly', () => {
+    const date = new Date(2024, 0, 31);
+    const result = addMonths(date, 1);
+    expect(result.getMonth()).toBe(1);
+    expect(result.getDate()).toBe(29);
+  });
+
+  it('keeps the day when target month has enough days', () => {
+    const date = new Date(2024, 0, 30);
+    const result = addMonths(date, 1);
+    expect(result.getMonth()).toBe(1);
+    expect(result.getDate()).toBe(29);
+  });
+
+  it('does not modify the original date', () => {
+    const date = new Date(2024, 0, 15);
+    addMonths(date, 3);
+    expect(date.getMonth()).toBe(0);
+    expect(date.getDate()).toBe(15);
+  });
+});
+
+describe('subMonths', () => {
+  it('subtracts months correctly', () => {
+    const date = new Date(2024, 5, 10);
+    const result = subMonths(date, 2);
+    expect(result.getFullYear()).toBe(2024);
+    expect(result.getMonth()).toBe(3);
+    expect(result.getDate()).toBe(10);
+  });
+
+  it('returns last day when original is month end', () => {
+    const date = new Date(2024, 2, 31);
+    const result = subMonths(date, 1);
+    expect(result.getMonth()).toBe(1);
+    expect(result.getDate()).toBe(29);
+  });
+});
+
+describe('setYear', () => {
+  it('changes only the year', () => {
+    const date = new Date(2024, 6, 20);
+    const result = setYear(date, 2025);
+    expect(result.getFullYear()).toBe(2025);
+    expect(result.getMonth()).toBe(6);
+    expect(result.getDate()).toBe(20);
+  });
+});
+
+describe('setMonth', () => {
+  it('changes only the month', () => {
+    const date = new Date(2024, 6, 20);
+    const result = setMonth(date, 10);
+    expect(result.getFullYear()).toBe(2024);
+    expect(result.getMonth()).toBe(10);
+    expect(result.getDate()).toBe(20);
+  });
+
+  it('clamps day to last day of month if needed', () => {
+    const date = new Date(2024, 0, 31);
+    const result = setMonth(date, 3);
+    expect(result.getMonth()).toBe(3);
+    expect(result.getDate()).toBe(30);
+  });
+
+  it('keeps day when month has enough days', () => {
+    const date = new Date(2024, 0, 15);
+    const result = setMonth(date, 1);
+    expect(result.getMonth()).toBe(1);
+    expect(result.getDate()).toBe(15);
+  });
+});
+
+describe('setHours', () => {
+  it('sets the hours correctly', () => {
+    const date = new Date(2024, 0, 15, 8, 45);
+    const result = setHours(date, 14);
+    expect(result.getHours()).toBe(14);
+    expect(result.getMinutes()).toBe(45);
+  });
+});
+
+describe('setMinutes', () => {
+  it('sets the minutes correctly', () => {
+    const date = new Date(2024, 0, 15, 8, 30);
+    const result = setMinutes(date, 55);
+    expect(result.getHours()).toBe(8);
+    expect(result.getMinutes()).toBe(55);
   });
 });

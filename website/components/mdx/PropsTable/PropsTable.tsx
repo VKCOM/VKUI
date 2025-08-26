@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Code, Table, Td, Th, Tr } from '@vkontakte/vkui-docs-theme';
+import { Code, getMdxComponents, Table, Td, Th, Tr } from '@vkontakte/vkui-docs-theme';
 import { compileMdx } from 'nextra/compile';
 import { MDXRemote } from 'nextra/mdx-remote';
 import { type PropItem } from 'react-docgen-typescript';
 import docgen from '@/docgen.json';
 import styles from './PropsTable.module.css';
+
+const Paragraph = getMdxComponents().p!;
 
 const AllProps: Record<string, PropItem[]> = docgen;
 
@@ -41,7 +43,11 @@ export function PropsTable({ name, children }: PropsTableProps) {
   });
 }
 
-function renderProps(props: PropItem[]) {
+function renderProps(props: PropItem[] = []) {
+  if (props.length === 0) {
+    return <Paragraph>Не принимает свойств</Paragraph>;
+  }
+
   return (
     <Table className={styles.root}>
       <thead>
