@@ -38,6 +38,8 @@ export type UseCSSTransition<Ref extends Element = Element> = [
   },
 ];
 
+const TRANSITION_FALLBACK_DELAY = 50;
+
 /**
  * Хук основан на компоненте `CSSTransition` из библиотеки `react-transition-group`.
  *
@@ -194,30 +196,32 @@ export const useCSSTransition = <Ref extends Element = Element>(
     }
   });
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) {
+  useEffect(
+    function scheduleTransitionCompletionFallback() {
+      const el = ref.current;
+      if (!el) {
+        return;
+      }
+
+      if (state === 'appearing' || state === 'entering' || state === 'exiting') {
+        const style = getComputedStyle(el);
+
+        const parseTime = (s: string) =>
+          s.includes('ms') ? parseFloat(s) : parseFloat(s) * millisecondsInSecond;
+
+        const duration =
+          Math.max(...style.transitionDuration.split(',').map(parseTime)) +
+          Math.max(...style.transitionDelay.split(',').map(parseTime));
+
+        // fallback если onTransitionEnd не пришёл
+        timerRef.current = setTimeout(completeTransition, duration + TRANSITION_FALLBACK_DELAY);
+
+        return clearTimer;
+      }
       return;
-    }
-
-    if (state === 'appearing' || state === 'entering' || state === 'exiting') {
-      const style = getComputedStyle(el);
-
-      const parseTime = (s: string) =>
-        s.includes('ms') ? parseFloat(s) : parseFloat(s) * millisecondsInSecond;
-
-      const duration =
-        Math.max(...style.transitionDuration.split(',').map(parseTime)) +
-        Math.max(...style.transitionDelay.split(',').map(parseTime));
-
-      timerRef.current = setTimeout(() => {
-        completeTransition(); // fallback если onTransitionEnd не пришёл
-      }, duration + 50);
-
-      return () => clearTimer();
-    }
-    return;
-  }, [completeTransition, state]);
+    },
+    [completeTransition, state],
+  );
 
   return [
     state,
