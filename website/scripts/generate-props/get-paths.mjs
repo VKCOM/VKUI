@@ -12,11 +12,11 @@ const EXCLUDED_EXTENSIONS = [
   '.md',
   '.mdx',
 ];
-const EXCLUDED_DIRS = ['__image_snapshots__'];
+const EXCLUDED_DIRS = ['__image_snapshots__', 'storybook', 'testing', 'styles'];
 
 function shouldIgnoreFile(filename) {
   return (
-    filename[0].toLowerCase() === filename[0] ||
+    (filename[0].toLowerCase() === filename[0] && !filename.startsWith('use')) ||
     EXCLUDED_EXTENSIONS.some((ext) => filename.endsWith(ext))
   );
 }
@@ -43,7 +43,7 @@ function scanDirectory(dirPath) {
   }, []);
 }
 
-const componentsDirectory = path.resolve('../packages/vkui/src/components');
+const componentsDirectory = path.resolve('../packages/vkui/src');
 
 export function getPaths() {
   return scanDirectory(componentsDirectory);
