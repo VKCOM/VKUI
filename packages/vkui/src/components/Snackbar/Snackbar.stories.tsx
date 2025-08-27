@@ -1,25 +1,17 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icons';
-import { type SnackbarsQueueStrategy, useSnackbar } from '../../hooks/useSnackbar';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
-import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
-import { Button } from '../Button/Button';
-import { Checkbox } from '../Checkbox/Checkbox';
-import { Flex } from '../Flex/Flex';
-import { FormItem } from '../FormItem/FormItem';
 import { Image } from '../Image/Image';
-import { Select } from '../Select/Select';
 import { Snackbar, type SnackbarProps } from './Snackbar';
-import { type SnackbarPlacement } from './types';
 
 const story: Meta<SnackbarProps> = {
-  title: 'Feedback/Snackbar',
+  title: 'Popouts/Snackbar',
   component: Snackbar,
-  parameters: createStoryParameters('Snackbar', CanvasFullLayout, DisableCartesianParam),
+  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['24', '28'],
@@ -42,92 +34,25 @@ const story: Meta<SnackbarProps> = {
     subtitle: StringArg,
     offsetY: StringArg,
   },
-  tags: ['Обратная связь'],
 };
 
 export default story;
 
 type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
 
-const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
-  'top-start',
-  'bottom-start',
-  'top',
-  'bottom',
-  'top-end',
-  'bottom-end',
-];
-
-const COLUMNS = [PLACEMENT.slice(0, 2), PLACEMENT.slice(2, 4), PLACEMENT.slice(4)];
-
 export const Playground: Story = {
   render: function Render({ onClose, ...args }) {
-    const [snackbarApi, contextHolder] = useSnackbar({
-      queueStrategy: 'queue',
-    });
-    const [snackbars, setSnackbars] = React.useState<Set<string>>(new Set());
-    const [autoHide, setAutoHide] = React.useState(true);
+    const [open, setOpen] = React.useState(true);
 
-    const _onOpen = (placement: SnackbarPlacement) => {
-      const { id } = snackbarApi.open({
-        duration: autoHide ? undefined : null,
-        ...args,
-        placement,
-        onClose: () => {
-          setSnackbars((oldState) => {
-            oldState.delete(id);
-            return new Set([...oldState]);
-          });
-        },
-      });
-      setSnackbars((oldState) => new Set([...oldState, id]));
-    };
-
-    const _onUpdate = () => {
-      [...snackbars].forEach((snackbarId) => {
-        snackbarApi.update(snackbarId, {
-          action: 'Обновлен',
-          children: 'Текст и всякое другое',
-        });
-      });
+    const handleClose = () => {
+      setOpen(false);
+      onClose?.();
     };
 
     return (
       <>
-        <Flex direction="column" gap="2xl">
-          <Flex gap="2xl">
-            {COLUMNS.map((placements) => (
-              <Flex direction="column" gap="xl" key={placements.join('_')}>
-                {placements.map((placement) => (
-                  <Button key={placement} onClick={() => _onOpen(placement)}>
-                    {placement}
-                  </Button>
-                ))}
-              </Flex>
-            ))}
-          </Flex>
-          <Checkbox checked={autoHide} onChange={() => setAutoHide((v) => !v)}>
-            Автоскрытие
-          </Checkbox>
-          <FormItem top="Overflow behavior" htmlFor="custom-select" noPadding>
-            <Select
-              options={[
-                { value: 'queue', label: 'queue' },
-                { value: 'shift', label: 'shift' },
-              ]}
-              defaultValue="queue"
-              onChange={(_, v) => snackbarApi.setQueueStrategy(v as SnackbarsQueueStrategy)}
-              id="custom-select"
-            />
-          </FormItem>
-          <Button appearance="negative" stretched onClick={snackbarApi.closeAll}>
-            Закрыть все
-          </Button>
-          <Button appearance="negative" stretched onClick={_onUpdate}>
-            Обновить все
-          </Button>
-        </Flex>
-        {contextHolder}
+        <button onClick={() => setOpen(true)}>Открыть</button>
+        {open ? <Snackbar onClose={handleClose} {...args} /> : null}
       </>
     );
   },
