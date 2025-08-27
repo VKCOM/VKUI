@@ -17,7 +17,7 @@ import { BlockWrapper } from '@/components/wrappers';
 Принимает объект со свойствами:
 
 - `verticalOffsetTop: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
-- `verticalOffsetBottom: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
+- `verticalOffsetBottom: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть нижнюю границу снекбаров.
 - `maxSnackbarsCount: number` - Максимальное число открытых на одном `placement` уведомлений.
 - `queueStrategy: "queue" | "shift"` - Поведение переполнения очереди снекбаров.
   `"queue"` - снекбары не откроются, пока для них не появится место. Значение по умолчанию.
@@ -31,15 +31,14 @@ import { BlockWrapper } from '@/components/wrappers';
 ### SnackbarApi
 
 - `open(config: SnackbarConfig): OpenSnackbarReturn` — Метод для открытия уведомления. Принимает конфиг, возвращает объект [OpenSnackbarReturn](/components/use-snackbar#open-snackbar-return).
-- `openCustom(config: OpenCustomPayload): OpenSnackbarReturn` - Более подробно можно почитать в разделе ["Пользовательские снекбары"](/components/use-snackbar#custom-snackbar)
+- `openCustom(payload: OpenCustomPayload | ComponentType<CustomSnackbarProps>): OpenSnackbarReturn` - Более подробно можно почитать в разделе ["Пользовательские снекбары"](/components/use-snackbar#custom-snackbar).
 - `close(id: string): void` — Метод для закрытия снекбара по `id`.
 - `closeAll(): void` — Метод для закрытия всех снекбаров.
 - `update(id: string, config: UpdateSnackbarProps): void` - Метод для обновления свойств уведомления. Можно поменять любое свойство, кроме 'id' и 'placement'.
 - `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
-- `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
 - `setQueueStrategy(behavior: SnackbarsQueueStrategy): void` - Метод для изменения поведения переполнения очереди снекбаров.
 - `setVerticalOffsetTop(offset: SnackbarsVerticalOffset): void` - Метод для изменения отступа контейнера снекбаров от верха.
-- `setVerticalOffsetBottom(offset: SnackbarsVerticalOffset): void` - Метод для изменения отступа контейнера снекбаров с низу.
+- `setVerticalOffsetBottom(offset: SnackbarsVerticalOffset): void` - Метод для изменения отступа контейнера снекбаров снизу.
 
 #### OpenSnackbarReturn [#open-snackbar-return]
 
@@ -48,7 +47,7 @@ API возвращаемое методами `open` и `openCustom`, котор
 - `id: string` - Идентификатор созданного снекбара. Либо переданный при открытии в `props`, либо сгенерированный автоматически `uuidv4`.
 - `close: () => void;` - Метод для закрытия созданного снекбара.
 - `update: (props: UpdateSnackbarProps) => void` - Метод для изменения свойств созданного снекбара.
-- `onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>` - Метод, который возвращает `Promise`, который сработает, когда снекбара будет закрыт.
+- `onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>` - Метод, который возвращает `Promise`, который сработает, когда снекбар будет закрыт.
 
 ## Пример использования
 
@@ -73,14 +72,14 @@ return (
 
 </Playground>
 
-## Пользователькие снекбары [#custom-snackbar]
+## Пользовательские снекбары [#custom-snackbar]
 
-Иногда нужно, чтобы место вызова снебара и его верстка были независимы друг от друга.
+Иногда нужно, чтобы место вызова снекбара и его верстка были независимы друг от друга.
 Для этого в `useSnackbar` есть метод **`openCustom`**, который позволяет отрисовать снекбар произвольного вида на базе `Snackbar`.
 
 ### Параметры `openCustom`
 
-- **`payload: OpenCustomPayload | ComponentType<CustomSnackbarProps>`** – принимает либо настройки снекбара в виде объекта типа [OpenCustomPayload](components/use-snackbar#open-custom-payload),
+- **`payload: OpenCustomPayload | ComponentType<CustomSnackbarProps>`** – принимает либо настройки снекбара в виде объекта типа [OpenCustomPayload](/components/use-snackbar#open-custom-payload),
   либо функцию отрисовки компонента, который принимает свойства типа `CustomSnackbarProps`.
 
 ### `OpenCustomPayload` [#open-custom-payload]
@@ -102,7 +101,7 @@ return (
 - ваши `AdditionalProps`,
 - а также служебные методы:
   - **`update(newProps)`** – обновляет свойства снекбара «на лету»;
-  - **`close()`** – закрывает текущие снекбар.
+  - **`close()`** – закрывает текущий снекбар.
 
 > ⚠️ **Важно:**
 >
@@ -151,9 +150,9 @@ return (
 
 </Playground>
 
-### Модальные окна без дополнительных свойств
+### Снекбары без дополнительных свойств
 
-Если вы хотите показать снекбар, не прокидывая ничего в него снаружи, то можете в качестве второго параметра в `openCustom` прокинуть саму функцию отрисовки компонента.
+Если вы хотите показать снекбар, не прокидывая ничего в него снаружи, то можете в качестве параметра в `openCustom` прокинуть саму функцию отрисовки компонента.
 
 <Playground Wrapper={BlockWrapper}>
 
