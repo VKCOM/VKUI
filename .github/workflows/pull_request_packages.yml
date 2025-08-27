@@ -228,7 +228,7 @@ jobs:
         if: steps.generate-diff.outputs.has_diff == 'true'
         run: |
           mkdir diff
-          diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
+          yarn run diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
 
       - name: Upload report
         if: steps.generate-diff.outputs.has_diff == 'true'
