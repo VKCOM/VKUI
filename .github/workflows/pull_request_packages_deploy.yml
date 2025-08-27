@@ -258,10 +258,11 @@ jobs:
   diff_comment:
     needs:
       - deploy_diff
+      - pr_workflow_payload
     runs-on: ubuntu-latest
     name: Diff comment
     steps:
-      - name: Find docs URLs comment
+      - name: Find diff URL comment
         uses: peter-evans/find-comment@v3
         id: find_url_comment
         with:
@@ -283,11 +284,7 @@ jobs:
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
-          body: |
-            <!-- diff_report_url -->
-            ${{ steps.comment_message.outputs.body }}
-
-            Commit ${{ env.PR_HEAD_SHA }}
+          body: ${{ steps.comment_message.outputs.body }}
           edit-mode: replace
 
   docs_comment:
