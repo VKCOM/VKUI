@@ -10,7 +10,7 @@ import { ModalRoot } from './ModalRoot';
 
 fakeTimers();
 
-const waitCSSTransitionEndConditionally = async (el: HTMLElement, displayName: string) =>
+export const waitCSSTransitionEndConditionally = async (el: HTMLElement, displayName: string) =>
   displayName === 'ModalPage'
     ? await waitModalPageCSSTransitionEnd(el)
     : await waitModalCardCSSTransitionEnd(el);
