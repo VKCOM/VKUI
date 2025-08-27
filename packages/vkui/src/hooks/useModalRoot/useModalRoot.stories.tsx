@@ -28,7 +28,7 @@ import {
 import { useModalRoot } from './useModalRoot';
 
 const story: Meta<UseModalRootProps> = {
-  title: 'Modals/useModalRoot',
+  title: 'Utils/useModalRoot',
   component: () => <div />,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
