@@ -1,7 +1,6 @@
 'use client';
 /* eslint-disable no-console, import/no-default-export */
 
-import * as React from 'react';
 import { type Meta, type StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56NotificationOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
@@ -116,40 +115,29 @@ const ModalPageComponent = ({
 export const Playground: Story = {
   render: function Render(props) {
     const [api, contextHolder] = useModalRoot(props);
-    const [saveHistory, setSaveHistory] = React.useState(true);
 
     const openCustomModal = (type: 'card' | 'page') => {
-      let modalId = '';
-      const openNextModal = (type: 'card' | 'page') => {
-        if (!saveHistory && modalId) {
-          api.close(modalId);
-        }
-        openCustomModal(type);
-      };
-
       if (type === 'card') {
-        const { id } = api.openCustomModal('card', {
+        api.openCustomModal('card', {
           component: ModalCardComponent,
           additionalProps: {
-            openNextModal,
+            openNextModal: openCustomModal,
           },
         });
-        modalId = id;
       } else {
-        const { id } = api.openCustomModal('page', {
+        api.openCustomModal('page', {
           component: ModalPageComponent,
           additionalProps: {
-            openNextModal,
+            openNextModal: openCustomModal,
           },
         });
-        modalId = id;
       }
     };
 
     return (
       <>
         <Flex direction="column" gap="m">
-          <Checkbox checked={saveHistory} onChange={(e) => setSaveHistory(e.target.checked)}>
+          <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
             Сохранять историю открытия
           </Checkbox>
           <Button appearance="overlay" onClick={() => openCustomModal('page')}>

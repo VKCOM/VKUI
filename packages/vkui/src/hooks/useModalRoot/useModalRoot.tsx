@@ -54,7 +54,11 @@ function ContextHolder({ modals, ...modalRootProps }: ContextHolderProps) {
 
 type ModalRootState = { modals: ModalRootItem[]; activeModal: string | null };
 
-export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn => {
+export const useModalRoot = ({
+  saveHistory: saveHistoryProp = true,
+  ...props
+}: UseModalRootProps = {}): UseModalRootReturn => {
+  const [saveHistory, setSaveHistory] = React.useState(saveHistoryProp);
   const [state, setState] = React.useState<ModalRootState>({
     activeModal: null,
     modals: [],
@@ -222,6 +226,15 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
         }
       })() as ModalRootItem;
 
+      if (!saveHistory) {
+        setState((oldState) => {
+          if (oldState.activeModal) {
+            return setPrevActiveModalImpl(oldState, oldState.activeModal);
+          }
+          return oldState;
+        });
+      }
+
       setState((oldState) => {
         if (oldState.modals.find((modal) => modal.id === id)) {
           return oldState;
@@ -239,7 +252,7 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
         },
       };
     },
-    [close, removeModal, setPrevActiveModal],
+    [close, removeModal, saveHistory, setPrevActiveModal],
   );
 
   const update: ModalRootApi['update'] = React.useCallback(
@@ -356,6 +369,7 @@ export const useModalRoot = (props: UseModalRootProps = {}): UseModalRootReturn 
       close,
       update,
       closeAll,
+      setSaveHistory,
     };
   }, [close, closeAll, openModalCard, openCustomModal, openModalPage, update]);
 

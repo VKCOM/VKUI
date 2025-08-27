@@ -4,7 +4,9 @@ import { type ModalPageProps } from '../../components/ModalPage/types';
 import { type ModalRootProps } from '../../components/ModalRoot/types';
 import { type HasDataAttribute } from '../../types';
 
-export type UseModalRootProps = Omit<ModalRootProps, 'activeModal' | 'children'>;
+export type UseModalRootProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
+  saveHistory?: boolean;
+};
 
 export type OpenModalPageProps = Omit<ModalPageProps, 'open' | 'keepMounted'> & HasDataAttribute;
 
@@ -105,6 +107,8 @@ export type ModalRootApi = {
   close: (id: string) => void;
   // Метод для закрытия всех модальных окон.
   closeAll: () => void;
+  // Метод для изменения флага saveHistory
+  setSaveHistory: (saveHistory: boolean) => void;
 };
 
 export type UseModalRootReturn = [ModalRootApi, React.ReactElement | null];

@@ -32,6 +32,7 @@ const ModalsApiContext = React.createContext<ModalRootApi>({
   update: noop,
   close: noop,
   closeAll: noop,
+  setSaveHistory: noop,
 });
 
 export const useModalsApi = () => {

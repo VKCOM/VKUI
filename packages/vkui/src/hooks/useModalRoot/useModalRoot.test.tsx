@@ -10,11 +10,15 @@ import {
   type ModalRootApi,
   type OpenModalCardProps,
   type OpenModalPageProps,
+  type UseModalRootProps,
 } from './types';
 import { useModalRoot } from './useModalRoot';
 
-const Fixture = ({ setApi }: { setApi: (api: ModalRootApi) => void }) => {
-  const [api, contextHolder] = useModalRoot();
+const Fixture = ({
+  setApi,
+  saveHistory = true,
+}: { setApi: (api: ModalRootApi) => void } & Pick<UseModalRootProps, 'saveHistory'>) => {
+  const [api, contextHolder] = useModalRoot({ saveHistory });
   useIsomorphicLayoutEffect(() => {
     setApi(api);
   }, []);
@@ -72,19 +76,19 @@ describe('useModalRoot', () => {
   });
 
   it('check open ModalPage and ModalCard without history', async () => {
-    render(<Fixture setApi={setApi} />);
-    await React.act(() =>
+    render(<Fixture setApi={setApi} saveHistory={false} />);
+
+    React.act(() => {
       getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
-      }),
-    );
+      });
+    });
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
 
     React.act(() => {
-      getApi().close('modal-card');
       getApi().openModalPage({
         'id': 'modal-page',
         'data-testid': 'modal-page',
@@ -281,7 +285,7 @@ describe('useModalRoot', () => {
     expect(screen.queryByTestId('modal-page')).not.toBeInTheDocument();
   });
 
-  it('should correct render custom modal page 2', async () => {
+  it('should correct render custom modal page without props', async () => {
     const additionalAction = jest.fn();
 
     const ModalPageComponent = ({

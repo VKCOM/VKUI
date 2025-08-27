@@ -12,7 +12,8 @@ description: Хук для работы с модальными окнами([`M
 
 ## Параметры
 
-Принимает все свойства компонента [`ModalRoot`](/components/modal-root) кроме `activeModal` и `children`.
+Принимает все свойства компонента [`ModalRoot`](/components/modal-root) кроме `activeModal` и `children`. А также принимает свойство `saveHistory`, которое отвечает
+за то, будет ли сохраняться история открытия модальных окон.
 
 ## Возвращаемое значение
 
@@ -29,6 +30,7 @@ description: Хук для работы с модальными окнами([`M
 - `update: (id: string, type: 'card' | 'page', props: T) => void` - Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
 - `close: (id: string) => void` - Метод для закрытия определенной модальных окон. Принимает id модального окна.
 - `closeAll: () => void` - Метод для закрытия всех созданных модальных окон.
+- `saveHistory: (value: boolean) => void` - Метод для изменения значения флага `saveHistory`
 
 #### OpenModalReturn [#open-modal-return]
 
@@ -109,35 +111,28 @@ return (
 
 ## История открытия модальных окон
 
-При использовании хука `useModalRoot` история открытых модальных окон сохраняется.
-Если вам не нужно, что модальное окно сохранилось в истории, то его нужно закрыть с помощью метода `close` перед открытием другого.
+При использовании хука `useModalRoot` история открытых модальных окон сохраняется по умолчанию.
+Чтобы отключить это поведение вы можете:
+
+- прокинуть в `useModalRoot` свойство `saveHistory`;
+- использовать метод `setSaveHistory` в api.
 
 <Playground>
 
 ```jsx
-const [saveHistory, setSaveHistory] = React.useState(true);
-
 const [api, contextHolder] = useModalRoot();
 
 const openModal = (type: 'card' | 'page') => {
-  let modalId = '';
-  const openNextModal = (type: 'card' | 'page') => {
-    if (!saveHistory && modalId) {
-      api.close(modalId);
-    }
-    openModal(type);
-  };
-
   if (type === 'card') {
-    const { close, id } = api.openModalCard({
+    const { id, close } = api.openModalCard({
       icon: <Icon56NotificationOutline />,
       title: 'Modal Card Title',
       actions: (
         <ButtonGroup stretched mode="vertical">
-          <Button size="l" mode="primary" stretched onClick={() => openNextModal('page')}>
+          <Button size="l" mode="primary" stretched onClick={() => openModal('page')}>
             Открыть ModalPage
           </Button>
-          <Button size="l" mode="primary" stretched onClick={() => openNextModal('card')}>
+          <Button size="l" mode="primary" stretched onClick={() => openModal('card')}>
             Открыть ModalCard
           </Button>
           <Button size="l" mode="secondary" stretched onClick={() => close()}>
@@ -146,9 +141,8 @@ const openModal = (type: 'card' | 'page') => {
         </ButtonGroup>
       ),
     });
-    modalId = id;
   } else {
-    const { close, id } = api.openModalPage({
+    const { id, close } = api.openModalPage({
       header: (
         <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
            Вложенная модальная страница
@@ -156,8 +150,8 @@ const openModal = (type: 'card' | 'page') => {
       ),
       children: (
         <Group>
-          <CellButton onClick={() => openNextModal('page')}>Open ModalPage</CellButton>
-          <CellButton onClick={() => openNextModal('card')}>Open ModalCard</CellButton>
+          <CellButton onClick={() => openModal('page')}>Open ModalPage</CellButton>
+          <CellButton onClick={() => openModal('card')}>Open ModalCard</CellButton>
         </Group>
       ),
     });
@@ -168,7 +162,7 @@ const openModal = (type: 'card' | 'page') => {
 return (
   <>
     <Flex direction="column" gap="m">
-      <Checkbox checked={saveHistory} onChange={(e) => setSaveHistory(e.target.checked)}>
+      <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
         Сохранять историю открытия
       </Checkbox>
       <Button appearance="overlay" onClick={() => openModal('page')}>
@@ -238,10 +232,7 @@ const ModalCardComponent = ({
   update,
   openNextModal,
   modalProps,
-}: CustomModalProps<
-  OpenModalCardProps,
-  { openNextModal: (type: 'card' | 'page') => void }
->) => {
+}: CustomModalProps<OpenModalCardProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
   return (
     <ModalCard
       icon={<Icon56NotificationOutline />}
@@ -275,10 +266,7 @@ const ModalPageComponent = ({
   openNextModal,
   close,
   modalProps,
-}: CustomModalProps<
-  OpenModalPageProps,
-  { openNextModal: (type: 'card' | 'page') => void }
->) => {
+}: CustomModalProps<OpenModalPageProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivityConditionalRender();
 
@@ -315,40 +303,29 @@ const ModalPageComponent = ({
 };
 
 const [api, contextHolder] = useModalRoot();
-const [saveHistory, setSaveHistory] = React.useState(true);
 
 const openCustomModal = (type: 'card' | 'page') => {
-  let modalId = '';
-  const openNextModal = (type: 'card' | 'page') => {
-    if (!saveHistory && modalId) {
-      api.close(modalId);
-    }
-    openCustomModal(type);
-  };
-
   if (type === 'card') {
-    const { id } = api.openCustomModal('card', {
+    api.openCustomModal('card', {
       component: ModalCardComponent,
       additionalProps: {
-        openNextModal,
+        openNextModal: openCustomModal,
       },
     });
-    modalId = id;
   } else {
-    const { id } = api.openCustomModal('page', {
+    api.openCustomModal('page', {
       component: ModalPageComponent,
       additionalProps: {
-        openNextModal,
+        openNextModal: openCustomModal,
       },
     });
-    modalId = id;
   }
 };
 
 return (
   <>
     <Flex direction="column" gap="m">
-      <Checkbox checked={saveHistory} onChange={(e) => setSaveHistory(e.target.checked)}>
+      <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
         Сохранять историю открытия
       </Checkbox>
       <Button appearance="overlay" onClick={() => openCustomModal('page')}>
