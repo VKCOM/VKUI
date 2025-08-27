@@ -1,0 +1,1 @@
+import{c as a}from"./callMultiple-ChqatQlo.js";function i(...n){const s=n.reduce((t,r)=>(Object.entries(r).forEach(([e,u])=>{t.hasOwnProperty(e)||(t[e]=[]),t[e].push(u)}),t),{});return Object.entries(s).reduce((t,[r,e])=>(t[r]=a(...e),t),{})}export{i as m};
