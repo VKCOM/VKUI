@@ -24,22 +24,20 @@ description: Хук для работы с модальными окнами([`M
 
 ### ModalRootApi [#modal-root-api]
 
-- `openModalCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
-- `openModalPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
-- `openCustomModal: (type: 'card' | 'page', props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals)
+- `openModalCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
+- `openModalPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
+- `openCustomModal: (type: 'card' | 'page', props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals).
 - `update: (id: string, type: 'card' | 'page', props: T) => void` - Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
-- `close: (id: string) => void` - Метод для закрытия определенной модальных окон. Принимает id модального окна.
+- `close: (id: string) => void` - Метод для закрытия определенного модального окна. Принимает id модального окна.
 - `closeAll: () => void` - Метод для закрытия всех созданных модальных окон.
-- `saveHistory: (value: boolean) => void` - Метод для изменения значения флага `saveHistory`
+- `setSaveHistory: (value: boolean) => void` - Метод для изменения значения флага `saveHistory`.
 
 #### OpenModalReturn [#open-modal-return]
 
-API возвращаемое методами `openModalCard` и `openModalPage`, которое добавляет дополнительные возможности для взаимодействия с открытыми модальными окнами.
-
 - `id: string` - Идентификатор созданного модального окна. Либо переданный при открытии в `props`, либо сгенерированный автоматически `uuidv4`.
-- `close: () => void;` - Метод для закрытия созданного модального окна.
+- `close: () => void` - Метод для закрытия созданного модального окна.
 - `update: (props: T) => void` - Метод для изменения свойств созданного модального окна. Тип `props` зависит от того, какого типа модальное окно изменяется - `ModalPage` или `ModalCard`.
-- `onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>` - Метод, который возвращает `Promise`, который сработает, когда модальное окно будет закрыто.
+- `onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>` - Метод, который возвращает `Promise`, который разрешится, когда модальное окно будет закрыто.
 
 ## Пример использования
 
@@ -124,7 +122,7 @@ const [api, contextHolder] = useModalRoot();
 
 const openModal = (type: 'card' | 'page') => {
   if (type === 'card') {
-    const { id, close } = api.openModalCard({
+    const { close } = api.openModalCard({
       icon: <Icon56NotificationOutline />,
       title: 'Modal Card Title',
       actions: (
@@ -142,11 +140,11 @@ const openModal = (type: 'card' | 'page') => {
       ),
     });
   } else {
-    const { id, close } = api.openModalPage({
+    const { close } = api.openModalPage({
       header: (
         <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
-           Вложенная модальная страница
-         </ModalPageHeader>
+          Вложенная модальная страница
+        </ModalPageHeader>
       ),
       children: (
         <Group>
@@ -155,7 +153,6 @@ const openModal = (type: 'card' | 'page') => {
         </Group>
       ),
     });
-    modalId = id;
   }
 };
 
@@ -200,7 +197,7 @@ return (
 #### Свойства `CustomModalPayload`:
 
 - **`id?: string`** – идентификатор окна (если не указать, будет сгенерирован автоматически);
-- **`baseProps?: BaseProps`** – базовык свойства, которые будут проброшены в компонент модалки;
+- **`baseProps?: BaseProps`** – базовые свойства, которые будут проброшены в компонент модалки;
 - **`additionalProps?: AdditionalProps`** – дополнительные свойства, которые будут проброшены в компонент модалки;
 - **`component: ReactComponent<CustomModalProps<BaseProps, AdditionalProps>>`** – React-компонент, который будет рендерить содержимое окна.
 
