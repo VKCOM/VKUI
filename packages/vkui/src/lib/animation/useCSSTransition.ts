@@ -1,7 +1,12 @@
-import { type TransitionEvent, type TransitionEventHandler, useEffect, useRef } from 'react';
+import {
+  type TransitionEvent,
+  type TransitionEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
-import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { millisecondsInSecond } from '../date';
 
 /* istanbul ignore next: особенность рендера в браузере когда меняется className, в Jest не воспроизвести */
@@ -68,7 +73,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ref = useRef<Ref | null>(null);
-  const [[state, prevState], setState] = useStateWithPrev<UseCSSTransitionState>(() => {
+  const [state, setState] = useState<UseCSSTransitionState>(() => {
     if (!inProp) {
       return 'exited';
     }
@@ -159,9 +164,6 @@ export const useCSSTransition = <Ref extends Element = Element>(
       inProp,
 
       state,
-      prevState,
-      setState,
-
       enableAppear,
       enableEnter,
       onEnter,
