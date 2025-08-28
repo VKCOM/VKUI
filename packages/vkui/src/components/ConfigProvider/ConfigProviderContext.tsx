@@ -51,11 +51,11 @@ export interface ConfigProviderContextInterface {
    * CSS классы, определяющие набор токенов.
    *
    * - Используйте `{ light?: '<css_class>', dark?: '<css_class>' }`, чтобы задать для всех платформ одинаковый набор токенов для светлой и/или тёмной тем.
-   * - Используйте `{ [key in 'android' | 'ios' | 'vkcom']?: '<css_class>' }`, чтобы задать для одной или нескольких платформ свой набор токенов.
+   * - Используйте `{ [key in 'material' | 'ios' | 'vkcom']?: '<css_class>' }`, чтобы задать для одной или нескольких платформ свой набор токенов.
    *
    * @default
    * {
-   *   android: {
+   *   material: {
    *     light: 'vkui--vkBase--light',
    *     dark: 'vkui--vkBase--dark',
    *   },

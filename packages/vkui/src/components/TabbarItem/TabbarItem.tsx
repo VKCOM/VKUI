@@ -78,7 +78,7 @@ export const TabbarItem = ({
       baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
-        platform === 'android' && styles.android,
+        (platform === 'material' || platform === 'android') && styles.material,
         selected && styles.selected,
       )}
     >
