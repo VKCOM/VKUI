@@ -82,6 +82,9 @@
   /* z_index HorizontalScroll isolate */
   --vkui_internal--z_index_horizontal_scroll_arrow: 1;
 
+  /* z_index Gallery isolate */
+  --vkui_internal--z_index_gallery_scroll_arrow: 1;
+
   /* Layout Gaps */
   --vkui_internal--row_gap: 0px;
   --vkui_internal--column_gap: 0px;

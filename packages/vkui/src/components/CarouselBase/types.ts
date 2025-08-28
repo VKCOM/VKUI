@@ -126,6 +126,15 @@ export interface BaseGalleryProps
    */
   arrowNextLabel?: string;
   /**
+   * Текст для слайда. Делает его доступным для ассистивных технологий. Может быть функцией.
+   * По умолчанию устанавливает `aria-label` вида `${Номер слайда} из ${Количества слайдов}`.
+   */
+  slideLabel?: string | ((index: number, slidesCount: number) => string);
+  /**
+   * Описание роли для слайда, для лучше понимания пользователей скринридеров. По умолчанию - `Слайд`.
+   */
+  slideRoleDescription?: string;
+  /**
    * Передает атрибут `data-testid` для слайда.
    */
   slideTestId?: (index: number) => string;
