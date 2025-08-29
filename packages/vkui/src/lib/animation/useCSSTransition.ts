@@ -43,6 +43,8 @@ export type UseCSSTransition<Ref extends Element = Element> = [
   },
 ];
 
+const TRANSITION_FALLBACK_DELAY = 100;
+
 /**
  * Хук основан на компоненте `CSSTransition` из библиотеки `react-transition-group`.
  *
@@ -219,7 +221,9 @@ export const useCSSTransition = <Ref extends Element = Element>(
         }
 
         // fallback если onTransitionEnd не пришёл
-        timerRef.current = setTimeout(completeTransition, duration);
+        // TRANSITION_FALLBACK_DELAY, чтобы минимизировать вероятность,
+        // что setTimeout сработает раньше onTransitionEnd
+        timerRef.current = setTimeout(completeTransition, duration + TRANSITION_FALLBACK_DELAY);
 
         return clearTimer;
       }
