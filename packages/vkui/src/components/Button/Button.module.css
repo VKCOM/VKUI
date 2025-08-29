@@ -87,8 +87,7 @@
   padding-inline-start: var(--vkui--size_button_base_small_padding_horizontal--regular);
 }
 
-.sizeS .content:last-child,
-.sizeS .after {
+.sizeS .content:last-child {
   padding-inline-end: var(--vkui--size_button_base_small_padding_horizontal--regular);
 }
 
@@ -96,8 +95,7 @@
   padding-inline-start: var(--vkui--size_button_base_medium_padding_horizontal--regular);
 }
 
-.sizeM .content:last-child,
-.sizeM .after {
+.sizeM .content:last-child {
   padding-inline-end: var(--vkui--size_button_base_medium_padding_horizontal--regular);
 }
 
@@ -105,8 +103,7 @@
   padding-inline-start: var(--vkui--size_button_base_large_padding_horizontal--regular);
 }
 
-.sizeL .content:last-child,
-.sizeL .after {
+.sizeL .content:last-child {
   padding-inline-end: var(--vkui--size_button_base_large_padding_horizontal--regular);
 }
 
@@ -122,12 +119,23 @@
   padding-inline-start: var(--vkui--size_button_base_large_padding_horizontal_icon--regular);
 }
 
+.sizeS .after {
+  padding-inline-end: var(--vkui--size_button_base_small_padding_horizontal_icon--regular);
+}
+
+.sizeM .after {
+  padding-inline-end: var(--vkui--size_button_base_medium_padding_horizontal_icon--regular);
+}
+
+.sizeL .after {
+  padding-inline-end: var(--vkui--size_button_base_large_padding_horizontal_icon--regular);
+}
+
 .modeTertiary.sizeS .content:first-child {
   padding-inline-start: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
 }
 
-.modeTertiary.sizeS .content:last-child,
-.modeTertiary.sizeS .after {
+.modeTertiary.sizeS .content:last-child {
   padding-inline-end: var(--vkui--size_button_tertiary_small_padding_horizontal--regular);
 }
 
@@ -135,8 +143,7 @@
   padding-inline-start: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
 }
 
-.modeTertiary.sizeM .content:last-child,
-.modeTertiary.sizeM .after {
+.modeTertiary.sizeM .content:last-child {
   padding-inline-end: var(--vkui--size_button_tertiary_medium_padding_horizontal--regular);
 }
 
@@ -144,8 +151,7 @@
   padding-inline-start: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
 }
 
-.modeTertiary.sizeL .content:last-child,
-.modeTertiary.sizeL .after {
+.modeTertiary.sizeL .content:last-child {
   padding-inline-end: var(--vkui--size_button_tertiary_large_padding_horizontal--regular);
 }
 
@@ -159,6 +165,18 @@
 
 .modeTertiary.sizeL .before {
   padding-inline-start: var(--vkui--size_button_tertiary_large_padding_horizontal_icon--regular);
+}
+
+.modeTertiary.sizeS .after {
+  padding-inline-end: var(--vkui--size_button_tertiary_small_padding_horizontal_icon--regular);
+}
+
+.modeTertiary.sizeM .after {
+  padding-inline-end: var(--vkui--size_button_tertiary_medium_padding_horizontal_icon--regular);
+}
+
+.modeTertiary.sizeL .after {
+  padding-inline-end: var(--vkui--size_button_tertiary_large_padding_horizontal_icon--regular);
 }
 
 .singleIcon .after,
