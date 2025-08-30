@@ -65,7 +65,9 @@ export const ModalCardInternal = ({
   modalDismissButtonTestId,
   getRootRef,
   dismissButtonMode,
+  modalDismissButtonMode,
   dismissLabel,
+  modalDismissButtonLabel,
   noFocusToDialog,
   restoreFocus,
   onOpen,
@@ -179,6 +181,8 @@ export const ModalCardInternal = ({
         onClose={() => onClose('click-close-button')}
         size={size}
         modalDismissButtonTestId={modalDismissButtonTestId}
+        modalDismissButtonLabel={modalDismissButtonLabel}
+        modalDismissButtonMode={modalDismissButtonMode}
         dismissButtonMode={dismissButtonMode}
         dismissLabel={dismissLabel}
       >
