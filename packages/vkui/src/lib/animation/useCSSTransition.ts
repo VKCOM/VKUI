@@ -8,6 +8,7 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { millisecondsInSecond } from '../date';
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
 /* istanbul ignore next: особенность рендера в браузере когда меняется className, в Jest не воспроизвести */
 const forceReflowForFixNewMountedElement = (node: Element | null) => void node?.scrollTop;
@@ -198,7 +199,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
     }
   });
 
-  useEffect(
+  useIsomorphicLayoutEffect(
     function scheduleTransitionCompletionFallback() {
       const el = ref.current;
       if (!el) {
