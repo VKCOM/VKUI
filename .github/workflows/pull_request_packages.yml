@@ -184,7 +184,7 @@ jobs:
     name: Generate Diff
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup (pr)
         uses: ./.github/actions/node-setup
@@ -193,7 +193,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          prettier ./dist --write
+          yarn run -T prettier ./dist --write
 
       - name: Checkout target
         run: |
@@ -212,7 +212,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          prettier ./dist --write
+          yarn run -T prettier ./dist --write
 
       - name: Generate diff
         id: generate-diff
@@ -228,7 +228,7 @@ jobs:
         if: steps.generate-diff.outputs.has_diff == 'true'
         run: |
           mkdir diff
-          diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
+          yarn run diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
 
       - name: Upload report
         if: steps.generate-diff.outputs.has_diff == 'true'
