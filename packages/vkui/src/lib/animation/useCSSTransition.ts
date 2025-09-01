@@ -1,10 +1,4 @@
-import {
-  type TransitionEvent,
-  type TransitionEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { type TransitionEvent, type TransitionEventHandler, useRef, useState } from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { millisecondsInSecond } from '../date';
@@ -96,7 +90,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
     }
   };
 
-  useEffect(
+  useIsomorphicLayoutEffect(
     function updateState() {
       if (inProp) {
         switch (state) {
