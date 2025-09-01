@@ -51,6 +51,10 @@ export interface CellProps
    * Текст для кнопки перетаскивания ячейки.
    */
   draggerLabel?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки перетаскивания ячейки.
+   */
+  draggerTestId?: string;
 }
 
 /**
@@ -79,6 +83,7 @@ export const Cell: React.FC<CellProps> & {
   style,
   toggleButtonTestId,
   removeButtonTestId,
+  draggerTestId,
   href: hrefProp,
   ...restProps
 }: CellProps) => {
@@ -98,6 +103,7 @@ export const Cell: React.FC<CellProps> & {
       className={classNames(styles.dragger, !before && !selectable && styles.controlNoBefore)}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
+      data-testid={draggerTestId}
     >
       {draggerLabel}
     </CellDragger>

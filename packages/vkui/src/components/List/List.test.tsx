@@ -4,7 +4,6 @@ import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { baselineComponent, mockTouchStartDisabled } from '../../testing/utils';
 import { Cell } from '../Cell/Cell';
 import { List } from './List';
-import draggerStyles from '../Cell/CellDragger/CellDragger.module.css';
 
 let isScrollRunning = false;
 jest.mock('../../hooks/useDraggableWithDomApi/autoScroll', () => {
@@ -89,11 +88,6 @@ const setupList = (element: HTMLDivElement) => {
   };
 };
 
-const getCellDraggerById = (testId: string) => {
-  const cellToDrag = screen.getByTestId(testId);
-  return cellToDrag.querySelector<HTMLElement>(`.${draggerStyles.host}`)!;
-};
-
 const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
   mockTimers();
   let listSetup: ReturnType<typeof setupList>;
@@ -128,6 +122,7 @@ const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
             key={index}
             draggable
             data-testid={`cell-${index}`}
+            draggerTestId={`dragger-${index}`}
             onDragFinish={onDragFinish}
           >
             {index} Item
@@ -168,7 +163,7 @@ const dragCell = ({
   afterMove?: Record<number, VoidFunction>;
   afterDragging?: VoidFunction;
 }) => {
-  const dragger = getCellDraggerById(testId);
+  const dragger = screen.getByTestId(testId);
   fireEvent.mouseDown(dragger);
 
   breakPoints.forEach((breakPoint, index) => {
@@ -213,7 +208,7 @@ describe('List', () => {
     const { getCellSetup } = setupData;
 
     dragCell({
-      testId: 'cell-0',
+      testId: 'dragger-0',
       breakPoints: [5, 140, 140, 124],
       afterDragging: () => {
         const cell1Data = getCellSetup('cell-1');
@@ -234,7 +229,7 @@ describe('List', () => {
     expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
 
     dragCell({
-      testId: 'cell-2',
+      testId: 'dragger-2',
       breakPoints: [140, 140, 75, 140, 75],
       afterDragging: () => {
         const cell1Data = getCellSetup('cell-0');
@@ -262,7 +257,7 @@ describe('List', () => {
     setupData.listScrollTop = 50;
 
     dragCell({
-      testId: 'cell-0',
+      testId: 'dragger-0',
       breakPoints: [5, 70, 90],
       afterMove: {
         1: () => {
