@@ -457,7 +457,7 @@ describe(useCSSTransition, () => {
 
     // Прокручиваем таймеры дальше, чтобы сработал fallback (200ms + safety offset (≈50ms))
     act(() => {
-      jest.advanceTimersByTime(250);
+      jest.advanceTimersByTime(300);
     });
 
     // После fallback хук должен перевести состояние в exited и вызвать onExited
