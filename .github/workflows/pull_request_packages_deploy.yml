@@ -270,21 +270,30 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: <!-- diff_report_url -->
 
-      - name: Set comment message
-        id: comment_message
-        run: |
-          if [ "${{ needs.deploy_diff.outputs.has_diff }}" = "true" ]; then
-            echo "body=<!-- diff_report_url -->\n📊 Найдены изменения в собранных файлах:\n[Отчет](${{ needs.deploy_diff.outputs.url }})\n\nCommit ${{ env.PR_HEAD_SHA }}" >> $GITHUB_OUTPUT
-          else
-            echo "body=<!-- diff_report_url -->\n✅ Изменений в собранных файлах нет\n\nCommit ${{ env.PR_HEAD_SHA }}" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Create or update comment
+      - name: Create or update comment with not empty diff
+        if: ${{ needs.deploy_diff.outputs.has_diff == 'true' }}
         uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
-          body: ${{ steps.comment_message.outputs.body }}
+          body: |
+            <!-- diff_report_url -->
+            📊 Найдены изменения в собранных файлах: [Отчет](${{ needs.deploy_diff.outputs.url }})
+
+            Commit ${{ env.PR_HEAD_SHA }}
+          edit-mode: replace
+
+      - name: Create or update comment with empty diff
+        if: ${{ needs.deploy_diff.outputs.has_diff == 'false' }}
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          body: |
+            <!-- diff_report_url -->
+            ✅ Изменений в собранных файлах нет
+
+            Commit ${{ env.PR_HEAD_SHA }}
           edit-mode: replace
 
   docs_comment:
