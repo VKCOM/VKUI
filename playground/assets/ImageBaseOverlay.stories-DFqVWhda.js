@@ -1,0 +1,5 @@
+import{j as r}from"./iframe-WscSQxk_.js";import{D as m,C as i}from"./constants-DdkjnEgz.js";import{g as p}from"./mock-BznupqUM.js";import{b as l,a as n}from"./ImageBase-3KL0flvN.js";import"./preload-helper-Dp1pzeXC.js";import"./Clickable-C7ilqGtf.js";import"./useFocusVisibleClassName-LTUayfN7.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./type_checkers-CVMjkZjG.js";import"./ImageBaseBadge-wA-vnNFa.js";import"./useColorScheme-C09gZSyP.js";import"./InputUtils-JLBJXs47.js";import"./useFocusWithin-BHVkTq3i.js";import"./useIsClient-d2y8ByAY.js";const O={title:"Data Display/ImageBase/ImageBaseOverlay",component:l,parameters:{...i,...m},decorators:[t=>r.jsx(n,{size:48,src:p("app_shorm_online"),alt:"Приложение шторм онлайн",children:r.jsx(t,{})})]},a={args:{"aria-label":"Кнопка для изображения"}};var o,s,e;a.parameters={...a.parameters,docs:{...(o=a.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {
+    'aria-label': 'Кнопка для изображения'
+  }
+}`,...(e=(s=a.parameters)==null?void 0:s.docs)==null?void 0:e.source}}};const P=["Playground"];export{a as Playground,P as __namedExportsOrder,O as default};
