@@ -6,7 +6,7 @@ import { useStableCallback } from '../../hooks/useStableCallback';
 import { getWindow, isHTMLElement, isSVGElement } from '../../lib/dom';
 import { coordX, coordY, touchEnabled, type VKUITouchEvent } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasComponent, HasRootRef, TimeoutId } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 
 /**
  * Костыль для правильной работы тайпскрипта.
@@ -205,38 +205,6 @@ export interface Gesture {
   shiftYAbs: number;
 }
 
-const useTouchActiveWithAutoReset = () => {
-  const isTouchActive = React.useRef(false);
-  const resetTimerRef = React.useRef<TimeoutId>(null);
-
-  const resetTimer = () => {
-    if (resetTimerRef.current) {
-      clearTimeout(resetTimerRef.current);
-      resetTimerRef.current = null;
-    }
-  };
-
-  const setActive = useStableCallback((active: boolean) => {
-    if (active) {
-      isTouchActive.current = true;
-      resetTimer();
-      resetTimerRef.current = setTimeout(() => {
-        setActive(false);
-      }, 1000);
-    } else {
-      isTouchActive.current = false;
-      resetTimer();
-    }
-  });
-
-  return {
-    setActive,
-    get active() {
-      return isTouchActive.current;
-    },
-  };
-};
-
 /**
  * @see https://vkui.io/components/touch
  */
@@ -266,7 +234,6 @@ export const Touch = ({
   const [isTouchEnabled] = React.useState(touchEnabled);
   const gestureRef = React.useRef<Gesture | null>(null);
   const didSlide = React.useRef(false);
-  const touchStart = useTouchActiveWithAutoReset();
   const disposeTargetNativeGestureEvents = React.useRef<VoidFunction | null>(null);
 
   const cleanupTargetNativeGestureEvents = () => {
@@ -279,15 +246,14 @@ export const Touch = ({
 
   React.useEffect(() => cleanupTargetNativeGestureEvents, []);
 
-  const checkTouchEvent = (event: MouseEvent | TouchEvent) => {
-    return 'touches' in event && event.touches !== undefined;
+  const isTouchEvent = (event: MouseEvent | TouchEvent) => {
+    return event.type.startsWith('touch');
   };
 
   /**
    * Note: используем `useStableCallback()`, чтобы не терялась область видимости `onEnd`/`onEndX`/`onEndY`.
    */
   const handleNativePointerUp = useStableCallback((event: MouseEvent | TouchEvent) => {
-    const isTouchEvent = checkTouchEvent(event);
     const gesture = gestureRef.current;
 
     /* istanbul ignore if: нужно для Typescript */
@@ -299,8 +265,7 @@ export const Touch = ({
       dispatchUserHandlers(event, gesture, [onEnd, onEndX, onEndY], stopPropagation);
     }
 
-    if (isTouchEvent) {
-      touchStart.setActive(false);
+    if (isTouchEvent(event)) {
       // https://github.com/VKCOM/VKUI/issues/4414
       // если тач-устройство и был зафиксирован touchmove,
       // то событие клика не вызывается
@@ -371,63 +336,63 @@ export const Touch = ({
     }
   });
 
-  const handlePointerDown = useStableCallback((event: TouchEvent | MouseEvent) => {
-    const isTouchEvent = checkTouchEvent(event);
-    if (!isTouchEvent && touchStart.active) {
-      return;
-    }
-
-    if (isTouchEvent) {
-      touchStart.setActive(true);
-    }
-
-    gestureRef.current = initGesture(coordX(event), coordY(event));
-
-    const shouldCallDirectionHandlerOnlyIsSlide = false;
-    dispatchUserHandlers(
-      event,
-      gestureRef.current,
-      [onStart, onStartX, onStartY],
-      stopPropagation,
-      shouldCallDirectionHandlerOnlyIsSlide,
-    );
-
-    if (!isHTMLElement(event.target) && !isSVGElement(event.target)) {
-      return;
-    }
-    // Тач-события не всплывают, поэтому навешиваем события на целевой элемент
-    // см. #235, #1968, https://stackoverflow.com/a/45760014
-    const target: HTMLorSVGElementWithEvents = event.target;
-    // Используем события на Document, т.к. mouse-события на целевом элементе могут теряться при
-    // выходе за границы этого элемента.
-    const doc = getWindow(event.currentTarget).document;
-
-    const eventOptions = { capture: useCapture, passive: false };
-
-    // FIXME: заменить touch/mouse-события ниже на pointer-события после того, как бразуеры из
-    // .browserslistrc начнут поддерживать его (см. https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#browser_compatibility).
-    if (isTouchEvent) {
-      target.addEventListener('touchmove', handleNativePointerMove, eventOptions);
-      target.addEventListener('touchend', handleNativePointerUp, eventOptions);
-      target.addEventListener('touchcancel', handleNativePointerUp, eventOptions);
-    } else {
-      doc.addEventListener('mousemove', handleNativePointerMove, eventOptions);
-      doc.addEventListener('mouseup', handleNativePointerUp, eventOptions);
-      doc.addEventListener('mouseleave', handleNativePointerUp, eventOptions);
-    }
-
-    disposeTargetNativeGestureEvents.current = () => {
-      if (isTouchEvent) {
-        target.removeEventListener('touchmove', handleNativePointerMove, eventOptions);
-        target.removeEventListener('touchend', handleNativePointerUp, eventOptions);
-        target.removeEventListener('touchcancel', handleNativePointerUp, eventOptions);
-      } else {
-        doc.removeEventListener('mousemove', handleNativePointerMove, eventOptions);
-        doc.removeEventListener('mouseup', handleNativePointerUp, eventOptions);
-        doc.removeEventListener('mouseleave', handleNativePointerUp, eventOptions);
+  const handlePointerDown = useStableCallback(
+    (event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement> | TouchEvent) => {
+      // Если touchstart сэмулировало mousedown, то заканчиваем обработку
+      if (gestureRef.current !== null) {
+        return;
       }
-    };
-  });
+
+      const nativeEvent = 'nativeEvent' in event ? event.nativeEvent : event;
+
+      gestureRef.current = initGesture(coordX(nativeEvent), coordY(nativeEvent));
+
+      const shouldCallDirectionHandlerOnlyIsSlide = false;
+      dispatchUserHandlers(
+        event,
+        gestureRef.current,
+        [onStart, onStartX, onStartY],
+        stopPropagation,
+        shouldCallDirectionHandlerOnlyIsSlide,
+      );
+
+      const eventOptions = { capture: useCapture, passive: false };
+
+      // FIXME: заменить touch/mouse-события ниже на pointer-события после того, как бразуеры из
+      // .browserslistrc начнут поддерживать его (см. https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#browser_compatibility).
+      if (isTouchEvent(nativeEvent)) {
+        if (isHTMLElement(event.target) || isSVGElement(event.target)) {
+          // Тач-события не всплывают, поэтому навешиваем события на целевой элемент
+          // см. #235, #1968, https://stackoverflow.com/a/45760014
+          const target: HTMLorSVGElementWithEvents = event.target;
+
+          target.addEventListener('touchmove', handleNativePointerMove, eventOptions);
+          target.addEventListener('touchend', handleNativePointerUp, eventOptions);
+          target.addEventListener('touchcancel', handleNativePointerUp, eventOptions);
+
+          disposeTargetNativeGestureEvents.current = () => {
+            target.removeEventListener('touchmove', handleNativePointerMove, eventOptions);
+            target.removeEventListener('touchend', handleNativePointerUp, eventOptions);
+            target.removeEventListener('touchcancel', handleNativePointerUp, eventOptions);
+          };
+        }
+      } else {
+        // Используем события на Document, т.к. mouse-события на целевом элементе могут теряться при
+        // выходе за границы этого элемента.
+        const doc = getWindow(event.currentTarget).document;
+
+        doc.addEventListener('mousemove', handleNativePointerMove, eventOptions);
+        doc.addEventListener('mouseup', handleNativePointerUp, eventOptions);
+        doc.addEventListener('mouseleave', handleNativePointerUp, eventOptions);
+
+        disposeTargetNativeGestureEvents.current = () => {
+          doc.removeEventListener('mousemove', handleNativePointerMove, eventOptions);
+          doc.removeEventListener('mouseup', handleNativePointerUp, eventOptions);
+          doc.removeEventListener('mouseleave', handleNativePointerUp, eventOptions);
+        };
+      }
+    },
+  );
 
   const handlePointerEnter = onEnter
     ? (event: React.MouseEvent<HTMLElement>) => onEnter(event.nativeEvent)
@@ -471,17 +436,15 @@ export const Touch = ({
   useIsomorphicLayoutEffect(
     function initializeNativeTouchStartEventWithPassiveFalse() {
       const hostEl = hostRef.current;
-      if (!hostEl) {
+      if (!hostEl || !isTouchEnabled) {
         return;
       }
 
       const options = { capture: useCapture, passive: false };
-      isTouchEnabled && hostEl.addEventListener('touchstart', handlePointerDown, options);
-      hostEl.addEventListener('mousedown', handlePointerDown, options);
+      hostEl.addEventListener('touchstart', handlePointerDown, options);
 
       return () => {
-        isTouchEnabled && hostEl.removeEventListener('touchstart', handlePointerDown, options);
-        hostEl.addEventListener('mousedown', handlePointerDown, options);
+        hostEl.removeEventListener('touchstart', handlePointerDown, options);
       };
     },
     [hostRef, isTouchEnabled, useCapture, handlePointerDown],
@@ -499,6 +462,9 @@ export const Touch = ({
       // onLeave
       onPointerLeave={usePointerHover ? handlePointerLeave : undefined}
       onMouseLeave={!usePointerHover ? handlePointerLeave : undefined}
+      // handlePointerDown(onTouchStart устанавливается отдельно через initializeNativeTouchEventStartWithPassiveFalse)
+      onMouseDownCapture={useCapture ? handlePointerDown : undefined}
+      onMouseDown={!useCapture ? handlePointerDown : undefined}
     />
   );
 };
