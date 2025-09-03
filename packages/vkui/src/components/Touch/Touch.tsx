@@ -274,7 +274,7 @@ export const Touch = ({
       }
       // Если это был тач-евент, симулируем отмену hover
       if (onLeave) {
-        onLeave(event as unknown as MouseEvent);
+        onLeave(event as MouseEvent);
       }
     } else {
       didSlide.current = Boolean(gesture.isSlide);
