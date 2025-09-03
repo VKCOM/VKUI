@@ -1,4 +1,4 @@
-import { fireEvent, render, renderHook } from '@testing-library/react';
+import { act, fireEvent, render, renderHook } from '@testing-library/react';
 import { useCSSTransition } from './useCSSTransition';
 
 describe(useCSSTransition, () => {
@@ -414,5 +414,101 @@ describe(useCSSTransition, () => {
         expect(callbacks.onExited).toHaveBeenCalledTimes(0);
       },
     );
+  });
+
+  it('should not stuck in exiting when transitionend not fired (fast open -> close)', () => {
+    // Управляем таймерами вручную
+    jest.useFakeTimers();
+
+    // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
+    const getComputedStyleMock = jest.spyOn(window, 'getComputedStyle').mockImplementation(
+      () =>
+        ({
+          transitionDuration: '0.2s',
+          transitionDelay: '0s',
+        }) as unknown as CSSStyleDeclaration,
+    );
+
+    const { result, rerender } = renderHook(
+      (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
+      { initialProps: false },
+    );
+
+    const cmp = render(<div {...result.current[1]} />);
+
+    // initial
+    expect(result.current[0]).toBe('exited');
+
+    // open -> entering
+    rerender(true);
+    cmp.rerender(<div {...result.current[1]} />);
+    expect(result.current[0]).toBe('entering');
+
+    // очень быстро close -> переход в exiting (но transitionend НЕ придёт)
+    rerender(false);
+    cmp.rerender(<div {...result.current[1]} />);
+    expect(result.current[0]).toBe('exiting');
+
+    // колбэки, которые должны были сработать к этому моменту
+    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+    expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+    expect(callbacks.onExited).toHaveBeenCalledTimes(0);
+
+    // Прокручиваем таймеры дальше, чтобы сработал fallback (200ms + safety offset (≈50ms))
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    // После fallback хук должен перевести состояние в exited и вызвать onExited
+    expect(result.current[0]).toBe('exited');
+    expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+
+    // Восстанавливаем мок
+    getComputedStyleMock.mockRestore();
+    jest.useRealTimers();
+  });
+
+  it('should not stuck in exiting when transitionend not fired (transition duration < 0 )', () => {
+    // Управляем таймерами вручную
+    jest.useFakeTimers();
+
+    // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
+    const getComputedStyleMock = jest.spyOn(window, 'getComputedStyle').mockImplementation(
+      () =>
+        ({
+          transitionDuration: '0s',
+          transitionDelay: '0s',
+        }) as unknown as CSSStyleDeclaration,
+    );
+
+    const { result, rerender } = renderHook(
+      (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
+      { initialProps: false },
+    );
+
+    const cmp = render(<div {...result.current[1]} />);
+
+    // initial
+    expect(result.current[0]).toBe('exited');
+
+    // open -> entering
+    rerender(true);
+    cmp.rerender(<div {...result.current[1]} />);
+    expect(result.current[0]).toBe('entered');
+
+    rerender(false);
+    cmp.rerender(<div {...result.current[1]} />);
+    expect(result.current[0]).toBe('exited');
+
+    // колбэки, которые должны были сработать к этому моменту
+    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+    expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+    expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+
+    // Восстанавливаем мок
+    getComputedStyleMock.mockRestore();
+    jest.useRealTimers();
   });
 });
