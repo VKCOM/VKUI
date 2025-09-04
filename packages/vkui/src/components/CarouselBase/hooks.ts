@@ -9,6 +9,7 @@ export function useSlideAnimation(): {
   getAnimateFunction: (drawFunction: DrawInterface) => () => void;
   addToAnimationQueue: (func: VoidFunction) => void;
   startAnimation: () => void;
+  animationInQueue: () => boolean;
 } {
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
@@ -33,7 +34,12 @@ export function useSlideAnimation(): {
     }
   }
 
+  function animationInQueue() {
+    return !!animationQueue.current.length;
+  }
+
   return {
+    animationInQueue,
     getAnimateFunction,
     addToAnimationQueue,
     startAnimation,

@@ -83,7 +83,8 @@ export const CarouselBase = ({
   const shiftXCurrentRef = React.useRef<number>(0);
   const shiftXDeltaRef = React.useRef<number>(0);
   const initialized = React.useRef<boolean>(false);
-  const { addToAnimationQueue, getAnimateFunction, startAnimation } = useSlideAnimation();
+  const { animationInQueue, addToAnimationQueue, getAnimateFunction, startAnimation } =
+    useSlideAnimation();
   const isDragging = React.useRef(false);
 
   const [controlElementsState, setControlElementsState] =
@@ -195,6 +196,7 @@ export const CarouselBase = ({
         shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
       }
       transformCssStyles(shiftX, animation);
+      animationFrameRef.current = null;
     });
   };
 
@@ -306,6 +308,12 @@ export const CarouselBase = ({
         containerWidth,
         isRtl,
       );
+    }
+
+    const isAnimationInProgress = animationInQueue() || animationFrameRef.current !== null;
+
+    if (isAnimationInProgress) {
+      return;
     }
 
     shiftXCurrentRef.current = snaps[slideIndex];
