@@ -160,6 +160,47 @@ describe(Snackbar, () => {
     expect(onClose).toHaveBeenCalled();
   });
 
+  it('should work with open prop', async () => {
+    const onActionClick = jest.fn();
+    const onDurationEnd = jest.fn();
+
+    const action = <span data-testid="action">action</span>;
+
+    const result = render(
+      <Snackbar
+        action={action}
+        onActionClick={onActionClick}
+        onDurationEnd={onDurationEnd}
+        onClose={onClose}
+        open={true}
+      />,
+    );
+    // Нажимаем на кнопку Action
+    await fireEventPatch(result.getByTestId('action'), 'click');
+    expect(onActionClick).toHaveBeenCalled();
+
+    // Снекбар не закрывается
+    await waitCSSKeyframesAnimation(result.getByRole('alert'));
+    expect(onClose).not.toHaveBeenCalled();
+
+    // Ждем, когда срабатает таймер
+    jest.runOnlyPendingTimers();
+    expect(onDurationEnd).toHaveBeenCalled();
+
+    // Снекбар не закрывается
+    await waitCSSKeyframesAnimation(result.getByRole('alert'));
+    expect(onClose).not.toHaveBeenCalled();
+
+    // Прокидываем open={false}
+    result.rerender(
+      <Snackbar action={action} onActionClick={onActionClick} onClose={onClose} open={false} />,
+    );
+
+    // onClose вызывается
+    await waitCSSKeyframesAnimation(result.getByRole('alert'));
+    expect(onClose).toHaveBeenCalled();
+  });
+
   it('should force unmount', async () => {
     const result = render(<Snackbar placement="top" onClose={onClose} />);
 
