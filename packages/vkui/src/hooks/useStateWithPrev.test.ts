@@ -4,7 +4,7 @@ import { useStateWithPrev } from './useStateWithPrev';
 
 describe(useStateWithPrev, () => {
   it('get previous value', () => {
-    const renderCounter = jest.fn();
+    const renderCounter = vi.fn();
 
     const { result } = renderHook(() => {
       const [[state, prevState], setState] = useStateWithPrev(3);
@@ -40,7 +40,7 @@ describe(useStateWithPrev, () => {
     expect(renderCounter).toHaveBeenCalledTimes(3);
   });
   it('initialState is function', () => {
-    const renderCounter = jest.fn();
+    const renderCounter = vi.fn();
 
     const { result } = renderHook(() => {
       const [[state, prevState], setState] = useStateWithPrev(() => 3);

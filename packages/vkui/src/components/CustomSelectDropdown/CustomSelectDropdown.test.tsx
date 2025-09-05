@@ -6,8 +6,8 @@ import { Button } from '../Button/Button';
 import { CustomSelectDropdown } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';
 
-jest.mock('../../lib/floating', () => {
-  const originalModule = jest.requireActual('../../lib/floating');
+vi.mock('../../lib/floating', async () => {
+  const originalModule = (await vi.importActual('../../lib/floating')) as any;
   return {
     ...originalModule,
     useFloating: (...args: Parameters<typeof useFloating>) => {
@@ -40,7 +40,7 @@ describe('CustomSelectDropdown', () => {
   });
 
   it('should call onPlacementChange callback when placement is changed', async () => {
-    const onPlacementChange = jest.fn();
+    const onPlacementChange = vi.fn();
 
     const Fixture = () => {
       const ref = useRef<HTMLDivElement>(null);

@@ -57,19 +57,19 @@ describe(UIPanGestureRecognizer, () => {
   });
 
   it('should calculate velocity', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     const panGestureRecognizer = new UIPanGestureRecognizer();
     panGestureRecognizer.setStartCoords(createTouchEvent('touchstart', 0, 0));
     panGestureRecognizer.setEndCoords(createTouchEvent('touchmove', 10, 10));
 
-    jest.setSystemTime(new Date('1970-01-01T00:00:00'));
+    vi.setSystemTime(new Date('1970-01-01T00:00:00'));
     panGestureRecognizer.setInitialTimeOnce();
 
-    jest.setSystemTime(new Date('1970-01-01T00:00:00'));
+    vi.setSystemTime(new Date('1970-01-01T00:00:00'));
     expect(panGestureRecognizer.velocity()).toEqual({ x: 0, y: 0 });
 
-    jest.setSystemTime(new Date('1970-01-01T00:00:02'));
+    vi.setSystemTime(new Date('1970-01-01T00:00:02'));
     expect(panGestureRecognizer.velocity()).toEqual({ x: 5, y: 5 });
   });
 

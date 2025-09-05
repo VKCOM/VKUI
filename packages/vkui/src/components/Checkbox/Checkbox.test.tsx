@@ -68,7 +68,7 @@ describe('Checkbox', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls Checkbox', () => {
-      const errorStub = jest.spyOn(console, 'error');
+      const errorStub = vi.spyOn(console, 'error');
       render(
         <>
           <Checkbox defaultIndeterminate={true} defaultChecked={true} />

@@ -8,8 +8,8 @@ const dayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarTime', () => {
   it('check onChange should called when select hours and minutes', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    vi.useFakeTimers();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -38,8 +38,8 @@ describe('CalendarTime', () => {
   });
 
   it('check onChange should not called when isDisabled true', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    vi.useFakeTimers();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -69,7 +69,7 @@ describe('CalendarTime', () => {
   });
 
   it('should hide done button with doneButtonShow=false', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -82,7 +82,7 @@ describe('CalendarTime', () => {
   });
 
   it('should disable done button with doneButtonDisabled=false', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -96,7 +96,7 @@ describe('CalendarTime', () => {
   });
 
   it('should render custom done button', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -113,7 +113,7 @@ describe('CalendarTime', () => {
 
   describe('Keyboard Navigation', () => {
     it('should handle Tab navigation between hours, minutes and done button', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -148,7 +148,7 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes and done button', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -184,7 +184,7 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Tab navigation between hours, minutes without done button', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -214,7 +214,7 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes without done button', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -245,7 +245,7 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Shift+Tab navigation', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <CalendarTime
           value={dayDate}
@@ -275,7 +275,7 @@ describe('CalendarTime', () => {
 
   describe('Time Input', () => {
     it('should handle direct time input in hours field', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
 
       const hoursInput = screen.getByTestId('hours-picker');
@@ -285,7 +285,7 @@ describe('CalendarTime', () => {
     });
 
     it('should handle direct time input in minutes field', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
 
       const minutesInput = screen.getByTestId('minutes-picker');
@@ -295,7 +295,7 @@ describe('CalendarTime', () => {
     });
 
     it('should not call onChange for invalid hours input', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
 
       const hoursInput = screen.getByTestId('hours-picker');
@@ -306,7 +306,7 @@ describe('CalendarTime', () => {
     });
 
     it('should not call onChange for invalid minutes input', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
 
       const minutesInput = screen.getByTestId('minutes-picker');
@@ -319,7 +319,7 @@ describe('CalendarTime', () => {
 
   describe('Done Button', () => {
     it('should call onDoneButtonClick when done button is clicked', async () => {
-      const onDoneButtonClick = jest.fn();
+      const onDoneButtonClick = vi.fn();
       render(
         <CalendarTime
           value={dayDate}

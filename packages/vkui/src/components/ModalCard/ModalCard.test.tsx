@@ -113,7 +113,7 @@ describe(ModalCard, () => {
   });
 
   it('should hides close button by dismissButtonMode prop', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <ModalCard
         key="host"
@@ -131,7 +131,7 @@ describe(ModalCard, () => {
   });
 
   test('click on close button', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <ConfigProvider platform="vkcom">
         <ModalCard
@@ -208,7 +208,7 @@ describe(ModalCard, () => {
     };
 
     it.each([true, false])('check restoreFocus=%s', async (restoreFocus) => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       const h = render(<Fixture restoreFocus={restoreFocus} />);
       expect(h.queryByTestId('host')).toBeFalsy();
 
@@ -221,13 +221,13 @@ describe(ModalCard, () => {
 
       await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeTruthy();
-      jest.runAllTimers();
+      vi.runAllTimers();
       expect(h.getByTestId('dismiss-button')).toHaveFocus();
 
       fireEvent.click(openButton);
       await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeFalsy();
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       if (restoreFocus) {
         expect(openButton).toHaveFocus();

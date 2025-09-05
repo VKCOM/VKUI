@@ -14,8 +14,8 @@ const ModalWithUseContext = (props: Omit<ModalCardProps, 'actions'>) => {
 
 describe(useModalRootContext, () => {
   test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
-    const globalCallbacks = { onOpen: jest.fn(), onOpened: jest.fn(), onClose: jest.fn(), onClosed: jest.fn() }; // prettier-ignore
-    const localCallbacks = { onOpen: jest.fn(), onOpened: jest.fn(), onClose: jest.fn(), onClosed: jest.fn() }; // prettier-ignore
+    const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
+    const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
 
     const result = render(
       <ModalRoot activeModal="m" {...globalCallbacks}>

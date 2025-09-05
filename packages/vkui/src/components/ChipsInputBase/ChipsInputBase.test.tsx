@@ -29,9 +29,9 @@ const BLUE_OPTION = { value: 'blue', label: 'Синий' };
 const YELLOW_OPTION = { value: 'yellow', label: 'Жёлтый' };
 
 describe(ChipsInputBase, () => {
-  const onAddChipOption = jest.fn();
-  const onRemoveChipOption = jest.fn();
-  const onClearOptions = jest.fn();
+  const onAddChipOption = vi.fn();
+  const onRemoveChipOption = vi.fn();
+  const onClearOptions = vi.fn();
 
   baselineComponent(
     (props) => (
@@ -63,12 +63,12 @@ describe(ChipsInputBase, () => {
     onRemoveChipOption.mockClear();
     onClearOptions.mockClear();
 
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
+    vi.runOnlyPendingTimers();
+    vi.useRealTimers();
   });
 
   it('renders values passed to it', () => {
@@ -347,7 +347,7 @@ describe(ChipsInputBase, () => {
   it.each([{ readOnly: false }, { readOnly: true }])(
     'calls user events (`readOnly` prop is `$readOnly`)',
     async ({ readOnly }) => {
-      const onBlur = jest.fn();
+      const onBlur = vi.fn();
       render(
         <ChipsInputBaseTest
           readOnly={readOnly}

@@ -15,7 +15,7 @@ const Modal = ({ updateModalHeight }: { updateModalHeight: VoidFunction }) => {
 describe(withModalRootContext, () => {
   it('check call update modal height callback', () => {
     const ModalWithContext = withModalRootContext(Modal);
-    const updateModalHeight = jest.fn();
+    const updateModalHeight = vi.fn();
     render(
       <ModalRootContext.Provider
         value={{

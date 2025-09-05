@@ -99,7 +99,7 @@ describe(ModalPage, () => {
   });
 
   it('should hides close button by adaptivity props ', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_MOBILE}>
         <ModalPage
@@ -119,7 +119,7 @@ describe(ModalPage, () => {
   });
 
   it('should hides close button by hideCloseButton prop', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <ModalPage
@@ -140,7 +140,7 @@ describe(ModalPage, () => {
   });
 
   test('click on close button', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <ModalPage
@@ -219,7 +219,7 @@ describe(ModalPage, () => {
     };
 
     it.each([true, false])('check restoreFocus=%s', async (restoreFocus) => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       const h = render(<Fixture restoreFocus={restoreFocus} />);
       expect(h.queryByTestId('host')).toBeFalsy();
 
@@ -232,13 +232,13 @@ describe(ModalPage, () => {
 
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeTruthy();
-      jest.runAllTimers();
+      vi.runAllTimers();
       expect(h.getByTestId('dismiss-button')).toHaveFocus();
 
       fireEvent.click(openButton);
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeFalsy();
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       if (restoreFocus) {
         expect(openButton).toHaveFocus();

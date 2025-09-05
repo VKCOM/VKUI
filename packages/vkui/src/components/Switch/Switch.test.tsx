@@ -54,7 +54,7 @@ describe(Switch, () => {
     expect(disabledSwitch.checked).toBeFalsy();
     expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
 
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     await userEvent.click(disabledSwitch);
 
     expect(disabledSwitch.checked).toBeFalsy();
@@ -66,7 +66,7 @@ describe(Switch, () => {
       const [checked, setChecked] = React.useState(false);
       return (
         <React.Fragment>
-          <Switch data-testid="switch" checked={checked} onChange={jest.fn} />
+          <Switch data-testid="switch" checked={checked} />
           <button onClick={() => setChecked((prevChecked) => !prevChecked)}>
             change switch state
           </button>

@@ -1,4 +1,194 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useFloatingWithInteractions > tests with snapshot > should be hidden state 1`] = `
+{
+  "floatingProps": {
+    "onMouseLeave": [Function],
+    "onMouseOver": [Function],
+    "style": {},
+  },
+  "middlewareData": {},
+  "onClose": [Function],
+  "onEscapeKeyDown": undefined,
+  "onRestoreFocus": [Function],
+  "placement": "bottom",
+  "referenceProps": {
+    "onBlur": [Function],
+    "onClick": [Function],
+    "onFocus": [Function],
+    "onMouseLeave": [Function],
+    "onMouseOver": [Function],
+  },
+  "refs": {
+    "floating": {
+      "current": null,
+    },
+    "reference": {
+      "current": null,
+    },
+    "setFloating": [Function],
+    "setReference": [Function],
+  },
+  "shown": false,
+  "willBeHide": false,
+}
+`;
+
+exports[`useFloatingWithInteractions > tests with snapshot > should be shown state 1`] = `
+{
+  "floatingProps": {
+    "onAnimationEnd": [Function],
+    "onAnimationStart": [Function],
+    "onMouseLeave": [Function],
+    "onMouseOver": [Function],
+    "style": {
+      "bottom": "auto",
+      "left": 0,
+      "position": "fixed",
+      "right": "auto",
+      "top": 0,
+      "width": "max-content",
+    },
+  },
+  "middlewareData": {},
+  "onClose": [Function],
+  "onEscapeKeyDown": [Function],
+  "onRestoreFocus": [Function],
+  "placement": "bottom",
+  "referenceProps": {
+    "onBlur": [Function],
+    "onClick": [Function],
+    "onFocus": [Function],
+    "onMouseLeave": [Function],
+    "onMouseOver": [Function],
+  },
+  "refs": {
+    "floating": {
+      "current": null,
+    },
+    "reference": {
+      "current": null,
+    },
+    "setFloating": [Function],
+    "setReference": [Function],
+  },
+  "shown": true,
+  "willBeHide": false,
+}
+`;
+
+exports[`useFloatingWithInteractions > tests with snapshot > should be shown state with disabled close on esc key and click outside events 1`] = `
+{
+  "floatingProps": {
+    "onAnimationEnd": [Function],
+    "onAnimationStart": [Function],
+    "onMouseLeave": [Function],
+    "onMouseOver": [Function],
+    "style": {
+      "bottom": "auto",
+      "left": 0,
+      "position": "fixed",
+      "right": "auto",
+      "top": 0,
+      "width": "max-content",
+    },
+  },
+  "middlewareData": {},
+  "onClose": [Function],
+  "onEscapeKeyDown": undefined,
+  "onRestoreFocus": [Function],
+  "placement": "bottom",
+  "referenceProps": {
+    "onBlur": [Function],
+    "onClick": [Function],
+    "onFocus": [Function],
+    "onMouseLeave": [Function],
+    "onMouseOver": [Function],
+  },
+  "refs": {
+    "floating": {
+      "current": null,
+    },
+    "reference": {
+      "current": null,
+    },
+    "setFloating": [Function],
+    "setReference": [Function],
+  },
+  "shown": true,
+  "willBeHide": false,
+}
+`;
+
+exports[`useFloatingWithInteractions > tests with snapshot > should be shown state with disabled interactive feature 1`] = `
+{
+  "floatingProps": {
+    "onAnimationEnd": [Function],
+    "onAnimationStart": [Function],
+    "style": {
+      "bottom": "auto",
+      "left": 0,
+      "pointerEvents": "none",
+      "position": "fixed",
+      "right": "auto",
+      "top": 0,
+      "width": "max-content",
+    },
+  },
+  "middlewareData": {},
+  "onClose": [Function],
+  "onEscapeKeyDown": [Function],
+  "onRestoreFocus": [Function],
+  "placement": "bottom",
+  "referenceProps": {
+    "onBlur": [Function],
+    "onClick": [Function],
+    "onFocus": [Function],
+    "onMouseLeave": [Function],
+    "onMouseOver": [Function],
+  },
+  "refs": {
+    "floating": {
+      "current": null,
+    },
+    "reference": {
+      "current": null,
+    },
+    "setFloating": [Function],
+    "setReference": [Function],
+  },
+  "shown": true,
+  "willBeHide": false,
+}
+`;
+
+exports[`useFloatingWithInteractions > tests with snapshot > should return default values 1`] = `
+{
+  "floatingProps": {
+    "style": {},
+  },
+  "middlewareData": {},
+  "onClose": [Function],
+  "onEscapeKeyDown": undefined,
+  "onRestoreFocus": [Function],
+  "placement": "bottom",
+  "referenceProps": {
+    "onClick": [Function],
+  },
+  "refs": {
+    "floating": {
+      "current": null,
+    },
+    "reference": {
+      "current": null,
+    },
+    "setFloating": [Function],
+    "setReference": [Function],
+  },
+  "shown": false,
+  "willBeHide": false,
+}
+`;
 
 exports[`useFloatingWithInteractions tests with snapshot should be hidden state 1`] = `
 {

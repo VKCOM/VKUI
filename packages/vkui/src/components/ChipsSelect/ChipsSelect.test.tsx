@@ -20,8 +20,8 @@ const THIRD_OPTION = { value: 'navarin', label: 'Наваринского пла
 const colors: ChipOption[] = [FIRST_OPTION, SECOND_OPTION, THIRD_OPTION];
 
 let placementStub: Placement | undefined = undefined;
-jest.mock('../../lib/floating', () => {
-  const originalModule = jest.requireActual('../../lib/floating');
+vi.mock('../../lib/floating', async () => {
+  const originalModule = (await vi.importActual('../../lib/floating')) as any;
   return {
     ...originalModule,
     useFloating: (...args: Parameters<typeof useFloating>) => {
@@ -116,7 +116,7 @@ describe('ChipsSelect', () => {
   });
 
   it.each(['click', 'focus'])('opens dropdown when %s on input field', async (eventType) => {
-    const onOpen = jest.fn();
+    const onOpen = vi.fn();
     const result = render(
       <ChipsSelect options={colors} defaultValue={[]} dropdownTestId="dropdown" onOpen={onOpen} />,
     );
@@ -133,7 +133,7 @@ describe('ChipsSelect', () => {
   });
 
   it('closes options on click outside', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const result = render(
       <ChipsSelect
         options={colors}
@@ -151,7 +151,7 @@ describe('ChipsSelect', () => {
   });
 
   it('should check custom fields when onChange', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const options = colors.map((color, index) => ({
       ...color,
       custom: index.toString(),
@@ -195,8 +195,8 @@ describe('ChipsSelect', () => {
   it.each(['{ArrowDown}', 'typing text'])(
     'closes dropdown on {Escape} and open when %s',
     async (type) => {
-      const onOpen = jest.fn();
-      const onClose = jest.fn();
+      const onOpen = vi.fn();
+      const onClose = vi.fn();
       const result = render(
         <ChipsSelect
           options={colors}
@@ -318,8 +318,8 @@ describe('ChipsSelect', () => {
   });
 
   it('adds chip from dropdown with click to option', async () => {
-    const onChangeStart = jest.fn();
-    const onChange = jest.fn();
+    const onChangeStart = vi.fn();
+    const onChange = vi.fn();
     const result = render(
       <ChipsSelect
         value={[]}
@@ -360,8 +360,8 @@ describe('ChipsSelect', () => {
   });
 
   it('adds chip from dropdown with {Enter} to option', async () => {
-    const onChangeStart = jest.fn();
-    const onChange = jest.fn();
+    const onChangeStart = vi.fn();
+    const onChange = vi.fn();
     const options = new Array(20).fill(0).map((_, i) => ({ value: i, label: `Option #${i}` }));
     const result = render(
       <ChipsSelect
@@ -417,7 +417,7 @@ describe('ChipsSelect', () => {
       { creatable: true, description: 'adds custom chip' },
       { creatable: false, description: 'does not add custom chip' },
     ])('$description by pressing {Enter}', async ({ creatable }) => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const result = render(
         <ChipsSelect
           creatable={creatable}
@@ -437,7 +437,7 @@ describe('ChipsSelect', () => {
     });
 
     it('adds custom chip by add button in dropdown', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const result = render(
         <ChipsSelect
           creatable="Добавить новую опцию"
@@ -464,7 +464,7 @@ describe('ChipsSelect', () => {
     ])(
       '$description when `addOnBlur` provided and `creatable` is $creatable',
       async ({ creatable }) => {
-        const onChange = jest.fn();
+        const onChange = vi.fn();
         const result = render(
           <ChipsSelect
             creatable={creatable}
@@ -491,9 +491,9 @@ describe('ChipsSelect', () => {
   it.each([{ readOnly: false }, { readOnly: true }])(
     'calls user events (`readOnly` prop is `$readOnly`)',
     async ({ readOnly }) => {
-      const onFocus = jest.fn();
-      const onBlur = jest.fn();
-      const onKeyDown = jest.fn();
+      const onFocus = vi.fn();
+      const onBlur = vi.fn();
+      const onKeyDown = vi.fn();
       const result = render(
         <ChipsSelect
           readOnly={readOnly}
@@ -520,7 +520,7 @@ describe('ChipsSelect', () => {
   );
 
   it('should ignore disabled option', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const result = render(
       <ChipsSelect
         options={[FIRST_OPTION, { ...SECOND_OPTION, disabled: true }, THIRD_OPTION]}
@@ -666,7 +666,7 @@ describe.each<{
   'should correct use delimiter $delimiter',
   ({ delimiter, str, expectedValues, expectedInputValue }) => {
     it('should add some options by splitting by delimiter when creatable', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(
         <ChipsSelect
           options={[]}
@@ -694,7 +694,7 @@ describe.each<{
     });
 
     it('should not add some options by splitting by delimiter when not creatable', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(
         <ChipsSelect
           options={[]}

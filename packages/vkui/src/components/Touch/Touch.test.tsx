@@ -64,7 +64,7 @@ describe('Touch', () => {
   baselineComponent(Touch);
 
   it.each([true, false])('use stopPropagation={%s}', (stopPropagation) => {
-    const onMouseDown = jest.fn();
+    const onMouseDown = vi.fn();
     const result = render(
       <div data-testid="container" onMouseDown={onMouseDown}>
         <Touch stopPropagation={stopPropagation} data-testid="touch" />
@@ -102,8 +102,8 @@ describe('Touch', () => {
 
   describe('hover', () => {
     it('calls onEnter / onLeave with mouse', () => {
-      const onEnter = jest.fn();
-      const onLeave = jest.fn();
+      const onEnter = vi.fn();
+      const onLeave = vi.fn();
       render(<Touch data-testid="__t__" onEnter={onEnter} onLeave={onLeave} />);
       fireEvent.mouseEnter(screen.getByTestId('__t__'));
       expect(onEnter).toHaveBeenCalledTimes(1);
@@ -112,7 +112,7 @@ describe('Touch', () => {
     });
     it('simulates onLeave with touch', () => {
       window['ontouchstart'] = null;
-      const onLeave = jest.fn();
+      const onLeave = vi.fn();
       render(<Touch data-testid="__t__" onLeave={onLeave} />);
       fireTouchSwipe(screen.getByTestId('__t__'), [[0, 0]]);
       expect(onLeave).toHaveBeenCalledTimes(1);
@@ -131,8 +131,8 @@ describe('Touch', () => {
       'onEndX',
       'onEndY',
     ] as const;
-    const makeHandlers = (): { [k in (typeof keys)[number]]: jest.Mock } => {
-      return keys.reduce<any>((acc, k) => ({ ...acc, [k]: jest.fn() }), {});
+    const makeHandlers = (): { [k in (typeof keys)[number]]: ReturnType<typeof vi.fn> } => {
+      return keys.reduce<any>((acc, k) => ({ ...acc, [k]: vi.fn() }), {});
     };
     describe.each(['touch', 'mouse'])('using %s', (input) => {
       const fireGesture = input === 'touch' ? fireTouchSwipe : fireMouseSwipe;
@@ -387,7 +387,7 @@ describe('Touch', () => {
       expect(hasDefault).toBe(true);
     });
     it('handles onClickCapture', async () => {
-      const cb = jest.fn(() => null);
+      const cb = vi.fn(() => null);
       render(<Touch onClickCapture={cb} onMove={noop} data-testid="touch" />);
       await userEvent.click(screen.getByTestId('touch'));
       expect(cb).toHaveBeenCalledTimes(1);
@@ -413,7 +413,7 @@ describe('Touch', () => {
       expect(clicked).toEqual(new Set());
     });
     it('handles click after slide', async () => {
-      const cb = jest.fn(() => null);
+      const cb = vi.fn(() => null);
       render(<Touch onClickCapture={cb} data-testid="touch" />);
       slideRight(screen.getByTestId('touch'));
       await userEvent.click(screen.getByTestId('touch'));
