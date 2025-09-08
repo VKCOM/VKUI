@@ -5614,7 +5614,7 @@ __metadata:
     postcss-custom-media: "npm:^11.0.6"
     postcss-gap-properties: "npm:^6.0.0"
     postcss-import: "npm:^16.1.1"
-    postcss-loader: "npm:^8.1.1"
+    postcss-loader: "npm:^8.2.0"
     postcss-logical: "npm:^8.1.0"
     postcss-modules: "npm:^6.0.1"
     postcss-value-parser: "npm:^4.2.0"
@@ -13400,16 +13400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^1.20.0":
-  version: 1.21.7
-  resolution: "jiti@npm:1.21.7"
-  bin:
-    jiti: bin/jiti.js
-  checksum: 10/6a182521532126e4b7b5ad64b64fb2e162718fc03bc6019c21aa2222aacde6c6dfce4fc3bce9f69561a73b24ab5f79750ad353c37c3487a220d5869a39eae3a2
-  languageName: node
-  linkType: hard
-
-"jiti@npm:^2.4.2":
+"jiti@npm:^2.4.2, jiti@npm:^2.5.1":
   version: 2.5.1
   resolution: "jiti@npm:2.5.1"
   bin:
@@ -16864,13 +16855,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-loader@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "postcss-loader@npm:8.1.1"
+"postcss-loader@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "postcss-loader@npm:8.2.0"
   dependencies:
     cosmiconfig: "npm:^9.0.0"
-    jiti: "npm:^1.20.0"
-    semver: "npm:^7.5.4"
+    jiti: "npm:^2.5.1"
+    semver: "npm:^7.6.2"
   peerDependencies:
     "@rspack/core": 0.x || 1.x
     postcss: ^7.0.0 || ^8.0.1
@@ -16880,7 +16871,7 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10/7ae38e635119a808ec05e25a5d1327afd40f5f07e1ae40827e4be5e9d1d0adf0e8e277252c13ddbc8909a1bc53fecb15741db340b98966c2bd9cab867cfe5f10
+  checksum: 10/eda6790673cae0077ed687c725ea7df09fb788ae9a7aa8a042623bcb318fd1452c95a3b5871ff8362e25dc3e0d9ccc6ed0b0f70c52c82a96745b48b855d32e0d
   languageName: node
   linkType: hard
 
