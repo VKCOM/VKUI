@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`typography transforms correctly 1`] = `
 "import { Headline, Subhead, Title as VKUITitle } from '@vkontakte/vkui';
