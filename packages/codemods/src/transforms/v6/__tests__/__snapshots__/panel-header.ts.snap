@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`panel-header transforms correctly 1`] = `
 "import { PanelHeader } from '@vkontakte/vkui';
