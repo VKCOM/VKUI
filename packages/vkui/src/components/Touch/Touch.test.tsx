@@ -83,6 +83,41 @@ describe('Touch', () => {
     expect(moved).toBe(false);
   });
 
+  it('should ignore compatible mousedown event after touch', () => {
+    const onStart = jest.fn();
+    const onMove = jest.fn();
+    const onEnd = jest.fn();
+    render(<Touch onStart={onStart} onMove={onMove} onEnd={onEnd} data-testid="touch" />);
+
+    const touch = screen.getByTestId('touch');
+    fireEvent.touchStart(touch, {
+      changedTouches: [{ clientX: 0, clientY: 0 }],
+    });
+    fireEvent.mouseDown(touch, {
+      clientX: 0,
+      clientY: 0,
+    });
+    expect(onStart).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchMove(touch, {
+      changedTouches: [{ clientX: 10, clientY: 0 }],
+    });
+    fireEvent.mouseMove(document.body, {
+      clientX: 10,
+      clientY: 0,
+    });
+    expect(onMove).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(touch, {
+      changedTouches: [{ clientX: 10, clientY: 0 }],
+    });
+    fireEvent.mouseUp(document.body, {
+      clientX: 10,
+      clientY: 0,
+    });
+    expect(onEnd).toHaveBeenCalledTimes(1);
+  });
+
   describe('prevents browser drag behavior', () => {
     it.each(['img', 'a'])('for %s', (tag) => {
       render(<Touch>{createElement(tag, { 'data-testid': '__el__' })}</Touch>);
