@@ -84,9 +84,9 @@ describe('Touch', () => {
   });
 
   it('should ignore compatible mousedown event after touch', () => {
-    const onStart = jest.fn();
-    const onMove = jest.fn();
-    const onEnd = jest.fn();
+    const onStart = vitest.fn();
+    const onMove = vitest.fn();
+    const onEnd = vitest.fn();
     render(<Touch onStart={onStart} onMove={onMove} onEnd={onEnd} data-testid="touch" />);
 
     const touch = screen.getByTestId('touch');
