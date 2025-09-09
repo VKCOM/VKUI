@@ -3,6 +3,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
 import { type BaseGalleryProps } from './types';
 import styles from './CarouselBase.module.css';
@@ -15,11 +16,13 @@ const stylesArrowAreaHeight = {
 export const getArrowClassName = (
   side: 'start' | 'end',
   arrowAreaHeight: Exclude<BaseGalleryProps['arrowAreaHeight'], undefined>,
+  focusVisible: boolean,
 ) => {
   return classNames(
     styles.arrow,
     side === 'start' ? styles.arrowStart : styles.arrowEnd,
     stylesArrowAreaHeight[arrowAreaHeight],
+    focusVisible && styles.arrowFocusVisible,
   );
 };
 
@@ -45,6 +48,7 @@ interface ScrollArrowsProps
   canSlideRight: boolean;
   onSlideLeft: (e: React.MouseEvent) => void;
   onSlideRight: (e: React.MouseEvent) => void;
+  slidesContainerId: string;
 }
 
 export const ScrollArrows = ({
@@ -60,27 +64,35 @@ export const ScrollArrows = ({
   arrowNextLabel,
   nextArrowTestId,
   prevArrowTestId,
+  slidesContainerId,
 }: ScrollArrowsProps) => {
+  const { focusVisible: prevArrowFocusVisible, ...prevArrowFocusHandlers } = useFocusVisible();
+  const { focusVisible: nextArrowFocusVisible, ...nextArrowFocusHandlers } = useFocusVisible();
+
   return showArrows && hasPointer ? (
     <>
       {canSlideLeft && (
         <ScrollArrow
-          className={getArrowClassName('start', arrowAreaHeight)}
+          className={getArrowClassName('start', arrowAreaHeight, prevArrowFocusVisible)}
           direction="left"
           onClick={onSlideLeft}
           size={arrowSize}
           data-testid={prevArrowTestId}
           label={arrowPrevLabel}
+          aria-controls={slidesContainerId}
+          {...prevArrowFocusHandlers}
         />
       )}
       {canSlideRight && (
         <ScrollArrow
-          className={getArrowClassName('end', arrowAreaHeight)}
+          className={getArrowClassName('end', arrowAreaHeight, nextArrowFocusVisible)}
           direction="right"
           onClick={onSlideRight}
           size={arrowSize}
           data-testid={nextArrowTestId}
           label={arrowNextLabel}
+          aria-controls={slidesContainerId}
+          {...nextArrowFocusHandlers}
         />
       )}
     </>
