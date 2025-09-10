@@ -118,9 +118,9 @@ export const ModalPageInternal = ({
   const handleSheetRef = useExternRef<HTMLDivElement>(setSheetEl, ref);
   const handleSheetScrollRef = useExternRef<HTMLDivElement>(setSheetScrollEl, getModalContentRef);
 
-  const [desktopMaxWidthClassName, desktopMaxWidthStyle] = resolveDesktopMaxWidth(
-    isDesktop ? desktopMaxWidth : 's',
-  );
+  const [desktopMaxWidthClassName, desktopMaxWidthStyle] = isDesktop
+    ? resolveDesktopMaxWidth(desktopMaxWidth)
+    : [undefined, undefined];
 
   const modalOverlay = !disableModalOverlay && (
     <ModalOverlay
@@ -213,16 +213,13 @@ const desktopMaxWidthClassNames = {
 function resolveDesktopMaxWidth(
   desktopMaxWidth: ModalPageInternalProps['size'] = 's',
 ): [string | undefined, CSSCustomProperties | undefined] {
-  if (typeof desktopMaxWidth === 'string') {
-    return [desktopMaxWidthClassNames[desktopMaxWidth], undefined];
+  if (typeof desktopMaxWidth === 'number') {
+    return [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': `${desktopMaxWidth}px` }];
   }
 
-  return [
-    undefined,
-    typeof desktopMaxWidth === 'number'
-      ? { '--vkui_internal_ModalPage--desktopMaxWidth': `${desktopMaxWidth}px` }
-      : undefined,
-  ];
+  return desktopMaxWidthClassNames.hasOwnProperty(desktopMaxWidth)
+    ? [desktopMaxWidthClassNames[desktopMaxWidth], undefined]
+    : [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': desktopMaxWidth }];
 }
 
 function getHeightCSSVariable(height?: number | string): CSSCustomProperties | undefined {
