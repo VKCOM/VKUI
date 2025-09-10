@@ -3,11 +3,7 @@ import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators'
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
-import { Radio as BasicRadio } from '../Radio/Radio';
-import {
-  Playground as BasicRadioStory,
-  WithDescription as RadioWithDescriptionStory,
-} from '../Radio/Radio.stories';
+import { Radio } from '../Radio/Radio';
 import { RadioGroup, type RadioGroupProps } from './RadioGroup';
 
 const story: Meta<RadioGroupProps> = {
@@ -25,8 +21,10 @@ export const Playground: Story = {
   render: function Render(args) {
     return (
       <RadioGroup {...args}>
-        <BasicRadio {...BasicRadioStory.args}>SberPay</BasicRadio>
-        <BasicRadio {...RadioWithDescriptionStory.args} />
+        <Radio name="payment">SberPay</Radio>
+        <Radio name="payment" description="Баланс 7 320 ₽">
+          VK Pay
+        </Radio>
       </RadioGroup>
     );
   },

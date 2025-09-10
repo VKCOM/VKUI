@@ -30,7 +30,7 @@
 const PopoverWithTriggerHover = () => {
   return (
     <Popover
-      trigger="hover"
+      trigger="click"
       placement="bottom"
       role="tooltip"
       aria-describedby="tooltip-1"
@@ -41,9 +41,7 @@ const PopoverWithTriggerHover = () => {
       }
       restoreFocus="anchor-element"
     >
-      <Button id="tooltip-1" mode="outline">
-        Наведи на меня
-      </Button>
+      <Input style={{ margin: 200 }} slotsProps={{ input: { defaultValue: 'lorem' } }} />
     </Popover>
   );
 };
@@ -194,10 +192,10 @@ const Playground = () => {
   return (
     <Flex margin="auto" direction="column" align="start" gap="2xl">
       <PopoverWithTriggerHover />
-      <PopoverWithTriggerClick />
-      <PopoverWithTriggerFocus />
-      <PopoverWithAllTriggers />
-      <PopoverWithTriggerManual />
+      {/* <PopoverWithTriggerClick /> */}
+      {/* <PopoverWithTriggerFocus /> */}
+      {/* <PopoverWithAllTriggers /> */}
+      {/* <PopoverWithTriggerManual /> */}
     </Flex>
   );
 };

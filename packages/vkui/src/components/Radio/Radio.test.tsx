@@ -52,4 +52,49 @@ describe('Radio', () => {
     expect(inputCard.checked).toBeTruthy();
     expect(inputCash.checked).toBeFalsy();
   });
+
+  it('should working without slotsProps', () => {
+    const rootRef = React.createRef<HTMLLabelElement | null>();
+    const inputRef = React.createRef<HTMLInputElement | null>();
+    render(
+      <Radio
+        getRootRef={rootRef}
+        getRef={inputRef}
+        data-testid="input"
+        checked
+        onChange={jest.fn}
+      />,
+    );
+
+    expect(rootRef.current!.tagName).toBe('LABEL');
+    expect(inputRef.current!.tagName).toBe('INPUT');
+    expect(inputRef.current).toBe(screen.getByTestId('input'));
+    expect(inputRef.current!.checked).toBeTruthy();
+  });
+
+  it('should working with slotsPropsProps', () => {
+    const rootRef = React.createRef<HTMLLabelElement | null>();
+    const inputRef = React.createRef<HTMLInputElement | null>();
+    render(
+      <Radio
+        getRootRef={rootRef}
+        data-testid="root"
+        checked
+        onChange={jest.fn}
+        slotsProps={{
+          input: {
+            'getRootRef': inputRef,
+            'data-testid': 'input',
+          },
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId('root')).toBe(rootRef.current);
+    expect(screen.getByTestId('input')).toBe(inputRef.current);
+    expect(rootRef.current!.tagName).toBe('LABEL');
+    expect(inputRef.current!.tagName).toBe('INPUT');
+
+    expect(inputRef.current!.checked).toBeTruthy();
+  });
 });

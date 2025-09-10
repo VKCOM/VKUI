@@ -3,9 +3,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
-import { FormField, type FormFieldProps } from '../FormField/FormField';
-import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { FormField, type FormFieldOwnProps, type FormFieldProps } from '../FormField/FormField';
+import {
+  UnstyledTextField,
+  type UnstyledTextFieldAsInputProps,
+} from '../UnstyledTextField/UnstyledTextField';
 import styles from './Input.module.css';
 
 const sizeYClassNames = {
@@ -13,20 +16,90 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRef<HTMLInputElement>,
-    HasRootRef<HTMLDivElement>,
+// 1. В сторибуке и в доке в таблице будут непонятки
+// 2. Как определять какие свойства будут прокидываться через slotsProps а какие нет?
+
+export interface InputBaseProps
+  extends HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'maxHeight'> {}
+
+export interface InputLegacyProps
+  extends InputBaseProps,
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HasRef<HTMLInputElement> {
+  /**
+   *
+   */
+  slotsProps?: undefined;
+}
+
+export interface InputModernProps
+  extends InputBaseProps,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
+    Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'type' | 'value' | 'defaultValue' | 'name' | 'disabled' | 'onChange'
+    > {
+  /**
+   *
+   */
+  slotsProps: {
+    input?: Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'type' | 'value' | 'defaultValue' | 'name' | 'disabled' | 'onChange'
+    > &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
+}
+
+export type InputProps = InputLegacyProps | InputModernProps;
+
+const useProps = (
+  props: Omit<
+    InputProps,
+    'align' | 'className' | 'getRootRef' | 'style' | 'before' | 'after' | 'status' | 'mode'
+  >,
+): [FormFieldOwnProps, Omit<UnstyledTextFieldAsInputProps, 'as'>] => {
+  const [formFieldProps, inputProps] = React.useMemo<
+    [FormFieldOwnProps, Omit<UnstyledTextFieldAsInputProps, 'as'>]
+  >(() => {
+    if (props.slotsProps?.input) {
+      const {
+        slotsProps,
+        type = 'text',
+        value,
+        defaultValue,
+        onChange,
+        disabled,
+        name,
+        ...rootProps
+      } = props as InputModernProps;
+      const inputProps = {
+        type,
+        value,
+        defaultValue,
+        onChange,
+        name,
+        disabled,
+        ...props.slotsProps.input,
+      };
+      return [rootProps, inputProps];
+    } else {
+      const { type = 'text', getRef, ...inputProps } = props as InputLegacyProps;
+
+      return [{}, { ...inputProps, getRootRef: getRef, type }];
+    }
+  }, [props]);
+  return [formFieldProps, inputProps];
+};
 
 /**
  * @see https://vkui.io/components/input
  */
 export const Input = ({
-  type = 'text',
   align = 'left',
-  getRef,
   className,
   getRootRef,
   style,
@@ -37,6 +110,7 @@ export const Input = ({
   ...restProps
 }: InputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
+  const [formFieldRestProps, inputRestProps] = useProps(restProps);
 
   return (
     <FormField
@@ -53,17 +127,12 @@ export const Input = ({
       getRootRef={getRootRef}
       before={before}
       after={after}
-      disabled={restProps.disabled}
+      disabled={inputRestProps.disabled}
       mode={mode}
       status={status}
+      {...formFieldRestProps}
     >
-      <UnstyledTextField
-        {...restProps}
-        as="input"
-        type={type}
-        className={styles.el}
-        getRootRef={getRef}
-      />
+      <UnstyledTextField {...inputRestProps} as="input" className={styles.el} />
     </FormField>
   );
 };

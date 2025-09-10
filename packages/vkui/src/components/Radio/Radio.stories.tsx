@@ -26,9 +26,8 @@ export const Playground: Story = {
 };
 
 export const WithDescription: Story = {
-  ...Playground,
   args: {
-    ...Playground.args,
+    name: 'payment',
     description: 'Баланс 7 320 ₽',
   },
 };
