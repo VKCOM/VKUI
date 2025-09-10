@@ -8,7 +8,7 @@ import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
@@ -17,10 +17,64 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-export interface SwitchProps
+interface SwitchModernProps
+  extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange'>,
+    HasRootRef<HTMLLabelElement>,
+    Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'checked' | 'defaultChecked' | 'onChange' | 'name' | 'disabled'
+    > {
+  /**
+   *
+   */
+  slotsProps: {
+    input: Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'checked' | 'defaultChecked' | 'onChange' | 'name' | 'disabled'
+    > &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
+}
+
+interface SwitchLegacyProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+    HasRef<HTMLInputElement> {
+  /**
+   *
+   */
+  slotsProps?: undefined;
+}
+
+export type SwitchProps = SwitchLegacyProps | SwitchModernProps;
+
+const useProps = (
+  props: Omit<SwitchProps, 'style' | 'className' | 'getRootRef' | 'onBlur' | 'onFocus' | 'onClick'>,
+): [React.LabelHTMLAttributes<HTMLLabelElement>, VisuallyHiddenProps<HTMLInputElement>] => {
+  return React.useMemo<
+    [React.LabelHTMLAttributes<HTMLLabelElement>, VisuallyHiddenProps<HTMLInputElement>]
+  >(() => {
+    if (props.slotsProps) {
+      const {
+        slotsProps: { input: userSlotsInputProps = {} },
+        checked,
+        defaultChecked,
+        onChange,
+        disabled,
+        name,
+        ...rootProps
+      } = props as SwitchModernProps;
+      return [
+        rootProps,
+        { ...userSlotsInputProps, checked, defaultChecked, onChange, disabled, name },
+      ];
+    } else {
+      const { getRef, ...inputProps } = props as SwitchLegacyProps;
+      return [{}, { ...inputProps, getRootRef: getRef }];
+    }
+  }, [props]);
+};
 
 /**
  * @see https://vkui.io/components/switch
@@ -29,9 +83,6 @@ export const Switch = ({
   style,
   className,
   getRootRef,
-  getRef,
-  checked: checkedProp,
-  disabled,
   onBlur: onBlurProp,
   onFocus: onFocusProp,
   onClick,
@@ -49,7 +100,10 @@ export const Switch = ({
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
     Boolean(restProps.defaultChecked),
   );
-  const isControlled = checkedProp !== undefined;
+
+  const [rootProps, inputBaseProps] = useProps(restProps);
+
+  const isControlled = inputBaseProps.checked !== undefined;
 
   const syncUncontrolledCheckedStateOnClick = React.useCallback(
     (e: React.MouseEvent<HTMLInputElement>) => {
@@ -64,20 +118,16 @@ export const Switch = ({
   );
 
   const inputProps: VisuallyHiddenProps<HTMLInputElement> = {
-    ...restProps,
+    ...inputBaseProps,
     Component: 'input',
-    getRootRef: getRef,
     type: 'checkbox',
     role: 'switch',
-    disabled: disabled,
-    onBlur: onBlurProp,
-    onFocus: onFocusProp,
     onClick: callMultiple(syncUncontrolledCheckedStateOnClick, onClick),
   };
 
   if (isControlled) {
-    inputProps.checked = checkedProp;
-    inputProps['aria-checked'] = checkedProp ? 'true' : 'false';
+    inputProps.checked = inputBaseProps.checked;
+    inputProps['aria-checked'] = inputBaseProps.checked ? 'true' : 'false';
   } else {
     inputProps['aria-checked'] = localUncontrolledChecked ? 'true' : 'false';
   }
@@ -88,13 +138,14 @@ export const Switch = ({
         styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         platform === 'ios' ? styles.ios : styles.default,
-        disabled && styles.disabled,
+        inputBaseProps.disabled && styles.disabled,
         isRtl && styles.rtl,
         focusVisibleClassNames,
         className,
       )}
       style={style}
       ref={getRootRef}
+      {...rootProps}
     >
       <VisuallyHidden
         {...inputProps}
@@ -108,7 +159,7 @@ export const Switch = ({
           aria-hidden
           className={classNames(
             styles.handle,
-            platform !== 'ios' && !disabled && styles.handleWithRipple,
+            platform !== 'ios' && !inputBaseProps.disabled && styles.handleWithRipple,
           )}
         />
       </span>

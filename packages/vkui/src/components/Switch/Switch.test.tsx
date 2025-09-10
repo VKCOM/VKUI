@@ -93,4 +93,51 @@ describe(Switch, () => {
     expect(switchComponent.checked).toBeTruthy();
     expect(switchComponent.getAttribute('aria-checked')).toBe('true');
   });
+
+  it('should working without slotsProps', () => {
+    const rootRef = React.createRef<HTMLLabelElement | null>();
+    const inputRef = React.createRef<HTMLInputElement | null>();
+    render(
+      <Switch
+        getRootRef={rootRef}
+        getRef={inputRef}
+        data-testid="input"
+        checked
+        onChange={jest.fn}
+      />,
+    );
+
+    expect(rootRef.current!.tagName).toBe('LABEL');
+    expect(inputRef.current!.tagName).toBe('INPUT');
+    expect(inputRef.current).toBe(screen.getByTestId('input'));
+    expect(inputRef.current!.checked).toBeTruthy();
+  });
+
+  it('should working with slotsProps', () => {
+    const rootRef = React.createRef<HTMLLabelElement | null>();
+    const inputRef = React.createRef<HTMLInputElement | null>();
+    render(
+      <Switch
+        getRootRef={rootRef}
+        data-testid="root"
+        checked
+        onChange={jest.fn}
+        disabled
+        slotsProps={{
+          input: {
+            'getRootRef': inputRef,
+            'data-testid': 'input',
+          },
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId('root')).toBe(rootRef.current);
+    expect(screen.getByTestId('input')).toBe(inputRef.current);
+    expect(rootRef.current!.tagName).toBe('LABEL');
+    expect(inputRef.current!.tagName).toBe('INPUT');
+
+    expect(inputRef.current!.checked).toBeTruthy();
+    expect(inputRef.current!.disabled).toBeTruthy();
+  });
 });
