@@ -246,7 +246,8 @@ describe('Gallery', () => {
       );
       expect(index).toBe(0);
     });
-    it('handles dynamic slide count', () => {
+    it('handles dynamic slide count', async () => {
+      jest.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       const { rerender } = render(
@@ -255,12 +256,19 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
+      await React.act(async () => {
+        jest.runOnlyPendingTimers();
+      });
       rerender(
         <Gallery onChange={setIndex} slideIndex={1}>
           <div />
         </Gallery>,
       );
+      await React.act(async () => {
+        jest.runOnlyPendingTimers();
+      });
       expect(index).toBe(0);
+      jest.useRealTimers();
     });
     it('keeps slideIndex when 0 slides', () => {
       const setIndex = jest.fn();
@@ -292,7 +300,7 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-      jest.runAllTimers();
+      React.act(jest.runAllTimers);
       expect(index).toBe(1);
     });
   });
@@ -427,7 +435,9 @@ describe('Gallery', () => {
         onChange,
       });
 
-      screen.getByTestId('slide-1').focus();
+      React.act(() => {
+        screen.getByTestId('slide-1').focus();
+      });
 
       await userEvent.tab();
       expect(document.activeElement).toBe(screen.getByTestId('slide-2'));
@@ -795,8 +805,8 @@ describe('Gallery', () => {
     expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
 
     mockedData.containerWidth = 250;
-
-    triggerResize();
+    React.act(triggerResize);
+    // triggerResize();
 
     expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
     expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');

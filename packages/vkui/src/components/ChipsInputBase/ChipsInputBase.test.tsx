@@ -505,12 +505,12 @@ describe(ChipsInputBase, () => {
     // Проверяем, что при mouseDown в option не происходит preventDefault
     fireEvent.mouseDown(option);
     checkPreventDefault(false);
-    option.focus();
+    React.act(() => option.focus());
 
     // Проверяем, что при mouseDown в root, когда option в фокусе не происходит preventDefault
     fireEvent.mouseDown(root);
     checkPreventDefault(false);
-    option.blur();
+    React.act(() => option.blur());
 
     // Проверяем, что при mouseDown в root, когда option не в фокусе происходит preventDefault
     fireEvent.mouseDown(root);

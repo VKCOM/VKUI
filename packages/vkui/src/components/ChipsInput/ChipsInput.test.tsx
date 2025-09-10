@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, userEvent } from '../../testing/utils';
 import { ChipsInput } from './ChipsInput';
@@ -118,7 +119,9 @@ describe(ChipsInput, () => {
       />,
     );
     const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
-    chip.focus();
+    React.act(() => {
+      chip.focus();
+    });
 
     await userEvent.keyboard('{Delete}');
 

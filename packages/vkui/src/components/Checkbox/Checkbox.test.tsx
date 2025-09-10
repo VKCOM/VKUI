@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, setNodeEnv, userEvent } from '../../testing/utils';
@@ -22,8 +23,14 @@ describe('Checkbox', () => {
     render(<CheckboxController />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
     await userEvent.click(screen.getByText('check'));
+    React.act(() => {
+      jest.runOnlyPendingTimers();
+    });
     expect(screen.getByRole('checkbox')).toBeChecked();
     await userEvent.click(screen.getByText('check'));
+    React.act(() => {
+      jest.runOnlyPendingTimers();
+    });
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
@@ -68,7 +75,7 @@ describe('Checkbox', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls Checkbox', () => {
-      const errorStub = jest.spyOn(console, 'error');
+      const errorStub = jest.spyOn(console, 'error').mockImplementation(noop);
       render(
         <>
           <Checkbox defaultIndeterminate={true} defaultChecked={true} />
@@ -88,6 +95,7 @@ describe('Checkbox', () => {
         '%c[VKUI/Checkbox] defaultChecked и checked не могут быть true одновременно',
         undefined,
       ]);
+      errorStub.mockRestore();
     });
   });
 });

@@ -268,6 +268,8 @@ describe('CustomSelect', () => {
   });
 
   it('correctly converts from controlled to uncontrolled state', () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(noop);
+
     const { rerender } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
@@ -291,6 +293,11 @@ describe('CustomSelect', () => {
       />,
     );
 
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      '%c[VKUI/CustomSelect] Похоже, что компонент был переведен из состояния Controlled в Uncontrolled. Пожалуйста, не делайте так. Если вам нужно отобразить невыбранное состояние компонента, используйте value=null вместо undefined',
+      undefined,
+    );
+
     expect(getCustomSelectValue()).toEqual('Josh');
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -299,6 +306,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Mike');
+    consoleErrorSpy.mockRestore();
   });
 
   it('accept defaultValue', () => {
@@ -1326,16 +1334,15 @@ describe('CustomSelect', () => {
     checkDropdownOpened(false);
   });
 
-  it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', ' ', 'Spacebar', 'Enter'])(
+  it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', 'Space', 'Enter', ' ', 'Spacebar'])(
     'should open dropdown when keydown %s',
     async (key) => {
       jest.useFakeTimers();
-      const inputRef: React.RefObject<HTMLInputElement | null> = {
-        current: null,
-      };
+      const inputRef: React.RefObject<HTMLInputElement | null> = { current: null };
+
       render(
         <CustomSelect
-          searchable={true}
+          searchable
           options={[
             { value: '0', label: 'Не выбрано' },
             { value: '1', label: 'Категория 1' },
@@ -1346,13 +1353,22 @@ describe('CustomSelect', () => {
           getSelectInputRef={inputRef}
         />,
       );
+      React.act(() => {
+        inputRef.current?.focus();
+      });
+      await userEvent.keyboard(`{${key}}`);
 
-      await React.act(async () => await userEvent.type(inputRef.current!, `{${key}}`));
+      React.act(() => {
+        jest.runOnlyPendingTimers();
+      });
+
       checkDropdownOpened(true);
+      jest.useRealTimers();
     },
   );
 
-  it('should render wrapper when use renderDropdown prop', () => {
+  it('should render wrapper when use renderDropdown prop', async () => {
+    jest.useFakeTimers();
     render(
       <CustomSelect
         renderDropdown={({ defaultDropdownContent }) => (
@@ -1368,10 +1384,15 @@ describe('CustomSelect', () => {
         defaultValue="0"
       />,
     );
-    fireEvent.click(screen.getByTestId('select'));
+    await userEvent.click(screen.getByTestId('select'));
+
+    React.act(() => {
+      jest.runOnlyPendingTimers();
+    });
 
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
     expect(screen.getAllByRole('option').length).toBe(4);
+    jest.useRealTimers();
   });
 
   it('should call onInputChange callback when change input', async () => {

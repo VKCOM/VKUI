@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { act, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
@@ -112,7 +112,9 @@ describe('SegmentedControl', () => {
     it('supports keyboard navigation', () => {
       render(<SegmentedControlTabsTest defaultValue="vk" />);
 
-      getTab(0).focus();
+      act(() => {
+        getTab(0).focus();
+      });
       fireEvent.keyDown(getTab(0), { key: 'ArrowRight' });
       expect(document.activeElement).toBe(getTab(1));
 

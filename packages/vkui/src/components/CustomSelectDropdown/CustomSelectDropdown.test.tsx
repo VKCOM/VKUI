@@ -40,6 +40,7 @@ describe('CustomSelectDropdown', () => {
   });
 
   it('should call onPlacementChange callback when placement is changed', async () => {
+    jest.useFakeTimers();
     const onPlacementChange = jest.fn();
 
     const Fixture = () => {
@@ -65,11 +66,15 @@ describe('CustomSelectDropdown', () => {
 
     expect(screen.getByTestId('dropdown')).toHaveClass(styles.bottom);
 
-    fireEvent.click(screen.getByTestId('change-placement'));
+    await React.act(async () => {
+      fireEvent.click(screen.getByTestId('change-placement'));
+      jest.runOnlyPendingTimers();
+    });
 
     expect(screen.getByTestId('dropdown')).toHaveClass(styles.top);
 
     expect(onPlacementChange).toHaveBeenCalledTimes(1);
+    jest.useRealTimers();
   });
 
   it('should not have className when noMaxHeight = true', () => {

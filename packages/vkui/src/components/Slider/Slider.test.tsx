@@ -336,12 +336,17 @@ describe(Slider, () => {
       expect(screen.queryByText('30')).not.toBeInTheDocument();
 
       // shows tooltip on focus
-      fireEvent.keyDown(document, { key: 'Tab', code: 'Tab' });
-      act(() => slider.focus());
+      await act(async () => {
+        await userEvent.tab();
+        jest.runOnlyPendingTimers();
+      });
       await waitFor(() => expect(screen.queryByText('30')).toBeInTheDocument());
 
       // hides on blur
-      act(() => slider.blur());
+      await act(async () => {
+        await userEvent.tab();
+        jest.runOnlyPendingTimers();
+      });
       await waitFor(() => expect(screen.queryByText('30')).not.toBeInTheDocument());
     });
   });

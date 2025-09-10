@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
@@ -401,6 +402,9 @@ describe('Alert', () => {
     );
 
     await userEvent.click(result.getByTestId('__action__'));
+    React.act(() => {
+      jest.runOnlyPendingTimers();
+    });
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 });
