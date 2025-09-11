@@ -1581,6 +1581,27 @@ describe('CustomSelect', () => {
     expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
   });
 
+  it('check no status label by default', async () => {
+    jest.useFakeTimers();
+    const Fixture = () => (
+      <CustomSelect
+        data-testid="select"
+        fetching={false}
+        fetchingCompletedLabel="Список категорий загружен."
+        options={[
+          { value: '0', label: 'Не выбрано' },
+          { value: '1', label: 'Категория 1' },
+          { value: '2', label: 'Категория 2' },
+          { value: '3', label: 'Категория 3' },
+        ]}
+      />
+    );
+
+    render(<Fixture />);
+
+    expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+  });
+
   it('should not call select option when not focus to option', async () => {
     const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,

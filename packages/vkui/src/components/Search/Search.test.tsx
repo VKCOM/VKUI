@@ -129,6 +129,10 @@ describe(Search, () => {
       rerender(<Search value="" clearButtonTestId="clear-button" />);
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
     });
+    it('hides clear button with hideClearButton prop', () => {
+      const h = render(<Search value="init" clearButtonTestId="clear-button" hideClearButton />);
+      expect(h.queryByTestId('clear-button')).toBeFalsy();
+    });
     it('clears value', async () => {
       let value = 'init';
       render(
