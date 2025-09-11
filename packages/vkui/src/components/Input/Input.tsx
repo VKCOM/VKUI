@@ -16,9 +16,6 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-// 1. В сторибуке и в доке в таблице будут непонятки
-// 2. Как определять какие свойства будут прокидываться через slotsProps а какие нет?
-
 export interface InputBaseProps
   extends HasRootRef<HTMLDivElement>,
     HasAlign,
@@ -65,7 +62,7 @@ const useProps = (
   const [formFieldProps, inputProps] = React.useMemo<
     [FormFieldOwnProps, Omit<UnstyledTextFieldAsInputProps, 'as'>]
   >(() => {
-    if (props.slotsProps?.input) {
+    if (props.slotsProps) {
       const {
         slotsProps,
         type = 'text',

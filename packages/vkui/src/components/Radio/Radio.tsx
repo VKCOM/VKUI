@@ -94,7 +94,7 @@ const useProps = (
   >,
 ): [LabelHTMLAttributes<HTMLLabelElement>, RadioInputModernProps] => {
   return React.useMemo<[LabelHTMLAttributes<HTMLLabelElement>, RadioInputModernProps]>(() => {
-    if (props.slotsProps?.input) {
+    if (props.slotsProps) {
       const {
         slotsProps,
         value,
