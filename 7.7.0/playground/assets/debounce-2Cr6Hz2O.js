@@ -1,0 +1,1 @@
+function m(o,i){var d=arguments.length>2&&arguments[2]!==void 0?arguments[2]:typeof window<"u"?window:void 0,e,t,c=function(){return o.apply(d,t)},r=function(){for(var u=arguments.length,a=new Array(u),n=0;n<u;n++)a[n]=arguments[n];t=a,clearTimeout(e),e=setTimeout(c,i)};return r.cancel=function(){clearTimeout(e)},r}export{m as d};
