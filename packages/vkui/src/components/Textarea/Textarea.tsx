@@ -8,9 +8,12 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
-import { FormField, type FormFieldProps } from '../FormField/FormField';
-import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { FormField, type FormFieldOwnProps, type FormFieldProps } from '../FormField/FormField';
+import {
+  UnstyledTextField,
+  type UnstyledTextFieldAsTextareaProps,
+} from '../UnstyledTextField/UnstyledTextField';
 import { useResizeTextarea } from './useResizeTextarea';
 import styles from './Textarea.module.css';
 
@@ -19,12 +22,7 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-export interface TextareaProps
-  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
-    HasRef<HTMLTextAreaElement>,
-    HasRootRef<HTMLElement>,
-    HasAlign,
-    FormFieldProps {
+interface TextareaOwnProps {
   /**
    * Свойство управляющее автоматическим изменением высоты компонента.
    */
@@ -39,6 +37,89 @@ export interface TextareaProps
   defaultValue?: string;
 }
 
+interface TextareaModernProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'defaultValue' | 'onChange'>,
+    HasRootRef<HTMLElement>,
+    HasAlign,
+    FormFieldProps,
+    TextareaOwnProps,
+    Pick<
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+      'value' | 'onChange' | 'name' | 'disabled' | 'placeholder'
+    > {
+  /**
+   *
+   */
+  slotsProps: {
+    textarea: Omit<
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+      'value' | 'onChange' | 'name' | 'disabled' | 'placeholder'
+    > &
+      HasRootRef<HTMLTextAreaElement> &
+      HasDataAttribute;
+  };
+}
+
+interface TextareaLegacyProps
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize' | 'defaultValue'>,
+    HasRef<HTMLTextAreaElement>,
+    HasRootRef<HTMLElement>,
+    HasAlign,
+    FormFieldProps,
+    TextareaOwnProps {
+  /**
+   *
+   */
+  slotsProps?: undefined;
+}
+
+export type TextareaProps = TextareaModernProps | TextareaLegacyProps;
+
+const useProps = (
+  props: Omit<
+    TextareaProps,
+    | 'grow'
+    | 'style'
+    | 'onResize'
+    | 'className'
+    | 'getRootRef'
+    | 'maxHeight'
+    | 'status'
+    | 'onChange'
+    | 'align'
+    | 'mode'
+    | 'after'
+    | 'before'
+    | 'afterAlign'
+    | 'beforeAlign'
+  >,
+): [FormFieldOwnProps, Omit<UnstyledTextFieldAsTextareaProps, 'as'>] => {
+  return React.useMemo<[FormFieldOwnProps, Omit<UnstyledTextFieldAsTextareaProps, 'as'>]>(() => {
+    if (props.slotsProps) {
+      const {
+        slotsProps: { textarea: userSlotsInputProps = {} },
+        value,
+        onChange,
+        name,
+        disabled,
+        placeholder,
+        ...rootProps
+      } = props as TextareaModernProps;
+      return [rootProps, { ...userSlotsInputProps, value, onChange, name, disabled, placeholder }];
+    } else {
+      const { getRef, rows = 2, ...inputProps } = props as TextareaLegacyProps;
+      return [
+        {},
+        {
+          ...inputProps,
+          getRootRef: getRef,
+          rows,
+        },
+      ];
+    }
+  }, [props]);
+};
+
 /**
  * @see https://vkui.io/components/textarea
  */
@@ -48,8 +129,6 @@ export const Textarea = ({
   onResize,
   className,
   getRootRef,
-  getRef,
-  rows = 2,
   maxHeight,
   status,
   onChange,
@@ -59,17 +138,18 @@ export const Textarea = ({
   before,
   afterAlign,
   beforeAlign,
-  value,
   ...restProps
 }: TextareaProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
   const { window } = useDOM();
 
-  const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
-  const elementRef = useExternRef(getRef, refResizeTextarea);
+  const [formFieldProps, textAreaProps] = useProps(restProps);
 
-  React.useEffect(resize, [resize, sizeY, platform, value]);
+  const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
+  const elementRef = useExternRef(textAreaProps.getRootRef, refResizeTextarea);
+
+  React.useEffect(resize, [resize, sizeY, platform, textAreaProps.value]);
   useResizeObserver(window, resize);
 
   return (
@@ -83,7 +163,7 @@ export const Textarea = ({
       )}
       style={style}
       getRootRef={getRootRef}
-      disabled={restProps.disabled}
+      disabled={textAreaProps.disabled}
       status={status}
       mode={mode}
       after={after}
@@ -91,12 +171,11 @@ export const Textarea = ({
       afterAlign={afterAlign}
       beforeAlign={beforeAlign}
       maxHeight={maxHeight}
+      {...formFieldProps}
     >
       <UnstyledTextField
-        {...restProps}
-        value={value}
+        {...textAreaProps}
         as="textarea"
-        rows={rows}
         className={styles.el}
         onChange={callMultiple(onChange, resize)}
         getRootRef={elementRef}

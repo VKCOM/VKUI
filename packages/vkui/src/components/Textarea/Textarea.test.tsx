@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
@@ -172,5 +173,52 @@ describe(Textarea, () => {
       );
       expect(onResize).not.toHaveBeenCalled();
     });
+  });
+
+  it('should working without slotsProps', () => {
+    const rootRef = React.createRef<HTMLLabelElement | null>();
+    const inputRef = React.createRef<HTMLTextAreaElement | null>();
+    render(
+      <Textarea
+        getRootRef={rootRef}
+        getRef={inputRef}
+        data-testid="input"
+        value="Text"
+        onChange={jest.fn}
+      />,
+    );
+
+    expect(rootRef.current!.tagName).toBe('SPAN');
+    expect(inputRef.current!.tagName).toBe('TEXTAREA');
+    expect(inputRef.current).toBe(screen.getByTestId('input'));
+    expect(inputRef.current!.value).toBe('Text');
+  });
+
+  it('should working with slotsPropsProps', () => {
+    const rootRef = React.createRef<HTMLLabelElement | null>();
+    const inputRef = React.createRef<HTMLTextAreaElement | null>();
+    render(
+      <Textarea
+        getRootRef={rootRef}
+        data-testid="root"
+        value="Text"
+        onChange={jest.fn}
+        disabled
+        slotsProps={{
+          textarea: {
+            'getRootRef': inputRef,
+            'data-testid': 'input',
+          },
+        }}
+      />,
+    );
+
+    expect(screen.getByTestId('root')).toBe(rootRef.current);
+    expect(screen.getByTestId('input')).toBe(inputRef.current);
+    expect(rootRef.current!.tagName).toBe('SPAN');
+    expect(inputRef.current!.tagName).toBe('TEXTAREA');
+
+    expect(inputRef.current!.value).toBe('Text');
+    expect(inputRef.current!.disabled).toBeTruthy();
   });
 });
