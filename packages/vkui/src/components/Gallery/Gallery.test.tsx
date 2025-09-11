@@ -8,21 +8,10 @@ import {
   userEvent,
 } from '../../testing/utils';
 import type { AlignType } from '../../types';
-import { ANIMATION_DURATION } from '../CarouselBase/constants';
 import { revertRtlValue } from '../CarouselBase/helpers';
 import { type BaseGalleryProps } from '../CarouselBase/types';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { Gallery, type GalleryProps } from './Gallery';
-
-const mockRAF = () => {
-  let lastTime = 0;
-
-  jest.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
-    lastTime = lastTime + ANIMATION_DURATION;
-    fn(lastTime);
-    return lastTime;
-  });
-};
 
 const mockTime = () => {
   const mockDate = new Date(2024, 7, 5);
@@ -109,7 +98,6 @@ const setup = ({
   onDragEnd?: VoidFunction;
   isRtl?: boolean;
 }) => {
-  mockRAF();
   let slideDataByIndexMap: Record<number, any> = {};
   let layerTransform = '';
   let viewPort: HTMLDivElement;
@@ -228,6 +216,15 @@ const setup = ({
 describe('Gallery', () => {
   mockTouchStartDisabled();
   baselineComponent(Gallery);
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   describe('handles slide count', () => {
     it('prevents slideIndex outside slide count', () => {
       let index;
@@ -368,6 +365,7 @@ describe('Gallery', () => {
         containerWidth: 200,
         viewPortWidth: 180,
       });
+      jest.runAllTimers();
 
       expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
       expect(mockedData.getSlideMockData(0).transform).toBeFalsy();
@@ -390,6 +388,8 @@ describe('Gallery', () => {
       });
       const { rerender } = mockedData;
 
+      jest.runAllTimers();
+
       checkActiveSlide(1);
 
       const [leftArrow, rightArrow] = getArrows();
@@ -402,6 +402,8 @@ describe('Gallery', () => {
       expect(onChange.mock.calls).toEqual([[2]]);
 
       rerender({ slideIndex: 2 });
+
+      jest.runAllTimers();
       checkActiveSlide(2);
       checkTransformX(mockedData.layerTransform, -400);
 
@@ -411,6 +413,8 @@ describe('Gallery', () => {
       expect(onChange.mock.calls).toEqual([[2], [1]]);
 
       rerender({ slideIndex: 1 });
+
+      jest.runAllTimers();
       checkActiveSlide(1);
       checkTransformX(mockedData.layerTransform, -200);
     });
@@ -459,10 +463,12 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
+      jest.runAllTimers();
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [2, 0]);
+      jest.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
@@ -488,6 +494,7 @@ describe('Gallery', () => {
         align: 'center',
         onChange,
       });
+      jest.runAllTimers();
 
       if (looped) {
         expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
@@ -497,6 +504,7 @@ describe('Gallery', () => {
       mockedData.containerWidth = 250;
 
       fireEvent.resize(window);
+      jest.runAllTimers();
 
       if (looped) {
         expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
@@ -525,26 +533,31 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
+      jest.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
+      jest.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(1);
       rerender({ slideIndex: 1 });
+      jest.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, -170);
       checkActiveSlide(1);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
+      jest.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(2);
       expect(onDragEnd).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls).toEqual([[1], [0]]);
       rerender({ slideIndex: 0 });
+      jest.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 10);
       checkActiveSlide(0);
@@ -652,26 +665,31 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
+      jest.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       const [leftArrow, rightArrow] = getArrows();
       fireEvent.click(leftArrow);
+      jest.runAllTimers();
 
       expect(onPrev).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[4]]);
 
       rerender({ slideIndex: 4 });
+      jest.runAllTimers();
       checkActiveSlide(4);
       checkTransformX(mockedData.layerTransform, -800);
 
       fireEvent.click(rightArrow);
+      jest.runAllTimers();
 
       expect(onNext).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[4], [0]]);
 
       rerender({ slideIndex: 0 });
+      jest.runAllTimers();
       checkActiveSlide(0);
       checkTransformX(mockedData.layerTransform, 0);
     });
@@ -692,27 +710,32 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
+      jest.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
+      jest.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(4);
       rerender({ slideIndex: 4 });
+      jest.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, -710);
       checkTransformX(mockedData.getSlideMockData(0).transform, 900);
       checkActiveSlide(4);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
+      jest.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(2);
       expect(onDragEnd).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls).toEqual([[4], [0]]);
       rerender({ slideIndex: 0 });
+      jest.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 10);
       checkTransformX(mockedData.getSlideMockData(0).transform, 0);
@@ -790,6 +813,7 @@ describe('Gallery', () => {
       align: 'center',
       onChange,
     });
+    jest.runAllTimers();
 
     expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
     expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
@@ -797,6 +821,7 @@ describe('Gallery', () => {
     mockedData.containerWidth = 250;
 
     triggerResize();
+    jest.runAllTimers();
 
     expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
     expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
@@ -823,12 +848,14 @@ describe('Gallery', () => {
       onDragEnd,
       onChange,
     });
+    jest.runAllTimers();
     const { rerender } = mockedData;
 
     checkActiveSlide(1);
     expect(getArrows()).toHaveLength(1);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
+    jest.runAllTimers();
 
     expect(onDragStart).toHaveBeenCalledTimes(1);
     expect(onDragEnd).toHaveBeenCalledTimes(1);
@@ -842,10 +869,12 @@ describe('Gallery', () => {
     onDragEnd.mockClear();
 
     rerender({ slideIndex: 1 });
+    jest.runAllTimers();
 
     expect(getArrows()).toHaveLength(1);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
+    jest.runAllTimers();
 
     expect(onDragStart).toHaveBeenCalledTimes(1);
     expect(onDragEnd).toHaveBeenCalledTimes(1);
@@ -858,10 +887,12 @@ describe('Gallery', () => {
     fireEvent.resize(window);
 
     rerender({ slideIndex: 1 });
+    jest.runAllTimers();
 
     expect(getArrows()).toHaveLength(0);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
+    jest.runAllTimers();
 
     expect(onDragStart).not.toHaveBeenCalled();
     expect(onDragEnd).not.toHaveBeenCalled();
@@ -918,6 +949,7 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
+      jest.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(1);
@@ -925,20 +957,24 @@ describe('Gallery', () => {
 
       const [prevArrow, nextArrow] = getArrows();
       fireEvent.click(nextArrow);
+      jest.runAllTimers();
 
       expect(onNext).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[2]]);
 
       rerender({ slideIndex: 2 });
+      jest.runAllTimers();
       checkActiveSlide(2);
       checkTransformX(mockedData.layerTransform, 400);
 
       fireEvent.click(prevArrow);
+      jest.runAllTimers();
 
       expect(onPrev).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[2], [1]]);
 
       rerender({ slideIndex: 1 });
+      jest.runAllTimers();
       checkActiveSlide(1);
       checkTransformX(mockedData.layerTransform, 200);
     });
@@ -960,27 +996,32 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
+      jest.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
+      jest.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(4);
       rerender({ slideIndex: 4 });
+      jest.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 710);
       checkTransformX(mockedData.getSlideMockData(0).transform, -900);
       checkActiveSlide(4);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
+      jest.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(2);
       expect(onDragEnd).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls).toEqual([[4], [0]]);
       rerender({ slideIndex: 0 });
+      jest.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 890);
       checkTransformX(mockedData.getSlideMockData(0).transform, -900);
