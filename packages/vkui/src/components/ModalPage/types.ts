@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode, Ref, UIEvent } from 'react';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
 
 export type ModalPageCloseReason =
   | 'click-overlay'
@@ -44,7 +44,10 @@ export interface ModalPageProps
   /**
    * Задаёт контенту максимальную ширину на десктопе.
    */
-  size?: 's' | 'm' | 'l' | number;
+  size?: LiteralUnion<
+    's' | 'm' | 'l' | 'auto' | 'fit-content' | 'max-content' | 'min-content',
+    string | number
+  >;
   /**
    * Задаёт модальному окну фиксированную высоту.
    * Можно передать числовое значение в пикселях, а можно строкой, в том числе и в процентах "50%".

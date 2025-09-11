@@ -15,4 +15,5 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  padding: var(--vkui--spacing_size_2xl);
 }
