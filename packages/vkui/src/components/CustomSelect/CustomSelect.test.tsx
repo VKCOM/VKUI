@@ -1561,7 +1561,7 @@ describe('CustomSelect', () => {
   });
 
   it('check no status label by default', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const Fixture = () => (
       <CustomSelect
         data-testid="select"

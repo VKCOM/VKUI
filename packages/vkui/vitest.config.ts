@@ -8,6 +8,7 @@ const config = defineConfig({
     include: ['**/*.test.tsx', '**/*.test.ts'],
     environment: 'jsdom',
     setupFiles: [resolve(__dirname, 'vitest.setup.ts')],
+    globalSetup: [resolve(__dirname, 'vitest.global-setup.ts')],
     coverage: {
       all: true,
       provider: 'v8',
