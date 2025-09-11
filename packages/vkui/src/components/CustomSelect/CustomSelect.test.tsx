@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { act, useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { Placement, useFloating } from '../../lib/floating';
@@ -46,7 +45,7 @@ const CustomSelectControlled = ({
 }: Omit<SelectProps, 'value'> & {
   initialValue?: string;
 }) => {
-  const [value, setValue] = React.useState<SelectProps['value']>(initialValue);
+  const [value, setValue] = useState<SelectProps['value']>(initialValue);
   const handleChange: SelectProps['onChange'] = (e, newValue) => {
     setValue(newValue);
     onChange?.(e, newValue);
@@ -59,7 +58,7 @@ const checkDropdownOpened = (opened = true) => {
 };
 
 const triggerKeydownEvent = async (input: HTMLElement, key: string, code: string) => {
-  await React.act(async () => {
+  await act(async () => {
     fireEvent.keyDown(input, {
       key,
       code,
@@ -1353,12 +1352,12 @@ describe('CustomSelect', () => {
           getSelectInputRef={inputRef}
         />,
       );
-      React.act(() => {
+      act(() => {
         inputRef.current?.focus();
       });
       await userEvent.keyboard(`{${key}}`);
 
-      React.act(() => {
+      act(() => {
         jest.runOnlyPendingTimers();
       });
 
@@ -1386,7 +1385,7 @@ describe('CustomSelect', () => {
     );
     await userEvent.click(screen.getByTestId('select'));
 
-    React.act(() => {
+    act(() => {
       jest.runOnlyPendingTimers();
     });
 
@@ -1502,7 +1501,7 @@ describe('CustomSelect', () => {
     fireEvent.click(screen.getByTestId('select'));
     const option = screen.getByRole('option', { name: 'Категория 1' });
 
-    await React.act(async () => fireEvent.mouseMove(option, { clientY: 20 }));
+    await act(async () => fireEvent.mouseMove(option, { clientY: 20 }));
 
     expect(option.getAttribute('data-hovered')).toBe('false');
   });
@@ -1539,12 +1538,10 @@ describe('CustomSelect', () => {
     expect(option.getAttribute('data-hovered')).toBe('true');
 
     if (expectedHover === 'false') {
-      await React.act(async () =>
-        fireEvent.mouseMove(inputRef.current!, { clientY: 20, clientX: 20 }),
-      );
+      await act(async () => fireEvent.mouseMove(inputRef.current!, { clientY: 20, clientX: 20 }));
     }
 
-    await React.act(async () => fireEvent.mouseLeave(option));
+    await act(async () => fireEvent.mouseLeave(option));
 
     expect(option.getAttribute('data-hovered')).toBe(expectedHover);
   });
@@ -1575,7 +1572,7 @@ describe('CustomSelect', () => {
     expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
     expect(screen.queryByText('Список категорий загружен.')).toBeTruthy();
 
-    React.act(() => jest.runAllTimers());
+    act(() => jest.runAllTimers());
 
     expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
     expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();

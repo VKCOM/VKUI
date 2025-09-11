@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon24Done } from '@vkontakte/icons';
@@ -44,7 +43,7 @@ describe(Search, () => {
       render(<Search defaultValue="def" clearButtonTestId="clear-button" />);
       expect(getInput()).toHaveValue('def');
       await userEvent.click(getClearIcon());
-      React.act(() => {
+      act(() => {
         jest.runOnlyPendingTimers();
       });
       expect(getInput()).toHaveValue('');
@@ -57,7 +56,7 @@ describe(Search, () => {
       );
       await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('user');
-      React.act(() => {
+      act(() => {
         screen.getByTestId<HTMLFormElement>('form').reset();
       });
       expect(getInput()).toHaveValue('');
@@ -143,7 +142,7 @@ describe(Search, () => {
         />,
       );
       await userEvent.click(getClearIcon());
-      React.act(() => {
+      act(() => {
         jest.runOnlyPendingTimers();
       });
       expect(value).toBe('');
@@ -157,7 +156,7 @@ describe(Search, () => {
       let value = 'init';
       render(<Search value={value} clearButtonTestId="clear-button" />);
       await userEvent.click(getClearIcon());
-      React.act(() => {
+      act(() => {
         jest.runOnlyPendingTimers();
       });
       expect(value).toBe('init');
@@ -201,7 +200,7 @@ describe(Search, () => {
       expect(value).toEqual('user');
       const clearButton = container.getElementsByClassName(styles.icon)[0];
       clickFn(clearButton);
-      React.act(() => {
+      act(() => {
         jest.runOnlyPendingTimers();
       });
       expect(value).toEqual('');

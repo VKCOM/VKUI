@@ -1,5 +1,4 @@
 import { act } from 'react';
-import * as React from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import type { Placement, useFloating } from '../../lib/floating';
 import {
@@ -574,7 +573,7 @@ describe('ChipsSelect', () => {
       />,
     );
     const inputLocator = screen.getByRole('combobox');
-    await React.act(async () => {
+    await act(async () => {
       fireEvent.click(inputLocator);
       jest.runOnlyPendingTimers();
     });

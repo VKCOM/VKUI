@@ -191,7 +191,7 @@ describe(ModalPage, () => {
     await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
 
     const dismissButton = h.getByTestId('dismiss-button');
-    React.act(() => {
+    act(() => {
       dismissButton.focus();
     });
     expect(dismissButton).toHaveFocus();
@@ -203,7 +203,7 @@ describe(ModalPage, () => {
 
   describe('check restoreFocus prop', () => {
     const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
-      const [open, setOpen] = React.useState(false);
+      const [open, setOpen] = useState(false);
       return (
         <>
           <ConfigProvider platform="vkcom">

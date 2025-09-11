@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react';
-import * as React from 'react';
+import { act, createRef, useRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import type { Placement, useFloating } from '../../lib/floating';
 import { Button } from '../Button/Button';
@@ -23,7 +22,7 @@ jest.mock('../../lib/floating', () => {
 describe('CustomSelectDropdown', () => {
   it('Displays only spinner if fetching: true', () => {
     render(
-      <CustomSelectDropdown targetRef={React.createRef()} scrollBoxRef={React.createRef()} fetching>
+      <CustomSelectDropdown targetRef={createRef()} scrollBoxRef={createRef()} fetching>
         <div data-testid="test-content">test</div>
       </CustomSelectDropdown>,
     );
@@ -32,7 +31,7 @@ describe('CustomSelectDropdown', () => {
 
   it('Displays children if fetching: false', () => {
     render(
-      <CustomSelectDropdown targetRef={React.createRef()} scrollBoxRef={React.createRef()}>
+      <CustomSelectDropdown targetRef={createRef()} scrollBoxRef={createRef()}>
         <div data-testid="test-content">test</div>
       </CustomSelectDropdown>,
     );
@@ -66,7 +65,7 @@ describe('CustomSelectDropdown', () => {
 
     expect(screen.getByTestId('dropdown')).toHaveClass(styles.bottom);
 
-    await React.act(async () => {
+    await act(async () => {
       fireEvent.click(screen.getByTestId('change-placement'));
       jest.runOnlyPendingTimers();
     });
@@ -79,7 +78,7 @@ describe('CustomSelectDropdown', () => {
 
   it('should not have className when noMaxHeight = true', () => {
     const props = {
-      'targetRef': React.createRef<HTMLDivElement>(),
+      'targetRef': createRef<HTMLDivElement>(),
       'data-testid': 'dropdown',
     };
     const { rerender } = render(<CustomSelectDropdown {...props} noMaxHeight />);

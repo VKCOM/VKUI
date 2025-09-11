@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, fakeTimers } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
@@ -302,13 +301,13 @@ describe(ModalRoot, () => {
         baseElement: document.documentElement,
       });
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
-      act(jest.runOnlyPendingTimers);
+      React.act(jest.runOnlyPendingTimers);
       expect(modalPageRef.current).toHaveFocus();
 
       component.rerender(<ModalRoot activeModal="modal-card">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
       await waitModalCardCSSTransitionEnd(component.getByTestId('modal-card'));
-      act(jest.runOnlyPendingTimers);
+      React.act(jest.runOnlyPendingTimers);
 
       expect(modalCardRef.current).toHaveFocus();
     });
