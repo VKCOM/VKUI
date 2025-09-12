@@ -6,6 +6,7 @@
     "@project-docs/styleguide": "workspace:1.0.0",
     "@project-docs/website": "workspace:1.0.0",
     "@project-tools/eslint-plugin-vkui": "workspace:1.0.0",
+    "@project-tools/postcss-layout-classes": "workspace:1.0.0",
     "@project-tools/postcss-restructure-variable": "workspace:1.0.0",
     "@project-tools/storybook-addon-cartesian": "workspace:1.0.0",
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
