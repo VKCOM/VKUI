@@ -162,6 +162,7 @@ describe(ModalPage, () => {
   });
 
   test('check disable focus trap', async () => {
+    jest.useFakeTimers();
     const Fixture = () => {
       const [open, setOpen] = useState(false);
       return (
@@ -190,16 +191,19 @@ describe(ModalPage, () => {
     await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
 
     const dismissButton = h.getByTestId('dismiss-button');
-    dismissButton.focus();
+    act(() => {
+      dismissButton.focus();
+    });
     expect(dismissButton).toHaveFocus();
 
     await userEvent.tab();
     expect(openButton).toHaveFocus();
+    jest.runAllTimers();
   });
 
   describe('check restoreFocus prop', () => {
     const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
-      const [open, setOpen] = React.useState(false);
+      const [open, setOpen] = useState(false);
       return (
         <>
           <ConfigProvider platform="vkcom">
@@ -225,7 +229,7 @@ describe(ModalPage, () => {
       expect(h.queryByTestId('host')).toBeFalsy();
 
       const openButton = h.getByTestId('open-modal');
-      await act(async () => {
+      act(() => {
         openButton.focus();
       });
       fireEvent.click(openButton);
@@ -233,13 +237,13 @@ describe(ModalPage, () => {
 
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeTruthy();
-      jest.runAllTimers();
+      act(jest.runAllTimers);
       expect(h.getByTestId('dismiss-button')).toHaveFocus();
 
       fireEvent.click(openButton);
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeFalsy();
-      jest.runAllTimers();
+      act(jest.runAllTimers);
 
       if (restoreFocus) {
         expect(openButton).toHaveFocus();
