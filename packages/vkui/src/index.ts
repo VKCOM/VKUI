@@ -256,6 +256,8 @@ export { Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';
 export { Spacing } from './components/Spacing/Spacing';
 export type { SpacingProps } from './components/Spacing/Spacing';
+export { Box } from './components/Box/Box';
+export type { BoxProps } from './components/Box/Box';
 export { Placeholder } from './components/Placeholder/Placeholder';
 export type {
   PlaceholderProps,
