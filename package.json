@@ -109,6 +109,7 @@
     "swc-plugin-transform-remove-imports": "6.0.1",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4",
+    "vitest-fail-on-console": "^0.10.1",
     "webpack": "^5.101.3",
     "webpack-cli": "^6.0.1",
     "webpack-merge": "^6.0.1",

@@ -1,4 +1,9 @@
 import '@testing-library/jest-dom';
+import failOnConsole from 'vitest-fail-on-console';
+
+failOnConsole({
+  shouldFailOnWarn: true,
+});
 
 vi.stubGlobal('jest', { advanceTimersByTime: vi.advanceTimersByTime.bind(vi) });
 

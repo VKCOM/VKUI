@@ -5882,6 +5882,7 @@ __metadata:
     swc-plugin-transform-remove-imports: "npm:6.0.1"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"
+    vitest-fail-on-console: "npm:^0.10.1"
     webpack: "npm:^5.101.3"
     webpack-cli: "npm:^6.0.1"
     webpack-merge: "npm:^6.0.1"
@@ -7440,6 +7441,13 @@ __metadata:
   version: 5.5.0
   resolution: "chalk@npm:5.5.0"
   checksum: 10/19f6905b47b628541976a534e2f39c3779f7f9276ff9693cb8f7cdb3e3e09ee5dee16e0c3768632fbb41c2a1f1653ee0041ea7730428b804068945eb0bab09c4
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^5.4.1":
+  version: 5.6.2
+  resolution: "chalk@npm:5.6.2"
+  checksum: 10/1b2f48f6fba1370670d5610f9cd54c391d6ede28f4b7062dd38244ea5768777af72e5be6b74fb6c6d54cb84c4a2dff3f3afa9b7cb5948f7f022cfd3d087989e0
   languageName: node
   linkType: hard
 
@@ -22160,6 +22168,19 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 10/8b8b6fe12318ca457396bf2053df7056cf4810f1d4a43b36b6afe59860e32b749c0685a290fe8a973b0d3da179ceec4c30cebbd3c91d0c47fbcf6436b17bdeef
+  languageName: node
+  linkType: hard
+
+"vitest-fail-on-console@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "vitest-fail-on-console@npm:0.10.1"
+  dependencies:
+    chalk: "npm:^5.4.1"
+  peerDependencies:
+    "@vitest/utils": ">=0.26.2"
+    vite: ">=4.5.2"
+    vitest: ">=0.26.2"
+  checksum: 10/de24af4caea606ff58db31459e5e3a209c6a4756ff224018240ebf7596ea95d1c03b276bb640248452264cd46df9b3a2d1a13644864ffe4995bb6db5d092d7b7
   languageName: node
   linkType: hard
 
