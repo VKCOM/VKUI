@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
@@ -44,7 +44,7 @@ describe('ActionSheetItem', () => {
       </ActionSheetContext.Provider>,
     );
 
-    await React.act(async () =>
+    await act(async () =>
       fireEvent.keyDown(screen.getByTestId('action-item'), { key: 'Enter', code: 'Enter' }),
     );
 
@@ -67,7 +67,7 @@ describe('ActionSheetItem', () => {
     );
 
     // эмулируем событие клика при навигации стрелочками
-    await React.act(async () =>
+    await act(async () =>
       fireEvent(
         screen.getByTestId('action-item'),
         new MouseEvent('click', {
@@ -87,7 +87,7 @@ describe('ActionSheetItem', () => {
       clientY: 1,
       bubbles: true,
     });
-    await React.act(async () => fireEvent(screen.getByTestId('action-item'), newMouseEvent));
+    await act(async () => fireEvent(screen.getByTestId('action-item'), newMouseEvent));
 
     expect(onItemClickCallback).toHaveBeenCalledTimes(1);
   });

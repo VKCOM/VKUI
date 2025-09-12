@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import type { Placement, useFloating } from '../../lib/floating';
 import {
@@ -561,7 +562,7 @@ describe('ChipsSelect', () => {
     expect(firstOptionLocator).toHaveAttribute('data-hovered', 'true');
   });
 
-  it('should render wrapper to dropdown content with renderDropdown', () => {
+  it('should render wrapper to dropdown content with renderDropdown', async () => {
     render(
       <ChipsSelect
         options={[FIRST_OPTION, SECOND_OPTION, THIRD_OPTION]}
@@ -572,7 +573,10 @@ describe('ChipsSelect', () => {
       />,
     );
     const inputLocator = screen.getByRole('combobox');
-    fireEvent.click(inputLocator);
+    await act(async () => {
+      fireEvent.click(inputLocator);
+      jest.runOnlyPendingTimers();
+    });
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
   });
 
@@ -666,6 +670,7 @@ describe.each<{
   'should correct use delimiter $delimiter',
   ({ delimiter, str, expectedValues, expectedInputValue }) => {
     it('should add some options by splitting by delimiter when creatable', async () => {
+      jest.useFakeTimers();
       const onChange = vi.fn();
       render(
         <ChipsSelect
@@ -677,8 +682,11 @@ describe.each<{
           creatable
         />,
       );
-      fireEvent.input(screen.getByTestId('input'), {
-        target: { value: str },
+      await act(async () => {
+        fireEvent.input(screen.getByTestId('input'), {
+          target: { value: str },
+        });
+        jest.runOnlyPendingTimers();
       });
       if (expectedValues) {
         expect(onChange).toHaveBeenCalledWith(
@@ -691,9 +699,11 @@ describe.each<{
         expect(onChange).not.toHaveBeenCalled();
       }
       expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+      jest.useRealTimers();
     });
 
     it('should not add some options by splitting by delimiter when not creatable', async () => {
+      jest.useFakeTimers();
       const onChange = vi.fn();
       render(
         <ChipsSelect
@@ -704,11 +714,15 @@ describe.each<{
           delimiter={delimiter}
         />,
       );
-      fireEvent.input(screen.getByTestId('input'), {
-        target: { value: str },
+      await act(async () => {
+        fireEvent.input(screen.getByTestId('input'), {
+          target: { value: str },
+        });
+        jest.runOnlyPendingTimers();
       });
       expect(onChange).not.toHaveBeenCalled();
       expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
+      jest.useRealTimers();
     });
   },
 );

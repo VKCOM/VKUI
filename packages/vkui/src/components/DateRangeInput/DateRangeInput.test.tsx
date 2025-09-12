@@ -442,7 +442,7 @@ describe('DateRangeInput', () => {
       for (const inputLabel of inputLikesLabels) {
         onCalendarOpenChangedStub.mockClear();
         // фокусируемся на одном из полей инпута
-        await act(() => userEvent.tab());
+        await userEvent.tab();
         // фокус на инпуте
         const inputPart = screen.getByRole('spinbutton', { name: inputLabel });
         expect(document.activeElement).toBe(inputPart);
@@ -451,10 +451,10 @@ describe('DateRangeInput', () => {
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
 
         // нажимаем пробел
-        await act(() => userEvent.keyboard(' '));
+        await userEvent.keyboard(' ');
         // календарь открыт
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
-        vi.runOnlyPendingTimers();
+        act(vi.runOnlyPendingTimers);
 
         // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
@@ -466,10 +466,10 @@ describe('DateRangeInput', () => {
         );
 
         // закрываем, нажимая Esc
-        await act(() => userEvent.keyboard('{Escape}'));
+        await userEvent.keyboard('{Escape}');
         // календарь закрыт
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
-        vi.runOnlyPendingTimers();
+        act(vi.runOnlyPendingTimers);
 
         // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
@@ -479,7 +479,7 @@ describe('DateRangeInput', () => {
         expect(document.activeElement).toBe(inputPart);
 
         // кликаем на ту же часть инпута чтобы открыть календарь
-        await act(() => userEvent.click(inputPart));
+        await userEvent.click(inputPart);
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
         // onCalendarOpenChanged вызван лишь раз
@@ -487,8 +487,8 @@ describe('DateRangeInput', () => {
         onCalendarOpenChangedStub.mockClear();
 
         // закрываем, нажимая Esc
-        await act(() => userEvent.keyboard('{Escape}'));
-        vi.runOnlyPendingTimers();
+        await userEvent.keyboard('{Escape}');
+        act(vi.runOnlyPendingTimers);
 
         // фокус возвращается на часть инпутa
         expect(document.activeElement).toBe(inputPart);
@@ -517,7 +517,7 @@ describe('DateRangeInput', () => {
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
 
       const calendarIcon = screen.getByText('Показать календарь');
-      await act(() => userEvent.click(calendarIcon));
+      await userEvent.click(calendarIcon);
 
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
       expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
@@ -528,12 +528,12 @@ describe('DateRangeInput', () => {
         // dropdown закрыт
         expect(screen.queryByRole('listbox')).toBeFalsy();
         // открываем дропдаун одного из селектов
-        await act(() => userEvent.click(screen.getByTestId(selectTestId)));
+        await userEvent.click(screen.getByTestId(selectTestId));
         // dropdown открыт
         expect(screen.queryByRole('listbox')).toBeTruthy();
 
         // закрываем дропдаун с помощью Escape
-        await act(() => userEvent.keyboard('{Escape}'));
+        await userEvent.keyboard('{Escape}');
         expect(screen.queryByRole('listbox')).toBeFalsy();
 
         // календарь всё ещё должен быть открыт
@@ -542,7 +542,7 @@ describe('DateRangeInput', () => {
       }
 
       // закрываем календарь с помощью Escape
-      await act(() => userEvent.keyboard('{Escape}'));
+      await userEvent.keyboard('{Escape}');
       // календарь закрыт
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
       expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(2);

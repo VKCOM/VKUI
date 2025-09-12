@@ -43,6 +43,9 @@ describe(Search, () => {
       render(<Search defaultValue="def" clearButtonTestId="clear-button" />);
       expect(getInput()).toHaveValue('def');
       await userEvent.click(getClearIcon());
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
       expect(getInput()).toHaveValue('');
     });
     it('form reset form', async () => {
@@ -53,7 +56,9 @@ describe(Search, () => {
       );
       await userEvent.type(getInput(), 'user');
       expect(getInput()).toHaveValue('user');
-      screen.getByTestId<HTMLFormElement>('form').reset();
+      act(() => {
+        screen.getByTestId<HTMLFormElement>('form').reset();
+      });
       expect(getInput()).toHaveValue('');
     });
     it('handles clear button visibility correctly', async () => {
@@ -137,6 +142,9 @@ describe(Search, () => {
         />,
       );
       await userEvent.click(getClearIcon());
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
       expect(value).toBe('');
     });
     it('does not change without onChange', async () => {
@@ -148,6 +156,9 @@ describe(Search, () => {
       let value = 'init';
       render(<Search value={value} clearButtonTestId="clear-button" />);
       await userEvent.click(getClearIcon());
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
       expect(value).toBe('init');
       expect(getInput()).toHaveValue('init');
     });
@@ -189,6 +200,9 @@ describe(Search, () => {
       expect(value).toEqual('user');
       const clearButton = container.getElementsByClassName(styles.icon)[0];
       clickFn(clearButton);
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
       expect(value).toEqual('');
     },
   );

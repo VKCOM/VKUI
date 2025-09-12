@@ -1,5 +1,6 @@
-import * as React from 'react';
+import { act, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, fakeTimers, setNodeEnv, userEvent } from '../../testing/utils';
@@ -12,7 +13,7 @@ describe('Checkbox', () => {
 
   it('handles change', async () => {
     const CheckboxController = () => {
-      const [checked, setChecked] = React.useState(false);
+      const [checked, setChecked] = useState(false);
       return (
         <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
           check
@@ -22,8 +23,14 @@ describe('Checkbox', () => {
     render(<CheckboxController />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
     await userEvent.click(screen.getByText('check'));
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
     expect(screen.getByRole('checkbox')).toBeChecked();
     await userEvent.click(screen.getByText('check'));
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
@@ -68,7 +75,7 @@ describe('Checkbox', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls Checkbox', () => {
-      const errorStub = vi.spyOn(console, 'error');
+      const errorStub = vi.spyOn(console, 'error').mockImplementation(noop);
       render(
         <>
           <Checkbox defaultIndeterminate={true} defaultChecked={true} />
@@ -88,6 +95,7 @@ describe('Checkbox', () => {
         '%c[VKUI/Checkbox] defaultChecked и checked не могут быть true одновременно',
         undefined,
       ]);
+      errorStub.mockRestore();
     });
   });
 });

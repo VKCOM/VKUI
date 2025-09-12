@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
 import { useAutoPlay } from './hooks';
 
@@ -43,24 +44,28 @@ describe(useAutoPlay, () => {
     vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
 
     const res = renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
-    vi.runAllTimers();
+    act(vi.runAllTimers);
     expect(callback).toHaveBeenCalledTimes(1);
 
     // Останавливаем работу хука
-    res.result.current.pause();
+    act(() => {
+      res.result.current.pause();
+    });
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
-    vi.runAllTimers();
+    act(vi.runAllTimers);
     // Но callback не срабатыват по истечению таймеров
     expect(callback).toHaveBeenCalledTimes(1);
 
     // Восстанавливаем работу хука
-    res.result.current.resume();
+    act(() => {
+      res.result.current.resume();
+    });
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
-    vi.runAllTimers();
+    act(vi.runAllTimers);
     // callback срабатыват по истечению таймеров
     expect(callback).toHaveBeenCalledTimes(2);
   });
