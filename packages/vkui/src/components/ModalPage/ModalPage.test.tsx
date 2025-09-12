@@ -162,7 +162,7 @@ describe(ModalPage, () => {
   });
 
   test('check disable focus trap', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const Fixture = () => {
       const [open, setOpen] = useState(false);
       return (
@@ -198,7 +198,7 @@ describe(ModalPage, () => {
 
     await userEvent.tab();
     expect(openButton).toHaveFocus();
-    jest.runAllTimers();
+    vi.runAllTimers();
   });
 
   describe('check restoreFocus prop', () => {

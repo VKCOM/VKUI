@@ -388,13 +388,13 @@ describe('DateInput', () => {
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
 
     const calendarIcon = screen.getByText('Показать календарь');
-    await act(() => userEvent.click(calendarIcon));
+    fireEvent.click(calendarIcon);
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
     expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
-    await act(() => userEvent.click(calendarIcon));
+    fireEvent.click(calendarIcon);
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
@@ -680,7 +680,7 @@ describe('DateInput', () => {
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
 
       const calendarIcon = screen.getByText('Показать календарь');
-      await userEvent.click(calendarIcon);
+      fireEvent.click(calendarIcon);
 
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
       expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);

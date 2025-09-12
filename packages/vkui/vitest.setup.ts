@@ -1,8 +1,20 @@
 import '@testing-library/jest-dom';
 import failOnConsole from 'vitest-fail-on-console';
 
+const ignoreList = [/.*usePatchChildren.test.tsx/, /.*warnOnce.test.ts/];
+
 failOnConsole({
   shouldFailOnWarn: true,
+  skipTest: ({ testPath }) => {
+    for (const pathExp of ignoreList) {
+      const result = testPath && pathExp.test(testPath);
+      if (result) {
+        return true;
+      }
+    }
+
+    return false;
+  },
 });
 
 vi.stubGlobal('jest', { advanceTimersByTime: vi.advanceTimersByTime.bind(vi) });

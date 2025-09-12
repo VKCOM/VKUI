@@ -575,7 +575,7 @@ describe('ChipsSelect', () => {
     const inputLocator = screen.getByRole('combobox');
     await act(async () => {
       fireEvent.click(inputLocator);
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
   });
@@ -670,7 +670,7 @@ describe.each<{
   'should correct use delimiter $delimiter',
   ({ delimiter, str, expectedValues, expectedInputValue }) => {
     it('should add some options by splitting by delimiter when creatable', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       const onChange = vi.fn();
       render(
         <ChipsSelect
@@ -686,7 +686,7 @@ describe.each<{
         fireEvent.input(screen.getByTestId('input'), {
           target: { value: str },
         });
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       if (expectedValues) {
         expect(onChange).toHaveBeenCalledWith(
@@ -699,11 +699,11 @@ describe.each<{
         expect(onChange).not.toHaveBeenCalled();
       }
       expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
     it('should not add some options by splitting by delimiter when not creatable', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       const onChange = vi.fn();
       render(
         <ChipsSelect
@@ -718,11 +718,11 @@ describe.each<{
         fireEvent.input(screen.getByTestId('input'), {
           target: { value: str },
         });
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(onChange).not.toHaveBeenCalled();
       expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
   },
 );

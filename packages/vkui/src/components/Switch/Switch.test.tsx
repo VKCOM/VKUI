@@ -66,7 +66,7 @@ describe(Switch, () => {
       const [checked, setChecked] = React.useState(false);
       return (
         <React.Fragment>
-          <Switch data-testid="switch" checked={checked} />
+          <Switch data-testid="switch" checked={checked} onChange={vi.fn()} />
           <button onClick={() => setChecked((prevChecked) => !prevChecked)}>
             change switch state
           </button>

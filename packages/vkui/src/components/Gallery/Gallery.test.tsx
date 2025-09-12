@@ -245,7 +245,7 @@ describe('Gallery', () => {
       expect(index).toBe(0);
     });
     it('handles dynamic slide count', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       const { rerender } = render(
@@ -255,7 +255,7 @@ describe('Gallery', () => {
         </Gallery>,
       );
       await act(async () => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       rerender(
         <Gallery onChange={setIndex} slideIndex={1}>
@@ -263,10 +263,10 @@ describe('Gallery', () => {
         </Gallery>,
       );
       await act(async () => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(index).toBe(0);
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
     it('keeps slideIndex when 0 slides', () => {
       const setIndex = vi.fn();

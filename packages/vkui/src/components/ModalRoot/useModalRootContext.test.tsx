@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { fakeTimers, waitCSSTransitionEnd } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
@@ -28,6 +29,7 @@ describe(useModalRootContext, () => {
     );
 
     await waitCSSTransitionEnd(result.getByTestId('m'));
+    act(vi.runOnlyPendingTimers);
 
     if (type === 'global') {
       expect(globalCallbacks.onOpen).toHaveBeenCalledTimes(1);

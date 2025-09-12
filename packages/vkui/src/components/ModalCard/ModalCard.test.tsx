@@ -151,7 +151,7 @@ describe(ModalCard, () => {
   });
 
   test('check disable focus trap', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const Fixture = () => {
       const [open, setOpen] = useState(false);
       return (
@@ -188,7 +188,7 @@ describe(ModalCard, () => {
 
     await userEvent.tab();
     expect(openButton).toHaveFocus();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   describe('check restoreFocus prop', () => {

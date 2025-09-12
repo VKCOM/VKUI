@@ -323,14 +323,14 @@ describe(Slider, () => {
       // shows tooltip on focus
       await act(async () => {
         await userEvent.tab();
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       await waitFor(() => expect(screen.queryByText('30')).toBeInTheDocument());
 
       // hides on blur
       await act(async () => {
         await userEvent.tab();
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       await waitFor(() => expect(screen.queryByText('30')).not.toBeInTheDocument());
     });

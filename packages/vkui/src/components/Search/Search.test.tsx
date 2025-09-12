@@ -44,7 +44,7 @@ describe(Search, () => {
       expect(getInput()).toHaveValue('def');
       await userEvent.click(getClearIcon());
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(getInput()).toHaveValue('');
     });
@@ -143,7 +143,7 @@ describe(Search, () => {
       );
       await userEvent.click(getClearIcon());
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(value).toBe('');
     });
@@ -157,7 +157,7 @@ describe(Search, () => {
       render(<Search value={value} clearButtonTestId="clear-button" />);
       await userEvent.click(getClearIcon());
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(value).toBe('init');
       expect(getInput()).toHaveValue('init');
@@ -201,7 +201,7 @@ describe(Search, () => {
       const clearButton = container.getElementsByClassName(styles.icon)[0];
       clickFn(clearButton);
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(value).toEqual('');
     },

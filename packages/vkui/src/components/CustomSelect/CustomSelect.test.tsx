@@ -267,7 +267,7 @@ describe('CustomSelect', () => {
   });
 
   it('correctly converts from controlled to uncontrolled state', () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(noop);
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(noop);
 
     const { rerender } = render(
       <CustomSelect
@@ -1357,16 +1357,16 @@ describe('CustomSelect', () => {
       await userEvent.keyboard(`{${key}}`);
 
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
 
       checkDropdownOpened(true);
-      jest.useRealTimers();
+      vi.useRealTimers();
     },
   );
 
   it('should render wrapper when use renderDropdown prop', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     render(
       <CustomSelect
         renderDropdown={({ defaultDropdownContent }) => (
@@ -1385,12 +1385,12 @@ describe('CustomSelect', () => {
     await userEvent.click(screen.getByTestId('select'));
 
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
 
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
     expect(screen.getAllByRole('option').length).toBe(4);
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should call onInputChange callback when change input', async () => {
@@ -1571,7 +1571,9 @@ describe('CustomSelect', () => {
     expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
     expect(screen.queryByText('Список категорий загружен.')).toBeTruthy();
 
-    act(() => vi.runAllTimers());
+    act(() => {
+      vi.runOnlyPendingTimers();
+    });
 
     expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
     expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();

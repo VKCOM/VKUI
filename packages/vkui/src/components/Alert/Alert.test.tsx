@@ -402,7 +402,7 @@ describe('Alert', () => {
 
     await userEvent.click(result.getByTestId('__action__'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(onClick).toHaveBeenCalledTimes(1);
   });

@@ -152,8 +152,8 @@ describe(usePatchChildren, () => {
     ({ type, event, hasOwnEvent }) => {
       const reactElementRef = React.createRef<HTMLDivElement>();
       const ownEvent = {
-        someIntValue: 1,
-        someBoolValue: false,
+        someintvalue: 1,
+        someboolvalue: 'false',
         onMouseEnter: vi.fn(),
         onMouseLeave: vi.fn(),
       };
@@ -188,8 +188,8 @@ describe(usePatchChildren, () => {
         fireEvent.click(reactElementRef.current!);
       });
 
-      expect(ownEvent.someIntValue).toBe(1);
-      expect(ownEvent.someBoolValue).toBeFalsy();
+      expect(ownEvent.someintvalue).toBe(1);
+      expect(ownEvent.someboolvalue).toBe('false');
       expect(ownEvent.onMouseEnter).toHaveBeenCalledTimes(hasOwnEvent ? 1 : 0);
       expect(ownEvent.onMouseLeave).toHaveBeenCalledTimes(0);
       expect(injectedEvents.onMouseEnter).toHaveBeenCalledTimes(1);

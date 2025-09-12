@@ -24,12 +24,12 @@ describe('Checkbox', () => {
     expect(screen.getByRole('checkbox')).not.toBeChecked();
     await userEvent.click(screen.getByText('check'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(screen.getByRole('checkbox')).toBeChecked();
     await userEvent.click(screen.getByText('check'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });

@@ -283,7 +283,7 @@ describe('CalendarTime', () => {
 
       const hoursInput = screen.getByTestId('hours-picker');
       await userEvent.type(hoursInput, '15');
-      await act(async () => jest.runOnlyPendingTimers());
+      await act(async () => vi.runOnlyPendingTimers());
 
       expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 15));
     });
@@ -294,7 +294,7 @@ describe('CalendarTime', () => {
 
       const minutesInput = screen.getByTestId('minutes-picker');
       await userEvent.type(minutesInput, '30');
-      await act(async () => jest.runOnlyPendingTimers());
+      await act(async () => vi.runOnlyPendingTimers());
 
       expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 30));
     });
@@ -305,7 +305,7 @@ describe('CalendarTime', () => {
 
       const hoursInput = screen.getByTestId('hours-picker');
       await userEvent.type(hoursInput, '25'); // Невалидное значение часов
-      await act(async () => jest.runOnlyPendingTimers());
+      await act(async () => vi.runOnlyPendingTimers());
 
       expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 2));
       expect(onChange).toHaveBeenCalledTimes(1);
@@ -317,7 +317,7 @@ describe('CalendarTime', () => {
 
       const minutesInput = screen.getByTestId('minutes-picker');
       await userEvent.type(minutesInput, '61'); // Невалидное значение минут
-      await act(async () => jest.runOnlyPendingTimers());
+      await act(async () => vi.runOnlyPendingTimers());
 
       expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 6));
       expect(onChange).toHaveBeenCalledTimes(1);
@@ -338,7 +338,7 @@ describe('CalendarTime', () => {
 
       const doneButton = screen.getByTestId('done-button');
       await userEvent.click(doneButton);
-      await act(async () => jest.runOnlyPendingTimers());
+      await act(async () => vi.runOnlyPendingTimers());
 
       expect(onDoneButtonClick).toHaveBeenCalledTimes(1);
     });

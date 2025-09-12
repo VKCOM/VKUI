@@ -20,7 +20,7 @@ describe(useStateWithDelay, () => {
     // время ещё не вышло, состояние не обновилось
     expect(handle.result.current[0]).not.toBe(20);
 
-    vi.runAllTimers();
+    act(vi.runAllTimers);
 
     handle.rerender();
     // состояние обновилось после таймера
@@ -51,7 +51,7 @@ describe(useStateWithDelay, () => {
     expect(handle.result.current[0]).not.toBe(20);
     expect(onStateChangeStub).not.toHaveBeenCalled();
 
-    vi.runAllTimers();
+    act(vi.runAllTimers);
 
     handle.rerender();
     // состояние обновилось после таймера
@@ -63,7 +63,7 @@ describe(useStateWithDelay, () => {
     // setState с аргументом-функцией с задержкой в 500мс
     act(() => handle.result.current[1]((prevValue) => prevValue + 30, 500));
 
-    vi.runAllTimers();
+    act(vi.runAllTimers);
     handle.rerender();
 
     // состояние после таймера обновилось
