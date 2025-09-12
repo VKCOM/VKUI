@@ -14,7 +14,10 @@ export type UseCSSAnimationControllerCallback = {
 
 export type AnimationState = 'enter' | 'entering' | 'entered' | 'exit' | 'exiting' | 'exited';
 
-export type AnimationHandlers = { onAnimationStart: VoidFunction; onAnimationEnd: VoidFunction };
+export type AnimationHandlers = {
+  onAnimationStart: (e?: React.AnimationEvent) => void;
+  onAnimationEnd: (e?: React.AnimationEvent) => void;
+};
 
 export const useCSSKeyframesAnimationController = (
   stateProp: 'enter' | 'exit',
@@ -27,6 +30,7 @@ export const useCSSKeyframesAnimationController = (
     onExited,
   }: UseCSSAnimationControllerCallback = {},
   disableInitAnimation = false,
+  stopPropagation = false,
 ): [AnimationState, AnimationHandlers] => {
   const [state, setState] = React.useState<AnimationState>(() =>
     disableInitAnimation ? (stateProp === 'enter' ? 'entered' : 'exited') : stateProp,
@@ -37,7 +41,7 @@ export const useCSSKeyframesAnimationController = (
     prevStateRef.current = stateProp;
   });
 
-  const onAnimationStart = () => {
+  const onAnimationStart = (e?: React.AnimationEvent) => {
     if (state === 'enter') {
       setState('entering');
       if (onEntering) {
@@ -49,9 +53,12 @@ export const useCSSKeyframesAnimationController = (
         onExiting();
       }
     }
+    if (stopPropagation) {
+      e?.stopPropagation();
+    }
   };
 
-  const onAnimationEnd = () => {
+  const onAnimationEnd = (e?: React.AnimationEvent) => {
     if (state === 'entering') {
       setState('entered');
       if (onEntered) {
@@ -62,6 +69,9 @@ export const useCSSKeyframesAnimationController = (
       if (onExited) {
         onExited();
       }
+    }
+    if (stopPropagation) {
+      e?.stopPropagation();
     }
   };
 

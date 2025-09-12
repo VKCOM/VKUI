@@ -159,6 +159,7 @@ const meta: MetaRecord = {
   'tappable': 'Tappable',
   'touch': 'Touch',
   'unstyled-text-field': 'UnstyledTextField',
+  'use-snackbar': 'useSnackbar',
   'use-adaptivity-conditional-render': 'useAdaptivityConditionalRender',
   'use-adaptivity-with-js-media-queries': 'useAdaptivityWithJSMediaQueries',
   'use-focus-visible': 'useFocusVisible',
