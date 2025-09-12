@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { act } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
@@ -505,12 +506,12 @@ describe(ChipsInputBase, () => {
     // Проверяем, что при mouseDown в option не происходит preventDefault
     fireEvent.mouseDown(option);
     checkPreventDefault(false);
-    React.act(() => option.focus());
+    act(() => option.focus());
 
     // Проверяем, что при mouseDown в root, когда option в фокусе не происходит preventDefault
     fireEvent.mouseDown(root);
     checkPreventDefault(false);
-    React.act(() => option.blur());
+    act(() => option.blur());
 
     // Проверяем, что при mouseDown в root, когда option не в фокусе происходит preventDefault
     fireEvent.mouseDown(root);

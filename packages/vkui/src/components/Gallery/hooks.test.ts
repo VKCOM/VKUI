@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
 import { useAutoPlay } from './hooks';
 
@@ -44,28 +44,28 @@ describe(useAutoPlay, () => {
     jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
 
     const res = renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
-    React.act(jest.runAllTimers);
+    act(jest.runAllTimers);
     expect(callback).toHaveBeenCalledTimes(1);
 
     // Останавливаем работу хука
-    React.act(() => {
+    act(() => {
       res.result.current.pause();
     });
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
-    React.act(jest.runAllTimers);
+    act(jest.runAllTimers);
     // Но callback не срабатыват по истечению таймеров
     expect(callback).toHaveBeenCalledTimes(1);
 
     // Восстанавливаем работу хука
-    React.act(() => {
+    act(() => {
       res.result.current.resume();
     });
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
-    React.act(jest.runAllTimers);
+    act(jest.runAllTimers);
     // callback срабатыват по истечению таймеров
     expect(callback).toHaveBeenCalledTimes(2);
   });

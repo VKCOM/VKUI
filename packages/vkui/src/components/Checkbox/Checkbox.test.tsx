@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { act, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { getDocumentBody } from '../../lib/dom';
@@ -13,7 +13,7 @@ describe('Checkbox', () => {
 
   it('handles change', async () => {
     const CheckboxController = () => {
-      const [checked, setChecked] = React.useState(false);
+      const [checked, setChecked] = useState(false);
       return (
         <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
           check
@@ -23,12 +23,12 @@ describe('Checkbox', () => {
     render(<CheckboxController />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
     await userEvent.click(screen.getByText('check'));
-    React.act(() => {
+    act(() => {
       jest.runOnlyPendingTimers();
     });
     expect(screen.getByRole('checkbox')).toBeChecked();
     await userEvent.click(screen.getByText('check'));
-    React.act(() => {
+    act(() => {
       jest.runOnlyPendingTimers();
     });
     expect(screen.getByRole('checkbox')).not.toBeChecked();

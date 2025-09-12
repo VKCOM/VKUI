@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
 import { useTodayDate } from './useTodayDate';
 
@@ -65,7 +65,7 @@ describe(useTodayDate, () => {
     expect(hookResult.result.current).toStrictEqual(currentDate);
 
     // меняем текущую дату на следующий день
-    React.act(jest.runAllTimers);
+    act(jest.runAllTimers);
 
     hookResult.rerender();
 

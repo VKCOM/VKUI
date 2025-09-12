@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import {
@@ -253,7 +254,7 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-      await React.act(async () => {
+      await act(async () => {
         jest.runOnlyPendingTimers();
       });
       rerender(
@@ -261,7 +262,7 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-      await React.act(async () => {
+      await act(async () => {
         jest.runOnlyPendingTimers();
       });
       expect(index).toBe(0);
@@ -297,7 +298,7 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-      React.act(jest.runAllTimers);
+      act(jest.runAllTimers);
       expect(index).toBe(1);
     });
   });
@@ -439,7 +440,7 @@ describe('Gallery', () => {
         onChange,
       });
 
-      React.act(() => {
+      act(() => {
         screen.getByTestId('slide-1').focus();
       });
 
@@ -830,7 +831,7 @@ describe('Gallery', () => {
 
     mockedData.containerWidth = 250;
 
-    React.act(triggerResize);
+    act(triggerResize);
     jest.runAllTimers();
 
     expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
