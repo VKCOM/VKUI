@@ -35,7 +35,7 @@ describe('ContentCard', () => {
   });
 
   it('[img] passes ref to img', () => {
-    const refCallback = jest.fn();
+    const refCallback = vi.fn();
     render(<ContentCardTest src="/image.png" getRef={refCallback} />);
 
     expect(refCallback).toHaveBeenCalled();

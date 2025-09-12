@@ -55,7 +55,7 @@ describe(Popover, () => {
   });
 
   it('should call onPlacementChange', async () => {
-    const onPlacementChange = jest.fn();
+    const onPlacementChange = vi.fn();
 
     const Fixture = (props: PopoverProps) => (
       <Popover defaultShown {...props}>
@@ -155,7 +155,7 @@ describe(Popover, () => {
   });
 
   it('should call onClose by content', async () => {
-    const onShownChange = jest.fn();
+    const onShownChange = vi.fn();
 
     const Fixture = () => (
       <Popover
@@ -229,7 +229,7 @@ describe(Popover, () => {
   });
 
   it('check working with usePopover hook', async () => {
-    const onShownChange = jest.fn();
+    const onShownChange = vi.fn();
     const Fixture = () => {
       const { anchorRef, anchorProps, popover } = usePopover({
         'trigger': 'click',

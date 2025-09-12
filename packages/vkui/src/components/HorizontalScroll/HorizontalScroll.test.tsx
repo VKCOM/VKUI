@@ -9,16 +9,16 @@ import { HorizontalScroll } from './HorizontalScroll';
 
 const setup = (element: HTMLElement, startScrollLeft = 0) => {
   let scrollLeft = startScrollLeft;
-  jest.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
-  jest.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
+  vi.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
+  vi.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
     scrollLeft = newValue;
   });
 
-  jest.spyOn(element, 'scrollWidth', 'get').mockImplementation(() => 300);
+  vi.spyOn(element, 'scrollWidth', 'get').mockImplementation(() => 300);
 
-  jest.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => 200);
+  vi.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => 200);
 
-  jest.spyOn(element.firstElementChild!, 'scrollWidth', 'get').mockImplementation(() => 500);
+  vi.spyOn(element.firstElementChild!, 'scrollWidth', 'get').mockImplementation(() => 500);
 
   return {
     get scrollLeft() {
@@ -39,7 +39,7 @@ describe('HorizontalScroll', () => {
       </HorizontalScroll>,
     );
 
-    const scrollBy: Element['scrollBy'] = jest.fn();
+    const scrollBy: Element['scrollBy'] = vi.fn();
     ref.current!.scrollBy = scrollBy;
 
     fireEvent.wheel(ref.current!, {
@@ -69,7 +69,7 @@ describe('HorizontalScroll', () => {
   });
 
   it('disables navigation to arrows by keyboard', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     let scrollContainer: HTMLDivElement | null = null;
 
@@ -106,7 +106,7 @@ describe('HorizontalScroll', () => {
     await userEvent.tab();
     expect(document.activeElement).toBe(document.body);
 
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
   });
 
   it('click on arrow right should change scrollLeft', async () => {
@@ -256,8 +256,7 @@ function mockRef(element: HTMLDivElement | null) {
   // to make sure we really call the logic that calculates show flag using element properties
   // we return 0 for first initial render, so, arrow won't be visible,
   // and on second call, we return value, which will allows us to see arrow on hover.
-  jest
-    .spyOn(element, 'scrollWidth', 'get')
+  vi.spyOn(element, 'scrollWidth', 'get')
     .mockImplementationOnce(() => {
       return 0;
     })

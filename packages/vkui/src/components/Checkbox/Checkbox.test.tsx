@@ -24,12 +24,12 @@ describe('Checkbox', () => {
     expect(screen.getByRole('checkbox')).not.toBeChecked();
     await userEvent.click(screen.getByText('check'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(screen.getByRole('checkbox')).toBeChecked();
     await userEvent.click(screen.getByText('check'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
@@ -75,7 +75,7 @@ describe('Checkbox', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls Checkbox', () => {
-      const errorStub = jest.spyOn(console, 'error').mockImplementation(noop);
+      const errorStub = vi.spyOn(console, 'error').mockImplementation(noop);
       render(
         <>
           <Checkbox defaultIndeterminate={true} defaultChecked={true} />

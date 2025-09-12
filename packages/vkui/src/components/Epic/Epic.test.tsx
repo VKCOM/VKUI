@@ -4,7 +4,7 @@ import { Epic } from './Epic';
 
 describe('Epic', () => {
   beforeAll(() => {
-    jest.spyOn(window, 'scrollTo').mockImplementation(noop);
+    vi.spyOn(window, 'scrollTo').mockImplementation(noop);
   });
   afterAll(() => {
     (window.scrollTo as any).mockRestore();

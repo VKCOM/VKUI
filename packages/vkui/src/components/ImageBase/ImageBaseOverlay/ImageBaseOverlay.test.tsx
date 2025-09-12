@@ -39,7 +39,7 @@ describe(ImageBaseOverlay, () => {
 
     await userEvent.tab();
     expect(element).toHaveFocus();
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
     await userEvent.tab();
     expect(document.querySelector(`.${styles.visible}`)).toBeNull();
   });
@@ -51,14 +51,14 @@ describe(ImageBaseOverlay, () => {
 
     await userEvent.tab();
     expect(button1).toHaveFocus();
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
     expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
     await userEvent.tab();
     expect(button2).toHaveFocus();
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
     expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
     await userEvent.tab();
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
     expect(document.querySelector(`.${styles.visible}`)).toBeNull();
   });
 
@@ -75,7 +75,7 @@ describe(ImageBaseOverlay, () => {
     });
 
     it('handles onClick prop', () => {
-      const handleClick = jest.fn();
+      const handleClick = vi.fn();
       render(<ImageBaseOverlayClickableTest onClick={handleClick} />);
 
       fireEvent.click(screen.getByTestId('overlay'));
@@ -83,7 +83,7 @@ describe(ImageBaseOverlay, () => {
     });
 
     it('handles onClick prop by keyboard Enter & Space event', () => {
-      const handleClick = jest.fn();
+      const handleClick = vi.fn();
       render(<ImageBaseOverlayClickableTest onClick={handleClick} />);
 
       const element = screen.getByTestId('overlay');

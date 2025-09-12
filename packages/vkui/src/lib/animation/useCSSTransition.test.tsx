@@ -2,7 +2,7 @@ import { act, fireEvent, render, renderHook } from '@testing-library/react';
 import { useCSSTransition } from './useCSSTransition';
 
 describe(useCSSTransition, () => {
-  const callbacks = { onEnter: jest.fn(), onEntering: jest.fn(), onEntered: jest.fn(), onExit: jest.fn(), onExiting: jest.fn(), onExited: jest.fn() }; // prettier-ignore
+  const callbacks = { onEnter: vi.fn(), onEntering: vi.fn(), onEntered: vi.fn(), onExit: vi.fn(), onExiting: vi.fn(), onExited: vi.fn() }; // prettier-ignore
 
   beforeEach(() => {
     for (const key in callbacks) {
@@ -418,10 +418,10 @@ describe(useCSSTransition, () => {
 
   it('should not stuck in exiting when transitionend not fired (fast open -> close)', () => {
     // Управляем таймерами вручную
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
-    const getComputedStyleMock = jest.spyOn(window, 'getComputedStyle').mockImplementation(
+    const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
       () =>
         ({
           transitionDuration: '0.2s',
@@ -457,7 +457,7 @@ describe(useCSSTransition, () => {
 
     // Прокручиваем таймеры дальше, чтобы сработал fallback (200ms + safety offset (≈50ms))
     act(() => {
-      jest.advanceTimersByTime(300);
+      vi.advanceTimersByTime(300);
     });
 
     // После fallback хук должен перевести состояние в exited и вызвать onExited
@@ -466,15 +466,15 @@ describe(useCSSTransition, () => {
 
     // Восстанавливаем мок
     getComputedStyleMock.mockRestore();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should not stuck in exiting when transitionend not fired (transition duration < 0 )', () => {
     // Управляем таймерами вручную
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
-    const getComputedStyleMock = jest.spyOn(window, 'getComputedStyle').mockImplementation(
+    const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
       () =>
         ({
           transitionDuration: '0s',
@@ -509,6 +509,6 @@ describe(useCSSTransition, () => {
 
     // Восстанавливаем мок
     getComputedStyleMock.mockRestore();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 });

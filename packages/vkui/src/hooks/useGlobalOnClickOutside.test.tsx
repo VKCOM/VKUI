@@ -55,7 +55,7 @@ describe.each([
   };
 
   it('should works with multiple refs provided', () => {
-    const globalClickHandler = jest.fn();
+    const globalClickHandler = vi.fn();
     const result = render(
       <WrapperUseGlobalOnClickOutside
         globalClickHandler={globalClickHandler}
@@ -75,7 +75,7 @@ describe.each([
   });
 
   it('should work with one ref provided', () => {
-    const globalClickHandler = jest.fn();
+    const globalClickHandler = vi.fn();
     const result = render(
       <WrapperUseGlobalOnClickOutside
         globalClickHandler={globalClickHandler}
@@ -104,7 +104,7 @@ describe.each([
   });
 
   it('should clear events if no refs provided', () => {
-    const globalClickHandler = jest.fn();
+    const globalClickHandler = vi.fn();
 
     const result = render(
       <WrapperUseGlobalOnClickOutside

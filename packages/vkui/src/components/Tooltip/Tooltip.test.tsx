@@ -12,7 +12,7 @@ describe(Tooltip, () => {
   ));
 
   it('should call onPlacementChange', async () => {
-    const onPlacementChange = jest.fn();
+    const onPlacementChange = vi.fn();
 
     const Fixture = (props: TooltipProps) => (
       <Tooltip defaultShown {...props}>
@@ -44,7 +44,7 @@ describe(Tooltip, () => {
   });
 
   it('check working with useTooltip hook', async () => {
-    const onShownChange = jest.fn();
+    const onShownChange = vi.fn();
     const Fixture = () => {
       const { anchorRef, anchorProps, tooltip } = useTooltip({
         'description': 'Some tooltip',

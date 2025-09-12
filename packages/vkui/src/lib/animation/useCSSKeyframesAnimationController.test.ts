@@ -4,12 +4,12 @@ import { useCSSKeyframesAnimationController } from './useCSSKeyframesAnimationCo
 
 describe(useCSSKeyframesAnimationController, () => {
   const callbacks = {
-    onEnter: jest.fn(),
-    onEntering: jest.fn(),
-    onEntered: jest.fn(),
-    onExit: jest.fn(),
-    onExiting: jest.fn(),
-    onExited: jest.fn(),
+    onEnter: vi.fn(),
+    onEntering: vi.fn(),
+    onEntered: vi.fn(),
+    onExit: vi.fn(),
+    onExiting: vi.fn(),
+    onExited: vi.fn(),
   };
 
   beforeEach(() => {

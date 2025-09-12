@@ -5,7 +5,7 @@ import { useSlideAnimation } from './hooks';
 const mockRAF = () => {
   let lastTime = 0;
 
-  jest.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
+  vi.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
     lastTime = lastTime + ANIMATION_DURATION;
     fn(lastTime);
     return lastTime;
@@ -15,7 +15,7 @@ const mockRAF = () => {
 describe(useSlideAnimation, () => {
   it('should call drawCallback when startAnimation', () => {
     mockRAF();
-    const animationStub = jest.fn();
+    const animationStub = vi.fn();
     const hookResult = renderHook(() => useSlideAnimation());
     hookResult.result.current.addToAnimationQueue(
       hookResult.result.current.getAnimateFunction(animationStub),

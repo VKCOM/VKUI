@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { dateFormatter } from '../../lib/date';
 import { baselineComponent, setNodeEnv, userEvent } from '../../testing/utils';
 import { Calendar } from './Calendar';
@@ -15,7 +16,7 @@ describe('Calendar', () => {
   baselineComponent(Calendar);
 
   it('checks aria roles', async () => {
-    jest.useFakeTimers({ now: targetDate });
+    vi.setSystemTime(targetDate);
     render(<Calendar defaultValue={targetDate} dayTestId={dayTestId} />);
 
     expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
@@ -46,7 +47,7 @@ describe('Calendar', () => {
   });
 
   it('fires onChange', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(<Calendar value={targetDate} onChange={onChange} dayTestId={dayTestId} />);
     fireEvent.click(screen.getByTestId(dayTestId(firstDayDate)));
@@ -54,7 +55,7 @@ describe('Calendar', () => {
   });
 
   it('does not fire onChange with the value out of minDateTime/maxDateTime', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <Calendar
@@ -72,7 +73,7 @@ describe('Calendar', () => {
   });
 
   it('onChange respects minDateTime', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <Calendar
@@ -87,7 +88,7 @@ describe('Calendar', () => {
   });
 
   it('onChange respects maxDateTime', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <Calendar
@@ -102,7 +103,7 @@ describe('Calendar', () => {
   });
 
   it('check navigation by keyboard between two months', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     const monthDropdownTestId = (monthIndex: number) => `month-picker-${monthIndex}`;
 
@@ -132,7 +133,7 @@ describe('Calendar', () => {
   });
 
   it('checks that previous focusable day still focusable after navigation out of Calendar using Tab', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const day = new Date('2023-09-30T07:40:00.000Z');
     const dayBeforeTarget = new Date('2023-09-29T07:40:00.000Z');
 
@@ -175,10 +176,10 @@ describe('Calendar', () => {
   });
 
   it('checks that Enter or Space triggers click on day cell', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const day = new Date('2023-09-30T07:40:00.000Z');
 
-    const onChangeStub = jest.fn();
+    const onChangeStub = vi.fn();
 
     render(<Calendar value={day} dayTestId={dayTestId} onChange={onChangeStub} />);
 
@@ -208,7 +209,7 @@ describe('Calendar', () => {
   });
 
   it('checks focusable days', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     render(<Calendar value={targetDate} dayTestId={dayTestId} />);
 
     // при открытии календаря focusable день соответствует значению в value
@@ -228,7 +229,7 @@ describe('Calendar', () => {
   });
 
   it('should display correct timezone time', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <Calendar
         value={targetDate}
@@ -255,7 +256,7 @@ describe('Calendar', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls Calendar', () => {
-      const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+      const consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(noop);
 
       const { rerender } = render(<Calendar value={lastDayDate} disablePickers={false} size="s" />);
 

@@ -31,7 +31,7 @@ describe('Popper', () => {
   });
 
   it('should call onPlacementChange', async () => {
-    const onPlacementChange = jest.fn();
+    const onPlacementChange = vi.fn();
     const result = render(
       <TestComponent placement="bottom" onPlacementChange={onPlacementChange} />,
     );

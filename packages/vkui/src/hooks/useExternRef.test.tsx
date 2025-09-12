@@ -81,12 +81,12 @@ describe(useExternRef, () => {
       expect(ref.current).toBeInTheDocument();
     });
     it('when ref identity changes', () => {
-      const secondRef = jest.fn();
+      const secondRef = vi.fn();
       render(<RefForwarder getRef={noop} />).rerender(<RefForwarder getRef={secondRef} />);
       expect(secondRef).toHaveBeenCalled();
     });
     it('once per identity', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       render(<RefForwarder getRef={ref} />).rerender(<RefForwarder getRef={ref} />);
       expect(ref).toHaveBeenCalledTimes(1);
     });

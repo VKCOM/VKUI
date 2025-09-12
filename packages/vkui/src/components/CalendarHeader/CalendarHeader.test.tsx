@@ -20,7 +20,7 @@ describe('CalendarHeader', () => {
 
   it('displays prev month button by default', () => {
     const viewDate = new Date('1970-01-01');
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader viewDate={viewDate} onChange={onChange} prevMonthButtonTestId="prev-month" />,
     );
@@ -29,7 +29,7 @@ describe('CalendarHeader', () => {
   });
   it('displays next month button by default', () => {
     const viewDate = new Date('1970-01-01');
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader viewDate={viewDate} onChange={onChange} nextMonthButtonTestId="next-month" />,
     );
@@ -38,7 +38,7 @@ describe('CalendarHeader', () => {
   });
   it('do not display prev month and next month buttons if they hidden', () => {
     const viewDate = new Date('1970-01-01');
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={viewDate}
@@ -54,7 +54,7 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });
   it('do not display prev and next month buttons if isMonthDisabled return true', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={targetDate}
@@ -69,7 +69,7 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });
   it('do not display prev month button when set prevMonthHidden prop', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={targetDate}
@@ -82,7 +82,7 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('prev-month')).toBeFalsy();
   });
   it('do not display next month button when set nextMonthHidden prop', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={targetDate}
@@ -96,8 +96,8 @@ describe('CalendarHeader', () => {
   });
 
   it('does not fire onChange when click on month dropdown item if isMonthDisabled return true', async () => {
-    const onChange = jest.fn();
-    jest.useFakeTimers();
+    const onChange = vi.fn();
+    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader
         viewDate={targetDate}
@@ -116,8 +116,8 @@ describe('CalendarHeader', () => {
   });
 
   it('does not fire onChange when click on year dropdown item if isYearDisabled return true', async () => {
-    const onChange = jest.fn();
-    jest.useFakeTimers();
+    const onChange = vi.fn();
+    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader
         viewDate={targetDate}
@@ -136,8 +136,8 @@ describe('CalendarHeader', () => {
   });
 
   it('fire onChange when click on year dropdown item', async () => {
-    const onChange = jest.fn();
-    jest.useFakeTimers();
+    const onChange = vi.fn();
+    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader viewDate={targetDate} onChange={onChange} yearDropdownTestId="year-picker" />,
     );
@@ -151,10 +151,10 @@ describe('CalendarHeader', () => {
   });
 
   it('should not find prev month button', () => {
-    const onChange = jest.fn();
-    const isMonthDisabled = jest.fn();
+    const onChange = vi.fn();
+    const isMonthDisabled = vi.fn();
     isMonthDisabled.mockImplementation(() => true);
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader
         viewDate={new Date('2023-01-20T07:40:00.000Z')}
@@ -168,10 +168,10 @@ describe('CalendarHeader', () => {
   });
 
   it('should not find next month button', () => {
-    const onChange = jest.fn();
-    const isMonthDisabled = jest.fn();
+    const onChange = vi.fn();
+    const isMonthDisabled = vi.fn();
     isMonthDisabled.mockImplementation(() => true);
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     render(
       <CalendarHeader
         viewDate={new Date('2023-12-20T07:40:00.000Z')}
