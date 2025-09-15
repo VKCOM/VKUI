@@ -151,6 +151,7 @@ describe(ModalCard, () => {
   });
 
   test('check disable focus trap', async () => {
+    jest.useFakeTimers();
     const Fixture = () => {
       const [open, setOpen] = useState(false);
       return (
@@ -173,16 +174,21 @@ describe(ModalCard, () => {
     const h = render(<Fixture />);
 
     const openButton = h.getByTestId('open-button');
-    fireEvent.click(openButton);
+    act(() => {
+      fireEvent.click(openButton);
+    });
 
     await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
 
     const dismissButton = h.getByTestId('dismiss-button');
-    dismissButton.focus();
+    act(() => {
+      dismissButton.focus();
+    });
     expect(dismissButton).toHaveFocus();
 
     await userEvent.tab();
     expect(openButton).toHaveFocus();
+    jest.useRealTimers();
   });
 
   describe('check restoreFocus prop', () => {
@@ -216,18 +222,22 @@ describe(ModalCard, () => {
       await act(async () => {
         openButton.focus();
       });
-      fireEvent.click(openButton);
+      act(() => {
+        fireEvent.click(openButton);
+      });
       expect(openButton).toHaveFocus();
 
       await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeTruthy();
-      jest.runAllTimers();
+      act(jest.runAllTimers);
       expect(h.getByTestId('dismiss-button')).toHaveFocus();
 
-      fireEvent.click(openButton);
+      act(() => {
+        fireEvent.click(openButton);
+      });
       await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeFalsy();
-      jest.runAllTimers();
+      act(jest.runAllTimers);
 
       if (restoreFocus) {
         expect(openButton).toHaveFocus();

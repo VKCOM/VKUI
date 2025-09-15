@@ -401,6 +401,9 @@ describe('Alert', () => {
     );
 
     await userEvent.click(result.getByTestId('__action__'));
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

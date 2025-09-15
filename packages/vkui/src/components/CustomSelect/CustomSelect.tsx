@@ -94,8 +94,10 @@ const FetchingStatus = ({
       if (fetching) {
         setStatus('fetching');
       } else {
-        setStatus('loaded');
-        setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
+        if (status === 'fetching') {
+          setStatus('loaded');
+          setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
+        }
       }
     },
     [fetching],

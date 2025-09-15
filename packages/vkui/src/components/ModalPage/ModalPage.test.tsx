@@ -9,6 +9,7 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { type ModalCardProps } from '../ModalCard/types';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalPage } from './ModalPage';
+import styles from './ModalPage.module.css';
 
 export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
   await waitCSSTransitionEnd(
@@ -161,6 +162,7 @@ describe(ModalPage, () => {
   });
 
   test('check disable focus trap', async () => {
+    jest.useFakeTimers();
     const Fixture = () => {
       const [open, setOpen] = useState(false);
       return (
@@ -189,16 +191,19 @@ describe(ModalPage, () => {
     await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
 
     const dismissButton = h.getByTestId('dismiss-button');
-    dismissButton.focus();
+    act(() => {
+      dismissButton.focus();
+    });
     expect(dismissButton).toHaveFocus();
 
     await userEvent.tab();
     expect(openButton).toHaveFocus();
+    jest.runAllTimers();
   });
 
   describe('check restoreFocus prop', () => {
     const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
-      const [open, setOpen] = React.useState(false);
+      const [open, setOpen] = useState(false);
       return (
         <>
           <ConfigProvider platform="vkcom">
@@ -224,7 +229,7 @@ describe(ModalPage, () => {
       expect(h.queryByTestId('host')).toBeFalsy();
 
       const openButton = h.getByTestId('open-modal');
-      await act(async () => {
+      act(() => {
         openButton.focus();
       });
       fireEvent.click(openButton);
@@ -232,19 +237,82 @@ describe(ModalPage, () => {
 
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeTruthy();
-      jest.runAllTimers();
+      act(jest.runAllTimers);
       expect(h.getByTestId('dismiss-button')).toHaveFocus();
 
       fireEvent.click(openButton);
       await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
       expect(h.queryByTestId('host')).toBeFalsy();
-      jest.runAllTimers();
+      act(jest.runAllTimers);
 
       if (restoreFocus) {
         expect(openButton).toHaveFocus();
       } else {
         expect(openButton).not.toHaveFocus();
       }
+    });
+  });
+
+  describe('size prop', () => {
+    it.each([
+      ['s' as const, styles.hostDesktopMaxWidthS],
+      ['m' as const, styles.hostDesktopMaxWidthM],
+      ['l' as const, styles.hostDesktopMaxWidthL],
+    ])('applies preset class on desktop for size=%s', async (size, expectedClass) => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+          <ModalPage key="host" id="host" open size={size} noFocusToDialog data-testid="host" />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.getByTestId('host')).toHaveClass(expectedClass);
+    });
+
+    it('sets CSS variable for custom numeric size on desktop', async () => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+          <ModalPage key="host" id="host" open size={500} noFocusToDialog data-testid="host" />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.getByTestId('host')).toHaveStyle(
+        '--vkui_internal_ModalPage--desktopMaxWidth: 500px',
+      );
+    });
+
+    it('sets CSS variable for custom string size on desktop', async () => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+          <ModalPage
+            key="host"
+            id="host"
+            open
+            size="fit-content"
+            noFocusToDialog
+            data-testid="host"
+          />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.getByTestId('host')).toHaveStyle(
+        '--vkui_internal_ModalPage--desktopMaxWidth: fit-content',
+      );
+    });
+
+    it('ignores size on mobile', async () => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_MOBILE}>
+          <ModalPage key="host" id="host" open size="l" noFocusToDialog data-testid="host" />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      const el = h.getByTestId('host');
+      expect(el).toHaveClass(styles.hostMobile);
+      expect(el).not.toHaveClass(styles.hostDesktopMaxWidthS);
     });
   });
 });
