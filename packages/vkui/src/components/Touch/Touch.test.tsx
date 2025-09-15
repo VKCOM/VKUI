@@ -24,7 +24,23 @@ function fireMouseSwipe(
   fireEvent.mouseDown(ops.startEl || e, asClientPos(start));
   move.forEach((p) => fireEvent.mouseMove(e, asClientPos(p)));
   fireEvent.mouseUp(e, asClientPos(move[move.length - 1]));
-  return fireEvent.click(e, asClientPos(move[move.length - 1]));
+
+  // Если это <a href="..."> — временно уберём href, чтобы jsdom не пытался навигировать.
+  const isAnchor =
+    e instanceof HTMLElement && e.tagName.toLowerCase() === 'a' && e.hasAttribute('href');
+  const hrefBackup = isAnchor ? e.getAttribute('href') : null;
+  if (isAnchor) {
+    e.removeAttribute('href');
+  }
+
+  try {
+    return fireEvent.click(e, asClientPos(move[move.length - 1]));
+  } finally {
+    // восстановим href в любом случае
+    if (isAnchor && hrefBackup !== null) {
+      e.setAttribute('href', hrefBackup);
+    }
+  }
 }
 
 function fireTouchSwipe(e: HTMLElement, [start, ...move]: any[], { end = true } = {}) {
