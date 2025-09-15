@@ -49,7 +49,7 @@ describe('Popper', () => {
     const result = render(<TestComponent sameWidth />);
     await waitForFloatingPosition();
     expect(result.getByTestId('popper')).not.toHaveStyle('width: max-content');
-    expect(result.getByTestId('popper')).toHaveStyle('width: 0'); // в окружении jest размер не будет высчитан, поэтому 0
+    expect(result.getByTestId('popper')).toHaveStyle('width: 0'); // в окружении vitest размер не будет высчитан, поэтому 0
   });
 
   it('should hides when reference is hidden', async () => {

@@ -28,7 +28,7 @@ export const defaultAxe = configureAxe({
 expect.extend(toHaveNoViolations);
 
 /**
- * Переконфигурируем работу userEvent под jest
+ * Переконфигурируем работу userEvent под vitest
  *
  * https://github.com/testing-library/user-event/issues/833
  */
