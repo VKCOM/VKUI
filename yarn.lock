@@ -4714,12 +4714,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^24.3.1":
-  version: 24.3.1
-  resolution: "@types/node@npm:24.3.1"
+"@types/node@npm:^24.4.0":
+  version: 24.4.0
+  resolution: "@types/node@npm:24.4.0"
   dependencies:
-    undici-types: "npm:~7.10.0"
-  checksum: 10/b9a52ed8f2fb1fa764ce988828b8d579761f944f1bb0492adbdeaa676a161086bad1a807b590799681ad93b3d272468b5c5ddccf5678735d487d1b65e481bc07
+    undici-types: "npm:~7.11.0"
+  checksum: 10/8ed3a165f80f642bfffebbf416b0bcc18e36e0661670e3baf13daa76ca3a08031edb50f292dba351cc411276fece0ef2d273a5a37a214ba487815f89e6381b1f
   languageName: node
   linkType: hard
 
@@ -5467,7 +5467,7 @@ __metadata:
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jest": "npm:^30.0.0"
     "@types/jscodeshift": "npm:^17.3.0"
-    "@types/node": "npm:^24.3.1"
+    "@types/node": "npm:^24.4.0"
     "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^4.1.2"
     commander: "npm:^14.0.0"
@@ -5584,7 +5584,7 @@ __metadata:
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/jest": "npm:^30.0.0"
     "@types/jest-axe": "npm:^3.5.9"
-    "@types/node": "npm:^24.3.1"
+    "@types/node": "npm:^24.4.0"
     "@types/react": "npm:^19.0.1"
     "@types/react-dom": "npm:^19.0.1"
     "@types/semver": "npm:^7.7.1"
@@ -21084,6 +21084,13 @@ __metadata:
   version: 7.10.0
   resolution: "undici-types@npm:7.10.0"
   checksum: 10/1f3fe777937690ab8a7a7bccabc8fdf4b3171f4899b5a384fb5f3d6b56c4b5fec2a51fbf345c9dd002ff6716fd440a37fa8fdb0e13af8eca8889f25445875ba3
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.11.0":
+  version: 7.11.0
+  resolution: "undici-types@npm:7.11.0"
+  checksum: 10/0cb7230eb4f60f1080aafbee7b4a583dd42242e93054500aff60cd4665574f39846ffe8ae9f0cc38916fffc912d259bd220ebe40fc0716cfe332e9686950fb95
   languageName: node
   linkType: hard
 
