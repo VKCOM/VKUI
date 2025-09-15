@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Button } from '../../components/Button/Button';
 import { ModalCard } from '../../components/ModalCard/ModalCard';
@@ -38,38 +38,38 @@ describe('useModalRoot', () => {
     api = null;
   });
   it('check open ModalPage and ModalCard with history', async () => {
-    render(<Fixture setApi={setApi} />);
-    await React.act(() =>
+    render(<Fixture setApi={setApi} saveHistory />);
+    act(() => {
       getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
-      }),
-    );
+      });
+    });
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
 
-    await React.act(() =>
+    act(() => {
       getApi().openModalPage({
         'id': 'modal-page',
         'data-testid': 'modal-page',
         'children': 'Content',
-      }),
-    );
+      });
+    });
 
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
     expect(screen.getByTestId('modal-page')).toBeInTheDocument();
     expect(screen.queryByTestId('modal-card')).not.toBeInTheDocument();
 
-    React.act(() => getApi().close('modal-page'));
+    act(() => getApi().close('modal-page'));
 
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
     expect(screen.queryByTestId('modal-page')).not.toBeInTheDocument();
 
-    React.act(() => getApi().close('modal-card'));
+    act(() => getApi().close('modal-card'));
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(screen.queryByTestId('modal-card')).not.toBeInTheDocument();
     expect(screen.queryByTestId('modal-page')).not.toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('useModalRoot', () => {
   it('check open ModalPage and ModalCard without history', async () => {
     render(<Fixture setApi={setApi} saveHistory={false} />);
 
-    React.act(() => {
+    act(() => {
       getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
@@ -88,7 +88,7 @@ describe('useModalRoot', () => {
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
 
-    React.act(() => {
+    act(() => {
       getApi().openModalPage({
         'id': 'modal-page',
         'data-testid': 'modal-page',
@@ -101,7 +101,7 @@ describe('useModalRoot', () => {
     expect(screen.getByTestId('modal-page')).toBeInTheDocument();
     expect(screen.queryByTestId('modal-card')).not.toBeInTheDocument();
 
-    React.act(() => getApi().close('modal-page'));
+    act(() => getApi().close('modal-page'));
 
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
     expect(screen.queryByTestId('modal-card')).not.toBeInTheDocument();
@@ -110,30 +110,30 @@ describe('useModalRoot', () => {
 
   it('check closeAll modals', async () => {
     render(<Fixture setApi={setApi} />);
-    await React.act(() =>
+    act(() => {
       getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
-      }),
-    );
+      });
+    });
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
 
-    await React.act(() =>
+    act(() => {
       getApi().openModalPage({
         'id': 'modal-page',
         'data-testid': 'modal-page',
         'children': 'Content',
-      }),
-    );
+      });
+    });
 
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
     expect(screen.getByTestId('modal-page')).toBeInTheDocument();
     expect(screen.queryByTestId('modal-card')).not.toBeInTheDocument();
 
-    React.act(() => getApi().closeAll());
+    act(() => getApi().closeAll());
 
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-page'), 'ModalPage');
     expect(screen.queryByTestId('modal-card')).not.toBeInTheDocument();
@@ -142,20 +142,20 @@ describe('useModalRoot', () => {
 
   it('check open update props', async () => {
     render(<Fixture setApi={setApi} />);
-    await React.act(() =>
+    act(() => {
       getApi().openModalCard({
         'title': 'Title',
         'id': 'modal-card',
         'data-testid': 'modal-card',
-      }),
-    );
+      });
+    });
     const modalCard = screen.getByTestId('modal-card');
     await waitCSSTransitionEndConditionally(modalCard, 'ModalCard');
     expect(modalCard).toBeInTheDocument();
 
     expect(screen.getByText('Title')).toBeInTheDocument();
 
-    React.act(() =>
+    act(() =>
       getApi().update('modal-card', 'card', {
         title: 'Updated title',
       }),
@@ -166,7 +166,7 @@ describe('useModalRoot', () => {
   it('check working with return data', async () => {
     render(<Fixture setApi={setApi} />);
     let cardApi: ReturnType<ModalRootApi['openModalCard']>;
-    React.act(() => {
+    act(() => {
       cardApi = getApi().openModalCard({
         'title': 'Title',
         'data-testid': 'modal-card',
@@ -175,7 +175,7 @@ describe('useModalRoot', () => {
     expect(cardApi!.id).toBeTruthy();
     expect(screen.getByText('Title')).toBeInTheDocument();
 
-    React.act(() =>
+    act(() =>
       cardApi.update({
         title: 'Updated title',
       }),
@@ -187,7 +187,7 @@ describe('useModalRoot', () => {
       closePromiseResolved = true;
     });
 
-    React.act(() => cardApi.close());
+    act(() => cardApi.close());
 
     await waitCSSTransitionEndConditionally(screen.getByTestId('modal-card'), 'ModalCard');
     expect(closePromiseResolved).toBeTruthy();
@@ -218,7 +218,7 @@ describe('useModalRoot', () => {
     };
 
     render(<Fixture setApi={setApi} />);
-    React.act(() => {
+    act(() => {
       getApi().openCustomModal('card', {
         id: 'modal-1',
         component: ModalCardComponent,
@@ -264,7 +264,7 @@ describe('useModalRoot', () => {
     };
 
     render(<Fixture setApi={setApi} />);
-    React.act(() => {
+    act(() => {
       getApi().openCustomModal('page', {
         id: 'modal-1',
         component: ModalPageComponent,
@@ -309,7 +309,7 @@ describe('useModalRoot', () => {
     };
 
     render(<Fixture setApi={setApi} />);
-    React.act(() => {
+    act(() => {
       getApi().openCustomModal('page', ModalPageComponent);
     });
 
