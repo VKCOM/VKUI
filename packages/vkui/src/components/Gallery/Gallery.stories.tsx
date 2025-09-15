@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { getValueByKey } from '../../helpers/getValueByKey';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Gallery, type GalleryProps } from './Gallery';
@@ -27,8 +28,21 @@ export const Playground: Story = {
         ...args.style,
       }}
       slideWidth="90%"
+      aria-label="Галерея с картинкой"
+      slideLabel={(index, slidesCount) => {
+        const additionLabel = getValueByKey(
+          index,
+          {
+            0: 'Картинка с двумя медведями',
+            1: 'Красный цвет фона',
+            2: 'Акцентный цвет фона',
+          },
+          '',
+        );
+        return `${index + 1} из ${slidesCount} ${additionLabel}`;
+      }}
     >
-      <img src="https://placebear.com/1024/640" style={{ display: 'block' }} />
+      <img src="https://placebear.com/1024/640" style={{ display: 'block' }} alt="Два медведя" />
       <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
       <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
     </Gallery>

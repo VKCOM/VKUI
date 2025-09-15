@@ -78,6 +78,7 @@
 
 .arrow {
   position: absolute;
+  z-index: var(--vkui_internal--z_index_gallery_scroll_arrow);
   opacity: 0;
 }
 
@@ -104,6 +105,7 @@
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
+.arrowFocusVisible,
 .host .arrow:hover {
   opacity: 1;
 }

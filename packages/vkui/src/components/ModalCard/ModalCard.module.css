@@ -61,7 +61,6 @@
 .hostDesktop {
   box-sizing: content-box;
   inline-size: 100%;
-  padding: var(--vkui--spacing_size_m);
   margin-block: auto;
   opacity: 1;
   transition: opacity 340ms var(--vkui--animation_easing_platform);

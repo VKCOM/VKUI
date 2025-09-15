@@ -155,7 +155,7 @@ describe(FocusTrap, () => {
     const onCloseStub = jest.fn();
     render(
       <FocusTrap onClose={onCloseStub}>
-        <input onKeyDown={(event) => event.stopPropagation()} value="Test input" />
+        <input onKeyDown={(event) => event.stopPropagation()} defaultValue="Test input" />
       </FocusTrap>,
     );
 
@@ -174,7 +174,7 @@ describe(FocusTrap, () => {
         <input
           data-testid="input"
           onKeyDown={(event) => event.stopPropagation()}
-          value="Test button"
+          defaultValue="Test button"
         />
       </FocusTrap>,
     );

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`text-tooltip should apply after \`transforms/tooltip.ts\` 1`] = `
 "import { Tooltip as TextTooltip } from '@vkontakte/vkui';

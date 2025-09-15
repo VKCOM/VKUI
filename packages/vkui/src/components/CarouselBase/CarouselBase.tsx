@@ -62,13 +62,18 @@ export const CarouselBase = ({
   getRef,
   arrowSize,
   arrowAreaHeight,
-  arrowNextLabel,
-  arrowPrevLabel,
   slideTestId,
   bulletTestId,
   nextArrowTestId,
   prevArrowTestId,
   looped = false,
+
+  // a11y
+  'aria-roledescription': ariaRoleDescription = 'Карусель',
+  arrowNextLabel = 'Следующий слайд',
+  arrowPrevLabel = 'Предыдущий слайд',
+  slideLabel,
+  slideRoleDescription,
   ...restProps
 }: BaseGalleryProps): React.ReactNode => {
   const slidesStore = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -83,13 +88,16 @@ export const CarouselBase = ({
   const shiftXCurrentRef = React.useRef<number>(0);
   const shiftXDeltaRef = React.useRef<number>(0);
   const initialized = React.useRef<boolean>(false);
-  const { addToAnimationQueue, getAnimateFunction, startAnimation } = useSlideAnimation();
+  const { animationInQueue, addToAnimationQueue, getAnimateFunction, startAnimation } =
+    useSlideAnimation();
   const isDragging = React.useRef(false);
 
   const [controlElementsState, setControlElementsState] =
     React.useState<ControlElementsState>(CONTROL_ELEMENTS_STATE);
 
   const hasPointer = useAdaptivityHasPointer();
+
+  const slidesContainerId = React.useId();
 
   const isCenterAlign = align === 'center';
 
@@ -195,6 +203,7 @@ export const CarouselBase = ({
         shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
       }
       transformCssStyles(shiftX, animation);
+      animationFrameRef.current = null;
     });
   };
 
@@ -306,6 +315,12 @@ export const CarouselBase = ({
         containerWidth,
         isRtl,
       );
+    }
+
+    const isAnimationInProgress = animationInQueue() || animationFrameRef.current !== null;
+
+    if (isAnimationInProgress) {
+      return;
     }
 
     shiftXCurrentRef.current = snaps[slideIndex];
@@ -521,9 +536,19 @@ export const CarouselBase = ({
 
   const { isDraggable, canSlideRight, canSlideLeft } = controlElementsState;
 
+  const handleScrollForFixVoiceOverBehavior = (event: React.UIEvent<HTMLDivElement>) => {
+    restProps.onScroll?.(event);
+    if (rootRef.current) {
+      event.currentTarget.scrollLeft = 0;
+    }
+  };
+
   return (
     <RootComponent
       {...restProps}
+      role="region"
+      onScroll={handleScrollForFixVoiceOverBehavior}
+      aria-roledescription={ariaRoleDescription}
       baseClassName={classNames(
         styles.host,
         slideWidth === 'custom' && styles.customWidth,
@@ -531,27 +556,6 @@ export const CarouselBase = ({
       )}
       getRootRef={rootRef}
     >
-      <CarouselViewPort
-        slideWidth={slideWidth}
-        slideTestId={slideTestId}
-        onStart={onStart}
-        onMoveX={onMoveX}
-        onEnd={onEnd}
-        getRootRef={viewportRef}
-        layerRef={layerRef}
-        setSlideRef={setSlideRef}
-      >
-        {children}
-      </CarouselViewPort>
-
-      {bullets && (
-        <Bullets
-          bullets={bullets}
-          slideIndex={slideIndex}
-          count={React.Children.count(children)}
-          bulletTestId={bulletTestId}
-        />
-      )}
       <ScrollArrows
         hasPointer={hasPointer}
         canSlideLeft={canSlideLeft}
@@ -565,7 +569,33 @@ export const CarouselBase = ({
         arrowNextLabel={arrowNextLabel}
         prevArrowTestId={prevArrowTestId}
         nextArrowTestId={nextArrowTestId}
+        slidesContainerId={slidesContainerId}
       />
+      <CarouselViewPort
+        slideWidth={slideWidth}
+        slideTestId={slideTestId}
+        onStart={onStart}
+        onMoveX={onMoveX}
+        onEnd={onEnd}
+        getRootRef={viewportRef}
+        layerRef={layerRef}
+        setSlideRef={setSlideRef}
+        slidesContainerId={slidesContainerId}
+        slideLabel={slideLabel}
+        slideRoleDescription={slideRoleDescription}
+        onChange={onChange}
+      >
+        {children}
+      </CarouselViewPort>
+
+      {bullets && (
+        <Bullets
+          bullets={bullets}
+          slideIndex={slideIndex}
+          count={React.Children.count(children)}
+          bulletTestId={bulletTestId}
+        />
+      )}
     </RootComponent>
   );
 };
