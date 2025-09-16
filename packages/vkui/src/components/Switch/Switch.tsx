@@ -17,8 +17,27 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
+type HiddenInputSwitchProps = Pick<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  | 'id'
+  | 'name'
+  | 'value'
+  | 'checked'
+  | 'defaultChecked'
+  | 'disabled'
+  | 'required'
+  | 'readOnly'
+  | 'autoFocus'
+  | 'onChange'
+  | 'onInvalid'
+  | 'onFocus'
+  | 'onBlur'
+  | 'onClick'
+>;
+
 export interface SwitchProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends HiddenInputSwitchProps,
+    Omit<React.HTMLAttributes<HTMLLabelElement>, keyof HiddenInputSwitchProps>,
     HasRootRef<HTMLLabelElement>,
     HasRef<HTMLInputElement> {}
 
@@ -30,11 +49,22 @@ export const Switch = ({
   className,
   getRootRef,
   getRef,
+  onClick,
+
+  // HiddenInputProps
+  id,
+  name,
+  value,
   checked: checkedProp,
+  defaultChecked,
   disabled,
+  required,
+  readOnly,
+  autoFocus,
+  onChange,
+  onInvalid,
   onBlur: onBlurProp,
   onFocus: onFocusProp,
-  onClick,
   ...restProps
 }: SwitchProps): React.ReactNode => {
   const direction = useConfigDirection();
@@ -47,7 +77,7 @@ export const Switch = ({
   const handleFocus = callMultiple(onFocus, onFocusProp);
 
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
-    Boolean(restProps.defaultChecked),
+    Boolean(defaultChecked),
   );
   const isControlled = checkedProp !== undefined;
 
@@ -64,12 +94,21 @@ export const Switch = ({
   );
 
   const inputProps: VisuallyHiddenProps<HTMLInputElement> = {
-    ...restProps,
+    id,
+    name,
+    value,
+    checked: checkedProp,
+    defaultChecked,
+    disabled,
+    required,
+    readOnly,
+    autoFocus,
+    onChange,
+    onInvalid,
     Component: 'input',
     getRootRef: getRef,
     type: 'checkbox',
     role: 'switch',
-    disabled: disabled,
     onBlur: onBlurProp,
     onFocus: onFocusProp,
     onClick: callMultiple(syncUncontrolledCheckedStateOnClick, onClick),
@@ -95,6 +134,7 @@ export const Switch = ({
       )}
       style={style}
       ref={getRootRef}
+      {...restProps}
     >
       <VisuallyHidden
         {...inputProps}

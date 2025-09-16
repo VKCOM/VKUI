@@ -1,4 +1,13 @@
+'use client';
+
 import * as React from 'react';
+import {
+  Icon20CheckBoxIndetermanate,
+  Icon20CheckBoxOff,
+  Icon20CheckBoxOn,
+  Icon24CheckBoxOff,
+  Icon24CheckBoxOn,
+} from '@vkontakte/icons';
 import { hasReactNode } from '@vkontakte/vkjs';
 import type { HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
@@ -7,8 +16,34 @@ import type { TappableOmitProps } from '../Tappable/Tappable';
 import { CheckboxInput, type CheckboxInputProps } from './CheckboxInput/CheckboxInput';
 import { CheckboxSimple } from './CheckboxSimple/CheckboxSimple';
 
+type HiddenCheckboxInputProps = Pick<
+  React.ComponentProps<'input'>,
+  | 'id'
+  | 'name'
+  | 'value'
+  | 'checked'
+  | 'defaultChecked'
+  | 'disabled'
+  | 'required'
+  | 'readOnly'
+  | 'autoFocus'
+  | 'onChange'
+  | 'onInvalid'
+>;
+
 export interface CheckboxProps
-  extends Omit<CheckboxInputProps, 'getRootRef'>,
+  extends HiddenCheckboxInputProps,
+    Pick<
+      CheckboxInputProps,
+      | 'indeterminate'
+      | 'defaultIndeterminate'
+      | 'IconOnCompact'
+      | 'IconOnRegular'
+      | 'IconOffCompact'
+      | 'IconOffRegular'
+      | 'IconIndeterminate'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof HiddenCheckboxInputProps>,
     HasRootRef<HTMLLabelElement>,
     Pick<
       TappableOmitProps,
@@ -33,21 +68,48 @@ const CheckboxComponent = ({
   className,
   style,
   getRootRef,
+
+  // Specific props
   description,
+  titleAfter,
+  noPadding,
+
+  // TappableProps
   hoverMode,
   activeMode,
   hasHover,
   hasActive,
   focusVisibleMode,
-  titleAfter,
-  noPadding,
+
+  // CheckboxInputProps
+  indeterminate,
+  defaultIndeterminate,
+  IconOnCompact = Icon20CheckBoxOn,
+  IconOnRegular = Icon24CheckBoxOn,
+  IconOffCompact = Icon20CheckBoxOff,
+  IconOffRegular = Icon24CheckBoxOff,
+  IconIndeterminate = Icon20CheckBoxIndetermanate,
+
+  // HiddenRadioInputProps
+  id,
+  name,
+  value,
+  checked,
+  defaultChecked,
+  disabled,
+  required,
+  readOnly,
+  autoFocus,
+  onChange,
+  onInvalid,
+
   ...restProps
 }: CheckboxProps): React.ReactNode => {
   return (
     <SelectionControl
       className={className}
       style={style}
-      disabled={restProps.disabled}
+      disabled={disabled}
       getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}
@@ -55,8 +117,27 @@ const CheckboxComponent = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       noPadding={noPadding}
+      {...restProps}
     >
-      <CheckboxInput {...restProps} />
+      <CheckboxInput
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        required={required}
+        readOnly={readOnly}
+        autoFocus={autoFocus}
+        onInvalid={onInvalid}
+        indeterminate={indeterminate}
+        defaultIndeterminate={defaultIndeterminate}
+        IconOnCompact={IconOnCompact}
+        IconOnRegular={IconOnRegular}
+        IconOffCompact={IconOffCompact}
+        IconOffRegular={IconOffRegular}
+        IconIndeterminate={IconIndeterminate}
+      />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>

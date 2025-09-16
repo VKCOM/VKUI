@@ -1,5 +1,12 @@
 'use client';
 
+import {
+  Icon20CheckBoxIndetermanate,
+  Icon20CheckBoxOff,
+  Icon20CheckBoxOn,
+  Icon24CheckBoxOff,
+  Icon24CheckBoxOn,
+} from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Tappable } from '../../Tappable/Tappable';
@@ -17,14 +24,41 @@ export function CheckboxSimple({
   className,
   style,
   getRootRef,
+
+  // Specific props
   description,
+  titleAfter,
+  noPadding,
+
+  // TappableProps
   hoverMode: hoverModeProp,
   activeMode: activeModeProp,
   hasHover,
   hasActive,
   focusVisibleMode,
-  titleAfter,
-  noPadding,
+
+  // CheckboxInputProps
+  indeterminate,
+  defaultIndeterminate,
+  IconOnCompact = Icon20CheckBoxOn,
+  IconOnRegular = Icon24CheckBoxOn,
+  IconOffCompact = Icon20CheckBoxOff,
+  IconOffRegular = Icon24CheckBoxOff,
+  IconIndeterminate = Icon20CheckBoxIndetermanate,
+
+  // HiddenRadioInputProps
+  id,
+  name,
+  value,
+  checked,
+  defaultChecked,
+  disabled,
+  required,
+  readOnly,
+  autoFocus,
+  onChange,
+  onInvalid,
+
   ...restProps
 }: CheckboxProps) {
   const { sizeY = 'none' } = useAdaptivity();
@@ -41,7 +75,7 @@ export function CheckboxSimple({
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
       style={style}
-      disabled={restProps.disabled}
+      disabled={disabled}
       getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}
@@ -49,8 +83,27 @@ export function CheckboxSimple({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       Component="label"
+      {...restProps}
     >
-      <CheckboxInput {...restProps} />
+      <CheckboxInput
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        required={required}
+        readOnly={readOnly}
+        autoFocus={autoFocus}
+        onInvalid={onInvalid}
+        indeterminate={indeterminate}
+        defaultIndeterminate={defaultIndeterminate}
+        IconOnCompact={IconOnCompact}
+        IconOnRegular={IconOnRegular}
+        IconOffCompact={IconOffCompact}
+        IconOffRegular={IconOffRegular}
+        IconIndeterminate={IconIndeterminate}
+      />
     </Tappable>
   );
 }

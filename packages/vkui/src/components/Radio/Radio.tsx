@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
@@ -7,8 +9,24 @@ import type { TappableOmitProps } from '../Tappable/Tappable';
 import { RadioInput } from './RadioInput/RadioInput';
 import styles from './Radio.module.css';
 
+type HiddenRadioInputProps = Pick<
+  React.ComponentProps<'input'>,
+  | 'id'
+  | 'name'
+  | 'value'
+  | 'checked'
+  | 'defaultChecked'
+  | 'disabled'
+  | 'required'
+  | 'readOnly'
+  | 'autoFocus'
+  | 'onChange'
+  | 'onInvalid'
+>;
+
 export interface RadioProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends HiddenRadioInputProps,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof HiddenRadioInputProps>,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
     Pick<
@@ -34,25 +52,43 @@ export interface RadioProps
  */
 export const Radio = ({
   children,
-  description,
   style,
   className,
   getRootRef,
-  titleAfter,
   getRef,
+
+  // Specific RadioProps
+  titleAfter,
+  description,
   labelProps,
+
+  // Tappable
   hoverMode,
   activeMode,
   hasHover,
   hasActive,
   focusVisibleMode,
+
+  // HiddenRadioInputProps
+  id,
+  name,
+  value,
+  checked,
+  defaultChecked,
+  disabled,
+  required,
+  readOnly,
+  autoFocus,
+  onChange,
+  onInvalid,
+
   ...restProps
 }: RadioProps): React.ReactNode => {
   return (
     <SelectionControl
       style={style}
       className={classNames(styles.host, className)}
-      disabled={restProps.disabled}
+      disabled={disabled}
       getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}
@@ -60,8 +96,22 @@ export const Radio = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       {...labelProps}
+      {...restProps}
     >
-      <RadioInput {...restProps} getRef={getRef} />
+      <RadioInput
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        required={required}
+        readOnly={readOnly}
+        autoFocus={autoFocus}
+        onChange={onChange}
+        onInvalid={onInvalid}
+        getRef={getRef}
+      />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>

@@ -1,11 +1,29 @@
+'use client';
+
 import * as React from 'react';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasChildren, HasRef, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
+import type { TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+
+type HiddenInputFileProps = Pick<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  | 'id'
+  | 'name'
+  | 'value'
+  | 'required'
+  | 'disabled'
+  | 'readOnly'
+  | 'autoFocus'
+  | 'onChange'
+  | 'onInvalid'
+>;
 
 export interface FileProps
   extends Omit<VKUIButtonProps, 'type'>,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'>,
+    HiddenInputFileProps,
+    HasChildren,
+    Omit<TappableOmitProps, 'size' | keyof HiddenInputFileProps>,
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {}
 
@@ -13,7 +31,13 @@ export interface FileProps
  * @see https://vkui.io/components/file
  */
 export const File = ({
+  className,
+  style,
+  getRef,
+  getRootRef,
   children = 'Выберите файл',
+
+  // VKUIButtonProps
   align = 'left',
   size,
   mode,
@@ -21,11 +45,18 @@ export const File = ({
   before,
   after,
   loading,
-  className,
-  style,
-  getRef,
-  getRootRef,
   appearance,
+
+  // HiddenInputFileProps
+  id,
+  name,
+  value,
+  required,
+  readOnly,
+  autoFocus,
+  onChange,
+  onInvalid,
+  disabled,
   ...restProps
 }: FileProps): React.ReactNode => {
   return (
@@ -42,9 +73,24 @@ export const File = ({
       loading={loading}
       style={style}
       getRootRef={getRootRef}
-      disabled={restProps.disabled}
+      disabled={disabled}
+      {...restProps}
     >
-      <VisuallyHidden title="" {...restProps} Component="input" type="file" getRootRef={getRef} />
+      <VisuallyHidden
+        title=""
+        id={id}
+        name={name}
+        value={value}
+        disabled={disabled}
+        required={required}
+        readOnly={readOnly}
+        autoFocus={autoFocus}
+        onChange={onChange}
+        onInvalid={onInvalid}
+        Component="input"
+        type="file"
+        getRootRef={getRef}
+      />
       {children}
     </Button>
   );

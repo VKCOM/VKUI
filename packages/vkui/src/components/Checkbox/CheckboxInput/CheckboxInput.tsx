@@ -28,8 +28,24 @@ function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
   el.indeterminate = indeterminate;
 }
 
+type HiddenInputCheckboxInputProps = Pick<
+  React.ComponentProps<'input'>,
+  | 'id'
+  | 'name'
+  | 'value'
+  | 'checked'
+  | 'defaultChecked'
+  | 'disabled'
+  | 'required'
+  | 'readOnly'
+  | 'autoFocus'
+  | 'onChange'
+  | 'onInvalid'
+>;
+
 export interface CheckboxInputProps
-  extends React.ComponentProps<'input'>,
+  extends HiddenInputCheckboxInputProps,
+    Omit<React.HTMLAttributes<HTMLDivElement>, keyof HiddenInputCheckboxInputProps>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
   /**
@@ -69,14 +85,29 @@ export function CheckboxInput({
   style,
   getRootRef,
   getRef,
+
+  // specific props
   indeterminate,
   defaultIndeterminate,
-  onChange,
   IconOnCompact = Icon20CheckBoxOn,
   IconOnRegular = Icon24CheckBoxOn,
   IconOffCompact = Icon20CheckBoxOff,
   IconOffRegular = Icon24CheckBoxOff,
   IconIndeterminate = Icon20CheckBoxIndetermanate,
+
+  // HiddenRadioInputProps
+  id,
+  name,
+  value,
+  checked,
+  defaultChecked,
+  disabled,
+  required,
+  readOnly,
+  autoFocus,
+  onChange,
+  onInvalid,
+
   ...restProps
 }: CheckboxInputProps) {
   const inputRef = useExternRef(getRef);
@@ -96,7 +127,7 @@ export function CheckboxInput({
       if (
         defaultIndeterminate !== undefined &&
         indeterminate === undefined &&
-        restProps.checked === undefined &&
+        checked === undefined &&
         inputRef.current
       ) {
         setIndeterminate(inputRef.current, false);
@@ -106,19 +137,19 @@ export function CheckboxInput({
       }
       onChange && onChange(event);
     },
-    [defaultIndeterminate, indeterminate, restProps.checked, onChange, inputRef],
+    [defaultIndeterminate, indeterminate, checked, onChange, inputRef],
   );
 
   if (process.env.NODE_ENV === 'development') {
-    if (defaultIndeterminate && restProps.defaultChecked) {
+    if (defaultIndeterminate && defaultChecked) {
       warn('defaultIndeterminate и defaultChecked не могут быть true одновременно', 'error');
     }
 
-    if (indeterminate && restProps.checked) {
+    if (indeterminate && checked) {
       warn('indeterminate и checked не могут быть true одновременно', 'error');
     }
 
-    if (restProps.defaultChecked && restProps.checked) {
+    if (defaultChecked && checked) {
       warn('defaultChecked и checked не могут быть true одновременно', 'error');
     }
   }
@@ -129,14 +160,24 @@ export function CheckboxInput({
       className={className}
       style={style}
       getRootRef={getRootRef}
+      {...restProps}
     >
       <VisuallyHidden
-        {...restProps}
         Component="input"
         type="checkbox"
         onChange={handleChange}
         className={styles.input}
         getRootRef={inputRef}
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        required={required}
+        readOnly={readOnly}
+        autoFocus={autoFocus}
+        onInvalid={onInvalid}
       />
       {platform === 'vkcom' ? (
         <IconOnCompact className={styles.iconOn} />

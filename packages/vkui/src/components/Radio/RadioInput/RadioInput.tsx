@@ -33,8 +33,24 @@ function RadioIcon() {
   );
 }
 
+type HiddenInputRadioInputProps = Pick<
+  React.ComponentProps<'input'>,
+  | 'id'
+  | 'name'
+  | 'value'
+  | 'checked'
+  | 'defaultChecked'
+  | 'disabled'
+  | 'required'
+  | 'readOnly'
+  | 'autoFocus'
+  | 'onChange'
+  | 'onInvalid'
+>;
+
 export interface RadioInputProps
-  extends Omit<React.ComponentProps<'input'>, 'type'>,
+  extends HiddenInputRadioInputProps,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof HiddenInputRadioInputProps>,
     HasRootRef<HTMLLabelElement>,
     HasRef<HTMLInputElement> {}
 
@@ -43,12 +59,41 @@ export function RadioInput({
   style,
   getRootRef,
   getRef,
+
+  // HiddenInputRadioInputProps
+  id,
+  name,
+  value,
+  checked,
+  defaultChecked,
+  disabled,
+  required,
+  readOnly,
+  autoFocus,
+  onChange,
+  onInvalid,
   ...restProps
 }: RadioInputProps) {
   return (
-    <RootComponent className={className} style={style} getRootRef={getRootRef}>
+    <RootComponent<HTMLLabelElement>
+      Component="label"
+      className={className}
+      style={style}
+      getRootRef={getRootRef}
+      {...restProps}
+    >
       <VisuallyHidden
-        {...restProps}
+        id={id}
+        name={name}
+        value={value}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        required={required}
+        readOnly={readOnly}
+        autoFocus={autoFocus}
+        onChange={onChange}
+        onInvalid={onInvalid}
         Component="input"
         type="radio"
         baseClassName={styles.input}
