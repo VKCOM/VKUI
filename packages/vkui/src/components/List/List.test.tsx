@@ -1,7 +1,13 @@
+import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
-import { baselineComponent, mockTouchStartDisabled } from '../../testing/utils';
+import {
+  ADOPTED_TOUCH_EVENTS_HANDLERS,
+  baselineComponent,
+  fakeTimers,
+  MOUSE_EVENTS_HANDLERS,
+} from '../../testing/utils';
 import { Cell } from '../Cell/Cell';
 import { List } from './List';
 
@@ -31,12 +37,6 @@ jest.mock('../../lib/dom', () => {
     },
   };
 });
-const mockTimers = () => {
-  jest.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
-    fn(1);
-    return 1;
-  });
-};
 
 const setupCell = (element: HTMLDivElement, index: number) => {
   let transform = '';
@@ -89,7 +89,6 @@ const setupList = (element: HTMLDivElement) => {
 };
 
 const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
-  mockTimers();
   let listSetup: ReturnType<typeof setupList>;
   let list;
   let swappedItems: SwappedItemRange | null = null;
@@ -157,37 +156,36 @@ const dragCell = ({
   breakPoints,
   afterDragging,
   afterMove = {},
+  mouseEvents = [fireEvent.mouseDown, fireEvent.mouseMove, fireEvent.mouseUp],
 }: {
   testId: string;
   breakPoints: number[];
   afterMove?: Record<number, VoidFunction>;
   afterDragging?: VoidFunction;
+  mouseEvents?: Array<typeof fireEvent.mouseDown>;
 }) => {
+  const [mouseDown, mouseMove, mouseUp] = mouseEvents;
   const dragger = screen.getByTestId(testId);
-  fireEvent.mouseDown(dragger);
+  mouseDown(dragger);
+
+  act(jest.runOnlyPendingTimers);
 
   breakPoints.forEach((breakPoint, index) => {
-    fireEvent.mouseMove(dragger, {
+    mouseMove(dragger, {
       clientY: breakPoint,
-      shiftY: breakPoint,
     });
+    act(jest.runOnlyPendingTimers);
     afterMove[index]?.();
   });
+  act(jest.runOnlyPendingTimers);
   afterDragging && afterDragging();
 
-  fireEvent.mouseUp(dragger);
+  mouseUp(dragger);
 };
 
 describe('List', () => {
-  mockTouchStartDisabled();
   baselineComponent(List);
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-  afterEach(() => {
-    jest.useRealTimers();
-  });
+  fakeTimers();
 
   it('should have style gap', async () => {
     render(
@@ -203,52 +201,57 @@ describe('List', () => {
     expect(screen.getByTestId('list').style.gridGap).toBe('20px');
   });
 
-  it('check dnd is working', async () => {
-    const setupData = setup({});
-    const { getCellSetup } = setupData;
+  it.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
+    'check dnd is working',
+    ({ handlers: mouseEvents }) => {
+      const setupData = setup({});
+      const { getCellSetup } = setupData;
 
-    dragCell({
-      testId: 'dragger-0',
-      breakPoints: [5, 140, 140, 124],
-      afterDragging: () => {
-        const cell1Data = getCellSetup('cell-1');
-        expect(cell1Data.transform).toBe('');
-        const cell2Data = getCellSetup('cell-2');
-        expect(cell2Data.transform).toBe('translateY(50px)');
-      },
-      afterMove: {
-        0: () => {
+      dragCell({
+        testId: 'dragger-0',
+        breakPoints: [5, 140, 140, 124],
+        afterDragging: () => {
           const cell1Data = getCellSetup('cell-1');
-          expect(cell1Data.transform).toBe('translateY(50px)');
+          expect(cell1Data.transform).toBe('');
           const cell2Data = getCellSetup('cell-2');
           expect(cell2Data.transform).toBe('translateY(50px)');
         },
-      },
-    });
+        afterMove: {
+          0: () => {
+            const cell1Data = getCellSetup('cell-1');
+            expect(cell1Data.transform).toBe('translateY(50px)');
+            const cell2Data = getCellSetup('cell-2');
+            expect(cell2Data.transform).toBe('translateY(50px)');
+          },
+        },
+        mouseEvents,
+      });
 
-    expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+      expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
 
-    dragCell({
-      testId: 'dragger-2',
-      breakPoints: [140, 140, 75, 140, 75],
-      afterDragging: () => {
-        const cell1Data = getCellSetup('cell-0');
-        expect(cell1Data.transform).toBe('');
-        const cell2Data = getCellSetup('cell-1');
-        expect(cell2Data.transform).toBe('translateY(50px)');
-      },
-      afterMove: {
-        0: () => {
+      dragCell({
+        testId: 'dragger-2',
+        breakPoints: [140, 140, 75, 140, 75],
+        afterDragging: () => {
           const cell1Data = getCellSetup('cell-0');
           expect(cell1Data.transform).toBe('');
           const cell2Data = getCellSetup('cell-1');
-          expect(cell2Data.transform).toBe('');
+          expect(cell2Data.transform).toBe('translateY(50px)');
         },
-      },
-    });
+        afterMove: {
+          0: () => {
+            const cell1Data = getCellSetup('cell-0');
+            expect(cell1Data.transform).toBe('');
+            const cell2Data = getCellSetup('cell-1');
+            expect(cell2Data.transform).toBe('');
+          },
+        },
+        mouseEvents,
+      });
 
-    expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
-  });
+      expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
+    },
+  );
 
   it('check dnd with scroll working', () => {
     const setupData = setup({});
