@@ -77,6 +77,10 @@ export interface SearchProps
    * Передает атрибут `data-testid` для кнопки поиска.
    */
   findButtonTestId?: string;
+  /**
+   * Скрывает кнопку очистки.
+   */
+  hideClearButton?: boolean;
 }
 
 /**
@@ -102,6 +106,7 @@ export const Search = ({
   findButtonText = 'Найти',
   findButtonTestId,
   onFindButtonClick,
+  hideClearButton,
   ...inputProps
 }: SearchProps): React.ReactNode => {
   const direction = useConfigDirection();
@@ -190,6 +195,10 @@ export const Search = ({
     </IconButton>
   );
 
+  const showControls = Boolean(
+    iconProp || !hideClearButton || (adaptiveSizeY.compact && onFindButtonClick),
+  );
+
   return (
     <div
       className={classNames(
@@ -231,37 +240,41 @@ export const Search = ({
             onChange={callMultiple(onChange, checkHasValue)}
           />
         </div>
-        <div className={styles.controls}>
-          {iconProp &&
-            (typeof iconProp === 'function'
-              ? iconProp(renderIconButton)
-              : renderIconButton(iconProp))}
-          <IconButton
-            hoverMode="opacity"
-            onPointerDown={onIconCancelClickStart}
-            onClick={onCancel}
-            className={styles.icon}
-            tabIndex={hasValue ? undefined : -1}
-            disabled={inputProps.disabled}
-            data-testid={clearButtonTestId}
-          >
-            <VisuallyHidden>{clearLabel}</VisuallyHidden>
-            {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
-          </IconButton>
-          {adaptiveSizeY.compact && onFindButtonClick && (
-            <Button
-              mode="primary"
-              size="m"
-              className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
-              focusVisibleMode="inside"
-              onClick={onFindButtonClick}
-              tabIndex={hasValue ? undefined : -1}
-              data-testid={findButtonTestId}
-            >
-              {findButtonText}
-            </Button>
-          )}
-        </div>
+        {showControls && (
+          <div className={styles.controls}>
+            {iconProp &&
+              (typeof iconProp === 'function'
+                ? iconProp(renderIconButton)
+                : renderIconButton(iconProp))}
+            {!hideClearButton && (
+              <IconButton
+                hoverMode="opacity"
+                onPointerDown={onIconCancelClickStart}
+                onClick={onCancel}
+                className={styles.icon}
+                tabIndex={hasValue ? undefined : -1}
+                disabled={inputProps.disabled}
+                data-testid={clearButtonTestId}
+              >
+                <VisuallyHidden>{clearLabel}</VisuallyHidden>
+                {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
+              </IconButton>
+            )}
+            {adaptiveSizeY.compact && onFindButtonClick && (
+              <Button
+                mode="primary"
+                size="m"
+                className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
+                focusVisibleMode="inside"
+                onClick={onFindButtonClick}
+                tabIndex={hasValue ? undefined : -1}
+                data-testid={findButtonTestId}
+              >
+                {findButtonText}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
       {hasAfter && (
         <div className={styles.after}>
