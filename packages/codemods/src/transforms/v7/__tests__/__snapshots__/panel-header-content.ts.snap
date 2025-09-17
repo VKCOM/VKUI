@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`panel-header-content transforms correctly 1`] = `
+exports[`panel-header-content > transforms correctly 1`] = `
 "import { Avatar, PanelHeader, PanelHeaderBack, PanelHeaderButton, PanelHeaderContent } from '@vkontakte/vkui';
 import React from 'react';
 
