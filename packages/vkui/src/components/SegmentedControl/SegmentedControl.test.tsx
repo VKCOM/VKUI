@@ -40,7 +40,7 @@ describe('SegmentedControl', () => {
     });
 
     it('uses passed onChange', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
 
       render(<SegmentedControlTest onChange={onChange} defaultValue="fb" />);
 
@@ -99,7 +99,7 @@ describe('SegmentedControl', () => {
     });
 
     it('switches on click', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<SegmentedControlTabsTest onChange={onChange} defaultValue="fb" />);
 
       fireEvent.click(getTab(0));

@@ -28,19 +28,19 @@ export const defaultAxe = configureAxe({
 expect.extend(toHaveNoViolations);
 
 /**
- * Переконфигурируем работу userEvent под jest
+ * Переконфигурируем работу userEvent под vitest
  *
  * https://github.com/testing-library/user-event/issues/833
  */
 export const userEvent = userEventLib.setup({
-  advanceTimers: jest.advanceTimersByTime,
+  advanceTimers: vi.advanceTimersByTime.bind(vi),
 });
 
 export function fakeTimers() {
-  beforeEach(() => jest.useFakeTimers());
+  beforeEach(() => vi.useFakeTimers());
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
+    vi.runOnlyPendingTimers();
+    vi.useRealTimers();
   });
 }
 
@@ -81,21 +81,21 @@ export function mountTest(Component: React.ComponentType<any>) {
     try {
       result = render(<Component />);
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(result).toBeTruthy();
     } catch {}
 
     try {
       result!.rerender(<Component />);
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(result!).toBeTruthy();
     } catch {}
 
     try {
       // unmount
       result!.unmount();
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(result!).toBeTruthy();
     } catch {}
   });
@@ -105,12 +105,12 @@ export function a11yTest(Component: React.ComponentType<any>, axeConfig?: JestAx
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
     await waitForFloatingPosition();
-    jest.useRealTimers();
+    vi.useRealTimers();
 
     const jestAxe = axeConfig ? configureAxe(axeConfig) : defaultAxe;
     const results = await jestAxe(container, {});
 
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     expect(results).toHaveNoViolations();
   });
 }
@@ -130,7 +130,7 @@ export function getRootRefTest(Component: React.ComponentType<any>) {
 
     render(<Component getRootRef={ref} />);
     await waitForFloatingPosition();
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
 
     expect(ref.current).toBeTruthy();
   });
@@ -160,8 +160,8 @@ export function baselineComponent<Props extends object>(
 
   describe(testName, () => {
     beforeAll(() => {
-      jest.clearAllTimers();
-      jest.useFakeTimers();
+      vi.clearAllTimers();
+      vi.useFakeTimers();
     });
 
     mountTest(Component);
@@ -177,7 +177,7 @@ export function baselineComponent<Props extends object>(
           <Component data-testid="__cmp__" className={cls} style={{ background: 'red' }} />,
         );
         await waitForFloatingPosition();
-        act(jest.runAllTimers);
+        act(vi.runAllTimers);
         // forward DOM attributes
         if (domAttr) {
           expect(screen.queryByTestId('__cmp__')).toBeTruthy();
@@ -198,7 +198,7 @@ export function baselineComponent<Props extends object>(
 
           rerender(<Component />);
           await waitForFloatingPosition();
-          act(jest.runAllTimers);
+          act(vi.runAllTimers);
 
           // does not replace default className
           if (className) {
@@ -250,11 +250,11 @@ export function mockRect(el: HTMLElement | null, data: DOMRectInit) {
 
 export const mockScrollContext = (
   getY: () => number,
-): [React.ComponentType<HasChildren>, jest.Mock] => {
+): [React.ComponentType<HasChildren>, ReturnType<typeof vi.fn>] => {
   const getScroll = () => ({ x: 0, y: getY() });
-  const scrollTo = jest.fn();
-  const incrementScrollLockCounter = jest.fn();
-  const decrementScrollLockCounter = jest.fn();
+  const scrollTo = vi.fn();
+  const incrementScrollLockCounter = vi.fn();
+  const decrementScrollLockCounter = vi.fn();
   return [
     (props) => (
       <ScrollContext.Provider
@@ -414,7 +414,7 @@ export async function waitCSSKeyframesAnimation(
   const { runOnlyPendingTimers } = options;
   await fireEventPatch(el, 'animationStart');
   await fireEventPatch(el, 'animationEnd');
-  act(runOnlyPendingTimers ? jest.runOnlyPendingTimers : noop);
+  act(runOnlyPendingTimers ? vi.runOnlyPendingTimers : noop);
   await fireEventPatch(el, 'animationStart');
   await fireEventPatch(el, 'animationEnd');
 }
@@ -428,15 +428,15 @@ export const withRegExp = (v: string) => new RegExp(v);
 export const matchMediaMock = (queries?: string | string[]) => {
   Object.defineProperty(global, 'matchMedia', {
     writable: true,
-    value: jest.fn().mockImplementation((query) => ({
+    value: vi.fn().mockImplementation((query: string) => ({
       matches: queries ? queries.includes(query) : false,
       media: query,
       onchange: null,
-      addListener: jest.fn(), // устарело
-      removeListener: jest.fn(), // устарело
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
+      addListener: vi.fn(), // устарело
+      removeListener: vi.fn(), // устарело
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
     })),
   });
 };
@@ -491,9 +491,7 @@ export function mouseEventMock({
 }
 
 export function setNodeEnv(value: 'development' | 'production' | 'test') {
-  Object.defineProperty(process.env, 'NODE_ENV', {
-    value,
-  });
+  vi.stubEnv('NODE_ENV', value);
 }
 
 export function mockTouchStartDisabled() {

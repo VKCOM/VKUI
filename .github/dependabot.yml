@@ -62,6 +62,10 @@ updates:
         patterns:
           - 'jest*'
           - '@types/jest*'
+      vitest:
+        patterns:
+          - 'vitest*'
+          - '@vitest*'
       testing-library:
         patterns:
           - '@testing-library/*'

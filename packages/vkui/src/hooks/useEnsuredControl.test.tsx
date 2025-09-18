@@ -16,7 +16,7 @@ describe(useEnsuredControl, () => {
   };
 
   it('should work like uncontrolled', () => {
-    const handleChange = jest.fn((event: React.ChangeEvent<HTMLInputElement>) =>
+    const handleChange = vi.fn((event: React.ChangeEvent<HTMLInputElement>) =>
       Number(event.target.value),
     );
     const prevValue = 1;
@@ -53,7 +53,7 @@ describe(useEnsuredControl, () => {
   });
 
   it('should work like controlled', () => {
-    const handleChange = jest.fn((event: React.ChangeEvent<HTMLInputElement>) =>
+    const handleChange = vi.fn((event: React.ChangeEvent<HTMLInputElement>) =>
       Number(event.target.value),
     );
     const prevValue = 1;
@@ -123,7 +123,7 @@ describe(useCustomEnsuredControl, () => {
   it.each([{ useFunction: true }, { useFunction: false }])(
     'should work like uncontrolled (useFunction: $useFunction)',
     (prop) => {
-      const handleChange = jest.fn((value: number) => value);
+      const handleChange = vi.fn((value: number) => value);
       const rendered = render(
         <UseCustomEnsuredControlComponent
           key="uncontrolled"
@@ -157,7 +157,7 @@ describe(useCustomEnsuredControl, () => {
   it.each([{ useFunction: true }, { useFunction: false }])(
     'should work like controlled (useFunction: $useFunction)',
     (prop) => {
-      const handleChange = jest.fn((value: number) => value);
+      const handleChange = vi.fn((value: number) => value);
       const prevValue = 1;
       const rendered = render(
         <UseCustomEnsuredControlComponent

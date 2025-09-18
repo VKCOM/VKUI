@@ -10,7 +10,7 @@
 
 Используем:
 
-- [jest](https://jestjs.io/ru/)
+- [vitest](https://vitest.dev/)
 - [react-testing-library](https://testing-library.com/docs/react-testing-library/example-intro)
 - [jest-dom](https://github.com/testing-library/jest-dom#table-of-contents)
 - [jest-axe](https://github.com/nickcolley/jest-axe)

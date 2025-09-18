@@ -85,7 +85,7 @@ describe(Textarea, () => {
       expect(getInput()).toHaveValue('update');
     });
     it('value overrides defaultValue', () => {
-      jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+      vi.spyOn(global.console, 'error').mockImplementationOnce((message) => {
         if (message.includes('with both value and defaultValue props.')) {
           return;
         }
@@ -113,7 +113,7 @@ describe(Textarea, () => {
     const mockTextareaScrollHeight = () => {
       const textArea = screen.getByTestId('textarea');
       let height = 100;
-      jest.spyOn(textArea, 'scrollHeight', 'get').mockImplementation(() => {
+      vi.spyOn(textArea, 'scrollHeight', 'get').mockImplementation(() => {
         const currHeight = height;
         height += 10;
         return currHeight;
@@ -121,21 +121,21 @@ describe(Textarea, () => {
     };
 
     it('when editing', async () => {
-      const onResize = jest.fn();
+      const onResize = vi.fn();
       render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
       mockTextareaScrollHeight();
       await userEvent.type(getInput(), '{enter}{enter}{enter}{enter}');
       expect(onResize).toHaveBeenCalledTimes(5);
     });
     it('when changing controlled value', () => {
-      const onResize = jest.fn();
+      const onResize = vi.fn();
       const { rerender } = render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
       mockTextareaScrollHeight();
       rerender(<Textarea data-testid="textarea" value="\n\n\n\n" onResize={onResize} />);
       expect(onResize).toHaveBeenCalledTimes(2);
     });
     it('when changing platform', async () => {
-      const onResize = jest.fn();
+      const onResize = vi.fn();
 
       const { rerender } = render(
         <ConfigProvider platform={Platform.VKCOM}>
@@ -153,14 +153,14 @@ describe(Textarea, () => {
       expect(onResize).toHaveBeenCalledTimes(2);
     });
     it('when resize window', () => {
-      const onResize = jest.fn();
+      const onResize = vi.fn();
       render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
       mockTextareaScrollHeight();
       fireEvent(window, new Event('resize'));
       expect(onResize).toHaveBeenCalledTimes(2);
     });
     it("won't resize if parent is invisible", () => {
-      const onResize = jest.fn();
+      const onResize = vi.fn();
       render(
         <div style={{ display: 'none' }}>
           <Textarea onResize={onResize} />

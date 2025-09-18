@@ -4,13 +4,13 @@ import { useTodayDate } from './useTodayDate';
 
 describe(useTodayDate, () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   it('returns same date if day is not changed', () => {
     const currentDate = new Date(2024, 2, 3);
     currentDate.setHours(10);
-    jest.setSystemTime(currentDate);
+    vi.setSystemTime(currentDate);
 
     const listenDayChangesForUpdate = true;
     const hookResult = renderHook(() => useTodayDate(listenDayChangesForUpdate));
@@ -20,7 +20,7 @@ describe(useTodayDate, () => {
     // чуть меняем время, но день остаётся тот же
     let now = new Date(currentDate);
     now.setHours(now.getHours() + 2);
-    jest.setSystemTime(now);
+    vi.setSystemTime(now);
 
     hookResult.rerender();
 
@@ -33,7 +33,7 @@ describe(useTodayDate, () => {
   it('returns same date if time is changed but there is no timeout or visibilitychange event', () => {
     const currentDate = new Date(2024, 2, 3);
     currentDate.setHours(10);
-    jest.setSystemTime(currentDate);
+    vi.setSystemTime(currentDate);
 
     const listenDayChangesForUpdate = true;
     const hookResult = renderHook(() => useTodayDate(listenDayChangesForUpdate));
@@ -43,7 +43,7 @@ describe(useTodayDate, () => {
     // меняем текущую дату на следующий день
     let now = new Date(currentDate);
     now.setDate(now.getDate() + 1);
-    jest.setSystemTime(now);
+    vi.setSystemTime(now);
 
     hookResult.rerender();
 
@@ -56,8 +56,8 @@ describe(useTodayDate, () => {
   it('returns next day if timer is fired', () => {
     const currentDate = new Date(2024, 2, 3);
     currentDate.setHours(10);
-    jest.setSystemTime(currentDate);
-    const setTimeoutStub = jest.spyOn(window, 'setTimeout');
+    vi.setSystemTime(currentDate);
+    const setTimeoutStub = vi.spyOn(window, 'setTimeout');
 
     const listenDayChangesForUpdate = true;
     const hookResult = renderHook(() => useTodayDate(listenDayChangesForUpdate));
@@ -65,7 +65,7 @@ describe(useTodayDate, () => {
     expect(hookResult.result.current).toStrictEqual(currentDate);
 
     // меняем текущую дату на следующий день
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
 
     hookResult.rerender();
 
@@ -81,14 +81,14 @@ describe(useTodayDate, () => {
   it('returns same day if visibilitychange event fired but day is not changed', () => {
     const currentDate = new Date(2024, 2, 3);
     currentDate.setHours(10);
-    jest.setSystemTime(currentDate);
+    vi.setSystemTime(currentDate);
 
     const listenDayChangesForUpdate = true;
     const hookResult = renderHook(() => useTodayDate(listenDayChangesForUpdate));
 
     expect(hookResult.result.current).toStrictEqual(currentDate);
 
-    jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => 'visible');
+    vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => 'visible');
     fireEvent(document, new Event('visibilitychange'));
 
     hookResult.rerender();
@@ -100,7 +100,7 @@ describe(useTodayDate, () => {
   it('returns same day if visibilitychange event fired with hidden state even if day is changed', () => {
     const currentDate = new Date(2024, 2, 3);
     currentDate.setHours(10);
-    jest.setSystemTime(currentDate);
+    vi.setSystemTime(currentDate);
 
     const listenDayChangesForUpdate = true;
     const hookResult = renderHook(() => useTodayDate(listenDayChangesForUpdate));
@@ -110,10 +110,10 @@ describe(useTodayDate, () => {
     // меняем текущую дату на следующий день
     let now = new Date(currentDate);
     now.setDate(now.getDate() + 1);
-    jest.setSystemTime(now);
+    vi.setSystemTime(now);
 
     // visibilityState = hidden
-    jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => 'hidden');
+    vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => 'hidden');
     fireEvent(document, new Event('visibilitychange'));
 
     hookResult.rerender();
@@ -125,7 +125,7 @@ describe(useTodayDate, () => {
   it('returns next day when visibilitychange event fired and day is changed', () => {
     const currentDate = new Date(2024, 2, 3);
     currentDate.setHours(10);
-    jest.setSystemTime(currentDate);
+    vi.setSystemTime(currentDate);
 
     const listenDayChangesForUpdate = true;
     const hookResult = renderHook(() => useTodayDate(listenDayChangesForUpdate));
@@ -135,10 +135,10 @@ describe(useTodayDate, () => {
     // меняем текущую дату на следующий день
     let now = new Date(currentDate);
     now.setDate(now.getDate() + 1);
-    jest.setSystemTime(now);
+    vi.setSystemTime(now);
 
     // visibilityState = hidden
-    jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => 'visible');
+    vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => 'visible');
     fireEvent(document, new Event('visibilitychange'));
 
     hookResult.rerender();

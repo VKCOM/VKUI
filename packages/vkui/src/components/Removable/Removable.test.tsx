@@ -8,8 +8,8 @@ describe('Removable', () => {
   baselineComponent(Removable);
 
   it('[iOS] does not propagate toggle button click', async () => {
-    const onClick = jest.fn();
-    const eventListener = jest.fn();
+    const onClick = vi.fn();
+    const eventListener = vi.fn();
 
     window.addEventListener('click', eventListener);
 

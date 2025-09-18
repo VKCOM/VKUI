@@ -34,7 +34,7 @@ describe('TabbarItem', () => {
   });
 
   it('handles disabled state', async () => {
-    const cb = jest.fn();
+    const cb = vi.fn();
 
     const { rerender } = render(<TabbarItem onClick={cb} data-testid="test" />);
     await userEvent.click(screen.getByTestId('test'));
@@ -46,8 +46,8 @@ describe('TabbarItem', () => {
   });
 
   function renderTabbarItemForFocus({ withKeyboardInput }: { withKeyboardInput: boolean }) {
-    const onFocusStub = jest.fn();
-    const onBlurStub = jest.fn();
+    const onFocusStub = vi.fn();
+    const onBlurStub = vi.fn();
 
     return {
       onFocusStub,
@@ -63,7 +63,7 @@ describe('TabbarItem', () => {
   }
 
   it('shows focus visible on focus with keyboard', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     const component = renderTabbarItemForFocus({ withKeyboardInput: true });
 
@@ -78,7 +78,7 @@ describe('TabbarItem', () => {
   });
 
   it('does not show focus visible on focus without keyboard', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     const component = renderTabbarItemForFocus({ withKeyboardInput: false });
 

@@ -17,7 +17,7 @@ describe('CustomSelectOption', () => {
   );
 
   it('does not handle onClick when disabled', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     const { rerender } = render(
       <CustomSelectOption onClick={onClick}>Дмитрий Безуглый</CustomSelectOption>,

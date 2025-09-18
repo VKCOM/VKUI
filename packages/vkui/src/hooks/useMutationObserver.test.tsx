@@ -4,7 +4,7 @@ import { useMutationObserver } from './useMutationObserver';
 
 describe('test useMutationObserver', () => {
   it('should call callback when add block', async () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     const Fixture = (props: { mockedBlocksIds: string[] }) => {
       const ref = useRef(null);
       useMutationObserver(ref, callback);
@@ -28,7 +28,7 @@ describe('test useMutationObserver', () => {
   });
 
   it('should call callback with custom options', async () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const Fixture = () => {
       const [tabIndex, setTabIndex] = useState(-1);

@@ -10,14 +10,14 @@ describe(getNavId, () => {
     afterEach(() => setNodeEnv('test'));
 
     it('does not error if nav id present', () => {
-      const warn = jest.fn();
+      const warn = vi.fn();
       getNavId({ nav: 'ok' }, warn);
       getNavId({ id: 'ok' }, warn);
       getNavId({ nav: 'ok', id: 'dont' }, warn);
       expect(warn).not.toHaveBeenCalled();
     });
     it('errors if nav id missing', () => {
-      const warn = jest.fn();
+      const warn = vi.fn();
       getNavId({}, warn);
       expect(warn).toHaveBeenCalled();
     });

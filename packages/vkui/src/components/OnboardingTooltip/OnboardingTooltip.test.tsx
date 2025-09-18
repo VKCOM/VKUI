@@ -85,7 +85,7 @@ describe(OnboardingTooltip, () => {
 
   describe('preserves child ref', () => {
     it('on DOM child', async () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       await renderTooltip(
         <OnboardingTooltip>
           <div ref={ref} data-testid="xxx" />
@@ -94,7 +94,7 @@ describe(OnboardingTooltip, () => {
       expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
     });
     it('on VKUI child', async () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       await renderTooltip(
         <OnboardingTooltip>
           <RootRef getRootRef={ref} data-testid="xxx" />
@@ -105,7 +105,7 @@ describe(OnboardingTooltip, () => {
   });
 
   it('should call onPlacementChange', async () => {
-    const onPlacementChange = jest.fn();
+    const onPlacementChange = vi.fn();
 
     const Fixture = (props: OnboardingTooltipProps) => (
       <OnboardingTooltipContainer data-testid="container">
@@ -128,7 +128,7 @@ describe(OnboardingTooltip, () => {
 
   it('shows warning if title and area attributes are not provided', () => {
     setNodeEnv('development');
-    const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+    const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
 
     const component = render(<OnboardingTooltip onClose={noop} title="title" />);
     expect(warn).not.toHaveBeenCalled();

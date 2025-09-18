@@ -86,8 +86,8 @@ describe(useFloatingWithInteractions, () => {
     ])(
       'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
       async ({ trigger, openBy, closeBy }) => {
-        const onShownChange = jest.fn();
-        const onShownChanged = jest.fn();
+        const onShownChange = vi.fn();
+        const onShownChanged = vi.fn();
         const { result } = renderHook(() =>
           useFloatingWithInteractions<HTMLButtonElement>({
             defaultShown: false,
@@ -117,20 +117,20 @@ describe(useFloatingWithInteractions, () => {
         switch (closeBy) {
           case 'escape-key':
             closeReason = closeBy;
-            jest.useFakeTimers();
+            vi.useFakeTimers();
             await userEvent.keyboard('{Escape}');
             act(() => {
-              jest.runOnlyPendingTimers();
-              jest.useRealTimers();
+              vi.runOnlyPendingTimers();
+              vi.useRealTimers();
             });
             break;
           case 'click-outside':
             closeReason = closeBy;
-            jest.useFakeTimers();
+            vi.useFakeTimers();
             await userEvent.click(document.body);
             act(() => {
-              jest.runOnlyPendingTimers();
-              jest.useRealTimers();
+              vi.runOnlyPendingTimers();
+              vi.useRealTimers();
             });
             break;
           case 'blur':
@@ -169,7 +169,7 @@ describe(useFloatingWithInteractions, () => {
       'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
       async ({ trigger, openBy, closeBy }) => {
         const shouldClosedByClickOutside = closeBy === 'click-outside';
-        const onShownChange = jest.fn();
+        const onShownChange = vi.fn();
         const { result } = renderHook(() =>
           useFloatingWithInteractions<HTMLButtonElement>({
             defaultShown: false,
@@ -193,15 +193,15 @@ describe(useFloatingWithInteractions, () => {
           expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
         });
 
-        jest.useFakeTimers();
+        vi.useFakeTimers();
         if (shouldClosedByClickOutside) {
           await userEvent.click(document.body);
         } else {
           await userEvent.keyboard('{Escape}');
         }
         act(() => {
-          jest.runOnlyPendingTimers();
-          jest.useRealTimers();
+          vi.runOnlyPendingTimers();
+          vi.useRealTimers();
         });
 
         rerender(<TestComponent hookResultRef={result} />);
@@ -251,7 +251,7 @@ describe(useFloatingWithInteractions, () => {
     );
 
     it('should work correctly with trigger=[click, focus]', async () => {
-      const onShownChange = jest.fn();
+      const onShownChange = vi.fn();
       const { result } = renderHook(() =>
         useFloatingWithInteractions<HTMLButtonElement>({
           defaultShown: false,
@@ -275,11 +275,11 @@ describe(useFloatingWithInteractions, () => {
         expect(onShownChange).toHaveBeenLastCalledWith(true, 'focus');
       });
 
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       await userEvent.click(result.current.refs.reference.current!);
       act(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
       });
 
       rerender(<TestComponent hookResultRef={result} autoFocus />);
@@ -337,19 +337,19 @@ describe(useFloatingWithInteractions, () => {
       );
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       await userEvent.keyboard('{Tab}');
       act(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
       });
       await waitFor(() => expect(testComponentRender.getByTestId('focus-trap')).toHaveFocus());
 
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       await userEvent.keyboard('{Escape}');
       act(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
       });
       testComponentRender.rerender(
         <TestComponent hookResultRef={result} restoreFocus={restoreFocus} keyboardInput />,
@@ -374,11 +374,11 @@ describe(useFloatingWithInteractions, () => {
       const testComponentRender = render(<TestComponent hookResultRef={result} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       await userEvent.click(result.current.refs.reference.current!);
       act(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
       });
       testComponentRender.rerender(<TestComponent hookResultRef={result} />);
       await waitFor(() => {
@@ -386,11 +386,11 @@ describe(useFloatingWithInteractions, () => {
         expect(document.activeElement).toBe(result.current.refs.reference.current);
       });
 
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       await userEvent.click(document.body);
       act(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
       });
       testComponentRender.rerender(<TestComponent hookResultRef={result} />);
       await waitFor(() => {
@@ -469,7 +469,7 @@ describe(useFloatingWithInteractions, () => {
         expect(result.current.shown).toBeTruthy();
       });
 
-      const onAnimationStart = jest.spyOn(result.current.floatingProps, 'onAnimationStart');
+      const onAnimationStart = vi.spyOn(result.current.floatingProps, 'onAnimationStart');
       render(<TestComponent hookResultRef={result} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationStart');
@@ -482,7 +482,7 @@ describe(useFloatingWithInteractions, () => {
         expect(result.current.shown).toBeTruthy();
       });
 
-      const onAnimationEnd = jest.spyOn(result.current.floatingProps, 'onAnimationEnd');
+      const onAnimationEnd = vi.spyOn(result.current.floatingProps, 'onAnimationEnd');
       render(<TestComponent hookResultRef={result} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationEnd');
@@ -494,7 +494,7 @@ describe(useFloatingWithInteractions, () => {
     });
 
     it('should close using the onClose()', async () => {
-      const onShownChange = jest.fn();
+      const onShownChange = vi.fn();
       const { result } = renderHook(() =>
         useFloatingWithInteractions({ defaultShown: true, onShownChange }),
       );

@@ -31,7 +31,7 @@ describe('ActionSheetItem', () => {
   });
 
   it('should call close callback when Enter keydown', async () => {
-    const onCloseCallback = jest.fn();
+    const onCloseCallback = vi.fn();
     render(
       <ActionSheetContext.Provider
         value={{
@@ -52,7 +52,7 @@ describe('ActionSheetItem', () => {
   });
 
   it('check call onItemClick callback when click to ActionSheetItem with selectable=true', async () => {
-    const onItemClickCallback = jest.fn();
+    const onItemClickCallback = vi.fn();
 
     render(
       <ActionSheetContext.Provider

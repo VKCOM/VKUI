@@ -58,7 +58,7 @@ describe(Root, () => {
       ['with animation', true],
       ['without animation', false],
     ])('%s', async (_name, animate) => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const result = render(
         <ConfigProvider transitionMotionEnabled={animate}>
           <Root activeView="v1" onTransition={onTransition}>
@@ -82,7 +82,7 @@ describe(Root, () => {
       });
     });
     it('detects back transition', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const h = render(
         <Root activeView="v2" onTransition={onTransition}>
           {views}
@@ -102,7 +102,7 @@ describe(Root, () => {
       });
     });
     it('once on rapid transitions', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const h = render(
         <Root activeView="v2" onTransition={onTransition}>
           {views}
@@ -129,7 +129,7 @@ describe(Root, () => {
       });
     });
     it('once on "canceled" transition', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const h = render(
         <Root activeView="v1" onTransition={onTransition}>
           {views}
@@ -173,7 +173,7 @@ describe(Root, () => {
       render(<Root activeView="focus">{views}</Root>).rerender(
         <Root activeView="other">{views}</Root>,
       );
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(document.activeElement === document.body).toBe(true);
     });
   });
