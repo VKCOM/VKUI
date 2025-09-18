@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`custom-select transforms correctly 1`] = `
+exports[`custom-select > transforms correctly 1`] = `
 "import { CustomSelect } from '@vkontakte/vkui';
 import React from 'react';
 

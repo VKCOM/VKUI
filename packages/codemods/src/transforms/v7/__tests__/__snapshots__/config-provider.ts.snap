@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`config-provider transforms correctly 1`] = `
+exports[`config-provider > transforms correctly 1`] = `
 "import { ConfigProvider, ConfigProviderContext } from '@vkontakte/vkui';
 import React, {createContext} from 'react';
 

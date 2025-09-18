@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`image-overlay transforms correctly 1`] = `
+exports[`image-overlay > transforms correctly 1`] = `
 "import { Image } from '@vkontakte/vkui';
 import { Icon12Add } from '@vkontakte/vkui-icons';
 import React from 'react';
@@ -50,7 +50,7 @@ const App = () => {
 };"
 `;
 
-exports[`image-overlay transforms correctly 2`] = `
+exports[`image-overlay > transforms correctly 2`] = `
 "import { ImageBase } from '@vkontakte/vkui';
 import { Icon12Add } from '@vkontakte/vkui-icons';
 import React from 'react';

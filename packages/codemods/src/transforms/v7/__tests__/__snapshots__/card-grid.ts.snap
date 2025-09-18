@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`card-grid transforms correctly 1`] = `
+exports[`card-grid > transforms correctly 1`] = `
 "import { Card, CardGrid } from '@vkontakte/vkui';
 import React from 'react';
 
