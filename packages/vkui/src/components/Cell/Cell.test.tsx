@@ -1,6 +1,6 @@
 import { fireEvent, getByRole, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
-import { baselineComponent, mockTouchStartDisabled, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { List } from '../List/List';
 import { Cell } from './Cell';
@@ -206,8 +206,6 @@ describe('Cell', () => {
       expect(checkbox).not.toBeChecked();
     });
   });
-
-  mockTouchStartDisabled();
 
   it('check dragging className add when dragging cell', async () => {
     render(

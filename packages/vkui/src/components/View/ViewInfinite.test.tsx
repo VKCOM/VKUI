@@ -5,7 +5,6 @@ import {
   baselineComponent,
   fakeTimers,
   mockScrollContext,
-  mockTouchStartDisabled,
   mountTest,
   waitCSSKeyframesAnimation,
   waitCSSTransitionEnd,
@@ -25,7 +24,6 @@ import styles from './View.module.css';
 // Basically the same as View.test.tsx
 
 describe(ViewInfinite, () => {
-  mockTouchStartDisabled();
   fakeTimers();
   baselineComponent(ViewInfinite);
 
