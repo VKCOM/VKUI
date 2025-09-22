@@ -18,6 +18,7 @@ export const ModalRoot = ({
   modalOverlayTestId,
   noFocusToDialog,
   disableModalOverlay,
+  disableAnimation,
   usePortal,
   onOpen,
   onOpened,
@@ -33,6 +34,7 @@ export const ModalRoot = ({
       modalOverlayTestId,
       noFocusToDialog,
       disableModalOverlay,
+      disableAnimation,
 
       // callbacks
       onOpen,
@@ -60,6 +62,7 @@ export const ModalRoot = ({
     }),
     [
       activeModal,
+      disableAnimation,
       disableModalOverlay,
       modalOverlayTestId,
       noFocusToDialog,
@@ -79,6 +82,7 @@ export const ModalRoot = ({
               position="fixed"
               visible={typeof activeModal === 'string'}
               getRootRef={modalOverlayRef}
+              disableAnimation={disableAnimation}
             />
           )}
           {children}

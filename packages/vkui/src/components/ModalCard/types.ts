@@ -61,7 +61,13 @@ export interface ModalCardProps
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
    * > При использовании `ModalCard` внутри `ModalRoot` есть особенность использования этого свойства.
-   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#otklyuchenie-zadnego-fona-u-konkretnogo-modalnogo-okna).
+   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-modal-overlay).
    */
   disableModalOverlay?: boolean;
+  /**
+   * Отключает анимацию открытия и закрытия модалки.
+   * > При использовании `ModalCard` внутри `ModalRoot` есть особенность использования этого свойства.
+   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-animation).
+   */
+  disableAnimation?: boolean;
 }

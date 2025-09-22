@@ -58,7 +58,7 @@ const modalIds = [1, 2, 3, 4] as const;
 
 export const Managing: Story = {
   parameters: { centered: false },
-  render: function Render() {
+  render: function Render(props) {
     const [withHeader, setWithHeader] = React.useState(false);
     const header = withHeader ? <ModalPageHeader>Header</ModalPageHeader> : null;
 
@@ -107,7 +107,7 @@ export const Managing: Story = {
           Включить шапку
         </Checkbox>
         {modalIds.map(renderNavigationCell)}
-        <ModalRoot activeModal={activeModal} onClose={() => setActiveModal(null)}>
+        <ModalRoot activeModal={activeModal} onClose={() => setActiveModal(null)} {...props}>
           <ModalPage id="1" settlingHeight={50} header={header}>
             {renderNavigationButtonGroup()}
             <Div>{multiplyText('Lorem ipsum', 400)}</Div>
