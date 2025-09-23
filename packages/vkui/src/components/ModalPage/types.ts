@@ -144,8 +144,6 @@ export interface ModalPageProps
   disableModalOverlay?: boolean;
   /**
    * Отключает анимацию открытия и закрытия модалки.
-   * > При использовании `ModalPage` внутри `ModalRoot` есть особенность использования этого свойства.
-   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-animation).
    */
   disableAnimation?: boolean;
 }

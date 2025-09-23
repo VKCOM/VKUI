@@ -135,23 +135,12 @@ const App = () => {
 > У `ModalPage` и `ModalCard` есть параметр `keepMounted`, при передаче этого параметра следует учитывать, что компонент будет
 > рендериться всегда, поэтому бизнес-логика будет срабатывать в любом случае.
 
-### Отключение заднего фона у конкретного модального окна [#disable-modal-overlay]
+### Отключение заднего фона у конкретного модального окна
 
 Если вам необходимо отключить отображение фона для конкретной модалки в `ModalRoot` вы можете сделать так:
 
 ```jsx
 <ModalRoot activeModal={activeModal} disableModalOverlay={activeModal === 'modal-1'}>
-  <ModalPage id="modal-1" />
-  <ModalPage id="modal-2" />
-</ModalRoot>
-```
-
-### Отключение анимации открытия у конкретного модального окна [#disable-animation]
-
-Если вам необходимо отключить анимации для конкретной модалки в `ModalRoot` вы можете сделать так:
-
-```jsx
-<ModalRoot activeModal={activeModal} disableAnimation={activeModal === 'modal-1'}>
   <ModalPage id="modal-1" />
   <ModalPage id="modal-2" />
 </ModalRoot>
