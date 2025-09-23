@@ -1,16 +1,16 @@
-function getUwuFromStorage() {
-  return localStorage.getItem('uwu') === 'true';
-}
-
-function setUwuToStorage(enabled) {
-  if (enabled) {
-    localStorage.setItem('uwu', 'true');
-  } else {
-    localStorage.removeItem('uwu');
-  }
-}
-
 (function () {
+  function getUwuFromStorage() {
+    return localStorage.getItem('uwu') === 'true';
+  }
+
+  function setUwuToStorage(enabled) {
+    if (enabled) {
+      localStorage.setItem('uwu', 'true');
+    } else {
+      localStorage.removeItem('uwu');
+    }
+  }
+
   try {
     const params = new URLSearchParams(window.location.search);
     const value = params.get('uwu');
