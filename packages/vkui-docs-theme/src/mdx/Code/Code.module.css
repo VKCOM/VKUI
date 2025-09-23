@@ -13,7 +13,7 @@
 pre .root {
   display: inline-flex;
   flex-direction: column;
-  min-inline-size: '100%';
+  min-inline-size: 100%;
 }
 
 /* stylelint-disable-next-line selector-max-type */
