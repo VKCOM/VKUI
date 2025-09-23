@@ -1,5 +1,6 @@
 # Next.js
 /.next/
+next-env.d.ts
 
 # Builds
 /build
