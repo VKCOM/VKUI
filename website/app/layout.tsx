@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     default: 'VKUI – React UI Kit',
     template: '%s | VKUI',
   },
+  metadataBase: new URL('https://vkui.io'),
+  alternates: {
+    canonical: './',
+  },
 };
 
 const versions = <Versions />;
