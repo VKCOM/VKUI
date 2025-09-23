@@ -71,7 +71,7 @@
   "scripts": {
     "prepack": "yarn run build",
     "build": "node --no-warnings=ExperimentalWarning --trace-warnings build.mjs",
-    "test": "yarn node --no-warnings=ExperimentalWarning --trace-warnings $(yarn bin jest)",
+    "test": "yarn run -T vitest run",
     "test:ci": "yarn test"
   },
   "peerDependencies": {
@@ -84,9 +84,6 @@
   },
   "devDependencies": {
     "@swc/core": "^1.13.5",
-    "@swc/jest": "^0.2.39",
-    "@types/jest": "^30.0.0",
-    "jest": "^30.1.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
