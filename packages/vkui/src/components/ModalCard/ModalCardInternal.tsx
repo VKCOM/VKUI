@@ -74,14 +74,15 @@ export const ModalCardInternal = ({
   onClosed,
   disableFocusTrap,
   disableModalOverlay,
-  disableAnimation,
+  disableOpenAnimation,
+  disableCloseAnimation,
   ...restProps
 }: ModalCardInternalProps): ReactNode => {
   const platform = usePlatform();
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
-    enableAppear: !disableAnimation,
-    enableEnter: !disableAnimation,
-    enableExit: !disableAnimation,
+    enableAppear: !disableOpenAnimation,
+    enableEnter: !disableOpenAnimation,
+    enableExit: !disableCloseAnimation,
     onEnter() {
       onOpen?.();
     },
@@ -124,7 +125,8 @@ export const ModalCardInternal = ({
       getRootRef={setBackdropEl}
       data-testid={modalOverlayTestId}
       visible={open}
-      disableAnimation={disableAnimation}
+      disableOpenAnimation={disableOpenAnimation}
+      disableCloseAnimation={disableCloseAnimation}
       onClick={
         closable
           ? function handleBackdropClick(event) {

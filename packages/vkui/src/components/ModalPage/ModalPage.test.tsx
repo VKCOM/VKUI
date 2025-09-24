@@ -84,7 +84,8 @@ describe(ModalPage, () => {
             onOpen={onOpen}
             onOpened={onOpened}
             onClosed={onClosed}
-            disableAnimation
+            disableOpenAnimation
+            disableCloseAnimation
             keepMounted
           />
         </>
@@ -99,6 +100,7 @@ describe(ModalPage, () => {
 
     fireEvent.click(screen.getByTestId('close-button'));
     expect(onClosed).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId('overlay')).toHaveAttribute('hidden', '');
   });
 
   test('testid for modal page content', async () => {

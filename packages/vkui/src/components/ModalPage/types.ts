@@ -143,7 +143,11 @@ export interface ModalPageProps
    */
   disableModalOverlay?: boolean;
   /**
-   * Отключает анимацию открытия и закрытия модалки.
+   * Отключает анимацию открытия модалки.
    */
-  disableAnimation?: boolean;
+  disableOpenAnimation?: boolean;
+  /**
+   * Отключает анимацию закрытия модалки.
+   */
+  disableCloseAnimation?: boolean;
 }

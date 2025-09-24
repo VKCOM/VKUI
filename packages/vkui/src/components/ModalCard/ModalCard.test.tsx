@@ -76,7 +76,8 @@ describe(ModalCard, () => {
             onOpen={onOpen}
             onOpened={onOpened}
             onClosed={onClosed}
-            disableAnimation
+            disableOpenAnimation
+            disableCloseAnimation
             keepMounted
           />
         </>
@@ -91,6 +92,7 @@ describe(ModalCard, () => {
 
     fireEvent.click(screen.getByTestId('close-button'));
     expect(onClosed).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId('overlay')).toHaveAttribute('hidden', '');
   });
 
   test('testid for modal card content', async () => {
