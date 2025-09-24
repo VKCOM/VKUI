@@ -11,8 +11,9 @@
 
 /* stylelint-disable-next-line selector-max-type */
 pre .root {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
+  min-inline-size: 100%;
 }
 
 /* stylelint-disable-next-line selector-max-type */

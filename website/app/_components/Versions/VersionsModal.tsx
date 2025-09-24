@@ -71,7 +71,11 @@ function VersionsModalInner() {
   return data.map((version) => (
     <SimpleCell
       key={version}
-      href={`https://vkcom.github.io/VKUI/${version}${location.hash}`}
+      href={
+        semverGte(version, MINIMUM_VERSION)
+          ? `https://vkui.io/${version}${location.hash}`
+          : `https://vkcom.github.io/VKUI/${version}${location.hash}`
+      }
       target="_blank"
     >
       {version}
