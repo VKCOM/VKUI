@@ -20,18 +20,20 @@ description: Компонент для выбора значения из вып
 > `undefined` ипользуется только для неконтролируемого компонента.
 
 <Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <CustomSelect
-    options={[
-      { value: 0, label: 'Москва' },
-      { value: 1, label: 'Санкт-Петербург' },
-      { value: 2, label: 'Новосибирск' },
-      { value: 3, label: 'Йошкар-Ола' },
-    ]}
-    placeholder="Выберите город"
-    allowClearButton
-  />
-  ```
+
+```jsx
+<CustomSelect
+  options={[
+    { value: 0, label: 'Москва' },
+    { value: 1, label: 'Санкт-Петербург' },
+    { value: 2, label: 'Новосибирск' },
+    { value: 3, label: 'Йошкар-Ола' },
+  ]}
+  placeholder="Выберите город"
+  allowClearButton
+/>
+```
+
 </Playground>
 
 ## Режим работы
@@ -75,9 +77,11 @@ const [color, setColor] = React.useState('red');
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
 <Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
-  ```
+
+```jsx
+<CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
+```
+
 </Playground>
 
 ## Валидация
@@ -89,14 +93,16 @@ const [color, setColor] = React.useState('red');
 > [`FormItem`](/components/form-item).
 
 <Playground style={{ maxWidth: 270 }}>
-  ```jsx
-  <CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
-  <CustomSelect
-    options={[{ value: 'green', label: 'Зеленый' }]}
-    defaultValue="green"
-    status="valid"
-  />
-  ```
+
+```jsx
+<CustomSelect options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
+<CustomSelect
+  options={[{ value: 'green', label: 'Зеленый' }]}
+  defaultValue="green"
+  status="valid"
+/>
+```
+
 </Playground>
 
 ## Кастомизация
@@ -107,21 +113,330 @@ const [color, setColor] = React.useState('red');
 Вы можете изменить стандартный компонент [`CustomSelectOption`](#customselectoption) или использовать свой компонент.
 
 <Playground style={{ maxWidth: 270 }}>
-  ```jsx
+
+```jsx
+<CustomSelect
+  options={[
+    { value: 0, label: 'Москва', country: 'Россия' },
+    { value: 1, label: 'Санкт-Петербург', country: 'Россия' },
+    { value: 2, label: 'Новосибирск', country: 'Россия' },
+    { value: 3, label: 'Йошкар-Ола', country: 'Россия' },
+  ]}
+  placeholder="Выберите город"
+  allowClearButton
+  renderOption={({ option, ...restProps }) => (
+    <CustomSelectOption {...restProps} description={option.country} />
+  )}
+/>
+```
+
+</Playground>
+
+## Кастомное поведение при поиске
+
+Пример показывает, как реализовать кастомное поведение поиска: при вводе сохраняется локальный `query`, при отсутствии совпадений в списке появляется опция «Добавить пользователя …»,
+её выбор добавляет новый элемент в `options` — вместе с пользовательским рендером опций это даёт удобный UX для создания элементов на лету.
+
+<Playground style={{ maxWidth: 270 }}>
+
+```jsx
+const users = [
+  {
+    id: 58690866,
+    first_name: 'Эльдар',
+    last_name: 'Мухаметханов',
+    screen_name: 'e.muhamethanov',
+  },
+  {
+    id: 1771114,
+    first_name: 'Ином',
+    last_name: 'Мирджамолов',
+    screen_name: 'inomdzhon',
+  },
+  {
+    id: 16790455,
+    first_name: 'Вика',
+    last_name: 'Жижонкова',
+    screen_name: 'BlackySoul',
+  },
+  {
+    id: 117253521,
+    first_name: 'Даниил',
+    last_name: 'Суворов',
+    screen_name: 'SevereCloud',
+  },
+  {
+    id: 99539515,
+    first_name: 'Никита',
+    last_name: 'Денисов',
+    screen_name: 'qurle',
+  },
+  {
+    id: 296221155,
+    first_name: 'Алексей',
+    last_name: 'Зайцев',
+    screen_name: 'Zaycevq',
+  },
+];
+
+const getUsers = (usersArray) =>
+  usersArray.map((user) => ({
+    label: `${user.first_name} ${user.last_name}`,
+    value: `${user.id}`,
+    description: user.screen_name,
+  }));
+
+const [value, setValue] = React.useState('');
+const [query, setQuery] = React.useState('');
+const [newUsers, setNewUsers] = React.useState([...getUsers(users)]);
+
+const customSearchOptions = () => {
+  const options = [...newUsers];
+  if (query.length > 0 && !options.find((user) => user.value === query || user.label === query)) {
+    options.unshift({
+      label: `Добавить пользователя ${query}`,
+      value: '0',
+    });
+  }
+  return options;
+};
+
+const onCustomSearchChange = (_, newValue) => {
+  if (newValue === '0') {
+    setNewUsers([...newUsers, { label: query, value: query }]);
+    setValue(query);
+  } else {
+    setValue(newValue);
+  }
+  setQuery('');
+};
+
+const onCustomSearchInputChange = (e) => {
+  setQuery(e.target.value);
+};
+
+return (
   <CustomSelect
-    options={[
-      { value: 0, label: 'Москва', country: 'Россия' },
-      { value: 1, label: 'Санкт-Петербург', country: 'Россия' },
-      { value: 2, label: 'Новосибирск', country: 'Россия' },
-      { value: 3, label: 'Йошкар-Ола', country: 'Россия' },
-    ]}
-    placeholder="Выберите город"
-    allowClearButton
+    value={value}
+    placeholder="Введите имя пользователя"
+    searchable
+    options={customSearchOptions()}
+    onInputChange={onCustomSearchInputChange}
     renderOption={({ option, ...restProps }) => (
-      <CustomSelectOption {...restProps} description={option.country} />
+      <CustomSelectOption
+        style={option.value === '0' ? { color: 'var(--vkui--color_text_accent)' } : {}}
+        {...restProps}
+      >
+        {option.label}
+      </CustomSelectOption>
     )}
+    onChange={onCustomSearchChange}
   />
-  ```
+);
+```
+
+</Playground>
+
+## Кастомный алгоритм поиска
+
+Демонстрация кастомного алгоритма поиска иллюстрирует передачу `filterFn` для гибкого соответствия (по `label` и `description`),
+поддержку `searchable` и кастомного рендера опций — полезно, когда нужно искать по нескольким полям или использовать нестандартные критерии.
+
+<Playground style={{ maxWidth: 270 }}>
+
+```jsx
+const cities = [
+  {
+    label: 'Санкт-Петербург',
+    description: 'Россия',
+    value: '0',
+  },
+  {
+    label: 'Москва',
+    description: 'Россия',
+    value: '1',
+  },
+  {
+    label: 'Новосибирск',
+    description: 'Россия',
+    disabled: true,
+    value: '2',
+  },
+  {
+    label: 'Нью-Йорк',
+    description: 'США',
+    value: '3',
+  },
+  {
+    label: 'Чикаго',
+    description: 'США',
+    value: '4',
+  },
+];
+
+const customSearchFilter = (value, option) =>
+  option.label.toLowerCase().includes(value.toLowerCase()) ||
+  option.description.toLowerCase().includes(value.toLowerCase());
+
+return (
+  <CustomSelect
+    id="custom-search-algo-select-id"
+    placeholder="Введите название города или страны"
+    searchable
+    filterFn={customSearchFilter}
+    renderOption={({ option, ...restProps }) => (
+      <CustomSelectOption {...restProps} description={option.description} />
+    )}
+    options={cities}
+  />
+);
+```
+
+</Playground>
+
+## Асинхронная загрузка списка
+
+Асинхронный пример показывает подгрузку опций с задержкой/дебаунсом, управление состояниями `fetching`/`remoteQuery`,
+минимальную длину запроса, очистку таймаутов и возможность заменить содержимое выпадающего списка (например, подсказкой «введите хотя бы три символа») — стандартный шаблон для работы с удалёнными API.
+
+<Playground style={{ maxWidth: 600 }}>
+
+```jsx
+const users = [
+  {
+    id: 58690866,
+    first_name: 'Эльдар',
+    last_name: 'Мухаметханов',
+    screen_name: 'e.muhamethanov',
+  },
+  {
+    id: 1771114,
+    first_name: 'Ином',
+    last_name: 'Мирджамолов',
+    screen_name: 'inomdzhon',
+  },
+  {
+    id: 16790455,
+    first_name: 'Вика',
+    last_name: 'Жижонкова',
+    screen_name: 'BlackySoul',
+  },
+  {
+    id: 117253521,
+    first_name: 'Даниил',
+    last_name: 'Суворов',
+    screen_name: 'SevereCloud',
+  },
+  {
+    id: 99539515,
+    first_name: 'Никита',
+    last_name: 'Денисов',
+    screen_name: 'qurle',
+  },
+  {
+    id: 296221155,
+    first_name: 'Алексей',
+    last_name: 'Зайцев',
+    screen_name: 'Zaycevq',
+  },
+];
+
+const getUsers = (usersArray) =>
+  usersArray.map((user) => ({
+    label: `${user.first_name} ${user.last_name}`,
+    value: `${user.id}`,
+    description: user.screen_name,
+  }));
+
+const [searchable, setSearchable] = React.useState(false);
+const [remoteQuery, setRemoteQuery] = React.useState('');
+const [fetching, setFetching] = React.useState(false);
+const [remoteUsers, setRemoteUsers] = React.useState([]);
+
+let timeout;
+
+const cleanFetchingTimeout = () => {
+  if (timeout) {
+    clearTimeout(timeout);
+  }
+};
+
+const fetchRemoteUsers = () => {
+  setFetching(true);
+  timeout = setTimeout(() => {
+    setRemoteUsers([...getUsers(users)]);
+    setFetching(false);
+    cleanFetchingTimeout();
+  }, 1500);
+};
+
+const searchRemoteUsers = (e) => {
+  const _remoteQuery = e.target.value;
+  cleanFetchingTimeout();
+  setRemoteQuery(_remoteQuery);
+
+  if (_remoteQuery.length < 3) {
+    setRemoteUsers([]);
+    setFetching(false);
+  } else {
+    fetchRemoteUsers();
+  }
+};
+
+const clearRemoteUsers = () => {
+  setRemoteUsers([]);
+  setRemoteQuery('');
+  cleanFetchingTimeout();
+};
+
+const renderDropdown = ({ defaultDropdownContent }) => {
+  if (remoteQuery.length < 3) {
+    return (
+      <Text style={{ padding: 12, color: 'var(--vkui--color_text_secondary)' }}>
+        Нужно ввести хотя бы три символа
+      </Text>
+    );
+  }
+  return defaultDropdownContent;
+};
+
+React.useEffect(() => {
+  return () => cleanFetchingTimeout();
+}, []);
+
+return (
+  <FormLayoutGroup mode="horizontal" style={{ width: '100%' }}>
+    <FormItem style={{ flexGrow: 1, flexShrink: 1 }}>
+      <CustomSelect
+        aria-label="Пользователь"
+        options={remoteUsers}
+        searchable={searchable}
+        placeholder={searchable ? 'Введите имя пользователя' : 'Не выбран'}
+        disabled={searchable && fetching}
+        onInputChange={searchable ? searchRemoteUsers : undefined}
+        onOpen={searchable ? undefined : remoteUsers.length === 0 && fetchRemoteUsers}
+        onClose={() => {
+          console.log('CLOSED [async CustomSelect]');
+        }}
+        fetching={fetching}
+        renderDropdown={searchable && !fetching && renderDropdown}
+      />
+    </FormItem>
+
+    <FormItem style={{ flexBasis: '200px', flexGrow: 0 }}>
+      <Checkbox
+        onChange={(e) => {
+          setSearchable(e.target.checked);
+          clearRemoteUsers();
+        }}
+      >
+        Использовать поиск
+      </Checkbox>
+    </FormItem>
+  </FormLayoutGroup>
+);
+```
+
 </Playground>
 
 ## CustomSelectOption [#custom-select-option]
