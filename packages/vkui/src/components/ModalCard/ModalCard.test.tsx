@@ -53,9 +53,9 @@ describe(ModalCard, () => {
   });
 
   test('should open/close without animation with disableAnimation', () => {
-    const onOpen = jest.fn();
-    const onOpened = jest.fn();
-    const onClosed = jest.fn();
+    const onOpen = vi.fn();
+    const onOpened = vi.fn();
+    const onClosed = vi.fn();
 
     const Fixture = () => {
       const [opened, setOpened] = React.useState<boolean>(false);
