@@ -1,18 +1,17 @@
-import * as React from 'react';
 import { act } from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { AppRoot } from '../../components/AppRoot/AppRoot';
 import { setRef } from '../../lib/utils';
 import {
+  ADOPTED_TOUCH_EVENTS_HANDLERS,
   baselineComponent,
   fakeTimers,
   mockRect,
-  mockTouchStartDisabled,
+  MOUSE_EVENTS_HANDLERS,
   userEvent,
   waitForFloatingPosition,
 } from '../../testing/utils';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
-import type { CustomTouchEvent } from '../Touch/Touch';
 import { Slider as SliderBase, type SliderMultipleProps, type SliderProps } from './Slider';
 
 const pointerPos = (x: number) => ({ clientX: x, clientY: 10 });
@@ -29,16 +28,11 @@ const Slider = ({
 };
 
 describe(Slider, () => {
-  mockTouchStartDisabled();
-
   baselineComponent((props) => <Slider getAriaLabel={() => 'Slider'} {...props} />);
 
   describe('uncontrolled', () => {
     it('uses min as fallback', () => {
-      const handleChangeForTypeCheck: jest.Mock<
-        void,
-        [number, CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChangeForTypeCheck: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider onChange={handleChangeForTypeCheck} />);
       expect(screen.getByRole('slider')).toHaveValue('0');
     });
@@ -79,10 +73,7 @@ describe(Slider, () => {
 
   describe('controlled', () => {
     it('sets value', () => {
-      const handleChangeForTypeCheck: jest.Mock<
-        void,
-        [number, CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChangeForTypeCheck: ReturnType<typeof vi.fn> = vi.fn();
       const { rerender } = render(<Slider value={5} onChange={handleChangeForTypeCheck} />);
       expect(screen.getByRole('slider')).toHaveValue('5');
 
@@ -107,10 +98,7 @@ describe(Slider, () => {
     });
 
     it('should overrides defaultValue if value is exist (multiple)', () => {
-      const handleChangeForTypeCheck: jest.Mock<
-        void,
-        [[number, number], CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChangeForTypeCheck: ReturnType<typeof vi.fn> = vi.fn();
       render(
         <Slider
           multiple
@@ -127,8 +115,7 @@ describe(Slider, () => {
 
   describe('change with tap', () => {
     it('moves start', async () => {
-      const handleChange: jest.Mock<void, [number, CustomTouchEvent | React.ChangeEvent]> =
-        jest.fn();
+      const handleChange: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider defaultValue={30} onChange={handleChange} />);
       await userEvent.pointer([
         { target: screen.getByTestId('root'), coords: pointerPos(20), keys: '[MouseLeft]' },
@@ -138,10 +125,7 @@ describe(Slider, () => {
     });
 
     it('moves start (multiple)', async () => {
-      const handleChange: jest.Mock<
-        void,
-        [[number, number], CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChange: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider multiple defaultValue={[30, 70]} onChange={handleChange} />);
       const [startSlider, endSlider] = screen.getAllByRole('slider');
       await userEvent.pointer([
@@ -171,146 +155,155 @@ describe(Slider, () => {
     });
   });
 
-  describe('change with drag', () => {
-    it('moves start', async () => {
-      render(<Slider />);
-      const slider = screen.getByRole('slider');
+  describe.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
+    'change with drag',
+    ({ handlers: mouseEvents }) => {
+      const [mouseDown, mouseMove, mouseUp] = mouseEvents;
 
-      fireEvent.mouseDown(slider);
+      it('moves start', async () => {
+        render(<Slider />);
+        const slider = screen.getByRole('slider');
 
-      fireEvent.mouseMove(slider, pointerPos(40));
-      expect(slider).toHaveValue('40');
+        mouseDown(slider);
 
-      fireEvent.mouseMove(slider, pointerPos(50));
-      expect(slider).toHaveValue('50');
+        mouseMove(slider, pointerPos(40));
+        expect(slider).toHaveValue('40');
 
-      fireEvent.mouseUp(slider);
-    });
+        mouseMove(slider, pointerPos(50));
+        expect(slider).toHaveValue('50');
 
-    it('moves start (multiple)', async () => {
-      render(
-        <Slider
-          multiple
-          defaultValue={[30, 70]}
-          startThumbTestId="startSlider"
-          endThumbTestId="endSlider"
-        />,
-      );
-      const startSlider = screen.getByTestId('startSlider');
-      const endSlider = screen.getByTestId('endSlider');
+        mouseUp(slider);
+      });
 
-      fireEvent.mouseDown(startSlider);
-
-      fireEvent.mouseMove(startSlider, pointerPos(40));
-      expect(startSlider).toHaveValue('40');
-      expect(endSlider).toHaveValue('70');
-
-      fireEvent.mouseMove(startSlider, pointerPos(50));
-      expect(startSlider).toHaveValue('50');
-      expect(endSlider).toHaveValue('70');
-
-      fireEvent.mouseUp(startSlider);
-    });
-
-    it('moves end (multiple)', async () => {
-      render(<Slider multiple defaultValue={[30, 70]} />);
-      const [startSlider, endSlider] = screen.getAllByRole('slider');
-
-      fireEvent.mouseDown(endSlider);
-
-      fireEvent.mouseMove(endSlider, pointerPos(40));
-      expect(startSlider).toHaveValue('30');
-      expect(endSlider).toHaveValue('40');
-
-      fireEvent.mouseMove(endSlider, pointerPos(50));
-      expect(startSlider).toHaveValue('30');
-      expect(endSlider).toHaveValue('50');
-
-      fireEvent.mouseUp(endSlider);
-    });
-
-    it('should prevent change of direction on over drag', () => {
-      render(<Slider multiple defaultValue={[30, 70]} />);
-      const [startSlider, endSlider] = screen.getAllByRole('slider');
-
-      fireEvent.mouseDown(startSlider);
-
-      fireEvent.mouseMove(startSlider, pointerPos(80));
-      expect(startSlider).toHaveValue('70');
-      expect(endSlider).toHaveValue('70');
-
-      fireEvent.mouseUp(startSlider);
-    });
-  });
-
-  describe('check rtl view', () => {
-    it('moves start', async () => {
-      render(
-        <DirectionProvider value="rtl">
-          <Slider />
-        </DirectionProvider>,
-      );
-      const slider = screen.getByRole('slider');
-
-      fireEvent.mouseDown(slider);
-
-      fireEvent.mouseMove(slider, pointerPos(40));
-      expect(slider).toHaveValue('60');
-
-      fireEvent.mouseMove(slider, pointerPos(50));
-      expect(slider).toHaveValue('50');
-
-      fireEvent.mouseUp(slider);
-    });
-
-    it('moves start (multiple)', async () => {
-      render(
-        <DirectionProvider value="rtl">
+      it('moves start (multiple)', async () => {
+        render(
           <Slider
             multiple
             defaultValue={[30, 70]}
             startThumbTestId="startSlider"
             endThumbTestId="endSlider"
-          />
-        </DirectionProvider>,
-      );
-      const startSlider = screen.getByTestId('startSlider');
-      const endSlider = screen.getByTestId('endSlider');
+          />,
+        );
+        const startSlider = screen.getByTestId('startSlider');
+        const endSlider = screen.getByTestId('endSlider');
 
-      fireEvent.mouseDown(startSlider);
+        mouseDown(startSlider);
 
-      fireEvent.mouseMove(startSlider, pointerPos(40));
-      expect(startSlider).toHaveValue('60');
-      expect(endSlider).toHaveValue('70');
+        mouseMove(startSlider, pointerPos(40));
+        expect(startSlider).toHaveValue('40');
+        expect(endSlider).toHaveValue('70');
 
-      fireEvent.mouseMove(startSlider, pointerPos(50));
-      expect(startSlider).toHaveValue('50');
-      expect(endSlider).toHaveValue('70');
+        mouseMove(startSlider, pointerPos(50));
+        expect(startSlider).toHaveValue('50');
+        expect(endSlider).toHaveValue('70');
 
-      fireEvent.mouseUp(startSlider);
-    });
+        mouseUp(startSlider);
+      });
 
-    it('moves end (multiple)', async () => {
-      render(
-        <DirectionProvider value="rtl">
-          <Slider multiple defaultValue={[30, 70]} />
-        </DirectionProvider>,
-      );
-      const [startSlider, endSlider] = screen.getAllByRole('slider');
+      it('moves end (multiple)', async () => {
+        render(<Slider multiple defaultValue={[30, 70]} />);
+        const [startSlider, endSlider] = screen.getAllByRole('slider');
 
-      fireEvent.mouseDown(endSlider);
+        mouseDown(endSlider);
 
-      fireEvent.mouseMove(endSlider, pointerPos(40));
-      expect(startSlider).toHaveValue('30');
-      expect(endSlider).toHaveValue('60');
+        mouseMove(endSlider, pointerPos(40));
+        expect(startSlider).toHaveValue('30');
+        expect(endSlider).toHaveValue('40');
 
-      fireEvent.mouseMove(endSlider, pointerPos(50));
-      expect(startSlider).toHaveValue('30');
-      expect(endSlider).toHaveValue('50');
+        mouseMove(endSlider, pointerPos(50));
+        expect(startSlider).toHaveValue('30');
+        expect(endSlider).toHaveValue('50');
 
-      fireEvent.mouseUp(endSlider);
-    });
-  });
+        mouseUp(endSlider);
+      });
+
+      it('should prevent change of direction on over drag', () => {
+        render(<Slider multiple defaultValue={[30, 70]} />);
+        const [startSlider, endSlider] = screen.getAllByRole('slider');
+
+        mouseDown(startSlider);
+
+        mouseMove(startSlider, pointerPos(80));
+        expect(startSlider).toHaveValue('70');
+        expect(endSlider).toHaveValue('70');
+
+        mouseUp(startSlider);
+      });
+    },
+  );
+
+  describe.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
+    'check rtl view',
+    ({ handlers: mouseEvents }) => {
+      const [mouseDown, mouseMove, mouseUp] = mouseEvents;
+      it('moves start', async () => {
+        render(
+          <DirectionProvider value="rtl">
+            <Slider />
+          </DirectionProvider>,
+        );
+        const slider = screen.getByRole('slider');
+
+        mouseDown(slider);
+
+        mouseMove(slider, pointerPos(40));
+        expect(slider).toHaveValue('60');
+
+        mouseMove(slider, pointerPos(50));
+        expect(slider).toHaveValue('50');
+
+        mouseUp(slider);
+      });
+
+      it('moves start (multiple)', async () => {
+        render(
+          <DirectionProvider value="rtl">
+            <Slider
+              multiple
+              defaultValue={[30, 70]}
+              startThumbTestId="startSlider"
+              endThumbTestId="endSlider"
+            />
+          </DirectionProvider>,
+        );
+        const startSlider = screen.getByTestId('startSlider');
+        const endSlider = screen.getByTestId('endSlider');
+
+        mouseDown(startSlider);
+
+        mouseMove(startSlider, pointerPos(40));
+        expect(startSlider).toHaveValue('60');
+        expect(endSlider).toHaveValue('70');
+
+        mouseMove(startSlider, pointerPos(50));
+        expect(startSlider).toHaveValue('50');
+        expect(endSlider).toHaveValue('70');
+
+        mouseUp(startSlider);
+      });
+
+      it('moves end (multiple)', async () => {
+        render(
+          <DirectionProvider value="rtl">
+            <Slider multiple defaultValue={[30, 70]} />
+          </DirectionProvider>,
+        );
+        const [startSlider, endSlider] = screen.getAllByRole('slider');
+
+        mouseDown(endSlider);
+
+        mouseMove(endSlider, pointerPos(40));
+        expect(startSlider).toHaveValue('30');
+        expect(endSlider).toHaveValue('60');
+
+        mouseMove(endSlider, pointerPos(50));
+        expect(startSlider).toHaveValue('30');
+        expect(endSlider).toHaveValue('50');
+
+        mouseUp(endSlider);
+      });
+    },
+  );
 
   describe('with tooltip', () => {
     fakeTimers();
@@ -338,14 +331,14 @@ describe(Slider, () => {
       // shows tooltip on focus
       await act(async () => {
         await userEvent.tab();
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       await waitFor(() => expect(screen.queryByText('30')).toBeInTheDocument());
 
       // hides on blur
       await act(async () => {
         await userEvent.tab();
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       await waitFor(() => expect(screen.queryByText('30')).not.toBeInTheDocument());
     });

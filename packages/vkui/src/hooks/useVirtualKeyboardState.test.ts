@@ -34,7 +34,7 @@ describe(useVirtualKeyboardState, () => {
     fireEvent.focusIn(el);
     const clearViewportMeasuresMock = mockViewportHeight(window, window.innerHeight / 2);
     fireEvent.resize(window);
-    act(jest.runOnlyPendingTimers);
+    act(vi.runOnlyPendingTimers);
     expect(h.result.current.opened).toBeFalsy();
 
     fireEvent.focusOut(el);
@@ -57,11 +57,11 @@ describe(useVirtualKeyboardState, () => {
 
       const clearViewportMeasuresMock = mockViewportHeight(viewport, window.innerHeight / 2);
       customResizeFireEvent(viewport);
-      act(jest.runOnlyPendingTimers);
+      act(vi.runOnlyPendingTimers);
       expect(h.result.current.opened).toBeTruthy();
 
       fireEvent.focusOut(el);
-      act(jest.runOnlyPendingTimers);
+      act(vi.runOnlyPendingTimers);
       expect(h.result.current.opened).toBeFalsy();
 
       clearViewportMeasuresMock();
@@ -84,7 +84,7 @@ describe(useVirtualKeyboardState, () => {
 
       const clearViewportMeasuresMock = mockViewportHeight(viewport, window.innerHeight / 2);
       customResizeFireEvent(viewport);
-      act(jest.runOnlyPendingTimers);
+      act(vi.runOnlyPendingTimers);
       expect(h.result.current.opened).toBeTruthy();
 
       fireEvent.focusOut(el);
@@ -108,11 +108,11 @@ describe(useVirtualKeyboardState, () => {
 
     const clearViewportMeasuresMock = mockViewportHeight(window, window.innerHeight / 2);
     customResizeFireEvent(window);
-    act(jest.runOnlyPendingTimers);
+    act(vi.runOnlyPendingTimers);
 
     expect(window.scrollY).toBe(0);
     fireEvent.scroll(window, { target: { scrollY: 100 } });
-    act(jest.runOnlyPendingTimers);
+    act(vi.runOnlyPendingTimers);
     expect(window.scrollY).toBe(0);
 
     clearActiveElementMock();
@@ -137,10 +137,10 @@ function visualViewportMock() {
       offsetLeft: window.pageXOffset,
       width: window.innerWidth,
       height: window.innerHeight,
-      addEventListener: jest.fn((_: string, callback: (event: Event) => void) => {
+      addEventListener: vi.fn((_: string, callback: (event: Event) => void) => {
         listeners.push(callback);
       }),
-      removeEventListener: jest.fn((_: string, callback: (event: Event) => void) => {
+      removeEventListener: vi.fn((_: string, callback: (event: Event) => void) => {
         listeners = listeners.filter((i) => i !== callback);
       }),
       dispatchEvent: (event: Event) => {
