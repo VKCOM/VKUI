@@ -8,6 +8,7 @@ export function LogoIcon(props: SvgIconProps) {
       height="36"
       fill="none"
       className={classNames(props.className, 'no-uwu')}
+      display="block"
       {...props}
     >
       <g>

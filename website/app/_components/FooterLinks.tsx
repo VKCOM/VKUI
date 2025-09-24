@@ -3,8 +3,9 @@
 import * as React from 'react';
 import { Icon16LinkOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
-import { LogoIcon } from '@vkontakte/vkui-docs-theme';
+import { LogoIcon, LogoIconUwu } from '@vkontakte/vkui-docs-theme';
 import NextLink from 'next/link';
+import { UwuModeSwitcher } from './UwuModeSwitcher.tsx';
 
 function FooterLink({ children, href }: React.PropsWithChildren<{ href: string }>) {
   const isExternal = /^https?:\/\//.test(href);
@@ -25,10 +26,11 @@ function FooterLink({ children, href }: React.PropsWithChildren<{ href: string }
 export function FooterLinks() {
   return (
     <>
-      <LogoIcon width={44} height={23} viewBox="0 0 73 36" />•
-      <FooterLink href="/blog">Блог</FooterLink>•
+      <LogoIcon width={44} height={23} viewBox="0 0 73 36" />
+      <LogoIconUwu />•<FooterLink href="/blog">Блог</FooterLink>•
       <FooterLink href="https://vkcom.github.io/icons/">Иконки</FooterLink>•
-      <FooterLink href="https://vkcom.github.io/vkui-tokens/">Токены</FooterLink>
+      <FooterLink href="https://vkcom.github.io/vkui-tokens/">Токены</FooterLink>•
+      <UwuModeSwitcher />
     </>
   );
 }
