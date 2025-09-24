@@ -54,7 +54,7 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
-<Playground style={{ maxWidth: 250 }}>
+<Playground style={{ width: 'fit-content' }}>
   ```jsx
   <DateRangeInput
     defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
@@ -72,18 +72,20 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 > Если вы используете `DateRangeInput` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
-<Playground style={{ maxWidth: 250 }}>
+<Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateRangeInput
-    status="error"
-    defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
-    accessible
-  />
-  <DateRangeInput
-    status="valid"
-    defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
-    accessible
-  />
+  <Flex direction="column" gap="m">
+    <DateRangeInput
+      status="error"
+      defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
+      accessible
+    />
+    <DateRangeInput
+      status="valid"
+      defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
+      accessible
+    />
+  </Flex>
   ```
 </Playground>
 
