@@ -73,9 +73,6 @@ const slideRight = (target: HTMLElement) =>
     [threshold, 0],
   ]);
 
-// reset touch detection
-afterEach(() => delete window['ontouchstart']);
-
 describe('Touch', () => {
   baselineComponent(Touch);
 

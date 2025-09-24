@@ -2,28 +2,12 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import {
-  baselineComponent,
-  mockTouchStartDisabled,
-  setNodeEnv,
-  userEvent,
-} from '../../testing/utils';
+import { baselineComponent, fakeTimers, setNodeEnv, userEvent } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { revertRtlValue } from '../CarouselBase/helpers';
 import { type BaseGalleryProps } from '../CarouselBase/types';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { Gallery, type GalleryProps } from './Gallery';
-
-const mockTime = () => {
-  const mockDate = new Date(2024, 7, 5);
-  let time = mockDate.getTime();
-  vi.spyOn(window, 'Date').mockImplementation(() => mockDate);
-  Date.now = vi.fn(() => {
-    const newTime = time + 1000;
-    time = newTime;
-    return newTime;
-  });
-};
 
 const simulateDrag = (element: HTMLDivElement, points: number[]) => {
   fireEvent.mouseDown(element, {
@@ -215,16 +199,8 @@ const setup = ({
 };
 
 describe('Gallery', () => {
-  mockTouchStartDisabled();
   baselineComponent(Gallery);
-
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
-  });
+  fakeTimers(false);
 
   describe('handles slide count', () => {
     it('prevents slideIndex outside slide count', () => {
@@ -331,7 +307,6 @@ describe('Gallery', () => {
   });
 
   it('check that scroll reset when using screen reader VoiceOver', () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
 
     let scrollLeft = 0;
@@ -525,8 +500,6 @@ describe('Gallery', () => {
   });
 
   describe('check not looped gallery navigation working', () => {
-    beforeEach(() => mockTime());
-    afterEach(() => vi.restoreAllMocks());
     it('check correct navigation by dragging', () => {
       const onChange = vi.fn();
       const onDragStart = vi.fn();

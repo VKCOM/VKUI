@@ -36,10 +36,10 @@ export const userEvent = userEventLib.setup({
   advanceTimers: vi.advanceTimersByTime.bind(vi),
 });
 
-export function fakeTimers() {
+export function fakeTimers(runPendingTimers = true) {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => {
-    vi.runOnlyPendingTimers();
+    runPendingTimers && vi.runOnlyPendingTimers();
     vi.useRealTimers();
   });
 }
@@ -494,21 +494,33 @@ export function setNodeEnv(value: 'development' | 'production' | 'test') {
   vi.stubEnv('NODE_ENV', value);
 }
 
-export function mockTouchStartDisabled() {
-  let originalOntouchstart: unknown;
+const TOUCH_TO_MOUSE_HANDLER = new WeakMap<
+  typeof fireEvent.touchStart,
+  typeof fireEvent.mouseDown
+>();
+TOUCH_TO_MOUSE_HANDLER.set(fireEvent.touchStart, fireEvent.mouseDown);
+TOUCH_TO_MOUSE_HANDLER.set(fireEvent.touchMove, fireEvent.mouseMove);
+TOUCH_TO_MOUSE_HANDLER.set(fireEvent.touchEnd, fireEvent.mouseUp);
 
-  beforeEach(() => {
-    if ('ontouchstart' in window) {
-      originalOntouchstart = window.ontouchstart;
-      delete window.ontouchstart;
-    }
-  });
+const adoptedTouchEvent = (fn: typeof fireEvent.touchStart): typeof fireEvent.mouseDown => {
+  return (element, options) => {
+    const typedOptions = options as { clientX: number; clientY: number } | undefined;
+    const handler = TOUCH_TO_MOUSE_HANDLER.get(fn);
+    return handler!(
+      element,
+      touchEventMock({ clientX: typedOptions?.clientX, clientY: typedOptions?.clientY }),
+    );
+  };
+};
 
-  afterEach(() => {
-    // Восстанавливаем либо исходное значение, либо удаляем, если его не было
-    if (originalOntouchstart !== undefined) {
-      // @ts-expect-error: TS2322 Нужно вернуть оригинально значение
-      window.ontouchstart = originalOntouchstart;
-    }
-  });
-}
+export const MOUSE_EVENTS_HANDLERS: Array<typeof fireEvent.mouseDown> = [
+  fireEvent.mouseDown,
+  fireEvent.mouseMove,
+  fireEvent.mouseUp,
+];
+
+export const ADOPTED_TOUCH_EVENTS_HANDLERS: Array<typeof fireEvent.mouseDown> = [
+  adoptedTouchEvent(fireEvent.touchStart),
+  adoptedTouchEvent(fireEvent.touchMove),
+  adoptedTouchEvent(fireEvent.touchEnd),
+];
