@@ -5839,7 +5839,6 @@ __metadata:
     jest-environment-jsdom: "npm:^30.1.2"
     jest-environment-node: "npm:^30.1.2"
     jest-preset-stylelint: "npm:^8.0.0"
-    jsdom: "npm:^26.1.0"
     lint-staged: "npm:^16.1.6"
     mini-css-extract-plugin: "npm:^2.9.4"
     postcss: "npm:^8.5.6"
