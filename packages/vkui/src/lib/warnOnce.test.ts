@@ -4,12 +4,12 @@ describe(warnOnce, () => {
   afterAll(() => {
     // eslint-disable-next-line no-console
     console.clear();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => void 0);
-  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => void 0);
-  const logSpy = jest.spyOn(console, 'log').mockImplementation(() => void 0);
+  const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => void 0);
+  const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => void 0);
+  const logSpy = vi.spyOn(console, 'log').mockImplementation(() => void 0);
 
   const warn = warnOnce('zone');
   const warnMsg = 'warn message';

@@ -55,7 +55,7 @@ describe(View, () => {
       expect(result.queryByTestId('p2')).not.toBeNull();
     });
     it('calls onTransition', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const result = render(
         <View activePanel="p1" onTransition={onTransition}>
           {panels}
@@ -75,7 +75,7 @@ describe(View, () => {
       });
     });
     it('detects back transition', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const result = render(
         <View activePanel="p2" onTransition={onTransition}>
           {panels}
@@ -108,15 +108,15 @@ describe(View, () => {
       render(<View activePanel="focus">{panels}</View>).rerender(
         <View activePanel="other">{panels}</View>,
       );
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(document.activeElement === document.body).toBe(true);
     });
   });
 
   describe('can swipeBack', () => {
-    let nowMock: jest.SpyInstance;
+    let nowMock: ReturnType<typeof vi.spyOn>;
     beforeEach(() => {
-      nowMock = jest.spyOn(Date, 'now');
+      nowMock = vi.spyOn(Date, 'now');
     });
     afterEach(() => {
       nowMock && nowMock.mockClear();
@@ -127,7 +127,7 @@ describe(View, () => {
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(view, { clientX: 0, clientY: 100 });
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
@@ -137,7 +137,7 @@ describe(View, () => {
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: window.innerWidth + 1, clientY: 100 });
       fireEvent.mouseUp(view);
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
@@ -190,7 +190,7 @@ describe(View, () => {
         });
         fireEvent.mouseMove(elPreventSwipeBack, { clientX: window.innerWidth + 1, clientY: 100 });
         fireEvent.mouseUp(elPreventSwipeBack);
-        act(jest.runAllTimers);
+        act(vi.runAllTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
 
@@ -202,7 +202,7 @@ describe(View, () => {
           clientY: 100,
         });
         fireEvent.mouseUp(view);
-        act(jest.runAllTimers);
+        act(vi.runAllTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
     });
@@ -250,7 +250,7 @@ describe(View, () => {
       // speed to 0
       nowMock.mockImplementation(() => Infinity);
       fireEvent.mouseUp(view);
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
@@ -351,7 +351,7 @@ describe(View, () => {
 
         scrollToLeftAndSwipe(0);
         expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
-        act(jest.runOnlyPendingTimers);
+        act(vi.runOnlyPendingTimers);
         expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
       });
@@ -382,7 +382,7 @@ describe(View, () => {
 
         scrollToLeftAndSwipe(100);
         expect(events.onSwipeBackStart).not.toHaveBeenCalled();
-        act(jest.runOnlyPendingTimers);
+        act(vi.runOnlyPendingTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
 
@@ -415,7 +415,7 @@ describe(View, () => {
       fireEvent.mouseMove(elSlide1, { clientX: window.innerWidth / 2, clientY: 100 });
       fireEvent.mouseUp(elSlide1);
       expect(events.onSwipeBackStart).not.toHaveBeenCalled();
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
@@ -496,10 +496,10 @@ function setupSwipeBack({
   initialProps?: Partial<ViewProps>;
 } = {}) {
   const events = {
-    onSwipeBack: jest.fn(),
-    onTransition: jest.fn(),
-    onSwipeBackStart: jest.fn(),
-    onSwipeBackCancel: jest.fn(),
+    onSwipeBack: vi.fn(),
+    onTransition: vi.fn(),
+    onSwipeBackStart: vi.fn(),
+    onSwipeBackCancel: vi.fn(),
   };
   const SwipeBack = (p: Partial<ViewProps>) => (
     <Wrapper>

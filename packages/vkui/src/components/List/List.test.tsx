@@ -6,8 +6,8 @@ import { Cell } from '../Cell/Cell';
 import { List } from './List';
 
 let isScrollRunning = false;
-jest.mock('../../hooks/useDraggableWithDomApi/autoScroll', () => {
-  const originalModule = jest.requireActual('../../hooks/useDraggableWithDomApi/autoScroll');
+vi.mock('../../hooks/useDraggableWithDomApi/autoScroll', async () => {
+  const originalModule = await vi.importActual('../../hooks/useDraggableWithDomApi/autoScroll');
   return {
     ...originalModule,
     createAutoScrollController: () => {
@@ -22,8 +22,8 @@ jest.mock('../../hooks/useDraggableWithDomApi/autoScroll', () => {
   };
 });
 
-jest.mock('../../lib/dom', () => {
-  const originalModule = jest.requireActual('../../lib/dom');
+vi.mock('../../lib/dom', async () => {
+  const originalModule = await vi.importActual('../../lib/dom');
   return {
     ...originalModule,
     getNearestOverflowAncestor: () => {
@@ -32,7 +32,7 @@ jest.mock('../../lib/dom', () => {
   };
 });
 const mockTimers = () => {
-  jest.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
+  vi.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
     fn(1);
     return 1;
   });
@@ -40,12 +40,12 @@ const mockTimers = () => {
 
 const setupCell = (element: HTMLDivElement, index: number) => {
   let transform = '';
-  jest.spyOn(element.style, 'setProperty').mockImplementation((property, value) => {
+  vi.spyOn(element.style, 'setProperty').mockImplementation((property, value) => {
     if (property === 'transform') {
       transform = value || '';
     }
   });
-  jest.spyOn(element.style, 'removeProperty').mockImplementation((property) => {
+  vi.spyOn(element.style, 'removeProperty').mockImplementation((property) => {
     if (property === 'transform') {
       transform = '';
     }
@@ -57,7 +57,7 @@ const setupCell = (element: HTMLDivElement, index: number) => {
     y: cellHeight * index,
     height: cellHeight,
   });
-  jest.spyOn(element, 'getBoundingClientRect').mockImplementation(() => rect);
+  vi.spyOn(element, 'getBoundingClientRect').mockImplementation(() => rect);
 
   return {
     get transform() {
@@ -74,10 +74,10 @@ const setupCell = (element: HTMLDivElement, index: number) => {
 
 const setupList = (element: HTMLDivElement) => {
   let listScrollTop = 0;
-  jest.spyOn(element, 'scrollTop', 'get').mockImplementation(() => listScrollTop);
-  jest
-    .spyOn(element, 'scrollTop', 'set')
-    .mockImplementation((newScrollTop) => (listScrollTop = newScrollTop));
+  vi.spyOn(element, 'scrollTop', 'get').mockImplementation(() => listScrollTop);
+  vi.spyOn(element, 'scrollTop', 'set').mockImplementation(
+    (newScrollTop) => (listScrollTop = newScrollTop),
+  );
   return {
     get listScrollTop() {
       return listScrollTop;
@@ -183,10 +183,10 @@ describe('List', () => {
   baselineComponent(List);
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should have style gap', async () => {
@@ -261,7 +261,7 @@ describe('List', () => {
       breakPoints: [5, 70, 90],
       afterMove: {
         1: () => {
-          jest.runAllTimers();
+          vi.runAllTimers();
           isScrollRunning = true;
           setupData.listScrollTop = 30;
           fireEvent.scroll(setupData.list);
