@@ -5816,7 +5816,7 @@ __metadata:
     eslint-plugin-compat: "npm:^6.0.2"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-jest: "npm:^28.2.0"
-    eslint-plugin-jsdoc: "npm:^60.1.0"
+    eslint-plugin-jsdoc: "npm:^60.3.0"
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-compiler: "npm:0.0.0-experimental-56229e1-20240813"
@@ -9996,9 +9996,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^60.1.0":
-  version: 60.1.0
-  resolution: "eslint-plugin-jsdoc@npm:60.1.0"
+"eslint-plugin-jsdoc@npm:^60.3.0":
+  version: 60.3.0
+  resolution: "eslint-plugin-jsdoc@npm:60.3.0"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.58.0"
     are-docs-informative: "npm:^0.0.2"
@@ -10013,7 +10013,7 @@ __metadata:
     spdx-expression-parse: "npm:^4.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10/0e986dcef70b376eebf2970c844237d3438d3c31513244e95a17f1237ca46412234d5fb3ce08c870e53d51f333b9e36530f758eae6a5cfdefe46fa5c8cdffda6
+  checksum: 10/5f35836d4554f9027a589159cb3f72cb36f1b57e146169332d06b2dcf6dafea1690b53185b53d4e62d02d280de418ee1ba26380e23328767d136f4eb878a1e6e
   languageName: node
   linkType: hard
 

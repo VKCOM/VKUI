@@ -61,7 +61,7 @@
     "eslint-plugin-compat": "^6.0.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^28.2.0",
-    "eslint-plugin-jsdoc": "^60.1.0",
+    "eslint-plugin-jsdoc": "^60.3.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-compiler": "0.0.0-experimental-56229e1-20240813",
