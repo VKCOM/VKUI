@@ -65,7 +65,7 @@ const ActionSheetTest = ({
 
 const mockElementFocus = (element: HTMLElement | null, focusFn: VoidFunction) => {
   if (element) {
-    jest.spyOn(element, 'focus').mockImplementation(focusFn);
+    vi.spyOn(element, 'focus').mockImplementation(focusFn);
   }
 };
 
@@ -142,7 +142,7 @@ describe(FocusTrap, () => {
   });
 
   it('always calls passed onClose on ESCAPE press', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     render(<ActionSheetTest onClose={onClose} />);
     await mountActionSheetViaClick();
     await unmountActionSheet();
@@ -151,8 +151,8 @@ describe(FocusTrap, () => {
   });
 
   it('captures Esc by default and calls onClose', async () => {
-    jest.useFakeTimers();
-    const onCloseStub = jest.fn();
+    vi.useFakeTimers();
+    const onCloseStub = vi.fn();
     render(
       <FocusTrap onClose={onCloseStub}>
         <input onKeyDown={(event) => event.stopPropagation()} defaultValue="Test input" />
@@ -167,8 +167,8 @@ describe(FocusTrap, () => {
   });
 
   it('allows to stop Escape keyboard event propagation from inner element with captureEscapeKeyboardEvent flag set to false', async () => {
-    jest.useFakeTimers();
-    const onCloseStub = jest.fn();
+    vi.useFakeTimers();
+    const onCloseStub = vi.fn();
     render(
       <FocusTrap onClose={onCloseStub} captureEscapeKeyboardEvent={false}>
         <input
@@ -188,7 +188,7 @@ describe(FocusTrap, () => {
 
   describe('focus restoration', () => {
     it('restores focus by default', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       render(<ActionSheetTest onClose={onClose} />);
       await mountActionSheetViaClick();
       await unmountActionSheet();
@@ -196,7 +196,7 @@ describe(FocusTrap, () => {
     });
 
     it('does not restore focus if restoreFocus={false}', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       render(<ActionSheetTest restoreFocus={false} onClose={onClose} />);
       await mountActionSheetViaClick();
       await unmountActionSheet();
@@ -368,8 +368,8 @@ describe(FocusTrap, () => {
     });
 
     it('check autoFocus to root', async () => {
-      const rootFocus = jest.fn();
-      const buttonFocus = jest.fn();
+      const rootFocus = vi.fn();
+      const buttonFocus = vi.fn();
 
       render(
         <>
@@ -392,7 +392,7 @@ describe(FocusTrap, () => {
       });
     });
     it('should autofocus to container when dont have another active elements', async () => {
-      const rootFocus = jest.fn();
+      const rootFocus = vi.fn();
       render(
         <>
           <FocusTrap autoFocus getRootRef={(element) => mockElementFocus(element, rootFocus)}>

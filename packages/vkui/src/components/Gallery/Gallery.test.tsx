@@ -93,25 +93,25 @@ const setup = ({
     if (!element) {
       return;
     }
-    jest.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => containerWidth);
+    vi.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => containerWidth);
   };
 
   const mockLayerData = (element: HTMLDivElement) => {
     if (!element) {
       return;
     }
-    jest
-      .spyOn(element.style, 'transform', 'set')
-      .mockImplementation((newTransform) => (layerTransform = newTransform));
+    vi.spyOn(element.style, 'transform', 'set').mockImplementation(
+      (newTransform) => (layerTransform = newTransform),
+    );
 
-    jest.spyOn(element, 'offsetWidth', 'get').mockReturnValue(viewPortWidth);
+    vi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(viewPortWidth);
   };
 
   const mockViewportData = (element: HTMLDivElement) => {
     if (!element) {
       return;
     }
-    jest.spyOn(element, 'offsetWidth', 'get').mockReturnValue(viewPortWidth);
+    vi.spyOn(element, 'offsetWidth', 'get').mockReturnValue(viewPortWidth);
     viewPort = element;
 
     mockLayerData(element.firstElementChild as HTMLDivElement);
@@ -121,15 +121,15 @@ const setup = ({
     if (!element) {
       return;
     }
-    jest.spyOn(element.parentElement!, 'offsetWidth', 'get').mockReturnValue(slideWidth);
-    jest
-      .spyOn(element.parentElement!, 'offsetLeft', 'get')
-      .mockReturnValue(revertRtlValue(slideWidth * index, isRtl));
+    vi.spyOn(element.parentElement!, 'offsetWidth', 'get').mockReturnValue(slideWidth);
+    vi.spyOn(element.parentElement!, 'offsetLeft', 'get').mockReturnValue(
+      revertRtlValue(slideWidth * index, isRtl),
+    );
 
     let transform = '';
-    jest
-      .spyOn(element.parentElement!.style, 'transform', 'set')
-      .mockImplementation((newTransform) => (transform = newTransform));
+    vi.spyOn(element.parentElement!.style, 'transform', 'set').mockImplementation(
+      (newTransform) => (transform = newTransform),
+    );
 
     slideDataByIndexMap[index] = {
       get transform() {
@@ -221,7 +221,7 @@ describe('Gallery', () => {
       expect(index).toBe(0);
     });
     it('handles dynamic slide count', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       const { rerender } = render(
@@ -231,7 +231,7 @@ describe('Gallery', () => {
         </Gallery>,
       );
       await act(async () => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       rerender(
         <Gallery onChange={setIndex} slideIndex={1}>
@@ -239,19 +239,19 @@ describe('Gallery', () => {
         </Gallery>,
       );
       await act(async () => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(index).toBe(0);
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
     it('keeps slideIndex when 0 slides', () => {
-      const setIndex = jest.fn();
+      const setIndex = vi.fn();
       render(<Gallery onChange={setIndex} slideIndex={10} />);
       expect(setIndex).not.toHaveBeenCalled();
     });
 
     it('check auto play in controlled component', () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       render(
@@ -260,12 +260,12 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-      jest.runAllTimers();
+      vi.runAllTimers();
       expect(index).toBe(1);
     });
 
     it('check auto play in uncontrolled component', () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       render(
@@ -274,14 +274,14 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(index).toBe(1);
     });
   });
 
   describe('check a11y', () => {
     it('check slide labels', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       const slideLabel: GalleryProps['slideLabel'] = (index, count) =>
         `Слайд ${index + 1} из ${count}`;
 
@@ -307,7 +307,7 @@ describe('Gallery', () => {
   });
 
   it('check that scroll reset when using screen reader VoiceOver', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     let scrollLeft = 0;
 
@@ -320,8 +320,8 @@ describe('Gallery', () => {
           if (!element) {
             return;
           }
-          jest.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
-          jest.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
+          vi.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
+          vi.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
             scrollLeft = newValue;
           });
         }}
@@ -349,16 +349,16 @@ describe('Gallery', () => {
         containerWidth: 200,
         viewPortWidth: 180,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
       expect(mockedData.getSlideMockData(0).transform).toBeFalsy();
     });
 
     it('check correct navigation by arrows clicks', () => {
-      const onNext = jest.fn();
-      const onPrev = jest.fn();
-      const onChange = jest.fn();
+      const onNext = vi.fn();
+      const onPrev = vi.fn();
+      const onChange = vi.fn();
 
       const mockedData = setup({
         looped,
@@ -372,7 +372,7 @@ describe('Gallery', () => {
       });
       const { rerender } = mockedData;
 
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkActiveSlide(1);
 
@@ -387,7 +387,7 @@ describe('Gallery', () => {
 
       rerender({ slideIndex: 2 });
 
-      jest.runAllTimers();
+      vi.runAllTimers();
       checkActiveSlide(2);
       checkTransformX(mockedData.layerTransform, -400);
 
@@ -398,13 +398,13 @@ describe('Gallery', () => {
 
       rerender({ slideIndex: 1 });
 
-      jest.runAllTimers();
+      vi.runAllTimers();
       checkActiveSlide(1);
       checkTransformX(mockedData.layerTransform, -200);
     });
 
     it('should change activeSlide by focus', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
 
       const { rerender } = setup({
         looped,
@@ -435,9 +435,9 @@ describe('Gallery', () => {
     });
 
     it('should not change slide when slide too small', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped,
@@ -449,12 +449,12 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [2, 0]);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
@@ -469,7 +469,7 @@ describe('Gallery', () => {
     });
 
     it('should resize when container resizes', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
 
       const mockedData = setup({
         looped,
@@ -480,7 +480,7 @@ describe('Gallery', () => {
         align: 'center',
         onChange,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       if (looped) {
         expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
@@ -490,7 +490,7 @@ describe('Gallery', () => {
       mockedData.containerWidth = 250;
 
       fireEvent.resize(window);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       if (looped) {
         expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
@@ -501,9 +501,9 @@ describe('Gallery', () => {
 
   describe('check not looped gallery navigation working', () => {
     it('check correct navigation by dragging', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped: false,
@@ -517,40 +517,40 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(1);
       rerender({ slideIndex: 1 });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, -170);
       checkActiveSlide(1);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(2);
       expect(onDragEnd).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls).toEqual([[1], [0]]);
       rerender({ slideIndex: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 10);
       checkActiveSlide(0);
     });
 
     it('check correct navigation by dragging with align right', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped: false,
@@ -575,9 +575,9 @@ describe('Gallery', () => {
     });
 
     it('check not change slide with too small gesture slide', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped: false,
@@ -600,9 +600,9 @@ describe('Gallery', () => {
     });
 
     it('check max and min restrictions', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped: false,
@@ -635,9 +635,9 @@ describe('Gallery', () => {
 
   describe('check looped gallery navigation working', () => {
     it('check correct reverse navigation by arrows clicks', () => {
-      const onNext = jest.fn();
-      const onPrev = jest.fn();
-      const onChange = jest.fn();
+      const onNext = vi.fn();
+      const onPrev = vi.fn();
+      const onChange = vi.fn();
 
       const mockedData = setup({
         looped: true,
@@ -649,39 +649,39 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       const [leftArrow, rightArrow] = getArrows();
       fireEvent.click(leftArrow);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onPrev).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[4]]);
 
       rerender({ slideIndex: 4 });
-      jest.runAllTimers();
+      vi.runAllTimers();
       checkActiveSlide(4);
       checkTransformX(mockedData.layerTransform, -800);
 
       fireEvent.click(rightArrow);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onNext).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[4], [0]]);
 
       rerender({ slideIndex: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
       checkActiveSlide(0);
       checkTransformX(mockedData.layerTransform, 0);
     });
 
     it('check correct navigation by dragging', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped: true,
@@ -694,32 +694,32 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(4);
       rerender({ slideIndex: 4 });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, -710);
       checkTransformX(mockedData.getSlideMockData(0).transform, 900);
       checkActiveSlide(4);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(2);
       expect(onDragEnd).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls).toEqual([[4], [0]]);
       rerender({ slideIndex: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 10);
       checkTransformX(mockedData.getSlideMockData(0).transform, 0);
@@ -731,8 +731,8 @@ describe('Gallery', () => {
       afterEach(() => setNodeEnv('test'));
 
       it('check dev error when slides width incorrect', () => {
-        const onChange = jest.fn();
-        const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+        const onChange = vi.fn();
+        const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
 
         setup({
           looped: true,
@@ -785,7 +785,7 @@ describe('Gallery', () => {
 
   it('check recalculate slides positions when resize element with resizeSource="element"', () => {
     const { triggerResize, restore } = mockResizeObserver();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const mockedData = setup({
       looped: true,
@@ -797,7 +797,7 @@ describe('Gallery', () => {
       align: 'center',
       onChange,
     });
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
     expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
@@ -805,7 +805,7 @@ describe('Gallery', () => {
     mockedData.containerWidth = 250;
 
     act(triggerResize);
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
     expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
@@ -813,9 +813,9 @@ describe('Gallery', () => {
   });
 
   it('checks gallery arrows and navigation in center alignment', () => {
-    const onChange = jest.fn();
-    const onDragStart = jest.fn();
-    const onDragEnd = jest.fn();
+    const onChange = vi.fn();
+    const onDragStart = vi.fn();
+    const onDragEnd = vi.fn();
 
     // в контейнере недостаточно места для
     // двух слайдов с выравниванием по центру
@@ -832,14 +832,14 @@ describe('Gallery', () => {
       onDragEnd,
       onChange,
     });
-    jest.runAllTimers();
+    vi.runAllTimers();
     const { rerender } = mockedData;
 
     checkActiveSlide(1);
     expect(getArrows()).toHaveLength(1);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(onDragStart).toHaveBeenCalledTimes(1);
     expect(onDragEnd).toHaveBeenCalledTimes(1);
@@ -853,12 +853,12 @@ describe('Gallery', () => {
     onDragEnd.mockClear();
 
     rerender({ slideIndex: 1 });
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(getArrows()).toHaveLength(1);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(onDragStart).toHaveBeenCalledTimes(1);
     expect(onDragEnd).toHaveBeenCalledTimes(1);
@@ -871,12 +871,12 @@ describe('Gallery', () => {
     fireEvent.resize(window);
 
     rerender({ slideIndex: 1 });
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(getArrows()).toHaveLength(0);
 
     simulateDrag(mockedData.viewPort, [150, 0]);
-    jest.runAllTimers();
+    vi.runAllTimers();
 
     expect(onDragStart).not.toHaveBeenCalled();
     expect(onDragEnd).not.toHaveBeenCalled();
@@ -884,9 +884,9 @@ describe('Gallery', () => {
 
   describe('check correct working with rtl direction', () => {
     it('check max and min restrictions', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped: false,
@@ -918,9 +918,9 @@ describe('Gallery', () => {
     });
 
     it('check correct navigation by arrows clicks in RTL', () => {
-      const onNext = jest.fn();
-      const onPrev = jest.fn();
-      const onChange = jest.fn();
+      const onNext = vi.fn();
+      const onPrev = vi.fn();
+      const onChange = vi.fn();
 
       const mockedData = setup({
         looped: true,
@@ -933,7 +933,7 @@ describe('Gallery', () => {
         onNext,
         onChange,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(1);
@@ -941,32 +941,32 @@ describe('Gallery', () => {
 
       const [prevArrow, nextArrow] = getArrows();
       fireEvent.click(nextArrow);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onNext).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[2]]);
 
       rerender({ slideIndex: 2 });
-      jest.runAllTimers();
+      vi.runAllTimers();
       checkActiveSlide(2);
       checkTransformX(mockedData.layerTransform, 400);
 
       fireEvent.click(prevArrow);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onPrev).toHaveBeenCalledTimes(1);
       expect(onChange.mock.calls).toEqual([[2], [1]]);
 
       rerender({ slideIndex: 1 });
-      jest.runAllTimers();
+      vi.runAllTimers();
       checkActiveSlide(1);
       checkTransformX(mockedData.layerTransform, 200);
     });
 
     it('check correct navigation by dragging', () => {
-      const onChange = jest.fn();
-      const onDragStart = jest.fn();
-      const onDragEnd = jest.fn();
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
       const mockedData = setup({
         looped: true,
@@ -980,32 +980,32 @@ describe('Gallery', () => {
         onDragEnd,
         onChange,
       });
-      jest.runAllTimers();
+      vi.runAllTimers();
       const { rerender } = mockedData;
 
       checkActiveSlide(0);
 
       simulateDrag(mockedData.viewPort, [150, 0]);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
       expect(onChange).toHaveBeenCalledWith(4);
       rerender({ slideIndex: 4 });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 710);
       checkTransformX(mockedData.getSlideMockData(0).transform, -900);
       checkActiveSlide(4);
 
       simulateDrag(mockedData.viewPort, [0, 150]);
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       expect(onDragStart).toHaveBeenCalledTimes(2);
       expect(onDragEnd).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls).toEqual([[4], [0]]);
       rerender({ slideIndex: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       checkTransformX(mockedData.layerTransform, 890);
       checkTransformX(mockedData.getSlideMockData(0).transform, -900);

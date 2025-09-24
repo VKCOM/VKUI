@@ -66,7 +66,7 @@ describe('DateRangeInput', () => {
   });
 
   it('check correct readonly state', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     render(
       <DateRangeInput
         value={[startDate, endDate]}
@@ -102,8 +102,8 @@ describe('DateRangeInput', () => {
   });
 
   it('should correct update value when typing text in input', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    vi.useFakeTimers();
+    const onChange = vi.fn();
     render(
       <DateRangeInput
         value={[startDate, endDate]}
@@ -135,8 +135,8 @@ describe('DateRangeInput', () => {
   });
 
   it('should call onChange callback when change data by calendar', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    vi.useFakeTimers();
+    const onChange = vi.fn();
     const { container } = render(
       <DateRangeInput
         value={[startDate, endDate]}
@@ -171,8 +171,8 @@ describe('DateRangeInput', () => {
   });
 
   it('should not update value when typing incorrect date in input', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    vi.useFakeTimers();
+    const onChange = vi.fn();
     render(
       <DateRangeInput
         value={[startDate, endDate]}
@@ -197,8 +197,8 @@ describe('DateRangeInput', () => {
   });
 
   it('should call onCalendarClose callback when calendar was closed', async () => {
-    jest.useFakeTimers();
-    const onCalendarOpenChanged = jest.fn();
+    vi.useFakeTimers();
+    const onCalendarOpenChanged = vi.fn();
     const { container } = render(
       <DateRangeInput
         value={[startDate, null]}
@@ -227,7 +227,7 @@ describe('DateRangeInput', () => {
   });
 
   it('should call onChange with undefined when click on clear button', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<DateRangeInput value={[startDate, endDate]} onChange={onChange} {...testsProps} />);
 
     fireEvent.click(screen.getByTestId(testsProps.clearButtonTestId));
@@ -236,8 +236,8 @@ describe('DateRangeInput', () => {
   });
 
   it('should toggle calendar open state on calendar icon click', async () => {
-    jest.useFakeTimers();
-    const onCalendarOpenChanged = jest.fn();
+    vi.useFakeTimers();
+    const onCalendarOpenChanged = vi.fn();
     render(
       <DateRangeInput
         showCalendarLabel="Показать календарь"
@@ -265,7 +265,7 @@ describe('DateRangeInput', () => {
 
   describe('keyboard', () => {
     it('controls focus when arrows or tab keys are pressed', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <div>
           <button type="button">Предыдущая кнопка</button>
@@ -337,7 +337,7 @@ describe('DateRangeInput', () => {
     });
 
     it('clears part of input data by pressing delete', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <DateRangeInput
           changeStartDayLabel=""
@@ -347,7 +347,7 @@ describe('DateRangeInput', () => {
           changeEndMonthLabel=""
           changeEndYearLabel=""
           value={[startDate, endDate]}
-          onChange={jest.fn()}
+          onChange={vi.fn()}
           {...testsProps}
         />,
       );
@@ -368,7 +368,7 @@ describe('DateRangeInput', () => {
     });
 
     it('changes input values by arrow keys', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       render(
         <DateRangeInput
           changeStartDayLabel=""
@@ -378,7 +378,7 @@ describe('DateRangeInput', () => {
           changeEndMonthLabel=""
           changeEndYearLabel=""
           value={[startDate, endDate]}
-          onChange={jest.fn()}
+          onChange={vi.fn()}
           {...testsProps}
         />,
       );
@@ -420,8 +420,8 @@ describe('DateRangeInput', () => {
 
   describe('accessible mode', () => {
     it('opens/closes calendar with keyboard/mouse', async () => {
-      jest.useFakeTimers();
-      const onCalendarOpenChangedStub = jest.fn();
+      vi.useFakeTimers();
+      const onCalendarOpenChangedStub = vi.fn();
       render(
         <DateRangeInput
           accessible
@@ -454,7 +454,7 @@ describe('DateRangeInput', () => {
         await userEvent.keyboard(' ');
         // календарь открыт
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
-        act(jest.runOnlyPendingTimers);
+        act(vi.runOnlyPendingTimers);
 
         // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
@@ -469,7 +469,7 @@ describe('DateRangeInput', () => {
         await userEvent.keyboard('{Escape}');
         // календарь закрыт
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
-        act(jest.runOnlyPendingTimers);
+        act(vi.runOnlyPendingTimers);
 
         // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
@@ -488,7 +488,7 @@ describe('DateRangeInput', () => {
 
         // закрываем, нажимая Esc
         await userEvent.keyboard('{Escape}');
-        act(jest.runOnlyPendingTimers);
+        act(vi.runOnlyPendingTimers);
 
         // фокус возвращается на часть инпутa
         expect(document.activeElement).toBe(inputPart);
@@ -496,8 +496,8 @@ describe('DateRangeInput', () => {
     });
 
     it('does not close calendar when Escape is pressed to close inner dropdown (month, year)', async () => {
-      jest.useFakeTimers();
-      const onCalendarOpenChangedStub = jest.fn();
+      vi.useFakeTimers();
+      const onCalendarOpenChangedStub = vi.fn();
       const dateNow = new Date();
       render(
         <DateRangeInput

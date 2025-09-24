@@ -135,7 +135,7 @@ describe('Group', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check DEV errors', () => {
-      const error = jest.spyOn(console, 'warn').mockImplementation(noop);
+      const error = vi.spyOn(console, 'warn').mockImplementation(noop);
       render(
         <Group role="tabpanel">
           <div />

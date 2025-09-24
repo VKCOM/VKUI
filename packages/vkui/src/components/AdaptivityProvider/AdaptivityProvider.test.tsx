@@ -6,33 +6,38 @@ import { baselineComponent } from '../../testing/utils';
 import { AdaptivityContext, type AdaptivityProps } from './AdaptivityContext';
 import { AdaptivityProvider, type AdaptivityProviderProps } from './AdaptivityProvider';
 
-jest.mock('@vkontakte/vkjs', () => ({
-  get canUseDOM() {
-    return true;
-  },
-  detectIOS: () => false,
-}));
-jest.mock('../../hooks/useMediaQueries', () => ({
+vi.mock('@vkontakte/vkjs', async () => {
+  const actual = await vi.importActual('@vkontakte/vkjs');
+  return {
+    ...actual,
+    get canUseDOM() {
+      return true;
+    },
+    detectIOS: () => false,
+  };
+});
+vi.mock('../../hooks/useMediaQueries', () => ({
   useMediaQueries: () => ({
-    desktopPlus: () => jest.fn(),
-    smallTabletPlus: () => jest.fn(),
-    tablet: () => jest.fn(),
-    smallTablet: () => jest.fn(),
-    mobile: () => jest.fn(),
-    mediumHeight: () => jest.fn(),
-    mobileLandscapeHeight: () => jest.fn(),
+    desktopPlus: () => vi.fn(),
+    smallTabletPlus: () => vi.fn(),
+    tablet: () => vi.fn(),
+    smallTablet: () => vi.fn(),
+    mobile: () => vi.fn(),
+    mediumHeight: () => vi.fn(),
+    mobileLandscapeHeight: () => vi.fn(),
   }),
 }));
-jest.mock('../../lib/matchMedia', () => ({
-  matchMediaListAddListener: () => jest.fn(),
-  matchMediaListRemoveListener: () => jest.fn(),
+vi.mock('../../lib/matchMedia', () => ({
+  matchMediaListAddListener: () => vi.fn(),
+  matchMediaListRemoveListener: () => vi.fn(),
 }));
 
-const getViewWidthByMediaQueriesStub = jest.fn().mockReturnValue(ViewWidth.SMALL_MOBILE);
-const getViewHeightByMediaQueriesStub = jest.fn().mockReturnValue(ViewHeight.SMALL);
-jest.mock('../../lib/adaptivity', () => {
+const getViewWidthByMediaQueriesStub = vi.fn().mockReturnValue(ViewWidth.SMALL_MOBILE);
+const getViewHeightByMediaQueriesStub = vi.fn().mockReturnValue(ViewHeight.SMALL);
+vi.mock('../../lib/adaptivity', async () => {
+  const module = await vi.importActual('../../lib/adaptivity');
   return {
-    ...jest.requireActual('../../lib/adaptivity'),
+    ...module,
     getViewWidthByMediaQueries: () => getViewWidthByMediaQueriesStub(),
     getViewHeightByMediaQueries: () => getViewHeightByMediaQueriesStub(),
   };

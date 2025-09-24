@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { act } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { AppRoot } from '../../components/AppRoot/AppRoot';
@@ -13,7 +12,6 @@ import {
   waitForFloatingPosition,
 } from '../../testing/utils';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
-import type { CustomTouchEvent } from '../Touch/Touch';
 import { Slider as SliderBase, type SliderMultipleProps, type SliderProps } from './Slider';
 
 const pointerPos = (x: number) => ({ clientX: x, clientY: 10 });
@@ -34,10 +32,7 @@ describe(Slider, () => {
 
   describe('uncontrolled', () => {
     it('uses min as fallback', () => {
-      const handleChangeForTypeCheck: jest.Mock<
-        void,
-        [number, CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChangeForTypeCheck: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider onChange={handleChangeForTypeCheck} />);
       expect(screen.getByRole('slider')).toHaveValue('0');
     });
@@ -78,10 +73,7 @@ describe(Slider, () => {
 
   describe('controlled', () => {
     it('sets value', () => {
-      const handleChangeForTypeCheck: jest.Mock<
-        void,
-        [number, CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChangeForTypeCheck: ReturnType<typeof vi.fn> = vi.fn();
       const { rerender } = render(<Slider value={5} onChange={handleChangeForTypeCheck} />);
       expect(screen.getByRole('slider')).toHaveValue('5');
 
@@ -106,10 +98,7 @@ describe(Slider, () => {
     });
 
     it('should overrides defaultValue if value is exist (multiple)', () => {
-      const handleChangeForTypeCheck: jest.Mock<
-        void,
-        [[number, number], CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChangeForTypeCheck: ReturnType<typeof vi.fn> = vi.fn();
       render(
         <Slider
           multiple
@@ -126,8 +115,7 @@ describe(Slider, () => {
 
   describe('change with tap', () => {
     it('moves start', async () => {
-      const handleChange: jest.Mock<void, [number, CustomTouchEvent | React.ChangeEvent]> =
-        jest.fn();
+      const handleChange: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider defaultValue={30} onChange={handleChange} />);
       await userEvent.pointer([
         { target: screen.getByTestId('root'), coords: pointerPos(20), keys: '[MouseLeft]' },
@@ -137,10 +125,7 @@ describe(Slider, () => {
     });
 
     it('moves start (multiple)', async () => {
-      const handleChange: jest.Mock<
-        void,
-        [[number, number], CustomTouchEvent | React.ChangeEvent]
-      > = jest.fn();
+      const handleChange: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider multiple defaultValue={[30, 70]} onChange={handleChange} />);
       const [startSlider, endSlider] = screen.getAllByRole('slider');
       await userEvent.pointer([
@@ -346,14 +331,14 @@ describe(Slider, () => {
       // shows tooltip on focus
       await act(async () => {
         await userEvent.tab();
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       await waitFor(() => expect(screen.queryByText('30')).toBeInTheDocument());
 
       // hides on blur
       await act(async () => {
         await userEvent.tab();
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       await waitFor(() => expect(screen.queryByText('30')).not.toBeInTheDocument());
     });

@@ -17,7 +17,7 @@ describe('mapObject', () => {
 
   it('should pass both value and key to mapping function', () => {
     const input = { a: 1, b: 2 };
-    const mappingFn = jest.fn((value, key) => `${key}:${value}`);
+    const mappingFn = vi.fn((value, key) => `${key}:${value}`);
 
     const result = mapObject(input, mappingFn);
 

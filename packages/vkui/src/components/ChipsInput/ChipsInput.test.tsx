@@ -12,7 +12,7 @@ describe(ChipsInput, () => {
   ));
 
   it('check reset form event', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <form data-testid="form">
         <ChipsInput
@@ -44,7 +44,7 @@ describe(ChipsInput, () => {
   });
 
   it('should clear value when click on remove button', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <ChipsInput
         id="color"
@@ -95,7 +95,7 @@ describe(ChipsInput, () => {
   });
 
   it('should delete option when keydown {Delete}', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const initialOptions = [
       {
         value: 'navarin',
@@ -174,7 +174,7 @@ describe(ChipsInput, () => {
   ])(
     'should correct use delimiter $delimiter',
     ({ delimiter, str, expectedValues, expectedInputValue }) => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(
         <ChipsInput
           value={[

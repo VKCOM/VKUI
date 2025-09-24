@@ -14,7 +14,7 @@ describe(Chip, () => {
   fakeTimers();
 
   it('removes chip on onRemove click', async () => {
-    const onRemove = jest.fn();
+    const onRemove = vi.fn();
 
     render(
       <Chip value="white" onRemove={onRemove}>
@@ -43,8 +43,8 @@ describe(Chip, () => {
   it.each([{ readOnly: false }, { readOnly: true }])(
     'calls user events (`readOnly` prop is `$readOnly`)',
     async ({ readOnly }) => {
-      const onFocus = jest.fn();
-      const onBlur = jest.fn();
+      const onFocus = vi.fn();
+      const onBlur = vi.fn();
       render(
         <Chip
           value="white"

@@ -10,6 +10,7 @@ _pagefind/
 
 # Next
 .next/
+next-env.d.ts
 
 # Dependency directory
 node_modules/

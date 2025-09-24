@@ -9,8 +9,8 @@ const getInput = () => screen.getByRole('searchbox');
 const getClearIcon = () => screen.getByTestId('clear-button');
 const getFindButton = () => screen.getByTestId('find-button');
 
-jest.mock('../../lib/touch', () => {
-  const originalModule = jest.requireActual('../../lib/touch');
+vi.mock('../../lib/touch', async () => {
+  const originalModule = await vi.importActual('../../lib/touch');
   return {
     ...originalModule,
     touchEnabled: () => true,
@@ -44,7 +44,7 @@ describe(Search, () => {
       expect(getInput()).toHaveValue('def');
       await userEvent.click(getClearIcon());
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(getInput()).toHaveValue('');
     });
@@ -107,7 +107,7 @@ describe(Search, () => {
       expect(getInput()).toHaveValue('update');
     });
     it('value overrides defaultValue', () => {
-      jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+      vi.spyOn(global.console, 'error').mockImplementationOnce((message) => {
         if (message.includes('with both value and defaultValue props.')) {
           return;
         }
@@ -143,7 +143,7 @@ describe(Search, () => {
       );
       await userEvent.click(getClearIcon());
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(value).toBe('');
     });
@@ -157,7 +157,7 @@ describe(Search, () => {
       render(<Search value={value} clearButtonTestId="clear-button" />);
       await userEvent.click(getClearIcon());
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(value).toBe('init');
       expect(getInput()).toHaveValue('init');
@@ -165,8 +165,8 @@ describe(Search, () => {
   });
 
   it('calls focus handlers', async () => {
-    const onFocus = jest.fn();
-    const onBlur = jest.fn();
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
     render(<Search onFocus={onFocus} onBlur={onBlur} />);
     await userEvent.click(getInput());
     expect(onFocus).toHaveBeenCalled();
@@ -176,18 +176,18 @@ describe(Search, () => {
   });
 
   it('calls onIconClick', async () => {
-    const cb = jest.fn();
+    const cb = vi.fn();
     render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
     await userEvent.click(screen.getByTestId('icon'));
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
     expect(cb).toHaveBeenCalled();
   });
 
   it('calls onFindButtonClick', async () => {
-    const cb = jest.fn();
+    const cb = vi.fn();
     render(<Search value="test" onFindButtonClick={cb} findButtonTestId="find-button" />);
     await userEvent.click(getFindButton());
-    act(jest.runAllTimers);
+    act(vi.runAllTimers);
     expect(cb).toHaveBeenCalled();
   });
 
@@ -201,7 +201,7 @@ describe(Search, () => {
       const clearButton = container.getElementsByClassName(styles.icon)[0];
       clickFn(clearButton);
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(value).toEqual('');
     },

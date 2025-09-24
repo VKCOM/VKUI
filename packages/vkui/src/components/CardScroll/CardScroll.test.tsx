@@ -7,16 +7,16 @@ import horizontalScrollStyles from '../HorizontalScroll/HorizontalScroll.module.
 
 const setupHorizontalScrollData = (element: HTMLElement, startScrollLeft = 0) => {
   let scrollLeft = startScrollLeft;
-  jest.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
-  jest.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
+  vi.spyOn(element, 'scrollLeft', 'get').mockImplementation(() => scrollLeft);
+  vi.spyOn(element, 'scrollLeft', 'set').mockImplementation((newValue) => {
     scrollLeft = newValue;
   });
 
-  jest.spyOn(element, 'scrollWidth', 'get').mockImplementation(() => 2486);
+  vi.spyOn(element, 'scrollWidth', 'get').mockImplementation(() => 2486);
 
-  jest.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => 1009);
+  vi.spyOn(element, 'offsetWidth', 'get').mockImplementation(() => 1009);
 
-  jest.spyOn(element.firstElementChild!, 'scrollWidth', 'get').mockImplementation(() => 2486);
+  vi.spyOn(element.firstElementChild!, 'scrollWidth', 'get').mockImplementation(() => 2486);
 
   return {
     get scrollLeft() {
@@ -31,20 +31,18 @@ const mockCardScrollData = (cardsCount: number, defaultScrollLeft = 50, isRtl = 
 
   const originalGetComputedStyle = window.getComputedStyle;
 
-  const getComputedStyleInstance = jest
-    .spyOn(window, 'getComputedStyle')
-    .mockImplementation((e) => {
-      return {
-        ...originalGetComputedStyle(e),
-        marginInlineEnd: '8px',
-        getPropertyValue: (property: string) => {
-          if (property === '--vkui_internal--CardScroll_horizontal_padding') {
-            return '12px';
-          }
-          return '';
-        },
-      };
-    });
+  const getComputedStyleInstance = vi.spyOn(window, 'getComputedStyle').mockImplementation((e) => {
+    return {
+      ...originalGetComputedStyle(e),
+      marginInlineEnd: '8px',
+      getPropertyValue: (property: string) => {
+        if (property === '--vkui_internal--CardScroll_horizontal_padding') {
+          return '12px';
+        }
+        return '';
+      },
+    };
+  });
 
   const mockCard = (card: HTMLElement, index: number) => {
     const width = 400;
@@ -53,8 +51,8 @@ const mockCardScrollData = (cardsCount: number, defaultScrollLeft = 50, isRtl = 
     const offsetLeft = startOffsetLeft + index * (width + gap);
     const offset = isRtl ? containerWidth - offsetLeft - width : offsetLeft;
 
-    jest.spyOn(card, 'offsetLeft', 'get').mockImplementation(() => offset);
-    jest.spyOn(card, 'offsetWidth', 'get').mockImplementation(() => width);
+    vi.spyOn(card, 'offsetLeft', 'get').mockImplementation(() => offset);
+    vi.spyOn(card, 'offsetWidth', 'get').mockImplementation(() => width);
   };
 
   const { container } = render(
@@ -76,7 +74,7 @@ const mockCardScrollData = (cardsCount: number, defaultScrollLeft = 50, isRtl = 
   );
 
   const cardScrollContainer = container.getElementsByClassName(styles.in)[0] as HTMLDivElement;
-  jest.spyOn(cardScrollContainer, 'offsetWidth', 'get').mockImplementation(() => containerWidth);
+  vi.spyOn(cardScrollContainer, 'offsetWidth', 'get').mockImplementation(() => containerWidth);
 
   const horizontalScroll = container.getElementsByClassName(
     horizontalScrollStyles.in,

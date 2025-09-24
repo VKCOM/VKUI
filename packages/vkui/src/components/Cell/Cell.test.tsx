@@ -64,8 +64,8 @@ describe('Cell', () => {
 
   describe("mode='removable'", () => {
     test('handles click', () => {
-      const removeStub = jest.fn();
-      const clickStub = jest.fn();
+      const removeStub = vi.fn();
+      const clickStub = vi.fn();
 
       const { rerender } = render(
         <Cell
@@ -109,8 +109,8 @@ describe('Cell', () => {
     });
 
     test('[iOS] handles click and ignores onClick in removing state', async () => {
-      const removeStub = jest.fn();
-      const clickStub = jest.fn();
+      const removeStub = vi.fn();
+      const clickStub = vi.fn();
 
       render(
         <ConfigProvider platform="ios">
@@ -152,8 +152,8 @@ describe('Cell', () => {
     });
 
     test('handles disabled', () => {
-      const removeStub = jest.fn();
-      const clickStub = jest.fn();
+      const removeStub = vi.fn();
+      const clickStub = vi.fn();
 
       render(
         <Cell
@@ -192,7 +192,7 @@ describe('Cell', () => {
     });
 
     it('handles disabled', () => {
-      const clickStub = jest.fn();
+      const clickStub = vi.fn();
       render(
         <Cell mode="selectable" data-testid="cell" onClick={clickStub} disabled>
           Саша Колобов
