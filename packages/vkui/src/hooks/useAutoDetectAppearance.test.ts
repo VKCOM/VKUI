@@ -5,10 +5,11 @@ import { ColorScheme } from '../lib/colorScheme';
 import * as LibDOM from '../lib/dom';
 import { useAutoDetectColorScheme } from './useAutoDetectColorScheme';
 
-jest.mock('../lib/dom', () => {
+vi.mock('../lib/dom', async () => {
+  const module = await vi.importActual('../lib/dom');
   return {
     __esModule: true,
-    ...jest.requireActual('../lib/dom'),
+    ...module,
   };
 });
 
@@ -47,7 +48,7 @@ describe(useAutoDetectColorScheme, () => {
       'should auto detect colorScheme (initialMatches is $initialMatches, listenerMatches is $listenerMatches, colorScheme is $colorScheme)',
       ({ initialMatches, listenerMatches, colorScheme }) => {
         let addEventListenerHandler = noop;
-        const addEventListener = jest.fn().mockImplementation((_, handlerByHook) => {
+        const addEventListener = vi.fn().mockImplementation((_, handlerByHook) => {
           addEventListenerHandler = () => {
             handlerByHook({ matches: listenerMatches });
           };
@@ -56,15 +57,15 @@ describe(useAutoDetectColorScheme, () => {
         // Объявление скопировано из документации https://jestjs.io/docs/manual-mocks
         Object.defineProperty(window, 'matchMedia', {
           writable: true,
-          value: jest.fn().mockImplementation((query) => ({
+          value: vi.fn().mockImplementation((query) => ({
             matches: initialMatches,
             media: query,
             onchange: null,
             addListener: addEventListener, // устарело
-            removeListener: jest.fn(), // устарело
+            removeListener: vi.fn(), // устарело
             addEventListener: addEventListener,
-            removeEventListener: jest.fn(),
-            dispatchEvent: jest.fn(),
+            removeEventListener: vi.fn(),
+            dispatchEvent: vi.fn(),
           })),
         });
         const { result } = renderHook(() => useAutoDetectColorScheme());
@@ -77,7 +78,7 @@ describe(useAutoDetectColorScheme, () => {
 
   describe('server', () => {
     it('should auto detect colorScheme ($colorScheme)', () => {
-      jest.spyOn<any, any>(LibDOM, 'useDOM').mockReturnValue(() => {
+      vi.spyOn<any, any>(LibDOM, 'useDOM').mockReturnValue(() => {
         return {
           document: undefined,
           window: undefined,

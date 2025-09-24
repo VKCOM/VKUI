@@ -3,24 +3,27 @@ import * as UseAdaptivityService from '../../../hooks/useAdaptivity';
 import * as UseIsClientService from '../../../hooks/useIsClient';
 import { useCalculatedDefaultVisibility } from './hooks';
 
-jest.mock('../../../hooks/useIsClient', () => {
+vi.mock('../../../hooks/useIsClient', async () => {
+  const original = await vi.importActual('../../../hooks/useIsClient');
   return {
     __esModule: true,
-    ...jest.requireActual('../../../hooks/useIsClient'),
+    ...original,
   };
 });
-jest.mock('../../../hooks/useAdaptivity', () => {
+vi.mock('../../../hooks/useAdaptivity', async () => {
+  const original = await vi.importActual('../../../hooks/useAdaptivity');
   return {
     __esModule: true,
-    ...jest.requireActual('../../../hooks/useAdaptivity'),
+    ...original,
   };
 });
 
 let hasPointerLibStub: undefined | boolean = false;
-jest.mock('@vkontakte/vkjs', () => {
+vi.mock('@vkontakte/vkjs', async () => {
+  const original = await vi.importActual('@vkontakte/vkjs');
   return {
     __esModule: true,
-    ...jest.requireActual('@vkontakte/vkjs'),
+    ...original,
     get hasMouse() {
       return hasPointerLibStub;
     },
@@ -49,8 +52,8 @@ describe(useCalculatedDefaultVisibility, () => {
   ])(
     'returns $expectedVisibility visibility (isClient as $isClient, hasPointerContext as $hasPointerContext, hasPointerLib as $hasPointerLib)',
     ({ expectedVisibility, isClient, hasPointerContext, hasPointerLib }) => {
-      jest.spyOn(UseIsClientService, 'useIsClient').mockReturnValue(isClient);
-      jest.spyOn(UseAdaptivityService, 'useAdaptivity').mockReturnValue({
+      vi.spyOn(UseIsClientService, 'useIsClient').mockReturnValue(isClient);
+      vi.spyOn(UseAdaptivityService, 'useAdaptivity').mockReturnValue({
         hasPointer: hasPointerContext,
       });
       hasPointerLibStub = hasPointerLib;
