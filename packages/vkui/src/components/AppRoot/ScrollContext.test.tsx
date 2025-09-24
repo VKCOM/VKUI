@@ -37,7 +37,7 @@ describe(useScrollLock, () => {
     test.each([true, false])('default behavior (width scroll: %s)', (withScroll) => {
       const clearWindowMeasuresMock = withScroll ? noop : mockWindowMeasures(-1, -1);
 
-      const beforeScrollLockFn = jest.fn();
+      const beforeScrollLockFn = vi.fn();
       const h = renderHook(useScrollLock, {
         wrapper: ({ children }) => (
           <GlobalScrollController elRef={createRef<HTMLElement>()}>
@@ -198,7 +198,7 @@ describe(useScrollLock, () => {
         ? mockElementMeasures(elRef.current!, -1, -1)
         : mockElementMeasures(elRef.current!, 1, 1);
 
-      const beforeScrollLockFn = jest.fn();
+      const beforeScrollLockFn = vi.fn();
       const h = renderHook(useScrollLock, {
         wrapper: ({ children }) => {
           return (

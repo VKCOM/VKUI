@@ -26,7 +26,7 @@ describe('PanelHeaderContext', () => {
     });
 
     it('on desktop outer click', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <PanelHeaderContext opened onClose={onClose} />
@@ -37,14 +37,14 @@ describe('PanelHeaderContext', () => {
     });
 
     it('on mobile fade click', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       render(<PanelHeaderContext opened onClose={onClose} />);
       await userEvent.click(document.querySelector(`.${panelHeaderContextStyles.fade}`) as Element);
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 
     it('does not close on content click', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       render(
         <PanelHeaderContext opened onClose={onClose}>
           <div data-testid="xxx" />

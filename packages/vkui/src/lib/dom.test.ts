@@ -22,13 +22,13 @@ const getChildElOfParentWithTransformedStyle = (
   const rootEl = document.createElement('div');
   const parentEl = document.createElement('div');
   const parentElRect = new DOMRect(0, 100, 1280, 768);
-  parentEl.getBoundingClientRect = jest.fn(() => new DOMRect(0, 100, 1280, 768));
+  parentEl.getBoundingClientRect = vi.fn(() => new DOMRect(0, 100, 1280, 768));
   Object.entries({ transform: 'none', willChange: 'auto', ...stylesProp }).forEach(
     ([key, value]) => (parentEl.style[key as any] = value),
   );
   const childEl = document.createElement('div');
   const childElRect = new DOMRect(10, 10, 100, 50);
-  childEl.getBoundingClientRect = jest.fn(() => childElRect);
+  childEl.getBoundingClientRect = vi.fn(() => childElRect);
   parentEl.appendChild(childEl);
   rootEl.appendChild(parentEl);
   return { parentEl, parentElRect, childEl, childElRect };
@@ -81,12 +81,12 @@ describe(getScrollRect, () => {
     { scrollTop: 0, viewportHeight: 768 },
     { scrollTop: 10, viewportHeight: 768 },
   ])('[window] should return correct y edges for %j', ({ scrollTop, viewportHeight }) => {
-    jest
-      .spyOn(document.documentElement, 'clientHeight', 'get')
-      .mockImplementation(() => viewportHeight);
+    vi.spyOn(document.documentElement, 'clientHeight', 'get').mockImplementation(
+      () => viewportHeight,
+    );
     const rect = new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : scrollTop, 1280, viewportHeight);
     window.scrollY = document.documentElement.scrollTop = scrollTop;
-    document.documentElement.getBoundingClientRect = jest.fn(() => rect);
+    document.documentElement.getBoundingClientRect = vi.fn(() => rect);
     const { relative, edges } = getScrollRect(window);
     expect(relative).toEqual(rect);
     expect(edges).toEqual({ y: [0, viewportHeight] });
@@ -101,7 +101,7 @@ describe(getScrollRect, () => {
     const rect = new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : scrollTop, 1280, viewportHeight);
     const scrollEl = document.createElement('div');
     window.scrollY = scrollEl.scrollTop = scrollTop;
-    scrollEl.getBoundingClientRect = jest.fn(() => rect);
+    scrollEl.getBoundingClientRect = vi.fn(() => rect);
     const { relative, edges } = getScrollRect(scrollEl);
     expect(relative).toEqual(rect);
     expect(edges).toEqual({ y: [0, viewportHeight] });
@@ -112,10 +112,10 @@ describe(getScrollHeight, () => {
   const getScrollHeightMock = () => 1000;
   const scrollEl = document.createElement('div');
   beforeEach(() => {
-    jest
-      .spyOn(document.documentElement, 'scrollHeight', 'get')
-      .mockImplementation(getScrollHeightMock);
-    jest.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(getScrollHeightMock);
+    vi.spyOn(document.documentElement, 'scrollHeight', 'get').mockImplementation(
+      getScrollHeightMock,
+    );
+    vi.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(getScrollHeightMock);
   });
   test.each([
     ['window', window],
@@ -158,12 +158,12 @@ describe(getBoundingClientRect, () => {
     const HTML_CLIENT_HEIGHT = 768;
     const HTML_SCROLL_HEIGHT = 2000;
 
-    jest
-      .spyOn(document.documentElement, 'clientHeight', 'get')
-      .mockImplementation(() => HTML_CLIENT_HEIGHT);
+    vi.spyOn(document.documentElement, 'clientHeight', 'get').mockImplementation(
+      () => HTML_CLIENT_HEIGHT,
+    );
 
     // Симулируем, что на странице не указан `html, body { height: 100% }` (или `height: 100vh`).
-    document.documentElement.getBoundingClientRect = jest.fn(
+    document.documentElement.getBoundingClientRect = vi.fn(
       () => new DOMRect(0, 0, 1280, HTML_SCROLL_HEIGHT),
     );
 
@@ -258,7 +258,7 @@ describe(getFirstTouchEventData, () => {
 
 describe(initializeBrowserGesturePreventionEffect, () => {
   it('should set and unset CSS class to <html />', () => {
-    const dispose = jest.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
+    const dispose = vi.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
 
     expect(document.documentElement).toHaveClass('vkui--disable-overscroll-behavior');
 
@@ -269,10 +269,10 @@ describe(initializeBrowserGesturePreventionEffect, () => {
   });
 
   it('should prevent touchmove event', () => {
-    const dispose = jest.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
+    const dispose = vi.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
 
-    const preventDefault = jest.fn();
-    const stopPropagation = jest.fn();
+    const preventDefault = vi.fn();
+    const stopPropagation = vi.fn();
     const touchMoveEvent = new TouchEvent('touchmove');
     Object.assign(touchMoveEvent, { preventDefault, stopPropagation });
 

@@ -52,21 +52,21 @@ describe(PullToRefresh, () => {
 
   describe('calls onRefresh', () => {
     it('after pull', () => {
-      const onRefresh = jest.fn();
+      const onRefresh = vi.fn();
       render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);
       firePull(screen.getByTestId('xxx'));
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(onRefresh).toHaveBeenCalledTimes(1);
     });
     it('during pull on iOS', () => {
-      const onRefresh = jest.fn();
+      const onRefresh = vi.fn();
       render(
         <ConfigProvider platform="ios">
           <PullToRefresh onRefresh={onRefresh} data-testid="xxx" />
         </ConfigProvider>,
       );
       firePull(screen.getByTestId('xxx'), { end: false });
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(onRefresh).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(screen.getByTestId('xxx'));
       expect(onRefresh).toHaveBeenCalledTimes(1);
@@ -98,7 +98,7 @@ describe(PullToRefresh, () => {
     it('stops on touch release if isFetching was never true', () => {
       render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
       firePull(screen.getByTestId('xxx'));
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(hasSpinner()).toBe(false);
     });
     it('on second interaction', () => {

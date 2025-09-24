@@ -5,8 +5,8 @@ import { Button } from '../Button/Button';
 import { CustomSelectDropdown } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';
 
-jest.mock('../../lib/floating', () => {
-  const originalModule = jest.requireActual('../../lib/floating');
+vi.mock('../../lib/floating', async () => {
+  const originalModule = (await vi.importActual('../../lib/floating')) as any;
   return {
     ...originalModule,
     useFloating: (...args: Parameters<typeof useFloating>) => {
@@ -39,8 +39,8 @@ describe('CustomSelectDropdown', () => {
   });
 
   it('should call onPlacementChange callback when placement is changed', async () => {
-    jest.useFakeTimers();
-    const onPlacementChange = jest.fn();
+    vi.useFakeTimers();
+    const onPlacementChange = vi.fn();
 
     const Fixture = () => {
       const ref = useRef<HTMLDivElement>(null);
@@ -67,13 +67,13 @@ describe('CustomSelectDropdown', () => {
 
     await act(async () => {
       fireEvent.click(screen.getByTestId('change-placement'));
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
 
     expect(screen.getByTestId('dropdown')).toHaveClass(styles.top);
 
     expect(onPlacementChange).toHaveBeenCalledTimes(1);
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should not have className when noMaxHeight = true', () => {
