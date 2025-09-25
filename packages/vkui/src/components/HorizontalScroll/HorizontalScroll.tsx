@@ -86,6 +86,10 @@ export interface HorizontalScrollProps
    * Специфичный `className` для обертки над контентом, прокинутым в `children`.
    */
   contentWrapperClassName?: string;
+  /**
+   * Предотвращает горизонтальную цепочку прокрутки (например, для отключения переключения страниц на macOS).
+   */
+  preventOverscroll?: boolean;
 }
 
 /**
@@ -214,6 +218,7 @@ export const HorizontalScroll = ({
   ContentWrapperComponent = 'div',
   contentWrapperRef,
   contentWrapperClassName,
+  preventOverscroll = false,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollStart, setCanScrollStart] = React.useState(false);
@@ -354,7 +359,11 @@ export const HorizontalScroll = ({
         />
       )}
       <div
-        className={classNames(styles.in, focusVisibleClassNames)}
+        className={classNames(
+          styles.in,
+          preventOverscroll && styles.inPreventOverscroll,
+          focusVisibleClassNames,
+        )}
         ref={scrollerRef}
         tabIndex={0}
         {...focusEvents}

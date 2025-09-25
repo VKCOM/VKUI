@@ -6,6 +6,7 @@ import { baselineComponent, userEvent } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { HorizontalScroll } from './HorizontalScroll';
+import styles from './HorizontalScroll.module.css';
 
 const setup = (element: HTMLElement, startScrollLeft = 0) => {
   let scrollLeft = startScrollLeft;
@@ -48,6 +49,18 @@ describe('HorizontalScroll', () => {
     });
 
     expect(scrollBy).toHaveBeenCalledTimes(1);
+  });
+
+  it('applies preventOverscroll class when preventOverscroll is true', () => {
+    const { container } = render(
+      <HorizontalScroll preventOverscroll data-testid="horizontal-scroll">
+        <div />
+        <div />
+      </HorizontalScroll>,
+    );
+
+    const scrollableElement = container.querySelector(`.${styles.in}`);
+    expect(scrollableElement).toHaveClass(styles.inPreventOverscroll);
   });
 
   it('calculates and shows arrow on hover', async () => {
