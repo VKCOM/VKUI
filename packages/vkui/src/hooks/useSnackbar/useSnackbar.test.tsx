@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { Button } from '../../components/Button/Button.tsx';
 import { Flex } from '../../components/Flex/Flex.tsx';
 import { Snackbar } from '../../components/Snackbar/Snackbar.tsx';
-import { waitCSSKeyframesAnimation } from '../../testing/utils';
+import { fakeTimers, waitCSSKeyframesAnimation } from '../../testing/utils';
 import {
   type CustomSnackbarProps,
   type OpenSnackbarReturn,
@@ -28,12 +28,7 @@ describe('useSnackbar', () => {
   const apiRef: React.RefObject<SnackbarApi | null> = {
     current: null,
   };
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-  afterEach(() => {
-    apiRef.current = null;
-  });
+  fakeTimers();
 
   it('should open a snackbar when the button is clicked', async () => {
     render(<TestComponent apiRef={apiRef} />);
@@ -108,8 +103,7 @@ describe('useSnackbar', () => {
   });
 
   it('should close snackbar automatically after duration', async () => {
-    jest.useFakeTimers();
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     render(<TestComponent apiRef={apiRef} />);
 
     await act(() =>
@@ -232,7 +226,7 @@ describe('useSnackbar', () => {
   });
 
   it('should open custom modal', async () => {
-    const additionalAction = jest.fn();
+    const additionalAction = vi.fn();
     render(<TestComponent apiRef={apiRef} />);
 
     const SnackbarComponent = ({

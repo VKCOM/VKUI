@@ -161,8 +161,8 @@ describe(Snackbar, () => {
   });
 
   it('should work with open prop', async () => {
-    const onActionClick = jest.fn();
-    const onDurationEnd = jest.fn();
+    const onActionClick = vi.fn();
+    const onDurationEnd = vi.fn();
 
     const action = <span data-testid="action">action</span>;
 
@@ -184,7 +184,7 @@ describe(Snackbar, () => {
     expect(onClose).not.toHaveBeenCalled();
 
     // Ждем, когда срабатает таймер
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(onDurationEnd).toHaveBeenCalled();
 
     // Снекбар не закрывается
