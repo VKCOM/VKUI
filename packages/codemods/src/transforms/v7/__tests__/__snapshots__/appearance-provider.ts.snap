@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`appearance-provider transforms correctly 1`] = `
+exports[`appearance-provider > transforms correctly 1`] = `
 "import { ColorSchemeProvider, type ColorSchemeProviderProps, Snackbar } from '@vkontakte/vkui';
 import React from 'react';
 
@@ -29,7 +29,7 @@ const App = () => {
 };"
 `;
 
-exports[`appearance-provider transforms correctly 2`] = `
+exports[`appearance-provider > transforms correctly 2`] = `
 "import { ColorSchemeProvider as AppearanceProviderAlias, type ColorSchemeProviderProps as AppearanceProviderPropsAlias, Snackbar } from '@vkontakte/vkui';
 import React from 'react';
 

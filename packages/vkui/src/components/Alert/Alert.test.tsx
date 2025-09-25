@@ -30,7 +30,7 @@ describe('Alert', () => {
 
   it('shows warning if title and area attributes are not provided', () => {
     setNodeEnv('development');
-    const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+    const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
 
     const component = render(<Alert onClose={noop} title="Alert title" />);
     expect(warn).not.toHaveBeenCalled();
@@ -52,7 +52,7 @@ describe('Alert', () => {
 
   describe('closes', () => {
     it.each(['overlay', 'close'])('with %s click', async (trigger) => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       const result = render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Alert onClose={onClose} />
@@ -71,7 +71,7 @@ describe('Alert', () => {
 
   describe('calls action and do not calls onClose with autoCloseDisabled=true', () => {
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
-      const action = jest
+      const action = vi
         .fn()
         .mockImplementationOnce(noop)
         .mockImplementationOnce((args) => {
@@ -80,7 +80,7 @@ describe('Alert', () => {
           }
         });
 
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       const result = render(
         <ConfigProvider platform={platform}>
           <Alert
@@ -115,8 +115,8 @@ describe('Alert', () => {
 
     it('should call onClose last', async () => {
       const callOrder: Array<'action' | 'onClose'> = [];
-      const action = jest.fn().mockImplementation(() => callOrder.push('action'));
-      const onClose = jest.fn().mockImplementation(() => callOrder.push('onClose'));
+      const action = vi.fn().mockImplementation(() => callOrder.push('action'));
+      const onClose = vi.fn().mockImplementation(() => callOrder.push('onClose'));
       const result = render(
         <Alert
           onClose={onClose}
@@ -140,8 +140,8 @@ describe('Alert', () => {
 
   describe('calls action after close by default', () => {
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
-      const action = jest.fn();
-      const onClose = jest.fn();
+      const action = vi.fn();
+      const onClose = vi.fn();
       const result = render(
         <ConfigProvider platform={platform}>
           <Alert
@@ -169,7 +169,7 @@ describe('Alert', () => {
   it('passes data-testid to actions', async () => {
     const result = render(
       <Alert
-        onClose={jest.fn()}
+        onClose={vi.fn()}
         actions={[
           { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id' },
           { 'title': 'Deny', 'mode': 'default', 'data-testid': 'deny-test-id' },
@@ -197,7 +197,7 @@ describe('Alert', () => {
       const result = render(
         <ConfigProvider platform={Platform.IOS}>
           <Alert
-            onClose={jest.fn()}
+            onClose={vi.fn()}
             actions={[
               { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id', href },
             ]}
@@ -226,7 +226,7 @@ describe('Alert', () => {
       const result = render(
         <ConfigProvider platform={Platform.IOS}>
           <Alert
-            onClose={jest.fn()}
+            onClose={vi.fn()}
             actions={[{ 'title': 'Allow', mode, 'data-testid': 'allow-test-id' }]}
           />
         </ConfigProvider>,
@@ -255,7 +255,7 @@ describe('Alert', () => {
       const result = render(
         <ConfigProvider platform={Platform.VKCOM}>
           <Alert
-            onClose={jest.fn()}
+            onClose={vi.fn()}
             actions={[{ 'title': 'Allow', mode, 'data-testid': 'allow-test-id' }]}
           />
         </ConfigProvider>,
@@ -275,14 +275,14 @@ describe('Alert', () => {
         render(
           <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
             <Alert
-              onClose={jest.fn()}
+              onClose={vi.fn()}
               dismissLabel="Закрыть предупреждение"
               dismissButtonTestId="dismiss-button-test-id"
               dismissButtonMode={dismissButtonMode}
             />
           </AdaptivityProvider>,
         );
-        act(jest.runAllTimers);
+        act(vi.runAllTimers);
         expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
           'Закрыть предупреждение',
         );
@@ -293,13 +293,13 @@ describe('Alert', () => {
       const result = render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Alert
-            onClose={jest.fn()}
+            onClose={vi.fn()}
             dismissButtonTestId="dismiss-button-test-id"
             dismissButtonMode="none"
           />
         </AdaptivityProvider>,
       );
-      act(jest.runAllTimers);
+      act(vi.runAllTimers);
       expect(result.queryByTestId('dismiss-button-test-id')).not.toBeInTheDocument();
     });
   });
@@ -320,7 +320,7 @@ describe('Alert', () => {
   ])(
     'actions wrapper should have className "$className" when use align "$align"',
     async ({ align, className }) => {
-      const result = render(<Alert onClose={jest.fn()} actionsAlign={align} />);
+      const result = render(<Alert onClose={vi.fn()} actionsAlign={align} />);
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
@@ -357,7 +357,7 @@ describe('Alert', () => {
       const result = render(
         <ConfigProvider platform={platform}>
           <Alert
-            onClose={jest.fn()}
+            onClose={vi.fn()}
             titleTestId="titleTestId"
             descriptionTestId="descriptionTestId"
             title={title}
@@ -377,8 +377,8 @@ describe('Alert', () => {
   );
 
   it('handle allowClickPropagation correctly', async () => {
-    const onClose = jest.fn();
-    const onClick = jest.fn();
+    const onClose = vi.fn();
+    const onClick = vi.fn();
     const action = {
       'title': 'Item',
       'data-testid': '__action__',
@@ -402,7 +402,7 @@ describe('Alert', () => {
 
     await userEvent.click(result.getByTestId('__action__'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(onClick).toHaveBeenCalledTimes(1);
   });

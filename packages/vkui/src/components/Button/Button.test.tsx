@@ -19,7 +19,7 @@ describe('Button', () => {
   });
 
   it('Component: Button with loading is not clickable', () => {
-    const handleClick = jest.fn();
+    const handleClick = vi.fn();
     render(
       <ButtonTest onClick={handleClick} loading>
         Button
