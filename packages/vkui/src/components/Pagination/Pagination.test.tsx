@@ -40,7 +40,7 @@ describe('Pagination', () => {
   );
 
   it('check navigation by click', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const Fixture = ({ page }: { page: number }) => {
       return (
         <Pagination
@@ -69,7 +69,7 @@ describe('Pagination', () => {
   });
 
   it('checks data-testid setup', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const Fixture = ({ page }: { page: number }) => {
       return (
         <Pagination

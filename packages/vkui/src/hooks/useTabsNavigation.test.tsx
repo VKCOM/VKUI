@@ -34,7 +34,7 @@ describe('useTabsNavigation', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should switch to next tab when right arrow is pressed', () => {
@@ -105,7 +105,7 @@ describe('useTabsNavigation', () => {
     (result.current.tabsRef as React.MutableRefObject<HTMLDivElement>).current = tabs;
     tab1.focus();
 
-    const clickSpy = jest.spyOn(tab1, 'click');
+    const clickSpy = vi.spyOn(tab1, 'click');
 
     fireEvent.keyDown(document, { key: 'Enter' });
 

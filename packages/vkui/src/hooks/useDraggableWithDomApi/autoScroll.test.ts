@@ -8,7 +8,7 @@ const MAX_SCROLL_Y = SCROLL_HEIGHT - VIEWPORT_HEIGHT;
 
 const setScrollTop = (scrollEl: HTMLElement, scrollTop: number) => {
   window.scrollY = scrollEl.scrollTop = scrollTop;
-  scrollEl.getBoundingClientRect = jest.fn(
+  scrollEl.getBoundingClientRect = vi.fn(
     () => new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT),
   );
 };
@@ -16,7 +16,7 @@ const setScrollTop = (scrollEl: HTMLElement, scrollTop: number) => {
 const initScrollElData = (scrollEl: HTMLElement, scrollTop: number) => {
   setScrollTop(scrollEl, scrollTop);
 
-  jest.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(() => SCROLL_HEIGHT);
+  vi.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(() => SCROLL_HEIGHT);
 
   Object.defineProperty(scrollEl, 'scrollBy', {
     value: (_: number, y: number) => {

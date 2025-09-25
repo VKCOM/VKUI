@@ -15,8 +15,8 @@ import { type CustomSelectRenderOption } from './types';
 import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;
-jest.mock('../../lib/floating', () => {
-  const originalModule = jest.requireActual('../../lib/floating');
+vi.mock('../../lib/floating', async () => {
+  const originalModule = (await vi.importActual('../../lib/floating')) as any;
   return {
     ...originalModule,
     useFloating: (...args: Parameters<typeof useFloating>) => {
@@ -67,18 +67,18 @@ const triggerKeydownEvent = async (input: HTMLElement, key: string, code: string
 };
 
 const mockPropertiesToScroll = (defaultScrollTop = 0) => {
-  const setScrollTopStub = jest.fn();
+  const setScrollTopStub = vi.fn();
 
   const dropdownScroll = screen.getByRole('listbox').firstElementChild as HTMLElement;
-  jest.spyOn(dropdownScroll, 'offsetHeight', 'get').mockImplementation(() => 200);
-  jest.spyOn(dropdownScroll, 'scrollTop', 'get').mockImplementation(() => defaultScrollTop);
-  jest.spyOn(dropdownScroll, 'scrollTop', 'set').mockImplementation(setScrollTopStub);
+  vi.spyOn(dropdownScroll, 'offsetHeight', 'get').mockImplementation(() => 200);
+  vi.spyOn(dropdownScroll, 'scrollTop', 'get').mockImplementation(() => defaultScrollTop);
+  vi.spyOn(dropdownScroll, 'scrollTop', 'set').mockImplementation(setScrollTopStub);
 
   const optionHeight = 40;
 
   screen.getAllByRole('option').forEach((option, index) => {
-    jest.spyOn(option, 'offsetTop', 'get').mockImplementation(() => optionHeight * index);
-    jest.spyOn(option, 'offsetHeight', 'get').mockImplementation(() => optionHeight);
+    vi.spyOn(option, 'offsetTop', 'get').mockImplementation(() => optionHeight * index);
+    vi.spyOn(option, 'offsetHeight', 'get').mockImplementation(() => optionHeight);
   });
 
   return setScrollTopStub;
@@ -93,7 +93,7 @@ describe('CustomSelect', () => {
   ));
 
   it('Does not explode on NaN value', () => {
-    jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+    vi.spyOn(global.console, 'error').mockImplementationOnce((message) => {
       if (message.includes('Received NaN')) {
         return;
       }
@@ -119,7 +119,7 @@ describe('CustomSelect', () => {
       },
     ];
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -267,7 +267,7 @@ describe('CustomSelect', () => {
   });
 
   it('correctly converts from controlled to uncontrolled state', () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(noop);
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(noop);
 
     const { rerender } = render(
       <CustomSelect
@@ -513,8 +513,8 @@ describe('CustomSelect', () => {
   });
 
   it('fires onOpen and onClose correctly', async () => {
-    const openCb = jest.fn(() => null);
-    const closeCb = jest.fn(() => null);
+    const openCb = vi.fn(() => null);
+    const closeCb = vi.fn(() => null);
     render(
       <CustomSelect
         onOpen={openCb}
@@ -644,7 +644,7 @@ describe('CustomSelect', () => {
 
   // https://github.com/VKCOM/VKUI/issues/4066
   it('invalid value does not call onChange', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -661,7 +661,7 @@ describe('CustomSelect', () => {
   });
 
   it('clear value externally with empty value', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const { rerender } = render(
       <CustomSelect
@@ -694,7 +694,7 @@ describe('CustomSelect', () => {
   });
 
   it('clear value with default clear button', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const { unmount } = render(
       <CustomSelect
@@ -746,7 +746,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): clearButton is not shown when option selected without props.value change', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -769,7 +769,7 @@ describe('CustomSelect', () => {
   });
 
   it('(uncontrolled): calls onChange when click on unselected option and does not call when click on selected ', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -807,7 +807,7 @@ describe('CustomSelect', () => {
   });
 
   it('(uncontrolled): doesn not calls onChange when click default selected option when defaultValue is string and option value is number', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -836,7 +836,7 @@ describe('CustomSelect', () => {
 
   it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
     // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очистки value проп не меняется
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const { rerender } = render(
       <CustomSelect
@@ -906,7 +906,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): calls onChange when click on unselected option without value change', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -967,7 +967,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): does not call onChange on already selected', async () => {
-    const onChangeStub = jest.fn();
+    const onChangeStub = vi.fn();
 
     render(
       <CustomSelectControlled
@@ -1034,7 +1034,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): does call onChange on option click when prop value is empty and value is not changing', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -1287,7 +1287,7 @@ describe('CustomSelect', () => {
   });
 
   it('check input should close popover and reset selected option', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
@@ -1336,9 +1336,8 @@ describe('CustomSelect', () => {
   it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', 'Space', 'Enter', ' ', 'Spacebar'])(
     'should open dropdown when keydown %s',
     async (key) => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       const inputRef: React.RefObject<HTMLInputElement | null> = { current: null };
-
       render(
         <CustomSelect
           searchable
@@ -1358,16 +1357,16 @@ describe('CustomSelect', () => {
       await userEvent.keyboard(`{${key}}`);
 
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
 
       checkDropdownOpened(true);
-      jest.useRealTimers();
+      vi.useRealTimers();
     },
   );
 
   it('should render wrapper when use renderDropdown prop', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     render(
       <CustomSelect
         renderDropdown={({ defaultDropdownContent }) => (
@@ -1386,20 +1385,20 @@ describe('CustomSelect', () => {
     await userEvent.click(screen.getByTestId('select'));
 
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
 
     expect(screen.getByTestId('wrapper')).toBeInTheDocument();
     expect(screen.getAllByRole('option').length).toBe(4);
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should call onInputChange callback when change input', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
-    const onInputChange = jest.fn();
+    const onInputChange = vi.fn();
     render(
       <CustomSelect
         getSelectInputRef={inputRef}
@@ -1547,7 +1546,7 @@ describe('CustomSelect', () => {
   });
 
   it('check correct fetching status label', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const Fixture = ({ fetching }: { fetching: boolean }) => (
       <CustomSelect
         data-testid="select"
@@ -1572,14 +1571,16 @@ describe('CustomSelect', () => {
     expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
     expect(screen.queryByText('Список категорий загружен.')).toBeTruthy();
 
-    act(() => jest.runAllTimers());
+    act(() => {
+      vi.runOnlyPendingTimers();
+    });
 
     expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
     expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
   });
 
   it('check no status label by default', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const Fixture = () => (
       <CustomSelect
         data-testid="select"
@@ -1603,7 +1604,7 @@ describe('CustomSelect', () => {
     const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CustomSelect
         getSelectInputRef={inputRef}
@@ -1629,7 +1630,7 @@ describe('CustomSelect', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check error when use different type of values', () => {
-      const errorStub = jest.spyOn(global.console, 'error').mockImplementationOnce(noop);
+      const errorStub = vi.spyOn(global.console, 'error').mockImplementationOnce(noop);
 
       render(
         <CustomSelect

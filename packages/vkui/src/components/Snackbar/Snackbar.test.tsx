@@ -52,24 +52,24 @@ const GESTURES_JEST_EACH_TABLE = [
 ] as const;
 
 describe(Snackbar, () => {
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   beforeAll(() => {
     matchMediaMock(MEDIA_QUERIES.SMALL_TABLET_PLUS);
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     onClose.mockClear();
   });
 
-  baselineComponent((props) => <Snackbar onClose={jest.fn()} {...props} />);
+  baselineComponent((props) => <Snackbar onClose={vi.fn()} {...props} />);
 
   it.each(PLACEMENT_JEST_EACH_TABLE)('should set offsetY relative placement="%s"', (placement) => {
-    const result = render(<Snackbar placement={placement} offsetY={8} onClose={jest.fn()} />);
+    const result = render(<Snackbar placement={placement} offsetY={8} onClose={vi.fn()} />);
     const el = result.getByRole('presentation');
     switch (placement) {
       case 'top-start':
@@ -90,18 +90,18 @@ describe(Snackbar, () => {
   it('should set iOS CSS selector', () => {
     const result = render(
       <PlatformProvider value="ios">
-        <Snackbar onClose={jest.fn()}>Text message</Snackbar>
+        <Snackbar onClose={vi.fn()}>Text message</Snackbar>
       </PlatformProvider>,
     );
     expect(result.getByRole('presentation')).toHaveClass(styles.ios);
-    result.rerender(<Snackbar onClose={jest.fn()}>Text message</Snackbar>);
+    result.rerender(<Snackbar onClose={vi.fn()}>Text message</Snackbar>);
     expect(result.getByRole('presentation')).not.toHaveClass(styles.ios);
   });
 
   it('renders in horizontal layout on desktop if layout prop is set', () => {
     const { container, rerender } = render(
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP}>
-        <Snackbar action="Close me" onClose={jest.fn()}>
+        <Snackbar action="Close me" onClose={vi.fn()}>
           Text message
         </Snackbar>
       </AdaptivityProvider>,
@@ -111,7 +111,7 @@ describe(Snackbar, () => {
     expect(container.querySelector(`.${basicStyles.layoutNone}`)).not.toBeNull();
 
     rerender(
-      <Snackbar layout="horizontal" action="Close me" onClose={jest.fn()}>
+      <Snackbar layout="horizontal" action="Close me" onClose={vi.fn()}>
         Text message
       </Snackbar>,
     );
@@ -139,7 +139,7 @@ describe(Snackbar, () => {
   });
 
   it('should be closed after click to action', async () => {
-    const onActionClick = jest.fn();
+    const onActionClick = vi.fn();
     const result = render(
       <Snackbar
         action={<span data-testid="action">action</span>}

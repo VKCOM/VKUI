@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`tooltip transforms correctly 1`] = `
+exports[`tooltip > transforms correctly 1`] = `
 "import { OnboardingTooltip } from '@vkontakte/vkui';
 import React from 'react';
 

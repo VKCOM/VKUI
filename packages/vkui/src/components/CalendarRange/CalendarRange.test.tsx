@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, dateFormatter, endOfDay, startOfDay } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
 import dayStyles from '../CalendarDay/CalendarDay.module.css';
 import daysStyles from '../CalendarDays/CalendarDays.module.css';
@@ -10,6 +10,7 @@ const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
+  fakeTimers();
 
   const triggerKeyDownEvent = (key: string, first: boolean) => {
     fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[first ? 0 : 1], {
@@ -23,7 +24,7 @@ describe('CalendarRange', () => {
   it('checks aria roles', async () => {
     const targetDate = new Date('2023-09-20T07:40:00.000Z');
 
-    jest.useFakeTimers({ now: targetDate });
+    vi.setSystemTime(targetDate);
     render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
 
     expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
@@ -55,7 +56,7 @@ describe('CalendarRange', () => {
   });
 
   it('calls onChange when initial value is [null, null]', () => {
-    const onChangeStub = jest.fn();
+    const onChangeStub = vi.fn();
     render(
       <CalendarRange
         data-testid="calendar-range"
@@ -107,7 +108,7 @@ describe('CalendarRange', () => {
   });
 
   it('check navigation by keyboard between two months', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     render(
       <CalendarRange
         value={[firstDayDate, firstDayDate]}
@@ -151,8 +152,8 @@ describe('CalendarRange', () => {
   });
 
   it('checks day selection by keyboard', async () => {
-    jest.useFakeTimers();
-    const onChangeStub = jest.fn();
+    vi.useFakeTimers();
+    const onChangeStub = vi.fn();
     const startDate = new Date(2024, 2, 1);
     const endDate = new Date(2024, 2, 10);
     render(
@@ -178,10 +179,10 @@ describe('CalendarRange', () => {
   });
 
   it('checks focusable days on each part of calendar', async () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const startDate = new Date(2024, 2, 1);
     const endDate = new Date(2024, 3, 10);
-    const onChangeStub = jest.fn();
+    const onChangeStub = vi.fn();
     render(
       <CalendarRange
         defaultValue={[startDate, endDate]}
@@ -230,7 +231,7 @@ describe('CalendarRange', () => {
   });
 
   it('check click on same day', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarRange value={[firstDayDate, null]} onChange={onChange} dayTestId={dayTestId} />,
     );
@@ -244,7 +245,7 @@ describe('CalendarRange', () => {
   });
 
   it('check range working', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarRange value={[firstDayDate, null]} onChange={onChange} dayTestId={dayTestId} />,
     );
@@ -260,7 +261,7 @@ describe('CalendarRange', () => {
   });
 
   it('check reverse range select working', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const end = addDays(firstDayDate, 10);
     const start = firstDayDate;
     render(<CalendarRange value={[end, null]} onChange={onChange} dayTestId={dayTestId} />);
@@ -271,8 +272,8 @@ describe('CalendarRange', () => {
   });
 
   it('check reselect range after range selected', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    vi.useFakeTimers();
+    const onChange = vi.fn();
     const start = firstDayDate;
     const end = addDays(firstDayDate, 10);
     render(<CalendarRange value={[start, end]} onChange={onChange} dayTestId={dayTestId} />);

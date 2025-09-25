@@ -9,7 +9,7 @@ type RenderHookProps = {
 
 describe('usePlacementChangeCallback', () => {
   it('calls callback on initial render when initial placement differ from resolvedPlacement', () => {
-    const onReferenceHiddenChangeStub = jest.fn();
+    const onReferenceHiddenChangeStub = vi.fn();
 
     const defaultProps: RenderHookProps = {
       hideMiddleware: {

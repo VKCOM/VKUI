@@ -22,8 +22,8 @@ describe(ModalRoot, () => {
     { displayName: 'ModalCard', Component: ModalCard },
   ])('With $displayName', ({ displayName, Component }) => {
     test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
-      const globalCallbacks = { onOpen: jest.fn(), onOpened: jest.fn(), onClose: jest.fn(), onClosed: jest.fn() }; // prettier-ignore
-      const localCallbacks = { onOpen: jest.fn(), onOpened: jest.fn(), onClose: jest.fn(), onClosed: jest.fn() }; // prettier-ignore
+      const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
+      const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
 
       const h = render(
         <ModalRoot activeModal="m" {...globalCallbacks}>
@@ -36,7 +36,7 @@ describe(ModalRoot, () => {
       );
       await waitCSSTransitionEndConditionally(h.getByTestId('m'), displayName);
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.getByTestId('m')).toBeInTheDocument();
 
@@ -51,7 +51,7 @@ describe(ModalRoot, () => {
       );
       await waitCSSTransitionEndConditionally(h.getByTestId('m'), displayName);
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).not.toBeInTheDocument();
 
@@ -94,7 +94,7 @@ describe(ModalRoot, () => {
       );
       await waitCSSTransitionEndConditionally(h.getByTestId('m'), displayName);
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).toBeInTheDocument();
     });
@@ -118,7 +118,7 @@ describe(ModalRoot, () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(h.getByTestId('m'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).not.toBeNull();
       expect(h.queryByTestId('other')).toBeNull();
@@ -131,7 +131,7 @@ describe(ModalRoot, () => {
       h.rerender(<ModalRoot activeModal="m">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(h.getByTestId('m'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).not.toBeNull();
       expect(h.queryByTestId('other')).toBeNull();
@@ -140,7 +140,7 @@ describe(ModalRoot, () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(h.getByTestId('m'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).not.toBeNull();
       expect(h.queryByTestId('other')).toBeNull();
@@ -148,7 +148,7 @@ describe(ModalRoot, () => {
       h.rerender(<ModalRoot activeModal={null}>{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(h.getByTestId('m'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).toBeNull();
       expect(h.queryByTestId('other')).toBeNull();
@@ -157,7 +157,7 @@ describe(ModalRoot, () => {
       const h = render(<ModalRoot activeModal="m">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(h.getByTestId('m'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).not.toBeNull();
       expect(h.queryByTestId('other')).toBeNull();
@@ -165,11 +165,11 @@ describe(ModalRoot, () => {
       h.rerender(<ModalRoot activeModal="other">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(h.getByTestId('m'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       await waitModalPageCSSTransitionEnd(h.getByTestId('other'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(h.queryByTestId('m')).toBeNull();
       expect(h.queryByTestId('other')).not.toBeNull();
@@ -182,8 +182,8 @@ describe(ModalRoot, () => {
   ])('handle onClose', ({ displayName, Component }) => {
     describe('on fade click', () => {
       it('calls modal onClose', async () => {
-        const onClose = jest.fn();
-        const onCloseRoot = jest.fn();
+        const onClose = vi.fn();
+        const onCloseRoot = vi.fn();
         const h = render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
             <Component id="m" data-testid="m" modalOverlayTestId="overlay" onClose={onClose} />
@@ -191,7 +191,7 @@ describe(ModalRoot, () => {
         );
         await waitCSSTransitionEndConditionally(h.getByTestId('m'), displayName);
         act(() => {
-          jest.runOnlyPendingTimers();
+          vi.runOnlyPendingTimers();
         });
         fireEvent.click(h.getByTestId('overlay'));
         expect(onClose).toHaveBeenCalledTimes(1);
@@ -199,7 +199,7 @@ describe(ModalRoot, () => {
         expect(onCloseRoot).not.toHaveBeenCalled();
       });
       it('calls root onClose if modal has no onClose', async () => {
-        const onCloseRoot = jest.fn();
+        const onCloseRoot = vi.fn();
         const h = render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
             <Component id="m" data-testid="m" modalOverlayTestId="overlay" />
@@ -207,13 +207,13 @@ describe(ModalRoot, () => {
         );
         await waitCSSTransitionEndConditionally(h.getByTestId('m'), displayName);
         act(() => {
-          jest.runOnlyPendingTimers();
+          vi.runOnlyPendingTimers();
         });
         fireEvent.click(h.getByTestId('overlay'));
         expect(onCloseRoot).toHaveBeenCalledTimes(1);
       });
       it('does not call root onClose when preventClose is provided', async () => {
-        const onCloseRoot = jest.fn();
+        const onCloseRoot = vi.fn();
         const h = render(
           <ModalRoot onClose={onCloseRoot} activeModal="m">
             <Component preventClose id="m" data-testid="m" modalOverlayTestId="overlay" />
@@ -221,7 +221,7 @@ describe(ModalRoot, () => {
         );
         await waitCSSTransitionEndConditionally(h.getByTestId('m'), displayName);
         act(() => {
-          jest.runOnlyPendingTimers();
+          vi.runOnlyPendingTimers();
         });
         fireEvent.click(h.getByTestId('overlay'));
         fireEvent.keyDown(h.getByTestId('m'), { key: 'Escape', code: 'Escape' });
@@ -229,7 +229,7 @@ describe(ModalRoot, () => {
       });
     });
     it('on esc click', async () => {
-      const onCloseRoot = jest.fn();
+      const onCloseRoot = vi.fn();
       const h = render(
         <ModalRoot onClose={onCloseRoot} activeModal="m">
           <Component id="m" data-testid="m" />
@@ -237,7 +237,7 @@ describe(ModalRoot, () => {
       );
       await waitCSSTransitionEndConditionally(h.getByTestId('m'), displayName);
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       fireEvent.keyDown(h.getByTestId('m'), { key: 'Escape', code: 'Escape' });
       expect(onCloseRoot).toHaveBeenCalledTimes(1);
@@ -252,7 +252,7 @@ describe(ModalRoot, () => {
     );
     await waitModalPageCSSTransitionEnd(h.getByTestId('page'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(screen.queryByTestId('modal-mask')).toBeTruthy();
 
@@ -263,7 +263,7 @@ describe(ModalRoot, () => {
     );
     await waitModalPageCSSTransitionEnd(h.getByTestId('page'));
     act(() => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
     expect(screen.queryByTestId('modal-mask')).toBeFalsy();
     expect(screen.queryByTestId('custom-mask')).toBeTruthy();
@@ -302,13 +302,13 @@ describe(ModalRoot, () => {
         baseElement: document.documentElement,
       });
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
-      act(jest.runOnlyPendingTimers);
+      act(vi.runOnlyPendingTimers);
       expect(modalPageRef.current).toHaveFocus();
 
       component.rerender(<ModalRoot activeModal="modal-card">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
       await waitModalCardCSSTransitionEnd(component.getByTestId('modal-card'));
-      act(jest.runOnlyPendingTimers);
+      act(vi.runOnlyPendingTimers);
 
       expect(modalCardRef.current).toHaveFocus();
     });
@@ -319,7 +319,7 @@ describe(ModalRoot, () => {
       });
       await waitModalPageCSSTransitionEnd(h.getByTestId('modal-page-with-input'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
 
       expect(modalPageWithInputRef.current).not.toHaveFocus();
@@ -337,7 +337,7 @@ describe(ModalRoot, () => {
       );
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
       expect(modalPageRef.current).not.toHaveFocus();
 
@@ -348,7 +348,7 @@ describe(ModalRoot, () => {
       );
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page-with-input'));
       act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
       });
 
       expect(modalPageWithInputRef.current).not.toHaveFocus();

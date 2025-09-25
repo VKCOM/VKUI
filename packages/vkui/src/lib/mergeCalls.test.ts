@@ -3,16 +3,16 @@ import { mergeCalls } from './mergeCalls';
 describe('mergeCalls', () => {
   it('Runs functions with same args call', () => {
     const props1 = {
-      fn1: jest.fn(),
-      fn3: jest.fn(),
+      fn1: vi.fn(),
+      fn3: vi.fn(),
     };
     const props2 = {
-      fn1: jest.fn(),
-      fn2: jest.fn(),
-      fn3: jest.fn(),
+      fn1: vi.fn(),
+      fn2: vi.fn(),
+      fn3: vi.fn(),
     };
     const props3 = {
-      fn4: jest.fn(),
+      fn4: vi.fn(),
     };
 
     const props = mergeCalls(props1, props2, props3);
