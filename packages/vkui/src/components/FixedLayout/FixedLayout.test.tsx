@@ -8,8 +8,8 @@ import styles from './FixedLayout.module.css';
 
 let updateFunction: () => void;
 
-jest.mock('../../lib/floating/customResizeObserver', () => ({
-  CustomResizeObserver: jest.fn().mockImplementation((updateFunctionFn: () => void) => {
+vi.mock('../../lib/floating/customResizeObserver', () => ({
+  CustomResizeObserver: vi.fn().mockImplementation((updateFunctionFn: () => void) => {
     updateFunction = updateFunctionFn;
     return {
       observe: noop,
@@ -35,9 +35,9 @@ describe('FixedLayout', () => {
       if (!element) {
         return;
       }
-      jest
-        .spyOn(element, 'getBoundingClientRect')
-        .mockImplementation(() => new DOMRect(0, 0, parentWidth, 800));
+      vi.spyOn(element, 'getBoundingClientRect').mockImplementation(
+        () => new DOMRect(0, 0, parentWidth, 800),
+      );
 
       parentRef.current = element;
     };
@@ -71,7 +71,7 @@ describe('FixedLayout', () => {
       if (!element) {
         return;
       }
-      jest.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
+      vi.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
 
       colRef.current = element;
     };

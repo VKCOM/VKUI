@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`tabbar transforms correctly 1`] = `
+exports[`tabbar > transforms correctly 1`] = `
 "import { Tabbar } from '@vkontakte/vkui';
 import React from 'react';
 

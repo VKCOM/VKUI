@@ -32,7 +32,7 @@ describe('useMergedState', () => {
   });
 
   it('works in controlled mode', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const initialValue = new Date();
     const { result, rerender } = renderHook((props) => useDateInputValue(props), {
       initialProps: { value: initialValue, onChange },
@@ -95,7 +95,7 @@ describe('useMergedState', () => {
 
   it('correctly clear value', () => {
     const defaultValue = new Date();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const { result } = renderHook(() => useDateInputValue({ defaultValue, onChange }));
 
     expect(result.current.value).toBe(defaultValue);

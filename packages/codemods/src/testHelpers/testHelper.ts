@@ -24,14 +24,14 @@ export function getTestFixturesInputPath(
  * У оригинального defineSnapshotTestFromFixture нет типов
  * Избавляемся от необходимости в тестах постоянно указывать `module`
  */
-export function defineSnapshotTestFromFixture(
+export async function defineSnapshotTestFromFixture(
   dirName: string,
   transformName: string,
   options: JSCodeShiftOptions,
   testFilePrefix: string,
 ) {
   // Assumes transform is one level up from __tests__ directory
-  const module = require(path.join(dirName, '..', transformName));
+  const module = await import(path.join(dirName, '..', transformName) + '.ts');
   defineSnapshotTestFromFixtureOrig(
     dirName,
     module,

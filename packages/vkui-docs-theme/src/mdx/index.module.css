@@ -18,6 +18,8 @@
 }
 
 .h1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-family: var(--vkui--font_family_accent);
   font-size: 40px;
   font-weight: var(--vkui--font_weight_accent1);
