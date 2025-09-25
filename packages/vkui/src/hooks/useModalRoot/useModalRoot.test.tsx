@@ -194,7 +194,7 @@ describe('useModalRoot', () => {
   });
 
   it('should correct render custom modal card', async () => {
-    const additionalAction = jest.fn();
+    const additionalAction = vi.fn();
 
     const ModalCardComponent = ({
       additionalAction,
@@ -240,7 +240,7 @@ describe('useModalRoot', () => {
   });
 
   it('should correct render custom modal page', async () => {
-    const additionalAction = jest.fn();
+    const additionalAction = vi.fn();
 
     const ModalPageComponent = ({
       additionalAction,
@@ -286,7 +286,7 @@ describe('useModalRoot', () => {
   });
 
   it('should correct render custom modal page without props', async () => {
-    const additionalAction = jest.fn();
+    const additionalAction = vi.fn();
 
     const ModalPageComponent = ({
       update,
