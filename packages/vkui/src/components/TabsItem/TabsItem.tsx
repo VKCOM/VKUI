@@ -212,7 +212,7 @@ export const TabsItem = ({
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
       )}
-      onClick={_onClick}
+      onClick={controller ? _onClick : onClick}
       id={id}
       {...restProps}
     >
