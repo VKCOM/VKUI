@@ -10,13 +10,16 @@ import {
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
-import { configureAxe, type JestAxeConfigureOptions, toHaveNoViolations } from 'jest-axe';
+import { configureAxe } from 'vitest-axe';
+import * as matchers from 'vitest-axe/matchers';
 import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
 import { isHTMLElement } from '../lib/dom';
 import type { ImgOnlyAttributes } from '../lib/utils';
 import type { HasChildren } from '../types';
+
+type AxeConfigureOptions = Parameters<typeof configureAxe>[0];
 
 export const testIf = (condition: boolean) => (condition ? it : it.skip);
 
@@ -25,7 +28,7 @@ export const defaultAxe = configureAxe({
    * @see https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
    */
 });
-expect.extend(toHaveNoViolations);
+expect.extend(matchers);
 
 /**
  * Переконфигурируем работу userEvent под vitest
@@ -67,7 +70,7 @@ export type ComponentTestOptions = {
   style?: boolean;
   adaptivity?: AdaptivityProps;
   a11y?: boolean;
-  a11yConfig?: JestAxeConfigureOptions;
+  a11yConfig?: AxeConfigureOptions;
   getRootRef?: boolean;
 };
 
@@ -101,7 +104,7 @@ export function mountTest(Component: React.ComponentType<any>) {
   });
 }
 
-export function a11yTest(Component: React.ComponentType<any>, axeConfig?: JestAxeConfigureOptions) {
+export function a11yTest(Component: React.ComponentType<any>, axeConfig?: AxeConfigureOptions) {
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
     await waitForFloatingPosition();
