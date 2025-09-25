@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import type { HasChildren, HasRef, HasRootRef } from '../../types';
+import type { HasChildren, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
 import type { TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -25,7 +25,15 @@ export interface FileProps
     HasChildren,
     Omit<TappableOmitProps, 'size' | keyof HiddenInputFileProps>,
     HasRef<HTMLInputElement>,
-    HasRootRef<HTMLElement> {}
+    HasRootRef<HTMLElement> {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: Omit<VKUIButtonProps, 'type'> & HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> & HasDataAttribute;
+  };
+}
 
 /**
  * @see https://vkui.io/components/file
@@ -57,6 +65,8 @@ export const File = ({
   onChange,
   onInvalid,
   disabled,
+
+  slotsProps,
   ...restProps
 }: FileProps): React.ReactNode => {
   return (
@@ -75,6 +85,7 @@ export const File = ({
       getRootRef={getRootRef}
       disabled={disabled}
       {...restProps}
+      {...slotsProps?.root}
     >
       <VisuallyHidden
         title=""
@@ -90,6 +101,7 @@ export const File = ({
         Component="input"
         type="file"
         getRootRef={getRef}
+        {...slotsProps?.input}
       />
       {children}
     </Button>

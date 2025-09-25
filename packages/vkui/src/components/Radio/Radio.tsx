@@ -34,6 +34,13 @@ export interface RadioProps
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
   /**
+   *
+   */
+  slotsProps?: {
+    root?: React.LabelHTMLAttributes<HTMLLabelElement> & HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasDataAttribute;
+  };
+  /**
    * Дополнительное описание под основным текстом.
    */
   description?: React.ReactNode;
@@ -82,12 +89,12 @@ export const Radio = ({
   onChange,
   onInvalid,
 
+  slotsProps,
   ...restProps
 }: RadioProps): React.ReactNode => {
   return (
     <SelectionControl
       style={style}
-      className={classNames(styles.host, className)}
       disabled={disabled}
       getRootRef={getRootRef}
       hoverMode={hoverMode}
@@ -97,6 +104,8 @@ export const Radio = ({
       focusVisibleMode={focusVisibleMode}
       {...labelProps}
       {...restProps}
+      {...slotsProps?.root}
+      className={classNames(styles.host, className, slotsProps?.root)}
     >
       <RadioInput
         id={id}
@@ -111,6 +120,9 @@ export const Radio = ({
         onChange={onChange}
         onInvalid={onInvalid}
         getRef={getRef}
+        slotsProps={{
+          input: slotsProps?.input,
+        }}
       />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}

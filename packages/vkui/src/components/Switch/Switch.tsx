@@ -8,7 +8,7 @@ import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
@@ -37,9 +37,17 @@ type HiddenInputSwitchProps = Pick<
 
 export interface SwitchProps
   extends HiddenInputSwitchProps,
-    Omit<React.HTMLAttributes<HTMLLabelElement>, keyof HiddenInputSwitchProps>,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof HiddenInputSwitchProps>,
     HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+    HasRef<HTMLInputElement> {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: React.LabelHTMLAttributes<HTMLLabelElement> & HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> & HasDataAttribute;
+  };
+}
 
 /**
  * @see https://vkui.io/components/switch
@@ -65,6 +73,7 @@ export const Switch = ({
   onInvalid,
   onBlur: onBlurProp,
   onFocus: onFocusProp,
+  slotsProps,
   ...restProps
 }: SwitchProps): React.ReactNode => {
   const direction = useConfigDirection();
@@ -73,8 +82,8 @@ export const Switch = ({
   const { sizeY = 'none' } = useAdaptivity();
   const { focusVisible, onBlur, onFocus } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
-  const handleBlur = callMultiple(onBlur, onBlurProp);
-  const handleFocus = callMultiple(onFocus, onFocusProp);
+  const handleBlur = callMultiple(onBlur, onBlurProp, slotsProps?.input?.onBlur);
+  const handleFocus = callMultiple(onFocus, onFocusProp, slotsProps?.input?.onFocus);
 
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
     Boolean(defaultChecked),
@@ -135,10 +144,12 @@ export const Switch = ({
       style={style}
       ref={getRootRef}
       {...restProps}
+      {...slotsProps?.root}
     >
       <VisuallyHidden
         {...inputProps}
-        className={styles.inputNative}
+        {...slotsProps?.input}
+        className={classNames(styles.inputNative, slotsProps?.input?.className)}
         onBlur={handleBlur}
         onFocus={handleFocus}
       />

@@ -59,6 +59,7 @@ export function CheckboxSimple({
   onChange,
   onInvalid,
 
+  slotsProps,
   ...restProps
 }: CheckboxProps) {
   const { sizeY = 'none' } = useAdaptivity();
@@ -84,6 +85,7 @@ export function CheckboxSimple({
       focusVisibleMode={focusVisibleMode}
       Component="label"
       {...restProps}
+      {...slotsProps?.root}
     >
       <CheckboxInput
         id={id}
@@ -103,6 +105,9 @@ export function CheckboxSimple({
         IconOffCompact={IconOffCompact}
         IconOffRegular={IconOffRegular}
         IconIndeterminate={IconIndeterminate}
+        slotsProps={{
+          input: slotsProps?.input,
+        }}
       />
     </Tappable>
   );

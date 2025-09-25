@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import type { HasRef, HasRootRef } from '../../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -52,7 +52,15 @@ export interface RadioInputProps
   extends HiddenInputRadioInputProps,
     Omit<React.LabelHTMLAttributes<HTMLLabelElement>, keyof HiddenInputRadioInputProps>,
     HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+    HasRef<HTMLInputElement> {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: React.LabelHTMLAttributes<HTMLLabelElement> & HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasDataAttribute;
+  };
+}
 
 export function RadioInput({
   className,
@@ -72,6 +80,8 @@ export function RadioInput({
   autoFocus,
   onChange,
   onInvalid,
+
+  slotsProps,
   ...restProps
 }: RadioInputProps) {
   return (
@@ -81,6 +91,7 @@ export function RadioInput({
       style={style}
       getRootRef={getRootRef}
       {...restProps}
+      {...slotsProps?.root}
     >
       <VisuallyHidden
         id={id}
@@ -98,6 +109,7 @@ export function RadioInput({
         type="radio"
         baseClassName={styles.input}
         getRootRef={getRef}
+        {...slotsProps?.input}
       />
       <RadioIcon />
     </RootComponent>

@@ -9,7 +9,7 @@ import {
   Icon24CheckBoxOn,
 } from '@vkontakte/icons';
 import { hasReactNode } from '@vkontakte/vkjs';
-import type { HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
@@ -49,6 +49,13 @@ export interface CheckboxProps
       TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: React.LabelHTMLAttributes<HTMLLabelElement> & HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasDataAttribute;
+  };
   /**
    * Подпись под основным текстом.
    */
@@ -103,6 +110,7 @@ const CheckboxComponent = ({
   onChange,
   onInvalid,
 
+  slotsProps,
   ...restProps
 }: CheckboxProps): React.ReactNode => {
   return (
@@ -118,6 +126,7 @@ const CheckboxComponent = ({
       focusVisibleMode={focusVisibleMode}
       noPadding={noPadding}
       {...restProps}
+      {...slotsProps?.root}
     >
       <CheckboxInput
         id={id}
@@ -129,6 +138,7 @@ const CheckboxComponent = ({
         required={required}
         readOnly={readOnly}
         autoFocus={autoFocus}
+        onChange={onChange}
         onInvalid={onInvalid}
         indeterminate={indeterminate}
         defaultIndeterminate={defaultIndeterminate}
@@ -137,6 +147,9 @@ const CheckboxComponent = ({
         IconOffCompact={IconOffCompact}
         IconOffRegular={IconOffRegular}
         IconIndeterminate={IconIndeterminate}
+        slotsProps={{
+          input: slotsProps?.input,
+        }}
       />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}

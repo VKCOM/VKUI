@@ -12,8 +12,9 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../../hooks/useAdaptivityConditionalRender';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { usePlatform } from '../../../hooks/usePlatform';
+import { callMultiple } from '../../../lib/callMultiple.ts';
 import { warnOnce } from '../../../lib/warnOnce';
-import type { HasRef, HasRootRef } from '../../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
@@ -48,6 +49,13 @@ export interface CheckboxInputProps
     Omit<React.HTMLAttributes<HTMLDivElement>, keyof HiddenInputCheckboxInputProps>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasDataAttribute;
+  };
   /**
    * Неопределенное состояние чекбокса.
    */
@@ -108,6 +116,7 @@ export function CheckboxInput({
   onChange,
   onInvalid,
 
+  slotsProps,
   ...restProps
 }: CheckboxInputProps) {
   const inputRef = useExternRef(getRef);
@@ -161,12 +170,13 @@ export function CheckboxInput({
       style={style}
       getRootRef={getRootRef}
       {...restProps}
+      {...slotsProps?.root}
     >
       <VisuallyHidden
         Component="input"
         type="checkbox"
-        onChange={handleChange}
-        className={styles.input}
+        onChange={callMultiple(handleChange, slotsProps?.input?.onChange)}
+        className={classNames(styles.input, slotsProps?.input?.className)}
         getRootRef={inputRef}
         id={id}
         name={name}
@@ -178,6 +188,7 @@ export function CheckboxInput({
         readOnly={readOnly}
         autoFocus={autoFocus}
         onInvalid={onInvalid}
+        {...slotsProps?.input}
       />
       {platform === 'vkcom' ? (
         <IconOnCompact className={styles.iconOn} />

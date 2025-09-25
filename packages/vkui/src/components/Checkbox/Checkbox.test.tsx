@@ -37,8 +37,8 @@ describe('Checkbox', () => {
   it('navigation by tab', async () => {
     render(
       <>
-        <Checkbox data-testid="checkbox-1" />
-        <Checkbox data-testid="checkbox-2" />
+        <Checkbox slotsProps={{ input: { 'data-testid': 'checkbox-1' } }} />
+        <Checkbox slotsProps={{ input: { 'data-testid': 'checkbox-2' } }} />
       </>,
     );
     expect(getDocumentBody()).toHaveFocus();

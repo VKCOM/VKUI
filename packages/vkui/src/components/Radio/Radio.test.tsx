@@ -10,7 +10,7 @@ describe('Radio', () => {
       <VisuallyHidden Component="label" id="radio">
         Radio
       </VisuallyHidden>
-      <Radio aria-labelledby="radio" {...props} />
+      <Radio slotsProps={{ input: { 'aria-labelledby': 'radio' } }} {...props} />
     </>
   ));
 
@@ -20,8 +20,10 @@ describe('Radio', () => {
         <Radio
           name="pay"
           value="cash"
-          data-testid="input-cash-id"
-          labelProps={{ 'data-testid': 'label-cash-id' }}
+          slotsProps={{
+            root: { 'data-testid': 'label-cash-id' },
+            input: { 'data-testid': 'input-cash-id' },
+          }}
           defaultChecked
         >
           Оплата наличными
@@ -29,8 +31,10 @@ describe('Radio', () => {
         <Radio
           name="pay"
           value="card"
-          data-testid="input-card-id"
-          labelProps={{ 'data-testid': 'label-card-id' }}
+          slotsProps={{
+            root: { 'data-testid': 'label-card-id' },
+            input: { 'data-testid': 'input-card-id' },
+          }}
         >
           Оплата картой
         </Radio>

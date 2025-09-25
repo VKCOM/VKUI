@@ -10,12 +10,12 @@ describe(Switch, () => {
       <VisuallyHidden Component="label" id="switch">
         Switch
       </VisuallyHidden>
-      <Switch aria-labelledby="switch" {...props} />
+      <Switch slotsProps={{ input: { 'aria-labelledby': 'switch' } }} {...props} />
     </>
   ));
 
   it('(Uncontrolled) shows checked state', async () => {
-    const { rerender } = render(<Switch data-testid="switch" />);
+    const { rerender } = render(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} />);
 
     const component = screen.getByRole<HTMLInputElement>('switch');
     if (!component) {
@@ -30,7 +30,7 @@ describe(Switch, () => {
     expect(component.checked).toBeTruthy();
     expect(component.getAttribute('aria-checked')).toBe('true');
 
-    rerender(<Switch data-testid="switch" defaultChecked />);
+    rerender(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} defaultChecked />);
 
     const defaultCheckedComponent = screen.getByTestId<HTMLInputElement>('switch');
     if (!defaultCheckedComponent) {
@@ -45,7 +45,7 @@ describe(Switch, () => {
     expect(defaultCheckedComponent.checked).toBeFalsy();
     expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('false');
 
-    rerender(<Switch data-testid="switch" disabled />);
+    rerender(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} disabled />);
 
     const disabledSwitch = screen.getByTestId<HTMLInputElement>('switch');
     if (!disabledSwitch) {
