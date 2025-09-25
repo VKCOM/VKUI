@@ -45,21 +45,21 @@ describe(ImageBaseOverlay, () => {
   });
 
   it('focus event works as expected with noInteractive', async () => {
-    render(<ImageBaseOverlayNonClickableTest />);
+    const { container } = render(<ImageBaseOverlayNonClickableTest />);
     const button1 = screen.getByTestId('button1');
     const button2 = screen.getByTestId('button2');
 
     await userEvent.tab();
     expect(button1).toHaveFocus();
     act(vi.runAllTimers);
-    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
+    expect(container.getElementsByClassName(styles.visible)).toHaveLength(1);
     await userEvent.tab();
     expect(button2).toHaveFocus();
     act(vi.runAllTimers);
-    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
+    expect(container.getElementsByClassName(styles.visible)).toHaveLength(1);
     await userEvent.tab();
     act(vi.runAllTimers);
-    expect(document.querySelector(`.${styles.visible}`)).toBeNull();
+    expect(container.getElementsByClassName(styles.visible)).toHaveLength(0);
   });
 
   describe('works as clickable element', () => {

@@ -174,7 +174,7 @@ export function baselineComponent<Props extends object>(
       it('forwards attributes', async () => {
         const cls = 'Custom';
         const { rerender } = render(
-          <Component data-testid="__cmp__" className={cls} style={{ background: 'red' }} />,
+          <Component data-testid="__cmp__" className={cls} style={{ backgroundColor: 'red' }} />,
         );
         await waitForFloatingPosition();
         act(vi.runAllTimers);
@@ -192,7 +192,7 @@ export function baselineComponent<Props extends object>(
           const customClassList = Array.from(styledNode.classList).filter((item) => item !== cls);
           // forwards style
           if (style) {
-            expect(styledNode.style.background).toBe('red');
+            expect(styledNode.style.backgroundColor).toBe('red');
           }
           const customStyleCount = styledNode.style.length;
 
@@ -207,7 +207,7 @@ export function baselineComponent<Props extends object>(
           // does not replace default styles
           if (style) {
             expect(styledNode.style.length).toEqual(
-              styledNode.style.background ? customStyleCount : customStyleCount - 1,
+              styledNode.style.backgroundColor ? customStyleCount : customStyleCount - 1,
             );
           }
         }

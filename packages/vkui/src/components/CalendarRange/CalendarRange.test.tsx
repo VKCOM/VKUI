@@ -104,7 +104,7 @@ describe('CalendarRange', () => {
     expect(leftPartSelect).not.toBeNull();
     fireEvent.click(leftPartSelect);
 
-    expect(screen.getByRole('option', { selected: true, name: 'май' }));
+    expect(screen.getByRole('option', { selected: true, name: 'май' })).toBeInTheDocument();
   });
 
   it('check navigation by keyboard between two months', async () => {
@@ -125,16 +125,16 @@ describe('CalendarRange', () => {
       expect(document.activeElement as HTMLElement).toBe(screen.getByTestId(dayTestId(date)));
     };
 
-    expect(screen.getByTestId(`left-month-picker-8`));
+    expect(screen.getByTestId(`left-month-picker-8`)).toBeInTheDocument();
 
     triggerKeyDownEvent('ArrowLeft', true);
 
-    expect(screen.getByTestId(`left-month-picker-7`));
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
     checkActiveDay(new Date(2023, 7, 31));
 
     triggerKeyDownEvent('ArrowRight', true);
 
-    expect(screen.getByTestId(`left-month-picker-7`));
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
     checkActiveDay(new Date(2023, 8, 1));
 
     triggerKeyDownEvent('ArrowRight', false);
@@ -142,12 +142,12 @@ describe('CalendarRange', () => {
 
     triggerKeyDownEvent('ArrowUp', false);
 
-    expect(screen.getByTestId(`left-month-picker-7`));
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
     checkActiveDay(new Date(2023, 7, 26));
 
     triggerKeyDownEvent('ArrowDown', true);
 
-    expect(screen.getByTestId(`left-month-picker-7`));
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
     checkActiveDay(new Date(2023, 8, 2));
   });
 
