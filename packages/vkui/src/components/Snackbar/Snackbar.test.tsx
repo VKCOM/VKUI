@@ -18,7 +18,7 @@ import type { SnackbarPlacement } from './types';
 import styles from './Snackbar.module.css';
 import basicStyles from './subcomponents/Basic/Basic.module.css';
 
-const PLACEMENT_JEST_EACH_TABLE: SnackbarPlacement[] = [
+const PLACEMENT_VITEST_EACH_TABLE: SnackbarPlacement[] = [
   'top',
   'top-start',
   'top-end',
@@ -27,7 +27,7 @@ const PLACEMENT_JEST_EACH_TABLE: SnackbarPlacement[] = [
   'bottom-end',
 ];
 
-const GESTURES_JEST_EACH_TABLE = [
+const GESTURES_VITEST_EACH_TABLE = [
   {
     name: 'touch',
     start: 'touchStart',
@@ -68,24 +68,27 @@ describe(Snackbar, () => {
 
   baselineComponent((props) => <Snackbar onClose={vi.fn()} {...props} />);
 
-  it.each(PLACEMENT_JEST_EACH_TABLE)('should set offsetY relative placement="%s"', (placement) => {
-    const result = render(<Snackbar placement={placement} offsetY={8} onClose={vi.fn()} />);
-    const el = result.getByRole('presentation');
-    switch (placement) {
-      case 'top-start':
-      case 'top':
-      case 'top-end':
-        expect(el.style.top).toBe('8px');
-        expect(el.style.bottom).toBe('');
-        break;
-      case 'bottom-start':
-      case 'bottom':
-      case 'bottom-end':
-        expect(el.style.top).toBe('');
-        expect(el.style.bottom).toBe('8px');
-        break;
-    }
-  });
+  it.each(PLACEMENT_VITEST_EACH_TABLE)(
+    'should set offsetY relative placement="%s"',
+    (placement) => {
+      const result = render(<Snackbar placement={placement} offsetY={8} onClose={vi.fn()} />);
+      const el = result.getByRole('presentation');
+      switch (placement) {
+        case 'top-start':
+        case 'top':
+        case 'top-end':
+          expect(el.style.top).toBe('8px');
+          expect(el.style.bottom).toBe('');
+          break;
+        case 'bottom-start':
+        case 'bottom':
+        case 'bottom-end':
+          expect(el.style.top).toBe('');
+          expect(el.style.bottom).toBe('8px');
+          break;
+      }
+    },
+  );
 
   it('should set iOS CSS selector', () => {
     const result = render(
@@ -186,11 +189,11 @@ describe(Snackbar, () => {
     expect(rootEl).not.toBeInTheDocument();
   });
 
-  describe.each(GESTURES_JEST_EACH_TABLE)(
+  describe.each(GESTURES_VITEST_EACH_TABLE)(
     'should use touched state for start or end timeout for close (user $name manipulation)',
     ({ start, move, end, fireEventOptions }) => {
       it.each([
-        ...PLACEMENT_JEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
+        ...PLACEMENT_VITEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
         { placement: 'top' as const, shifted: false },
       ])('placement="$placement" (shifted: $shifted)', async ({ placement, shifted }) => {
         const result = render(<Snackbar placement={placement} onClose={onClose} />);
@@ -227,10 +230,10 @@ describe(Snackbar, () => {
     },
   );
 
-  describe.each(GESTURES_JEST_EACH_TABLE)(
+  describe.each(GESTURES_VITEST_EACH_TABLE)(
     'should closing with user $name manipulation',
     ({ start, move, end, fireEventOptions }) => {
-      it.each(PLACEMENT_JEST_EACH_TABLE)('placement="%s"', async (placement) => {
+      it.each(PLACEMENT_VITEST_EACH_TABLE)('placement="%s"', async (placement) => {
         const result = render(<Snackbar placement={placement} onClose={onClose} />);
 
         const rootEl = result.getByRole('presentation');

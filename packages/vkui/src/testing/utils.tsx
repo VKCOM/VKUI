@@ -21,8 +21,6 @@ import type { HasChildren } from '../types';
 
 type AxeConfigureOptions = Parameters<typeof configureAxe>[0];
 
-export const testIf = (condition: boolean) => (condition ? it : it.skip);
-
 export const defaultAxe = configureAxe({
   /**
    * @see https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
@@ -110,8 +108,8 @@ export function a11yTest(Component: React.ComponentType<any>, axeConfig?: AxeCon
     await waitForFloatingPosition();
     vi.useRealTimers();
 
-    const jestAxe = axeConfig ? configureAxe(axeConfig) : defaultAxe;
-    const results = await jestAxe(container, {});
+    const vitestAxe = axeConfig ? configureAxe(axeConfig) : defaultAxe;
+    const results = await vitestAxe(container, {});
 
     vi.useFakeTimers();
     expect(results).toHaveNoViolations();

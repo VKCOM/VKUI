@@ -10,23 +10,23 @@ import { PostHeader } from '@vkontakte/vkui-docs-theme';
 
 <PostHeader frontMatter={metadata} />
 
-## Тестирование с помощью Jest и React Testing Library
+## Тестирование с помощью Vitest и React Testing Library
 
 Несмотря на то, что существует несколько различных инструментов по тестированию React-приложений,
-мы рекомендуем использовать `Jest` и `React Testing Library` для функционального или unit-тестирования VKUI-приложений.
+мы рекомендуем использовать `Vitest` и `React Testing Library` для функционального или unit-тестирования VKUI-приложений.
 В данном руководстве мы рассмотрим основные подходы к тестированию, используя данный стек технологий.
 Его же мы применяем сами для тестирования компонентов VKUI.
 
 <Callout>
   Предполагается, что вы уже обладаете базовыми знаниями работы с выбранными инструментами, если это
-  не так, то обратитесь к документации [Jest](https://jestjs.io/) и [React Testing
+  не так, то обратитесь к документации [Vitest](https://vitest.dev) и [React Testing
   Library](https://testing-library.com/docs/react-testing-library/intro). В данном руководстве мы
   сосредоточимся именно на специфичных настройках под VKUI.
 </Callout>
 
-### Jest
+### Vitest
 
-Специфичной настройки `Jest` для тестирования VKUI-компонентов не требуется, но могут возникнуть трудности
+Специфичной настройки `Vitest` для тестирования VKUI-компонентов не требуется, но могут возникнуть трудности
 с рядом компонентов, которые опираются на браузерное API. Подробнее об этом написано в [секции ниже](#special-components).
 
 Для корректной работы VKUI-компонентов необходимо использовать обязательную обёртку, об этом упоминается
@@ -82,9 +82,9 @@ test('check if prevButton disabled', () => {
 
 ### Snackbar, Spinner, SplitCol
 
-Некоторые компоненты зависят от браузерного API, которое не реализовано в окружении `Jest`, поэтому для
+Некоторые компоненты зависят от браузерного API, которое не реализовано в окружении `Vitest`, поэтому для
 тестирования подобных компонентов вам необходимо предоставить `mock`-реализацию самостоятельно.
-Подробнее читайте в [этом руководстве](https://jestjs.io/docs/manual-mocks).
+Подробнее читайте в [этом руководстве](https://vitest.dev/guide/mocking.html).
 
 ### Select
 
@@ -150,16 +150,16 @@ test('test is value selected on mobile', () => {
 
 <Callout>
   Обратите внимание, мы не используем функцию `userEvent` напрямую из `@testing-library/user-event`,
-  вместо этого импортируется обёртка, которая адаптирует функцию под работу в `Jest`-окружении:
+  вместо этого импортируется обёртка, которая адаптирует функцию под работу в `Vitest`-окружении:
 
 ```jsx filename="./testing/helpers"
 import userEventLib from '@testing-library/user-event';
 /**
- * Переконфигурируем работу userEvent под jest
+ * Переконфигурируем работу userEvent под vitest
  *
  * https://github.com/testing-library/user-event/issues/833
  */
-export const userEvent = userEventLib.setup({ advanceTimers: jest.advanceTimersByTime });
+export const userEvent = userEventLib.setup({ advanceTimers: vi.advanceTimersByTime });
 ```
 
 </Callout>
