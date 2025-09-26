@@ -10,7 +10,7 @@ const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
-  fakeTimers();
+  fakeTimers(false);
 
   const triggerKeyDownEvent = (key: string, first: boolean) => {
     fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[first ? 0 : 1], {
@@ -108,7 +108,6 @@ describe('CalendarRange', () => {
   });
 
   it('check navigation by keyboard between two months', async () => {
-    vi.useFakeTimers();
     render(
       <CalendarRange
         value={[firstDayDate, firstDayDate]}
@@ -152,7 +151,6 @@ describe('CalendarRange', () => {
   });
 
   it('checks day selection by keyboard', async () => {
-    vi.useFakeTimers();
     const onChangeStub = vi.fn();
     const startDate = new Date(2024, 2, 1);
     const endDate = new Date(2024, 2, 10);
@@ -179,7 +177,6 @@ describe('CalendarRange', () => {
   });
 
   it('checks focusable days on each part of calendar', async () => {
-    vi.useFakeTimers();
     const startDate = new Date(2024, 2, 1);
     const endDate = new Date(2024, 3, 10);
     const onChangeStub = vi.fn();

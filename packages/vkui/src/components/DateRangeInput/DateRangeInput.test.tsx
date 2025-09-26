@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, dateFormatter } from '../../lib/date';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { DateRangeInput } from './DateRangeInput';
 
 const startDate = new Date(2024, 6, 20);
@@ -40,6 +40,8 @@ const convertInputsToNumbers = (inputs: HTMLElement[]) => {
 };
 
 describe('DateRangeInput', () => {
+  fakeTimers(false);
+
   baselineComponent((props) => (
     <React.Fragment>
       <label htmlFor="range-input">Date range</label>
@@ -66,7 +68,6 @@ describe('DateRangeInput', () => {
   });
 
   it('check correct readonly state', async () => {
-    vi.useFakeTimers();
     render(
       <DateRangeInput
         value={[startDate, endDate]}
@@ -102,7 +103,6 @@ describe('DateRangeInput', () => {
   });
 
   it('should correct update value when typing text in input', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     render(
       <DateRangeInput
@@ -135,7 +135,6 @@ describe('DateRangeInput', () => {
   });
 
   it('should call onChange callback when change data by calendar', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     const { container } = render(
       <DateRangeInput
@@ -171,7 +170,6 @@ describe('DateRangeInput', () => {
   });
 
   it('should not update value when typing incorrect date in input', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     render(
       <DateRangeInput
@@ -197,7 +195,6 @@ describe('DateRangeInput', () => {
   });
 
   it('should call onCalendarClose callback when calendar was closed', async () => {
-    vi.useFakeTimers();
     const onCalendarOpenChanged = vi.fn();
     const { container } = render(
       <DateRangeInput
@@ -236,7 +233,6 @@ describe('DateRangeInput', () => {
   });
 
   it('should toggle calendar open state on calendar icon click', async () => {
-    vi.useFakeTimers();
     const onCalendarOpenChanged = vi.fn();
     render(
       <DateRangeInput
@@ -265,7 +261,6 @@ describe('DateRangeInput', () => {
 
   describe('keyboard', () => {
     it('controls focus when arrows or tab keys are pressed', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <button type="button">Предыдущая кнопка</button>
@@ -337,7 +332,6 @@ describe('DateRangeInput', () => {
     });
 
     it('clears part of input data by pressing delete', async () => {
-      vi.useFakeTimers();
       render(
         <DateRangeInput
           changeStartDayLabel=""
@@ -368,7 +362,6 @@ describe('DateRangeInput', () => {
     });
 
     it('changes input values by arrow keys', async () => {
-      vi.useFakeTimers();
       render(
         <DateRangeInput
           changeStartDayLabel=""
@@ -420,7 +413,6 @@ describe('DateRangeInput', () => {
 
   describe('accessible mode', () => {
     it('opens/closes calendar with keyboard/mouse', async () => {
-      vi.useFakeTimers();
       const onCalendarOpenChangedStub = vi.fn();
       render(
         <DateRangeInput
@@ -496,7 +488,6 @@ describe('DateRangeInput', () => {
     });
 
     it('does not close calendar when Escape is pressed to close inner dropdown (month, year)', async () => {
-      vi.useFakeTimers();
       const onCalendarOpenChangedStub = vi.fn();
       const dateNow = new Date();
       render(
