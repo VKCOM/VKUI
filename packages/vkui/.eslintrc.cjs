@@ -183,9 +183,15 @@ module.exports = {
     {
       files: ['src/**/*.test.{ts,tsx}', 'src/testing/*.{ts,tsx}'],
       env: {
-        jest: true,
+        '@vitest/env': true,
       },
+      // подключаем плагин и рекомендуемую (legacy) конфигурацию
+      extends: ['plugin:@vitest/legacy-recommended'],
+      plugins: ['@vitest'],
       rules: {
+        '@vitest/valid-describe-callback': 'off',
+        '@vitest/expect-expect': 'off',
+        '@vitest/valid-title': 'off',
         'no-restricted-properties': 'off',
         'no-restricted-globals': 'off',
         'react/display-name': 'off',

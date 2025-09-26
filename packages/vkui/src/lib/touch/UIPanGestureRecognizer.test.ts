@@ -71,6 +71,8 @@ describe(UIPanGestureRecognizer, () => {
 
     vi.setSystemTime(new Date('1970-01-01T00:00:02'));
     expect(panGestureRecognizer.velocity()).toEqual({ x: 5, y: 5 });
+
+    vi.useRealTimers();
   });
 
   it('should reset coords', () => {

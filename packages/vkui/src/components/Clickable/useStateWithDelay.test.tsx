@@ -1,9 +1,11 @@
 import { act, renderHook } from '@testing-library/react';
+import { fakeTimers } from '../../testing/utils.tsx';
 import { useStateWithDelay } from './useStateWithDelay';
 
 describe(useStateWithDelay, () => {
+  fakeTimers();
+
   it('updates state after delay', () => {
-    vi.useFakeTimers();
     const handle = renderHook(() => useStateWithDelay(5));
 
     expect(handle.result.current[0]).toBe(5);
@@ -28,8 +30,6 @@ describe(useStateWithDelay, () => {
   });
 
   it('calls callback on state update', () => {
-    vi.useFakeTimers();
-
     const onStateChangeStub = vi.fn();
     const handle = renderHook(() => useStateWithDelay<number>(5, 0, onStateChangeStub));
 

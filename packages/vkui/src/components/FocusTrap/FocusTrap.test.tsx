@@ -151,7 +151,6 @@ describe(FocusTrap, () => {
   });
 
   it('captures Esc by default and calls onClose', async () => {
-    vi.useFakeTimers();
     const onCloseStub = vi.fn();
     render(
       <FocusTrap onClose={onCloseStub}>
@@ -167,7 +166,6 @@ describe(FocusTrap, () => {
   });
 
   it('allows to stop Escape keyboard event propagation from inner element with captureEscapeKeyboardEvent flag set to false', async () => {
-    vi.useFakeTimers();
     const onCloseStub = vi.fn();
     render(
       <FocusTrap onClose={onCloseStub} captureEscapeKeyboardEvent={false}>

@@ -1,5 +1,7 @@
 import { ruleName } from './index.js';
 
+const testRule = createTestRule({ ruleName });
+
 testRule({
   ruleName,
   config: true,

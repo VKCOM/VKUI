@@ -65,11 +65,11 @@ describe(useScrollLock, () => {
             }
           : {}),
       });
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
 
       h.rerender(false);
       expect(getStyleAttributeObject(document.documentElement)).toEqual({});
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
 
       clearWindowMeasuresMock();
     });
@@ -91,11 +91,11 @@ describe(useScrollLock, () => {
         'overflow-y': 'scroll',
         'overscroll-behavior': 'none',
       });
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
 
       h.unmount();
       expect(getStyleAttributeObject(document.documentElement)).toEqual({});
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
     });
 
     test.each([true, false])('context api with locked=%s', (locked) => {
@@ -382,9 +382,9 @@ describe(useScrollLock, () => {
 });
 
 /**
- * В Jest через `el.getAttribute('style')` не получается получить свойство.
+ * В Vitest через `el.getAttribute('style')` не получается получить свойство.
  */
-function jestWorkaroundGetOverscrollBehaviorPropertyValue(el: HTMLElement) {
+function vitestWorkaroundGetOverscrollBehaviorPropertyValue(el: HTMLElement) {
   return el.style.overscrollBehavior;
 }
 

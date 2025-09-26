@@ -1,10 +1,11 @@
 import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
+import { fakeTimers } from '../../testing/utils.tsx';
 import { useAutoPlay } from './hooks';
 
 describe(useAutoPlay, () => {
+  fakeTimers(false);
   it('should call callback when fire event visibilitychange', () => {
-    vi.useFakeTimers();
     const callback = vi.fn();
 
     let visibilityState: Document['visibilityState'] = 'visible';
@@ -27,7 +28,6 @@ describe(useAutoPlay, () => {
   });
 
   it('should not call callback when timeout = 0', () => {
-    vi.useFakeTimers();
     const callback = vi.fn();
 
     renderHook(() => useAutoPlay({ timeout: 0, slideIndex: 0, onNext: callback }));
@@ -36,7 +36,6 @@ describe(useAutoPlay, () => {
   });
 
   it('check controls working', () => {
-    vi.useFakeTimers();
     const callback = vi.fn();
 
     let visibilityState: Document['visibilityState'] = 'visible';

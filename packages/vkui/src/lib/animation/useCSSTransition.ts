@@ -4,7 +4,7 @@ import { useStableCallback } from '../../hooks/useStableCallback';
 import { millisecondsInSecond } from '../date';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
-/* istanbul ignore next: особенность рендера в браузере когда меняется className, в Jest не воспроизвести */
+/* istanbul ignore next: особенность рендера в браузере когда меняется className, в Vitest не воспроизвести */
 const forceReflowForFixNewMountedElement = (node: Element | null) => void node?.scrollTop;
 
 export type UseCSSTransitionState =

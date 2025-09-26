@@ -84,5 +84,5 @@ class FakeTransitionEvent extends Event {
 // Подменяем глобально
 vi.stubGlobal('TransitionEvent', FakeTransitionEvent);
 
-// Замена jest.global-setup.ts
+// Замена vitest.global-setup.ts
 vi.stubEnv('TZ', 'UTC');

@@ -18,7 +18,7 @@ export function warnOnce(zone: string): WarnOnceHandler {
 }
 
 function getA11yRuleUrl(ruleName: string): string {
-  // see jest-axe's axe-core dependency
+  // see vitest-axe's axe-core dependency
   const AXE_CORE_MINOR_VERSION = '4.5';
 
   return `https://dequeuniversity.com/rules/axe/${AXE_CORE_MINOR_VERSION}/${ruleName}`;
