@@ -1,11 +1,10 @@
 import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
+import { fakeTimers } from '../testing/utils.tsx';
 import { useTodayDate } from './useTodayDate';
 
 describe(useTodayDate, () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
+  fakeTimers(false);
 
   it('returns same date if day is not changed', () => {
     const currentDate = new Date(2024, 2, 3);

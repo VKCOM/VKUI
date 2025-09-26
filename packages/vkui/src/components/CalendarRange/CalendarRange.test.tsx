@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, dateFormatter, endOfDay, startOfDay } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
 import dayStyles from '../CalendarDay/CalendarDay.module.css';
 import daysStyles from '../CalendarDays/CalendarDays.module.css';
@@ -10,7 +10,6 @@ const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
-  fakeTimers(false);
 
   const triggerKeyDownEvent = (key: string, first: boolean) => {
     fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[first ? 0 : 1], {
@@ -269,7 +268,6 @@ describe('CalendarRange', () => {
   });
 
   it('check reselect range after range selected', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     const start = firstDayDate;
     const end = addDays(firstDayDate, 10);

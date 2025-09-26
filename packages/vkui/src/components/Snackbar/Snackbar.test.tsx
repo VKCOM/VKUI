@@ -63,6 +63,7 @@ describe(Snackbar, () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     onClose.mockClear();
   });
 

@@ -244,6 +244,7 @@ describe(ModalCard, () => {
       } else {
         expect(openButton).not.toHaveFocus();
       }
+      vi.useRealTimers();
     });
   });
 });

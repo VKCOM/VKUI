@@ -199,6 +199,7 @@ describe(ModalPage, () => {
     await userEvent.tab();
     expect(openButton).toHaveFocus();
     vi.runAllTimers();
+    vi.useRealTimers();
   });
 
   describe('check restoreFocus prop', () => {
@@ -250,6 +251,7 @@ describe(ModalPage, () => {
       } else {
         expect(openButton).not.toHaveFocus();
       }
+      vi.useRealTimers();
     });
   });
 

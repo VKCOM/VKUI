@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { dateFormatter } from '../../lib/date';
-import { baselineComponent, fakeTimers, setNodeEnv, userEvent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv, userEvent } from '../../testing/utils';
 import { Calendar } from './Calendar';
 
 const targetDate = new Date('2023-09-20T07:40:00.000Z');
@@ -13,7 +13,6 @@ const maxDate = new Date('2023-09-29T07:20:00.000Z');
 const dayTestId = (day: Date) => dateFormatter.format(day);
 
 describe('Calendar', () => {
-  fakeTimers(false);
   baselineComponent(Calendar);
 
   it('checks aria roles', async () => {

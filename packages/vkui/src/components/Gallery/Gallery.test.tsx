@@ -221,7 +221,6 @@ describe('Gallery', () => {
       expect(index).toBe(0);
     });
     it('handles dynamic slide count', async () => {
-      vi.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       const { rerender } = render(
@@ -251,7 +250,6 @@ describe('Gallery', () => {
     });
 
     it('check auto play in controlled component', () => {
-      vi.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       render(
@@ -265,7 +263,6 @@ describe('Gallery', () => {
     });
 
     it('check auto play in uncontrolled component', () => {
-      vi.useFakeTimers();
       let index;
       const setIndex = (v: number) => (index = v);
       render(

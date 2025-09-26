@@ -59,6 +59,8 @@ describe(Switch, () => {
 
     expect(disabledSwitch.checked).toBeFalsy();
     expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
+
+    vi.useRealTimers();
   });
 
   it('(Controlled) shows checked state', () => {

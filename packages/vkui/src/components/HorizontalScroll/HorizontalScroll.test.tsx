@@ -107,6 +107,7 @@ describe('HorizontalScroll', () => {
     expect(document.activeElement).toBe(document.body);
 
     act(vi.runAllTimers);
+    vi.useRealTimers();
   });
 
   it('click on arrow right should change scrollLeft', async () => {

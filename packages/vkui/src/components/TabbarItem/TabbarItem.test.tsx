@@ -75,6 +75,7 @@ describe('TabbarItem', () => {
 
     expect(component.onFocusStub).toHaveBeenCalledTimes(1);
     expect(component.onBlurStub).toHaveBeenCalledTimes(1);
+    vi.useRealTimers();
   });
 
   it('does not show focus visible on focus without keyboard', async () => {
@@ -90,5 +91,6 @@ describe('TabbarItem', () => {
 
     expect(component.onFocusStub).toHaveBeenCalledTimes(1);
     expect(component.onBlurStub).toHaveBeenCalledTimes(1);
+    vi.useRealTimers();
   });
 });

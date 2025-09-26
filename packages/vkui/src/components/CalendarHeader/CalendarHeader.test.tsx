@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
 import { CalendarHeader } from './CalendarHeader';
 import styles from './CalendarHeader.module.css';
 import customSelectOptionStyles from '../CustomSelectOption/CustomSelectOption.module.css';
@@ -8,6 +8,8 @@ import customSelectOptionStyles from '../CustomSelectOption/CustomSelectOption.m
 const targetDate = new Date('2023-09-20T07:40:00.000Z');
 
 describe('CalendarHeader', () => {
+  fakeTimers();
+
   baselineComponent((props) => (
     <CalendarHeader
       onNextMonth={noop}
@@ -97,7 +99,6 @@ describe('CalendarHeader', () => {
 
   it('does not fire onChange when click on month dropdown item if isMonthDisabled return true', async () => {
     const onChange = vi.fn();
-    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader
         viewDate={targetDate}
@@ -117,7 +118,6 @@ describe('CalendarHeader', () => {
 
   it('does not fire onChange when click on year dropdown item if isYearDisabled return true', async () => {
     const onChange = vi.fn();
-    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader
         viewDate={targetDate}
@@ -137,7 +137,6 @@ describe('CalendarHeader', () => {
 
   it('fire onChange when click on year dropdown item', async () => {
     const onChange = vi.fn();
-    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader viewDate={targetDate} onChange={onChange} yearDropdownTestId="year-picker" />,
     );
@@ -154,7 +153,6 @@ describe('CalendarHeader', () => {
     const onChange = vi.fn();
     const isMonthDisabled = vi.fn();
     isMonthDisabled.mockImplementation(() => true);
-    vi.useFakeTimers();
     const { container } = render(
       <CalendarHeader
         viewDate={new Date('2023-01-20T07:40:00.000Z')}
@@ -171,7 +169,6 @@ describe('CalendarHeader', () => {
     const onChange = vi.fn();
     const isMonthDisabled = vi.fn();
     isMonthDisabled.mockImplementation(() => true);
-    vi.useFakeTimers();
     render(
       <CalendarHeader
         viewDate={new Date('2023-12-20T07:40:00.000Z')}

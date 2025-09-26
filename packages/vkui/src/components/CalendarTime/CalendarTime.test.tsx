@@ -7,8 +7,8 @@ import { CalendarTime } from './CalendarTime';
 const dayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarTime', () => {
+  fakeTimers();
   it('check onChange should called when select hours and minutes', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     render(
       <CalendarTime
@@ -38,7 +38,6 @@ describe('CalendarTime', () => {
   });
 
   it('check onChange should not called when isDisabled true', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     render(
       <CalendarTime
@@ -113,7 +112,6 @@ describe('CalendarTime', () => {
 
   describe('Keyboard Navigation', () => {
     it('should handle Tab navigation between hours, minutes and done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -148,7 +146,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes and done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -184,7 +181,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Tab navigation between hours, minutes without done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -214,7 +210,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes without done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -245,7 +240,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Shift+Tab navigation', async () => {
-      vi.useFakeTimers();
       render(
         <CalendarTime
           value={dayDate}
@@ -276,7 +270,6 @@ describe('CalendarTime', () => {
   });
 
   describe('Time Input', () => {
-    fakeTimers();
     it('should handle direct time input in hours field', async () => {
       const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
@@ -325,7 +318,6 @@ describe('CalendarTime', () => {
   });
 
   describe('Done Button', () => {
-    fakeTimers();
     it('should call onDoneButtonClick when done button is clicked', async () => {
       const onDoneButtonClick = vi.fn();
       render(

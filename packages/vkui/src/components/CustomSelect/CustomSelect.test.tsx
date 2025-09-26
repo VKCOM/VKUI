@@ -1417,6 +1417,7 @@ describe('CustomSelect', () => {
 
     fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
     expect(onInputChange).toHaveBeenCalledTimes(2);
+    vi.useRealTimers();
   });
 
   it('check scroll to bottom to element', async () => {
@@ -1577,6 +1578,7 @@ describe('CustomSelect', () => {
 
     expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
     expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+    vi.useRealTimers();
   });
 
   it('check no status label by default', async () => {
@@ -1598,6 +1600,8 @@ describe('CustomSelect', () => {
     render(<Fixture />);
 
     expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+
+    vi.useRealTimers();
   });
 
   it('should not call select option when not focus to option', async () => {
