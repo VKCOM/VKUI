@@ -84,6 +84,10 @@ export interface PopperCommonProps
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
   autoUpdateOnTargetResize?: boolean;
+  /**
+   * Пытаться обновлять позицию всплывающего элемента каждый фрейм.
+   */
+  autoUpdateOnAnimationFrame?: boolean;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -113,6 +117,7 @@ export const Popper = ({
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
+  autoUpdateOnAnimationFrame = false,
   strategy: strategyProp,
 
   // ArrowProps
@@ -163,6 +168,7 @@ export const Popper = ({
       /* istanbul ignore next: не знаю как проверить */
       return autoUpdateFloatingElement(...args, {
         elementResize: autoUpdateOnTargetResize,
+        animationFrame: autoUpdateOnAnimationFrame,
       });
     },
   });
