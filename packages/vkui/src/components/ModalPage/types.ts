@@ -139,7 +139,15 @@ export interface ModalPageProps
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
    * > При использовании `ModalPage` внутри `ModalRoot` есть особенность использования этого свойства.
-   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#otklyuchenie-zadnego-fona-u-konkretnogo-modalnogo-okna).
+   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-modal-overlay).
    */
   disableModalOverlay?: boolean;
+  /**
+   * Отключает анимацию открытия модалки.
+   */
+  disableOpenAnimation?: boolean;
+  /**
+   * Отключает анимацию закрытия модалки.
+   */
+  disableCloseAnimation?: boolean;
 }

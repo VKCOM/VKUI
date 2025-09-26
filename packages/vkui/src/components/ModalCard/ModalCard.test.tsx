@@ -52,6 +52,49 @@ describe(ModalCard, () => {
     expect(result.queryByTestId('overlay')).toBe(null);
   });
 
+  test('should open/close without animation with disableAnimation', () => {
+    const onOpen = vi.fn();
+    const onOpened = vi.fn();
+    const onClosed = vi.fn();
+
+    const Fixture = () => {
+      const [opened, setOpened] = React.useState<boolean>(false);
+
+      return (
+        <>
+          <Button onClick={() => setOpened(true)} data-testid="open-button">
+            Open
+          </Button>
+          <Button onClick={() => setOpened(false)} data-testid="close-button">
+            Close
+          </Button>
+          <ModalCard
+            open={opened}
+            id="host"
+            data-testid="host"
+            modalOverlayTestId="overlay"
+            onOpen={onOpen}
+            onOpened={onOpened}
+            onClosed={onClosed}
+            disableOpenAnimation
+            disableCloseAnimation
+            keepMounted
+          />
+        </>
+      );
+    };
+
+    render(<Fixture />);
+
+    fireEvent.click(screen.getByTestId('open-button'));
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onOpened).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('close-button'));
+    expect(onClosed).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId('overlay')).toHaveAttribute('hidden', '');
+  });
+
   test('testid for modal card content', async () => {
     const result = render(<ModalCard key="host" nav="host" open data-testid="host" />);
     await waitModalCardCSSTransitionEnd(result.getByTestId('host'));

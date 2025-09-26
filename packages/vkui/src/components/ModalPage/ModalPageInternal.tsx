@@ -75,11 +75,15 @@ export const ModalPageInternal = ({
   onClosed,
   disableFocusTrap,
   disableModalOverlay,
+  disableOpenAnimation = false,
+  disableCloseAnimation = false,
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
-    enableAppear: true,
+    enableAppear: !disableOpenAnimation,
+    enableEnter: !disableOpenAnimation,
+    enableExit: !disableCloseAnimation,
     onEnter() {
       onOpen?.();
     },
@@ -127,6 +131,8 @@ export const ModalPageInternal = ({
       getRootRef={setBackdropEl}
       data-testid={modalOverlayTestId}
       visible={open}
+      disableOpenAnimation={disableOpenAnimation}
+      disableCloseAnimation={disableCloseAnimation}
       onClick={
         closable
           ? function handleBackdropClick(event) {

@@ -21,6 +21,8 @@ export const VisuallyHiddenModalOverlay = ({
   visible: visibleExcluded,
   position: positionExcluded,
   getRootRef,
+  disableOpenAnimation,
+  disableCloseAnimation,
   ...restProps
 }: VisuallyHiddenModalOverlayProps) => {
   const ref = useContext(ModalRootOverlayContext);
