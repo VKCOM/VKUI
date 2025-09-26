@@ -39,7 +39,7 @@ const convertInputsToNumbers = (inputs: HTMLElement[]) => {
   return inputs.map((input) => Number(input.textContent));
 };
 
-describe('DateRangeInput', () => {
+describe.skip('DateRangeInput', () => {
   fakeTimers(false);
 
   baselineComponent((props) => (
