@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import failOnConsole from 'vitest-fail-on-console';
 
 const ignoreList = [/.*usePatchChildren.test.tsx/, /.*warnOnce.test.ts/];
