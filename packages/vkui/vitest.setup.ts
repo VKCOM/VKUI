@@ -19,6 +19,37 @@ failOnConsole({
 
 vi.stubGlobal('jest', { advanceTimersByTime: vi.advanceTimersByTime.bind(vi) });
 
+const _origGetComputedStyle = globalThis.getComputedStyle;
+
+globalThis.getComputedStyle = function (el: Element, pseudoElt?: string | null) {
+  // Если запрашивают псевдоэлемент — возвращаем "фейковый" CSSStyleDeclaration
+  if (pseudoElt && pseudoElt.startsWith('::')) {
+    // минимальная реализация для axe/core — getPropertyValue('content') и любые другие свойства
+    const fakeStyle: any = {
+      getPropertyValue: (prop: string) => {
+        if (prop === 'content') {
+          return '""';
+        } // иногда требуется не пусто, а хотя бы строка
+        return '';
+      },
+      // иногда код обращается напрямую к свойствам
+      content: '""',
+      display: '',
+      // ...можно дописать часто используемые поля
+    };
+
+    // Дополнительно — сделать Proxy, чтобы любые обращения возвращали '' (не обязательно)
+    return new Proxy(fakeStyle, {
+      get(target, prop) {
+        return prop in target ? target[prop] : '';
+      },
+    }) as CSSStyleDeclaration;
+  }
+
+  // иначе — дефолтное поведение
+  return _origGetComputedStyle.call(globalThis, el);
+};
+
 // Не реализован в JSDOM.
 // https://jestjs.io/docs/manual-mocks
 class DOMRectPolyfill {
