@@ -4462,14 +4462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/types@npm:8.44.1, @typescript-eslint/types@npm:^8.43.0, @typescript-eslint/types@npm:^8.44.1":
-  version: 8.44.1
-  resolution: "@typescript-eslint/types@npm:8.44.1"
-  checksum: 10/acebff929b2c64254c430fff54d8d135c9f47bcc20062fd3e52f64952b0ef973db9582812025f5314940889ae4c4a8798726a477b94fbda31881109687567528
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/types@npm:^8.44.1":
+"@typescript-eslint/types@npm:8.44.1, @typescript-eslint/types@npm:^8.44.1":
   version: 8.44.1
   resolution: "@typescript-eslint/types@npm:8.44.1"
   checksum: 10/acebff929b2c64254c430fff54d8d135c9f47bcc20062fd3e52f64952b0ef973db9582812025f5314940889ae4c4a8798726a477b94fbda31881109687567528
@@ -4959,7 +4952,7 @@ __metadata:
     happy-css-modules: "npm:^4.0.0"
     husky: "npm:^9.1.6"
     jsdom: "npm:^26.1.0"
-    lint-staged: "npm:^16.2.0"
+    lint-staged: "npm:^16.2.3"
     mini-css-extract-plugin: "npm:^2.9.4"
     postcss: "npm:^8.5.6"
     postcss-cli: "npm:^11.0.1"
