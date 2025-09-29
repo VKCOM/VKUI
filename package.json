@@ -59,7 +59,7 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-compat": "^6.0.2",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsdoc": "^60.3.0",
+    "eslint-plugin-jsdoc": "^60.5.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-compiler": "0.0.0-experimental-56229e1-20240813",
@@ -69,7 +69,7 @@
     "happy-css-modules": "^4.0.0",
     "husky": "^9.1.6",
     "jsdom": "^26.1.0",
-    "lint-staged": "^16.2.0",
+    "lint-staged": "^16.2.3",
     "mini-css-extract-plugin": "^2.9.4",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
@@ -160,7 +160,7 @@
       "prettier --check"
     ]
   },
-  "packageManager": "yarn@4.10.2+sha512.0b0e54ad5381f0a35184957bd3ea44e37f5a4fb1960b903b0fb9a3c7c2c009190455c41ef2a1977b1dbd3b72c5f152da696e9c52e2bc78a011b6adea8ee73ba3",
+  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f",
   "workspaces": {
     "packages": [
       "benchmark",

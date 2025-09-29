@@ -1,6 +1,6 @@
 import { act, useState } from 'react';
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import { baselineComponent, userEvent, waitCSSTransitionEnd } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -58,6 +58,49 @@ describe(ModalPage, () => {
     expect(result.getByTestId('host')).toBeInTheDocument();
 
     expect(result.queryByTestId('overlay')).toBe(null);
+  });
+
+  test('should open/close without animation with disableAnimation', () => {
+    const onOpen = vi.fn();
+    const onOpened = vi.fn();
+    const onClosed = vi.fn();
+
+    const Fixture = () => {
+      const [opened, setOpened] = React.useState<boolean>(false);
+
+      return (
+        <>
+          <Button onClick={() => setOpened(true)} data-testid="open-button">
+            Open
+          </Button>
+          <Button onClick={() => setOpened(false)} data-testid="close-button">
+            Close
+          </Button>
+          <ModalPage
+            open={opened}
+            id="host"
+            data-testid="host"
+            modalOverlayTestId="overlay"
+            onOpen={onOpen}
+            onOpened={onOpened}
+            onClosed={onClosed}
+            disableOpenAnimation
+            disableCloseAnimation
+            keepMounted
+          />
+        </>
+      );
+    };
+
+    render(<Fixture />);
+
+    fireEvent.click(screen.getByTestId('open-button'));
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onOpened).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('close-button'));
+    expect(onClosed).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId('overlay')).toHaveAttribute('hidden', '');
   });
 
   test('testid for modal page content', async () => {
