@@ -34,18 +34,16 @@ const convertInputsToNumbers = (inputs: HTMLElement[]) => {
   return inputs.map((input) => Number(input.textContent));
 };
 
-describe.skip('DateInput', () => {
+describe('DateInput', () => {
   baselineComponent((props) => (
     <React.Fragment>
       <label htmlFor="date-input">Date range</label>
       <DateInput {...props} id="date-input" />
     </React.Fragment>
   ));
-
-  fakeTimers();
+  fakeTimers(false);
 
   it('check correct readonly state', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
 
     render(

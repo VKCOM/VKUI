@@ -39,15 +39,15 @@ const convertInputsToNumbers = (inputs: HTMLElement[]) => {
   return inputs.map((input) => Number(input.textContent));
 };
 
-describe.skip('DateRangeInput', () => {
-  fakeTimers(false);
-
+describe('DateRangeInput', () => {
   baselineComponent((props) => (
     <React.Fragment>
       <label htmlFor="range-input">Date range</label>
       <DateRangeInput {...props} id="range-input" />
     </React.Fragment>
   ));
+
+  fakeTimers(false);
 
   it('should be correct input value', () => {
     render(
@@ -246,13 +246,13 @@ describe.skip('DateRangeInput', () => {
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
 
     const calendarIcon = screen.getByTestId('show-calendar');
-    await act(() => userEvent.click(calendarIcon));
+    await userEvent.click(calendarIcon);
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
     expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
     expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
-    await act(() => userEvent.click(calendarIcon));
+    await userEvent.click(calendarIcon);
 
     expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
     expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);

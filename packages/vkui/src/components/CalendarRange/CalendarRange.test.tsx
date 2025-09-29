@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { addDays, dateFormatter, endOfDay, startOfDay } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
 import { baselineComponent, userEvent } from '../../testing/utils';
@@ -8,8 +8,8 @@ import daysStyles from '../CalendarDays/CalendarDays.module.css';
 
 const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 
-describe.skip('CalendarRange', () => {
-  // baselineComponent(CalendarRange);
+describe('CalendarRange', () => {
+  baselineComponent(CalendarRange);
 
   const triggerKeyDownEvent = (key: string, first: boolean) => {
     fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[first ? 0 : 1], {
@@ -42,7 +42,7 @@ describe.skip('CalendarRange', () => {
     expect(currentDate.getAttribute('aria-current')).toBe('date');
     expect(currentDate.getAttribute('aria-selected')).toBe('true');
 
-    await userEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' }));
+    fireEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' }));
 
     currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
     expect(currentDate.getAttribute('aria-current')).toBe('date');

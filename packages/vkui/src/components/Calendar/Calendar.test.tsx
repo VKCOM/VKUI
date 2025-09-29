@@ -12,10 +12,11 @@ const maxDate = new Date('2023-09-29T07:20:00.000Z');
 
 const dayTestId = (day: Date) => dateFormatter.format(day);
 
-describe.skip('Calendar', () => {
+describe('Calendar', () => {
   baselineComponent(Calendar);
 
   it('checks aria roles', async () => {
+    vi.useFakeTimers();
     vi.setSystemTime(targetDate);
     render(<Calendar defaultValue={targetDate} dayTestId={dayTestId} />);
 
@@ -44,6 +45,8 @@ describe.skip('Calendar', () => {
     const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
     expect(selectedDate.getAttribute('aria-current')).toBe(null);
     expect(selectedDate.getAttribute('aria-selected')).toBe('true');
+
+    vi.useRealTimers();
   });
 
   it('fires onChange', () => {
@@ -103,6 +106,7 @@ describe.skip('Calendar', () => {
   });
 
   it('check navigation by keyboard between two months', async () => {
+    vi.useFakeTimers();
     const monthDropdownTestId = (monthIndex: number) => `month-picker-${monthIndex}`;
 
     render(
@@ -128,9 +132,12 @@ describe.skip('Calendar', () => {
     await userEvent.keyboard('{ArrowUp}');
 
     expect(screen.getByTestId(monthDropdownTestId(8))).toBeInTheDocument();
+
+    vi.useRealTimers();
   });
 
   it('checks that previous focusable day still focusable after navigation out of Calendar using Tab', async () => {
+    vi.useFakeTimers();
     const day = new Date('2023-09-30T07:40:00.000Z');
     const dayBeforeTarget = new Date('2023-09-29T07:40:00.000Z');
 
@@ -150,9 +157,9 @@ describe.skip('Calendar', () => {
     expect(getDayBeforeTarget().tabIndex).toBe(-1);
 
     // фокусируемся с помощью клика на текущем дне
-    await act(() => userEvent.click(getTargetDay()));
+    await userEvent.click(getTargetDay());
     // переходим на предыдущий день с помощью клавиатуры
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
+    await userEvent.keyboard('{ArrowLeft}');
 
     // текущая дата календаря больше не фокусируемая
     expect(getTargetDay().tabIndex).toBe(-1);
@@ -160,19 +167,22 @@ describe.skip('Calendar', () => {
     expect(getDayBeforeTarget().tabIndex).toBe(0);
 
     // уводим фокус с помощью клавиатуры за пределы календаря
-    await act(() => userEvent.tab());
+    await userEvent.tab();
     expect(document.activeElement).toBe(screen.getByText('Следующая кнопка'));
 
     // на последний выбранный день календаря всё ещё можно сфокусироваться
     expect(getDayBeforeTarget().tabIndex).toBe(0);
 
     // возвращаемся назад с помощью Shift + Tab
-    await act(() => userEvent.tab({ shift: true }));
+    await userEvent.tab({ shift: true });
     // последний выбранный день снова в фокусе
     expect(document.activeElement).toStrictEqual(getDayBeforeTarget());
+
+    vi.useRealTimers();
   });
 
   it('checks that Enter or Space triggers click on day cell', async () => {
+    vi.useFakeTimers();
     const day = new Date('2023-09-30T07:40:00.000Z');
 
     const onChangeStub = vi.fn();
@@ -185,42 +195,47 @@ describe.skip('Calendar', () => {
     expect(getTargetDay().tabIndex).toBe(0);
 
     // фокусируемся с помощью клика на текущем дне
-    await act(() => userEvent.click(getTargetDay()));
+    await userEvent.click(getTargetDay());
 
     expect(onChangeStub).toHaveBeenCalledWith(day);
     // переходим на предыдущий день с помощью клавиатуры
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
+    await userEvent.keyboard('{ArrowLeft}');
+    await userEvent.keyboard('{ArrowLeft}');
+    await userEvent.keyboard('{ArrowLeft}');
 
     // нажимаем Enter
-    await act(() => userEvent.keyboard('{Enter}'));
+    await userEvent.keyboard('{Enter}');
     expect(onChangeStub).toHaveBeenLastCalledWith(new Date('2023-09-27T07:40:00.000Z'));
 
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
+    await userEvent.keyboard('{ArrowLeft}');
 
     // нажимаем Space
-    await act(() => userEvent.keyboard(' '));
+    await userEvent.keyboard(' ');
     expect(onChangeStub).toHaveBeenLastCalledWith(new Date('2023-09-26T07:40:00.000Z'));
+
+    vi.useRealTimers();
   });
 
   it('checks focusable days', async () => {
+    vi.useFakeTimers();
     render(<Calendar value={targetDate} dayTestId={dayTestId} />);
 
     // при открытии календаря focusable день соответствует значению в value
     expect(screen.getByTestId('20.09.2023').tabIndex).toBe(0);
     expect(screen.getByTestId('21.09.2023').tabIndex).toBe(-1);
 
-    await act(() => userEvent.click(screen.getByTestId('20.09.2023')));
+    await userEvent.click(screen.getByTestId('20.09.2023'));
     // при переходе к следующему дню с клавиатуры, следующий день становится фокусируемым
-    await act(() => userEvent.keyboard('{ArrowRight}'));
+    await userEvent.keyboard('{ArrowRight}');
 
     expect(screen.getByTestId('20.09.2023').tabIndex).toBe(-1);
     expect(screen.getByTestId('21.09.2023').tabIndex).toBe(0);
 
     // при смене месяца факусируемым становится первый день месяца
-    await act(() => userEvent.click(screen.getByText(/Следующий месяц/)));
+    await userEvent.click(screen.getByText(/Следующий месяц/));
     expect(screen.getByTestId('01.10.2023').tabIndex).toBe(0);
+
+    vi.useRealTimers();
   });
 
   it('should display correct timezone time', () => {
