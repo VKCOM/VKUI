@@ -21,9 +21,13 @@ describe('NativeSelect', () => {
       const [value, setValue] = React.useState<NativeSelectProps['value']>('0');
       return (
         <NativeSelect
-          data-testid="target"
           value={value}
           onChange={(_, newValue) => setValue(newValue)}
+          slotsProps={{
+            select: {
+              'data-testid': 'target',
+            },
+          }}
         >
           <option value="0">Mike</option>
           <option value="1">Josh</option>
@@ -40,7 +44,14 @@ describe('NativeSelect', () => {
 
   it('works correctly with pinned value', async () => {
     render(
-      <NativeSelect data-testid="target" value="0">
+      <NativeSelect
+        value="0"
+        slotsProps={{
+          select: {
+            'data-testid': 'target',
+          },
+        }}
+      >
         <option value="0">Mike</option>
         <option value="1">Josh</option>
       </NativeSelect>,
@@ -53,7 +64,14 @@ describe('NativeSelect', () => {
 
   it('accept defaultValue', () => {
     render(
-      <NativeSelect data-testid="target" defaultValue={1}>
+      <NativeSelect
+        slotsProps={{
+          select: {
+            'data-testid': 'target',
+          },
+        }}
+        defaultValue={1}
+      >
         <option value="0">Mike</option>
         <option value="1">Josh</option>
       </NativeSelect>,
@@ -66,7 +84,13 @@ describe('NativeSelect', () => {
     it('form reset form', async () => {
       render(
         <form data-testid="form">
-          <NativeSelect data-testid="target">
+          <NativeSelect
+            slotsProps={{
+              select: {
+                'data-testid': 'target',
+              },
+            }}
+          >
             <option value="0">Mike</option>
             <option value="1">Josh</option>
           </NativeSelect>
@@ -82,7 +106,14 @@ describe('NativeSelect', () => {
     it('form reset with defaultValue', async () => {
       render(
         <form data-testid="form">
-          <NativeSelect data-testid="target" defaultValue={1}>
+          <NativeSelect
+            slotsProps={{
+              select: {
+                'data-testid': 'target',
+              },
+            }}
+            defaultValue={1}
+          >
             <option value="0">Mike</option>
             <option value="1">Josh</option>
           </NativeSelect>

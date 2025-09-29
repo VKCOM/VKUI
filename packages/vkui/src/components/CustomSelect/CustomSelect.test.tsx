@@ -89,7 +89,15 @@ describe('CustomSelect', () => {
     placementStub = undefined;
   });
   baselineComponent((props) => (
-    <CustomSelect aria-label="Choose your user" {...props} options={[]} />
+    <CustomSelect
+      slotsProps={{
+        input: {
+          'aria-label': 'Choose your user',
+        },
+      }}
+      {...props}
+      options={[]}
+    />
   ));
 
   it('Does not explode on NaN value', () => {
@@ -139,19 +147,27 @@ describe('CustomSelect', () => {
   it('should input value not empty with flag accessible', () => {
     const { rerender } = render(
       <CustomSelect
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
         defaultValue={0}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
     expect(getInputValue()).toBe('');
 
     rerender(
       <CustomSelect
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -328,7 +344,11 @@ describe('CustomSelect', () => {
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -363,7 +383,11 @@ describe('CustomSelect', () => {
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'SPb', country: 'Russia' },
           { value: 1, label: 'Moscow', country: 'Russia' },
@@ -395,7 +419,11 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -429,7 +457,11 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         value={1}
         options={[
           { value: 0, label: 'Mike' },
@@ -451,7 +483,11 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         value={1}
         options={[
           { value: 0, label: 'Mike' },
@@ -466,7 +502,11 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         value={3}
         options={[
           { value: 3, label: 'Joe' },
@@ -486,7 +526,11 @@ describe('CustomSelect', () => {
       <CustomSelectControlled
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         initialValue="3"
         options={[
           { value: '0', label: 'Не выбрано' },
@@ -519,7 +563,11 @@ describe('CustomSelect', () => {
       <CustomSelect
         onOpen={openCb}
         onClose={closeCb}
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -562,7 +610,11 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -616,7 +668,11 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { disabled: true, value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -699,7 +755,11 @@ describe('CustomSelect', () => {
     const { unmount } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         clearButtonTestId="clearButtonTestId"
         options={[
           { value: 0, label: 'Mike' },
@@ -1039,7 +1099,11 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1250,7 +1314,11 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         nativeSelectTestId="nativeSelectTestId"
-        data-testid={INPUT_TEST_ID}
+        slotsProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1651,7 +1719,11 @@ describe('CustomSelect', () => {
   it('checks CustomSelect placement class for borders when dropdown is opened and closed during  placement change', async () => {
     const component = render(
       <CustomSelect
-        data-testid="select"
+        slotsProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1670,7 +1742,11 @@ describe('CustomSelect', () => {
     placementStub = 'top';
     component.rerender(
       <CustomSelect
-        data-testid="select"
+        slotsProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1688,7 +1764,11 @@ describe('CustomSelect', () => {
     placementStub = 'bottom';
     component.rerender(
       <CustomSelect
-        data-testid="select"
+        slotsProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },

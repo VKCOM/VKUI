@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent, type ChangeEventHandler } from 'react';
+import { type ChangeEvent, type ChangeEventHandler, type HTMLAttributes } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -8,7 +8,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import type { SelectType } from '../Select/Select';
@@ -41,15 +41,12 @@ export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSel
 export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
   value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
 
-export interface NativeSelectProps
-  extends Omit<
-      React.SelectHTMLAttributes<HTMLSelectElement>,
-      'multiple' | 'value' | 'defaultValue' | 'onChange'
-    >,
-    HasRef<HTMLSelectElement>,
-    HasRootRef<HTMLDivElement>,
-    HasAlign,
-    Pick<FormFieldProps, 'before' | 'status'> {
+type BaseSelectProps = Pick<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
+  'disabled' | 'required' | 'name'
+>;
+
+export interface NativeSelectOwnProps {
   /**
    * Выбранное значение.
    *
@@ -87,31 +84,62 @@ export interface NativeSelectProps
   icon?: React.ReactNode;
 }
 
+export interface NativeSelectProps
+  extends BaseSelectProps,
+    Omit<HTMLAttributes<HTMLDivElement>, keyof BaseSelectProps | 'onChange' | 'defaultValue'>,
+    HasRef<HTMLSelectElement>,
+    HasRootRef<HTMLDivElement>,
+    HasAlign,
+    Pick<FormFieldProps, 'before' | 'status'>,
+    NativeSelectOwnProps {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasDataAttribute & HasRootRef<HTMLDivElement>;
+    select?: React.SelectHTMLAttributes<HTMLSelectElement> &
+      HasDataAttribute &
+      HasRootRef<HTMLSelectElement>;
+  };
+}
+
 /**
  * @see https://vkui.io/components/native-select
  */
 export const NativeSelect = ({
-  style,
   align,
-  placeholder,
-  children,
+  style,
   className,
+  children,
   getRef,
   getRootRef,
-  disabled,
+  placeholder,
   multiline,
   selectType = 'default',
   status,
   icon = <DropdownIcon />,
   before,
+
+  // NativeSelectProps
+  id,
+  disabled,
+  required,
+  name,
   onChange,
   value,
   defaultValue,
+
+  slotsProps,
   ...restProps
 }: NativeSelectProps): React.ReactNode => {
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
-  const selectRef = useExternRef(getRef);
+
+  const { getRootRef: getRootComponentRef, ...restRootProps } = slotsProps?.root || {};
+  const { getRootRef: getSelectRef, ...restSelectProps } = slotsProps?.select || {};
+
+  const rootRef = useExternRef(getRootRef, getRootComponentRef);
+  const selectRef = useExternRef(getRef, getSelectRef);
   const { sizeY = 'none' } = useAdaptivity();
 
   const checkSelectedOption = () => {
@@ -149,15 +177,16 @@ export const NativeSelect = ({
         className,
       )}
       style={style}
-      getRootRef={getRootRef}
+      getRootRef={rootRef}
       disabled={disabled}
       before={before}
       after={icon}
       status={status}
       mode={getFormFieldModeFromSelectType(selectType)}
+      {...restProps}
+      {...restRootProps}
     >
       <select
-        {...restProps}
         value={value !== undefined ? remapFromSelectValueToNativeValue(value) : value}
         defaultValue={
           defaultValue !== undefined
@@ -165,9 +194,13 @@ export const NativeSelect = ({
             : defaultValue
         }
         disabled={disabled}
-        className={styles.el}
-        onChange={callMultiple(_onChange, checkSelectedOption)}
+        required={required}
+        name={name}
         ref={selectRef}
+        id={id}
+        {...restSelectProps}
+        onChange={callMultiple(_onChange, checkSelectedOption, slotsProps?.select?.onChange)}
+        className={classNames(styles.el, slotsProps?.select?.className)}
       >
         {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
         {children}

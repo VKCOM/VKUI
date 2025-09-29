@@ -231,9 +231,13 @@ export const CalendarTime = ({
             filterFn={selectFilterFn}
             onInputChange={onHoursInputChange}
             onInputKeyDown={onSelectInputKeyDown}
-            getSelectInputRef={hoursInputRef}
-            aria-label={changeHoursLabel}
-            data-testid={hoursTestId}
+            slotsProps={{
+              input: {
+                'getRootRef': hoursInputRef,
+                'aria-label': changeHoursLabel,
+                'data-testid': hoursTestId,
+              },
+            }}
           />
         </AdaptivityProvider>
       </div>
@@ -248,10 +252,14 @@ export const CalendarTime = ({
             searchable
             filterFn={selectFilterFn}
             onInputChange={onMinutesInputChange}
-            getSelectInputRef={minutesInputRef}
             onInputKeyDown={onSelectInputKeyDown}
-            aria-label={changeMinutesLabel}
-            data-testid={minutesTestId}
+            slotsProps={{
+              input: {
+                'getRootRef': minutesInputRef,
+                'aria-label': changeMinutesLabel,
+                'data-testid': minutesTestId,
+              },
+            }}
           />
         </AdaptivityProvider>
       </div>

@@ -11,6 +11,7 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { preventDefault } from '../../lib/utils';
+import type { HasDataAttribute, HasRootRef } from '../../types.ts';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
@@ -110,10 +111,19 @@ export type { CustomSelectClearButtonProps };
 
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
-> extends NativeSelectProps,
+> extends Omit<NativeSelectProps, 'slotsProps'>,
     Omit<FormFieldProps, 'maxHeight'>,
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
     Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
+  /**
+   *
+   */
+  slotsProps?: NativeSelectProps['slotsProps'] & {
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasDataAttribute &
+      HasRootRef<HTMLInputElement>;
+  };
+
   /**
    * Ref на внутрений компонент input.
    */
@@ -284,6 +294,15 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     accessible = false,
     fetchingInProgressLabel,
     fetchingCompletedLabel,
+    labelTextTestId,
+    status,
+    align,
+    id,
+
+    placeholder,
+    disabled,
+    slotsProps,
+    multiline,
     ...restProps
   } = props;
 
@@ -293,10 +312,14 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const { sizeY = 'none' } = useAdaptivity();
 
+  const { getRootRef: getInputRef, ...restSlotsPropsInput } = slotsProps?.input || {};
+  const { getRootRef: getRootComponentRef, ...restRootProps } = slotsProps?.root || {};
+  const { getRootRef: getSelectRef, ...restSelectProps } = slotsProps?.select || {};
+
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const handleRootRef = useExternRef(containerRef, getRootRef);
-  const selectElRef = useExternRef(getRef);
-  const selectInputRef = useExternRef(getSelectInputRef);
+  const handleRootRef = useExternRef(containerRef, getRootRef, getRootComponentRef);
+  const selectElRef = useExternRef(getRef, getSelectRef);
+  const selectInputRef = useExternRef(getSelectInputRef, getInputRef);
 
   const propsValue = React.useMemo<SelectValue | undefined>(() => {
     if (props.value === undefined) {
@@ -548,7 +571,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       selectInputRef.current && selectInputRef.current.focus();
     },
     clearButtonTestId,
-    disabled: restProps.disabled,
+    disabled,
     readOnly,
     icon: iconProp,
   });
@@ -633,14 +656,23 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       onMouseMove={function updateLastMousePosition(e) {
         lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
       }}
+      {...restProps}
+      {...restRootProps}
     >
       <CustomSelectInput
         autoComplete="off"
         autoCapitalize="none"
         autoCorrect="off"
         spellCheck="false"
-        {...restProps}
         {...selectInputAriaProps}
+        {...restSlotsPropsInput}
+        id={id}
+        align={align}
+        disabled={disabled}
+        placeholder={placeholder}
+        labelTextTestId={labelTextTestId}
+        multiline={multiline}
+        status={status}
         getRef={selectInputRef}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -671,14 +703,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         ref={selectElRef}
         name={name}
         onChange={onNativeSelectChange}
-        onBlur={props.onBlur}
-        onFocus={props.onFocus}
-        onClick={props.onClick}
         value={nativeSelectValue}
         aria-hidden
         className={styles.control}
         data-testid={nativeSelectTestId}
         required={required}
+        {...restSelectProps}
       >
         {(allowClearButton || nativeSelectValue === NOT_SELECTED.NATIVE) && (
           <option key={NOT_SELECTED.NATIVE} value={NOT_SELECTED.NATIVE} />

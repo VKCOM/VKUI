@@ -34,8 +34,12 @@ export const Playground: Story = {
           {...args}
           value={value}
           onChange={(_, newValue) => setValue(newValue)}
-          aria-label="Выберите город"
           id="custom-select"
+          slotsProps={{
+            input: {
+              'aria-label': 'Выберите город',
+            },
+          }}
         />
       </FormItem>
     );
