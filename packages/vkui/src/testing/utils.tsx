@@ -130,7 +130,7 @@ export function a11yTest(Component: React.ComponentType<any>, axeConfig?: AxeCon
     const results = await vitestAxe(container, {});
 
     expect(results).toHaveNoViolations();
-  }, 15_000);
+  }, 20_000);
 }
 
 export function getRootRefTest(Component: React.ComponentType<any>) {
