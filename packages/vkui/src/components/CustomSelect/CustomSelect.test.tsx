@@ -1363,7 +1363,6 @@ describe('CustomSelect', () => {
       });
 
       checkDropdownOpened(true);
-      vi.useRealTimers();
     }),
   );
 
@@ -1393,7 +1392,6 @@ describe('CustomSelect', () => {
 
       expect(screen.getByTestId('wrapper')).toBeInTheDocument();
       expect(screen.getAllByRole('option').length).toBe(4);
-      vi.useRealTimers();
     }),
   );
 
@@ -1422,7 +1420,6 @@ describe('CustomSelect', () => {
 
       fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
       expect(onInputChange).toHaveBeenCalledTimes(2);
-      vi.useRealTimers();
     }),
   );
 

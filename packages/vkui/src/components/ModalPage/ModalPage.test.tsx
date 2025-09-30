@@ -301,7 +301,6 @@ describe(ModalPage, () => {
         } else {
           expect(openButton).not.toHaveFocus();
         }
-        vi.useRealTimers();
       }),
     );
   });

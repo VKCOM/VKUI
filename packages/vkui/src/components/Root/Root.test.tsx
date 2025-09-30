@@ -29,7 +29,7 @@ describe(Root, () => {
   baselineComponent(Root);
 
   describe('With View', () => {
-    fakeTimers();
+    fakeTimers(false);
     mountTest(() => (
       <Root activeView="view">
         <View id="view" activePanel="">
@@ -55,7 +55,7 @@ describe(Root, () => {
   });
 
   describe('calls onTransition', () => {
-    fakeTimers();
+    fakeTimers(false);
     it.each([
       ['with animation', true],
       ['without animation', false],
@@ -184,7 +184,7 @@ describe(Root, () => {
   });
 
   describe('scroll control', () => {
-    fakeTimers();
+    fakeTimers(false);
     it('restores on back navigation', async () => {
       let y = 101;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);

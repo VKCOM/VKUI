@@ -508,7 +508,6 @@ describe(useCSSTransition, () => {
 
       // Восстанавливаем мок
       getComputedStyleMock.mockRestore();
-      vi.useRealTimers();
     }),
   );
 });

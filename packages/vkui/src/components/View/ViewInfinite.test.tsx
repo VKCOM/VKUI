@@ -28,7 +28,7 @@ describe(ViewInfinite, () => {
   baselineComponent(ViewInfinite);
 
   describe('With Panel', () => {
-    fakeTimers();
+    fakeTimers(false);
     mountTest(() => (
       <ViewInfinite activePanel="panel">
         <Panel id="panel" />
@@ -102,7 +102,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('blurs active element', () => {
-    fakeTimers();
+    fakeTimers(false);
     const panels = [
       <Panel id="focus" key="1">
         <input autoFocus data-testid="__autofocus__" />
@@ -120,7 +120,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('can swipeBack', () => {
-    fakeTimers();
+    fakeTimers(false);
     let nowMock: ReturnType<typeof vi.spyOn>;
     beforeEach(() => {
       nowMock = vi.spyOn(Date, 'now');
@@ -415,7 +415,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('scroll control', () => {
-    fakeTimers();
+    fakeTimers(false);
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,
