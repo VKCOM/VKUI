@@ -1331,6 +1331,7 @@ describe('CustomSelect', () => {
     // Нажимаем escape, тем самым закрывая дропдаун
     await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
     checkDropdownOpened(false);
+    vi.useRealTimers();
   });
 
   it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', 'Space', 'Enter', ' ', 'Spacebar'])(

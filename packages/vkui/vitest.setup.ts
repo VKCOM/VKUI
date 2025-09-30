@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { noop } from '@vkontakte/vkjs';
 import failOnConsole from 'vitest-fail-on-console';
 
 const ignoreList = [/.*usePatchChildren.test.tsx/, /.*warnOnce.test.ts/];
@@ -49,6 +50,35 @@ globalThis.getComputedStyle = function (el: Element, pseudoElt?: string | null) 
   // иначе — дефолтное поведение
   return _origGetComputedStyle.call(globalThis, el);
 };
+
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+  value: () => ({
+    fillRect: noop,
+    clearRect: noop,
+    getImageData: () => ({ data: [] }),
+    putImageData: noop,
+    createImageData: () => [],
+    setTransform: noop,
+    drawImage: noop,
+    save: noop,
+    fillText: noop,
+    restore: noop,
+    beginPath: noop,
+    moveTo: noop,
+    lineTo: noop,
+    closePath: noop,
+    stroke: noop,
+    translate: noop,
+    scale: noop,
+    rotate: noop,
+    arc: noop,
+    fill: noop,
+    measureText: () => ({ width: 0 }),
+    transform: noop,
+    rect: noop,
+    clip: noop,
+  }),
+});
 
 // Не реализован в JSDOM.
 // https://jestjs.io/docs/manual-mocks

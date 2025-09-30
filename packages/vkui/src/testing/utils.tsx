@@ -165,6 +165,10 @@ export function baselineComponent<Props extends object>(
       vi.useFakeTimers();
     });
 
+    afterAll(() => {
+      vi.useRealTimers();
+    });
+
     mountTest(Component);
 
     if (a11y) {
