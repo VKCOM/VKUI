@@ -51,6 +51,7 @@ export function withFakeTimers<T extends any[]>(
   options: Parameters<typeof vi.useFakeTimers>[0] = {},
 ) {
   return async (...args: T) => {
+    vi.clearAllTimers();
     vi.useFakeTimers(options);
     try {
       return await testFn(...args);
@@ -88,68 +89,72 @@ export type ComponentTestOptions = {
 };
 
 export function mountTest(Component: React.ComponentType<any>) {
-  it('renders', async () => {
-    expect.assertions(3);
+  it(
+    'renders',
+    withFakeTimers(async () => {
+      expect.assertions(3);
 
-    let result: RenderResult;
+      let result: RenderResult;
 
-    // mount
-    try {
-      result = render(<Component />);
-      await waitForFloatingPosition();
-      act(vi.runAllTimers);
-      expect(result).toBeTruthy();
-    } catch {}
+      // mount
+      try {
+        result = render(<Component />);
+        await waitForFloatingPosition();
+        act(vi.runAllTimers);
+        expect(result).toBeTruthy();
+      } catch {}
 
-    try {
-      result!.rerender(<Component />);
-      await waitForFloatingPosition();
-      act(vi.runAllTimers);
-      expect(result!).toBeTruthy();
-    } catch {}
+      try {
+        result!.rerender(<Component />);
+        await waitForFloatingPosition();
+        act(vi.runAllTimers);
+        expect(result!).toBeTruthy();
+      } catch {}
 
-    try {
-      // unmount
-      result!.unmount();
-      act(vi.runAllTimers);
-      expect(result!).toBeTruthy();
-    } catch {}
-  });
+      try {
+        // unmount
+        result!.unmount();
+        act(vi.runAllTimers);
+        expect(result!).toBeTruthy();
+      } catch {}
+    }),
+  );
 }
 
 export function a11yTest(Component: React.ComponentType<any>, axeConfig?: AxeConfigureOptions) {
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
     await waitForFloatingPosition();
-    vi.useRealTimers();
 
     const vitestAxe = axeConfig ? configureAxe(axeConfig) : defaultAxe;
     const results = await vitestAxe(container, {});
 
-    vi.useFakeTimers();
     expect(results).toHaveNoViolations();
-  });
+  }, 15_000);
 }
 
 export function getRootRefTest(Component: React.ComponentType<any>) {
-  it('getRootRef', async () => {
-    const stableRef = { current: undefined };
+  it(
+    'getRootRef',
+    withFakeTimers(async () => {
+      const stableRef = { current: undefined };
 
-    const ref = {
-      get current() {
-        return stableRef.current;
-      },
-      set current(el) {
-        stableRef.current = el;
-      },
-    };
+      const ref = {
+        get current() {
+          return stableRef.current;
+        },
+        set current(el) {
+          stableRef.current = el;
+        },
+      };
 
-    render(<Component getRootRef={ref} />);
-    await waitForFloatingPosition();
-    act(vi.runAllTimers);
+      render(<Component getRootRef={ref} />);
+      await waitForFloatingPosition();
+      act(vi.runAllTimers);
 
-    expect(ref.current).toBeTruthy();
-  });
+      expect(ref.current).toBeTruthy();
+    }),
+  );
 }
 
 export function baselineComponent<Props extends object>(
@@ -175,15 +180,15 @@ export function baselineComponent<Props extends object>(
     : RawComponent;
 
   describe(testName, () => {
-    beforeEach(() => {
-      vi.clearAllTimers();
-      vi.useFakeTimers();
-    });
-
-    afterEach(() => {
-      vi.runOnlyPendingTimers();
-      vi.useRealTimers();
-    });
+    // beforeEach(() => {
+    //   vi.clearAllTimers();
+    //   vi.useFakeTimers();
+    // });
+    //
+    // afterEach(() => {
+    //   vi.runOnlyPendingTimers();
+    //   vi.useRealTimers();
+    // });
 
     mountTest(Component);
 
@@ -192,47 +197,50 @@ export function baselineComponent<Props extends object>(
     }
 
     if (forward) {
-      it('forwards attributes', async () => {
-        const cls = 'Custom';
-        const { rerender } = render(
-          <Component data-testid="__cmp__" className={cls} style={{ backgroundColor: 'red' }} />,
-        );
-        await waitForFloatingPosition();
-        act(vi.runAllTimers);
-        // forward DOM attributes
-        if (domAttr) {
-          expect(screen.queryByTestId('__cmp__')).toBeTruthy();
-        }
-
-        if (className || style) {
-          const styledNode = document.getElementsByClassName(cls)[0] as HTMLElement;
-          // forwards className
-          if (className) {
-            expect(styledNode).toBeTruthy();
-          }
-          const customClassList = Array.from(styledNode.classList).filter((item) => item !== cls);
-          // forwards style
-          if (style) {
-            expect(styledNode.style.backgroundColor).toBe('red');
-          }
-          const customStyleCount = styledNode.style.length;
-
-          rerender(<Component />);
+      it(
+        'forwards attributes',
+        withFakeTimers(async () => {
+          const cls = 'Custom';
+          const { rerender } = render(
+            <Component data-testid="__cmp__" className={cls} style={{ backgroundColor: 'red' }} />,
+          );
           await waitForFloatingPosition();
           act(vi.runAllTimers);
+          // forward DOM attributes
+          if (domAttr) {
+            expect(screen.queryByTestId('__cmp__')).toBeTruthy();
+          }
 
-          // does not replace default className
-          if (className) {
-            expect(Array.from(styledNode.classList)).toEqual(customClassList);
+          if (className || style) {
+            const styledNode = document.getElementsByClassName(cls)[0] as HTMLElement;
+            // forwards className
+            if (className) {
+              expect(styledNode).toBeTruthy();
+            }
+            const customClassList = Array.from(styledNode.classList).filter((item) => item !== cls);
+            // forwards style
+            if (style) {
+              expect(styledNode.style.backgroundColor).toBe('red');
+            }
+            const customStyleCount = styledNode.style.length;
+
+            rerender(<Component />);
+            await waitForFloatingPosition();
+            act(vi.runAllTimers);
+
+            // does not replace default className
+            if (className) {
+              expect(Array.from(styledNode.classList)).toEqual(customClassList);
+            }
+            // does not replace default styles
+            if (style) {
+              expect(styledNode.style.length).toEqual(
+                styledNode.style.backgroundColor ? customStyleCount : customStyleCount - 1,
+              );
+            }
           }
-          // does not replace default styles
-          if (style) {
-            expect(styledNode.style.length).toEqual(
-              styledNode.style.backgroundColor ? customStyleCount : customStyleCount - 1,
-            );
-          }
-        }
-      });
+        }),
+      );
     }
 
     if (getRootRef) {
