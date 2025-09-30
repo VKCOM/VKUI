@@ -22,37 +22,38 @@ describe('CalendarRange', () => {
 
   it(
     'checks aria roles',
-    withFakeTimers(async () => {
-      const targetDate = new Date('2023-09-20T07:40:00.000Z');
+    withFakeTimers(
+      async () => {
+        const targetDate = new Date('2023-09-20T07:40:00.000Z');
+        render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
 
-      vi.setSystemTime(targetDate);
-      render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
+        expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
+        expect(screen.getByRole('grid', { name: 'октябрь 2023 г.' })).toBeDefined();
+        expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
+        expect(screen.getAllByRole('columnheader', { name: 'понедельник' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'вторник' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'среда' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'четверг' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'пятница' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'суббота' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'воскресенье' })).toHaveLength(2);
 
-      expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
-      expect(screen.getByRole('grid', { name: 'октябрь 2023 г.' })).toBeDefined();
-      expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
-      expect(screen.getAllByRole('columnheader', { name: 'понедельник' })).toHaveLength(2);
-      expect(screen.getAllByRole('columnheader', { name: 'вторник' })).toHaveLength(2);
-      expect(screen.getAllByRole('columnheader', { name: 'среда' })).toHaveLength(2);
-      expect(screen.getAllByRole('columnheader', { name: 'четверг' })).toHaveLength(2);
-      expect(screen.getAllByRole('columnheader', { name: 'пятница' })).toHaveLength(2);
-      expect(screen.getAllByRole('columnheader', { name: 'суббота' })).toHaveLength(2);
-      expect(screen.getAllByRole('columnheader', { name: 'воскресенье' })).toHaveLength(2);
+        let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+        expect(currentDate.getAttribute('aria-current')).toBe('date');
+        expect(currentDate.getAttribute('aria-selected')).toBe('true');
 
-      let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
-      expect(currentDate.getAttribute('aria-current')).toBe('date');
-      expect(currentDate.getAttribute('aria-selected')).toBe('true');
+        fireEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' }));
 
-      fireEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' }));
+        currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+        expect(currentDate.getAttribute('aria-current')).toBe('date');
+        expect(currentDate.getAttribute('aria-selected')).toBe('false');
 
-      currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
-      expect(currentDate.getAttribute('aria-current')).toBe('date');
-      expect(currentDate.getAttribute('aria-selected')).toBe('false');
-
-      const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
-      expect(selectedDate.getAttribute('aria-current')).toBe(null);
-      expect(selectedDate.getAttribute('aria-selected')).toBe('true');
-    }),
+        const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
+        expect(selectedDate.getAttribute('aria-current')).toBe(null);
+        expect(selectedDate.getAttribute('aria-selected')).toBe('true');
+      },
+      { now: new Date('2023-09-20T07:40:00.000Z') },
+    ),
   );
 
   it('calls onChange when initial value is [null, null]', () => {

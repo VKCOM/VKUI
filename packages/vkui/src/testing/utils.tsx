@@ -46,9 +46,12 @@ export function fakeTimers(runPendingTimers = true) {
   });
 }
 
-export function withFakeTimers<T extends any[]>(testFn: (...args: T) => Awaitable<void>) {
+export function withFakeTimers<T extends any[]>(
+  testFn: (...args: T) => Awaitable<void>,
+  options: Parameters<typeof vi.useFakeTimers>[0],
+) {
   return async (...args: T) => {
-    vi.useFakeTimers();
+    vi.useFakeTimers(options);
     try {
       return await testFn(...args);
     } finally {
