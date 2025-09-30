@@ -276,7 +276,11 @@ export const CalendarHeader = ({
               forceDropdownPortal={false}
               selectType="accent"
               aria-label={changeYearLabel}
-              data-testid={yearDropdownTestId}
+              data-testid={
+                typeof yearDropdownTestId === 'string'
+                  ? yearDropdownTestId
+                  : yearDropdownTestId?.(currentYear)
+              }
               onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
             />
           </div>
