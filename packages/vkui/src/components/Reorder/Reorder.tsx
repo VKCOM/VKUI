@@ -39,6 +39,7 @@ export function Reorder(
     Trigger: typeof ReorderTrigger;
     Item: typeof ReorderItem;
     Container: typeof ReorderRoot;
+    TriggerIcon: typeof ReorderTriggerIcon;
   },
 ) {
   return <ReorderRoot {...props} />;
