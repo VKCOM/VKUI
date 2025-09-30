@@ -48,7 +48,7 @@ export function fakeTimers(runPendingTimers = true) {
 
 export function withFakeTimers<T extends any[]>(
   testFn: (...args: T) => Awaitable<void>,
-  options: Parameters<typeof vi.useFakeTimers>[0],
+  options: Parameters<typeof vi.useFakeTimers>[0] = {},
 ) {
   return async (...args: T) => {
     vi.useFakeTimers(options);

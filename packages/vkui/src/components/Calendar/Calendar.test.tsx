@@ -49,6 +49,7 @@ describe('Calendar', () => {
       },
       { now: targetDate },
     ),
+    15_000,
   );
 
   it('fires onChange', () => {

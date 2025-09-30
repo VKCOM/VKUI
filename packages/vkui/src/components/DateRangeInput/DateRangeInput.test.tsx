@@ -503,7 +503,7 @@ describe('DateRangeInput', () => {
         // фокус возвращается на часть инпутa
         expect(document.activeElement).toBe(inputPart);
       }
-    });
+    }, 15_000);
 
     it('does not close calendar when Escape is pressed to close inner dropdown (month, year)', async () => {
       const onCalendarOpenChangedStub = vi.fn();

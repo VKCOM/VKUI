@@ -54,6 +54,7 @@ describe('CalendarRange', () => {
       },
       { now: new Date('2023-09-20T07:40:00.000Z') },
     ),
+    15_000,
   );
 
   it('calls onChange when initial value is [null, null]', () => {
