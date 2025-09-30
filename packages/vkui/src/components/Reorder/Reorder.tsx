@@ -4,13 +4,14 @@ import { DATA_DRAGGABLE_PLACEHOLDER_REACT_PROP } from '../../hooks/useDraggableW
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 import { ReorderItem } from './components/ReorderItem';
 import { ReorderTrigger } from './components/ReorderTrigger';
+import { ReorderTriggerIcon } from './components/ReorderTriggerIcon.tsx';
 import { ReorderContext, type ReorderContextData } from './context';
 import styles from './Reorder.module.css';
 
 export type ReorderProps = RootComponentProps<HTMLDivElement> &
   Pick<ReorderContextData, 'onReorder'>;
 
-function ReorderContainer({ children, onReorder, disabled, ...restProps }: ReorderProps) {
+function ReorderRoot({ children, onReorder, disabled, ...restProps }: ReorderProps) {
   return (
     <ReorderContext.Provider
       value={{
@@ -37,12 +38,13 @@ export function Reorder(
   props: ReorderProps & {
     Trigger: typeof ReorderTrigger;
     Item: typeof ReorderItem;
-    Container: typeof ReorderContainer;
+    Container: typeof ReorderRoot;
   },
 ) {
-  return <ReorderContainer {...props} />;
+  return <ReorderRoot {...props} />;
 }
 
 Reorder.Trigger = ReorderTrigger;
+Reorder.TriggerIcon = ReorderTriggerIcon;
 Reorder.Item = ReorderItem;
-Reorder.Container = ReorderContainer;
+Reorder.Root = ReorderRoot;

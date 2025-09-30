@@ -21,7 +21,7 @@ export const List = ({
   ...restProps
 }: ListProps): React.ReactNode => {
   return (
-    <Reorder.Container
+    <Reorder.Root
       role="list"
       className={styles.host}
       style={{
@@ -31,6 +31,6 @@ export const List = ({
       {...restProps}
     >
       {children}
-    </Reorder.Container>
+    </Reorder.Root>
   );
 };

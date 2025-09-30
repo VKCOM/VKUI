@@ -103,7 +103,7 @@ export const Cell: React.FC<CellProps> & {
       onDragStateChange={setDragging}
       data-testid={draggerTestId}
     >
-      {draggerLabel}
+      <Reorder.TriggerIcon>{draggerLabel}</Reorder.TriggerIcon>
     </Reorder.Trigger>
   ) : null;
 
@@ -164,6 +164,7 @@ export const Cell: React.FC<CellProps> & {
   if (removable) {
     return (
       <Removable
+        Component={draggable ? Reorder.Item : undefined}
         className={classNames(cellClasses, className)}
         style={style}
         getRootRef={rootElRef}
@@ -186,7 +187,7 @@ export const Cell: React.FC<CellProps> & {
     );
   }
 
-  return (
+  return draggable ? (
     <Reorder.Item
       className={classNames(cellClasses, className)}
       style={style}
@@ -195,6 +196,10 @@ export const Cell: React.FC<CellProps> & {
     >
       <SimpleCell {...simpleCellProps} />
     </Reorder.Item>
+  ) : (
+    <div className={classNames(cellClasses, className)} style={style} ref={rootElRef}>
+      <SimpleCell {...simpleCellProps} />
+    </div>
   );
 };
 
