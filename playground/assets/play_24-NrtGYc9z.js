@@ -1,0 +1,1 @@
+import{j as o}from"./iframe-qoTtUH8h.js";import{S as t}from"./SvgIconRootV2-Dgfs3ogP.js";const a=r=>o.jsx(t,{viewBox:"0 0 24 24",width:24,height:24,vkuiIconId:"play_24",vkuiAttrs:{fill:"currentColor"},vkuiProps:r,children:o.jsx("path",{d:"M18.5 11.134a1 1 0 0 1 0 1.732l-9 5.196a1 1 0 0 1-1.5-.866V6.804a1 1 0 0 1 1.5-.866z"})});export{a as I};
