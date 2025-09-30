@@ -1,43 +1,49 @@
 'use client';
-/* eslint-disable jsdoc/require-jsdoc */
 
+import * as React from 'react';
 import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import {
-  type DraggableProps,
-  type UseDraggableProps,
-  useDraggableWithDomApi,
-} from '../../../hooks/useDraggableWithDomApi';
+import { useDraggableWithDomApi } from '../../../hooks/useDraggableWithDomApi';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import type { HTMLAttributesWithRootRef } from '../../../types';
-import { Touch } from '../../Touch/Touch';
+import { Touch, type TouchProps } from '../../Touch/Touch';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
-import styles from './CellDragger.module.css';
+import { ItemContext, ReorderContext } from '../context';
+import styles from './Reorder.module.css';
 
-interface CellDraggerProps
-  extends UseDraggableProps,
-    Omit<HTMLAttributesWithRootRef<HTMLElement>, keyof DraggableProps> {
-  disabled?: boolean;
+type VendorIconType = typeof Icon24ReorderIos;
+
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>> | VendorIconType;
+
+export interface ReorderTriggerProps extends TouchProps {
+  /**
+   *
+   */
+  Icon?: IconType;
+  /**
+   *
+   */
   onDragStateChange?: (dragging: boolean) => void;
 }
 
-export const CellDragger = ({
-  elRef,
-  disabled,
-  className,
-  onDragStateChange,
-  onDragFinish,
+export function ReorderTrigger({
   children,
+  className,
+  disabled: disabledProp,
+  Icon: IconProp,
+  onDragStateChange,
   ...restProps
-}: CellDraggerProps): React.ReactNode => {
+}: ReorderTriggerProps) {
+  const { itemRef } = React.useContext(ItemContext);
+  const { onReorder, disabled: disabledFromContext } = React.useContext(ReorderContext);
   const platform = usePlatform();
-  const Icon = platform === 'ios' ? Icon24ReorderIos : Icon24Reorder;
-
+  const Icon = IconProp || (platform === 'ios' ? Icon24ReorderIos : Icon24Reorder);
   const { dragging, onDragStart, onDragMove, onDragEnd } = useDraggableWithDomApi({
-    elRef,
-    onDragFinish,
+    elRef: itemRef,
+    onDragFinish: onReorder,
   });
+
+  const disabled = disabledFromContext === undefined ? disabledProp : disabledFromContext;
 
   useIsomorphicLayoutEffect(() => {
     if (onDragStateChange) {
@@ -48,6 +54,7 @@ export const CellDragger = ({
   return (
     <Touch
       className={classNames(styles.host, className)}
+      disabled={disabled}
       onStart={disabled ? undefined : onDragStart}
       onMoveY={disabled ? undefined : onDragMove}
       onEnd={disabled ? undefined : onDragEnd}
@@ -57,4 +64,4 @@ export const CellDragger = ({
       <Icon className={styles.icon} />
     </Touch>
   );
-};
+}

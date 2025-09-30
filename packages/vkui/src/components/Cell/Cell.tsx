@@ -7,9 +7,9 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
+import { Reorder } from '../Reorder/Reorder.tsx';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbox';
-import { CellDragger } from './CellDragger/CellDragger';
 import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
 
@@ -98,15 +98,13 @@ export const Cell: React.FC<CellProps> & {
   const rootElRef = useExternRef(getRootRef);
 
   const dragger = draggable ? (
-    <CellDragger
-      elRef={rootElRef}
+    <Reorder.Trigger
       className={classNames(styles.dragger, !before && !selectable && styles.controlNoBefore)}
       onDragStateChange={setDragging}
-      onDragFinish={onDragFinish}
       data-testid={draggerTestId}
     >
       {draggerLabel}
-    </CellDragger>
+    </Reorder.Trigger>
   ) : null;
 
   let checkbox;
@@ -189,9 +187,14 @@ export const Cell: React.FC<CellProps> & {
   }
 
   return (
-    <div className={classNames(cellClasses, className)} style={style} ref={rootElRef}>
+    <Reorder.Item
+      className={classNames(cellClasses, className)}
+      style={style}
+      getRootRef={rootElRef}
+      onReorder={onDragFinish}
+    >
       <SimpleCell {...simpleCellProps} />
-    </div>
+    </Reorder.Item>
   );
 };
 

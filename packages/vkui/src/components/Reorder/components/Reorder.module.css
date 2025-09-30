@@ -1,4 +1,3 @@
-/* stylelint-disable selector-max-universal */
 .host {
   color: var(--vkui--color_icon_secondary);
   touch-action: manipulation;
