@@ -1,6 +1,7 @@
 import { act, createRef, useRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import type { Placement, useFloating } from '../../lib/floating';
+import { withFakeTimers } from '../../testing/utils.tsx';
 import { Button } from '../Button/Button';
 import { CustomSelectDropdown } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';
@@ -38,43 +39,44 @@ describe('CustomSelectDropdown', () => {
     expect(screen.getByTestId('test-content')).not.toBeNull();
   });
 
-  it('should call onPlacementChange callback when placement is changed', async () => {
-    vi.useFakeTimers();
-    const onPlacementChange = vi.fn();
+  it(
+    'should call onPlacementChange callback when placement is changed',
+    withFakeTimers(async () => {
+      const onPlacementChange = vi.fn();
 
-    const Fixture = () => {
-      const ref = useRef<HTMLDivElement>(null);
-      const [placement, setPlacement] = useState<Placement>('bottom');
-      return (
-        <>
-          <div ref={ref}></div>
-          <CustomSelectDropdown
-            targetRef={ref}
-            placement={placement}
-            data-testid="dropdown"
-            onPlacementChange={onPlacementChange}
-          />
-          <Button onClick={() => setPlacement('top')} data-testid="change-placement">
-            Change Placement
-          </Button>
-        </>
-      );
-    };
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement>(null);
+        const [placement, setPlacement] = useState<Placement>('bottom');
+        return (
+          <>
+            <div ref={ref}></div>
+            <CustomSelectDropdown
+              targetRef={ref}
+              placement={placement}
+              data-testid="dropdown"
+              onPlacementChange={onPlacementChange}
+            />
+            <Button onClick={() => setPlacement('top')} data-testid="change-placement">
+              Change Placement
+            </Button>
+          </>
+        );
+      };
 
-    render(<Fixture />);
+      render(<Fixture />);
 
-    expect(screen.getByTestId('dropdown')).toHaveClass(styles.bottom);
+      expect(screen.getByTestId('dropdown')).toHaveClass(styles.bottom);
 
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('change-placement'));
-      vi.runOnlyPendingTimers();
-    });
+      await act(async () => {
+        fireEvent.click(screen.getByTestId('change-placement'));
+        vi.runOnlyPendingTimers();
+      });
 
-    expect(screen.getByTestId('dropdown')).toHaveClass(styles.top);
+      expect(screen.getByTestId('dropdown')).toHaveClass(styles.top);
 
-    expect(onPlacementChange).toHaveBeenCalledTimes(1);
-    vi.useRealTimers();
-  });
+      expect(onPlacementChange).toHaveBeenCalledTimes(1);
+    }),
+  );
 
   it('should not have className when noMaxHeight = true', () => {
     const props = {

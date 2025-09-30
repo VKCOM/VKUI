@@ -139,7 +139,7 @@ describe('ChipsSelect', () => {
 
   it.each(['click', 'focus'])(
     'opens dropdown when %s on input field',
-    withFakeTimers(async (eventType) => {
+    withFakeTimers<[string]>(async (eventType) => {
       const onOpen = vi.fn();
       const result = render(
         <ChipsSelect
@@ -230,7 +230,7 @@ describe('ChipsSelect', () => {
 
   it.each(['{ArrowDown}', 'typing text'])(
     'closes dropdown on {Escape} and open when %s',
-    withFakeTimers(async (type) => {
+    withFakeTimers<[string]>(async (type) => {
       const onOpen = vi.fn();
       const onClose = vi.fn();
       const result = render(
@@ -265,7 +265,7 @@ describe('ChipsSelect', () => {
     { closeAfterSelect: false, description: 'does not close' },
   ])(
     '$description dropdown after select',
-    withFakeTimers(async ({ closeAfterSelect }) => {
+    withFakeTimers<[{ closeAfterSelect: boolean }]>(async ({ closeAfterSelect }) => {
       const result = render(
         <ChipsSelect
           options={colors}
@@ -294,7 +294,7 @@ describe('ChipsSelect', () => {
     { selectedBehavior: 'hide' as const, description: 'does not hide' },
   ])(
     '$description selected option if `selectedBehavior` is `"$selectedBehavior"`',
-    withFakeTimers(async ({ selectedBehavior }) => {
+    withFakeTimers<[{ selectedBehavior: 'hide' | 'highlight' }]>(async ({ selectedBehavior }) => {
       const result = render(
         <ChipsSelect
           options={colors}
@@ -542,7 +542,7 @@ describe('ChipsSelect', () => {
 
   it.each([{ readOnly: false }, { readOnly: true }])(
     'calls user events (`readOnly` prop is `$readOnly`)',
-    withFakeTimers(async ({ readOnly }) => {
+    withFakeTimers<[{ readOnly: boolean }]>(async ({ readOnly }) => {
       const onFocus = vi.fn();
       const onBlur = vi.fn();
       const onKeyDown = vi.fn();

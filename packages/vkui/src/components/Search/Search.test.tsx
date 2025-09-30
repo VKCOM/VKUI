@@ -202,7 +202,7 @@ describe(Search, () => {
 
   it.each([fireEvent.click, fireEvent.pointerDown])(
     'should clear value by click clear button',
-    withFakeTimers(async (clickFn) => {
+    withFakeTimers<[typeof fireEvent.click]>(async (clickFn) => {
       let value = '';
       const { container } = render(<Search onChange={(e) => (value = e.target.value)} />);
       await userEvent.type(getInput(), 'user');

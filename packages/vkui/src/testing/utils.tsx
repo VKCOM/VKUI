@@ -10,6 +10,7 @@ import {
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
+import { type Awaitable } from 'vitest';
 import { configureAxe } from 'vitest-axe';
 import * as matchers from 'vitest-axe/matchers';
 import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
@@ -45,9 +46,7 @@ export function fakeTimers(runPendingTimers = true) {
   });
 }
 
-export function withFakeTimers<T extends any[]>(
-  testFn: (...args: T) => unknown | Promise<unknown>,
-) {
+export function withFakeTimers<T extends any[]>(testFn: (...args: T) => Awaitable<void>) {
   return async (...args: T) => {
     vi.useFakeTimers();
     try {

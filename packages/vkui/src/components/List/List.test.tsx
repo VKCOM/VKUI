@@ -5,7 +5,6 @@ import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import {
   ADOPTED_TOUCH_EVENTS_HANDLERS,
   baselineComponent,
-  fakeTimers,
   MOUSE_EVENTS_HANDLERS,
   withFakeTimers,
 } from '../../testing/utils';
@@ -203,54 +202,56 @@ describe('List', () => {
 
   it.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
     'check dnd is working',
-    withFakeTimers(({ handlers: mouseEvents }) => {
-      const setupData = setup({});
-      const { getCellSetup } = setupData;
+    withFakeTimers<[{ handlers: Array<typeof fireEvent.mouseDown> }]>(
+      ({ handlers: mouseEvents }) => {
+        const setupData = setup({});
+        const { getCellSetup } = setupData;
 
-      dragCell({
-        testId: 'dragger-0',
-        breakPoints: [5, 140, 140, 124],
-        afterDragging: () => {
-          const cell1Data = getCellSetup('cell-1');
-          expect(cell1Data.transform).toBe('');
-          const cell2Data = getCellSetup('cell-2');
-          expect(cell2Data.transform).toBe('translateY(50px)');
-        },
-        afterMove: {
-          0: () => {
+        dragCell({
+          testId: 'dragger-0',
+          breakPoints: [5, 140, 140, 124],
+          afterDragging: () => {
             const cell1Data = getCellSetup('cell-1');
-            expect(cell1Data.transform).toBe('translateY(50px)');
+            expect(cell1Data.transform).toBe('');
             const cell2Data = getCellSetup('cell-2');
             expect(cell2Data.transform).toBe('translateY(50px)');
           },
-        },
-        mouseEvents,
-      });
+          afterMove: {
+            0: () => {
+              const cell1Data = getCellSetup('cell-1');
+              expect(cell1Data.transform).toBe('translateY(50px)');
+              const cell2Data = getCellSetup('cell-2');
+              expect(cell2Data.transform).toBe('translateY(50px)');
+            },
+          },
+          mouseEvents,
+        });
 
-      expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+        expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
 
-      dragCell({
-        testId: 'dragger-2',
-        breakPoints: [140, 140, 75, 140, 75],
-        afterDragging: () => {
-          const cell1Data = getCellSetup('cell-0');
-          expect(cell1Data.transform).toBe('');
-          const cell2Data = getCellSetup('cell-1');
-          expect(cell2Data.transform).toBe('translateY(50px)');
-        },
-        afterMove: {
-          0: () => {
+        dragCell({
+          testId: 'dragger-2',
+          breakPoints: [140, 140, 75, 140, 75],
+          afterDragging: () => {
             const cell1Data = getCellSetup('cell-0');
             expect(cell1Data.transform).toBe('');
             const cell2Data = getCellSetup('cell-1');
-            expect(cell2Data.transform).toBe('');
+            expect(cell2Data.transform).toBe('translateY(50px)');
           },
-        },
-        mouseEvents,
-      });
+          afterMove: {
+            0: () => {
+              const cell1Data = getCellSetup('cell-0');
+              expect(cell1Data.transform).toBe('');
+              const cell2Data = getCellSetup('cell-1');
+              expect(cell2Data.transform).toBe('');
+            },
+          },
+          mouseEvents,
+        });
 
-      expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
-    }),
+        expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
+      },
+    ),
   );
 
   it(

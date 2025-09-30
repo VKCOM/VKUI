@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Switch } from './Switch';
 
@@ -14,54 +14,54 @@ describe(Switch, () => {
     </>
   ));
 
-  it('(Uncontrolled) shows checked state', async () => {
-    const { rerender } = render(<Switch data-testid="switch" />);
+  it(
+    '(Uncontrolled) shows checked state',
+    withFakeTimers(async () => {
+      const { rerender } = render(<Switch data-testid="switch" />);
 
-    const component = screen.getByRole<HTMLInputElement>('switch');
-    if (!component) {
-      throw new Error('Can not find component');
-    }
+      const component = screen.getByRole<HTMLInputElement>('switch');
+      if (!component) {
+        throw new Error('Can not find component');
+      }
 
-    expect(component.checked).toBeFalsy();
-    expect(component.getAttribute('aria-checked')).toBe('false');
+      expect(component.checked).toBeFalsy();
+      expect(component.getAttribute('aria-checked')).toBe('false');
 
-    fireEvent.click(component);
+      fireEvent.click(component);
 
-    expect(component.checked).toBeTruthy();
-    expect(component.getAttribute('aria-checked')).toBe('true');
+      expect(component.checked).toBeTruthy();
+      expect(component.getAttribute('aria-checked')).toBe('true');
 
-    rerender(<Switch data-testid="switch" defaultChecked />);
+      rerender(<Switch data-testid="switch" defaultChecked />);
 
-    const defaultCheckedComponent = screen.getByTestId<HTMLInputElement>('switch');
-    if (!defaultCheckedComponent) {
-      throw new Error('Can not find component');
-    }
+      const defaultCheckedComponent = screen.getByTestId<HTMLInputElement>('switch');
+      if (!defaultCheckedComponent) {
+        throw new Error('Can not find component');
+      }
 
-    expect(defaultCheckedComponent.checked).toBeTruthy();
-    expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('true');
+      expect(defaultCheckedComponent.checked).toBeTruthy();
+      expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('true');
 
-    fireEvent.click(defaultCheckedComponent);
+      fireEvent.click(defaultCheckedComponent);
 
-    expect(defaultCheckedComponent.checked).toBeFalsy();
-    expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('false');
+      expect(defaultCheckedComponent.checked).toBeFalsy();
+      expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('false');
 
-    rerender(<Switch data-testid="switch" disabled />);
+      rerender(<Switch data-testid="switch" disabled />);
 
-    const disabledSwitch = screen.getByTestId<HTMLInputElement>('switch');
-    if (!disabledSwitch) {
-      throw new Error('Can not find component');
-    }
-    expect(disabledSwitch.checked).toBeFalsy();
-    expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
+      const disabledSwitch = screen.getByTestId<HTMLInputElement>('switch');
+      if (!disabledSwitch) {
+        throw new Error('Can not find component');
+      }
+      expect(disabledSwitch.checked).toBeFalsy();
+      expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
 
-    vi.useFakeTimers();
-    await userEvent.click(disabledSwitch);
+      await userEvent.click(disabledSwitch);
 
-    expect(disabledSwitch.checked).toBeFalsy();
-    expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
-
-    vi.useRealTimers();
-  });
+      expect(disabledSwitch.checked).toBeFalsy();
+      expect(disabledSwitch.getAttribute('aria-checked')).toBe('false');
+    }),
+  );
 
   it('(Controlled) shows checked state', () => {
     function ControlledSwitch() {

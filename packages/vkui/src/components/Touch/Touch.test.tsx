@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon12Add } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
 import { CardScroll } from '../CardScroll/CardScroll';

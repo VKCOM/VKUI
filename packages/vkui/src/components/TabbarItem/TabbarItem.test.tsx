@@ -4,7 +4,7 @@ import {
   AppRootContext,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../../components/AppRoot/AppRootContext';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { TabbarItem } from './TabbarItem';
 import styles from '../../styles/focusVisible.module.css';
 
@@ -33,19 +33,20 @@ describe('TabbarItem', () => {
     expect(screen.getByTestId('test').tagName.toLowerCase()).toBe('div');
   });
 
-  it('handles disabled state', async () => {
-    vi.useFakeTimers();
-    const cb = vi.fn();
+  it(
+    'handles disabled state',
+    withFakeTimers(async () => {
+      const cb = vi.fn();
 
-    const { rerender } = render(<TabbarItem onClick={cb} data-testid="test" />);
-    await userEvent.click(screen.getByTestId('test'));
-    expect(cb).toHaveBeenCalledTimes(1);
+      const { rerender } = render(<TabbarItem onClick={cb} data-testid="test" />);
+      await userEvent.click(screen.getByTestId('test'));
+      expect(cb).toHaveBeenCalledTimes(1);
 
-    rerender(<TabbarItem onClick={cb} data-testid="test" disabled />);
-    await userEvent.click(screen.getByTestId('test'));
-    expect(cb).toHaveBeenCalledTimes(1);
-    vi.useRealTimers();
-  });
+      rerender(<TabbarItem onClick={cb} data-testid="test" disabled />);
+      await userEvent.click(screen.getByTestId('test'));
+      expect(cb).toHaveBeenCalledTimes(1);
+    }),
+  );
 
   function renderTabbarItemForFocus({ withKeyboardInput }: { withKeyboardInput: boolean }) {
     const onFocusStub = vi.fn();
@@ -64,35 +65,35 @@ describe('TabbarItem', () => {
     };
   }
 
-  it('shows focus visible on focus with keyboard', async () => {
-    vi.useFakeTimers();
+  it(
+    'shows focus visible on focus with keyboard',
+    withFakeTimers(async () => {
+      const component = renderTabbarItemForFocus({ withKeyboardInput: true });
 
-    const component = renderTabbarItemForFocus({ withKeyboardInput: true });
+      await userEvent.tab();
+      expect(screen.getByRole('presentation')).toHaveClass(styles['-focus-visible--focused']);
 
-    await userEvent.tab();
-    expect(screen.getByRole('presentation')).toHaveClass(styles['-focus-visible--focused']);
+      await userEvent.tab();
+      expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
 
-    await userEvent.tab();
-    expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
+      expect(component.onFocusStub).toHaveBeenCalledTimes(1);
+      expect(component.onBlurStub).toHaveBeenCalledTimes(1);
+    }),
+  );
 
-    expect(component.onFocusStub).toHaveBeenCalledTimes(1);
-    expect(component.onBlurStub).toHaveBeenCalledTimes(1);
-    vi.useRealTimers();
-  });
+  it(
+    'does not show focus visible on focus without keyboard',
+    withFakeTimers(async () => {
+      const component = renderTabbarItemForFocus({ withKeyboardInput: false });
 
-  it('does not show focus visible on focus without keyboard', async () => {
-    vi.useFakeTimers();
+      await userEvent.click(screen.getByTestId('test'));
+      expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
 
-    const component = renderTabbarItemForFocus({ withKeyboardInput: false });
+      await userEvent.tab();
+      expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
 
-    await userEvent.click(screen.getByTestId('test'));
-    expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
-
-    await userEvent.tab();
-    expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
-
-    expect(component.onFocusStub).toHaveBeenCalledTimes(1);
-    expect(component.onBlurStub).toHaveBeenCalledTimes(1);
-    vi.useRealTimers();
-  });
+      expect(component.onFocusStub).toHaveBeenCalledTimes(1);
+      expect(component.onBlurStub).toHaveBeenCalledTimes(1);
+    }),
+  );
 });

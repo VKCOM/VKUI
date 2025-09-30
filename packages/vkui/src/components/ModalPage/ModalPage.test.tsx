@@ -2,7 +2,12 @@ import { act, useState } from 'react';
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, userEvent, waitCSSTransitionEnd } from '../../testing/utils';
+import {
+  baselineComponent,
+  userEvent,
+  waitCSSTransitionEnd,
+  withFakeTimers,
+} from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -204,46 +209,47 @@ describe(ModalPage, () => {
     expect(onClose).toHaveBeenCalledWith('click-close-button', expect.any(Object));
   });
 
-  test('check disable focus trap', async () => {
-    vi.useFakeTimers();
-    const Fixture = () => {
-      const [open, setOpen] = useState(false);
-      return (
-        <>
-          <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-            <ModalPage
-              key="host"
-              id="host"
-              open={open}
-              modalDismissButtonTestId="dismiss-button"
-              disableFocusTrap
-              noFocusToDialog
-              data-testid="host"
-            />
-          </AdaptivityProvider>
-          <Button data-testid="open-button" onClick={() => setOpen(true)} />
-        </>
-      );
-    };
+  test(
+    'check disable focus trap',
+    withFakeTimers(async () => {
+      const Fixture = () => {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+              <ModalPage
+                key="host"
+                id="host"
+                open={open}
+                modalDismissButtonTestId="dismiss-button"
+                disableFocusTrap
+                noFocusToDialog
+                data-testid="host"
+              />
+            </AdaptivityProvider>
+            <Button data-testid="open-button" onClick={() => setOpen(true)} />
+          </>
+        );
+      };
 
-    const h = render(<Fixture />);
+      const h = render(<Fixture />);
 
-    const openButton = h.getByTestId('open-button');
-    fireEvent.click(openButton);
+      const openButton = h.getByTestId('open-button');
+      fireEvent.click(openButton);
 
-    await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
 
-    const dismissButton = h.getByTestId('dismiss-button');
-    act(() => {
-      dismissButton.focus();
-    });
-    expect(dismissButton).toHaveFocus();
+      const dismissButton = h.getByTestId('dismiss-button');
+      act(() => {
+        dismissButton.focus();
+      });
+      expect(dismissButton).toHaveFocus();
 
-    await userEvent.tab();
-    expect(openButton).toHaveFocus();
-    vi.runAllTimers();
-    vi.useRealTimers();
-  });
+      await userEvent.tab();
+      expect(openButton).toHaveFocus();
+      vi.runAllTimers();
+    }),
+  );
 
   describe('check restoreFocus prop', () => {
     const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
@@ -267,35 +273,37 @@ describe(ModalPage, () => {
       );
     };
 
-    it.each([true, false])('check restoreFocus=%s', async (restoreFocus) => {
-      vi.useFakeTimers();
-      const h = render(<Fixture restoreFocus={restoreFocus} />);
-      expect(h.queryByTestId('host')).toBeFalsy();
+    it.each([true, false])(
+      'check restoreFocus=%s',
+      withFakeTimers<[boolean]>(async (restoreFocus) => {
+        const h = render(<Fixture restoreFocus={restoreFocus} />);
+        expect(h.queryByTestId('host')).toBeFalsy();
 
-      const openButton = h.getByTestId('open-modal');
-      act(() => {
-        openButton.focus();
-      });
-      fireEvent.click(openButton);
-      expect(openButton).toHaveFocus();
-
-      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
-      expect(h.queryByTestId('host')).toBeTruthy();
-      act(vi.runAllTimers);
-      expect(h.getByTestId('dismiss-button')).toHaveFocus();
-
-      fireEvent.click(openButton);
-      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
-      expect(h.queryByTestId('host')).toBeFalsy();
-      act(vi.runAllTimers);
-
-      if (restoreFocus) {
+        const openButton = h.getByTestId('open-modal');
+        act(() => {
+          openButton.focus();
+        });
+        fireEvent.click(openButton);
         expect(openButton).toHaveFocus();
-      } else {
-        expect(openButton).not.toHaveFocus();
-      }
-      vi.useRealTimers();
-    });
+
+        await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+        expect(h.queryByTestId('host')).toBeTruthy();
+        act(vi.runAllTimers);
+        expect(h.getByTestId('dismiss-button')).toHaveFocus();
+
+        fireEvent.click(openButton);
+        await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+        expect(h.queryByTestId('host')).toBeFalsy();
+        act(vi.runAllTimers);
+
+        if (restoreFocus) {
+          expect(openButton).toHaveFocus();
+        } else {
+          expect(openButton).not.toHaveFocus();
+        }
+        vi.useRealTimers();
+      }),
+    );
   });
 
   describe('size prop', () => {

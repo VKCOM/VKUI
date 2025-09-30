@@ -2,7 +2,7 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { HorizontalScroll } from './HorizontalScroll';
@@ -68,47 +68,47 @@ describe('HorizontalScroll', () => {
     await screen.findByTestId('scroll-arrow-right');
   });
 
-  it('disables navigation to arrows by keyboard', async () => {
-    vi.useFakeTimers();
+  it(
+    'disables navigation to arrows by keyboard',
+    withFakeTimers(async () => {
+      let scrollContainer: HTMLDivElement | null = null;
 
-    let scrollContainer: HTMLDivElement | null = null;
-
-    const result = render(
-      <AdaptivityProvider hasPointer>
-        <HorizontalScroll
-          getRef={(e) => {
-            scrollContainer = e;
-            mockRef(e);
-          }}
-          data-testid="horizontal-scroll"
-          showArrows="always"
-        >
-          <button
-            type="button"
-            data-testid="focusable-element"
-            style={{ width: '800px', height: '50px' }}
-            onClick={noop}
+      const result = render(
+        <AdaptivityProvider hasPointer>
+          <HorizontalScroll
+            getRef={(e) => {
+              scrollContainer = e;
+              mockRef(e);
+            }}
+            data-testid="horizontal-scroll"
+            showArrows="always"
           >
-            Button
-          </button>
-        </HorizontalScroll>
-      </AdaptivityProvider>,
-    );
+            <button
+              type="button"
+              data-testid="focusable-element"
+              style={{ width: '800px', height: '50px' }}
+              onClick={noop}
+            >
+              Button
+            </button>
+          </HorizontalScroll>
+        </AdaptivityProvider>,
+      );
 
-    expect(document.activeElement).toBe(document.body);
+      expect(document.activeElement).toBe(document.body);
 
-    await userEvent.tab();
-    expect(document.activeElement).toBe(scrollContainer);
+      await userEvent.tab();
+      expect(document.activeElement).toBe(scrollContainer);
 
-    await userEvent.tab();
-    expect(document.activeElement).toBe(result.getByTestId('focusable-element'));
+      await userEvent.tab();
+      expect(document.activeElement).toBe(result.getByTestId('focusable-element'));
 
-    await userEvent.tab();
-    expect(document.activeElement).toBe(document.body);
+      await userEvent.tab();
+      expect(document.activeElement).toBe(document.body);
 
-    act(vi.runAllTimers);
-    vi.useRealTimers();
-  });
+      act(vi.runAllTimers);
+    }),
+  );
 
   it('click on arrow right should change scrollLeft', async () => {
     const ref: React.RefObject<HTMLDivElement | null> = {

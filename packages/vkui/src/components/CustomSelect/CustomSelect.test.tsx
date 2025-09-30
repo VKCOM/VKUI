@@ -7,6 +7,7 @@ import {
   setNodeEnv,
   userEvent,
   waitForFloatingPosition,
+  withFakeTimers,
 } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
@@ -1286,58 +1287,58 @@ describe('CustomSelect', () => {
     expect(inputRef.current).not.toBeNull();
   });
 
-  it('check input should close popover and reset selected option', async () => {
-    vi.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement | null> = {
-      current: null,
-    };
+  it(
+    'check input should close popover and reset selected option',
+    withFakeTimers(async () => {
+      const inputRef: React.RefObject<HTMLInputElement | null> = {
+        current: null,
+      };
 
-    render(
-      <CustomSelect
-        searchable={true}
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-        defaultValue="0"
-        getSelectInputRef={inputRef}
-      />,
-    );
+      render(
+        <CustomSelect
+          searchable={true}
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          defaultValue="0"
+          getSelectInputRef={inputRef}
+        />,
+      );
 
-    const optionsHasFocused = () => {
-      return !!document.body.querySelector('[data-hovered="true"]');
-    };
+      const optionsHasFocused = () => {
+        return !!document.body.querySelector('[data-hovered="true"]');
+      };
 
-    checkDropdownOpened(false);
+      checkDropdownOpened(false);
 
-    // Вводим текст в инпут
-    // И проверяем, что дропдаун открылся, а также что нет option в фокусе
-    await triggerKeydownEvent(inputRef.current!, 'К', 'KeyR');
-    checkDropdownOpened();
-    expect(optionsHasFocused()).toBeFalsy();
+      // Вводим текст в инпут
+      // И проверяем, что дропдаун открылся, а также что нет option в фокусе
+      await triggerKeydownEvent(inputRef.current!, 'К', 'KeyR');
+      checkDropdownOpened();
+      expect(optionsHasFocused()).toBeFalsy();
 
-    // Нажимаем стрелку вниз, тем самым фокусируемся на первом option
-    await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
-    checkDropdownOpened();
-    expect(optionsHasFocused()).toBeTruthy();
+      // Нажимаем стрелку вниз, тем самым фокусируемся на первом option
+      await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
+      checkDropdownOpened();
+      expect(optionsHasFocused()).toBeTruthy();
 
-    // Вводим еще текст, тем самым сбрасываем фокус с option
-    await triggerKeydownEvent(inputRef.current!, 'т', 'KeyN');
-    checkDropdownOpened();
-    expect(optionsHasFocused()).toBeFalsy();
+      // Вводим еще текст, тем самым сбрасываем фокус с option
+      await triggerKeydownEvent(inputRef.current!, 'т', 'KeyN');
+      checkDropdownOpened();
+      expect(optionsHasFocused()).toBeFalsy();
 
-    // Нажимаем escape, тем самым закрывая дропдаун
-    await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
-    checkDropdownOpened(false);
-    vi.useRealTimers();
-  });
+      // Нажимаем escape, тем самым закрывая дропдаун
+      await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
+      checkDropdownOpened(false);
+    }),
+  );
 
   it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', 'Space', 'Enter', ' ', 'Spacebar'])(
     'should open dropdown when keydown %s',
-    async (key) => {
-      vi.useFakeTimers();
+    withFakeTimers(async (key) => {
       const inputRef: React.RefObject<HTMLInputElement | null> = { current: null };
       render(
         <CustomSelect
@@ -1363,63 +1364,67 @@ describe('CustomSelect', () => {
 
       checkDropdownOpened(true);
       vi.useRealTimers();
-    },
+    }),
   );
 
-  it('should render wrapper when use renderDropdown prop', async () => {
-    vi.useFakeTimers();
-    render(
-      <CustomSelect
-        renderDropdown={({ defaultDropdownContent }) => (
-          <div data-testid="wrapper">{defaultDropdownContent}</div>
-        )}
-        data-testid="select"
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-        defaultValue="0"
-      />,
-    );
-    await userEvent.click(screen.getByTestId('select'));
+  it(
+    'should render wrapper when use renderDropdown prop',
+    withFakeTimers(async () => {
+      render(
+        <CustomSelect
+          renderDropdown={({ defaultDropdownContent }) => (
+            <div data-testid="wrapper">{defaultDropdownContent}</div>
+          )}
+          data-testid="select"
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          defaultValue="0"
+        />,
+      );
+      await userEvent.click(screen.getByTestId('select'));
 
-    act(() => {
-      vi.runOnlyPendingTimers();
-    });
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
 
-    expect(screen.getByTestId('wrapper')).toBeInTheDocument();
-    expect(screen.getAllByRole('option').length).toBe(4);
-    vi.useRealTimers();
-  });
+      expect(screen.getByTestId('wrapper')).toBeInTheDocument();
+      expect(screen.getAllByRole('option').length).toBe(4);
+      vi.useRealTimers();
+    }),
+  );
 
-  it('should call onInputChange callback when change input', async () => {
-    vi.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement | null> = {
-      current: null,
-    };
-    const onInputChange = vi.fn();
-    render(
-      <CustomSelect
-        getSelectInputRef={inputRef}
-        onInputChange={onInputChange}
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-        defaultValue="0"
-      />,
-    );
-    fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
-    expect(onInputChange).toHaveBeenCalledTimes(1);
+  it(
+    'should call onInputChange callback when change input',
+    withFakeTimers(async () => {
+      const inputRef: React.RefObject<HTMLInputElement | null> = {
+        current: null,
+      };
+      const onInputChange = vi.fn();
+      render(
+        <CustomSelect
+          getSelectInputRef={inputRef}
+          onInputChange={onInputChange}
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          defaultValue="0"
+        />,
+      );
+      fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
+      expect(onInputChange).toHaveBeenCalledTimes(1);
 
-    fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
-    expect(onInputChange).toHaveBeenCalledTimes(2);
-    vi.useRealTimers();
-  });
+      fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
+      expect(onInputChange).toHaveBeenCalledTimes(2);
+      vi.useRealTimers();
+    }),
+  );
 
   it('check scroll to bottom to element', async () => {
     const inputRef: React.RefObject<HTMLInputElement | null> = {
@@ -1547,63 +1552,64 @@ describe('CustomSelect', () => {
     expect(option.getAttribute('data-hovered')).toBe(expectedHover);
   });
 
-  it('check correct fetching status label', async () => {
-    vi.useFakeTimers();
-    const Fixture = ({ fetching }: { fetching: boolean }) => (
-      <CustomSelect
-        data-testid="select"
-        fetching={fetching}
-        fetchingInProgressLabel="Список категорий загружается..."
-        fetchingCompletedLabel="Список категорий загружен."
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-      />
-    );
+  it(
+    'check correct fetching status label',
+    withFakeTimers(async () => {
+      const Fixture = ({ fetching }: { fetching: boolean }) => (
+        <CustomSelect
+          data-testid="select"
+          fetching={fetching}
+          fetchingInProgressLabel="Список категорий загружается..."
+          fetchingCompletedLabel="Список категорий загружен."
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+        />
+      );
 
-    const { rerender } = render(<Fixture fetching />);
+      const { rerender } = render(<Fixture fetching />);
 
-    expect(screen.queryByText('Список категорий загружается...')).toBeTruthy();
+      expect(screen.queryByText('Список категорий загружается...')).toBeTruthy();
 
-    rerender(<Fixture fetching={false} />);
+      rerender(<Fixture fetching={false} />);
 
-    expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
-    expect(screen.queryByText('Список категорий загружен.')).toBeTruthy();
+      expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
+      expect(screen.queryByText('Список категорий загружен.')).toBeTruthy();
 
-    act(() => {
-      vi.runOnlyPendingTimers();
-    });
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
 
-    expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
-    expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
-    vi.useRealTimers();
-  });
+      expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
+      expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+    }),
+  );
 
-  it('check no status label by default', async () => {
-    vi.useFakeTimers();
-    const Fixture = () => (
-      <CustomSelect
-        data-testid="select"
-        fetching={false}
-        fetchingCompletedLabel="Список категорий загружен."
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-      />
-    );
+  it(
+    'check no status label by default',
+    withFakeTimers(async () => {
+      const Fixture = () => (
+        <CustomSelect
+          data-testid="select"
+          fetching={false}
+          fetchingCompletedLabel="Список категорий загружен."
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+        />
+      );
 
-    render(<Fixture />);
+      render(<Fixture />);
 
-    expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
-
-    vi.useRealTimers();
-  });
+      expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+    }),
+  );
 
   it('should not call select option when not focus to option', async () => {
     const inputRef: React.RefObject<HTMLInputElement | null> = {

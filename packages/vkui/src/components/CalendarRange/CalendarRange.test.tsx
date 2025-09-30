@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { addDays, dateFormatter, endOfDay, startOfDay } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
 import dayStyles from '../CalendarDay/CalendarDay.module.css';
 import daysStyles from '../CalendarDays/CalendarDays.module.css';
@@ -20,40 +20,40 @@ describe('CalendarRange', () => {
 
   const dayTestId = (day: Date) => dateFormatter.format(day);
 
-  it('checks aria roles', async () => {
-    const targetDate = new Date('2023-09-20T07:40:00.000Z');
+  it(
+    'checks aria roles',
+    withFakeTimers(async () => {
+      const targetDate = new Date('2023-09-20T07:40:00.000Z');
 
-    vi.useFakeTimers();
-    vi.setSystemTime(targetDate);
-    render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
+      vi.setSystemTime(targetDate);
+      render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
 
-    expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
-    expect(screen.getByRole('grid', { name: 'октябрь 2023 г.' })).toBeDefined();
-    expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
-    expect(screen.getAllByRole('columnheader', { name: 'понедельник' })).toHaveLength(2);
-    expect(screen.getAllByRole('columnheader', { name: 'вторник' })).toHaveLength(2);
-    expect(screen.getAllByRole('columnheader', { name: 'среда' })).toHaveLength(2);
-    expect(screen.getAllByRole('columnheader', { name: 'четверг' })).toHaveLength(2);
-    expect(screen.getAllByRole('columnheader', { name: 'пятница' })).toHaveLength(2);
-    expect(screen.getAllByRole('columnheader', { name: 'суббота' })).toHaveLength(2);
-    expect(screen.getAllByRole('columnheader', { name: 'воскресенье' })).toHaveLength(2);
+      expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
+      expect(screen.getByRole('grid', { name: 'октябрь 2023 г.' })).toBeDefined();
+      expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
+      expect(screen.getAllByRole('columnheader', { name: 'понедельник' })).toHaveLength(2);
+      expect(screen.getAllByRole('columnheader', { name: 'вторник' })).toHaveLength(2);
+      expect(screen.getAllByRole('columnheader', { name: 'среда' })).toHaveLength(2);
+      expect(screen.getAllByRole('columnheader', { name: 'четверг' })).toHaveLength(2);
+      expect(screen.getAllByRole('columnheader', { name: 'пятница' })).toHaveLength(2);
+      expect(screen.getAllByRole('columnheader', { name: 'суббота' })).toHaveLength(2);
+      expect(screen.getAllByRole('columnheader', { name: 'воскресенье' })).toHaveLength(2);
 
-    let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
-    expect(currentDate.getAttribute('aria-current')).toBe('date');
-    expect(currentDate.getAttribute('aria-selected')).toBe('true');
+      let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+      expect(currentDate.getAttribute('aria-current')).toBe('date');
+      expect(currentDate.getAttribute('aria-selected')).toBe('true');
 
-    fireEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' }));
+      fireEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' }));
 
-    currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
-    expect(currentDate.getAttribute('aria-current')).toBe('date');
-    expect(currentDate.getAttribute('aria-selected')).toBe('false');
+      currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+      expect(currentDate.getAttribute('aria-current')).toBe('date');
+      expect(currentDate.getAttribute('aria-selected')).toBe('false');
 
-    const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
-    expect(selectedDate.getAttribute('aria-current')).toBe(null);
-    expect(selectedDate.getAttribute('aria-selected')).toBe('true');
-
-    vi.useRealTimers();
-  });
+      const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
+      expect(selectedDate.getAttribute('aria-current')).toBe(null);
+      expect(selectedDate.getAttribute('aria-selected')).toBe('true');
+    }),
+  );
 
   it('calls onChange when initial value is [null, null]', () => {
     const onChangeStub = vi.fn();
@@ -150,89 +150,89 @@ describe('CalendarRange', () => {
     checkActiveDay(new Date(2023, 8, 2));
   });
 
-  it('checks day selection by keyboard', async () => {
-    vi.useFakeTimers();
-    const onChangeStub = vi.fn();
-    const startDate = new Date(2024, 2, 1);
-    const endDate = new Date(2024, 2, 10);
+  it(
+    'checks day selection by keyboard',
+    withFakeTimers(async () => {
+      const onChangeStub = vi.fn();
+      const startDate = new Date(2024, 2, 1);
+      const endDate = new Date(2024, 2, 10);
 
-    render(
-      <CalendarRange
-        value={[startDate, endDate]}
-        onChange={onChangeStub}
-        dayTestId={(day) => `${day.getDate()}`}
-      />,
-    );
-    await userEvent.click(screen.getAllByRole('gridcell', { selected: true })[0]);
-    expect(onChangeStub).toHaveBeenCalledTimes(1);
+      render(
+        <CalendarRange
+          value={[startDate, endDate]}
+          onChange={onChangeStub}
+          dayTestId={(day) => `${day.getDate()}`}
+        />,
+      );
+      await userEvent.click(screen.getAllByRole('gridcell', { selected: true })[0]);
+      expect(onChangeStub).toHaveBeenCalledTimes(1);
 
-    await userEvent.keyboard('{ArrowLeft}');
+      await userEvent.keyboard('{ArrowLeft}');
 
-    // выбираем день с помощью Space
-    await userEvent.keyboard(' ');
-    expect(onChangeStub).toHaveBeenCalledTimes(2);
-    await userEvent.keyboard('{ArrowLeft}');
-    await userEvent.keyboard('{ArrowLeft}');
-    // выбираем день с помощью Enter
-    await userEvent.keyboard('{Enter}');
-    expect(onChangeStub).toHaveBeenCalledTimes(3);
+      // выбираем день с помощью Space
+      await userEvent.keyboard(' ');
+      expect(onChangeStub).toHaveBeenCalledTimes(2);
+      await userEvent.keyboard('{ArrowLeft}');
+      await userEvent.keyboard('{ArrowLeft}');
+      // выбираем день с помощью Enter
+      await userEvent.keyboard('{Enter}');
+      expect(onChangeStub).toHaveBeenCalledTimes(3);
+    }),
+  );
 
-    vi.useRealTimers();
-  });
+  it(
+    'checks focusable days on each part of calendar',
+    withFakeTimers(async () => {
+      const startDate = new Date(2024, 2, 1);
+      const endDate = new Date(2024, 3, 10);
+      const onChangeStub = vi.fn();
+      render(
+        <CalendarRange
+          defaultValue={[startDate, endDate]}
+          onChange={onChangeStub}
+          dayTestId={dayTestId}
+        />,
+      );
 
-  it('checks focusable days on each part of calendar', async () => {
-    vi.useFakeTimers();
-    const startDate = new Date(2024, 2, 1);
-    const endDate = new Date(2024, 3, 10);
-    const onChangeStub = vi.fn();
-    render(
-      <CalendarRange
-        defaultValue={[startDate, endDate]}
-        onChange={onChangeStub}
-        dayTestId={dayTestId}
-      />,
-    );
+      // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+      await userEvent.click(screen.getByTestId(dayTestId(startDate)));
+      await userEvent.click(screen.getByTestId(dayTestId(endDate)));
 
-    // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
-    await userEvent.click(screen.getByTestId(dayTestId(startDate)));
-    await userEvent.click(screen.getByTestId(dayTestId(endDate)));
+      // выбранные в данный момент дни диапазона имеют tabIndex = 0
+      expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
+      expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
 
-    // выбранные в данный момент дни диапазона имеют tabIndex = 0
-    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
-    expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+      // выбираем новый диапазон в пределах левого календаря
+      await userEvent.click(screen.getByTestId(dayTestId(startDate)));
+      const sameMonthDate = addDays(startDate, 10);
+      await userEvent.click(screen.getByTestId(dayTestId(sameMonthDate)));
 
-    // выбираем новый диапазон в пределах левого календаря
-    await userEvent.click(screen.getByTestId(dayTestId(startDate)));
-    const sameMonthDate = addDays(startDate, 10);
-    await userEvent.click(screen.getByTestId(dayTestId(sameMonthDate)));
+      // уйдём с календаря и вернёмся
+      await userEvent.tab();
+      await userEvent.tab({ shift: true });
 
-    // уйдём с календаря и вернёмся
-    await userEvent.tab();
-    await userEvent.tab({ shift: true });
+      // только последний выбранный день диапазона имеет tabIndex="0"
+      expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('-1');
+      expect(screen.getByTestId(dayTestId(sameMonthDate)).getAttribute('tabindex')).toBe('0');
 
-    // только последний выбранный день диапазона имеет tabIndex="0"
-    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('-1');
-    expect(screen.getByTestId(dayTestId(sameMonthDate)).getAttribute('tabindex')).toBe('0');
+      // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+      await userEvent.click(screen.getByTestId(dayTestId(startDate)));
+      await userEvent.click(screen.getByTestId(dayTestId(endDate)));
 
-    // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
-    await userEvent.click(screen.getByTestId(dayTestId(startDate)));
-    await userEvent.click(screen.getByTestId(dayTestId(endDate)));
+      // уйдём с календаря и вернёмся
+      await userEvent.tab();
+      await userEvent.tab({ shift: true });
 
-    // уйдём с календаря и вернёмся
-    await userEvent.tab();
-    await userEvent.tab({ shift: true });
-
-    // на каждом календре дни на которые пришлись последние клики имеют tabIndex="0"
-    expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
-    await userEvent.tab({ shift: true });
-    await userEvent.tab({ shift: true });
-    await userEvent.tab({ shift: true });
-    await userEvent.tab({ shift: true });
-    expect(document.activeElement).toBe(screen.getByTestId(dayTestId(startDate)));
-    expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
-
-    vi.useRealTimers();
-  });
+      // на каждом календре дни на которые пришлись последние клики имеют tabIndex="0"
+      expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+      await userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
+      expect(document.activeElement).toBe(screen.getByTestId(dayTestId(startDate)));
+      expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
+    }),
+  );
 
   it('check click on same day', () => {
     const onChange = vi.fn();
