@@ -18,7 +18,7 @@ export type ReorderProps<ITEM = string> = Omit<ReorderRootProps, 'children'> & {
 };
 
 /**
- * @see https://vkui.io/components/custom-select
+ * @see https://vkui.io/components/reorder
  */
 export function Reorder<ITEM = string>({
   items,
