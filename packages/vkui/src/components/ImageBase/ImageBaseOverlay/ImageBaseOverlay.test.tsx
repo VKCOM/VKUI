@@ -34,6 +34,7 @@ describe(ImageBaseOverlay, () => {
   baselineComponent(ImageBaseOverlayClickableTest);
 
   it('focus event works as expected without noInteractive', async () => {
+    vi.useFakeTimers();
     render(<ImageBaseOverlayClickableTest />);
     const element = screen.getByTestId('overlay');
 
@@ -42,9 +43,11 @@ describe(ImageBaseOverlay, () => {
     act(vi.runAllTimers);
     await userEvent.tab();
     expect(document.querySelector(`.${styles.visible}`)).toBeNull();
+    vi.useRealTimers();
   });
 
   it('focus event works as expected with noInteractive', async () => {
+    vi.useFakeTimers();
     const { container } = render(<ImageBaseOverlayNonClickableTest />);
     const button1 = screen.getByTestId('button1');
     const button2 = screen.getByTestId('button2');
@@ -60,6 +63,7 @@ describe(ImageBaseOverlay, () => {
     await userEvent.tab();
     act(vi.runAllTimers);
     expect(container.getElementsByClassName(styles.visible)).toHaveLength(0);
+    vi.useRealTimers();
   });
 
   describe('works as clickable element', () => {

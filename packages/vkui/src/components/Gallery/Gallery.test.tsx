@@ -2,7 +2,13 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, fakeTimers, setNodeEnv, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimers,
+  setNodeEnv,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { revertRtlValue } from '../CarouselBase/helpers';
 import { type BaseGalleryProps } from '../CarouselBase/types';
@@ -200,9 +206,9 @@ const setup = ({
 
 describe('Gallery', () => {
   baselineComponent(Gallery);
-  fakeTimers(false);
 
   describe('handles slide count', () => {
+    fakeTimers(false);
     it('prevents slideIndex outside slide count', () => {
       let index;
       render(
@@ -241,7 +247,6 @@ describe('Gallery', () => {
         vi.runOnlyPendingTimers();
       });
       expect(index).toBe(0);
-      vi.useRealTimers();
     });
     it('keeps slideIndex when 0 slides', () => {
       const setIndex = vi.fn();
@@ -336,6 +341,7 @@ describe('Gallery', () => {
   });
 
   describe.each([true, false])('check correct working gallery with lopped %s', (looped) => {
+    fakeTimers(false);
     it('check rendering one slide correct', () => {
       const mockedData = setup({
         looped,
@@ -497,52 +503,55 @@ describe('Gallery', () => {
   });
 
   describe('check not looped gallery navigation working', () => {
-    it('check correct navigation by dragging', () => {
-      const onChange = vi.fn();
-      const onDragStart = vi.fn();
-      const onDragEnd = vi.fn();
+    it(
+      'check correct navigation by dragging',
+      withFakeTimers(() => {
+        const onChange = vi.fn();
+        const onDragStart = vi.fn();
+        const onDragEnd = vi.fn();
 
-      const mockedData = setup({
-        looped: false,
-        defaultSlideIndex: 0,
-        slideWidth: 180,
-        containerWidth: 200,
-        viewPortWidth: 180,
-        align: 'center',
-        isCustomSlideWidth: true,
-        onDragStart,
-        onDragEnd,
-        onChange,
-      });
-      vi.runAllTimers();
-      const { rerender } = mockedData;
+        const mockedData = setup({
+          looped: false,
+          defaultSlideIndex: 0,
+          slideWidth: 180,
+          containerWidth: 200,
+          viewPortWidth: 180,
+          align: 'center',
+          isCustomSlideWidth: true,
+          onDragStart,
+          onDragEnd,
+          onChange,
+        });
+        vi.runAllTimers();
+        const { rerender } = mockedData;
 
-      checkActiveSlide(0);
+        checkActiveSlide(0);
 
-      simulateDrag(mockedData.viewPort, [150, 0]);
-      vi.runAllTimers();
+        simulateDrag(mockedData.viewPort, [150, 0]);
+        vi.runAllTimers();
 
-      expect(onDragStart).toHaveBeenCalledTimes(1);
-      expect(onDragEnd).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith(1);
-      rerender({ slideIndex: 1 });
-      vi.runAllTimers();
+        expect(onDragStart).toHaveBeenCalledTimes(1);
+        expect(onDragEnd).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledWith(1);
+        rerender({ slideIndex: 1 });
+        vi.runAllTimers();
 
-      checkTransformX(mockedData.layerTransform, -170);
-      checkActiveSlide(1);
+        checkTransformX(mockedData.layerTransform, -170);
+        checkActiveSlide(1);
 
-      simulateDrag(mockedData.viewPort, [0, 150]);
-      vi.runAllTimers();
+        simulateDrag(mockedData.viewPort, [0, 150]);
+        vi.runAllTimers();
 
-      expect(onDragStart).toHaveBeenCalledTimes(2);
-      expect(onDragEnd).toHaveBeenCalledTimes(2);
-      expect(onChange.mock.calls).toEqual([[1], [0]]);
-      rerender({ slideIndex: 0 });
-      vi.runAllTimers();
+        expect(onDragStart).toHaveBeenCalledTimes(2);
+        expect(onDragEnd).toHaveBeenCalledTimes(2);
+        expect(onChange.mock.calls).toEqual([[1], [0]]);
+        rerender({ slideIndex: 0 });
+        vi.runAllTimers();
 
-      checkTransformX(mockedData.layerTransform, 10);
-      checkActiveSlide(0);
-    });
+        checkTransformX(mockedData.layerTransform, 10);
+        checkActiveSlide(0);
+      }),
+    );
 
     it('check correct navigation by dragging with align right', () => {
       const onChange = vi.fn();
@@ -631,97 +640,103 @@ describe('Gallery', () => {
   });
 
   describe('check looped gallery navigation working', () => {
-    it('check correct reverse navigation by arrows clicks', () => {
-      const onNext = vi.fn();
-      const onPrev = vi.fn();
-      const onChange = vi.fn();
+    it(
+      'check correct reverse navigation by arrows clicks',
+      withFakeTimers(() => {
+        const onNext = vi.fn();
+        const onPrev = vi.fn();
+        const onChange = vi.fn();
 
-      const mockedData = setup({
-        looped: true,
-        defaultSlideIndex: 0,
-        slideWidth: 200,
-        containerWidth: 200,
-        viewPortWidth: 200,
-        onPrev,
-        onNext,
-        onChange,
-      });
-      vi.runAllTimers();
-      const { rerender } = mockedData;
+        const mockedData = setup({
+          looped: true,
+          defaultSlideIndex: 0,
+          slideWidth: 200,
+          containerWidth: 200,
+          viewPortWidth: 200,
+          onPrev,
+          onNext,
+          onChange,
+        });
+        vi.runAllTimers();
+        const { rerender } = mockedData;
 
-      checkActiveSlide(0);
+        checkActiveSlide(0);
 
-      const [leftArrow, rightArrow] = getArrows();
-      fireEvent.click(leftArrow);
-      vi.runAllTimers();
+        const [leftArrow, rightArrow] = getArrows();
+        fireEvent.click(leftArrow);
+        vi.runAllTimers();
 
-      expect(onPrev).toHaveBeenCalledTimes(1);
-      expect(onChange.mock.calls).toEqual([[4]]);
+        expect(onPrev).toHaveBeenCalledTimes(1);
+        expect(onChange.mock.calls).toEqual([[4]]);
 
-      rerender({ slideIndex: 4 });
-      vi.runAllTimers();
-      checkActiveSlide(4);
-      checkTransformX(mockedData.layerTransform, -800);
+        rerender({ slideIndex: 4 });
+        vi.runAllTimers();
+        checkActiveSlide(4);
+        checkTransformX(mockedData.layerTransform, -800);
 
-      fireEvent.click(rightArrow);
-      vi.runAllTimers();
+        fireEvent.click(rightArrow);
+        vi.runAllTimers();
 
-      expect(onNext).toHaveBeenCalledTimes(1);
-      expect(onChange.mock.calls).toEqual([[4], [0]]);
+        expect(onNext).toHaveBeenCalledTimes(1);
+        expect(onChange.mock.calls).toEqual([[4], [0]]);
 
-      rerender({ slideIndex: 0 });
-      vi.runAllTimers();
-      checkActiveSlide(0);
-      checkTransformX(mockedData.layerTransform, 0);
-    });
+        rerender({ slideIndex: 0 });
+        vi.runAllTimers();
+        checkActiveSlide(0);
+        checkTransformX(mockedData.layerTransform, 0);
+      }),
+    );
 
-    it('check correct navigation by dragging', () => {
-      const onChange = vi.fn();
-      const onDragStart = vi.fn();
-      const onDragEnd = vi.fn();
+    it(
+      'check correct navigation by dragging',
+      withFakeTimers(() => {
+        const onChange = vi.fn();
+        const onDragStart = vi.fn();
+        const onDragEnd = vi.fn();
 
-      const mockedData = setup({
-        looped: true,
-        defaultSlideIndex: 0,
-        slideWidth: 180,
-        containerWidth: 200,
-        viewPortWidth: 180,
-        align: 'center',
-        onDragStart,
-        onDragEnd,
-        onChange,
-      });
-      vi.runAllTimers();
-      const { rerender } = mockedData;
+        const mockedData = setup({
+          looped: true,
+          defaultSlideIndex: 0,
+          slideWidth: 180,
+          containerWidth: 200,
+          viewPortWidth: 180,
+          align: 'center',
+          onDragStart,
+          onDragEnd,
+          onChange,
+        });
+        vi.runAllTimers();
+        const { rerender } = mockedData;
 
-      checkActiveSlide(0);
+        checkActiveSlide(0);
 
-      simulateDrag(mockedData.viewPort, [0, 150]);
-      vi.runAllTimers();
+        simulateDrag(mockedData.viewPort, [0, 150]);
+        vi.runAllTimers();
 
-      expect(onDragStart).toHaveBeenCalledTimes(1);
-      expect(onDragEnd).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith(4);
-      rerender({ slideIndex: 4 });
-      vi.runAllTimers();
+        expect(onDragStart).toHaveBeenCalledTimes(1);
+        expect(onDragEnd).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledWith(4);
+        rerender({ slideIndex: 4 });
+        vi.runAllTimers();
 
-      checkTransformX(mockedData.layerTransform, -710);
-      checkTransformX(mockedData.getSlideMockData(0).transform, 900);
-      checkActiveSlide(4);
+        checkTransformX(mockedData.layerTransform, -710);
+        checkTransformX(mockedData.getSlideMockData(0).transform, 900);
+        checkActiveSlide(4);
 
-      simulateDrag(mockedData.viewPort, [150, 0]);
-      vi.runAllTimers();
+        simulateDrag(mockedData.viewPort, [150, 0]);
+        vi.runAllTimers();
 
-      expect(onDragStart).toHaveBeenCalledTimes(2);
-      expect(onDragEnd).toHaveBeenCalledTimes(2);
-      expect(onChange.mock.calls).toEqual([[4], [0]]);
-      rerender({ slideIndex: 0 });
-      vi.runAllTimers();
+        expect(onDragStart).toHaveBeenCalledTimes(2);
+        expect(onDragEnd).toHaveBeenCalledTimes(2);
+        expect(onChange.mock.calls).toEqual([[4], [0]]);
+        rerender({ slideIndex: 0 });
+        vi.runAllTimers();
 
-      checkTransformX(mockedData.layerTransform, 10);
-      checkTransformX(mockedData.getSlideMockData(0).transform, 0);
-      checkActiveSlide(0);
-    });
+        checkTransformX(mockedData.layerTransform, 10);
+        checkTransformX(mockedData.getSlideMockData(0).transform, 0);
+        checkActiveSlide(0);
+      }),
+    );
 
     describe('DEV errors', () => {
       beforeEach(() => setNodeEnv('development'));
@@ -780,104 +795,110 @@ describe('Gallery', () => {
     };
   };
 
-  it('check recalculate slides positions when resize element with resizeSource="element"', () => {
-    const { triggerResize, restore } = mockResizeObserver();
-    const onChange = vi.fn();
+  it(
+    'check recalculate slides positions when resize element with resizeSource="element"',
+    withFakeTimers(() => {
+      const { triggerResize, restore } = mockResizeObserver();
+      const onChange = vi.fn();
 
-    const mockedData = setup({
-      looped: true,
-      resizeSource: 'element',
-      defaultSlideIndex: 0,
-      slideWidth: 180,
-      containerWidth: 200,
-      viewPortWidth: 180,
-      align: 'center',
-      onChange,
-    });
-    vi.runAllTimers();
+      const mockedData = setup({
+        looped: true,
+        resizeSource: 'element',
+        defaultSlideIndex: 0,
+        slideWidth: 180,
+        containerWidth: 200,
+        viewPortWidth: 180,
+        align: 'center',
+        onChange,
+      });
+      vi.runAllTimers();
 
-    expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
-    expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
+      expect(mockedData.layerTransform).toBe('translate3d(10px, 0, 0)');
+      expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
 
-    mockedData.containerWidth = 250;
+      mockedData.containerWidth = 250;
 
-    act(triggerResize);
-    vi.runAllTimers();
+      act(triggerResize);
+      vi.runAllTimers();
 
-    expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
-    expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
-    restore();
-  });
+      expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
+      expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
+      restore();
+    }),
+  );
 
-  it('checks gallery arrows and navigation in center alignment', () => {
-    const onChange = vi.fn();
-    const onDragStart = vi.fn();
-    const onDragEnd = vi.fn();
+  it(
+    'checks gallery arrows and navigation in center alignment',
+    withFakeTimers(() => {
+      const onChange = vi.fn();
+      const onDragStart = vi.fn();
+      const onDragEnd = vi.fn();
 
-    // в контейнере недостаточно места для
-    // двух слайдов с выравниванием по центру
-    // поэтому мы показываем кнопки и позволяем drag
-    const mockedData = setup({
-      numberOfSlides: 2,
-      defaultSlideIndex: 1,
-      slideWidth: 180,
-      containerWidth: 300,
-      viewPortWidth: 300,
-      align: 'center',
-      looped: false,
-      onDragStart,
-      onDragEnd,
-      onChange,
-    });
-    vi.runAllTimers();
-    const { rerender } = mockedData;
+      // в контейнере недостаточно места для
+      // двух слайдов с выравниванием по центру
+      // поэтому мы показываем кнопки и позволяем drag
+      const mockedData = setup({
+        numberOfSlides: 2,
+        defaultSlideIndex: 1,
+        slideWidth: 180,
+        containerWidth: 300,
+        viewPortWidth: 300,
+        align: 'center',
+        looped: false,
+        onDragStart,
+        onDragEnd,
+        onChange,
+      });
+      vi.runAllTimers();
+      const { rerender } = mockedData;
 
-    checkActiveSlide(1);
-    expect(getArrows()).toHaveLength(1);
+      checkActiveSlide(1);
+      expect(getArrows()).toHaveLength(1);
 
-    simulateDrag(mockedData.viewPort, [150, 0]);
-    vi.runAllTimers();
+      simulateDrag(mockedData.viewPort, [150, 0]);
+      vi.runAllTimers();
 
-    expect(onDragStart).toHaveBeenCalledTimes(1);
-    expect(onDragEnd).toHaveBeenCalledTimes(1);
+      expect(onDragStart).toHaveBeenCalledTimes(1);
+      expect(onDragEnd).toHaveBeenCalledTimes(1);
 
-    // это пограничное состояние при котором слайды ещё
-    // не помещаются в контейнер,
-    // при ширине контейнера 540 они уже будут влезать
-    mockedData.containerWidth = 539;
-    mockedData.viewPortWidth = 539;
-    onDragStart.mockClear();
-    onDragEnd.mockClear();
+      // это пограничное состояние при котором слайды ещё
+      // не помещаются в контейнер,
+      // при ширине контейнера 540 они уже будут влезать
+      mockedData.containerWidth = 539;
+      mockedData.viewPortWidth = 539;
+      onDragStart.mockClear();
+      onDragEnd.mockClear();
 
-    rerender({ slideIndex: 1 });
-    vi.runAllTimers();
+      rerender({ slideIndex: 1 });
+      vi.runAllTimers();
 
-    expect(getArrows()).toHaveLength(1);
+      expect(getArrows()).toHaveLength(1);
 
-    simulateDrag(mockedData.viewPort, [150, 0]);
-    vi.runAllTimers();
+      simulateDrag(mockedData.viewPort, [150, 0]);
+      vi.runAllTimers();
 
-    expect(onDragStart).toHaveBeenCalledTimes(1);
-    expect(onDragEnd).toHaveBeenCalledTimes(1);
+      expect(onDragStart).toHaveBeenCalledTimes(1);
+      expect(onDragEnd).toHaveBeenCalledTimes(1);
 
-    // слайды полностью помещаются, поэтому мы отключаем drag и не показываем стрелочки
-    mockedData.containerWidth = 540;
-    mockedData.viewPortWidth = 540;
-    onDragStart.mockClear();
-    onDragEnd.mockClear();
-    fireEvent.resize(window);
+      // слайды полностью помещаются, поэтому мы отключаем drag и не показываем стрелочки
+      mockedData.containerWidth = 540;
+      mockedData.viewPortWidth = 540;
+      onDragStart.mockClear();
+      onDragEnd.mockClear();
+      fireEvent.resize(window);
 
-    rerender({ slideIndex: 1 });
-    vi.runAllTimers();
+      rerender({ slideIndex: 1 });
+      vi.runAllTimers();
 
-    expect(getArrows()).toHaveLength(0);
+      expect(getArrows()).toHaveLength(0);
 
-    simulateDrag(mockedData.viewPort, [150, 0]);
-    vi.runAllTimers();
+      simulateDrag(mockedData.viewPort, [150, 0]);
+      vi.runAllTimers();
 
-    expect(onDragStart).not.toHaveBeenCalled();
-    expect(onDragEnd).not.toHaveBeenCalled();
-  });
+      expect(onDragStart).not.toHaveBeenCalled();
+      expect(onDragEnd).not.toHaveBeenCalled();
+    }),
+  );
 
   describe('check correct working with rtl direction', () => {
     it('check max and min restrictions', () => {
@@ -914,99 +935,105 @@ describe('Gallery', () => {
       expect(onChange).toHaveBeenCalledTimes(0);
     });
 
-    it('check correct navigation by arrows clicks in RTL', () => {
-      const onNext = vi.fn();
-      const onPrev = vi.fn();
-      const onChange = vi.fn();
+    it(
+      'check correct navigation by arrows clicks in RTL',
+      withFakeTimers(() => {
+        const onNext = vi.fn();
+        const onPrev = vi.fn();
+        const onChange = vi.fn();
 
-      const mockedData = setup({
-        looped: true,
-        isRtl: true,
-        defaultSlideIndex: 1,
-        slideWidth: 200,
-        containerWidth: 200,
-        viewPortWidth: 200,
-        onPrev,
-        onNext,
-        onChange,
-      });
-      vi.runAllTimers();
-      const { rerender } = mockedData;
+        const mockedData = setup({
+          looped: true,
+          isRtl: true,
+          defaultSlideIndex: 1,
+          slideWidth: 200,
+          containerWidth: 200,
+          viewPortWidth: 200,
+          onPrev,
+          onNext,
+          onChange,
+        });
+        vi.runAllTimers();
+        const { rerender } = mockedData;
 
-      checkActiveSlide(1);
-      checkTransformX(mockedData.layerTransform, 200);
+        checkActiveSlide(1);
+        checkTransformX(mockedData.layerTransform, 200);
 
-      const [prevArrow, nextArrow] = getArrows();
-      fireEvent.click(nextArrow);
-      vi.runAllTimers();
+        const [prevArrow, nextArrow] = getArrows();
+        fireEvent.click(nextArrow);
+        vi.runAllTimers();
 
-      expect(onNext).toHaveBeenCalledTimes(1);
-      expect(onChange.mock.calls).toEqual([[2]]);
+        expect(onNext).toHaveBeenCalledTimes(1);
+        expect(onChange.mock.calls).toEqual([[2]]);
 
-      rerender({ slideIndex: 2 });
-      vi.runAllTimers();
-      checkActiveSlide(2);
-      checkTransformX(mockedData.layerTransform, 400);
+        rerender({ slideIndex: 2 });
+        vi.runAllTimers();
+        checkActiveSlide(2);
+        checkTransformX(mockedData.layerTransform, 400);
 
-      fireEvent.click(prevArrow);
-      vi.runAllTimers();
+        fireEvent.click(prevArrow);
+        vi.runAllTimers();
 
-      expect(onPrev).toHaveBeenCalledTimes(1);
-      expect(onChange.mock.calls).toEqual([[2], [1]]);
+        expect(onPrev).toHaveBeenCalledTimes(1);
+        expect(onChange.mock.calls).toEqual([[2], [1]]);
 
-      rerender({ slideIndex: 1 });
-      vi.runAllTimers();
-      checkActiveSlide(1);
-      checkTransformX(mockedData.layerTransform, 200);
-    });
+        rerender({ slideIndex: 1 });
+        vi.runAllTimers();
+        checkActiveSlide(1);
+        checkTransformX(mockedData.layerTransform, 200);
+      }),
+    );
 
-    it('check correct navigation by dragging', () => {
-      const onChange = vi.fn();
-      const onDragStart = vi.fn();
-      const onDragEnd = vi.fn();
+    it(
+      'check correct navigation by dragging',
+      withFakeTimers(() => {
+        const onChange = vi.fn();
+        const onDragStart = vi.fn();
+        const onDragEnd = vi.fn();
 
-      const mockedData = setup({
-        looped: true,
-        isRtl: true,
-        defaultSlideIndex: 0,
-        slideWidth: 180,
-        containerWidth: 200,
-        viewPortWidth: 180,
-        align: 'center',
-        onDragStart,
-        onDragEnd,
-        onChange,
-      });
-      vi.runAllTimers();
-      const { rerender } = mockedData;
+        const mockedData = setup({
+          looped: true,
+          isRtl: true,
+          defaultSlideIndex: 0,
+          slideWidth: 180,
+          containerWidth: 200,
+          viewPortWidth: 180,
+          align: 'center',
+          onDragStart,
+          onDragEnd,
+          onChange,
+        });
+        vi.runAllTimers();
+        const { rerender } = mockedData;
 
-      checkActiveSlide(0);
+        checkActiveSlide(0);
 
-      simulateDrag(mockedData.viewPort, [150, 0]);
-      vi.runAllTimers();
+        simulateDrag(mockedData.viewPort, [150, 0]);
+        vi.runAllTimers();
 
-      expect(onDragStart).toHaveBeenCalledTimes(1);
-      expect(onDragEnd).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith(4);
-      rerender({ slideIndex: 4 });
-      vi.runAllTimers();
+        expect(onDragStart).toHaveBeenCalledTimes(1);
+        expect(onDragEnd).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledWith(4);
+        rerender({ slideIndex: 4 });
+        vi.runAllTimers();
 
-      checkTransformX(mockedData.layerTransform, 710);
-      checkTransformX(mockedData.getSlideMockData(0).transform, -900);
-      checkActiveSlide(4);
+        checkTransformX(mockedData.layerTransform, 710);
+        checkTransformX(mockedData.getSlideMockData(0).transform, -900);
+        checkActiveSlide(4);
 
-      simulateDrag(mockedData.viewPort, [0, 150]);
-      vi.runAllTimers();
+        simulateDrag(mockedData.viewPort, [0, 150]);
+        vi.runAllTimers();
 
-      expect(onDragStart).toHaveBeenCalledTimes(2);
-      expect(onDragEnd).toHaveBeenCalledTimes(2);
-      expect(onChange.mock.calls).toEqual([[4], [0]]);
-      rerender({ slideIndex: 0 });
-      vi.runAllTimers();
+        expect(onDragStart).toHaveBeenCalledTimes(2);
+        expect(onDragEnd).toHaveBeenCalledTimes(2);
+        expect(onChange.mock.calls).toEqual([[4], [0]]);
+        rerender({ slideIndex: 0 });
+        vi.runAllTimers();
 
-      checkTransformX(mockedData.layerTransform, 890);
-      checkTransformX(mockedData.getSlideMockData(0).transform, -900);
-      checkActiveSlide(0);
-    });
+        checkTransformX(mockedData.layerTransform, 890);
+        checkTransformX(mockedData.getSlideMockData(0).transform, -900);
+        checkActiveSlide(0);
+      }),
+    );
   });
 });

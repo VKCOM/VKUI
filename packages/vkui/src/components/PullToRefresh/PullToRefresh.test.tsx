@@ -3,7 +3,7 @@ import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Platform, type PlatformType } from '../../lib/platform';
-import { baselineComponent, fakeTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimers, withFakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
 import pullToRefreshStyles from './PullToRefresh.module.css';
@@ -48,9 +48,8 @@ function renderRefresher(
 describe(PullToRefresh, () => {
   baselineComponent(PullToRefresh);
 
-  fakeTimers();
-
   describe('calls onRefresh', () => {
+    fakeTimers();
     it('after pull', () => {
       const onRefresh = vi.fn();
       render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);
@@ -95,12 +94,15 @@ describe(PullToRefresh, () => {
       fireEvent.mouseUp(screen.getByTestId('xxx'));
       expect(hasSpinner(container)).toBe(false);
     });
-    it('stops on touch release if isFetching was never true', () => {
-      const { container } = render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
-      firePull(screen.getByTestId('xxx'));
-      act(vi.runAllTimers);
-      expect(hasSpinner(container)).toBe(false);
-    });
+    it(
+      'stops on touch release if isFetching was never true',
+      withFakeTimers(() => {
+        const { container } = render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
+        firePull(screen.getByTestId('xxx'));
+        act(vi.runAllTimers);
+        expect(hasSpinner(container)).toBe(false);
+      }),
+    );
     it('on second interaction', () => {
       const { setFetching } = renderRefresher();
       firePull(screen.getByTestId('xxx'));

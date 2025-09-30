@@ -43,7 +43,7 @@ describe(ChipsInput, () => {
     expect(onChange).toHaveBeenCalledWith([]);
   });
 
-  it('should clear value when click on remove button', async () => {
+  it('should clear value when click on remove button', () => {
     const onChange = vi.fn();
     render(
       <ChipsInput
@@ -72,7 +72,7 @@ describe(ChipsInput, () => {
         onChange={onChange}
       />,
     );
-    await userEvent.click(screen.getByTestId('delete'));
+    fireEvent.click(screen.getByTestId('delete'));
     expect(onChange).toHaveBeenCalledWith([]);
   });
 
@@ -95,6 +95,7 @@ describe(ChipsInput, () => {
   });
 
   it('should delete option when keydown {Delete}', async () => {
+    vi.useFakeTimers();
     const onChange = vi.fn();
     const initialOptions = [
       {
@@ -128,6 +129,7 @@ describe(ChipsInput, () => {
     const resultValue = [...initialOptions];
     resultValue.pop();
     expect(onChange).toHaveBeenCalledWith(resultValue);
+    vi.useRealTimers();
   });
 
   it.each<{

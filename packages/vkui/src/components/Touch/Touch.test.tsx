@@ -437,7 +437,7 @@ describe('Touch', () => {
     it('handles onClickCapture', async () => {
       const cb = vi.fn(() => null);
       render(<Touch onClickCapture={cb} onMove={noop} data-testid="touch" />);
-      await userEvent.click(screen.getByTestId('touch'));
+      fireEvent.click(screen.getByTestId('touch'));
       expect(cb).toHaveBeenCalledTimes(1);
       cb.mockReset();
       slideRight(screen.getByTestId('touch'));
@@ -464,7 +464,7 @@ describe('Touch', () => {
       const cb = vi.fn(() => null);
       render(<Touch onClickCapture={cb} data-testid="touch" />);
       slideRight(screen.getByTestId('touch'));
-      await userEvent.click(screen.getByTestId('touch'));
+      fireEvent.click(screen.getByTestId('touch'));
       expect(cb).toHaveBeenCalled();
     });
     it('does not prevent click of a button after slide of a parent on mobile', () => {

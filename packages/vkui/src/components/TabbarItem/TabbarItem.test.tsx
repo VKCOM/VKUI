@@ -34,6 +34,7 @@ describe('TabbarItem', () => {
   });
 
   it('handles disabled state', async () => {
+    vi.useFakeTimers();
     const cb = vi.fn();
 
     const { rerender } = render(<TabbarItem onClick={cb} data-testid="test" />);
@@ -43,6 +44,7 @@ describe('TabbarItem', () => {
     rerender(<TabbarItem onClick={cb} data-testid="test" disabled />);
     await userEvent.click(screen.getByTestId('test'));
     expect(cb).toHaveBeenCalledTimes(1);
+    vi.useRealTimers();
   });
 
   function renderTabbarItemForFocus({ withKeyboardInput }: { withKeyboardInput: boolean }) {

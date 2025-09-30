@@ -6,14 +6,13 @@ import type { ModalCardProps } from '../ModalCard/types';
 import { ModalRoot } from './ModalRoot';
 import { useModalRootContext } from './useModalRootContext';
 
-fakeTimers();
-
 const ModalWithUseContext = (props: Omit<ModalCardProps, 'actions'>) => {
   const { onClose } = useModalRootContext();
   return <ModalCard {...props} actions={<button onClick={onClose}></button>} />;
 };
 
 describe(useModalRootContext, () => {
+  fakeTimers();
   test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
     const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
     const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore

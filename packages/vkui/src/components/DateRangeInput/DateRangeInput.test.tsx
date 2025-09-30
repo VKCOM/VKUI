@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, dateFormatter } from '../../lib/date';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent, withFakeTimers } from '../../testing/utils';
 import { DateRangeInput } from './DateRangeInput';
 
 const startDate = new Date(2024, 6, 20);
@@ -47,8 +47,6 @@ describe('DateRangeInput', () => {
     </React.Fragment>
   ));
 
-  fakeTimers(false);
-
   it('should be correct input value', () => {
     render(
       <DateRangeInput
@@ -67,161 +65,176 @@ describe('DateRangeInput', () => {
     expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
   });
 
-  it('check correct readonly state', async () => {
-    render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        changeStartDayLabel=""
-        changeStartMonthLabel=""
-        changeStartYearLabel=""
-        changeEndDayLabel=""
-        changeEndMonthLabel=""
-        changeEndYearLabel=""
-        readOnly={true}
-        {...testsProps}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
+  it(
+    'check correct readonly state',
+    withFakeTimers(async () => {
+      render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          readOnly={true}
+          {...testsProps}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
 
-    inputLikes.forEach((inputLike) => {
-      expect(inputLike).toHaveAttribute('aria-readonly', 'true');
-    });
+      inputLikes.forEach((inputLike) => {
+        expect(inputLike).toHaveAttribute('aria-readonly', 'true');
+      });
 
-    await userEvent.type(startDates, '10');
-    await userEvent.type(startMonths, '04');
-    await userEvent.type(startYears, '2023');
+      await userEvent.type(startDates, '10');
+      await userEvent.type(startMonths, '04');
+      await userEvent.type(startYears, '2023');
 
-    await userEvent.type(endDates, '15');
-    await userEvent.type(endMonths, '06');
-    await userEvent.type(endYears, '2024');
+      await userEvent.type(endDates, '15');
+      await userEvent.type(endMonths, '06');
+      await userEvent.type(endYears, '2024');
 
-    const normalizedDate = convertInputsToNumbers(inputLikes);
-    expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
+      const normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
 
-    expect(screen.queryByTestId(testsProps.clearButtonTestId)).toBeNull();
-  });
+      expect(screen.queryByTestId(testsProps.clearButtonTestId)).toBeNull();
+    }),
+  );
 
-  it('should correct update value when typing text in input', async () => {
-    const onChange = vi.fn();
-    render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        onChange={onChange}
-        changeStartDayLabel=""
-        changeStartMonthLabel=""
-        changeStartYearLabel=""
-        changeEndDayLabel=""
-        changeEndMonthLabel=""
-        changeEndYearLabel=""
-        {...testsProps}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
+  it(
+    'should correct update value when typing text in input',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          onChange={onChange}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          {...testsProps}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
 
-    await userEvent.type(startDates, '10');
-    await userEvent.type(startMonths, '04');
-    await userEvent.type(startYears, '2023');
+      await userEvent.type(startDates, '10');
+      await userEvent.type(startMonths, '04');
+      await userEvent.type(startYears, '2023');
 
-    await userEvent.type(endDates, '15');
-    await userEvent.type(endMonths, '06');
-    await userEvent.type(endYears, '2024');
+      await userEvent.type(endDates, '15');
+      await userEvent.type(endMonths, '06');
+      await userEvent.type(endYears, '2024');
 
-    const normalized = convertInputsToNumbers(inputLikes);
-    expect(normalized).toEqual([10, 4, 2023, 15, 6, 2024]);
+      const normalized = convertInputsToNumbers(inputLikes);
+      expect(normalized).toEqual([10, 4, 2023, 15, 6, 2024]);
 
-    expect(onChange).toHaveBeenCalledTimes(6);
-  });
+      expect(onChange).toHaveBeenCalledTimes(6);
+    }),
+  );
 
-  it('should call onChange callback when change data by calendar', async () => {
-    const onChange = vi.fn();
-    const { container } = render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        onChange={onChange}
-        changeStartDayLabel=""
-        changeStartMonthLabel=""
-        changeStartYearLabel=""
-        changeEndDayLabel=""
-        changeEndMonthLabel=""
-        changeEndYearLabel=""
-        {...testsProps}
-        calendarTestsProps={{
-          dayTestId,
-        }}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const [dates] = inputLikes;
+  it(
+    'should call onChange callback when change data by calendar',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      const { container } = render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          onChange={onChange}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          {...testsProps}
+          calendarTestsProps={{
+            dayTestId,
+          }}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [dates] = inputLikes;
 
-    await userEvent.click(dates);
+      await userEvent.click(dates);
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+      expect(container.contains(document.activeElement)).toBeTruthy();
 
-    const resultStartDate = new Date(startDate);
-    resultStartDate.setDate(15);
+      const resultStartDate = new Date(startDate);
+      resultStartDate.setDate(15);
 
-    fireEvent.click(screen.getByTestId(dayTestId(resultStartDate)));
+      fireEvent.click(screen.getByTestId(dayTestId(resultStartDate)));
 
-    expect(onChange.mock.calls).toEqual([[[resultStartDate, null]]]);
+      expect(onChange.mock.calls).toEqual([[[resultStartDate, null]]]);
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
-  });
+      expect(container.contains(document.activeElement)).toBeTruthy();
+    }),
+  );
 
-  it('should not update value when typing incorrect date in input', async () => {
-    const onChange = vi.fn();
-    render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        onChange={onChange}
-        changeStartDayLabel=""
-        changeStartMonthLabel=""
-        changeStartYearLabel=""
-        changeEndDayLabel=""
-        changeEndMonthLabel=""
-        changeEndYearLabel=""
-        {...testsProps}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const startDates = inputLikes[0];
-    const endDates = inputLikes[3];
+  it(
+    'should not update value when typing incorrect date in input',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          onChange={onChange}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          {...testsProps}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const startDates = inputLikes[0];
+      const endDates = inputLikes[3];
 
-    await userEvent.type(startDates, '40');
-    await userEvent.type(endDates, '32');
+      await userEvent.type(startDates, '40');
+      await userEvent.type(endDates, '32');
 
-    expect(onChange).toHaveBeenCalledTimes(0);
-  });
+      expect(onChange).toHaveBeenCalledTimes(0);
+    }),
+  );
 
-  it('should call onCalendarClose callback when calendar was closed', async () => {
-    const onCalendarOpenChanged = vi.fn();
-    const { container } = render(
-      <DateRangeInput
-        value={[startDate, null]}
-        onCalendarOpenChanged={onCalendarOpenChanged}
-        {...testsProps}
-        calendarTestsProps={{
-          dayTestId,
-        }}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const [dates] = inputLikes;
+  it(
+    'should call onCalendarClose callback when calendar was closed',
+    withFakeTimers(async () => {
+      const onCalendarOpenChanged = vi.fn();
+      const { container } = render(
+        <DateRangeInput
+          value={[startDate, null]}
+          onCalendarOpenChanged={onCalendarOpenChanged}
+          {...testsProps}
+          calendarTestsProps={{
+            dayTestId,
+          }}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [dates] = inputLikes;
 
-    await userEvent.click(dates);
+      await userEvent.click(dates);
 
-    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-    expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
+      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
+      expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
-    await userEvent.click(screen.getByTestId(dayTestId(addDays(startDate, 10))));
+      expect(container.contains(document.activeElement)).toBeTruthy();
+      await userEvent.click(screen.getByTestId(dayTestId(addDays(startDate, 10))));
 
-    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-    expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
+      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
+      expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
-  });
+      expect(container.contains(document.activeElement)).toBeFalsy();
+    }),
+  );
 
   it('should call onChange with undefined when click on clear button', async () => {
     const onChange = vi.fn();
@@ -232,34 +245,38 @@ describe('DateRangeInput', () => {
     expect(onChange).toHaveBeenCalledWith(undefined);
   });
 
-  it('should toggle calendar open state on calendar icon click', async () => {
-    const onCalendarOpenChanged = vi.fn();
-    render(
-      <DateRangeInput
-        showCalendarLabel="Показать календарь"
-        onCalendarOpenChanged={onCalendarOpenChanged}
-        showCalendarButtonTestId="show-calendar"
-      />,
-    );
+  it(
+    'should toggle calendar open state on calendar icon click',
+    withFakeTimers(async () => {
+      const onCalendarOpenChanged = vi.fn();
+      render(
+        <DateRangeInput
+          showCalendarLabel="Показать календарь"
+          onCalendarOpenChanged={onCalendarOpenChanged}
+          showCalendarButtonTestId="show-calendar"
+        />,
+      );
 
-    // проверяем, что календарь закрыт
-    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+      // проверяем, что календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
 
-    const calendarIcon = screen.getByTestId('show-calendar');
-    await userEvent.click(calendarIcon);
+      const calendarIcon = screen.getByTestId('show-calendar');
+      await userEvent.click(calendarIcon);
 
-    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-    expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
-    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
+      expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
-    await userEvent.click(calendarIcon);
+      await userEvent.click(calendarIcon);
 
-    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-    expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
-    expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
-  });
+      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
+      expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+    }),
+  );
 
   describe('keyboard', () => {
+    fakeTimers();
     it('controls focus when arrows or tab keys are pressed', async () => {
       render(
         <div>
@@ -412,6 +429,7 @@ describe('DateRangeInput', () => {
   });
 
   describe('accessible mode', () => {
+    fakeTimers(false);
     it('opens/closes calendar with keyboard/mouse', async () => {
       const onCalendarOpenChangedStub = vi.fn();
       render(

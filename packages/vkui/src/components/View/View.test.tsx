@@ -26,16 +26,17 @@ import styles from './View.module.css';
 describe(View, () => {
   baselineComponent(View);
 
-  fakeTimers();
-
-  describe('With Panel', () =>
+  describe('With Panel', () => {
+    fakeTimers();
     mountTest(() => (
       <View activePanel="panel">
         <Panel id="panel" />
       </View>
-    )));
+    ));
+  });
 
   describe('shows active panel', () => {
+    fakeTimers();
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,
@@ -95,6 +96,7 @@ describe(View, () => {
   });
 
   describe('blurs active element', () => {
+    fakeTimers();
     const panels = [
       <Panel id="focus" key="1">
         <input autoFocus data-testid="__autofocus__" />
@@ -112,6 +114,7 @@ describe(View, () => {
   });
 
   describe('can swipeBack', () => {
+    fakeTimers();
     let nowMock: ReturnType<typeof vi.spyOn>;
     beforeEach(() => {
       nowMock = vi.spyOn(Date, 'now');
@@ -420,6 +423,7 @@ describe(View, () => {
   });
 
   describe('scroll control', () => {
+    fakeTimers();
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,

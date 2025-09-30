@@ -13,6 +13,7 @@ describe('Cell', () => {
 
   describe('Controls dragging', () => {
     it('does not reorder dragged item on click', async () => {
+      vi.useFakeTimers();
       const initialList = ['eugpoloz', 'arthurstam', 'xyz'];
       let updatedList = [...initialList];
 
@@ -42,6 +43,7 @@ describe('Cell', () => {
       );
 
       expect(updatedList).toEqual(initialList);
+      vi.useRealTimers();
     });
   });
 

@@ -6,6 +6,7 @@ import {
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
+  withFakeTimers,
 } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { View } from '../View/View';
@@ -27,16 +28,16 @@ const views = [
 describe(Root, () => {
   baselineComponent(Root);
 
-  fakeTimers();
-
-  describe('With View', () =>
+  describe('With View', () => {
+    fakeTimers();
     mountTest(() => (
       <Root activeView="view">
         <View id="view" activePanel="">
           <></>
         </View>
       </Root>
-    )));
+    ));
+  });
 
   describe('shows active view', () => {
     it('on mount', () => {
@@ -54,6 +55,7 @@ describe(Root, () => {
   });
 
   describe('calls onTransition', () => {
+    fakeTimers();
     it.each([
       ['with animation', true],
       ['without animation', false],
@@ -160,25 +162,29 @@ describe(Root, () => {
 
   describe('blurs active element', () => {
     const renderFocused = () => render(<input autoFocus data-testid="__autofocus__" />);
-    it('on activeView change', () => {
-      renderFocused();
-      const views = [
-        <View id="focus" activePanel="" key="1">
-          <></>
-        </View>,
-        <View id="other" activePanel="" key="2">
-          <></>
-        </View>,
-      ];
-      render(<Root activeView="focus">{views}</Root>).rerender(
-        <Root activeView="other">{views}</Root>,
-      );
-      act(vi.runAllTimers);
-      expect(document.activeElement === document.body).toBe(true);
-    });
+    it(
+      'on activeView change',
+      withFakeTimers(() => {
+        renderFocused();
+        const views = [
+          <View id="focus" activePanel="" key="1">
+            <></>
+          </View>,
+          <View id="other" activePanel="" key="2">
+            <></>
+          </View>,
+        ];
+        render(<Root activeView="focus">{views}</Root>).rerender(
+          <Root activeView="other">{views}</Root>,
+        );
+        act(vi.runAllTimers);
+        expect(document.activeElement === document.body).toBe(true);
+      }),
+    );
   });
 
   describe('scroll control', () => {
+    fakeTimers();
     it('restores on back navigation', async () => {
       let y = 101;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);

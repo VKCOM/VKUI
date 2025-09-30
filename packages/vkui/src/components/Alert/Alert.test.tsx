@@ -10,6 +10,7 @@ import {
   setNodeEnv,
   userEvent,
   waitCSSKeyframesAnimation,
+  withFakeTimers,
 } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
@@ -24,8 +25,6 @@ import titleStyles from '../Typography/Title/Title.module.css';
 import typographyStyles from '../Typography/Typography.module.css';
 
 describe('Alert', () => {
-  fakeTimers();
-
   baselineComponent((props) => <Alert {...props} title="Alert title" onClose={noop} />, {});
 
   it('shows warning if title and area attributes are not provided', () => {
@@ -51,6 +50,7 @@ describe('Alert', () => {
   });
 
   describe('closes', () => {
+    fakeTimers();
     it.each(['overlay', 'close'])('with %s click', async (trigger) => {
       const onClose = vi.fn();
       const result = render(
@@ -70,6 +70,7 @@ describe('Alert', () => {
   });
 
   describe('calls action and do not calls onClose with autoCloseDisabled=true', () => {
+    fakeTimers();
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
       const action = vi
         .fn()
@@ -139,6 +140,7 @@ describe('Alert', () => {
   });
 
   describe('calls action after close by default', () => {
+    fakeTimers();
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
       const action = vi.fn();
       const onClose = vi.fn();
@@ -166,22 +168,25 @@ describe('Alert', () => {
     });
   });
 
-  it('passes data-testid to actions', async () => {
-    const result = render(
-      <Alert
-        onClose={vi.fn()}
-        actions={[
-          { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id' },
-          { 'title': 'Deny', 'mode': 'default', 'data-testid': 'deny-test-id' },
-        ]}
-      />,
-    );
-    await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
-      runOnlyPendingTimers: true,
-    });
-    expect(screen.getByTestId('allow-test-id')).toHaveTextContent('Allow');
-    expect(screen.getByTestId('deny-test-id')).toHaveTextContent('Deny');
-  });
+  it(
+    'passes data-testid to actions',
+    withFakeTimers(async () => {
+      const result = render(
+        <Alert
+          onClose={vi.fn()}
+          actions={[
+            { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id' },
+            { 'title': 'Deny', 'mode': 'default', 'data-testid': 'deny-test-id' },
+          ]}
+        />,
+      );
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(screen.getByTestId('allow-test-id')).toHaveTextContent('Allow');
+      expect(screen.getByTestId('deny-test-id')).toHaveTextContent('Deny');
+    }),
+  );
   it.each([
     {
       href: '#',
@@ -193,7 +198,7 @@ describe('Alert', () => {
     },
   ])(
     'action should use "$expectedTag" tag when use href "$href" ',
-    async ({ href, expectedTag }) => {
+    withFakeTimers(async ({ href, expectedTag }) => {
       const result = render(
         <ConfigProvider platform={Platform.IOS}>
           <Alert
@@ -208,7 +213,7 @@ describe('Alert', () => {
         runOnlyPendingTimers: true,
       });
       expect(screen.getByTestId('allow-test-id').tagName).toBe(expectedTag);
-    },
+    }),
   );
 
   it.each([
@@ -222,7 +227,7 @@ describe('Alert', () => {
     },
   ])(
     'should have className "$className" with mode "$mode" in IOS platform',
-    async ({ mode, className }) => {
+    withFakeTimers(async ({ mode, className }) => {
       const result = render(
         <ConfigProvider platform={Platform.IOS}>
           <Alert
@@ -235,7 +240,7 @@ describe('Alert', () => {
         runOnlyPendingTimers: true,
       });
       expect(screen.getByTestId('allow-test-id')).toHaveClass(className);
-    },
+    }),
   );
 
   it.each([
@@ -251,7 +256,7 @@ describe('Alert', () => {
     },
   ])(
     'should have className "$className" ans "$buttonClassName" with mode "$mode" in VKCOM platform',
-    async ({ mode, className, buttonClassName }) => {
+    withFakeTimers(async ({ mode, className, buttonClassName }) => {
       const result = render(
         <ConfigProvider platform={Platform.VKCOM}>
           <Alert
@@ -265,10 +270,11 @@ describe('Alert', () => {
       });
       className && expect(screen.getByTestId('allow-test-id')).toHaveClass(className);
       expect(screen.getByTestId('allow-test-id')).toHaveClass(buttonClassName);
-    },
+    }),
   );
 
   describe('handles dismissButtonMode', () => {
+    fakeTimers();
     it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
       'passes data-testid to dismiss button in %s dismissButtonMode',
       async (dismissButtonMode) => {
@@ -319,14 +325,14 @@ describe('Alert', () => {
     },
   ])(
     'actions wrapper should have className "$className" when use align "$align"',
-    async ({ align, className }) => {
+    withFakeTimers(async ({ align, className }) => {
       const result = render(<Alert onClose={vi.fn()} actionsAlign={align} />);
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
       const actionsWrapper = getDocumentBody().getElementsByClassName(styles.actions)[0];
       expect(actionsWrapper).toHaveClass(className);
-    },
+    }),
   );
 
   it.each([
@@ -353,57 +359,62 @@ describe('Alert', () => {
     },
   ])(
     `should have header classNames "$headerClassNames" and text classNames "$textClassNames" when use platform "$platform"`,
-    async ({ title, description, titleClassNames, descriptionClassNames, platform }) => {
-      const result = render(
-        <ConfigProvider platform={platform}>
-          <Alert
-            onClose={vi.fn()}
-            titleTestId="titleTestId"
-            descriptionTestId="descriptionTestId"
-            title={title}
-            description={description}
-          />
-        </ConfigProvider>,
-      );
-      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
-        runOnlyPendingTimers: true,
-      });
-      const headerElement = screen.getByTestId('titleTestId');
-      const textElement = screen.getByTestId('descriptionTestId');
+    withFakeTimers(
+      async ({ title, description, titleClassNames, descriptionClassNames, platform }) => {
+        const result = render(
+          <ConfigProvider platform={platform}>
+            <Alert
+              onClose={vi.fn()}
+              titleTestId="titleTestId"
+              descriptionTestId="descriptionTestId"
+              title={title}
+              description={description}
+            />
+          </ConfigProvider>,
+        );
+        await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+          runOnlyPendingTimers: true,
+        });
+        const headerElement = screen.getByTestId('titleTestId');
+        const textElement = screen.getByTestId('descriptionTestId');
 
-      titleClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
-      descriptionClassNames.forEach((className) => expect(textElement).toHaveClass(className));
-    },
+        titleClassNames.forEach((className) => expect(headerElement).toHaveClass(className));
+        descriptionClassNames.forEach((className) => expect(textElement).toHaveClass(className));
+      },
+    ),
   );
 
-  it('handle allowClickPropagation correctly', async () => {
-    const onClose = vi.fn();
-    const onClick = vi.fn();
-    const action = {
-      'title': 'Item',
-      'data-testid': '__action__',
-      'autoCloseDisabled': true,
-      'mode': 'default' as const,
-    };
-    const result = render(
-      <div onClick={onClick}>
-        <Alert onClose={onClose} actions={[action]} />
-      </div>,
-    );
+  it(
+    'handle allowClickPropagation correctly',
+    withFakeTimers(async () => {
+      const onClose = vi.fn();
+      const onClick = vi.fn();
+      const action = {
+        'title': 'Item',
+        'data-testid': '__action__',
+        'autoCloseDisabled': true,
+        'mode': 'default' as const,
+      };
+      const result = render(
+        <div onClick={onClick}>
+          <Alert onClose={onClose} actions={[action]} />
+        </div>,
+      );
 
-    await userEvent.click(result.getByTestId('__action__'));
-    expect(onClick).not.toHaveBeenCalled();
+      await userEvent.click(result.getByTestId('__action__'));
+      expect(onClick).not.toHaveBeenCalled();
 
-    result.rerender(
-      <div onClick={onClick}>
-        <Alert onClose={onClose} actions={[action]} allowClickPropagation />
-      </div>,
-    );
+      result.rerender(
+        <div onClick={onClick}>
+          <Alert onClose={onClose} actions={[action]} allowClickPropagation />
+        </div>,
+      );
 
-    await userEvent.click(result.getByTestId('__action__'));
-    act(() => {
-      vi.runOnlyPendingTimers();
-    });
-    expect(onClick).toHaveBeenCalledTimes(1);
-  });
+      await userEvent.click(result.getByTestId('__action__'));
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+      expect(onClick).toHaveBeenCalledTimes(1);
+    }),
+  );
 });

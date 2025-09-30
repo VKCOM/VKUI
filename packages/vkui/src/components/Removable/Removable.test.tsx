@@ -8,6 +8,7 @@ describe('Removable', () => {
   baselineComponent(Removable);
 
   it('[iOS] does not propagate toggle button click', async () => {
+    vi.useFakeTimers();
     const onClick = vi.fn();
     const eventListener = vi.fn();
 
@@ -30,9 +31,11 @@ describe('Removable', () => {
 
     await userEvent.click(screen.getByTestId('content'));
     expect(eventListener).toHaveBeenCalled();
+    vi.useRealTimers();
   });
 
   it('[iOS] render prop isRemoving is true when toggle button is clicked ', async () => {
+    vi.useFakeTimers();
     render(
       <ConfigProvider platform="ios">
         <Removable toggleButtonTestId="toggleButtonTestId" removeButtonTestId="removeButtonTestId">
@@ -59,6 +62,7 @@ describe('Removable', () => {
 
     await userEvent.click(screen.getByTestId('content'));
     expect(screen.queryByText(/сдвинут/)).toBeFalsy();
+    vi.useRealTimers();
   });
 
   it('should not render remove button when indent mode', () => {

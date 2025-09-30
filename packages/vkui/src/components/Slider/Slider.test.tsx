@@ -114,6 +114,7 @@ describe(Slider, () => {
   });
 
   describe('change with tap', () => {
+    fakeTimers();
     it('moves start', async () => {
       const handleChange: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider defaultValue={30} onChange={handleChange} />);

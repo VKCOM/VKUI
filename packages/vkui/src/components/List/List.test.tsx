@@ -7,6 +7,7 @@ import {
   baselineComponent,
   fakeTimers,
   MOUSE_EVENTS_HANDLERS,
+  withFakeTimers,
 } from '../../testing/utils';
 import { Cell } from '../Cell/Cell';
 import { List } from './List';
@@ -185,7 +186,6 @@ const dragCell = ({
 
 describe('List', () => {
   baselineComponent(List);
-  fakeTimers();
 
   it('should have style gap', async () => {
     render(
@@ -203,7 +203,7 @@ describe('List', () => {
 
   it.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
     'check dnd is working',
-    ({ handlers: mouseEvents }) => {
+    withFakeTimers(({ handlers: mouseEvents }) => {
       const setupData = setup({});
       const { getCellSetup } = setupData;
 
@@ -250,28 +250,31 @@ describe('List', () => {
       });
 
       expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
-    },
+    }),
   );
 
-  it('check dnd with scroll working', () => {
-    const setupData = setup({});
+  it(
+    'check dnd with scroll working',
+    withFakeTimers(() => {
+      const setupData = setup({});
 
-    isScrollRunning = false;
-    setupData.listScrollTop = 50;
+      isScrollRunning = false;
+      setupData.listScrollTop = 50;
 
-    dragCell({
-      testId: 'dragger-0',
-      breakPoints: [5, 70, 90],
-      afterMove: {
-        1: () => {
-          vi.runAllTimers();
-          isScrollRunning = true;
-          setupData.listScrollTop = 30;
-          fireEvent.scroll(setupData.list);
+      dragCell({
+        testId: 'dragger-0',
+        breakPoints: [5, 70, 90],
+        afterMove: {
+          1: () => {
+            vi.runAllTimers();
+            isScrollRunning = true;
+            setupData.listScrollTop = 30;
+            fireEvent.scroll(setupData.list);
+          },
         },
-      },
-    });
+      });
 
-    expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
-  });
+      expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+    }),
+  );
 });

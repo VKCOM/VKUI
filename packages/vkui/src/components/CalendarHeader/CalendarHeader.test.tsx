@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
 import { CalendarHeader } from './CalendarHeader';
 import styles from './CalendarHeader.module.css';
 import customSelectOptionStyles from '../CustomSelectOption/CustomSelectOption.module.css';
@@ -8,8 +8,6 @@ import customSelectOptionStyles from '../CustomSelectOption/CustomSelectOption.m
 const targetDate = new Date('2023-09-20T07:40:00.000Z');
 
 describe('CalendarHeader', () => {
-  fakeTimers();
-
   baselineComponent((props) => (
     <CalendarHeader
       onNextMonth={noop}
@@ -97,7 +95,7 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });
 
-  it('does not fire onChange when click on month dropdown item if isMonthDisabled return true', async () => {
+  it('does not fire onChange when click on month dropdown item if isMonthDisabled return true', () => {
     const onChange = vi.fn();
     const { container } = render(
       <CalendarHeader
@@ -111,12 +109,12 @@ describe('CalendarHeader', () => {
     const monthPicker = screen.getByTestId('month-picker');
     fireEvent.click(monthPicker);
     const [januarySelectOption] = container.getElementsByClassName(customSelectOptionStyles.host);
-    await userEvent.click(januarySelectOption);
+    fireEvent.click(januarySelectOption);
 
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('does not fire onChange when click on year dropdown item if isYearDisabled return true', async () => {
+  it('does not fire onChange when click on year dropdown item if isYearDisabled return true', () => {
     const onChange = vi.fn();
     const { container } = render(
       <CalendarHeader
@@ -130,12 +128,12 @@ describe('CalendarHeader', () => {
     const yearPicker = screen.getByTestId('year-picker');
     fireEvent.click(yearPicker);
     const [minYearSelectOption] = container.getElementsByClassName(customSelectOptionStyles.host);
-    await userEvent.click(minYearSelectOption);
+    fireEvent.click(minYearSelectOption);
 
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('fire onChange when click on year dropdown item', async () => {
+  it('fire onChange when click on year dropdown item', () => {
     const onChange = vi.fn();
     const yearDropdownTestId = (year: number) => `year-picker-${year}`;
 
@@ -150,7 +148,7 @@ describe('CalendarHeader', () => {
     const yearPicker = screen.getByTestId(yearDropdownTestId(2023));
     fireEvent.click(yearPicker);
     const [minYearSelectOption] = container.getElementsByClassName(customSelectOptionStyles.host);
-    await userEvent.click(minYearSelectOption);
+    fireEvent.click(minYearSelectOption);
 
     expect(onChange).toHaveBeenCalled();
   });

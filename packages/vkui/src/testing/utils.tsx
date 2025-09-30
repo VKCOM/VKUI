@@ -45,6 +45,19 @@ export function fakeTimers(runPendingTimers = true) {
   });
 }
 
+export function withFakeTimers<T extends any[]>(
+  testFn: (...args: T) => unknown | Promise<unknown>,
+) {
+  return async (...args: T) => {
+    vi.useFakeTimers();
+    try {
+      return await testFn(...args);
+    } finally {
+      vi.useRealTimers();
+    }
+  };
+}
+
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: 'test',
   crossOrigin: 'anonymous',
@@ -160,12 +173,13 @@ export function baselineComponent<Props extends object>(
     : RawComponent;
 
   describe(testName, () => {
-    beforeAll(() => {
+    beforeEach(() => {
       vi.clearAllTimers();
       vi.useFakeTimers();
     });
 
-    afterAll(() => {
+    afterEach(() => {
+      vi.runOnlyPendingTimers();
       vi.useRealTimers();
     });
 

@@ -1,7 +1,7 @@
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimers, userEvent, withFakeTimers } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Tappable, type TappableProps } from './Tappable';
@@ -14,7 +14,6 @@ const tappable = () => screen.getByTestId('tappable');
 describe(Tappable, () => {
   baselineComponent(TappableTest);
 
-  fakeTimers();
   afterEach(() => delete window['ontouchstart']);
 
   it('Component: if no Component is passed Tappable becomes a div', () => {
@@ -131,41 +130,47 @@ describe(Tappable, () => {
     expect(tappable()).toHaveAttribute('aria-disabled', 'true');
   });
 
-  it('a11y(button): custom button keyboard events', async () => {
-    const handleClick = vi.fn();
-    render(<TappableTest onClick={handleClick}>Custom Button</TappableTest>);
+  it(
+    'a11y(button): custom button keyboard events',
+    withFakeTimers(async () => {
+      const handleClick = vi.fn();
+      render(<TappableTest onClick={handleClick}>Custom Button</TappableTest>);
 
-    // gets focused on tab
-    await userEvent.tab();
-    expect(tappable()).toHaveFocus();
+      // gets focused on tab
+      await userEvent.tab();
+      expect(tappable()).toHaveFocus();
 
-    // onClick gets called on Enter and Space
-    fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
-    expect(handleClick).toHaveBeenCalledTimes(1);
+      // onClick gets called on Enter and Space
+      fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
+      expect(handleClick).toHaveBeenCalledTimes(1);
 
-    fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
-    expect(handleClick).toHaveBeenCalledTimes(2);
-  });
+      fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
+      expect(handleClick).toHaveBeenCalledTimes(2);
+    }),
+  );
 
-  it('a11y(link): custom link keyboard events', async () => {
-    const handleClick = vi.fn();
-    render(
-      <TappableTest role="link" onClick={handleClick}>
-        Custom Link
-      </TappableTest>,
-    );
+  it(
+    'a11y(link): custom link keyboard events',
+    withFakeTimers(async () => {
+      const handleClick = vi.fn();
+      render(
+        <TappableTest role="link" onClick={handleClick}>
+          Custom Link
+        </TappableTest>,
+      );
 
-    // gets focused on tab
-    await userEvent.tab();
-    expect(tappable()).toHaveFocus();
+      // gets focused on tab
+      await userEvent.tab();
+      expect(tappable()).toHaveFocus();
 
-    // onClick gets called on Enter only
-    fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
-    expect(handleClick).toHaveBeenCalledTimes(1);
+      // onClick gets called on Enter only
+      fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
+      expect(handleClick).toHaveBeenCalledTimes(1);
 
-    fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
-    expect(handleClick).toHaveBeenCalledTimes(1);
-  });
+      fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
+      expect(handleClick).toHaveBeenCalledTimes(1);
+    }),
+  );
 
   it('Tappable calls onKeyDown prop', () => {
     const onKeyDown = vi.fn();
@@ -186,6 +191,7 @@ describe(Tappable, () => {
   });
 
   describe('active', () => {
+    fakeTimers();
     afterEach(() => vi.clearAllMocks());
 
     it('shows waves on android', async () => {
@@ -299,6 +305,7 @@ describe(Tappable, () => {
   });
 
   describe('hover', () => {
+    fakeTimers();
     it('is not hovered by default', () => {
       const result = render(<Tappable onClick={noop} data-testid="x" />);
       expect(result.getByTestId('x')).not.toHaveClass(styles.hoveredBackground);
