@@ -26,12 +26,11 @@ import { NumberInputLike } from '../NumberInputLike/NumberInputLike';
 import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import styles from './DateRangeInput.module.css';
 import dateInputStyles from '../DateInput/DateInput.module.css';
 
 const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+  none: dateInputStyles.sizeYNone,
+  compact: dateInputStyles.sizeYCompact,
 };
 
 type DateTestsProps = {
@@ -261,6 +260,7 @@ export const DateRangeInput = ({
   accessible,
   readOnly,
   'disableCalendar': disableCalendarProp = false,
+  before,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -417,16 +417,25 @@ export const DateRangeInput = ({
     }
   }, [handleFieldEnter, openCalendar, accessible]);
 
+  const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
+  const showClearButton = value && !readOnly;
+
   return (
     <FormField
       style={style}
-      className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
+      className={classNames(
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        !!before && dateInputStyles.hasBefore,
+        (showCalendarButton || showClearButton) && dateInputStyles.hasAfter,
+        className,
+      )}
       getRootRef={handleRootRef}
       role="group"
       aria-labelledby={`${ariaLabelId} ${currentDateLabelId}`}
+      before={before}
       after={
         <>
-          {!disableCalendar && (accessible || (!accessible && !value)) ? (
+          {showCalendarButton ? (
             <IconButton
               hoverMode="opacity"
               label={showCalendarLabel}
@@ -436,7 +445,7 @@ export const DateRangeInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value && !readOnly ? (
+          {showClearButton ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}

@@ -137,11 +137,17 @@ describe('CalendarHeader', () => {
 
   it('fire onChange when click on year dropdown item', async () => {
     const onChange = vi.fn();
+    const yearDropdownTestId = (year: number) => `year-picker-${year}`;
+
     const { container } = render(
-      <CalendarHeader viewDate={targetDate} onChange={onChange} yearDropdownTestId="year-picker" />,
+      <CalendarHeader
+        viewDate={targetDate}
+        onChange={onChange}
+        yearDropdownTestId={yearDropdownTestId}
+      />,
     );
 
-    const yearPicker = screen.getByTestId('year-picker');
+    const yearPicker = screen.getByTestId(yearDropdownTestId(2023));
     fireEvent.click(yearPicker);
     const [minYearSelectOption] = container.getElementsByClassName(customSelectOptionStyles.host);
     await userEvent.click(minYearSelectOption);

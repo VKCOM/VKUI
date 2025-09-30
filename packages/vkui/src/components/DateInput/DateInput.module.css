@@ -9,6 +9,14 @@
   --vkui_internal--DateInput_input_margin_inline_end: 14px;
 }
 
+.hasBefore .wrapper {
+  --vkui_internal--DateInput_input_margin_inline_start: 0px;
+}
+
+.hasAfter .wrapper {
+  --vkui_internal--DateInput_input_margin_inline_end: 0px;
+}
+
 .input {
   z-index: var(--vkui_internal--z_index_form_field_element);
   display: block;
@@ -48,12 +56,12 @@
   letter-spacing: 6px !important;
 }
 
-.sizeYCompact .input {
-  margin-inline-end: 22px;
+.sizeYCompact:not(.hasAfter) .wrapper {
+  --vkui_internal--DateInput_input_margin_inline_end: 22px;
 }
 
 @media (--sizeY-compact) {
-  .sizeYNone .input {
+  .sizeYNone:not(.hasAfter) .wrapper {
     --vkui_internal--DateInput_input_margin_inline_end: 22px;
   }
 }
