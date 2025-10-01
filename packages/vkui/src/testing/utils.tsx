@@ -180,16 +180,6 @@ export function baselineComponent<Props extends object>(
     : RawComponent;
 
   describe(testName, () => {
-    // beforeEach(() => {
-    //   vi.clearAllTimers();
-    //   vi.useFakeTimers();
-    // });
-    //
-    // afterEach(() => {
-    //   vi.runOnlyPendingTimers();
-    //   vi.useRealTimers();
-    // });
-
     mountTest(Component);
 
     if (a11y) {
