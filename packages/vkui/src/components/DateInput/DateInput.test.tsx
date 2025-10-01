@@ -2,7 +2,12 @@ import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { dateFormatter, isToday, isYesterday, subDays } from '../../lib/date';
-import { baselineComponent, fakeTimers, userEvent, withFakeTimers } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
@@ -448,7 +453,7 @@ describe('DateInput', () => {
   );
 
   describe('keyboard', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('controls focus when arrows or tab keys are pressed', async () => {
       render(
         <div>
@@ -612,7 +617,7 @@ describe('DateInput', () => {
   });
 
   describe('accessible mode', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('opens/closes calendar with keyboard/mouse', async () => {
       const onCalendarOpenChangedStub = vi.fn();
       render(

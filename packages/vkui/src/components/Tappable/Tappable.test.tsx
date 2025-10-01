@@ -1,7 +1,12 @@
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, fakeTimers, userEvent, withFakeTimers } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Tappable, type TappableProps } from './Tappable';
@@ -191,7 +196,7 @@ describe(Tappable, () => {
   });
 
   describe('active', () => {
-    fakeTimers();
+    fakeTimersForScope();
     afterEach(() => vi.clearAllMocks());
 
     it('shows waves on android', async () => {
@@ -305,7 +310,7 @@ describe(Tappable, () => {
   });
 
   describe('hover', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('is not hovered by default', () => {
       const result = render(<Tappable onClick={noop} data-testid="x" />);
       expect(result.getByTestId('x')).not.toHaveClass(styles.hoveredBackground);

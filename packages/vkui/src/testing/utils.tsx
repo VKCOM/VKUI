@@ -38,7 +38,7 @@ export const userEvent = userEventLib.setup({
   advanceTimers: vi.advanceTimersByTime.bind(vi),
 });
 
-export function fakeTimers(runPendingTimers = true) {
+export function fakeTimersForScope(runPendingTimers = true) {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => {
     runPendingTimers && vi.runOnlyPendingTimers();

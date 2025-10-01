@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   userEvent,
   waitCSSKeyframesAnimation,
   waitForFloatingPosition,
@@ -111,7 +111,7 @@ describe(ActionSheet, () => {
     { autoCloseDisabled: true, selectable: true },
     { isCancelItem: true },
   ])('calls handlers when %s', (props) => {
-    fakeTimers();
+    fakeTimersForScope();
     it.each([
       ['desktop', ActionSheetDesktop],
       ['mobile', ActionSheetMobile],
@@ -162,7 +162,7 @@ describe(ActionSheet, () => {
     ['container', () => screen.getByTestId('container')],
     ['content', () => screen.getByTestId('content')],
   ])('does not close on %s click', (_name, getNode) => {
-    fakeTimers();
+    fakeTimersForScope();
     it.each([
       ['desktop', ActionSheetDesktop],
       ['mobile', ActionSheetMobile],
@@ -183,7 +183,7 @@ describe(ActionSheet, () => {
   });
 
   describe('closes on click outside', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('desktop', async () => {
       const onClose = vi.fn();
       const result = render(<ActionSheetDesktop onClose={onClose} />);
@@ -268,7 +268,7 @@ describe(ActionSheet, () => {
   });
 
   describe('handle allowClickPropagation correctly', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it.each([
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],

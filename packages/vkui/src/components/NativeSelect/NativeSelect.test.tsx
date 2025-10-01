@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, fakeTimers, userEvent, withFakeTimers } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { NativeSelect, type NativeSelectProps } from './NativeSelect';
 
 const getTarget = () => screen.getByTestId<HTMLSelectElement>('target');
@@ -69,7 +74,7 @@ describe('NativeSelect', () => {
   });
 
   describe('works uncontrolled', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('form reset form', async () => {
       render(
         <form data-testid="form">

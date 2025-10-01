@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { getRandomUsers } from '../../testing/mock';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
@@ -28,7 +28,7 @@ describe(ViewInfinite, () => {
   baselineComponent(ViewInfinite);
 
   describe('With Panel', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     mountTest(() => (
       <ViewInfinite activePanel="panel">
         <Panel id="panel" />
@@ -102,7 +102,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('blurs active element', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="focus" key="1">
         <input autoFocus data-testid="__autofocus__" />
@@ -120,7 +120,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('can swipeBack', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     let nowMock: ReturnType<typeof vi.spyOn>;
     beforeEach(() => {
       nowMock = vi.spyOn(Date, 'now');
@@ -415,7 +415,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('scroll control', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,

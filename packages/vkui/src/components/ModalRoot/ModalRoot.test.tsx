@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, fakeTimers, withFakeTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimersForScope, withFakeTimers } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { waitModalCardCSSTransitionEnd } from '../ModalCard/ModalCard.test';
 import { ModalPage } from '../ModalPage/ModalPage';
@@ -20,7 +20,7 @@ describe(ModalRoot, () => {
     { displayName: 'ModalPage', Component: ModalPage },
     { displayName: 'ModalCard', Component: ModalCard },
   ])('With $displayName', ({ displayName, Component }) => {
-    fakeTimers();
+    fakeTimersForScope();
     test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
       const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
       const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
@@ -110,7 +110,7 @@ describe(ModalRoot, () => {
   });
 
   describe('shows active modal', () => {
-    fakeTimers();
+    fakeTimersForScope();
     const modals = [
       <ModalPage id="m" data-testid="m" key="m" />,
       <ModalPage id="other" data-testid="other" key="o" />,
@@ -181,7 +181,7 @@ describe(ModalRoot, () => {
     { displayName: 'ModalPage', Component: ModalPage },
     { displayName: 'ModalCard', Component: ModalCard },
   ])('handle onClose', ({ displayName, Component }) => {
-    fakeTimers();
+    fakeTimersForScope();
     describe('on fade click', () => {
       it('calls modal onClose', async () => {
         const onClose = vi.fn();
@@ -275,7 +275,7 @@ describe(ModalRoot, () => {
   );
 
   describe('focus', () => {
-    fakeTimers();
+    fakeTimersForScope();
     let modalPageRef: React.RefObject<HTMLDivElement | null> = React.createRef<HTMLDivElement>();
     let modalCardRef: React.RefObject<HTMLDivElement | null> = React.createRef<HTMLDivElement>();
     let modalPageWithInputRef: React.RefObject<HTMLDivElement | null> =

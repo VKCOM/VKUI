@@ -1,6 +1,6 @@
 import { act } from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { fakeTimers, waitCSSTransitionEnd } from '../../testing/utils';
+import { fakeTimersForScope, waitCSSTransitionEnd } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import type { ModalCardProps } from '../ModalCard/types';
 import { ModalRoot } from './ModalRoot';
@@ -12,7 +12,7 @@ const ModalWithUseContext = (props: Omit<ModalCardProps, 'actions'>) => {
 };
 
 describe(useModalRootContext, () => {
-  fakeTimers();
+  fakeTimersForScope();
   test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
     const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
     const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore

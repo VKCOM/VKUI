@@ -1,9 +1,9 @@
 import { act, renderHook } from '@testing-library/react';
-import { fakeTimers } from '../../testing/utils.tsx';
+import { fakeTimersForScope } from '../../testing/utils.tsx';
 import { useStateWithDelay } from './useStateWithDelay';
 
 describe(useStateWithDelay, () => {
-  fakeTimers();
+  fakeTimersForScope();
 
   it('updates state after delay', () => {
     const handle = renderHook(() => useStateWithDelay(5));

@@ -6,7 +6,7 @@ import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   setNodeEnv,
   userEvent,
   waitCSSKeyframesAnimation,
@@ -50,7 +50,7 @@ describe('Alert', () => {
   });
 
   describe('closes', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it.each(['overlay', 'close'])('with %s click', async (trigger) => {
       const onClose = vi.fn();
       const result = render(
@@ -70,7 +70,7 @@ describe('Alert', () => {
   });
 
   describe('calls action and do not calls onClose with autoCloseDisabled=true', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
       const action = vi
         .fn()
@@ -140,7 +140,7 @@ describe('Alert', () => {
   });
 
   describe('calls action after close by default', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
       const action = vi.fn();
       const onClose = vi.fn();
@@ -274,7 +274,7 @@ describe('Alert', () => {
   );
 
   describe('handles dismissButtonMode', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
       'passes data-testid to dismiss button in %s dismissButtonMode',
       async (dismissButtonMode) => {

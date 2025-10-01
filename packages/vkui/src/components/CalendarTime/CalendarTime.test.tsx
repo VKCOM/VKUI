@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { setHours, setMinutes } from '../../lib/date';
-import { fakeTimers, userEvent } from '../../testing/utils';
+import { fakeTimersForScope, userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { CalendarTime } from './CalendarTime';
 
@@ -110,7 +110,7 @@ describe('CalendarTime', () => {
   });
 
   describe('Keyboard Navigation', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('should handle Tab navigation between hours, minutes and done button', async () => {
       render(
         <div>
@@ -270,7 +270,7 @@ describe('CalendarTime', () => {
   });
 
   describe('Time Input', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('should handle direct time input in hours field', async () => {
       const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
@@ -319,7 +319,7 @@ describe('CalendarTime', () => {
   });
 
   describe('Done Button', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('should call onDoneButtonClick when done button is clicked', async () => {
       const onDoneButtonClick = vi.fn();
       render(

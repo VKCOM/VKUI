@@ -3,7 +3,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import type { Placement, useFloating } from '../../lib/floating';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   userEvent,
   waitForFloatingPosition,
   withFakeTimers,
@@ -462,7 +462,7 @@ describe('ChipsSelect', () => {
   );
 
   describe('creatable', () => {
-    fakeTimers();
+    fakeTimersForScope();
     const customChip = { value: 'testvalue', label: 'testvalue' };
 
     it.each([
@@ -731,7 +731,7 @@ describe.each<{
 ])(
   'should correct use delimiter $delimiter',
   ({ delimiter, str, expectedValues, expectedInputValue }) => {
-    fakeTimers();
+    fakeTimersForScope();
     it('should add some options by splitting by delimiter when creatable', async () => {
       const onChange = vi.fn();
       render(

@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   userEvent,
   waitCSSKeyframesAnimation,
   waitForFloatingPosition,
@@ -203,7 +203,7 @@ describe(FocusTrap, () => {
   );
 
   describe('focus restoration', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('restores focus by default', async () => {
       const onClose = vi.fn();
       render(<ActionSheetTest onClose={onClose} />);
@@ -222,7 +222,7 @@ describe(FocusTrap, () => {
   });
 
   describe('specific keyboard navigation', () => {
-    fakeTimers();
+    fakeTimersForScope();
     const mountViaKeyboard = async () => {
       await userEvent.tab(); // focus toggle via keyboard
       await userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard

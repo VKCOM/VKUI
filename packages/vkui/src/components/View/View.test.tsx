@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { getRandomUsers } from '../../testing/mock';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
@@ -27,7 +27,7 @@ describe(View, () => {
   baselineComponent(View);
 
   describe('With Panel', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     mountTest(() => (
       <View activePanel="panel">
         <Panel id="panel" />
@@ -36,7 +36,7 @@ describe(View, () => {
   });
 
   describe('shows active panel', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,
@@ -96,7 +96,7 @@ describe(View, () => {
   });
 
   describe('blurs active element', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="focus" key="1">
         <input autoFocus data-testid="__autofocus__" />
@@ -114,7 +114,7 @@ describe(View, () => {
   });
 
   describe('can swipeBack', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     let nowMock: ReturnType<typeof vi.spyOn>;
     beforeEach(() => {
       nowMock = vi.spyOn(Date, 'now');
@@ -423,7 +423,7 @@ describe(View, () => {
   });
 
   describe('scroll control', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,

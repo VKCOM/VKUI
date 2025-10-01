@@ -1,10 +1,10 @@
 import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
-import { fakeTimers } from '../../testing/utils.tsx';
+import { fakeTimersForScope } from '../../testing/utils.tsx';
 import { useAutoPlay } from './hooks';
 
 describe(useAutoPlay, () => {
-  fakeTimers(false);
+  fakeTimersForScope(false);
   it('should call callback when fire event visibilitychange', () => {
     const callback = vi.fn();
 

@@ -1,7 +1,12 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon24Done } from '@vkontakte/icons';
-import { baselineComponent, fakeTimers, userEvent, withFakeTimers } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
 
@@ -21,7 +26,7 @@ describe(Search, () => {
   baselineComponent(Search);
 
   describe('works uncontrolled', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('uses defaultValue', () => {
       render(<Search defaultValue="def" />);
       expect(getInput()).toHaveValue('def');
@@ -99,7 +104,7 @@ describe(Search, () => {
   });
 
   describe('works controlled', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('respects outer value', () => {
       const { rerender } = render(<Search value="init" />);
       expect(getInput()).toHaveValue('init');

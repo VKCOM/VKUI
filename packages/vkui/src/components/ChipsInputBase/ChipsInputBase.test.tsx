@@ -3,7 +3,7 @@ import { act } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   userEvent,
   withFakeTimers,
   withRegExp,
@@ -177,7 +177,7 @@ describe(ChipsInputBase, () => {
   );
 
   describe('focus', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('focuses on input field after clicking to container', async () => {
       const result = render(
         <ChipsInputBaseTest

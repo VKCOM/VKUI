@@ -2,7 +2,7 @@ import { type EventType, render } from '@testing-library/react';
 import { MEDIA_QUERIES, ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   fireEventPatch,
   matchMediaMock,
   mockRect,
@@ -202,7 +202,7 @@ describe(Snackbar, () => {
   describe.each(GESTURES_VITEST_EACH_TABLE)(
     'should use touched state for start or end timeout for close (user $name manipulation)',
     ({ start, move, end, fireEventOptions }) => {
-      fakeTimers(false);
+      fakeTimersForScope(false);
       it.each([
         ...PLACEMENT_VITEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
         { placement: 'top' as const, shifted: false },
@@ -244,7 +244,7 @@ describe(Snackbar, () => {
   describe.each(GESTURES_VITEST_EACH_TABLE)(
     'should closing with user $name manipulation',
     ({ start, move, end, fireEventOptions }) => {
-      fakeTimers(false);
+      fakeTimersForScope(false);
       it.each(PLACEMENT_VITEST_EACH_TABLE)('placement="%s"', async (placement) => {
         const result = render(<Snackbar placement={placement} onClose={onClose} />);
 

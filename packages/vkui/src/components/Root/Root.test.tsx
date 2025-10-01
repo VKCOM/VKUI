@@ -2,7 +2,7 @@ import { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
@@ -29,7 +29,7 @@ describe(Root, () => {
   baselineComponent(Root);
 
   describe('With View', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     mountTest(() => (
       <Root activeView="view">
         <View id="view" activePanel="">
@@ -55,7 +55,7 @@ describe(Root, () => {
   });
 
   describe('calls onTransition', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     it.each([
       ['with animation', true],
       ['without animation', false],
@@ -184,7 +184,7 @@ describe(Root, () => {
   });
 
   describe('scroll control', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     it('restores on back navigation', async () => {
       let y = 101;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);

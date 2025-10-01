@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimersForScope, userEvent } from '../../testing/utils';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { WriteBar, type WriteBarProps } from './WriteBar';
 
@@ -16,7 +16,7 @@ describe('WriteBar', () => {
   ));
 
   describe('works uncontrolled', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('form reset form', async () => {
       render(
         <form data-testid="form">

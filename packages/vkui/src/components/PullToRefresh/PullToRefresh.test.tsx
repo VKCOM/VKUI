@@ -3,7 +3,7 @@ import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Platform, type PlatformType } from '../../lib/platform';
-import { baselineComponent, fakeTimers, withFakeTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimersForScope, withFakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
 import pullToRefreshStyles from './PullToRefresh.module.css';
@@ -49,7 +49,7 @@ describe(PullToRefresh, () => {
   baselineComponent(PullToRefresh);
 
   describe('calls onRefresh', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('after pull', () => {
       const onRefresh = vi.fn();
       render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);

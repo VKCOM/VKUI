@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   setNodeEnv,
   userEvent,
   withFakeTimers,
@@ -208,7 +208,7 @@ describe('Gallery', () => {
   baselineComponent(Gallery);
 
   describe('handles slide count', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     it('prevents slideIndex outside slide count', () => {
       let index;
       render(
@@ -341,7 +341,7 @@ describe('Gallery', () => {
   });
 
   describe.each([true, false])('check correct working gallery with lopped %s', (looped) => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     it('check rendering one slide correct', () => {
       const mockedData = setup({
         looped,

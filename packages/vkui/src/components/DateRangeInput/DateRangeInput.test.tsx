@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { addDays, dateFormatter } from '../../lib/date';
-import { baselineComponent, fakeTimers, userEvent, withFakeTimers } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { DateRangeInput } from './DateRangeInput';
 
 const startDate = new Date(2024, 6, 20);
@@ -276,7 +281,7 @@ describe('DateRangeInput', () => {
   );
 
   describe('keyboard', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('controls focus when arrows or tab keys are pressed', async () => {
       render(
         <div>
@@ -429,7 +434,7 @@ describe('DateRangeInput', () => {
   });
 
   describe('accessible mode', () => {
-    fakeTimers(false);
+    fakeTimersForScope(false);
     it('opens/closes calendar with keyboard/mouse', async () => {
       const onCalendarOpenChangedStub = vi.fn();
       render(
