@@ -95,8 +95,6 @@ describe(ActionSheet, () => {
     }
   });
 
-  // fakeTimers();
-
   describe.each([
     ['desktop', ActionSheetDesktop],
     ['mobile', ActionSheetMobile],
