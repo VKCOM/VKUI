@@ -43,8 +43,6 @@ export const Playground: Story = {
     return (
       <Reorder.Root
         style={{
-          display: 'flex',
-          flexDirection: 'column',
           gap: '10px',
         }}
         onReorder={onDragFinish}

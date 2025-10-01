@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { RootComponent, type RootComponentProps } from '../../RootComponent/RootComponent';
-import { type ReorderProps } from '../Reorder.tsx';
+import { type ReorderProps } from '../Reorder';
 import { ItemContext, ReorderContext } from '../context';
 
 export type ReorderItemProps = RootComponentProps<HTMLDivElement> & Pick<ReorderProps, 'onReorder'>;
@@ -13,9 +13,21 @@ export function ReorderItem({ children, getRootRef, onReorder, ...restProps }: R
   const itemRef = React.useRef<HTMLDivElement | null>(null);
   const rootRef = useExternRef(getRootRef, itemRef);
 
+  const updatedContext = React.useMemo(
+    () => (onReorder ? { ...context, onReorder: onReorder } : context),
+    [context, onReorder],
+  );
+
+  const itemContext = React.useMemo(
+    () => ({
+      itemRef,
+    }),
+    [],
+  );
+
   return (
-    <ReorderContext.Provider value={onReorder ? { ...context, onReorder } : context}>
-      <ItemContext.Provider value={{ itemRef }}>
+    <ReorderContext.Provider value={updatedContext}>
+      <ItemContext.Provider value={itemContext}>
         <RootComponent getRootRef={rootRef} {...restProps}>
           {children}
         </RootComponent>

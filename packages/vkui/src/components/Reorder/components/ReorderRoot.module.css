@@ -1,3 +1,8 @@
+.host {
+  display: flex;
+  flex-direction: column;
+}
+
 .placeholder {
   display: none;
 }

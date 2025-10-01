@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useDraggableWithDomApi } from '../../../hooks/useDraggableWithDomApi';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import type { HasComponent, HasRootRef } from '../../../types.ts';
+import type { HasComponent, HasRootRef } from '../../../types';
 import { Touch } from '../../Touch/Touch';
 import { ItemContext, ReorderContext } from '../context';
 import styles from './ReorderTrigger.module.css';
@@ -14,7 +14,7 @@ export interface ReorderTriggerProps
     HasRootRef<HTMLElement>,
     HasComponent {
   /**
-   *
+   * Обработчик, срабатывающий при изменении состояния перетаскивания.
    */
   onDragStateChange?: (dragging: boolean) => void;
 }

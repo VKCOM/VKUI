@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { ReorderItem } from './components/ReorderItem';
-import { ReorderRoot, type ReorderRootProps } from './components/ReorderRoot.tsx';
+import { ReorderRoot, type ReorderRootProps } from './components/ReorderRoot';
 import { ReorderTrigger } from './components/ReorderTrigger';
-import { ReorderTriggerIcon } from './components/ReorderTriggerIcon.tsx';
+import { ReorderTriggerIcon } from './components/ReorderTriggerIcon';
 
 export type ReorderProps<ITEM = string> = Omit<ReorderRootProps, 'children'> & {
   /**

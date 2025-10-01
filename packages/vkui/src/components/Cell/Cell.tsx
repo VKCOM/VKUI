@@ -7,7 +7,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
-import { Reorder } from '../Reorder/Reorder.tsx';
+import { Reorder } from '../Reorder/Reorder';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import { DEFAULT_DRAGGABLE_LABEL } from './constants';

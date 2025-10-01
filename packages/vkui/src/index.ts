@@ -33,6 +33,8 @@ export { Caption } from './components/Typography/Caption/Caption';
 export type { CaptionProps } from './components/Typography/Caption/Caption';
 export { EllipsisText } from './components/Typography/EllipsisText/EllipsisText';
 export type { EllipsisTextProps } from './components/Typography/EllipsisText/EllipsisText';
+export { Reorder } from './components/Reorder/Reorder';
+export type { ReorderProps } from './components/Reorder/Reorder';
 /**
  * Service
  */

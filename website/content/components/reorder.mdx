@@ -1,0 +1,48 @@
+---
+description: Компонент для реализации drag-and-drop-перестановки элементов списка.
+---
+
+<Overview group="utils">
+
+# Reorder [tag:component]
+
+Компонент для реализации drag-and-drop-перестановки элементов списка.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [draggingList, updateDraggingList] = React.useState(['Пункт 1', 'Пункт 2', 'Пункт 3', 'Пункт 4', 'Пункт 5']);
+
+const onDragFinish = ({ from, to }) => {
+  const _list = [...draggingList];
+  _list.splice(from, 1);
+  _list.splice(to, 0, draggingList[from]);
+  updateDraggingList(_list);
+};
+
+return (
+  <Reorder
+    onReorder={onDragFinish}
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 10,
+    }}
+    items={draggingList}
+    renderItem={(item) => (
+      <Reorder.Item key={item} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <Reorder.Trigger>
+          <Reorder.TriggerIcon>Переместить {item}</Reorder.TriggerIcon>
+        </Reorder.Trigger>
+        <div>{item}</div>
+      </Reorder.Item>
+    )}
+  />
+)
+```
+
+</Playground>

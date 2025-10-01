@@ -10,13 +10,13 @@ type IconType = typeof Icon24Reorder;
 
 type PropsOfComponent<T> = T extends React.ComponentType<infer P> ? P : never;
 
-type IconsProps = PropsOfComponent<typeof Icon24Reorder>;
+type IconsProps = PropsOfComponent<IconType>;
 
 interface ReorderTriggerIconProps
   extends IconsProps,
     Omit<React.HTMLAttributes<HTMLElement>, keyof IconsProps> {
   /**
-   *
+   * Иконка, которая будет отрисована.
    */
   Icon?: IconType;
 }
