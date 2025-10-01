@@ -1,12 +1,12 @@
 ---
-description: Компонент для реализации drag-and-drop-перестановки элементов списка.
+description: Компонент для реализации drag-and-drop-перестановки элементов вертикального списка.
 ---
 
 <Overview group="utils">
 
 # Reorder [tag:component]
 
-Компонент для реализации drag-and-drop-перестановки элементов списка.
+Компонент для реализации drag-and-drop-перестановки элементов вертикального списка.
 
 </Overview>
 
@@ -15,7 +15,13 @@ import { BlockWrapper } from '@/components/wrappers';
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
-const [draggingList, updateDraggingList] = React.useState(['Пункт 1', 'Пункт 2', 'Пункт 3', 'Пункт 4', 'Пункт 5']);
+const [draggingList, updateDraggingList] = React.useState([
+  'Пункт 1',
+  'Пункт 2',
+  'Пункт 3',
+  'Пункт 4',
+  'Пункт 5',
+]);
 
 const onDragFinish = ({ from, to }) => {
   const _list = [...draggingList];
@@ -28,8 +34,6 @@ return (
   <Reorder
     onReorder={onDragFinish}
     style={{
-      display: 'flex',
-      flexDirection: 'column',
       gap: 10,
     }}
     items={draggingList}
@@ -42,7 +46,208 @@ return (
       </Reorder.Item>
     )}
   />
-)
+);
 ```
 
 </Playground>
+
+## Подкомпонентный подход
+
+Собрать `Reorder` самостоятельно можно с помощью следующих подкомпонентов:
+
+- `Reorder.Root` – служит flex-оберткой для элементов списка.
+  Принимает все основные свойства `Reorder`, кроме `items` и `renderItem`.
+
+- `Reorder.Item` – отвечает за отрисовку элемента списка.
+
+- `Reorder.Trigger` – элемент, на котором обрабатываются жесты/drag. Обычно внутри него ставят Reorder.TriggerIcon.
+
+- `Reorder.TriggerIcon` — иконка для визуального хэндла. Поддерживает передачу кастомной иконки через Icon.
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const items = [
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/61377022',
+    name: 'Эльдар Мухаметханов',
+    screenName: 'e.muhamethanov',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/5850354',
+    name: 'Ином Мирджамолов',
+    screenName: 'inomdzhon',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/7431217',
+    name: 'Вика Жижонкова',
+    screenName: 'BlackySoul',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/14944123',
+    name: 'Даниил Суворов',
+    screenName: 'SevereCloud',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/32414396',
+    name: 'Никита Денисов',
+    screenName: 'qurle',
+  },
+]
+
+const [draggingList, updateDraggingList] = React.useState(items);
+
+const onDragFinish = ({ from, to }: { from: number; to: number }) => {
+  const _list = [...draggingList];
+  _list.splice(from, 1);
+  _list.splice(to, 0, draggingList[from]);
+  updateDraggingList(_list);
+};
+
+return (
+  <Reorder.Root
+    style={{
+      gap: '10px',
+    }}
+    onReorder={onDragFinish}
+  >
+    {draggingList.map((item) => (
+      <Reorder.Item key={item.name}>
+        <SimpleCell
+          hasHover={false}
+          before={
+            <Flex align="center" gap={10}>
+              <Reorder.Trigger>
+                <Reorder.TriggerIcon>Перенести ячейку</Reorder.TriggerIcon>
+              </Reorder.Trigger>
+              <Avatar size={48} src={item.avatarUrl} />
+            </Flex>
+          }
+          after={
+            <IconButton label="Написать сообщение" onClick={() => {}}>
+              <Icon28MessageOutline />
+            </IconButton>
+          }
+          subtitle={item.screenName}
+          onClick={() => {}}
+        >
+          {item.name}
+        </SimpleCell>
+      </Reorder.Item>
+    ))}
+  </Reorder.Root>
+);
+```
+
+</Playground>
+
+## Перетаскивание всего элемента целиком
+
+Иногда удобно, чтобы область перетаскивания занимала весь элемент списка — тогда пользователь может начать перемещение, нажав в любом месте карточки
+(полезно для мобильных устройств и больших touch-таргетов). Ниже — готовый пример, показывающий этот подход и объясняющий важные нюансы.
+
+Когда использовать:
+
+- Когда элемент списка представляет собой цельный интерактивный блок (карточка, контакт, запись) и вы хотите упростить UX перетаскивания.
+- Когда важно обеспечить широкий touch-таргет для перетаскивания на мобильных устройствах.
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const items = React.useMemo(
+  () => [
+    {
+      avatarUrl: 'https://avatars.githubusercontent.com/u/61377022',
+      name: 'Эльдар Мухаметханов',
+      screenName: 'e.muhamethanov',
+    },
+    {
+      avatarUrl: 'https://avatars.githubusercontent.com/u/5850354',
+      name: 'Ином Мирджамолов',
+      screenName: 'inomdzhon',
+    },
+    {
+      avatarUrl: 'https://avatars.githubusercontent.com/u/7431217',
+      name: 'Вика Жижонкова',
+      screenName: 'BlackySoul',
+    },
+    {
+      avatarUrl: 'https://avatars.githubusercontent.com/u/14944123',
+      name: 'Даниил Суворов',
+      screenName: 'SevereCloud',
+    },
+    {
+      avatarUrl: 'https://avatars.githubusercontent.com/u/32414396',
+      name: 'Никита Денисов',
+      screenName: 'qurle',
+    },
+  ],
+  [],
+);
+
+const SimpleCellWrapper = React.useCallback(({ avatarUrl, name, screenName }) => {
+  const [dragging, setDragging] = React.useState(false);
+
+  return (
+    <Reorder.Item>
+      <Reorder.Trigger onDragStateChange={setDragging}>
+        <SimpleCell
+          before={<Avatar size={48} src={avatarUrl} />}
+          after={
+            <IconButton label="Написать сообщение">
+              <Icon28MessageOutline />
+            </IconButton>
+          }
+          subtitle={screenName}
+          style={dragging ? { background: 'var(--vkui--color_background_secondary)' } : undefined}
+        >
+          {name}
+        </SimpleCell>
+      </Reorder.Trigger>
+    </Reorder.Item>
+  );
+}, []);
+
+const [draggingList, updateDraggingList] = React.useState(items);
+
+const onDragFinish = React.useCallback(
+  ({ from, to }) => {
+    const _list = [...draggingList];
+    _list.splice(from, 1);
+    _list.splice(to, 0, draggingList[from]);
+    updateDraggingList(_list);
+  },
+  [draggingList],
+);
+
+return (
+  <Reorder.Root
+    style={{
+      gap: '10px',
+    }}
+    onReorder={onDragFinish}
+  >
+    {draggingList.map((item) => (
+      <SimpleCellWrapper key={item.screenName} {...item} />
+    ))}
+  </Reorder.Root>
+);
+```
+
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name={["Group"]}>
+
+### Reorder [#reorder-api]
+
+### Reorder.Root [#reorder-root-api]
+
+### Reorder.Item [#reorder-item-api]
+
+### Reorder.Trigger [#reorder-trigger-api]
+
+### Reorder.TriggerIcon [#reorder-trigger-icon-api]
+
+</PropsTable>

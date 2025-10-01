@@ -2,11 +2,15 @@
 
 import * as React from 'react';
 import { useExternRef } from '../../../hooks/useExternRef';
-import { RootComponent, type RootComponentProps } from '../../RootComponent/RootComponent';
+import type { HasComponent, HasRootRef } from '../../../types.ts';
+import { RootComponent } from '../../RootComponent/RootComponent';
 import { type ReorderProps } from '../Reorder';
 import { ItemContext, ReorderContext } from '../context';
 
-export type ReorderItemProps = RootComponentProps<HTMLDivElement> & Pick<ReorderProps, 'onReorder'>;
+export type ReorderItemProps = React.AllHTMLAttributes<HTMLElement> &
+  HasRootRef<HTMLElement> &
+  HasComponent &
+  Pick<ReorderProps, 'onReorder'>;
 
 export function ReorderItem({ children, getRootRef, onReorder, ...restProps }: ReorderItemProps) {
   const context = React.useContext(ReorderContext);

@@ -30,14 +30,15 @@ type ReorderComponent = {
 /**
  * @see https://vkui.io/components/reorder
  */
-export const Reorder: ReorderComponent = Object.assign(
-  function Reorder<ITEM>({ items, renderItem, ...restProps }: ReorderProps<ITEM>) {
-    return <ReorderRoot {...restProps}>{items.map(renderItem)}</ReorderRoot>;
-  },
-  {
-    Trigger: ReorderTrigger,
-    Item: ReorderItem,
-    Root: ReorderRoot,
-    TriggerIcon: ReorderTriggerIcon,
-  },
-);
+export const Reorder: ReorderComponent = function Reorder<ITEM>({
+  items,
+  renderItem,
+  ...restProps
+}: ReorderProps<ITEM>) {
+  return <ReorderRoot {...restProps}>{items.map(renderItem)}</ReorderRoot>;
+};
+
+Reorder.Trigger = ReorderTrigger;
+Reorder.Item = ReorderItem;
+Reorder.Root = ReorderRoot;
+Reorder.TriggerIcon = ReorderTriggerIcon;

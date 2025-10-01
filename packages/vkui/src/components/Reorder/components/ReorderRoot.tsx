@@ -7,11 +7,15 @@ import {
   type SwappedItemRange,
 } from '../../../hooks/useDraggableWithDomApi';
 import { useStableCallback } from '../../../hooks/useStableCallback';
-import { RootComponent, type RootComponentProps } from '../../RootComponent/RootComponent';
+import type { HasComponent, HasRootRef } from '../../../types.ts';
+import { RootComponent } from '../../RootComponent/RootComponent';
 import { ReorderContext } from '../context';
 import styles from './ReorderRoot.module.css';
 
-export interface ReorderRootProps extends RootComponentProps<HTMLDivElement> {
+export interface ReorderRootProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLElement>,
+    HasComponent {
   /**
    * Обработчик, срабатывающий при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В обработчике есть объект с полями `from` и `to`.
