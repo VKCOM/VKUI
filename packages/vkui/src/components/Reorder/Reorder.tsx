@@ -8,32 +8,36 @@ import { ReorderTriggerIcon } from './components/ReorderTriggerIcon.tsx';
 
 export type ReorderProps<ITEM = string> = Omit<ReorderRootProps, 'children'> & {
   /**
-   *
+   * Массив элементов для рендера.
    */
   items: ITEM[];
   /**
-   *
+   * Функция для рендера элемента.
    */
-  renderItem: (item: ITEM) => React.ReactNode;
+  renderItem: (item: ITEM, index: number) => React.ReactNode;
 };
+
+/* eslint-disable jsdoc/require-jsdoc */
+type ReorderComponent = {
+  <ITEM>(props: ReorderProps<ITEM>): React.ReactElement | null;
+  Trigger: typeof ReorderTrigger;
+  Item: typeof ReorderItem;
+  Root: typeof ReorderRoot;
+  TriggerIcon: typeof ReorderTriggerIcon;
+};
+/* eslint-enable jsdoc/require-jsdoc */
 
 /**
  * @see https://vkui.io/components/reorder
  */
-export function Reorder<ITEM = string>({
-  items,
-  renderItem,
-  ...restProps
-}: ReorderProps<ITEM> & {
-  Trigger: typeof ReorderTrigger;
-  Item: typeof ReorderItem;
-  Container: typeof ReorderRoot;
-  TriggerIcon: typeof ReorderTriggerIcon;
-}) {
-  return <ReorderRoot {...restProps}>{items.map(renderItem)}</ReorderRoot>;
-}
-
-Reorder.Trigger = ReorderTrigger;
-Reorder.TriggerIcon = ReorderTriggerIcon;
-Reorder.Item = ReorderItem;
-Reorder.Root = ReorderRoot;
+export const Reorder: ReorderComponent = Object.assign(
+  function Reorder<ITEM>({ items, renderItem, ...restProps }: ReorderProps<ITEM>) {
+    return <ReorderRoot {...restProps}>{items.map(renderItem)}</ReorderRoot>;
+  },
+  {
+    Trigger: ReorderTrigger,
+    Item: ReorderItem,
+    Root: ReorderRoot,
+    TriggerIcon: ReorderTriggerIcon,
+  },
+);

@@ -1,5 +1,4 @@
 .host {
-  color: var(--vkui--color_icon_secondary);
   touch-action: manipulation;
   cursor: ns-resize;
   user-select: none;

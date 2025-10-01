@@ -4,11 +4,15 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useDraggableWithDomApi } from '../../../hooks/useDraggableWithDomApi';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { Touch, type TouchProps } from '../../Touch/Touch';
+import type { HasComponent, HasRootRef } from '../../../types.ts';
+import { Touch } from '../../Touch/Touch';
 import { ItemContext, ReorderContext } from '../context';
-import styles from './Reorder.module.css';
+import styles from './ReorderTrigger.module.css';
 
-export interface ReorderTriggerProps extends TouchProps {
+export interface ReorderTriggerProps
+  extends React.AllHTMLAttributes<HTMLElement>,
+    HasRootRef<HTMLElement>,
+    HasComponent {
   /**
    *
    */
