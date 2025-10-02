@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { Reorder, type ReorderProps } from '../Reorder/Reorder';
 import styles from './List.module.css';
@@ -18,14 +19,17 @@ export const List = ({
   children,
   gap = 0,
   onReorder,
+  className,
+  style,
   ...restProps
 }: ListProps): React.ReactNode => {
   return (
     <Reorder.Root
       role="list"
-      className={styles.host}
+      className={classNames(styles.host, className)}
       style={{
         gridGap: gap,
+        ...style,
       }}
       onReorder={onReorder}
       {...restProps}
