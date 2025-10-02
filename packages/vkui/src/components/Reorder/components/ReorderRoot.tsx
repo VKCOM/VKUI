@@ -23,9 +23,19 @@ export interface ReorderRootProps
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
   onReorder?: (value: SwappedItemRange) => void;
+  /**
+   * Отступ между элементами списка.
+   */
+  gap?: number | string;
 }
 
-export function ReorderRoot({ children, onReorder, disabled, ...restProps }: ReorderRootProps) {
+export function ReorderRoot({
+  children,
+  onReorder,
+  disabled,
+  gap = 0,
+  ...restProps
+}: ReorderRootProps) {
   const onReorderCb = useStableCallback(onReorder || noop);
 
   const context = React.useMemo(
@@ -38,7 +48,14 @@ export function ReorderRoot({ children, onReorder, disabled, ...restProps }: Reo
 
   return (
     <ReorderContext.Provider value={context}>
-      <RootComponent baseClassName={styles.host} {...restProps}>
+      <RootComponent
+        baseClassName={styles.host}
+        baseStyle={{
+          gap,
+          gridGap: gap,
+        }}
+        {...restProps}
+      >
         {children}
         <div
           aria-hidden

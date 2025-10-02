@@ -20,17 +20,13 @@ export const List = ({
   gap = 0,
   onReorder,
   className,
-  style,
   ...restProps
 }: ListProps): React.ReactNode => {
   return (
     <Reorder.Root
       role="list"
       className={classNames(styles.host, className)}
-      style={{
-        gridGap: gap,
-        ...style,
-      }}
+      gap={gap}
       onReorder={onReorder}
       {...restProps}
     >

@@ -41,13 +41,7 @@ export const Playground: Story = {
     };
 
     return (
-      <Reorder.Root
-        style={{
-          gap: '10px',
-        }}
-        onReorder={onDragFinish}
-        {...args}
-      >
+      <Reorder.Root gap={10} onReorder={onDragFinish} {...args}>
         {draggingList.map((item) => (
           <SimpleCell
             key={item.name}

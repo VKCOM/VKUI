@@ -33,9 +33,7 @@ const onDragFinish = ({ from, to }) => {
 return (
   <Reorder
     onReorder={onDragFinish}
-    style={{
-      gap: 10,
-    }}
+    gap={10}
     items={draggingList}
     renderItem={(item) => (
       <Reorder.Item key={item} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -95,6 +93,34 @@ const items = [
   },
 ]
 
+const SimpleCellWrapper = React.useCallback(({ avatarUrl, name, screenName }) => {
+  const [dragging, setDragging] = React.useState(false);
+
+  return (
+    <Reorder.Item>
+      <SimpleCell
+        before={
+          <Flex align="center" gap={10}>
+            <Reorder.Trigger onDragStateChange={setDragging}>
+              <Reorder.TriggerIcon>Перенести ячейку</Reorder.TriggerIcon>
+            </Reorder.Trigger>
+            <Avatar size={48} src={avatarUrl} />
+          </Flex>
+        }
+        after={
+          <IconButton label="Написать сообщение">
+            <Icon28MessageOutline />
+          </IconButton>
+        }
+        subtitle={screenName}
+        style={dragging ? { background: 'var(--vkui--color_background_secondary)' } : undefined}
+      >
+        {name}
+      </SimpleCell>
+    </Reorder.Item>
+  );
+}, []);
+
 const [draggingList, updateDraggingList] = React.useState(items);
 
 const onDragFinish = ({ from, to }: { from: number; to: number }) => {
@@ -106,34 +132,11 @@ const onDragFinish = ({ from, to }: { from: number; to: number }) => {
 
 return (
   <Reorder.Root
-    style={{
-      gap: '10px',
-    }}
+    gap={10}
     onReorder={onDragFinish}
   >
     {draggingList.map((item) => (
-      <Reorder.Item key={item.name}>
-        <SimpleCell
-          hasHover={false}
-          before={
-            <Flex align="center" gap={10}>
-              <Reorder.Trigger>
-                <Reorder.TriggerIcon>Перенести ячейку</Reorder.TriggerIcon>
-              </Reorder.Trigger>
-              <Avatar size={48} src={item.avatarUrl} />
-            </Flex>
-          }
-          after={
-            <IconButton label="Написать сообщение" onClick={() => {}}>
-              <Icon28MessageOutline />
-            </IconButton>
-          }
-          subtitle={item.screenName}
-          onClick={() => {}}
-        >
-          {item.name}
-        </SimpleCell>
-      </Reorder.Item>
+      <SimpleCellWrapper key={item.screenName} {...item} />
     ))}
   </Reorder.Root>
 );
@@ -154,36 +157,33 @@ return (
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
-const items = React.useMemo(
-  () => [
-    {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/61377022',
-      name: 'Эльдар Мухаметханов',
-      screenName: 'e.muhamethanov',
-    },
-    {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/5850354',
-      name: 'Ином Мирджамолов',
-      screenName: 'inomdzhon',
-    },
-    {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/7431217',
-      name: 'Вика Жижонкова',
-      screenName: 'BlackySoul',
-    },
-    {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/14944123',
-      name: 'Даниил Суворов',
-      screenName: 'SevereCloud',
-    },
-    {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/32414396',
-      name: 'Никита Денисов',
-      screenName: 'qurle',
-    },
-  ],
-  [],
-);
+const items = [
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/61377022',
+    name: 'Эльдар Мухаметханов',
+    screenName: 'e.muhamethanov',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/5850354',
+    name: 'Ином Мирджамолов',
+    screenName: 'inomdzhon',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/7431217',
+    name: 'Вика Жижонкова',
+    screenName: 'BlackySoul',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/14944123',
+    name: 'Даниил Суворов',
+    screenName: 'SevereCloud',
+  },
+  {
+    avatarUrl: 'https://avatars.githubusercontent.com/u/32414396',
+    name: 'Никита Денисов',
+    screenName: 'qurle',
+  },
+];
 
 const SimpleCellWrapper = React.useCallback(({ avatarUrl, name, screenName }) => {
   const [dragging, setDragging] = React.useState(false);
@@ -221,12 +221,7 @@ const onDragFinish = React.useCallback(
 );
 
 return (
-  <Reorder.Root
-    style={{
-      gap: '10px',
-    }}
-    onReorder={onDragFinish}
-  >
+  <Reorder.Root gap={10} onReorder={onDragFinish}>
     {draggingList.map((item) => (
       <SimpleCellWrapper key={item.screenName} {...item} />
     ))}
@@ -235,6 +230,19 @@ return (
 ```
 
 </Playground>
+
+## Пользовательская иконка перетаскивания
+
+Чтобы изменить иконку перетаскивания можно использовать свойство `Icon` компонента `Reorder.TriggerIcon`.
+
+```jsx
+<Reorder.Item>
+  <Reorder.Trigger>
+    <Reorder.TriggerIcon Icon={Icon24DragReorderOutline}>Переместить {item}</Reorder.TriggerIcon>
+  </Reorder.Trigger>
+  <div>{item}</div>
+</Reorder.Item>
+```
 
 ## Свойства и методы [#api]
 
