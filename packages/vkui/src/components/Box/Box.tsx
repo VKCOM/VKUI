@@ -1,11 +1,10 @@
-'use client';
-
 import { resolveLayoutProps } from '../../lib/layouts';
 import type { LayoutProps } from '../../lib/layouts/types';
-import type { HTMLAttributesWithRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
+import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 
-export interface BoxProps extends HTMLAttributesWithRootRef<HTMLDivElement>, LayoutProps {}
+export interface BoxProps
+  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName' | 'baseStyle'>,
+    LayoutProps {}
 
 /**
  * @see https://vkui.io/components/box

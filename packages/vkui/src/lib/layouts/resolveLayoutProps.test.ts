@@ -37,7 +37,7 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-p--m',
+      className: 'vkui-padding-m',
       style: undefined,
     });
   });
@@ -47,7 +47,7 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-pos--abs',
+      className: 'vkui-position-absolute',
       style: undefined,
     });
   });
@@ -57,8 +57,8 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-p',
-      style: { '--vkui-int-p': '16px' },
+      className: 'vkui-padding',
+      style: { '--vkui-int-padding': '16px' },
     });
   });
 
@@ -67,8 +67,8 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-is',
-      style: { '--vkui-int-is': '200px' },
+      className: 'vkui-inline-size',
+      style: { '--vkui-int-inline-size': '200px' },
     });
   });
 
@@ -77,8 +77,8 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-fg',
-      style: { '--vkui-int-fg': 2 },
+      className: 'vkui-flex-grow',
+      style: { '--vkui-int-flex-grow': 2 },
     });
   });
 
@@ -87,8 +87,8 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-fs',
-      style: { '--vkui-int-fs': 1 },
+      className: 'vkui-flex-shrink',
+      style: { '--vkui-int-flex-shrink': 1 },
     });
   });
 
@@ -97,10 +97,10 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-p--m vkui-is vkui-fg',
+      className: 'vkui-padding-m vkui-inline-size vkui-flex-grow',
       style: {
-        '--vkui-int-is': '200px',
-        '--vkui-int-fg': 1,
+        '--vkui-int-inline-size': '200px',
+        '--vkui-int-flex-grow': 1,
       },
     });
   });
@@ -110,8 +110,8 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-is',
-      style: { '--vkui-int-is': '100px' },
+      className: 'vkui-inline-size',
+      style: { '--vkui-int-inline-size': '100px' },
     });
   });
 
@@ -120,8 +120,8 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-p',
-      style: { '--vkui-int-p': 'var(--custom-value)' },
+      className: 'vkui-padding',
+      style: { '--vkui-int-padding': 'var(--custom-value)' },
     });
   });
 
@@ -130,7 +130,7 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-p--inh',
+      className: 'vkui-padding-inherit',
       style: undefined,
     });
   });
@@ -140,7 +140,7 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-is--aut',
+      className: 'vkui-inline-size-auto',
       style: undefined,
     });
   });
@@ -155,8 +155,8 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      'className': 'vkui-p--m vkui-is custom-class',
-      'style': { '--vkui-int-is': '100px' },
+      'className': 'vkui-padding-m vkui-inline-size custom-class',
+      'style': { '--vkui-int-inline-size': '100px' },
       'data-testid': 'test',
     });
   });

@@ -126,6 +126,7 @@
     "docs:beta:build": "yarn workspace @project-docs/website run build",
     "build": "yarn workspaces foreach -A run build",
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
+    "size:vkui": "yarn workspace @vkontakte/vkui run size",
     "test": "yarn workspaces foreach -A run test",
     "test:ci": "yarn workspaces foreach -A run test:ci",
     "test:e2e": "yarn workspace @vkontakte/vkui run test:e2e",

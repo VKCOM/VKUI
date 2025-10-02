@@ -5,6 +5,7 @@ import './styles/focusVisible.module.css';
 import './styles/animationFades.module.css';
 import './styles/transformOriginByPlacement.module.css';
 import './styles/gaps.module.css';
+import './styles/layout.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export { AppRootPortal } from './components/AppRoot/AppRootPortal';

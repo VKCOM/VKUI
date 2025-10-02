@@ -6,43 +6,28 @@ export type DesignSystemSize = '2xs' | 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '
 // Глобальные CSS-значения
 export type CSSGlobalValue = 'inherit' | 'initial' | 'unset';
 
-// Значения с единицами измерения
-export type CSSUnitValue = `${number}${'em' | 'rem' | '%' | 'vw' | 'vh'}`;
-
-// Пользовательские CSS-переменные
-export type CSSCustomSize = `--${string}`;
-
 // Ключевые слова для внутренних размеров
-export type CSSIntrinsicSizingKeywords =
-  | 'auto'
-  | 'fill'
-  | 'max-content'
-  | 'min-content'
-  | 'fit-content';
+export type CSSIntrinsicSizingKeywords = 'auto' | 'max-content' | 'min-content' | 'fit-content';
 
 export type PositionValue = 'static' | 'relative' | 'absolute' | 'fixed';
 
+export type OverflowValue = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | CSSGlobalValue;
+
 // Тип для отступов
-export type PaddingProp = LiteralUnion<
-  DesignSystemSize | CSSGlobalValue | CSSUnitValue | CSSCustomSize | CSSIntrinsicSizingKeywords,
-  number
->;
+export type PaddingProp = LiteralUnion<DesignSystemSize | CSSGlobalValue, number | string>;
 
 // Типы для параметров позиционирования
-export type InsetProp = LiteralUnion<DesignSystemSize | CSSUnitValue | CSSCustomSize, number>;
+export type InsetProp = LiteralUnion<DesignSystemSize | CSSGlobalValue | 'auto', number | string>;
 
 // Тип для размеров
-export type SizeProp = LiteralUnion<
-  CSSGlobalValue | CSSUnitValue | CSSCustomSize | CSSIntrinsicSizingKeywords,
-  number
->;
+export type SizeProp = LiteralUnion<CSSGlobalValue | CSSIntrinsicSizingKeywords, number | string>;
 
 // Тип для управления flex-свойствами
-export type FlexGrowProp = LiteralUnion<CSSGlobalValue | CSSCustomSize, number>;
-export type FlexShrinkProp = LiteralUnion<CSSGlobalValue | CSSCustomSize, number>;
+export type FlexGrowProp = LiteralUnion<CSSGlobalValue, number>;
+export type FlexShrinkProp = LiteralUnion<CSSGlobalValue, number>;
 export type FlexBasisProp = LiteralUnion<
-  CSSIntrinsicSizingKeywords | CSSGlobalValue | CSSUnitValue | CSSCustomSize,
-  number
+  CSSIntrinsicSizingKeywords | 'content' | CSSGlobalValue,
+  number | string
 >;
 
 export interface LayoutProps {
@@ -81,11 +66,11 @@ export interface LayoutProps {
   /**
    * Минимальная ширина элемента.
    */
-  minInlineSize?: SizeProp;
+  minInlineSize?: Exclude<SizeProp, 'auto'>;
   /**
    * Максимальная ширина элемента.
    */
-  maxInlineSize?: SizeProp;
+  maxInlineSize?: Exclude<SizeProp, 'auto'>;
   /**
    * Высота элемента.
    */
@@ -130,6 +115,18 @@ export interface LayoutProps {
    * Позиционирование элемента.
    */
   position?: PositionValue;
+  /**
+   * Управление переполнением содержимого.
+   */
+  overflow?: OverflowValue;
+  /**
+   * Управление переполнением содержимого по вертикали.
+   */
+  overflowBlock?: OverflowValue;
+  /**
+   * Управление переполнением содержимого по горизонтали.
+   */
+  overflowInline?: OverflowValue;
   /**
    * Определяет, насколько элемент будет расти относительно остальных flex-элементов.
    */

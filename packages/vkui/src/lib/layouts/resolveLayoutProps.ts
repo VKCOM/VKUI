@@ -1,6 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
-import type { CSSCustomProperties } from '../../types';
+import { generateConstantClassName, generateVariable, generateVariableClassName } from './helpers';
 import { LAYOUT_PROPS, type LayoutPropKeys } from './layoutProps';
 
 export type ComponentProps = {
@@ -19,21 +19,22 @@ export function resolveLayoutProps<T extends ComponentProps>(
 ) {
   const outProps = { ...props };
   let resolvedClassName: string | undefined;
-  let resolvedStyle: React.CSSProperties & CSSCustomProperties;
+  let resolvedStyle: React.CSSProperties | undefined;
 
   for (const key in LAYOUT_PROPS) {
     if (key in outProps && outProps[key] !== undefined) {
       const propDef = LAYOUT_PROPS[key as LayoutPropKeys];
       const value = outProps[key];
-      // @ts-expect-error: TS1224 Fix types
-      if (typeof value === 'string' && propDef.values.includes(value)) {
-        const shortValue = value.substring(0, 3);
-        resolvedClassName = classNames(resolvedClassName, `${propDef.className}--${shortValue}`);
-      } else if ('variable' in propDef) {
-        resolvedClassName = classNames(resolvedClassName, propDef.className);
-        // @ts-expect-error: TS1224 Fix mergeStyle props?
+      const cssProperty = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      if (typeof value === 'string' && (propDef as string[]).includes(value)) {
+        resolvedClassName = classNames(
+          resolvedClassName,
+          generateConstantClassName(cssProperty, value),
+        );
+      } else if (key !== 'position' && !key.startsWith('overflow')) {
+        resolvedClassName = classNames(resolvedClassName, generateVariableClassName(cssProperty));
         resolvedStyle = mergeStyle(resolvedStyle, {
-          [propDef.variable]:
+          [generateVariable(cssProperty)]:
             typeof value === 'number' && key !== 'flexGrow' && key !== 'flexShrink'
               ? `${value}px`
               : value,
@@ -44,7 +45,6 @@ export function resolveLayoutProps<T extends ComponentProps>(
   }
 
   outProps.className = classNames(resolvedClassName, outProps.className);
-  // @ts-expect-error: TS1224 Fix mergeStyle props?
   outProps.style = mergeStyle(resolvedStyle, outProps.style);
 
   return outProps;
