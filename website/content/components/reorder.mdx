@@ -23,25 +23,16 @@ const [draggingList, updateDraggingList] = React.useState([
   'Пункт 5',
 ]);
 
-const onDragFinish = ({ from, to }) => {
-  const _list = [...draggingList];
-  _list.splice(from, 1);
-  _list.splice(to, 0, draggingList[from]);
-  updateDraggingList(_list);
-};
-
 return (
   <Reorder
-    onReorder={onDragFinish}
     gap={10}
     items={draggingList}
-    renderItem={(item) => (
-      <Reorder.Item key={item} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <Reorder.Trigger>
-          <Reorder.TriggerIcon>Переместить {item}</Reorder.TriggerIcon>
-        </Reorder.Trigger>
+    setItems={updateDraggingList}
+    renderItem={(item, index, dragger) => (
+      <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        {dragger}
         <div>{item}</div>
-      </Reorder.Item>
+      </div>
     )}
   />
 );
@@ -49,7 +40,17 @@ return (
 
 </Playground>
 
-## Подкомпонентный подход
+> Несколько важных моментов:
+>
+> - В качестве `items` можно передать массив элементов типа `string`, `number` или объекта с полем `id`.
+>   Элементы массива, а также `id` должны быть уникальными в рамках списка.
+>   Это нужно для корректного определения `key` у элемента.
+> - В `renderItem` третьим параметром передается готовый тригер для перетаскивания, который вы можете встроить в любое место элемента.
+>   Если вам нужно кастомизировать компонент, вы можете использовать свойства `triggerLabel` и `TriggerIcon`.
+>   Если этого не достаточно, то вы можете самостоятельно отрендерить тригер для перетаскивания. Подробнее можно увидеть в разделе ["Подкомпонентный подход"](/components/reorder#subcomponents)
+> - Вы можете использовать функцию `Reorder.onReorder`, чтобы не реализовывать логику изменения порядка элементов.
+
+## Подкомпонентный подход [#subcomponents]
 
 Собрать `Reorder` самостоятельно можно с помощью следующих подкомпонентов:
 
@@ -58,9 +59,9 @@ return (
 
 - `Reorder.Item` – отвечает за отрисовку элемента списка.
 
-- `Reorder.Trigger` – элемент, на котором обрабатываются жесты/drag. Обычно внутри него ставят Reorder.TriggerIcon.
+- `Reorder.Trigger` – элемент, на котором обрабатываются жесты/drag. Обычно внутри него ставят `Reorder.TriggerIcon`.
 
-- `Reorder.TriggerIcon` — иконка для визуального хэндла. Поддерживает передачу кастомной иконки через Icon.
+- `Reorder.TriggerIcon` — иконка для визуального хэндла. Поддерживает передачу кастомной иконки через `Icon`.
 
 <Playground Wrapper={BlockWrapper}>
 
@@ -91,7 +92,7 @@ const items = [
     name: 'Никита Денисов',
     screenName: 'qurle',
   },
-]
+];
 
 const SimpleCellWrapper = React.useCallback(({ avatarUrl, name, screenName }) => {
   const [dragging, setDragging] = React.useState(false);
@@ -123,18 +124,11 @@ const SimpleCellWrapper = React.useCallback(({ avatarUrl, name, screenName }) =>
 
 const [draggingList, updateDraggingList] = React.useState(items);
 
-const onDragFinish = ({ from, to }: { from: number; to: number }) => {
-  const _list = [...draggingList];
-  _list.splice(from, 1);
-  _list.splice(to, 0, draggingList[from]);
-  updateDraggingList(_list);
-};
+const onDragFinish = (swappedItems) =>
+  updateDraggingList(Reorder.onReorder(swappedItems, draggingList));
 
 return (
-  <Reorder.Root
-    gap={10}
-    onReorder={onDragFinish}
-  >
+  <Reorder.Root gap={10} onReorder={onDragFinish}>
     {draggingList.map((item) => (
       <SimpleCellWrapper key={item.screenName} {...item} />
     ))}
@@ -210,15 +204,8 @@ const SimpleCellWrapper = React.useCallback(({ avatarUrl, name, screenName }) =>
 
 const [draggingList, updateDraggingList] = React.useState(items);
 
-const onDragFinish = React.useCallback(
-  ({ from, to }) => {
-    const _list = [...draggingList];
-    _list.splice(from, 1);
-    _list.splice(to, 0, draggingList[from]);
-    updateDraggingList(_list);
-  },
-  [draggingList],
-);
+const onDragFinish = (swappedItems) =>
+  updateDraggingList(Reorder.onReorder(swappedItems, draggingList));
 
 return (
   <Reorder.Root gap={10} onReorder={onDragFinish}>

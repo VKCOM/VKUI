@@ -12,7 +12,7 @@ type PropsOfComponent<T> = T extends React.ComponentType<infer P> ? P : never;
 
 type IconsProps = PropsOfComponent<IconType>;
 
-interface ReorderTriggerIconProps
+export interface ReorderTriggerIconProps
   extends IconsProps,
     Omit<React.HTMLAttributes<HTMLElement>, keyof IconsProps> {
   /**

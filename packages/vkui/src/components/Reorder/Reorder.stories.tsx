@@ -23,6 +23,7 @@ export default story;
 
 type Story = StoryObj<
   ReorderProps<{
+    id: string;
     avatarUrl: string;
     name: string;
     screenName: string;
@@ -33,18 +34,15 @@ export const Playground: Story = {
   render: function Render({ items, ...args }) {
     const [draggingList, updateDraggingList] = React.useState(items);
 
-    const onDragFinish = ({ from, to }: { from: number; to: number }) => {
-      const _list = [...draggingList];
-      _list.splice(from, 1);
-      _list.splice(to, 0, draggingList[from]);
-      updateDraggingList(_list);
+    const onDragFinish: ReorderProps['onReorder'] = (swappedItems) => {
+      updateDraggingList(Reorder.onReorder(swappedItems, draggingList));
     };
 
     return (
       <Reorder.Root gap={10} onReorder={onDragFinish} {...args}>
         {draggingList.map((item) => (
           <SimpleCell
-            key={item.name}
+            key={item.id}
             Component={Reorder.Item}
             hasHover={false}
             before={
@@ -75,26 +73,31 @@ export const Playground: Story = {
         avatarUrl: 'https://avatars.githubusercontent.com/u/61377022',
         name: 'Эльдар Мухаметханов',
         screenName: 'e.muhamethanov',
+        id: 'e.muhamethanov',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/5850354',
         name: 'Ином Мирджамолов',
         screenName: 'inomdzhon',
+        id: 'inomdzhon',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/7431217',
         name: 'Вика Жижонкова',
         screenName: 'BlackySoul',
+        id: 'BlackySoul',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/14944123',
         name: 'Даниил Суворов',
         screenName: 'SevereCloud',
+        id: 'SevereCloud',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/32414396',
         name: 'Никита Денисов',
         screenName: 'qurle',
+        id: 'qurle',
       },
     ],
   },
