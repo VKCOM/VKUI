@@ -19,7 +19,7 @@
     "cross-spawn": "^7.0.5",
     "jscodeshift": "^17.3.0",
     "prompts": "^2.4.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@swc/core": "^1.13.5",
