@@ -3,7 +3,7 @@ import {
   AppRootContext,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../../components/AppRoot/AppRootContext';
-import { fakeTimers, userEvent } from '../../testing/utils';
+import { userEvent, withFakeTimers } from '../../testing/utils';
 import { CalendarDay, type CalendarDayProps } from './CalendarDay';
 import styles from './CalendarDay.module.css';
 import stylesFocusVisible from '../../styles/focusVisible.module.css';
@@ -16,8 +16,6 @@ const CalendarDayTest = (testProps: Omit<CalendarDayProps, 'day' | 'onChange'>) 
 );
 
 describe('CalendarDay', () => {
-  fakeTimers();
-
   it('calls callback with day on click', () => {
     render(<CalendarDayTest />);
     fireEvent.click(screen.getByText('1'));
@@ -54,26 +52,28 @@ describe('CalendarDay', () => {
     expect(screen.queryByText('1')).toBeTruthy();
   });
 
-  it('can be disabled but focusable with focus visible', async () => {
-    // Важно видеть фокус в календаре при переходе по задисейбленным дням
-    // Так как дни могут быть запрещены произвольным образом,
-    // то прыгать через них при навигации выглядит как плохое решение как в плане написания логики для проверки ближайшего незадисейбленного дня,
-    // так и для пользователя, для которого может быть неожиданно оказаться на несколько месяцев впереди при переходе по таблице, а значит видеть где фокус даже на disabled дне при навигации с клавиатуры нужно.
-    vi.useFakeTimers();
-    render(
-      <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput: true }}>
-        <CalendarDayTest disabled testId="day" tabIndex={0}>
-          31
-        </CalendarDayTest>
-      </AppRootContext.Provider>,
-    );
+  it(
+    'can be disabled but focusable with focus visible',
+    withFakeTimers(async () => {
+      // Важно видеть фокус в календаре при переходе по задисейбленным дням
+      // Так как дни могут быть запрещены произвольным образом,
+      // то прыгать через них при навигации выглядит как плохое решение как в плане написания логики для проверки ближайшего незадисейбленного дня,
+      // так и для пользователя, для которого может быть неожиданно оказаться на несколько месяцев впереди при переходе по таблице, а значит видеть где фокус даже на disabled дне при навигации с клавиатуры нужно.
+      render(
+        <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput: true }}>
+          <CalendarDayTest disabled testId="day" tabIndex={0}>
+            31
+          </CalendarDayTest>
+        </AppRootContext.Provider>,
+      );
 
-    expect(screen.getByTestId('day')).not.toHaveClass(
-      stylesFocusVisible['-focus-visible--focused'],
-    );
+      expect(screen.getByTestId('day')).not.toHaveClass(
+        stylesFocusVisible['-focus-visible--focused'],
+      );
 
-    await userEvent.tab();
+      await userEvent.tab();
 
-    expect(screen.getByTestId('day')).toHaveClass(stylesFocusVisible['-focus-visible--focused']);
-  });
+      expect(screen.getByTestId('day')).toHaveClass(stylesFocusVisible['-focus-visible--focused']);
+    }),
+  );
 });

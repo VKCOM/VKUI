@@ -58,10 +58,6 @@ updates:
         patterns:
           - 'stylelint*'
           - '@vkontakte/stylelint-config'
-      jest:
-        patterns:
-          - 'jest*'
-          - '@types/jest*'
       vitest:
         patterns:
           - 'vitest*'

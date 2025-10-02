@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { NativeSelect, type NativeSelectProps } from './NativeSelect';
 
 const getTarget = () => screen.getByTestId<HTMLSelectElement>('target');
@@ -16,40 +21,46 @@ describe('NativeSelect', () => {
     </>
   ));
 
-  it('works correctly with value and onChange', async () => {
-    const SelectController = () => {
-      const [value, setValue] = React.useState<NativeSelectProps['value']>('0');
-      return (
-        <NativeSelect
-          data-testid="target"
-          value={value}
-          onChange={(_, newValue) => setValue(newValue)}
-        >
+  it(
+    'works correctly with value and onChange',
+    withFakeTimers(async () => {
+      const SelectController = () => {
+        const [value, setValue] = React.useState<NativeSelectProps['value']>('0');
+        return (
+          <NativeSelect
+            data-testid="target"
+            value={value}
+            onChange={(_, newValue) => setValue(newValue)}
+          >
+            <option value="0">Mike</option>
+            <option value="1">Josh</option>
+          </NativeSelect>
+        );
+      };
+
+      render(<SelectController />);
+
+      expect(getTarget()).toHaveValue('0');
+      await userEvent.selectOptions(getTarget(), ['1']);
+      expect(getTarget()).toHaveValue('1');
+    }),
+  );
+
+  it(
+    'works correctly with pinned value',
+    withFakeTimers(async () => {
+      render(
+        <NativeSelect data-testid="target" value="0">
           <option value="0">Mike</option>
           <option value="1">Josh</option>
-        </NativeSelect>
+        </NativeSelect>,
       );
-    };
 
-    render(<SelectController />);
-
-    expect(getTarget()).toHaveValue('0');
-    await userEvent.selectOptions(getTarget(), ['1']);
-    expect(getTarget()).toHaveValue('1');
-  });
-
-  it('works correctly with pinned value', async () => {
-    render(
-      <NativeSelect data-testid="target" value="0">
-        <option value="0">Mike</option>
-        <option value="1">Josh</option>
-      </NativeSelect>,
-    );
-
-    expect(getTarget()).toHaveValue('0');
-    await userEvent.selectOptions(getTarget(), ['1']);
-    expect(getTarget()).toHaveValue('0');
-  });
+      expect(getTarget()).toHaveValue('0');
+      await userEvent.selectOptions(getTarget(), ['1']);
+      expect(getTarget()).toHaveValue('0');
+    }),
+  );
 
   it('accept defaultValue', () => {
     render(
@@ -63,6 +74,7 @@ describe('NativeSelect', () => {
   });
 
   describe('works uncontrolled', () => {
+    fakeTimersForScope();
     it('form reset form', async () => {
       render(
         <form data-testid="form">

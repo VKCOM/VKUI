@@ -4,10 +4,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   userEvent,
   waitCSSKeyframesAnimation,
   waitForFloatingPosition,
+  withFakeTimers,
 } from '../../testing/utils';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -94,8 +95,6 @@ describe(ActionSheet, () => {
     }
   });
 
-  fakeTimers();
-
   describe.each([
     ['desktop', ActionSheetDesktop],
     ['mobile', ActionSheetMobile],
@@ -112,6 +111,7 @@ describe(ActionSheet, () => {
     { autoCloseDisabled: true, selectable: true },
     { isCancelItem: true },
   ])('calls handlers when %s', (props) => {
+    fakeTimersForScope();
     it.each([
       ['desktop', ActionSheetDesktop],
       ['mobile', ActionSheetMobile],
@@ -162,6 +162,7 @@ describe(ActionSheet, () => {
     ['container', () => screen.getByTestId('container')],
     ['content', () => screen.getByTestId('content')],
   ])('does not close on %s click', (_name, getNode) => {
+    fakeTimersForScope();
     it.each([
       ['desktop', ActionSheetDesktop],
       ['mobile', ActionSheetMobile],
@@ -182,6 +183,7 @@ describe(ActionSheet, () => {
   });
 
   describe('closes on click outside', () => {
+    fakeTimersForScope();
     it('desktop', async () => {
       const onClose = vi.fn();
       const result = render(<ActionSheetDesktop onClose={onClose} />);
@@ -205,12 +207,15 @@ describe(ActionSheet, () => {
     });
   });
 
-  it('renders header and text', () => {
-    render(<ActionSheetMobile title="The header title" description="Text footnote" />);
-    act(vi.runAllTimers);
-    expect(screen.queryByText('The header title')).toBeTruthy();
-    expect(screen.queryByText('Text footnote')).toBeTruthy();
-  });
+  it(
+    'renders header and text',
+    withFakeTimers(() => {
+      render(<ActionSheetMobile title="The header title" description="Text footnote" />);
+      act(vi.runAllTimers);
+      expect(screen.queryByText('The header title')).toBeTruthy();
+      expect(screen.queryByText('Text footnote')).toBeTruthy();
+    }),
+  );
 
   it('renders close button only on mobile iOS', async () => {
     const { rerender } = render(
@@ -263,6 +268,7 @@ describe(ActionSheet, () => {
   });
 
   describe('handle allowClickPropagation correctly', () => {
+    fakeTimersForScope();
     it.each([
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, fakeTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimersForScope, withFakeTimers } from '../../testing/utils';
 import { ModalCard } from '../ModalCard/ModalCard';
 import { waitModalCardCSSTransitionEnd } from '../ModalCard/ModalCard.test';
 import { ModalPage } from '../ModalPage/ModalPage';
@@ -15,12 +15,12 @@ const waitCSSTransitionEndConditionally = async (el: HTMLElement, displayName: s
 
 describe(ModalRoot, () => {
   baselineComponent(ModalRoot, { forward: false, getRootRef: false });
-  fakeTimers();
 
   describe.each([
     { displayName: 'ModalPage', Component: ModalPage },
     { displayName: 'ModalCard', Component: ModalCard },
   ])('With $displayName', ({ displayName, Component }) => {
+    fakeTimersForScope();
     test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
       const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
       const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
@@ -110,6 +110,7 @@ describe(ModalRoot, () => {
   });
 
   describe('shows active modal', () => {
+    fakeTimersForScope();
     const modals = [
       <ModalPage id="m" data-testid="m" key="m" />,
       <ModalPage id="other" data-testid="other" key="o" />,
@@ -180,6 +181,7 @@ describe(ModalRoot, () => {
     { displayName: 'ModalPage', Component: ModalPage },
     { displayName: 'ModalCard', Component: ModalCard },
   ])('handle onClose', ({ displayName, Component }) => {
+    fakeTimersForScope();
     describe('on fade click', () => {
       it('calls modal onClose', async () => {
         const onClose = vi.fn();
@@ -244,32 +246,36 @@ describe(ModalRoot, () => {
     });
   });
 
-  it('check modalOverlayTestId prop vs context priority', async () => {
-    const h = render(
-      <ModalRoot activeModal="page" modalOverlayTestId="modal-mask">
-        <ModalPage id="page" data-testid="page" />
-      </ModalRoot>,
-    );
-    await waitModalPageCSSTransitionEnd(h.getByTestId('page'));
-    act(() => {
-      vi.runOnlyPendingTimers();
-    });
-    expect(screen.queryByTestId('modal-mask')).toBeTruthy();
+  it(
+    'check modalOverlayTestId prop vs context priority',
+    withFakeTimers(async () => {
+      const h = render(
+        <ModalRoot activeModal="page" modalOverlayTestId="modal-mask">
+          <ModalPage id="page" data-testid="page" />
+        </ModalRoot>,
+      );
+      await waitModalPageCSSTransitionEnd(h.getByTestId('page'));
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+      expect(screen.queryByTestId('modal-mask')).toBeTruthy();
 
-    h.rerender(
-      <ModalRoot activeModal="page" modalOverlayTestId="modal-mask">
-        <ModalPage id="page" data-testid="page" modalOverlayTestId="custom-mask" />
-      </ModalRoot>,
-    );
-    await waitModalPageCSSTransitionEnd(h.getByTestId('page'));
-    act(() => {
-      vi.runOnlyPendingTimers();
-    });
-    expect(screen.queryByTestId('modal-mask')).toBeFalsy();
-    expect(screen.queryByTestId('custom-mask')).toBeTruthy();
-  });
+      h.rerender(
+        <ModalRoot activeModal="page" modalOverlayTestId="modal-mask">
+          <ModalPage id="page" data-testid="page" modalOverlayTestId="custom-mask" />
+        </ModalRoot>,
+      );
+      await waitModalPageCSSTransitionEnd(h.getByTestId('page'));
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+      expect(screen.queryByTestId('modal-mask')).toBeFalsy();
+      expect(screen.queryByTestId('custom-mask')).toBeTruthy();
+    }),
+  );
 
   describe('focus', () => {
+    fakeTimersForScope();
     let modalPageRef: React.RefObject<HTMLDivElement | null> = React.createRef<HTMLDivElement>();
     let modalCardRef: React.RefObject<HTMLDivElement | null> = React.createRef<HTMLDivElement>();
     let modalPageWithInputRef: React.RefObject<HTMLDivElement | null> =

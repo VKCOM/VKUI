@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon12Add } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { Button } from '../../../components/Button/Button';
-import { baselineComponent, userEvent } from '../../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../../testing/utils';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay';
 import styles from './ImageBaseOverlay.module.css';
 
@@ -33,34 +33,40 @@ const ImageBaseOverlayNonClickableTest = (
 describe(ImageBaseOverlay, () => {
   baselineComponent(ImageBaseOverlayClickableTest);
 
-  it('focus event works as expected without noInteractive', async () => {
-    render(<ImageBaseOverlayClickableTest />);
-    const element = screen.getByTestId('overlay');
+  it(
+    'focus event works as expected without noInteractive',
+    withFakeTimers(async () => {
+      render(<ImageBaseOverlayClickableTest />);
+      const element = screen.getByTestId('overlay');
 
-    await userEvent.tab();
-    expect(element).toHaveFocus();
-    act(vi.runAllTimers);
-    await userEvent.tab();
-    expect(document.querySelector(`.${styles.visible}`)).toBeNull();
-  });
+      await userEvent.tab();
+      expect(element).toHaveFocus();
+      act(vi.runAllTimers);
+      await userEvent.tab();
+      expect(document.querySelector(`.${styles.visible}`)).toBeNull();
+    }),
+  );
 
-  it('focus event works as expected with noInteractive', async () => {
-    render(<ImageBaseOverlayNonClickableTest />);
-    const button1 = screen.getByTestId('button1');
-    const button2 = screen.getByTestId('button2');
+  it(
+    'focus event works as expected with noInteractive',
+    withFakeTimers(async () => {
+      const { container } = render(<ImageBaseOverlayNonClickableTest />);
+      const button1 = screen.getByTestId('button1');
+      const button2 = screen.getByTestId('button2');
 
-    await userEvent.tab();
-    expect(button1).toHaveFocus();
-    act(vi.runAllTimers);
-    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
-    await userEvent.tab();
-    expect(button2).toHaveFocus();
-    act(vi.runAllTimers);
-    expect(document.querySelector(`.${styles.visible}`)).not.toBeNull();
-    await userEvent.tab();
-    act(vi.runAllTimers);
-    expect(document.querySelector(`.${styles.visible}`)).toBeNull();
-  });
+      await userEvent.tab();
+      expect(button1).toHaveFocus();
+      act(vi.runAllTimers);
+      expect(container.getElementsByClassName(styles.visible)).toHaveLength(1);
+      await userEvent.tab();
+      expect(button2).toHaveFocus();
+      act(vi.runAllTimers);
+      expect(container.getElementsByClassName(styles.visible)).toHaveLength(1);
+      await userEvent.tab();
+      act(vi.runAllTimers);
+      expect(container.getElementsByClassName(styles.visible)).toHaveLength(0);
+    }),
+  );
 
   describe('works as clickable element', () => {
     it('appears as clickable element', () => {
