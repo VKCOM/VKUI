@@ -1,6 +1,6 @@
 import { fireEvent, getByRole, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { List } from '../List/List';
 import { Cell } from './Cell';
@@ -12,37 +12,40 @@ describe('Cell', () => {
   baselineComponent((props) => <Cell {...props}>Cell</Cell>);
 
   describe('Controls dragging', () => {
-    it('does not reorder dragged item on click', async () => {
-      const initialList = ['eugpoloz', 'arthurstam', 'xyz'];
-      let updatedList = [...initialList];
+    it(
+      'does not reorder dragged item on click',
+      withFakeTimers(async () => {
+        const initialList = ['eugpoloz', 'arthurstam', 'xyz'];
+        let updatedList = [...initialList];
 
-      render(
-        <List gap={20}>
-          {updatedList.map((item) => (
-            <Cell
-              key={item}
-              data-testid={'list-' + item}
-              draggable
-              onDragFinish={({ from, to }) => {
-                let list = [...updatedList];
-                list.splice(from, 1);
-                list.splice(to, 0, updatedList[from]);
-                updatedList = [...list];
-              }}
-              draggerLabel={label}
-            >
-              {item}
-            </Cell>
-          ))}
-        </List>,
-      );
+        render(
+          <List gap={20}>
+            {updatedList.map((item) => (
+              <Cell
+                key={item}
+                data-testid={'list-' + item}
+                draggable
+                onDragFinish={({ from, to }) => {
+                  let list = [...updatedList];
+                  list.splice(from, 1);
+                  list.splice(to, 0, updatedList[from]);
+                  updatedList = [...list];
+                }}
+                draggerLabel={label}
+              >
+                {item}
+              </Cell>
+            ))}
+          </List>,
+        );
 
-      await userEvent.click(
-        screen.getByTestId('list-xyz').querySelector<HTMLElement>(`[aria-label="${label}"]`)!,
-      );
+        await userEvent.click(
+          screen.getByTestId('list-xyz').querySelector<HTMLElement>(`[aria-label="${label}"]`)!,
+        );
 
-      expect(updatedList).toEqual(initialList);
-    });
+        expect(updatedList).toEqual(initialList);
+      }),
+    );
   });
 
   test('has "a" tag by default if href is defined', () => {

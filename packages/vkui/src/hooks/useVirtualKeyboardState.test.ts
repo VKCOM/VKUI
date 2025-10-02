@@ -1,11 +1,11 @@
 import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
 import { type AnyFunction, noop } from '@vkontakte/vkjs';
-import { fakeTimers } from '../testing/utils';
+import { fakeTimersForScope } from '../testing/utils';
 import { useVirtualKeyboardState } from './useVirtualKeyboardState';
 
 describe(useVirtualKeyboardState, () => {
-  fakeTimers();
+  fakeTimersForScope();
 
   it('disabled if no virtual keyboard', () => {
     const h = renderHook(useVirtualKeyboardState);
