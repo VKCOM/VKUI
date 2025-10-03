@@ -6,9 +6,10 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { useMergeProps } from '../../hooks/useMergeProps.ts';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
@@ -20,23 +21,47 @@ const sizeYClassNames = {
 export interface SwitchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+    HasRef<HTMLInputElement> {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+      HasRootRef<HTMLLabelElement> &
+      HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
+}
 
 /**
  * @see https://vkui.io/components/switch
  */
 export const Switch = ({
-  style,
-  className,
-  getRootRef,
+  style: rootStyle,
+  className: rootClassName,
+  getRootRef: rootGetRootRef,
   getRef,
-  checked: checkedProp,
-  disabled,
-  onBlur: onBlurProp,
-  onFocus: onFocusProp,
-  onClick,
+  slotsProps,
   ...restProps
 }: SwitchProps): React.ReactNode => {
+  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+    { style: rootStyle, className: rootClassName, getRootRef: rootGetRootRef },
+    slotsProps?.root,
+  );
+  const {
+    checked: checkedProp,
+    disabled,
+    onBlur: onBlurProp,
+    onFocus: onFocusProp,
+    onClick,
+    ...inputRest
+  } = useMergeProps(
+    { getRootRef: getRef, className: styles.inputNative, ...restProps },
+    slotsProps?.input,
+  );
+
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
   const platform = usePlatform();
@@ -47,7 +72,7 @@ export const Switch = ({
   const handleFocus = callMultiple(onFocus, onFocusProp);
 
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
-    Boolean(restProps.defaultChecked),
+    Boolean(inputRest.defaultChecked),
   );
   const isControlled = checkedProp !== undefined;
 
@@ -64,14 +89,13 @@ export const Switch = ({
   );
 
   const inputProps: VisuallyHiddenProps<HTMLInputElement> = {
-    ...restProps,
+    ...inputRest,
     Component: 'input',
-    getRootRef: getRef,
     type: 'checkbox',
     role: 'switch',
-    disabled: disabled,
-    onBlur: onBlurProp,
-    onFocus: onFocusProp,
+    disabled,
+    onBlur: handleBlur,
+    onFocus: handleFocus,
     onClick: callMultiple(syncUncontrolledCheckedStateOnClick, onClick),
   };
 
@@ -95,13 +119,9 @@ export const Switch = ({
       )}
       style={style}
       ref={getRootRef}
+      {...rootRest}
     >
-      <VisuallyHidden
-        {...inputProps}
-        className={styles.inputNative}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-      />
+      <VisuallyHidden {...inputProps} />
       <span aria-hidden className={styles.inputFake}>
         <span className={styles.track} />
         <span
