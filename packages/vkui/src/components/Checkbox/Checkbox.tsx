@@ -1,6 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
-import type { HasRootRef } from '../../types';
+import { useMergeProps } from '../../hooks/useMergeProps.ts';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
@@ -14,6 +17,15 @@ export interface CheckboxProps
       TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: React.LabelHTMLAttributes<HTMLLabelElement> &
+      HasRootRef<HTMLLabelElement> &
+      HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+  };
   /**
    * Подпись под основным текстом.
    */
@@ -30,9 +42,10 @@ export interface CheckboxProps
 
 const CheckboxComponent = ({
   children,
-  className,
-  style,
-  getRootRef,
+  className: rootClassName,
+  style: rootStyle,
+  getRootRef: rootGetRootRef,
+  getRef,
   description,
   hoverMode,
   activeMode,
@@ -41,22 +54,36 @@ const CheckboxComponent = ({
   focusVisibleMode,
   titleAfter,
   noPadding,
+
+  slotsProps,
   ...restProps
 }: CheckboxProps): React.ReactNode => {
+  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+    {
+      className: rootClassName,
+      style: rootStyle,
+      getRootRef: rootGetRootRef,
+    },
+    slotsProps?.root,
+  );
+
+  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+
   return (
     <SelectionControl
       className={className}
       style={style}
-      disabled={restProps.disabled}
       getRootRef={getRootRef}
+      disabled={inputRest.disabled}
       hoverMode={hoverMode}
       activeMode={activeMode}
       hasHover={hasHover}
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       noPadding={noPadding}
+      {...rootRest}
     >
-      <CheckboxInput {...restProps} />
+      <CheckboxInput slotsProps={{ input: inputRest }} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>

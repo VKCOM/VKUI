@@ -10,10 +10,11 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../../hooks/useAdaptivityConditionalRender';
-import { useExternRef } from '../../../hooks/useExternRef';
+import { useExternRef } from '../../../hooks/useExternRef.ts';
+import { useMergeProps } from '../../../hooks/useMergeProps.ts';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
-import type { HasRef, HasRootRef } from '../../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
@@ -32,6 +33,13 @@ export interface CheckboxInputProps
   extends React.ComponentProps<'input'>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+  };
   /**
    * Неопределенное состояние чекбокса.
    */
@@ -65,21 +73,45 @@ export interface CheckboxInputProps
 const warn = warnOnce('Checkbox');
 
 export function CheckboxInput({
-  className,
-  style,
-  getRootRef,
+  className: rootClassName,
+  style: rootStyle,
+  getRootRef: rootGetRootRef,
   getRef,
-  indeterminate,
-  defaultIndeterminate,
-  onChange,
   IconOnCompact = Icon20CheckBoxOn,
   IconOnRegular = Icon24CheckBoxOn,
   IconOffCompact = Icon20CheckBoxOff,
   IconOffRegular = Icon24CheckBoxOff,
   IconIndeterminate = Icon20CheckBoxIndetermanate,
+
+  slotsProps,
   ...restProps
 }: CheckboxInputProps) {
-  const inputRef = useExternRef(getRef);
+  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+    {
+      className: rootClassName,
+      style: rootStyle,
+      getRootRef: rootGetRootRef,
+    },
+    slotsProps?.root,
+  );
+
+  const {
+    indeterminate,
+    defaultIndeterminate,
+    onChange,
+    getRootRef: getInputRef,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      className: styles.input,
+      ...restProps,
+    },
+    slotsProps?.input,
+  );
+
+  const inputRef = useExternRef<HTMLInputElement>(getInputRef);
+
   const platform = usePlatform();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
@@ -96,7 +128,7 @@ export function CheckboxInput({
       if (
         defaultIndeterminate !== undefined &&
         indeterminate === undefined &&
-        restProps.checked === undefined &&
+        inputRest.checked === undefined &&
         inputRef.current
       ) {
         setIndeterminate(inputRef.current, false);
@@ -106,19 +138,19 @@ export function CheckboxInput({
       }
       onChange && onChange(event);
     },
-    [defaultIndeterminate, indeterminate, restProps.checked, onChange, inputRef],
+    [defaultIndeterminate, indeterminate, inputRest.checked, onChange, inputRef],
   );
 
   if (process.env.NODE_ENV === 'development') {
-    if (defaultIndeterminate && restProps.defaultChecked) {
+    if (defaultIndeterminate && inputRest.defaultChecked) {
       warn('defaultIndeterminate и defaultChecked не могут быть true одновременно', 'error');
     }
 
-    if (indeterminate && restProps.checked) {
+    if (indeterminate && inputRest.checked) {
       warn('indeterminate и checked не могут быть true одновременно', 'error');
     }
 
-    if (restProps.defaultChecked && restProps.checked) {
+    if (inputRest.defaultChecked && inputRest.checked) {
       warn('defaultChecked и checked не могут быть true одновременно', 'error');
     }
   }
@@ -129,13 +161,13 @@ export function CheckboxInput({
       className={className}
       style={style}
       getRootRef={getRootRef}
+      {...rootRest}
     >
       <VisuallyHidden
-        {...restProps}
+        {...inputRest}
         Component="input"
         type="checkbox"
         onChange={handleChange}
-        className={styles.input}
         getRootRef={inputRef}
       />
       {platform === 'vkcom' ? (
