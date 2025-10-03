@@ -272,7 +272,7 @@ jobs:
 
       - name: Create or update comment with not empty diff
         if: ${{ needs.deploy_diff.outputs.has_diff == 'true' }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -285,7 +285,7 @@ jobs:
 
       - name: Create or update comment with empty diff
         if: ${{ needs.deploy_diff.outputs.has_diff == 'false' }}
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -316,7 +316,7 @@ jobs:
           body-includes: <!-- docs_urls -->
 
       - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
