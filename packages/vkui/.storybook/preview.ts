@@ -3,6 +3,8 @@ import { Preview } from '@storybook/react';
 // import { withConsole } from '@storybook/addon-console';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
+// Выносим отдельно, чтобы файл обрабатывался postcss плагином
+import '../src/styles/layout.css';
 import './preview.css';
 
 declare global {
