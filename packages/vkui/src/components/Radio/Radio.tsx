@@ -1,5 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useMergeProps } from '../../hooks/useMergeProps.ts';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
@@ -15,6 +18,15 @@ export interface RadioProps
       TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+      HasRootRef<HTMLLabelElement> &
+      HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+  };
   /**
    * Дополнительное описание под основным текстом.
    */
@@ -46,22 +58,36 @@ export const Radio = ({
   hasHover,
   hasActive,
   focusVisibleMode,
+
+  slotsProps,
   ...restProps
 }: RadioProps): React.ReactNode => {
+  const rootProps = useMergeProps(
+    {
+      style,
+      className: classNames(styles.host, className),
+      getRootRef,
+      ...labelProps,
+    },
+    slotsProps?.root,
+  );
+
+  const { disabled, ...inputProps } = useMergeProps(
+    { getRootRef: getRef, ...restProps },
+    slotsProps?.input,
+  );
+
   return (
     <SelectionControl
-      style={style}
-      className={classNames(styles.host, className)}
-      disabled={restProps.disabled}
-      getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}
       hasHover={hasHover}
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
-      {...labelProps}
+      disabled={disabled}
+      {...rootProps}
     >
-      <RadioInput {...restProps} getRef={getRef} />
+      <RadioInput slotsProps={{ input: inputProps }} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>
