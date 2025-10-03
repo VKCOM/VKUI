@@ -16,7 +16,7 @@ export type ReorderProps<ITEM = string> = Omit<ReorderRootProps, 'children'> & {
   /**
    * Функция для изменения порядка элементов.
    */
-  setItems?: (items: ITEM[]) => ITEM[];
+  setItems?: (items: ITEM[]) => void;
   /**
    * Функция, которая по элементу массива возвращает `id`.
    */
