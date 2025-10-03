@@ -23,7 +23,6 @@ export default story;
 
 type Story = StoryObj<
   ReorderProps<{
-    id: string;
     avatarUrl: string;
     name: string;
     screenName: string;
@@ -42,7 +41,7 @@ export const Playground: Story = {
       <Reorder.Root gap={10} onReorder={onDragFinish} {...args}>
         {draggingList.map((item) => (
           <SimpleCell
-            key={item.id}
+            key={item.screenName}
             Component={Reorder.Item}
             hasHover={false}
             before={
@@ -73,31 +72,26 @@ export const Playground: Story = {
         avatarUrl: 'https://avatars.githubusercontent.com/u/61377022',
         name: 'Эльдар Мухаметханов',
         screenName: 'e.muhamethanov',
-        id: 'e.muhamethanov',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/5850354',
         name: 'Ином Мирджамолов',
         screenName: 'inomdzhon',
-        id: 'inomdzhon',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/7431217',
         name: 'Вика Жижонкова',
         screenName: 'BlackySoul',
-        id: 'BlackySoul',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/14944123',
         name: 'Даниил Суворов',
         screenName: 'SevereCloud',
-        id: 'SevereCloud',
       },
       {
         avatarUrl: 'https://avatars.githubusercontent.com/u/32414396',
         name: 'Никита Денисов',
         screenName: 'qurle',
-        id: 'qurle',
       },
     ],
   },

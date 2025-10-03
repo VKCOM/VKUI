@@ -8,16 +8,7 @@ import { ReorderRoot, type ReorderRootProps } from './components/ReorderRoot';
 import { ReorderTrigger } from './components/ReorderTrigger';
 import { ReorderTriggerIcon, type ReorderTriggerIconProps } from './components/ReorderTriggerIcon';
 
-/* eslint-disable jsdoc/require-jsdoc */
-interface ReorderItemType {
-  id: string;
-}
-/* eslint-enable jsdoc/require-jsdoc */
-
-export type ReorderProps<ITEM extends string | number | ReorderItemType = string> = Omit<
-  ReorderRootProps,
-  'children'
-> & {
+export type ReorderProps<ITEM = string> = Omit<ReorderRootProps, 'children'> & {
   /**
    * Массив элементов для рендера.
    */
@@ -26,6 +17,10 @@ export type ReorderProps<ITEM extends string | number | ReorderItemType = string
    * Функция для изменения порядка элементов.
    */
   setItems?: (items: ITEM[]) => ITEM[];
+  /**
+   * Функция, которая по элементу массива возвращает `id`.
+   */
+  getItemId?: (item: ITEM) => string | number;
   /**
    * Функция для рендера элемента.
    */
@@ -40,21 +35,23 @@ export type ReorderProps<ITEM extends string | number | ReorderItemType = string
   TriggerIcon?: ReorderTriggerIconProps['Icon'];
 };
 
-const onReorder = <ITEM extends string | number | ReorderItemType = string>(
-  { from, to }: SwappedItemRange,
-  list: ITEM[],
-): ITEM[] => {
+const onReorder = <ITEM = string,>({ from, to }: SwappedItemRange, list: ITEM[]): ITEM[] => {
   const _list = [...list];
   _list.splice(from, 1);
   _list.splice(to, 0, list[from]);
   return _list;
 };
 
+const defaultGetId = <ITEM = string,>(item: ITEM): string | number => {
+  if (typeof item === 'string' || typeof item === 'number') {
+    return item;
+  }
+  return JSON.stringify(item);
+};
+
 /* eslint-disable jsdoc/require-jsdoc */
 type ReorderComponent = {
-  <ITEM extends string | number | ReorderItemType>(
-    props: ReorderProps<ITEM>,
-  ): React.ReactElement | null;
+  <ITEM = string>(props: ReorderProps<ITEM>): React.ReactElement | null;
   Trigger: typeof ReorderTrigger;
   Item: typeof ReorderItem;
   Root: typeof ReorderRoot;
@@ -66,11 +63,10 @@ type ReorderComponent = {
 /**
  * @see https://vkui.io/components/reorder
  */
-export const Reorder: ReorderComponent = function Reorder<
-  ITEM extends string | number | ReorderItemType,
->({
+export const Reorder: ReorderComponent = function Reorder<ITEM = string>({
   items,
   setItems,
+  getItemId = defaultGetId,
   renderItem,
   triggerLabel = 'Перенести элемент',
   TriggerIcon,
@@ -92,7 +88,7 @@ export const Reorder: ReorderComponent = function Reorder<
             <Reorder.TriggerIcon Icon={TriggerIcon}>{triggerLabel}</Reorder.TriggerIcon>
           </Reorder.Trigger>
         );
-        const key = typeof item === 'string' || typeof item === 'number' ? item : item.id;
+        const key = getItemId(item);
         return <Reorder.Item key={key}>{renderItem(item, index, dragger)}</Reorder.Item>;
       })}
     </ReorderRoot>
