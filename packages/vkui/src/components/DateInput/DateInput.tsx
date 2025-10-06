@@ -283,6 +283,7 @@ export const DateInput = ({
   readOnly,
   'disableCalendar': disableCalendarProp = false,
   'aria-label': ariaLabel = '',
+  before,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -431,16 +432,25 @@ export const DateInput = ({
     }
   }, [handleFieldEnter, openCalendar, accessible]);
 
+  const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
+  const showClearButton = value && !readOnly;
+
   return (
     <FormField
       style={style}
-      className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
+      className={classNames(
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        !!before && styles.hasBefore,
+        (showCalendarButton || showClearButton) && styles.hasAfter,
+        className,
+      )}
       getRootRef={handleRootRef}
       role="group"
       aria-labelledby={`${ariaLabelId} ${currentDateLabelId}`}
+      before={before}
       after={
         <React.Fragment>
-          {!disableCalendar && (accessible || (!accessible && !value)) ? (
+          {showCalendarButton ? (
             <IconButton
               hoverMode="opacity"
               label={showCalendarLabel}
@@ -450,7 +460,7 @@ export const DateInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value && !readOnly ? (
+          {showClearButton ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}

@@ -1,6 +1,6 @@
 import { act } from 'react';
 import { render } from '@testing-library/react';
-import { fakeTimers, waitCSSKeyframesAnimation } from '../../testing/utils';
+import { fakeTimersForScope, waitCSSKeyframesAnimation } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';
 import { Root } from '../Root/Root';
@@ -53,7 +53,7 @@ function setup({ withAnimationsMode }: { withAnimationsMode: boolean }) {
 }
 
 describe('useNavTransition', () => {
-  fakeTimers();
+  fakeTimersForScope();
 
   it.each([
     ['properly detects transition direction without animations', false],

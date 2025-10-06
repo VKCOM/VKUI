@@ -32,6 +32,8 @@ export interface ModalOverlayProps
   position?: 'absolute' | 'fixed';
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
   onClosed?: () => void;
+  disableOpenAnimation?: boolean;
+  disableCloseAnimation?: boolean;
 }
 
 /**
@@ -43,10 +45,14 @@ export const ModalOverlay = ({
   getRootRef,
   onClick,
   onClosed,
+  disableOpenAnimation,
+  disableCloseAnimation,
   ...restProps
 }: ModalOverlayProps) => {
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(visible, {
-    enableAppear: true,
+    enableAppear: !disableOpenAnimation,
+    enableEnter: !disableOpenAnimation,
+    enableExit: !disableCloseAnimation,
     onExited: onClosed,
   });
   const handleRef = useExternRef(getRootRef, ref);

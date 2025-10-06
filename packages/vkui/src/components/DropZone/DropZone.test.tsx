@@ -31,7 +31,7 @@ describe('DropZone', () => {
     expect(screen.getByTestId('drop-zone')).not.toHaveClass(styles.active);
   });
 
-  it('no active state when content stopPropagation dragOver', async () => {
+  it('no active state when content without stopPropagation dragOver', async () => {
     render(
       <DropZone data-testid="drop-zone">
         {({ active }) => <div data-testid="content" data-active={active} />}

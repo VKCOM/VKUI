@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { baselineComponent, userEvent, withRegExp } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+  withRegExp,
+} from '../../testing/utils';
 import { ChipsInputBase } from './ChipsInputBase';
 import type { ChipsInputBasePrivateProps } from './types';
 
@@ -63,13 +69,6 @@ describe(ChipsInputBase, () => {
     onAddChipOption.mockClear();
     onRemoveChipOption.mockClear();
     onClearOptions.mockClear();
-
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.runOnlyPendingTimers();
-    vi.useRealTimers();
   });
 
   it('renders values passed to it', () => {
@@ -84,69 +83,81 @@ describe(ChipsInputBase, () => {
     expect(result.queryByText('Красный')).not.toBeNull();
   });
 
-  it('adds chip', async () => {
-    const result = render(
-      <ChipsInputBaseTest
-        value={[]}
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-        onClear={onClearOptions}
-      />,
-    );
-    await userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}');
-    expect(onAddChipOption).toHaveBeenCalledWith('Красный');
-  });
+  it(
+    'adds chip',
+    withFakeTimers(async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
+        />,
+      );
+      await userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}');
+      expect(onAddChipOption).toHaveBeenCalledWith('Красный');
+    }),
+  );
 
-  it('adds value on blur event if `addOnBlur` is `true`', async () => {
-    const result = render(
-      <ChipsInputBaseTest
-        addOnBlur
-        value={[]}
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-        onClear={onClearOptions}
-      />,
-    );
-    await userEvent.type(result.getByTestId('chips-input'), 'Красный');
-    await userEvent.click(document.body);
-    expect(onAddChipOption).toHaveBeenCalledWith('Красный');
-  });
+  it(
+    'adds value on blur event if `addOnBlur` is `true`',
+    withFakeTimers(async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          addOnBlur
+          value={[]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
+        />,
+      );
+      await userEvent.type(result.getByTestId('chips-input'), 'Красный');
+      await userEvent.click(document.body);
+      expect(onAddChipOption).toHaveBeenCalledWith('Красный');
+    }),
+  );
 
-  it('removes chip with icon button', async () => {
-    const result = render(
-      <ChipsInputBaseTest
-        value={[RED_OPTION]}
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-        onClear={onClearOptions}
-      />,
-    );
-    const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
-    const removeButton = within(chipRedLocator).getByRole('button');
-    await userEvent.click(removeButton);
-    expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
-  });
+  it(
+    'removes chip with icon button',
+    withFakeTimers(async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
+        />,
+      );
+      const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
+      const removeButton = within(chipRedLocator).getByRole('button');
+      await userEvent.click(removeButton);
+      expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
+    }),
+  );
 
-  it.each(['Delete', 'Backspace'])('removes chip when pressing {%s}', async (type) => {
-    const result = render(
-      <ChipsInputBaseTest
-        value={[RED_OPTION]}
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-        onClear={onClearOptions}
-      />,
-    );
-    await userEvent.tab();
-    await userEvent.type(
-      result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
-      `{${type}}`,
-    );
-    expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
-  });
+  it.each(['Delete', 'Backspace'])(
+    'removes chip when pressing {%s}',
+    withFakeTimers(async (type) => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[RED_OPTION]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
+        />,
+      );
+      await userEvent.tab();
+      await userEvent.type(
+        result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
+        `{${type}}`,
+      );
+      expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
+    }),
+  );
 
   it.each(['Delete', 'Backspace'])(
     'does not delete chips when pressing {%s} in readonly mode',
-    async (type) => {
+    withFakeTimers(async (type) => {
       const result = render(
         <ChipsInputBaseTest
           readOnly
@@ -162,10 +173,11 @@ describe(ChipsInputBase, () => {
         `{${type}}`,
       );
       expect(onRemoveChipOption).not.toHaveBeenCalled();
-    },
+    }),
   );
 
   describe('focus', () => {
+    fakeTimersForScope();
     it('focuses on input field after clicking to container', async () => {
       const result = render(
         <ChipsInputBaseTest
@@ -347,7 +359,7 @@ describe(ChipsInputBase, () => {
 
   it.each([{ readOnly: false }, { readOnly: true }])(
     'calls user events (`readOnly` prop is `$readOnly`)',
-    async ({ readOnly }) => {
+    withFakeTimers(async ({ readOnly }) => {
       const onBlur = vi.fn();
       render(
         <ChipsInputBaseTest
@@ -364,7 +376,7 @@ describe(ChipsInputBase, () => {
       await userEvent.tab({ shift: true });
 
       expect(onBlur).toHaveBeenCalled();
-    },
+    }),
   );
 
   it('applies option readOnly and disabled to chips', () => {
@@ -457,22 +469,25 @@ describe(ChipsInputBase, () => {
     expect(screen.getByTestId('chips-input')).toHaveFocus();
   });
 
-  it('remove option by backspace when option value is number', async () => {
-    const result = render(
-      <ChipsInputBaseTest
-        value={[{ value: 1, label: 'Красный' }]}
-        onAddChipOption={onAddChipOption}
-        onRemoveChipOption={onRemoveChipOption}
-        onClear={onClearOptions}
-      />,
-    );
-    await userEvent.tab();
-    await userEvent.type(
-      result.getByRole('option', { name: withRegExp('Красный') }),
-      `{Backspace}`,
-    );
-    expect(onRemoveChipOption).toHaveBeenCalledWith(1);
-  });
+  it(
+    'remove option by backspace when option value is number',
+    withFakeTimers(async () => {
+      const result = render(
+        <ChipsInputBaseTest
+          value={[{ value: 1, label: 'Красный' }]}
+          onAddChipOption={onAddChipOption}
+          onRemoveChipOption={onRemoveChipOption}
+          onClear={onClearOptions}
+        />,
+      );
+      await userEvent.tab();
+      await userEvent.type(
+        result.getByRole('option', { name: withRegExp('Красный') }),
+        `{Backspace}`,
+      );
+      expect(onRemoveChipOption).toHaveBeenCalledWith(1);
+    }),
+  );
 
   it('check correct mouseDown event preventDefault', async () => {
     let event: MouseEvent | null = null;

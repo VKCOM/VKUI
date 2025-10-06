@@ -3,10 +3,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   userEvent,
   waitCSSKeyframesAnimation,
   waitForFloatingPosition,
+  withFakeTimers,
 } from '../../testing/utils';
 import { ActionSheet, type ActionSheetProps } from '../ActionSheet/ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
@@ -70,7 +71,6 @@ const mockElementFocus = (element: HTMLElement | null, focusFn: VoidFunction) =>
 };
 
 describe(FocusTrap, () => {
-  fakeTimers();
   baselineComponent(FocusTrap);
 
   const mountActionSheetViaClick = async () => {
@@ -85,30 +85,39 @@ describe(FocusTrap, () => {
     await waitCSSKeyframesAnimation(screen.getByTestId('sheet'), { runOnlyPendingTimers: true });
   };
 
-  it('renders with no focusable elements', async () => {
-    render(
-      <ActionSheetTest>
-        <Fragment>NOPE</Fragment>
-      </ActionSheetTest>,
-    );
-    await mountActionSheetViaClick();
+  it(
+    'renders with no focusable elements',
+    withFakeTimers(async () => {
+      render(
+        <ActionSheetTest>
+          <Fragment>NOPE</Fragment>
+        </ActionSheetTest>,
+      );
+      await mountActionSheetViaClick();
 
-    expect(screen.getByTestId('sheet')).toBeInTheDocument();
-  });
+      expect(screen.getByTestId('sheet')).toBeInTheDocument();
+    }),
+  );
 
-  it('focuses first element by default', async () => {
-    render(<ActionSheetTest />);
-    await mountActionSheetViaClick();
+  it(
+    'focuses first element by default',
+    withFakeTimers(async () => {
+      render(<ActionSheetTest />);
+      await mountActionSheetViaClick();
 
-    expect(screen.getByTestId('first')).toHaveFocus();
-  });
+      expect(screen.getByTestId('first')).toHaveFocus();
+    }),
+  );
 
-  it('no focus when autoFocus=false', async () => {
-    render(<ActionSheetTest autoFocus={false} />);
-    await mountActionSheetViaClick();
+  it(
+    'no focus when autoFocus=false',
+    withFakeTimers(async () => {
+      render(<ActionSheetTest autoFocus={false} />);
+      await mountActionSheetViaClick();
 
-    expect(screen.getByTestId('toggle')).toHaveFocus();
-  });
+      expect(screen.getByTestId('toggle')).toHaveFocus();
+    }),
+  );
 
   it('preserve focus when autoFocus=false with dynamic content', async () => {
     const Template = (props: { childIds: string[] }) => {
@@ -141,52 +150,60 @@ describe(FocusTrap, () => {
     expect(input).toHaveFocus();
   });
 
-  it('always calls passed onClose on ESCAPE press', async () => {
-    const onClose = vi.fn();
-    render(<ActionSheetTest onClose={onClose} />);
-    await mountActionSheetViaClick();
-    await unmountActionSheet();
-    await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
-    expect(onClose).toHaveBeenCalledTimes(1);
-  });
+  it(
+    'always calls passed onClose on ESCAPE press',
+    withFakeTimers(async () => {
+      const onClose = vi.fn();
+      render(<ActionSheetTest onClose={onClose} />);
+      await mountActionSheetViaClick();
+      await unmountActionSheet();
+      await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
+      expect(onClose).toHaveBeenCalledTimes(1);
+    }),
+  );
 
-  it('captures Esc by default and calls onClose', async () => {
-    vi.useFakeTimers();
-    const onCloseStub = vi.fn();
-    render(
-      <FocusTrap onClose={onCloseStub}>
-        <input onKeyDown={(event) => event.stopPropagation()} defaultValue="Test input" />
-      </FocusTrap>,
-    );
+  it(
+    'captures Esc by default and calls onClose',
+    withFakeTimers(async () => {
+      const onCloseStub = vi.fn();
+      render(
+        <FocusTrap onClose={onCloseStub}>
+          <input onKeyDown={(event) => event.stopPropagation()} defaultValue="Test input" />
+        </FocusTrap>,
+      );
 
-    await userEvent.tab();
-    await userEvent.keyboard(`{Escape}`);
+      await userEvent.tab();
+      await userEvent.keyboard(`{Escape}`);
 
-    // event.stopPropagation of input does nothing, onClose of FocusTrap is triggered on Esc
-    expect(onCloseStub).toHaveBeenCalledTimes(1);
-  });
+      // event.stopPropagation of input does nothing, onClose of FocusTrap is triggered on Esc
+      expect(onCloseStub).toHaveBeenCalledTimes(1);
+    }),
+  );
 
-  it('allows to stop Escape keyboard event propagation from inner element with captureEscapeKeyboardEvent flag set to false', async () => {
-    vi.useFakeTimers();
-    const onCloseStub = vi.fn();
-    render(
-      <FocusTrap onClose={onCloseStub} captureEscapeKeyboardEvent={false}>
-        <input
-          data-testid="input"
-          onKeyDown={(event) => event.stopPropagation()}
-          defaultValue="Test button"
-        />
-      </FocusTrap>,
-    );
+  it(
+    'allows to stop Escape keyboard event propagation from inner element with captureEscapeKeyboardEvent flag set to false',
+    withFakeTimers(async () => {
+      const onCloseStub = vi.fn();
+      render(
+        <FocusTrap onClose={onCloseStub} captureEscapeKeyboardEvent={false}>
+          <input
+            data-testid="input"
+            onKeyDown={(event) => event.stopPropagation()}
+            defaultValue="Test button"
+          />
+        </FocusTrap>,
+      );
 
-    await userEvent.tab();
-    await userEvent.keyboard(`{Escape}`);
+      await userEvent.tab();
+      await userEvent.keyboard(`{Escape}`);
 
-    // event.stopPropagation of input doesn't trigger onClose of FocusTrap on Esc
-    expect(onCloseStub).toHaveBeenCalledTimes(0);
-  });
+      // event.stopPropagation of input doesn't trigger onClose of FocusTrap on Esc
+      expect(onCloseStub).toHaveBeenCalledTimes(0);
+    }),
+  );
 
   describe('focus restoration', () => {
+    fakeTimersForScope();
     it('restores focus by default', async () => {
       const onClose = vi.fn();
       render(<ActionSheetTest onClose={onClose} />);
@@ -205,6 +222,7 @@ describe(FocusTrap, () => {
   });
 
   describe('specific keyboard navigation', () => {
+    fakeTimersForScope();
     const mountViaKeyboard = async () => {
       await userEvent.tab(); // focus toggle via keyboard
       await userEvent.keyboard('{enter}'); // mount ActionSheet via keyboard
