@@ -2349,7 +2349,7 @@ __metadata:
     "@vkontakte/vkui-docs-theme": "workspace:^"
     next: "npm:^15.5.4"
     next-sitemap: "npm:^4.2.3"
-    nextra: "npm:^4.5.1"
+    nextra: "npm:^4.6.0"
     pagefind: "npm:^1.4.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -4889,13 +4889,13 @@ __metadata:
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.70.0"
     next: "npm:^15.5.4"
-    nextra: "npm:^4.5.1"
+    nextra: "npm:^4.6.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     scroll-into-view-if-needed: "npm:^3.1.0"
   peerDependencies:
     next: ^15.5.4
-    nextra: ^4.5.1
+    nextra: ^4.6.0
     react: ^18.3.1
     react-dom: ^18.3.1
   languageName: unknown
@@ -14327,9 +14327,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nextra@npm:^4.5.1":
-  version: 4.5.1
-  resolution: "nextra@npm:4.5.1"
+"nextra@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "nextra@npm:4.6.0"
   dependencies:
     "@formatjs/intl-localematcher": "npm:^0.6.0"
     "@headlessui/react": "npm:^2.1.2"
@@ -14374,7 +14374,7 @@ __metadata:
     next: ">=14"
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10/74a404756d3237dc3874f347c2b0ad5b685ccda131ba9a63df0d1d05e120c6fade2c9ead27bfc75cdf5ac28742c745073b2108764179421ca64b2f224b805eb3
+  checksum: 10/480baa22b6cd52c3dee200f88be11e5427b9c2a8f64808db039b8ea5607ffafc6ebe75a1ada83d5f9832d7816868e524fa8e61afb9bdc09d7c41c029bf9d57b4
   languageName: node
   linkType: hard
 

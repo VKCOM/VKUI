@@ -41,6 +41,7 @@ const meta: MetaRecord = {
       sidebar: false,
       pagination: false,
       layout: 'full',
+      copyPage: false,
     },
   },
 };
