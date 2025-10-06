@@ -22,11 +22,11 @@ describe('mergeCalls', () => {
     props.fn3(3);
     props.fn4(4);
 
-    expect(props1.fn1).toHaveBeenCalledWith(1);
-    expect(props1.fn3).toHaveBeenCalledWith(3);
-    expect(props2.fn1).toHaveBeenCalledWith(1);
-    expect(props2.fn2).toHaveBeenCalledWith(2);
-    expect(props2.fn3).toHaveBeenCalledWith(3);
-    expect(props3.fn4).toHaveBeenCalledWith(4);
+    expect(props1.fn1).toHaveBeenCalledExactlyOnceWith(1);
+    expect(props1.fn3).toHaveBeenCalledExactlyOnceWith(3);
+    expect(props2.fn1).toHaveBeenCalledExactlyOnceWith(1);
+    expect(props2.fn2).toHaveBeenCalledExactlyOnceWith(2);
+    expect(props2.fn3).toHaveBeenCalledExactlyOnceWith(3);
+    expect(props3.fn4).toHaveBeenCalledExactlyOnceWith(4);
   });
 });

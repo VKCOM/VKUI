@@ -31,10 +31,8 @@ describe(useModalRootContext, () => {
     act(vi.runOnlyPendingTimers);
 
     if (type === 'global') {
-      expect(globalCallbacks.onOpen).toHaveBeenCalledTimes(1);
-      expect(globalCallbacks.onOpen).toHaveBeenCalledWith('m');
-      expect(globalCallbacks.onOpened).toHaveBeenCalledTimes(1);
-      expect(globalCallbacks.onOpened).toHaveBeenCalledWith('m');
+      expect(globalCallbacks.onOpen).toHaveBeenCalledExactlyOnceWith('m');
+      expect(globalCallbacks.onOpened).toHaveBeenCalledExactlyOnceWith('m');
 
       expect(localCallbacks.onOpen).toHaveBeenCalledTimes(0);
       expect(localCallbacks.onOpened).toHaveBeenCalledTimes(0);
@@ -42,16 +40,13 @@ describe(useModalRootContext, () => {
       expect(globalCallbacks.onOpen).toHaveBeenCalledTimes(0);
       expect(globalCallbacks.onOpened).toHaveBeenCalledTimes(0);
 
-      expect(localCallbacks.onOpen).toHaveBeenCalledTimes(1);
-      expect(localCallbacks.onOpen).toHaveBeenCalledWith();
-      expect(localCallbacks.onOpened).toHaveBeenCalledTimes(1);
-      expect(localCallbacks.onOpened).toHaveBeenCalledWith();
+      expect(localCallbacks.onOpen).toHaveBeenCalledExactlyOnceWith();
+      expect(localCallbacks.onOpened).toHaveBeenCalledExactlyOnceWith();
     }
 
     fireEvent.click(result.getByRole('button'));
 
-    expect(globalCallbacks.onClose).toHaveBeenCalledTimes(1);
-    expect(globalCallbacks.onClose).toHaveBeenCalledWith('m');
+    expect(globalCallbacks.onClose).toHaveBeenCalledExactlyOnceWith('m');
 
     expect(localCallbacks.onClose).toHaveBeenCalledTimes(0);
   });

@@ -28,7 +28,7 @@ describe(Tooltip, () => {
     result.rerender(<Fixture placement="auto" onPlacementChange={onPlacementChange} />);
     await waitForFloatingPosition();
 
-    expect(onPlacementChange).toHaveBeenCalledWith('top');
+    expect(onPlacementChange).toHaveBeenCalledExactlyOnceWith('top');
   });
 
   it('should position tooltip with provided strategy', async () => {

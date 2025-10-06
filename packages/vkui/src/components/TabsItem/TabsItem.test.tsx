@@ -54,7 +54,7 @@ describe('TabsItem', () => {
     const scrollIntoViewMock = mockScrollIntoView();
     fireEvent.click(secondTab);
 
-    expect(scrollIntoViewMock).toHaveBeenCalledWith({
+    expect(scrollIntoViewMock).toHaveBeenCalledExactlyOnceWith({
       inline: 'start',
       block: 'nearest',
       behavior: 'smooth',

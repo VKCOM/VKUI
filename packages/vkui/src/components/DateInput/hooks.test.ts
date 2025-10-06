@@ -46,7 +46,7 @@ describe('useMergedState', () => {
     });
 
     expect(result.current.value).toBe(initialValue);
-    expect(onChange).toHaveBeenCalledWith(newDate);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(newDate);
 
     const updatedValue = new Date();
     rerender({ value: updatedValue, onChange });

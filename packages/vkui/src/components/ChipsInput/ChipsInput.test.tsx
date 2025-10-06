@@ -40,7 +40,7 @@ describe(ChipsInput, () => {
 
     fireEvent(screen.getByTestId('form'), new Event('reset'));
 
-    expect(onChange).toHaveBeenCalledWith([]);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith([]);
   });
 
   it('should clear value when click on remove button', () => {
@@ -73,7 +73,7 @@ describe(ChipsInput, () => {
       />,
     );
     fireEvent.click(screen.getByTestId('delete'));
-    expect(onChange).toHaveBeenCalledWith([]);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith([]);
   });
 
   it('should show clear button when inputValue !== ""', () => {
@@ -129,7 +129,7 @@ describe(ChipsInput, () => {
 
       const resultValue = [...initialOptions];
       resultValue.pop();
-      expect(onChange).toHaveBeenCalledWith(resultValue);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(resultValue);
     }),
   );
 
@@ -199,7 +199,7 @@ describe(ChipsInput, () => {
         target: { value: str },
       });
       if (expectedValues) {
-        expect(onChange).toHaveBeenCalledWith([
+        expect(onChange).toHaveBeenCalledExactlyOnceWith([
           {
             value: 'navarin',
             label: 'Наваринского пламени с дымом',
