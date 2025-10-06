@@ -772,16 +772,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@es-joy/jsdoccomment@npm:~0.65.2":
-  version: 0.65.2
-  resolution: "@es-joy/jsdoccomment@npm:0.65.2"
+"@es-joy/jsdoccomment@npm:~0.69.0":
+  version: 0.69.0
+  resolution: "@es-joy/jsdoccomment@npm:0.69.0"
   dependencies:
     "@types/estree": "npm:^1.0.8"
     "@typescript-eslint/types": "npm:^8.45.0"
     comment-parser: "npm:1.4.1"
     esquery: "npm:^1.6.0"
-    jsdoc-type-pratt-parser: "npm:~6.1.2"
-  checksum: 10/2b0da2e135d883ad76591fcc8f9eb2e8fde5c0b1c8b1ab941e6d34201495df2e1f2442dea1fcc0c77a9af98546ab559e04e51adcc0cc79881a20a7e5731d5132
+    jsdoc-type-pratt-parser: "npm:6.4.0"
+  checksum: 10/06519de55de9cae1098015e026c5c3ea017ad5446ff5fec42ac7fe3721d650747abdf2b33b5ab6e300fca7744699b35909a11d25ca2dba8f859376eaa38652cf
   languageName: node
   linkType: hard
 
@@ -4987,11 +4987,11 @@ __metadata:
     eslint-import-resolver-alias: "npm:^1.1.2"
     eslint-plugin-compat: "npm:^6.0.2"
     eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-jsdoc: "npm:^60.7.1"
+    eslint-plugin-jsdoc: "npm:^60.8.2"
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-compiler: "npm:0.0.0-experimental-56229e1-20240813"
-    eslint-plugin-react-hooks: "npm:^6.1.0"
+    eslint-plugin-react-hooks: "npm:^6.1.1"
     eslint-plugin-react-server-components: "npm:^1.2.0"
     eslint-plugin-unicorn: "npm:^55.0.0"
     happy-css-modules: "npm:^4.0.0"
@@ -9036,11 +9036,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^60.7.1":
-  version: 60.7.1
-  resolution: "eslint-plugin-jsdoc@npm:60.7.1"
+"eslint-plugin-jsdoc@npm:^60.8.2":
+  version: 60.8.2
+  resolution: "eslint-plugin-jsdoc@npm:60.8.2"
   dependencies:
-    "@es-joy/jsdoccomment": "npm:~0.65.2"
+    "@es-joy/jsdoccomment": "npm:~0.69.0"
     are-docs-informative: "npm:^0.0.2"
     comment-parser: "npm:1.4.1"
     debug: "npm:^4.4.3"
@@ -9054,7 +9054,7 @@ __metadata:
     spdx-expression-parse: "npm:^4.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10/18ef2e1f71225ede676da726bd5f620186131634dbb1b6d53e36cf7bac5acd6249fff0dfc042be279dbde35a3f028bb0b45d123c664dec24dfe8cf0cb645e8b1
+  checksum: 10/5ad830a84ff2d2eab03110d19758abedcb7eb72edc4d2b929493e988b62f2ece29569d3d2494b480045943ad8366a5db8f50ed40fc9efe1284e106eda609cc8a
   languageName: node
   linkType: hard
 
@@ -9094,19 +9094,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "eslint-plugin-react-hooks@npm:6.1.0"
+"eslint-plugin-react-hooks@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "eslint-plugin-react-hooks@npm:6.1.1"
   dependencies:
     "@babel/core": "npm:^7.24.4"
     "@babel/parser": "npm:^7.24.4"
-    "@babel/plugin-proposal-private-methods": "npm:^7.18.6"
-    hermes-parser: "npm:^0.25.1"
-    zod: "npm:^3.22.4"
-    zod-validation-error: "npm:^3.0.3"
+    zod: "npm:^3.22.4 || ^4.0.0"
+    zod-validation-error: "npm:^3.0.3 || ^4.0.0"
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
-  checksum: 10/0b1d32510f6419c058182ec159914f6580bb070bbabcdb1ac47348993f84c3c93407304b93de13920b1a6e5bf72463367ab80d9e5aa688f3e44000abab75fa14
+  checksum: 10/dcd74dbff0f18ba5aa1d36f0e414628f99c25f14e5bd7ce8205d719dd488adca7530d15ea429ffbc94b09ab6d499160a2e3d2a9a9d9a72f9d517c79e6b472ba6
   languageName: node
   linkType: hard
 
@@ -10923,28 +10921,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-estree@npm:0.25.1":
-  version: 0.25.1
-  resolution: "hermes-estree@npm:0.25.1"
-  checksum: 10/7b1eca98b264a25632064cffa5771360d30cf452e77db1e191f9913ee45cf78c292b2dbca707e92fb71b0870abb97e94b506a5ab80abd96ba237fee169b601fe
-  languageName: node
-  linkType: hard
-
 "hermes-parser@npm:^0.20.1":
   version: 0.20.1
   resolution: "hermes-parser@npm:0.20.1"
   dependencies:
     hermes-estree: "npm:0.20.1"
   checksum: 10/b1ae9e9f6b49234fcf2bd45eafde140a3c727b8bcb845ab398016a538f040d326291d1f8b75fd91793b8817f2c600a890e251984d55bdedea74a5143d29f0c81
-  languageName: node
-  linkType: hard
-
-"hermes-parser@npm:^0.25.1":
-  version: 0.25.1
-  resolution: "hermes-parser@npm:0.25.1"
-  dependencies:
-    hermes-estree: "npm:0.25.1"
-  checksum: 10/805efc05691420f236654349872c70731121791fa54de521c7ee51059eae34f84dd19f22ee846741dcb60372f8fb5335719b96b4ecb010d2aed7d872f2eff9cc
   languageName: node
   linkType: hard
 
@@ -12207,10 +12189,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdoc-type-pratt-parser@npm:~6.1.2":
-  version: 6.1.2
-  resolution: "jsdoc-type-pratt-parser@npm:6.1.2"
-  checksum: 10/c2ef65e76bcc2127fd677c1810dc7c75fa447c06d3f10889d231eb5ec79ecd78a418418bdcc097b42d6d67c3413b462ca91c1487aeb9d503d36e0c781da8ca01
+"jsdoc-type-pratt-parser@npm:6.4.0":
+  version: 6.4.0
+  resolution: "jsdoc-type-pratt-parser@npm:6.4.0"
+  checksum: 10/86c222b6c04625a8e1efdb26339576735e9b009652f8844a5bbdee336e641f753c94512da8c355968b798390891a9001f2e00c5a560fb5fed71b0cb1daa60fc6
   languageName: node
   linkType: hard
 
@@ -21311,6 +21293,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"zod-validation-error@npm:^3.0.3 || ^4.0.0":
+  version: 4.0.2
+  resolution: "zod-validation-error@npm:4.0.2"
+  peerDependencies:
+    zod: ^3.25.0 || ^4.0.0
+  checksum: 10/5e35ca8ebb4602dcb526e122d7e9fca695c4a479bd97535f3400a732d49160f24f7213a9ed64986fc9dc3a2e8a6c4e1241ec0c4d8a4e3e69ea91a0328ded2192
+  languageName: node
+  linkType: hard
+
 "zod@npm:4.0.0-beta.20250424T163858":
   version: 4.0.0-beta.20250424T163858
   resolution: "zod@npm:4.0.0-beta.20250424T163858"
@@ -21324,6 +21315,13 @@ __metadata:
   version: 3.25.76
   resolution: "zod@npm:3.25.76"
   checksum: 10/f0c963ec40cd96858451d1690404d603d36507c1fc9682f2dae59ab38b578687d542708a7fdbf645f77926f78c9ed558f57c3d3aa226c285f798df0c4da16995
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4 || ^4.0.0":
+  version: 4.1.11
+  resolution: "zod@npm:4.1.11"
+  checksum: 10/5a0f5697dbe86bf40934916d888cfe0ec6f1f767eb0b6f944ffd5573397c8a56ef7d2ebd0f889bfb44ceaf93edcddf021994633747a9a6b0dcbeb57bd0a67442
   languageName: node
   linkType: hard
 
