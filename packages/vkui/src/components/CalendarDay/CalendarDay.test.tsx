@@ -20,7 +20,7 @@ describe('CalendarDay', () => {
     render(<CalendarDayTest />);
     fireEvent.click(screen.getByText('1'));
 
-    expect(onChange).toHaveBeenCalledWith(day);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(day);
   });
   it('renders hidden div', () => {
     render(<CalendarDayTest hidden />);

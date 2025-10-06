@@ -37,14 +37,11 @@ describe(useCSSTransition, () => {
           fireEvent.transitionEnd(result.current[1].ref.current!, { propertyName: 'opacity' });
           expect(result.current[0]).toBe('appeared');
 
-          expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEnter).toHaveBeenCalledWith(true);
+          expect(callbacks.onEnter).toHaveBeenCalledExactlyOnceWith(true);
 
-          expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEntering).toHaveBeenCalledWith(true);
+          expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith(true);
 
-          expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEntered).toHaveBeenCalledWith('opacity', true);
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity', true);
         } else {
           expect(result.current[0]).toBe('exited');
           expectEveryCallbacksHaveNotBeenCalled();
@@ -105,13 +102,11 @@ describe(useCSSTransition, () => {
 
         expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
         expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+        expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(1);
         expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+        expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
       },
     );
 
@@ -152,13 +147,12 @@ describe(useCSSTransition, () => {
           expect(callbacks.onEntered).toHaveBeenNthCalledWith(1, 'opacity', true);
           expect(callbacks.onEntered).toHaveBeenNthCalledWith(2, 'opacity');
         } else {
-          expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
         }
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(1);
         expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+        expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
       },
     );
 
@@ -182,13 +176,11 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onEnter).toHaveBeenCalledTimes(0);
       expect(callbacks.onEntering).toHaveBeenCalledTimes(0);
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledWith();
+      expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith();
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(1);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
     });
 
     it('should exit immediately and enter with transition', () => {
@@ -212,13 +204,11 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
       expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+      expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(0);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith();
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
     });
 
     it('should enter and exit immediately', () => {
@@ -245,13 +235,11 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onEnter).toHaveBeenCalledTimes(0);
       expect(callbacks.onEntering).toHaveBeenCalledTimes(0);
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledWith();
+      expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith();
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(0);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith();
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
     });
 
     it('should appear with transition but enter and exit immediately', () => {
@@ -287,8 +275,7 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(0);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith();
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
     });
   });
 
@@ -317,19 +304,17 @@ describe(useCSSTransition, () => {
         }
         expect(result.current[0]).toBe('exited');
 
-        expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEnter).toHaveBeenCalledWith(true);
-        expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntering).toHaveBeenCalledWith(true);
+        expect(callbacks.onEnter).toHaveBeenCalledExactlyOnceWith(true);
+        expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith(true);
         expect(callbacks.onEntered).toHaveBeenCalledTimes(0);
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(0);
         if (option.enableExit) {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-          expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
         } else {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-          expect(callbacks.onExited).toHaveBeenCalledWith();
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
         }
         expect(callbacks.onExited).toHaveBeenCalledTimes(1);
       },
@@ -358,19 +343,17 @@ describe(useCSSTransition, () => {
         }
         expect(result.current[0]).toBe('exited');
 
-        expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEnter).toHaveBeenCalledWith();
-        expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntering).toHaveBeenCalledWith();
+        expect(callbacks.onEnter).toHaveBeenCalledExactlyOnceWith();
+        expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith();
         expect(callbacks.onEntered).toHaveBeenCalledTimes(0);
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(0);
         if (option.enableExit) {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-          expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
         } else {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-          expect(callbacks.onExited).toHaveBeenCalledWith();
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
         }
         expect(callbacks.onExited).toHaveBeenCalledTimes(1);
       },
@@ -401,12 +384,11 @@ describe(useCSSTransition, () => {
 
         expect(callbacks.onEnter).toHaveBeenCalledTimes(0);
         if (option.enableEnter) {
-          expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEntering).toHaveBeenCalledWith();
-          expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith();
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
         } else {
           expect(callbacks.onEntering).toHaveBeenCalledTimes(0);
-          expect(callbacks.onEntered).toHaveBeenCalledWith();
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith();
         }
         expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
 

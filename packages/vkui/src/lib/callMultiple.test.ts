@@ -7,7 +7,7 @@ describe('callMultiple', () => {
 
     callMultiple(undefined, fn1, fn2)(1);
 
-    expect(fn1).toHaveBeenCalledWith(1);
-    expect(fn2).toHaveBeenCalledWith(1);
+    expect(fn1).toHaveBeenCalledExactlyOnceWith(1);
+    expect(fn2).toHaveBeenCalledExactlyOnceWith(1);
   });
 });

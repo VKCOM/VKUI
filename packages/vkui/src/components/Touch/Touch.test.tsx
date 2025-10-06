@@ -227,15 +227,13 @@ describe('Touch', () => {
           const handlers = makeHandlers();
           render(<Touch {...handlers} data-testid="__t__" />);
           fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
-          expect(handlers.onStart).toHaveBeenCalledTimes(1);
-          expect(handlers.onStart).toHaveBeenCalledWith(emptyGesture(20, 20));
+          expect(handlers.onStart).toHaveBeenCalledExactlyOnceWith(emptyGesture(20, 20));
         });
         it('has all params end gesture on clean tap', () => {
           const handlers = makeHandlers();
           render(<Touch {...handlers} data-testid="__t__" />);
           fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
-          expect(handlers.onEnd).toHaveBeenCalledTimes(1);
-          expect(handlers.onEnd).toHaveBeenCalledWith(emptyGesture(20, 20));
+          expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(emptyGesture(20, 20));
         });
       });
 
@@ -280,8 +278,7 @@ describe('Touch', () => {
           [20, 20],
           [20, 30],
         ]);
-        expect(handlers.onEnd).toHaveBeenCalledTimes(1);
-        expect(handlers.onEnd).toHaveBeenCalledWith(
+        expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
           expect.objectContaining({
             isSlideX: false,
             isSlideY: false,
@@ -300,7 +297,7 @@ describe('Touch', () => {
         ]);
         expect(handlers.onMoveX).not.toHaveBeenCalled();
         expect(handlers.onEndX).not.toHaveBeenCalled();
-        expect(handlers.onEnd).toHaveBeenCalledWith(
+        expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
           expect.objectContaining({
             isSlide: true,
             isSlideY: true,
@@ -326,7 +323,7 @@ describe('Touch', () => {
             ],
           ]);
           expect(handlers.onMove).toHaveBeenCalledTimes(1);
-          expect(handlers.onEnd).toHaveBeenCalledWith(
+          expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
             expect.objectContaining({ shiftX: 0, shiftY: 6 }),
           );
         });
@@ -347,8 +344,7 @@ describe('Touch', () => {
           );
           expect(handlers.onStart).toHaveBeenCalledTimes(1);
           expect(handlers.onMoveY).toHaveBeenCalledTimes(2);
-          expect(handlers.onEnd).toHaveBeenCalledTimes(1);
-          expect(handlers.onEnd).toHaveBeenCalledWith(
+          expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
             expect.objectContaining({ isSlideY: true, shiftY: 10 }),
           );
         });

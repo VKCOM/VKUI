@@ -78,7 +78,7 @@ describe('AppRoot', () => {
         <AppRootContext.Consumer>{contextCallback}</AppRootContext.Consumer>
       </AppRoot>,
     );
-    expect(contextCallback).toHaveBeenCalledWith({
+    expect(contextCallback).toHaveBeenCalledExactlyOnceWith({
       safeAreaInsets: {},
       userSelectMode: undefined,
       appRoot: { current: result.getByTestId('app-root') },

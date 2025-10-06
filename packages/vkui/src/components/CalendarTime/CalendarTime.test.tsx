@@ -279,7 +279,7 @@ describe('CalendarTime', () => {
       await userEvent.type(hoursInput, '15');
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 15));
+      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 15));
     });
 
     it('should handle direct time input in minutes field', async () => {
@@ -290,7 +290,7 @@ describe('CalendarTime', () => {
       await userEvent.type(minutesInput, '30');
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 30));
+      expect(onChange).toHaveBeenLastCalledWith(setMinutes(dayDate, 30));
     });
 
     it('should not call onChange for invalid hours input', async () => {
@@ -301,8 +301,7 @@ describe('CalendarTime', () => {
       await userEvent.type(hoursInput, '25'); // Невалидное значение часов
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 2));
-      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(setHours(dayDate, 2));
     });
 
     it('should not call onChange for invalid minutes input', async () => {
@@ -313,8 +312,7 @@ describe('CalendarTime', () => {
       await userEvent.type(minutesInput, '61'); // Невалидное значение минут
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 6));
-      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(setMinutes(dayDate, 6));
     });
   });
 

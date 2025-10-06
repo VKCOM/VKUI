@@ -90,7 +90,6 @@ describe('useResizeObserver', () => {
       window.dispatchEvent(new Event('resize'));
     });
 
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith(window);
+    expect(callback).toHaveBeenCalledExactlyOnceWith(window);
   });
 });

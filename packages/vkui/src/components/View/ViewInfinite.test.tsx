@@ -68,8 +68,7 @@ describe(ViewInfinite, () => {
           </ViewInfinite>,
         );
         await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
-        expect(onTransition).toHaveBeenCalledTimes(1);
-        expect(onTransition).toHaveBeenCalledWith({
+        expect(onTransition).toHaveBeenCalledExactlyOnceWith({
           from: 'p1',
           to: 'p2',
           isBack: false,
@@ -92,7 +91,7 @@ describe(ViewInfinite, () => {
         );
         await waitCSSKeyframesAnimation(getViewPanelById('p2'));
         await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
-        expect(onTransition).toHaveBeenCalledWith({
+        expect(onTransition).toHaveBeenCalledExactlyOnceWith({
           from: 'p2',
           to: 'p1',
           isBack: true,
@@ -291,7 +290,7 @@ describe(ViewInfinite, () => {
       });
       fireEvent.mouseUp(view);
       rerender(<SwipeBack activePanel="p1" history={['p1']} />);
-      expect(scrollTo).toHaveBeenCalledWith(0, 22);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, 22);
     });
 
     describe('horizontal scrollable elements', () => {
@@ -442,7 +441,7 @@ describe(ViewInfinite, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p2'));
       await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, y);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, y);
     });
 
     it('resets scroll on forward navigation', async () => {
@@ -469,7 +468,7 @@ describe(ViewInfinite, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p1'));
       await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, 0);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, 0);
     });
   });
 });
