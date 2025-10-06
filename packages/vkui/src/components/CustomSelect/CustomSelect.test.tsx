@@ -1,4 +1,5 @@
-import { act, useState } from 'react';
+import * as React from 'react';
+import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { Placement, useFloating } from '../../lib/floating';
@@ -92,6 +93,95 @@ describe('CustomSelect', () => {
   baselineComponent((props) => (
     <CustomSelect aria-label="Choose your user" {...props} options={[]} />
   ));
+
+  it(
+    'should work with slotsProps',
+    withFakeTimers(() => {
+      const rootRef1 = createRef<HTMLDivElement>();
+      const rootRef2 = createRef<HTMLDivElement>();
+      const selectRef1 = createRef<HTMLSelectElement>();
+      const selectRef2 = createRef<HTMLSelectElement>();
+      const inputRef1 = createRef<HTMLInputElement>();
+      const inputRef2 = createRef<HTMLInputElement>();
+
+      render(
+        <CustomSelect
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: 1, label: 'Josh' },
+          ]}
+          defaultValue={0}
+          data-testid="input"
+          required
+          className="rootClassName"
+          getRootRef={rootRef1}
+          getRef={selectRef1}
+          getSelectInputRef={inputRef1}
+          style={{
+            backgroundColor: 'rgb(255, 0, 0)',
+          }}
+          slotsProps={{
+            root: {
+              'data-testid': 'root',
+              'className': 'rootClassName-2',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'getRootRef': rootRef2,
+            },
+            select: {
+              'className': 'selectClassName',
+              'getRootRef': selectRef2,
+              'data-testid': 'select-2',
+              'required': false,
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+            },
+            input: {
+              'getRootRef': inputRef2,
+              'data-testid': 'input-2',
+              'className': 'inputClassName',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+            },
+          }}
+        />,
+      );
+
+      const select = screen.getByTestId('select-2');
+      expect(select).toBeInTheDocument();
+      expect(select.tagName).toBe('SELECT');
+      expect(select).toHaveClass('selectClassName');
+      expect(select).toHaveStyle('color: rgb(255, 0, 0)');
+      expect(select).not.toHaveAttribute('required');
+
+      const root = screen.getByTestId('root');
+      expect(root.tagName).toBe('DIV');
+      expect(root).toBeInTheDocument();
+      expect(root).toHaveClass('rootClassName');
+      expect(root).toHaveClass('rootClassName-2');
+      expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
+      expect(root).toHaveStyle('color: rgb(255, 0, 0)');
+
+      expect(screen.queryByTestId('input')).not.toBeInTheDocument();
+      const input = screen.getByTestId('input-2');
+      expect(input.tagName).toBe('INPUT');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveClass('inputClassName');
+      expect(input).toHaveStyle('color: rgb(255, 0, 0)');
+
+      expect(rootRef1.current).toBe(rootRef2.current);
+      expect(rootRef1.current).toBe(root);
+
+      expect(selectRef1.current).toBe(selectRef2.current);
+      expect(selectRef1.current).toBe(select);
+
+      expect(inputRef1.current).toBe(inputRef2.current);
+      expect(inputRef1.current).toBe(input);
+    }),
+  );
 
   it('Does not explode on NaN value', () => {
     vi.spyOn(global.console, 'error').mockImplementationOnce((message) => {

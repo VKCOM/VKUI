@@ -47,7 +47,11 @@ export const Switch = ({
   ...restProps
 }: SwitchProps): React.ReactNode => {
   const { className, style, getRootRef, ...rootRest } = useMergeProps(
-    { style: rootStyle, className: rootClassName, getRootRef: rootGetRootRef },
+    {
+      style: rootStyle,
+      className: rootClassName,
+      getRootRef: rootGetRootRef,
+    },
     slotsProps?.root,
   );
   const {

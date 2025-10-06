@@ -6,9 +6,10 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusWithin } from '../../../hooks/useFocusWithin';
+import { useMergeProps } from '../../../hooks/useMergeProps';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { getFormFieldModeFromSelectType } from '../../../lib/select';
-import type { HasAlign, HasRef, HasRootRef } from '../../../types';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { FormField, type FormFieldProps } from '../../FormField/FormField';
 import type { SelectType } from '../../Select/Select';
 import { SelectTypography } from '../../SelectTypography/SelectTypography';
@@ -27,6 +28,14 @@ export interface CustomSelectInputProps
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'mode' | 'type' | 'maxHeight'> {
+  slotsProps?: {
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRef<HTMLInputElement> &
+      HasDataAttribute;
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasRef<HTMLDivElement> &
+      HasDataAttribute;
+  };
   selectType?: SelectType;
   multiline?: boolean;
   labelTextTestId?: string;
@@ -40,11 +49,11 @@ export interface CustomSelectInputProps
  * @private
  */
 export const CustomSelectInput = ({
+  style: rootStyle,
+  className: rootClassName,
+  getRootRef: rootGetRootRef,
   align = 'left',
   getRef,
-  className,
-  getRootRef,
-  style,
   before,
   after,
   status,
@@ -57,6 +66,8 @@ export const CustomSelectInput = ({
   labelTextTestId,
   searchable,
   accessible,
+
+  slotsProps,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -64,25 +75,32 @@ export const CustomSelectInput = ({
   const title = children || placeholder;
   const showLabelOrPlaceholder = !Boolean(restProps.value);
 
-  const handleRootRef = useExternRef(getRootRef);
+  const handleRootRef = useExternRef(rootGetRootRef);
   const focusWithin = useFocusWithin(handleRootRef);
 
   const inputReadonly = restProps.readOnly || (disabled && fetching);
 
+  const inputProps = useMergeProps(
+    {
+      getRootRef: getRef,
+      className: classNames(
+        styles.el,
+        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) && styles.elCursorPointer,
+      ),
+      ...restProps,
+    },
+    slotsProps?.input,
+  );
+
   const input = (
     <Text
       type="text"
-      {...restProps}
       disabled={disabled && !fetching}
       readOnly={inputReadonly}
       Component="input"
       normalize={false}
-      className={classNames(
-        styles.el,
-        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) && styles.elCursorPointer,
-      )}
-      getRootRef={getRef}
       placeholder={children ? '' : placeholder}
+      {...inputProps}
     />
   );
 
@@ -98,6 +116,20 @@ export const CustomSelectInput = ({
   }, [accessible, fetching, focusWithin, inputReadonly, searchable]);
 
   const labelHidden = showLabelOrPlaceholder ? false : !inputHidden;
+
+  const {
+    style,
+    className,
+    getRootRef: rootRef,
+    ...rootRest
+  } = useMergeProps(
+    {
+      style: rootStyle,
+      className: rootClassName,
+      getRootRef: handleRootRef,
+    },
+    slotsProps?.root,
+  );
 
   const platform = usePlatform();
   return (
@@ -119,12 +151,13 @@ export const CustomSelectInput = ({
         restProps.value && styles.hasInputValue,
         className,
       )}
-      getRootRef={handleRootRef}
+      getRootRef={rootRef}
       before={before}
       after={after}
       disabled={disabled}
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
+      {...rootRest}
     >
       <div className={styles.inputGroup}>
         <div

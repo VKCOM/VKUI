@@ -5,10 +5,11 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import type { SelectType } from '../Select/Select';
@@ -41,15 +42,26 @@ export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSel
 export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
   value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
 
+type NativeHTMLSelectProps = Omit<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
+  'multiple' | 'value' | 'defaultValue' | 'onChange'
+>;
+
 export interface NativeSelectProps
-  extends Omit<
-      React.SelectHTMLAttributes<HTMLSelectElement>,
-      'multiple' | 'value' | 'defaultValue' | 'onChange'
-    >,
+  extends NativeHTMLSelectProps,
     HasRef<HTMLSelectElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
+  /**
+   *
+   */
+  slotsProps?: {
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasDataAttribute &
+      HasRootRef<HTMLDivElement>;
+    select?: NativeHTMLSelectProps & HasDataAttribute & HasRootRef<HTMLSelectElement>;
+  };
   /**
    * Выбранное значение.
    *
@@ -91,14 +103,13 @@ export interface NativeSelectProps
  * @see https://vkui.io/components/native-select
  */
 export const NativeSelect = ({
-  style,
+  style: rootStyle,
+  className: rootClassName,
+  getRootRef: rootGetRootRef,
   align,
   placeholder,
   children,
-  className,
   getRef,
-  getRootRef,
-  disabled,
   multiline,
   selectType = 'default',
   status,
@@ -107,6 +118,9 @@ export const NativeSelect = ({
   onChange,
   value,
   defaultValue,
+  onChange: onChangeProp,
+
+  slotsProps,
   ...restProps
 }: NativeSelectProps): React.ReactNode => {
   const [title, setTitle] = React.useState('');
@@ -134,6 +148,25 @@ export const NativeSelect = ({
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
 
+  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+    { style: rootStyle, className: rootClassName, getRootRef: rootGetRootRef },
+    slotsProps?.root,
+  );
+
+  const {
+    disabled,
+    getRootRef: getSelectRef,
+    ...selectRest
+  } = useMergeProps(
+    {
+      getRootRef: selectRef,
+      className: styles.el,
+      onChange: callMultiple(_onChange, checkSelectedOption, onChangeProp),
+      ...restProps,
+    },
+    slotsProps?.select,
+  );
+
   return (
     <FormField
       Component="div"
@@ -155,9 +188,9 @@ export const NativeSelect = ({
       after={icon}
       status={status}
       mode={getFormFieldModeFromSelectType(selectType)}
+      {...rootRest}
     >
       <select
-        {...restProps}
         value={value !== undefined ? remapFromSelectValueToNativeValue(value) : value}
         defaultValue={
           defaultValue !== undefined
@@ -165,9 +198,8 @@ export const NativeSelect = ({
             : defaultValue
         }
         disabled={disabled}
-        className={styles.el}
-        onChange={callMultiple(_onChange, checkSelectedOption)}
-        ref={selectRef}
+        ref={getSelectRef}
+        {...selectRest}
       >
         {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
         {children}
