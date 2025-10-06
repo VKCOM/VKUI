@@ -164,11 +164,11 @@ export function CheckboxInput({
       {...rootRest}
     >
       <VisuallyHidden
-        {...inputRest}
         Component="input"
         type="checkbox"
         onChange={handleChange}
         getRootRef={inputRef}
+        {...inputRest}
       />
       {platform === 'vkcom' ? (
         <IconOnCompact className={styles.iconOn} />

@@ -93,7 +93,6 @@ export const Switch = ({
   );
 
   const inputProps: VisuallyHiddenProps<HTMLInputElement> = {
-    ...inputRest,
     Component: 'input',
     type: 'checkbox',
     role: 'switch',
@@ -101,6 +100,7 @@ export const Switch = ({
     onBlur: handleBlur,
     onFocus: handleFocus,
     onClick: callMultiple(syncUncontrolledCheckedStateOnClick, onClick),
+    ...inputRest,
   };
 
   if (isControlled) {
