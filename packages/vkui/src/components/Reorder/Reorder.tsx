@@ -84,12 +84,12 @@ export const Reorder: ReorderComponent = function Reorder<ITEM = string>({
     <ReorderRoot onReorder={callMultiple(onReorder, onReorderProp)} {...restProps}>
       {items.map((item, index) => {
         const dragger = (
-          <Reorder.Trigger>
-            <Reorder.TriggerIcon Icon={TriggerIcon}>{triggerLabel}</Reorder.TriggerIcon>
-          </Reorder.Trigger>
+          <ReorderTrigger>
+            <ReorderTriggerIcon Icon={TriggerIcon}>{triggerLabel}</ReorderTriggerIcon>
+          </ReorderTrigger>
         );
         const key = getItemId(item);
-        return <Reorder.Item key={key}>{renderItem(item, index, dragger)}</Reorder.Item>;
+        return <ReorderItem key={key}>{renderItem(item, index, dragger)}</ReorderItem>;
       })}
     </ReorderRoot>
   );
