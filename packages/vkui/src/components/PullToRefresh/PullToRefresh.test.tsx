@@ -3,12 +3,13 @@ import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { Platform, type PlatformType } from '../../lib/platform';
-import { baselineComponent, fakeTimers } from '../../testing/utils';
+import { baselineComponent, fakeTimersForScope, withFakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { PullToRefresh } from './PullToRefresh';
 import pullToRefreshStyles from './PullToRefresh.module.css';
 
-const hasSpinner = () => !!document.querySelector(`.${pullToRefreshStyles.spinnerOn}`);
+const hasSpinner = (container: HTMLElement) =>
+  container.getElementsByClassName(pullToRefreshStyles.spinnerOn).length > 0;
 
 function firePull(el: HTMLElement, { end = true } = {}) {
   fireEvent.mouseDown(el, { clientY: 0 });
@@ -47,9 +48,8 @@ function renderRefresher(
 describe(PullToRefresh, () => {
   baselineComponent(PullToRefresh);
 
-  fakeTimers();
-
   describe('calls onRefresh', () => {
+    fakeTimersForScope();
     it('after pull', () => {
       const onRefresh = vi.fn();
       render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);
@@ -76,30 +76,33 @@ describe(PullToRefresh, () => {
     // reset touch detection
     afterEach(() => delete window['ontouchstart']);
     it('after a gesture', () => {
-      renderRefresher();
+      const { container } = renderRefresher();
       firePull(screen.getByTestId('xxx'));
-      expect(hasSpinner()).toBe(true);
+      expect(hasSpinner(container)).toBe(true);
     });
     it('until isFetching=false after release', () => {
-      const { setFetching } = renderRefresher();
+      const { setFetching, container } = renderRefresher();
       firePull(screen.getByTestId('xxx'));
       setFetching(false);
-      expect(hasSpinner()).toBe(false);
+      expect(hasSpinner(container)).toBe(false);
     });
     it('until touch release after isFetching=false on iOS', () => {
-      const { setFetching } = renderRefresher({ platform: Platform.IOS });
+      const { setFetching, container } = renderRefresher({ platform: Platform.IOS });
       firePull(screen.getByTestId('xxx'), { end: false });
       setFetching(false);
-      expect(hasSpinner()).toBe(true);
+      expect(hasSpinner(container)).toBe(true);
       fireEvent.mouseUp(screen.getByTestId('xxx'));
-      expect(hasSpinner()).toBe(false);
+      expect(hasSpinner(container)).toBe(false);
     });
-    it('stops on touch release if isFetching was never true', () => {
-      render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
-      firePull(screen.getByTestId('xxx'));
-      act(vi.runAllTimers);
-      expect(hasSpinner()).toBe(false);
-    });
+    it(
+      'stops on touch release if isFetching was never true',
+      withFakeTimers(() => {
+        const { container } = render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
+        firePull(screen.getByTestId('xxx'));
+        act(vi.runAllTimers);
+        expect(hasSpinner(container)).toBe(false);
+      }),
+    );
     it('on second interaction', () => {
       const { setFetching } = renderRefresher();
       firePull(screen.getByTestId('xxx'));
@@ -137,13 +140,13 @@ describe(PullToRefresh, () => {
 
   describe('only shows spinner after a gesture', () => {
     it('not if mounted with isFetching', () => {
-      render(<PullToRefresh isFetching onRefresh={noop} />);
-      expect(hasSpinner()).toBe(false);
+      const { container } = render(<PullToRefresh isFetching onRefresh={noop} />);
+      expect(hasSpinner(container)).toBe(false);
     });
     it('not if updated to isFetching', () => {
       const h = render(<PullToRefresh onRefresh={noop} />);
       h.rerender(<PullToRefresh isFetching onRefresh={noop} />);
-      expect(hasSpinner()).toBe(false);
+      expect(hasSpinner(h.container)).toBe(false);
     });
   });
 
@@ -155,11 +158,15 @@ describe(PullToRefresh, () => {
       { baseElement: document.documentElement },
     );
 
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+    expect(
+      window.document.documentElement.classList.contains('vkui--disable-overscroll-behavior'),
+    ).toBeFalsy();
 
     // класс присутствует пока пуллим
     firePull(component.getByTestId('xxx'), { end: false });
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+    expect(
+      window.document.documentElement.classList.contains('vkui--disable-overscroll-behavior'),
+    ).toBeTruthy();
 
     component.rerender(
       <ConfigProvider platform="ios">
@@ -168,11 +175,15 @@ describe(PullToRefresh, () => {
     );
 
     fireEvent.mouseUp(component.getByTestId('xxx'), { clientY: 500 });
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+    expect(
+      window.document.documentElement.classList.contains('vkui--disable-overscroll-behavior'),
+    ).toBeTruthy();
 
     // пока идёт обновление, класс не удаляется, чтобы не вызывалось нативное поведение
     firePull(component.getByTestId('xxx'), { end: true });
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeTruthy();
+    expect(
+      window.document.documentElement.classList.contains('vkui--disable-overscroll-behavior'),
+    ).toBeTruthy();
 
     component.rerender(
       <ConfigProvider platform="ios">
@@ -180,6 +191,8 @@ describe(PullToRefresh, () => {
       </ConfigProvider>,
     );
 
-    expect(document.querySelector('.vkui--disable-overscroll-behavior')).toBeFalsy();
+    expect(
+      window.document.documentElement.classList.contains('vkui--disable-overscroll-behavior'),
+    ).toBeFalsy();
   });
 });

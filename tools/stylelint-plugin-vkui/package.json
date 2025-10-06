@@ -8,7 +8,7 @@
   "exports": "./index.js",
   "scripts": {
     "build": "echo no build",
-    "test": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" yarn run --top-level jest --runInBand",
+    "test": "yarn run -T vitest run",
     "test:ci": "yarn test"
   }
 }

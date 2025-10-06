@@ -3,11 +3,12 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { getRandomUsers } from '../../testing/mock';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
   waitCSSTransitionEnd,
+  withFakeTimers,
 } from '../../testing/utils';
 import type { HasChildren } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
@@ -24,15 +25,16 @@ import styles from './View.module.css';
 // Basically the same as View.test.tsx
 
 describe(ViewInfinite, () => {
-  fakeTimers();
   baselineComponent(ViewInfinite);
 
-  describe('With Panel', () =>
+  describe('With Panel', () => {
+    fakeTimersForScope(false);
     mountTest(() => (
       <ViewInfinite activePanel="panel">
         <Panel id="panel" />
       </ViewInfinite>
-    )));
+    ));
+  });
 
   describe('shows active panel', () => {
     const panels = [
@@ -51,49 +53,56 @@ describe(ViewInfinite, () => {
       expect(result.queryByTestId('p1')).toBeNull();
       expect(result.queryByTestId('p2')).not.toBeNull();
     });
-    it('calls onTransition', async () => {
-      const onTransition = vi.fn();
-      const result = render(
-        <ViewInfinite activePanel="p1" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      result.rerender(
-        <ViewInfinite activePanel="p2" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledTimes(1);
-      expect(onTransition).toHaveBeenCalledWith({
-        from: 'p1',
-        to: 'p2',
-        isBack: false,
-      });
-    });
-    it('detects back transition', async () => {
-      const onTransition = vi.fn();
-      const result = render(
-        <ViewInfinite activePanel="p2" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      result.rerender(
-        <ViewInfinite activePanel="p1" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      await waitCSSKeyframesAnimation(getViewPanelById('p2'));
-      await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledWith({
-        from: 'p2',
-        to: 'p1',
-        isBack: true,
-      });
-    });
+    it(
+      'calls onTransition',
+      withFakeTimers(async () => {
+        const onTransition = vi.fn();
+        const result = render(
+          <ViewInfinite activePanel="p1" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        result.rerender(
+          <ViewInfinite activePanel="p2" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
+        expect(onTransition).toHaveBeenCalledTimes(1);
+        expect(onTransition).toHaveBeenCalledWith({
+          from: 'p1',
+          to: 'p2',
+          isBack: false,
+        });
+      }),
+    );
+    it(
+      'detects back transition',
+      withFakeTimers(async () => {
+        const onTransition = vi.fn();
+        const result = render(
+          <ViewInfinite activePanel="p2" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        result.rerender(
+          <ViewInfinite activePanel="p1" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        await waitCSSKeyframesAnimation(getViewPanelById('p2'));
+        await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
+        expect(onTransition).toHaveBeenCalledWith({
+          from: 'p2',
+          to: 'p1',
+          isBack: true,
+        });
+      }),
+    );
   });
 
   describe('blurs active element', () => {
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="focus" key="1">
         <input autoFocus data-testid="__autofocus__" />
@@ -111,6 +120,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('can swipeBack', () => {
+    fakeTimersForScope(false);
     let nowMock: ReturnType<typeof vi.spyOn>;
     beforeEach(() => {
       nowMock = vi.spyOn(Date, 'now');
@@ -405,6 +415,7 @@ describe(ViewInfinite, () => {
   });
 
   describe('scroll control', () => {
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,

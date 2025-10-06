@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import { baselineComponent, fakeTimersForScope, userEvent } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -31,7 +31,7 @@ describe(Textarea, () => {
   });
 
   describe('works uncontrolled', () => {
-    fakeTimers();
+    fakeTimersForScope();
 
     it('uses defaultValue', () => {
       render(<Textarea defaultValue="def" />);
@@ -76,7 +76,7 @@ describe(Textarea, () => {
   });
 
   describe('works controlled', () => {
-    fakeTimers();
+    fakeTimersForScope();
 
     it('respects outer value', () => {
       const { rerender } = render(<Textarea value="init" />);
@@ -108,7 +108,7 @@ describe(Textarea, () => {
   });
 
   describe('calls onResize', () => {
-    fakeTimers();
+    fakeTimersForScope();
 
     const mockTextareaScrollHeight = () => {
       const textArea = screen.getByTestId('textarea');

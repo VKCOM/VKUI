@@ -1,7 +1,12 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon24Done } from '@vkontakte/icons';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { Search } from './Search';
 import styles from './Search.module.css';
 
@@ -20,9 +25,8 @@ vi.mock('../../lib/touch', async () => {
 describe(Search, () => {
   baselineComponent(Search);
 
-  fakeTimers();
-
   describe('works uncontrolled', () => {
+    fakeTimersForScope();
     it('uses defaultValue', () => {
       render(<Search defaultValue="def" />);
       expect(getInput()).toHaveValue('def');
@@ -100,6 +104,7 @@ describe(Search, () => {
   });
 
   describe('works controlled', () => {
+    fakeTimersForScope();
     it('respects outer value', () => {
       const { rerender } = render(<Search value="init" />);
       expect(getInput()).toHaveValue('init');
@@ -164,36 +169,45 @@ describe(Search, () => {
     });
   });
 
-  it('calls focus handlers', async () => {
-    const onFocus = vi.fn();
-    const onBlur = vi.fn();
-    render(<Search onFocus={onFocus} onBlur={onBlur} />);
-    await userEvent.click(getInput());
-    expect(onFocus).toHaveBeenCalled();
-    expect(onBlur).not.toHaveBeenCalled();
-    await userEvent.click(document.body);
-    expect(onBlur).toHaveBeenCalled();
-  });
+  it(
+    'calls focus handlers',
+    withFakeTimers(async () => {
+      const onFocus = vi.fn();
+      const onBlur = vi.fn();
+      render(<Search onFocus={onFocus} onBlur={onBlur} />);
+      await userEvent.click(getInput());
+      expect(onFocus).toHaveBeenCalled();
+      expect(onBlur).not.toHaveBeenCalled();
+      await userEvent.click(document.body);
+      expect(onBlur).toHaveBeenCalled();
+    }),
+  );
 
-  it('calls onIconClick', async () => {
-    const cb = vi.fn();
-    render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
-    await userEvent.click(screen.getByTestId('icon'));
-    act(vi.runAllTimers);
-    expect(cb).toHaveBeenCalled();
-  });
+  it(
+    'calls onIconClick',
+    withFakeTimers(async () => {
+      const cb = vi.fn();
+      render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
+      await userEvent.click(screen.getByTestId('icon'));
+      act(vi.runAllTimers);
+      expect(cb).toHaveBeenCalled();
+    }),
+  );
 
-  it('calls onFindButtonClick', async () => {
-    const cb = vi.fn();
-    render(<Search value="test" onFindButtonClick={cb} findButtonTestId="find-button" />);
-    await userEvent.click(getFindButton());
-    act(vi.runAllTimers);
-    expect(cb).toHaveBeenCalled();
-  });
+  it(
+    'calls onFindButtonClick',
+    withFakeTimers(async () => {
+      const cb = vi.fn();
+      render(<Search value="test" onFindButtonClick={cb} findButtonTestId="find-button" />);
+      await userEvent.click(getFindButton());
+      act(vi.runAllTimers);
+      expect(cb).toHaveBeenCalled();
+    }),
+  );
 
   it.each([fireEvent.click, fireEvent.pointerDown])(
     'should clear value by click clear button',
-    async (clickFn) => {
+    withFakeTimers<[typeof fireEvent.click]>(async (clickFn) => {
       let value = '';
       const { container } = render(<Search onChange={(e) => (value = e.target.value)} />);
       await userEvent.type(getInput(), 'user');
@@ -204,7 +218,7 @@ describe(Search, () => {
         vi.runOnlyPendingTimers();
       });
       expect(value).toEqual('');
-    },
+    }),
   );
 
   it('should render custom icon by function', () => {

@@ -5,7 +5,7 @@ import { setRef } from '../../lib/utils';
 import {
   ADOPTED_TOUCH_EVENTS_HANDLERS,
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   mockRect,
   MOUSE_EVENTS_HANDLERS,
   userEvent,
@@ -114,6 +114,7 @@ describe(Slider, () => {
   });
 
   describe('change with tap', () => {
+    fakeTimersForScope();
     it('moves start', async () => {
       const handleChange: ReturnType<typeof vi.fn> = vi.fn();
       render(<Slider defaultValue={30} onChange={handleChange} />);
@@ -306,7 +307,7 @@ describe(Slider, () => {
   );
 
   describe('with tooltip', () => {
-    fakeTimers();
+    fakeTimersForScope();
 
     it('shows tooltip on hover/focus', async () => {
       render(

@@ -1,6 +1,6 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { setHours, setMinutes } from '../../lib/date';
-import { fakeTimers, userEvent } from '../../testing/utils';
+import { fakeTimersForScope, userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { CalendarTime } from './CalendarTime';
 
@@ -8,7 +8,6 @@ const dayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarTime', () => {
   it('check onChange should called when select hours and minutes', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     render(
       <CalendarTime
@@ -24,21 +23,20 @@ describe('CalendarTime', () => {
       screen.getByTestId('minutes-picker'),
     ];
 
-    await userEvent.click(hourSelect);
+    fireEvent.click(hourSelect);
 
     const unselectedHourOption = screen.getByRole('option', { selected: false, name: '01' });
-    await userEvent.click(unselectedHourOption);
+    fireEvent.click(unselectedHourOption);
 
-    await userEvent.click(minuteSelect);
+    fireEvent.click(minuteSelect);
 
     const unselectedMinuteOption = screen.getByRole('option', { selected: false, name: '55' });
-    await userEvent.click(unselectedMinuteOption);
+    fireEvent.click(unselectedMinuteOption);
 
     expect(onChange.mock.calls).toEqual([[setHours(dayDate, 1)], [setMinutes(dayDate, 55)]]);
   });
 
   it('check onChange should not called when isDisabled true', async () => {
-    vi.useFakeTimers();
     const onChange = vi.fn();
     render(
       <CalendarTime
@@ -55,15 +53,15 @@ describe('CalendarTime', () => {
       screen.getByTestId('minutes-picker'),
     ];
 
-    await userEvent.click(hourSelect);
+    fireEvent.click(hourSelect);
 
     const unselectedHourOption = screen.getByRole('option', { selected: false, name: '01' });
-    await userEvent.click(unselectedHourOption);
+    fireEvent.click(unselectedHourOption);
 
-    await userEvent.click(minuteSelect);
+    fireEvent.click(minuteSelect);
 
     const unselectedMinuteOption = screen.getByRole('option', { selected: false, name: '55' });
-    await userEvent.click(unselectedMinuteOption);
+    fireEvent.click(unselectedMinuteOption);
 
     expect(onChange).toHaveBeenCalledTimes(0);
   });
@@ -112,8 +110,8 @@ describe('CalendarTime', () => {
   });
 
   describe('Keyboard Navigation', () => {
+    fakeTimersForScope();
     it('should handle Tab navigation between hours, minutes and done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -148,7 +146,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes and done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -184,7 +181,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Tab navigation between hours, minutes without done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -214,7 +210,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes without done button', async () => {
-      vi.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -245,7 +240,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Shift+Tab navigation', async () => {
-      vi.useFakeTimers();
       render(
         <CalendarTime
           value={dayDate}
@@ -276,7 +270,7 @@ describe('CalendarTime', () => {
   });
 
   describe('Time Input', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('should handle direct time input in hours field', async () => {
       const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
@@ -325,7 +319,7 @@ describe('CalendarTime', () => {
   });
 
   describe('Done Button', () => {
-    fakeTimers();
+    fakeTimersForScope();
     it('should call onDoneButtonClick when done button is clicked', async () => {
       const onDoneButtonClick = vi.fn();
       render(
@@ -337,7 +331,7 @@ describe('CalendarTime', () => {
       );
 
       const doneButton = screen.getByTestId('done-button');
-      await userEvent.click(doneButton);
+      fireEvent.click(doneButton);
       await act(async () => vi.runOnlyPendingTimers());
 
       expect(onDoneButtonClick).toHaveBeenCalledTimes(1);

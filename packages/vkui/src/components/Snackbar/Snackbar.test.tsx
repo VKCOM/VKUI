@@ -2,6 +2,7 @@ import { type EventType, render } from '@testing-library/react';
 import { MEDIA_QUERIES, ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
+  fakeTimersForScope,
   fireEventPatch,
   matchMediaMock,
   mockRect,
@@ -10,6 +11,7 @@ import {
   touchEventMock,
   userEvent,
   waitCSSKeyframesAnimation,
+  withFakeTimers,
 } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PlatformProvider } from '../PlatformProvider/PlatformProvider';
@@ -18,7 +20,7 @@ import type { SnackbarPlacement } from './types';
 import styles from './Snackbar.module.css';
 import basicStyles from './subcomponents/Basic/Basic.module.css';
 
-const PLACEMENT_JEST_EACH_TABLE: SnackbarPlacement[] = [
+const PLACEMENT_VITEST_EACH_TABLE: SnackbarPlacement[] = [
   'top',
   'top-start',
   'top-end',
@@ -27,7 +29,7 @@ const PLACEMENT_JEST_EACH_TABLE: SnackbarPlacement[] = [
   'bottom-end',
 ];
 
-const GESTURES_JEST_EACH_TABLE = [
+const GESTURES_VITEST_EACH_TABLE = [
   {
     name: 'touch',
     start: 'touchStart',
@@ -58,34 +60,33 @@ describe(Snackbar, () => {
     matchMediaMock(MEDIA_QUERIES.SMALL_TABLET_PLUS);
   });
 
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
   afterEach(() => {
     onClose.mockClear();
   });
 
   baselineComponent((props) => <Snackbar onClose={vi.fn()} {...props} />);
 
-  it.each(PLACEMENT_JEST_EACH_TABLE)('should set offsetY relative placement="%s"', (placement) => {
-    const result = render(<Snackbar placement={placement} offsetY={8} onClose={vi.fn()} />);
-    const el = result.getByRole('presentation');
-    switch (placement) {
-      case 'top-start':
-      case 'top':
-      case 'top-end':
-        expect(el.style.top).toBe('8px');
-        expect(el.style.bottom).toBe('');
-        break;
-      case 'bottom-start':
-      case 'bottom':
-      case 'bottom-end':
-        expect(el.style.top).toBe('');
-        expect(el.style.bottom).toBe('8px');
-        break;
-    }
-  });
+  it.each(PLACEMENT_VITEST_EACH_TABLE)(
+    'should set offsetY relative placement="%s"',
+    (placement) => {
+      const result = render(<Snackbar placement={placement} offsetY={8} onClose={vi.fn()} />);
+      const el = result.getByRole('presentation');
+      switch (placement) {
+        case 'top-start':
+        case 'top':
+        case 'top-end':
+          expect(el.style.top).toBe('8px');
+          expect(el.style.bottom).toBe('');
+          break;
+        case 'bottom-start':
+        case 'bottom':
+        case 'bottom-end':
+          expect(el.style.top).toBe('');
+          expect(el.style.bottom).toBe('8px');
+          break;
+      }
+    },
+  );
 
   it('should set iOS CSS selector', () => {
     const result = render(
@@ -120,23 +121,29 @@ describe(Snackbar, () => {
     expect(container.querySelector(`.${basicStyles.layoutHorizontal}`)).not.toBeNull();
   });
 
-  it('should be closed after timeout', async () => {
-    const result = render(<Snackbar onClose={onClose} />);
-    await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
-    expect(onClose).toHaveBeenCalled();
-  });
+  it(
+    'should be closed after timeout',
+    withFakeTimers(async () => {
+      const result = render(<Snackbar onClose={onClose} />);
+      await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
+      expect(onClose).toHaveBeenCalled();
+    }),
+  );
 
-  it('should use focused state for start or end timeout for close', async () => {
-    const result = render(<Snackbar action="Action" onClose={onClose} />);
+  it(
+    'should use focused state for start or end timeout for close',
+    withFakeTimers(async () => {
+      const result = render(<Snackbar action="Action" onClose={onClose} />);
 
-    await userEvent.keyboard('{Tab}');
-    await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
-    expect(onClose).not.toHaveBeenCalled();
+      await userEvent.keyboard('{Tab}');
+      await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
+      expect(onClose).not.toHaveBeenCalled();
 
-    await userEvent.keyboard('{Tab}');
-    await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
-    expect(onClose).toHaveBeenCalled();
-  });
+      await userEvent.keyboard('{Tab}');
+      await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
+      expect(onClose).toHaveBeenCalled();
+    }),
+  );
 
   it('should be closed after click to action', async () => {
     const onActionClick = vi.fn();
@@ -153,12 +160,15 @@ describe(Snackbar, () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('should be closed after press to ESC', async () => {
-    const result = render(<Snackbar onClose={onClose} />);
-    await userEvent.keyboard('{Escape}');
-    await waitCSSKeyframesAnimation(result.getByRole('alert'));
-    expect(onClose).toHaveBeenCalled();
-  });
+  it(
+    'should be closed after press to ESC',
+    withFakeTimers(async () => {
+      const result = render(<Snackbar onClose={onClose} />);
+      await userEvent.keyboard('{Escape}');
+      await waitCSSKeyframesAnimation(result.getByRole('alert'));
+      expect(onClose).toHaveBeenCalled();
+    }),
+  );
 
   it('should work with open prop', async () => {
     const onActionClick = vi.fn();
@@ -201,37 +211,41 @@ describe(Snackbar, () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('should force unmount', async () => {
-    const result = render(<Snackbar placement="top" onClose={onClose} />);
+  it(
+    'should force unmount',
+    withFakeTimers(async () => {
+      const result = render(<Snackbar placement="top" onClose={onClose} />);
 
-    const rootEl = result.getByRole('presentation');
-    const contentEl = result.getByRole('alert');
+      const rootEl = result.getByRole('presentation');
+      const contentEl = result.getByRole('alert');
 
-    const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-    const movedRect = getMovedContentRectByPlacement('top', { shouldTriggerClosing: true }); // prettier-ignore
+      const initialRect = { x: 0, y: 0, width: 320, height: 100 };
+      const movedRect = getMovedContentRectByPlacement('top', { shouldTriggerClosing: true }); // prettier-ignore
 
-    // start
-    mockRect(rootEl, initialRect);
-    mockRect(contentEl, initialRect);
-    await fireEventPatch(contentEl, 'touchStart', transformDomRectToEventData('touchStart', initialRect)); // prettier-ignore
-    await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+      // start
+      mockRect(rootEl, initialRect);
+      mockRect(contentEl, initialRect);
+      await fireEventPatch(contentEl, 'touchStart', transformDomRectToEventData('touchStart', initialRect)); // prettier-ignore
+      await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
 
-    // move
-    mockRect(contentEl, movedRect);
-    requestAnimationFrameMock.init();
-    await fireEventPatch(contentEl, 'touchMove', transformDomRectToEventData('touchMove', movedRect)); // prettier-ignore
-    requestAnimationFrameMock.triggerNextAnimationFrame();
+      // move
+      mockRect(contentEl, movedRect);
+      requestAnimationFrameMock.init();
+      await fireEventPatch(contentEl, 'touchMove', transformDomRectToEventData('touchMove', movedRect)); // prettier-ignore
+      requestAnimationFrameMock.triggerNextAnimationFrame();
 
-    result.unmount();
+      result.unmount();
 
-    expect(rootEl).not.toBeInTheDocument();
-  });
+      expect(rootEl).not.toBeInTheDocument();
+    }),
+  );
 
-  describe.each(GESTURES_JEST_EACH_TABLE)(
+  describe.each(GESTURES_VITEST_EACH_TABLE)(
     'should use touched state for start or end timeout for close (user $name manipulation)',
     ({ start, move, end, fireEventOptions }) => {
+      fakeTimersForScope(false);
       it.each([
-        ...PLACEMENT_JEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
+        ...PLACEMENT_VITEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
         { placement: 'top' as const, shifted: false },
       ])('placement="$placement" (shifted: $shifted)', async ({ placement, shifted }) => {
         const result = render(<Snackbar placement={placement} onClose={onClose} />);
@@ -268,10 +282,11 @@ describe(Snackbar, () => {
     },
   );
 
-  describe.each(GESTURES_JEST_EACH_TABLE)(
+  describe.each(GESTURES_VITEST_EACH_TABLE)(
     'should closing with user $name manipulation',
     ({ start, move, end, fireEventOptions }) => {
-      it.each(PLACEMENT_JEST_EACH_TABLE)('placement="%s"', async (placement) => {
+      fakeTimersForScope(false);
+      it.each(PLACEMENT_VITEST_EACH_TABLE)('placement="%s"', async (placement) => {
         const result = render(<Snackbar placement={placement} onClose={onClose} />);
 
         const rootEl = result.getByRole('presentation');

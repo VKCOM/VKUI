@@ -1,4 +1,5 @@
 import { act, fireEvent, render, renderHook } from '@testing-library/react';
+import { withFakeTimers } from '../../testing/utils.tsx';
 import { useCSSTransition } from './useCSSTransition';
 
 describe(useCSSTransition, () => {
@@ -416,99 +417,97 @@ describe(useCSSTransition, () => {
     );
   });
 
-  it('should not stuck in exiting when transitionend not fired (fast open -> close)', () => {
-    // Управляем таймерами вручную
-    vi.useFakeTimers();
+  it(
+    'should not stuck in exiting when transitionend not fired (fast open -> close)',
+    withFakeTimers(() => {
+      // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
+      const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
+        () =>
+          ({
+            transitionDuration: '0.2s',
+            transitionDelay: '0s',
+          }) as unknown as CSSStyleDeclaration,
+      );
 
-    // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
-    const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
-      () =>
-        ({
-          transitionDuration: '0.2s',
-          transitionDelay: '0s',
-        }) as unknown as CSSStyleDeclaration,
-    );
+      const { result, rerender } = renderHook(
+        (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
+        { initialProps: false },
+      );
 
-    const { result, rerender } = renderHook(
-      (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
-      { initialProps: false },
-    );
+      const cmp = render(<div {...result.current[1]} />);
 
-    const cmp = render(<div {...result.current[1]} />);
+      // initial
+      expect(result.current[0]).toBe('exited');
 
-    // initial
-    expect(result.current[0]).toBe('exited');
+      // open -> entering
+      rerender(true);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('entering');
 
-    // open -> entering
-    rerender(true);
-    cmp.rerender(<div {...result.current[1]} />);
-    expect(result.current[0]).toBe('entering');
+      // очень быстро close -> переход в exiting (но transitionend НЕ придёт)
+      rerender(false);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('exiting');
 
-    // очень быстро close -> переход в exiting (но transitionend НЕ придёт)
-    rerender(false);
-    cmp.rerender(<div {...result.current[1]} />);
-    expect(result.current[0]).toBe('exiting');
+      // колбэки, которые должны были сработать к этому моменту
+      expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+      expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExited).toHaveBeenCalledTimes(0);
 
-    // колбэки, которые должны были сработать к этому моменту
-    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-    expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-    expect(callbacks.onExited).toHaveBeenCalledTimes(0);
+      // Прокручиваем таймеры дальше, чтобы сработал fallback (200ms + safety offset (≈50ms))
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
 
-    // Прокручиваем таймеры дальше, чтобы сработал fallback (200ms + safety offset (≈50ms))
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+      // После fallback хук должен перевести состояние в exited и вызвать onExited
+      expect(result.current[0]).toBe('exited');
+      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
 
-    // После fallback хук должен перевести состояние в exited и вызвать onExited
-    expect(result.current[0]).toBe('exited');
-    expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+      // Восстанавливаем мок
+      getComputedStyleMock.mockRestore();
+    }),
+  );
 
-    // Восстанавливаем мок
-    getComputedStyleMock.mockRestore();
-    vi.useRealTimers();
-  });
+  it(
+    'should not stuck in exiting when transitionend not fired (transition duration < 0 )',
+    withFakeTimers(() => {
+      // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
+      const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
+        () =>
+          ({
+            transitionDuration: '0s',
+            transitionDelay: '0s',
+          }) as unknown as CSSStyleDeclaration,
+      );
 
-  it('should not stuck in exiting when transitionend not fired (transition duration < 0 )', () => {
-    // Управляем таймерами вручную
-    vi.useFakeTimers();
+      const { result, rerender } = renderHook(
+        (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
+        { initialProps: false },
+      );
 
-    // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
-    const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
-      () =>
-        ({
-          transitionDuration: '0s',
-          transitionDelay: '0s',
-        }) as unknown as CSSStyleDeclaration,
-    );
+      const cmp = render(<div {...result.current[1]} />);
 
-    const { result, rerender } = renderHook(
-      (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
-      { initialProps: false },
-    );
+      // initial
+      expect(result.current[0]).toBe('exited');
 
-    const cmp = render(<div {...result.current[1]} />);
+      // open -> entering
+      rerender(true);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('entered');
 
-    // initial
-    expect(result.current[0]).toBe('exited');
+      rerender(false);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('exited');
 
-    // open -> entering
-    rerender(true);
-    cmp.rerender(<div {...result.current[1]} />);
-    expect(result.current[0]).toBe('entered');
+      // колбэки, которые должны были сработать к этому моменту
+      expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+      expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
 
-    rerender(false);
-    cmp.rerender(<div {...result.current[1]} />);
-    expect(result.current[0]).toBe('exited');
-
-    // колбэки, которые должны были сработать к этому моменту
-    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-    expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-    expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-
-    // Восстанавливаем мок
-    getComputedStyleMock.mockRestore();
-    vi.useRealTimers();
-  });
+      // Восстанавливаем мок
+      getComputedStyleMock.mockRestore();
+    }),
+  );
 });

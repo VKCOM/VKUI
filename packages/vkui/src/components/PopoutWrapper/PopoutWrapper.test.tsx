@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { baselineComponent, fakeTimers } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 import styles from './PopoutWrapper.module.css';
 
@@ -7,8 +7,6 @@ describe(PopoutWrapper, () => {
   baselineComponent(PopoutWrapper);
 
   describe('opened state', () => {
-    fakeTimers();
-
     it('should be opened by default', () => {
       const result = render(<PopoutWrapper data-testid="popout-wrapper" />);
       const locator = result.getByTestId('popout-wrapper');

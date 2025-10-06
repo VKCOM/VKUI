@@ -1,6 +1,6 @@
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { ChipsInput } from './ChipsInput';
 
 describe(ChipsInput, () => {
@@ -43,7 +43,7 @@ describe(ChipsInput, () => {
     expect(onChange).toHaveBeenCalledWith([]);
   });
 
-  it('should clear value when click on remove button', async () => {
+  it('should clear value when click on remove button', () => {
     const onChange = vi.fn();
     render(
       <ChipsInput
@@ -72,7 +72,7 @@ describe(ChipsInput, () => {
         onChange={onChange}
       />,
     );
-    await userEvent.click(screen.getByTestId('delete'));
+    fireEvent.click(screen.getByTestId('delete'));
     expect(onChange).toHaveBeenCalledWith([]);
   });
 
@@ -94,41 +94,44 @@ describe(ChipsInput, () => {
     expect(screen.getByTestId('delete')).toBeInTheDocument();
   });
 
-  it('should delete option when keydown {Delete}', async () => {
-    const onChange = vi.fn();
-    const initialOptions = [
-      {
-        value: 'navarin',
-        label: 'Наваринского пламени с дымом',
-      },
-      {
-        value: 'red',
-        label: 'Красный',
-      },
-      {
-        value: 'blue',
-        label: 'Синий',
-      },
-    ];
-    const { container } = render(
-      <ChipsInput
-        id="color"
-        placeholder="Введите цвета"
-        value={initialOptions}
-        onChange={onChange}
-      />,
-    );
-    const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
-    act(() => {
-      chip.focus();
-    });
+  it(
+    'should delete option when keydown {Delete}',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      const initialOptions = [
+        {
+          value: 'navarin',
+          label: 'Наваринского пламени с дымом',
+        },
+        {
+          value: 'red',
+          label: 'Красный',
+        },
+        {
+          value: 'blue',
+          label: 'Синий',
+        },
+      ];
+      const { container } = render(
+        <ChipsInput
+          id="color"
+          placeholder="Введите цвета"
+          value={initialOptions}
+          onChange={onChange}
+        />,
+      );
+      const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
+      act(() => {
+        chip.focus();
+      });
 
-    await userEvent.keyboard('{Delete}');
+      await userEvent.keyboard('{Delete}');
 
-    const resultValue = [...initialOptions];
-    resultValue.pop();
-    expect(onChange).toHaveBeenCalledWith(resultValue);
-  });
+      const resultValue = [...initialOptions];
+      resultValue.pop();
+      expect(onChange).toHaveBeenCalledWith(resultValue);
+    }),
+  );
 
   it.each<{
     delimiter: string | RegExp | string[];
