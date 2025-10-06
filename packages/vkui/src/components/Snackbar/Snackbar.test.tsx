@@ -170,46 +170,49 @@ describe(Snackbar, () => {
     }),
   );
 
-  it('should work with open prop', async () => {
-    const onActionClick = vi.fn();
-    const onDurationEnd = vi.fn();
+  it(
+    'should work with open prop',
+    withFakeTimers(async () => {
+      const onActionClick = vi.fn();
+      const onDurationEnd = vi.fn();
 
-    const action = <span data-testid="action">action</span>;
+      const action = <span data-testid="action">action</span>;
 
-    const result = render(
-      <Snackbar
-        action={action}
-        onActionClick={onActionClick}
-        onDurationEnd={onDurationEnd}
-        onClose={onClose}
-        open={true}
-      />,
-    );
-    // Нажимаем на кнопку Action
-    await fireEventPatch(result.getByTestId('action'), 'click');
-    expect(onActionClick).toHaveBeenCalled();
+      const result = render(
+        <Snackbar
+          action={action}
+          onActionClick={onActionClick}
+          onDurationEnd={onDurationEnd}
+          onClose={onClose}
+          open={true}
+        />,
+      );
+      // Нажимаем на кнопку Action
+      await fireEventPatch(result.getByTestId('action'), 'click');
+      expect(onActionClick).toHaveBeenCalled();
 
-    // Снекбар не закрывается
-    await waitCSSKeyframesAnimation(result.getByRole('alert'));
-    expect(onClose).not.toHaveBeenCalled();
+      // Снекбар не закрывается
+      await waitCSSKeyframesAnimation(result.getByRole('alert'));
+      expect(onClose).not.toHaveBeenCalled();
 
-    // Ждем, когда срабатает таймер
-    vi.runOnlyPendingTimers();
-    expect(onDurationEnd).toHaveBeenCalled();
+      // Ждем, когда срабатает таймер
+      vi.runOnlyPendingTimers();
+      expect(onDurationEnd).toHaveBeenCalled();
 
-    // Снекбар не закрывается
-    await waitCSSKeyframesAnimation(result.getByRole('alert'));
-    expect(onClose).not.toHaveBeenCalled();
+      // Снекбар не закрывается
+      await waitCSSKeyframesAnimation(result.getByRole('alert'));
+      expect(onClose).not.toHaveBeenCalled();
 
-    // Прокидываем open={false}
-    result.rerender(
-      <Snackbar action={action} onActionClick={onActionClick} onClose={onClose} open={false} />,
-    );
+      // Прокидываем open={false}
+      result.rerender(
+        <Snackbar action={action} onActionClick={onActionClick} onClose={onClose} open={false} />,
+      );
 
-    // onClose вызывается
-    await waitCSSKeyframesAnimation(result.getByRole('alert'));
-    expect(onClose).toHaveBeenCalled();
-  });
+      // onClose вызывается
+      await waitCSSKeyframesAnimation(result.getByRole('alert'));
+      expect(onClose).toHaveBeenCalled();
+    }),
+  );
 
   it(
     'should force unmount',
