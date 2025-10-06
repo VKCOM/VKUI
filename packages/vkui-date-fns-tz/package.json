@@ -87,6 +87,6 @@
   "devDependencies": {
     "@date-fns/tz": "1.4.1",
     "@swc/core": "^1.13.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
