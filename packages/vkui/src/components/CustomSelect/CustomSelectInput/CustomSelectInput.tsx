@@ -30,11 +30,11 @@ export interface CustomSelectInputProps
     Omit<FormFieldProps, 'mode' | 'type' | 'maxHeight'> {
   slotsProps?: {
     input?: React.InputHTMLAttributes<HTMLInputElement> &
-      HasRef<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
       HasComponent &
       HasDataAttribute;
     root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
-      HasRef<HTMLDivElement> &
+      HasRootRef<HTMLDivElement> &
       HasComponent &
       HasDataAttribute;
   };
@@ -94,6 +94,20 @@ export const CustomSelectInput = ({
     slotsProps?.input,
   );
 
+  const {
+    style,
+    className,
+    getRootRef: rootRef,
+    ...rootRest
+  } = useMergeProps(
+    {
+      style: rootStyle,
+      className: rootClassName,
+      getRootRef: handleRootRef,
+    },
+    slotsProps?.root,
+  );
+
   const input = (
     <Text
       type="text"
@@ -118,20 +132,6 @@ export const CustomSelectInput = ({
   }, [accessible, fetching, focusWithin, inputReadonly, searchable]);
 
   const labelHidden = showLabelOrPlaceholder ? false : !inputHidden;
-
-  const {
-    style,
-    className,
-    getRootRef: rootRef,
-    ...rootRest
-  } = useMergeProps(
-    {
-      style: rootStyle,
-      className: rootClassName,
-      getRootRef: handleRootRef,
-    },
-    slotsProps?.root,
-  );
 
   const platform = usePlatform();
   return (

@@ -59,6 +59,8 @@ const CheckboxComponent = ({
   titleAfter,
   noPadding,
 
+  indeterminate,
+  defaultIndeterminate,
   IconOnCompact,
   IconOnRegular,
   IconOffCompact,
@@ -91,6 +93,8 @@ const CheckboxComponent = ({
       {...rootRest}
     >
       <CheckboxInput
+        indeterminate={indeterminate}
+        defaultIndeterminate={defaultIndeterminate}
         IconIndeterminate={IconIndeterminate}
         IconOnCompact={IconOnCompact}
         IconOnRegular={IconOnRegular}

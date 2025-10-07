@@ -28,6 +28,8 @@ export function CheckboxSimple({
   titleAfter,
   noPadding,
 
+  indeterminate,
+  defaultIndeterminate,
   IconOnCompact,
   IconOnRegular,
   IconOffCompact,
@@ -70,6 +72,8 @@ export function CheckboxSimple({
       {...rootRest}
     >
       <CheckboxInput
+        indeterminate={indeterminate}
+        defaultIndeterminate={defaultIndeterminate}
         IconIndeterminate={IconIndeterminate}
         IconOnCompact={IconOnCompact}
         IconOnRegular={IconOnRegular}

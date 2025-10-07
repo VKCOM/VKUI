@@ -83,6 +83,9 @@ export function CheckboxInput({
   style,
   getRootRef,
   getRef,
+
+  indeterminate,
+  defaultIndeterminate,
   IconOnCompact = Icon20CheckBoxOn,
   IconOnRegular = Icon24CheckBoxOn,
   IconOffCompact = Icon20CheckBoxOff,
@@ -102,18 +105,10 @@ export function CheckboxInput({
   );
 
   const {
-    indeterminate,
-    defaultIndeterminate,
     onChange,
     getRootRef: getInputRef,
     ...inputRest
-  } = useMergeProps(
-    {
-      getRootRef: getRef,
-      ...restProps,
-    },
-    slotsProps?.input,
-  );
+  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
 
   const inputRef = useExternRef<HTMLInputElement>(getInputRef);
 

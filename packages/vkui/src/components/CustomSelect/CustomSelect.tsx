@@ -19,8 +19,12 @@ import {
 } from '../CustomSelectDropdown/CustomSelectDropdown';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import type { FormFieldProps } from '../FormField/FormField';
-import type { NativeSelectProps, SelectValue } from '../NativeSelect/NativeSelect';
-import { NOT_SELECTED, remapFromNativeValueToSelectValue } from '../NativeSelect/NativeSelect';
+import {
+  type NativeSelectProps,
+  NOT_SELECTED,
+  remapFromNativeValueToSelectValue,
+  type SelectValue,
+} from '../NativeSelect/NativeSelect';
 import { RootComponent } from '../RootComponent/RootComponent.tsx';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -667,7 +671,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const selectRest = useMergeProps(
     {
       getRootRef: selectElRef,
-      onChange: onNativeSelectChange,
       onBlur: props.onBlur,
       onFocus: props.onFocus,
       onClick: props.onClick,
@@ -675,16 +678,26 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     slotsProps?.select,
   );
 
+  // Приводим типы так как в CustomSelect типы в rest определены как React.SelectHTMLAttributes<HTMLSelectElement>
+  // Хотя эти свойства прокидываются в input
+  const typedOnInputKeyDownProp =
+    onKeyDownProp as unknown as React.KeyboardEventHandler<HTMLInputElement>;
+  const typedOnInputClickProp = onClickProp as unknown as React.MouseEventHandler<HTMLInputElement>;
+
   const inputRest = useMergeProps(
     {
       getRootRef: selectInputRef,
       onChange: onInputChange,
       onFocus: callMultiple(onFocus, onFocusProp),
       onBlur: callMultiple(onBlur, onFocusProp),
-      onKeyDown: !readOnly ? callMultiple(onInputKeyDown, onKeyDownProp) : onKeyDownProp,
-      onClick: !readOnly ? callMultiple(toggleOpened, onClickProp) : onClickProp,
+      onKeyDown: !readOnly
+        ? callMultiple(onInputKeyDown, typedOnInputKeyDownProp)
+        : typedOnInputKeyDownProp,
+      onClick: !readOnly
+        ? callMultiple(toggleOpened, typedOnInputClickProp)
+        : typedOnInputClickProp,
       className: openedClassNames,
-      ...restProps,
+      ...(restProps as React.InputHTMLAttributes<HTMLInputElement>),
     },
     slotsProps?.input,
   );
@@ -735,6 +748,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         aria-hidden
         data-testid={nativeSelectTestId}
         required={required}
+        onChange={onNativeSelectChange}
         {...selectRest}
       >
         {(allowClearButton || nativeSelectValue === NOT_SELECTED.NATIVE) && (

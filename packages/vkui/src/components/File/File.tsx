@@ -50,7 +50,7 @@ export const File = ({
     {
       className,
       style,
-      getRootRef,
+      getRootRef: getRootRef as React.Ref<HTMLLabelElement>,
     },
     slotsProps?.root,
   );

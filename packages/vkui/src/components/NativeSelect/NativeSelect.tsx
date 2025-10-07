@@ -43,7 +43,7 @@ export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSel
 export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
   value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
 
-type NativeHTMLSelectProps = Omit<
+export type NativeHTMLSelectProps = Omit<
   React.SelectHTMLAttributes<HTMLSelectElement>,
   'multiple' | 'value' | 'defaultValue' | 'onChange'
 >;
@@ -157,14 +157,7 @@ export const NativeSelect = ({
     slotsProps?.root,
   );
 
-  const selectRest = useMergeProps(
-    {
-      getRootRef: selectRef,
-      onChange: callMultiple(_onChange, checkSelectedOption, onChange),
-      ...restProps,
-    },
-    slotsProps?.select,
-  );
+  const selectRest = useMergeProps({ getRootRef: selectRef, ...restProps }, slotsProps?.select);
 
   return (
     <FormField
@@ -198,6 +191,7 @@ export const NativeSelect = ({
             ? remapFromSelectValueToNativeValue(defaultValue)
             : defaultValue
         }
+        onChange={callMultiple(_onChange, checkSelectedOption)}
         {...selectRest}
       >
         {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}

@@ -96,13 +96,17 @@ describe('CustomSelect', () => {
 
   it(
     'should work with slotsProps',
-    withFakeTimers(() => {
+    withFakeTimers(async () => {
       const rootRef1 = createRef<HTMLDivElement>();
       const rootRef2 = createRef<HTMLDivElement>();
       const selectRef1 = createRef<HTMLSelectElement>();
       const selectRef2 = createRef<HTMLSelectElement>();
       const inputRef1 = createRef<HTMLInputElement>();
       const inputRef2 = createRef<HTMLInputElement>();
+
+      const onRootClick = vi.fn();
+      const onInputClick = vi.fn();
+      const onSelectClick = vi.fn();
 
       render(
         <CustomSelect
@@ -128,6 +132,7 @@ describe('CustomSelect', () => {
                 color: 'rgb(255, 0, 0)',
               },
               'getRootRef': rootRef2,
+              'onClick': onRootClick,
             },
             select: {
               'className': 'selectClassName',
@@ -137,6 +142,7 @@ describe('CustomSelect', () => {
               'style': {
                 color: 'rgb(255, 0, 0)',
               },
+              'onClick': onSelectClick,
             },
             input: {
               'getRootRef': inputRef2,
@@ -145,6 +151,7 @@ describe('CustomSelect', () => {
               'style': {
                 color: 'rgb(255, 0, 0)',
               },
+              'onClick': onInputClick,
             },
           }}
         />,
@@ -180,6 +187,17 @@ describe('CustomSelect', () => {
 
       expect(inputRef1.current).toBe(inputRef2.current);
       expect(inputRef1.current).toBe(input);
+
+      fireEvent.click(input);
+      await act(async () => vi.runOnlyPendingTimers());
+      expect(onInputClick).toHaveBeenCalledOnce();
+
+      fireEvent.click(select);
+      expect(onSelectClick).toHaveBeenCalledOnce();
+
+      fireEvent.click(root);
+      await act(async () => vi.runOnlyPendingTimers());
+      expect(onRootClick).toHaveBeenCalledTimes(5);
     }),
   );
 
