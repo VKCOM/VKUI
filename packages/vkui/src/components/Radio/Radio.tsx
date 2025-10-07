@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps.ts';
-import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
@@ -19,17 +19,15 @@ export interface RadioProps
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
   /**
-   *
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
    */
   slotsProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
-      HasComponent &
       HasDataAttribute;
-    input?: React.ComponentProps<'input'> &
-      HasRootRef<HTMLInputElement> &
-      HasComponent &
-      HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
   };
   /**
    * Дополнительное описание под основным текстом.

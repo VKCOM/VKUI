@@ -12,7 +12,7 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { preventDefault } from '../../lib/utils';
-import { type HasComponent, type HasDataAttribute, type HasRootRef } from '../../types';
+import { type HasDataAttribute, type HasRootRef } from '../../types';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
@@ -122,12 +122,14 @@ export interface SelectProps<
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
     Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
   /**
-   *
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `select`: свойства для прокидывания в нативный `select`;
+   * - `input`: свойства для прокидывания в нативный `input`.
    */
   slotsProps?: NativeSelectProps['slotsProps'] & {
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasDataAttribute &
-      HasComponent &
       HasRootRef<HTMLInputElement>;
   };
   /**

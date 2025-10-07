@@ -9,7 +9,7 @@ import { useMergeProps } from '../../hooks/useMergeProps';
 import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasAlign, HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { RootComponent } from '../RootComponent/RootComponent.tsx';
@@ -55,17 +55,15 @@ export interface NativeSelectProps
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
   /**
-   *
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `select`: свойства для прокидывания в нативный `select`.
    */
   slotsProps?: {
     root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
       HasDataAttribute &
-      HasComponent &
       HasRootRef<HTMLDivElement>;
-    select?: NativeHTMLSelectProps &
-      HasRootRef<HTMLSelectElement> &
-      HasComponent &
-      HasDataAttribute;
+    select?: NativeHTMLSelectProps & HasRootRef<HTMLSelectElement> & HasDataAttribute;
   };
   /**
    * Выбранное значение.

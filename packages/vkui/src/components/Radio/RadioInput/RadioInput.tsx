@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../../hooks/useMergeProps.ts';
-import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -39,16 +39,16 @@ export interface RadioInputProps
     HasRootRef<HTMLLabelElement>,
     HasRef<HTMLInputElement> {
   /**
-   *
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
    */
   slotsProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
-      HasComponent &
       HasDataAttribute;
     input?: Omit<React.ComponentProps<'input'>, 'type'> &
       HasRootRef<HTMLInputElement> &
-      HasComponent &
       HasDataAttribute;
   };
 }

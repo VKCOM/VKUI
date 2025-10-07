@@ -14,7 +14,7 @@ import { useExternRef } from '../../../hooks/useExternRef.ts';
 import { useMergeProps } from '../../../hooks/useMergeProps.ts';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
-import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
@@ -34,17 +34,15 @@ export interface CheckboxInputProps
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
   /**
-   *
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
    */
   slotsProps?: {
-    root?: React.HTMLAttributes<HTMLElement> &
+    root?: Omit<React.HTMLAttributes<HTMLElement>, 'children'> &
       HasRootRef<HTMLElement> &
-      HasComponent &
       HasDataAttribute;
-    input?: React.ComponentProps<'input'> &
-      HasRootRef<HTMLInputElement> &
-      HasComponent &
-      HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
   };
   /**
    * Неопределенное состояние чекбокса.

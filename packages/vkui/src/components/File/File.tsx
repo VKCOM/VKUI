@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../hooks/useMergeProps.ts';
-import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
@@ -12,16 +12,16 @@ export interface FileProps
     HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {
   /**
-   *
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
    */
   slotsProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
-      HasComponent &
       HasDataAttribute;
     input?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> &
       HasRootRef<HTMLInputElement> &
-      HasComponent &
       HasDataAttribute;
   };
 }

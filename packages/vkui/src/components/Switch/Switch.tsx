@@ -9,7 +9,7 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useMergeProps } from '../../hooks/useMergeProps.ts';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent.tsx';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
@@ -24,16 +24,16 @@ export interface SwitchProps
     HasRootRef<HTMLLabelElement>,
     HasRef<HTMLInputElement> {
   /**
-   *
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
    */
   slotsProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
-      HasComponent &
       HasDataAttribute;
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRootRef<HTMLInputElement> &
-      HasComponent &
       HasDataAttribute;
   };
 }
