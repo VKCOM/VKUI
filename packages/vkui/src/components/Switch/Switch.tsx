@@ -9,7 +9,8 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useMergeProps } from '../../hooks/useMergeProps.ts';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent.tsx';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 
@@ -28,9 +29,11 @@ export interface SwitchProps
   slotsProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
+      HasComponent &
       HasDataAttribute;
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRootRef<HTMLInputElement> &
+      HasComponent &
       HasDataAttribute;
   };
 }
@@ -46,7 +49,7 @@ export const Switch = ({
   slotsProps,
   ...restProps
 }: SwitchProps): React.ReactNode => {
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+  const rootRest = useMergeProps(
     {
       style: rootStyle,
       className: rootClassName,
@@ -56,15 +59,11 @@ export const Switch = ({
   );
   const {
     checked: checkedProp,
-    disabled,
     onBlur: onBlurProp,
     onFocus: onFocusProp,
     onClick,
     ...inputRest
-  } = useMergeProps(
-    { getRootRef: getRef, className: styles.inputNative, ...restProps },
-    slotsProps?.input,
-  );
+  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
 
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
@@ -96,7 +95,6 @@ export const Switch = ({
     Component: 'input',
     type: 'checkbox',
     role: 'switch',
-    disabled,
     onBlur: handleBlur,
     onFocus: handleFocus,
     onClick: callMultiple(syncUncontrolledCheckedStateOnClick, onClick),
@@ -111,31 +109,29 @@ export const Switch = ({
   }
 
   return (
-    <label
-      className={classNames(
+    <RootComponent
+      Component="label"
+      baseClassName={classNames(
         styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         platform === 'ios' ? styles.ios : styles.default,
-        disabled && styles.disabled,
+        inputRest.disabled && styles.disabled,
         isRtl && styles.rtl,
         focusVisibleClassNames,
-        className,
       )}
-      style={style}
-      ref={getRootRef}
       {...rootRest}
     >
-      <VisuallyHidden {...inputProps} />
+      <VisuallyHidden baseClassName={styles.inputNative} {...inputProps} />
       <span aria-hidden className={styles.inputFake}>
         <span className={styles.track} />
         <span
           aria-hidden
           className={classNames(
             styles.handle,
-            platform !== 'ios' && !disabled && styles.handleWithRipple,
+            platform !== 'ios' && !inputRest.disabled && styles.handleWithRipple,
           )}
         />
       </span>
-    </label>
+    </RootComponent>
   );
 };

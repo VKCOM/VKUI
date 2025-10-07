@@ -9,7 +9,7 @@ import { useFocusWithin } from '../../../hooks/useFocusWithin';
 import { useMergeProps } from '../../../hooks/useMergeProps';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { getFormFieldModeFromSelectType } from '../../../lib/select';
-import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
+import type { HasAlign, HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { FormField, type FormFieldProps } from '../../FormField/FormField';
 import type { SelectType } from '../../Select/Select';
 import { SelectTypography } from '../../SelectTypography/SelectTypography';
@@ -31,9 +31,11 @@ export interface CustomSelectInputProps
   slotsProps?: {
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRef<HTMLInputElement> &
+      HasComponent &
       HasDataAttribute;
     root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
       HasRef<HTMLDivElement> &
+      HasComponent &
       HasDataAttribute;
   };
   selectType?: SelectType;

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps.ts';
-import type { HasDataAttribute, HasRootRef } from '../../types';
+import type { HasComponent, HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
@@ -23,8 +23,12 @@ export interface CheckboxProps
   slotsProps?: {
     root?: React.LabelHTMLAttributes<HTMLLabelElement> &
       HasRootRef<HTMLLabelElement> &
+      HasComponent &
       HasDataAttribute;
-    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+    input?: React.ComponentProps<'input'> &
+      HasRootRef<HTMLInputElement> &
+      HasComponent &
+      HasDataAttribute;
   };
   /**
    * Подпись под основным текстом.
@@ -42,9 +46,9 @@ export interface CheckboxProps
 
 const CheckboxComponent = ({
   children,
-  className: rootClassName,
-  style: rootStyle,
-  getRootRef: rootGetRootRef,
+  className,
+  style,
+  getRootRef,
   getRef,
   description,
   hoverMode,
@@ -55,14 +59,20 @@ const CheckboxComponent = ({
   titleAfter,
   noPadding,
 
+  IconOnCompact,
+  IconOnRegular,
+  IconOffCompact,
+  IconOffRegular,
+  IconIndeterminate,
+
   slotsProps,
   ...restProps
 }: CheckboxProps): React.ReactNode => {
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+  const rootRest = useMergeProps(
     {
-      className: rootClassName,
-      style: rootStyle,
-      getRootRef: rootGetRootRef,
+      className,
+      style,
+      getRootRef,
     },
     slotsProps?.root,
   );
@@ -71,9 +81,6 @@ const CheckboxComponent = ({
 
   return (
     <SelectionControl
-      className={className}
-      style={style}
-      getRootRef={getRootRef}
       disabled={inputRest.disabled}
       hoverMode={hoverMode}
       activeMode={activeMode}
@@ -83,7 +90,14 @@ const CheckboxComponent = ({
       noPadding={noPadding}
       {...rootRest}
     >
-      <CheckboxInput slotsProps={{ input: inputRest }} />
+      <CheckboxInput
+        IconIndeterminate={IconIndeterminate}
+        IconOnCompact={IconOnCompact}
+        IconOnRegular={IconOnRegular}
+        IconOffCompact={IconOffCompact}
+        IconOffRegular={IconOffRegular}
+        slotsProps={{ input: inputRest }}
+      />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>

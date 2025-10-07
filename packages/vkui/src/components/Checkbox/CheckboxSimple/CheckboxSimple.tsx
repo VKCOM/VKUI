@@ -15,9 +15,9 @@ const sizeYClassNames = {
 
 export function CheckboxSimple({
   children,
-  className: rootClassName,
-  style: rootStyle,
-  getRootRef: rootGetRootRef,
+  className,
+  style,
+  getRootRef,
   getRef,
   description,
   hoverMode: hoverModeProp,
@@ -28,14 +28,20 @@ export function CheckboxSimple({
   titleAfter,
   noPadding,
 
+  IconOnCompact,
+  IconOnRegular,
+  IconOffCompact,
+  IconOffRegular,
+  IconIndeterminate,
+
   slotsProps,
   ...restProps
 }: CheckboxProps) {
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+  const rootRest = useMergeProps(
     {
-      className: rootClassName,
-      style: rootStyle,
-      getRootRef: rootGetRootRef,
+      className,
+      style,
+      getRootRef,
     },
     slotsProps?.root,
   );
@@ -49,15 +55,12 @@ export function CheckboxSimple({
 
   return (
     <Tappable
-      className={classNames(
-        className,
+      baseClassName={classNames(
         styles.host,
         !noPadding && styles.withPadding,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
-      style={style}
       disabled={inputRest.disabled}
-      getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}
       hasHover={hasHover}
@@ -66,7 +69,14 @@ export function CheckboxSimple({
       Component="label"
       {...rootRest}
     >
-      <CheckboxInput slotsProps={{ input: inputRest }} />
+      <CheckboxInput
+        IconIndeterminate={IconIndeterminate}
+        IconOnCompact={IconOnCompact}
+        IconOnRegular={IconOnRegular}
+        IconOffCompact={IconOffCompact}
+        IconOffRegular={IconOffRegular}
+        slotsProps={{ input: inputRest }}
+      />
     </Tappable>
   );
 }

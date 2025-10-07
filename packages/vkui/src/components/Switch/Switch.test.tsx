@@ -46,6 +46,7 @@ describe(Switch, () => {
             },
             'getRootRef': rootRef2,
             'onClick': onRootClick,
+            'Component': 'div',
           },
           input: {
             'className': 'inputClassName',
@@ -53,6 +54,7 @@ describe(Switch, () => {
             'data-testid': 'switch-2',
             'checked': false,
             'onClick': onClick2,
+            'Component': 'select',
           },
         }}
       />,
@@ -61,11 +63,13 @@ describe(Switch, () => {
     expect(screen.queryByTestId('switch')).not.toBeInTheDocument();
     const input = screen.getByTestId('switch-2');
     expect(input).toBeInTheDocument();
+    expect(input.tagName).toBe('SELECT');
     expect(input).toHaveClass('inputClassName');
     expect(input).not.toBeChecked();
 
     const root = screen.getByTestId('root');
     expect(root).toBeInTheDocument();
+    expect(root.tagName).toBe('DIV');
     expect(root).toHaveClass('rootClassName');
     expect(root).toHaveClass('rootClassName-2');
     expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
@@ -82,7 +86,7 @@ describe(Switch, () => {
     expect(onClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(3);
+    expect(onRootClick).toHaveBeenCalledTimes(2);
   });
 
   it(

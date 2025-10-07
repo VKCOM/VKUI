@@ -14,7 +14,7 @@ import { useExternRef } from '../../../hooks/useExternRef.ts';
 import { useMergeProps } from '../../../hooks/useMergeProps.ts';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
+import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
@@ -37,8 +37,14 @@ export interface CheckboxInputProps
    *
    */
   slotsProps?: {
-    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
-    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+    root?: React.HTMLAttributes<HTMLElement> &
+      HasRootRef<HTMLElement> &
+      HasComponent &
+      HasDataAttribute;
+    input?: React.ComponentProps<'input'> &
+      HasRootRef<HTMLInputElement> &
+      HasComponent &
+      HasDataAttribute;
   };
   /**
    * Неопределенное состояние чекбокса.
@@ -73,9 +79,9 @@ export interface CheckboxInputProps
 const warn = warnOnce('Checkbox');
 
 export function CheckboxInput({
-  className: rootClassName,
-  style: rootStyle,
-  getRootRef: rootGetRootRef,
+  className,
+  style,
+  getRootRef,
   getRef,
   IconOnCompact = Icon20CheckBoxOn,
   IconOnRegular = Icon24CheckBoxOn,
@@ -86,11 +92,11 @@ export function CheckboxInput({
   slotsProps,
   ...restProps
 }: CheckboxInputProps) {
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+  const rootRest = useMergeProps(
     {
-      className: rootClassName,
-      style: rootStyle,
-      getRootRef: rootGetRootRef,
+      className,
+      style,
+      getRootRef,
     },
     slotsProps?.root,
   );
@@ -104,7 +110,6 @@ export function CheckboxInput({
   } = useMergeProps(
     {
       getRootRef: getRef,
-      className: styles.input,
       ...restProps,
     },
     slotsProps?.input,
@@ -156,18 +161,13 @@ export function CheckboxInput({
   }
 
   return (
-    <RootComponent
-      baseClassName={styles.host}
-      className={className}
-      style={style}
-      getRootRef={getRootRef}
-      {...rootRest}
-    >
+    <RootComponent baseClassName={styles.host} {...rootRest}>
       <VisuallyHidden
         Component="input"
         type="checkbox"
         onChange={handleChange}
         getRootRef={inputRef}
+        baseClassName={styles.input}
         {...inputRest}
       />
       {platform === 'vkcom' ? (

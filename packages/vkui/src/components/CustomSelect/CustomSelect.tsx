@@ -12,7 +12,7 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { preventDefault } from '../../lib/utils';
-import { type HasDataAttribute, type HasRootRef } from '../../types';
+import { type HasComponent, type HasDataAttribute, type HasRootRef } from '../../types';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
@@ -21,6 +21,7 @@ import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import type { FormFieldProps } from '../FormField/FormField';
 import type { NativeSelectProps, SelectValue } from '../NativeSelect/NativeSelect';
 import { NOT_SELECTED, remapFromNativeValueToSelectValue } from '../NativeSelect/NativeSelect';
+import { RootComponent } from '../RootComponent/RootComponent.tsx';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -122,6 +123,7 @@ export interface SelectProps<
   slotsProps?: NativeSelectProps['slotsProps'] & {
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasDataAttribute &
+      HasComponent &
       HasRootRef<HTMLInputElement>;
   };
   /**
@@ -650,7 +652,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
   };
 
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+  const rootRest = useMergeProps(
     {
       style: rootStyle,
       className: rootClassName,
@@ -662,19 +664,18 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     slotsProps?.root,
   );
 
-  const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
+  const selectRest = useMergeProps(
     {
       getRootRef: selectElRef,
       onChange: onNativeSelectChange,
       onBlur: props.onBlur,
       onFocus: props.onFocus,
       onClick: props.onClick,
-      className: styles.control,
     },
     slotsProps?.select,
   );
 
-  const { disabled, ...inputRest } = useMergeProps(
+  const inputRest = useMergeProps(
     {
       getRootRef: selectInputRef,
       onChange: onInputChange,
@@ -689,10 +690,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   );
 
   return (
-    <div
-      className={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
-      style={style}
-      ref={getRootRef}
+    <RootComponent
+      baseClassName={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
       {...rootRest}
     >
       <CustomSelectInput
@@ -712,7 +711,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         status={status}
         placeholder={placeholder}
         multiline={multiline}
-        disabled={disabled}
+        disabled={inputRest.disabled}
         labelTextTestId={labelTextTestId}
         slotsProps={{
           input: { ...selectInputAriaProps, ...inputRest },
@@ -727,9 +726,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         fetchingInProgressLabel={fetchingInProgressLabel}
         fetchingCompletedLabel={fetchingCompletedLabel}
       />
-      <select
+      <RootComponent
+        Component="select"
+        baseClassName={styles.control}
         tabIndex={-1}
-        ref={getSelectRef}
         name={name}
         value={nativeSelectValue}
         aria-hidden
@@ -743,7 +743,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         {options.map((item) => (
           <option key={`${item.value}`} value={item.value} />
         ))}
-      </select>
+      </RootComponent>
       {opened && (
         <CustomSelectDropdown
           targetRef={containerRef}
@@ -765,6 +765,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
           {resolvedContent}
         </CustomSelectDropdown>
       )}
-    </div>
+    </RootComponent>
   );
 }

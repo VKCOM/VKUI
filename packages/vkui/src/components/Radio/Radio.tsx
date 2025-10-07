@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps.ts';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
@@ -24,8 +24,12 @@ export interface RadioProps
   slotsProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
+      HasComponent &
       HasDataAttribute;
-    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+    input?: React.ComponentProps<'input'> &
+      HasRootRef<HTMLInputElement> &
+      HasComponent &
+      HasDataAttribute;
   };
   /**
    * Дополнительное описание под основным текстом.
@@ -72,10 +76,7 @@ export const Radio = ({
     slotsProps?.root,
   );
 
-  const { disabled, ...inputProps } = useMergeProps(
-    { getRootRef: getRef, ...restProps },
-    slotsProps?.input,
-  );
+  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
 
   return (
     <SelectionControl
@@ -84,10 +85,10 @@ export const Radio = ({
       hasHover={hasHover}
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
-      disabled={disabled}
+      disabled={inputRest.disabled}
       {...rootProps}
     >
-      <RadioInput slotsProps={{ input: inputProps }} />
+      <RadioInput slotsProps={{ input: inputRest }} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>

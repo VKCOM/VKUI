@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../../hooks/useMergeProps.ts';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
+import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -44,31 +44,30 @@ export interface RadioInputProps
   slotsProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
+      HasComponent &
       HasDataAttribute;
     input?: Omit<React.ComponentProps<'input'>, 'type'> &
       HasRootRef<HTMLInputElement> &
+      HasComponent &
       HasDataAttribute;
   };
 }
 
 export function RadioInput({
-  className: rootClassName,
-  style: rootStyle,
-  getRootRef: rootGetRootRef,
+  className,
+  style,
+  getRootRef,
   getRef,
   slotsProps,
   ...restProps
 }: RadioInputProps) {
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
-    { className: rootClassName, style: rootStyle, getRootRef: rootGetRootRef },
-    slotsProps?.root,
-  );
+  const rootRest = useMergeProps({ className, style, getRootRef }, slotsProps?.root);
 
   const inputProps = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
 
   return (
-    <RootComponent className={className} style={style} getRootRef={getRootRef} {...rootRest}>
-      <VisuallyHidden {...inputProps} Component="input" type="radio" baseClassName={styles.input} />
+    <RootComponent {...rootRest}>
+      <VisuallyHidden Component="input" type="radio" baseClassName={styles.input} {...inputProps} />
       <RadioIcon />
     </RootComponent>
   );

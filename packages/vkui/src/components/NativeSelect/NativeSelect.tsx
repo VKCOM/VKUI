@@ -9,9 +9,10 @@ import { useMergeProps } from '../../hooks/useMergeProps';
 import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasAlign, HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
+import { RootComponent } from '../RootComponent/RootComponent.tsx';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
@@ -59,8 +60,12 @@ export interface NativeSelectProps
   slotsProps?: {
     root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
       HasDataAttribute &
+      HasComponent &
       HasRootRef<HTMLDivElement>;
-    select?: NativeHTMLSelectProps & HasDataAttribute & HasRootRef<HTMLSelectElement>;
+    select?: NativeHTMLSelectProps &
+      HasRootRef<HTMLSelectElement> &
+      HasComponent &
+      HasDataAttribute;
   };
   /**
    * Выбранное значение.
@@ -118,7 +123,6 @@ export const NativeSelect = ({
   onChange,
   value,
   defaultValue,
-  onChange: onChangeProp,
 
   slotsProps,
   ...restProps
@@ -153,15 +157,10 @@ export const NativeSelect = ({
     slotsProps?.root,
   );
 
-  const {
-    disabled,
-    getRootRef: getSelectRef,
-    ...selectRest
-  } = useMergeProps(
+  const selectRest = useMergeProps(
     {
       getRootRef: selectRef,
-      className: styles.el,
-      onChange: callMultiple(_onChange, checkSelectedOption, onChangeProp),
+      onChange: callMultiple(_onChange, checkSelectedOption, onChange),
       ...restProps,
     },
     slotsProps?.select,
@@ -183,27 +182,27 @@ export const NativeSelect = ({
       )}
       style={style}
       getRootRef={getRootRef}
-      disabled={disabled}
+      disabled={selectRest.disabled}
       before={before}
       after={icon}
       status={status}
       mode={getFormFieldModeFromSelectType(selectType)}
       {...rootRest}
     >
-      <select
+      <RootComponent
+        Component="select"
+        baseClassName={styles.el}
         value={value !== undefined ? remapFromSelectValueToNativeValue(value) : value}
         defaultValue={
           defaultValue !== undefined
             ? remapFromSelectValueToNativeValue(defaultValue)
             : defaultValue
         }
-        disabled={disabled}
-        ref={getSelectRef}
         {...selectRest}
       >
         {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
         {children}
-      </select>
+      </RootComponent>
       <div className={styles.container} aria-hidden>
         <SelectTypography className={styles.title} selectType={selectType}>
           {title}
