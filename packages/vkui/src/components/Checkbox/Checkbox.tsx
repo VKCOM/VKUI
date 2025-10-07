@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
-import { useMergeProps } from '../../hooks/useMergeProps.ts';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useMergeProps } from '../../hooks/useMergeProps.ts';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

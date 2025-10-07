@@ -2,7 +2,7 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { useMergeProps } from '../../../hooks/useMergeProps.ts';
+import { useMergeProps } from '../../../hooks/useMergeProps';
 import { Tappable } from '../../Tappable/Tappable';
 import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';

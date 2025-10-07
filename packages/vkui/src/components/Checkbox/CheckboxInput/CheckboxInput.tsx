@@ -10,8 +10,8 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../../hooks/useAdaptivityConditionalRender';
-import { useExternRef } from '../../../hooks/useExternRef.ts';
-import { useMergeProps } from '../../../hooks/useMergeProps.ts';
+import { useExternRef } from '../../../hooks/useExternRef';
+import { useMergeProps } from '../../../hooks/useMergeProps';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';

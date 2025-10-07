@@ -6,7 +6,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
-import { useMergeProps } from '../../hooks/useMergeProps.ts';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
