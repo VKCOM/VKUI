@@ -64,14 +64,12 @@ export const Textarea = ({
   rows = 2,
   maxHeight,
   status,
-  onChange,
   align,
   mode,
   after,
   before,
   afterAlign,
   beforeAlign,
-  value,
 
   slotsProps,
   ...restProps
@@ -79,12 +77,6 @@ export const Textarea = ({
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
   const { window } = useDOM();
-
-  const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
-  const elementRef = useExternRef(getRef, refResizeTextarea);
-
-  React.useEffect(resize, [resize, sizeY, platform, value]);
-  useResizeObserver(window, resize);
 
   const { className, ...rootProps } = useMergeProps(
     {
@@ -95,15 +87,25 @@ export const Textarea = ({
     slotsProps?.root,
   );
 
-  const textAreaRest = useMergeProps(
+  const {
+    onChange,
+    getRootRef: getTextAreaRef,
+    value,
+    ...textAreaRest
+  } = useMergeProps(
     {
       className: styles.el,
-      getRootRef: elementRef,
-      onChange: callMultiple(onChange, resize),
+      getRootRef: getRef,
       ...restProps,
     },
     slotsProps?.textArea,
   );
+
+  const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
+  const elementRef = useExternRef(getTextAreaRef, refResizeTextarea);
+
+  React.useEffect(resize, [resize, sizeY, platform, value]);
+  useResizeObserver(window, resize);
 
   return (
     <FormField
@@ -124,7 +126,14 @@ export const Textarea = ({
       maxHeight={maxHeight}
       {...rootProps}
     >
-      <UnstyledTextField value={value} as="textarea" rows={rows} {...textAreaRest} />
+      <UnstyledTextField
+        value={value}
+        as="textarea"
+        rows={rows}
+        getRootRef={elementRef}
+        onChange={callMultiple(onChange, resize)}
+        {...textAreaRest}
+      />
     </FormField>
   );
 };
