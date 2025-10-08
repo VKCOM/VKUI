@@ -3,9 +3,11 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasRef, HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { useResizeTextarea } from '../Textarea/useResizeTextarea';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
@@ -16,6 +18,17 @@ export interface WriteBarProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLTextAreaElement> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `textarea`: свойства для прокидывания в поле ввода.
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+    textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
+      HasRootRef<HTMLTextAreaElement> &
+      HasDataAttribute;
+  };
   /**
    * Содержимое, отображаемое слева от поля ввода.
    */
@@ -65,43 +78,59 @@ export const WriteBar = ({
   getRef,
   onHeightChange,
   shadow = false,
-  onChange,
+
+  slotsProps,
   ...restProps
 }: WriteBarProps): React.ReactNode => {
   const platform = usePlatform();
 
+  const rootProps = useMergeProps(
+    {
+      className,
+      getRootRef,
+      style,
+    },
+    slotsProps?.root,
+  );
+
+  const {
+    onChange,
+    getRootRef: getTextAreaRef,
+    ...textAreaRest
+  } = useMergeProps(
+    {
+      className: styles.textarea,
+      getRootRef: getRef,
+      ...restProps,
+    },
+    slotsProps?.textArea,
+  );
+
   const [refResizeTextarea, resize] = useResizeTextarea(onHeightChange, true);
-  const textareaRef = useExternRef(getRef, refResizeTextarea);
+  const textareaRef = useExternRef(getTextAreaRef, refResizeTextarea);
 
   React.useEffect(resize, [resize, platform]);
 
   return (
-    <div
-      ref={getRootRef}
-      className={classNames(
-        styles.host,
-        platform === 'ios' && styles.ios,
-        shadow && styles.shadow,
-        className,
-      )}
-      style={style}
+    <RootComponent
+      className={classNames(styles.host, platform === 'ios' && styles.ios, shadow && styles.shadow)}
+      {...rootProps}
     >
       <div className={styles.form}>
         {hasReactNode(before) && <div className={styles.before}>{before}</div>}
 
         <div className={styles.formIn}>
           <WriteBarTypography
-            {...restProps}
             Component="textarea"
-            className={styles.textarea}
             onChange={callMultiple(onChange, resize)}
             getRootRef={textareaRef}
+            {...textAreaRest}
           />
           {hasReactNode(inlineAfter) && <div className={styles.inlineAfter}>{inlineAfter}</div>}
         </div>
 
         {hasReactNode(after) && <div className={styles.after}>{after}</div>}
       </div>
-    </div>
+    </RootComponent>
   );
 };
