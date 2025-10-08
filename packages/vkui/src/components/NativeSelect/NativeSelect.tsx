@@ -127,8 +127,19 @@ export const NativeSelect = ({
 }: NativeSelectProps): React.ReactNode => {
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
-  const selectRef = useExternRef(getRef);
   const { sizeY = 'none' } = useAdaptivity();
+
+  const { className, style, getRootRef, ...rootRest } = useMergeProps(
+    { style: rootStyle, className: rootClassName, getRootRef: rootGetRootRef },
+    slotsProps?.root,
+  );
+
+  const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
+    { getRootRef: getRef, ...restProps },
+    slotsProps?.select,
+  );
+
+  const selectRef = useExternRef(getSelectRef);
 
   const checkSelectedOption = () => {
     const selectedOption = selectRef.current?.options[selectRef.current.selectedIndex];
@@ -149,13 +160,6 @@ export const NativeSelect = ({
     onChange?.(e, newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
-
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
-    { style: rootStyle, className: rootClassName, getRootRef: rootGetRootRef },
-    slotsProps?.root,
-  );
-
-  const selectRest = useMergeProps({ getRootRef: selectRef, ...restProps }, slotsProps?.select);
 
   return (
     <FormField

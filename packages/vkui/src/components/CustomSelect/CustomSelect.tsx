@@ -263,9 +263,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   props: SelectProps<OptionInterfaceT>,
 ): React.ReactNode {
   const {
-    'style': rootStyle,
-    'className': rootClassName,
-    'getRootRef': rootGetRootRef,
+    style,
+    className,
+    getRootRef,
     before,
     name,
     getRef,
@@ -303,16 +303,10 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     getSelectInputRef,
     overscrollBehavior,
     'onInputKeyDown': onInputKeyDownProp,
-    readOnly,
     accessible = false,
     fetchingInProgressLabel,
     fetchingCompletedLabel,
     'value': selectValue,
-
-    'onClick': onClickProp,
-    'onKeyDown': onKeyDownProp,
-    'onFocus': onFocusProp,
-    'onBlur': onBlurProp,
 
     slotsProps,
     ...restProps
@@ -324,10 +318,55 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   const { sizeY = 'none' } = useAdaptivity();
 
+  const {
+    onClick: onRootClick,
+    onMouseMove: onRootMouseMove,
+    onMouseDown: onRootMouseDown,
+    getRootRef: rootRef,
+    ...rootRest
+  } = useMergeProps(
+    {
+      style,
+      className,
+      getRootRef,
+    },
+    slotsProps?.root,
+  );
+
+  const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
+    {
+      getRootRef: getRef,
+      onBlur: props.onBlur,
+      onFocus: props.onFocus,
+      onClick: props.onClick,
+    },
+    slotsProps?.select,
+  );
+
+  const {
+    getRootRef: getInputRef,
+    onChange: onChangeInput,
+    onFocus: onInputFocus,
+    onBlur: onInputBlur,
+    onKeyDown: onNativeInputKeyDown,
+    onClick: onNativeInputClick,
+    readOnly,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getSelectInputRef,
+      onChange: onInputChangeProp,
+      // Приводим типы так как в CustomSelect типы в rest определены как React.SelectHTMLAttributes<HTMLSelectElement>
+      // Хотя эти свойства прокидываются в input
+      ...(restProps as React.InputHTMLAttributes<HTMLInputElement>),
+    },
+    slotsProps?.input,
+  );
+
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const handleRootRef = useExternRef(containerRef, rootGetRootRef);
-  const selectElRef = useExternRef(getRef);
-  const selectInputRef = useExternRef(getSelectInputRef);
+  const handleRootRef = useExternRef(containerRef, rootRef);
+  const selectElRef = useExternRef(getSelectRef);
+  const selectInputRef = useExternRef(getInputRef);
 
   const propsValue = React.useMemo<SelectValue | undefined>(() => {
     if (selectValue === undefined) {
@@ -363,7 +402,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       options,
       accessible,
       selectedValue: selectedOptionValue,
-      onInputChange: onInputChangeProp,
+      onInputChange: onChangeInput,
     });
 
   const filteredOptions = React.useMemo(
@@ -464,7 +503,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     selectOption(focusedOptionValue);
   }, [focusedOptionValue, selectOption]);
 
-  const onInputKeyDown = useInputKeyboardController({
+  const handleInputKeyDown = useInputKeyboardController({
     opened,
     open,
     close,
@@ -658,54 +697,13 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
   };
 
-  const rootRest = useMergeProps(
-    {
-      style: rootStyle,
-      className: rootClassName,
-      getRootRef: handleRootRef,
-      onClick: passClickAndFocusToInputOnClick,
-      onMouseDown: preventInputBlurWhenClickInsideFocusedSelectArea,
-      onMouseMove: updateLastMousePosition,
-    },
-    slotsProps?.root,
-  );
-
-  const selectRest = useMergeProps(
-    {
-      getRootRef: selectElRef,
-      onBlur: props.onBlur,
-      onFocus: props.onFocus,
-      onClick: props.onClick,
-    },
-    slotsProps?.select,
-  );
-
-  // Приводим типы так как в CustomSelect типы в rest определены как React.SelectHTMLAttributes<HTMLSelectElement>
-  // Хотя эти свойства прокидываются в input
-  const typedOnInputKeyDownProp =
-    onKeyDownProp as unknown as React.KeyboardEventHandler<HTMLInputElement>;
-  const typedOnInputClickProp = onClickProp as unknown as React.MouseEventHandler<HTMLInputElement>;
-
-  const inputRest = useMergeProps(
-    {
-      getRootRef: selectInputRef,
-      onChange: onInputChange,
-      onFocus: callMultiple(onFocus, onFocusProp),
-      onBlur: callMultiple(onBlur, onFocusProp),
-      onKeyDown: !readOnly
-        ? callMultiple(onInputKeyDown, typedOnInputKeyDownProp)
-        : typedOnInputKeyDownProp,
-      onClick: !readOnly
-        ? callMultiple(toggleOpened, typedOnInputClickProp)
-        : typedOnInputClickProp,
-      ...(restProps as React.InputHTMLAttributes<HTMLInputElement>),
-    },
-    slotsProps?.input,
-  );
-
   return (
     <RootComponent
       baseClassName={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
+      getRootRef={handleRootRef}
+      onClick={callMultiple(onRootClick, passClickAndFocusToInputOnClick)}
+      onMouseDown={callMultiple(onRootMouseDown, preventInputBlurWhenClickInsideFocusedSelectArea)}
+      onMouseMove={callMultiple(onRootMouseMove, updateLastMousePosition)}
       {...rootRest}
     >
       <CustomSelectInput
@@ -713,11 +711,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         autoCapitalize="none"
         autoCorrect="off"
         spellCheck="false"
-        readOnly={readOnly || !searchable}
         fetching={fetching}
         searchable={searchable}
         accessible={accessible}
-        value={inputValue}
         before={before}
         after={afterItems}
         selectType={selectType}
@@ -725,11 +721,25 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         status={status}
         placeholder={placeholder}
         multiline={multiline}
-        disabled={inputRest.disabled}
         labelTextTestId={labelTextTestId}
         slotsProps={{
           root: { className: openedClassNames },
-          input: { ...selectInputAriaProps, ...inputRest },
+          input: {
+            getRootRef: selectInputRef,
+            onChange: onInputChange,
+            onFocus: callMultiple(onFocus, onInputFocus),
+            onBlur: callMultiple(onBlur, onInputFocus),
+            onKeyDown: !readOnly
+              ? callMultiple(handleInputKeyDown, onNativeInputKeyDown)
+              : onNativeInputKeyDown,
+            onClick: !readOnly
+              ? callMultiple(toggleOpened, onNativeInputClick)
+              : onNativeInputClick,
+            value: inputValue,
+            readOnly: readOnly || !searchable,
+            ...selectInputAriaProps,
+            ...inputRest,
+          },
         }}
       >
         {selected?.label}
@@ -751,6 +761,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         data-testid={nativeSelectTestId}
         required={required}
         onChange={onNativeSelectChange}
+        getRootRef={selectElRef}
         {...selectRest}
       >
         {(allowClearButton || nativeSelectValue === NOT_SELECTED.NATIVE) && (

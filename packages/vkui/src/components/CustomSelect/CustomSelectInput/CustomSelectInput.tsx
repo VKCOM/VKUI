@@ -61,7 +61,6 @@ export const CustomSelectInput = ({
   placeholder,
   selectType = 'default',
   multiline,
-  disabled,
   fetching,
   labelTextTestId,
   searchable,
@@ -72,39 +71,36 @@ export const CustomSelectInput = ({
 }: CustomSelectInputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
-  const title = children || placeholder;
-  const showLabelOrPlaceholder = !Boolean(restProps.value);
+  const { style, className, getRootRef, ...rootRest } = useMergeProps(
+    {
+      style: rootStyle,
+      className: rootClassName,
+      getRootRef: rootGetRootRef,
+    },
+    slotsProps?.root,
+  );
 
-  const handleRootRef = useExternRef(rootGetRootRef);
-  const focusWithin = useFocusWithin(handleRootRef);
-
-  const inputReadonly = restProps.readOnly || (disabled && fetching);
-
-  const inputProps = useMergeProps(
+  const {
+    className: inputClassName,
+    value,
+    readOnly,
+    disabled,
+    ...inputProps
+  } = useMergeProps(
     {
       getRootRef: getRef,
-      className: classNames(
-        styles.el,
-        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) && styles.elCursorPointer,
-      ),
       ...restProps,
     },
     slotsProps?.input,
   );
 
-  const {
-    style,
-    className,
-    getRootRef: rootRef,
-    ...rootRest
-  } = useMergeProps(
-    {
-      style: rootStyle,
-      className: rootClassName,
-      getRootRef: handleRootRef,
-    },
-    slotsProps?.root,
-  );
+  const title = children || placeholder;
+  const showLabelOrPlaceholder = !Boolean(value);
+
+  const handleRootRef = useExternRef(getRootRef);
+  const focusWithin = useFocusWithin(handleRootRef);
+
+  const inputReadonly = readOnly || (disabled && fetching);
 
   const input = (
     <Text
@@ -114,6 +110,12 @@ export const CustomSelectInput = ({
       Component="input"
       normalize={false}
       placeholder={children ? '' : placeholder}
+      className={classNames(
+        styles.el,
+        (readOnly || (showLabelOrPlaceholder && !focusWithin)) && styles.elCursorPointer,
+        inputClassName,
+      )}
+      value={value}
       {...inputProps}
     />
   );
@@ -148,10 +150,10 @@ export const CustomSelectInput = ({
         inputHidden && styles.inputHidden,
         labelHidden && styles.labelHidden,
         accessible && styles.accessible,
-        restProps.value && styles.hasInputValue,
+        value && styles.hasInputValue,
         className,
       )}
-      getRootRef={rootRef}
+      getRootRef={handleRootRef}
       before={before}
       after={after}
       disabled={disabled}
@@ -179,11 +181,7 @@ export const CustomSelectInput = ({
          * Делаем это только для режима read-only. Потому что проблема именно в режиме read-only.
          * Обертка вокруг инпута обрабатывает клики и передаёт фокус, так что на взаимодействии с инпутом это никак не скажется.
          **/}
-        {restProps.readOnly && platform === 'ios' ? (
-          <VisuallyHidden>{input}</VisuallyHidden>
-        ) : (
-          input
-        )}
+        {readOnly && platform === 'ios' ? <VisuallyHidden>{input}</VisuallyHidden> : input}
       </div>
     </FormField>
   );
