@@ -8,6 +8,7 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { useBooleanState } from '../../hooks/useBooleanState';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
@@ -16,6 +17,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
@@ -29,6 +31,17 @@ export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLInputElement> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в поле ввода.
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
   /**
    * Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
@@ -87,41 +100,71 @@ export interface SearchProps
  * @see https://vkui.io/components/search
  */
 export const Search = ({
-  id: idProp,
-  before = <Icon16SearchOutline />,
   className,
-  placeholder = 'Поиск',
+  getRootRef,
+  style,
+  placeholder: placeholderProp = 'Поиск',
+  before = <Icon16SearchOutline />,
   after = 'Отмена',
   getRef,
   icon: iconProp,
   onIconClick,
-  style,
-  autoComplete = 'off',
-  onChange,
+  autoComplete: autoCompleteProp = 'off',
   iconLabel,
   clearLabel = 'Очистить',
   clearButtonTestId,
   noPadding,
-  getRootRef,
   findButtonText = 'Найти',
   findButtonTestId,
   onFindButtonClick,
   hideClearButton,
+
+  slotsProps,
   ...inputProps
 }: SearchProps): React.ReactNode => {
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
-  const inputRef = useExternRef(getRef);
+
+  const rootRest = useMergeProps(
+    {
+      className,
+      style,
+      getRootRef,
+    },
+    slotsProps?.root,
+  );
+
+  const {
+    id,
+    placeholder,
+    onChange,
+    autoComplete,
+    getRootRef: getInputRef,
+    onFocus: onInputFocus,
+    onBlur: onInputBlur,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      placeholder: placeholderProp,
+      autoComplete: autoCompleteProp,
+      className: styles.nativeInput,
+      ...inputProps,
+    },
+    slotsProps?.input,
+  );
+
+  const inputRef = useExternRef(getInputRef);
   const {
     value: isFocused,
     setTrue: setFocusedTrue,
     setFalse: setFocusedFalse,
   } = useBooleanState(false);
   const generatedId = React.useId();
-  const inputId = idProp ? idProp : `search-${generatedId}`;
+  const inputId = id ? id : `search-${generatedId}`;
 
   const [hasValue, setHasValue] = React.useState<boolean>(() =>
-    Boolean(inputProps.value || inputProps.defaultValue),
+    Boolean(inputRest.value || inputRest.defaultValue),
   );
   const checkHasValue: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setHasValue(Boolean(e.currentTarget.value));
@@ -134,12 +177,12 @@ export const Search = ({
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocusedTrue();
-    inputProps.onFocus && inputProps.onFocus(e);
+    onInputFocus && onInputFocus(e);
   };
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocusedFalse();
-    inputProps.onBlur && inputProps.onBlur(e);
+    onInputBlur && onInputBlur(e);
   };
 
   const onCancel = React.useCallback(() => {
@@ -171,13 +214,13 @@ export const Search = ({
   );
 
   useIsomorphicLayoutEffect(() => {
-    if (inputProps.value !== undefined) {
-      setHasValue(Boolean(inputProps.value));
+    if (inputRest.value !== undefined) {
+      setHasValue(Boolean(inputRest.value));
     }
-  }, [inputProps.value]);
+  }, [inputRest.value]);
 
   useNativeFormResetListener(inputRef, () => {
-    setHasValue(Boolean(inputProps.defaultValue));
+    setHasValue(Boolean(inputRest.defaultValue));
   });
 
   const renderIconButton: RenderIconButtonFn = (icon, props = {}) => (
@@ -200,8 +243,8 @@ export const Search = ({
   );
 
   return (
-    <div
-      className={classNames(
+    <RootComponent
+      baseClassName={classNames(
         'vkuiInternalSearch',
         styles.host,
         sizeY === 'none' && styles.sizeYNone,
@@ -210,13 +253,11 @@ export const Search = ({
         hasValue && styles.hasValue,
         hasAfter && styles.hasAfter,
         iconProp && styles.hasIcon,
-        inputProps.disabled && styles.disabled,
+        inputRest.disabled && styles.disabled,
         !noPadding && styles.withPadding,
         isRtl && styles.rtl,
-        className,
       )}
-      ref={getRootRef}
-      style={style}
+      {...rootRest}
     >
       <div className={styles.field}>
         <label htmlFor={inputId} className={styles.label}>
@@ -229,15 +270,14 @@ export const Search = ({
             type="search"
             level="1"
             weight="3"
-            {...inputProps}
             id={inputId}
             placeholder={placeholder}
             autoComplete={autoComplete}
             getRootRef={inputRef}
-            className={styles.nativeInput}
+            onChange={callMultiple(onChange, checkHasValue)}
             onFocus={onFocus}
             onBlur={onBlur}
-            onChange={callMultiple(onChange, checkHasValue)}
+            {...inputRest}
           />
         </div>
         {showControls && (
@@ -292,6 +332,6 @@ export const Search = ({
           </Button>
         </div>
       )}
-    </div>
+    </RootComponent>
   );
 };
