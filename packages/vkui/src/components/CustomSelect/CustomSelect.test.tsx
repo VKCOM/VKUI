@@ -190,10 +190,10 @@ describe('CustomSelect', () => {
 
       fireEvent.click(input);
       await act(async () => vi.runOnlyPendingTimers());
-      expect(onInputClick).toHaveBeenCalledOnce();
+      expect(onInputClick).toHaveBeenCalledTimes(1);
 
       fireEvent.click(select);
-      expect(onSelectClick).toHaveBeenCalledOnce();
+      expect(onSelectClick).toHaveBeenCalledTimes(1);
 
       fireEvent.click(root);
       await act(async () => vi.runOnlyPendingTimers());

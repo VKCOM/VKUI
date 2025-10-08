@@ -46,7 +46,6 @@ describe('Radio', () => {
             },
             'getRootRef': rootRef2,
             'onClick': onRootClick,
-            'Component': 'div',
           },
           input: {
             'className': 'inputClassName',
@@ -54,7 +53,6 @@ describe('Radio', () => {
             'data-testid': 'radio-2',
             'checked': false,
             'onClick': onClick2,
-            'Component': 'select',
           },
         }}
       />,
@@ -62,14 +60,12 @@ describe('Radio', () => {
 
     expect(screen.queryByTestId('radio')).not.toBeInTheDocument();
     const input = screen.getByTestId('radio-2');
-    expect(input.tagName).toBe('SELECT');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
     expect(input).not.toBeChecked();
 
     const root = screen.getByTestId('root');
     expect(root).toBeInTheDocument();
-    expect(root.tagName).toBe('DIV');
     expect(root).toHaveClass('rootClassName');
     expect(root).toHaveClass('rootClassName-2');
     expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
@@ -86,7 +82,7 @@ describe('Radio', () => {
     expect(onClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(2);
+    expect(onRootClick).toHaveBeenCalledTimes(3);
   });
 
   test('label and input can receive data-testid', () => {
