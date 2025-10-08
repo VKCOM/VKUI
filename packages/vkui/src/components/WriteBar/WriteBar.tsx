@@ -113,7 +113,11 @@ export const WriteBar = ({
 
   return (
     <RootComponent
-      className={classNames(styles.host, platform === 'ios' && styles.ios, shadow && styles.shadow)}
+      baseClassName={classNames(
+        styles.host,
+        platform === 'ios' && styles.ios,
+        shadow && styles.shadow,
+      )}
       {...rootProps}
     >
       <div className={styles.form}>
