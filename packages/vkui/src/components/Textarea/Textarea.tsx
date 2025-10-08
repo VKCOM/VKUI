@@ -4,11 +4,12 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import { useResizeTextarea } from './useResizeTextarea';
@@ -25,6 +26,17 @@ export interface TextareaProps
     HasRootRef<HTMLElement>,
     HasAlign,
     FormFieldProps {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `textarea`: свойства для прокидывания в поле ввода.
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+    textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
+      HasRootRef<HTMLTextAreaElement> &
+      HasDataAttribute;
+  };
   /**
    * Свойство управляющее автоматическим изменением высоты компонента.
    */
@@ -43,11 +55,11 @@ export interface TextareaProps
  * @see https://vkui.io/components/textarea
  */
 export const Textarea = ({
-  grow = true,
-  style,
-  onResize,
-  className,
+  className: rootClassName,
   getRootRef,
+  style,
+  grow = true,
+  onResize,
   getRef,
   rows = 2,
   maxHeight,
@@ -60,6 +72,8 @@ export const Textarea = ({
   afterAlign,
   beforeAlign,
   value,
+
+  slotsProps,
   ...restProps
 }: TextareaProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -72,6 +86,25 @@ export const Textarea = ({
   React.useEffect(resize, [resize, sizeY, platform, value]);
   useResizeObserver(window, resize);
 
+  const { className, ...rootProps } = useMergeProps(
+    {
+      className: rootClassName,
+      getRootRef,
+      style,
+    },
+    slotsProps?.root,
+  );
+
+  const textAreaRest = useMergeProps(
+    {
+      className: styles.el,
+      getRootRef: elementRef,
+      onChange: callMultiple(onChange, resize),
+      ...restProps,
+    },
+    slotsProps?.textArea,
+  );
+
   return (
     <FormField
       className={classNames(
@@ -81,9 +114,7 @@ export const Textarea = ({
         align === 'center' && styles.alignCenter,
         className,
       )}
-      style={style}
-      getRootRef={getRootRef}
-      disabled={restProps.disabled}
+      disabled={textAreaRest.disabled}
       status={status}
       mode={mode}
       after={after}
@@ -91,16 +122,9 @@ export const Textarea = ({
       afterAlign={afterAlign}
       beforeAlign={beforeAlign}
       maxHeight={maxHeight}
+      {...rootProps}
     >
-      <UnstyledTextField
-        {...restProps}
-        value={value}
-        as="textarea"
-        rows={rows}
-        className={styles.el}
-        onChange={callMultiple(onChange, resize)}
-        getRootRef={elementRef}
-      />
+      <UnstyledTextField value={value} as="textarea" rows={rows} {...textAreaRest} />
     </FormField>
   );
 };
