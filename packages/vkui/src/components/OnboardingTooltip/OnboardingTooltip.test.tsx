@@ -91,7 +91,7 @@ describe(OnboardingTooltip, () => {
           <div ref={ref} data-testid="xxx" />
         </OnboardingTooltip>,
       );
-      expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
+      expect(ref).toHaveBeenCalledExactlyOnceWith(screen.getByTestId('xxx'));
     });
     it('on VKUI child', async () => {
       const ref = vi.fn();
@@ -100,7 +100,7 @@ describe(OnboardingTooltip, () => {
           <RootRef getRootRef={ref} data-testid="xxx" />
         </OnboardingTooltip>,
       );
-      expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
+      expect(ref).toHaveBeenCalledExactlyOnceWith(screen.getByTestId('xxx'));
     });
   });
 
@@ -123,7 +123,7 @@ describe(OnboardingTooltip, () => {
     result.rerender(<Fixture placement="auto" onPlacementChange={onPlacementChange} />);
     await waitForFloatingPosition();
 
-    expect(onPlacementChange).toHaveBeenCalledWith('top');
+    expect(onPlacementChange).toHaveBeenCalledExactlyOnceWith('top');
   });
 
   it('shows warning if title and area attributes are not provided', () => {

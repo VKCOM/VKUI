@@ -228,14 +228,13 @@ describe('DateRangeInput', () => {
 
       await userEvent.click(dates);
 
-      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-      expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
+      expect(onCalendarOpenChanged).toHaveBeenCalledExactlyOnceWith(true);
 
       expect(container.contains(document.activeElement)).toBeTruthy();
       await userEvent.click(screen.getByTestId(dayTestId(addDays(startDate, 10))));
 
       expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-      expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
+      expect(onCalendarOpenChanged).toHaveBeenLastCalledWith(false);
 
       expect(container.contains(document.activeElement)).toBeFalsy();
     }),
@@ -247,7 +246,7 @@ describe('DateRangeInput', () => {
 
     fireEvent.click(screen.getByTestId(testsProps.clearButtonTestId));
 
-    expect(onChange).toHaveBeenCalledWith(undefined);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(undefined);
   });
 
   it(
@@ -268,14 +267,13 @@ describe('DateRangeInput', () => {
       const calendarIcon = screen.getByTestId('show-calendar');
       await userEvent.click(calendarIcon);
 
-      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-      expect(onCalendarOpenChanged).toHaveBeenCalledWith(true);
+      expect(onCalendarOpenChanged).toHaveBeenCalledExactlyOnceWith(true);
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
 
       await userEvent.click(calendarIcon);
 
       expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-      expect(onCalendarOpenChanged).toHaveBeenCalledWith(false);
+      expect(onCalendarOpenChanged).toHaveBeenLastCalledWith(false);
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
     }),
   );

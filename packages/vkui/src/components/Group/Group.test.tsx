@@ -142,7 +142,7 @@ describe('Group', () => {
         </Group>,
       );
 
-      expect(error).toHaveBeenCalledWith(
+      expect(error).toHaveBeenCalledExactlyOnceWith(
         '%c[VKUI/Group] При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"',
         undefined,
       );

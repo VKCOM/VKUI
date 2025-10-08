@@ -150,10 +150,10 @@ describe(ActionSheet, () => {
       if (props.autoCloseDisabled) {
         expect(onCloseHandler).not.toHaveBeenCalled();
       } else if (!props.autoCloseDisabled && props.isCancelItem) {
-        expect(onCloseHandler).toHaveBeenCalledWith({ closedBy: 'cancel-item' });
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
       } else {
         !props.autoCloseDisabled &&
-          expect(onCloseHandler).toHaveBeenCalledWith({ closedBy: 'action-item' });
+          expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
       }
     });
   });
@@ -190,8 +190,7 @@ describe(ActionSheet, () => {
       await waitForFloatingPosition();
       await userEvent.click(document.body);
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith({ closedBy: 'other' });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
 
     it('mobile', async () => {
@@ -202,8 +201,7 @@ describe(ActionSheet, () => {
         result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
       );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith({ closedBy: 'other' });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
   });
 

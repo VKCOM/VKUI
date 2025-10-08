@@ -56,26 +56,20 @@ describe(ModalRoot, () => {
       expect(h.queryByTestId('m')).not.toBeInTheDocument();
 
       if (type === 'global') {
-        expect(globalCallbacks.onOpen).toHaveBeenCalledTimes(1);
-        expect(globalCallbacks.onOpen).toHaveBeenCalledWith('m');
-        expect(globalCallbacks.onOpened).toHaveBeenCalledTimes(1);
-        expect(globalCallbacks.onOpened).toHaveBeenCalledWith('m');
+        expect(globalCallbacks.onOpen).toHaveBeenCalledExactlyOnceWith('m');
+        expect(globalCallbacks.onOpened).toHaveBeenCalledExactlyOnceWith('m');
         expect(globalCallbacks.onClose).toHaveBeenCalledTimes(0);
-        expect(globalCallbacks.onClosed).toHaveBeenCalledTimes(1);
-        expect(globalCallbacks.onClosed).toHaveBeenCalledWith('m');
+        expect(globalCallbacks.onClosed).toHaveBeenCalledExactlyOnceWith('m');
       } else {
         expect(globalCallbacks.onOpen).toHaveBeenCalledTimes(0);
         expect(globalCallbacks.onOpened).toHaveBeenCalledTimes(0);
         expect(globalCallbacks.onClose).toHaveBeenCalledTimes(0);
         expect(globalCallbacks.onClosed).toHaveBeenCalledTimes(0);
 
-        expect(localCallbacks.onOpen).toHaveBeenCalledTimes(1);
-        expect(localCallbacks.onOpen).toHaveBeenCalledWith();
-        expect(localCallbacks.onOpened).toHaveBeenCalledTimes(1);
-        expect(localCallbacks.onOpened).toHaveBeenCalledWith();
+        expect(localCallbacks.onOpen).toHaveBeenCalledExactlyOnceWith();
+        expect(localCallbacks.onOpened).toHaveBeenCalledExactlyOnceWith();
         expect(localCallbacks.onClose).toHaveBeenCalledTimes(0);
-        expect(localCallbacks.onClosed).toHaveBeenCalledTimes(1);
-        expect(localCallbacks.onClosed).toHaveBeenCalledWith();
+        expect(localCallbacks.onClosed).toHaveBeenCalledExactlyOnceWith();
       }
     });
 
@@ -196,8 +190,7 @@ describe(ModalRoot, () => {
           vi.runOnlyPendingTimers();
         });
         fireEvent.click(h.getByTestId('overlay'));
-        expect(onClose).toHaveBeenCalledTimes(1);
-        expect(onClose).toHaveBeenCalledWith('click-overlay', expect.any(Object));
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay', expect.any(Object));
         expect(onCloseRoot).not.toHaveBeenCalled();
       });
       it('calls root onClose if modal has no onClose', async () => {

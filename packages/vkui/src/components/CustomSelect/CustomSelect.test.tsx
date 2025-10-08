@@ -401,7 +401,7 @@ describe('CustomSelect', () => {
       />,
     );
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
+    expect(consoleErrorSpy).toHaveBeenCalledExactlyOnceWith(
       '%c[VKUI/CustomSelect] Похоже, что компонент был переведен из состояния Controlled в Uncontrolled. Пожалуйста, не делайте так. Если вам нужно отобразить невыбранное состояние компонента, используйте value=null вместо undefined',
       undefined,
     );
@@ -1561,7 +1561,7 @@ describe('CustomSelect', () => {
 
     await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
 
-    expect(setScrollTop).toHaveBeenCalledWith(40);
+    expect(setScrollTop).toHaveBeenCalledExactlyOnceWith(40);
   });
 
   it('check scroll to up', async () => {
@@ -1594,7 +1594,7 @@ describe('CustomSelect', () => {
 
     await triggerKeydownEvent(inputRef.current!, 'ArrowUp', 'ArrowUp');
 
-    expect(setScrollTop).toHaveBeenCalledWith(0);
+    expect(setScrollTop).toHaveBeenCalledExactlyOnceWith(0);
   });
 
   it('should not hover disabled option', async () => {
@@ -1757,7 +1757,7 @@ describe('CustomSelect', () => {
         />,
       );
 
-      expect(errorStub).toHaveBeenCalledWith(
+      expect(errorStub).toHaveBeenCalledExactlyOnceWith(
         '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
         undefined,
       );

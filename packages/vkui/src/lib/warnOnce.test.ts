@@ -37,8 +37,7 @@ describe(warnOnce, () => {
   it('adds styles for console.log', () => {
     warn('log message', 'log');
 
-    expect(logSpy).toHaveBeenCalledTimes(1);
-    expect(logSpy).toHaveBeenCalledWith(
+    expect(logSpy).toHaveBeenCalledExactlyOnceWith(
       '%c[VKUI/zone] log message',
       'color: steelblue; font-style: italic',
     );

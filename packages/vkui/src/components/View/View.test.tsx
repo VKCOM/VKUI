@@ -66,8 +66,7 @@ describe(View, () => {
         </View>,
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledTimes(1);
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenCalledExactlyOnceWith({
         from: 'p1',
         to: 'p2',
         isBack: false,
@@ -87,7 +86,7 @@ describe(View, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p2'));
       await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenCalledExactlyOnceWith({
         from: 'p2',
         to: 'p1',
         isBack: true,
@@ -285,7 +284,7 @@ describe(View, () => {
       });
       fireEvent.mouseUp(view);
       rerender(<SwipeBack activePanel="p1" history={['p1']} />);
-      expect(scrollTo).toHaveBeenCalledWith(0, 22);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, 22);
     });
 
     it('restores scroll when swipeBack cancelled because user moves panel back to starting point', () => {
@@ -299,7 +298,7 @@ describe(View, () => {
       fireEvent.mouseUp(view);
 
       rerender(<SwipeBack activePanel="p2" history={['p2']} />);
-      expect(scrollTo).toHaveBeenCalledWith(0, currentScrollPosition);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, currentScrollPosition);
     });
 
     describe('horizontal scrollable elements', () => {
@@ -450,7 +449,7 @@ describe(View, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p2'));
       await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, y);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, y);
     });
 
     it('resets scroll on forward navigation', async () => {
@@ -477,7 +476,7 @@ describe(View, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p1'));
       await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, 0);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, 0);
     });
   });
 });

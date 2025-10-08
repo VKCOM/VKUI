@@ -76,8 +76,7 @@ describe(Root, () => {
         </ConfigProvider>,
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v2'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledTimes(1);
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenCalledExactlyOnceWith({
         from: 'v1',
         to: 'v2',
         isBack: false,
@@ -97,7 +96,7 @@ describe(Root, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v2'));
       await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenLastCalledWith({
         from: 'v2',
         to: 'v1',
         isBack: true,
@@ -124,7 +123,7 @@ describe(Root, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v3'), { runOnlyPendingTimers: true });
       expect(onTransition).toHaveBeenCalledTimes(2);
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenLastCalledWith({
         from: 'v1',
         to: 'v3',
         isBack: false,
@@ -152,7 +151,7 @@ describe(Root, () => {
       await waitCSSKeyframesAnimation(getViewPanelById('v2'));
       await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
       expect(onTransition).toHaveBeenCalledTimes(2);
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenLastCalledWith({
         from: 'v2',
         to: 'v1',
         isBack: true,
@@ -206,7 +205,7 @@ describe(Root, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v2'));
       await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, y);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, y);
     });
     it('resets on forward navigation', async () => {
       let y = 101;
