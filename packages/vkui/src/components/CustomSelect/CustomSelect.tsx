@@ -698,7 +698,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       onClick: !readOnly
         ? callMultiple(toggleOpened, typedOnInputClickProp)
         : typedOnInputClickProp,
-      className: openedClassNames,
       ...(restProps as React.InputHTMLAttributes<HTMLInputElement>),
     },
     slotsProps?.input,
@@ -729,6 +728,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         disabled={inputRest.disabled}
         labelTextTestId={labelTextTestId}
         slotsProps={{
+          root: { className: openedClassNames },
           input: { ...selectInputAriaProps, ...inputRest },
         }}
       >
