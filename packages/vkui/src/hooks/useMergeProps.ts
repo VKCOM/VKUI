@@ -1,9 +1,9 @@
 import { type AllHTMLAttributes } from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { getMergedSameEventsByProps } from '../helpers/getMergedSameEventsByProps.ts';
-import { mergeStyle } from '../helpers/mergeStyle.ts';
-import { type HasRootRef } from '../types.ts';
-import { useExternRef } from './useExternRef.ts';
+import { getMergedSameEventsByProps } from '../helpers/getMergedSameEventsByProps';
+import { mergeStyle } from '../helpers/mergeStyle';
+import { type HasRootRef } from '../types';
+import { useExternRef } from './useExternRef';
 
 type BaseProps<T extends HTMLElement = HTMLElement> = HasRootRef<T> &
   Pick<AllHTMLAttributes<T>, 'className' | 'style'>;

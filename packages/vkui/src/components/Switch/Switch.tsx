@@ -10,7 +10,7 @@ import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent.tsx';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
 

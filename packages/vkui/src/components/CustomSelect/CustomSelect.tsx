@@ -25,7 +25,7 @@ import {
   remapFromNativeValueToSelectValue,
   type SelectValue,
 } from '../NativeSelect/NativeSelect';
-import { RootComponent } from '../RootComponent/RootComponent.tsx';
+import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

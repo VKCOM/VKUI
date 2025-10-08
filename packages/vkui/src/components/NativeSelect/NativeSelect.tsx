@@ -12,7 +12,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
-import { RootComponent } from '../RootComponent/RootComponent.tsx';
+import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
