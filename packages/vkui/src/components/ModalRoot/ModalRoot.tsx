@@ -23,6 +23,7 @@ export const ModalRoot = ({
   onOpened,
   onClose,
   onClosed,
+  onOverlayClosed,
 }: ModalRootProps): React.ReactNode => {
   const contextValue = React.useMemo(
     () => ({
@@ -79,6 +80,7 @@ export const ModalRoot = ({
               position="fixed"
               visible={typeof activeModal === 'string'}
               getRootRef={modalOverlayRef}
+              onClosed={onOverlayClosed}
             />
           )}
           {children}
