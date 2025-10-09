@@ -1,8 +1,17 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { mergeStyle } from '../../helpers/mergeStyle';
-import type { CSSCustomProperties, HasRef, HasRootRef, LiteralUnion } from '../../types';
+import { useMergeProps } from '../../hooks/useMergeProps';
+import type {
+  CSSCustomProperties,
+  HasDataAttribute,
+  HasRef,
+  HasRootRef,
+  LiteralUnion,
+} from '../../types';
 import { Avatar } from '../Avatar/Avatar';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -30,6 +39,17 @@ export interface HorizontalCellProps
   extends Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `content`: свойства для прокидывания в контент обернутый `Tappable`.
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+    content?: Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
+  };
   /**
    * Ширина компонента.
    *
@@ -83,8 +103,27 @@ export const HorizontalCell = ({
   textAlign = size === 's' ? 'center' : 'start',
   noPadding = false,
   TitleComponent = size === 's' ? Caption : Subhead,
+
+  slotsProps,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
+  const rootRest = useMergeProps(
+    {
+      className,
+      style,
+      getRootRef,
+    },
+    slotsProps?.root,
+  );
+
+  const contentRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      ...restProps,
+    },
+    slotsProps?.content,
+  );
+
   const hasTypography =
     hasReactNode(title) || hasReactNode(subtitle) || hasReactNode(extraSubtitle);
 
@@ -92,19 +131,18 @@ export const HorizontalCell = ({
     typeof size === 'number' ? { [CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH]: `${size}px` } : undefined;
 
   return (
-    <div
-      ref={getRootRef}
-      style={mergeStyle(customProperties, style)}
-      className={classNames(
+    <RootComponent
+      baseStyle={customProperties}
+      baseClassName={classNames(
         styles.host,
         typeof size === 'string' && stylesSize[size],
         size !== 'auto' && styles.sized,
         typeof size === 'number' && styles.customSize,
         noPadding && styles.noPadding,
-        className,
       )}
+      {...rootRest}
     >
-      <Tappable className={styles.body} getRootRef={getRef} {...restProps}>
+      <Tappable baseClassName={styles.body} {...contentRest}>
         {hasReactNode(children) && <div className={styles.image}>{children}</div>}
         {hasTypography && (
           <div
@@ -121,6 +159,6 @@ export const HorizontalCell = ({
           </div>
         )}
       </Tappable>
-    </div>
+    </RootComponent>
   );
 };
