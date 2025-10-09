@@ -194,6 +194,7 @@ export const NativeSelect = ({
             : defaultValue
         }
         onChange={callMultiple(_onChange, checkSelectedOption)}
+        getRootRef={selectRef}
         {...selectRest}
       >
         {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
