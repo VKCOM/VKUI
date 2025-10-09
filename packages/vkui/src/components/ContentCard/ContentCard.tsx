@@ -1,8 +1,12 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { getFetchPriorityProp } from '../../lib/utils';
-import type { HasComponent, HasRef, HasRootRef } from '../../types';
+import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { Card, type CardProps } from '../Card/Card';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -16,6 +20,21 @@ export interface ContentCardProps
     Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `content`: свойства для прокидывания в контент обернутый `Tappable`;
+   * - `image`: войства для прокидывания в компонент картинки.
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+    content?: Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
+    image?: React.ImgHTMLAttributes<HTMLImageElement> &
+      HasRootRef<HTMLImageElement> &
+      HasDataAttribute;
+  };
   /**
    Текст над заголовком.
    */
@@ -61,13 +80,16 @@ export const ContentCard = ({
   description,
   caption,
   // card props
-  className,
+  className: rootClassName,
   mode = 'shadow',
   style,
   getRootRef,
+  Component = 'li',
   // img props
   getRef,
   maxHeight,
+  imageObjectFit,
+  // HTMLImageAttributes
   src,
   srcSet,
   alt = '',
@@ -79,44 +101,59 @@ export const ContentCard = ({
   referrerPolicy,
   sizes,
   useMap,
-  fetchPriority,
-  imageObjectFit,
+  fetchPriority: fetchPriorityProp,
+  // content props
   hasHover = false,
   hasActive = false,
-  Component = 'li',
+
+  slotsProps,
   ...restProps
 }: ContentCardProps): React.ReactNode => {
+  const { className, ...rootRest } = useMergeProps(
+    {
+      className: rootClassName,
+      style,
+      getRootRef,
+    },
+    slotsProps?.root,
+  );
+
+  const contentRest = useMergeProps({ hasHover, hasActive, ...restProps }, slotsProps?.content);
+
+  const { fetchPriority, ...imageRest } = useMergeProps(
+    {
+      src,
+      srcSet,
+      alt,
+      width,
+      height,
+      crossOrigin,
+      decoding,
+      loading,
+      referrerPolicy,
+      sizes,
+      useMap,
+      fetchPriority: fetchPriorityProp,
+      getRootRef: getRef,
+    },
+    slotsProps?.image,
+  );
+
   return (
     <Card
       mode={mode}
-      getRootRef={getRootRef}
       Component={Component}
-      style={style}
       className={classNames(restProps.disabled && styles.disabled, className)}
+      {...rootRest}
     >
-      <Tappable
-        hasHover={hasHover}
-        hasActive={hasActive}
-        {...restProps}
-        baseClassName={styles.tappable}
-      >
+      <Tappable baseClassName={styles.tappable} {...contentRest}>
         {(src || srcSet) && (
-          <img
-            ref={getRef}
-            className={styles.img}
-            src={src}
-            srcSet={srcSet}
-            alt={alt}
-            crossOrigin={crossOrigin}
-            decoding={decoding}
-            loading={loading}
-            referrerPolicy={referrerPolicy}
-            sizes={sizes}
-            useMap={useMap}
+          <RootComponent
+            Component="img"
+            baseClassName={styles.img}
+            baseStyle={{ maxHeight, objectFit: imageObjectFit }}
+            {...imageRest}
             {...getFetchPriorityProp(fetchPriority)}
-            height={height}
-            width={width}
-            style={{ maxHeight, objectFit: imageObjectFit }}
           />
         )}
         <div className={styles.body}>
