@@ -263,7 +263,7 @@ jobs:
     name: Diff comment
     steps:
       - name: Find diff URL comment
-        uses: peter-evans/find-comment@v3
+        uses: peter-evans/find-comment@v4
         id: find_url_comment
         with:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -308,7 +308,7 @@ jobs:
     name: Docs comment
     steps:
       - name: Find docs URLs comment
-        uses: peter-evans/find-comment@v3
+        uses: peter-evans/find-comment@v4
         id: find_url_comment
         with:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
