@@ -23,9 +23,9 @@ const Example = () => {
       <Panel id="list">
         <PanelHeader>List</PanelHeader>
         <Group>
-          <List>
+          <List onReorder={onDragFinish}>
             {draggingList.map((item) => (
-              <Cell key={item} before={<Avatar />} draggable onDragFinish={onDragFinish}>
+              <Cell key={item} before={<Avatar />} draggable>
                 {item}
               </Cell>
             ))}
