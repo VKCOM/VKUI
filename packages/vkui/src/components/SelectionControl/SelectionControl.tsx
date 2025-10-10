@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import type { HasRootRef } from '../../types';
+import type { HasComponent, HasRootRef } from '../../types';
 import { DEFAULT_ACTIVE_EFFECT_DELAY } from '../Clickable/useState';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { SelectionControlContext } from './SelectionControlContext';
@@ -19,6 +19,7 @@ const sizeYClassNames = {
 export interface SelectionControlProps
   extends React.ComponentProps<'label'>,
     HasRootRef<HTMLLabelElement>,
+    HasComponent,
     Pick<
       TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode' | 'disabled'

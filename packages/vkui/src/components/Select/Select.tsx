@@ -53,6 +53,8 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     accessible,
     fetchingCompletedLabel,
     fetchingInProgressLabel,
+
+    slotsProps,
     ...restProps
   } = props;
 
@@ -63,11 +65,19 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
   return (
     <React.Fragment>
       {deviceType.desktop && (
-        <CustomSelect className={classNames(className, deviceType.desktop.className)} {...props} />
+        <CustomSelect
+          className={classNames(className, deviceType.desktop.className)}
+          slotsProps={slotsProps}
+          {...props}
+        />
       )}
       {deviceType.mobile && (
         <NativeSelect
           className={classNames(className, deviceType.mobile.className)}
+          slotsProps={{
+            select: slotsProps?.select,
+            root: slotsProps?.root,
+          }}
           {...nativeProps}
         >
           {options.map(({ label, value, disabled }) => (
