@@ -21,10 +21,16 @@ const ChipsInputBaseTest = ({
   };
   return (
     <ChipsInputBase
-      data-testid="chips-input"
       {...restProps}
-      inputValue={inputValue}
-      onInputChange={handleInputChange}
+      slotsProps={{
+        ...restProps.slotsProps,
+        input: {
+          'data-testid': 'chips-input',
+          'value': inputValue,
+          'onChange': handleInputChange,
+          ...restProps.slotsProps?.input,
+        },
+      }}
     />
   );
 };

@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { type FormFieldProps } from '../FormField/FormField';
 import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 import { type ChipProps } from './Chip/Chip';
@@ -72,14 +72,20 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
    */
   onChange?: OnChange<O>;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { value: ... } }`.
+   *
    * Значение поля ввода.
    */
   inputValue?: string;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { defaultValue: ... } }`.
+   *
    * Значение поля ввода по умолчанию.
    */
   defaultInputValue?: string;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { onChange: ... } }`.
+   *
    * Обработчик изменения значения в поле ввода.
    */
   onInputChange?: OnInputChange;
@@ -119,9 +125,12 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
       React.InputHTMLAttributes<HTMLInputElement>,
       keyof UseChipsInputBaseProps<O> | 'defaultChecked'
     >,
-    HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;

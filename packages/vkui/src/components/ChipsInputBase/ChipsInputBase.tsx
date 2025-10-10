@@ -5,7 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useMergeProps } from '../../hooks/useMergeProps.ts';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
 import { callMultiple } from '../../lib/callMultiple.ts';
 import {
@@ -13,6 +13,7 @@ import {
   contains,
   getActiveElementByAnotherElement,
 } from '../../lib/dom';
+import { warnOnce } from '../../lib/warnOnce';
 import { FormField } from '../FormField/FormField';
 import { FormFieldClearButton } from '../FormFieldClearButton/FormFieldClearButton';
 import { Text } from '../Typography/Text/Text';
@@ -26,6 +27,8 @@ import {
 } from './helpers';
 import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps, NavigateTo } from './types';
 import styles from './ChipsInputBase.module.css';
+
+const warn = warnOnce('ChipsInputBase');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -51,7 +54,7 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   // input
   getRef,
-  inputValue = DEFAULT_INPUT_VALUE,
+  'inputValue': inputValueProp = DEFAULT_INPUT_VALUE,
   addOnBlur,
   onInputChange,
 
@@ -69,6 +72,20 @@ export const ChipsInputBase = <O extends ChipOption>({
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
+
+  if (process.env.NODE_ENV === 'development') {
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    }
+    if (typeof inputValueProp !== 'undefined') {
+      warn('Свойство `inputValue` устаревшее, используйте `slotsProps={ input: { value: ... } }`');
+    }
+    if (onInputChange) {
+      warn(
+        'Свойство `onInputChange` устаревшее, используйте `slotsProps={ input: { onChange: ... } }`',
+      );
+    }
+  }
 
   const {
     className,
@@ -93,12 +110,13 @@ export const ChipsInputBase = <O extends ChipOption>({
     readOnly,
     disabled,
     id,
+    value: inputValue = DEFAULT_INPUT_VALUE,
     ...inputRest
   } = useMergeProps(
     {
       getRootRef: getRef,
       className: styles.el,
-      value: inputValue,
+      value: inputValueProp,
       onChange: onInputChange,
       ...restProps,
     },
@@ -372,6 +390,7 @@ export const ChipsInputBase = <O extends ChipOption>({
           getRootRef={inputRef}
           disabled={disabled}
           readOnly={readOnly}
+          value={inputValue}
           placeholder={withPlaceholder ? placeholder : undefined}
           onBlur={handleInputBlur}
           {...inputRest}

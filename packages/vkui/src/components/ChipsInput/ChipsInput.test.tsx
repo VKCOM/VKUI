@@ -159,8 +159,6 @@ describe(ChipsInput, () => {
   it('should show clear button when inputValue !== ""', () => {
     render(
       <ChipsInput
-        id="color"
-        placeholder="Введите цвета"
         ClearButton={(props) => (
           <div {...props} data-testid="delete">
             Delete
@@ -168,7 +166,13 @@ describe(ChipsInput, () => {
         )}
         allowClearButton
         value={[]}
-        inputValue="Синий"
+        slotsProps={{
+          input: {
+            id: 'color',
+            placeholder: 'Введите цвета',
+            value: 'Синий',
+          },
+        }}
       />,
     );
     expect(screen.getByTestId('delete')).toBeInTheDocument();
@@ -270,9 +274,13 @@ describe(ChipsInput, () => {
               label: 'Красный',
             },
           ]}
-          data-testid="input"
           onChange={onChange}
           delimiter={delimiter}
+          slotsProps={{
+            input: {
+              'data-testid': 'input',
+            },
+          }}
         />,
       );
       fireEvent.input(screen.getByTestId('input'), {
