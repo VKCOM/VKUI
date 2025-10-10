@@ -9,7 +9,7 @@ import { useMergeProps } from '../../hooks/useMergeProps';
 import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { warnOnce } from '../../lib/warnOnce.ts';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';

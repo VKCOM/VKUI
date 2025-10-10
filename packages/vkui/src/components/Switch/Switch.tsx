@@ -9,7 +9,7 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import { warnOnce } from '../../lib/warnOnce.ts';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';

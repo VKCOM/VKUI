@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { warnOnce } from '../../lib/warnOnce.ts';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';

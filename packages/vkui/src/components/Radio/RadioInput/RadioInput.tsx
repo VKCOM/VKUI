@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../../hooks/useMergeProps';
-import { warnOnce } from '../../../lib/warnOnce.ts';
+import { warnOnce } from '../../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../RootComponent/RootComponent';
