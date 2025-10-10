@@ -4,13 +4,19 @@ import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { CardGrid } from '../CardGrid/CardGrid';
 import { ContentCard, type ContentCardProps } from './ContentCard';
 
-const ContentCardTest = (props: ContentCardProps) => (
+const ContentCardTest = ({ slotsProps, ...props }: ContentCardProps) => (
   <ContentCard
     overTitle="VKUI"
     title="ContentCard example"
     caption="VKUI Styleguide > Blocks > ContentCard"
+    slotsProps={{
+      ...slotsProps,
+      content: {
+        ...slotsProps?.content,
+        'data-testid': 'card',
+      },
+    }}
     {...props}
-    data-testid="card"
   />
 );
 const card = () => screen.getByTestId('card');
@@ -125,7 +131,9 @@ describe('ContentCard', () => {
 
   it('[img] passes ref to img', () => {
     const refCallback = vi.fn();
-    render(<ContentCardTest src="/image.png" getRef={refCallback} />);
+    render(
+      <ContentCardTest src="/image.png" slotsProps={{ image: { getRootRef: refCallback } }} />,
+    );
 
     expect(refCallback).toHaveBeenCalled();
   });
@@ -139,7 +147,12 @@ describe('ContentCard', () => {
   });
 
   it('[img] passes `imageObjectFit`', () => {
-    render(<ContentCardTest src="/image.png" imageObjectFit="contain" />);
+    render(
+      <ContentCardTest
+        src="/image.png"
+        slotsProps={{ image: { style: { objectFit: 'contain' } } }}
+      />,
+    );
 
     expect(img()).toHaveStyle('object-fit: contain;');
   });
