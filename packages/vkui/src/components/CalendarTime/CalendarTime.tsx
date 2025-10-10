@@ -146,6 +146,9 @@ export const CalendarTime = ({
 
   const onHoursInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onPickerValueChange(e, (numValue) => validateValue(numValue, localHours), setHours);
+    if (e.target.value.length > 1) {
+      minutesInputRef.current?.focus();
+    }
   };
 
   const onMinutesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
