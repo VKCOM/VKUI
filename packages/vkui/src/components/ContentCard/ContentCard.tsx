@@ -173,12 +173,12 @@ export const ContentCard = ({
       {...rootRest}
     >
       <Tappable baseClassName={styles.tappable} {...contentRest}>
-        {(src || srcSet) && (
+        {(imageRest.src || imageRest.srcSet) && (
           <RootComponent
             Component="img"
             baseClassName={styles.img}
             baseStyle={{ maxHeight, objectFit: imageObjectFit }}
-            {...imageRest}
+            {...(imageRest as React.AllHTMLAttributes<HTMLImageElement>)}
             {...getFetchPriorityProp(fetchPriority)}
           />
         )}
