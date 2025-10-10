@@ -4,9 +4,11 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
-import type { HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import { CellDragger } from './CellDragger/CellDragger';
@@ -17,6 +19,15 @@ export interface CellProps
   extends Omit<SimpleCellProps, 'getRootRef'>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `content`: свойства для прокидывания в контент;.
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+    content?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+  };
   /**
    * Режим отображения ячейки:
    *
@@ -63,6 +74,9 @@ export interface CellProps
 export const Cell: React.FC<CellProps> & {
   Checkbox: typeof CellCheckbox;
 } = ({
+  getRootRef: rootGetRootRef,
+  className: rootClassName,
+  style: rootStyle,
   mode,
   onRemove,
   removePlaceholder = 'Удалить',
@@ -77,14 +91,13 @@ export const Cell: React.FC<CellProps> & {
   value,
   checked,
   defaultChecked,
-  getRootRef,
   draggerLabel = DEFAULT_DRAGGABLE_LABEL,
-  className,
-  style,
   toggleButtonTestId,
   removeButtonTestId,
   draggerTestId,
   href: hrefProp,
+
+  slotsProps,
   ...restProps
 }: CellProps) => {
   const [dragging, setDragging] = React.useState(false);
@@ -92,6 +105,23 @@ export const Cell: React.FC<CellProps> & {
   const removable = mode === 'removable';
   const Component = selectable ? 'label' : ComponentProps;
   const href = selectable ? undefined : hrefProp;
+
+  const { getRootRef, className, style, ...rootRest } = useMergeProps(
+    {
+      getRootRef: rootGetRootRef,
+      className: rootClassName,
+      style: rootStyle,
+    },
+    slotsProps?.root,
+  );
+
+  const contentProps = useMergeProps(
+    {
+      className: styles.content,
+      ...restProps,
+    },
+    slotsProps?.content,
+  );
 
   const platform = usePlatform();
 
@@ -141,8 +171,7 @@ export const Cell: React.FC<CellProps> & {
     hasHover: hasActive && !removable,
     disabled,
     href,
-    ...restProps,
-    className: styles.content,
+    ...contentProps,
     // чтобы свойство, если не определено, не присутствовало в
     // restProps явно как {'Component': undefined} и ниже не переопределяло
     // возможное значение commonProps.Component = 'a' при слиянии двух объектов, как
@@ -174,6 +203,7 @@ export const Cell: React.FC<CellProps> & {
         toggleButtonTestId={toggleButtonTestId}
         removeButtonTestId={removeButtonTestId}
         disabled={disabled}
+        {...rootRest}
       >
         {platform === 'ios' ? (
           ({ isRemoving }) => {
@@ -189,9 +219,15 @@ export const Cell: React.FC<CellProps> & {
   }
 
   return (
-    <div className={classNames(cellClasses, className)} style={style} ref={rootElRef}>
+    <RootComponent
+      baseClassName={cellClasses}
+      className={className}
+      style={style}
+      getRootRef={rootElRef}
+      {...rootRest}
+    >
       <SimpleCell {...simpleCellProps} />
-    </div>
+    </RootComponent>
   );
 };
 

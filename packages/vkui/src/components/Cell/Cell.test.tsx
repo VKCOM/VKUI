@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { fireEvent, getByRole, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
@@ -10,6 +11,68 @@ const label = 'Перенести ячейку';
 
 describe('Cell', () => {
   baselineComponent((props) => <Cell {...props}>Cell</Cell>);
+
+  it('should work with slotsProps', () => {
+    const rootRef1 = createRef<HTMLDivElement>();
+    const rootRef2 = createRef<HTMLDivElement>();
+    const contentRef2 = createRef<HTMLDivElement>();
+    const onClick1 = vi.fn();
+    const onClick2 = vi.fn();
+    const onRootClick = vi.fn();
+
+    render(
+      <Cell
+        data-testid="content"
+        className="rootClassName"
+        getRootRef={rootRef1}
+        onClick={onClick1}
+        style={{
+          backgroundColor: 'rgb(255, 0, 0)',
+        }}
+        slotsProps={{
+          root: {
+            'data-testid': 'root',
+            'className': 'rootClassName-2',
+            'style': {
+              color: 'rgb(255, 0, 0)',
+            },
+            'getRootRef': rootRef2,
+            'onClick': onRootClick,
+          },
+          content: {
+            'className': 'contentClassName',
+            'getRootRef': contentRef2,
+            'data-testid': 'content-2',
+            'onClick': onClick2,
+          },
+        }}
+      />,
+    );
+
+    expect(screen.queryByTestId('content')).not.toBeInTheDocument();
+    const content = screen.getByTestId('content-2');
+    expect(content).toBeInTheDocument();
+    expect(content).toHaveClass('contentClassName');
+
+    const root = screen.getByTestId('root');
+    expect(root).toBeInTheDocument();
+    expect(root).toHaveClass('rootClassName');
+    expect(root).toHaveClass('rootClassName-2');
+    expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
+    expect(root).toHaveStyle('color: rgb(255, 0, 0)');
+
+    expect(rootRef1.current).toBe(rootRef2.current);
+    expect(rootRef1.current).toBe(root);
+
+    expect(contentRef2.current).toBe(content);
+
+    fireEvent.click(content);
+    expect(onClick1).toHaveBeenCalledTimes(1);
+    expect(onClick2).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(root);
+    expect(onRootClick).toHaveBeenCalledTimes(2);
+  });
 
   describe('Controls dragging', () => {
     it(
