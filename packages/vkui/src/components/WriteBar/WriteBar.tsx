@@ -3,19 +3,38 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasDataAttribute, HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { useResizeTextarea } from '../Textarea/useResizeTextarea';
 import { Headline } from '../Typography/Headline/Headline';
 import { Title } from '../Typography/Title/Title';
 import type { TypographyProps } from '../Typography/Typography';
 import styles from './WriteBar.module.css';
 
+const warn = warnOnce('WriteBar');
+
 export interface WriteBarProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLTextAreaElement> {
+    HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ textArea: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLTextAreaElement>;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `textarea`: свойства для прокидывания в поле ввода.
+   */
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+    textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
+      HasRootRef<HTMLTextAreaElement> &
+      HasDataAttribute;
+  };
   /**
    * Содержимое, отображаемое слева от поля ввода.
    */
@@ -65,43 +84,69 @@ export const WriteBar = ({
   getRef,
   onHeightChange,
   shadow = false,
-  onChange,
+
+  slotsProps,
   ...restProps
 }: WriteBarProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn(
+      'Свойство `getRef` устаревшее, используйте `slotsProps={ textArea: { getRootRef: ... } }`',
+    );
+  }
+
   const platform = usePlatform();
 
+  const rootProps = useMergeProps(
+    {
+      className,
+      getRootRef,
+      style,
+    },
+    slotsProps?.root,
+  );
+
+  const {
+    onChange,
+    getRootRef: getTextAreaRef,
+    ...textAreaRest
+  } = useMergeProps(
+    {
+      className: styles.textarea,
+      getRootRef: getRef,
+      ...restProps,
+    },
+    slotsProps?.textArea,
+  );
+
   const [refResizeTextarea, resize] = useResizeTextarea(onHeightChange, true);
-  const textareaRef = useExternRef(getRef, refResizeTextarea);
+  const textareaRef = useExternRef(getTextAreaRef, refResizeTextarea);
 
   React.useEffect(resize, [resize, platform]);
 
   return (
-    <div
-      ref={getRootRef}
-      className={classNames(
+    <RootComponent
+      baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
         shadow && styles.shadow,
-        className,
       )}
-      style={style}
+      {...rootProps}
     >
       <div className={styles.form}>
         {hasReactNode(before) && <div className={styles.before}>{before}</div>}
 
         <div className={styles.formIn}>
           <WriteBarTypography
-            {...restProps}
             Component="textarea"
-            className={styles.textarea}
             onChange={callMultiple(onChange, resize)}
             getRootRef={textareaRef}
+            {...textAreaRest}
           />
           {hasReactNode(inlineAfter) && <div className={styles.inlineAfter}>{inlineAfter}</div>}
         </div>
 
         {hasReactNode(after) && <div className={styles.after}>{after}</div>}
       </div>
-    </div>
+    </RootComponent>
   );
 };
