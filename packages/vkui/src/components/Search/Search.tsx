@@ -14,13 +14,16 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { touchEnabled } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Headline } from '../Typography/Headline/Headline';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Search.module.css';
+
+const warn = warnOnce('Search');
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
@@ -29,8 +32,11 @@ export type RenderIconButtonFn = (
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLInputElement> {
+    HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -122,6 +128,10 @@ export const Search = ({
   slotsProps,
   ...inputProps
 }: SearchProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+  }
+
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
 

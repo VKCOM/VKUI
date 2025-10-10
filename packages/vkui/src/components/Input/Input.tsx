@@ -4,10 +4,13 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import styles from './Input.module.css';
+
+const warn = warnOnce('Input');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -16,10 +19,13 @@ const sizeYClassNames = {
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRef<HTMLInputElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'maxHeight'> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -51,6 +57,10 @@ export const Input = ({
   slotsProps,
   ...restProps
 }: InputProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+  }
+
   const { sizeY = 'none' } = useAdaptivity();
 
   const { className, ...rootProps } = useMergeProps(

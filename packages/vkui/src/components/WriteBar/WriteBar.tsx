@@ -6,7 +6,8 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { useResizeTextarea } from '../Textarea/useResizeTextarea';
 import { Headline } from '../Typography/Headline/Headline';
@@ -14,10 +15,15 @@ import { Title } from '../Typography/Title/Title';
 import type { TypographyProps } from '../Typography/Typography';
 import styles from './WriteBar.module.css';
 
+const warn = warnOnce('WriteBar');
+
 export interface WriteBarProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLTextAreaElement> {
+    HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ textArea: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLTextAreaElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -82,6 +88,12 @@ export const WriteBar = ({
   slotsProps,
   ...restProps
 }: WriteBarProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn(
+      'Свойство `getRef` устаревшее, используйте `slotsProps={ textArea: { getRootRef: ... } }`',
+    );
+  }
+
   const platform = usePlatform();
 
   const rootProps = useMergeProps(

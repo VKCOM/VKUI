@@ -9,11 +9,14 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
-import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import { useResizeTextarea } from './useResizeTextarea';
 import styles from './Textarea.module.css';
+
+const warn = warnOnce('Textarea');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -22,10 +25,13 @@ const sizeYClassNames = {
 
 export interface TextareaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
-    HasRef<HTMLTextAreaElement>,
     HasRootRef<HTMLElement>,
     HasAlign,
     FormFieldProps {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ textArea: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLTextAreaElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -74,6 +80,12 @@ export const Textarea = ({
   slotsProps,
   ...restProps
 }: TextareaProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn(
+      'Свойство `getRef` устаревшее, используйте `slotsProps={ textArea: { getRootRef: ... } }`',
+    );
+  }
+
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
   const { window } = useDOM();
