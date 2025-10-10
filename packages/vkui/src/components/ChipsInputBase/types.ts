@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import type { HasAlign, HasRef } from '../../types';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
 import { type FormFieldProps } from '../FormField/FormField';
 import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
 import { type ChipProps } from './Chip/Chip';
@@ -120,11 +120,19 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
       keyof UseChipsInputBaseProps<O> | 'defaultChecked'
     >,
     HasRef<HTMLInputElement>,
+    HasRootRef<HTMLDivElement>,
     HasAlign {
   /**
-   * Ссылка на корневой элемент.
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в поле ввода.
    */
-  getRootRef?: React.Ref<HTMLDivElement>;
+  slotsProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
   /**
    * Добавляет значение в список на событие `onBlur`.
    */

@@ -5,6 +5,7 @@ import { type MouseEventHandler } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalOnEventOutside } from '../../hooks/useGlobalOnClickOutside';
+import { useMergeProps } from '../../hooks/useMergeProps.ts';
 import { Keys } from '../../lib/accessibility';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
@@ -147,7 +148,6 @@ export interface ChipsSelectProps<O extends ChipOption>
  */
 export const ChipsSelect = <Option extends ChipOption>({
   // FormFieldProps
-  id: labelledbyId,
   getRootRef,
   className,
   status = 'default',
@@ -178,19 +178,14 @@ export const ChipsSelect = <Option extends ChipOption>({
   value: valueProp,
   defaultValue,
   inputValue: inputValueProp,
-  defaultInputValue,
-  disabled,
-  readOnly,
+  defaultInputValue: defaultInputValueProp,
   getOptionValue = getOptionValueDefault,
   getOptionLabel = getOptionLabelDefault,
   getNewOptionData = getNewOptionDataDefault,
   renderChip = renderChipDefault,
   renderOption = renderOptionDefault,
   onChange,
-  onFocus: onFocusProp,
   onInputChange: onInputChangeProp,
-  onBlur: onBlurProp,
-  onKeyDown: onKeyDownProp,
   dropdownOffsetDistance = 0,
   allowClearButton,
   clearButtonTestId,
@@ -198,8 +193,46 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   // a11y
   chipsListLabel,
+
+  // input native props
+  disabled: disabledProp,
+  readOnly: readOnlyProp,
+  id: idProp,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
+  onKeyDown: onKeyDownProp,
+
+  slotsProps,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
+  const {
+    getRootRef: getInputRef,
+    value: resolvedInputValue,
+    defaultValue: resolvedDefaultInputValue,
+    onChange: resolvedOnInputChange,
+    disabled,
+    readOnly,
+    id: labelledbyId,
+    onFocus,
+    onBlur,
+    onKeyDown,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      value: inputValueProp,
+      defaultValue: defaultInputValueProp,
+      onChange: onInputChangeProp,
+      disabled: disabledProp,
+      readOnly: readOnlyProp,
+      id: idProp,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      onKeyDown: onKeyDownProp,
+    },
+    slotsProps?.input,
+  );
+
   const {
     // Связано с ChipsInputProps
     // option
@@ -232,9 +265,9 @@ export const ChipsSelect = <Option extends ChipOption>({
     getNewOptionData,
 
     // input
-    inputValue: inputValueProp,
-    defaultInputValue,
-    onInputChange: onInputChangeProp,
+    inputValue: resolvedInputValue as string,
+    defaultInputValue: resolvedDefaultInputValue as string,
+    onInputChange: resolvedOnInputChange,
 
     // dropdown
     options: optionsProp,
@@ -253,7 +286,7 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   // Связано с ChipsInputProps
   const rootRef = useExternRef(getRootRef);
-  const inputRef = useExternRef(getRef, inputRefHook);
+  const inputRef = useExternRef(getInputRef, inputRefHook);
 
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
@@ -274,8 +307,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   const dropdownScrollBoxRef = React.useRef<HTMLDivElement>(null);
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (onFocusProp) {
-      onFocusProp(event);
+    if (onFocus) {
+      onFocus(event);
     }
 
     if (!readOnly) {
@@ -285,8 +318,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (onBlurProp) {
-      onBlurProp(event);
+    if (onBlur) {
+      onBlur(event);
     }
 
     // Не добавляем значение, если его нужно выбрать строго из списка
@@ -352,8 +385,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (onKeyDownProp) {
-      onKeyDownProp(event);
+    if (onKeyDown) {
+      onKeyDown(event);
     }
 
     if (event.defaultPrevented || readOnly) {
@@ -554,13 +587,9 @@ export const ChipsSelect = <Option extends ChipOption>({
   return (
     <>
       <ChipsInputBase
-        {...restProps}
-        disabled={disabled}
-        readOnly={readOnly}
         clearButtonShown={clearButtonShown}
         clearButtonTestId={clearButtonTestId}
         // FormFieldProps
-        id={labelledbyId}
         getRootRef={rootRef}
         className={classNames(styles.host, openedClassNames, className)}
         status={status}
@@ -582,20 +611,29 @@ export const ChipsSelect = <Option extends ChipOption>({
         onRemoveChipOption={removeOption}
         renderChip={renderChip}
         onClear={clearOptions}
-        // input
-        getRef={inputRef}
-        inputValue={inputValue}
-        onInputChange={onInputChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
         // a11y
-        role="combobox"
-        aria-expanded={opened}
-        aria-autocomplete="list"
-        aria-activedescendant={opened ? dropdownCurrentItemId : undefined}
-        aria-haspopup="listbox"
         chipsListLabel={chipsListLabel}
+        slotsProps={{
+          ...slotsProps,
+          input: {
+            'role': 'combobox',
+            'aria-expanded': opened,
+            'aria-autocomplete': 'list',
+            'aria-activedescendant': opened ? dropdownCurrentItemId : undefined,
+            'aria-haspopup': 'listbox',
+            'getRootRef': inputRef,
+            'value': inputValue,
+            'onChange': onInputChange,
+            disabled,
+            readOnly,
+            'id': labelledbyId,
+            'onFocus': handleFocus,
+            'onBlur': handleBlur,
+            'onKeyDown': handleKeyDown,
+            ...inputRest,
+          },
+        }}
+        {...restProps}
       />
       {opened && (
         <CustomSelectDropdown

@@ -5,7 +5,9 @@ import { classNames } from '@vkontakte/vkjs';
 import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps.ts';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
+import { callMultiple } from '../../lib/callMultiple.ts';
 import {
   contains as checkTargetIsInputEl,
   contains,
@@ -32,9 +34,9 @@ const sizeYClassNames = {
 
 export const ChipsInputBase = <O extends ChipOption>({
   // FormFieldProps
-  getRootRef,
-  style,
-  className,
+  'getRootRef': rootGetRootRef,
+  'style': rootStyle,
+  'className': rootClassName,
   before,
   after,
   status,
@@ -49,13 +51,8 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   // input
   getRef,
-  'id': idProp,
   inputValue = DEFAULT_INPUT_VALUE,
-  placeholder,
-  disabled,
-  readOnly,
   addOnBlur,
-  onBlur,
   onInputChange,
 
   // clear
@@ -67,11 +64,49 @@ export const ChipsInputBase = <O extends ChipOption>({
   // a11y
   chipsListLabel = 'Выбранные элементы',
   'aria-label': ariaLabel = '',
+
+  slotsProps,
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
+
+  const {
+    className,
+    style,
+    getRootRef,
+    onClick: onRootClick,
+    onMouseDown: onRootMouseDown,
+    ...rootRest
+  } = useMergeProps(
+    {
+      getRootRef: rootGetRootRef,
+      style: rootStyle,
+      className: rootClassName,
+    },
+    slotsProps?.root,
+  );
+
+  const {
+    getRootRef: getInputRef,
+    onBlur,
+    placeholder,
+    readOnly,
+    disabled,
+    id,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      className: styles.el,
+      value: inputValue,
+      onChange: onInputChange,
+      ...restProps,
+    },
+    slotsProps?.input,
+  );
+
   const idGenerated = React.useId();
-  const inputRef = useExternRef(getRef);
+  const inputRef = useExternRef(getInputRef);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const listboxRef = React.useRef<HTMLDivElement>(null);
 
@@ -232,7 +267,7 @@ export const ChipsInputBase = <O extends ChipOption>({
     return undefined;
   }, [after, clearButton]);
 
-  const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
+  const inputId = id || `chips-input-base-generated-id-${idGenerated}`;
 
   const handleRootMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     // Если клик был в один из чипов, то preventDefault делать не нужно, так как не будет срабатывать выделение текста
@@ -273,8 +308,9 @@ export const ChipsInputBase = <O extends ChipOption>({
       mode={mode}
       className={className}
       maxHeight={maxHeight}
-      onClick={disabled ? undefined : handleRootClick}
-      onMouseDown={handleRootMouseDown}
+      onClick={disabled ? onRootClick : callMultiple(handleRootClick, onRootClick)}
+      onMouseDown={callMultiple(handleRootMouseDown, onRootMouseDown)}
+      {...rootRest}
     >
       <div
         className={classNames(
@@ -329,19 +365,16 @@ export const ChipsInputBase = <O extends ChipOption>({
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
-          {...restProps}
           aria-label={ariaLabel}
           Component="input"
           type="text"
           id={inputId}
           getRootRef={inputRef}
-          className={styles.el}
           disabled={disabled}
           readOnly={readOnly}
           placeholder={withPlaceholder ? placeholder : undefined}
-          value={inputValue}
-          onChange={onInputChange}
           onBlur={handleInputBlur}
+          {...inputRest}
         />
       </div>
     </FormField>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
 import type { FormFieldProps } from '../FormField/FormField';
@@ -28,18 +29,38 @@ export const ChipsInput = <Option extends ChipOption>({
   // input
   getRef,
   inputValue: inputValueProp,
-  defaultInputValue: inputDefaultValueProp,
+  defaultInputValue: defaultInputValueProp,
   onInputChange: onInputChangeProp,
   getOptionValue,
   getOptionLabel,
   getNewOptionData,
 
   // other
-  disabled,
+  disabled: disabledProp,
   allowClearButton,
   delimiter,
+
+  slotsProps,
   ...restProps
 }: ChipsInputProps<Option>): React.ReactNode => {
+  const {
+    getRootRef: getInputRef,
+    value: resolvedInputValue,
+    defaultValue: resolvedInputDefaultValue,
+    onChange: resolvedOnInputChange,
+    disabled,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      value: inputValueProp,
+      defaultValue: defaultInputValueProp,
+      onChange: onInputChangeProp,
+      disabled: disabledProp,
+    },
+    slotsProps?.input,
+  );
+
   const {
     value,
     addOptionFromInput,
@@ -60,28 +81,34 @@ export const ChipsInput = <Option extends ChipOption>({
     getNewOptionData,
 
     // input
-    inputValue: inputValueProp,
-    defaultInputValue: inputDefaultValueProp,
-    onInputChange: onInputChangeProp,
+    inputValue: resolvedInputValue as string,
+    defaultInputValue: resolvedInputDefaultValue as string,
+    onInputChange: resolvedOnInputChange,
 
     // other
     disabled,
     delimiter,
   });
-  const inputRef = useExternRef(getRef, inputRefHook);
+  const inputRef = useExternRef(getInputRef, inputRefHook);
 
   return (
     <ChipsInputBase
-      {...restProps}
-      disabled={disabled}
       value={value}
       clearButtonShown={allowClearButton && (!!value.length || !!inputValue.length)}
       onAddChipOption={addOptionFromInput}
       onRemoveChipOption={removeOption}
       onClear={clearOptions}
-      getRef={inputRef}
-      inputValue={inputValue}
-      onInputChange={onInputChange}
+      slotsProps={{
+        ...slotsProps,
+        input: {
+          getRootRef: inputRef,
+          value: inputValue,
+          onChange: onInputChange,
+          disabled,
+          ...inputRest,
+        },
+      }}
+      {...restProps}
     />
   );
 };
