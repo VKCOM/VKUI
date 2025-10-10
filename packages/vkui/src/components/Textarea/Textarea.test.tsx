@@ -182,7 +182,7 @@ describe(Textarea, () => {
     fakeTimersForScope();
 
     const mockTextareaScrollHeight = () => {
-      const textArea = screen.getByTestId('textarea');
+      const textArea = getInput();
       let height = 100;
       vi.spyOn(textArea, 'scrollHeight', 'get').mockImplementation(() => {
         const currHeight = height;
@@ -193,16 +193,16 @@ describe(Textarea, () => {
 
     it('when editing', async () => {
       const onResize = vi.fn();
-      render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
+      render(<Textarea value="" onResize={onResize} />);
       mockTextareaScrollHeight();
       await userEvent.type(getInput(), '{enter}{enter}{enter}{enter}');
       expect(onResize).toHaveBeenCalledTimes(5);
     });
     it('when changing controlled value', () => {
       const onResize = vi.fn();
-      const { rerender } = render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
+      const { rerender } = render(<Textarea value="" onResize={onResize} />);
       mockTextareaScrollHeight();
-      rerender(<Textarea data-testid="textarea" value="\n\n\n\n" onResize={onResize} />);
+      rerender(<Textarea value="\n\n\n\n" onResize={onResize} />);
       expect(onResize).toHaveBeenCalledTimes(2);
     });
     it('when changing platform', async () => {
@@ -210,14 +210,14 @@ describe(Textarea, () => {
 
       const { rerender } = render(
         <ConfigProvider platform={Platform.VKCOM}>
-          <Textarea data-testid="textarea" value="" onResize={onResize} />
+          <Textarea value="" onResize={onResize} />
         </ConfigProvider>,
       );
       mockTextareaScrollHeight();
 
       rerender(
         <ConfigProvider platform={Platform.ANDROID}>
-          <Textarea data-testid="textarea" value="" onResize={onResize} />
+          <Textarea value="" onResize={onResize} />
         </ConfigProvider>,
       );
 
@@ -225,7 +225,7 @@ describe(Textarea, () => {
     });
     it('when resize window', () => {
       const onResize = vi.fn();
-      render(<Textarea data-testid="textarea" value="" onResize={onResize} />);
+      render(<Textarea value="" onResize={onResize} />);
       mockTextareaScrollHeight();
       fireEvent(window, new Event('resize'));
       expect(onResize).toHaveBeenCalledTimes(2);
