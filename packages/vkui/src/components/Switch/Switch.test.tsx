@@ -88,7 +88,7 @@ describe(Switch, () => {
   it(
     '(Uncontrolled) shows checked state',
     withFakeTimers(async () => {
-      const { rerender } = render(<Switch data-testid="switch" />);
+      const { rerender } = render(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} />);
 
       const component = screen.getByRole<HTMLInputElement>('switch');
       if (!component) {
@@ -103,7 +103,7 @@ describe(Switch, () => {
       expect(component.checked).toBeTruthy();
       expect(component.getAttribute('aria-checked')).toBe('true');
 
-      rerender(<Switch data-testid="switch" defaultChecked />);
+      rerender(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} defaultChecked />);
 
       const defaultCheckedComponent = screen.getByTestId<HTMLInputElement>('switch');
       if (!defaultCheckedComponent) {
@@ -118,7 +118,7 @@ describe(Switch, () => {
       expect(defaultCheckedComponent.checked).toBeFalsy();
       expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('false');
 
-      rerender(<Switch data-testid="switch" disabled />);
+      rerender(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} disabled />);
 
       const disabledSwitch = screen.getByTestId<HTMLInputElement>('switch');
       if (!disabledSwitch) {
@@ -139,7 +139,11 @@ describe(Switch, () => {
       const [checked, setChecked] = React.useState(false);
       return (
         <React.Fragment>
-          <Switch data-testid="switch" checked={checked} onChange={vi.fn()} />
+          <Switch
+            slotsProps={{ input: { 'data-testid': 'switch' } }}
+            checked={checked}
+            onChange={vi.fn()}
+          />
           <button onClick={() => setChecked((prevChecked) => !prevChecked)}>
             change switch state
           </button>
