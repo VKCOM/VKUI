@@ -92,7 +92,7 @@ describe('Radio', () => {
           name="pay"
           value="cash"
           data-testid="input-cash-id"
-          labelProps={{ 'data-testid': 'label-cash-id' }}
+          slotsProps={{ root: { 'data-testid': 'label-cash-id' } }}
           defaultChecked
         >
           Оплата наличными
@@ -101,7 +101,7 @@ describe('Radio', () => {
           name="pay"
           value="card"
           data-testid="input-card-id"
-          labelProps={{ 'data-testid': 'label-card-id' }}
+          slotsProps={{ root: { 'data-testid': 'label-card-id' } }}
         >
           Оплата картой
         </Radio>

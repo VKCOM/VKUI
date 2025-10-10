@@ -121,6 +121,7 @@ describe('CustomSelect', () => {
           getRootRef={rootRef1}
           getRef={selectRef1}
           getSelectInputRef={inputRef1}
+          nativeSelectTestId="select"
           style={{
             backgroundColor: 'rgb(255, 0, 0)',
           }}
@@ -157,6 +158,7 @@ describe('CustomSelect', () => {
         />,
       );
 
+      expect(screen.queryByTestId('select')).not.toBeInTheDocument();
       const select = screen.getByTestId('select-2');
       expect(select).toBeInTheDocument();
       expect(select.tagName).toBe('SELECT');
@@ -1337,10 +1339,9 @@ describe('CustomSelect', () => {
     expect(screen.queryByPlaceholderText('Не выбрано')).toBeFalsy();
   });
 
-  it('native select is reachable via nativeSelectTestId', () => {
+  it('native select is reachable via slotsProps.select.data-testid', () => {
     render(
       <CustomSelect
-        nativeSelectTestId="nativeSelectTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1348,6 +1349,11 @@ describe('CustomSelect', () => {
         placeholder="Не выбрано"
         allowClearButton
         defaultValue={1}
+        slotsProps={{
+          select: {
+            'data-testid': 'nativeSelectTestId',
+          },
+        }}
       />,
     );
 
@@ -1358,7 +1364,6 @@ describe('CustomSelect', () => {
   it('passes required prop to native select, not input', () => {
     render(
       <CustomSelect
-        nativeSelectTestId="nativeSelectTestId"
         data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
@@ -1368,6 +1373,11 @@ describe('CustomSelect', () => {
         allowClearButton
         defaultValue={1}
         required
+        slotsProps={{
+          select: {
+            'data-testid': 'nativeSelectTestId',
+          },
+        }}
       />,
     );
 
@@ -1384,12 +1394,16 @@ describe('CustomSelect', () => {
     };
     render(
       <CustomSelect
-        getSelectInputRef={inputRef}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
         placeholder="Не выбрано"
+        slotsProps={{
+          input: {
+            getRootRef: inputRef,
+          },
+        }}
       />,
     );
     expect(inputRef.current).not.toBeNull();
@@ -1412,7 +1426,11 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          getSelectInputRef={inputRef}
+          slotsProps={{
+            input: {
+              getRootRef: inputRef,
+            },
+          }}
         />,
       );
 
@@ -1458,7 +1476,11 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          getSelectInputRef={inputRef}
+          slotsProps={{
+            input: {
+              getRootRef: inputRef,
+            },
+          }}
         />,
       );
       act(() => {
@@ -1512,8 +1534,6 @@ describe('CustomSelect', () => {
       const onInputChange = vi.fn();
       render(
         <CustomSelect
-          getSelectInputRef={inputRef}
-          onInputChange={onInputChange}
           options={[
             { value: '0', label: 'Не выбрано' },
             { value: '1', label: 'Категория 1' },
@@ -1521,6 +1541,12 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
+          slotsProps={{
+            input: {
+              getRootRef: inputRef,
+              onChange: onInputChange,
+            },
+          }}
         />,
       );
       fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
@@ -1539,7 +1565,6 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         data-testid="select"
-        getSelectInputRef={inputRef}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1551,6 +1576,11 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="4"
+        slotsProps={{
+          input: {
+            getRootRef: inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1572,7 +1602,6 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         data-testid="select"
-        getSelectInputRef={inputRef}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1584,6 +1613,11 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="1"
+        slotsProps={{
+          input: {
+            getRootRef: inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1640,7 +1674,11 @@ describe('CustomSelect', () => {
           { value: '3', label: 'Категория 3' },
         ]}
         defaultValue="1"
-        getSelectInputRef={inputRef}
+        slotsProps={{
+          input: {
+            getRootRef: inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1723,7 +1761,6 @@ describe('CustomSelect', () => {
     const onChange = vi.fn();
     render(
       <CustomSelect
-        getSelectInputRef={inputRef}
         onChange={onChange}
         data-testid="select"
         options={[
@@ -1732,6 +1769,11 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotsProps={{
+          input: {
+            getRootRef: inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
