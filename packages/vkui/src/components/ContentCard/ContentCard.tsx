@@ -4,7 +4,8 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { getFetchPriorityProp } from '../../lib/utils';
-import type { HasComponent, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasComponent, HasDataAttribute, HasRootRef } from '../../types';
 import { Card, type CardProps } from '../Card/Card';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
@@ -14,12 +15,17 @@ import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import styles from './ContentCard.module.css';
 
+const warn = warnOnce('ContentCard');
+
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
     Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
-    Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
-    HasRef<HTMLImageElement> {
+    Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ image: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLImageElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -56,7 +62,9 @@ export interface ContentCardProps
    */
   caption?: React.ReactNode;
   /**
-    Максимальная высота изображения.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ image: { style: { maxHeight: ... } } }`.
+   *
+   * Максимальная высота изображения.
    */
   maxHeight?: number;
   /**
@@ -64,6 +72,8 @@ export interface ContentCardProps
    */
   mode?: CardProps['mode'];
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ image: { style: { objectFit: ... } } }`.
+   *
    * Пользовательское значения стиля `object-fit` для картинки
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
    */
@@ -109,6 +119,22 @@ export const ContentCard = ({
   slotsProps,
   ...restProps
 }: ContentCardProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development') {
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ image: { getRootRef: ... } }`');
+    }
+    if (maxHeight) {
+      warn(
+        'Свойство `maxHeight` устаревшее, используйте `slotsProps={ image: { style: { maxHeight: ... } } }`',
+      );
+    }
+    if (imageObjectFit) {
+      warn(
+        'Свойство `imageObjectFit` устаревшее, используйте `slotsProps={ image: { style: { objectFit: ... } } }`',
+      );
+    }
+  }
+
   const { className, ...rootRest } = useMergeProps(
     {
       className: rootClassName,

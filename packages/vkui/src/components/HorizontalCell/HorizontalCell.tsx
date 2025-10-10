@@ -3,13 +3,8 @@
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import type {
-  CSSCustomProperties,
-  HasDataAttribute,
-  HasRef,
-  HasRootRef,
-  LiteralUnion,
-} from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { CSSCustomProperties, HasDataAttribute, HasRootRef, LiteralUnion } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
@@ -17,6 +12,8 @@ import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCell.module.css';
+
+const warn = warnOnce('HorizontalCell');
 
 export const CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH = '--vkui_internal--cell_width';
 
@@ -37,8 +34,11 @@ type HorizontalCellSizes = 's' | 'm' | 'l' | 'xl' | 'auto';
 
 export interface HorizontalCellProps
   extends Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLDivElement> {
+    HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ content: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLDivElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -107,6 +107,10 @@ export const HorizontalCell = ({
   slotsProps,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ content: { getRootRef: ... } }`');
+  }
+
   const rootRest = useMergeProps(
     {
       className,
