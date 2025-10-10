@@ -2,11 +2,14 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../../hooks/useMergeProps';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
+import { warnOnce } from '../../../lib/warnOnce.ts';
+import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './RadioInput.module.css';
+
+const warn = warnOnce('Radio.Input');
 
 function RadioIcon24(props: React.ComponentProps<'svg'>) {
   return (
@@ -36,8 +39,7 @@ function RadioIcon() {
 
 export interface RadioInputProps
   extends Omit<React.ComponentProps<'input'>, 'type'>,
-    HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {
+    HasRootRef<HTMLLabelElement> {
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -51,6 +53,10 @@ export interface RadioInputProps
       HasRootRef<HTMLInputElement> &
       HasDataAttribute;
   };
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
 }
 
 export function RadioInput({
@@ -61,6 +67,10 @@ export function RadioInput({
   slotsProps,
   ...restProps
 }: RadioInputProps) {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+  }
+
   const rootRest = useMergeProps({ className, style, getRootRef }, slotsProps?.root);
 
   const inputProps = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);

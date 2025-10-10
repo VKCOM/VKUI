@@ -3,16 +3,18 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce.ts';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
 import { RadioInput } from './RadioInput/RadioInput';
 import styles from './Radio.module.css';
 
+const warn = warnOnce('Radio');
+
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRef<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
     Pick<
       TappableOmitProps,
@@ -30,6 +32,10 @@ export interface RadioProps
     input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
   };
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
+  /**
    * Дополнительное описание под основным текстом.
    */
   description?: React.ReactNode;
@@ -38,6 +44,8 @@ export interface RadioProps
    */
   titleAfter?: React.ReactNode;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ root: {...} }`.
+   *
    * Позволяет передавать data-* аттрибуты элементу label.
    **/
   labelProps?: HasDataAttribute;
@@ -64,6 +72,15 @@ export const Radio = ({
   slotsProps,
   ...restProps
 }: RadioProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development') {
+    if (labelProps) {
+      warn('Свойство `labelProps` устаревшее, используйте `slotsProps={ root: {...} }`');
+    }
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    }
+  }
+
   const rootProps = useMergeProps(
     {
       style,

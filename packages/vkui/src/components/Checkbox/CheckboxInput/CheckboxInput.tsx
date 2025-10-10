@@ -14,7 +14,7 @@ import { useExternRef } from '../../../hooks/useExternRef';
 import { useMergeProps } from '../../../hooks/useMergeProps';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../../types';
+import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
@@ -31,8 +31,11 @@ function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
 
 export interface CheckboxInputProps
   extends React.ComponentProps<'input'>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLInputElement> {
+    HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -140,6 +143,10 @@ export function CheckboxInput({
   );
 
   if (process.env.NODE_ENV === 'development') {
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    }
+
     if (defaultIndeterminate && inputRest.defaultChecked) {
       warn('defaultIndeterminate и defaultChecked не могут быть true одновременно', 'error');
     }

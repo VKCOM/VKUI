@@ -3,12 +3,15 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
+import { warnOnce } from '../../lib/warnOnce.ts';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
 import type { TappableOmitProps } from '../Tappable/Tappable';
 import { CheckboxInput, type CheckboxInputProps } from './CheckboxInput/CheckboxInput';
 import { CheckboxSimple } from './CheckboxSimple/CheckboxSimple';
+
+const warn = warnOnce('Checkbox');
 
 export interface CheckboxProps
   extends Omit<CheckboxInputProps, 'getRootRef'>,
@@ -111,6 +114,10 @@ const CheckboxComponent = ({
  * @see https://vkui.io/components/checkbox
  */
 export const Checkbox = (props: CheckboxProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && props.getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+  }
+
   const simple = !(hasReactNode(props.children) || hasReactNode(props.description));
   if (simple) {
     return <CheckboxSimple {...props} />;

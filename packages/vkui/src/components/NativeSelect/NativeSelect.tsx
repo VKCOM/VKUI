@@ -9,13 +9,16 @@ import { useMergeProps } from '../../hooks/useMergeProps';
 import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce.ts';
+import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
+
+const warn = warnOnce('NativeSelect');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -50,7 +53,6 @@ export type NativeHTMLSelectProps = Omit<
 
 export interface NativeSelectProps
   extends NativeHTMLSelectProps,
-    HasRef<HTMLSelectElement>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
@@ -65,6 +67,10 @@ export interface NativeSelectProps
       HasRootRef<HTMLDivElement>;
     select?: NativeHTMLSelectProps & HasRootRef<HTMLSelectElement> & HasDataAttribute;
   };
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLSelectElement>;
   /**
    * Выбранное значение.
    *
@@ -125,6 +131,10 @@ export const NativeSelect = ({
   slotsProps,
   ...restProps
 }: NativeSelectProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ select: { getRootRef: ... } }`');
+  }
+
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
   const { sizeY = 'none' } = useAdaptivity();

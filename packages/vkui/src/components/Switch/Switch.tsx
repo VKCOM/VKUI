@@ -9,10 +9,13 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce.ts';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
+
+const warn = warnOnce('Switch');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -21,8 +24,7 @@ const sizeYClassNames = {
 
 export interface SwitchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {
+    HasRootRef<HTMLLabelElement> {
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -36,6 +38,10 @@ export interface SwitchProps
       HasRootRef<HTMLInputElement> &
       HasDataAttribute;
   };
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
 }
 
 /**
@@ -49,6 +55,10 @@ export const Switch = ({
   slotsProps,
   ...restProps
 }: SwitchProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+  }
+
   const rootRest = useMergeProps(
     {
       style: rootStyle,

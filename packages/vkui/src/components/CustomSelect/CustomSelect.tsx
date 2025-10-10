@@ -35,6 +35,7 @@ import {
   type CustomSelectInputProps,
 } from './CustomSelectInput/CustomSelectInput';
 import {
+  checkDeprecatedProps,
   checkMixControlledAndUncontrolledState,
   checkOptionsValueType,
   filter,
@@ -133,6 +134,8 @@ export interface SelectProps<
       HasRootRef<HTMLInputElement>;
   };
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   *
    * Ref на внутрений компонент input.
    */
   getSelectInputRef?: React.Ref<HTMLInputElement>;
@@ -146,6 +149,8 @@ export interface SelectProps<
    */
   emptyText?: string;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { onChange: ... } }`.
+   *
    * Событие изменения текстового поля.
    */
   onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -234,6 +239,8 @@ export interface SelectProps<
    */
   labelTextTestId?: string;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ select: { 'data-testid': ... } }`.
+   *
    * Передает атрибут `data-testid` для нативного элемента `select`.
    */
   nativeSelectTestId?: string;
@@ -314,6 +321,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   if (process.env.NODE_ENV === 'development') {
     checkOptionsValueType(options);
+    checkDeprecatedProps(props);
   }
 
   const { sizeY = 'none' } = useAdaptivity();
