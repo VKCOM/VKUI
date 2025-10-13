@@ -68,7 +68,7 @@ export interface NativeSelectProps
     select?: NativeHTMLSelectProps & HasRootRef<HTMLSelectElement> & HasDataAttribute;
   };
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ select: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLSelectElement>;
   /**
