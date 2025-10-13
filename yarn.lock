@@ -4824,13 +4824,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vkontakte/vkjs@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@vkontakte/vkjs@npm:2.0.1"
+"@vkontakte/vkjs@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@vkontakte/vkjs@npm:2.0.2"
   dependencies:
     "@swc/helpers": "npm:^0.5.0"
     clsx: "npm:^2.1.1"
-  checksum: 10/1eae0c1cebf2fbe080fd15e22017f0601ced645b41ea7bfba7efa6e39b717379c848ed3401747aab7a16c7c4a8a4d9f6a2544289a46b2a1d7f0c464d5bbfd159
+  checksum: 10/cde66e86a7665f18490d14f4341af9630391f9fc4938ecb255670dd2fbc2984a59e9b2e8fcd7cdd5b0419de507ff48e38ff4928659ce6e762359e6f0a95ee743
   languageName: node
   linkType: hard
 
@@ -4876,7 +4876,7 @@ __metadata:
   resolution: "@vkontakte/vkui-docs-theme@workspace:packages/vkui-docs-theme"
   dependencies:
     "@vkontakte/icons": "npm:^3.0.0"
-    "@vkontakte/vkjs": "npm:^2.0.1"
+    "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.70.0"
     next: "npm:^15.5.4"
@@ -5047,7 +5047,7 @@ __metadata:
     "@types/node": "npm:*"
     "@types/postcss-import": "npm:^14.0.3"
     "@vkontakte/icons": "npm:^3.0.0"
-    "@vkontakte/vkjs": "npm:^2.0.1"
+    "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui-date-fns-tz": "npm:^0.0.6"
     "@vkontakte/vkui-floating-ui": "npm:^0.2.7"
     react: "npm:^18.3.1"
