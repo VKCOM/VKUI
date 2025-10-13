@@ -16,7 +16,7 @@ if (!E2E_TEST || !E2E_PLAYGROUND_HELPERS) {
 
 module.exports = {
   root: false,
-  extends: ['plugin:react-hooks/recommended-legacy', 'plugin:react-server-components/recommended'],
+  extends: ['plugin:react-hooks/recommended', 'plugin:react-server-components/recommended'],
   plugins: ['import', '@project-tools/vkui', 'unicorn', 'eslint-plugin-jsdoc'],
   parserOptions: {
     project: './tsconfig.eslint.json',
