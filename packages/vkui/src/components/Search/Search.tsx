@@ -34,7 +34,7 @@ export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLDivElement> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLInputElement>;
   /**
@@ -42,7 +42,7 @@ export interface SearchProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRootRef<HTMLInputElement> &
@@ -125,11 +125,11 @@ export const Search = ({
   onFindButtonClick,
   hideClearButton,
 
-  slotsProps,
+  slotProps,
   ...inputProps
 }: SearchProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
   const direction = useConfigDirection();
@@ -141,7 +141,7 @@ export const Search = ({
       style,
       getRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const {
@@ -161,7 +161,7 @@ export const Search = ({
       className: styles.nativeInput,
       ...inputProps,
     },
-    slotsProps?.input,
+    slotProps?.input,
   );
 
   const inputRef = useExternRef(getInputRef);

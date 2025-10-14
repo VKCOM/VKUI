@@ -23,7 +23,7 @@ export interface InputProps
     HasAlign,
     Omit<FormFieldProps, 'maxHeight'> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLInputElement>;
   /**
@@ -31,7 +31,7 @@ export interface InputProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRootRef<HTMLInputElement> &
@@ -54,11 +54,11 @@ export const Input = ({
   status,
   mode,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: InputProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
   const { sizeY = 'none' } = useAdaptivity();
@@ -69,7 +69,7 @@ export const Input = ({
       getRootRef,
       style,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const inputRest = useMergeProps(
@@ -78,7 +78,7 @@ export const Input = ({
       getRootRef: getRef,
       ...restProps,
     },
-    slotsProps?.input,
+    slotProps?.input,
   );
 
   return (

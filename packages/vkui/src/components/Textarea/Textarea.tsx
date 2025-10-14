@@ -29,7 +29,7 @@ export interface TextareaProps
     HasAlign,
     FormFieldProps {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ textArea: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ textArea: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLTextAreaElement>;
   /**
@@ -37,7 +37,7 @@ export interface TextareaProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `textarea`: свойства для прокидывания в поле ввода.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
     textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
       HasRootRef<HTMLTextAreaElement> &
@@ -77,13 +77,11 @@ export const Textarea = ({
   afterAlign,
   beforeAlign,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: TextareaProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn(
-      'Свойство `getRef` устаревшее, используйте `slotsProps={ textArea: { getRootRef: ... } }`',
-    );
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ textArea: { getRootRef: ... } }`');
   }
 
   const { sizeY = 'none' } = useAdaptivity();
@@ -96,7 +94,7 @@ export const Textarea = ({
       getRootRef,
       style,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const {
@@ -110,7 +108,7 @@ export const Textarea = ({
       getRootRef: getRef,
       ...restProps,
     },
-    slotsProps?.textArea,
+    slotProps?.textArea,
   );
 
   const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);

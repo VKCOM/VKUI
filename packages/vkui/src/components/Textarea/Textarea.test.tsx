@@ -21,7 +21,7 @@ describe(Textarea, () => {
     </>
   ));
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLElement>();
     const rootRef2 = createRef<HTMLElement>();
     const textAreaRef1 = createRef<HTMLTextAreaElement>();
@@ -42,7 +42,7 @@ describe(Textarea, () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',

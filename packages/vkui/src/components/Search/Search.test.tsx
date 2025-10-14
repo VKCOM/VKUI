@@ -26,7 +26,7 @@ vi.mock('../../lib/touch', async () => {
 describe(Search, () => {
   baselineComponent(Search);
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLDivElement>();
     const rootRef2 = createRef<HTMLDivElement>();
     const inputRef1 = createRef<HTMLInputElement>();
@@ -47,7 +47,7 @@ describe(Search, () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',

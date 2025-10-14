@@ -17,7 +17,7 @@ describe('WriteBar', () => {
     </>
   ));
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLDivElement>();
     const rootRef2 = createRef<HTMLDivElement>();
     const textAreaRef1 = createRef<HTMLTextAreaElement>();
@@ -38,7 +38,7 @@ describe('WriteBar', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',

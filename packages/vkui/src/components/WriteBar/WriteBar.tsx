@@ -21,7 +21,7 @@ export interface WriteBarProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HasRootRef<HTMLDivElement> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ textArea: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ textArea: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLTextAreaElement>;
   /**
@@ -29,7 +29,7 @@ export interface WriteBarProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `textarea`: свойства для прокидывания в поле ввода.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
     textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
       HasRootRef<HTMLTextAreaElement> &
@@ -85,13 +85,11 @@ export const WriteBar = ({
   onHeightChange,
   shadow = false,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: WriteBarProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn(
-      'Свойство `getRef` устаревшее, используйте `slotsProps={ textArea: { getRootRef: ... } }`',
-    );
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ textArea: { getRootRef: ... } }`');
   }
 
   const platform = usePlatform();
@@ -102,7 +100,7 @@ export const WriteBar = ({
       getRootRef,
       style,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const {
@@ -115,7 +113,7 @@ export const WriteBar = ({
       getRootRef: getRef,
       ...restProps,
     },
-    slotsProps?.textArea,
+    slotProps?.textArea,
   );
 
   const [refResizeTextarea, resize] = useResizeTextarea(onHeightChange, true);
