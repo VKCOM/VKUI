@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { act, createRef } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import {
   baselineComponent,
   fakeTimersForScope,
@@ -50,13 +51,14 @@ describe(ChipsInputBase, () => {
     (props) => (
       <>
         <label htmlFor="chips">Chips Input</label>
-        <ChipsInputBaseTest
+        <ChipsInputBase
           id="chips"
           chipsListLabel="Выбранные опции"
           onAddChipOption={onAddChipOption}
           onRemoveChipOption={onRemoveChipOption}
           onClear={onClearOptions}
           value={[RED_OPTION]}
+          onInputChange={noop}
           {...props}
         />
       </>
