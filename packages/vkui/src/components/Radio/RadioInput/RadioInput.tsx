@@ -45,7 +45,7 @@ export interface RadioInputProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
       HasDataAttribute;
@@ -54,7 +54,7 @@ export interface RadioInputProps
       HasDataAttribute;
   };
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLInputElement>;
 }
@@ -64,16 +64,16 @@ export function RadioInput({
   style,
   getRootRef,
   getRef,
-  slotsProps,
+  slotProps,
   ...restProps
 }: RadioInputProps) {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
-  const rootRest = useMergeProps({ className, style, getRootRef }, slotsProps?.root);
+  const rootRest = useMergeProps({ className, style, getRootRef }, slotProps?.root);
 
-  const inputProps = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+  const inputProps = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
 
   return (
     <RootComponent {...rootRest}>

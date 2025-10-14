@@ -21,7 +21,7 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
     return originalProps;
   }
 
-  const { className: rootSlotClassName, style: rootSlotStyle, ...rootSlotsProps } = slotProps || {};
+  const { className: rootSlotClassName, style: rootSlotStyle, ...rootSlotProps } = slotProps || {};
 
   const {
     className: originalClassName,
@@ -38,12 +38,12 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
 
   const mergedEventsByInjectProps: any = getMergedSameEventsByProps(
     originalRestProps,
-    rootSlotsProps,
+    rootSlotProps,
   );
 
   const resolvedProps: T = {
     ...originalRestProps,
-    ...rootSlotsProps,
+    ...rootSlotProps,
     ...mergedEventsByInjectProps,
   };
 

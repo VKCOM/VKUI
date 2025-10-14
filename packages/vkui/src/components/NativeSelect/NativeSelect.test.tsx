@@ -23,7 +23,7 @@ describe('NativeSelect', () => {
     </>
   ));
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLDivElement>();
     const rootRef2 = createRef<HTMLDivElement>();
     const selectRef1 = createRef<HTMLSelectElement>();
@@ -44,7 +44,7 @@ describe('NativeSelect', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',
@@ -101,7 +101,7 @@ describe('NativeSelect', () => {
           <NativeSelect
             value={value}
             onChange={(_, newValue) => setValue(newValue)}
-            slotsProps={{
+            slotProps={{
               select: {
                 'data-testid': 'target',
               },
@@ -126,7 +126,7 @@ describe('NativeSelect', () => {
     withFakeTimers(async () => {
       render(
         <NativeSelect
-          slotsProps={{
+          slotProps={{
             select: {
               'data-testid': 'target',
             },
@@ -147,7 +147,7 @@ describe('NativeSelect', () => {
   it('accept defaultValue', () => {
     render(
       <NativeSelect
-        slotsProps={{
+        slotProps={{
           select: {
             'data-testid': 'target',
           },
@@ -168,7 +168,7 @@ describe('NativeSelect', () => {
       render(
         <form data-testid="form">
           <NativeSelect
-            slotsProps={{
+            slotProps={{
               select: {
                 'data-testid': 'target',
               },
@@ -190,7 +190,7 @@ describe('NativeSelect', () => {
       render(
         <form data-testid="form">
           <NativeSelect
-            slotsProps={{
+            slotProps={{
               select: {
                 'data-testid': 'target',
               },

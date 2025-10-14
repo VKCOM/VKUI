@@ -16,7 +16,7 @@ export interface FileProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
       HasDataAttribute;
@@ -43,7 +43,7 @@ export const File = ({
   loading,
   getRef,
   appearance,
-  slotsProps,
+  slotProps,
   ...restProps
 }: FileProps): React.ReactNode => {
   const rootProps = useMergeProps(
@@ -52,9 +52,9 @@ export const File = ({
       style,
       getRootRef: getRootRef as React.Ref<HTMLLabelElement>,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
 
   return (
     <Button

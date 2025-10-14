@@ -33,7 +33,7 @@ export interface CheckboxInputProps
   extends React.ComponentProps<'input'>,
     HasRootRef<HTMLDivElement> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLInputElement>;
   /**
@@ -41,7 +41,7 @@ export interface CheckboxInputProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: Omit<React.HTMLAttributes<HTMLElement>, 'children'> &
       HasRootRef<HTMLElement> &
       HasDataAttribute;
@@ -93,7 +93,7 @@ export function CheckboxInput({
   IconOffRegular = Icon24CheckBoxOff,
   IconIndeterminate = Icon20CheckBoxIndetermanate,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: CheckboxInputProps) {
   const rootRest = useMergeProps(
@@ -102,14 +102,14 @@ export function CheckboxInput({
       style,
       getRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const {
     onChange,
     getRootRef: getInputRef,
     ...inputRest
-  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
 
   const inputRef = useExternRef<HTMLInputElement>(getInputRef);
 
@@ -144,7 +144,7 @@ export function CheckboxInput({
 
   if (process.env.NODE_ENV === 'development') {
     if (getRef) {
-      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
     }
 
     if (defaultIndeterminate && inputRest.defaultChecked) {

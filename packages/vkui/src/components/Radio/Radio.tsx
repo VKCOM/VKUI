@@ -25,14 +25,14 @@ export interface RadioProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
       HasDataAttribute;
     input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
   };
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLInputElement>;
   /**
@@ -44,7 +44,7 @@ export interface RadioProps
    */
   titleAfter?: React.ReactNode;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ root: {...} }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ root: {...} }`.
    *
    * Позволяет передавать data-* аттрибуты элементу label.
    **/
@@ -69,15 +69,15 @@ export const Radio = ({
   hasActive,
   focusVisibleMode,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: RadioProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development') {
     if (labelProps) {
-      warn('Свойство `labelProps` устаревшее, используйте `slotsProps={ root: {...} }`');
+      warn('Свойство `labelProps` устаревшее, используйте `slotProps={ root: {...} }`');
     }
     if (getRef) {
-      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
     }
   }
 
@@ -88,10 +88,10 @@ export const Radio = ({
       getRootRef,
       ...labelProps,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
 
   return (
     <SelectionControl
@@ -103,7 +103,7 @@ export const Radio = ({
       disabled={inputRest.disabled}
       {...rootProps}
     >
-      <RadioInput slotsProps={{ input: inputRest }} />
+      <RadioInput slotProps={{ input: inputRest }} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>

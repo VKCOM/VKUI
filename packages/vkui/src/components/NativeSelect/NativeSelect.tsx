@@ -61,14 +61,14 @@ export interface NativeSelectProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `select`: свойства для прокидывания в нативный `select`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
       HasDataAttribute &
       HasRootRef<HTMLDivElement>;
     select?: NativeHTMLSelectProps & HasRootRef<HTMLSelectElement> & HasDataAttribute;
   };
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ select: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ select: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLSelectElement>;
   /**
@@ -128,11 +128,11 @@ export const NativeSelect = ({
   value,
   defaultValue,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: NativeSelectProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ select: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ select: { getRootRef: ... } }`');
   }
 
   const [title, setTitle] = React.useState('');
@@ -141,12 +141,12 @@ export const NativeSelect = ({
 
   const { className, style, getRootRef, ...rootRest } = useMergeProps(
     { style: rootStyle, className: rootClassName, getRootRef: rootGetRootRef },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
     { getRootRef: getRef, ...restProps },
-    slotsProps?.select,
+    slotProps?.select,
   );
 
   const selectRef = useExternRef(getSelectRef);

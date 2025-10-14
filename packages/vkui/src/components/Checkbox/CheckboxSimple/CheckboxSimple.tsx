@@ -36,7 +36,7 @@ export function CheckboxSimple({
   IconOffRegular,
   IconIndeterminate,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: CheckboxProps) {
   const rootRest = useMergeProps(
@@ -45,10 +45,10 @@ export function CheckboxSimple({
       style,
       getRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
 
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -79,7 +79,7 @@ export function CheckboxSimple({
         IconOnRegular={IconOnRegular}
         IconOffCompact={IconOffCompact}
         IconOffRegular={IconOffRegular}
-        slotsProps={{ input: inputRest }}
+        slotProps={{ input: inputRest }}
       />
     </Tappable>
   );

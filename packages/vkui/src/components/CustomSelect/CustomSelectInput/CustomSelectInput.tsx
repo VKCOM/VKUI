@@ -28,7 +28,7 @@ export interface CustomSelectInputProps
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'mode' | 'type' | 'maxHeight'> {
-  slotsProps?: {
+  slotProps?: {
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRootRef<HTMLInputElement> &
       HasDataAttribute;
@@ -66,7 +66,7 @@ export const CustomSelectInput = ({
   searchable,
   accessible,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
@@ -77,7 +77,7 @@ export const CustomSelectInput = ({
       className: rootClassName,
       getRootRef: rootGetRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const {
@@ -91,7 +91,7 @@ export const CustomSelectInput = ({
       getRootRef: getRef,
       ...restProps,
     },
-    slotsProps?.input,
+    slotProps?.input,
   );
 
   const title = children || placeholder;

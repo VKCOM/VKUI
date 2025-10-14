@@ -16,7 +16,7 @@ describe(Switch, () => {
     </>
   ));
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLLabelElement>();
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
@@ -37,7 +37,7 @@ describe(Switch, () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',
@@ -88,7 +88,7 @@ describe(Switch, () => {
   it(
     '(Uncontrolled) shows checked state',
     withFakeTimers(async () => {
-      const { rerender } = render(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} />);
+      const { rerender } = render(<Switch slotProps={{ input: { 'data-testid': 'switch' } }} />);
 
       const component = screen.getByRole<HTMLInputElement>('switch');
       if (!component) {
@@ -103,7 +103,7 @@ describe(Switch, () => {
       expect(component.checked).toBeTruthy();
       expect(component.getAttribute('aria-checked')).toBe('true');
 
-      rerender(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} defaultChecked />);
+      rerender(<Switch slotProps={{ input: { 'data-testid': 'switch' } }} defaultChecked />);
 
       const defaultCheckedComponent = screen.getByTestId<HTMLInputElement>('switch');
       if (!defaultCheckedComponent) {
@@ -118,7 +118,7 @@ describe(Switch, () => {
       expect(defaultCheckedComponent.checked).toBeFalsy();
       expect(defaultCheckedComponent.getAttribute('aria-checked')).toBe('false');
 
-      rerender(<Switch slotsProps={{ input: { 'data-testid': 'switch' } }} disabled />);
+      rerender(<Switch slotProps={{ input: { 'data-testid': 'switch' } }} disabled />);
 
       const disabledSwitch = screen.getByTestId<HTMLInputElement>('switch');
       if (!disabledSwitch) {
@@ -140,7 +140,7 @@ describe(Switch, () => {
       return (
         <React.Fragment>
           <Switch
-            slotsProps={{ input: { 'data-testid': 'switch' } }}
+            slotProps={{ input: { 'data-testid': 'switch' } }}
             checked={checked}
             onChange={vi.fn()}
           />

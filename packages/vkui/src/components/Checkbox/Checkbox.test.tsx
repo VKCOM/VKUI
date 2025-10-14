@@ -10,7 +10,7 @@ import { Checkbox } from './Checkbox';
 describe('Checkbox', () => {
   baselineComponent((props) => <Checkbox {...props}>Checkbox</Checkbox>);
 
-  it('should work with slotsProps with SimpleCheckbox', () => {
+  it('should work with slotProps with SimpleCheckbox', () => {
     const rootRef1 = createRef<HTMLLabelElement>();
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
@@ -31,7 +31,7 @@ describe('Checkbox', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',
@@ -79,7 +79,7 @@ describe('Checkbox', () => {
     expect(onRootClick).toHaveBeenCalledTimes(3);
   });
 
-  it('should work with slotsProps with CheckboxComponent', () => {
+  it('should work with slotProps with CheckboxComponent', () => {
     const rootRef1 = createRef<HTMLLabelElement>();
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
@@ -100,7 +100,7 @@ describe('Checkbox', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',
@@ -181,8 +181,8 @@ describe('Checkbox', () => {
     withFakeTimers(async () => {
       render(
         <>
-          <Checkbox slotsProps={{ input: { 'data-testid': 'checkbox-1' } }} />
-          <Checkbox slotsProps={{ input: { 'data-testid': 'checkbox-2' } }} />
+          <Checkbox slotProps={{ input: { 'data-testid': 'checkbox-1' } }} />
+          <Checkbox slotProps={{ input: { 'data-testid': 'checkbox-2' } }} />
         </>,
       );
       expect(getDocumentBody()).toHaveFocus();

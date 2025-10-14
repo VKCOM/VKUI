@@ -6,7 +6,7 @@ import { File } from './File';
 describe('File', () => {
   baselineComponent(File);
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLLabelElement>();
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
@@ -25,7 +25,7 @@ describe('File', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',

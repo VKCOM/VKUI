@@ -30,7 +30,7 @@ export interface SwitchProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
       HasDataAttribute;
@@ -39,7 +39,7 @@ export interface SwitchProps
       HasDataAttribute;
   };
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLInputElement>;
 }
@@ -52,11 +52,11 @@ export const Switch = ({
   className: rootClassName,
   getRootRef: rootGetRootRef,
   getRef,
-  slotsProps,
+  slotProps,
   ...restProps
 }: SwitchProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
   const rootRest = useMergeProps(
@@ -65,7 +65,7 @@ export const Switch = ({
       className: rootClassName,
       getRootRef: rootGetRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
   const {
     checked: checkedProp,
@@ -73,7 +73,7 @@ export const Switch = ({
     onFocus: onFocusProp,
     onClick,
     ...inputRest
-  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
 
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';

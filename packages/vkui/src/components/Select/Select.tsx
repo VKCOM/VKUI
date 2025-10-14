@@ -54,7 +54,7 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
     fetchingCompletedLabel,
     fetchingInProgressLabel,
 
-    slotsProps,
+    slotProps,
     ...restProps
   } = props;
 
@@ -67,16 +67,16 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
       {deviceType.desktop && (
         <CustomSelect
           className={classNames(className, deviceType.desktop.className)}
-          slotsProps={slotsProps}
+          slotProps={slotProps}
           {...props}
         />
       )}
       {deviceType.mobile && (
         <NativeSelect
           className={classNames(className, deviceType.mobile.className)}
-          slotsProps={{
-            select: slotsProps?.select,
-            root: slotsProps?.root,
+          slotProps={{
+            select: slotProps?.select,
+            root: slotProps?.root,
           }}
           {...nativeProps}
         >

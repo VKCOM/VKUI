@@ -118,7 +118,7 @@ export type { CustomSelectClearButtonProps };
 
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
-> extends Omit<NativeSelectProps, 'slotsProps'>,
+> extends Omit<NativeSelectProps, 'slotProps'>,
     Omit<FormFieldProps, 'maxHeight'>,
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
     Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
@@ -128,13 +128,13 @@ export interface SelectProps<
    * - `select`: свойства для прокидывания в нативный `select`;
    * - `input`: свойства для прокидывания в нативный `input`.
    */
-  slotsProps?: NativeSelectProps['slotsProps'] & {
+  slotProps?: NativeSelectProps['slotProps'] & {
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasDataAttribute &
       HasRootRef<HTMLInputElement>;
   };
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    *
    * Ref на внутрений компонент input.
    */
@@ -149,7 +149,7 @@ export interface SelectProps<
    */
   emptyText?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { onChange: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { onChange: ... } }`.
    *
    * Событие изменения текстового поля.
    */
@@ -239,7 +239,7 @@ export interface SelectProps<
    */
   labelTextTestId?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ select: { 'data-testid': ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ select: { 'data-testid': ... } }`.
    *
    * Передает атрибут `data-testid` для нативного элемента `select`.
    */
@@ -315,7 +315,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     fetchingCompletedLabel,
     'value': selectValue,
 
-    slotsProps,
+    slotProps,
     ...restProps
   } = props;
 
@@ -338,7 +338,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       className,
       getRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
@@ -348,7 +348,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       onFocus: props.onFocus,
       onClick: props.onClick,
     },
-    slotsProps?.select,
+    slotProps?.select,
   );
 
   const {
@@ -368,7 +368,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       // Хотя эти свойства прокидываются в input
       ...(restProps as React.InputHTMLAttributes<HTMLInputElement>),
     },
-    slotsProps?.input,
+    slotProps?.input,
   );
 
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -730,7 +730,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         placeholder={placeholder}
         multiline={multiline}
         labelTextTestId={labelTextTestId}
-        slotsProps={{
+        slotProps={{
           root: { className: openedClassNames },
           input: {
             getRootRef: selectInputRef,

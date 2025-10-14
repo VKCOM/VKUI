@@ -34,7 +34,7 @@ export const Playground: Story = {
           {...args}
           value={value}
           onChange={(_, newValue) => setValue(newValue)}
-          slotsProps={{
+          slotProps={{
             input: {
               'id': 'custom-select',
               'aria-label': 'Выберите город',

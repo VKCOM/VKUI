@@ -25,7 +25,7 @@ export interface CheckboxProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
       HasRootRef<HTMLLabelElement> &
       HasDataAttribute;
@@ -68,7 +68,7 @@ const CheckboxComponent = ({
   IconOffRegular,
   IconIndeterminate,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: CheckboxProps): React.ReactNode => {
   const rootRest = useMergeProps(
@@ -77,10 +77,10 @@ const CheckboxComponent = ({
       style,
       getRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotsProps?.input);
+  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
 
   return (
     <SelectionControl
@@ -101,7 +101,7 @@ const CheckboxComponent = ({
         IconOnRegular={IconOnRegular}
         IconOffCompact={IconOffCompact}
         IconOffRegular={IconOffRegular}
-        slotsProps={{ input: inputRest }}
+        slotProps={{ input: inputRest }}
       />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
@@ -115,7 +115,7 @@ const CheckboxComponent = ({
  */
 export const Checkbox = (props: CheckboxProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && props.getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
   const simple = !(hasReactNode(props.children) || hasReactNode(props.description));

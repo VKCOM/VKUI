@@ -16,7 +16,7 @@ describe('Radio', () => {
     </>
   ));
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLLabelElement>();
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
@@ -37,7 +37,7 @@ describe('Radio', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',
@@ -91,7 +91,7 @@ describe('Radio', () => {
         <Radio
           name="pay"
           value="cash"
-          slotsProps={{
+          slotProps={{
             root: { 'data-testid': 'label-cash-id' },
             input: { 'data-testid': 'input-cash-id' },
           }}
@@ -102,7 +102,7 @@ describe('Radio', () => {
         <Radio
           name="pay"
           value="card"
-          slotsProps={{
+          slotProps={{
             root: { 'data-testid': 'label-card-id' },
             input: { 'data-testid': 'input-card-id' },
           }}

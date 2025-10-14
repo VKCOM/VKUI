@@ -95,7 +95,7 @@ describe('CustomSelect', () => {
   ));
 
   it(
-    'should work with slotsProps',
+    'should work with slotProps',
     withFakeTimers(async () => {
       const rootRef1 = createRef<HTMLDivElement>();
       const rootRef2 = createRef<HTMLDivElement>();
@@ -125,7 +125,7 @@ describe('CustomSelect', () => {
           style={{
             backgroundColor: 'rgb(255, 0, 0)',
           }}
-          slotsProps={{
+          slotProps={{
             root: {
               'data-testid': 'root',
               'className': 'rootClassName-2',
@@ -255,7 +255,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
         ]}
         defaultValue={0}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -272,7 +272,7 @@ describe('CustomSelect', () => {
         ]}
         defaultValue={0}
         accessible
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -452,7 +452,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
         ]}
         accessible={accessible}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -495,7 +495,7 @@ describe('CustomSelect', () => {
           option.label.toLowerCase().includes(value.toLowerCase()) ||
           option.country.toLowerCase().includes(value.toLowerCase())
         }
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -526,7 +526,7 @@ describe('CustomSelect', () => {
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -549,7 +549,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
           { value: 2, label: 'Mika' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -569,7 +569,7 @@ describe('CustomSelect', () => {
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -596,7 +596,7 @@ describe('CustomSelect', () => {
           { value: 2, label: 'Mika' },
           { value: 1, label: 'Josh' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -616,7 +616,7 @@ describe('CustomSelect', () => {
           { value: 2, label: 'Mika' },
           { value: 1, label: 'Josh' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -640,7 +640,7 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -674,7 +674,7 @@ describe('CustomSelect', () => {
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -722,7 +722,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
           { value: 3, label: 'Bob' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -780,7 +780,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
           { value: 3, label: 'Bob' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -870,7 +870,7 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         defaultValue={0}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -924,7 +924,7 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         value={null}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'inputTextId',
           },
@@ -1217,7 +1217,7 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         value={null}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -1403,7 +1403,7 @@ describe('CustomSelect', () => {
     expect(screen.queryByPlaceholderText('Не выбрано')).toBeFalsy();
   });
 
-  it('native select is reachable via slotsProps.select.data-testid', () => {
+  it('native select is reachable via slotProps.select.data-testid', () => {
     render(
       <CustomSelect
         options={[
@@ -1413,7 +1413,7 @@ describe('CustomSelect', () => {
         placeholder="Не выбрано"
         allowClearButton
         defaultValue={1}
-        slotsProps={{
+        slotProps={{
           select: {
             'data-testid': 'nativeSelectTestId',
           },
@@ -1436,7 +1436,7 @@ describe('CustomSelect', () => {
         allowClearButton
         defaultValue={1}
         required
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,
           },
@@ -1465,7 +1465,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
         ]}
         placeholder="Не выбрано"
-        slotsProps={{
+        slotProps={{
           input: {
             getRootRef: inputRef,
           },
@@ -1492,7 +1492,7 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          slotsProps={{
+          slotProps={{
             input: {
               getRootRef: inputRef,
             },
@@ -1542,7 +1542,7 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          slotsProps={{
+          slotProps={{
             input: {
               getRootRef: inputRef,
             },
@@ -1577,7 +1577,7 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          slotsProps={{
+          slotProps={{
             input: {
               'data-testid': 'select',
             },
@@ -1611,7 +1611,7 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          slotsProps={{
+          slotProps={{
             input: {
               getRootRef: inputRef,
               onChange: onInputChange,
@@ -1645,7 +1645,7 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="4"
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
             'getRootRef': inputRef,
@@ -1682,7 +1682,7 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="1"
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
             'getRootRef': inputRef,
@@ -1710,7 +1710,7 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
           },
@@ -1747,7 +1747,7 @@ describe('CustomSelect', () => {
           { value: '3', label: 'Категория 3' },
         ]}
         defaultValue="1"
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
             'getRootRef': inputRef,
@@ -1783,7 +1783,7 @@ describe('CustomSelect', () => {
             { value: '2', label: 'Категория 2' },
             { value: '3', label: 'Категория 3' },
           ]}
-          slotsProps={{
+          slotProps={{
             input: {
               'data-testid': 'select',
             },
@@ -1822,7 +1822,7 @@ describe('CustomSelect', () => {
             { value: '2', label: 'Категория 2' },
             { value: '3', label: 'Категория 3' },
           ]}
-          slotsProps={{
+          slotProps={{
             input: {
               'data-testid': 'select',
             },
@@ -1850,7 +1850,7 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
             'getRootRef': inputRef,
@@ -1897,7 +1897,7 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
           },
@@ -1920,7 +1920,7 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
           },
@@ -1942,7 +1942,7 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
-        slotsProps={{
+        slotProps={{
           input: {
             'data-testid': 'select',
           },

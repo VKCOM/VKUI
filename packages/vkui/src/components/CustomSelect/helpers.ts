@@ -38,21 +38,21 @@ export const checkDeprecatedProps = ({
   onInputChange,
 }: Pick<SelectProps, 'getRef' | 'getSelectInputRef' | 'nativeSelectTestId' | 'onInputChange'>) => {
   if (getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ select: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ select: { getRootRef: ... } }`');
   }
   if (getSelectInputRef) {
     warn(
-      'Свойство `getSelectInputRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`',
+      'Свойство `getSelectInputRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`',
     );
   }
   if (nativeSelectTestId) {
     warn(
-      "Свойство `nativeSelectTestId` устаревшее, используйте `slotsProps={ select: { 'data-testid': ... } }`",
+      "Свойство `nativeSelectTestId` устаревшее, используйте `slotProps={ select: { 'data-testid': ... } }`",
     );
   }
   if (onInputChange) {
     warn(
-      'Свойство `onInputChange` устаревшее, используйте `slotsProps={ input: { onChange: ... } }`',
+      'Свойство `onInputChange` устаревшее, используйте `slotProps={ input: { onChange: ... } }`',
     );
   }
 };
