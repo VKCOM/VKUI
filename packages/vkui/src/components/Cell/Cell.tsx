@@ -27,6 +27,7 @@ export interface CellProps
   slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     content?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+    dragger?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
   };
   /**
    * Режим отображения ячейки:
@@ -59,10 +60,14 @@ export interface CellProps
    */
   onDragFinish?: (swappedItemRange: SwappedItemRange) => void;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ dragger: { children: ... } }`.
+   *
    * Текст для кнопки перетаскивания ячейки.
    */
   draggerLabel?: string;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ dragger: { data-testid: ... } }`.
+   *
    * Передает атрибут `data-testid` для кнопки перетаскивания ячейки.
    */
   draggerTestId?: string;
@@ -91,7 +96,7 @@ export const Cell: React.FC<CellProps> & {
   value,
   checked,
   defaultChecked,
-  draggerLabel = DEFAULT_DRAGGABLE_LABEL,
+  draggerLabel: draggerLabelProp = DEFAULT_DRAGGABLE_LABEL,
   toggleButtonTestId,
   removeButtonTestId,
   draggerTestId,
@@ -115,12 +120,21 @@ export const Cell: React.FC<CellProps> & {
     slotProps?.root,
   );
 
-  const contentProps = useMergeProps(
+  const contentRest = useMergeProps(
     {
       className: styles.content,
       ...restProps,
     },
     slotProps?.content,
+  );
+
+  const { children: draggerLabel, ...draggerRest } = useMergeProps(
+    {
+      'data-testid': draggerTestId,
+      'children': draggerLabelProp,
+      'className': classNames(styles.dragger, !before && !selectable && styles.controlNoBefore),
+    },
+    slotProps?.dragger,
   );
 
   const platform = usePlatform();
@@ -130,10 +144,9 @@ export const Cell: React.FC<CellProps> & {
   const dragger = draggable ? (
     <CellDragger
       elRef={rootElRef}
-      className={classNames(styles.dragger, !before && !selectable && styles.controlNoBefore)}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
-      data-testid={draggerTestId}
+      {...draggerRest}
     >
       {draggerLabel}
     </CellDragger>
@@ -171,7 +184,7 @@ export const Cell: React.FC<CellProps> & {
     hasHover: hasActive && !removable,
     disabled,
     href,
-    ...contentProps,
+    ...contentRest,
     // чтобы свойство, если не определено, не присутствовало в
     // restProps явно как {'Component': undefined} и ниже не переопределяло
     // возможное значение commonProps.Component = 'a' при слиянии двух объектов, как

@@ -16,9 +16,11 @@ describe('Cell', () => {
     const rootRef1 = createRef<HTMLDivElement>();
     const rootRef2 = createRef<HTMLDivElement>();
     const contentRef2 = createRef<HTMLDivElement>();
+    const draggerRef = createRef<HTMLElement>();
     const onClick1 = vi.fn();
     const onClick2 = vi.fn();
     const onRootClick = vi.fn();
+    const onDraggerClick = vi.fn();
 
     render(
       <Cell
@@ -26,6 +28,7 @@ describe('Cell', () => {
         className="rootClassName"
         getRootRef={rootRef1}
         onClick={onClick1}
+        draggable
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -45,6 +48,16 @@ describe('Cell', () => {
             'data-testid': 'content-2',
             'onClick': onClick2,
           },
+          dragger: {
+            'className': 'draggerClassName',
+            'getRootRef': draggerRef,
+            'data-testid': 'dragger',
+            'children': 'draggerLabel',
+            'onClick': onDraggerClick,
+            'style': {
+              backgroundColor: 'rgb(255, 0, 0)',
+            },
+          },
         }}
       />,
     );
@@ -61,17 +74,28 @@ describe('Cell', () => {
     expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
     expect(root).toHaveStyle('color: rgb(255, 0, 0)');
 
+    const dragger = screen.getByTestId('dragger');
+    expect(dragger).toBeInTheDocument();
+    expect(dragger).toHaveClass('draggerClassName');
+    expect(dragger).toHaveStyle('background-color: rgb(255, 0, 0)');
+    expect(dragger).toHaveTextContent('draggerLabel');
+
     expect(rootRef1.current).toBe(rootRef2.current);
     expect(rootRef1.current).toBe(root);
 
     expect(contentRef2.current).toBe(content);
 
+    expect(draggerRef.current).toBe(dragger);
+
     fireEvent.click(content);
     expect(onClick1).toHaveBeenCalledTimes(1);
     expect(onClick2).toHaveBeenCalledTimes(1);
 
+    fireEvent.click(dragger);
+    expect(onDraggerClick).toHaveBeenCalledTimes(1);
+
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(2);
+    expect(onRootClick).toHaveBeenCalledTimes(3);
   });
 
   describe('Controls dragging', () => {
