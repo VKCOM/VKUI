@@ -6,6 +6,7 @@ import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -14,6 +15,8 @@ import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbo
 import { CellDragger } from './CellDragger/CellDragger';
 import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
+
+const warn = warnOnce('Cell');
 
 export interface CellProps
   extends Omit<SimpleCellProps, 'getRootRef'>,
@@ -66,7 +69,7 @@ export interface CellProps
    */
   draggerLabel?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ dragger: { data-testid: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ dragger: { 'data-testid': ... } }`.
    *
    * Передает атрибут `data-testid` для кнопки перетаскивания ячейки.
    */
@@ -105,6 +108,19 @@ export const Cell: React.FC<CellProps> & {
   slotProps,
   ...restProps
 }: CellProps) => {
+  if (process.env.NODE_ENV === 'development') {
+    if (draggerTestId) {
+      warn(
+        'Свойство `draggerTestId` устаревшее, используйте `slotProps={ dragger: { "data-testid": ... } }`',
+      );
+    }
+    if (draggerLabelProp) {
+      warn(
+        'Свойство `draggerLabel` устаревшее, используйте `slotProps={ dragger: { children: ... } }`',
+      );
+    }
+  }
+
   const [dragging, setDragging] = React.useState(false);
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
@@ -128,7 +144,7 @@ export const Cell: React.FC<CellProps> & {
     slotProps?.content,
   );
 
-  const { children: draggerLabel, ...draggerRest } = useMergeProps(
+  const { children: draggerLabel = DEFAULT_DRAGGABLE_LABEL, ...draggerRest } = useMergeProps(
     {
       'data-testid': draggerTestId,
       'children': draggerLabelProp,
