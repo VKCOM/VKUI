@@ -4,15 +4,15 @@ import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { CardGrid } from '../CardGrid/CardGrid';
 import { ContentCard, type ContentCardProps } from './ContentCard';
 
-const ContentCardTest = ({ slotsProps, ...props }: ContentCardProps) => (
+const ContentCardTest = ({ slotProps, ...props }: ContentCardProps) => (
   <ContentCard
     overTitle="VKUI"
     title="ContentCard example"
     caption="VKUI Styleguide > Blocks > ContentCard"
-    slotsProps={{
-      ...slotsProps,
+    slotProps={{
+      ...slotProps,
       content: {
-        ...slotsProps?.content,
+        ...slotProps?.content,
         'data-testid': 'card',
       },
     }}
@@ -29,7 +29,7 @@ describe('ContentCard', () => {
     </CardGrid>
   ));
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLDivElement>();
     const rootRef2 = createRef<HTMLDivElement>();
     const contentRef = createRef<HTMLDivElement>();
@@ -52,7 +52,7 @@ describe('ContentCard', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',
@@ -131,9 +131,7 @@ describe('ContentCard', () => {
 
   it('[img] passes ref to img', () => {
     const refCallback = vi.fn();
-    render(
-      <ContentCardTest src="/image.png" slotsProps={{ image: { getRootRef: refCallback } }} />,
-    );
+    render(<ContentCardTest src="/image.png" slotProps={{ image: { getRootRef: refCallback } }} />);
 
     expect(refCallback).toHaveBeenCalled();
   });
@@ -150,7 +148,7 @@ describe('ContentCard', () => {
     render(
       <ContentCardTest
         src="/image.png"
-        slotsProps={{ image: { style: { objectFit: 'contain' } } }}
+        slotProps={{ image: { style: { objectFit: 'contain' } } }}
       />,
     );
 

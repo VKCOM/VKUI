@@ -13,7 +13,7 @@ const warn = warnOnce('SplitLayout');
 
 export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ content: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLDivElement>;
   /**
@@ -21,7 +21,7 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
    * - `root`: свойства для прокидывания в корень компонента;
    * - `content`: свойства для прокидывания в контент;.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     content?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
   };
@@ -64,21 +64,21 @@ export const SplitLayout = ({
   modal,
   popout,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: SplitLayoutProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ content: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ content: { getRootRef: ... } }`');
   }
 
-  const rootRest = useMergeProps({ getRootRef }, slotsProps?.root);
+  const rootRest = useMergeProps({ getRootRef }, slotProps?.root);
   const contentRest = useMergeProps(
     {
       getRootRef: getRef,
       className,
       ...restProps,
     },
-    slotsProps?.content,
+    slotProps?.content,
   );
 
   const platform = usePlatform();

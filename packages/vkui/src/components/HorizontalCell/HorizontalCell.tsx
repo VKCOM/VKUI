@@ -36,7 +36,7 @@ export interface HorizontalCellProps
   extends Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
     HasRootRef<HTMLDivElement> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ content: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLDivElement>;
   /**
@@ -44,7 +44,7 @@ export interface HorizontalCellProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `content`: свойства для прокидывания в контент обернутый `Tappable`.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     content?: Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'> &
       HasRootRef<HTMLDivElement> &
@@ -104,11 +104,11 @@ export const HorizontalCell = ({
   noPadding = false,
   TitleComponent = size === 's' ? Caption : Subhead,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotsProps={ content: { getRootRef: ... } }`');
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ content: { getRootRef: ... } }`');
   }
 
   const rootRest = useMergeProps(
@@ -117,7 +117,7 @@ export const HorizontalCell = ({
       style,
       getRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const contentRest = useMergeProps(
@@ -125,7 +125,7 @@ export const HorizontalCell = ({
       getRootRef: getRef,
       ...restProps,
     },
-    slotsProps?.content,
+    slotProps?.content,
   );
 
   const hasTypography =

@@ -12,7 +12,7 @@ const label = 'Перенести ячейку';
 describe('Cell', () => {
   baselineComponent((props) => <Cell {...props}>Cell</Cell>);
 
-  it('should work with slotsProps', () => {
+  it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLDivElement>();
     const rootRef2 = createRef<HTMLDivElement>();
     const contentRef2 = createRef<HTMLDivElement>();
@@ -29,7 +29,7 @@ describe('Cell', () => {
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
-        slotsProps={{
+        slotProps={{
           root: {
             'data-testid': 'root',
             'className': 'rootClassName-2',

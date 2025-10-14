@@ -72,19 +72,19 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
    */
   onChange?: OnChange<O>;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { value: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { value: ... } }`.
    *
    * Значение поля ввода.
    */
   inputValue?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { defaultValue: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { defaultValue: ... } }`.
    *
    * Значение поля ввода по умолчанию.
    */
   defaultInputValue?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { onChange: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { onChange: ... } }`.
    *
    * Обработчик изменения значения в поле ввода.
    */
@@ -128,7 +128,7 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
     HasRootRef<HTMLDivElement>,
     HasAlign {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ input: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLInputElement>;
   /**
@@ -136,7 +136,7 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRootRef<HTMLInputElement> &

@@ -23,7 +23,7 @@ export interface ContentCardProps
     Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ image: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ image: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLImageElement>;
   /**
@@ -32,7 +32,7 @@ export interface ContentCardProps
    * - `content`: свойства для прокидывания в контент обернутый `Tappable`;
    * - `image`: войства для прокидывания в компонент картинки.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     content?: Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'> &
       HasRootRef<HTMLDivElement> &
@@ -62,7 +62,7 @@ export interface ContentCardProps
    */
   caption?: React.ReactNode;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ image: { style: { maxHeight: ... } } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ image: { style: { maxHeight: ... } } }`.
    *
    * Максимальная высота изображения.
    */
@@ -72,7 +72,7 @@ export interface ContentCardProps
    */
   mode?: CardProps['mode'];
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotsProps={ image: { style: { objectFit: ... } } }`.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ image: { style: { objectFit: ... } } }`.
    *
    * Пользовательское значения стиля `object-fit` для картинки
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
@@ -116,21 +116,21 @@ export const ContentCard = ({
   hasHover = false,
   hasActive = false,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: ContentCardProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development') {
     if (getRef) {
-      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ image: { getRootRef: ... } }`');
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ image: { getRootRef: ... } }`');
     }
     if (maxHeight) {
       warn(
-        'Свойство `maxHeight` устаревшее, используйте `slotsProps={ image: { style: { maxHeight: ... } } }`',
+        'Свойство `maxHeight` устаревшее, используйте `slotProps={ image: { style: { maxHeight: ... } } }`',
       );
     }
     if (imageObjectFit) {
       warn(
-        'Свойство `imageObjectFit` устаревшее, используйте `slotsProps={ image: { style: { objectFit: ... } } }`',
+        'Свойство `imageObjectFit` устаревшее, используйте `slotProps={ image: { style: { objectFit: ... } } }`',
       );
     }
   }
@@ -141,10 +141,10 @@ export const ContentCard = ({
       style,
       getRootRef,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
-  const contentRest = useMergeProps({ hasHover, hasActive, ...restProps }, slotsProps?.content);
+  const contentRest = useMergeProps({ hasHover, hasActive, ...restProps }, slotProps?.content);
 
   const { fetchPriority, ...imageRest } = useMergeProps(
     {
@@ -162,7 +162,7 @@ export const ContentCard = ({
       fetchPriority: fetchPriorityProp,
       getRootRef: getRef,
     },
-    slotsProps?.image,
+    slotProps?.image,
   );
 
   return (

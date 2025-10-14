@@ -50,7 +50,7 @@ describe('ChipsSelect', () => {
   ));
 
   it(
-    'should work with slotsProps',
+    'should work with slotProps',
     withFakeTimers(async () => {
       const rootRef1 = createRef<HTMLDivElement>();
       const rootRef2 = createRef<HTMLDivElement>();
@@ -75,7 +75,7 @@ describe('ChipsSelect', () => {
           style={{
             backgroundColor: 'rgb(255, 0, 0)',
           }}
-          slotsProps={{
+          slotProps={{
             root: {
               'data-testid': 'root',
               'className': 'rootClassName-2',

@@ -40,7 +40,7 @@ export const ChipsInput = <Option extends ChipOption>({
   allowClearButton,
   delimiter,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: ChipsInputProps<Option>): React.ReactNode => {
   const {
@@ -58,7 +58,7 @@ export const ChipsInput = <Option extends ChipOption>({
       onChange: onInputChangeProp,
       disabled: disabledProp,
     },
-    slotsProps?.input,
+    slotProps?.input,
   );
 
   const {
@@ -98,8 +98,8 @@ export const ChipsInput = <Option extends ChipOption>({
       onAddChipOption={addOptionFromInput}
       onRemoveChipOption={removeOption}
       onClear={clearOptions}
-      slotsProps={{
-        ...slotsProps,
+      slotProps={{
+        ...slotProps,
         input: {
           getRootRef: inputRef,
           value: inputValue,

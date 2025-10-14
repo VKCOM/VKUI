@@ -22,13 +22,13 @@ const ChipsInputBaseTest = ({
   return (
     <ChipsInputBase
       {...restProps}
-      slotsProps={{
-        ...restProps.slotsProps,
+      slotProps={{
+        ...restProps.slotProps,
         input: {
           'data-testid': 'chips-input',
           'value': inputValue,
           'onChange': handleInputChange,
-          ...restProps.slotsProps?.input,
+          ...restProps.slotProps?.input,
         },
       }}
     />
@@ -78,7 +78,7 @@ describe(ChipsInputBase, () => {
   });
 
   it(
-    'should work with slotsProps',
+    'should work with slotProps',
     withFakeTimers(async () => {
       const rootRef1 = createRef<HTMLDivElement>();
       const rootRef2 = createRef<HTMLDivElement>();
@@ -106,7 +106,7 @@ describe(ChipsInputBase, () => {
           style={{
             backgroundColor: 'rgb(255, 0, 0)',
           }}
-          slotsProps={{
+          slotProps={{
             root: {
               'data-testid': 'root',
               'className': 'rootClassName-2',

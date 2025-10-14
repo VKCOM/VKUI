@@ -68,21 +68,21 @@ export const ChipsInputBase = <O extends ChipOption>({
   chipsListLabel = 'Выбранные элементы',
   'aria-label': ariaLabel = '',
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   if (process.env.NODE_ENV === 'development') {
     if (getRef) {
-      warn('Свойство `getRef` устаревшее, используйте `slotsProps={ input: { getRootRef: ... } }`');
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
     }
     if (typeof inputValueProp !== 'undefined') {
-      warn('Свойство `inputValue` устаревшее, используйте `slotsProps={ input: { value: ... } }`');
+      warn('Свойство `inputValue` устаревшее, используйте `slotProps={ input: { value: ... } }`');
     }
     if (onInputChange) {
       warn(
-        'Свойство `onInputChange` устаревшее, используйте `slotsProps={ input: { onChange: ... } }`',
+        'Свойство `onInputChange` устаревшее, используйте `slotProps={ input: { onChange: ... } }`',
       );
     }
   }
@@ -100,7 +100,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       style: rootStyle,
       className: rootClassName,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const {
@@ -120,7 +120,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       onChange: onInputChange,
       ...restProps,
     },
-    slotsProps?.input,
+    slotProps?.input,
   );
 
   const idGenerated = React.useId();

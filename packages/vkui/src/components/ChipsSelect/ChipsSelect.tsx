@@ -202,7 +202,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   onBlur: onBlurProp,
   onKeyDown: onKeyDownProp,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
   const {
@@ -230,7 +230,7 @@ export const ChipsSelect = <Option extends ChipOption>({
       onBlur: onBlurProp,
       onKeyDown: onKeyDownProp,
     },
-    slotsProps?.input,
+    slotProps?.input,
   );
 
   const {
@@ -613,8 +613,8 @@ export const ChipsSelect = <Option extends ChipOption>({
         onClear={clearOptions}
         // a11y
         chipsListLabel={chipsListLabel}
-        slotsProps={{
-          ...slotsProps,
+        slotProps={{
+          ...slotProps,
           input: {
             'role': 'combobox',
             'aria-expanded': opened,

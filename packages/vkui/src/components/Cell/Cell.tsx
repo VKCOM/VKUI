@@ -24,7 +24,7 @@ export interface CellProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `content`: свойства для прокидывания в контент;.
    */
-  slotsProps?: {
+  slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     content?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
   };
@@ -97,7 +97,7 @@ export const Cell: React.FC<CellProps> & {
   draggerTestId,
   href: hrefProp,
 
-  slotsProps,
+  slotProps,
   ...restProps
 }: CellProps) => {
   const [dragging, setDragging] = React.useState(false);
@@ -112,7 +112,7 @@ export const Cell: React.FC<CellProps> & {
       className: rootClassName,
       style: rootStyle,
     },
-    slotsProps?.root,
+    slotProps?.root,
   );
 
   const contentProps = useMergeProps(
@@ -120,7 +120,7 @@ export const Cell: React.FC<CellProps> & {
       className: styles.content,
       ...restProps,
     },
-    slotsProps?.content,
+    slotProps?.content,
   );
 
   const platform = usePlatform();
