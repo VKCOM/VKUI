@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`switch > transforms correctly 1`] = `
+"import { Switch } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <Switch
+        checked
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-value": "true",
+            "data-testid": "switch",
+            "aria-checked": "checked",
+            "aria-label": "switch"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

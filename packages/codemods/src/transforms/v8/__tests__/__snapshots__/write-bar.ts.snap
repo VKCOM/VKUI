@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`write-bar > transforms correctly 1`] = `
+"import { WriteBar } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const textAreaRef = React.createRef<HTMLTextAreaElement>();
+
+  return (
+    <React.Fragment>
+      <WriteBar
+        value="value"
+        onChange={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: textAreaRef,
+            "data-testid": "text-area",
+            "aria-label": "text-area"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`checkbox > transforms correctly 1`] = `
+"import { Checkbox } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <Checkbox
+        checked
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "checkbox",
+            "aria-label": "checkbox"
+          }
+        }} />
+      <Checkbox
+        checked
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "checkbox",
+            "aria-label": "checkbox"
+          }
+        }}>
+        Checkbox
+      </Checkbox>
+      <Checkbox.Input
+        checked
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "checkbox",
+            "aria-label": "checkbox"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

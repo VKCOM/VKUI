@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`native-select > transforms correctly 1`] = `
+"import { NativeSelect } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const selectRef = React.createRef<HTMLSelectElement>();
+
+  const onInputChange = () => {};
+
+  return (
+    <React.Fragment>
+      <NativeSelect
+        value="value"
+        onChange={() => {}}
+        slotProps={{
+          select: {
+            getRootRef: selectRef,
+            "data-testid": "select",
+            "aria-label": "select"
+          }
+        }}>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </NativeSelect>
+    </React.Fragment>
+  );
+};"
+`;

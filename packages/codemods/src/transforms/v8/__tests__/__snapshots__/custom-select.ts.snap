@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`custom-select > transforms correctly 1`] = `
+"import { CustomSelect } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+  const selectRef = React.createRef<HTMLSelectElement>();
+
+  const onInputChange = () => {};
+
+  return (
+    <React.Fragment>
+      <CustomSelect
+        value={"value"}
+        options={[]}
+        onChange={() => {}}
+        slotProps={{
+          select: {
+            getRootRef: selectRef,
+            "data-testid": "select"
+          },
+
+          input: {
+            getRootRef: inputRef,
+            onChange: () => {},
+            "data-testid": "input",
+            "aria-label": "input"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;
