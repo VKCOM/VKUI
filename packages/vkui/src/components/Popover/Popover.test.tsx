@@ -71,7 +71,7 @@ describe(Popover, () => {
     result.rerender(<Fixture placement="auto" onPlacementChange={onPlacementChange} />);
     await waitForFloatingPosition();
 
-    expect(onPlacementChange).toHaveBeenCalledWith('top');
+    expect(onPlacementChange).toHaveBeenCalledExactlyOnceWith('top');
   });
 
   it('passes popover ref to ref prop of children that uses React.forwardRef', async () => {
@@ -181,7 +181,7 @@ describe(Popover, () => {
     result.rerender(<Fixture />);
     await waitForFloatingPosition();
     expect(result.queryByTestId('popover')).not.toBeInTheDocument();
-    expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
+    expect(onShownChange).toHaveBeenCalledExactlyOnceWith(false, 'callback');
   });
 
   it('check keepMounted=true, popover not unmount when close', async () => {

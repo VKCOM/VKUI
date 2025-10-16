@@ -424,17 +424,17 @@ describe('Gallery', () => {
 
       await userEvent.tab();
       expect(document.activeElement).toBe(screen.getByTestId('slide-2'));
-      expect(onChange).toHaveBeenCalledWith(1);
+      expect(onChange).toHaveBeenLastCalledWith(1);
       rerender({ slideIndex: 1 });
 
       await userEvent.tab();
       expect(document.activeElement).toBe(screen.getByTestId('slide-3'));
-      expect(onChange).toHaveBeenCalledWith(2);
+      expect(onChange).toHaveBeenLastCalledWith(2);
       rerender({ slideIndex: 2 });
 
       await userEvent.tab({ shift: true });
       expect(document.activeElement).toBe(screen.getByTestId('slide-2'));
-      expect(onChange).toHaveBeenCalledWith(1);
+      expect(onChange).toHaveBeenLastCalledWith(1);
     });
 
     it('should not change slide when slide too small', () => {
@@ -532,7 +532,7 @@ describe('Gallery', () => {
 
         expect(onDragStart).toHaveBeenCalledTimes(1);
         expect(onDragEnd).toHaveBeenCalledTimes(1);
-        expect(onChange).toHaveBeenCalledWith(1);
+        expect(onChange).toHaveBeenCalledExactlyOnceWith(1);
         rerender({ slideIndex: 1 });
         vi.runAllTimers();
 
@@ -577,7 +577,7 @@ describe('Gallery', () => {
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith(1);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(1);
     });
 
     it('check not change slide with too small gesture slide', () => {
@@ -602,7 +602,7 @@ describe('Gallery', () => {
 
       expect(onDragStart).toHaveBeenCalledTimes(1);
       expect(onDragEnd).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveBeenCalledWith(1);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(1);
     });
 
     it('check max and min restrictions', () => {
@@ -715,7 +715,7 @@ describe('Gallery', () => {
 
         expect(onDragStart).toHaveBeenCalledTimes(1);
         expect(onDragEnd).toHaveBeenCalledTimes(1);
-        expect(onChange).toHaveBeenCalledWith(4);
+        expect(onChange).toHaveBeenCalledExactlyOnceWith(4);
         rerender({ slideIndex: 4 });
         vi.runAllTimers();
 
@@ -755,7 +755,7 @@ describe('Gallery', () => {
           onChange,
         });
 
-        expect(warn).toHaveBeenCalledWith(
+        expect(warn).toHaveBeenCalledExactlyOnceWith(
           '%c[VKUI/Gallery] Ширины слайдов недостаточно для корректной работы свойства "looped". Пожалуйста, сделайте её больше.',
           undefined,
         );
@@ -1013,7 +1013,7 @@ describe('Gallery', () => {
 
         expect(onDragStart).toHaveBeenCalledTimes(1);
         expect(onDragEnd).toHaveBeenCalledTimes(1);
-        expect(onChange).toHaveBeenCalledWith(4);
+        expect(onChange).toHaveBeenCalledExactlyOnceWith(4);
         rerender({ slideIndex: 4 });
         vi.runAllTimers();
 

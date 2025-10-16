@@ -27,6 +27,7 @@ const withNextra = nextra({
 
 export default withBundleAnalyzer(
   withNextra({
+    trailingSlash: true,
     // ... your Next.js config
     transpilePackages: ['@vkontakte/vkui-docs-theme', '@vkontakte/vkui'],
     modularizeImports: {

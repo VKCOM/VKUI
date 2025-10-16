@@ -40,7 +40,7 @@ describe(useStateWithDelay, () => {
 
     handle.rerender();
     expect(handle.result.current[0]).toBe(10);
-    expect(onStateChangeStub).toHaveBeenCalledWith(10);
+    expect(onStateChangeStub).toHaveBeenCalledExactlyOnceWith(10);
 
     onStateChangeStub.mockClear();
     // setState с задержкой в 500мс
@@ -56,7 +56,7 @@ describe(useStateWithDelay, () => {
     handle.rerender();
     // состояние обновилось после таймера
     expect(handle.result.current[0]).toBe(20);
-    expect(onStateChangeStub).toHaveBeenCalledWith(20);
+    expect(onStateChangeStub).toHaveBeenCalledExactlyOnceWith(20);
 
     onStateChangeStub.mockClear();
 
@@ -69,6 +69,6 @@ describe(useStateWithDelay, () => {
     // состояние после таймера обновилось
     expect(handle.result.current[0]).toBe(50);
     // коллбэк был вызван с верным значением
-    expect(onStateChangeStub).toHaveBeenCalledWith(50);
+    expect(onStateChangeStub).toHaveBeenCalledExactlyOnceWith(50);
   });
 });

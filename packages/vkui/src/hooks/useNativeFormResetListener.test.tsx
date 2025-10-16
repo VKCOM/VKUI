@@ -52,7 +52,7 @@ describe(useNativeFormResetListener, () => {
     fireEvent.click(result.getByTestId('reset'));
 
     expect(customFormItemLocator).toHaveTextContent('');
-    expect(hookCallback).toHaveBeenCalledWith(
+    expect(hookCallback).toHaveBeenCalledExactlyOnceWith(
       expect.objectContaining({
         isTrusted: true,
       }),

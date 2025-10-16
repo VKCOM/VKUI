@@ -33,6 +33,8 @@ module.exports = {
     Element: true,
   },
   rules: {
+    'react-hooks/immutability': 'warn', // TODO [#6919] поменять на 'error'
+    'react-hooks/refs': 'warn', // TODO [#6919] поменять на 'error'
     'no-restricted-imports': [
       'error',
       {
@@ -189,6 +191,7 @@ module.exports = {
       extends: ['plugin:@vitest/legacy-recommended'],
       plugins: ['@vitest'],
       rules: {
+        'react-hooks/globals': 'warn', // TODO [#6919] поменять на 'error' (при необходимости, точечно отключить в тестах)
         '@vitest/valid-describe-callback': 'off',
         '@vitest/expect-expect': 'off',
         '@vitest/valid-title': 'off',

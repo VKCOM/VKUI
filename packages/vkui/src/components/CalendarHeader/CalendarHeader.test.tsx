@@ -165,7 +165,7 @@ describe('CalendarHeader', () => {
         isMonthDisabled={isMonthDisabled}
       />,
     );
-    expect(isMonthDisabled).toHaveBeenCalledWith(11, 2022);
+    expect(isMonthDisabled).toHaveBeenLastCalledWith(11, 2022);
     expect(container.getElementsByClassName(styles.navIconPrev).length).toBe(0);
   });
 
@@ -182,6 +182,7 @@ describe('CalendarHeader', () => {
         nextMonthButtonTestId="next-month"
       />,
     );
+    // eslint-disable-next-line @vitest/prefer-called-exactly-once-with
     expect(isMonthDisabled).toHaveBeenCalledWith(0, 2024);
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });

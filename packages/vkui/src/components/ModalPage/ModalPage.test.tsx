@@ -205,8 +205,7 @@ describe(ModalPage, () => {
     );
     await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
     fireEvent.click(h.getByTestId('dismiss-button'));
-    expect(onClose).toHaveBeenCalledTimes(1);
-    expect(onClose).toHaveBeenCalledWith('click-close-button', expect.any(Object));
+    expect(onClose).toHaveBeenCalledExactlyOnceWith('click-close-button', expect.any(Object));
   });
 
   test(

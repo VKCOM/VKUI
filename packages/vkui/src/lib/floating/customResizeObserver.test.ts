@@ -64,7 +64,7 @@ describe(CustomResizeObserver, () => {
     expect(observeUsingMutationObserverStub).toHaveBeenCalledTimes(0);
 
     // создает iframe
-    expect(elementStub.ownerDocument.createElement).toHaveBeenCalledWith('iframe');
+    expect(elementStub.ownerDocument.createElement).toHaveBeenCalledExactlyOnceWith('iframe');
 
     // с нужным набором стилей
     expect(iframeStub.style).toStrictEqual({
@@ -89,10 +89,10 @@ describe(CustomResizeObserver, () => {
     expect(observer.mutationObserverFallback).toBe(null);
 
     observer.appendToTheDOM();
-    expect(elementStub.appendChild).toHaveBeenCalledWith(iframeStub);
+    expect(elementStub.appendChild).toHaveBeenCalledExactlyOnceWith(iframeStub);
 
     // функция update подписана на событие resize у iframe.contentWindow
-    expect(iframeStub.contentWindow?.addEventListener).toHaveBeenCalledWith(
+    expect(iframeStub.contentWindow?.addEventListener).toHaveBeenCalledExactlyOnceWith(
       'resize',
       updateFunctionStub,
     );
@@ -101,13 +101,13 @@ describe(CustomResizeObserver, () => {
 
     expect(observer.records).toStrictEqual([]);
     // функций update отписана от события resize у iframe.contentWindow
-    expect(iframeStub.contentWindow.removeEventListener).toHaveBeenCalledWith(
+    expect(iframeStub.contentWindow.removeEventListener).toHaveBeenCalledExactlyOnceWith(
       'resize',
       updateFunctionStub,
     );
 
     // iframe удалён из DOM
-    expect(elementStub.removeChild).toHaveBeenCalledWith(iframeStub);
+    expect(elementStub.removeChild).toHaveBeenCalledExactlyOnceWith(iframeStub);
 
     // MutationObserver не был использован
     expect(mutationObserverStub.mock.instances.length).toBe(0);
@@ -132,7 +132,7 @@ describe(CustomResizeObserver, () => {
     expect(observeUsingMutationObserverStub).toHaveBeenCalledTimes(1);
 
     expect(mutationObserverStub.mock.instances.length).toBe(1);
-    expect(mutationObserverInstanceStub.observe).toHaveBeenCalledWith(elementStub, {
+    expect(mutationObserverInstanceStub.observe).toHaveBeenCalledExactlyOnceWith(elementStub, {
       childList: true,
       subtree: true,
     });
