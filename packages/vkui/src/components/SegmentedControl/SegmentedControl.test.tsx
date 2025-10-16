@@ -104,7 +104,7 @@ describe('SegmentedControl', () => {
 
       fireEvent.click(getTab(0));
 
-      expect(onChange).toHaveBeenCalledWith('vk');
+      expect(onChange).toHaveBeenCalledExactlyOnceWith('vk');
       expect(getTab(0)).toHaveAttribute('aria-selected', 'true');
       expect(getTab(2)).toHaveAttribute('aria-selected', 'false');
     });

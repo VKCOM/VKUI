@@ -504,8 +504,7 @@ describe(useFloatingWithInteractions, () => {
       });
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
-        expect(onShownChange).toHaveBeenCalledTimes(1);
-        expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
+        expect(onShownChange).toHaveBeenCalledExactlyOnceWith(false, 'callback');
       });
     });
 

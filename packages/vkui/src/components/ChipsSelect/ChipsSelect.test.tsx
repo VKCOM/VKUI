@@ -224,7 +224,7 @@ describe('ChipsSelect', () => {
           name: withRegExp(FIRST_OPTION.label),
         }),
       ).toBeTruthy();
-      expect(onChange).toHaveBeenCalledWith([{ ...FIRST_OPTION, custom: '0' }]);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith([{ ...FIRST_OPTION, custom: '0' }]);
     }),
   );
 
@@ -400,7 +400,7 @@ describe('ChipsSelect', () => {
         }),
       ).toBeTruthy();
       expect(onChangeStart).toHaveBeenCalled();
-      expect(onChange).toHaveBeenCalledWith([FIRST_OPTION]);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith([FIRST_OPTION]);
     }),
   );
 
@@ -445,7 +445,7 @@ describe('ChipsSelect', () => {
         }),
       ).toBeTruthy();
       expect(onChangeStart).toHaveBeenCalled();
-      expect(onChange).toHaveBeenCalledWith([selectedOption]);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith([selectedOption]);
     }),
   );
 
@@ -482,7 +482,7 @@ describe('ChipsSelect', () => {
       await userEvent.type(inputLocator, customChip.label);
       await userEvent.type(inputLocator, '{Enter}');
       if (creatable) {
-        expect(onChange).toHaveBeenCalledWith([customChip]);
+        expect(onChange).toHaveBeenCalledExactlyOnceWith([customChip]);
       } else {
         expect(onChange).not.toHaveBeenCalled();
       }
@@ -507,7 +507,7 @@ describe('ChipsSelect', () => {
           name: withRegExp('Добавить новую опцию'),
         }),
       );
-      expect(onChange).toHaveBeenCalledWith([customChip]);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith([customChip]);
     });
 
     it.each([
@@ -532,7 +532,7 @@ describe('ChipsSelect', () => {
         await userEvent.click(document.body);
 
         if (creatable) {
-          expect(onChange).toHaveBeenCalledWith([customChip]);
+          expect(onChange).toHaveBeenCalledExactlyOnceWith([customChip]);
         } else {
           expect(onChange).not.toHaveBeenCalledWith([]);
         }
@@ -751,7 +751,7 @@ describe.each<{
         vi.runOnlyPendingTimers();
       });
       if (expectedValues) {
-        expect(onChange).toHaveBeenCalledWith(
+        expect(onChange).toHaveBeenCalledExactlyOnceWith(
           expectedValues.map((value) => ({
             value,
             label: value,

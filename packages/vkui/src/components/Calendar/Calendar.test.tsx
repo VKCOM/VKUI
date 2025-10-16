@@ -57,7 +57,7 @@ describe('Calendar', () => {
 
     render(<Calendar value={targetDate} onChange={onChange} dayTestId={dayTestId} />);
     fireEvent.click(screen.getByTestId(dayTestId(firstDayDate)));
-    expect(onChange).toHaveBeenCalledWith(firstDayDate);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(firstDayDate);
   });
 
   it('does not fire onChange with the value out of minDateTime/maxDateTime', () => {
@@ -90,7 +90,7 @@ describe('Calendar', () => {
       />,
     );
     fireEvent.click(screen.getByTestId(dayTestId(minDate)));
-    expect(onChange).toHaveBeenCalledWith(minDate);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(minDate);
   });
 
   it('onChange respects maxDateTime', () => {
@@ -105,7 +105,7 @@ describe('Calendar', () => {
       />,
     );
     fireEvent.click(screen.getByTestId(dayTestId(maxDate)));
-    expect(onChange).toHaveBeenCalledWith(maxDate);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(maxDate);
   });
 
   it(
@@ -201,7 +201,7 @@ describe('Calendar', () => {
       // фокусируемся с помощью клика на текущем дне
       await userEvent.click(getTargetDay());
 
-      expect(onChangeStub).toHaveBeenCalledWith(day);
+      expect(onChangeStub).toHaveBeenCalledExactlyOnceWith(day);
       // переходим на предыдущий день с помощью клавиатуры
       await userEvent.keyboard('{ArrowLeft}');
       await userEvent.keyboard('{ArrowLeft}');
@@ -273,8 +273,7 @@ describe('Calendar', () => {
 
       const { rerender } = render(<Calendar value={lastDayDate} disablePickers={false} size="s" />);
 
-      expect(consoleErrorMock).toHaveBeenCalledTimes(1);
-      expect(consoleErrorMock).toHaveBeenCalledWith(
+      expect(consoleErrorMock).toHaveBeenCalledExactlyOnceWith(
         "%c[VKUI/Calendar] Нельзя включить селекты выбора месяца/года, если размер календаря 's'",
         undefined,
       );
