@@ -37,19 +37,23 @@ export const checkDeprecatedProps = ({
   nativeSelectTestId,
   onInputChange,
 }: Pick<SelectProps, 'getRef' | 'getSelectInputRef' | 'nativeSelectTestId' | 'onInputChange'>) => {
+  /* istanbul ignore if: не проверяем в тестах */
   if (getRef) {
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ select: { getRootRef: ... } }`');
   }
+  /* istanbul ignore if: не проверяем в тестах */
   if (getSelectInputRef) {
     warn(
       'Свойство `getSelectInputRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`',
     );
   }
+  /* istanbul ignore if: не проверяем в тестах */
   if (nativeSelectTestId) {
     warn(
       "Свойство `nativeSelectTestId` устаревшее, используйте `slotProps={ select: { 'data-testid': ... } }`",
     );
   }
+  /* istanbul ignore if: не проверяем в тестах */
   if (onInputChange) {
     warn(
       'Свойство `onInputChange` устаревшее, используйте `slotProps={ input: { onChange: ... } }`',

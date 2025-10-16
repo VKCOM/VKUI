@@ -72,6 +72,7 @@ export const Radio = ({
   slotProps,
   ...restProps
 }: RadioProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development') {
     if (labelProps) {
       warn('Свойство `labelProps` устаревшее, используйте `slotProps={ root: {...} }`');

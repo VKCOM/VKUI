@@ -143,6 +143,7 @@ export function CheckboxInput({
   );
 
   if (process.env.NODE_ENV === 'development') {
+    /* istanbul ignore if: не проверяем в тестах */
     if (getRef) {
       warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
     }

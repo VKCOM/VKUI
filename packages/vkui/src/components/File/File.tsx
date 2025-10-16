@@ -2,15 +2,21 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce.ts';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
+
+const warn = warnOnce('File');
 
 export interface FileProps
   extends Omit<VKUIButtonProps, 'type'>,
     Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'>,
-    HasRef<HTMLInputElement>,
     HasRootRef<HTMLElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -46,6 +52,11 @@ export const File = ({
   slotProps,
   ...restProps
 }: FileProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+  }
+
   const rootProps = useMergeProps(
     {
       className,
