@@ -35,7 +35,7 @@ export interface TextareaProps
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
-   * - `textarea`: свойства для прокидывания в поле ввода.
+   * - `textArea`: свойства для прокидывания в поле ввода.
    */
   slotProps?: {
     root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
@@ -80,6 +80,7 @@ export const Textarea = ({
   slotProps,
   ...restProps
 }: TextareaProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development' && getRef) {
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ textArea: { getRootRef: ... } }`');
   }

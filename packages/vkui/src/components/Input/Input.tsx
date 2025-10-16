@@ -57,6 +57,7 @@ export const Input = ({
   slotProps,
   ...restProps
 }: InputProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development' && getRef) {
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
