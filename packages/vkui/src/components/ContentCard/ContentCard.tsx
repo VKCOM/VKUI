@@ -121,14 +121,17 @@ export const ContentCard = ({
 }: ContentCardProps): React.ReactNode => {
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development') {
+    /* istanbul ignore if: не проверяем в тестах */
     if (getRef) {
       warn('Свойство `getRef` устаревшее, используйте `slotProps={ image: { getRootRef: ... } }`');
     }
+    /* istanbul ignore if: не проверяем в тестах */
     if (maxHeight) {
       warn(
         'Свойство `maxHeight` устаревшее, используйте `slotProps={ image: { style: { maxHeight: ... } } }`',
       );
     }
+    /* istanbul ignore if: не проверяем в тестах */
     if (imageObjectFit) {
       warn(
         'Свойство `imageObjectFit` устаревшее, используйте `slotProps={ image: { style: { objectFit: ... } } }`',
