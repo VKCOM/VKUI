@@ -119,6 +119,7 @@ export const ContentCard = ({
   slotProps,
   ...restProps
 }: ContentCardProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development') {
     if (getRef) {
       warn('Свойство `getRef` устаревшее, используйте `slotProps={ image: { getRootRef: ... } }`');

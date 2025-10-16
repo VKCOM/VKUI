@@ -73,6 +73,7 @@ export const ChipsInputBase = <O extends ChipOption>({
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
+  /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development') {
     if (getRef) {
       warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
