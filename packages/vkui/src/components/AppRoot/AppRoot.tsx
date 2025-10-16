@@ -7,6 +7,7 @@ import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseV
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
 import { AppRootContext } from './AppRootContext';
 import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
+import { ModalsController } from './ModalContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import { useSafeAreaInsetsMemo } from './helpers';
 import type {
@@ -157,7 +158,9 @@ export const AppRoot = ({
 
   return mode === 'partial' ? (
     <AppRootContext.Provider value={contextValue}>
-      <ScrollController elRef={appRootRef}>{children}</ScrollController>
+      <ScrollController elRef={appRootRef}>
+        <ModalsController>{children}</ModalsController>
+      </ScrollController>
     </AppRootContext.Provider>
   ) : (
     <AppRootContext.Provider value={contextValue}>
@@ -173,7 +176,9 @@ export const AppRoot = ({
         )}
         {...props}
       >
-        <ScrollController elRef={appRootRef}>{children}</ScrollController>
+        <ScrollController elRef={appRootRef}>
+          <ModalsController>{children}</ModalsController>
+        </ScrollController>
       </AppRootStyleContainer>
     </AppRootContext.Provider>
   );
