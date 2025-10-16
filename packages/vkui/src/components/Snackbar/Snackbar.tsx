@@ -13,6 +13,7 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -25,6 +26,8 @@ import {
   shouldBeClosedByShiftData,
 } from './utils';
 import styles from './Snackbar.module.css';
+
+const warn = warnOnce('Switch');
 
 const placementClassNames = {
   'top-start': styles.placementTopStart,
@@ -118,6 +121,11 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   slotProps,
   ...restProps
 }: SnackbarProps) => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && onActionClickProp) {
+    warn('onActionClick `getRef` устаревшее, используйте `slotProps={ action: { onClick: ... } }`');
+  }
+
   const { getRootRef, ...rootRest } = useMergeProps(
     {
       getRootRef: getRootRefProp,

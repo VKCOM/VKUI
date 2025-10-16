@@ -220,8 +220,10 @@ describe(Snackbar, () => {
     const result = render(
       <Snackbar
         action={<span data-testid="action">action</span>}
-        onActionClick={onActionClick}
         onClose={onClose}
+        slotProps={{
+          action: { onClick: onActionClick },
+        }}
       />,
     );
     await fireEventPatch(result.getByTestId('action'), 'click');
