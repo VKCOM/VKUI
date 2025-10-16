@@ -54,6 +54,62 @@ const defaultRenderItemContent = (index: number) => (
   </>
 );
 
+const setupWithoutSubcomponents = ({ itemsCount = 3 }: { itemsCount?: number }) => {
+  let list;
+  let swappedItems: SwappedItemRange | null = null;
+
+  const onDragFinish = (swappedItemRange: SwappedItemRange) => {
+    swappedItems = swappedItemRange;
+  };
+  const itemToMockedData: Record<string, ReturnType<typeof setupItem>> = {};
+
+  const component = render(
+    <Reorder
+      data-testid="root"
+      getRootRef={(element) => {
+        if (!element) {
+          return;
+        }
+        list = element;
+      }}
+      onReorder={onDragFinish}
+      items={new Array(itemsCount).fill(0).map((_, index) => index)}
+      renderItem={(item, index, dragger) => {
+        return (
+          <div
+            style={{ display: 'flex', alignItems: 'center', gap: 12 }}
+            ref={(element) => {
+              if (!element) {
+                return;
+              }
+              const parent = element.parentElement!;
+              const draggerElement = element.firstElementChild!;
+              draggerElement.setAttribute('data-testid', `dragger-${index}`);
+              itemToMockedData[`item-${index}`] = setupItem(parent, index);
+            }}
+          >
+            {dragger}
+            <div key={item}>Пункт {index + 1}</div>
+          </div>
+        );
+      }}
+    />,
+  );
+
+  return {
+    component,
+    get list() {
+      return list!;
+    },
+    get swappedItems() {
+      return swappedItems;
+    },
+    getItemSetup: (id: string) => {
+      return itemToMockedData[id];
+    },
+  };
+};
+
 const setup = ({
   itemsCount = 3,
   renderItemContent = defaultRenderItemContent,
@@ -265,5 +321,55 @@ describe('Reorder', () => {
         }),
       );
     },
+  );
+
+  it(
+    'dnd without subcomponents working',
+    withFakeTimers(() => {
+      const setupData = setupWithoutSubcomponents({});
+      const { getItemSetup } = setupData;
+
+      dragItem({
+        testId: 'dragger-0',
+        breakPoints: [5, 140, 140, 124],
+        afterDragging: () => {
+          const item1Data = getItemSetup('item-1');
+          expect(item1Data.transform).toBe('');
+          const item2Data = getItemSetup('item-2');
+          expect(item2Data.transform).toBe('translateY(50px)');
+        },
+        afterMove: {
+          0: () => {
+            const item1Data = getItemSetup('item-1');
+            expect(item1Data.transform).toBe('translateY(50px)');
+            const item2Data = getItemSetup('item-2');
+            expect(item2Data.transform).toBe('translateY(50px)');
+          },
+        },
+      });
+
+      expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+
+      dragItem({
+        testId: 'dragger-2',
+        breakPoints: [140, 140, 75, 140, 75],
+        afterDragging: () => {
+          const item1Data = getItemSetup('item-0');
+          expect(item1Data.transform).toBe('');
+          const item2Data = getItemSetup('item-1');
+          expect(item2Data.transform).toBe('translateY(50px)');
+        },
+        afterMove: {
+          0: () => {
+            const item1Data = getItemSetup('item-0');
+            expect(item1Data.transform).toBe('');
+            const item2Data = getItemSetup('item-1');
+            expect(item2Data.transform).toBe('');
+          },
+        },
+      });
+
+      expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
+    }),
   );
 });
