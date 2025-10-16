@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { warnOnce } from '../../lib/warnOnce.ts';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
