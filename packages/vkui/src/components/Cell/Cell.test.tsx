@@ -1,4 +1,3 @@
-import { createRef } from 'react';
 import { fireEvent, getByRole, render, screen } from '@testing-library/react';
 import { Platform } from '../../lib/platform';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
@@ -11,92 +10,6 @@ const label = 'Перенести ячейку';
 
 describe('Cell', () => {
   baselineComponent((props) => <Cell {...props}>Cell</Cell>);
-
-  it('should work with slotProps', () => {
-    const rootRef1 = createRef<HTMLDivElement>();
-    const rootRef2 = createRef<HTMLDivElement>();
-    const contentRef2 = createRef<HTMLDivElement>();
-    const draggerRef = createRef<HTMLElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
-    const onDraggerClick = vi.fn();
-
-    render(
-      <Cell
-        data-testid="content"
-        className="rootClassName"
-        getRootRef={rootRef1}
-        onClick={onClick1}
-        draggable
-        style={{
-          backgroundColor: 'rgb(255, 0, 0)',
-        }}
-        slotProps={{
-          root: {
-            'data-testid': 'root',
-            'className': 'rootClassName-2',
-            'style': {
-              color: 'rgb(255, 0, 0)',
-            },
-            'getRootRef': rootRef2,
-            'onClick': onRootClick,
-          },
-          content: {
-            'className': 'contentClassName',
-            'getRootRef': contentRef2,
-            'data-testid': 'content-2',
-            'onClick': onClick2,
-          },
-          dragger: {
-            'className': 'draggerClassName',
-            'getRootRef': draggerRef,
-            'data-testid': 'dragger',
-            'children': 'draggerLabel',
-            'onClick': onDraggerClick,
-            'style': {
-              backgroundColor: 'rgb(255, 0, 0)',
-            },
-          },
-        }}
-      />,
-    );
-
-    expect(screen.queryByTestId('content')).not.toBeInTheDocument();
-    const content = screen.getByTestId('content-2');
-    expect(content).toBeInTheDocument();
-    expect(content).toHaveClass('contentClassName');
-
-    const root = screen.getByTestId('root');
-    expect(root).toBeInTheDocument();
-    expect(root).toHaveClass('rootClassName');
-    expect(root).toHaveClass('rootClassName-2');
-    expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
-    expect(root).toHaveStyle('color: rgb(255, 0, 0)');
-
-    const dragger = screen.getByTestId('dragger');
-    expect(dragger).toBeInTheDocument();
-    expect(dragger).toHaveClass('draggerClassName');
-    expect(dragger).toHaveStyle('background-color: rgb(255, 0, 0)');
-    expect(dragger).toHaveTextContent('draggerLabel');
-
-    expect(rootRef1.current).toBe(rootRef2.current);
-    expect(rootRef1.current).toBe(root);
-
-    expect(contentRef2.current).toBe(content);
-
-    expect(draggerRef.current).toBe(dragger);
-
-    fireEvent.click(content);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(dragger);
-    expect(onDraggerClick).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(3);
-  });
 
   describe('Controls dragging', () => {
     it(

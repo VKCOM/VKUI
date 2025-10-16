@@ -4,34 +4,19 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
-import { warnOnce } from '../../lib/warnOnce';
-import type { HasDataAttribute, HasRootRef } from '../../types';
+import type { HasRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
-import { RootComponent } from '../RootComponent/RootComponent';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { CellCheckbox, type CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import { CellDragger } from './CellDragger/CellDragger';
 import { DEFAULT_DRAGGABLE_LABEL } from './constants';
 import styles from './Cell.module.css';
 
-const warn = warnOnce('Cell');
-
 export interface CellProps
   extends Omit<SimpleCellProps, 'getRootRef'>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
-  /**
-   * Свойства, которые можно прокинуть внутрь компонента:
-   * - `root`: свойства для прокидывания в корень компонента;
-   * - `content`: свойства для прокидывания в контент;.
-   */
-  slotProps?: {
-    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
-    content?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
-    dragger?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
-  };
   /**
    * Режим отображения ячейки:
    *
@@ -63,14 +48,10 @@ export interface CellProps
    */
   onDragFinish?: (swappedItemRange: SwappedItemRange) => void;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ dragger: { children: ... } }`.
-   *
    * Текст для кнопки перетаскивания ячейки.
    */
   draggerLabel?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ dragger: { 'data-testid': ... } }`.
-   *
    * Передает атрибут `data-testid` для кнопки перетаскивания ячейки.
    */
   draggerTestId?: string;
@@ -82,9 +63,6 @@ export interface CellProps
 export const Cell: React.FC<CellProps> & {
   Checkbox: typeof CellCheckbox;
 } = ({
-  getRootRef: rootGetRootRef,
-  className: rootClassName,
-  style: rootStyle,
   mode,
   onRemove,
   removePlaceholder = 'Удалить',
@@ -99,59 +77,21 @@ export const Cell: React.FC<CellProps> & {
   value,
   checked,
   defaultChecked,
-  draggerLabel: draggerLabelProp = DEFAULT_DRAGGABLE_LABEL,
+  getRootRef,
+  draggerLabel = DEFAULT_DRAGGABLE_LABEL,
+  className,
+  style,
   toggleButtonTestId,
   removeButtonTestId,
   draggerTestId,
   href: hrefProp,
-
-  slotProps,
   ...restProps
 }: CellProps) => {
-  if (process.env.NODE_ENV === 'development') {
-    if (draggerTestId) {
-      warn(
-        'Свойство `draggerTestId` устаревшее, используйте `slotProps={ dragger: { "data-testid": ... } }`',
-      );
-    }
-    if (draggerLabelProp) {
-      warn(
-        'Свойство `draggerLabel` устаревшее, используйте `slotProps={ dragger: { children: ... } }`',
-      );
-    }
-  }
-
   const [dragging, setDragging] = React.useState(false);
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
   const Component = selectable ? 'label' : ComponentProps;
   const href = selectable ? undefined : hrefProp;
-
-  const { getRootRef, className, style, ...rootRest } = useMergeProps(
-    {
-      getRootRef: rootGetRootRef,
-      className: rootClassName,
-      style: rootStyle,
-    },
-    slotProps?.root,
-  );
-
-  const contentRest = useMergeProps(
-    {
-      className: styles.content,
-      ...restProps,
-    },
-    slotProps?.content,
-  );
-
-  const { children: draggerLabel = DEFAULT_DRAGGABLE_LABEL, ...draggerRest } = useMergeProps(
-    {
-      'data-testid': draggerTestId,
-      'children': draggerLabelProp,
-      'className': classNames(styles.dragger, !before && !selectable && styles.controlNoBefore),
-    },
-    slotProps?.dragger,
-  );
 
   const platform = usePlatform();
 
@@ -160,9 +100,10 @@ export const Cell: React.FC<CellProps> & {
   const dragger = draggable ? (
     <CellDragger
       elRef={rootElRef}
+      className={classNames(styles.dragger, !before && !selectable && styles.controlNoBefore)}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
-      {...draggerRest}
+      data-testid={draggerTestId}
     >
       {draggerLabel}
     </CellDragger>
@@ -200,7 +141,8 @@ export const Cell: React.FC<CellProps> & {
     hasHover: hasActive && !removable,
     disabled,
     href,
-    ...contentRest,
+    ...restProps,
+    className: styles.content,
     // чтобы свойство, если не определено, не присутствовало в
     // restProps явно как {'Component': undefined} и ниже не переопределяло
     // возможное значение commonProps.Component = 'a' при слиянии двух объектов, как
@@ -232,7 +174,6 @@ export const Cell: React.FC<CellProps> & {
         toggleButtonTestId={toggleButtonTestId}
         removeButtonTestId={removeButtonTestId}
         disabled={disabled}
-        {...rootRest}
       >
         {platform === 'ios' ? (
           ({ isRemoving }) => {
@@ -248,15 +189,9 @@ export const Cell: React.FC<CellProps> & {
   }
 
   return (
-    <RootComponent
-      baseClassName={cellClasses}
-      className={className}
-      style={style}
-      getRootRef={rootElRef}
-      {...rootRest}
-    >
+    <div className={classNames(cellClasses, className)} style={style} ref={rootElRef}>
       <SimpleCell {...simpleCellProps} />
-    </RootComponent>
+    </div>
   );
 };
 
