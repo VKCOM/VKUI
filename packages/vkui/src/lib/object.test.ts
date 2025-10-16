@@ -22,9 +22,11 @@ describe('mapObject', () => {
     const result = mapObject(input, mappingFn);
 
     expect(result).toEqual({ a: 'a:1', b: 'b:2' });
+    /* eslint-disable @vitest/prefer-called-exactly-once-with */
     expect(mappingFn).toHaveBeenCalledWith(1, 'a');
     expect(mappingFn).toHaveBeenCalledWith(2, 'b');
     expect(mappingFn).toHaveBeenCalledTimes(2);
+    /* eslint-enable @vitest/prefer-called-exactly-once-with */
   });
 
   it('should handle different value types', () => {

@@ -85,6 +85,6 @@ describe(getMergedSameEventsByProps, () => {
     });
 
     expect(mainProps.onCallCommonDefinedFn).toHaveReturnedWith(true);
-    expect(props.onCallCommonDefinedFn).toHaveBeenCalledWith({ stopPropagation: true });
+    expect(props.onCallCommonDefinedFn).toHaveBeenCalledExactlyOnceWith({ stopPropagation: true });
   });
 });

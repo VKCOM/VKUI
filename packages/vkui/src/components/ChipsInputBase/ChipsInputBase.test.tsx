@@ -95,7 +95,7 @@ describe(ChipsInputBase, () => {
         />,
       );
       await userEvent.type(result.getByTestId('chips-input'), 'Красный{enter}');
-      expect(onAddChipOption).toHaveBeenCalledWith('Красный');
+      expect(onAddChipOption).toHaveBeenCalledExactlyOnceWith('Красный');
     }),
   );
 
@@ -113,7 +113,7 @@ describe(ChipsInputBase, () => {
       );
       await userEvent.type(result.getByTestId('chips-input'), 'Красный');
       await userEvent.click(document.body);
-      expect(onAddChipOption).toHaveBeenCalledWith('Красный');
+      expect(onAddChipOption).toHaveBeenCalledExactlyOnceWith('Красный');
     }),
   );
 
@@ -131,7 +131,7 @@ describe(ChipsInputBase, () => {
       const chipRedLocator = result.getByRole('option', { name: withRegExp(RED_OPTION.label) });
       const removeButton = within(chipRedLocator).getByRole('button');
       await userEvent.click(removeButton);
-      expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
+      expect(onRemoveChipOption).toHaveBeenCalledExactlyOnceWith(RED_OPTION.value);
     }),
   );
 
@@ -151,7 +151,7 @@ describe(ChipsInputBase, () => {
         result.getByRole('option', { name: withRegExp(RED_OPTION.label) }),
         `{${type}}`,
       );
-      expect(onRemoveChipOption).toHaveBeenCalledWith(RED_OPTION.value);
+      expect(onRemoveChipOption).toHaveBeenCalledExactlyOnceWith(RED_OPTION.value);
     }),
   );
 
@@ -485,7 +485,7 @@ describe(ChipsInputBase, () => {
         result.getByRole('option', { name: withRegExp('Красный') }),
         `{Backspace}`,
       );
-      expect(onRemoveChipOption).toHaveBeenCalledWith(1);
+      expect(onRemoveChipOption).toHaveBeenCalledExactlyOnceWith(1);
     }),
   );
 
