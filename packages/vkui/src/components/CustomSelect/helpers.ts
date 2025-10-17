@@ -35,7 +35,6 @@ export const checkDeprecatedProps = ({
   getRef,
   getSelectInputRef,
   nativeSelectTestId,
-  onInputChange,
 }: Pick<SelectProps, 'getRef' | 'getSelectInputRef' | 'nativeSelectTestId' | 'onInputChange'>) => {
   /* istanbul ignore if: не проверяем в тестах */
   if (getRef) {
