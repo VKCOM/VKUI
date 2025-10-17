@@ -1,13 +1,8 @@
-'use client';
-
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useMergeProps } from '../../hooks/useMergeProps';
 import { getFetchPriorityProp } from '../../lib/utils';
-import { warnOnce } from '../../lib/warnOnce';
-import type { HasComponent, HasDataAttribute, HasRootRef } from '../../types';
+import type { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Card, type CardProps } from '../Card/Card';
-import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -15,32 +10,12 @@ import { Headline } from '../Typography/Headline/Headline';
 import { Text } from '../Typography/Text/Text';
 import styles from './ContentCard.module.css';
 
-const warn = warnOnce('ContentCard');
-
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
     Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
-    Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>> {
-  /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ image: { getRootRef: ... } }`.
-   */
-  getRef?: React.Ref<HTMLImageElement>;
-  /**
-   * Свойства, которые можно прокинуть внутрь компонента:
-   * - `root`: свойства для прокидывания в корень компонента;
-   * - `content`: свойства для прокидывания в контент обернутый `Tappable`;
-   * - `image`: войства для прокидывания в компонент картинки.
-   */
-  slotProps?: {
-    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
-    content?: Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'> &
-      HasRootRef<HTMLDivElement> &
-      HasDataAttribute;
-    image?: React.ImgHTMLAttributes<HTMLImageElement> &
-      HasRootRef<HTMLImageElement> &
-      HasDataAttribute;
-  };
+    Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
+    HasRef<HTMLImageElement> {
   /**
    Текст над заголовком.
    */
@@ -62,9 +37,7 @@ export interface ContentCardProps
    */
   caption?: React.ReactNode;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ image: { style: { maxHeight: ... } } }`.
-   *
-   * Максимальная высота изображения.
+    Максимальная высота изображения.
    */
   maxHeight?: number;
   /**
@@ -72,8 +45,6 @@ export interface ContentCardProps
    */
   mode?: CardProps['mode'];
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ image: { style: { objectFit: ... } } }`.
-   *
    * Пользовательское значения стиля `object-fit` для картинки
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
    */
@@ -90,16 +61,13 @@ export const ContentCard = ({
   description,
   caption,
   // card props
-  className: rootClassName,
+  className,
   mode = 'shadow',
   style,
   getRootRef,
-  Component = 'li',
   // img props
   getRef,
   maxHeight,
-  imageObjectFit,
-  // HTMLImageAttributes
   src,
   srcSet,
   alt = '',
@@ -111,79 +79,44 @@ export const ContentCard = ({
   referrerPolicy,
   sizes,
   useMap,
-  fetchPriority: fetchPriorityProp,
-  // content props
+  fetchPriority,
+  imageObjectFit,
   hasHover = false,
   hasActive = false,
-
-  slotProps,
+  Component = 'li',
   ...restProps
 }: ContentCardProps): React.ReactNode => {
-  /* istanbul ignore if: не проверяем в тестах */
-  if (process.env.NODE_ENV === 'development') {
-    /* istanbul ignore if: не проверяем в тестах */
-    if (getRef) {
-      warn('Свойство `getRef` устаревшее, используйте `slotProps={ image: { getRootRef: ... } }`');
-    }
-    /* istanbul ignore if: не проверяем в тестах */
-    if (maxHeight) {
-      warn(
-        'Свойство `maxHeight` устаревшее, используйте `slotProps={ image: { style: { maxHeight: ... } } }`',
-      );
-    }
-    /* istanbul ignore if: не проверяем в тестах */
-    if (imageObjectFit) {
-      warn(
-        'Свойство `imageObjectFit` устаревшее, используйте `slotProps={ image: { style: { objectFit: ... } } }`',
-      );
-    }
-  }
-
-  const { className, ...rootRest } = useMergeProps(
-    {
-      className: rootClassName,
-      style,
-      getRootRef,
-    },
-    slotProps?.root,
-  );
-
-  const contentRest = useMergeProps({ hasHover, hasActive, ...restProps }, slotProps?.content);
-
-  const { fetchPriority, ...imageRest } = useMergeProps(
-    {
-      src,
-      srcSet,
-      alt,
-      width,
-      height,
-      crossOrigin,
-      decoding,
-      loading,
-      referrerPolicy,
-      sizes,
-      useMap,
-      fetchPriority: fetchPriorityProp,
-      getRootRef: getRef,
-    },
-    slotProps?.image,
-  );
-
   return (
     <Card
       mode={mode}
+      getRootRef={getRootRef}
       Component={Component}
+      style={style}
       className={classNames(restProps.disabled && styles.disabled, className)}
-      {...rootRest}
     >
-      <Tappable baseClassName={styles.tappable} {...contentRest}>
-        {(imageRest.src || imageRest.srcSet) && (
-          <RootComponent
-            Component="img"
-            baseClassName={styles.img}
-            baseStyle={{ maxHeight, objectFit: imageObjectFit }}
-            {...(imageRest as React.AllHTMLAttributes<HTMLImageElement>)}
+      <Tappable
+        hasHover={hasHover}
+        hasActive={hasActive}
+        {...restProps}
+        baseClassName={styles.tappable}
+      >
+        {(src || srcSet) && (
+          <img
+            ref={getRef}
+            className={styles.img}
+            src={src}
+            srcSet={srcSet}
+            alt={alt}
+            crossOrigin={crossOrigin}
+            decoding={decoding}
+            loading={loading}
+            referrerPolicy={referrerPolicy}
+            sizes={sizes}
+            useMap={useMap}
             {...getFetchPriorityProp(fetchPriority)}
+            height={height}
+            width={width}
+            style={{ maxHeight, objectFit: imageObjectFit }}
           />
         )}
         <div className={styles.body}>

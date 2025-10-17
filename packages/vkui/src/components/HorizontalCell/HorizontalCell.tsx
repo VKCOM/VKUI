@@ -1,19 +1,13 @@
-'use client';
-
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useMergeProps } from '../../hooks/useMergeProps';
-import { warnOnce } from '../../lib/warnOnce';
-import type { CSSCustomProperties, HasDataAttribute, HasRootRef, LiteralUnion } from '../../types';
+import { mergeStyle } from '../../helpers/mergeStyle';
+import type { CSSCustomProperties, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
-import { RootComponent } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './HorizontalCell.module.css';
-
-const warn = warnOnce('HorizontalCell');
 
 export const CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH = '--vkui_internal--cell_width';
 
@@ -34,22 +28,8 @@ type HorizontalCellSizes = 's' | 'm' | 'l' | 'xl' | 'auto';
 
 export interface HorizontalCellProps
   extends Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
-    HasRootRef<HTMLDivElement> {
-  /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`.
-   */
-  getRef?: React.Ref<HTMLDivElement>;
-  /**
-   * Свойства, которые можно прокинуть внутрь компонента:
-   * - `root`: свойства для прокидывания в корень компонента;
-   * - `content`: свойства для прокидывания в контент обернутый `Tappable`.
-   */
-  slotProps?: {
-    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
-    content?: Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'> &
-      HasRootRef<HTMLDivElement> &
-      HasDataAttribute;
-  };
+    HasRootRef<HTMLDivElement>,
+    HasRef<HTMLDivElement> {
   /**
    * Ширина компонента.
    *
@@ -103,32 +83,8 @@ export const HorizontalCell = ({
   textAlign = size === 's' ? 'center' : 'start',
   noPadding = false,
   TitleComponent = size === 's' ? Caption : Subhead,
-
-  slotProps,
   ...restProps
 }: HorizontalCellProps): React.ReactNode => {
-  /* istanbul ignore if: не проверяем в тестах */
-  if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotProps={ content: { getRootRef: ... } }`');
-  }
-
-  const rootRest = useMergeProps(
-    {
-      className,
-      style,
-      getRootRef,
-    },
-    slotProps?.root,
-  );
-
-  const contentRest = useMergeProps(
-    {
-      getRootRef: getRef,
-      ...restProps,
-    },
-    slotProps?.content,
-  );
-
   const hasTypography =
     hasReactNode(title) || hasReactNode(subtitle) || hasReactNode(extraSubtitle);
 
@@ -136,18 +92,19 @@ export const HorizontalCell = ({
     typeof size === 'number' ? { [CUSTOM_CSS_TOKEN_FOR_CELL_WIDTH]: `${size}px` } : undefined;
 
   return (
-    <RootComponent
-      baseStyle={customProperties}
-      baseClassName={classNames(
+    <div
+      ref={getRootRef}
+      style={mergeStyle(customProperties, style)}
+      className={classNames(
         styles.host,
         typeof size === 'string' && stylesSize[size],
         size !== 'auto' && styles.sized,
         typeof size === 'number' && styles.customSize,
         noPadding && styles.noPadding,
+        className,
       )}
-      {...rootRest}
     >
-      <Tappable baseClassName={styles.body} {...contentRest}>
+      <Tappable className={styles.body} getRootRef={getRef} {...restProps}>
         {hasReactNode(children) && <div className={styles.image}>{children}</div>}
         {hasTypography && (
           <div
@@ -164,6 +121,6 @@ export const HorizontalCell = ({
           </div>
         )}
       </Tappable>
-    </RootComponent>
+    </div>
   );
 };
