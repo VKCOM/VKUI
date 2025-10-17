@@ -11,11 +11,18 @@ const App = () => {
     <React.Fragment>
       <File
         size="m"
+        id="file"
+        align="center"
+        mode="secondary"
+        stretched
+        accept=".txt"
+        onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
-            "aria-label": "input"
+            "aria-label": "input",
+            onClick: () => {}
           }
         }} />
     </React.Fragment>
