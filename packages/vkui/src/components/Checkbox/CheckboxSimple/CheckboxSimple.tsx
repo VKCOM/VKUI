@@ -2,6 +2,7 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { useMergeProps } from '../../../hooks/useMergeProps';
 import { Tappable } from '../../Tappable/Tappable';
 import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
@@ -17,6 +18,7 @@ export function CheckboxSimple({
   className,
   style,
   getRootRef,
+  getRef,
   description,
   hoverMode: hoverModeProp,
   activeMode: activeModeProp,
@@ -25,8 +27,29 @@ export function CheckboxSimple({
   focusVisibleMode,
   titleAfter,
   noPadding,
+
+  indeterminate,
+  defaultIndeterminate,
+  IconOnCompact,
+  IconOnRegular,
+  IconOffCompact,
+  IconOffRegular,
+  IconIndeterminate,
+
+  slotProps,
   ...restProps
 }: CheckboxProps) {
+  const rootRest = useMergeProps(
+    {
+      className,
+      style,
+      getRootRef,
+    },
+    slotProps?.root,
+  );
+
+  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+
   const { sizeY = 'none' } = useAdaptivity();
 
   const hoverMode = hoverModeProp || (noPadding ? 'opacity' : 'background');
@@ -34,23 +57,30 @@ export function CheckboxSimple({
 
   return (
     <Tappable
-      className={classNames(
-        className,
+      baseClassName={classNames(
         styles.host,
         !noPadding && styles.withPadding,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
-      style={style}
-      disabled={restProps.disabled}
-      getRootRef={getRootRef}
+      disabled={inputRest.disabled}
       hoverMode={hoverMode}
       activeMode={activeMode}
       hasHover={hasHover}
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       Component="label"
+      {...rootRest}
     >
-      <CheckboxInput {...restProps} />
+      <CheckboxInput
+        indeterminate={indeterminate}
+        defaultIndeterminate={defaultIndeterminate}
+        IconIndeterminate={IconIndeterminate}
+        IconOnCompact={IconOnCompact}
+        IconOnRegular={IconOnRegular}
+        IconOffCompact={IconOffCompact}
+        IconOffRegular={IconOffRegular}
+        slotProps={{ input: inputRest }}
+      />
     </Tappable>
   );
 }
