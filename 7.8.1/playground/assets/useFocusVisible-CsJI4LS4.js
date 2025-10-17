@@ -1,0 +1,1 @@
+import{r as o,p as n}from"./iframe-DdZr-4mP.js";function p(){const[e,s]=o.useState(!1),{keyboardInput:u}=o.useContext(n),a=o.useCallback(t=>{t.stopPropagation(),s(!0)},[s]),c=o.useCallback(t=>{t.stopPropagation(),s(!1)},[s]);return{focusVisible:u&&e,onFocus:a,onBlur:c}}export{p as u};
