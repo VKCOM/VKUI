@@ -53,12 +53,6 @@ export const checkDeprecatedProps = ({
       "Свойство `nativeSelectTestId` устаревшее, используйте `slotProps={ select: { 'data-testid': ... } }`",
     );
   }
-  /* istanbul ignore if: не проверяем в тестах */
-  if (onInputChange) {
-    warn(
-      'Свойство `onInputChange` устаревшее, используйте `slotProps={ input: { onChange: ... } }`',
-    );
-  }
 };
 
 export const checkOptionsValueType = <T extends CustomSelectOptionInterface>(options: T[]) => {
