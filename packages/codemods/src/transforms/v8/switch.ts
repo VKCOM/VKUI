@@ -1,6 +1,7 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
+import { moveAllPropsIntoSlotProp } from './common/moveAllPropsIntoSlotProp';
 import { movePropIntoSlotProps } from './common/movePropIntoSlotProps';
 
 export const parser = 'tsx';
@@ -20,18 +21,30 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       slotPropName: 'getRootRef',
     });
 
-    movePropIntoSlotProps(j, {
+    moveAllPropsIntoSlotProp(j, {
       root: source,
       componentName: localName,
-      propName: /data-.+/,
       slotName: 'input',
-    });
+      excludedProps: [
+        'style',
+        'className',
+        'getRootRef',
+        'getRef',
+        'checked',
+        'defaultChecked',
+        'disabled',
+        'readOnly',
+        'required',
+        'autoFocus',
 
-    movePropIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      propName: /aria-.+/,
-      slotName: 'input',
+        'id',
+        'name',
+        'value',
+        'tabIndex',
+
+        'onChange',
+        'onInvalid',
+      ],
     });
   }
 

@@ -5,18 +5,22 @@ exports[`split-layout > transforms correctly 1`] = `
 import React from 'react';
 
 const App = () => {
-  const contentRef = React.createRef<HTMLInputElement>();
+  const rootRef = React.createRef<HTMLDivElement>()
+  const contentRef = React.createRef<HTMLDivElement>();
 
   return (
     <React.Fragment>
       <SplitLayout
         center
+        className="baseClassName"
+        getRootRef={rootRef}
         header={<PanelHeader delimiter="none" />}
         slotProps={{
           content: {
             getRootRef: contentRef,
             "data-testid": "content",
-            "aria-label": "content"
+            "aria-label": "content",
+            id: "content"
           }
         }}>
         Content

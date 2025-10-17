@@ -11,18 +11,32 @@ const App = () => {
     <React.Fragment>
       <Checkbox
         checked
+        required
+        description="description"
+        indeterminate
+        hasHover={false}
+        onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
+            onFocus: () => {},
+            onClick: () => {},
             "data-testid": "checkbox",
             "aria-label": "checkbox"
           }
         }} />
       <Checkbox
         checked
+        required
+        description="description"
+        indeterminate
+        hasHover={false}
+        onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
+            onFocus: () => {},
+            onClick: () => {},
             "data-testid": "checkbox",
             "aria-label": "checkbox"
           }
@@ -31,9 +45,13 @@ const App = () => {
       </Checkbox>
       <Checkbox.Input
         checked
+        required
+        onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
+            onFocus: () => {},
+            onClick: () => {},
             "data-testid": "checkbox",
             "aria-label": "checkbox"
           }

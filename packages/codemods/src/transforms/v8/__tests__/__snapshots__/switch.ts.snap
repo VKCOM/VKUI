@@ -10,14 +10,18 @@ const App = () => {
   return (
     <React.Fragment>
       <Switch
+        id="switch"
+        name="switch"
         checked
+        onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-value": "true",
             "data-testid": "switch",
             "aria-checked": "checked",
-            "aria-label": "switch"
+            "aria-label": "switch",
+            onClick: () => {}
           }
         }} />
     </React.Fragment>

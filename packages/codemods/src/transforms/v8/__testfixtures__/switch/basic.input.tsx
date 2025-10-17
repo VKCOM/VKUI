@@ -7,7 +7,11 @@ const App = () => {
   return (
     <React.Fragment>
       <Switch
+        id="switch"
+        name="switch"
         checked
+        onChange={() => {}}
+        onClick={() => {}}
         aria-label="switch"
         aria-checked="checked"
         data-testid="switch"

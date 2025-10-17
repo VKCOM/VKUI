@@ -7,7 +7,12 @@ const App = () => {
   return (
     <React.Fragment>
       <Radio
+        id="radio"
+        name="radio"
         checked
+        onClick={() => {}}
+        onChange={() => {}}
+        description="description"
         aria-label="radio"
         data-testid="radio"
         labelProps={{
@@ -18,6 +23,10 @@ const App = () => {
       />
       <Radio.Input
         checked
+        id="radio"
+        name="radio"
+        onClick={() => {}}
+        onChange={() => {}}
         aria-label="radio"
         data-testid="radio"
         getRef={inputRef}

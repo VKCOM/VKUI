@@ -181,6 +181,7 @@ function moveJsxPropsIntoSlotPropsByRegExp(
   element: JSXElement,
   propName: RegExp,
   slotName: string,
+  excludedProps?: string[],
 ) {
   const attributes = element.openingElement.attributes;
   if (!attributes) {
@@ -193,6 +194,7 @@ function moveJsxPropsIntoSlotPropsByRegExp(
         attr.type === 'JSXAttribute' &&
         typeof attr.name.name === 'string' &&
         propName.test(attr.name.name) &&
+        !excludedProps?.includes(attr.name.name) &&
         moveJsxPropIntoSlotProps(j, element, attr.name.name, slotName, attr.name.name),
     );
 }
@@ -212,17 +214,18 @@ type MovePropsOptions = {
   componentName: string;
   propName: string | RegExp;
   slotName: string;
+  excludedProps?: string[];
   slotPropName?: string;
 };
 
 export function movePropIntoSlotProps(j: JSCodeshift, options: MovePropsOptions) {
-  const { propName, slotName, slotPropName, root, componentName } = options;
+  const { propName, slotName, slotPropName, root, componentName, excludedProps } = options;
 
   findComponentJSX(j, root, componentName, (elementPath) => {
     if (typeof propName === 'string') {
       moveJsxPropIntoSlotPropsByName(j, elementPath.node, propName, slotName, slotPropName);
     } else {
-      moveJsxPropsIntoSlotPropsByRegExp(j, elementPath.node, propName, slotName);
+      moveJsxPropsIntoSlotPropsByRegExp(j, elementPath.node, propName, slotName, excludedProps);
     }
   });
 }

@@ -10,12 +10,26 @@ const App = () => {
         checked
         aria-label="checkbox"
         data-testid="checkbox"
+        required
+        description="description"
+        indeterminate
+        hasHover={false}
+        onClick={() => {}}
+        onChange={() => {}}
+        onFocus={() => {}}
         getRef={inputRef}
       />
       <Checkbox
         checked
         aria-label="checkbox"
         data-testid="checkbox"
+        required
+        description="description"
+        indeterminate
+        hasHover={false}
+        onChange={() => {}}
+        onClick={() => {}}
+        onFocus={() => {}}
         getRef={inputRef}
       >
         Checkbox
@@ -24,6 +38,10 @@ const App = () => {
         checked
         aria-label="checkbox"
         data-testid="checkbox"
+        required
+        onClick={() => {}}
+        onChange={() => {}}
+        onFocus={() => {}}
         getRef={inputRef}
       />
     </React.Fragment>

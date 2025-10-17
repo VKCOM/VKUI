@@ -10,7 +10,11 @@ const App = () => {
   return (
     <React.Fragment>
       <Radio
+        id="radio"
+        name="radio"
         checked
+        onChange={() => {}}
+        description="description"
         slotProps={{
           root: {
             'data-testid': 'radio-root',
@@ -20,16 +24,21 @@ const App = () => {
           input: {
             getRootRef: inputRef,
             "data-testid": "radio",
-            "aria-label": "radio"
+            "aria-label": "radio",
+            onClick: () => {}
           }
         }} />
       <Radio.Input
         checked
+        id="radio"
+        name="radio"
+        onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "radio",
-            "aria-label": "radio"
+            "aria-label": "radio",
+            onClick: () => {}
           }
         }} />
     </React.Fragment>
