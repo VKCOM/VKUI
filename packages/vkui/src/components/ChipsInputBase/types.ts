@@ -72,20 +72,14 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
    */
   onChange?: OnChange<O>;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { value: ... } }`.
-   *
    * Значение поля ввода.
    */
   inputValue?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { defaultValue: ... } }`.
-   *
    * Значение поля ввода по умолчанию.
    */
   defaultInputValue?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { onChange: ... } }`.
-   *
    * Обработчик изменения значения в поле ввода.
    */
   onInputChange?: OnInputChange;

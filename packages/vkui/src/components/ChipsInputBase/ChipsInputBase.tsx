@@ -74,21 +74,8 @@ export const ChipsInputBase = <O extends ChipOption>({
   const { sizeY = 'none' } = useAdaptivity();
 
   /* istanbul ignore if: не проверяем в тестах */
-  if (process.env.NODE_ENV === 'development') {
-    /* istanbul ignore if: не проверяем в тестах */
-    if (getRef) {
-      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
-    }
-    /* istanbul ignore if: не проверяем в тестах */
-    if (typeof inputValueProp !== 'undefined') {
-      warn('Свойство `inputValue` устаревшее, используйте `slotProps={ input: { value: ... } }`');
-    }
-    /* istanbul ignore if: не проверяем в тестах */
-    if (onInputChange) {
-      warn(
-        'Свойство `onInputChange` устаревшее, используйте `slotProps={ input: { onChange: ... } }`',
-      );
-    }
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
   const {
