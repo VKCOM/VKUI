@@ -1,4 +1,5 @@
-import { act, useState } from 'react';
+import * as React from 'react';
+import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { Placement, useFloating } from '../../lib/floating';
@@ -93,6 +94,115 @@ describe('CustomSelect', () => {
     <CustomSelect aria-label="Choose your user" {...props} options={[]} />
   ));
 
+  it(
+    'should work with slotProps',
+    withFakeTimers(async () => {
+      const rootRef1 = createRef<HTMLDivElement>();
+      const rootRef2 = createRef<HTMLDivElement>();
+      const selectRef1 = createRef<HTMLSelectElement>();
+      const selectRef2 = createRef<HTMLSelectElement>();
+      const inputRef1 = createRef<HTMLInputElement>();
+      const inputRef2 = createRef<HTMLInputElement>();
+
+      const onRootClick = vi.fn();
+      const onInputClick = vi.fn();
+      const onSelectClick = vi.fn();
+
+      render(
+        <CustomSelect
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: 1, label: 'Josh' },
+          ]}
+          defaultValue={0}
+          data-testid="input"
+          required
+          className="rootClassName"
+          getRootRef={rootRef1}
+          getRef={selectRef1}
+          getSelectInputRef={inputRef1}
+          nativeSelectTestId="select"
+          style={{
+            backgroundColor: 'rgb(255, 0, 0)',
+          }}
+          slotProps={{
+            root: {
+              'data-testid': 'root',
+              'className': 'rootClassName-2',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'getRootRef': rootRef2,
+              'onClick': onRootClick,
+            },
+            select: {
+              'className': 'selectClassName',
+              'getRootRef': selectRef2,
+              'data-testid': 'select-2',
+              'required': false,
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'onClick': onSelectClick,
+            },
+            input: {
+              'getRootRef': inputRef2,
+              'data-testid': 'input-2',
+              'className': 'inputClassName',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'onClick': onInputClick,
+            },
+          }}
+        />,
+      );
+
+      expect(screen.queryByTestId('select')).not.toBeInTheDocument();
+      const select = screen.getByTestId('select-2');
+      expect(select).toBeInTheDocument();
+      expect(select.tagName).toBe('SELECT');
+      expect(select).toHaveClass('selectClassName');
+      expect(select).toHaveStyle('color: rgb(255, 0, 0)');
+      expect(select).not.toHaveAttribute('required');
+
+      const root = screen.getByTestId('root');
+      expect(root.tagName).toBe('DIV');
+      expect(root).toBeInTheDocument();
+      expect(root).toHaveClass('rootClassName');
+      expect(root).toHaveClass('rootClassName-2');
+      expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
+      expect(root).toHaveStyle('color: rgb(255, 0, 0)');
+
+      expect(screen.queryByTestId('input')).not.toBeInTheDocument();
+      const input = screen.getByTestId('input-2');
+      expect(input.tagName).toBe('INPUT');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveClass('inputClassName');
+      expect(input).toHaveStyle('color: rgb(255, 0, 0)');
+
+      expect(rootRef1.current).toBe(rootRef2.current);
+      expect(rootRef1.current).toBe(root);
+
+      expect(selectRef1.current).toBe(selectRef2.current);
+      expect(selectRef1.current).toBe(select);
+
+      expect(inputRef1.current).toBe(inputRef2.current);
+      expect(inputRef1.current).toBe(input);
+
+      fireEvent.click(input);
+      await act(async () => vi.runOnlyPendingTimers());
+      expect(onInputClick).toHaveBeenCalledTimes(1);
+
+      fireEvent.click(select);
+      expect(onSelectClick).toHaveBeenCalledTimes(1);
+
+      fireEvent.click(root);
+      await act(async () => vi.runOnlyPendingTimers());
+      expect(onRootClick).toHaveBeenCalledTimes(5);
+    }),
+  );
+
   it('Does not explode on NaN value', () => {
     vi.spyOn(global.console, 'error').mockImplementationOnce((message) => {
       if (message.includes('Received NaN')) {
@@ -140,25 +250,33 @@ describe('CustomSelect', () => {
   it('should input value not empty with flag accessible', () => {
     const { rerender } = render(
       <CustomSelect
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
         defaultValue={0}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
     expect(getInputValue()).toBe('');
 
     rerender(
       <CustomSelect
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
         defaultValue={0}
         accessible
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
     expect(getInputValue()).toBe('Mike');
@@ -329,12 +447,16 @@ describe('CustomSelect', () => {
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
         accessible={accessible}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -364,7 +486,6 @@ describe('CustomSelect', () => {
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'SPb', country: 'Russia' },
           { value: 1, label: 'Moscow', country: 'Russia' },
@@ -374,6 +495,11 @@ describe('CustomSelect', () => {
           option.label.toLowerCase().includes(value.toLowerCase()) ||
           option.country.toLowerCase().includes(value.toLowerCase())
         }
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -396,11 +522,15 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -414,12 +544,16 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
           { value: 2, label: 'Mika' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -430,12 +564,16 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
         value={1}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -452,13 +590,17 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
         value={1}
         options={[
           { value: 0, label: 'Mike' },
           { value: 2, label: 'Mika' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -467,7 +609,6 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid={INPUT_TEST_ID}
         value={3}
         options={[
           { value: 3, label: 'Joe' },
@@ -475,6 +616,11 @@ describe('CustomSelect', () => {
           { value: 2, label: 'Mika' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -487,7 +633,6 @@ describe('CustomSelect', () => {
       <CustomSelectControlled
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
         initialValue="3"
         options={[
           { value: '0', label: 'Не выбрано' },
@@ -495,6 +640,11 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -520,11 +670,15 @@ describe('CustomSelect', () => {
       <CustomSelect
         onOpen={openCb}
         onClose={closeCb}
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -563,12 +717,16 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
           { value: 3, label: 'Bob' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -617,12 +775,16 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
         options={[
           { disabled: true, value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
           { value: 3, label: 'Bob' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -700,7 +862,6 @@ describe('CustomSelect', () => {
     const { unmount } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
         clearButtonTestId="clearButtonTestId"
         options={[
           { value: 0, label: 'Mike' },
@@ -709,6 +870,11 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         defaultValue={0}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -751,7 +917,6 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="inputTextId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -759,6 +924,11 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         value={null}
+        slotProps={{
+          input: {
+            'data-testid': 'inputTextId',
+          },
+        }}
       />,
     );
 
@@ -1040,7 +1210,6 @@ describe('CustomSelect', () => {
     render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1048,6 +1217,11 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         value={null}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -1229,10 +1403,9 @@ describe('CustomSelect', () => {
     expect(screen.queryByPlaceholderText('Не выбрано')).toBeFalsy();
   });
 
-  it('native select is reachable via nativeSelectTestId', () => {
+  it('native select is reachable via slotProps.select.data-testid', () => {
     render(
       <CustomSelect
-        nativeSelectTestId="nativeSelectTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1240,6 +1413,11 @@ describe('CustomSelect', () => {
         placeholder="Не выбрано"
         allowClearButton
         defaultValue={1}
+        slotProps={{
+          select: {
+            'data-testid': 'nativeSelectTestId',
+          },
+        }}
       />,
     );
 
@@ -1250,8 +1428,6 @@ describe('CustomSelect', () => {
   it('passes required prop to native select, not input', () => {
     render(
       <CustomSelect
-        nativeSelectTestId="nativeSelectTestId"
-        data-testid={INPUT_TEST_ID}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1260,6 +1436,14 @@ describe('CustomSelect', () => {
         allowClearButton
         defaultValue={1}
         required
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+          select: {
+            'data-testid': 'nativeSelectTestId',
+          },
+        }}
       />,
     );
 
@@ -1276,12 +1460,16 @@ describe('CustomSelect', () => {
     };
     render(
       <CustomSelect
-        getSelectInputRef={inputRef}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
         placeholder="Не выбрано"
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+          },
+        }}
       />,
     );
     expect(inputRef.current).not.toBeNull();
@@ -1304,7 +1492,11 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          getSelectInputRef={inputRef}
+          slotProps={{
+            input: {
+              getRootRef: inputRef,
+            },
+          }}
         />,
       );
 
@@ -1350,7 +1542,11 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          getSelectInputRef={inputRef}
+          slotProps={{
+            input: {
+              getRootRef: inputRef,
+            },
+          }}
         />,
       );
       act(() => {
@@ -1374,7 +1570,6 @@ describe('CustomSelect', () => {
           renderDropdown={({ defaultDropdownContent }) => (
             <div data-testid="wrapper">{defaultDropdownContent}</div>
           )}
-          data-testid="select"
           options={[
             { value: '0', label: 'Не выбрано' },
             { value: '1', label: 'Категория 1' },
@@ -1382,6 +1577,11 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
+          slotProps={{
+            input: {
+              'data-testid': 'select',
+            },
+          }}
         />,
       );
       await userEvent.click(screen.getByTestId('select'));
@@ -1404,8 +1604,6 @@ describe('CustomSelect', () => {
       const onInputChange = vi.fn();
       render(
         <CustomSelect
-          getSelectInputRef={inputRef}
-          onInputChange={onInputChange}
           options={[
             { value: '0', label: 'Не выбрано' },
             { value: '1', label: 'Категория 1' },
@@ -1413,6 +1611,12 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
+          slotProps={{
+            input: {
+              getRootRef: inputRef,
+              onChange: onInputChange,
+            },
+          }}
         />,
       );
       fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
@@ -1430,8 +1634,6 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="select"
-        getSelectInputRef={inputRef}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1443,6 +1645,12 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="4"
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1463,8 +1671,6 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="select"
-        getSelectInputRef={inputRef}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1476,6 +1682,12 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="1"
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1492,13 +1704,17 @@ describe('CustomSelect', () => {
   it('should not hover disabled option', async () => {
     render(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1', disabled: true },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1524,7 +1740,6 @@ describe('CustomSelect', () => {
     };
     render(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1532,7 +1747,12 @@ describe('CustomSelect', () => {
           { value: '3', label: 'Категория 3' },
         ]}
         defaultValue="1"
-        getSelectInputRef={inputRef}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1554,7 +1774,6 @@ describe('CustomSelect', () => {
     withFakeTimers(async () => {
       const Fixture = ({ fetching }: { fetching: boolean }) => (
         <CustomSelect
-          data-testid="select"
           fetching={fetching}
           fetchingInProgressLabel="Список категорий загружается..."
           fetchingCompletedLabel="Список категорий загружен."
@@ -1564,6 +1783,11 @@ describe('CustomSelect', () => {
             { value: '2', label: 'Категория 2' },
             { value: '3', label: 'Категория 3' },
           ]}
+          slotProps={{
+            input: {
+              'data-testid': 'select',
+            },
+          }}
         />
       );
 
@@ -1590,7 +1814,6 @@ describe('CustomSelect', () => {
     withFakeTimers(async () => {
       const Fixture = () => (
         <CustomSelect
-          data-testid="select"
           fetching={false}
           fetchingCompletedLabel="Список категорий загружен."
           options={[
@@ -1599,6 +1822,11 @@ describe('CustomSelect', () => {
             { value: '2', label: 'Категория 2' },
             { value: '3', label: 'Категория 3' },
           ]}
+          slotProps={{
+            input: {
+              'data-testid': 'select',
+            },
+          }}
         />
       );
 
@@ -1615,15 +1843,19 @@ describe('CustomSelect', () => {
     const onChange = vi.fn();
     render(
       <CustomSelect
-        getSelectInputRef={inputRef}
         onChange={onChange}
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1659,13 +1891,17 @@ describe('CustomSelect', () => {
   it('checks CustomSelect placement class for borders when dropdown is opened and closed during  placement change', async () => {
     const component = render(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1678,13 +1914,17 @@ describe('CustomSelect', () => {
     placementStub = 'top';
     component.rerender(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
 
@@ -1696,13 +1936,17 @@ describe('CustomSelect', () => {
     placementStub = 'bottom';
     component.rerender(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
 
