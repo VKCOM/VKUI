@@ -94,12 +94,20 @@ function moveJsxPropIntoSlotProps(
     return;
   }
 
-  const removedValue: any =
-    removedAttr.value?.type === 'StringLiteral'
-      ? j.literal(removedAttr.value.value)
-      : removedAttr.value?.type === 'JSXExpressionContainer'
-        ? removedAttr.value?.expression
-        : undefined;
+  const removedValue: any = (() => {
+    if (!removedAttr?.value) {
+      return j.literal(true);
+    }
+
+    switch (removedAttr.value.type) {
+      case 'StringLiteral':
+        return j.literal(removedAttr.value.value);
+      case 'JSXExpressionContainer':
+        return removedAttr.value.expression;
+      default:
+        return undefined;
+    }
+  })();
 
   if (removedValue === undefined) {
     return;
