@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`split-layout > transforms correctly 1`] = `
+"import { PanelHeader, SplitLayout } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const contentRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <SplitLayout
+        center
+        header={<PanelHeader delimiter="none" />}
+        slotProps={{
+          content: {
+            getRootRef: contentRef,
+            "data-testid": "content",
+            "aria-label": "content"
+          }
+        }}>
+        Content
+      </SplitLayout>
+    </React.Fragment>
+  );
+};"
+`;

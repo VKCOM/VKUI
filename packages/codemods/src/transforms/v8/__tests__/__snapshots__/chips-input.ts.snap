@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`chips-input > transforms correctly 1`] = `
+"import { ChipsInput } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  const onInputChange = () => {};
+
+  return (
+    <React.Fragment>
+      <ChipsInput
+        value="value"
+        options={[]}
+        id="favoriteGroups"
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            value: "value",
+            defaultValue: "defaultValue",
+            onChange: onInputChange,
+            "data-testid": "input"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;
