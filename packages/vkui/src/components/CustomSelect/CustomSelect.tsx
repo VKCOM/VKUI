@@ -149,8 +149,6 @@ export interface SelectProps<
    */
   emptyText?: string;
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { onChange: ... } }`.
-   *
    * Событие изменения текстового поля.
    */
   onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
