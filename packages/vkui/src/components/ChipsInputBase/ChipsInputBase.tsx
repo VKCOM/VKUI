@@ -5,12 +5,15 @@ import { classNames } from '@vkontakte/vkjs';
 import { isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
+import { callMultiple } from '../../lib/callMultiple';
 import {
   contains as checkTargetIsInputEl,
   contains,
   getActiveElementByAnotherElement,
 } from '../../lib/dom';
+import { warnOnce } from '../../lib/warnOnce';
 import { FormField } from '../FormField/FormField';
 import { FormFieldClearButton } from '../FormFieldClearButton/FormFieldClearButton';
 import { Text } from '../Typography/Text/Text';
@@ -25,6 +28,8 @@ import {
 import type { ChipOption, ChipOptionValue, ChipsInputBasePrivateProps, NavigateTo } from './types';
 import styles from './ChipsInputBase.module.css';
 
+const warn = warnOnce('ChipsInputBase');
+
 const sizeYClassNames = {
   none: styles.sizeYNone,
   compact: styles.sizeYCompact,
@@ -32,9 +37,9 @@ const sizeYClassNames = {
 
 export const ChipsInputBase = <O extends ChipOption>({
   // FormFieldProps
-  getRootRef,
-  style,
-  className,
+  'getRootRef': rootGetRootRef,
+  'style': rootStyle,
+  'className': rootClassName,
   before,
   after,
   status,
@@ -49,13 +54,8 @@ export const ChipsInputBase = <O extends ChipOption>({
 
   // input
   getRef,
-  'id': idProp,
-  inputValue = DEFAULT_INPUT_VALUE,
-  placeholder,
-  disabled,
-  readOnly,
+  'inputValue': inputValueProp = DEFAULT_INPUT_VALUE,
   addOnBlur,
-  onBlur,
   onInputChange,
 
   // clear
@@ -67,11 +67,55 @@ export const ChipsInputBase = <O extends ChipOption>({
   // a11y
   chipsListLabel = 'Выбранные элементы',
   'aria-label': ariaLabel = '',
+
+  slotProps,
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
+
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+  }
+
+  const {
+    className,
+    style,
+    getRootRef,
+    onClick: onRootClick,
+    onMouseDown: onRootMouseDown,
+    ...rootRest
+  } = useMergeProps(
+    {
+      getRootRef: rootGetRootRef,
+      style: rootStyle,
+      className: rootClassName,
+    },
+    slotProps?.root,
+  );
+
+  const {
+    getRootRef: getInputRef,
+    onBlur,
+    placeholder,
+    readOnly,
+    disabled,
+    id,
+    value: inputValue = DEFAULT_INPUT_VALUE,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      className: styles.el,
+      value: inputValueProp,
+      onChange: onInputChange,
+      ...restProps,
+    },
+    slotProps?.input,
+  );
+
   const idGenerated = React.useId();
-  const inputRef = useExternRef(getRef);
+  const inputRef = useExternRef(getInputRef);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const listboxRef = React.useRef<HTMLDivElement>(null);
 
@@ -232,7 +276,7 @@ export const ChipsInputBase = <O extends ChipOption>({
     return undefined;
   }, [after, clearButton]);
 
-  const inputId = idProp || `chips-input-base-generated-id-${idGenerated}`;
+  const inputId = id || `chips-input-base-generated-id-${idGenerated}`;
 
   const handleRootMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     // Если клик был в один из чипов, то preventDefault делать не нужно, так как не будет срабатывать выделение текста
@@ -273,8 +317,9 @@ export const ChipsInputBase = <O extends ChipOption>({
       mode={mode}
       className={className}
       maxHeight={maxHeight}
-      onClick={disabled ? undefined : handleRootClick}
-      onMouseDown={handleRootMouseDown}
+      onClick={disabled ? onRootClick : callMultiple(handleRootClick, onRootClick)}
+      onMouseDown={callMultiple(handleRootMouseDown, onRootMouseDown)}
+      {...rootRest}
     >
       <div
         className={classNames(
@@ -329,19 +374,17 @@ export const ChipsInputBase = <O extends ChipOption>({
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
-          {...restProps}
           aria-label={ariaLabel}
           Component="input"
           type="text"
           id={inputId}
           getRootRef={inputRef}
-          className={styles.el}
           disabled={disabled}
           readOnly={readOnly}
-          placeholder={withPlaceholder ? placeholder : undefined}
           value={inputValue}
-          onChange={onInputChange}
+          placeholder={withPlaceholder ? placeholder : undefined}
           onBlur={handleInputBlur}
+          {...inputRest}
         />
       </div>
     </FormField>
