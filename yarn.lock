@@ -2953,6 +2953,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sindresorhus/base62@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@sindresorhus/base62@npm:0.1.0"
+  checksum: 10/1c2bca5a83805f64dc566612b18a82d4e3667b80ba83366ae2c6b39e7119f4f9ea1a98563e3c642da0d6130032870d979139d3dff51e8169dc5cf19315c11aac
+  languageName: node
+  linkType: hard
+
 "@sindresorhus/is@npm:^5.2.0":
   version: 5.6.0
   resolution: "@sindresorhus/is@npm:5.6.0"
@@ -4987,7 +4994,7 @@ __metadata:
     eslint-import-resolver-alias: "npm:^1.1.2"
     eslint-plugin-compat: "npm:^6.0.2"
     eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-jsdoc: "npm:^61.1.1"
+    eslint-plugin-jsdoc: "npm:^61.1.4"
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-compiler: "npm:0.0.0-experimental-56229e1-20240813"
@@ -9001,9 +9008,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^61.1.1":
-  version: 61.1.1
-  resolution: "eslint-plugin-jsdoc@npm:61.1.1"
+"eslint-plugin-jsdoc@npm:^61.1.4":
+  version: 61.1.4
+  resolution: "eslint-plugin-jsdoc@npm:61.1.4"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.76.0"
     are-docs-informative: "npm:^0.0.2"
@@ -9017,9 +9024,10 @@ __metadata:
     parse-imports-exports: "npm:^0.2.4"
     semver: "npm:^7.7.3"
     spdx-expression-parse: "npm:^4.0.0"
+    to-valid-identifier: "npm:^0.1.1"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10/2c30af7d42eeb4bf73082a2e07c22bdc4405c8a7d0c873ea799cd0a8c9a4107f765d4dbe62577fabbdfd5f68a3fe9bb25938548faf7cbd3f5634164a71e92700
+  checksum: 10/5f4b5e7a205d98907709a27feb3a1659be39a3890a44077c8d26dc1bc1fe6de10a68476fba0f2bba04d069cb35b05f7bd7f9d9d9a8c9f9d594e0c080f0a100a4
   languageName: node
   linkType: hard
 
@@ -17144,6 +17152,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"reserved-identifiers@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "reserved-identifiers@npm:1.0.0"
+  checksum: 10/95b4cdedd57a2589e76012c66f9f4414ae5d25178a79a8b3d11a16b080616af7f790f8f55dc7825813d1a83a383de19492f021998484f834dca0f5a3b015a536
+  languageName: node
+  linkType: hard
+
 "resolve-alpn@npm:^1.2.0":
   version: 1.2.1
   resolution: "resolve-alpn@npm:1.2.1"
@@ -19420,6 +19435,16 @@ __metadata:
   dependencies:
     is-number: "npm:^7.0.0"
   checksum: 10/10dda13571e1f5ad37546827e9b6d4252d2e0bc176c24a101252153ef435d83696e2557fe128c4678e4e78f5f01e83711c703eef9814eb12dab028580d45980a
+  languageName: node
+  linkType: hard
+
+"to-valid-identifier@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "to-valid-identifier@npm:0.1.1"
+  dependencies:
+    "@sindresorhus/base62": "npm:^0.1.0"
+    reserved-identifiers: "npm:^1.0.0"
+  checksum: 10/48d544d705cc5445c89bf3bc3655bd2880ec9b987f40e25d52eb7a2e10a4f33a7d54448972034fa2d395880c0fb00a6f85dc21adbbed216ab1a6f9033e64c222
   languageName: node
   linkType: hard
 
