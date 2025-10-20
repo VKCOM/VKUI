@@ -2354,7 +2354,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-live: "npm:^4.1.8"
-    slug: "npm:^11.0.0"
+    slug: "npm:^11.0.1"
     typescript: "npm:*"
     zustand: "npm:^5.0.8"
   languageName: unknown
@@ -18158,12 +18158,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slug@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "slug@npm:11.0.0"
+"slug@npm:^11.0.1":
+  version: 11.0.1
+  resolution: "slug@npm:11.0.1"
   bin:
     slug: cli.js
-  checksum: 10/4d7470ebcc4aa49823d21b0f19ac25f7640dc5761af3c7d90a0dfe22eb4e10f78d6149fe5d0de752911ed8740f9c9796d27514e6c2043fd6d0236acb61681f95
+  checksum: 10/1222fc40609537b45fc407b6ffcc9e72f1ea269488edeb5a3d985535cd7e2beba56f8c719734ef0ea58b3d5185cefc2d9a1e620e71cdf9915b007ba2ad04fd1b
   languageName: node
   linkType: hard
 
