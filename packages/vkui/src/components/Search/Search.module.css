@@ -118,8 +118,16 @@
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
+.nativeInput:placeholder-shown {
+  margin-inline-end: var(--vkui--spacing_size_xl);
+  text-overflow: ellipsis;
+}
+
 .nativeInput::placeholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--vkui--color_text_secondary);
+  white-space: nowrap;
   /* Для Firefox */
   opacity: 1;
 }
@@ -129,32 +137,59 @@
 }
 
 .controls {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--vkui--color_icon_secondary);
-  /* Используем translate3d, чтобы поправить дергание при наведении в Safari */
-  transform: translate3d(calc(var(--vkui_internal--search_shift_direction) * 100%), 0, 0);
-  transition: transform 0.3s var(--vkui--animation_easing_platform);
+  animation-duration: 0.3s;
+  animation-timing-function: var(--vkui--animation_easing_platform);
+  animation-fill-mode: both;
 
-  --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 4px);
+  --vkui_internal--search_transform_offset: calc(
+    var(--vkui_internal--search_shift_direction) *
+    100%
+  );
+  --vkui_internal--search_icon_size: calc(var(--vkui_internal--search_height) + 6px);
+}
+
+.controlsStateEnter {
+  animation-name: animation-controls-slide-in;
+}
+
+.controlsStateExit {
+  animation-name: animation-controls-slide-out;
 }
 
 .hasIcon .controls {
   /* Исключаем параметр icon из расчёта, чтобы он оставался видимым */
-  transform: translate3d(
-    calc(
-      var(--vkui_internal--search_shift_direction) *
-      calc(100% - var(--vkui_internal--search_icon_size))
-    ),
-    0,
-    0
+  --vkui_internal--search_transform_offset: calc(
+    var(--vkui_internal--search_shift_direction) *
+    calc(100% - var(--vkui_internal--search_icon_size))
   );
 }
 
 .hasValue .controls {
   transform: translate3d(0, 0, 0);
+}
+
+@keyframes animation-controls-slide-in {
+  /* Используем translate3d, чтобы поправить дергание при наведении в Safari */
+  from {
+    transform: translate3d(var(--vkui_internal--search_transform_offset), 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes animation-controls-slide-out {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(var(--vkui_internal--search_transform_offset), 0, 0);
+  }
 }
 
 .icon {
