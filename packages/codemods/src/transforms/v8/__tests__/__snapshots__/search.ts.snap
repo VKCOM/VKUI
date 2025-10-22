@@ -22,12 +22,12 @@ const App = () => {
         onFindButtonClick={() => {}}
         onFocus={() => {}}
         onBlur={() => {}}
+        onClick={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
-            "aria-label": "input",
-            onClick: () => {}
+            "aria-label": "input"
           }
         }} />
     </React.Fragment>

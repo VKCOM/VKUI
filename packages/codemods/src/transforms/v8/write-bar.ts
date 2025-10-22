@@ -1,7 +1,6 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
-import { moveCallbacksIntoSlotProps } from './common/moveCallbacksIntoSlotProps';
 import {
   moveAriaAttrsIntoSlotProps,
   moveDataAttrsIntoSlotProps,
@@ -35,13 +34,6 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       root: source,
       componentName: localName,
       slotName: 'textArea',
-    });
-
-    moveCallbacksIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      slotName: 'textArea',
-      excludedProps: ['onChange', 'onInvalid', 'onHeightChange', 'onFocus', 'onBlur'],
     });
   }
 

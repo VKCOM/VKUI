@@ -1,7 +1,6 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
-import { moveCallbacksIntoSlotProps } from './common/moveCallbacksIntoSlotProps';
 import { moveInputPropsIntoSlotProps } from './common/moveInputPropsIntoSlotProps';
 import { movePropIntoSlotProps } from './common/movePropIntoSlotProps';
 
@@ -34,22 +33,6 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       componentName: localName,
       propName: /aria-.+/,
       slotName: 'input',
-    });
-
-    moveCallbacksIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      slotName: 'input',
-      excludedProps: [
-        'onFocus',
-        'onBlur',
-        'onKeyDown',
-        'onChange',
-        'onInputChange',
-        'onChangeStart',
-        'onClose',
-        'onOpen',
-      ],
     });
 
     moveInputPropsIntoSlotProps(j, {

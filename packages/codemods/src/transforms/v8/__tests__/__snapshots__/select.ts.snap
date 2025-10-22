@@ -25,6 +25,7 @@ const App = () => {
         onClose={() => {}}
         onOpen={() => {}}
         onInputKeyDown={() => {}}
+        onMouseDown={() => {}}
         slotProps={{
           select: {
             getRootRef: selectRef,
@@ -35,7 +36,6 @@ const App = () => {
             getRootRef: inputRef,
             "data-testid": "input",
             "aria-label": "input",
-            onMouseDown: () => {},
             size: 100
           }
         }} />

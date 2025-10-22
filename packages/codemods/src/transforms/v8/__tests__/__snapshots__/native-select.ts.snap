@@ -19,12 +19,12 @@ const App = () => {
         onClick={() => {}}
         onBlur={() => {}}
         onFocus={() => {}}
+        onMouseDown={() => {}}
         slotProps={{
           select: {
             getRootRef: selectRef,
             "data-testid": "select",
             "aria-label": "select",
-            onMouseDown: () => {},
             size: 100
           }
         }}>

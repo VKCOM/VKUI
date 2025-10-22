@@ -24,6 +24,8 @@ const App = () => {
         onBlur={() => {}}
         onKeyDown={() => {}}
         onChange={() => {}}
+        onClick={() => {}}
+        onMouseDown={() => {}}
         onChangeStart={() => {}}
         onClose={() => {}}
         onOpen={() => {}}
@@ -31,8 +33,6 @@ const App = () => {
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
-            onMouseDown: () => {},
-            onClick: () => {},
             required: true
           }
         }} />

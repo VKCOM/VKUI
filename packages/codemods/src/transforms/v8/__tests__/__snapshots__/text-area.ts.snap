@@ -17,6 +17,7 @@ const App = () => {
         onResize={() => {}}
         onFocus={() => {}}
         onBlur={() => {}}
+        onClick={() => {}}
         rows={4}
         cols={10}
         maxLength={100}
@@ -27,8 +28,7 @@ const App = () => {
           textArea: {
             getRootRef: textAreaRef,
             "data-testid": "text-area",
-            "aria-label": "text-area",
-            onClick: () => {}
+            "aria-label": "text-area"
           }
         }} />
     </React.Fragment>

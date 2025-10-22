@@ -20,13 +20,13 @@ const App = () => {
         stretched
         accept=".txt"
         multiple
+        onClick={() => {}}
         onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
             "aria-label": "input",
-            onClick: () => {},
             placeholder: "file"
           }
         }} />

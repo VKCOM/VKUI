@@ -16,6 +16,7 @@ const App = () => {
         autoFocus
         required
         checked
+        onClick={() => {}}
         onChange={() => {}}
         description="description"
         slotProps={{
@@ -28,7 +29,6 @@ const App = () => {
             getRootRef: inputRef,
             "data-testid": "radio",
             "aria-label": "radio",
-            onClick: () => {},
             placeholder: "radio"
           }
         }} />
@@ -39,13 +39,13 @@ const App = () => {
         autoFocus
         required
         checked
+        onClick={() => {}}
         onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "radio",
             "aria-label": "radio",
-            onClick: () => {},
             placeholder: "radio"
           }
         }} />

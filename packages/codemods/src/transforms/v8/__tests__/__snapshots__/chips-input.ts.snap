@@ -24,12 +24,12 @@ const App = () => {
         onBlur={() => {}}
         onKeyDown={() => {}}
         onChange={() => {}}
+        onClick={() => {}}
+        onMouseDown={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
-            onMouseDown: () => {},
-            onClick: () => {},
             required: true
           }
         }} />
