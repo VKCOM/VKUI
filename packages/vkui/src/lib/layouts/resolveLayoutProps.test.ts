@@ -58,7 +58,7 @@ describe('resolveLayoutProps', () => {
 
     expect(result).toEqual({
       className: 'vkui-padding',
-      style: { '--vkui-int-padding': '16px' },
+      style: { '--vkui_internal--padding': '16px' },
     });
   });
 
@@ -68,7 +68,7 @@ describe('resolveLayoutProps', () => {
 
     expect(result).toEqual({
       className: 'vkui-inline-size',
-      style: { '--vkui-int-inline-size': '200px' },
+      style: { '--vkui_internal--inline-size': '200px' },
     });
   });
 
@@ -78,7 +78,7 @@ describe('resolveLayoutProps', () => {
 
     expect(result).toEqual({
       className: 'vkui-flex-grow',
-      style: { '--vkui-int-flex-grow': 2 },
+      style: { '--vkui_internal--flex-grow': 2 },
     });
   });
 
@@ -88,7 +88,7 @@ describe('resolveLayoutProps', () => {
 
     expect(result).toEqual({
       className: 'vkui-flex-shrink',
-      style: { '--vkui-int-flex-shrink': 1 },
+      style: { '--vkui_internal--flex-shrink': 1 },
     });
   });
 
@@ -99,8 +99,8 @@ describe('resolveLayoutProps', () => {
     expect(result).toEqual({
       className: 'vkui-padding-m vkui-inline-size vkui-flex-grow',
       style: {
-        '--vkui-int-inline-size': '200px',
-        '--vkui-int-flex-grow': 1,
+        '--vkui_internal--inline-size': '200px',
+        '--vkui_internal--flex-grow': 1,
       },
     });
   });
@@ -111,7 +111,7 @@ describe('resolveLayoutProps', () => {
 
     expect(result).toEqual({
       className: 'vkui-inline-size',
-      style: { '--vkui-int-inline-size': '100px' },
+      style: { '--vkui_internal--inline-size': '100px' },
     });
   });
 
@@ -121,7 +121,7 @@ describe('resolveLayoutProps', () => {
 
     expect(result).toEqual({
       className: 'vkui-padding',
-      style: { '--vkui-int-padding': 'var(--custom-value)' },
+      style: { '--vkui_internal--padding': 'var(--custom-value)' },
     });
   });
 
@@ -156,7 +156,7 @@ describe('resolveLayoutProps', () => {
 
     expect(result).toEqual({
       'className': 'vkui-padding-m vkui-inline-size custom-class',
-      'style': { '--vkui-int-inline-size': '100px' },
+      'style': { '--vkui_internal--inline-size': '100px' },
       'data-testid': 'test',
     });
   });

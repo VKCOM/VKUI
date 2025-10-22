@@ -36,7 +36,7 @@ exports[`generate layout classes 1`] = `
     padding: unset;
 }
 .vkui-padding {
-    padding: var(--vkui-int-padding);
+    padding: var(--vkui_internal--padding);
 }
 .vkui-padding-inline-2xs {
     padding-inline: var(--vkui--spacing_size_2xs);
@@ -75,7 +75,7 @@ exports[`generate layout classes 1`] = `
     padding-inline: unset;
 }
 .vkui-padding-inline {
-    padding-inline: var(--vkui-int-padding-inline);
+    padding-inline: var(--vkui_internal--padding-inline);
 }
 .vkui-padding-block-2xs {
     padding-block: var(--vkui--spacing_size_2xs);
@@ -114,7 +114,7 @@ exports[`generate layout classes 1`] = `
     padding-block: unset;
 }
 .vkui-padding-block {
-    padding-block: var(--vkui-int-padding-block);
+    padding-block: var(--vkui_internal--padding-block);
 }
 .vkui-padding-inline-start-2xs {
     padding-inline-start: var(--vkui--spacing_size_2xs);
@@ -153,7 +153,7 @@ exports[`generate layout classes 1`] = `
     padding-inline-start: unset;
 }
 .vkui-padding-inline-start {
-    padding-inline-start: var(--vkui-int-padding-inline-start);
+    padding-inline-start: var(--vkui_internal--padding-inline-start);
 }
 .vkui-padding-inline-end-2xs {
     padding-inline-end: var(--vkui--spacing_size_2xs);
@@ -192,7 +192,7 @@ exports[`generate layout classes 1`] = `
     padding-inline-end: unset;
 }
 .vkui-padding-inline-end {
-    padding-inline-end: var(--vkui-int-padding-inline-end);
+    padding-inline-end: var(--vkui_internal--padding-inline-end);
 }
 .vkui-padding-block-start-2xs {
     padding-block-start: var(--vkui--spacing_size_2xs);
@@ -231,7 +231,7 @@ exports[`generate layout classes 1`] = `
     padding-block-start: unset;
 }
 .vkui-padding-block-start {
-    padding-block-start: var(--vkui-int-padding-block-start);
+    padding-block-start: var(--vkui_internal--padding-block-start);
 }
 .vkui-padding-block-end-2xs {
     padding-block-end: var(--vkui--spacing_size_2xs);
@@ -270,7 +270,7 @@ exports[`generate layout classes 1`] = `
     padding-block-end: unset;
 }
 .vkui-padding-block-end {
-    padding-block-end: var(--vkui-int-padding-block-end);
+    padding-block-end: var(--vkui_internal--padding-block-end);
 }
 .vkui-inline-size-auto {
     inline-size: auto;
@@ -294,7 +294,7 @@ exports[`generate layout classes 1`] = `
     inline-size: unset;
 }
 .vkui-inline-size {
-    inline-size: var(--vkui-int-inline-size);
+    inline-size: var(--vkui_internal--inline-size);
 }
 .vkui-min-inline-size-max-content {
     min-inline-size: max-content;
@@ -315,7 +315,7 @@ exports[`generate layout classes 1`] = `
     min-inline-size: unset;
 }
 .vkui-min-inline-size {
-    min-inline-size: var(--vkui-int-min-inline-size);
+    min-inline-size: var(--vkui_internal--min-inline-size);
 }
 .vkui-max-inline-size-max-content {
     max-inline-size: max-content;
@@ -336,7 +336,7 @@ exports[`generate layout classes 1`] = `
     max-inline-size: unset;
 }
 .vkui-max-inline-size {
-    max-inline-size: var(--vkui-int-max-inline-size);
+    max-inline-size: var(--vkui_internal--max-inline-size);
 }
 .vkui-block-size-auto {
     block-size: auto;
@@ -360,7 +360,7 @@ exports[`generate layout classes 1`] = `
     block-size: unset;
 }
 .vkui-block-size {
-    block-size: var(--vkui-int-block-size);
+    block-size: var(--vkui_internal--block-size);
 }
 .vkui-min-block-size-max-content {
     min-block-size: max-content;
@@ -381,7 +381,7 @@ exports[`generate layout classes 1`] = `
     min-block-size: unset;
 }
 .vkui-min-block-size {
-    min-block-size: var(--vkui-int-min-block-size);
+    min-block-size: var(--vkui_internal--min-block-size);
 }
 .vkui-max-block-size-max-content {
     max-block-size: max-content;
@@ -402,7 +402,7 @@ exports[`generate layout classes 1`] = `
     max-block-size: unset;
 }
 .vkui-max-block-size {
-    max-block-size: var(--vkui-int-max-block-size);
+    max-block-size: var(--vkui_internal--max-block-size);
 }
 .vkui-inset-2xs {
     inset: var(--vkui--spacing_size_2xs);
@@ -444,7 +444,7 @@ exports[`generate layout classes 1`] = `
     inset: auto;
 }
 .vkui-inset {
-    inset: var(--vkui-int-inset);
+    inset: var(--vkui_internal--inset);
 }
 .vkui-inset-inline-2xs {
     inset-inline: var(--vkui--spacing_size_2xs);
@@ -486,7 +486,7 @@ exports[`generate layout classes 1`] = `
     inset-inline: auto;
 }
 .vkui-inset-inline {
-    inset-inline: var(--vkui-int-inset-inline);
+    inset-inline: var(--vkui_internal--inset-inline);
 }
 .vkui-inset-block-2xs {
     inset-block: var(--vkui--spacing_size_2xs);
@@ -528,7 +528,7 @@ exports[`generate layout classes 1`] = `
     inset-block: auto;
 }
 .vkui-inset-block {
-    inset-block: var(--vkui-int-inset-block);
+    inset-block: var(--vkui_internal--inset-block);
 }
 .vkui-inset-inline-start-2xs {
     inset-inline-start: var(--vkui--spacing_size_2xs);
@@ -570,7 +570,7 @@ exports[`generate layout classes 1`] = `
     inset-inline-start: auto;
 }
 .vkui-inset-inline-start {
-    inset-inline-start: var(--vkui-int-inset-inline-start);
+    inset-inline-start: var(--vkui_internal--inset-inline-start);
 }
 .vkui-inset-inline-end-2xs {
     inset-inline-end: var(--vkui--spacing_size_2xs);
@@ -612,7 +612,7 @@ exports[`generate layout classes 1`] = `
     inset-inline-end: auto;
 }
 .vkui-inset-inline-end {
-    inset-inline-end: var(--vkui-int-inset-inline-end);
+    inset-inline-end: var(--vkui_internal--inset-inline-end);
 }
 .vkui-inset-block-start-2xs {
     inset-block-start: var(--vkui--spacing_size_2xs);
@@ -654,7 +654,7 @@ exports[`generate layout classes 1`] = `
     inset-block-start: auto;
 }
 .vkui-inset-block-start {
-    inset-block-start: var(--vkui-int-inset-block-start);
+    inset-block-start: var(--vkui_internal--inset-block-start);
 }
 .vkui-inset-block-end-2xs {
     inset-block-end: var(--vkui--spacing_size_2xs);
@@ -696,7 +696,7 @@ exports[`generate layout classes 1`] = `
     inset-block-end: auto;
 }
 .vkui-inset-block-end {
-    inset-block-end: var(--vkui-int-inset-block-end);
+    inset-block-end: var(--vkui_internal--inset-block-end);
 }
 .vkui-position-static {
     position: static;
@@ -720,7 +720,7 @@ exports[`generate layout classes 1`] = `
     flex-grow: unset;
 }
 .vkui-flex-grow {
-    flex-grow: var(--vkui-int-flex-grow);
+    flex-grow: var(--vkui_internal--flex-grow);
 }
 .vkui-flex-shrink-inherit {
     flex-shrink: inherit;
@@ -732,7 +732,7 @@ exports[`generate layout classes 1`] = `
     flex-shrink: unset;
 }
 .vkui-flex-shrink {
-    flex-shrink: var(--vkui-int-flex-shrink);
+    flex-shrink: var(--vkui_internal--flex-shrink);
 }
 .vkui-flex-basis-auto {
     flex-basis: auto;
@@ -759,7 +759,7 @@ exports[`generate layout classes 1`] = `
     flex-basis: content;
 }
 .vkui-flex-basis {
-    flex-basis: var(--vkui-int-flex-basis);
+    flex-basis: var(--vkui_internal--flex-basis);
 }
 .vkui-overflow-visible {
     overflow: visible;

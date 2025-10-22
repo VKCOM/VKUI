@@ -17,8 +17,8 @@ export function generateVariableClassName(prefix: string): string {
 /**
  * Генерируем название кастомной css-переменной,
  * в которой будет храниться заданное пользователем значение
- * @example --vkui-internal--inline-size
+ * @example --vkui_internal--inline-size
  */
 export function generateVariable(prefix: string): string {
-  return `--vkui-internal--${prefix}`;
+  return `--vkui_internal--${prefix}`;
 }
