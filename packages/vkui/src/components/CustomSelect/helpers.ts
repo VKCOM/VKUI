@@ -31,6 +31,29 @@ export const findIndexBefore = (
 };
 const warn = warnOnce('CustomSelect');
 
+export const checkDeprecatedProps = ({
+  getRef,
+  getSelectInputRef,
+  nativeSelectTestId,
+}: Pick<SelectProps, 'getRef' | 'getSelectInputRef' | 'nativeSelectTestId' | 'onInputChange'>) => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ select: { getRootRef: ... } }`');
+  }
+  /* istanbul ignore if: не проверяем в тестах */
+  if (getSelectInputRef) {
+    warn(
+      'Свойство `getSelectInputRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`',
+    );
+  }
+  /* istanbul ignore if: не проверяем в тестах */
+  if (nativeSelectTestId) {
+    warn(
+      "Свойство `nativeSelectTestId` устаревшее, используйте `slotProps={ select: { 'data-testid': ... } }`",
+    );
+  }
+};
+
 export const checkOptionsValueType = <T extends CustomSelectOptionInterface>(options: T[]) => {
   if (new Set(options.map((item) => typeof item.value)).size > 1) {
     warn(
