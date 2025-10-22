@@ -12,7 +12,15 @@ const App = () => {
         after={null}
         aria-label="input"
         data-testid="input"
+        name="input"
+        autoComplete="off"
         getRef={inputRef}
+        placeholder="Search"
+        onIconClick={() => {}}
+        onFindButtonClick={() => {}}
+        onFocus={() => {}}
+        onBlur={() => {}}
+        onClick={() => {}}
       />
     </React.Fragment>
   );

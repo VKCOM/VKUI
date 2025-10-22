@@ -15,13 +15,25 @@ const App = () => {
         value="value"
         options={[]}
         id="favoriteGroups"
+        inputValue="value"
+        defaultInputValue="defaultValue"
+        onInputChange={onInputChange}
+        disabled={false}
+        readOnly={true}
+        onFocus={() => {}}
+        onBlur={() => {}}
+        onKeyDown={() => {}}
+        onChange={() => {}}
+        onChangeStart={() => {}}
+        onClose={() => {}}
+        onOpen={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
-            value: "value",
-            defaultValue: "defaultValue",
-            onChange: onInputChange,
-            "data-testid": "input"
+            "data-testid": "input",
+            onMouseDown: () => {},
+            onClick: () => {},
+            required: true
           }
         }} />
     </React.Fragment>

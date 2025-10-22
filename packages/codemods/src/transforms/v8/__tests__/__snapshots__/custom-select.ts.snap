@@ -16,6 +16,15 @@ const App = () => {
         value={"value"}
         options={[]}
         onChange={() => {}}
+        disabled={false}
+        required
+        onInputChange={() => {}}
+        onClick={() => {}}
+        onBlur={() => {}}
+        onFocus={() => {}}
+        onClose={() => {}}
+        onOpen={() => {}}
+        onInputKeyDown={() => {}}
         slotProps={{
           select: {
             getRootRef: selectRef,
@@ -24,9 +33,10 @@ const App = () => {
 
           input: {
             getRootRef: inputRef,
-            onChange: () => {},
             "data-testid": "input",
-            "aria-label": "input"
+            "aria-label": "input",
+            onMouseDown: () => {},
+            size: 100
           }
         }} />
     </React.Fragment>

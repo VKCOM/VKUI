@@ -17,6 +17,18 @@ const App = () => {
         inputValue="value"
         defaultInputValue="defaultValue"
         onInputChange={onInputChange}
+        required
+        disabled={false}
+        readOnly={true}
+        onFocus={() => {}}
+        onBlur={() => {}}
+        onKeyDown={() => {}}
+        onChange={() => {}}
+        onClick={() => {}}
+        onMouseDown={() => {}}
+        onChangeStart={() => {}}
+        onClose={() => {}}
+        onOpen={() => {}}
       />
     </React.Fragment>
   );

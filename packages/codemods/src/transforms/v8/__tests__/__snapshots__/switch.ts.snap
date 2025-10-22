@@ -12,6 +12,8 @@ const App = () => {
       <Switch
         id="switch"
         name="switch"
+        tabIndex={-1}
+        autoFocus
         checked
         onChange={() => {}}
         slotProps={{
@@ -21,7 +23,8 @@ const App = () => {
             "data-testid": "switch",
             "aria-checked": "checked",
             "aria-label": "switch",
-            onClick: () => {}
+            onClick: () => {},
+            placeholder: "switch"
           }
         }} />
     </React.Fragment>

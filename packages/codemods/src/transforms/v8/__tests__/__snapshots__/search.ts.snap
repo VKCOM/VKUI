@@ -13,11 +13,19 @@ const App = () => {
         value=""
         onChange={() => {}}
         after={null}
+        name="input"
+        autoComplete="off"
+        placeholder="Search"
+        onIconClick={() => {}}
+        onFindButtonClick={() => {}}
+        onFocus={() => {}}
+        onBlur={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
-            "aria-label": "input"
+            "aria-label": "input",
+            onClick: () => {}
           }
         }} />
     </React.Fragment>

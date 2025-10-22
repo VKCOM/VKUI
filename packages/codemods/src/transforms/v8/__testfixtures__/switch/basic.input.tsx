@@ -9,6 +9,9 @@ const App = () => {
       <Switch
         id="switch"
         name="switch"
+        tabIndex={-1}
+        autoFocus
+        placeholder="switch"
         checked
         onChange={() => {}}
         onClick={() => {}}

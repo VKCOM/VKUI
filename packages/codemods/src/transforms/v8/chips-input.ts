@@ -1,7 +1,13 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
-import { movePropIntoSlotProps } from './common/movePropIntoSlotProps';
+import { moveCallbacksIntoSlotProps } from './common/moveCallbacksIntoSlotProps';
+import { moveInputPropsIntoSlotProps } from './common/moveInputPropsIntoSlotProps';
+import {
+  moveAriaAttrsIntoSlotProps,
+  moveDataAttrsIntoSlotProps,
+  movePropIntoSlotProps,
+} from './common/movePropIntoSlotProps';
 
 export const parser = 'tsx';
 
@@ -20,42 +26,29 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       slotPropName: 'getRootRef',
     });
 
-    movePropIntoSlotProps(j, {
+    moveDataAttrsIntoSlotProps(j, {
       root: source,
       componentName: localName,
-      propName: 'inputValue',
-      slotName: 'input',
-      slotPropName: 'value',
-    });
-
-    movePropIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      propName: 'defaultInputValue',
-      slotName: 'input',
-      slotPropName: 'defaultValue',
-    });
-
-    movePropIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      propName: 'onInputChange',
-      slotName: 'input',
-      slotPropName: 'onChange',
-    });
-
-    movePropIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      propName: /data-.+/,
       slotName: 'input',
     });
 
-    movePropIntoSlotProps(j, {
+    moveAriaAttrsIntoSlotProps(j, {
       root: source,
       componentName: localName,
-      propName: /aria-.+/,
       slotName: 'input',
+    });
+
+    moveCallbacksIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      slotName: 'input',
+      excludedProps: ['onFocus', 'onBlur', 'onKeyDown', 'onChange', 'onInputChange'],
+    });
+
+    moveInputPropsIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      excludedProps: ['disabled', 'readOnly', 'placeholder', 'value'],
     });
   }
 

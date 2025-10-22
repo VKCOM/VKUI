@@ -12,6 +12,9 @@ const App = () => {
       <Radio
         id="radio"
         name="radio"
+        tabIndex={-1}
+        autoFocus
+        required
         checked
         onChange={() => {}}
         description="description"
@@ -25,20 +28,25 @@ const App = () => {
             getRootRef: inputRef,
             "data-testid": "radio",
             "aria-label": "radio",
-            onClick: () => {}
+            onClick: () => {},
+            placeholder: "radio"
           }
         }} />
       <Radio.Input
-        checked
         id="radio"
         name="radio"
+        tabIndex={-1}
+        autoFocus
+        required
+        checked
         onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "radio",
             "aria-label": "radio",
-            onClick: () => {}
+            onClick: () => {},
+            placeholder: "radio"
           }
         }} />
     </React.Fragment>

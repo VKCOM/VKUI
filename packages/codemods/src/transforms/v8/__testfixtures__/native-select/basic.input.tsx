@@ -14,6 +14,13 @@ const App = () => {
         aria-label="select"
         data-testid="select"
         getRef={selectRef}
+        disabled={false}
+        required
+        size={100}
+        onClick={() => {}}
+        onBlur={() => {}}
+        onFocus={() => {}}
+        onMouseDown={() => {}}
       >
         <option value="1">1</option>
         <option value="2">2</option>

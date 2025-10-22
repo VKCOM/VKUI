@@ -184,10 +184,10 @@ function moveJsxPropIntoSlotProps(
   }
 }
 
-function moveJsxPropsIntoSlotPropsByRegExp(
+function moveMultipleJsxPropsIntoSlotProps(
   j: JSCodeshift,
   element: JSXElement,
-  propName: RegExp,
+  propName: RegExp | string[],
   slotName: string,
   excludedProps?: string[],
 ) {
@@ -195,14 +195,22 @@ function moveJsxPropsIntoSlotPropsByRegExp(
   if (!attributes) {
     return;
   }
+
+  const checkMatch = (attrName: string) => {
+    return (
+      ((propName instanceof RegExp && propName.test(attrName)) ||
+        (propName instanceof Array && propName.includes(attrName))) &&
+      !excludedProps?.includes(attrName)
+    );
+  };
+
   [...attributes]
     .reverse()
     .forEach(
       (attr) =>
         attr.type === 'JSXAttribute' &&
         typeof attr.name.name === 'string' &&
-        propName.test(attr.name.name) &&
-        !excludedProps?.includes(attr.name.name) &&
+        checkMatch(attr.name.name) &&
         moveJsxPropIntoSlotProps(j, element, attr.name.name, slotName, attr.name.name),
     );
 }
@@ -220,7 +228,7 @@ function moveJsxPropIntoSlotPropsByName(
 type MovePropsOptions = {
   root: Collection;
   componentName: string;
-  propName: string | RegExp;
+  propName: string | RegExp | string[];
   slotName: string;
   excludedProps?: string[];
   slotPropName?: string;
@@ -233,7 +241,37 @@ export function movePropIntoSlotProps(j: JSCodeshift, options: MovePropsOptions)
     if (typeof propName === 'string') {
       moveJsxPropIntoSlotPropsByName(j, elementPath.node, propName, slotName, slotPropName);
     } else {
-      moveJsxPropsIntoSlotPropsByRegExp(j, elementPath.node, propName, slotName, excludedProps);
+      moveMultipleJsxPropsIntoSlotProps(j, elementPath.node, propName, slotName, excludedProps);
     }
+  });
+}
+
+type MoveCommonAttrsOptions = {
+  root: Collection;
+  componentName: string;
+  slotName: string;
+};
+
+export function moveDataAttrsIntoSlotProps(
+  j: JSCodeshift,
+  { root, componentName, slotName }: MoveCommonAttrsOptions,
+) {
+  movePropIntoSlotProps(j, {
+    root,
+    componentName,
+    propName: /data-.+/,
+    slotName,
+  });
+}
+
+export function moveAriaAttrsIntoSlotProps(
+  j: JSCodeshift,
+  { root, componentName, slotName }: MoveCommonAttrsOptions,
+) {
+  movePropIntoSlotProps(j, {
+    root,
+    componentName,
+    propName: /aria-.+/,
+    slotName,
   });
 }

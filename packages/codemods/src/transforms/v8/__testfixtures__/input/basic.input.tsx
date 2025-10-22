@@ -11,7 +11,13 @@ const App = () => {
         aria-label="input"
         data-testid="input"
         getRef={inputRef}
-
+        name="input"
+        minLength={0}
+        maxLength={0}
+        placeholder="value"
+        onChange={() => {}}
+        onFocus={() => {}}
+        onClick={() => {}}
       />
     </React.Fragment>
   );

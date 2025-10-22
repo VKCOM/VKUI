@@ -1,6 +1,8 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
+import { moveCallbacksIntoSlotProps } from './common/moveCallbacksIntoSlotProps';
+import { moveInputPropsIntoSlotProps } from './common/moveInputPropsIntoSlotProps';
 import { movePropIntoSlotProps } from './common/movePropIntoSlotProps';
 
 export const parser = 'tsx';
@@ -23,30 +25,6 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     movePropIntoSlotProps(j, {
       root: source,
       componentName: localName,
-      propName: 'inputValue',
-      slotName: 'input',
-      slotPropName: 'value',
-    });
-
-    movePropIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      propName: 'defaultInputValue',
-      slotName: 'input',
-      slotPropName: 'defaultValue',
-    });
-
-    movePropIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      propName: 'onInputChange',
-      slotName: 'input',
-      slotPropName: 'onChange',
-    });
-
-    movePropIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
       propName: /data-.+/,
       slotName: 'input',
     });
@@ -56,6 +34,28 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       componentName: localName,
       propName: /aria-.+/,
       slotName: 'input',
+    });
+
+    moveCallbacksIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      slotName: 'input',
+      excludedProps: [
+        'onFocus',
+        'onBlur',
+        'onKeyDown',
+        'onChange',
+        'onInputChange',
+        'onChangeStart',
+        'onClose',
+        'onOpen',
+      ],
+    });
+
+    moveInputPropsIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      excludedProps: ['disabled', 'readOnly', 'placeholder', 'value'],
     });
   }
 

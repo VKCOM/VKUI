@@ -1,8 +1,13 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
-import { moveAllPropsIntoSlotProp } from './common/moveAllPropsIntoSlotProp';
-import { movePropIntoSlotProps } from './common/movePropIntoSlotProps';
+import { moveCallbacksIntoSlotProps } from './common/moveCallbacksIntoSlotProps';
+import { moveInputPropsIntoSlotProps } from './common/moveInputPropsIntoSlotProps';
+import {
+  moveAriaAttrsIntoSlotProps,
+  moveDataAttrsIntoSlotProps,
+  movePropIntoSlotProps,
+} from './common/movePropIntoSlotProps';
 
 export const parser = 'tsx';
 
@@ -21,40 +26,39 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       slotPropName: 'getRootRef',
     });
 
-    moveAllPropsIntoSlotProp(j, {
+    moveDataAttrsIntoSlotProps(j, {
       root: source,
       componentName: localName,
       slotName: 'input',
-      excludedProps: [
-        'getRootRef',
-        'className',
-        'style',
-        'children',
-        'align',
-        'size',
-        'mode',
-        'stretched',
-        'before',
-        'after',
-        'loading',
-        'getRef',
-        'appearance',
+    });
 
+    moveAriaAttrsIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      slotName: 'input',
+    });
+
+    moveCallbacksIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      slotName: 'input',
+      excludedProps: ['onChange', 'onInvalid', 'onFocus', 'onBlur'],
+    });
+
+    moveInputPropsIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      excludedProps: [
+        'checked',
         'disabled',
         'readOnly',
         'required',
-        'autoFocus',
-
-        'id',
         'name',
         'value',
-
         'accept',
         'multiple',
-
-        'tabIndex',
-        'onChange',
-        'onInvalid',
+        'type',
+        'size',
       ],
     });
   }

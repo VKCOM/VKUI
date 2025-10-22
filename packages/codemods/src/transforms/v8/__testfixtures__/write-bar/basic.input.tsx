@@ -12,6 +12,16 @@ const App = () => {
         aria-label="text-area"
         data-testid="text-area"
         getRef={textAreaRef}
+        onHeightChange={() => {}}
+        onFocus={() => {}}
+        onBlur={() => {}}
+        onClick={() => {}}
+        rows={4}
+        cols={10}
+        maxLength={100}
+        minLength={100}
+        disabled={false}
+        readOnly
       />
     </React.Fragment>
   );

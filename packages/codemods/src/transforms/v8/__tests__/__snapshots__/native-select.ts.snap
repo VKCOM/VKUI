@@ -14,11 +14,18 @@ const App = () => {
       <NativeSelect
         value="value"
         onChange={() => {}}
+        disabled={false}
+        required
+        onClick={() => {}}
+        onBlur={() => {}}
+        onFocus={() => {}}
         slotProps={{
           select: {
             getRootRef: selectRef,
             "data-testid": "select",
-            "aria-label": "select"
+            "aria-label": "select",
+            onMouseDown: () => {},
+            size: 100
           }
         }}>
         <option value="1">1</option>

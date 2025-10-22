@@ -7,12 +7,17 @@ const App = () => {
   return (
     <React.Fragment>
       <File
-        size="m"
         id="file"
+        name="file"
+        tabIndex={-1}
+        autoFocus
+        placeholder="file"
+        size="m"
         align="center"
         mode="secondary"
         stretched
         accept=".txt"
+        multiple
         onClick={() => {}}
         onChange={() => {}}
         aria-label="input"

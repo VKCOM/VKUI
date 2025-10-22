@@ -11,11 +11,18 @@ const App = () => {
     <React.Fragment>
       <Input
         value="value"
+        name="input"
+        minLength={0}
+        maxLength={0}
+        placeholder="value"
+        onChange={() => {}}
+        onFocus={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
-            "aria-label": "input"
+            "aria-label": "input",
+            onClick: () => {}
           }
         }} />
     </React.Fragment>

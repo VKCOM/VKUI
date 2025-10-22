@@ -9,6 +9,10 @@ const App = () => {
       <Radio
         id="radio"
         name="radio"
+        tabIndex={-1}
+        autoFocus
+        placeholder="radio"
+        required
         checked
         onClick={() => {}}
         onChange={() => {}}
@@ -22,9 +26,13 @@ const App = () => {
         getRef={inputRef}
       />
       <Radio.Input
-        checked
         id="radio"
         name="radio"
+        tabIndex={-1}
+        autoFocus
+        required
+        placeholder="radio"
+        checked
         onClick={() => {}}
         onChange={() => {}}
         aria-label="radio"

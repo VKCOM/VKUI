@@ -1,8 +1,13 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
-import { moveAllPropsIntoSlotProp } from './common/moveAllPropsIntoSlotProp';
-import { movePropIntoSlotProps } from './common/movePropIntoSlotProps';
+import { moveCallbacksIntoSlotProps } from './common/moveCallbacksIntoSlotProps';
+import { moveInputPropsIntoSlotProps } from './common/moveInputPropsIntoSlotProps';
+import {
+  moveAriaAttrsIntoSlotProps,
+  moveDataAttrsIntoSlotProps,
+  movePropIntoSlotProps,
+} from './common/movePropIntoSlotProps';
 
 export const parser = 'tsx';
 
@@ -22,48 +27,29 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         slotPropName: 'getRootRef',
       });
 
-      moveAllPropsIntoSlotProp(j, {
+      moveDataAttrsIntoSlotProps(j, {
         root: source,
         componentName,
         slotName: 'input',
-        excludedProps: [
-          'checked',
-          'defaultChecked',
-          'disabled',
-          'readOnly',
-          'required',
-          'autoFocus',
+      });
 
-          'id',
-          'name',
-          'value',
-          'tabIndex',
+      moveAriaAttrsIntoSlotProps(j, {
+        root: source,
+        componentName,
+        slotName: 'input',
+      });
 
-          'onChange',
-          'onInvalid',
+      moveCallbacksIntoSlotProps(j, {
+        root: source,
+        componentName,
+        slotName: 'input',
+        excludedProps: ['onChange', 'onInvalid', 'onFocus', 'onBlur'],
+      });
 
-          'children',
-          'className',
-          'style',
-          'getRootRef',
-          'getRef',
-          'description',
-          'hoverMode',
-          'activeMode',
-          'hasHover',
-          'hasActive',
-          'focusVisibleMode',
-          'titleAfter',
-          'noPadding',
-
-          'indeterminate',
-          'defaultIndeterminate',
-          'IconOnCompact',
-          'IconOnRegular',
-          'IconOffCompact',
-          'IconOffRegular',
-          'IconIndeterminate',
-        ],
+      moveInputPropsIntoSlotProps(j, {
+        root: source,
+        componentName,
+        excludedProps: ['checked', 'disabled', 'readOnly', 'required', 'name', 'value'],
       });
     });
   }

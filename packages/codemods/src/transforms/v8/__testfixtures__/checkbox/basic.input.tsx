@@ -7,6 +7,11 @@ const App = () => {
   return (
     <React.Fragment>
       <Checkbox
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
+        placeholder="checkbox"
         checked
         aria-label="checkbox"
         data-testid="checkbox"
@@ -20,6 +25,11 @@ const App = () => {
         getRef={inputRef}
       />
       <Checkbox
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
+        placeholder="checkbox"
         checked
         aria-label="checkbox"
         data-testid="checkbox"
@@ -35,6 +45,11 @@ const App = () => {
         Checkbox
       </Checkbox>
       <Checkbox.Input
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
+        placeholder="checkbox"
         checked
         aria-label="checkbox"
         data-testid="checkbox"

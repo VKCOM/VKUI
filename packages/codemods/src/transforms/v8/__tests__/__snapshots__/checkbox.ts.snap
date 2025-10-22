@@ -10,50 +10,65 @@ const App = () => {
   return (
     <React.Fragment>
       <Checkbox
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
         checked
         required
         description="description"
         indeterminate
         hasHover={false}
         onChange={() => {}}
+        onFocus={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
-            onFocus: () => {},
-            onClick: () => {},
             "data-testid": "checkbox",
-            "aria-label": "checkbox"
+            "aria-label": "checkbox",
+            onClick: () => {},
+            placeholder: "checkbox"
           }
         }} />
       <Checkbox
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
         checked
         required
         description="description"
         indeterminate
         hasHover={false}
         onChange={() => {}}
+        onFocus={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
-            onFocus: () => {},
-            onClick: () => {},
             "data-testid": "checkbox",
-            "aria-label": "checkbox"
+            "aria-label": "checkbox",
+            onClick: () => {},
+            placeholder: "checkbox"
           }
         }}>
         Checkbox
       </Checkbox>
       <Checkbox.Input
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
         checked
         required
         onChange={() => {}}
+        onFocus={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
-            onFocus: () => {},
-            onClick: () => {},
             "data-testid": "checkbox",
-            "aria-label": "checkbox"
+            "aria-label": "checkbox",
+            onClick: () => {},
+            placeholder: "checkbox"
           }
         }} />
     </React.Fragment>

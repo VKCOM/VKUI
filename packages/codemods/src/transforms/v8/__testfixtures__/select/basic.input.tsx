@@ -18,7 +18,17 @@ const App = () => {
         getRef={selectRef}
         getSelectInputRef={inputRef}
         nativeSelectTestId="select"
+        disabled={false}
+        required
+        size={100}
         onInputChange={() => {}}
+        onClick={() => {}}
+        onBlur={() => {}}
+        onFocus={() => {}}
+        onClose={() => {}}
+        onOpen={() => {}}
+        onInputKeyDown={() => {}}
+        onMouseDown={() => {}}
       />
     </React.Fragment>
   );

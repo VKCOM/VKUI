@@ -1,7 +1,13 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
-import { movePropIntoSlotProps } from './common/movePropIntoSlotProps';
+import { moveCallbacksIntoSlotProps } from './common/moveCallbacksIntoSlotProps';
+import {
+  moveAriaAttrsIntoSlotProps,
+  moveDataAttrsIntoSlotProps,
+  movePropIntoSlotProps,
+} from './common/movePropIntoSlotProps';
+import { moveTextAreaPropsIntoSlotProps } from './common/moveTextAreaPropsIntoSlotProps';
 
 export const parser = 'tsx';
 
@@ -16,22 +22,42 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       root: source,
       componentName: localName,
       propName: 'getRef',
-      slotName: 'input',
+      slotName: 'textArea',
       slotPropName: 'getRootRef',
     });
 
-    movePropIntoSlotProps(j, {
+    moveDataAttrsIntoSlotProps(j, {
       root: source,
       componentName: localName,
-      propName: /data-.+/,
-      slotName: 'input',
+      slotName: 'textArea',
     });
 
-    movePropIntoSlotProps(j, {
+    moveAriaAttrsIntoSlotProps(j, {
       root: source,
       componentName: localName,
-      propName: /aria-.+/,
-      slotName: 'input',
+      slotName: 'textArea',
+    });
+
+    moveCallbacksIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      slotName: 'textArea',
+      excludedProps: ['onChange', 'onInvalid', 'onHeightChange', 'onFocus', 'onBlur'],
+    });
+
+    moveTextAreaPropsIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      excludedProps: [
+        'value',
+        'rows',
+        'maxLength',
+        'minLength',
+        'disabled',
+        'placeholder',
+        'name',
+        'readOnly',
+      ],
     });
   }
 

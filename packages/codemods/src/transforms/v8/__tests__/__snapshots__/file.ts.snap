@@ -10,19 +10,24 @@ const App = () => {
   return (
     <React.Fragment>
       <File
-        size="m"
         id="file"
+        name="file"
+        tabIndex={-1}
+        autoFocus
+        size="m"
         align="center"
         mode="secondary"
         stretched
         accept=".txt"
+        multiple
         onChange={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
             "aria-label": "input",
-            onClick: () => {}
+            onClick: () => {},
+            placeholder: "file"
           }
         }} />
     </React.Fragment>

@@ -12,11 +12,21 @@ const App = () => {
       <WriteBar
         value="value"
         onChange={() => {}}
+        onHeightChange={() => {}}
+        onFocus={() => {}}
+        onBlur={() => {}}
+        rows={4}
+        maxLength={100}
+        minLength={100}
+        disabled={false}
+        readOnly
         slotProps={{
-          input: {
+          textArea: {
             getRootRef: textAreaRef,
             "data-testid": "text-area",
-            "aria-label": "text-area"
+            "aria-label": "text-area",
+            onClick: () => {},
+            cols: 10
           }
         }} />
     </React.Fragment>
