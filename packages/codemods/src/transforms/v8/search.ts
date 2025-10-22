@@ -49,7 +49,23 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       root: source,
       componentName: localName,
       slotName: 'input',
-      excludedProps: ['value', 'disabled', 'placeholder', 'name', 'readOnly', 'autoComplete'],
+      excludedProps: [
+        'alt',
+        'autoComplete',
+        'capture',
+        'disabled',
+        'list',
+        'max',
+        'maxLength',
+        'min',
+        'minLength',
+        'name',
+        'pattern',
+        'placeholder',
+        'readOnly',
+        'required',
+        'value',
+      ],
     });
   }
 

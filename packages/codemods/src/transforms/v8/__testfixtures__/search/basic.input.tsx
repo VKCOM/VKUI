@@ -8,6 +8,8 @@ const App = () => {
     <React.Fragment>
       <Search
         value=""
+        id="search"
+        disabled={false}
         onChange={() => {}}
         after={null}
         aria-label="input"

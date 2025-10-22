@@ -44,24 +44,6 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       slotName: 'input',
       excludedProps: ['onChange', 'onInput', 'onInvalid', 'onFocus', 'onBlur'],
     });
-
-    moveInputPropsIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      slotName: 'input',
-      excludedProps: [
-        'value',
-        'maxLength',
-        'minLength',
-        'disabled',
-        'placeholder',
-        'name',
-        'readOnly',
-        'required',
-        'size',
-        'autoComplete',
-      ],
-    });
   }
 
   return source.toSource();
