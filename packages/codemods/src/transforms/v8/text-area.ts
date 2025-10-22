@@ -7,7 +7,6 @@ import {
   moveDataAttrsIntoSlotProps,
   movePropIntoSlotProps,
 } from './common/movePropIntoSlotProps';
-import { moveTextAreaPropsIntoSlotProps } from './common/moveTextAreaPropsIntoSlotProps';
 
 export const parser = 'tsx';
 
@@ -43,22 +42,6 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       componentName: localName,
       slotName: 'textArea',
       excludedProps: ['onChange', 'onInvalid', 'onResize', 'onFocus', 'onBlur'],
-    });
-
-    moveTextAreaPropsIntoSlotProps(j, {
-      root: source,
-      componentName: localName,
-      excludedProps: [
-        'value',
-        'rows',
-        'maxLength',
-        'minLength',
-        'disabled',
-        'placeholder',
-        'name',
-        'autoComplete',
-        'readOnly',
-      ],
     });
   }
 
