@@ -50,14 +50,12 @@ export interface SnackbarProps
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
-   * - `content`: свойства для прокидывания в сам элемент `Snackbar.Basic`;
    * - `action`: свойства для прокидывания в кнопку действия.
    */
   slotProps?: {
     root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
       HasRootRef<HTMLDivElement> &
       HasDataAttribute;
-    content?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     action?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
   };
   /**
@@ -339,7 +337,6 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
               </Button>
             )
           }
-          {...slotProps?.content}
         >
           {children}
         </Basic>
