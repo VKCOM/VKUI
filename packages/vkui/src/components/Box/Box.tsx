@@ -8,6 +8,8 @@ export interface BoxProps
 
 /**
  * @see https://vkui.io/components/box
+ *
+ * @since 7.9.0
  */
 export const Box = ({ className, style, ...restProps }: BoxProps) => {
   const resolvedProps = resolveLayoutProps(restProps);

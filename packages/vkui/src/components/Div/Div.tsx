@@ -11,7 +11,7 @@ const warn = warnOnce('Div');
 /**
  * @see https://vkui.io/components/div
  *
- * @deprecated Будет удалено в **VKUI v9**.
+ * @deprecated Since 7.9.0. Будет удалено в **VKUI v9**.
  * Используйте компонент `Box`.
  */
 export const Div = (props: DivProps): React.ReactNode => {
