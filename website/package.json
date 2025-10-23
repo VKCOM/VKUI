@@ -11,18 +11,18 @@
     "generate": "node ./scripts/generate-props/generate-props.mjs"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "15.5.4",
+    "@next/bundle-analyzer": "15.5.6",
     "@shikijs/transformers": "^3.13.0",
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-docs-theme": "workspace:^",
-    "next": "^15.5.4",
+    "next": "^15.5.6",
     "next-sitemap": "^4.2.3",
     "nextra": "^4.6.0",
     "pagefind": "^1.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-live": "^4.1.8",
-    "slug": "^11.0.0",
+    "slug": "^11.0.1",
     "typescript": "*",
     "zustand": "^5.0.8"
   }
