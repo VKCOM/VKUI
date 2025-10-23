@@ -1,5 +1,3 @@
-import './styles/adaptivity.module.css';
-import './styles/animationFades.module.css';
 import './styles/constants.css';
 import './styles/adaptivity.module.css';
 import './styles/dynamicTokens.css';
