@@ -156,6 +156,30 @@ return (
   ```
 </Playground>
 
+## Параметры анимации
+
+С помощью свойств `animationDuration` и `animationEasing` можно изменить такие параметры анимации смены слайдов, как длительность
+и функция анимации соответственно. Свойство `animationEasing` принимает одно из предопределенных значений анимации или позволяет
+задать пользовательское значение через массив, элементы которого соответствуют параметрам аналогичной CSS-функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier).
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery
+    slideWidth="90%"
+    bullets="dark"
+    showArrows
+    animationDuration={1000}
+    animationEasing={[0, 0, 0.2, 1]}
+  >
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
+  </Gallery>
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 ### 1. Навигация

@@ -16,8 +16,8 @@ import { Bullets } from './Bullets';
 import { CarouselViewPort } from './CarouselViewPort';
 import { ScrollArrows } from './ScrollArrows';
 import {
-  ANIMATION_DURATION,
   CONTROL_ELEMENTS_STATE,
+  DEFAULT_ANIMATION_DURATION,
   SLIDE_THRESHOLD,
   SLIDES_MANAGER_STATE,
 } from './constants';
@@ -67,6 +67,8 @@ export const CarouselBase = ({
   nextArrowTestId,
   prevArrowTestId,
   looped = false,
+  animationDuration = DEFAULT_ANIMATION_DURATION,
+  animationEasing = 'ease',
 
   // a11y
   'aria-roledescription': ariaRoleDescription = 'Карусель',
@@ -88,8 +90,13 @@ export const CarouselBase = ({
   const shiftXCurrentRef = React.useRef<number>(0);
   const shiftXDeltaRef = React.useRef<number>(0);
   const initialized = React.useRef<boolean>(false);
-  const { animationInQueue, addToAnimationQueue, getAnimateFunction, startAnimation } =
-    useSlideAnimation();
+  const {
+    animationInQueue,
+    addToAnimationQueue,
+    getAnimateFunction,
+    startAnimation,
+    getAnimationEasing,
+  } = useSlideAnimation(animationDuration, animationEasing);
   const isDragging = React.useRef(false);
 
   const [controlElementsState, setControlElementsState] =
@@ -155,7 +162,7 @@ export const CarouselBase = ({
 
       layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
       layerRef.current.style.transition = animation
-        ? `transform ${ANIMATION_DURATION}ms cubic-bezier(.1, 0, .25, 1)`
+        ? `transform ${animationDuration}ms ${getAnimationEasing()}`
         : '';
     }
   };
