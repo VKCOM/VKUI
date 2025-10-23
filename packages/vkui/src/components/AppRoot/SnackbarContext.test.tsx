@@ -3,7 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { type SnackbarApi } from '../../hooks/useSnackbar';
 import { SnackbarsController, useSnackbarApi } from './SnackbarContext';
 
-const TestComponent: React.FC<{ apiRef: React.RefObject<SnackbarApi | null> }> = ({ apiRef }) => {
+const TestComponent: React.FC<{ apiRef: React.RefObject<SnackbarApi.Api | null> }> = ({
+  apiRef,
+}) => {
   const snackbarApi = useSnackbarApi();
 
   React.useImperativeHandle(apiRef, () => snackbarApi);
@@ -12,7 +14,7 @@ const TestComponent: React.FC<{ apiRef: React.RefObject<SnackbarApi | null> }> =
 };
 
 describe('SnackbarContext', () => {
-  const apiRef: React.RefObject<SnackbarApi | null> = {
+  const apiRef: React.RefObject<SnackbarApi.Api | null> = {
     current: null,
   };
 

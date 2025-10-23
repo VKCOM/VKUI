@@ -10,19 +10,15 @@ import {
   SnackbarsContainerContext,
   type SnackbarsContainerContextData,
 } from './SnackbarsContainerContext';
-import {
-  type SnackbarItem,
-  type SnackbarsVerticalOffset,
-  type UseSnackbarParameters,
-} from './types';
+import { type SnackbarApi, type SnackbarItem, type UseSnackbar } from './types';
 import styles from './SnackbarsContainer.module.css';
 /* eslint-disable jsdoc/require-jsdoc */
 
 interface SnackbarsContainerProps
-  extends Pick<UseSnackbarParameters, 'verticalOffsetTop' | 'verticalOffsetBottom'> {
+  extends Pick<UseSnackbar.Parameters, 'verticalOffsetTop' | 'verticalOffsetBottom'> {
   snackbars: SnackbarItem[];
   placement: SnackbarPlacement;
-  onSnackbarShow: (id: string) => void;
+  onSnackbarOpen: (id: string) => void;
   onSnackbarContainerClosed: (id: string) => void;
 }
 
@@ -35,7 +31,7 @@ const placementClassNames = {
   'bottom': styles.placementBottom,
 };
 
-const resolveOffset = (offset: SnackbarsVerticalOffset | undefined): string => {
+const resolveOffset = (offset: SnackbarApi.VerticalOffset | undefined): string => {
   if (typeof offset === 'undefined') {
     return '';
   }
@@ -45,7 +41,7 @@ const resolveOffset = (offset: SnackbarsVerticalOffset | undefined): string => {
 export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
   snackbars,
   placement,
-  onSnackbarShow,
+  onSnackbarOpen,
   onSnackbarContainerClosed: onSnackbarContainerClosedProp,
   verticalOffsetTop,
   verticalOffsetBottom,
@@ -72,9 +68,9 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
     () => ({
       isInsideSnackbarContainer: true,
       onSnackbarClosed,
-      onSnackbarShow,
+      onSnackbarOpen,
     }),
-    [onSnackbarClosed, onSnackbarShow],
+    [onSnackbarClosed, onSnackbarOpen],
   );
 
   const containerStyles: CSSCustomProperties = {

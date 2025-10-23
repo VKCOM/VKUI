@@ -4,17 +4,12 @@ import { Button } from '../../components/Button/Button';
 import { Flex } from '../../components/Flex/Flex';
 import { Snackbar } from '../../components/Snackbar/Snackbar';
 import { waitCSSKeyframesAnimation, withFakeTimers } from '../../testing/utils';
-import {
-  type CustomSnackbarProps,
-  type OpenSnackbarReturn,
-  type SnackbarApi,
-  type UseSnackbarParameters,
-} from './types';
+import { type CustomSnackbar, type SnackbarApi, type UseSnackbar } from './types';
 import { useSnackbar } from './useSnackbar';
 
 const TestComponent: React.FC<
-  UseSnackbarParameters & {
-    apiRef: React.RefObject<SnackbarApi | null>;
+  UseSnackbar.Parameters & {
+    apiRef: React.RefObject<SnackbarApi.Api | null>;
   }
 > = ({ apiRef, maxSnackbarsCount, queueStrategy }) => {
   const [snackbarApi, snackbar] = useSnackbar({ maxSnackbarsCount, queueStrategy });
@@ -25,7 +20,7 @@ const TestComponent: React.FC<
 };
 
 describe('useSnackbar', () => {
-  const apiRef: React.RefObject<SnackbarApi | null> = {
+  const apiRef: React.RefObject<SnackbarApi.Api | null> = {
     current: null,
   };
 
@@ -156,7 +151,7 @@ describe('useSnackbar', () => {
     withFakeTimers(async () => {
       render(<TestComponent apiRef={apiRef} />);
 
-      let snackbarApi: OpenSnackbarReturn | null = null;
+      let snackbarApi: SnackbarApi.OpenSnackbarReturn | null = null;
 
       act(() => {
         snackbarApi = apiRef.current!.open({
@@ -250,7 +245,7 @@ describe('useSnackbar', () => {
         snackbarProps,
         update,
         close,
-      }: CustomSnackbarProps<{ additionalAction: VoidFunction }>) => {
+      }: CustomSnackbar.Props<{ additionalAction: VoidFunction }>) => {
         return (
           <Snackbar data-testid="snackbar" action="Поделиться" {...snackbarProps}>
             Test Snackbar
@@ -301,7 +296,7 @@ describe('useSnackbar', () => {
   it('should open custom modal without props', async () => {
     render(<TestComponent apiRef={apiRef} />);
 
-    const SnackbarComponent = ({ snackbarProps }: CustomSnackbarProps) => {
+    const SnackbarComponent = ({ snackbarProps }: CustomSnackbar.Props) => {
       return (
         <Snackbar data-testid="snackbar" action="Поделиться" {...snackbarProps}>
           Test Snackbar

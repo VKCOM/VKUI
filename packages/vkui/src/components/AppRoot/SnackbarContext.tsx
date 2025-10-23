@@ -7,7 +7,7 @@ import { useSnackbar } from '../../hooks/useSnackbar';
 import { type SnackbarApi } from '../../hooks/useSnackbar';
 import { type HasChildren } from '../../types';
 
-const SnackbarApiContext = React.createContext<SnackbarApi>({
+const SnackbarApiContext = React.createContext<SnackbarApi.Api>({
   open: () => ({
     id: '',
     close: noop,

@@ -8,11 +8,11 @@ import { Icon24ThumbsUpOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
 import { Checkbox } from '../../components/Checkbox/Checkbox';
 import { Flex } from '../../components/Flex/Flex';
-import { useSnackbar, type UseSnackbarParameters } from '../../hooks/useSnackbar';
+import { useSnackbar, type UseSnackbar } from '../../hooks/useSnackbar';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { type SnackbarPlacement, type SnackbarProps } from './types';
 
-const story: Meta<UseSnackbarParameters> = {
+const story: Meta<UseSnackbar.Parameters> = {
   title: 'Utils/useSnackbar',
   component: () => <div />,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
@@ -35,7 +35,7 @@ const story: Meta<UseSnackbarParameters> = {
 
 export default story;
 
-type Story = StoryObj<UseSnackbarParameters>;
+type Story = StoryObj<UseSnackbar.Parameters>;
 
 const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
   'top-start',

@@ -85,11 +85,11 @@ export interface SnackbarProps
   /**
    * Обработчик, срабатывающий при окончании свайпа снекбара, когда он должен закрыться.
    */
-  onSwipeEnd?: () => void;
+  onCloseWithSwipe?: () => void;
   /**
    * Обработчик, срабатывающий при окончании таймера, длительность, которого задана свойством `duration`.
    */
-  onDurationEnd?: () => void;
+  onCloseAfterTimeout?: () => void;
   /**
    * Время в миллисекундах, через которое плашка скроется.
    */
@@ -131,8 +131,8 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   slotProps,
   open: openProp,
-  onSwipeEnd,
-  onDurationEnd,
+  onCloseWithSwipe,
+  onCloseAfterTimeout,
   id,
   ...restProps
 }: SnackbarProps) => {
@@ -152,10 +152,10 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   );
 
   const platform = usePlatform();
-  const { isInsideSnackbarContainer, onSnackbarShow, onSnackbarClosed } =
+  const { isInsideSnackbarContainer, onSnackbarOpen, onSnackbarClosed } =
     useContext(SnackbarsContainerContext);
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(openProp !== undefined ? openProp : true);
   const [touched, setTouched] = React.useState(false);
 
   const direction = useConfigDirection();
@@ -174,7 +174,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
     {
-      onEnter: id ? () => onSnackbarShow(id) : undefined,
+      onEnter: id ? () => onSnackbarOpen(id) : undefined,
       onExited: callMultiple(onClose, id ? () => onSnackbarClosed(id) : undefined),
     },
     false,
@@ -279,7 +279,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       )
     ) {
       close();
-      onSwipeEnd?.();
+      onCloseWithSwipe?.();
     }
 
     setTouched(false);
@@ -292,7 +292,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       }
       const onTimeout = () => {
         close();
-        onDurationEnd?.();
+        onCloseAfterTimeout?.();
       };
 
       closeTimeoutIdRef.current = setTimeout(onTimeout, duration);
