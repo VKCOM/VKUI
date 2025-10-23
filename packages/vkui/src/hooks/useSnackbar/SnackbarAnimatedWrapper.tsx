@@ -39,11 +39,15 @@ export const SnackbarAnimatedWrapper: React.FC<{
   );
 
   useEffect(() => {
-    if (ref.current && animationState === 'entered') {
-      ref.current?.style.setProperty(
-        '--vkui_internal--SnackbarAnimatedWrapper_height',
-        `${ref.current.offsetHeight}px`,
-      );
+    if (ref.current) {
+      if (animationState === 'entered') {
+        ref.current.style.setProperty(
+          '--vkui_internal--SnackbarAnimatedWrapper_height',
+          `${ref.current.offsetHeight}px`,
+        );
+      } else {
+        ref.current.style.removeProperty('--vkui_internal--SnackbarAnimatedWrapper_height');
+      }
     }
   }, [animationState]);
 

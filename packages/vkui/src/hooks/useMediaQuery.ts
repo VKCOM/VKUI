@@ -2,6 +2,10 @@ import * as React from 'react';
 import { useDOM } from '../lib/dom';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 
+const getMediaQuery = (window: Window | undefined, query: string) => {
+  return !!window && typeof window.matchMedia === 'function' ? window.matchMedia(query) : undefined;
+};
+
 /**
  * Хук для определения соответствия медиазапросу
  * @param query - Медиазапрос, например `(min-width: 1024px)` или `(--desktop)`
@@ -9,17 +13,14 @@ import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/
  */
 export function useMediaQuery(query: string): boolean {
   const { window } = useDOM();
-  const [matches, setMatches] = React.useState(false);
+  // eslint-disable-next-line no-restricted-properties
+  const [matches, setMatches] = React.useState(() => !!getMediaQuery(window, query)?.matches);
 
   React.useEffect(() => {
-    if (!window) {
+    const mediaQuery = getMediaQuery(window, query);
+    if (!mediaQuery) {
       return;
     }
-    if (typeof window.matchMedia !== 'function') {
-      return;
-    }
-
-    const mediaQuery = window.matchMedia(query);
 
     // eslint-disable-next-line no-restricted-properties
     const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
