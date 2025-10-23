@@ -459,7 +459,16 @@ export { usePagination } from './hooks/usePagination';
 export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
 export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
+export {
+  useModalRoot,
+  type ModalRootApi,
+  type CustomModalProps,
+  type OpenModalCardProps,
+  type OpenModalPageProps,
+  type CustomModalPayload,
+} from './hooks/useModalRoot';
 export { useScrollLock, useManualScroll as useScroll } from './components/AppRoot/ScrollContext';
+export { useModalsApi } from './components/AppRoot/ModalContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
