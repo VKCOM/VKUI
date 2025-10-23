@@ -1,0 +1,1 @@
+function n(r){return r<=36?12:r>36&&r<=48?16:r>48&&r<=64?20:n.MAX_SIZE}n.MAX_SIZE=24;function t(r){return r<=20?12:r>20&&r<=24?16:r>24&&r<=28?18:r>28&&r<=40?20:r>40&&r<=48?24:r>48&&r<=88?28:t.MAX_SIZE}t.MAX_SIZE=32;export{t as a,n as g};
