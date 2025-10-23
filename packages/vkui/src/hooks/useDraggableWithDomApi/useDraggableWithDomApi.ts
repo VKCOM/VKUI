@@ -229,6 +229,7 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
         if (prevDragging) {
           return prevDragging;
         }
+        cleanupItems();
         initializeScrollRefs(draggingEl);
         initializeItems(draggingEl);
         return true;

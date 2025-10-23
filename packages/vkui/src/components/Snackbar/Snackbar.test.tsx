@@ -1,4 +1,5 @@
-import { type EventType, render } from '@testing-library/react';
+import * as React from 'react';
+import { type EventType, fireEvent, render, screen } from '@testing-library/react';
 import { MEDIA_QUERIES, ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
@@ -65,6 +66,59 @@ describe(Snackbar, () => {
   });
 
   baselineComponent((props) => <Snackbar onClose={vi.fn()} {...props} />);
+
+  it('should work correctly with slotProps', () => {
+    const rootRef1 = React.createRef<HTMLDivElement>();
+    const rootRef2 = React.createRef<HTMLDivElement>();
+    const actionRef = React.createRef<HTMLElement>();
+    const onActionClick1 = vi.fn();
+    const onActionClick2 = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+
+    render(
+      <Snackbar
+        onClose={vi.fn()}
+        getRootRef={rootRef1}
+        action="Action"
+        onActionClick={onActionClick1}
+        onClick={onRootClick1}
+        slotProps={{
+          root: {
+            'getRootRef': rootRef2,
+            'data-testid': 'root',
+            'onClick': onRootClick2,
+            'className': 'rootClassName',
+          },
+          action: {
+            'getRootRef': actionRef,
+            'data-testid': 'action',
+            'onClick': onActionClick2,
+            'className': 'actionClassName',
+          },
+        }}
+      />,
+    );
+
+    const root = screen.getByTestId('root');
+    expect(root).toBeInTheDocument();
+    expect(root).toHaveClass('rootClassName');
+    expect(rootRef1.current).toBe(root);
+    expect(rootRef2.current).toBe(root);
+
+    const action = screen.getByTestId('action');
+    expect(action).toBeInTheDocument();
+    expect(action).toHaveClass('actionClassName');
+    expect(actionRef.current).toBe(action);
+
+    fireEvent.click(action);
+    expect(onActionClick1).toHaveBeenCalledTimes(1);
+    expect(onActionClick2).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(root);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
+  });
 
   it.each(PLACEMENT_VITEST_EACH_TABLE)(
     'should set offsetY relative placement="%s"',
@@ -150,8 +204,10 @@ describe(Snackbar, () => {
     const result = render(
       <Snackbar
         action={<span data-testid="action">action</span>}
-        onActionClick={onActionClick}
         onClose={onClose}
+        slotProps={{
+          action: { onClick: onActionClick },
+        }}
       />,
     );
     await fireEventPatch(result.getByTestId('action'), 'click');

@@ -8,6 +8,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SnackbarsContainerContext } from '../../hooks/useSnackbar/SnackbarsContainerContext';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
@@ -15,7 +16,7 @@ import { callMultiple } from '../../lib/callMultiple';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { HasDataAttribute, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Basic, type BasicProps } from './subcomponents/Basic/Basic';
@@ -49,6 +50,17 @@ const animationStateClassNames = {
 export interface SnackbarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'role'>,
     BasicProps {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `action`: свойства для прокидывания в кнопку действия.
+   */
+  slotProps?: {
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
+    action?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+  };
   /**
    * Задаёт расположение компонента.
    *
@@ -110,18 +122,35 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   before,
   after,
   duration = 4000,
-  onActionClick,
+  onActionClick: onActionClickProp,
   onClose,
   mode = 'default',
   subtitle,
   offsetY,
-  getRootRef,
+  getRootRef: getRootRefProp,
+
+  slotProps,
   open: openProp,
   onSwipeEnd,
   onDurationEnd,
   id,
   ...restProps
 }: SnackbarProps) => {
+  const { getRootRef, ...rootRest } = useMergeProps(
+    {
+      getRootRef: getRootRefProp,
+      ...restProps,
+    },
+    slotProps?.root,
+  );
+
+  const { onClick: onActionClick, ...actionRest } = useMergeProps(
+    {
+      onClick: onActionClickProp,
+    },
+    slotProps?.action,
+  );
+
   const platform = usePlatform();
   const { isInsideSnackbarContainer, onSnackbarShow, onSnackbarClosed } =
     useContext(SnackbarsContainerContext);
@@ -200,7 +229,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const handleActionClick = (event: React.MouseEvent) => {
     close();
     if (action) {
-      onActionClick?.(event);
+      onActionClick?.(event as React.MouseEvent<HTMLElement>);
     }
   };
 
@@ -299,7 +328,6 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   return (
     <RootComponent
-      {...restProps}
       id={id}
       role="presentation"
       baseClassName={classNames(
@@ -313,6 +341,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       )}
       baseStyle={resolveOffsetYCssStyle(placement, offsetY)}
       getRootRef={rootRef}
+      {...rootRest}
     >
       <div
         role="alert"
@@ -348,6 +377,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
                 }
                 size="s"
                 onClick={handleActionClick}
+                {...actionRest}
               >
                 {action}
               </Button>
