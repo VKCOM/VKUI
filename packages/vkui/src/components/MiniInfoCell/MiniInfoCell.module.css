@@ -70,7 +70,7 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .middle :global(.vkuiIcon) {
   margin-inline-start: var(--vkui--spacing_size_xs);
-  color: var(--vkui--color_text_accent);
+  color: var(--vkui--color_icon_secondary);
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
