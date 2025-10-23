@@ -519,3 +519,5 @@ export { ViewInfinite as unstable_ViewInfinite } from './components/View/ViewInf
 export type { ViewInfiniteProps as unstable_ViewInfiniteProps } from './components/View/ViewInfinite';
 export { ModalPageFooter as unstable_ModalPageFooter } from './components/ModalPageFooter/ModalPageFooter';
 export type { ModalPageFooterProps as unstable_ModalPageFooterProps } from './components/ModalPageFooter/ModalPageFooter';
+
+import './styles/common.css';
