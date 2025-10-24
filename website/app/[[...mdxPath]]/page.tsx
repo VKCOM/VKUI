@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { generateStaticParamsFor, importPage } from 'nextra/pages';
 import { useMDXComponents } from '../../mdx-components';
 
@@ -23,10 +22,6 @@ export default async function Page(props: PageProps) {
   const params = await props.params;
   const result = await importPage(params.mdxPath);
   const { default: MDXContent, toc, metadata, sourceCode } = result;
-
-  if (!params.mdxPath) {
-    redirect('/overview/about');
-  }
 
   return (
     <Wrapper toc={toc} metadata={metadata} sourceCode={sourceCode}>
