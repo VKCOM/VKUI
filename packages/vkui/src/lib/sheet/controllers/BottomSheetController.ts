@@ -341,7 +341,7 @@ export class BottomSheetController {
     currentY: number,
     direction: -1 | 1,
   ): number {
-    const foundIndex = snapPointDetents.findIndex((i) => i === currentY);
+    const foundIndex = snapPointDetents.indexOf(currentY);
     switch (direction) {
       case -1:
         return snapPointDetents[foundIndex + 1] ?? snapPointDetents[snapPointDetents.length - 1];
