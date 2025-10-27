@@ -1,9 +1,9 @@
 'use client';
 
-import type { MouseEventHandler } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useMergeProps } from '../../../hooks/useMergeProps';
+import { onLabelClickWrapper } from '../../../lib/onLabelClickWrapper';
 import { Tappable } from '../../Tappable/Tappable';
 import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
@@ -12,16 +12,6 @@ import styles from './CheckboxSimple.module.css';
 const sizeYClassNames = {
   none: styles.sizeYNone,
   compact: styles.sizeYCompact,
-};
-
-const onRootClickWrapper = (
-  onClick?: MouseEventHandler<HTMLLabelElement>,
-): MouseEventHandler<HTMLLabelElement> => {
-  return (event) => {
-    if (onClick && (event.target as HTMLElement).tagName === 'INPUT') {
-      onClick(event);
-    }
-  };
 };
 
 export function CheckboxSimple({
@@ -105,7 +95,7 @@ export function CheckboxSimple({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       Component="label"
-      onClick={onRootClickWrapper(onClick)}
+      onClick={onLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <CheckboxInput

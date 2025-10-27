@@ -1,9 +1,9 @@
 'use client';
 
-import type { MouseEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
+import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
@@ -65,16 +65,6 @@ export interface RadioProps
    **/
   labelProps?: HasDataAttribute;
 }
-
-const onRootClickWrapper = (
-  onClick?: MouseEventHandler<HTMLLabelElement>,
-): MouseEventHandler<HTMLLabelElement> => {
-  return (event) => {
-    if (onClick && (event.target as HTMLElement).tagName === 'INPUT') {
-      onClick(event);
-    }
-  };
-};
 
 /**
  * @see https://vkui.io/components/radio
@@ -158,7 +148,7 @@ export const Radio = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       disabled={inputRest.disabled}
-      onClick={onRootClickWrapper(onRootClick)}
+      onClick={onLabelClickWrapper(onRootClick)}
       {...rootRest}
     >
       <RadioInput slotProps={{ input: inputRest }} />

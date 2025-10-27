@@ -1,9 +1,9 @@
 'use client';
 
-import type { MouseEventHandler } from 'react';
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
+import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
@@ -70,16 +70,6 @@ export interface CheckboxProps
    */
   noPadding?: boolean;
 }
-
-const onRootClickWrapper = (
-  onClick?: MouseEventHandler<HTMLLabelElement>,
-): MouseEventHandler<HTMLLabelElement> => {
-  return (event) => {
-    if (onClick && (event.target as HTMLElement).tagName === 'INPUT') {
-      onClick(event);
-    }
-  };
-};
 
 const CheckboxComponent = ({
   // CheckboxProps
@@ -152,7 +142,7 @@ const CheckboxComponent = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       noPadding={noPadding}
-      onClick={onRootClickWrapper(onClick)}
+      onClick={onLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <CheckboxInput

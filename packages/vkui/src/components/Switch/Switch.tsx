@@ -1,6 +1,5 @@
 'use client';
 
-import { type MouseEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -10,6 +9,7 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
+import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -58,16 +58,6 @@ export interface SwitchProps
    */
   getRef?: React.Ref<HTMLInputElement>;
 }
-
-const onRootClickWrapper = (
-  onClick?: MouseEventHandler<HTMLLabelElement>,
-): MouseEventHandler<HTMLLabelElement> => {
-  return (event) => {
-    if (onClick && (event.target as HTMLElement).tagName === 'INPUT') {
-      onClick(event);
-    }
-  };
-};
 
 /**
  * @see https://vkui.io/components/switch
@@ -182,7 +172,7 @@ export const Switch = ({
         isRtl && styles.rtl,
         focusVisibleClassNames,
       )}
-      onClick={onRootClickWrapper(onRootClick)}
+      onClick={onLabelClickWrapper(onRootClick)}
       {...rootRest}
     >
       <VisuallyHidden baseClassName={styles.inputNative} {...inputProps} />
