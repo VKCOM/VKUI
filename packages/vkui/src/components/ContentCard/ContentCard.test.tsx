@@ -7,7 +7,7 @@ const ContentCardTest = (props: ContentCardProps) => (
   <ContentCard
     overTitle="VKUI"
     title="ContentCard example"
-    caption="VKUI Styleguide > Blocks > ContentCard"
+    caption="ContentCard caption"
     {...props}
     data-testid="card"
   />
