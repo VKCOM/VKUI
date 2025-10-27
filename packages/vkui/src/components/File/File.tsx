@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../hooks/useMergeProps';
+import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
@@ -11,7 +12,22 @@ const warn = warnOnce('File');
 
 export interface FileProps
   extends Omit<VKUIButtonProps, 'type'>,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'>,
+    Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'name'
+      | 'value'
+      | 'accept'
+      | 'capture'
+      | 'multiple'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLElement> {
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
@@ -36,10 +52,12 @@ export interface FileProps
  * @see https://vkui.io/components/file
  */
 export const File = ({
+  // FileProps
   getRootRef,
-  className,
-  style,
   children = 'Выберите файл',
+  getRef,
+
+  // VKUIButtonProps
   align = 'left',
   size,
   mode,
@@ -47,8 +65,23 @@ export const File = ({
   before,
   after,
   loading,
-  getRef,
   appearance,
+
+  // Input props
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  accept,
+  capture,
+  multiple,
+  onChange,
+  onFocus,
+  onBlur,
+
   slotProps,
   ...restProps
 }: FileProps): React.ReactNode => {
@@ -57,15 +90,32 @@ export const File = ({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
-  const rootProps = useMergeProps(
+  const { onClick, ...rootRest } = useMergeProps(
     {
-      className,
-      style,
       getRootRef: getRootRef as React.Ref<HTMLLabelElement>,
+      ...restProps,
     },
     slotProps?.root,
   );
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  const inputRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      accept,
+      capture,
+      multiple,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   return (
     <Button
@@ -79,7 +129,8 @@ export const File = ({
       after={after}
       loading={loading}
       disabled={inputRest.disabled}
-      {...rootProps}
+      onClick={onLabelClickWrapper(onClick)}
+      {...rootRest}
     >
       <VisuallyHidden title="" Component="input" type="file" {...inputRest} />
       {children}
