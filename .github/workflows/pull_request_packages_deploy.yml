@@ -153,7 +153,7 @@ jobs:
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/docs-beta/overview/about.html" >> $GITHUB_OUTPUT
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/docs-beta/overview/about/index.html" >> $GITHUB_OUTPUT
 
   deploy_storybook:
     needs: pr_workflow_payload
