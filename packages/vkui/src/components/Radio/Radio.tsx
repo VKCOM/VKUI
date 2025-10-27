@@ -1,5 +1,6 @@
 'use client';
 
+import type { MouseEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
@@ -14,7 +15,21 @@ import styles from './Radio.module.css';
 const warn = warnOnce('Radio');
 
 export interface RadioProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLLabelElement>,
     Pick<
       TappableOmitProps,
@@ -51,23 +66,48 @@ export interface RadioProps
   labelProps?: HasDataAttribute;
 }
 
+const onRootClickWrapper = (
+  onClick?: MouseEventHandler<HTMLLabelElement>,
+): MouseEventHandler<HTMLLabelElement> => {
+  return (event) => {
+    if (onClick && (event.target as HTMLElement).tagName === 'INPUT') {
+      onClick(event);
+    }
+  };
+};
+
 /**
  * @see https://vkui.io/components/radio
  */
 export const Radio = ({
+  // RadioProps
   children,
   description,
-  style,
-  className,
-  getRootRef,
   titleAfter,
-  getRef,
   labelProps,
+  getRef,
+  className,
+
+  // Tappable props
   hoverMode,
   activeMode,
   hasHover,
   hasActive,
   focusVisibleMode,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
 
   slotProps,
   ...restProps
@@ -82,17 +122,33 @@ export const Radio = ({
     }
   }
 
-  const rootProps = useMergeProps(
+  const { onClick: onRootClick, ...rootRest } = useMergeProps(
     {
-      style,
       className: classNames(styles.host, className),
-      getRootRef,
       ...labelProps,
+      ...restProps,
     },
     slotProps?.root,
   );
 
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  const inputRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   return (
     <SelectionControl
@@ -102,7 +158,8 @@ export const Radio = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       disabled={inputRest.disabled}
-      {...rootProps}
+      onClick={onRootClickWrapper(onRootClick)}
+      {...rootRest}
     >
       <RadioInput slotProps={{ input: inputRest }} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>

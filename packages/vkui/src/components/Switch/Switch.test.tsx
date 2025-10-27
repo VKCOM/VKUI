@@ -12,7 +12,7 @@ describe(Switch, () => {
       <VisuallyHidden Component="label" id="switch">
         Switch
       </VisuallyHidden>
-      <Switch aria-labelledby="switch" {...props} />
+      <Switch slotProps={{ input: { 'aria-labelledby': 'switch' } }} {...props} />
     </>
   ));
 
@@ -21,9 +21,9 @@ describe(Switch, () => {
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
     const inputRef2 = createRef<HTMLInputElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onInputClick = vi.fn();
 
     render(
       <Switch
@@ -32,8 +32,10 @@ describe(Switch, () => {
         getRootRef={rootRef1}
         getRef={inputRef1}
         checked
+        name="input"
+        id="switch"
         onChange={noop}
-        onClick={onClick1}
+        onClick={onRootClick1}
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -45,14 +47,14 @@ describe(Switch, () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
-            'onClick': onRootClick,
+            'onClick': onRootClick2,
           },
           input: {
             'className': 'inputClassName',
             'getRootRef': inputRef2,
             'data-testid': 'switch-2',
             'checked': false,
-            'onClick': onClick2,
+            'onClick': onInputClick,
           },
         }}
       />,
@@ -62,6 +64,8 @@ describe(Switch, () => {
     const input = screen.getByTestId('switch-2');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
+    expect(input).toHaveAttribute('name', 'input');
+    expect(input).toHaveAttribute('id', 'switch');
     expect(input).not.toBeChecked();
 
     const root = screen.getByTestId('root');
@@ -78,11 +82,13 @@ describe(Switch, () => {
     expect(inputRef1.current).toBe(input);
 
     fireEvent.click(input);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onInputClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(3);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 
   it(
