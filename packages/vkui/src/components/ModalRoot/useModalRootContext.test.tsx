@@ -28,7 +28,7 @@ describe(useModalRootContext, () => {
     );
 
     await waitCSSTransitionEnd(result.getByTestId('m'));
-    act(vi.runOnlyPendingTimers);
+    await act(vi.runOnlyPendingTimers);
 
     if (type === 'global') {
       expect(globalCallbacks.onOpen).toHaveBeenCalledExactlyOnceWith('m');

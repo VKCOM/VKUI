@@ -10,7 +10,6 @@ const config = defineConfig({
     setupFiles: [resolve(__dirname, 'vitest.setup.ts')],
     globalSetup: [resolve(__dirname, 'vitest.global-setup.ts')],
     coverage: {
-      all: true,
       provider: 'v8',
       reporter: ['json'],
       reportsDirectory: '../../.nyc_output',

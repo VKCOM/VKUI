@@ -267,7 +267,7 @@ describe('Gallery', () => {
       expect(index).toBe(1);
     });
 
-    it('check auto play in uncontrolled component', () => {
+    it('check auto play in uncontrolled component', async () => {
       let index;
       const setIndex = (v: number) => (index = v);
       render(
@@ -276,7 +276,7 @@ describe('Gallery', () => {
           <div />
         </Gallery>,
       );
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(index).toBe(1);
     });
   });

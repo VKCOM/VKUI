@@ -41,7 +41,7 @@ describe(ImageBaseOverlay, () => {
 
       await userEvent.tab();
       expect(element).toHaveFocus();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       await userEvent.tab();
       expect(document.querySelector(`.${styles.visible}`)).toBeNull();
     }),
@@ -56,14 +56,14 @@ describe(ImageBaseOverlay, () => {
 
       await userEvent.tab();
       expect(button1).toHaveFocus();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(container.getElementsByClassName(styles.visible)).toHaveLength(1);
       await userEvent.tab();
       expect(button2).toHaveFocus();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(container.getElementsByClassName(styles.visible)).toHaveLength(1);
       await userEvent.tab();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(container.getElementsByClassName(styles.visible)).toHaveLength(0);
     }),
   );

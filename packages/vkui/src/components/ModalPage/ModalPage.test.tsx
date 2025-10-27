@@ -287,13 +287,13 @@ describe(ModalPage, () => {
 
         await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
         expect(h.queryByTestId('host')).toBeTruthy();
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         expect(h.getByTestId('dismiss-button')).toHaveFocus();
 
         fireEvent.click(openButton);
         await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
         expect(h.queryByTestId('host')).toBeFalsy();
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
 
         if (restoreFocus) {
           expect(openButton).toHaveFocus();

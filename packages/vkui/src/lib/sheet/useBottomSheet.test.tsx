@@ -696,7 +696,7 @@ describe(useBottomSheet, () => {
       expect(sheetEl.style.getPropertyValue('--sheet')).toBe('');
     });
 
-    test('– by drag velocity', () => {
+    test('– by drag velocity', async () => {
       const r = render(<div data-testid="sheetEl" />);
       const sheetEl = r.getByTestId('sheetEl');
       Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
@@ -795,7 +795,7 @@ describe(useBottomSheet, () => {
       expect(backdropEl.style.getPropertyValue('--backdrop')).toBe('');
     });
 
-    it('- changes opacity relative initialSnapPoint', () => {
+    it('- changes opacity relative initialSnapPoint', async () => {
       const DRAG_TO_HALF_OF_SHEET_HEIGHT = DRAG_OFFSET + SHEET_HEIGHT / 2;
 
       const r = render(
