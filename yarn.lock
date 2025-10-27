@@ -5040,7 +5040,7 @@ __metadata:
     happy-css-modules: "npm:^4.0.0"
     husky: "npm:^9.1.6"
     jsdom: "npm:^27.0.0"
-    lint-staged: "npm:^16.2.4"
+    lint-staged: "npm:^16.2.6"
     mini-css-extract-plugin: "npm:^2.9.4"
     postcss: "npm:^8.5.6"
     postcss-cli: "npm:^11.0.1"
@@ -12564,12 +12564,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^16.2.4":
-  version: 16.2.4
-  resolution: "lint-staged@npm:16.2.4"
+"lint-staged@npm:^16.2.6":
+  version: 16.2.6
+  resolution: "lint-staged@npm:16.2.6"
   dependencies:
     commander: "npm:^14.0.1"
-    listr2: "npm:^9.0.4"
+    listr2: "npm:^9.0.5"
     micromatch: "npm:^4.0.8"
     nano-spawn: "npm:^2.0.0"
     pidtree: "npm:^0.6.0"
@@ -12577,7 +12577,7 @@ __metadata:
     yaml: "npm:^2.8.1"
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 10/e4ce8e6b07fc2c1d96962dafaab483271b2359b6f22f74324ba0f827ad6383caa2800651379f36b2570cfa74b27354e0db9316be69795636a0c53fa3fd599b79
+  checksum: 10/c419f1347166ddd06746d4a3e4ce6441f3d0e82dcdcbc3d3615ddf7b82b36c603df2e43dbb1edad5ed00ae29857479e1f880bcca271f8bf4b0db7d0f77861d21
   languageName: node
   linkType: hard
 
@@ -12588,9 +12588,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"listr2@npm:^9.0.4":
-  version: 9.0.4
-  resolution: "listr2@npm:9.0.4"
+"listr2@npm:^9.0.5":
+  version: 9.0.5
+  resolution: "listr2@npm:9.0.5"
   dependencies:
     cli-truncate: "npm:^5.0.0"
     colorette: "npm:^2.0.20"
@@ -12598,7 +12598,7 @@ __metadata:
     log-update: "npm:^6.1.0"
     rfdc: "npm:^1.4.1"
     wrap-ansi: "npm:^9.0.0"
-  checksum: 10/8d8665d2efec9a26eb1359c2e86c80d189067e1bd7a7d7ed28a6a9264ec6127caa2a9c4a5b424918e50725600e0e2be058d15c2ad9492df71e3a55a53a82c643
+  checksum: 10/b78ffd60443aed9a8e0fc9162eb941ea4d63210700d61a895eb29348f23fc668327e26bbca87a9e6a6208e7fa96c475fe1f1c6c19b46f376f547e0cba3b935ae
   languageName: node
   linkType: hard
 
