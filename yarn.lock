@@ -785,6 +785,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@es-joy/resolve.exports@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@es-joy/resolve.exports@npm:1.0.0"
+  checksum: 10/7e911bf89b1723bebed2cd336f8cc248d4093cd02a00513101f3c0f7fba725f795ec7536c9d1d27eb7ab7652f7b9926ea37c72d5d130baf75e9c6de7ca175531
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.25.8":
   version: 0.25.8
   resolution: "@esbuild/aix-ppc64@npm:0.25.8"
@@ -2959,10 +2966,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sindresorhus/base62@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@sindresorhus/base62@npm:0.1.0"
-  checksum: 10/1c2bca5a83805f64dc566612b18a82d4e3667b80ba83366ae2c6b39e7119f4f9ea1a98563e3c642da0d6130032870d979139d3dff51e8169dc5cf19315c11aac
+"@sindresorhus/base62@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@sindresorhus/base62@npm:1.0.0"
+  checksum: 10/ba1a1ccfc9de0995f0e4506b8cabff3436fd1a9815f9c1a44f6833694bba6b3db7fa61fa5fc2f63180edda01abf3c26ffd16325be0ab25409f992ba91ea6dcd0
   languageName: node
   linkType: hard
 
@@ -5030,11 +5037,11 @@ __metadata:
     eslint-import-resolver-alias: "npm:^1.1.2"
     eslint-plugin-compat: "npm:^6.0.2"
     eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-jsdoc: "npm:^61.1.4"
+    eslint-plugin-jsdoc: "npm:^61.1.9"
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-compiler: "npm:0.0.0-experimental-56229e1-20240813"
-    eslint-plugin-react-hooks: "npm:^7.0.0"
+    eslint-plugin-react-hooks: "npm:^7.0.1"
     eslint-plugin-react-server-components: "npm:^1.2.0"
     eslint-plugin-unicorn: "npm:^55.0.0"
     happy-css-modules: "npm:^4.0.0"
@@ -9051,11 +9058,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^61.1.4":
-  version: 61.1.4
-  resolution: "eslint-plugin-jsdoc@npm:61.1.4"
+"eslint-plugin-jsdoc@npm:^61.1.9":
+  version: 61.1.9
+  resolution: "eslint-plugin-jsdoc@npm:61.1.9"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.76.0"
+    "@es-joy/resolve.exports": "npm:1.0.0"
     are-docs-informative: "npm:^0.0.2"
     comment-parser: "npm:1.4.1"
     debug: "npm:^4.4.3"
@@ -9063,14 +9071,14 @@ __metadata:
     espree: "npm:^10.4.0"
     esquery: "npm:^1.6.0"
     html-entities: "npm:^2.6.0"
-    object-deep-merge: "npm:^1.0.5"
+    object-deep-merge: "npm:^2.0.0"
     parse-imports-exports: "npm:^0.2.4"
     semver: "npm:^7.7.3"
     spdx-expression-parse: "npm:^4.0.0"
-    to-valid-identifier: "npm:^0.1.1"
+    to-valid-identifier: "npm:^1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10/5f4b5e7a205d98907709a27feb3a1659be39a3890a44077c8d26dc1bc1fe6de10a68476fba0f2bba04d069cb35b05f7bd7f9d9d9a8c9f9d594e0c080f0a100a4
+  checksum: 10/0136623983fc7cb704b06e135d52ba683d2b743a5d02607f4af912a6903e274094e30673a38fbdf67009b8b6553d5870060d988e5cc6307350802e5dbf510d4c
   languageName: node
   linkType: hard
 
@@ -9110,18 +9118,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "eslint-plugin-react-hooks@npm:7.0.0"
+"eslint-plugin-react-hooks@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "eslint-plugin-react-hooks@npm:7.0.1"
   dependencies:
     "@babel/core": "npm:^7.24.4"
     "@babel/parser": "npm:^7.24.4"
     hermes-parser: "npm:^0.25.1"
-    zod: "npm:^3.22.4 || ^4.0.0"
-    zod-validation-error: "npm:^3.0.3 || ^4.0.0"
+    zod: "npm:^3.25.0 || ^4.0.0"
+    zod-validation-error: "npm:^3.5.0 || ^4.0.0"
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
-  checksum: 10/756ad90ec6390bafa8037f86ab72d98af55c25e13b69e15bdac634724c8af7a87eb6993b643665e930d67635d52c8aa55b0e7a1d47e3c4e42a3b66950b2069fb
+  checksum: 10/12e96c68d58c6588305fd17d660524a1ef1e872650ec591d5b138f059431290831c373d4b1c9ae8991fb25f96c43935497d2149678c027e65d0417d3d99ecc85
   languageName: node
   linkType: hard
 
@@ -14603,12 +14611,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-deep-merge@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "object-deep-merge@npm:1.0.5"
-  dependencies:
-    type-fest: "npm:4.2.0"
-  checksum: 10/823f7e691775535a0f85fabe49204faaf6531dac6566b294f3fc4f3c929f228545076e5795c2c402a469330f223cffc282d913b90123e1ed1847864b81c39b02
+"object-deep-merge@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "object-deep-merge@npm:2.0.0"
+  checksum: 10/d2f9aa0b2160118f3e261fe51634a958b9f19993f64479911df3d3b4daa0212cb01bf2a7cf2c3ab1a1830cc167151a408ecf8c3e47efa44343b516777d6ef11c
   languageName: node
   linkType: hard
 
@@ -19481,13 +19487,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"to-valid-identifier@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "to-valid-identifier@npm:0.1.1"
+"to-valid-identifier@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "to-valid-identifier@npm:1.0.0"
   dependencies:
-    "@sindresorhus/base62": "npm:^0.1.0"
+    "@sindresorhus/base62": "npm:^1.0.0"
     reserved-identifiers: "npm:^1.0.0"
-  checksum: 10/48d544d705cc5445c89bf3bc3655bd2880ec9b987f40e25d52eb7a2e10a4f33a7d54448972034fa2d395880c0fb00a6f85dc21adbbed216ab1a6f9033e64c222
+  checksum: 10/fba7ebdf464c92c92ccde887f917c9461792f99b738d36bebe5c3bd07562c3fdceedfd120ac115da359162b115798136bb8b9ea7417d7e3a663db9425ff1bcc1
   languageName: node
   linkType: hard
 
@@ -19694,13 +19700,6 @@ __metadata:
   version: 4.1.0
   resolution: "type-detect@npm:4.1.0"
   checksum: 10/e363bf0352427a79301f26a7795a27718624c49c576965076624eb5495d87515030b207217845f7018093adcbe169b2d119bb9b7f1a31a92bfbb1ab9639ca8dd
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:4.2.0":
-  version: 4.2.0
-  resolution: "type-fest@npm:4.2.0"
-  checksum: 10/d1eccf145e47a19446009cc0c618703633436ae6c8765b7d6ccb70bbdcaa874d3c9b090d8b1a1e019ad62af94b2a71074a1e98eae5e0473dca6bf4231ca00385
   languageName: node
   linkType: hard
 
@@ -21271,7 +21270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod-validation-error@npm:^3.0.3 || ^4.0.0":
+"zod-validation-error@npm:^3.5.0 || ^4.0.0":
   version: 4.0.2
   resolution: "zod-validation-error@npm:4.0.2"
   peerDependencies:
@@ -21296,10 +21295,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.22.4 || ^4.0.0":
-  version: 4.1.11
-  resolution: "zod@npm:4.1.11"
-  checksum: 10/5a0f5697dbe86bf40934916d888cfe0ec6f1f767eb0b6f944ffd5573397c8a56ef7d2ebd0f889bfb44ceaf93edcddf021994633747a9a6b0dcbeb57bd0a67442
+"zod@npm:^3.25.0 || ^4.0.0":
+  version: 4.1.12
+  resolution: "zod@npm:4.1.12"
+  checksum: 10/c5f04e6ac306515c4db6ef73cf7705f521c7a2107c8c8912416a0658d689f361db9bee829b0bf01ef4a22492f1065c5cbcdb523ce532606ac6792fd714f3c326
   languageName: node
   linkType: hard
 
