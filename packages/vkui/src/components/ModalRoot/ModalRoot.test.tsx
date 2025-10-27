@@ -301,13 +301,13 @@ describe(ModalRoot, () => {
         baseElement: document.documentElement,
       });
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(modalPageRef.current).toHaveFocus();
 
       component.rerender(<ModalRoot activeModal="modal-card">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
       await waitModalCardCSSTransitionEnd(component.getByTestId('modal-card'));
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
 
       expect(modalCardRef.current).toHaveFocus();
     });

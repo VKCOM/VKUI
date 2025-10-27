@@ -10,7 +10,6 @@ import {
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
-import { type Awaitable } from 'vitest';
 import { configureAxe } from 'vitest-axe';
 import * as matchers from 'vitest-axe/matchers';
 import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
@@ -47,7 +46,7 @@ export function fakeTimersForScope(runPendingTimers = true) {
 }
 
 export function withFakeTimers<T extends any[]>(
-  testFn: (...args: T) => Awaitable<void>,
+  testFn: (...args: T) => void | PromiseLike<void>,
   options: Parameters<typeof vi.useFakeTimers>[0] = {},
 ) {
   return async (...args: T) => {
@@ -98,21 +97,21 @@ export function mountTest(Component: React.ComponentType<any>) {
     try {
       result = render(<Component />);
       await waitForFloatingPosition();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(result).toBeTruthy();
     } catch {}
 
     try {
       result!.rerender(<Component />);
       await waitForFloatingPosition();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(result!).toBeTruthy();
     } catch {}
 
     try {
       // unmount
       result!.unmount();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(result!).toBeTruthy();
     } catch {}
   });
@@ -146,7 +145,7 @@ export function getRootRefTest(Component: React.ComponentType<any>) {
 
     render(<Component getRootRef={ref} />);
     await waitForFloatingPosition();
-    act(vi.runAllTimers);
+    await act(vi.runAllTimers);
 
     expect(ref.current).toBeTruthy();
   });
@@ -190,7 +189,7 @@ export function baselineComponent<Props extends object>(
           <Component data-testid="__cmp__" className={cls} style={{ backgroundColor: 'red' }} />,
         );
         await waitForFloatingPosition();
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         // forward DOM attributes
         if (domAttr) {
           expect(screen.queryByTestId('__cmp__')).toBeTruthy();
@@ -211,7 +210,7 @@ export function baselineComponent<Props extends object>(
 
           rerender(<Component />);
           await waitForFloatingPosition();
-          act(vi.runAllTimers);
+          await act(vi.runAllTimers);
 
           // does not replace default className
           if (className) {

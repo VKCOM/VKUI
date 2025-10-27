@@ -50,14 +50,14 @@ describe(PullToRefresh, () => {
 
   describe('calls onRefresh', () => {
     fakeTimersForScope();
-    it('after pull', () => {
+    it('after pull', async () => {
       const onRefresh = vi.fn();
       render(<PullToRefresh onRefresh={onRefresh} data-testid="xxx" />);
       firePull(screen.getByTestId('xxx'));
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(onRefresh).toHaveBeenCalledTimes(1);
     });
-    it('during pull on iOS', () => {
+    it('during pull on iOS', async () => {
       const onRefresh = vi.fn();
       render(
         <ConfigProvider platform="ios">
@@ -65,7 +65,7 @@ describe(PullToRefresh, () => {
         </ConfigProvider>,
       );
       firePull(screen.getByTestId('xxx'), { end: false });
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(onRefresh).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(screen.getByTestId('xxx'));
       expect(onRefresh).toHaveBeenCalledTimes(1);
@@ -96,10 +96,10 @@ describe(PullToRefresh, () => {
     });
     it(
       'stops on touch release if isFetching was never true',
-      withFakeTimers(() => {
+      withFakeTimers(async () => {
         const { container } = render(<PullToRefresh onRefresh={noop} data-testid="xxx" />);
         firePull(screen.getByTestId('xxx'));
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         expect(hasSpinner(container)).toBe(false);
       }),
     );

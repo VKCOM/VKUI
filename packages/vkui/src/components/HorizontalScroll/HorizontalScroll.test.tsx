@@ -106,7 +106,7 @@ describe('HorizontalScroll', () => {
       await userEvent.tab();
       expect(document.activeElement).toBe(document.body);
 
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
     }),
   );
 

@@ -109,11 +109,11 @@ describe(ViewInfinite, () => {
       <Panel id="other" key="2" />,
     ];
 
-    it('on activePanel change', () => {
+    it('on activePanel change', async () => {
       render(<ViewInfinite activePanel="focus">{panels}</ViewInfinite>).rerender(
         <ViewInfinite activePanel="other">{panels}</ViewInfinite>,
       );
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(document.activeElement === document.body).toBe(true);
     });
   });
@@ -127,23 +127,23 @@ describe(ViewInfinite, () => {
     afterEach(() => {
       nowMock && nowMock.mockClear();
     });
-    it('cancels swipeBack on swipe left', () => {
+    it('cancels swipeBack on swipe left', async () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(view, { clientX: 0, clientY: 100 });
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
-    it('does swipeBack immediately on overscroll', () => {
+    it('does swipeBack immediately on overscroll', async () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: window.innerWidth + 1, clientY: 100 });
       fireEvent.mouseUp(view);
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
@@ -182,7 +182,7 @@ describe(ViewInfinite, () => {
           <div data-testid="ex" key="" />,
           { onSwipeBackStart: () => 'prevent' },
         ],
-      ])('%s', (_name, component, props) => {
+      ])('%s', async (_name, component, props) => {
         const { view, ...events } = setupSwipeBack({
           Wrapper: Fragment,
           childrenForPanel2: component,
@@ -196,11 +196,11 @@ describe(ViewInfinite, () => {
         });
         fireEvent.mouseMove(elPreventSwipeBack, { clientX: window.innerWidth + 1, clientY: 100 });
         fireEvent.mouseUp(elPreventSwipeBack);
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
 
-      it('should prevent swipe back if swiped to opposite', () => {
+      it('should prevent swipe back if swiped to opposite', async () => {
         const { view, ...events } = setupSwipeBack();
         fireEvent.mouseDown(view, { clientX: 50, clientY: 100 });
         fireEvent.mouseMove(view, {
@@ -208,7 +208,7 @@ describe(ViewInfinite, () => {
           clientY: 100,
         });
         fireEvent.mouseUp(view);
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
     });
@@ -246,7 +246,7 @@ describe(ViewInfinite, () => {
       expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
-    it('fails weak swipeBack', () => {
+    it('fails weak swipeBack', async () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
       fireEvent.mouseMove(view, {
@@ -256,7 +256,7 @@ describe(ViewInfinite, () => {
       // speed to 0
       nowMock.mockImplementation(() => Infinity);
       fireEvent.mouseUp(view);
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
@@ -343,7 +343,7 @@ describe(ViewInfinite, () => {
 
         scrollToLeftAndSwipe(0);
         expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
       });
@@ -374,7 +374,7 @@ describe(ViewInfinite, () => {
 
         scrollToLeftAndSwipe(100);
         expect(events.onSwipeBackStart).not.toHaveBeenCalled();
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
 
@@ -386,7 +386,7 @@ describe(ViewInfinite, () => {
       });
     });
 
-    it('should prevent swipe back if Gallery is drag', () => {
+    it('should prevent swipe back if Gallery is drag', async () => {
       const { rerender, SwipeBack, getByTestId, ...events } = setupSwipeBack({
         childrenForPanel2: (
           <Gallery slideWidth="90%" align="center">
@@ -407,7 +407,7 @@ describe(ViewInfinite, () => {
       fireEvent.mouseMove(elSlide1, { clientX: window.innerWidth / 2, clientY: 100 });
       fireEvent.mouseUp(elSlide1);
       expect(events.onSwipeBackStart).not.toHaveBeenCalled();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
