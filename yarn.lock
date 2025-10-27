@@ -4895,7 +4895,7 @@ __metadata:
     "@types/node": "npm:^24.8.1"
     "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^4.1.2"
-    commander: "npm:^14.0.1"
+    commander: "npm:^14.0.2"
     cross-spawn: "npm:^7.0.5"
     jscodeshift: "npm:^17.3.0"
     prompts: "npm:^2.4.2"
@@ -6988,6 +6988,13 @@ __metadata:
   version: 14.0.1
   resolution: "commander@npm:14.0.1"
   checksum: 10/783115e9403caeca29c0fcbd4e0358f70c67760e4e4933f3453fcdd5ddba2ec44173c8da5213d7ce5e404f51c7e71203a42c548164dbe27b668b32a8981577f1
+  languageName: node
+  linkType: hard
+
+"commander@npm:^14.0.2":
+  version: 14.0.2
+  resolution: "commander@npm:14.0.2"
+  checksum: 10/2d202db5e5f9bb770112a3c1579b893d17ac6f6d932183077308bdd96d0f87f0bbe6a68b5b9ed2cf3b2514be6bb7de637480703c0e2db9741ee1b383237deb26
   languageName: node
   linkType: hard
 
