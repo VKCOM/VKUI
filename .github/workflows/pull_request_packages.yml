@@ -76,7 +76,7 @@ jobs:
     name: Report unit test results
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: test-output
 
@@ -102,7 +102,7 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Download Playwright blob reports from GitHub Actions Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: packages/vkui/artifacts
 
