@@ -31,6 +31,8 @@ describe('Input', () => {
         getRootRef={rootRef1}
         getRef={inputRef1}
         value="value"
+        autoComplete="off"
+        required
         onChange={noop}
         onClick={onClick1}
         style={{
@@ -62,6 +64,8 @@ describe('Input', () => {
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
     expect(input).toHaveValue('value-2');
+    expect(input).toHaveAttribute('autoComplete', 'off');
+    expect(input).toHaveAttribute('required');
 
     const root = screen.getByTestId('root');
     expect(root).toBeInTheDocument();

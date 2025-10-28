@@ -18,7 +18,40 @@ const sizeYClassNames = {
 };
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'accept'
+      | 'alt'
+      | 'autoComplete'
+      | 'capture'
+      | 'disabled'
+      | 'form'
+      | 'formAction'
+      | 'formEncType'
+      | 'formMethod'
+      | 'formNoValidate'
+      | 'formTarget'
+      | 'list'
+      | 'max'
+      | 'maxLength'
+      | 'min'
+      | 'minLength'
+      | 'multiple'
+      | 'name'
+      | 'pattern'
+      | 'placeholder'
+      | 'readOnly'
+      | 'required'
+      | 'size'
+      | 'src'
+      | 'step'
+      | 'type'
+      | 'value'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'maxHeight'> {
@@ -43,16 +76,53 @@ export interface InputProps
  * @see https://vkui.io/components/input
  */
 export const Input = ({
-  type = 'text',
+  // InputProps
   align = 'left',
   getRef,
-  className: rootClassName,
-  getRootRef,
-  style,
+
+  // FormFieldProps
   before,
   after,
   status,
   mode,
+
+  // input props
+  accept,
+  alt,
+  autoComplete,
+  capture,
+  disabled,
+  form,
+  formAction,
+  formEncType,
+  formMethod,
+  formNoValidate,
+  formTarget,
+  list,
+  max,
+  maxLength,
+  min,
+  minLength,
+  multiple,
+  name,
+  pattern,
+  placeholder,
+  readOnly,
+  required,
+  size,
+  src,
+  step,
+  type = 'text',
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  id,
+  inputMode,
+  defaultValue,
+  autoFocus,
+  tabIndex,
+  spellCheck,
 
   slotProps,
   ...restProps
@@ -64,20 +134,48 @@ export const Input = ({
 
   const { sizeY = 'none' } = useAdaptivity();
 
-  const { className, ...rootProps } = useMergeProps(
-    {
-      className: rootClassName,
-      getRootRef,
-      style,
-    },
-    slotProps?.root,
-  );
+  const { className, ...rootProps } = useMergeProps(restProps, slotProps?.root);
 
   const inputRest = useMergeProps(
     {
       className: styles.el,
       getRootRef: getRef,
-      ...restProps,
+      accept,
+      alt,
+      autoComplete,
+      capture,
+      disabled,
+      form,
+      formAction,
+      formEncType,
+      formMethod,
+      formNoValidate,
+      formTarget,
+      list,
+      max,
+      maxLength,
+      min,
+      minLength,
+      multiple,
+      name,
+      pattern,
+      placeholder,
+      readOnly,
+      required,
+      size,
+      src,
+      step,
+      type,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+      id,
+      inputMode,
+      defaultValue,
+      autoFocus,
+      tabIndex,
+      spellCheck,
     },
     slotProps?.input,
   );
@@ -100,7 +198,7 @@ export const Input = ({
       status={status}
       {...rootProps}
     >
-      <UnstyledTextField as="input" type={type} {...inputRest} />
+      <UnstyledTextField as="input" {...inputRest} />
     </FormField>
   );
 };
