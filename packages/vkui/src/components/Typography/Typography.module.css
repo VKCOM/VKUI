@@ -42,3 +42,15 @@
 .accent.host b {
   font-weight: var(--vkui--font_weight_accent1);
 }
+
+.alignStart {
+  text-align: start;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignEnd {
+  text-align: end;
+}
