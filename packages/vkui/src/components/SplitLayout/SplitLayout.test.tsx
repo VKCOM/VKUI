@@ -17,8 +17,8 @@ describe('SplitLayout', () => {
 
     render(
       <SplitLayout
-        data-testid="content"
-        className="contentClassName"
+        data-testid="root"
+        className="rootClassName"
         getRootRef={rootRef1}
         getRef={contentRef1}
         onClick={onClick1}
@@ -27,8 +27,8 @@ describe('SplitLayout', () => {
         }}
         slotProps={{
           root: {
-            'data-testid': 'root',
-            'className': 'rootClassName',
+            'data-testid': 'root-2',
+            'className': 'rootClassName-2',
             'style': {
               color: 'rgb(255, 0, 0)',
             },
@@ -36,26 +36,29 @@ describe('SplitLayout', () => {
             'onClick': onRootClick,
           },
           content: {
-            'className': 'contentClassName-2',
+            'className': 'contentClassName',
             'getRootRef': contentRef2,
-            'data-testid': 'content-2',
+            'style': {
+              color: 'rgb(255, 0, 0)',
+            },
+            'data-testid': 'content',
             'onClick': onClick2,
           },
         }}
       />,
     );
 
-    expect(screen.queryByTestId('content')).not.toBeInTheDocument();
-    const content = screen.getByTestId('content-2');
+    const content = screen.getByTestId('content');
     expect(content).toBeInTheDocument();
-    expect(content).toHaveStyle('background-color: rgb(255, 0, 0)');
+    expect(content).toHaveStyle('color: rgb(255, 0, 0)');
     expect(content).toHaveClass('contentClassName');
-    expect(content).toHaveClass('contentClassName-2');
 
-    const root = screen.getByTestId('root');
+    const root = screen.getByTestId('root-2');
     expect(root).toBeInTheDocument();
     expect(root).toHaveClass('rootClassName');
+    expect(root).toHaveClass('rootClassName-2');
     expect(root).toHaveStyle('color: rgb(255, 0, 0)');
+    expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
 
     expect(rootRef1.current).toBe(rootRef2.current);
     expect(rootRef1.current).toBe(root);
