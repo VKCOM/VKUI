@@ -31,7 +31,27 @@ export type RenderIconButtonFn = (
 ) => React.ReactElement;
 
 export interface SearchProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'alt'
+      | 'autoComplete'
+      | 'capture'
+      | 'disabled'
+      | 'list'
+      | 'max'
+      | 'maxLength'
+      | 'min'
+      | 'minLength'
+      | 'name'
+      | 'placeholder'
+      | 'readOnly'
+      | 'required'
+      | 'value'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLDivElement> {
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
@@ -106,27 +126,48 @@ export interface SearchProps
  * @see https://vkui.io/components/search
  */
 export const Search = ({
-  className,
-  getRootRef,
-  style,
-  placeholder: placeholderProp = 'Поиск',
-  before = <Icon16SearchOutline />,
+  // SearchProps
   after = 'Отмена',
-  getRef,
+  before = <Icon16SearchOutline />,
   icon: iconProp,
   onIconClick,
-  autoComplete: autoCompleteProp = 'off',
   iconLabel,
   clearLabel = 'Очистить',
   clearButtonTestId,
   noPadding,
   findButtonText = 'Найти',
-  findButtonTestId,
   onFindButtonClick,
+  findButtonTestId,
   hideClearButton,
+  getRef,
+
+  // input props
+  placeholder: placeholderProp = 'Поиск',
+  autoComplete = 'off',
+  alt,
+  capture,
+  disabled,
+  list,
+  max,
+  maxLength,
+  min,
+  minLength,
+  name,
+  readOnly,
+  required,
+  value,
+  id: idProp,
+  inputMode,
+  defaultValue,
+  autoFocus,
+  tabIndex,
+  spellCheck,
+  onChange: onChangeProp,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
 
   slotProps,
-  ...inputProps
+  ...restProps
 }: SearchProps): React.ReactNode => {
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development' && getRef) {
@@ -136,31 +177,43 @@ export const Search = ({
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
 
-  const rootRest = useMergeProps(
-    {
-      className,
-      style,
-      getRootRef,
-    },
-    slotProps?.root,
-  );
+  const rootRest = useMergeProps(restProps, slotProps?.root);
 
   const {
     id,
     placeholder,
-    onChange,
-    autoComplete,
     getRootRef: getInputRef,
+    onChange,
     onFocus: onInputFocus,
     onBlur: onInputBlur,
     ...inputRest
   } = useMergeProps(
     {
       getRootRef: getRef,
-      placeholder: placeholderProp,
-      autoComplete: autoCompleteProp,
       className: styles.nativeInput,
-      ...inputProps,
+      placeholder: placeholderProp,
+      autoComplete,
+      alt,
+      capture,
+      disabled,
+      list,
+      max,
+      maxLength,
+      min,
+      minLength,
+      name,
+      readOnly,
+      required,
+      value,
+      id: idProp,
+      inputMode,
+      defaultValue,
+      autoFocus,
+      tabIndex,
+      spellCheck,
+      onChange: onChangeProp,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
     },
     slotProps?.input,
   );
@@ -283,7 +336,6 @@ export const Search = ({
             weight="3"
             id={inputId}
             placeholder={placeholder}
-            autoComplete={autoComplete}
             getRootRef={inputRef}
             onChange={callMultiple(onChange, checkHasValue)}
             onFocus={onFocus}
@@ -304,7 +356,7 @@ export const Search = ({
                 onClick={onCancel}
                 className={styles.icon}
                 tabIndex={hasValue ? undefined : -1}
-                disabled={inputProps.disabled}
+                disabled={inputRest.disabled}
                 data-testid={clearButtonTestId}
               >
                 <VisuallyHidden>{clearLabel}</VisuallyHidden>
