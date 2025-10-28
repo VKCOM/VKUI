@@ -10,6 +10,7 @@ const App = () => {
       <SplitLayout
         center
         className="baseClassName"
+        style={{background: "red"}}
         id="content"
         getRootRef={rootRef}
         data-testid="content"

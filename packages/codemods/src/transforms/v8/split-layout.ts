@@ -41,7 +41,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       root: source,
       componentName: localName,
       slotName: 'content',
-      excludedProps: ['header', 'children', 'getRootRef', 'className', 'center', 'modal', 'popout'],
+      excludedProps: ['header', 'children', 'getRootRef', 'center', 'modal', 'popout'],
     });
   }
 

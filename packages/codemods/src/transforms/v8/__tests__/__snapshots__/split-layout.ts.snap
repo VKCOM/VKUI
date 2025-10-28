@@ -12,7 +12,6 @@ const App = () => {
     <React.Fragment>
       <SplitLayout
         center
-        className="baseClassName"
         getRootRef={rootRef}
         header={<PanelHeader delimiter="none" />}
         slotProps={{
@@ -20,7 +19,9 @@ const App = () => {
             getRootRef: contentRef,
             "data-testid": "content",
             "aria-label": "content",
-            id: "content"
+            id: "content",
+            style: {background: "red"},
+            className: "baseClassName"
           }
         }}>
         Content
