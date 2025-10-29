@@ -42,8 +42,8 @@ export interface CheckboxInputProps
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
   slotProps?: {
-    root?: Omit<React.HTMLAttributes<HTMLElement>, 'children'> &
-      HasRootRef<HTMLElement> &
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasRootRef<HTMLDivElement> &
       HasDataAttribute;
     input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
   };
