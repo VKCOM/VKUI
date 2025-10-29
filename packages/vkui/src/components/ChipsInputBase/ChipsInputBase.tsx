@@ -37,9 +37,7 @@ const sizeYClassNames = {
 
 export const ChipsInputBase = <O extends ChipOption>({
   // FormFieldProps
-  'getRootRef': rootGetRootRef,
-  'style': rootStyle,
-  'className': rootClassName,
+  getRef,
   before,
   after,
   status,
@@ -53,10 +51,15 @@ export const ChipsInputBase = <O extends ChipOption>({
   renderChip = renderChipDefault,
 
   // input
-  getRef,
   'inputValue': inputValueProp = DEFAULT_INPUT_VALUE,
   addOnBlur,
   onInputChange,
+  'disabled': disabledProp,
+  'readOnly': readOnlyProp,
+  'onFocus': onFocusProp,
+  'onBlur': onBlurProp,
+  'id': idProp,
+  'placeholder': placeholderProp,
 
   // clear
   ClearButton = FormFieldClearButton,
@@ -79,20 +82,10 @@ export const ChipsInputBase = <O extends ChipOption>({
   }
 
   const {
-    className,
-    style,
-    getRootRef,
     onClick: onRootClick,
     onMouseDown: onRootMouseDown,
     ...rootRest
-  } = useMergeProps(
-    {
-      getRootRef: rootGetRootRef,
-      style: rootStyle,
-      className: rootClassName,
-    },
-    slotProps?.root,
-  );
+  } = useMergeProps(restProps, slotProps?.root);
 
   const {
     getRootRef: getInputRef,
@@ -109,7 +102,12 @@ export const ChipsInputBase = <O extends ChipOption>({
       className: styles.el,
       value: inputValueProp,
       onChange: onInputChange,
-      ...restProps,
+      disabled: disabledProp,
+      readOnly: readOnlyProp,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      id: idProp,
+      placeholder: placeholderProp,
     },
     slotProps?.input,
   );
@@ -304,18 +302,15 @@ export const ChipsInputBase = <O extends ChipOption>({
   return (
     <FormField
       Component="div"
-      getRootRef={getRootRef}
       // role="group" добавлена, чтобы этот блок можно было найти с помощью стрелочек при использовании NVDA
       // Если убрать, то aria-label не будет читаться
       role="group"
       aria-label={ariaLabel}
-      style={style}
       disabled={disabled}
       before={before}
       after={afterItems}
       status={status}
       mode={mode}
-      className={className}
       maxHeight={maxHeight}
       onClick={disabled ? onRootClick : callMultiple(handleRootClick, onRootClick)}
       onMouseDown={callMultiple(handleRootMouseDown, onRootMouseDown)}

@@ -115,10 +115,11 @@ type UseChipsInputBaseOnlyNeededProps<O extends ChipOption = ChipOption> = Omit<
  */
 export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
   extends UseChipsInputBaseOnlyNeededProps<O>,
-    Omit<
+    Pick<
       React.InputHTMLAttributes<HTMLInputElement>,
-      keyof UseChipsInputBaseProps<O> | 'defaultChecked'
+      'readOnly' | 'onFocus' | 'onBlur' | 'placeholder'
     >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur' | 'defaultValue'>,
     HasRootRef<HTMLDivElement>,
     HasAlign {
   /**

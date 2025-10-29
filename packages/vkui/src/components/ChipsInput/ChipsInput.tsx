@@ -34,9 +34,14 @@ export const ChipsInput = <Option extends ChipOption>({
   getOptionValue,
   getOptionLabel,
   getNewOptionData,
+  disabled: disabledProp,
+  readOnly: readOnlyProp,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
+  id: idProp,
+  placeholder: placeholderProp,
 
   // other
-  disabled: disabledProp,
   allowClearButton,
   delimiter,
 
@@ -49,6 +54,11 @@ export const ChipsInput = <Option extends ChipOption>({
     defaultValue: resolvedInputDefaultValue,
     onChange: resolvedOnInputChange,
     disabled,
+    readOnly,
+    onFocus,
+    onBlur,
+    id,
+    placeholder,
     ...inputRest
   } = useMergeProps(
     {
@@ -57,6 +67,11 @@ export const ChipsInput = <Option extends ChipOption>({
       defaultValue: defaultInputValueProp,
       onChange: onInputChangeProp,
       disabled: disabledProp,
+      readOnly: readOnlyProp,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      id: idProp,
+      placeholder: placeholderProp,
     },
     slotProps?.input,
   );
@@ -104,10 +119,15 @@ export const ChipsInput = <Option extends ChipOption>({
           getRootRef: inputRef,
           value: inputValue,
           onChange: onInputChange,
-          disabled,
           ...inputRest,
         },
       }}
+      disabled={disabled}
+      readOnly={readOnly}
+      onFocus={onFocusProp}
+      onBlur={onBlur}
+      id={id}
+      placeholder={placeholder}
       {...restProps}
     />
   );
