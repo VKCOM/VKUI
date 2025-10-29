@@ -13,7 +13,7 @@ describe('WriteBar', () => {
       <VisuallyHidden id="writebar" Component="label">
         WriteBar
       </VisuallyHidden>
-      <WriteBar aria-labelledby="writebar" {...props} />
+      <WriteBar slotProps={{ textArea: { 'aria-labelledby': 'writebar' } }} {...props} />
     </>
   ));
 
@@ -22,9 +22,9 @@ describe('WriteBar', () => {
     const rootRef2 = createRef<HTMLDivElement>();
     const textAreaRef1 = createRef<HTMLTextAreaElement>();
     const textAreaRef2 = createRef<HTMLTextAreaElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onTextareaClick = vi.fn();
 
     render(
       <WriteBar
@@ -34,7 +34,10 @@ describe('WriteBar', () => {
         getRef={textAreaRef1}
         value="value"
         onChange={noop}
-        onClick={onClick1}
+        id="textarea"
+        name="textarea"
+        rows={2}
+        onClick={onRootClick1}
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -46,14 +49,14 @@ describe('WriteBar', () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
-            'onClick': onRootClick,
+            'onClick': onRootClick2,
           },
           textArea: {
             'className': 'textAreaClassName',
             'getRootRef': textAreaRef2,
             'data-testid': 'textArea-2',
             'value': 'value-2',
-            'onClick': onClick2,
+            'onClick': onTextareaClick,
           },
         }}
       />,
@@ -64,6 +67,9 @@ describe('WriteBar', () => {
     expect(textArea).toBeInTheDocument();
     expect(textArea).toHaveClass('textAreaClassName');
     expect(textArea).toHaveValue('value-2');
+    expect(textArea).toHaveAttribute('id', 'textarea');
+    expect(textArea).toHaveAttribute('name', 'textarea');
+    expect(textArea).toHaveAttribute('rows', '2');
 
     const root = screen.getByTestId('root');
     expect(root).toBeInTheDocument();
@@ -79,11 +85,13 @@ describe('WriteBar', () => {
     expect(textAreaRef1.current).toBe(textArea);
 
     fireEvent.click(textArea);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onTextareaClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(2);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 
   describe('works uncontrolled', () => {
