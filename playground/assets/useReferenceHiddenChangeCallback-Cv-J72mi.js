@@ -1,0 +1,1 @@
+import{r as f,l as n}from"./iframe-DC59t_7s.js";function u(e,r){const c=f.useRef(e?.referenceHidden);f.useEffect(()=>{c.current=e?.referenceHidden}),n(function(){r&&e?.referenceHidden!==c.current&&r(e?.referenceHidden||!1)},[e?.referenceHidden,r])}export{u};
