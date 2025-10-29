@@ -9,6 +9,10 @@ import { useExternRef } from './useExternRef';
 type BaseProps<T extends HTMLElement = HTMLElement> = HasRootRef<T> &
   Pick<AllHTMLAttributes<T>, 'className' | 'style'>;
 
+const filterProps = <T extends BaseProps = BaseProps>(props: T) => {
+  return filterObject(props, (value) => value !== undefined);
+};
+
 export const useMergeProps = <T extends BaseProps = BaseProps>(
   originalProps: T,
   slotProps?: T,
@@ -19,7 +23,7 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
   const getRootRef = useExternRef(originalSlotGetRef, rootSlotGetRef);
 
   if (!slotProps) {
-    return originalProps;
+    return filterProps(originalProps);
   }
 
   const { className: rootSlotClassName, style: rootSlotStyle, ...rootSlotProps } = slotProps || {};
@@ -58,5 +62,5 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
     resolvedProps.getRootRef = getRootRef;
   }
 
-  return filterObject(resolvedProps, (value) => value !== undefined);
+  return filterProps(resolvedProps);
 };
