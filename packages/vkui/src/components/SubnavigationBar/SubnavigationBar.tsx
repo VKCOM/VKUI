@@ -13,7 +13,11 @@ export interface SubnavigationBarProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     Pick<
       HorizontalScrollProps,
-      'showArrows' | 'arrowSize' | 'getScrollToLeft' | 'getScrollToRight' | 'scrollAnimationDuration'
+      | 'showArrows'
+      | 'arrowSize'
+      | 'getScrollToLeft'
+      | 'getScrollToRight'
+      | 'scrollAnimationDuration'
     > {
   /**
    * Отключение возможности прокручивания компонента по горизонтали.
