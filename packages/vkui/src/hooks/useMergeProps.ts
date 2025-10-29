@@ -2,6 +2,7 @@ import { type AllHTMLAttributes } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getMergedSameEventsByProps } from '../helpers/getMergedSameEventsByProps';
 import { mergeStyle } from '../helpers/mergeStyle';
+import { filterObject } from '../lib/object';
 import { type HasRootRef } from '../types';
 import { useExternRef } from './useExternRef';
 
@@ -57,5 +58,5 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
     resolvedProps.getRootRef = getRootRef;
   }
 
-  return resolvedProps;
+  return filterObject(resolvedProps, (value) => value !== undefined);
 };
