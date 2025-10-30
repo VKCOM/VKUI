@@ -1,7 +1,0 @@
-.Para {
-  margin: 0;
-}
-
-.Para:not(:last-child) {
-  margin-bottom: 8px;
-}
