@@ -1,7 +1,11 @@
 .in {
   /* Отрицательный margin нужен, чтобы компенсировать увеличенный из-за тени padding (12px -> 20px) */
+  position: relative;
+  /* min-width: 100%; */
   margin-block: -8px;
   margin-inline: 0;
+  overflow-x: hidden;
+  isolation: isolate;
 }
 
 .scrollIn {
@@ -17,6 +21,17 @@
   content: '';
 }
 
+.scroll {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .item {
   display: flex;
   list-style-type: none;
@@ -29,4 +44,29 @@
 .modeFixed .item {
   flex: 1;
   min-inline-size: 0;
+}
+
+.inFade {
+  display: flex;
+  flex: 1 0 100%;
+  align-items: stretch;
+  transition: transform var(--vkui--animation_duration_m);
+}
+
+.inFadeLeft {
+  mask-image: linear-gradient(to left, rgb(0, 0, 0, 1) 90%, rgb(0, 0, 0, 0));
+}
+
+.inFadeRight {
+  mask-image: linear-gradient(to right, rgb(0, 0, 0, 1) 90%, rgb(0, 0, 0, 0));
+}
+
+.inFadeLeft.inFadeRight {
+  mask-image: linear-gradient(
+    to right,
+    rgb(0, 0, 0, 0) 0%,
+    rgb(0, 0, 0, 1) 10%,
+    rgb(0, 0, 0, 1) 90%,
+    rgb(0, 0, 0, 0) 100%
+  );
 }
