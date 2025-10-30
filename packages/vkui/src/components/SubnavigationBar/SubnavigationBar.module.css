@@ -1,7 +1,6 @@
 .in {
   /* Отрицательный margin нужен, чтобы компенсировать увеличенный из-за тени padding (12px -> 20px) */
   position: relative;
-  /* min-width: 100%; */
   margin-block: -8px;
   margin-inline: 0;
   overflow-x: hidden;
@@ -30,6 +29,10 @@
 
 .scroll::-webkit-scrollbar {
   display: none;
+}
+
+.noPadding {
+  padding: 0;
 }
 
 .item {

@@ -26,6 +26,10 @@ export interface SubnavigationBarProps
    * Добавляет тень слева и справа при скролле.
    */
   withFade?: boolean;
+  /**
+   * Убрать отступы.
+   */
+  noPadding?: boolean;
 }
 
 const defaultScrollToLeft: ScrollPositionHandler = (x) => x - 240;
@@ -40,6 +44,7 @@ export const SubnavigationBar = ({
   withFade = false,
   children,
   showArrows = true,
+  noPadding = false,
   getScrollToLeft = defaultScrollToLeft,
   getScrollToRight = defaultScrollToRight,
   scrollAnimationDuration,
@@ -61,8 +66,8 @@ export const SubnavigationBar = ({
   }
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [ isFadeLeft, setFadeLeft ] = useState(false);
-  const [ isFadeRight, setFadeRight ] = useState(false);
+  const [isFadeLeft, setFadeLeft] = useState(false);
+  const [isFadeRight, setFadeRight] = useState(false);
 
   const scrollHandler = useCallback(() => {
     if (!scrollRef.current) {
@@ -71,13 +76,16 @@ export const SubnavigationBar = ({
 
     setFadeLeft(scrollRef.current.scrollLeft !== 0);
     setFadeRight(
-      !(scrollRef.current.clientWidth + scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth)
+      !(
+        scrollRef.current.clientWidth + scrollRef.current.scrollLeft >=
+        scrollRef.current.scrollWidth
+      ),
     );
   }, []);
 
   const renderScrollWrapper = () => (
     <ScrollWrapper className={styles.in} {...scrollWrapperProps}>
-      <ul className={styles.scrollIn}>
+      <ul className={classNames(styles.scrollIn, noPadding && styles.noPadding)}>
         {React.Children.map(children, (child, idx) =>
           hasReactNode(child) ? (
             <li key={idx} className={styles.item}>
