@@ -73,10 +73,18 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
   const placeholderItemRef = React.useRef<PlaceholderItem | null>(null);
   const siblingItemsRef = React.useRef<SiblingItem[]>([]);
   const itemsGapRef = React.useRef<number>(0);
+
+  const getGap = (element: HTMLElement) => {
+    if (element.style.gap) {
+      parseInt(element.style.gap);
+    }
+    return parseInt(element.style.gridGap);
+  };
+
   const initializeItems = (draggingEl: HTMLElement) => {
     const draggingElRect = getBoundingClientRect(draggingEl, true);
     const parentElement = draggingEl.parentElement;
-    itemsGapRef.current = parentElement ? parseInt(parentElement.style.gridGap) : 0;
+    itemsGapRef.current = parentElement ? getGap(parentElement) : 0;
 
     const { children } = parentElement || { children: [] };
     Array.prototype.forEach.call(children, (el: HTMLElement, index) => {
