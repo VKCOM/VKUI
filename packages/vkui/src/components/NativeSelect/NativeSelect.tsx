@@ -52,7 +52,14 @@ export type NativeHTMLSelectProps = Omit<
 >;
 
 export interface NativeSelectProps
-  extends NativeHTMLSelectProps,
+  extends Pick<
+      React.SelectHTMLAttributes<HTMLSelectElement>,
+      'disabled' | 'required' | 'autoFocus' | 'name' | 'onFocus' | 'onBlur' | 'onClick'
+    >,
+    Omit<
+      React.HTMLAttributes<HTMLDivElement>,
+      'defaultValue' | 'onChange' | 'onFocus' | 'onBlur' | 'onClick'
+    >,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
@@ -112,13 +119,10 @@ export interface NativeSelectProps
  * @see https://vkui.io/components/native-select
  */
 export const NativeSelect = ({
-  style: rootStyle,
-  className: rootClassName,
-  getRootRef: rootGetRootRef,
+  // NativeSelectProps
+  children,
   align,
   placeholder,
-  children,
-  getRef,
   multiline,
   selectType = 'default',
   status,
@@ -127,6 +131,17 @@ export const NativeSelect = ({
   onChange,
   value,
   defaultValue,
+  getRef,
+
+  // Select props
+  disabled,
+  required,
+  autoFocus,
+  id,
+  name,
+  onClick,
+  onFocus,
+  onBlur,
 
   slotProps,
   ...restProps
@@ -140,13 +155,10 @@ export const NativeSelect = ({
   const [empty, setEmpty] = React.useState(false);
   const { sizeY = 'none' } = useAdaptivity();
 
-  const { className, style, getRootRef, ...rootRest } = useMergeProps(
-    { style: rootStyle, className: rootClassName, getRootRef: rootGetRootRef },
-    slotProps?.root,
-  );
+  const { className, style, getRootRef, ...rootRest } = useMergeProps(restProps, slotProps?.root);
 
   const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
-    { getRootRef: getRef, ...restProps },
+    { getRootRef: getRef, disabled, required, autoFocus, id, name, onClick, onFocus, onBlur },
     slotProps?.select,
   );
 

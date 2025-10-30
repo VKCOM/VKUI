@@ -16,7 +16,12 @@ describe('NativeSelect', () => {
   baselineComponent((props) => (
     <>
       <label htmlFor="name">Name:</label>
-      <NativeSelect id="name" data-testid="target" value="0" {...props}>
+      <NativeSelect
+        id="name"
+        slotProps={{ select: { 'data-testid': 'target' } }}
+        value="0"
+        {...props}
+      >
         <option value="0">Mike</option>
         <option value="1">Josh</option>
       </NativeSelect>
@@ -28,8 +33,8 @@ describe('NativeSelect', () => {
     const rootRef2 = createRef<HTMLDivElement>();
     const selectRef1 = createRef<HTMLSelectElement>();
     const selectRef2 = createRef<HTMLSelectElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
+    const onSelectClick1 = vi.fn();
+    const onSelectClick2 = vi.fn();
     const onRootClick = vi.fn();
 
     render(
@@ -39,8 +44,10 @@ describe('NativeSelect', () => {
         getRootRef={rootRef1}
         getRef={selectRef1}
         required
+        id="select"
+        name="select"
         onChange={noop}
-        onClick={onClick1}
+        onClick={onSelectClick1}
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -59,7 +66,7 @@ describe('NativeSelect', () => {
             'getRootRef': selectRef2,
             'data-testid': 'select-2',
             'required': false,
-            'onClick': onClick2,
+            'onClick': onSelectClick2,
           },
         }}
       />,
@@ -69,6 +76,8 @@ describe('NativeSelect', () => {
     const input = screen.getByTestId('select-2');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
+    expect(input).toHaveAttribute('name', 'select');
+    expect(input).toHaveAttribute('id', 'select');
     expect(input).not.toBeChecked();
 
     const root = screen.getByTestId('root');
@@ -85,8 +94,8 @@ describe('NativeSelect', () => {
     expect(selectRef1.current).toBe(input);
 
     fireEvent.click(input);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onSelectClick1).toHaveBeenCalledTimes(1);
+    expect(onSelectClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
     expect(onRootClick).toHaveBeenCalledTimes(2);
