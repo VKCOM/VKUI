@@ -90,7 +90,7 @@ jobs:
 
       - name: Download artifacts
         id: artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: packages/vkui/artifacts
 
