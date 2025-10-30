@@ -1,5 +1,6 @@
 'use client';
 
+import { useContext } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
@@ -9,7 +10,9 @@ import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
+import { SnackbarsContainerContext } from '../../hooks/useSnackbar/SnackbarsContainerContext';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { callMultiple } from '../../lib/callMultiple';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -80,9 +83,17 @@ export interface SnackbarProps
    */
   onActionClick?: (event: React.MouseEvent) => void;
   /**
+   * Обработчик, срабатывающий при окончании свайпа снекбара, когда он должен закрыться.
+   */
+  onCloseWithSwipe?: () => void;
+  /**
+   * Обработчик, срабатывающий при окончании таймера, длительность, которого задана свойством `duration`.
+   */
+  onCloseAfterTimeout?: () => void;
+  /**
    * Время в миллисекундах, через которое плашка скроется.
    */
-  duration?: number;
+  duration?: number | null;
   /**
    * Обработчик закрытия уведомления.
    */
@@ -91,6 +102,13 @@ export interface SnackbarProps
    * Величина отступа снизу. Используется для позиционирования элемента в случае, когда нежелательно, чтобы Snackbar при появлении перекрывал важные элементы интерфейса.
    */
   offsetY?: React.CSSProperties['bottom'];
+  /**
+   * Управление состоянием открытия снекбара:
+   * При `open = undefined` - работает как обычно
+   * При `open = true` - снекбар будет открыт при любых действиях со снекбаром
+   * При `open = false` - запустится анимация закрытия снекбара, и в конце анимации вызовется `onClose`.
+   */
+  open?: boolean;
 }
 
 /**
@@ -112,6 +130,10 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   getRootRef: getRootRefProp,
 
   slotProps,
+  open: openProp,
+  onCloseWithSwipe,
+  onCloseAfterTimeout,
+  id,
   ...restProps
 }: SnackbarProps) => {
   const { getRootRef, ...rootRest } = useMergeProps(
@@ -130,8 +152,10 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   );
 
   const platform = usePlatform();
+  const { isInsideSnackbarContainer, onSnackbarOpen, onSnackbarClosed } =
+    useContext(SnackbarsContainerContext);
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(openProp !== undefined ? openProp : true);
   const [touched, setTouched] = React.useState(false);
 
   const direction = useConfigDirection();
@@ -150,8 +174,20 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
     {
-      onExited: onClose,
+      onEnter: id ? () => onSnackbarOpen(id) : undefined,
+      onExited: callMultiple(onClose, id ? () => onSnackbarClosed(id) : undefined),
     },
+    false,
+    true,
+  );
+
+  useIsomorphicLayoutEffect(
+    function updateForceOpen() {
+      if (openProp !== undefined) {
+        setOpen(openProp);
+      }
+    },
+    [openProp],
   );
 
   const clearRAF = React.useCallback(() => {
@@ -185,8 +221,10 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   );
 
   const close = React.useCallback(() => {
-    setOpen(false);
-  }, []);
+    if (openProp === undefined) {
+      setOpen(false);
+    }
+  }, [openProp]);
 
   const handleActionClick = (event: React.MouseEvent) => {
     close();
@@ -241,6 +279,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       )
     ) {
       close();
+      onCloseWithSwipe?.();
     }
 
     setTouched(false);
@@ -248,10 +287,15 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   useIsomorphicLayoutEffect(
     function closeAfterDelay() {
-      if (!open || focused || touched || animationState !== 'entered') {
+      if (!open || focused || touched || animationState !== 'entered' || !duration) {
         return;
       }
-      closeTimeoutIdRef.current = setTimeout(close, duration);
+      const onTimeout = () => {
+        close();
+        onCloseAfterTimeout?.();
+      };
+
+      closeTimeoutIdRef.current = setTimeout(onTimeout, duration);
       return function preventCloseAfterDelayOnUnmount() {
         clearTimeout(closeTimeoutIdRef.current);
       };
@@ -284,9 +328,11 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   return (
     <RootComponent
+      id={id}
       role="presentation"
       baseClassName={classNames(
         styles.host,
+        !isInsideSnackbarContainer && styles.fixed,
         platform === 'ios' && styles.ios,
         touched && styles.touched,
         placementClassNames[placement],
