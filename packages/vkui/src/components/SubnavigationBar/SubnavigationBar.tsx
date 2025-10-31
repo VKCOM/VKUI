@@ -60,9 +60,9 @@ export const SubnavigationBar = ({
     };
   }
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [ isFadeLeft, setFadeLeft ] = useState(false);
-  const [ isFadeRight, setFadeRight ] = useState(false);
+  const scrollRef = useRef<HTMLUListElement>(null);
+  const [isFadeLeft, setFadeLeft] = useState(false);
+  const [isFadeRight, setFadeRight] = useState(false);
 
   const scrollHandler = useCallback(() => {
     if (!scrollRef.current) {
@@ -71,41 +71,38 @@ export const SubnavigationBar = ({
 
     setFadeLeft(scrollRef.current.scrollLeft !== 0);
     setFadeRight(
-      !(scrollRef.current.clientWidth + scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth)
+      !(
+        scrollRef.current.clientWidth + scrollRef.current.scrollLeft >=
+        scrollRef.current.scrollWidth
+      ),
     );
   }, []);
 
-  const renderScrollWrapper = () => (
-    <ScrollWrapper className={styles.in} {...scrollWrapperProps}>
-      <ul className={styles.scrollIn}>
-        {React.Children.map(children, (child, idx) =>
-          hasReactNode(child) ? (
-            <li key={idx} className={styles.item}>
-              {child}
-            </li>
-          ) : null,
-        )}
-      </ul>
-    </ScrollWrapper>
-  );
-
   return (
     <RootComponent baseClassName={fixed && styles.modeFixed} {...restProps}>
-      {withFade ? (
-        <div
-          className={classNames(
-            styles.in,
-            isFadeLeft && styles.inFadeLeft,
-            isFadeRight && styles.inFadeRight,
-          )}
+      <ScrollWrapper
+        className={classNames(
+          styles.in,
+          withFade && styles.inFade,
+          withFade && isFadeLeft && styles.inFadeLeft,
+          withFade && isFadeRight && styles.inFadeRight,
+        )}
+        {...scrollWrapperProps}
+      >
+        <ul
+          ref={scrollRef}
+          className={classNames(styles.scrollIn, withFade && styles.scroll)}
+          onScroll={scrollHandler}
         >
-          <div ref={scrollRef} className={styles.scroll} onScroll={scrollHandler}>
-            <div className={styles.inFade}>{renderScrollWrapper()}</div>
-          </div>
-        </div>
-      ) : (
-        renderScrollWrapper()
-      )}
+          {React.Children.map(children, (child, idx) =>
+            hasReactNode(child) ? (
+              <li key={idx} className={styles.item}>
+                {child}
+              </li>
+            ) : null,
+          )}
+        </ul>
+      </ScrollWrapper>
     </RootComponent>
   );
 };

@@ -54,19 +54,35 @@
 }
 
 .inFadeLeft {
-  mask-image: linear-gradient(to left, rgb(0, 0, 0, 1) 90%, rgb(0, 0, 0, 0));
+  mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    #000 20px,
+    #000 calc(100% - 20px),
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
 }
 
 .inFadeRight {
-  mask-image: linear-gradient(to right, rgb(0, 0, 0, 1) 90%, rgb(0, 0, 0, 0));
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 20px,
+    #000 calc(100% - 20px),
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
 }
 
 .inFadeLeft.inFadeRight {
   mask-image: linear-gradient(
     to right,
-    rgb(0, 0, 0, 0) 0%,
-    rgb(0, 0, 0, 1) 10%,
-    rgb(0, 0, 0, 1) 90%,
-    rgb(0, 0, 0, 0) 100%
+    transparent 0,
+    #000 20px,
+    #000 calc(100% - 20px),
+    transparent 100%
   );
 }
