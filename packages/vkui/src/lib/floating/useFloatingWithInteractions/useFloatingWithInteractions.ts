@@ -5,6 +5,7 @@ import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
 import { useLongpress } from '../../../hooks/useLongpress.ts';
 import { useStableCallback } from '../../../hooks/useStableCallback';
+import { callMultiple } from '../../callMultiple.ts';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
@@ -181,7 +182,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   });
 
   const handleLongpressOnReference = useStableCallback(() => {
-    commitShownLocalState(true, 'longpress');
+    if (!shownLocalState.shown) {
+      commitShownLocalState(true, 'longpress');
+    }
   });
 
   const handleClickOnReferenceForOnlyClose = useStableCallback(() => {
@@ -253,6 +256,12 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     },
     [refs.reference, triggerOnFocus],
   );
+
+  const handleMouseDown = useStableCallback(() => {
+    if (shownLocalState.shown && shownLocalState.reason === 'longpress') {
+      commitShownLocalState(false, 'longpress');
+    }
+  });
 
   const handleEscapeKeyDown = React.useCallback(() => {
     blockFocusRef.current = true;
@@ -380,7 +389,15 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   }
 
   if (triggerOnLongPress) {
-    Object.assign(referencePropsRef.current, longpressHandlers);
+    const { onMouseDown, onTouchStart, onPointerDown, ...otherLongpressHandlers } =
+      longpressHandlers;
+
+    Object.assign(referencePropsRef.current, {
+      onMouseDown: callMultiple(onMouseDown, handleMouseDown),
+      onTouchStart: callMultiple(onTouchStart, handleMouseDown),
+      onPointerDown: callMultiple(onPointerDown, handleMouseDown),
+      ...otherLongpressHandlers,
+    });
   }
 
   if (shownFinalState) {
