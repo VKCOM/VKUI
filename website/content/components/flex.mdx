@@ -108,10 +108,10 @@ VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/
   ```jsx
   <Group mode="card" header={<Header size="s">Друзья</Header>}>
     <Flex gap="m" justify="center" margin="auto">
-      <Avatar size={48} src="#" initials="ДС" gradientColor="orange" />
-      <Avatar size={48} src="#" initials="ИМ" gradientColor="yellow" />
-      <Avatar size={48} src="#" initials="ВЖ" gradientColor="violet" />
-      <Avatar size={48} src="#" initials="ЭМ" gradientColor="green" />
+      <Avatar size={48} initials="ДС" gradientColor="orange" />
+      <Avatar size={48} initials="ИМ" gradientColor="yellow" />
+      <Avatar size={48} initials="ВЖ" gradientColor="violet" />
+      <Avatar size={48} initials="ЭМ" gradientColor="green" />
     </Flex>
   </Group>
   ```
@@ -125,11 +125,11 @@ VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/
 <Playground>
   ```jsx
   <Flex gap="m" justify="center" margin="auto">
-    <Card>Колонка</Card>
+    <Card Component="div">Колонка</Card>
     <Flex.Item flexBasis={100}>
-      <Card>Ширина 100px</Card>
+      <Card Component="div">Ширина 100px</Card>
     </Flex.Item>
-    <Card>Колонка</Card>
+    <Card Component="div">Колонка</Card>
   </Flex>
   ```
 </Playground>
