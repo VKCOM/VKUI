@@ -63,7 +63,7 @@ description: Компонент для визуальной группировк
 
 <Playground Wrapper={BlockWrapper}>
   ```jsx
-  <Header indicator={<Badge mode="prominent">12</Indicator>} after={<Switch />}>Уведомления</Header>
+  <Header indicator={<Badge mode="prominent">12</Indicator>} after={<Switch label="Уведомления" />}>Уведомления</Header>
   ```
 </Playground>
 
@@ -88,7 +88,7 @@ description: Компонент для визуальной группировк
 - `after` — контент справа от всего заголовка:
 
   ```jsx
-  <Header after={<Switch />}>Настройки</Header>
+  <Header after={<Switch label="Настройки" />}>Настройки</Header>
   ```
 
 ### Пример использования
@@ -219,7 +219,7 @@ description: Компонент для визуальной группировк
       <HorizontalScroll showArrows>
         {Array.from({ length: 20 }).map((_, index) => {
           return (
-            <HorizontalCell onClick={() => {}} key={index} header={index}>
+            <HorizontalCell key={index} header={index}>
               <Avatar size={56} />
             </HorizontalCell>
           );
