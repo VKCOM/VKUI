@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`input > transforms correctly 1`] = `
+"import { Input } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <Input
+        value="value"
+        name="input"
+        minLength={0}
+        maxLength={0}
+        placeholder="value"
+        onChange={() => {}}
+        onFocus={() => {}}
+        onClick={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "input",
+            "aria-label": "input"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;
