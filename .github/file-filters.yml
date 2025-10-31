@@ -31,7 +31,7 @@ docs_storybook:
   - 'packages/vkui/docs/**'
   - 'tools/storybook-*/**'
 
-docs_beta:
+docs_website:
   - *package_vkui
   - 'packages/vkui-docs-theme/**'
   - 'website/**'
