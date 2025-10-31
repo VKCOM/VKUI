@@ -9,7 +9,7 @@ export const REDUCE_MOTION_MEDIA_QUERY = 'screen and (prefers-reduced-motion: re
 export const useReducedMotion = (): boolean | undefined => {
   const { window } = useDOM();
 
-  const [reducedMotion, setReducedMotion] = React.useState<boolean | undefined>(() => undefined);
+  const [reducedMotion, setReducedMotion] = React.useState<boolean | undefined>(undefined);
 
   useIsomorphicLayoutEffect(() => {
     /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
