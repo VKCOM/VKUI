@@ -45,6 +45,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   disableFlipMiddleware = false,
   disableShiftMiddleware = false,
   trigger = 'click',
+  longpressDelay,
   strategy,
   content,
   hoverDelay = 150,
@@ -189,6 +190,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
     customMiddlewares,
 
     trigger,
+    longpressDelay,
     strategy,
     hoverDelay,
     onReferenceHiddenChange,

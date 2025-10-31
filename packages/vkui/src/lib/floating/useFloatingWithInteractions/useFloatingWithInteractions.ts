@@ -31,6 +31,7 @@ const whileElementsMounted: UseFloatingOptions['whileElementsMounted'] = (...arg
  */
 export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>({
   trigger = DEFAULT_TRIGGER,
+  longpressDelay,
 
   // UseFloating
   placement: placementProp = 'bottom',
@@ -334,7 +335,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     referencePropsRef.current = {};
   }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
 
-  const longpressHandlers = useLongpress(handleLongpressOnReference);
+  const longpressHandlers = useLongpress(handleLongpressOnReference, { delay: longpressDelay });
 
   if (shownFinalState) {
     floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties({

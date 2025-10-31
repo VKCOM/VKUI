@@ -57,6 +57,7 @@ export const useTooltip = ({
   onShownChange,
   hoverDelay = 150,
   strategy,
+  longpressDelay,
 
   // инверсированные св-ва для useFloatingWithInteractions
   enableInteractive = false,
@@ -177,6 +178,7 @@ export const useTooltip = ({
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,
     strategy,
+    longpressDelay,
 
     onPlacementChange,
 

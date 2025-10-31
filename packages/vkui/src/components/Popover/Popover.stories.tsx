@@ -103,6 +103,37 @@ export const Example: Story = {
       );
     };
 
+    const PopoverWithTriggerLongpress = () => {
+      return (
+        <Popover
+          noStyling
+          trigger="longpress"
+          id="menupopup-longpress"
+          role="dialog"
+          aria-labelledby="menubutton"
+          content={({ onClose }) => (
+            <Group>
+              <CellButton role="menuitem" before={<Icon28AddOutline />} onClick={onClose}>
+                Добавить
+              </CellButton>
+              <CellButton
+                role="menuitem"
+                before={<Icon28DeleteOutline />}
+                appearance="negative"
+                onClick={onClose}
+              >
+                Удалить
+              </CellButton>
+            </Group>
+          )}
+        >
+          <Button id="menubutton" aria-controls="menupopup" mode="outline">
+            Долго удерживай нажатие на мне
+          </Button>
+        </Popover>
+      );
+    };
+
     const PopoverWithTriggerFocus = () => {
       return (
         <Popover
@@ -204,6 +235,7 @@ export const Example: Story = {
       <Flex margin="auto" direction="column" align="start" gap="2xl">
         <PopoverWithTriggerHover />
         <PopoverWithTriggerClick />
+        <PopoverWithTriggerLongpress />
         <PopoverWithTriggerFocus />
         <PopoverWithAllTriggers />
         <PopoverWithTriggerManual />

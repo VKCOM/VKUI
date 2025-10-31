@@ -26,6 +26,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
   | 'disableShiftMiddleware'
   | 'strategy'
+  | 'longpressDelay'
 >;
 
 type AllowedTooltipBaseProps = Omit<TooltipBaseProps, 'arrowProps' | 'onCloseIconClick'>;

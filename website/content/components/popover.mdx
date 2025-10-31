@@ -69,6 +69,31 @@ description: Компонент, предназначенный для отоб�
   ```
 </Playground>
 
+### `"longpress"`
+
+Показ происходит при долгом нажатии на якорный элемент.
+
+<Playground>
+  ```jsx
+  <Popover
+    placement="bottom"
+    role="tooltip"
+    aria-describedby="tooltip-1"
+    content={
+      <Div>
+        <Text>Привет</Text>
+      </Div>
+    }
+    restoreFocus="anchor-element"
+    trigger="longpress"
+  >
+    <Button id="tooltip-1" mode="outline">
+      Нажми на меня
+    </Button>
+  </Popover>
+  ```
+</Playground>
+
 ### `"hover"`
 
 Показ происходит при наведении мыши на якорных элемент, скрытие - при отведении.
