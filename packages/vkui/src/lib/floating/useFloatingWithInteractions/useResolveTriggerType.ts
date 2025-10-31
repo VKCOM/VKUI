@@ -20,7 +20,7 @@ export const useResolveTriggerType = (
         case 'focus':
           result.triggerOnFocus = true;
           return result;
-        case 'longpress':
+        case 'long-press':
           result.triggerOnLongPress = true;
           return result;
         case 'manual':

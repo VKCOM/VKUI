@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react';
-import { useLongpress } from './useLongpress';
+import { useLongPress } from './useLongPress';
 
 // Мокаем модуль useDOM, чтобы управлять наличием PointerEvent
 let fakeWindow: any = {};
@@ -22,7 +22,7 @@ afterEach(() => {
 
 function setup(onLongPress: VoidFunction, options?: any) {
   const Test: React.FC = () => {
-    const handlers = useLongpress(onLongPress, options || {});
+    const handlers = useLongPress(onLongPress, options || {});
     return <div data-testid="target" {...handlers} style={{ width: 200, height: 200 }} />;
   };
   const utils = render(<Test />);
@@ -30,7 +30,7 @@ function setup(onLongPress: VoidFunction, options?: any) {
   return { target, utils };
 }
 
-describe('useLongpress', () => {
+describe('useLongPress', () => {
   test('calls onLongPress for pointer events after the delay', () => {
     fakeWindow.PointerEvent = {};
     const onLongPress = vi.fn();

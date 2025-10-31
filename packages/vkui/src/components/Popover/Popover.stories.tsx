@@ -103,11 +103,11 @@ export const Example: Story = {
       );
     };
 
-    const PopoverWithTriggerLongpress = () => {
+    const PopoverWithTriggerLongPress = () => {
       return (
         <Popover
           noStyling
-          trigger="longpress"
+          trigger="long-press"
           id="menupopup-longpress"
           role="dialog"
           aria-labelledby="menubutton"
@@ -235,7 +235,7 @@ export const Example: Story = {
       <Flex margin="auto" direction="column" align="start" gap="2xl">
         <PopoverWithTriggerHover />
         <PopoverWithTriggerClick />
-        <PopoverWithTriggerLongpress />
+        <PopoverWithTriggerLongPress />
         <PopoverWithTriggerFocus />
         <PopoverWithAllTriggers />
         <PopoverWithTriggerManual />

@@ -6,7 +6,7 @@ import {
   type UseFloatingRefs,
 } from '../types/common';
 
-export type InteractiveTriggerType = 'click' | 'hover' | 'focus' | 'longpress';
+export type InteractiveTriggerType = 'click' | 'hover' | 'focus' | 'long-press';
 
 export type ManualTriggerType = 'manual';
 
@@ -20,7 +20,7 @@ export type ShownChangeReason =
   | 'click'
   | 'hover'
   | 'focus'
-  | 'longpress'
+  | 'long-press'
   | 'callback';
 
 export type OnShownChange = (shown: boolean, reason?: ShownChangeReason) => void;
@@ -43,7 +43,7 @@ export interface UseFloatingWithInteractionsProps {
    * - `"click"` – показывается/скрывается только при нажатии.
    * - `"hover"` – будет показываться/скрывается при наведении/отведении мыши.
    * - `"focus"` – будет показываться/скрывается при фокусе/потере фокуса мыши.
-   * - `"longpress"` - будет показываться при долгом нажатии.
+   * - `"long-press"` - будет показываться при долгом нажатии.
    * - `"manual"` – будет показываться/скрывается только через свойство `shown`. `onShownChange`
    *    будет вызываться при нажатии за пределы целевого и всплывающего элементов, а также по кнопке
    *    ESC.
@@ -104,9 +104,9 @@ export interface UseFloatingWithInteractionsProps {
    * Количество миллисекунд, после которых произойдёт показ всплывающего элемента
    * при долгом нажатии.
    *
-   * > Используется только для `trigger="longpress"`.
+   * > Используется только для `trigger="long-press"`.
    */
-  longpressDelay?: number;
+  longPressDelay?: number;
 }
 
 export type ReferenceProps<T = HTMLElement> = Omit<

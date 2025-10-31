@@ -3,9 +3,8 @@ import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
-import { useLongpress } from '../../../hooks/useLongpress.ts';
+import { useLongPress } from '../../../hooks/useLongPress';
 import { useStableCallback } from '../../../hooks/useStableCallback';
-import { callMultiple } from '../../callMultiple.ts';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
@@ -32,7 +31,7 @@ const whileElementsMounted: UseFloatingOptions['whileElementsMounted'] = (...arg
  */
 export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>({
   trigger = DEFAULT_TRIGGER,
-  longpressDelay,
+  longPressDelay,
 
   // UseFloating
   placement: placementProp = 'bottom',
@@ -73,6 +72,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const [shownFinalState, setShownFinalState] = React.useState(() => shownLocalState.shown);
   const [willBeHide, setWillBeHide] = React.useState(false);
 
+  const skipNextClickRef = React.useRef(false);
   const hasCSSAnimation = React.useRef(false);
 
   const blockMouseEnterRef = React.useRef(false);
@@ -97,6 +97,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const commitShownLocalState = React.useCallback(
     (nextShown: boolean, reason: ShownChangeReason) => {
+      if (!nextShown) {
+        skipNextClickRef.current = false;
+      }
       setShownLocalState((prevState) => {
         if (prevState.shown !== nextShown || prevState.reason !== reason) {
           return {
@@ -172,6 +175,17 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     });
   });
 
+  const handleClickOnReferenceWhenLongpress = useStableCallback(() => {
+    if (skipNextClickRef.current) {
+      skipNextClickRef.current = false;
+      return;
+    }
+    if (shownLocalState.shown && shownLocalState.reason === 'long-press') {
+      commitShownLocalState(false, 'click');
+      return;
+    }
+  });
+
   const handleClickOnReference = useStableCallback(() => {
     // Предыдущий триггер (фокус) уже вызвал открытие/закрытие всплывающего окна, игнорируем вызов
     if (shownLocalState.reason === 'focus') {
@@ -181,9 +195,13 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     commitShownLocalState(!shownLocalState.shown, 'click');
   });
 
-  const handleLongpressOnReference = useStableCallback(() => {
+  const handleLongPressOnReference = useStableCallback(() => {
     if (!shownLocalState.shown) {
-      commitShownLocalState(true, 'longpress');
+      commitShownLocalState(true, 'long-press');
+      skipNextClickRef.current = true;
+      setTimeout(() => {
+        skipNextClickRef.current = false;
+      }, 500);
     }
   });
 
@@ -256,12 +274,6 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     },
     [refs.reference, triggerOnFocus],
   );
-
-  const handleMouseDown = useStableCallback(() => {
-    if (shownLocalState.shown && shownLocalState.reason === 'longpress') {
-      commitShownLocalState(false, 'longpress');
-    }
-  });
 
   const handleEscapeKeyDown = React.useCallback(() => {
     blockFocusRef.current = true;
@@ -344,7 +356,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     referencePropsRef.current = {};
   }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
 
-  const longpressHandlers = useLongpress(handleLongpressOnReference, { delay: longpressDelay });
+  const longPressHandlers = useLongPress(handleLongPressOnReference, { delay: longPressDelay });
 
   if (shownFinalState) {
     floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties({
@@ -357,6 +369,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     if (disableInteractive) {
       floatingPropsRef.current.style.pointerEvents = 'none';
     }
+  }
+
+  if (triggerOnLongPress && !triggerOnClick) {
+    referencePropsRef.current.onClick = handleClickOnReferenceWhenLongpress;
   }
 
   if (triggerOnFocus) {
@@ -389,15 +405,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   }
 
   if (triggerOnLongPress) {
-    const { onMouseDown, onTouchStart, onPointerDown, ...otherLongpressHandlers } =
-      longpressHandlers;
-
-    Object.assign(referencePropsRef.current, {
-      onMouseDown: callMultiple(onMouseDown, handleMouseDown),
-      onTouchStart: callMultiple(onTouchStart, handleMouseDown),
-      onPointerDown: callMultiple(onPointerDown, handleMouseDown),
-      ...otherLongpressHandlers,
-    });
+    Object.assign(referencePropsRef.current, longPressHandlers);
   }
 
   if (shownFinalState) {

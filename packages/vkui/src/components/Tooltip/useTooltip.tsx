@@ -8,7 +8,7 @@ import {
   useFloatingElement,
   type UseFloatingElementProps,
 } from '../../hooks/useFloatingElement';
-import { useHoverSupported } from '../../hooks/useHoverSupported.ts';
+import { useHoverSupported } from '../../hooks/useHoverSupported';
 import { animationFadeClassNames } from '../../lib/animation';
 import { getArrowCoordsByMiddlewareData } from '../../lib/floating';
 import {
@@ -57,7 +57,7 @@ export const useTooltip = ({
   onShownChange,
   hoverDelay = 150,
   strategy,
-  longpressDelay,
+  longPressDelay,
 
   // инверсированные св-ва для useFloatingWithInteractions
   enableInteractive = false,
@@ -87,7 +87,7 @@ export const useTooltip = ({
     if (hoverSupported) {
       return disableTriggerOnFocus ? 'hover' : ['hover', 'focus'];
     } else {
-      return 'longpress';
+      return 'long-press';
     }
   })();
 
@@ -178,7 +178,7 @@ export const useTooltip = ({
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,
     strategy,
-    longpressDelay,
+    longPressDelay,
 
     onPlacementChange,
 

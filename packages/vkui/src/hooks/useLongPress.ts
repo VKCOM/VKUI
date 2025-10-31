@@ -32,7 +32,7 @@ type AnyPointerEvent<T extends HTMLElement = HTMLElement> =
  *   произошло вскоре после touch (эмуляция) — по таймауту LAST_TOUCH_IGNORE_MS.
  * - Также отслеживаем activePointerId для многоуказательного взаимодействия.
  */
-export function useLongpress<T extends HTMLElement = HTMLElement>(
+export function useLongPress<T extends HTMLElement = HTMLElement>(
   onLongPress: (event: AnyPointerEvent<T>) => void,
   options: UseLogpressOptions = {},
 ): React.DOMAttributes<T> {
@@ -259,6 +259,5 @@ export function useLongpress<T extends HTMLElement = HTMLElement>(
     onMouseDown: start,
     onMouseMove: move,
     onMouseUp: end,
-    onMouseLeave: end,
   };
 }

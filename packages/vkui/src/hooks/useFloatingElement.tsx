@@ -84,7 +84,7 @@ export const useFloatingElement = <
   onShownChange,
   onShownChanged,
   strategy,
-  longpressDelay,
+  longPressDelay,
   onReferenceHiddenChange,
 
   onPlacementChange,
@@ -129,7 +129,7 @@ export const useFloatingElement = <
     strategy,
     placement: strictPlacement,
     trigger,
-    longpressDelay,
+    longPressDelay,
     hoverDelay,
     closeAfterClick,
     disabled,
