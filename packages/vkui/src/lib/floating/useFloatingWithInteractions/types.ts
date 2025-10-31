@@ -6,7 +6,7 @@ import {
   type UseFloatingRefs,
 } from '../types/common';
 
-export type InteractiveTriggerType = 'click' | 'hover' | 'focus';
+export type InteractiveTriggerType = 'click' | 'hover' | 'focus' | 'longpress';
 
 export type ManualTriggerType = 'manual';
 
@@ -20,6 +20,7 @@ export type ShownChangeReason =
   | 'click'
   | 'hover'
   | 'focus'
+  | 'longpress'
   | 'callback';
 
 export type OnShownChange = (shown: boolean, reason?: ShownChangeReason) => void;

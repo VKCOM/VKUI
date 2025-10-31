@@ -3,6 +3,7 @@ import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
+import { useLongpress } from '../../../hooks/useLongpress.ts';
 import { useStableCallback } from '../../../hooks/useStableCallback';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
@@ -81,7 +82,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const handleCloseOnFloatingClickOutsideDisabled =
     disableInteractive || handleCloseOnReferenceClickOutsideDisabled;
 
-  const { triggerOnFocus, triggerOnClick, triggerOnHover } = useResolveTriggerType(trigger);
+  const { triggerOnFocus, triggerOnClick, triggerOnHover, triggerOnLongPress } =
+    useResolveTriggerType(trigger);
 
   // Библиотека `floating-ui`
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
@@ -175,6 +177,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       return;
     }
     commitShownLocalState(!shownLocalState.shown, 'click');
+  });
+
+  const handleLongpressOnReference = useStableCallback(() => {
+    commitShownLocalState(true, 'longpress');
   });
 
   const handleClickOnReferenceForOnlyClose = useStableCallback(() => {
@@ -328,6 +334,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     referencePropsRef.current = {};
   }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
 
+  const longpressHandlers = useLongpress(handleLongpressOnReference);
+
   if (shownFinalState) {
     floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties({
       strategy,
@@ -368,6 +376,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     if (!disableInteractive) {
       floatingPropsRef.current.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
     }
+  }
+
+  if (triggerOnLongPress) {
+    Object.assign(referencePropsRef.current, longpressHandlers);
   }
 
   if (shownFinalState) {

@@ -6,6 +6,7 @@ export const useResolveTriggerType = (
   triggerOnFocus: boolean;
   triggerOnClick: boolean;
   triggerOnHover: boolean;
+  triggerOnLongPress: boolean;
 } =>
   (typeof triggerProp === 'string' ? [triggerProp] : triggerProp).reduce(
     (result, trigger) => {
@@ -19,6 +20,9 @@ export const useResolveTriggerType = (
         case 'focus':
           result.triggerOnFocus = true;
           return result;
+        case 'longpress':
+          result.triggerOnLongPress = true;
+          return result;
         case 'manual':
           return result;
       }
@@ -27,5 +31,6 @@ export const useResolveTriggerType = (
       triggerOnFocus: false as boolean,
       triggerOnClick: false as boolean,
       triggerOnHover: false as boolean,
+      triggerOnLongPress: false as boolean,
     },
   );
