@@ -19,10 +19,22 @@ describe(useResolveTriggerType, () => {
   });
 
   it.each([
-    { args: ['focus' as const, 'click' as const, 'hover' as const], result: { triggerOnFocus: true, triggerOnClick: true, triggerOnHover: true } }, // prettier-ignore
-    { args: ['focus' as const, 'click' as const], result: { triggerOnFocus: true, triggerOnClick: true, triggerOnHover: false } }, // prettier-ignore
-    { args: ['focus' as const, 'hover' as const], result: { triggerOnFocus: true, triggerOnClick: false, triggerOnHover: true } }, // prettier-ignore
-    { args: ['click' as const, 'hover' as const], result: { triggerOnFocus: false, triggerOnClick: true, triggerOnHover: true } }, // prettier-ignore
+    {
+      args: ['focus' as const, 'click' as const, 'hover' as const],
+      result: { triggerOnFocus: true, triggerOnClick: true, triggerOnHover: true },
+    },
+    {
+      args: ['focus' as const, 'click' as const],
+      result: { triggerOnFocus: true, triggerOnClick: true, triggerOnHover: false },
+    },
+    {
+      args: ['focus' as const, 'hover' as const],
+      result: { triggerOnFocus: true, triggerOnClick: false, triggerOnHover: true },
+    },
+    {
+      args: ['click' as const, 'hover' as const],
+      result: { triggerOnFocus: false, triggerOnClick: true, triggerOnHover: true },
+    },
   ])(`should return combination predicates for args are $args`, ({ args, result }) => {
     expect(useResolveTriggerType(args)).toEqual(result);
   });

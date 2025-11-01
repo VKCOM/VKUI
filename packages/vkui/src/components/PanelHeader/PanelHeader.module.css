@@ -249,7 +249,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .vkcom.sizeXRegular:not(:global(.vkuiInternalModalPageHeader__in)):not(.sep):not(.trnsp)
-  .in::after {
+.in::after {
   position: absolute;
   inset-block-end: 0;
   inset-inline: var(--vkui--size_border--regular);

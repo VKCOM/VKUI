@@ -19,8 +19,9 @@
 
 .withSafeZone .container {
   padding-block-start: calc(
-    var(--vkui_internal--dismiss_icon_height) + var(--vkui_internal--dismiss_icon_padding) +
-      var(--vkui_internal--dismiss_icon_safe_offset)
+    var(--vkui_internal--dismiss_icon_height) +
+    var(--vkui_internal--dismiss_icon_padding) +
+    var(--vkui_internal--dismiss_icon_safe_offset)
   );
 }
 
@@ -95,8 +96,9 @@
 
 .withSafeZone.desktop .container {
   padding-block-start: calc(
-    var(--vkui_internal--dismiss_icon_height) + var(--vkui_internal--dismiss_icon_padding) +
-      var(--vkui_internal--dismiss_icon_safe_offset) +
-      var(--vkui_internal--dismiss_icon_desktop_offset)
+    var(--vkui_internal--dismiss_icon_height) +
+    var(--vkui_internal--dismiss_icon_padding) +
+    var(--vkui_internal--dismiss_icon_safe_offset) +
+    var(--vkui_internal--dismiss_icon_desktop_offset)
   );
 }

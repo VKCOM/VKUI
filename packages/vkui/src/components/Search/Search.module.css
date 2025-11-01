@@ -38,7 +38,7 @@
   flex-basis: 0%;
   /**
    * Костыль для PanelHeader. Необходимо для растягивания на всю ширину.
-  */
+   */
   inline-size: 10000px;
   block-size: var(--vkui_internal--search_height);
   overflow: hidden;
@@ -146,7 +146,7 @@
   transform: translate3d(
     calc(
       var(--vkui_internal--search_shift_direction) *
-        calc(100% - var(--vkui_internal--search_icon_size))
+      calc(100% - var(--vkui_internal--search_icon_size))
     ),
     0,
     0

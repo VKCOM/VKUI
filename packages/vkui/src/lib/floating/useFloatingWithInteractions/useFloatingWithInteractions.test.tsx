@@ -82,7 +82,11 @@ describe(useFloatingWithInteractions, () => {
       { trigger: 'click' as const, openBy: 'click' as const, closeBy: 'click-outside' as const },
       { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'mouseLeave' as const },
       { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'escape-key' as const },
-      { trigger: 'hover' as const, openBy: 'mouseOver' as const, closeBy: 'click-outside' as const }, // prettier-ignore
+      {
+        trigger: 'hover' as const,
+        openBy: 'mouseOver' as const,
+        closeBy: 'click-outside' as const,
+      },
     ])(
       'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
       async ({ trigger, openBy, closeBy }) => {

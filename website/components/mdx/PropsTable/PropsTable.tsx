@@ -116,9 +116,9 @@ async function TableDescriptionColumn({
     <Td className={classNames(styles.td, styles.propDescription)}>
       <Code>{type}</Code>
       <MDXRemote
-        compiledSource={await compileMdx(
-          `${deprecated ? `\n\n**Deprecated**: ${deprecated}` : description}`,
-        )}
+        compiledSource={
+          await compileMdx(`${deprecated ? `\n\n**Deprecated**: ${deprecated}` : description}`)
+        }
         components={{
           pre: (props) => <pre {...props} />,
         }}
