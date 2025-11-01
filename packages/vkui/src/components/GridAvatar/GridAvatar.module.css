@@ -31,6 +31,6 @@
 /* если есть минимум три элемента — выбираем второй с конца */
 .item:nth-last-child(n + 3) ~ .item:nth-last-child(2),
 /* четвертый с конца */
-.item:nth-last-child(4) {
+  .item:nth-last-child(4) {
   margin-block-end: var(--vkui_internal--grid_avatar_image_offset);
 }

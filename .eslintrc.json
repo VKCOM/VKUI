@@ -18,16 +18,20 @@
       "spread": true
     }
   },
-  "extends": [
-    "plugin:@vkontakte/eslint-plugin/react-typescript", // "Preset 1"
-    "prettier" // "Preset 2" (overrides "Preset 1")
-  ],
+  "extends": ["plugin:@vkontakte/eslint-plugin/react-typescript"],
   "rules": {
     "@typescript-eslint/method-signature-style": "error",
     "@typescript-eslint/explicit-member-accessibility": "off", // [Reason] overrides "Preset 1"
     "@typescript-eslint/no-unnecessary-condition": "off", // [Reason] overrides "Preset 1"
     "@typescript-eslint/no-magic-numbers": "off", // [Reason] overrides "Preset 1"
     "@typescript-eslint/no-non-null-assertion": "off", // [Reason] overrides "Preset 1"
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-extra-parens": "off",
+    "@typescript-eslint/quotes": "off",
+    "react/jsx-indent": "off",
+    "space-before-function-paren": "off",
+    "comma-spacing": "off",
+    "max-len": "off",
     "@typescript-eslint/ban-ts-comment": [
       "error",
       {

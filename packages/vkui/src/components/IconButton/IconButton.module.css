@@ -105,9 +105,13 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .host,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormLayoutGroup--removable) :global(.vkuiInternalRemovable__content) > .host,
+  :global(.vkuiInternalFormLayoutGroup--removable)
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  :global(.vkuiInternalRemovable__content)
+  > .host,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormField__after) .host {
+  :global(.vkuiInternalFormField__after)
+  .host {
   display: flex;
   align-content: center;
   align-items: center;

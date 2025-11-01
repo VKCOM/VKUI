@@ -39,8 +39,9 @@
   box-sizing: border-box;
   align-self: center;
   inline-size: calc(
-    100% - var(--vkui_internal--DateInput_input_margin_inline_start) -
-      var(--vkui_internal--DateInput_input_margin_inline_end)
+    100% -
+    var(--vkui_internal--DateInput_input_margin_inline_start) -
+    var(--vkui_internal--DateInput_input_margin_inline_end)
   );
   margin-inline: var(--vkui_internal--DateInput_input_margin_inline_start)
     var(--vkui_internal--DateInput_input_margin_inline_end);

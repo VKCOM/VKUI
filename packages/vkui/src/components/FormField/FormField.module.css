@@ -136,7 +136,9 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-error) .modeDefault > .border,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-error) .focusVisible > .border,
+  :global(.vkuiInternalFormItem--status-error)
+  .focusVisible
+  > .border,
 .statusError.modeDefault > .border,
 .statusError.focusVisible > .border {
   z-index: var(--vkui_internal--z_index_form_field_status);
@@ -153,7 +155,9 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--status-valid) .modeDefault > .border,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--status-valid) .focusVisible > .border,
+  :global(.vkuiInternalFormItem--status-valid)
+  .focusVisible
+  > .border,
 .statusValid.modeDefault > .border,
 .statusValid.focusVisible > .border {
   z-index: var(--vkui_internal--z_index_form_field_status);
@@ -206,7 +210,7 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
-      .vkuiInternalFormItem
+    .vkuiInternalFormItem
   ):first-of-type
   .host {
   border-start-start-radius: var(--vkui--size_border_radius--regular);
@@ -216,7 +220,7 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-horizontal
-      .vkuiInternalFormItem
+    .vkuiInternalFormItem
   ):last-of-type
   .host {
   border-start-end-radius: var(--vkui--size_border_radius--regular);
@@ -226,7 +230,7 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
-      .vkuiInternalFormItem
+    .vkuiInternalFormItem
   ):first-of-type
   .host {
   border-start-start-radius: var(--vkui--size_border_radius--regular);
@@ -236,7 +240,7 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(
     .vkuiInternalFormLayoutGroup--segmented.vkuiInternalFormLayoutGroup--mode-vertical
-      .vkuiInternalFormItem
+    .vkuiInternalFormItem
   ):last-of-type
   .host {
   border-end-start-radius: var(--vkui--size_border_radius--regular);
