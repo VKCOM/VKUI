@@ -11,6 +11,7 @@
     "@project-tools/stylelint-plugin-vkui": "workspace:1.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.2",
     "@csstools/postcss-global-data": "3.1.0",
     "@morev/stylelint-testing-library": "^1.0.2",
     "@playwright/experimental-ct-react": "1.56.1",
@@ -41,7 +42,6 @@
     "@vitest/coverage-v8": "^4.0.4",
     "@vitest/eslint-plugin": "^1.3.25",
     "@vkontakte/eslint-plugin": "^2.0.0",
-    "@vkontakte/prettier-config": "^0.2.1",
     "@vkontakte/stylelint-config": "^4.1.0",
     "@vkontakte/vkui-tokens": "4.70.0",
     "autoprefixer": "^10.4.21",
@@ -55,12 +55,10 @@
     "diff2html-cli": "^5.2.15",
     "dotenv": "^17.2.3",
     "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-compat": "^6.0.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^61.1.11",
-    "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-compiler": "0.0.0-experimental-56229e1-20240813",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -80,7 +78,6 @@
     "postcss-logical": "^8.1.0",
     "postcss-modules": "^6.0.1",
     "postcss-value-parser": "^4.2.0",
-    "prettier": "^3.6.2",
     "process": "^0.11.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -94,7 +91,6 @@
     "stylelint-config-standard": "^39.0.1",
     "stylelint-media-use-custom-media": "^4.0.0",
     "stylelint-order": "^7.0.0",
-    "stylelint-prettier": "^5.0.3",
     "stylelint-use-logical": "^2.1.2",
     "stylelint-value-no-unknown-custom-properties": "^6.0.1",
     "swc-loader": "^0.2.6",
@@ -131,11 +127,11 @@
     "test:e2e:ci": "yarn workspace @vkontakte/vkui run test:e2e:ci",
     "test:e2e-update:ci": "yarn workspace @vkontakte/vkui run test:e2e-update:ci",
     "test:coverage": "npx nyc report --reporter=lcov",
-    "lint": "yarn lint:generated-files && concurrently 'yarn:lint:types' 'yarn:lint:types:vkui-date-fns-tz' 'yarn:lint:es' 'yarn:lint:style' 'yarn:lint:prettier'",
+    "lint": "yarn lint:generated-files && concurrently 'yarn:lint:types' 'yarn:lint:types:vkui-date-fns-tz' 'yarn:lint:es' 'yarn:lint:style' 'yarn:lint:biome-format'",
     "lint:es": "eslint . --ext .jsx,.js,.ts,.tsx --cache --cache-location .cache/.eslintcache",
     "lint:es:ci": "yarn lint:es -o lint-results.json -f json",
     "lint:style": "cross-env LINT_PRECOMMIT_RUN=1 stylelint '**/*.css' --cache --cache-location .cache/.stylelintcache",
-    "lint:prettier": "prettier --check --ignore-unknown --cache --cache-location .cache/.prettiercache .",
+    "lint:biome-format": "biome format .",
     "lint:types": "concurrently 'yarn:lint:types:*'",
     "lint:types:root": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo",
     "lint:types:vkui-date-fns-tz": "yarn workspace @vkontakte/vkui-date-fns-tz run lint:types",
@@ -148,15 +144,15 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "prettier --check",
+      "biome format --no-errors-on-unmatched",
       "eslint"
     ],
     "*.css": [
-      "prettier --check",
+      "biome format --no-errors-on-unmatched",
       "cross-env LINT_PRECOMMIT_RUN=1 stylelint --allow-empty-input"
     ],
     "*.{json,md,mdx}": [
-      "prettier --check"
+      "biome format --no-errors-on-unmatched"
     ]
   },
   "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f",
@@ -167,6 +163,5 @@
       "packages/*",
       "tools/*"
     ]
-  },
-  "prettier": "@vkontakte/prettier-config"
+  }
 }

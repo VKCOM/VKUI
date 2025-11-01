@@ -189,7 +189,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          yarn run -T prettier ./dist --write
+          yarn run -T biome format --write ./dist
 
       - name: Checkout target
         run: |
@@ -208,7 +208,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          yarn run -T prettier ./dist --write
+          yarn run -T biome format --write ./dist
 
       - name: Generate diff
         id: generate-diff

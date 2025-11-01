@@ -25,7 +25,8 @@
 
 .hostMobileSafeAreaInsetTopWithCustomOffset {
   max-block-size: calc(
-    100% - (var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height))
+    100% -
+    (var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height))
   );
 }
 
