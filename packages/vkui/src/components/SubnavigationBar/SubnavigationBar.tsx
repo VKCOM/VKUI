@@ -20,7 +20,7 @@ export interface SubnavigationBarProps
    */
   fixed?: boolean;
   /**
-   * Убрать отступы.
+   * Отключает отступы. Рекомендуется использовать с `mode="outline"` у [`SubnavigationButton`](https://vkui.io/components/subnavigation-button).
    */
   noPadding?: boolean;
 }
