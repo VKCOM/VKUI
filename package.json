@@ -21,8 +21,6 @@
     "@size-limit/webpack": "^11.2.0",
     "@size-limit/webpack-css": "^11.2.0",
     "@storybook/addon-a11y": "10.0.4",
-    "@storybook/addon-actions": "9.0.8",
-    "@storybook/addon-console": "3.0.0",
     "@storybook/addon-designs": "11.0.1",
     "@storybook/addon-docs": "10.0.4",
     "@storybook/addon-links": "10.0.4",
