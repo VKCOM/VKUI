@@ -51,7 +51,7 @@
     "cross-env": "^10.1.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
-    "cssnano": "^7.1.1",
+    "cssnano": "^7.1.2",
     "diff2html-cli": "^5.2.15",
     "dotenv": "^17.2.3",
     "eslint": "^8.56.0",
