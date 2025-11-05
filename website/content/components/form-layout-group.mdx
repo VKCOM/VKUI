@@ -91,7 +91,7 @@ description: Компонент, помогающий сгруппировать
   ```jsx
   <FormLayoutGroup mode="horizontal" segmented>
     <FormItem htmlFor="email" top="E-mail">
-      <Input id="email" aria-label="Имя пользователя" />
+      <Input id="email" slotProps={{ input: { "aria-label": "Имя пользователя" } }} />
     </FormItem>
     <FormItem>
       <Select
