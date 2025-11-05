@@ -20,15 +20,14 @@ jobs:
 
       - name: Build docs
         run: |
-          yarn docs:beta:build
+          yarn docs:website:build
           yarn workspace @project-docs/website next-sitemap
 
       - name: Publishing docs
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          repository-name: VKCOM/vkui.io
-          token: ${{ secrets.DOCS_REPO_TOKEN }}
-          branch: main
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: gh-pages
           folder: website/out
           clean: true
           clean-exclude: |
