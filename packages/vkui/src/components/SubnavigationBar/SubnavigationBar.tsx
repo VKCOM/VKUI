@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { hasReactNode } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   HorizontalScroll,
@@ -19,6 +19,10 @@ export interface SubnavigationBarProps
    * Отключение возможности прокручивания компонента по горизонтали.
    */
   fixed?: boolean;
+  /**
+   * Убрать отступы.
+   */
+  noPadding?: boolean;
 }
 
 const defaultScrollToLeft: ScrollPositionHandler = (x) => x - 240;
@@ -32,6 +36,7 @@ export const SubnavigationBar = ({
   fixed = false,
   children,
   showArrows = true,
+  noPadding = false,
   getScrollToLeft = defaultScrollToLeft,
   getScrollToRight = defaultScrollToRight,
   scrollAnimationDuration,
@@ -55,7 +60,7 @@ export const SubnavigationBar = ({
   return (
     <RootComponent baseClassName={fixed && styles.modeFixed} {...restProps}>
       <ScrollWrapper className={styles.in} {...scrollWrapperProps}>
-        <ul className={styles.scrollIn}>
+        <ul className={classNames(styles.scrollIn, noPadding && styles.noPadding)}>
           {React.Children.map(children, (child, idx) =>
             hasReactNode(child) ? (
               <li key={idx} className={styles.item}>
