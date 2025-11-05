@@ -135,6 +135,8 @@ export { ScreenSpinnerContext } from './components/ScreenSpinner/context';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
 export type { ScreenSpinnerContextProps } from './components/ScreenSpinner/context';
 export { Snackbar } from './components/Snackbar/Snackbar';
+export { useSnackbar } from './hooks/useSnackbar';
+export type { SnackbarApi, CustomSnackbar, UseSnackbar } from './hooks/useSnackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export { useTooltip } from './components/Tooltip/useTooltip';
@@ -460,6 +462,7 @@ export { type Orientation, useOrientationChange } from './hooks/useOrientationCh
 export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock, useManualScroll as useScroll } from './components/AppRoot/ScrollContext';
+export { useSnackbarApi } from './components/AppRoot/SnackbarContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
