@@ -192,7 +192,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          yarn run -T biome format --write ./dist
+          yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Checkout target
         run: |
@@ -211,7 +211,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          yarn yarn exec biome format --write --config-path=diff.biome.json
+          yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Generate diff
         id: generate-diff
