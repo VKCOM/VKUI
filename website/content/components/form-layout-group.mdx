@@ -95,7 +95,7 @@ description: Компонент, помогающий сгруппировать
     </FormItem>
     <FormItem>
       <Select
-        aria-label="Имя домена"
+        slotProps={{ input: { "aria-label": "Имя домена" } }}
         options={['@mail.ru', '@internet.ru', '@bk.ru', '@inbox.ru', '@list.ru'].map((i) => ({
           label: i,
           value: i,
