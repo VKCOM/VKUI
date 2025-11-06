@@ -38,7 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "@vitest/coverage-v8": "^4.0.7",
-    "@vitest/eslint-plugin": "^1.4.0",
+    "@vitest/eslint-plugin": "^1.4.1",
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/stylelint-config": "^4.1.0",
     "@vkontakte/vkui-tokens": "4.70.0",
