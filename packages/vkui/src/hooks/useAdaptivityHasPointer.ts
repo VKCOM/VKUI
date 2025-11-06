@@ -9,7 +9,7 @@ import { useIsClient } from './useIsClient';
  *
  * [No SSR] Если передать `false`, то определение будет сразу.
  */
-export function useAdaptivityHasPointer(deferDetect?: true): undefined | boolean; // prettier-ignore
+export function useAdaptivityHasPointer(deferDetect?: true): undefined | boolean;
 export function useAdaptivityHasPointer(deferDetect?: false): boolean;
 export function useAdaptivityHasPointer(deferDetect = true): undefined | boolean {
   const { hasPointer: hasPointerContext } = React.useContext(AdaptivityContext);

@@ -14,8 +14,18 @@ const ModalWithUseContext = (props: Omit<ModalCardProps, 'actions'>) => {
 describe(useModalRootContext, () => {
   fakeTimersForScope();
   test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
-    const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
-    const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
+    const globalCallbacks = {
+      onOpen: vi.fn(),
+      onOpened: vi.fn(),
+      onClose: vi.fn(),
+      onClosed: vi.fn(),
+    };
+    const localCallbacks = {
+      onOpen: vi.fn(),
+      onOpened: vi.fn(),
+      onClose: vi.fn(),
+      onClosed: vi.fn(),
+    };
 
     const result = render(
       <ModalRoot activeModal="m" {...globalCallbacks}>

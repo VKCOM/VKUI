@@ -45,6 +45,9 @@ jobs:
       - name: Node setup
         uses: ./.github/actions/node-setup
 
+      - name: Run Biome format
+        run: yarn run lint:format
+
       - name: Run Stylelint
         run: yarn run lint:style
 
@@ -189,7 +192,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          yarn run -T prettier ./dist --write
+          yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Checkout target
         run: |
@@ -208,7 +211,7 @@ jobs:
         working-directory: packages/vkui
         run: |
           yarn run build
-          yarn run -T prettier ./dist --write
+          yarn exec biome format --write --config-path=diff.biome.json
 
       - name: Generate diff
         id: generate-diff

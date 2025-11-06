@@ -38,8 +38,8 @@
 
 .closing .overlay {
   opacity: 0;
-  /* prettier-ignore */
-  animation: animation-full-fade-out var(--vkui--animation_duration_m) var(--vkui--animation_easing_default) both;
+  animation: animation-full-fade-out var(--vkui--animation_duration_m)
+    var(--vkui--animation_easing_default) both;
 }
 
 .masked .overlay {
