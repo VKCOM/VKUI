@@ -1,4 +1,4 @@
-name: "Pull Request / Common"
+name: 'Pull Request / Common'
 
 on:
   pull_request:
@@ -24,14 +24,14 @@ jobs:
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
-          label: "ci:cherry-pick:patch"
+          label: 'ci:cherry-pick:patch'
 
       - name: VKUI-tokens
         if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
-          label: "vkui-tokens"
+          label: 'vkui-tokens'
 
   check-dependabot-pr:
     runs-on: ubuntu-latest

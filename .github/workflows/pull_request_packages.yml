@@ -1,15 +1,15 @@
-name: "Pull Request / Packages"
+name: 'Pull Request / Packages'
 
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
-      - ".husky/**"
-      - ".github/**"
-      - "!.github/actions/**"
-      - ".github/actions/**/*.yml"
-      - "**/*.md"
-      - "**/__image_snapshots__/*.png"
+      - '.husky/**'
+      - '.github/**'
+      - '!.github/actions/**'
+      - '.github/actions/**/*.yml'
+      - '**/*.md'
+      - '**/__image_snapshots__/*.png'
 
 concurrency:
   group: pr-packages-${{ github.event.pull_request.number }}
@@ -173,7 +173,7 @@ jobs:
           package_manager: yarn
           # only affects current branch
           skip_step: install
-          build_script: "size:ci"
+          build_script: 'size:ci'
           script: yarn run -T size-limit --json"
 
   diff_build:
@@ -310,8 +310,8 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v6
         with:
-          node-version-file: ".nvmrc"
-          cache: "yarn"
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
 
       - name: Install dependencies
         run: YARN_ENABLE_SCRIPTS=false yarn install --immutable --check-cache --check-resolutions
