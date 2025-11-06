@@ -1,0 +1,6 @@
+import{j as r}from"./iframe-DQDZnzQe.js";import{D as i,C as p}from"./constants-DdkjnEgz.js";import{C as m}from"./Checkbox-5uhnNxH8.js";import{S as t}from"./SelectionControl-CFdFhHfj.js";import"./react_utils-CSZjvU4X.js";import"./VisuallyHidden-vRsYbH_6.js";import"./check_box_on_24-CE0mzBhH.js";import"./_object_spread_props-DRD4qu7p.js";import"./SvgIconRoot-wcV10mZC.js";import"./check_box_indetermanate_20-Cg7bgzsm.js";import"./Tappable-GGjjvyZD.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./Clickable-BDq-1Cyq.js";import"./useFocusVisibleClassName-CSPl5qrL.js";import"./type_checkers-CVMjkZjG.js";import"./InputUtils-CKZOM7f4.js";import"./Footnote-y02Efo06.js";const I={title:"Utils/SelectionControl",component:t,parameters:{...p,...i},tags:["Утилиты"]},o={render:a=>r.jsxs(t,{...a,children:[r.jsx(m.Input,{}),r.jsx(t.Label,{children:"Согласен"})]})};var e,n,s;o.parameters={...o.parameters,docs:{...(e=o.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  render: props => <SelectionControl {...props}>
+      <Checkbox.Input />
+      <SelectionControl.Label>Согласен</SelectionControl.Label>
+    </SelectionControl>
+}`,...(s=(n=o.parameters)==null?void 0:n.docs)==null?void 0:s.source}}};const _=["Playground"];export{o as Playground,_ as __namedExportsOrder,I as default};

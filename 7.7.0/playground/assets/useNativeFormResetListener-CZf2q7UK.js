@@ -1,0 +1,1 @@
+import{l as s}from"./iframe-B4SbMwac.js";const n=(e,t)=>{s(()=>{if(!e.current)return;const r=e.current.closest("form");if(r)return r.addEventListener("reset",t),()=>{r.removeEventListener("reset",t)}},[e,t])};export{n as u};

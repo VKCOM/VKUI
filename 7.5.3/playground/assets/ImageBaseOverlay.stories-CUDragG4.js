@@ -1,0 +1,5 @@
+import{j as r}from"./iframe-VQuwIBim.js";import{D as m,C as i}from"./constants-DdkjnEgz.js";import{g as p}from"./mock-BznupqUM.js";import{b as l,a as n}from"./ImageBase-BsyA3SxR.js";import"./Clickable-GKvDpg7c.js";import"./useFocusVisibleClassName--V0F3pwv.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./type_checkers-CVMjkZjG.js";import"./ImageBaseBadge-lUb35v5x.js";import"./useColorScheme-3PoJfbUB.js";import"./InputUtils-esLGIMz7.js";import"./useFocusWithin-C9W7nehx.js";import"./useIsClient--20LXL4m.js";const C={title:"Data Display/ImageBase/ImageBaseOverlay",component:l,parameters:{...i,...m},decorators:[t=>r.jsx(n,{size:48,src:p("app_shorm_online"),alt:"Приложение шторм онлайн",children:r.jsx(t,{})})]},a={args:{"aria-label":"Кнопка для изображения"}};var o,s,e;a.parameters={...a.parameters,docs:{...(o=a.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {
+    'aria-label': 'Кнопка для изображения'
+  }
+}`,...(e=(s=a.parameters)==null?void 0:s.docs)==null?void 0:e.source}}};const O=["Playground"];export{a as Playground,O as __namedExportsOrder,C as default};

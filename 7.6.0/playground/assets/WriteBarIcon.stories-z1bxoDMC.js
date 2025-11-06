@@ -1,6 +1,0 @@
-import{n as m}from"./iframe-CNYWi-tv.js";import{D as i,C as e}from"./constants-DdkjnEgz.js";import{c as p}from"./createStoryParameters-CcwS40kl.js";import{W as s}from"./WriteBarIcon-B1ZE3Ri8.js";import"./preload-helper-Dp1pzeXC.js";import"./react_utils-CSZjvU4X.js";import"./AdaptiveIconRenderer-B0gv9O0k.js";import"./Counter-B-9JT4qU.js";import"./Caption-VNaRRNHV.js";import"./Headline-DsqdPKjD.js";import"./Tappable-Bt2S1yMc.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./Clickable-PPkKMUDS.js";import"./useFocusVisibleClassName-CrxrpfB8.js";import"./type_checkers-CVMjkZjG.js";import"./InputUtils-Bfhccirq.js";import"./VisuallyHidden-CIbqknZb.js";import"./writebar_send_48-D34g67ak.js";import"./SvgIconRootV2-gYxZaoy5.js";import"./_object_spread_props-DRD4qu7p.js";const v={title:"Forms/WriteBar/WriteBarIcon",component:s,parameters:p("WriteBarIcon",e,i)},r={args:{mode:"attach",onClick:m}};var o,t,a;r.parameters={...r.parameters,docs:{...(o=r.parameters)==null?void 0:o.docs,source:{originalSource:`{
-  args: {
-    mode: 'attach',
-    onClick: noop
-  }
-}`,...(a=(t=r.parameters)==null?void 0:t.docs)==null?void 0:a.source}}};const E=["Playground"];export{r as Playground,E as __namedExportsOrder,v as default};

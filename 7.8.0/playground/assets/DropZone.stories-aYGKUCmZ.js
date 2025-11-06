@@ -1,0 +1,17 @@
+import{j as o,R as _,h as f,r as v}from"./iframe-F_0bvJrc.js";import{D as P,C as R}from"./constants-DdkjnEgz.js";import{c as x}from"./createStoryParameters-CcwS40kl.js";import{G as C}from"./Group-DWRY0NV1.js";import{P as n}from"./Placeholder-DnYwtbnt.js";import{c}from"./callMultiple-ChqatQlo.js";import{I as j}from"./camera_outline_56-BnYEuRhx.js";const Z="_host_xc4k7_1",G="_column_xc4k7_8",E="_row_xc4k7_12",l={host:Z,column:G,row:E},N={row:l.row,column:l.column},i=({direction:e="column",...a})=>o.jsx(_,{baseClassName:f(l.host,N[e]),...a});try{i.displayName="DropZoneGrid",i.__docgenInfo={description:"",displayName:"DropZoneGrid",props:{direction:{defaultValue:{value:"column"},description:"Направление дочерних компонентов.",name:"direction",required:!1,type:{name:"enum",value:[{value:'"row"'},{value:'"column"'}]}},getRootRef:{defaultValue:null,description:"",name:"getRootRef",required:!1,type:{name:"Ref<HTMLDivElement>"}}}}}catch{}const I="_host_1aife_1",w="_active_1aife_13",m={host:I,active:w},r=({onDragOver:e,onDragLeave:a,onDrop:D,children:s,...h})=>{const[u,d]=v.useState(!1),y=g=>{g.isPropagationStopped()||d(!0)},p=()=>{d(!1)};return o.jsx(_,{baseClassName:f(m.host,u&&m.active),onDragOver:c(e,y),onDragLeave:c(a,p),onDrop:c(D,p),...h,children:typeof s=="function"?s({active:u}):s})};r.Grid=i;try{r.displayName="DropZone",r.__docgenInfo={description:`Компонент позволяет пользователям загружать файлы, перетаскивая файлы в
+область на странице.`,displayName:"DropZone",props:{children:{defaultValue:null,description:"Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.",name:"children",required:!1,type:{name:"ReactNode | ((renderProps: DropZonePropsChildrenProps) => ReactNode)"}},getRootRef:{defaultValue:null,description:"",name:"getRootRef",required:!1,type:{name:"Ref<HTMLDivElement>"}}}}}catch{}try{r.Grid.displayName="DropZone.Grid",r.Grid.__docgenInfo={description:"",displayName:"DropZone.Grid",props:{direction:{defaultValue:{value:"column"},description:"Направление дочерних компонентов.",name:"direction",required:!1,type:{name:"enum",value:[{value:'"row"'},{value:'"column"'}]}},getRootRef:{defaultValue:null,description:"",name:"getRootRef",required:!1,type:{name:"Ref<HTMLDivElement>"}}}}}catch{}const S={title:"Forms/DropZone",component:r,parameters:x("DropZone",R,P),tags:["Формы и поля ввода"]},t={render:e=>o.jsx(r,{...e,children:o.jsxs(n.Container,{children:[o.jsx(n.Icon,{children:o.jsx(j,{})}),o.jsx(n.Title,{children:"Быстрая отправка"}),o.jsx(n.Description,{children:"Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты."})]})}),decorators:[e=>o.jsx(C,{children:o.jsx(e,{})})]};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
+  render: args => <DropZone {...args}>
+      <Placeholder.Container>
+        <Placeholder.Icon>
+          <Icon56CameraOutline />
+        </Placeholder.Icon>
+        <Placeholder.Title>Быстрая отправка</Placeholder.Title>
+        <Placeholder.Description>
+          Перенесите файл сюда для быстрой отправки. В таком случае изображения будут сжаты.
+        </Placeholder.Description>
+      </Placeholder.Container>
+    </DropZone>,
+  decorators: [Component => <Group>
+        <Component />
+      </Group>]
+}`,...t.parameters?.docs?.source}}};const T=["Playground"],F=Object.freeze(Object.defineProperty({__proto__:null,Playground:t,__namedExportsOrder:T,default:S},Symbol.toStringTag,{value:"Module"}));export{r as D,t as P,F as a};

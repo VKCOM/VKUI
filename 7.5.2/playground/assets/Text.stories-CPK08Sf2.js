@@ -1,0 +1,3 @@
+import{T as o,j as m}from"./iframe-BzXYREd1.js";import{w as n}from"./withCartesian-DtNeXQM4.js";import{C as p}from"./constants-DdkjnEgz.js";import{c}from"./createStoryParameters-CcwS40kl.js";const u={title:"Typography/Typography/Text",component:o,parameters:c("Text",p),decorators:[n],tags:["Типографика"]},r={render:s=>m.jsx(o,{...s,children:"Text"})};var e,t,a;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  render: args => <Text {...args}>Text</Text>
+}`,...(a=(t=r.parameters)==null?void 0:t.docs)==null?void 0:a.source}}};const y=["Playground"];export{r as Playground,y as __namedExportsOrder,u as default};

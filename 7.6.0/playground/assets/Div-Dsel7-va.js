@@ -1,1 +1,0 @@
-import{j as o,R as s}from"./iframe-CNYWi-tv.js";const a="_host_1jauu_1",r={host:a},t=e=>o.jsx(s,{baseClassName:r.host,...e});try{t.displayName="Div",t.__docgenInfo={description:"",displayName:"Div",props:{getRootRef:{defaultValue:null,description:"",name:"getRootRef",required:!1,type:{name:"Ref<HTMLDivElement>"}}}}}catch{}export{t as D};

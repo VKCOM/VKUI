@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://vkui.io
+
+# Sitemaps
+Sitemap: https://vkui.io/sitemap.xml

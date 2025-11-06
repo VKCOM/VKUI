@@ -1,0 +1,5 @@
+import{A as t,j as r,u as s}from"./iframe-DcUCz3Gq.js";import{D as d,C as o}from"./constants-DdkjnEgz.js";import{c as n}from"./createStoryParameters-CcwS40kl.js";import"./preload-helper-PPVm8Dsz.js";const y={title:"Configuration/AdaptivityProvider",component:t,parameters:n("AdaptivityProvider",o,d),tags:["Конфигурация"]},p=()=>{const{sizeX:e,sizeY:i}=s();return r.jsxs(r.Fragment,{children:[e.compact&&r.jsx("div",{style:{padding:5},children:"Size X: Compact"}),e.regular&&r.jsx("div",{style:{padding:5},children:"Size X: Regular"}),i.compact&&r.jsx("div",{style:{padding:5},children:"Size Y: Compact"}),i.regular&&r.jsx("div",{style:{padding:5},children:"Size Y: Regular"})]})},a={render:e=>r.jsx(t,{...e,children:r.jsx(p,{})})};a.parameters={...a.parameters,docs:{...a.parameters?.docs,source:{originalSource:`{
+  render: args => <AdaptivityProvider {...args}>
+      <DisplayAdaptivityProvider />
+    </AdaptivityProvider>
+}`,...a.parameters?.docs?.source}}};const u=["Playground"];export{a as Playground,u as __namedExportsOrder,y as default};

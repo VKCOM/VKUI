@@ -1,1 +1,0 @@
-import{q as u,l as E,s as a,K as d}from"./iframe-qoTtUH8h.js";const n={passive:!0,capture:!0},p=(o,s)=>{const{document:e}=u();E(()=>{if(!e||!o||!s)return;const t=r=>{a(r)===d.ESCAPE&&s(r)};return e.addEventListener("keydown",t,n),()=>{e.removeEventListener("keydown",t,n)}},[o,e,s])};export{p as u};
