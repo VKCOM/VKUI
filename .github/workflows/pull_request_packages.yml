@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - name: Run Biome format
-        run: yarn run lint:biome-format
+        run: yarn run lint:format
 
       - name: Run Stylelint
         run: yarn run lint:style

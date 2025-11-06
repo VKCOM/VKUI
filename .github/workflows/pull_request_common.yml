@@ -119,4 +119,4 @@ jobs:
       - name: Node setup
         uses: ./.github/actions/node-setup
       - name: Run Biome format
-        run: yarn run lint:biome-format
+        run: yarn run lint:format
