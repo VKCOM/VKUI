@@ -1,17 +1,122 @@
 'use client';
 
-import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
+import { type Placement } from '@floating-ui/utils';
 import { classNames } from '@vkontakte/vkjs';
+import { clamp } from '../../helpers/math';
+import { useBooleanArrayState } from '../../hooks/useBooleanState';
+import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import { useExternRef } from '../../hooks/useExternRef';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { callMultiple } from '../../lib/callMultiple';
 import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
-import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
+import { CustomScrollView } from '../CustomScrollView/CustomScrollView';
+import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
+import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
+import { Input, type InputProps } from '../Input/Input';
+import { Popper } from '../Popper/Popper';
 import styles from './CalendarTime.module.css';
 
-const selectFilterFn = () => true;
+interface ComboBoxProps extends InputProps {
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  labels?: Array<{
+    value: string;
+    label: string;
+  }>;
+}
+
+function ComboBox({
+  getRootRef,
+  onBlur,
+  onFocus,
+  after,
+  labels,
+  value,
+  defaultValue,
+  onChange,
+  slotProps,
+  ...restProps
+}: ComboBoxProps) {
+  const ref = useExternRef(getRootRef);
+  const inputRef = useExternRef(slotProps?.input?.getRootRef);
+
+  const [inputValue, setInputChange] = useEnsuredControl({
+    disabled: restProps.disabled,
+    value: value,
+    defaultValue: defaultValue,
+    onChange: onChange,
+  });
+
+  const [focus, setFocus, setBlur] = useBooleanArrayState(false);
+
+  const [popperPlacement, setPopperPlacement] = React.useState<Placement>('bottom');
+
+  return (
+    <>
+      <Input
+        value={inputValue}
+        onChange={setInputChange}
+        getRootRef={ref}
+        className={
+          focus ? (popperPlacement.includes('top') ? styles.inputPopUp : styles.inputPopDown) : ''
+        }
+        type="text"
+        onFocus={callMultiple(setFocus, onFocus)}
+        onBlur={callMultiple(setBlur, onBlur)}
+        after={
+          after ||
+          (labels && <DropdownIcon opened={focus} onClick={() => inputRef.current?.focus()} />)
+        }
+        slotProps={{
+          ...slotProps,
+          input: {
+            ...slotProps?.input,
+            getRootRef: inputRef,
+          },
+        }}
+        {...restProps}
+      />
+
+      {focus && labels && (
+        <Popper
+          targetRef={ref}
+          placement={popperPlacement}
+          onPlacementChange={setPopperPlacement}
+          className={classNames(
+            styles.popper,
+            popperPlacement.includes('top') ? styles.popperTop : styles.popperBottom,
+          )}
+          sameWidth
+          autoUpdateOnTargetResize
+          flipMiddlewareFallbackAxisSideDirection="none"
+          offsetByMainAxis={0}
+        >
+          <CustomScrollView tabIndex={-1} className={styles.customScroll}>
+            {labels.map((option) => {
+              return (
+                <CustomSelectOption
+                  key={option.value}
+                  onMouseDown={(event) => {
+                    event.preventDefault();
+                    // eslint-disable-next-line react-compiler/react-compiler
+                    inputRef.current!.value = option.value;
+                    inputRef.current!.dispatchEvent(new Event('input'));
+                    inputRef.current!.dispatchEvent(new Event('change'));
+                  }}
+                  selected={value === option.value}
+                >
+                  {option.label}
+                </CustomSelectOption>
+              );
+            })}
+          </CustomScrollView>
+        </Popper>
+      )}
+    </>
+  );
+}
 
 export type CalendarTimeTestsProps = {
   /**
@@ -74,36 +179,31 @@ export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneB
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
-const hours: Array<{
-  value: number;
+function generateLabels(
+  min: number,
+  max: number,
+): Array<{
+  value: string;
   label: string;
-}> = [];
-for (let i = 0; i < 24; i += 1) {
-  hours.push({ value: i, label: String(i).padStart(2, '0') });
+}> {
+  const array = new Array(Math.ceil(max - min));
+
+  for (let i = min; i <= max; i += 1) {
+    const value = String(i).padStart(2, '0');
+
+    array[i - min] = { value, label: value };
+  }
+
+  return array;
 }
 
-const minutes: Array<{
-  value: number;
-  label: string;
-}> = [];
-for (let i = 0; i < 60; i += 1) {
-  minutes.push({ value: i, label: String(i).padStart(2, '0') });
-}
+const hours = generateLabels(0, 23);
 
-const validateValue = (
-  value: string,
-  validValues: Array<{
-    value: number;
-    label: string;
-  }>,
-): boolean => {
-  const numValue = Number(value);
-  return !isNaN(numValue) && validValues.some((v) => v.value === numValue);
-};
+const minutes = generateLabels(0, 59);
 
 export const CalendarTime = ({
   value,
-  onChange,
+  // onChange,
   onDoneButtonClick,
   changeHoursLabel,
   changeMinutesLabel,
@@ -116,55 +216,24 @@ export const CalendarTime = ({
   doneButtonTestId,
   DoneButton,
 }: CalendarTimeProps): React.ReactNode => {
-  const hoursInputRef = useRef<HTMLInputElement | null>(null);
-  const minutesInputRef = useRef<HTMLInputElement | null>(null);
-  const doneButtonRef = useRef<HTMLButtonElement | null>(null);
+  const hoursInputRef = React.useRef<HTMLInputElement | null>(null);
+  const minutesInputRef = React.useRef<HTMLInputElement | null>(null);
+  const doneButtonRef = React.useRef<HTMLButtonElement | null>(null);
 
   const localHours = isDayDisabled
     ? hours.map((hour) => {
-        return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };
+        return { ...hour, disabled: isDayDisabled(setHours(value, Number(hour.value)), true) };
       })
     : hours;
 
   const localMinutes = isDayDisabled
     ? minutes.map((minute) => {
-        return { ...minute, disabled: isDayDisabled(setMinutes(value, minute.value), true) };
+        return {
+          ...minute,
+          disabled: isDayDisabled(setMinutes(value, Number(minute.value)), true),
+        };
       })
     : minutes;
-
-  const onPickerValueChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    validate: (numericValue: string) => boolean,
-    setter: (value: Date, numericValue: number) => Date,
-  ) => {
-    const numericValue = e.target.value.replace(/\D/g, '');
-    e.target.value = numericValue;
-    if (validate(numericValue)) {
-      onChange?.(setter(value, Number(numericValue)));
-    }
-  };
-
-  const onHoursInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateValue(numValue, localHours), setHours);
-    if (e.target.value.length > 1) {
-      minutesInputRef.current?.focus();
-    }
-  };
-
-  const onMinutesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateValue(numValue, localMinutes), setMinutes);
-  };
-
-  const onHoursChange = React.useCallback(
-    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
-      onChange?.(setHours(value, Number(newValue))),
-    [onChange, value],
-  );
-  const onMinutesChange = React.useCallback(
-    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
-      onChange?.(setMinutes(value, Number(newValue))),
-    [onChange, value],
-  );
 
   const onPickerKeyDown = (e: React.KeyboardEvent) => {
     const key = pressedKey(e);
@@ -190,20 +259,6 @@ export const CalendarTime = ({
     }
   };
 
-  const stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
-    (event: React.KeyboardEvent, isOpen: boolean) => {
-      if (isOpen && event.key === 'Escape') {
-        event.stopPropagation();
-      }
-    },
-    [],
-  );
-
-  const onSelectInputKeyDown = callMultiple(
-    onPickerKeyDown,
-    stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen,
-  );
-
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
     return (
@@ -221,45 +276,108 @@ export const CalendarTime = ({
     );
   };
 
+  const onFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.select();
+  };
+
+  const onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.value = event.target.value.padStart(2, '0');
+  };
+
+  const onNumberInput = (event: React.ChangeEvent<HTMLInputElement>, maxValue: number) => {
+    const inputValue = /\d\d?/.exec(event.target.value)?.[0] || '';
+    if (event.target.value !== inputValue) {
+      event.target.value = inputValue;
+    }
+
+    const inputValueNumber = Number(inputValue);
+    if (isNaN(inputValueNumber)) {
+      return;
+    }
+
+    const resultValueNumber = clamp(inputValueNumber, 0, maxValue);
+
+    if (inputValueNumber !== resultValueNumber) {
+      event.target.value = resultValueNumber.toString();
+    }
+  };
+
+  const onHoursInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onNumberInput(event, 23);
+
+    if (event.target.value.length > 1) {
+      minutesInputRef.current?.focus();
+    }
+  };
+
+  const onMinutesInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onNumberInput(event, 59);
+  };
+
+  const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, maxValue: number) => {
+    switch (event.key) {
+      case Keys.ARROW_UP:
+        // @ts-expect-error: TS2339 почему-то у таргета нет value
+        event.target.value = Math.min(Number(event.target.value) + 1, maxValue)
+          .toString()
+          .padStart(2, '0');
+
+        break;
+      case Keys.ARROW_DOWN:
+        // @ts-expect-error: TS2339 почему-то у таргета нет value
+        event.target.value = Math.max(Number(event.target.value) - 1, 0)
+          .toString()
+          .padStart(2, '0');
+
+        break;
+    }
+  };
+
+  const onHoursKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onInputKeyDown(event, 23);
+  };
+
+  const onMinutesKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onInputKeyDown(event, 59);
+  };
+
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
-      <div className={styles.picker}>
-        <AdaptivityProvider sizeY="compact">
-          <CustomSelect
-            maxLength={2}
-            value={value.getHours()}
-            options={localHours}
-            onChange={onHoursChange}
-            forceDropdownPortal={false}
-            searchable
-            filterFn={selectFilterFn}
-            onInputChange={onHoursInputChange}
-            onInputKeyDown={onSelectInputKeyDown}
-            getSelectInputRef={hoursInputRef}
+      <AdaptivityProvider sizeY="compact">
+        <div className={styles.picker}>
+          <ComboBox
+            slotProps={{
+              input: {
+                getRootRef: hoursInputRef,
+              },
+            }}
+            labels={localHours}
+            onInput={onHoursInput}
+            onFocus={onFocus}
+            onBlur={onBlur}
             aria-label={changeHoursLabel}
+            onKeyDown={onHoursKeyDown}
             data-testid={hoursTestId}
           />
-        </AdaptivityProvider>
-      </div>
-      <div className={styles.divider}>:</div>
-      <div className={styles.picker}>
-        <AdaptivityProvider sizeY="compact">
-          <CustomSelect
-            maxLength={2}
-            value={value.getMinutes()}
-            options={localMinutes}
-            onChange={onMinutesChange}
-            forceDropdownPortal={false}
-            searchable
-            filterFn={selectFilterFn}
-            onInputChange={onMinutesInputChange}
-            getSelectInputRef={minutesInputRef}
-            onInputKeyDown={onSelectInputKeyDown}
+        </div>
+        <div className={styles.divider}>:</div>
+        <div className={styles.picker}>
+          <ComboBox
+            slotProps={{
+              input: {
+                getRootRef: minutesInputRef,
+              },
+            }}
+            labels={localMinutes}
+            onInput={onMinutesInput}
+            onFocus={onFocus}
+            onBlur={onBlur}
             aria-label={changeMinutesLabel}
+            onKeyDown={onMinutesKeyDown}
             data-testid={minutesTestId}
           />
-        </AdaptivityProvider>
-      </div>
+        </div>
+      </AdaptivityProvider>
       {doneButtonShow && (
         <div className={styles.button}>
           <AdaptivityProvider sizeY="compact">{renderDoneButton()}</AdaptivityProvider>
