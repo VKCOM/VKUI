@@ -30,6 +30,10 @@
   display: none;
 }
 
+.inPreventOverscroll {
+  overscroll-behavior-x: none;
+}
+
 .inWrapper {
   display: flex;
   align-items: stretch;
