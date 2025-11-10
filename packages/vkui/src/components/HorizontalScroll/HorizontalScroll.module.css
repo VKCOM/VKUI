@@ -64,11 +64,14 @@
  * CMP:
  * Tabs
  */
+.withPadding,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs) .host {
   min-inline-size: 100%;
 }
 
+.withPadding .inWrapper::before,
+.withPadding .inWrapper::after,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalTabs--withGaps) .inWrapper::after,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */

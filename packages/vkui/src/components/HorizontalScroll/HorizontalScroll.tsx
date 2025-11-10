@@ -86,6 +86,10 @@ export interface HorizontalScrollProps
    * Специфичный `className` для обертки над контентом, прокинутым в `children`.
    */
   contentWrapperClassName?: string;
+  /**
+   * Добавляет отступы для контента внутри.
+   */
+  withPadding?: boolean;
 }
 
 /**
@@ -214,6 +218,7 @@ export const HorizontalScroll = ({
   ContentWrapperComponent = 'div',
   contentWrapperRef,
   contentWrapperClassName,
+  withPadding,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollStart, setCanScrollStart] = React.useState(false);
@@ -326,6 +331,7 @@ export const HorizontalScroll = ({
         'vkuiInternalHorizontalScroll',
         showArrows === 'always' && styles.withConstArrows,
         isRtl && styles.rtl,
+        withPadding && styles.withPadding,
       )}
       onMouseEnter={calculateArrowsVisibility}
     >
