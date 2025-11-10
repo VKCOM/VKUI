@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, useColorScheme } from '@vkontakte/vkui';
 import { JetBrains_Mono } from 'next/font/google';
 import { LiveEditor, LiveProvider } from 'react-live';
+import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import {
   PlaygroundPreview,
   type PlaygroundPreviewProps,
@@ -44,6 +45,7 @@ export function Playground({
         {codeVisible && (
           <div className={styles.code}>
             <LiveEditor style={{ whiteSpace: 'nowrap' }} />
+            <CopyCodeButton />
           </div>
         )}
       </LiveProvider>

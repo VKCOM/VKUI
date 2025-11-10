@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Icon24ChecksOutline, Icon24CopyOutline } from '@vkontakte/icons';
 import { classNames, copyTextToClipboard } from '@vkontakte/vkjs';

@@ -6,6 +6,7 @@
 }
 
 .code {
+  position: relative;
   padding-block: var(--vkui--spacing_size_m);
   padding-inline: var(--vkui--spacing_size_xs);
   font-size: 14px;
