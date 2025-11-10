@@ -737,7 +737,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             getRootRef: selectInputRef,
             onChange: onInputChange,
             onFocus: callMultiple(onFocus, onInputFocus),
-            onBlur: callMultiple(onBlur, onInputFocus),
+            onBlur: callMultiple(onBlur, onInputBlur),
             onKeyDown: !readOnly
               ? callMultiple(handleInputKeyDown, onNativeInputKeyDown)
               : onNativeInputKeyDown,
