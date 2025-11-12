@@ -5,12 +5,21 @@
   border-radius: 8px;
 }
 
-.code {
-  position: relative;
-  padding-block: var(--vkui--spacing_size_m);
-  padding-inline: var(--vkui--spacing_size_xs);
-  font-size: 14px;
+.codeBlock {
+  display: flex;
   background-color: rgb(126, 142, 160, 0.08);
+}
+
+.code {
+  flex: 1;
+  overflow: auto;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.buttons {
+  display: flex;
+  color: var(--vkui--color_icon_tertiary);
 }
 
 .skeleton {
