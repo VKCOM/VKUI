@@ -13,6 +13,7 @@
 }
 
 .pre {
+  flex: 1;
   max-block-size: 460px;
   padding-block: var(--vkui--spacing_size_xl);
   padding-inline: var(--vkui--spacing_size_xl);
@@ -22,22 +23,9 @@
   -webkit-font-smoothing: auto;
 }
 
-.codeBlock {
-  position: relative;
-}
-
 .buttons {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-end: 0;
   display: flex;
   color: var(--vkui--color_icon_tertiary);
-  opacity: 0;
-  transition: opacity ease-out 0.2s;
-}
-
-.codeBlock:hover .buttons {
-  opacity: 1;
 }
 
 /* stylelint-disable-next-line selector-max-universal */
