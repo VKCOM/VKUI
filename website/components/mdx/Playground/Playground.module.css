@@ -6,20 +6,27 @@
 }
 
 .codeBlock {
-  display: flex;
+  position: relative;
   background-color: rgb(126, 142, 160, 0.08);
 }
 
 .code {
-  flex: 1;
-  overflow: auto;
   font-size: 14px;
   white-space: nowrap;
 }
 
 .buttons {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
   display: flex;
   color: var(--vkui--color_icon_tertiary);
+  opacity: 0;
+  transition: opacity ease-out 0.2s;
+}
+
+.codeBlock:hover .buttons {
+  opacity: 1;
 }
 
 .skeleton {
