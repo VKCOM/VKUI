@@ -29,6 +29,10 @@
   opacity: 1;
 }
 
+.codeBlock:has(.code:active) .buttons {
+  opacity: 0;
+}
+
 .skeleton {
   align-items: center;
   justify-content: center;

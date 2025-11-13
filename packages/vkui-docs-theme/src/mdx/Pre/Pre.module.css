@@ -40,6 +40,10 @@
   opacity: 1;
 }
 
+.codeBlock:has(.pre:active) .buttons {
+  opacity: 0;
+}
+
 /* stylelint-disable-next-line selector-max-universal */
 .buttons > *:not(:last-child) {
   margin-inline-end: var(--vkui--spacing_size_xs);
