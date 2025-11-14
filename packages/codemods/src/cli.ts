@@ -57,6 +57,7 @@ const promptTransformVersions = async (): Promise<string> => {
       choices: [
         { title: 'v6', value: '6' },
         { title: 'v7', value: '7' },
+        { title: 'v8', value: '8' },
       ],
     },
     {
@@ -78,7 +79,7 @@ export const runCli = async (): Promise<Cli> => {
     .option('--all', 'apply all available codemods')
     .option(
       '--tv, --transforms-version <transformsVersion>',
-      'vkui major version transforms (available versions: "6", "7")',
+      'vkui major version transforms (available versions: "6", "7", "8")',
     )
     .option(
       '-p --path [paths...]',

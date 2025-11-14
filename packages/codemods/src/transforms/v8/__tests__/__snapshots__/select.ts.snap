@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`select > transforms correctly 1`] = `
+"import { Select } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+  const selectRef = React.createRef<HTMLSelectElement>();
+
+  const onInputChange = () => {};
+
+  return (
+    <React.Fragment>
+      <Select
+        value={"value"}
+        options={[]}
+        onChange={() => {}}
+        disabled={false}
+        required
+        onInputChange={() => {}}
+        onClick={() => {}}
+        onBlur={() => {}}
+        onFocus={() => {}}
+        onClose={() => {}}
+        onOpen={() => {}}
+        onInputKeyDown={() => {}}
+        onMouseDown={() => {}}
+        slotProps={{
+          select: {
+            getRootRef: selectRef,
+            "data-testid": "select"
+          },
+
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "input",
+            "aria-label": "input",
+            size: 100
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;
