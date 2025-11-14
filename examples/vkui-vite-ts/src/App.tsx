@@ -44,7 +44,7 @@ export default function App() {
         <Flex direction="column" justify="center" className={styles.layout}>
           <FixedLayout vertical="top">
             <Flex justify="end" className={styles.header}>
-              <Flex.Item>{colorSchemeSwitcher}</Flex.Item>
+              {colorSchemeSwitcher}
             </Flex>
           </FixedLayout>
           <Flex direction="column" justify="center" align="center" gap={16}>
