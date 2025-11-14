@@ -90,7 +90,7 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
  */
 export const Flex: React.FC<FlexProps> & {
   /**
-   * @deprecated Since 8.0.0. Будет удалено в **VKUI v9**.
+   * @deprecated Since 7.11.0. Будет удалено в **VKUI v9**.
    * Используйте компонент `Flex`.
    */
   Item: typeof FlexItem;
