@@ -5,11 +5,32 @@
   border-radius: 8px;
 }
 
-.code {
-  padding-block: var(--vkui--spacing_size_m);
-  padding-inline: var(--vkui--spacing_size_xs);
-  font-size: 14px;
+.codeBlock {
+  position: relative;
   background-color: rgb(126, 142, 160, 0.08);
+}
+
+.code {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.buttons {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: flex;
+  color: var(--vkui--color_icon_tertiary);
+  opacity: 0;
+  transition: opacity ease-out 0.2s;
+}
+
+.codeBlock:hover .buttons {
+  opacity: 1;
+}
+
+.codeBlock:has(.code:active) .buttons {
+  opacity: 0;
 }
 
 .skeleton {

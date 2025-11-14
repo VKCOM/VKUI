@@ -6,6 +6,7 @@ import { H1 } from './H1';
 import { HeadingLink } from './HeadingLink/HeadingLink';
 import { Main } from './Main/Main';
 import { PackageManagers } from './PackageManagers/PackageManagers';
+import { CopyToClipboard } from './Pre/CopyToClipboard/CopyToClipboard';
 import { Pre } from './Pre/Pre';
 import { Steps } from './Steps/Steps';
 import { Table, Td, Th, Tr } from './Table/Table';
@@ -54,4 +55,4 @@ export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
   };
 };
 
-export { Callout, Code, HeadingLink, Table, Td, Th, Tr };
+export { Callout, Code, HeadingLink, Table, Td, Th, Tr, CopyToClipboard };
