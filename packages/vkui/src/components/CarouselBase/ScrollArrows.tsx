@@ -43,7 +43,6 @@ interface ScrollArrowsProps
       'showArrows' | 'arrowSize' | 'arrowAreaHeight' | 'arrowPrevLabel' | 'arrowNextLabel'
     >,
     ScrollArrowsTestIds {
-  hasPointer?: boolean;
   canSlideLeft: boolean;
   canSlideRight: boolean;
   onSlideLeft: (e: React.MouseEvent) => void;
@@ -52,7 +51,6 @@ interface ScrollArrowsProps
 }
 
 export const ScrollArrows = ({
-  hasPointer,
   canSlideLeft,
   canSlideRight,
   onSlideRight,
@@ -69,7 +67,7 @@ export const ScrollArrows = ({
   const { focusVisible: prevArrowFocusVisible, ...prevArrowFocusHandlers } = useFocusVisible();
   const { focusVisible: nextArrowFocusVisible, ...nextArrowFocusHandlers } = useFocusVisible();
 
-  return showArrows && hasPointer ? (
+  return showArrows ? (
     <>
       {canSlideLeft && (
         <ScrollArrow
