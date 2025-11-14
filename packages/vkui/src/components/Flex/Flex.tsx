@@ -11,6 +11,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
 import { FlexItem, type FlexItemProps } from './FlexItem/FlexItem';
 import styles from './Flex.module.css';
+import flexItemStyles from './FlexItem/FlexItem.module.css';
 
 export type { FlexItemProps };
 
@@ -29,6 +30,14 @@ const alignClassNames = {
   center: styles.alignCenter,
   stretch: styles.alignStretch,
   baseline: styles.alignBaseline,
+};
+
+const alignSelfClassNames = {
+  start: flexItemStyles.alignSelfStart,
+  end: flexItemStyles.alignSelfEnd,
+  center: flexItemStyles.alignSelfCenter,
+  baseline: flexItemStyles.alignSelfBaseline,
+  stretch: flexItemStyles.alignSelfStretch,
 };
 
 type FlexContentProps =
@@ -70,12 +79,20 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
    * Для инвертирования направления, эквивалентно `row-reverse` `column-reverse`.
    */
   reverse?: boolean;
+  /**
+   * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `align-self`.
+   */
+  alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
 }
 
 /**
  * @see https://vkui.io/components/flex
  */
 export const Flex: React.FC<FlexProps> & {
+  /**
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v9**.
+   * Используйте компонент `Flex`.
+   */
   Item: typeof FlexItem;
 } = ({
   gap = 0,
@@ -86,6 +103,7 @@ export const Flex: React.FC<FlexProps> & {
   direction = 'row',
   reverse = false,
   children,
+  alignSelf,
   ...props
 }: FlexProps) => {
   const [rowGap, columnGap] = calculateGap(gap);
@@ -100,6 +118,7 @@ export const Flex: React.FC<FlexProps> & {
         direction !== 'row' && styles.directionColumn,
         margin !== 'none' && styles.marginAuto,
         align && alignClassNames[align],
+        alignSelf && alignSelfClassNames[alignSelf],
         justify && justifyClassNames[justify],
         getGapsPresets(rowGap, columnGap),
       )}
