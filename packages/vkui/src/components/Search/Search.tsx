@@ -1,25 +1,33 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Icon16Clear, Icon16SearchOutline, Icon24Cancel } from '@vkontakte/icons';
-import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import { useBooleanState } from '../../hooks/useBooleanState';
-import { useConfigDirection } from '../../hooks/useConfigDirection';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useCSSKeyframesAnimationController } from '../../lib/animation';
-import { callMultiple } from '../../lib/callMultiple';
-import { touchEnabled } from '../../lib/touch';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
-import { Button } from '../Button/Button';
-import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
-import { Headline } from '../Typography/Headline/Headline';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import styles from './Search.module.css';
+import * as React from "react";
+import {
+  Icon16Clear,
+  Icon16SearchOutline,
+  Icon24Cancel,
+} from "@vkontakte/icons";
+import { classNames, hasReactNode, noop } from "@vkontakte/vkjs";
+import { useAdaptivity } from "../../hooks/useAdaptivity";
+import { useAdaptivityConditionalRender } from "../../hooks/useAdaptivityConditionalRender";
+import { useBooleanState } from "../../hooks/useBooleanState";
+import { useConfigDirection } from "../../hooks/useConfigDirection";
+import { useExternRef } from "../../hooks/useExternRef";
+import { useMergeProps } from "../../hooks/useMergeProps";
+import { useNativeFormResetListener } from "../../hooks/useNativeFormResetListener";
+import { usePlatform } from "../../hooks/usePlatform";
+import { callMultiple } from "../../lib/callMultiple";
+import { touchEnabled } from "../../lib/touch";
+import { useIsomorphicLayoutEffect } from "../../lib/useIsomorphicLayoutEffect";
+import { warnOnce } from "../../lib/warnOnce";
+import type { HasDataAttribute, HasRootRef } from "../../types";
+import { Button } from "../Button/Button";
+import { IconButton, type IconButtonProps } from "../IconButton/IconButton";
+import { Headline } from "../Typography/Headline/Headline";
+import { VisuallyHidden } from "../VisuallyHidden/VisuallyHidden";
+import styles from "./Search.module.css";
+import { useCSSKeyframesAnimationController } from "../../lib/animation";
+
+const warn = warnOnce("Search");
 
 const controlsAnimationStateClassNames = {
   enter: styles.controlsStateEnter,
@@ -32,13 +40,29 @@ const controlsAnimationStateClassNames = {
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
-  props?: Partial<IconButtonProps> & HasDataAttribute,
+  props?: Partial<IconButtonProps> & HasDataAttribute
 ) => React.ReactElement;
 
 export interface SearchProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLInputElement> {
+    HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в поле ввода.
+   */
+  slotProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
   /**
    * Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
@@ -87,110 +111,150 @@ export interface SearchProps
    * Передает атрибут `data-testid` для кнопки поиска.
    */
   findButtonTestId?: string;
+  /**
+   * Скрывает кнопку очистки.
+   */
+  hideClearButton?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Search
+ * @see https://vkui.io/components/search
  */
 export const Search = ({
-  id: idProp,
-  before = <Icon16SearchOutline />,
   className,
-  placeholder = 'Поиск',
-  after = 'Отмена',
+  getRootRef,
+  style,
+  placeholder:
+    placeholderProp = "фывафывафываывфафыварфывадфырваджфрыаждфыраджрфывжадрвфыждрафыжвдарфждывраждфываждрвфджрыафжвдарфждывржд",
+  before = <Icon16SearchOutline />,
+  after = "Отмена",
   getRef,
   icon: iconProp,
   onIconClick,
-  style,
-  autoComplete = 'off',
-  onChange,
+  autoComplete: autoCompleteProp = "off",
   iconLabel,
-  clearLabel = 'Очистить',
+  clearLabel = "Очистить",
   clearButtonTestId,
   noPadding,
-  getRootRef,
-  findButtonText = 'Найти',
+  findButtonText = "Найти",
   findButtonTestId,
   onFindButtonClick,
+  hideClearButton,
+
+  slotProps,
   ...inputProps
 }: SearchProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === "development" && getRef) {
+    warn(
+      "Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`"
+    );
+  }
+
   const direction = useConfigDirection();
-  const isRtl = direction === 'rtl';
-  const inputRef = useExternRef(getRef);
+  const isRtl = direction === "rtl";
+
+  const rootRest = useMergeProps(
+    {
+      className,
+      style,
+      getRootRef,
+    },
+    slotProps?.root
+  );
+
+  const {
+    id,
+    placeholder,
+    onChange,
+    autoComplete,
+    getRootRef: getInputRef,
+    onFocus: onInputFocus,
+    onBlur: onInputBlur,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      placeholder: placeholderProp,
+      autoComplete: autoCompleteProp,
+      className: styles.nativeInput,
+      ...inputProps,
+    },
+    slotProps?.input
+  );
+
+  const inputRef = useExternRef(getInputRef);
   const {
     value: isFocused,
     setTrue: setFocusedTrue,
     setFalse: setFocusedFalse,
   } = useBooleanState(false);
   const generatedId = React.useId();
-  const inputId = idProp ? idProp : `search-${generatedId}`;
+  const inputId = id ? id : `search-${generatedId}`;
 
   const [hasValue, setHasValue] = React.useState<boolean>(() =>
-    Boolean(inputProps.value || inputProps.defaultValue),
+    Boolean(inputRest.value || inputRest.defaultValue)
   );
   const checkHasValue: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setHasValue(Boolean(e.currentTarget.value));
 
-  const [controlsAnimationState, controlsAnimationHandlers] = useCSSKeyframesAnimationController(
-    hasValue ? 'enter' : 'exit',
-    {},
-    true,
-  );
+  const [controlsAnimationState, controlsAnimationHandlers] =
+    useCSSKeyframesAnimationController(hasValue ? "enter" : "exit", {}, true);
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { sizeY = "none" } = useAdaptivity();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
   const platform = usePlatform();
 
-  const hasAfter = platform === 'ios' && hasReactNode(after);
+  const hasAfter = platform === "ios" && hasReactNode(after);
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocusedTrue();
-    inputProps.onFocus && inputProps.onFocus(e);
+    onInputFocus && onInputFocus(e);
   };
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocusedFalse();
-    inputProps.onBlur && inputProps.onBlur(e);
+    onInputBlur && onInputBlur(e);
   };
 
   const onCancel = React.useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       HTMLInputElement.prototype,
-      'value',
+      "value"
     )?.set;
-    nativeInputValueSetter?.call(inputRef.current, '');
+    nativeInputValueSetter?.call(inputRef.current, "");
 
-    const ev2 = new Event('input', { bubbles: true });
+    const ev2 = new Event("input", { bubbles: true });
     inputRef.current?.dispatchEvent(ev2);
   }, [inputRef]);
 
-  const onIconClickStart: React.PointerEventHandler<HTMLElement> = React.useCallback(
-    (e) => onIconClick?.(e),
-    [onIconClick],
-  );
+  const onIconClickStart: React.PointerEventHandler<HTMLElement> =
+    React.useCallback((e) => onIconClick?.(e), [onIconClick]);
 
-  const onIconCancelClickStart: React.PointerEventHandler<HTMLElement> = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      inputRef.current?.focus();
-      if (touchEnabled()) {
-        onCancel();
-      }
-    },
-    [inputRef, onCancel],
-  );
+  const onIconCancelClickStart: React.PointerEventHandler<HTMLElement> =
+    React.useCallback(
+      (e) => {
+        e.preventDefault();
+        inputRef.current?.focus();
+        if (touchEnabled()) {
+          onCancel();
+        }
+      },
+      [inputRef, onCancel]
+    );
 
   useIsomorphicLayoutEffect(() => {
-    if (inputProps.value !== undefined) {
-      setHasValue(Boolean(inputProps.value));
+    if (inputRest.value !== undefined) {
+      setHasValue(Boolean(inputRest.value));
     }
-  }, [inputProps.value]);
+  }, [inputRest.value]);
 
   useNativeFormResetListener(inputRef, () => {
-    setHasValue(Boolean(inputProps.defaultValue));
+    setHasValue(Boolean(inputRest.defaultValue));
   });
 
+  console.log("controlsAnimationState", controlsAnimationState);
   const renderIconButton: RenderIconButtonFn = (icon, props = {}) => (
     <IconButton
       hoverMode="opacity"
@@ -206,24 +270,27 @@ export const Search = ({
     </IconButton>
   );
 
+  const showControls = Boolean(
+    iconProp || !hideClearButton || (adaptiveSizeY.compact && onFindButtonClick)
+  );
+
   return (
     <div
+      {...controlsAnimationHandlers}
       className={classNames(
-        'vkuiInternalSearch',
+        "vkuiInternalSearch",
         styles.host,
-        sizeY === 'none' && styles.sizeYNone,
-        sizeY === 'compact' && styles.sizeYCompact,
+        sizeY === "none" && styles.sizeYNone,
+        sizeY === "compact" && styles.sizeYCompact,
         isFocused && styles.focused,
         hasValue && styles.hasValue,
         hasAfter && styles.hasAfter,
         iconProp && styles.hasIcon,
-        inputProps.disabled && styles.disabled,
+        inputRest.disabled && styles.disabled,
         !noPadding && styles.withPadding,
-        isRtl && styles.rtl,
-        className,
+        isRtl && styles.rtl
       )}
-      ref={getRootRef}
-      style={style}
+      {...rootRest}
     >
       <div className={styles.field}>
         <label htmlFor={inputId} className={styles.label}>
@@ -236,56 +303,59 @@ export const Search = ({
             type="search"
             level="1"
             weight="3"
-            {...inputProps}
             id={inputId}
             placeholder={placeholder}
             autoComplete={autoComplete}
             getRootRef={inputRef}
-            className={styles.nativeInput}
+            onChange={callMultiple(onChange, checkHasValue)}
             onFocus={onFocus}
             onBlur={onBlur}
-            onChange={callMultiple(onChange, checkHasValue)}
+            {...inputRest}
           />
         </div>
-        <div
-          {...controlsAnimationHandlers}
-          className={classNames(
-            styles.controls,
-            controlsAnimationStateClassNames[controlsAnimationState],
-          )}
-        >
-          {iconProp &&
-            (typeof iconProp === 'function'
-              ? iconProp(renderIconButton)
-              : renderIconButton(iconProp))}
-          {controlsAnimationState !== 'exited' && (
-            <IconButton
-              hoverMode="opacity"
-              onPointerDown={onIconCancelClickStart}
-              onClick={onCancel}
-              className={styles.icon}
-              tabIndex={hasValue ? undefined : -1}
-              disabled={inputProps.disabled}
-              data-testid={clearButtonTestId}
-            >
-              <VisuallyHidden>{clearLabel}</VisuallyHidden>
-              {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
-            </IconButton>
-          )}
-          {adaptiveSizeY.compact && onFindButtonClick && (
-            <Button
-              mode="primary"
-              size="m"
-              className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
-              focusVisibleMode="inside"
-              onClick={onFindButtonClick}
-              tabIndex={hasValue ? undefined : -1}
-              data-testid={findButtonTestId}
-            >
-              {findButtonText}
-            </Button>
-          )}
-        </div>
+        {showControls && (
+          <div
+            className={classNames(
+              styles.controls,
+              controlsAnimationStateClassNames[controlsAnimationState]
+            )}
+          >
+            {iconProp &&
+              (typeof iconProp === "function"
+                ? iconProp(renderIconButton)
+                : renderIconButton(iconProp))}
+            {controlsAnimationState !== "exited" && (
+              <IconButton
+                hoverMode="opacity"
+                onPointerDown={onIconCancelClickStart}
+                onClick={onCancel}
+                className={styles.icon}
+                tabIndex={hasValue ? undefined : -1}
+                disabled={inputProps.disabled}
+                data-testid={clearButtonTestId}
+              >
+                <VisuallyHidden>{clearLabel}</VisuallyHidden>
+                {platform === "ios" ? <Icon16Clear /> : <Icon24Cancel />}
+              </IconButton>
+            )}
+            {adaptiveSizeY.compact && onFindButtonClick && (
+              <Button
+                mode="primary"
+                size="m"
+                className={classNames(
+                  styles.findButton,
+                  adaptiveSizeY.compact.className
+                )}
+                focusVisibleMode="inside"
+                onClick={onFindButtonClick}
+                tabIndex={hasValue ? undefined : -1}
+                data-testid={findButtonTestId}
+              >
+                {findButtonText}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
       {hasAfter && (
         <div className={styles.after}>
