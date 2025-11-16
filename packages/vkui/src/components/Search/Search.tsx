@@ -124,8 +124,7 @@ export const Search = ({
   className,
   getRootRef,
   style,
-  placeholder:
-    placeholderProp = "фывафывафываывфафыварфывадфырваджфрыаждфыраджрфывжадрвфыждрафыжвдарфждывраждфываждрвфджрыафжвдарфждывржд",
+  placeholder: placeholderProp = "Поиск",
   before = <Icon16SearchOutline />,
   after = "Отмена",
   getRef,
@@ -324,7 +323,7 @@ export const Search = ({
               (typeof iconProp === "function"
                 ? iconProp(renderIconButton)
                 : renderIconButton(iconProp))}
-            {controlsAnimationState !== "exited" && (
+            {!hideClearButton && controlsAnimationState !== "exited" && (
               <IconButton
                 hoverMode="opacity"
                 onPointerDown={onIconCancelClickStart}
