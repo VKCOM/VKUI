@@ -2,14 +2,15 @@
 
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
-import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { easeInOutSine } from '../../lib/fx';
+import { mergeCalls } from '../../lib/mergeCalls';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import { useHover } from '../Clickable/useState';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
@@ -219,6 +220,9 @@ export const HorizontalScroll = ({
   contentWrapperRef,
   contentWrapperClassName,
   withPadding,
+  onPointerEnter,
+  onPointerLeave,
+  onMouseEnter,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
   const [canScrollStart, setCanScrollStart] = React.useState(false);
@@ -237,7 +241,7 @@ export const HorizontalScroll = ({
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
-  const hasPointer = useAdaptivityHasPointer();
+  const { isHovered, ...hoverHandlers } = useHover();
 
   const scrollTo = React.useCallback(
     (getScrollPosition: ScrollPositionHandler) => {
@@ -276,7 +280,7 @@ export const HorizontalScroll = ({
   }, [getScrollToRight, scrollTo, scrollerRef]);
 
   const calculateArrowsVisibility = React.useCallback(() => {
-    if (showArrows && hasPointer && scrollerRef.current && !isCustomScrollingRef.current) {
+    if (showArrows && scrollerRef.current && !isCustomScrollingRef.current) {
       const scrollElement = scrollerRef.current;
       const scrollLeft = scrollElement.scrollLeft;
 
@@ -286,7 +290,7 @@ export const HorizontalScroll = ({
           scrollElement.scrollWidth,
       );
     }
-  }, [showArrows, hasPointer, scrollerRef, isRtl]);
+  }, [showArrows, scrollerRef, isRtl]);
 
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
@@ -323,19 +327,23 @@ export const HorizontalScroll = ({
     [scrollOnAnyWheel, calculateArrowsVisibility, scrollerRef],
   );
 
+  const handlers = mergeCalls(hoverHandlers, { onPointerEnter, onPointerLeave });
+
   return (
     <RootComponent
       {...restProps}
+      {...handlers}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalHorizontalScroll',
-        showArrows === 'always' && styles.withConstArrows,
+        (showArrows === 'always' || isHovered) && styles.showArrows,
         isRtl && styles.rtl,
         withPadding && styles.withPadding,
       )}
+      // FIXME: onMouseEnter из restProps затирается, а при callMultiply орет линтер на рефы.
       onMouseEnter={calculateArrowsVisibility}
     >
-      {showArrows && (hasPointer || hasPointer === undefined) && canScrollStart && (
+      {showArrows && canScrollStart && (
         <ScrollArrow
           data-testid={prevButtonTestId}
           size={arrowSize}
@@ -347,7 +355,7 @@ export const HorizontalScroll = ({
           onClick={scrollToStart}
         />
       )}
-      {showArrows && (hasPointer || hasPointer === undefined) && canScrollEnd && (
+      {showArrows && canScrollEnd && (
         <ScrollArrow
           data-testid={nextButtonTestId}
           size={arrowSize}
