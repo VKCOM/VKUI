@@ -43,8 +43,7 @@
   opacity: 0;
 }
 
-.host:hover .arrow,
-.withConstArrows .arrow {
+.showArrows .arrow {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
