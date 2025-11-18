@@ -22,8 +22,18 @@ describe(ModalRoot, () => {
   ])('With $displayName', ({ displayName, Component }) => {
     fakeTimersForScope();
     test.each(['global', 'local'])('mount and unmount (should use %s callbacks)', async (type) => {
-      const globalCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
-      const localCallbacks = { onOpen: vi.fn(), onOpened: vi.fn(), onClose: vi.fn(), onClosed: vi.fn() }; // prettier-ignore
+      const globalCallbacks = {
+        onOpen: vi.fn(),
+        onOpened: vi.fn(),
+        onClose: vi.fn(),
+        onClosed: vi.fn(),
+      };
+      const localCallbacks = {
+        onOpen: vi.fn(),
+        onOpened: vi.fn(),
+        onClose: vi.fn(),
+        onClosed: vi.fn(),
+      };
 
       const h = render(
         <ModalRoot activeModal="m" {...globalCallbacks}>
@@ -301,13 +311,13 @@ describe(ModalRoot, () => {
         baseElement: document.documentElement,
       });
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(modalPageRef.current).toHaveFocus();
 
       component.rerender(<ModalRoot activeModal="modal-card">{modals}</ModalRoot>);
       await waitModalPageCSSTransitionEnd(component.getByTestId('modal-page'));
       await waitModalCardCSSTransitionEnd(component.getByTestId('modal-card'));
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
 
       expect(modalCardRef.current).toHaveFocus();
     });

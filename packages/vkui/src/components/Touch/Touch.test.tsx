@@ -10,7 +10,7 @@ import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { View } from '../View/View';
-import { Touch } from './Touch';
+import { Touch, type TouchProps } from './Touch';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent =>
@@ -179,8 +179,11 @@ describe('Touch', () => {
       'onEndX',
       'onEndY',
     ] as const;
-    const makeHandlers = (): { [k in (typeof keys)[number]]: ReturnType<typeof vi.fn> } => {
-      return keys.reduce<any>((acc, k) => ({ ...acc, [k]: vi.fn() }), {});
+    const makeHandlers = () => {
+      return keys.reduce<Pick<TouchProps, (typeof keys)[number]>>(
+        (acc, k) => ({ ...acc, [k]: vi.fn() }),
+        {},
+      );
     };
     describe.each(['touch', 'mouse'])('using %s', (input) => {
       const fireGesture = input === 'touch' ? fireTouchSwipe : fireMouseSwipe;

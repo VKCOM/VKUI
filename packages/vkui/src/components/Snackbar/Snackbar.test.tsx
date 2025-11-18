@@ -1,4 +1,5 @@
-import { type EventType, render } from '@testing-library/react';
+import * as React from 'react';
+import { type EventType, fireEvent, render, screen } from '@testing-library/react';
 import { MEDIA_QUERIES, ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
@@ -65,6 +66,59 @@ describe(Snackbar, () => {
   });
 
   baselineComponent((props) => <Snackbar onClose={vi.fn()} {...props} />);
+
+  it('should work correctly with slotProps', () => {
+    const rootRef1 = React.createRef<HTMLDivElement>();
+    const rootRef2 = React.createRef<HTMLDivElement>();
+    const actionRef = React.createRef<HTMLElement>();
+    const onActionClick1 = vi.fn();
+    const onActionClick2 = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+
+    render(
+      <Snackbar
+        onClose={vi.fn()}
+        getRootRef={rootRef1}
+        action="Action"
+        onActionClick={onActionClick1}
+        onClick={onRootClick1}
+        slotProps={{
+          root: {
+            'getRootRef': rootRef2,
+            'data-testid': 'root',
+            'onClick': onRootClick2,
+            'className': 'rootClassName',
+          },
+          action: {
+            'getRootRef': actionRef,
+            'data-testid': 'action',
+            'onClick': onActionClick2,
+            'className': 'actionClassName',
+          },
+        }}
+      />,
+    );
+
+    const root = screen.getByTestId('root');
+    expect(root).toBeInTheDocument();
+    expect(root).toHaveClass('rootClassName');
+    expect(rootRef1.current).toBe(root);
+    expect(rootRef2.current).toBe(root);
+
+    const action = screen.getByTestId('action');
+    expect(action).toBeInTheDocument();
+    expect(action).toHaveClass('actionClassName');
+    expect(actionRef.current).toBe(action);
+
+    fireEvent.click(action);
+    expect(onActionClick1).toHaveBeenCalledTimes(1);
+    expect(onActionClick2).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(root);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
+  });
 
   it.each(PLACEMENT_VITEST_EACH_TABLE)(
     'should set offsetY relative placement="%s"',
@@ -150,8 +204,10 @@ describe(Snackbar, () => {
     const result = render(
       <Snackbar
         action={<span data-testid="action">action</span>}
-        onActionClick={onActionClick}
         onClose={onClose}
+        slotProps={{
+          action: { onClick: onActionClick },
+        }}
       />,
     );
     await fireEventPatch(result.getByTestId('action'), 'click');
@@ -179,18 +235,26 @@ describe(Snackbar, () => {
       const contentEl = result.getByRole('alert');
 
       const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-      const movedRect = getMovedContentRectByPlacement('top', { shouldTriggerClosing: true }); // prettier-ignore
+      const movedRect = getMovedContentRectByPlacement('top', { shouldTriggerClosing: true });
 
       // start
       mockRect(rootEl, initialRect);
       mockRect(contentEl, initialRect);
-      await fireEventPatch(contentEl, 'touchStart', transformDomRectToEventData('touchStart', initialRect)); // prettier-ignore
+      await fireEventPatch(
+        contentEl,
+        'touchStart',
+        transformDomRectToEventData('touchStart', initialRect),
+      );
       await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
 
       // move
       mockRect(contentEl, movedRect);
       requestAnimationFrameMock.init();
-      await fireEventPatch(contentEl, 'touchMove', transformDomRectToEventData('touchMove', movedRect)); // prettier-ignore
+      await fireEventPatch(
+        contentEl,
+        'touchMove',
+        transformDomRectToEventData('touchMove', movedRect),
+      );
       requestAnimationFrameMock.triggerNextAnimationFrame();
 
       result.unmount();
@@ -213,12 +277,14 @@ describe(Snackbar, () => {
         const contentEl = result.getByRole('alert');
 
         const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-        const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: false }); // prettier-ignore
+        const movedRect = getMovedContentRectByPlacement(placement, {
+          shouldTriggerClosing: false,
+        });
 
         // start
         mockRect(rootEl, initialRect);
         mockRect(contentEl, initialRect);
-        await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect)); // prettier-ignore
+        await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect));
         await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
         expect(onClose).not.toHaveBeenCalled();
 
@@ -226,14 +292,14 @@ describe(Snackbar, () => {
           // move
           mockRect(contentEl, movedRect);
           requestAnimationFrameMock.init();
-          await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect)); // prettier-ignore
+          await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect));
           requestAnimationFrameMock.triggerNextAnimationFrame();
           expect(onClose).not.toHaveBeenCalled();
         }
 
         // end
         requestAnimationFrameMock.init();
-        await fireEventPatch(contentEl, end, fireEventOptions); // prettier-ignore
+        await fireEventPatch(contentEl, end, fireEventOptions);
         await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
         requestAnimationFrameMock.triggerNextAnimationFrame();
         expect(onClose).toHaveBeenCalled();
@@ -252,7 +318,7 @@ describe(Snackbar, () => {
         const contentEl = result.getByRole('alert');
 
         const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-        const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: true }); // prettier-ignore
+        const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: true });
 
         // start
         mockRect(rootEl, initialRect);

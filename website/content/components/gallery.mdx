@@ -61,8 +61,7 @@ import { BlockWrapper } from '@/components/wrappers';
 - `arrowAreaHeight` - размер активной зоны стрелок. Определяет область вокруг стрелок, реагирующую на взаимодействие пользователя:
   - `stretch` - на всю высоту галереи
   - `fit` - фиксированная высота
-- `showArrows` - флаг, определяющий нужно ли показывать стрелки. Видимость стрелок также зависит
-  от параметра адаптивности `hasPointer`. Например, на мобильных устройствах стрелки отображаться никогда не будут.
+- `showArrows` - флаг, определяющий нужно ли показывать стрелки при наведении.
 
 <Playground Wrapper={BlockWrapper}>
   ```jsx
@@ -152,6 +151,30 @@ return (
         backgroundColor: 'var(--vkui--color_icon_secondary)',
       }}
     />
+  </Gallery>
+  ```
+</Playground>
+
+## Параметры анимации
+
+С помощью свойств `animationDuration` и `animationEasing` можно изменить такие параметры анимации смены слайдов, как длительность
+и функция анимации соответственно. Свойство `animationEasing` принимает одно из предопределенных значений анимации или позволяет
+задать пользовательское значение через массив, элементы которого соответствуют параметрам аналогичной CSS-функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier).
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery
+    slideWidth="90%"
+    bullets="dark"
+    showArrows
+    animationDuration={1000}
+    animationEasing={[0, 0, 0.2, 1]}
+  >
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
   </Gallery>
   ```
 </Playground>

@@ -2,11 +2,16 @@ import { type AllHTMLAttributes } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { getMergedSameEventsByProps } from '../helpers/getMergedSameEventsByProps';
 import { mergeStyle } from '../helpers/mergeStyle';
+import { filterObject } from '../lib/object';
 import { type HasRootRef } from '../types';
 import { useExternRef } from './useExternRef';
 
 type BaseProps<T extends HTMLElement = HTMLElement> = HasRootRef<T> &
   Pick<AllHTMLAttributes<T>, 'className' | 'style'>;
+
+const filterProps = <T extends BaseProps = BaseProps>(props: T) => {
+  return filterObject(props, (value) => value !== undefined);
+};
 
 export const useMergeProps = <T extends BaseProps = BaseProps>(
   originalProps: T,
@@ -18,7 +23,7 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
   const getRootRef = useExternRef(originalSlotGetRef, rootSlotGetRef);
 
   if (!slotProps) {
-    return originalProps;
+    return filterProps(originalProps);
   }
 
   const { className: rootSlotClassName, style: rootSlotStyle, ...rootSlotProps } = slotProps || {};
@@ -57,5 +62,5 @@ export const useMergeProps = <T extends BaseProps = BaseProps>(
     resolvedProps.getRootRef = getRootRef;
   }
 
-  return resolvedProps;
+  return filterProps(resolvedProps);
 };

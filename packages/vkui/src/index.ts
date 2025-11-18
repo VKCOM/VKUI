@@ -5,6 +5,7 @@ import './styles/focusVisible.module.css';
 import './styles/animationFades.module.css';
 import './styles/transformOriginByPlacement.module.css';
 import './styles/gaps.module.css';
+import './styles/layout.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export { AppRootPortal } from './components/AppRoot/AppRootPortal';
@@ -256,6 +257,8 @@ export { Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';
 export { Spacing } from './components/Spacing/Spacing';
 export type { SpacingProps } from './components/Spacing/Spacing';
+export { Box } from './components/Box/Box';
+export type { BoxProps } from './components/Box/Box';
 export { Placeholder } from './components/Placeholder/Placeholder';
 export type {
   PlaceholderProps,
@@ -463,6 +466,7 @@ export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useCSSKeyframesAnimationController as unstable_useCSSKeyframesAnimationController } from './lib/animation';
 export { useFocusVisible } from './hooks/useFocusVisible';
+export { useReducedMotion as unstable_useReducedMotion } from './lib/animation';
 
 /**
  * Utils

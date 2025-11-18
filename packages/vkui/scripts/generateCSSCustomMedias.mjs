@@ -38,8 +38,8 @@ export const getCustomMedias = async () => {
     '--sizeX-regular': widthPlus(BREAKPOINTS.SMALL_TABLET),
     '--sizeX-compact': widthMinus(BREAKPOINTS.SMALL_TABLET),
 
-    '--sizeY-compact': `(pointer: fine) and ${widthPlus(BREAKPOINTS.SMALL_TABLET)}, ${heightMinus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`, // prettier-ignore
-    '--sizeY-regular': `(pointer: coarse) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, (pointer: none) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, ${widthMinus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`, // prettier-ignore
+    '--sizeY-compact': `(pointer: fine) and ${widthPlus(BREAKPOINTS.SMALL_TABLET)}, ${heightMinus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`,
+    '--sizeY-regular': `(pointer: coarse) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, (pointer: none) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, ${widthMinus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`,
 
     '--hover-has': '(hover: hover) and (pointer: fine)', // см. https://github.com/VKCOM/VKUI/issues/3469
     '--hover-has-not': '(hover: none)',
@@ -49,8 +49,8 @@ export const getCustomMedias = async () => {
 
     '--reduce-motion': 'screen and (prefers-reduced-motion: reduce)',
 
-    '--desktop': `${widthPlus(BREAKPOINTS.SMALL_TABLET)} and (pointer: fine), ${widthPlus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MEDIUM_HEIGHT)}`, // prettier-ignore
-    '--mobile': `${widthMinus(BREAKPOINTS.SMALL_TABLET)}, (pointer: none) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}, (pointer: coarse) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}`, // prettier-ignore
+    '--desktop': `${widthPlus(BREAKPOINTS.SMALL_TABLET)} and (pointer: fine), ${widthPlus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MEDIUM_HEIGHT)}`,
+    '--mobile': `${widthMinus(BREAKPOINTS.SMALL_TABLET)}, (pointer: none) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}, (pointer: coarse) and ${heightMinus(BREAKPOINTS.MEDIUM_HEIGHT)}`,
 
     '--viewWidth-desktopPlus': MEDIA_QUERIES.DESKTOP_PLUS,
 
@@ -76,13 +76,17 @@ async function main() {
   const dataRaw = [];
 
   dataRaw.push('/* ⚠️ Документ сгенерирован автоматически */');
-  dataRaw.push('/* 📝 Если требуется изменения, то запустите команду `yarn workspace @vkontakte/vkui run generate:css-custom-medias` */'); // prettier-ignore
+  dataRaw.push(
+    '/* 📝 Если требуется изменения, то запустите команду `yarn workspace @vkontakte/vkui run generate:css-custom-medias` */',
+  );
   dataRaw.push('');
   dataRaw.push('/* stylelint-disable */');
   dataRaw.push(
     Object.entries(customMedias)
       .map(([key, value]) => {
-        return ['/* prettier-ignore */', `@custom-media ${key} ${value};`].join('\n');
+        return ['/* biome-ignore format: для красоты */', `@custom-media ${key} ${value};`].join(
+          '\n',
+        );
       })
       .join('\n'),
   );

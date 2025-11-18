@@ -80,6 +80,9 @@ export interface SlidesManagerState {
   layerWidth: number;
 }
 
+export type PredefinedEasingType = 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
+export type CubicBezierEasingType = [number, number, number, number];
+
 export interface BaseGalleryProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
     HasAlign,
@@ -148,4 +151,14 @@ export interface BaseGalleryProps
    * - `element`: пересчет позиции слайдов будет происходить при изменении размеров компонента.
    */
   resizeSource?: 'window' | 'element';
+  /**
+   * Длительность анимации смены слайда в миллисекундах.
+   */
+  animationDuration?: number;
+  /**
+   * Функция для анимации.
+   *
+   * Принимает одно из предопределённых значений или параметры функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier).
+   */
+  animationEasing?: PredefinedEasingType | CubicBezierEasingType;
 }

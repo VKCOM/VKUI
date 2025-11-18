@@ -1,5 +1,6 @@
 import path from 'node:path';
 import postcssGlobalData from '@csstools/postcss-global-data';
+import layoutClasses from '@project-tools/postcss-layout-classes';
 import restructureVariable from '@project-tools/postcss-restructure-variable';
 import autoprefixer from 'autoprefixer';
 import postcssCustomMedia from 'postcss-custom-media';
@@ -50,6 +51,8 @@ export default {
             'packages/vkui/src/styles/customMedias.generated.css',
           ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
         }),
+
+        layoutClasses(),
 
         // Автопрефиксер
         autoprefixer(),
