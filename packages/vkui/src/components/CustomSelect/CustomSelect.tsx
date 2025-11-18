@@ -745,7 +745,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             readOnly: readOnly || !searchable,
             placeholder,
             onFocus: callMultiple(onFocus, onInputFocus),
-            onBlur: callMultiple(onBlur, onInputFocus),
+            onBlur: callMultiple(onBlur, onInputBlur),
             onKeyDown: !readOnly
               ? callMultiple(handleInputKeyDown, onNativeInputKeyDown)
               : onNativeInputKeyDown,

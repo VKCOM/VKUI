@@ -21,6 +21,7 @@ export const Footer = ({
     <Footnote
       Component={Component}
       role={role}
+      align="center"
       {...restProps}
       className={classNames(styles.host, className)}
     >
