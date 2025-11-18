@@ -16,7 +16,7 @@
 
   padding-inline-start: calc(
     var(--vkui_internal--custom_select_option_hierarchy_level) *
-      var(--vkui--size_option_hierarchy--regular)
+    var(--vkui--size_option_hierarchy--regular)
   );
 }
 

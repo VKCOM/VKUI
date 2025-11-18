@@ -94,7 +94,13 @@ export const useDraggableWithDomApi = <T extends HTMLElement>({
       } else if (el.getAttribute(DATA_DRAGGABLE_PLACEHOLDER_KEY) !== null) {
         placeholderItemRef.current = { index, el, draggingElRect };
       } else {
-        siblingItemsRef.current.push({ index, el, shifted: itemStartIndexRef.current !== ITEM_INITIAL_INDEX && itemStartIndexRef.current < index, draggingElRect }); // prettier-ignore
+        siblingItemsRef.current.push({
+          index,
+          el,
+          shifted:
+            itemStartIndexRef.current !== ITEM_INITIAL_INDEX && itemStartIndexRef.current < index,
+          draggingElRect,
+        });
       }
     });
     if (placeholderItemRef.current) {

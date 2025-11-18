@@ -1,5 +1,6 @@
 const path = require('path');
 const postcssGlobalData = require('@csstools/postcss-global-data');
+const layoutClasses = require('@project-tools/postcss-layout-classes');
 const restructureVariable = require('@project-tools/postcss-restructure-variable');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
@@ -73,6 +74,8 @@ function makePostcssPlugins({
         'packages/vkui/src/styles/customMedias.generated.css',
       ].map((pathSegment) => path.join(rootDirectory, pathSegment)),
     }),
+
+    layoutClasses(),
 
     // Автопрефиксер
     autoprefixer(),

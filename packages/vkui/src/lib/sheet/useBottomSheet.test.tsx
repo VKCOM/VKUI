@@ -350,9 +350,21 @@ describe(useBottomSheet, () => {
   });
 
   describe.each([
-    { snapPoint: 'auto' as const, initialPropertyValue: '', mutatedPropertyValue: `${sheetPropertyValue('auto', SHEET_HEIGHT, DRAG_OFFSET, SHEET_HEIGHT)}px` }, // prettier-ignore
-    { snapPoint: { initial: 50, detents: DETENTS_A }, initialPropertyValue: '50%', mutatedPropertyValue: `${sheetPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT)}%` }, // prettier-ignore
-    { snapPoint: { initial: 100, detents: DETENTS_B }, initialPropertyValue: '100%', mutatedPropertyValue: `${sheetPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT)}%` }, // prettier-ignore
+    {
+      snapPoint: 'auto' as const,
+      initialPropertyValue: '',
+      mutatedPropertyValue: `${sheetPropertyValue('auto', SHEET_HEIGHT, DRAG_OFFSET, SHEET_HEIGHT)}px`,
+    },
+    {
+      snapPoint: { initial: 50, detents: DETENTS_A },
+      initialPropertyValue: '50%',
+      mutatedPropertyValue: `${sheetPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT)}%`,
+    },
+    {
+      snapPoint: { initial: 100, detents: DETENTS_B },
+      initialPropertyValue: '100%',
+      mutatedPropertyValue: `${sheetPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT)}%`,
+    },
   ])(
     'swipe down (snapPoint: $snapPoint):',
     ({ snapPoint, initialPropertyValue, mutatedPropertyValue }) => {
@@ -696,7 +708,7 @@ describe(useBottomSheet, () => {
       expect(sheetEl.style.getPropertyValue('--sheet')).toBe('');
     });
 
-    test('– by drag velocity', () => {
+    test('– by drag velocity', async () => {
       const r = render(<div data-testid="sheetEl" />);
       const sheetEl = r.getByTestId('sheetEl');
       Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
@@ -742,9 +754,23 @@ describe(useBottomSheet, () => {
 
   describe('backdrop:', () => {
     test.each([
-      { snapPoint: 'auto' as const, backdropOpacity: backdropOpacityPropertyValue('auto', SHEET_HEIGHT, DRAG_OFFSET, SHEET_HEIGHT) }, // prettier-ignore
-      { snapPoint: { initial: 50, detents: DETENTS_A }, backdropOpacity: backdropOpacityPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT) }, // prettier-ignore
-      { snapPoint: { initial: 100, detents: DETENTS_B }, backdropOpacity: backdropOpacityPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT) }, // prettier-ignore
+      {
+        snapPoint: 'auto' as const,
+        backdropOpacity: backdropOpacityPropertyValue(
+          'auto',
+          SHEET_HEIGHT,
+          DRAG_OFFSET,
+          SHEET_HEIGHT,
+        ),
+      },
+      {
+        snapPoint: { initial: 50, detents: DETENTS_A },
+        backdropOpacity: backdropOpacityPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT),
+      },
+      {
+        snapPoint: { initial: 100, detents: DETENTS_B },
+        backdropOpacity: backdropOpacityPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT),
+      },
     ])('- basic usage (snapPoint: $snapPoint)', ({ snapPoint, backdropOpacity }) => {
       const props = { ...DEFAULT_PROPS, snapPoint };
       const r = render(
@@ -795,7 +821,7 @@ describe(useBottomSheet, () => {
       expect(backdropEl.style.getPropertyValue('--backdrop')).toBe('');
     });
 
-    it('- changes opacity relative initialSnapPoint', () => {
+    it('- changes opacity relative initialSnapPoint', async () => {
       const DRAG_TO_HALF_OF_SHEET_HEIGHT = DRAG_OFFSET + SHEET_HEIGHT / 2;
 
       const r = render(

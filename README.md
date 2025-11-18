@@ -56,6 +56,7 @@ import {
   Header,
   Group,
   SimpleCell,
+  usePlatform
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 

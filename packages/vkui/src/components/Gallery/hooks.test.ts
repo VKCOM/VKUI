@@ -35,7 +35,7 @@ describe(useAutoPlay, () => {
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
-  it('check controls working', () => {
+  it('check controls working', async () => {
     const callback = vi.fn();
 
     let visibilityState: Document['visibilityState'] = 'visible';
@@ -43,7 +43,7 @@ describe(useAutoPlay, () => {
     vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
 
     const res = renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
-    act(vi.runAllTimers);
+    await act(vi.runAllTimers);
     expect(callback).toHaveBeenCalledTimes(1);
 
     // Останавливаем работу хука
@@ -53,7 +53,7 @@ describe(useAutoPlay, () => {
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
-    act(vi.runAllTimers);
+    await act(vi.runAllTimers);
     // Но callback не срабатыват по истечению таймеров
     expect(callback).toHaveBeenCalledTimes(1);
 
@@ -64,7 +64,7 @@ describe(useAutoPlay, () => {
     res.rerender();
     // Срабатывает события visibilityChange
     fireEvent(document, new Event('visibilitychange'));
-    act(vi.runAllTimers);
+    await act(vi.runAllTimers);
     // callback срабатыват по истечению таймеров
     expect(callback).toHaveBeenCalledTimes(2);
   });

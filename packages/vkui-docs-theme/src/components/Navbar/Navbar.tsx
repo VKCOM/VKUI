@@ -63,7 +63,7 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
               hoverMode="opacity"
               activeMode="opacity"
               aria-label="Лого VKUI"
-              href="/"
+              href={fakeNavbarItem ? fakeNavbarItem.href : '/'}
             >
               {logo}
             </Tappable>

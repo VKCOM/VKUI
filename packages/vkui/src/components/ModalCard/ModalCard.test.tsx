@@ -278,7 +278,7 @@ describe(ModalCard, () => {
 
         await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
         expect(h.queryByTestId('host')).toBeTruthy();
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         expect(h.getByTestId('dismiss-button')).toHaveFocus();
 
         act(() => {
@@ -286,7 +286,7 @@ describe(ModalCard, () => {
         });
         await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
         expect(h.queryByTestId('host')).toBeFalsy();
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
 
         if (restoreFocus) {
           expect(openButton).toHaveFocus();

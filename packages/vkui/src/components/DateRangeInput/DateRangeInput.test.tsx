@@ -467,7 +467,7 @@ describe('DateRangeInput', () => {
         await userEvent.keyboard(' ');
         // календарь открыт
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
 
         // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
@@ -482,7 +482,7 @@ describe('DateRangeInput', () => {
         await userEvent.keyboard('{Escape}');
         // календарь закрыт
         expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
 
         // onCalendarOpenChanged вызван лишь раз
         expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
@@ -501,7 +501,7 @@ describe('DateRangeInput', () => {
 
         // закрываем, нажимая Esc
         await userEvent.keyboard('{Escape}');
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
 
         // фокус возвращается на часть инпутa
         expect(document.activeElement).toBe(inputPart);

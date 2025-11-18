@@ -11,5 +11,5 @@
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json"],
   "exclude": ["**/__testfixtures__", "**/__tests__", "node_modules"],
-  "files": ["./typings.d.ts", "./vitest.d.ts"]
+  "files": ["./typings.d.ts"]
 }

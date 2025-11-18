@@ -259,7 +259,7 @@ describe(Search, () => {
       const cb = vi.fn();
       render(<Search icon={<div data-testid="icon" />} onIconClick={cb} />);
       await userEvent.click(screen.getByTestId('icon'));
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(cb).toHaveBeenCalled();
     }),
   );
@@ -270,7 +270,7 @@ describe(Search, () => {
       const cb = vi.fn();
       render(<Search value="test" onFindButtonClick={cb} findButtonTestId="find-button" />);
       await userEvent.click(getFindButton());
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(cb).toHaveBeenCalled();
     }),
   );
