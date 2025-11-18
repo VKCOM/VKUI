@@ -74,7 +74,8 @@
 :global(.vkuiInternalEpic--hasTabbar) .in {
   padding-block-end: var(--vkui_internal--tabbar_height);
   padding-block-end: calc(
-    var(--vkui_internal--safe_area_inset_bottom) + var(--vkui_internal--tabbar_height)
+    var(--vkui_internal--safe_area_inset_bottom) +
+    var(--vkui_internal--tabbar_height)
   );
 }
 

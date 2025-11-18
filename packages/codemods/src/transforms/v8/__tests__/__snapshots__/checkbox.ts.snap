@@ -1,0 +1,77 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`checkbox > transforms correctly 1`] = `
+"import { Checkbox } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <Checkbox
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
+        checked
+        required
+        description="description"
+        indeterminate
+        hasHover={false}
+        onClick={() => {}}
+        onChange={() => {}}
+        onFocus={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "checkbox",
+            "aria-label": "checkbox",
+            placeholder: "checkbox"
+          }
+        }} />
+      <Checkbox
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
+        checked
+        required
+        description="description"
+        indeterminate
+        hasHover={false}
+        onChange={() => {}}
+        onClick={() => {}}
+        onFocus={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "checkbox",
+            "aria-label": "checkbox",
+            placeholder: "checkbox"
+          }
+        }}>
+        Checkbox
+      </Checkbox>
+      <Checkbox.Input
+        id="checkbox"
+        name="checkbox"
+        tabIndex={-1}
+        autoFocus
+        checked
+        required
+        onClick={() => {}}
+        onChange={() => {}}
+        onFocus={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "checkbox",
+            "aria-label": "checkbox",
+            placeholder: "checkbox"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

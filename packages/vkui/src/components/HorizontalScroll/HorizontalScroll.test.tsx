@@ -3,7 +3,6 @@ import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { HorizontalScroll } from './HorizontalScroll';
 
@@ -74,25 +73,23 @@ describe('HorizontalScroll', () => {
       let scrollContainer: HTMLDivElement | null = null;
 
       const result = render(
-        <AdaptivityProvider hasPointer>
-          <HorizontalScroll
-            getRef={(e) => {
-              scrollContainer = e;
-              mockRef(e);
-            }}
-            data-testid="horizontal-scroll"
-            showArrows="always"
+        <HorizontalScroll
+          getRef={(e) => {
+            scrollContainer = e;
+            mockRef(e);
+          }}
+          data-testid="horizontal-scroll"
+          showArrows="always"
+        >
+          <button
+            type="button"
+            data-testid="focusable-element"
+            style={{ width: '800px', height: '50px' }}
+            onClick={noop}
           >
-            <button
-              type="button"
-              data-testid="focusable-element"
-              style={{ width: '800px', height: '50px' }}
-              onClick={noop}
-            >
-              Button
-            </button>
-          </HorizontalScroll>
-        </AdaptivityProvider>,
+            Button
+          </button>
+        </HorizontalScroll>,
       );
 
       expect(document.activeElement).toBe(document.body);
@@ -106,7 +103,7 @@ describe('HorizontalScroll', () => {
       await userEvent.tab();
       expect(document.activeElement).toBe(document.body);
 
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
     }),
   );
 

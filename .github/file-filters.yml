@@ -22,20 +22,16 @@ package_vkui: &package_vkui
   - 'tsconfig.*'
   - 'package.json'
 
-docs_styleguide:
-  - *package_vkui
-  - 'packages/vkui/src/**/*.md'
-  - 'styleguide/**'
-
 docs_storybook:
   - *package_vkui
   - 'packages/vkui/.storybook/**'
   - 'packages/vkui/storybook/**'
   - 'packages/vkui/src/**/*.stories.*'
   - 'packages/vkui/src/**/*.mdx'
+  - 'packages/vkui/docs/**'
   - 'tools/storybook-*/**'
 
-docs_beta:
+docs_website:
   - *package_vkui
   - 'packages/vkui-docs-theme/**'
   - 'website/**'

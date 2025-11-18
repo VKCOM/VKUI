@@ -1,7 +1,5 @@
-function managerEntries(entry = []) {
-  return [...entry, require.resolve('./register.ts')];
-}
+import { fileURLToPath } from 'node:url';
 
-module.exports = {
-  managerEntries,
-};
+export function managerEntries(entry = []) {
+  return [...entry, fileURLToPath(import.meta.resolve('./register.ts'))];
+}

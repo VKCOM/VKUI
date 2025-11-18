@@ -62,7 +62,7 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    */
   sameWidth?: boolean;
   /**
-   * Массив кастомных модификаторов для Popper (необходимо мемоизировать).
+   * Позволяет задать или переопределить модификаторы библиотеки **Floating UI** (подробнее в документации про [middleware](https://floating-ui.com/docs/middleware)).
    */
   customMiddlewares?: UseFloatingMiddleware[];
   /**

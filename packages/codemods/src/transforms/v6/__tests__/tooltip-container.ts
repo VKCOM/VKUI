@@ -1,3 +1,4 @@
+import { describe } from 'vitest';
 import { defineSnapshotTestFromFixture } from '../../../testHelpers/testHelper';
 
 const name = 'tooltip-container';
