@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - v6
+      - v7
       - '*-stable'
 
 run-name: Update screenshots for ${{ github.ref_name }}

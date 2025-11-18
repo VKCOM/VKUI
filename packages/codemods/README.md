@@ -34,7 +34,7 @@ Options:
   -V, --version                                 output the version number
   -l --list                                     list available codemods
   --all                                         apply all available codemods
-  --tv, --transforms-version <transformsVersion>  vkui major version transforms (available versions: "6", "7")
+  --tv, --transforms-version <transformsVersion>  vkui major version transforms (available versions: "6", "7", "8")
   -p --path [paths...]                          file paths where codemods need to apply (space separated list), default: current
                                                 directory
   --input-file <file>                           apply codemods only to file/directory listed in the file

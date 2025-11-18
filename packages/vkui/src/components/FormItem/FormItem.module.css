@@ -140,8 +140,10 @@
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .withTop,
 .withTop .removable {
   margin-block-start: calc(
-    -1 * var(--vkui--spacing_size_2xs) - var(--vkui--font_subhead--line_height--regular) -
-      var(--vkui--spacing_size_m)
+    -1 *
+    var(--vkui--spacing_size_2xs) -
+    var(--vkui--font_subhead--line_height--regular) -
+    var(--vkui--spacing_size_m)
   );
 }
 
@@ -149,8 +151,10 @@
 :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .sizeYCompact.withTop,
 .sizeYCompact.withTop .removable {
   margin-block-start: calc(
-    -1 * var(--vkui--spacing_size_2xs) - var(--vkui--font_subhead--line_height--compact) -
-      var(--vkui--spacing_size_s)
+    -1 *
+    var(--vkui--spacing_size_2xs) -
+    var(--vkui--font_subhead--line_height--compact) -
+    var(--vkui--spacing_size_s)
   );
 }
 
@@ -159,8 +163,10 @@
   :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .sizeYNone.withTop,
   .sizeYNone.withTop .removable {
     margin-block-start: calc(
-      -1 * var(--vkui--spacing_size_2xs) - var(--vkui--font_subhead--line_height--compact) -
-        var(--vkui--spacing_size_s)
+      -1 *
+      var(--vkui--spacing_size_2xs) -
+      var(--vkui--font_subhead--line_height--compact) -
+      var(--vkui--spacing_size_s)
     );
   }
 }

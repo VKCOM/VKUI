@@ -1,6 +1,5 @@
 import { act, type RefObject } from 'react';
 import { render } from '@testing-library/react';
-import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
@@ -9,14 +8,17 @@ import styles from './FixedLayout.module.css';
 let updateFunction: () => void;
 
 vi.mock('../../lib/floating/customResizeObserver', () => ({
-  CustomResizeObserver: vi.fn().mockImplementation((updateFunctionFn: () => void) => {
-    updateFunction = updateFunctionFn;
-    return {
-      observe: noop,
-      appendToTheDOM: noop,
-      disconnect: noop,
-    };
-  }),
+  CustomResizeObserver: vi.fn(
+    class MockCustomResizeObserver {
+      constructor(updateFunctionFn: () => void) {
+        updateFunction = updateFunctionFn;
+      }
+
+      observe = vi.fn();
+      appendToTheDOM = vi.fn();
+      disconnect = vi.fn();
+    },
+  ),
 }));
 
 describe('FixedLayout', () => {

@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`radio > transforms correctly 1`] = `
+"import { Radio } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <Radio
+        id="radio"
+        name="radio"
+        tabIndex={-1}
+        autoFocus
+        required
+        checked
+        onClick={() => {}}
+        onChange={() => {}}
+        description="description"
+        slotProps={{
+          root: {
+            'data-testid': 'radio-root',
+            'aria-label': 'radio-root-label'
+          },
+
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "radio",
+            "aria-label": "radio",
+            placeholder: "radio"
+          }
+        }} />
+      <Radio.Input
+        id="radio"
+        name="radio"
+        tabIndex={-1}
+        autoFocus
+        required
+        checked
+        onClick={() => {}}
+        onChange={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "radio",
+            "aria-label": "radio",
+            placeholder: "radio"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

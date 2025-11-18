@@ -6,10 +6,16 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
 export const REDUCE_MOTION_MEDIA_QUERY = 'screen and (prefers-reduced-motion: reduce)';
 
+/**
+ * Хук для отслеживания предпочтения пользователя в уменьшении анимации.
+ *
+ * @returns {boolean | undefined} Возвращает `true`, если пользователь предпочитает уменьшенную анимацию,
+ * `false` - если нет, и `undefined` во время серверного рендеринга или во время первого рендеринга на клиенте.
+ */
 export const useReducedMotion = (): boolean | undefined => {
   const { window } = useDOM();
 
-  const [reducedMotion, setReducedMotion] = React.useState<boolean | undefined>(() => undefined);
+  const [reducedMotion, setReducedMotion] = React.useState<boolean | undefined>(undefined);
 
   useIsomorphicLayoutEffect(() => {
     /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
