@@ -39,7 +39,8 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalEpic--hasTabbar) .verticalBottom {
   padding-block-end: calc(
-    var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
+    var(--vkui_internal--tabbar_height) +
+    var(--vkui_internal--safe_area_inset_bottom)
   );
 }
 
@@ -51,7 +52,8 @@
 :global(.vkuiInternalPanelHeader) ~ .verticalTop,
 :global(.vkuiInternalPanelHeader) ~ * .verticalTop:not(:global(.vkuiInternalPanelHeader__fixed)) {
   inset-block-start: calc(
-    var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top)
+    var(--vkui_internal--panel_header_height) +
+    var(--vkui_internal--safe_area_inset_top)
   );
 }
 /* stylelint-enable selector-max-universal, selector-pseudo-class-disallowed-list */

@@ -4,81 +4,53 @@ on:
   push:
     branches:
       - master
-    paths-ignore:
-      - '.husky/**'
-      - '.codesandbox/**'
-      - '.github/**'
-      - '!.github/actions/**'
-      - '.github/actions/**/*.yml'
-      - '**/*.md'
-      - '!packages/vkui/src/**/*.md'
-      - '!styleguide/pages/**/*.md'
-      - '**/__image_snapshots__/*.png'
+    paths:
+      - 'website/**'
+      - 'packages/vkui/**'
+      # unit
+      - '!packages/vkui/**/*.test.*'
+      - '!packages/vkui/global.vitest.*'
+      - '!packages/vkui/vitest.*.*'
+      # e2e
+      - '!packages/vkui/playwright/**'
+      - '!packages/vkui/docker-compose.yml'
+      - '!packages/vkui/playwright-ct.config.*'
+      - '!packages/vkui/**/__image_snapshots__/*.png'
+      # eslint
+      - '!packages/vkui/.eslintrc.*'
+      - '!packages/vkui/tsconfig.eslint.json'
 
 env:
   AWS_S3_URL: https://${{ vars.AWS_BUCKET }}.${{ vars.AWS_ENDPOINT }}
 
 concurrency:
-  group: deploy-docs-${{ github.ref_name }}
+  group: deploy-next-version-docs-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
-  changed_files:
+  cleanup:
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
-    name: Detect what files changed
-    outputs:
-      docs_styleguide: ${{ steps.changes.outputs.docs_styleguide }}
-      docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
-      docs_beta: ${{ steps.changes.outputs.docs_beta }}
-
+    name: Cleanup
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Find changes
-        uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          filters: .github/file-filters.yml
-
-  build_and_deploy_styleguide:
-    if: ${{ !cancelled() && needs.changed_files.outputs.docs_styleguide == 'true' }}
-    runs-on: ubuntu-latest
-    name: Deploy docs (styleguide)
-    needs: changed_files
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Node setup
-        uses: ./.github/actions/node-setup
-
-      - name: Build
-        run: yarn docs:styleguide:build
-
-      - name: Upload to S3
-        id: deploy
+      - name: Delete old artifacts for the next documentation version
         uses: VKCOM/gh-actions/VKUI/s3@main
         with:
           awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
           awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
           awsBucket: ${{ vars.AWS_BUCKET }}
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
-          command: upload
-          commandUploadSrc: styleguide/dist
-          commandUploadDist: next/styleguide
-
-      - name: Create doc url
-        if: ${{ steps.deploy.outcome == 'success' }}
-        id: url
-        run: echo "${{ env.AWS_S3_URL }}/next/styleguide/index.html"
+          command: delete
+          commandDeletePrefix: next/
 
   build_and_deploy_storybook:
-    if: ${{ !cancelled() && needs.changed_files.outputs.docs_storybook == 'true' }}
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     name: Deploy docs (storybook)
-    needs: changed_files
+    needs: cleanup
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -99,18 +71,18 @@ jobs:
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
           command: upload
           commandUploadSrc: packages/vkui/storybook-static
-          commandUploadDist: next/storybook
+          commandUploadDist: next/playground
 
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "${{ env.AWS_S3_URL }}/next/storybook/index.html"
+        run: echo "${{ env.AWS_S3_URL }}/next/playground/index.html"
 
-  build_and_deploy_docs_beta:
-    if: ${{ !cancelled() && needs.changed_files.outputs.docs_beta == 'true' }}
+  build_and_deploy_docs_website:
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
-    name: Deploy docs (beta)
-    needs: changed_files
+    name: Deploy docs
+    needs: cleanup
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -122,9 +94,9 @@ jobs:
         run: yarn build:vkui
 
       - name: Build
-        run: yarn docs:beta:build
+        run: yarn docs:website:build
         env:
-          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /next/docs-beta
+          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /next
 
       - name: Upload to S3
         id: deploy
@@ -136,9 +108,9 @@ jobs:
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
           command: upload
           commandUploadSrc: website/out
-          commandUploadDist: next/docs-beta
+          commandUploadDist: next
 
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "${{ env.AWS_S3_URL }}/next/docs-beta/overview/about/index.html"
+        run: echo "${{ env.AWS_S3_URL }}/next/overview/about/index.html"

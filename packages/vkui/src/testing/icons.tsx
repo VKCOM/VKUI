@@ -16,6 +16,7 @@ import {
   getOverlayIconSizeByImageBaseSize,
   ImageBaseContext,
 } from '../components/ImageBase/ImageBase';
+import type { HasDataAttribute } from '../types';
 
 export const IconExampleForBadgeBasedOnImageBaseSize = () => {
   const { size } = React.useContext(ImageBaseContext);
@@ -35,27 +36,21 @@ IconExampleForBadgeBasedOnImageBaseSize.DATA_TEST_ID = 'icon-example-for-badge';
 export const IconExampleForFallbackBasedOnImageBaseSize = () => {
   const { size } = React.useContext(ImageBaseContext);
   const iconSize = getFallbackIconSizeByImageBaseSize(size);
-  const props = {
+  const props: HasDataAttribute = {
     'data-testid': IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID,
   };
   switch (iconSize) {
     case 12:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon12Users, props);
     case 16:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon16Users, props);
     case 20:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon20Users, props);
     case 24:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon24Users, props);
     case 28:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon28Users, props);
     default:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon36Users, props);
   }
 };
@@ -65,7 +60,7 @@ IconExampleForFallbackBasedOnImageBaseSize.DATA_TEST_ID = 'icon-example-for-fall
 export const IconExampleForOverlayBasedOnImageBaseSize = () => {
   const { size } = React.useContext(ImageBaseContext);
   const iconSize = getOverlayIconSizeByImageBaseSize(size);
-  const props = {
+  const props: HasDataAttribute = {
     'data-testid': IconExampleForOverlayBasedOnImageBaseSize.DATA_TEST_ID,
   };
   switch (iconSize) {
@@ -79,10 +74,8 @@ export const IconExampleForOverlayBasedOnImageBaseSize = () => {
         ...props,
       });
     case 24:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon24AddOutline, props);
     case 28:
-      // @ts-expect-error: TS2769 styleguide не может распарсить `as ...` на `props`
       return React.createElement(Icon28AddOutline, props);
     case 32:
     default:

@@ -3,6 +3,7 @@ import * as Icons from '@vkontakte/icons';
 import {
   Accordion,
   ActionSheet,
+  ActionSheetDefaultIosCloseItem,
   ActionSheetItem,
   AdaptiveIconRenderer,
   AdaptivityProvider,
@@ -271,6 +272,7 @@ export const scope: Record<string, unknown> = {
   Spinner,
   ActionSheet,
   ActionSheetItem,
+  ActionSheetDefaultIosCloseItem,
   ModalCard,
   ModalCardBase,
   ModalDismissButton,
