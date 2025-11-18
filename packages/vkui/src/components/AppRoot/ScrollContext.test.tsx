@@ -65,7 +65,9 @@ describe(useScrollLock, () => {
             }
           : {}),
       });
-      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe(
+        'none',
+      );
 
       h.rerender(false);
       expect(getStyleAttributeObject(document.documentElement)).toEqual({});
@@ -91,7 +93,9 @@ describe(useScrollLock, () => {
         'overflow-y': 'scroll',
         'overscroll-behavior': 'none',
       });
-      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe(
+        'none',
+      );
 
       h.unmount();
       expect(getStyleAttributeObject(document.documentElement)).toEqual({});

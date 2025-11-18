@@ -24,7 +24,7 @@ describe(useVirtualKeyboardState, () => {
   it.each([
     { testDescription: 'disabled if argument is false', enabled: false },
     { testDescription: 'disabled if activeElement is not content editable', htmlTag: 'button' },
-  ])('should be $testDescription', ({ enabled, htmlTag = 'input' }) => {
+  ])('should be $testDescription', async ({ enabled, htmlTag = 'input' }) => {
     const h = renderHook(useVirtualKeyboardState, { initialProps: enabled });
     expect(h.result.current.opened).toBeFalsy();
 
@@ -34,7 +34,7 @@ describe(useVirtualKeyboardState, () => {
     fireEvent.focusIn(el);
     const clearViewportMeasuresMock = mockViewportHeight(window, window.innerHeight / 2);
     fireEvent.resize(window);
-    act(vi.runOnlyPendingTimers);
+    await act(vi.runOnlyPendingTimers);
     expect(h.result.current.opened).toBeFalsy();
 
     fireEvent.focusOut(el);
@@ -45,7 +45,7 @@ describe(useVirtualKeyboardState, () => {
 
   it.each(['window', 'visualViewport'])(
     'should be opened after focus to input if viewport changes height (use %s measures)',
-    (viewportType) => {
+    async (viewportType) => {
       const clearVisualViewportMock = viewportType === 'window' ? noop : visualViewportMock();
       const viewport = viewportType === 'window' ? window : window.visualViewport!;
       const h = renderHook(useVirtualKeyboardState);
@@ -57,11 +57,11 @@ describe(useVirtualKeyboardState, () => {
 
       const clearViewportMeasuresMock = mockViewportHeight(viewport, window.innerHeight / 2);
       customResizeFireEvent(viewport);
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(h.result.current.opened).toBeTruthy();
 
       fireEvent.focusOut(el);
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(h.result.current.opened).toBeFalsy();
 
       clearViewportMeasuresMock();
@@ -71,7 +71,7 @@ describe(useVirtualKeyboardState, () => {
 
   it.each(['window', 'visualViewport'])(
     'should be opened after auto focus to input if viewport changes height (use %s measures)',
-    (viewportType) => {
+    async (viewportType) => {
       const clearVisualViewportMock = viewportType === 'window' ? noop : visualViewportMock();
       const viewport = viewportType === 'window' ? window : window.visualViewport!;
 
@@ -84,7 +84,7 @@ describe(useVirtualKeyboardState, () => {
 
       const clearViewportMeasuresMock = mockViewportHeight(viewport, window.innerHeight / 2);
       customResizeFireEvent(viewport);
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(h.result.current.opened).toBeTruthy();
 
       fireEvent.focusOut(el);
@@ -96,7 +96,7 @@ describe(useVirtualKeyboardState, () => {
     },
   );
 
-  it('should prevent scrollTo', () => {
+  it('should prevent scrollTo', async () => {
     const clearWindowScrollToMock = mockWindowScrollTo();
 
     const el = document.createElement('input');
@@ -108,11 +108,11 @@ describe(useVirtualKeyboardState, () => {
 
     const clearViewportMeasuresMock = mockViewportHeight(window, window.innerHeight / 2);
     customResizeFireEvent(window);
-    act(vi.runOnlyPendingTimers);
+    await act(vi.runOnlyPendingTimers);
 
     expect(window.scrollY).toBe(0);
     fireEvent.scroll(window, { target: { scrollY: 100 } });
-    act(vi.runOnlyPendingTimers);
+    await act(vi.runOnlyPendingTimers);
     expect(window.scrollY).toBe(0);
 
     clearActiveElementMock();

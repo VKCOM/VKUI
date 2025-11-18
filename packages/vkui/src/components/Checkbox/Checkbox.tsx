@@ -40,7 +40,7 @@ export interface CheckboxProps
       | 'onFocus'
       | 'onBlur'
     >,
-    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur' | 'slotProps'>,
     HasRootRef<HTMLLabelElement>,
     Pick<
       TappableOmitProps,

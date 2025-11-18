@@ -17,6 +17,15 @@
   content: '';
 }
 
+.noPadding {
+  padding: 0;
+}
+
+.noPadding::before,
+.noPadding::after {
+  display: none;
+}
+
 .item {
   display: flex;
   list-style-type: none;

@@ -10,20 +10,29 @@ vi.mock('@vkontakte/vkui-floating-ui/react-dom', () => {
   };
 });
 
-const customResizeObserverInstanceStub = {
+const customResizeObserverInstanceStub = vi.hoisted(() => ({
   observe: vi.fn(),
   disconnect: vi.fn(),
   appendToTheDOM: vi.fn(),
-};
-const customResizeObserverStub = vi.fn().mockImplementation(() => {
-  return customResizeObserverInstanceStub;
-});
+}));
+
+const CustomResizeObserverStub = vi.hoisted(() =>
+  vi.fn(
+    class MockCustomResizeObserver {
+      observe = customResizeObserverInstanceStub.observe.bind(customResizeObserverInstanceStub);
+      disconnect = customResizeObserverInstanceStub.disconnect.bind(
+        customResizeObserverInstanceStub,
+      );
+      appendToTheDOM = customResizeObserverInstanceStub.appendToTheDOM.bind(
+        customResizeObserverInstanceStub,
+      );
+    },
+  ),
+);
 
 vi.mock('./customResizeObserver', () => {
   return {
-    CustomResizeObserver: vi.fn().mockImplementation(() => {
-      return customResizeObserverStub();
-    }),
+    CustomResizeObserver: CustomResizeObserverStub,
   };
 });
 
@@ -70,7 +79,7 @@ describe(autoUpdateFloatingElement, () => {
       expect.objectContaining({ elementResize: false }),
     );
 
-    expect(customResizeObserverStub.mock.instances.length).toBe(1);
+    expect(CustomResizeObserverStub.mock.instances.length).toBe(1);
   });
 
   test('calls disposer in unmount callback', () => {

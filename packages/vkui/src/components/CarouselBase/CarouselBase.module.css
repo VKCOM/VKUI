@@ -101,7 +101,7 @@
   padding-inline-start: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.host:hover .arrow {
+.hover .arrow {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 

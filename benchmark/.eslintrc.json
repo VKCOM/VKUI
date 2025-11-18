@@ -4,7 +4,7 @@
     "node": true,
     "browser": true
   },
-  "extends": ["plugin:react-hooks/recommended", "prettier"],
+  "extends": ["plugin:react-hooks/recommended"],
   "plugins": ["import", "unicorn"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

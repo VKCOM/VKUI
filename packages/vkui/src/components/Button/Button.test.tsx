@@ -18,6 +18,16 @@ describe('Button', () => {
     expect(button().tagName.toLowerCase()).toMatch('a');
   });
 
+  it('Component: Button with href and disabled is handled as a native link', () => {
+    render(
+      <ButtonTest href="#" disabled>
+        Native Link
+      </ButtonTest>,
+    );
+
+    expect(button()).toEqual(screen.getByRole('link'));
+  });
+
   it('Component: Button with loading is not clickable', () => {
     const handleClick = vi.fn();
     render(

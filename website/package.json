@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "15.5.6",
-    "@shikijs/transformers": "^3.13.0",
+    "@shikijs/transformers": "^3.15.0",
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-docs-theme": "workspace:^",
     "next": "^15.5.6",

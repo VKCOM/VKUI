@@ -11,11 +11,9 @@ const config = {
     'stylelint-media-use-custom-media',
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-use-logical',
-    'stylelint-prettier',
   ],
   rules: {
     'property-no-deprecated': [true, { ignoreProperties: ['/^-.*-box-orient$/'] }],
-    'prettier/prettier': true,
     'block-no-empty': null,
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,
