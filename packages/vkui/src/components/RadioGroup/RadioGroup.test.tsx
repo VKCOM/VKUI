@@ -29,10 +29,10 @@ describe('RadioGroup', () => {
     withFakeTimers(async () => {
       render(
         <RadioGroup>
-          <Radio name="test" value="classic" data-testid="classic">
+          <Radio name="test" value="classic" slotProps={{ input: { 'data-testid': 'classic' } }}>
             Classic
           </Radio>
-          <Radio name="test" value="regular" data-testid="regular">
+          <Radio name="test" value="regular" slotProps={{ input: { 'data-testid': 'regular' } }}>
             Regular
           </Radio>
         </RadioGroup>,
