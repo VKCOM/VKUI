@@ -3,10 +3,14 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
-import type { HasOnlyExpectedProps } from '../../types';
+import type { HasDataAttribute, HasOnlyExpectedProps, HasRootRef } from '../../types';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
 import { type CustomSelectOptionInterface } from '../CustomSelect/types';
-import { NativeSelect, type NativeSelectProps } from '../NativeSelect/NativeSelect';
+import {
+  type NativeHTMLSelectProps,
+  NativeSelect,
+  type NativeSelectProps,
+} from '../NativeSelect/NativeSelect';
 export type SelectType = 'default' | 'plain' | 'accent';
 
 /**
@@ -75,7 +79,12 @@ export const Select = <OptionT extends CustomSelectOptionInterface>({
         <NativeSelect
           className={classNames(className, deviceType.mobile.className)}
           slotProps={{
-            select: slotProps?.select,
+            select: {
+              ...(slotProps?.input as NativeHTMLSelectProps &
+                HasRootRef<HTMLSelectElement> &
+                HasDataAttribute),
+              ...slotProps?.select,
+            },
             root: slotProps?.root,
           }}
           {...nativeProps}

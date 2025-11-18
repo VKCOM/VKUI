@@ -312,6 +312,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     fetchingInProgressLabel,
     fetchingCompletedLabel,
     'value': selectValue,
+    'onBlur': onSelectBlur,
+    'onFocus': onSelectFocus,
+    'onClick': onSelectClick,
 
     slotProps,
     ...restProps
@@ -342,9 +345,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
   const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
     {
       getRootRef: getRef,
-      onBlur: props.onBlur,
-      onFocus: props.onFocus,
-      onClick: props.onClick,
+      onBlur: onSelectBlur,
+      onFocus: onSelectFocus,
+      onClick: onSelectClick,
     },
     slotProps?.select,
   );
@@ -734,7 +737,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             getRootRef: selectInputRef,
             onChange: onInputChange,
             onFocus: callMultiple(onFocus, onInputFocus),
-            onBlur: callMultiple(onBlur, onInputFocus),
+            onBlur: callMultiple(onBlur, onInputBlur),
             onKeyDown: !readOnly
               ? callMultiple(handleInputKeyDown, onNativeInputKeyDown)
               : onNativeInputKeyDown,

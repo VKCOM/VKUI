@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "7.9.0",
+  "version": "7.10.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
@@ -93,6 +93,7 @@
     "@vkontakte/vkui-floating-ui": "^0.2.7"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.5",
     "@types/node": "*",
     "@types/postcss-import": "^14.0.3",
     "react": "^18.3.1",

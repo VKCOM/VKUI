@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { Icon12Add, Icon16Clear, Icon20Add, Icon96GoodsCollection } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
+import { type Mock } from 'vitest';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
@@ -36,7 +37,7 @@ const getImageBaseRootEl = () => screen.getByTestId(TEST_LOCATORS.ROOT);
 
 const getImageBaseImgEl = (elParent = getImageBaseRootEl()) => within(elParent).getByRole('img');
 
-let logStub: ReturnType<typeof vi.spyOn> | null = null;
+let logStub: Mock<() => void> | null = null;
 beforeEach(() => {
   logStub = vi.spyOn(console, 'log').mockImplementation(noop);
 });

@@ -2,14 +2,15 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
+import { mergeCalls } from '../../lib/mergeCalls';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
+import { useHover } from '../Clickable/useState';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { type CustomTouchEvent } from '../Touch/Touch';
 import { Bullets } from './Bullets';
@@ -57,6 +58,8 @@ export const CarouselBase = ({
   onChange,
   onPrevClick,
   onNextClick,
+  onPointerEnter,
+  onPointerLeave,
   align = 'left',
   showArrows,
   getRef,
@@ -101,8 +104,6 @@ export const CarouselBase = ({
 
   const [controlElementsState, setControlElementsState] =
     React.useState<ControlElementsState>(CONTROL_ELEMENTS_STATE);
-
-  const hasPointer = useAdaptivityHasPointer();
 
   const slidesContainerId = React.useId();
 
@@ -550,21 +551,26 @@ export const CarouselBase = ({
     }
   };
 
+  const { isHovered, ...hoverHandlers } = useHover();
+
+  const handlers = mergeCalls(hoverHandlers, { onPointerEnter, onPointerLeave });
+
   return (
     <RootComponent
       {...restProps}
+      {...handlers}
       role="region"
       onScroll={handleScrollForFixVoiceOverBehavior}
       aria-roledescription={ariaRoleDescription}
       baseClassName={classNames(
         styles.host,
         slideWidth === 'custom' && styles.customWidth,
+        isHovered && styles.hover,
         isDraggable && styles.draggable,
       )}
       getRootRef={rootRef}
     >
       <ScrollArrows
-        hasPointer={hasPointer}
         canSlideLeft={canSlideLeft}
         canSlideRight={canSlideRight}
         onSlideRight={slideRight}

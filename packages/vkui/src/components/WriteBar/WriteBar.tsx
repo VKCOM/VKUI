@@ -30,7 +30,9 @@ export interface WriteBarProps
    * - `textArea`: свойства для прокидывания в поле ввода.
    */
   slotProps?: {
-    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
     textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
       HasRootRef<HTMLTextAreaElement> &
       HasDataAttribute;

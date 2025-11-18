@@ -14,7 +14,7 @@ import { CheckboxSimple } from './CheckboxSimple/CheckboxSimple';
 const warn = warnOnce('Checkbox');
 
 export interface CheckboxProps
-  extends Omit<CheckboxInputProps, 'getRootRef'>,
+  extends Omit<CheckboxInputProps, 'getRootRef' | 'slotProps'>,
     HasRootRef<HTMLLabelElement>,
     Pick<
       TappableOmitProps,
