@@ -16,7 +16,6 @@ import {
   Snackbar,
   Tooltip,
 } from '../../src';
-import { FlexItem } from '../../src/components/Flex/FlexItem/FlexItem';
 import { Keys, pressedKey } from '../../src/lib/accessibility';
 import { OverviewLayout } from '../common/components/OverviewLayout';
 import { useGetGlobalParams } from '../common/hooks/useGetGlobalParams';
@@ -114,7 +113,7 @@ const IconsOverview = () => {
         ItemsContainer={({ children }) => <Flex gap={['2xl', 'xl']}>{children}</Flex>}
         renderSectionItem={(iconData, iconSizeData) => (
           <Tooltip key={iconData.name} title={iconData.name} strategy="absolute">
-            <FlexItem
+            <div
               onClick={() => onIconClick(iconData.name)}
               onKeyDown={(e) => onKeyDown(e, iconData.name)}
               className={styles.icon}
@@ -123,7 +122,7 @@ const IconsOverview = () => {
               style={{ inlineSize: Number(iconSizeData.title) }}
             >
               {iconData.node}
-            </FlexItem>
+            </div>
           </Tooltip>
         )}
         additionalHeaderItem={
@@ -136,7 +135,7 @@ const IconsOverview = () => {
               allowClearButton
             />
             {selectedSizes.length < SIZES_OPTIONS.length && (
-              <FlexItem flex="shrink">
+              <Flex flexShrink={1}>
                 <Button
                   size="m"
                   mode="secondary"
@@ -145,7 +144,7 @@ const IconsOverview = () => {
                   rounded
                   aria-label="Сбросить фильтры"
                 />
-              </FlexItem>
+              </Flex>
             )}
           </Flex>
         }

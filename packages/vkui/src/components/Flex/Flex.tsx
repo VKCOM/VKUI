@@ -4,8 +4,10 @@ import {
   columnGapClassNames,
   type GapProp,
   type GapsProp,
+  resolveLayoutProps,
   rowGapClassNames,
 } from '../../lib/layouts';
+import type { LayoutProps } from '../../lib/layouts/types';
 import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
@@ -48,7 +50,9 @@ type FlexContentProps =
   | 'space-between'
   | 'space-evenly';
 
-export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
+export interface FlexProps
+  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
+    LayoutProps {
   /**
    * Направление осей, эквивалентно `flex-direction`.
    */
@@ -104,13 +108,14 @@ export const Flex: React.FC<FlexProps> & {
   reverse = false,
   children,
   alignSelf,
-  ...props
+  ...restProps
 }: FlexProps) => {
   const [rowGap, columnGap] = calculateGap(gap);
+  const resolvedProps = resolveLayoutProps(restProps);
 
   return (
     <RootComponent
-      {...props}
+      {...resolvedProps}
       baseClassName={classNames(
         styles.host,
         !noWrap && styles.wrap,
