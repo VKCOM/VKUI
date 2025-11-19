@@ -20,7 +20,6 @@ const sizeYClassNames = {
 export interface InputProps
   extends Pick<
       React.InputHTMLAttributes<HTMLInputElement>,
-      | 'accept'
       | 'autoComplete'
       | 'disabled'
       | 'list'
@@ -76,7 +75,6 @@ export const Input = ({
   mode,
 
   // input props
-  accept,
   autoComplete,
   disabled,
   list,
@@ -118,7 +116,6 @@ export const Input = ({
     {
       className: styles.el,
       getRootRef: getRef,
-      accept,
       autoComplete,
       disabled,
       list,
