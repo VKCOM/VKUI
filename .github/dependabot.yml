@@ -69,10 +69,6 @@ updates:
         patterns:
           - 'size-limit'
           - '@size-limit/*'
-      prettier:
-        patterns:
-          - 'prettier'
-          - '@vkontakte/prettier-config'
       swc:
         patterns:
           - '@swc/*'

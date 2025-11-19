@@ -246,7 +246,8 @@
 
   .modePlainInsideModal + .separatorSibling {
     padding-inline: calc(
-      var(--vkui--size_base_padding_horizontal--regular) + var(--vkui--spacing_size_m)
+      var(--vkui--size_base_padding_horizontal--regular) +
+      var(--vkui--spacing_size_m)
     );
   }
 }
@@ -299,7 +300,9 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader--vkcom) ~ .host:first-of-type,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalPanelHeader--vkcom) + * .host:first-of-type {
+  :global(.vkuiInternalPanelHeader--vkcom)
+  + *
+  .host:first-of-type {
   position: relative;
   inset-block-start: -1px;
   border-start-start-radius: 0;

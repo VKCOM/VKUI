@@ -35,9 +35,13 @@ function setup() {
     takeRecords: vi.fn(),
   };
 
-  const mutationObserverStub = vi.spyOn(global, 'MutationObserver').mockImplementation(() => {
-    return mutationObserverInstanceStub;
-  });
+  const mutationObserverStub = vi.spyOn(global, 'MutationObserver').mockImplementation(
+    class MockMutationObserver {
+      observe = mutationObserverInstanceStub.observe.bind(mutationObserverInstanceStub);
+      disconnect = mutationObserverInstanceStub.disconnect.bind(mutationObserverInstanceStub);
+      takeRecords = mutationObserverInstanceStub.takeRecords.bind(mutationObserverInstanceStub);
+    },
+  );
 
   return {
     updateFunctionStub,

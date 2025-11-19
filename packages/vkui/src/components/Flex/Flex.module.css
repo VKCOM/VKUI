@@ -26,10 +26,14 @@
 @supports not (inset: 0) {
   .host {
     margin-block-start: calc(
-      -1 * var(--vkui_internal--row_gap) + var(--vkui_internal--flex_original_margin_block)
+      -1 *
+      var(--vkui_internal--row_gap) +
+      var(--vkui_internal--flex_original_margin_block)
     );
     margin-inline-start: calc(
-      -1 * var(--vkui_internal--column_gap) + var(--vkui_internal--flex_original_margin_inline)
+      -1 *
+      var(--vkui_internal--column_gap) +
+      var(--vkui_internal--flex_original_margin_inline)
     );
   }
 

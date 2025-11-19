@@ -42,6 +42,7 @@ const Unscrollable = ({
   );
 };
 
+// TODO: Удалить HorizontalScroll вместе с `vkuiInternalTabs--withGaps`
 const Scrollable = ({ disabled }: { disabled?: boolean }) => {
   const beforeIconByMode = useIconByMode();
 
@@ -152,27 +153,30 @@ export const TabsItemsFlexModePlayground = (props: ComponentPlaygroundProps) => 
       propSets={[
         {
           mode: ['default', 'accent', 'secondary'],
-          children: [
-            <>
-              <TabsItem onClick={noop}>Unscrollable</TabsItem>
-              <TabsItem onClick={noop} selected>
-                Unscrollable
-              </TabsItem>
-            </>,
-            <HorizontalScroll key="scrolled" arrowSize="m">
+          layoutFillMode: ['auto', 'shrinked', 'stretched'],
+        },
+      ]}
+    >
+      {(props: TabsProps) => (
+        <>
+          <Tabs {...props}>
+            <TabsItem onClick={noop}>Unscrollable</TabsItem>
+            <TabsItem onClick={noop} selected>
+              Unscrollable
+            </TabsItem>
+          </Tabs>
+          <HorizontalScroll key="scrolled" arrowSize="m" withPadding={props.mode !== 'default'}>
+            <Tabs {...props}>
               <TabsItem onClick={noop} key="groups">
                 Scrollable
               </TabsItem>
               <TabsItem onClick={noop} key="news" selected>
                 Scrollable
               </TabsItem>
-            </HorizontalScroll>,
-          ],
-          layoutFillMode: ['auto', 'shrinked', 'stretched'],
-        },
-      ]}
-    >
-      {(props: TabsProps) => <Tabs {...props} />}
+            </Tabs>
+          </HorizontalScroll>
+        </>
+      )}
     </ComponentPlayground>
   );
 };

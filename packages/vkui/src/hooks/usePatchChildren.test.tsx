@@ -3,6 +3,7 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
+import { type Mock } from 'vitest';
 import { setRef } from '../lib/utils';
 import type { HasRootRef } from '../types';
 import { usePatchChildren } from './usePatchChildren';
@@ -52,7 +53,7 @@ vi.mock('./useEffectDev', () => ({
 type ConsoleErrorArgs = Parameters<typeof console.error>;
 
 describe(usePatchChildren, () => {
-  let consoleErrorMock: ReturnType<typeof vi.spyOn> = vi.fn();
+  let consoleErrorMock: Mock<typeof console.log> = vi.fn();
   beforeAll(() => {
     consoleErrorMock.mockRestore();
     consoleErrorMock = vi.spyOn(global.console, 'error').mockImplementation(noop);
