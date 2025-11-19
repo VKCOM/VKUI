@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -129,7 +129,7 @@ export const File = ({
       after={after}
       loading={loading}
       disabled={inputRest.disabled}
-      onClick={onLabelClickWrapper(onClick)}
+      onClick={withLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <VisuallyHidden title="" Component="input" type="file" {...inputRest} />
