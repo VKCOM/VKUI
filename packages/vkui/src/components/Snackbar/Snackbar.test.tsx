@@ -238,7 +238,7 @@ describe(Snackbar, () => {
         <Snackbar
           action={action}
           onActionClick={onActionClick}
-          onDurationEnd={onDurationEnd}
+          onCloseAfterTimeout={onDurationEnd}
           onClose={onClose}
           open={true}
         />,

@@ -190,13 +190,13 @@ return (
 
 </Playground>
 
-# Хук `useSnackbarApi`
+# Хук `useSnackbarApi` [#use-snackbar-api]
 
-Хук `useSnackbarApi` позволяет получить доступ к API Snackbar в приложениях, обернутых в `AppRoot`.
+Хук `useSnackbarApi` позволяет получить доступ к API Snackbar в приложениях, обернутых в `AppRoot` со свойством `enableSnackbarsController`.
 
 ### Пример использования
 
-<Playground Wrapper={BlockWrapper}>
+<Playground Wrapper={BlockWrapper} enableSnackbarsController={true}>
 
 ```jsx
 const snackbarApi = useSnackbarApi();
@@ -213,4 +213,4 @@ return <Button onClick={showSnackbar}>Показать уведомление</B
 </Playground>
 
 > **Важно**:
-> Убедитесь, что ваше приложение обернуто в `AppRoot`, иначе `useSnackbarApi` не будет работать.
+> Убедитесь, что ваше приложение обернуто в `AppRoot` со свойством `enableSnackbarsController`, иначе `useSnackbarApi` не будет работать.
