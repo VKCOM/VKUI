@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
@@ -145,7 +145,7 @@ const CheckboxComponent = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       noPadding={noPadding}
-      onClick={onLabelClickWrapper(onClick)}
+      onClick={withLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <CheckboxInput

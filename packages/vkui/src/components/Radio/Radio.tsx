@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
@@ -148,7 +148,7 @@ export const Radio = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       disabled={inputRest.disabled}
-      onClick={onLabelClickWrapper(onRootClick)}
+      onClick={withLabelClickWrapper(onRootClick)}
       {...rootRest}
     >
       <RadioInput slotProps={{ input: inputRest }} />

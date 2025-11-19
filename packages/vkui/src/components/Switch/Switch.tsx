@@ -9,8 +9,8 @@ import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import { onLabelClickWrapper } from '../../lib/onLabelClickWrapper';
 import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
@@ -172,7 +172,7 @@ export const Switch = ({
         isRtl && styles.rtl,
         focusVisibleClassNames,
       )}
-      onClick={onLabelClickWrapper(onRootClick)}
+      onClick={withLabelClickWrapper(onRootClick)}
       {...rootRest}
     >
       <VisuallyHidden baseClassName={styles.inputNative} {...inputProps} />

@@ -3,7 +3,7 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useMergeProps } from '../../../hooks/useMergeProps';
-import { onLabelClickWrapper } from '../../../lib/onLabelClickWrapper';
+import { withLabelClickWrapper } from '../../../lib/withLabelClickWrapper';
 import { Tappable } from '../../Tappable/Tappable';
 import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
@@ -95,7 +95,7 @@ export function CheckboxSimple({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       Component="label"
-      onClick={onLabelClickWrapper(onClick)}
+      onClick={withLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <CheckboxInput
