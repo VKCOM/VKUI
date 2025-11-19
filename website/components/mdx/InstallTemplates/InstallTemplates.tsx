@@ -63,7 +63,6 @@ function InstallTemplate({
       className={styles.root}
       hoverMode={styles.hover}
       title={title}
-      imageTheme="light"
       subtitle={subtitle}
       actions={
         <Headline>
