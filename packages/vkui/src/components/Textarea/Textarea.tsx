@@ -24,7 +24,26 @@ const sizeYClassNames = {
 };
 
 export interface TextareaProps
-  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
+  extends Pick<
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+      | 'autoComplete'
+      | 'cols'
+      | 'dirName'
+      | 'disabled'
+      | 'maxLength'
+      | 'minLength'
+      | 'name'
+      | 'placeholder'
+      | 'readOnly'
+      | 'required'
+      | 'rows'
+      | 'value'
+      | 'wrap'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLElement>,
     HasAlign,
     FormFieldProps {
@@ -61,21 +80,44 @@ export interface TextareaProps
  * @see https://vkui.io/components/textarea
  */
 export const Textarea = ({
-  className: rootClassName,
-  getRootRef,
-  style,
-  grow = true,
-  onResize,
-  getRef,
-  rows = 2,
-  maxHeight,
+  // FormFieldProps
   status,
-  align,
   mode,
   after,
   before,
   afterAlign,
   beforeAlign,
+  maxHeight,
+
+  // TextareaProps
+  grow = true,
+  onResize,
+  align,
+  getRef,
+
+  // textarea props
+  autoComplete,
+  cols,
+  dirName,
+  disabled,
+  maxLength,
+  minLength,
+  name,
+  placeholder,
+  readOnly,
+  required,
+  value: valueProp,
+  wrap,
+  rows = 2,
+  onChange: onChangeProp,
+  onFocus,
+  onBlur,
+  id,
+  inputMode,
+  defaultValue,
+  autoFocus,
+  tabIndex,
+  spellCheck,
 
   slotProps,
   ...restProps
@@ -89,14 +131,7 @@ export const Textarea = ({
   const platform = usePlatform();
   const { window } = useDOM();
 
-  const { className, ...rootProps } = useMergeProps(
-    {
-      className: rootClassName,
-      getRootRef,
-      style,
-    },
-    slotProps?.root,
-  );
+  const { className, ...rootProps } = useMergeProps(restProps, slotProps?.root);
 
   const {
     onChange,
@@ -107,7 +142,28 @@ export const Textarea = ({
     {
       className: styles.el,
       getRootRef: getRef,
-      ...restProps,
+      autoComplete,
+      cols,
+      dirName,
+      disabled,
+      maxLength,
+      minLength,
+      name,
+      placeholder,
+      readOnly,
+      required,
+      value: valueProp,
+      wrap,
+      rows,
+      onChange: onChangeProp,
+      onFocus,
+      onBlur,
+      id,
+      inputMode,
+      defaultValue,
+      autoFocus,
+      tabIndex,
+      spellCheck,
     },
     slotProps?.textArea,
   );

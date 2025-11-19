@@ -18,7 +18,26 @@ import styles from './WriteBar.module.css';
 const warn = warnOnce('WriteBar');
 
 export interface WriteBarProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  extends Pick<
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+      | 'autoComplete'
+      | 'cols'
+      | 'dirName'
+      | 'disabled'
+      | 'maxLength'
+      | 'minLength'
+      | 'name'
+      | 'placeholder'
+      | 'readOnly'
+      | 'required'
+      | 'rows'
+      | 'value'
+      | 'wrap'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLDivElement> {
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ textArea: { getRootRef: ... } }`.
@@ -77,15 +96,37 @@ const WriteBarTypography = (props: TypographyProps) => {
  * @see https://vkui.io/components/write-bar
  */
 export const WriteBar = ({
-  className,
-  style,
+  // WriteBarProps
   before,
   inlineAfter,
   after,
-  getRootRef,
-  getRef,
   onHeightChange,
   shadow = false,
+  getRef,
+
+  // textarea props
+  autoComplete,
+  cols,
+  dirName,
+  disabled,
+  maxLength,
+  minLength,
+  name,
+  placeholder,
+  readOnly,
+  required,
+  value: valueProp,
+  wrap,
+  rows,
+  onChange: onChangeProp,
+  onFocus,
+  onBlur,
+  id,
+  inputMode,
+  defaultValue,
+  autoFocus,
+  tabIndex,
+  spellCheck,
 
   slotProps,
   ...restProps
@@ -97,14 +138,7 @@ export const WriteBar = ({
 
   const platform = usePlatform();
 
-  const rootProps = useMergeProps(
-    {
-      className,
-      getRootRef,
-      style,
-    },
-    slotProps?.root,
-  );
+  const rootProps = useMergeProps(restProps, slotProps?.root);
 
   const {
     onChange,
@@ -114,7 +148,28 @@ export const WriteBar = ({
     {
       className: styles.textarea,
       getRootRef: getRef,
-      ...restProps,
+      autoComplete,
+      cols,
+      dirName,
+      disabled,
+      maxLength,
+      minLength,
+      name,
+      placeholder,
+      readOnly,
+      required,
+      value: valueProp,
+      wrap,
+      rows,
+      onChange: onChangeProp,
+      onFocus,
+      onBlur,
+      id,
+      inputMode,
+      defaultValue,
+      autoFocus,
+      tabIndex,
+      spellCheck,
     },
     slotProps?.textArea,
   );
