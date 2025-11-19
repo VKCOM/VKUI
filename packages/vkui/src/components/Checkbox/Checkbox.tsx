@@ -4,6 +4,7 @@ import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
@@ -14,7 +15,35 @@ import { CheckboxSimple } from './CheckboxSimple/CheckboxSimple';
 const warn = warnOnce('Checkbox');
 
 export interface CheckboxProps
-  extends Omit<CheckboxInputProps, 'getRootRef' | 'slotProps'>,
+  extends Pick<
+      CheckboxInputProps,
+      | 'indeterminate'
+      | 'defaultIndeterminate'
+      | 'IconOnCompact'
+      | 'IconOnRegular'
+      | 'IconOffCompact'
+      | 'IconOffRegular'
+      | 'IconIndeterminate'
+      | 'getRef'
+    >,
+    Pick<
+      React.ComponentProps<'input'>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<
+      React.LabelHTMLAttributes<HTMLLabelElement>,
+      'onChange' | 'onFocus' | 'onBlur' | 'slotProps'
+    >,
     HasRootRef<HTMLLabelElement>,
     Pick<
       TappableOmitProps,
@@ -46,20 +75,14 @@ export interface CheckboxProps
 }
 
 const CheckboxComponent = ({
-  children,
-  className,
-  style,
-  getRootRef,
+  // CheckboxProps
   getRef,
   description,
-  hoverMode,
-  activeMode,
-  hasHover,
-  hasActive,
-  focusVisibleMode,
   titleAfter,
   noPadding,
+  children,
 
+  // CheckboxInputProps
   indeterminate,
   defaultIndeterminate,
   IconOnCompact,
@@ -68,19 +91,50 @@ const CheckboxComponent = ({
   IconOffRegular,
   IconIndeterminate,
 
+  // Tappable props
+  hoverMode,
+  activeMode,
+  hasHover,
+  hasActive,
+  focusVisibleMode,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
   slotProps,
   ...restProps
 }: CheckboxProps): React.ReactNode => {
-  const rootRest = useMergeProps(
-    {
-      className,
-      style,
-      getRootRef,
-    },
-    slotProps?.root,
-  );
+  const { onClick, ...rootRest } = useMergeProps(restProps, slotProps?.root);
 
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  const inputRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   return (
     <SelectionControl
@@ -91,6 +145,7 @@ const CheckboxComponent = ({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       noPadding={noPadding}
+      onClick={withLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <CheckboxInput

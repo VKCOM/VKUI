@@ -10,6 +10,7 @@ import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
 import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
 import type { HasDataAttribute, HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
@@ -23,7 +24,21 @@ const sizeYClassNames = {
 };
 
 export interface SwitchProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLLabelElement> {
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
@@ -48,10 +63,22 @@ export interface SwitchProps
  * @see https://vkui.io/components/switch
  */
 export const Switch = ({
-  style: rootStyle,
-  className: rootClassName,
-  getRootRef: rootGetRootRef,
   getRef,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
   slotProps,
   ...restProps
 }: SwitchProps): React.ReactNode => {
@@ -60,30 +87,45 @@ export const Switch = ({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
-  const rootRest = useMergeProps(
-    {
-      style: rootStyle,
-      className: rootClassName,
-      getRootRef: rootGetRootRef,
-    },
-    slotProps?.root,
-  );
+  const { onClick: onRootClick, ...rootRest } = useMergeProps(restProps, slotProps?.root);
+
   const {
     checked: checkedProp,
-    onBlur: onBlurProp,
-    onFocus: onFocusProp,
+    onBlur: onInputBlur,
+    onFocus: onInputFocus,
     onClick,
     ...inputRest
-  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const {
+    focusVisible,
+    onBlur: onFocusVisibleBlur,
+    onFocus: onFocusVisibleFocus,
+  } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
-  const handleBlur = callMultiple(onBlur, onBlurProp);
-  const handleFocus = callMultiple(onFocus, onFocusProp);
+  const handleBlur = callMultiple(onFocusVisibleBlur, onInputBlur);
+  const handleFocus = callMultiple(onFocusVisibleFocus, onInputFocus);
 
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
     Boolean(inputRest.defaultChecked),
@@ -130,6 +172,7 @@ export const Switch = ({
         isRtl && styles.rtl,
         focusVisibleClassNames,
       )}
+      onClick={withLabelClickWrapper(onRootClick)}
       {...rootRest}
     >
       <VisuallyHidden baseClassName={styles.inputNative} {...inputProps} />

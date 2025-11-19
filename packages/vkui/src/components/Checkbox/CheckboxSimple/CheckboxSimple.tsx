@@ -3,6 +3,7 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useMergeProps } from '../../../hooks/useMergeProps';
+import { withLabelClickWrapper } from '../../../lib/withLabelClickWrapper';
 import { Tappable } from '../../Tappable/Tappable';
 import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
@@ -14,20 +15,14 @@ const sizeYClassNames = {
 };
 
 export function CheckboxSimple({
-  children,
-  className,
-  style,
-  getRootRef,
+  // CheckboxProps
   getRef,
   description,
-  hoverMode: hoverModeProp,
-  activeMode: activeModeProp,
-  hasHover,
-  hasActive,
-  focusVisibleMode,
   titleAfter,
   noPadding,
+  children,
 
+  // CheckboxInputProps
   indeterminate,
   defaultIndeterminate,
   IconOnCompact,
@@ -36,19 +31,50 @@ export function CheckboxSimple({
   IconOffRegular,
   IconIndeterminate,
 
+  // Tappable props
+  hoverMode: hoverModeProp,
+  activeMode: activeModeProp,
+  hasHover,
+  hasActive,
+  focusVisibleMode,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
   slotProps,
   ...restProps
 }: CheckboxProps) {
-  const rootRest = useMergeProps(
-    {
-      className,
-      style,
-      getRootRef,
-    },
-    slotProps?.root,
-  );
+  const { onClick, ...rootRest } = useMergeProps(restProps, slotProps?.root);
 
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  const inputRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -69,6 +95,7 @@ export function CheckboxSimple({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       Component="label"
+      onClick={withLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <CheckboxInput

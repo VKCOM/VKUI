@@ -30,7 +30,21 @@ function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
 }
 
 export interface CheckboxInputProps
-  extends React.ComponentProps<'input'>,
+  extends Pick<
+      React.ComponentProps<'input'>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLDivElement> {
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
@@ -80,11 +94,23 @@ export interface CheckboxInputProps
 const warn = warnOnce('Checkbox');
 
 export function CheckboxInput({
-  className,
-  style,
-  getRootRef,
   getRef,
 
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange: onChangeProp,
+  onFocus,
+  onBlur,
+
+  // CheckboxInputProps
   indeterminate,
   defaultIndeterminate,
   IconOnCompact = Icon20CheckBoxOn,
@@ -96,20 +122,30 @@ export function CheckboxInput({
   slotProps,
   ...restProps
 }: CheckboxInputProps) {
-  const rootRest = useMergeProps(
-    {
-      className,
-      style,
-      getRootRef,
-    },
-    slotProps?.root,
-  );
+  const rootRest = useMergeProps(restProps, slotProps?.root);
 
   const {
     onChange,
     getRootRef: getInputRef,
     ...inputRest
-  } = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange: onChangeProp,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   const inputRef = useExternRef<HTMLInputElement>(getInputRef);
 
