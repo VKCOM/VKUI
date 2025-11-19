@@ -18,9 +18,9 @@ describe(ChipsInput, () => {
       const rootRef2 = createRef<HTMLDivElement>();
       const inputRef1 = createRef<HTMLInputElement>();
       const inputRef2 = createRef<HTMLInputElement>();
-      const onClick1 = vi.fn();
-      const onClick2 = vi.fn();
-      const onRootClick = vi.fn();
+      const onInputClick = vi.fn();
+      const onRootClick1 = vi.fn();
+      const onRootClick2 = vi.fn();
       const onInputChange1 = vi.fn();
       const onInputChange2 = vi.fn();
 
@@ -33,7 +33,9 @@ describe(ChipsInput, () => {
           className="rootClassName"
           getRootRef={rootRef1}
           getRef={inputRef1}
-          onClick={onClick1}
+          id="input"
+          placeholder="placeholder"
+          onClick={onRootClick1}
           style={{
             backgroundColor: 'rgb(255, 0, 0)',
           }}
@@ -45,13 +47,13 @@ describe(ChipsInput, () => {
                 color: 'rgb(255, 0, 0)',
               },
               'getRootRef': rootRef2,
-              'onClick': onRootClick,
+              'onClick': onRootClick2,
             },
             input: {
               'className': 'inputClassName',
               'getRootRef': inputRef2,
               'data-testid': 'input-2',
-              'onClick': onClick2,
+              'onClick': onInputClick,
               'value': 'input-value-2',
               'onChange': onInputChange2,
             },
@@ -64,6 +66,8 @@ describe(ChipsInput, () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass('inputClassName');
       expect(input).toHaveValue('input-value-2');
+      expect(input).toHaveAttribute('id', 'input');
+      expect(input).toHaveAttribute('placeholder', 'placeholder');
 
       const root = screen.getByTestId('root');
       expect(root).toBeInTheDocument();
@@ -79,11 +83,13 @@ describe(ChipsInput, () => {
       expect(inputRef1.current).toBe(input);
 
       fireEvent.click(input);
-      expect(onClick1).toHaveBeenCalledTimes(1);
-      expect(onClick2).toHaveBeenCalledTimes(1);
+      expect(onInputClick).toHaveBeenCalledTimes(1);
+      expect(onRootClick1).toHaveBeenCalledTimes(1);
+      expect(onRootClick2).toHaveBeenCalledTimes(1);
 
       fireEvent.click(root);
-      expect(onRootClick).toHaveBeenCalledTimes(2);
+      expect(onRootClick1).toHaveBeenCalledTimes(2);
+      expect(onRootClick2).toHaveBeenCalledTimes(2);
 
       await userEvent.type(input, 'v');
       expect(onInputChange1).toHaveBeenCalledTimes(1);
