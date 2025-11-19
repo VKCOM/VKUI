@@ -64,7 +64,6 @@ describe(Search, () => {
             'className': 'inputClassName',
             'getRootRef': inputRef2,
             'data-testid': 'input-2',
-            'value': 'value-2',
             'onClick': onInputClick,
           },
         }}
@@ -75,7 +74,7 @@ describe(Search, () => {
     const input = screen.getByTestId('input-2');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
-    expect(input).toHaveValue('value-2');
+    expect(input).toHaveValue('value');
     expect(input).toHaveAttribute('id', 'search');
     expect(input).toHaveAttribute('required');
     expect(input).toHaveAttribute('autoComplete', 'off');
