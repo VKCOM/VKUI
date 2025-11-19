@@ -261,9 +261,10 @@ export const CalendarHeader = ({
               slotProps={{
                 input: {
                   'aria-label': changeMonthLabel,
-                  'data-testid': typeof monthDropdownTestId === 'string'
-                    ? monthDropdownTestId
-                    : monthDropdownTestId?.(currentMonth),
+                  'data-testid':
+                    typeof monthDropdownTestId === 'string'
+                      ? monthDropdownTestId
+                      : monthDropdownTestId?.(currentMonth),
                 },
               }}
             />
@@ -281,9 +282,10 @@ export const CalendarHeader = ({
               slotProps={{
                 input: {
                   'aria-label': changeYearLabel,
-                  'data-testid': typeof yearDropdownTestId === 'string'
-                    ? yearDropdownTestId
-                    : yearDropdownTestId?.(currentYear),
+                  'data-testid':
+                    typeof yearDropdownTestId === 'string'
+                      ? yearDropdownTestId
+                      : yearDropdownTestId?.(currentYear),
                 },
               }}
             />
