@@ -61,6 +61,14 @@ export const BannerPlayground = (props: ComponentPlaygroundProps) => {
           extraSubtitle: ['Extra Subhead'],
           actions: [<Button key="btn">Button</Button>],
         },
+        {
+          mode: ['image'],
+          after: ['dismiss'],
+          imageTheme: ['auto'],
+          title: ['Мои достижения'],
+          subtitle: ['Разблокировано 9 из 36'],
+          background: [<div key="img-bg" style={{ backgroundColor: '#222222' }} />],
+        },
       ]}
     >
       {(props: BannerProps) => (
