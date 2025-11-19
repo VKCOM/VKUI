@@ -428,17 +428,17 @@ return (
 
 </Playground>
 
-# useModalsApi
+# useModalsApi [#use-modals-api]
 
 Хук для еще большего упрощения работы с модальными окнами.
 
-> **Важно**: Для его работы необходимо, чтобы ваше приложение было обернуто в [`AppRoot`](/components/app-root).
+> **Важно**: Для его работы необходимо, чтобы ваше приложение было обернуто в [`AppRoot`](/components/app-root) со свойством `enableModalsController`.
 
 Отличие от `useModalRoot`, в том, что ничего не принимает и возвращает только объект с [API](/components/use-modal-root#modal-root-api).
 
 ## Пример использования
 
-<Playground>
+<Playground enableModalsController={true}>
 
 ```jsx
 const api = useModalsApi();
