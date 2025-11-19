@@ -232,8 +232,12 @@ export const CalendarTime = ({
             onInputChange={onHoursInputChange}
             onInputKeyDown={onSelectInputKeyDown}
             getSelectInputRef={hoursInputRef}
-            aria-label={changeHoursLabel}
-            data-testid={hoursTestId}
+            slotProps={{
+              input: {
+                'aria-label': changeHoursLabel,
+                'data-testid': hoursTestId,
+              },
+            }}
           />
         </AdaptivityProvider>
       </div>
@@ -250,8 +254,12 @@ export const CalendarTime = ({
             onInputChange={onMinutesInputChange}
             getSelectInputRef={minutesInputRef}
             onInputKeyDown={onSelectInputKeyDown}
-            aria-label={changeMinutesLabel}
-            data-testid={minutesTestId}
+            slotProps={{
+              input: {
+                'aria-label': changeMinutesLabel,
+                'data-testid': minutesTestId,
+              },
+            }}
           />
         </AdaptivityProvider>
       </div>

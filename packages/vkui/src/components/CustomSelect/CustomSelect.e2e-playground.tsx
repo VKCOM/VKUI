@@ -56,7 +56,11 @@ export const CustomSelectNoMaxHeightPlayground = (props: ComponentPlaygroundProp
         >
           <CustomSelect
             placeholder="Не выбрана"
-            data-testid="target-select"
+            slotProps={{
+              input: {
+                'data-testid': 'target-select',
+              },
+            }}
             {...props}
             accessible
             options={[
@@ -84,7 +88,11 @@ export const CustomSelectOptionScrollPlayground = (props: ComponentPlaygroundPro
       {(props: SelectProps) => (
         <div style={{ height: 200 }}>
           <CustomSelect
-            data-testid="target-select"
+            slotProps={{
+              input: {
+                'data-testid': 'target-select',
+              },
+            }}
             {...props}
             accessible
             options={[
