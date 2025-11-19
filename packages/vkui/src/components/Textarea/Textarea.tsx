@@ -30,7 +30,6 @@ export interface TextareaProps
       | 'cols'
       | 'dirName'
       | 'disabled'
-      | 'form'
       | 'maxLength'
       | 'minLength'
       | 'name'
@@ -101,7 +100,6 @@ export const Textarea = ({
   cols,
   dirName,
   disabled,
-  form,
   maxLength,
   minLength,
   name,
@@ -148,7 +146,6 @@ export const Textarea = ({
       cols,
       dirName,
       disabled,
-      form,
       maxLength,
       minLength,
       name,

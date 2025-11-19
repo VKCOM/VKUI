@@ -24,7 +24,6 @@ export interface WriteBarProps
       | 'cols'
       | 'dirName'
       | 'disabled'
-      | 'form'
       | 'maxLength'
       | 'minLength'
       | 'name'
@@ -110,7 +109,6 @@ export const WriteBar = ({
   cols,
   dirName,
   disabled,
-  form,
   maxLength,
   minLength,
   name,
@@ -154,7 +152,6 @@ export const WriteBar = ({
       cols,
       dirName,
       disabled,
-      form,
       maxLength,
       minLength,
       name,
