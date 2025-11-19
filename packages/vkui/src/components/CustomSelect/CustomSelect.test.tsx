@@ -106,7 +106,11 @@ describe('CustomSelect', () => {
 
       const onRootClick = vi.fn();
       const onInputClick = vi.fn();
-      const onSelectClick = vi.fn();
+      const onSelectClick1 = vi.fn();
+      const onSelectClick2 = vi.fn();
+
+      const onSelectFocus = vi.fn();
+      const onInputFocus = vi.fn();
 
       render(
         <CustomSelect
@@ -119,6 +123,8 @@ describe('CustomSelect', () => {
           required
           className="rootClassName"
           getRootRef={rootRef1}
+          onClick={onSelectClick1}
+          onFocus={onSelectFocus}
           getRef={selectRef1}
           getSelectInputRef={inputRef1}
           nativeSelectTestId="select"
@@ -143,7 +149,7 @@ describe('CustomSelect', () => {
               'style': {
                 color: 'rgb(255, 0, 0)',
               },
-              'onClick': onSelectClick,
+              'onClick': onSelectClick2,
             },
             input: {
               'getRootRef': inputRef2,
@@ -153,6 +159,7 @@ describe('CustomSelect', () => {
                 color: 'rgb(255, 0, 0)',
               },
               'onClick': onInputClick,
+              'onFocus': onInputFocus,
             },
           }}
         />,
@@ -195,11 +202,22 @@ describe('CustomSelect', () => {
       expect(onInputClick).toHaveBeenCalledTimes(1);
 
       fireEvent.click(select);
-      expect(onSelectClick).toHaveBeenCalledTimes(1);
+      expect(onSelectClick1).toHaveBeenCalledTimes(1);
+      expect(onSelectClick2).toHaveBeenCalledTimes(1);
+      expect(onInputFocus).toHaveBeenCalledTimes(1);
+      expect(onSelectFocus).toHaveBeenCalledTimes(1);
 
       fireEvent.click(root);
       await act(async () => vi.runOnlyPendingTimers());
       expect(onRootClick).toHaveBeenCalledTimes(5);
+
+      fireEvent.focus(input);
+      expect(onInputFocus).toHaveBeenCalledTimes(2);
+      expect(onSelectFocus).toHaveBeenCalledTimes(2);
+
+      fireEvent.focus(select);
+      expect(onInputFocus).toHaveBeenCalledTimes(2);
+      expect(onSelectFocus).toHaveBeenCalledTimes(3);
     }),
   );
 

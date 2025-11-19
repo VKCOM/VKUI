@@ -214,7 +214,7 @@ describe(Tappable, () => {
       await waitFor(() => expect(waveCount()).toBe(1));
       await userEvent.click(screen.getByTestId('x'));
       await waitFor(() => expect(waveCount()).toBe(2));
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       // removes waves
       expect(waveCount()).toBe(0);
     });
@@ -223,18 +223,18 @@ describe(Tappable, () => {
       render(<TappableTest onClick={noop} />);
       await userEvent.click(tappable());
       await waitFor(() => expect(tappable()).toHaveClass(styles.activatedBackground));
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(tappable()).not.toHaveClass(styles.activatedBackground);
     });
 
     it('activates during longtap', async () => {
       render(<TappableTest onClick={noop} />);
       fireEvent.pointerDown(tappable());
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(tappable()).toHaveClass(styles.activatedBackground);
 
       fireEvent.pointerUp(tappable());
-      act(vi.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(tappable()).not.toHaveClass(styles.activatedBackground);
     });
 
@@ -248,26 +248,26 @@ describe(Tappable, () => {
       await userEvent.click(child);
       expect(child).toHaveClass(styles.activatedBackground);
       expect(result.getByTestId('parent')).not.toHaveClass(styles.activatedBackground);
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
     });
 
     describe('prevents early', () => {
-      it('on slide', () => {
+      it('on slide', async () => {
         render(<TappableTest />);
         fireEvent.mouseDown(tappable(), { clientX: 10 });
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         fireEvent.mouseMove(tappable(), { clientX: 40 });
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
-      it('on multi-touch', () => {
+      it('on multi-touch', async () => {
         window.ontouchstart = null;
         render(<TappableTest />);
         fireEvent.touchStart(tappable(), {
           touches: [{}],
           changedTouches: [{}],
         });
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         fireEvent.touchStart(tappable(), {
           touches: [{}, {}],
           changedTouches: [{}],
@@ -275,10 +275,10 @@ describe(Tappable, () => {
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
-      it('on disable', () => {
+      it('on disable', async () => {
         const h = render(<TappableTest />);
         fireEvent.mouseDown(tappable());
-        act(vi.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         h.rerender(<TappableTest disabled />);
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
@@ -302,7 +302,7 @@ describe(Tappable, () => {
           </TappableTest>,
         );
         fireEvent.mouseDown(tappable());
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         await userEvent.hover(screen.getByTestId('c'));
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });

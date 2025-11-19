@@ -137,7 +137,7 @@ describe(ActionSheet, () => {
           bubbles: true,
         }),
       );
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
 
       if (onCloseHandler.mock.calls.length > 0) {
         result.unmount();
@@ -176,7 +176,7 @@ describe(ActionSheet, () => {
         </ActionSheet>,
       );
       await waitForFloatingPosition();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       await userEvent.click(getNode());
       expect(onClose).not.toHaveBeenCalled();
     });
@@ -207,9 +207,9 @@ describe(ActionSheet, () => {
 
   it(
     'renders header and text',
-    withFakeTimers(() => {
+    withFakeTimers(async () => {
       render(<ActionSheetMobile title="The header title" description="Text footnote" />);
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(screen.queryByText('The header title')).toBeTruthy();
       expect(screen.queryByText('Text footnote')).toBeTruthy();
     }),
@@ -281,7 +281,7 @@ describe(ActionSheet, () => {
         </div>,
       );
       await waitForFloatingPosition();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
 
       await userEvent.click(screen.getByTestId('content'));
       expect(onClick).not.toHaveBeenCalled();
@@ -295,7 +295,7 @@ describe(ActionSheet, () => {
       );
 
       await waitForFloatingPosition();
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
 
       await userEvent.click(screen.getByTestId('content'));
       expect(onClick).toHaveBeenCalled();

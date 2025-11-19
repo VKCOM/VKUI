@@ -52,7 +52,7 @@ describe(useTodayDate, () => {
     hookResult.unmount();
   });
 
-  it('returns next day if timer is fired', () => {
+  it('returns next day if timer is fired', async () => {
     const currentDate = new Date(2024, 2, 3);
     currentDate.setHours(10);
     vi.setSystemTime(currentDate);
@@ -64,7 +64,7 @@ describe(useTodayDate, () => {
     expect(hookResult.result.current).toStrictEqual(currentDate);
 
     // меняем текущую дату на следующий день
-    act(vi.runAllTimers);
+    await act(vi.runAllTimers);
 
     hookResult.rerender();
 

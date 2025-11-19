@@ -3,7 +3,14 @@ import { withFakeTimers } from '../../testing/utils.tsx';
 import { useCSSTransition } from './useCSSTransition';
 
 describe(useCSSTransition, () => {
-  const callbacks = { onEnter: vi.fn(), onEntering: vi.fn(), onEntered: vi.fn(), onExit: vi.fn(), onExiting: vi.fn(), onExited: vi.fn() }; // prettier-ignore
+  const callbacks = {
+    onEnter: vi.fn(),
+    onEntering: vi.fn(),
+    onEntered: vi.fn(),
+    onExit: vi.fn(),
+    onExiting: vi.fn(),
+    onExited: vi.fn(),
+  };
 
   beforeEach(() => {
     for (const key in callbacks) {

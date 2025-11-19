@@ -163,7 +163,7 @@ describe(Root, () => {
     const renderFocused = () => render(<input autoFocus data-testid="__autofocus__" />);
     it(
       'on activeView change',
-      withFakeTimers(() => {
+      withFakeTimers(async () => {
         renderFocused();
         const views = [
           <View id="focus" activePanel="" key="1">
@@ -176,7 +176,7 @@ describe(Root, () => {
         render(<Root activeView="focus">{views}</Root>).rerender(
           <Root activeView="other">{views}</Root>,
         );
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         expect(document.activeElement === document.body).toBe(true);
       }),
     );

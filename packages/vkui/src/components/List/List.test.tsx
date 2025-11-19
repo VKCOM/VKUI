@@ -151,7 +151,7 @@ const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
   };
 };
 
-const dragCell = ({
+const dragCell = async ({
   testId,
   breakPoints,
   afterDragging,
@@ -168,16 +168,18 @@ const dragCell = ({
   const dragger = screen.getByTestId(testId);
   mouseDown(dragger);
 
-  act(vi.runOnlyPendingTimers);
+  await act(vi.runOnlyPendingTimers);
 
-  breakPoints.forEach((breakPoint, index) => {
+  for (let index = 0; index < breakPoints.length; index++) {
+    const breakPoint = breakPoints[index];
     mouseMove(dragger, {
       clientY: breakPoint,
     });
-    act(vi.runOnlyPendingTimers);
+    await act(vi.runOnlyPendingTimers);
     afterMove[index]?.();
-  });
-  act(vi.runOnlyPendingTimers);
+  }
+
+  await act(vi.runOnlyPendingTimers);
   afterDragging && afterDragging();
 
   mouseUp(dragger);
@@ -203,11 +205,11 @@ describe('List', () => {
   it.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
     'check dnd is working',
     withFakeTimers<[{ handlers: Array<typeof fireEvent.mouseDown> }]>(
-      ({ handlers: mouseEvents }) => {
+      async ({ handlers: mouseEvents }) => {
         const setupData = setup({});
         const { getCellSetup } = setupData;
 
-        dragCell({
+        await dragCell({
           testId: 'dragger-0',
           breakPoints: [5, 140, 140, 124],
           afterDragging: () => {
@@ -229,7 +231,7 @@ describe('List', () => {
 
         expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
 
-        dragCell({
+        await dragCell({
           testId: 'dragger-2',
           breakPoints: [140, 140, 75, 140, 75],
           afterDragging: () => {
@@ -256,13 +258,13 @@ describe('List', () => {
 
   it(
     'check dnd with scroll working',
-    withFakeTimers(() => {
+    withFakeTimers(async () => {
       const setupData = setup({});
 
       isScrollRunning = false;
       setupData.listScrollTop = 50;
 
-      dragCell({
+      await dragCell({
         testId: 'dragger-0',
         breakPoints: [5, 70, 90],
         afterMove: {

@@ -21,11 +21,11 @@ jobs:
       action: upload
       override_pr_number: ${{ inputs.pr_number_by_workflow_dispatch }}
 
-  v6:
-    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'v6')
+  v7:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:v7')
     concurrency: ci-stable
     runs-on: ubuntu-latest
-    name: v6 Patch
+    name: v7 Patch
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
@@ -56,7 +56,7 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
-          targetBranch: v6
+          targetBranch: v7
           needScreenshots: true
 
   patch:

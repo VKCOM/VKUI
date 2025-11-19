@@ -288,7 +288,7 @@ describe('Alert', () => {
             />
           </AdaptivityProvider>,
         );
-        act(vi.runAllTimers);
+        await act(vi.runAllTimers);
         expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
           'Закрыть предупреждение',
         );
@@ -305,7 +305,7 @@ describe('Alert', () => {
           />
         </AdaptivityProvider>,
       );
-      act(vi.runAllTimers);
+      await act(vi.runAllTimers);
       expect(result.queryByTestId('dismiss-button-test-id')).not.toBeInTheDocument();
     });
   });

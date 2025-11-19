@@ -25,13 +25,13 @@
 }
 
 .viewShowForward {
-  /* prettier-ignore */
-  animation: root-animation-show-forward var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform);
+  animation: root-animation-show-forward var(--vkui_internal--root_animation_duration)
+    var(--vkui--animation_easing_platform);
 }
 
 .viewHideBack {
-  /* prettier-ignore */
-  animation: root-animation-hide-back var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform) forwards;
+  animation: root-animation-hide-back var(--vkui_internal--root_animation_duration)
+    var(--vkui--animation_easing_platform) forwards;
 }
 
 .transition .view {
@@ -63,13 +63,13 @@
 }
 
 .ios .viewShowBack::after {
-  /* prettier-ignore */
-  animation: root-ios-overlay-animation-show-back var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform) forwards;
+  animation: root-ios-overlay-animation-show-back var(--vkui_internal--root_animation_duration)
+    var(--vkui--animation_easing_platform) forwards;
 }
 
 .ios .viewHideForward::after {
-  /* prettier-ignore */
-  animation: root-ios-overlay-animation-hide-forward var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform);
+  animation: root-ios-overlay-animation-hide-forward var(--vkui_internal--root_animation_duration)
+    var(--vkui--animation_easing_platform);
 }
 
 @media (--reduce-motion) {
