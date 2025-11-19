@@ -91,7 +91,11 @@ describe('CustomSelect', () => {
     placementStub = undefined;
   });
   baselineComponent((props) => (
-    <CustomSelect aria-label="Choose your user" {...props} options={[]} />
+    <CustomSelect
+      slotProps={{ input: { 'aria-label': 'Choose your user' } }}
+      {...props}
+      options={[]}
+    />
   ));
 
   it(
@@ -122,6 +126,8 @@ describe('CustomSelect', () => {
           data-testid="input"
           required
           className="rootClassName"
+          id="input"
+          name="select"
           getRootRef={rootRef1}
           onClick={onSelectClick1}
           onFocus={onSelectFocus}
@@ -145,7 +151,6 @@ describe('CustomSelect', () => {
               'className': 'selectClassName',
               'getRootRef': selectRef2,
               'data-testid': 'select-2',
-              'required': false,
               'style': {
                 color: 'rgb(255, 0, 0)',
               },
@@ -171,7 +176,8 @@ describe('CustomSelect', () => {
       expect(select.tagName).toBe('SELECT');
       expect(select).toHaveClass('selectClassName');
       expect(select).toHaveStyle('color: rgb(255, 0, 0)');
-      expect(select).not.toHaveAttribute('required');
+      expect(select).toHaveAttribute('required');
+      expect(select).toHaveAttribute('name', 'select');
 
       const root = screen.getByTestId('root');
       expect(root.tagName).toBe('DIV');
@@ -187,6 +193,7 @@ describe('CustomSelect', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass('inputClassName');
       expect(input).toHaveStyle('color: rgb(255, 0, 0)');
+      expect(input).toHaveAttribute('id', 'input');
 
       expect(rootRef1.current).toBe(rootRef2.current);
       expect(rootRef1.current).toBe(root);
