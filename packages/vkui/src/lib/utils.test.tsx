@@ -59,7 +59,10 @@ describe(excludeKeysWithUndefined, () => {
     expect(excludeKeysWithUndefined({})).toEqual({});
     expect(excludeKeysWithUndefined({ key1: 1 })).toEqual({ key1: 1 });
     expect(excludeKeysWithUndefined({ key1: 1, key2: undefined })).toEqual({ key1: 1 });
-    expect(excludeKeysWithUndefined({ key1: 1, key2: null, key3: undefined })).toEqual({ key1: 1, key2: null }); // prettier-ignore
+    expect(excludeKeysWithUndefined({ key1: 1, key2: null, key3: undefined })).toEqual({
+      key1: 1,
+      key2: null,
+    });
   });
 });
 

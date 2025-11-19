@@ -1,8 +1,9 @@
+import { spyOn } from 'storybook/test';
 import { Preview } from '@storybook/react';
-// TODO [@storybook/addon-console>3.0.0] https://github.com/storybookjs/storybook-addon-console/issues/86
-// import { withConsole } from '@storybook/addon-console';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
+// Выносим отдельно, чтобы файл обрабатывался postcss плагином
+import '../src/styles/layout.css';
 import './preview.css';
 
 declare global {
@@ -35,9 +36,6 @@ const customViewports = Object.entries(BREAKPOINTS).reduce<Record<string, Custom
   },
   {},
 );
-
-// TODO [@storybook/addon-console>3.0.0] https://github.com/storybookjs/storybook-addon-console/issues/86
-// const withConsoleWrapper = (Story, context) => withConsole()(Story)(context);
 
 const preview: Preview = {
   parameters: {
@@ -127,11 +125,19 @@ const preview: Preview = {
     getRef: { control: false },
     getRootRef: { control: false },
   },
-  decorators: [
-    withVKUIWrapper,
-    // TODO [@storybook/addon-console>3.0.0] https://github.com/storybookjs/storybook-addon-console/issues/86
-    // withConsoleWrapper,
-  ],
+  decorators: [withVKUIWrapper],
 };
 
 export default preview;
+
+export const beforeEach = function beforeEach() {
+  spyOn(console, 'log').mockName('console.log');
+  spyOn(console, 'warn').mockName('console.warn');
+  spyOn(console, 'error').mockName('console.error');
+  spyOn(console, 'info').mockName('console.info');
+  spyOn(console, 'debug').mockName('console.debug');
+  spyOn(console, 'trace').mockName('console.trace');
+  spyOn(console, 'count').mockName('console.count');
+  spyOn(console, 'dir').mockName('console.dir');
+  spyOn(console, 'assert').mockName('console.assert');
+};

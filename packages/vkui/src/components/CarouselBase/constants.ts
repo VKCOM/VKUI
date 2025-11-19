@@ -1,6 +1,6 @@
 import type { ControlElementsState, SlidesManagerState } from './types';
 
-export const ANIMATION_DURATION = 240;
+export const DEFAULT_ANIMATION_DURATION = 240;
 
 export const SLIDE_THRESHOLD = 0.05;
 

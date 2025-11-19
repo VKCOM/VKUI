@@ -5,12 +5,17 @@
   --vkui_internal--Switch__handle_shift_x_direction: 1;
   --vkui_internal--Switch__handle_shift_x: calc(
     var(--vkui_internal--Switch__handle_shift_x_direction) *
-      var(--vkui_internal--Switch__track_outline_width)
+    var(--vkui_internal--Switch__track_outline_width)
   );
-  /* prettier-ignore */
-  --vkui_internal--Switch__handle_shift_y: calc(var(--vkui_internal--Switch__track_height) - var(--vkui_internal--Switch__handle_height) - var(--vkui_internal--Switch__track_outline_width));
-  /* prettier-ignore */
-  --vkui_internal--Switch__handle_scale: calc(var(--vkui_internal--Switch__handle_widthNoUnit--not-checked) / var(--vkui_internal--Switch__handle_heightNoUnit));
+  --vkui_internal--Switch__handle_shift_y: calc(
+    var(--vkui_internal--Switch__track_height) -
+    var(--vkui_internal--Switch__handle_height) -
+    var(--vkui_internal--Switch__track_outline_width)
+  );
+  --vkui_internal--Switch__handle_scale: calc(
+    var(--vkui_internal--Switch__handle_widthNoUnit--not-checked) /
+    var(--vkui_internal--Switch__handle_heightNoUnit)
+  );
 
   position: relative;
   display: block;
@@ -99,11 +104,8 @@
   --vkui_internal--Switch__handle_scale_duration: 200ms;
   --vkui_internal--Switch__handle_shift_x_duration: 200ms;
   --vkui_internal--Switch__handle_shift_x_easing: cubic-bezier(0.36, -0.24, 0.26, 1.32);
-  /* prettier-ignore */
   --vkui_internal--Switch__handle_shadow:
-    0 3px 8px rgb(0, 0, 0, 0.15),
-    0 3px 1px rgb(0, 0, 0, 0.06),
-    inset 0 0 0 0.5px rgb(0, 0, 0, 0.04);
+    0 3px 8px rgb(0, 0, 0, 0.15), 0 3px 1px rgb(0, 0, 0, 0.06), inset 0 0 0 0.5px rgb(0, 0, 0, 0.04);
 }
 
 .ios.sizeYCompact {
@@ -143,10 +145,18 @@
   --vkui_internal--Switch__track_color: var(--vkui--color_background_accent);
 
   /* Switch__handle */
-  /* prettier-ignore */
-  --vkui_internal--Switch__handle_shift_x: calc(var(--vkui_internal--Switch__handle_shift_x_direction) * calc(var(--vkui_internal--Switch__track_width) - var(--vkui_internal--Switch__handle_width) - var(--vkui_internal--Switch__track_outline_width)));
-  /* prettier-ignore */
-  --vkui_internal--Switch__handle_scale: calc(var(--vkui_internal--Switch__handle_widthNoUnit--checked) / var(--vkui_internal--Switch__handle_heightNoUnit));
+  --vkui_internal--Switch__handle_shift_x: calc(
+    var(--vkui_internal--Switch__handle_shift_x_direction) *
+    calc(
+      var(--vkui_internal--Switch__track_width) -
+      var(--vkui_internal--Switch__handle_width) -
+      var(--vkui_internal--Switch__track_outline_width)
+    )
+  );
+  --vkui_internal--Switch__handle_scale: calc(
+    var(--vkui_internal--Switch__handle_widthNoUnit--checked) /
+    var(--vkui_internal--Switch__handle_heightNoUnit)
+  );
   --vkui_internal--Switch__track_shadow_visibility: 0;
   --vkui_internal--Switch__handle_color: var(--vkui--color_icon_contrast);
 }
@@ -185,10 +195,12 @@
   inline-size: var(--vkui_internal--Switch__handle_width);
   block-size: var(--vkui_internal--Switch__handle_height);
   border-radius: 9999px;
-  /* prettier-ignore */
-  transform: translate(var(--vkui_internal--Switch__handle_shift_x), var(--vkui_internal--Switch__handle_shift_y));
-  /* prettier-ignore */
-  transition: transform var(--vkui_internal--Switch__handle_shift_x_duration) var(--vkui_internal--Switch__handle_shift_x_easing);
+  transform: translate(
+    var(--vkui_internal--Switch__handle_shift_x),
+    var(--vkui_internal--Switch__handle_shift_y)
+  );
+  transition: transform var(--vkui_internal--Switch__handle_shift_x_duration)
+    var(--vkui_internal--Switch__handle_shift_x_easing);
 }
 
 .handle::after {
@@ -200,8 +212,9 @@
   box-shadow: var(--vkui_internal--Switch__handle_shadow);
   transform: scale(var(--vkui_internal--Switch__handle_scale));
   transition-timing-function: var(--vkui_internal--Switch__handle_shift_x_easing), linear;
-  /* prettier-ignore */
-  transition-duration: var(--vkui_internal--Switch__handle_scale_duration), var(--vkui_internal--Switch__handle_color_duration);
+  transition-duration:
+    var(--vkui_internal--Switch__handle_scale_duration),
+    var(--vkui_internal--Switch__handle_color_duration);
   transition-property: transform, background-color;
 }
 
@@ -222,7 +235,6 @@
   opacity: var(--vkui_internal--Switch__handleRipple_opacity);
   transform: translate(calc(-50% * var(--vkui_internal--Switch__handle_shift_x_direction)), -50%);
   transition-timing-function: linear;
-  /* prettier-ignore */
   transition-duration:
     var(--vkui_internal--Switch__handleRipple_opacity_duration),
     var(--vkui_internal--Switch__handleRipple_color_duration);

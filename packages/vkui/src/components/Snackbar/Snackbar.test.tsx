@@ -279,18 +279,26 @@ describe(Snackbar, () => {
       const contentEl = result.getByRole('alert');
 
       const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-      const movedRect = getMovedContentRectByPlacement('top', { shouldTriggerClosing: true }); // prettier-ignore
+      const movedRect = getMovedContentRectByPlacement('top', { shouldTriggerClosing: true });
 
       // start
       mockRect(rootEl, initialRect);
       mockRect(contentEl, initialRect);
-      await fireEventPatch(contentEl, 'touchStart', transformDomRectToEventData('touchStart', initialRect)); // prettier-ignore
+      await fireEventPatch(
+        contentEl,
+        'touchStart',
+        transformDomRectToEventData('touchStart', initialRect),
+      );
       await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
 
       // move
       mockRect(contentEl, movedRect);
       requestAnimationFrameMock.init();
-      await fireEventPatch(contentEl, 'touchMove', transformDomRectToEventData('touchMove', movedRect)); // prettier-ignore
+      await fireEventPatch(
+        contentEl,
+        'touchMove',
+        transformDomRectToEventData('touchMove', movedRect),
+      );
       requestAnimationFrameMock.triggerNextAnimationFrame();
 
       result.unmount();
@@ -313,12 +321,14 @@ describe(Snackbar, () => {
         const contentEl = result.getByRole('alert');
 
         const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-        const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: false }); // prettier-ignore
+        const movedRect = getMovedContentRectByPlacement(placement, {
+          shouldTriggerClosing: false,
+        });
 
         // start
         mockRect(rootEl, initialRect);
         mockRect(contentEl, initialRect);
-        await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect)); // prettier-ignore
+        await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect));
         await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
         expect(onClose).not.toHaveBeenCalled();
 
@@ -326,14 +336,14 @@ describe(Snackbar, () => {
           // move
           mockRect(contentEl, movedRect);
           requestAnimationFrameMock.init();
-          await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect)); // prettier-ignore
+          await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect));
           requestAnimationFrameMock.triggerNextAnimationFrame();
           expect(onClose).not.toHaveBeenCalled();
         }
 
         // end
         requestAnimationFrameMock.init();
-        await fireEventPatch(contentEl, end, fireEventOptions); // prettier-ignore
+        await fireEventPatch(contentEl, end, fireEventOptions);
         await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
         requestAnimationFrameMock.triggerNextAnimationFrame();
         expect(onClose).toHaveBeenCalled();
@@ -352,7 +362,7 @@ describe(Snackbar, () => {
         const contentEl = result.getByRole('alert');
 
         const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-        const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: true }); // prettier-ignore
+        const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: true });
 
         // start
         mockRect(rootEl, initialRect);

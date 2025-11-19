@@ -5,6 +5,7 @@ const meta: MetaRecord = {
     type: 'separator',
     title: 'Раскладка',
   },
+  'box': 'Box',
   'button-group': 'ButtonGroup',
   'card-grid': 'CardGrid',
   'card-scroll': 'CardScroll',

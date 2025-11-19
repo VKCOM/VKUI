@@ -14,7 +14,7 @@ import { type PageMapItem } from 'nextra';
 import { getPageMap } from 'nextra/page-map';
 import { PlaygroundStoreProvider } from '@/providers/playgroundStoreProvider';
 import uwuCode from '../uwu.js?raw';
-import { FooterLinks, Versions } from './_components';
+import { FooterLinks, RedirectHandler, Versions } from './_components';
 import '@vkontakte/vkui-docs-theme/styles.css';
 
 export const metadata: Metadata = {
@@ -73,6 +73,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({ children })
             __html: uwuCode,
           }}
         />
+        <RedirectHandler />
         <Layout
           pageMap={pageMap}
           navbar={navbar}

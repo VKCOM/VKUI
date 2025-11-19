@@ -2,22 +2,23 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
+import { mergeCalls } from '../../lib/mergeCalls';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
+import { useHover } from '../Clickable/useState';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { type CustomTouchEvent } from '../Touch/Touch';
 import { Bullets } from './Bullets';
 import { CarouselViewPort } from './CarouselViewPort';
 import { ScrollArrows } from './ScrollArrows';
 import {
-  ANIMATION_DURATION,
   CONTROL_ELEMENTS_STATE,
+  DEFAULT_ANIMATION_DURATION,
   SLIDE_THRESHOLD,
   SLIDES_MANAGER_STATE,
 } from './constants';
@@ -57,6 +58,8 @@ export const CarouselBase = ({
   onChange,
   onPrevClick,
   onNextClick,
+  onPointerEnter,
+  onPointerLeave,
   align = 'left',
   showArrows,
   getRef,
@@ -67,6 +70,8 @@ export const CarouselBase = ({
   nextArrowTestId,
   prevArrowTestId,
   looped = false,
+  animationDuration = DEFAULT_ANIMATION_DURATION,
+  animationEasing = 'ease',
 
   // a11y
   'aria-roledescription': ariaRoleDescription = 'Карусель',
@@ -88,14 +93,17 @@ export const CarouselBase = ({
   const shiftXCurrentRef = React.useRef<number>(0);
   const shiftXDeltaRef = React.useRef<number>(0);
   const initialized = React.useRef<boolean>(false);
-  const { animationInQueue, addToAnimationQueue, getAnimateFunction, startAnimation } =
-    useSlideAnimation();
+  const {
+    animationInQueue,
+    addToAnimationQueue,
+    getAnimateFunction,
+    startAnimation,
+    getAnimationEasing,
+  } = useSlideAnimation(animationDuration, animationEasing);
   const isDragging = React.useRef(false);
 
   const [controlElementsState, setControlElementsState] =
     React.useState<ControlElementsState>(CONTROL_ELEMENTS_STATE);
-
-  const hasPointer = useAdaptivityHasPointer();
 
   const slidesContainerId = React.useId();
 
@@ -155,7 +163,7 @@ export const CarouselBase = ({
 
       layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
       layerRef.current.style.transition = animation
-        ? `transform ${ANIMATION_DURATION}ms cubic-bezier(.1, 0, .25, 1)`
+        ? `transform ${animationDuration}ms ${getAnimationEasing()}`
         : '';
     }
   };
@@ -543,21 +551,26 @@ export const CarouselBase = ({
     }
   };
 
+  const { isHovered, ...hoverHandlers } = useHover();
+
+  const handlers = mergeCalls(hoverHandlers, { onPointerEnter, onPointerLeave });
+
   return (
     <RootComponent
       {...restProps}
+      {...handlers}
       role="region"
       onScroll={handleScrollForFixVoiceOverBehavior}
       aria-roledescription={ariaRoleDescription}
       baseClassName={classNames(
         styles.host,
         slideWidth === 'custom' && styles.customWidth,
+        isHovered && styles.hover,
         isDraggable && styles.draggable,
       )}
       getRootRef={rootRef}
     >
       <ScrollArrows
-        hasPointer={hasPointer}
         canSlideLeft={canSlideLeft}
         canSlideRight={canSlideRight}
         onSlideRight={slideRight}

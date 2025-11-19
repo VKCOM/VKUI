@@ -1,28 +1,35 @@
 import path from 'node:path';
-import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const require = createRequire(import.meta.url);
-const getAbsolutePath = (value) => path.dirname(require.resolve(path.join(value, 'package.json')));
+
+const getGlobalAddonPath = (addonName: string, presetDir?: string) => {
+  const resolvedPath = path.dirname(require.resolve(path.join(addonName, 'package.json')));
+  return presetDir ? `${resolvedPath}/${presetDir}` : resolvedPath;
+};
+
+const getLocalAddonPath = (addonName: string) => fileURLToPath(import.meta.resolve(addonName));
 
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    './addons/source-tab',
-    getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-a11y'),
-    getAbsolutePath('@storybook/addon-designs'),
-    getAbsolutePath('@storybook/addon-docs'),
-    getAbsolutePath('@project-tools/storybook-addon-cartesian'),
-    './addons/colorScheme',
-    './addons/pointer',
-    './addons/customPanelHeaderAfter',
-    './addons/source-button',
-    './addons/documentation-button',
-    './addons/storybook-theme',
+    getLocalAddonPath('./addons/source-tab'),
+    getGlobalAddonPath('@storybook/addon-links'),
+    getGlobalAddonPath('@storybook/addon-a11y'),
+    getGlobalAddonPath('@storybook/addon-designs', 'dist'),
+    getGlobalAddonPath('@storybook/addon-docs'),
+    getGlobalAddonPath('@project-tools/storybook-addon-cartesian'),
+    getLocalAddonPath('./addons/colorScheme'),
+    getLocalAddonPath('./addons/pointer'),
+    getLocalAddonPath('./addons/customPanelHeaderAfter'),
+    getLocalAddonPath('./addons/source-button'),
+    getLocalAddonPath('./addons/documentation-button'),
+    getLocalAddonPath('./addons/storybook-theme'),
   ],
-  framework: getAbsolutePath('@storybook/react-vite'),
+  framework: getGlobalAddonPath('@storybook/react-vite'),
   viteFinal: async (config) => {
     const { mergeConfig } = await import('vite');
     const packageJSON = JSON.parse(readFileSync('./package.json', 'utf-8'));

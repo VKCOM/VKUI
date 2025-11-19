@@ -31,14 +31,14 @@
 }
 
 .opening {
-  /* prettier-ignore */
-  animation: animation-actionsheet-slide-up var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
+  animation: animation-actionsheet-slide-up var(--vkui--animation_duration_m)
+    var(--vkui--animation_easing_platform);
 }
 
 .closing {
   opacity: 0;
-  /* prettier-ignore */
-  animation: animation-actionsheet-slide-down var(--vkui--animation_duration_m) var(--vkui--animation_easing_platform);
+  animation: animation-actionsheet-slide-down var(--vkui--animation_duration_m)
+    var(--vkui--animation_easing_platform);
 }
 
 .title + .description {

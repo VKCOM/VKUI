@@ -62,7 +62,7 @@ describe('useNavTransition', () => {
     const { TestComponent } = setup({ withAnimationsMode });
     // transition between views
     const component = render(<TestComponent activeView="v1" />);
-    act(vi.runOnlyPendingTimers);
+    await act(vi.runOnlyPendingTimers);
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: undefined');
 
     component.rerender(<TestComponent activeView="v3" />);
