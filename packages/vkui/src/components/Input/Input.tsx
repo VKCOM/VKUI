@@ -21,20 +21,10 @@ export interface InputProps
   extends Pick<
       React.InputHTMLAttributes<HTMLInputElement>,
       | 'accept'
-      | 'alt'
       | 'autoComplete'
-      | 'capture'
       | 'disabled'
-      | 'form'
-      | 'formAction'
-      | 'formEncType'
-      | 'formMethod'
-      | 'formNoValidate'
-      | 'formTarget'
       | 'list'
-      | 'max'
       | 'maxLength'
-      | 'min'
       | 'minLength'
       | 'multiple'
       | 'name'
@@ -43,7 +33,6 @@ export interface InputProps
       | 'readOnly'
       | 'required'
       | 'size'
-      | 'src'
       | 'step'
       | 'type'
       | 'value'
@@ -88,20 +77,10 @@ export const Input = ({
 
   // input props
   accept,
-  alt,
   autoComplete,
-  capture,
   disabled,
-  form,
-  formAction,
-  formEncType,
-  formMethod,
-  formNoValidate,
-  formTarget,
   list,
-  max,
   maxLength,
-  min,
   minLength,
   multiple,
   name,
@@ -110,7 +89,6 @@ export const Input = ({
   readOnly,
   required,
   size,
-  src,
   step,
   type = 'text',
   value,
@@ -141,20 +119,10 @@ export const Input = ({
       className: styles.el,
       getRootRef: getRef,
       accept,
-      alt,
       autoComplete,
-      capture,
       disabled,
-      form,
-      formAction,
-      formEncType,
-      formMethod,
-      formNoValidate,
-      formTarget,
       list,
-      max,
       maxLength,
-      min,
       minLength,
       multiple,
       name,
@@ -163,7 +131,6 @@ export const Input = ({
       readOnly,
       required,
       size,
-      src,
       step,
       type,
       value,

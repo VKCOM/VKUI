@@ -33,14 +33,10 @@ export type RenderIconButtonFn = (
 export interface SearchProps
   extends Pick<
       React.InputHTMLAttributes<HTMLInputElement>,
-      | 'alt'
       | 'autoComplete'
-      | 'capture'
       | 'disabled'
       | 'list'
-      | 'max'
       | 'maxLength'
-      | 'min'
       | 'minLength'
       | 'name'
       | 'placeholder'
@@ -144,13 +140,9 @@ export const Search = ({
   // input props
   placeholder: placeholderProp = 'Поиск',
   autoComplete = 'off',
-  alt,
-  capture,
   disabled,
   list,
-  max,
   maxLength,
-  min,
   minLength,
   name,
   readOnly,
@@ -193,13 +185,9 @@ export const Search = ({
       className: styles.nativeInput,
       placeholder: placeholderProp,
       autoComplete,
-      alt,
-      capture,
       disabled,
       list,
-      max,
       maxLength,
-      min,
       minLength,
       name,
       readOnly,
