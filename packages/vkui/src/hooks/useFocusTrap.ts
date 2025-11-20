@@ -40,7 +40,11 @@ const useRestoreFocus = ({
     }
 
     const activeElement = getActiveElementByAnotherElement(ref.current);
-    if (activeElement && !ref.current?.contains(activeElement) && isFocusableElement(activeElement)) {
+    if (
+      activeElement &&
+      !ref.current?.contains(activeElement) &&
+      isFocusableElement(activeElement)
+    ) {
       return;
     }
 
