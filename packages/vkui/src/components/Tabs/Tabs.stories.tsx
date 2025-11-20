@@ -1,4 +1,3 @@
-import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import {
   Icon16Dropdown,
@@ -7,6 +6,7 @@ import {
   Icon20ThumbsUpOutline,
   Icon20UsersOutline,
 } from '@vkontakte/icons';
+import { useArgs } from 'storybook/preview-api';
 import { withSinglePanel } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -26,17 +26,18 @@ import { Tabs, type TabsProps } from './Tabs';
 type StoryTabsProps = TabsProps & { selected: string };
 
 const story: Meta<StoryTabsProps> = {
-  title: 'Blocks/Tabs',
+  title: 'Navigation/Tabs',
   component: Tabs,
   parameters: createStoryParameters('Tabs', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
-    selected: {
+    selectedId: {
       control: {
         type: 'select',
       },
       options: ['groups', 'news', 'recommendations', 'friends', 'photos'],
     },
   },
+  tags: ['Навигация'],
 };
 
 export default story;
@@ -44,53 +45,53 @@ export default story;
 type Story = StoryObj<StoryTabsProps & { count: number }>;
 
 export const Playground: Story = {
-  render: function Render({ selected = 'groups', count, ...args }) {
+  render: function Render({ count, ...args }) {
     const [, updateArg] = useCustomArgs();
     const items = [
       <TabsItem
         key="groups"
+        id="groups"
         {...BasicTabsItemStory.args}
         before={<Icon20NewsfeedOutline />}
         after={<Icon16Dropdown />}
-        selected={selected === 'groups'}
-        onClick={() => updateArg({ selected: 'groups' })}
       />,
       <TabsItem
         key="news"
+        id="news"
         {...BeforeAfterTabsItemStory.args}
         before={<Icon20NewsfeedOutline />}
         after={<Icon16Dropdown />}
-        selected={selected === 'news'}
-        onClick={() => updateArg({ selected: 'news' })}
       />,
       <TabsItem
         key="recommendations"
+        id="recommendations"
         {...BadgeTabsItemStory.args}
         before={<Icon20ThumbsUpOutline />}
         after={<Icon16Dropdown />}
-        selected={selected === 'recommendations'}
-        onClick={() => updateArg({ selected: 'recommendations' })}
       />,
       <TabsItem
         key="friends"
+        id="friends"
         {...CounterTabsItemStory.args}
         before={<Icon20UsersOutline />}
         after={<Icon16Dropdown />}
-        selected={selected === 'friends'}
-        onClick={() => updateArg({ selected: 'friends' })}
       />,
       <TabsItem
         key="photos"
+        id="photos"
         {...NumberStatusTabsItemStory.args}
         before={<Icon20PictureOutline />}
         after={<Icon16Dropdown />}
-        selected={selected === 'photos'}
-        onClick={() => updateArg({ selected: 'photos' })}
       />,
     ].slice(0, count);
-    return <Tabs {...args}>{items}</Tabs>;
+    return (
+      <Tabs onSelectedIdChange={(id) => updateArg({ selectedId: id })} {...args}>
+        {items}
+      </Tabs>
+    );
   },
   args: {
+    selectedId: 'groups',
     count: 5,
   },
   decorators: [
@@ -104,47 +105,45 @@ export const Playground: Story = {
 
 export const WithHorizontalScroll: Story = {
   args: {
+    selectedId: 'groups',
     withScrollToSelectedTab: true,
     scrollBehaviorToSelectedTab: 'center',
   },
-  render: function Render({ selected = 'groups', ...args }) {
+  render: function Render({ ...args }) {
     const [, updateArg] = useArgs();
 
     return (
-      <Tabs {...args}>
+      <Tabs onSelectedIdChange={(id) => updateArg({ selectedId: id })} {...args}>
         <HorizontalScroll arrowSize="m">
           <TabsItem
+            id="groups"
             {...BasicTabsItemStory.args}
-            selected={selected === 'groups'}
-            onClick={() => updateArg({ selected: 'groups' })}
+            before={<Icon20NewsfeedOutline />}
+            after={<Icon16Dropdown />}
           />
           <TabsItem
+            id="news"
             {...BeforeAfterTabsItemStory.args}
             before={<Icon20NewsfeedOutline />}
             after={<Icon16Dropdown />}
-            selected={selected === 'news'}
-            onClick={() => updateArg({ selected: 'news' })}
           />
           <TabsItem
+            id="recommendations"
             {...BadgeTabsItemStory.args}
             before={<Icon20ThumbsUpOutline />}
             after={<Icon16Dropdown />}
-            selected={selected === 'recommendations'}
-            onClick={() => updateArg({ selected: 'recommendations' })}
           />
           <TabsItem
+            id="friends"
             {...CounterTabsItemStory.args}
             before={<Icon20UsersOutline />}
             after={<Icon16Dropdown />}
-            selected={selected === 'friends'}
-            onClick={() => updateArg({ selected: 'friends' })}
           />
           <TabsItem
+            id="photos"
             {...NumberStatusTabsItemStory.args}
             before={<Icon20PictureOutline />}
             after={<Icon16Dropdown />}
-            selected={selected === 'photos'}
-            onClick={() => updateArg({ selected: 'photos' })}
           />
         </HorizontalScroll>
       </Tabs>

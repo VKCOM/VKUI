@@ -1,8 +1,16 @@
-import { fireEvent, render, renderHook } from '@testing-library/react';
+import { act, fireEvent, render, renderHook } from '@testing-library/react';
+import { withFakeTimers } from '../../testing/utils.tsx';
 import { useCSSTransition } from './useCSSTransition';
 
 describe(useCSSTransition, () => {
-  const callbacks = { onEnter: jest.fn(), onEntering: jest.fn(), onEntered: jest.fn(), onExit: jest.fn(), onExiting: jest.fn(), onExited: jest.fn() }; // prettier-ignore
+  const callbacks = {
+    onEnter: vi.fn(),
+    onEntering: vi.fn(),
+    onEntered: vi.fn(),
+    onExit: vi.fn(),
+    onExiting: vi.fn(),
+    onExited: vi.fn(),
+  };
 
   beforeEach(() => {
     for (const key in callbacks) {
@@ -36,14 +44,11 @@ describe(useCSSTransition, () => {
           fireEvent.transitionEnd(result.current[1].ref.current!, { propertyName: 'opacity' });
           expect(result.current[0]).toBe('appeared');
 
-          expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEnter).toHaveBeenCalledWith(true);
+          expect(callbacks.onEnter).toHaveBeenCalledExactlyOnceWith(true);
 
-          expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEntering).toHaveBeenCalledWith(true);
+          expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith(true);
 
-          expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEntered).toHaveBeenCalledWith('opacity', true);
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity', true);
         } else {
           expect(result.current[0]).toBe('exited');
           expectEveryCallbacksHaveNotBeenCalled();
@@ -104,13 +109,11 @@ describe(useCSSTransition, () => {
 
         expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
         expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+        expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(1);
         expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+        expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
       },
     );
 
@@ -151,13 +154,12 @@ describe(useCSSTransition, () => {
           expect(callbacks.onEntered).toHaveBeenNthCalledWith(1, 'opacity', true);
           expect(callbacks.onEntered).toHaveBeenNthCalledWith(2, 'opacity');
         } else {
-          expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
         }
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(1);
         expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-        expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+        expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
       },
     );
 
@@ -181,13 +183,11 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onEnter).toHaveBeenCalledTimes(0);
       expect(callbacks.onEntering).toHaveBeenCalledTimes(0);
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledWith();
+      expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith();
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(1);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
     });
 
     it('should exit immediately and enter with transition', () => {
@@ -211,13 +211,11 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
       expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+      expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(0);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith();
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
     });
 
     it('should enter and exit immediately', () => {
@@ -244,13 +242,11 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onEnter).toHaveBeenCalledTimes(0);
       expect(callbacks.onEntering).toHaveBeenCalledTimes(0);
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-      expect(callbacks.onEntered).toHaveBeenCalledWith();
+      expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith();
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(0);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith();
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
     });
 
     it('should appear with transition but enter and exit immediately', () => {
@@ -286,8 +282,7 @@ describe(useCSSTransition, () => {
 
       expect(callbacks.onExit).toHaveBeenCalledTimes(0);
       expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
-      expect(callbacks.onExited).toHaveBeenCalledWith();
+      expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
     });
   });
 
@@ -316,19 +311,17 @@ describe(useCSSTransition, () => {
         }
         expect(result.current[0]).toBe('exited');
 
-        expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEnter).toHaveBeenCalledWith(true);
-        expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntering).toHaveBeenCalledWith(true);
+        expect(callbacks.onEnter).toHaveBeenCalledExactlyOnceWith(true);
+        expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith(true);
         expect(callbacks.onEntered).toHaveBeenCalledTimes(0);
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(0);
         if (option.enableExit) {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-          expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
         } else {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-          expect(callbacks.onExited).toHaveBeenCalledWith();
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
         }
         expect(callbacks.onExited).toHaveBeenCalledTimes(1);
       },
@@ -357,19 +350,17 @@ describe(useCSSTransition, () => {
         }
         expect(result.current[0]).toBe('exited');
 
-        expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEnter).toHaveBeenCalledWith();
-        expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-        expect(callbacks.onEntering).toHaveBeenCalledWith();
+        expect(callbacks.onEnter).toHaveBeenCalledExactlyOnceWith();
+        expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith();
         expect(callbacks.onEntered).toHaveBeenCalledTimes(0);
 
         expect(callbacks.onExit).toHaveBeenCalledTimes(0);
         if (option.enableExit) {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
-          expect(callbacks.onExited).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith('opacity');
         } else {
           expect(callbacks.onExiting).toHaveBeenCalledTimes(0);
-          expect(callbacks.onExited).toHaveBeenCalledWith();
+          expect(callbacks.onExited).toHaveBeenCalledExactlyOnceWith();
         }
         expect(callbacks.onExited).toHaveBeenCalledTimes(1);
       },
@@ -400,12 +391,11 @@ describe(useCSSTransition, () => {
 
         expect(callbacks.onEnter).toHaveBeenCalledTimes(0);
         if (option.enableEnter) {
-          expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
-          expect(callbacks.onEntering).toHaveBeenCalledWith();
-          expect(callbacks.onEntered).toHaveBeenCalledWith('opacity');
+          expect(callbacks.onEntering).toHaveBeenCalledExactlyOnceWith();
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith('opacity');
         } else {
           expect(callbacks.onEntering).toHaveBeenCalledTimes(0);
-          expect(callbacks.onEntered).toHaveBeenCalledWith();
+          expect(callbacks.onEntered).toHaveBeenCalledExactlyOnceWith();
         }
         expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
 
@@ -415,4 +405,98 @@ describe(useCSSTransition, () => {
       },
     );
   });
+
+  it(
+    'should not stuck in exiting when transitionend not fired (fast open -> close)',
+    withFakeTimers(() => {
+      // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
+      const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
+        () =>
+          ({
+            transitionDuration: '0.2s',
+            transitionDelay: '0s',
+          }) as unknown as CSSStyleDeclaration,
+      );
+
+      const { result, rerender } = renderHook(
+        (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
+        { initialProps: false },
+      );
+
+      const cmp = render(<div {...result.current[1]} />);
+
+      // initial
+      expect(result.current[0]).toBe('exited');
+
+      // open -> entering
+      rerender(true);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('entering');
+
+      // очень быстро close -> переход в exiting (но transitionend НЕ придёт)
+      rerender(false);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('exiting');
+
+      // колбэки, которые должны были сработать к этому моменту
+      expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+      expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExited).toHaveBeenCalledTimes(0);
+
+      // Прокручиваем таймеры дальше, чтобы сработал fallback (200ms + safety offset (≈50ms))
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
+
+      // После fallback хук должен перевести состояние в exited и вызвать onExited
+      expect(result.current[0]).toBe('exited');
+      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+
+      // Восстанавливаем мок
+      getComputedStyleMock.mockRestore();
+    }),
+  );
+
+  it(
+    'should not stuck in exiting when transitionend not fired (transition duration < 0 )',
+    withFakeTimers(() => {
+      // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
+      const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
+        () =>
+          ({
+            transitionDuration: '0s',
+            transitionDelay: '0s',
+          }) as unknown as CSSStyleDeclaration,
+      );
+
+      const { result, rerender } = renderHook(
+        (inProp) => useCSSTransition<HTMLDivElement>(inProp, { ...callbacks }),
+        { initialProps: false },
+      );
+
+      const cmp = render(<div {...result.current[1]} />);
+
+      // initial
+      expect(result.current[0]).toBe('exited');
+
+      // open -> entering
+      rerender(true);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('entered');
+
+      rerender(false);
+      cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('exited');
+
+      // колбэки, которые должны были сработать к этому моменту
+      expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+      expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+
+      // Восстанавливаем мок
+      getComputedStyleMock.mockRestore();
+    }),
+  );
 });

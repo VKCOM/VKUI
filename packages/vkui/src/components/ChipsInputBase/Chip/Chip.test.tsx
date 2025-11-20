@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { baselineComponent, fakeTimers, userEvent } from '../../../testing/utils';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { baselineComponent, userEvent, withFakeTimers } from '../../../testing/utils';
 import { Chip } from './Chip';
 
 describe(Chip, () => {
@@ -11,10 +11,8 @@ describe(Chip, () => {
     a11y: false,
   });
 
-  fakeTimers();
-
   it('removes chip on onRemove click', async () => {
-    const onRemove = jest.fn();
+    const onRemove = vi.fn();
 
     render(
       <Chip value="white" onRemove={onRemove}>
@@ -22,7 +20,7 @@ describe(Chip, () => {
       </Chip>,
     );
 
-    await userEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button'));
 
     expect(onRemove).toHaveBeenCalled();
   });
@@ -42,9 +40,9 @@ describe(Chip, () => {
 
   it.each([{ readOnly: false }, { readOnly: true }])(
     'calls user events (`readOnly` prop is `$readOnly`)',
-    async ({ readOnly }) => {
-      const onFocus = jest.fn();
-      const onBlur = jest.fn();
+    withFakeTimers(async ({ readOnly }) => {
+      const onFocus = vi.fn();
+      const onBlur = vi.fn();
       render(
         <Chip
           value="white"
@@ -61,6 +59,6 @@ describe(Chip, () => {
 
       expect(onFocus).toHaveBeenCalled();
       expect(onBlur).toHaveBeenCalled();
-    },
+    }),
   );
 });

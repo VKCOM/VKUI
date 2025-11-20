@@ -21,7 +21,7 @@ export interface ConfigProviderProps extends Partial<ConfigProviderContextInterf
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ConfigProvider
+ * @see https://vkui.io/components/config-provider
  */
 export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode => {
   const props = excludeKeysWithUndefined(propsRaw);

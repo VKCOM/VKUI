@@ -1,5 +1,5 @@
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
-import type { PartialStoryFn } from '@storybook/types';
+import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Div } from '../Div/Div';
@@ -22,9 +22,10 @@ const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
 );
 
 const story: Meta<CustomScrollViewProps> = {
-  title: 'Layout/CustomScrollView',
+  title: 'Utils/CustomScrollView',
   component: CustomScrollView,
   parameters: createStoryParameters('CustomScrollView', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

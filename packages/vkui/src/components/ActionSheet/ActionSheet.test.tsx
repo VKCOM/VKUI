@@ -4,10 +4,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   userEvent,
   waitCSSKeyframesAnimation,
   waitForFloatingPosition,
+  withFakeTimers,
 } from '../../testing/utils';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -15,7 +16,7 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 
-const ActionSheetDesktop = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -34,7 +35,7 @@ const ActionSheetDesktop = ({ onClose = jest.fn(), ...restProps }: Partial<Actio
   );
 };
 
-const ActionSheetMobile = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetMobile = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -46,7 +47,7 @@ const ActionSheetMobile = ({ onClose = jest.fn(), ...restProps }: Partial<Action
   );
 };
 
-const ActionSheetMenu = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetMenu = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -62,7 +63,7 @@ const ActionSheetMenu = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSh
   );
 };
 
-const ActionSheetSheet = ({ onClose = jest.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetSheet = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -94,8 +95,6 @@ describe(ActionSheet, () => {
     }
   });
 
-  fakeTimers();
-
   describe.each([
     ['desktop', ActionSheetDesktop],
     ['mobile', ActionSheetMobile],
@@ -112,14 +111,15 @@ describe(ActionSheet, () => {
     { autoCloseDisabled: true, selectable: true },
     { isCancelItem: true },
   ])('calls handlers when %s', (props) => {
+    fakeTimersForScope();
     it.each([
       ['desktop', ActionSheetDesktop],
       ['mobile', ActionSheetMobile],
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_, ActionSheet) => {
-      const onCloseHandler = jest.fn();
-      const handlers = { onClick: jest.fn(), onChange: jest.fn() };
+      const onCloseHandler = vi.fn();
+      const handlers = { onClick: vi.fn(), onChange: vi.fn() };
 
       const result = render(
         <ActionSheet onClose={onCloseHandler}>
@@ -137,7 +137,7 @@ describe(ActionSheet, () => {
           bubbles: true,
         }),
       );
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
 
       if (onCloseHandler.mock.calls.length > 0) {
         result.unmount();
@@ -150,10 +150,10 @@ describe(ActionSheet, () => {
       if (props.autoCloseDisabled) {
         expect(onCloseHandler).not.toHaveBeenCalled();
       } else if (!props.autoCloseDisabled && props.isCancelItem) {
-        expect(onCloseHandler).toHaveBeenCalledWith({ closedBy: 'cancel-item' });
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
       } else {
         !props.autoCloseDisabled &&
-          expect(onCloseHandler).toHaveBeenCalledWith({ closedBy: 'action-item' });
+          expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
       }
     });
   });
@@ -162,61 +162,64 @@ describe(ActionSheet, () => {
     ['container', () => screen.getByTestId('container')],
     ['content', () => screen.getByTestId('content')],
   ])('does not close on %s click', (_name, getNode) => {
+    fakeTimersForScope();
     it.each([
       ['desktop', ActionSheetDesktop],
       ['mobile', ActionSheetMobile],
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_name, ActionSheet) => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       render(
         <ActionSheet data-testid="container" onClose={onClose}>
           <div data-testid="content" />
         </ActionSheet>,
       );
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       await userEvent.click(getNode());
       expect(onClose).not.toHaveBeenCalled();
     });
   });
 
   describe('closes on click outside', () => {
+    fakeTimersForScope();
     it('desktop', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       const result = render(<ActionSheetDesktop onClose={onClose} />);
       await waitForFloatingPosition();
       await userEvent.click(document.body);
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith({ closedBy: 'other' });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
 
     it('mobile', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       const result = render(<ActionSheetMobile onClose={onClose} />);
       await waitForFloatingPosition();
       await userEvent.click(
         result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
       );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith({ closedBy: 'other' });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
   });
 
-  it('renders header and text', () => {
-    render(<ActionSheetMobile title="The header title" description="Text footnote" />);
-    act(jest.runAllTimers);
-    expect(screen.queryByText('The header title')).toBeTruthy();
-    expect(screen.queryByText('Text footnote')).toBeTruthy();
-  });
+  it(
+    'renders header and text',
+    withFakeTimers(async () => {
+      render(<ActionSheetMobile title="The header title" description="Text footnote" />);
+      await act(vi.runAllTimers);
+      expect(screen.queryByText('The header title')).toBeTruthy();
+      expect(screen.queryByText('Text footnote')).toBeTruthy();
+    }),
+  );
 
   it('renders close button only on mobile iOS', async () => {
     const { rerender } = render(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={jest.fn()} />
+          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -228,7 +231,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={jest.fn()} />
+          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -240,7 +243,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={jest.fn()} />
+          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -252,7 +255,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={jest.fn()} />
+          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -263,12 +266,13 @@ describe(ActionSheet, () => {
   });
 
   describe('handle allowClickPropagation correctly', () => {
+    fakeTimersForScope();
     it.each([
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_name, ActionSheet) => {
-      const onClose = jest.fn();
-      const onClick = jest.fn();
+      const onClose = vi.fn();
+      const onClick = vi.fn();
       const { rerender } = render(
         <div onClick={onClick}>
           <ActionSheet data-testid="container" onClose={onClose}>
@@ -277,7 +281,7 @@ describe(ActionSheet, () => {
         </div>,
       );
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
 
       await userEvent.click(screen.getByTestId('content'));
       expect(onClick).not.toHaveBeenCalled();
@@ -291,7 +295,7 @@ describe(ActionSheet, () => {
       );
 
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
 
       await userEvent.click(screen.getByTestId('content'));
       expect(onClick).toHaveBeenCalled();

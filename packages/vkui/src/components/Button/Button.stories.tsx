@@ -16,7 +16,7 @@ const iconsPresets = createFieldWithPresets({
 });
 
 const story: Meta<StoryButtonProps> = {
-  title: 'Blocks/Button',
+  title: 'Buttons/Button',
   component: Button,
   parameters: createStoryParameters('Button', CanvasFullLayout),
   argTypes: {
@@ -24,6 +24,7 @@ const story: Meta<StoryButtonProps> = {
     after: iconsPresets,
   },
   decorators: [withCartesian],
+  tags: ['Кнопки'],
 };
 
 export default story;

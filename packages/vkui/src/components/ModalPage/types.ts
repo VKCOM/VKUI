@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode, Ref, UIEvent } from 'react';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
 
 export type ModalPageCloseReason =
   | 'click-overlay'
@@ -44,7 +44,10 @@ export interface ModalPageProps
   /**
    * Задаёт контенту максимальную ширину на десктопе.
    */
-  size?: 's' | 'm' | 'l' | number;
+  size?: LiteralUnion<
+    's' | 'm' | 'l' | 'auto' | 'fit-content' | 'max-content' | 'min-content',
+    string | number
+  >;
   /**
    * Задаёт модальному окну фиксированную высоту.
    * Можно передать числовое значение в пикселях, а можно строкой, в том числе и в процентах "50%".
@@ -66,6 +69,8 @@ export interface ModalPageProps
   dynamicContentHeight?: boolean;
   /**
    * Отключает фокус на интерактивный элемент после открытия модалки.
+   *
+   * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
   noFocusToDialog?: boolean;
   /**
@@ -131,4 +136,18 @@ export interface ModalPageProps
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
+  /**
+   * Отключает отображение и взаимодействие с фоном модалки.
+   * > При использовании `ModalPage` внутри `ModalRoot` есть особенность использования этого свойства.
+   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-modal-overlay).
+   */
+  disableModalOverlay?: boolean;
+  /**
+   * Отключает анимацию открытия модалки.
+   */
+  disableOpenAnimation?: boolean;
+  /**
+   * Отключает анимацию закрытия модалки.
+   */
+  disableCloseAnimation?: boolean;
 }

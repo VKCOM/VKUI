@@ -11,7 +11,7 @@ import type { ModalPageProps } from './types';
 const snapPointCache = new Map<string, Exclude<SnapPoint, 'auto'>>();
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalPage
+ * @see https://vkui.io/components/modal-page
  */
 export const ModalPage = ({
   id: idProp,
@@ -26,6 +26,7 @@ export const ModalPage = ({
   size = 's',
   settlingHeight = 50,
   dynamicContentHeight,
+  disableModalOverlay,
   keepMounted = false,
   ...restProps
 }: ModalPageProps) => {
@@ -34,6 +35,7 @@ export const ModalPage = ({
     open,
     keepMounted,
     modalOverlayTestId,
+    disableModalOverlay,
     noFocusToDialog,
     onOpen,
     onOpened,

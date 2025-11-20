@@ -3,7 +3,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getFetchPriorityProp } from '../../lib/utils';
 import type { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Card, type CardProps } from '../Card/Card';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
@@ -13,7 +13,7 @@ import styles from './ContentCard.module.css';
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
-    Omit<TappableProps, 'getRootRef' | 'crossOrigin' | 'title'>,
+    Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
   /**
@@ -52,7 +52,7 @@ export interface ContentCardProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ContentCard
+ * @see https://vkui.io/components/content-card
  */
 export const ContentCard = ({
   overTitle,

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`appearance transforms correctly 1`] = `
+exports[`appearance > transforms correctly 1`] = `
 "import { ColorScheme, type ColorSchemeType, useColorScheme } from '@vkontakte/vkui';
 import React from 'react';
 
@@ -27,7 +27,7 @@ const App = () => {
 };"
 `;
 
-exports[`appearance transforms correctly 2`] = `
+exports[`appearance > transforms correctly 2`] = `
 "import { ColorScheme as AppearanceAlias, type ColorSchemeType as AppearanceTypeAlias } from '@vkontakte/vkui';
 import React from 'react';
 

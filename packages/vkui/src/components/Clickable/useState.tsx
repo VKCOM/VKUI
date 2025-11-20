@@ -56,7 +56,7 @@ export interface StateProps {
   unlockParentHover?: boolean;
 
   /**
-   * Длительность показа `activated`-состояния.
+   * Длительность показа `active`-состояния.
    */
   activeEffectDelay?: number;
 
@@ -79,14 +79,19 @@ interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
   /**
    * Блокирование активации состояний.
    */
-  lockState: boolean;
-  setParentStateLock: (v: boolean) => void;
+  lockState?: boolean;
+  setParentStateLock?: (v: boolean) => void;
 }
 
 /**
  * Управляет наведением на компонент, игнорирует тач события.
  */
-function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: UseHoverProps) {
+export function useHover({
+  hovered,
+  hasHover = true,
+  lockState = false,
+  setParentStateLock = noop,
+}: UseHoverProps = {}) {
   const [hoveredStateLocal, setHoveredStateLocal] = React.useState(false);
 
   const prevIsHoveredRef = React.useRef<boolean | undefined>(undefined);

@@ -55,7 +55,7 @@ describe('useResizeObserver', () => {
   };
 
   it('should call callback when add block', async () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     const result = render(<Fixture mockedBlocksIds={['block-1']} resizeCallback={callback} />);
 
@@ -70,7 +70,7 @@ describe('useResizeObserver', () => {
   });
 
   it('should use ResizeObserver when available', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     const { triggerResize, restore } = mockResizeObserver();
 
     render(<Fixture mockedBlocksIds={['block-1']} resizeCallback={callback} />);
@@ -82,7 +82,7 @@ describe('useResizeObserver', () => {
   });
 
   it('should handle window resize events', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     render(<Fixture mockedBlocksIds={[]} resizeCallback={callback} useWindow />);
 
@@ -90,7 +90,6 @@ describe('useResizeObserver', () => {
       window.dispatchEvent(new Event('resize'));
     });
 
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith(window);
+    expect(callback).toHaveBeenCalledExactlyOnceWith(window);
   });
 });

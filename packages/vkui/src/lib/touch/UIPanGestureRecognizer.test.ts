@@ -1,4 +1,4 @@
-import { touchEventMock } from '../../testing/utils';
+import { touchEventMock, withFakeTimers } from '../../testing/utils';
 import { UIPanGestureRecognizer } from './UIPanGestureRecognizer';
 
 const createTouchEvent = (type: string, clientX: number, clientY: number) =>
@@ -56,22 +56,23 @@ describe(UIPanGestureRecognizer, () => {
     expect(panGestureRecognizer.angle()).toBe(angle);
   });
 
-  it('should calculate velocity', () => {
-    jest.useFakeTimers();
+  it(
+    'should calculate velocity',
+    withFakeTimers(() => {
+      const panGestureRecognizer = new UIPanGestureRecognizer();
+      panGestureRecognizer.setStartCoords(createTouchEvent('touchstart', 0, 0));
+      panGestureRecognizer.setEndCoords(createTouchEvent('touchmove', 10, 10));
 
-    const panGestureRecognizer = new UIPanGestureRecognizer();
-    panGestureRecognizer.setStartCoords(createTouchEvent('touchstart', 0, 0));
-    panGestureRecognizer.setEndCoords(createTouchEvent('touchmove', 10, 10));
+      vi.setSystemTime(new Date('1970-01-01T00:00:00'));
+      panGestureRecognizer.setInitialTimeOnce();
 
-    jest.setSystemTime(new Date('1970-01-01T00:00:00'));
-    panGestureRecognizer.setInitialTimeOnce();
+      vi.setSystemTime(new Date('1970-01-01T00:00:00'));
+      expect(panGestureRecognizer.velocity()).toEqual({ x: 0, y: 0 });
 
-    jest.setSystemTime(new Date('1970-01-01T00:00:00'));
-    expect(panGestureRecognizer.velocity()).toEqual({ x: 0, y: 0 });
-
-    jest.setSystemTime(new Date('1970-01-01T00:00:02'));
-    expect(panGestureRecognizer.velocity()).toEqual({ x: 5, y: 5 });
-  });
+      vi.setSystemTime(new Date('1970-01-01T00:00:02'));
+      expect(panGestureRecognizer.velocity()).toEqual({ x: 5, y: 5 });
+    }),
+  );
 
   it('should reset coords', () => {
     const panGestureRecognizer = new UIPanGestureRecognizer();

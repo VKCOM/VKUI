@@ -1,6 +1,6 @@
 import { act } from 'react';
 import { render } from '@testing-library/react';
-import { fakeTimers, waitCSSKeyframesAnimation } from '../../testing/utils';
+import { fakeTimersForScope, waitCSSKeyframesAnimation } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';
 import { Root } from '../Root/Root';
@@ -53,7 +53,7 @@ function setup({ withAnimationsMode }: { withAnimationsMode: boolean }) {
 }
 
 describe('useNavTransition', () => {
-  fakeTimers();
+  fakeTimersForScope();
 
   it.each([
     ['properly detects transition direction without animations', false],
@@ -62,7 +62,7 @@ describe('useNavTransition', () => {
     const { TestComponent } = setup({ withAnimationsMode });
     // transition between views
     const component = render(<TestComponent activeView="v1" />);
-    act(jest.runOnlyPendingTimers);
+    await act(vi.runOnlyPendingTimers);
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: undefined');
 
     component.rerender(<TestComponent activeView="v3" />);

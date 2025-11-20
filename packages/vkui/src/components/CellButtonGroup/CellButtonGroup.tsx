@@ -9,7 +9,7 @@ export type CellButtonGroupProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 /**
  * @since 7.2.0
  *
- * @see https://vkcom.github.io/VKUI/#/CellButtonGroup
+ * @see https://vkui.io/components/cell-button-group
  */
 export const CellButtonGroup = (props: CellButtonGroupProps): React.ReactNode => {
   return <ButtonGroup gap="none" stretched {...props} />;

@@ -1,0 +1,154 @@
+---
+description: Кнопки, которые используются для вызова инструмента, вставки вложений или для форматирования.
+---
+
+<Overview group="buttons">
+
+# ToolButton [tag:component]
+
+Кнопки, которые используются для вызова инструмента, вставки вложений или для форматирования.
+Их можно использовать как кнопки для разового действия или для включения/выключения режима.
+
+Компонент наследует свойства компонента [`Tappable`](/components/tappable),
+что обеспечивает базовую функциональность для интерактивных элементов, таких как обработка событий нажатия (`onClick`),
+отключение (`disabled`) и поддержка ссылок (`href`)
+
+</Overview>
+
+<Playground style={{ width: 'unset' }}>
+  ```jsx
+  <ToolButton IconCompact={Icon20Add} IconRegular={Icon24Add} aria-label="Добавить вложение" />
+  ```
+</Playground>
+
+## Обязательные свойства
+
+### Адаптивные иконки
+
+Обязательные свойства `IconCompact` и `IconRegular` позволяют использовать разные иконки в зависимости от режима отображения
+(см. [Адаптивность | Размеры элементов интерфейса](/overview/adaptivity#sizes)). Это помогает поддерживать доступность и удобство использования
+на различных устройствах.
+
+## Контент
+
+Внутри кнопки допускается разместить дочерний элемент (`children`) — текст, который будет отображаться.
+За расположение контента отвечает свойство `direction`:
+
+- `row` — иконка и текст идут горизонтально, рядом (по умолчанию);
+- `column` — иконка над текстом, вертикально.
+
+<Playground style={{ width: 'unset' }}>
+  ```jsx
+  <ToolButton IconCompact={Icon20Add} IconRegular={Icon24Add} direction="row">
+    row
+  </ToolButton>
+  <ToolButton IconCompact={Icon20Add} IconRegular={Icon24Add} direction="column">
+    column
+  </ToolButton>
+  ```
+</Playground>
+
+## Режимы отображения
+
+Устанавливаются через свойство `mode`:
+
+- `primary` — акцентная основная кнопка, этот тип переупорядочения является первичным действием;
+- `secondary` — второстепенная кнопка с полупрозрачным фоном, этот тип переупорядочения является вторичным действием;
+- `tertiary` — кнопка без фона с низким акцентом, этот тип переупорядочения является вторичным действием;
+- `outline` — второстепенная кнопка с обводкой с средним акцентом, этот тип переупорядочения является вторичным действием рядом с `Primary` и первичным c `Link`.
+
+## Визуальное оформление
+
+### Цвет
+
+Задаётся свойством `appearance`.
+
+#### `"accent"`
+
+Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+<Playground style={{ width: 'unset' }}>
+  ```jsx
+  <ToolButton appearance="accent" mode="primary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Primary
+  </ToolButton>
+  <ToolButton appearance="accent" mode="secondary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Secondary
+  </ToolButton>
+  <ToolButton appearance="accent" mode="tertiary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Tertiary
+  </ToolButton>
+  <ToolButton appearance="accent" mode="outline" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Outline
+  </ToolButton>
+  ```
+</Playground>
+
+#### `"neutral"`
+
+Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки.
+
+<Playground style={{ width: 'unset' }}>
+  ```jsx
+  <ToolButton appearance="neutral" mode="primary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Primary
+  </ToolButton>
+  <ToolButton appearance="neutral" mode="secondary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Secondary
+  </ToolButton>
+  <ToolButton appearance="neutral" mode="tertiary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Tertiary
+  </ToolButton>
+  <ToolButton appearance="neutral" mode="outline" IconCompact={Icon20Add} IconRegular={Icon24Add}>
+    Outline
+  </ToolButton>
+  ```
+</Playground>
+
+### Скругление
+
+Управляется свойством `rounded`:
+
+- Если `true` — кнопка становится круглой (50% скругление);
+- Не работает, если `direction="column"` и есть дочерние элементы (`children`).
+
+<Playground style={{ width: 'unset' }}>
+  ```jsx
+  <ToolButton
+    IconCompact={Icon20Add}
+    IconRegular={Icon24Add}
+    aria-label="Добавить вложение"
+    rounded
+  />
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент `ToolButton` автоматически выбирает правильный HTML-тег: по умолчанию это `button`,
+а если передано свойство `href`, то `a`. Это обеспечивает базовую поддержку доступности.
+
+Компонент поддерживает все стандартные `aria`-атрибуты, что позволяет переопределить поведение по умолчанию,
+если это необходимо.
+
+> Если одновременно переданы свойства `href` и `disabled`, компонент отключает `href`,
+> чтобы соответствовать требованиям доступности. По возможности избегайте такой комбинации.
+
+### Кнопки с иконками
+
+Если `ToolButton` содержит только иконку (без текста), обязательно добавьте `aria-label` с описанием действия кнопки.
+Это поможет пользователям с ограниченными возможностями понять назначение кнопки.
+
+```jsx
+<ToolButton
+  IconRegular={Icon24Add}
+  IconCompact={Icon20Add}
+  mode="primary"
+  appearance="accent"
+  aria-label="Добавить вложение"
+/>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="ToolButton" />

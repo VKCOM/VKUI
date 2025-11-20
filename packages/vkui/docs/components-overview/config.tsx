@@ -52,6 +52,7 @@ import {
   EllipsisText,
   File,
   Flex,
+  FloatingArrow,
   Footer,
   Footnote,
   FormItem,
@@ -91,6 +92,7 @@ import {
   Search,
   SegmentedControl,
   Select,
+  SelectionControl,
   Separator,
   SimpleCell,
   SimpleGrid,
@@ -148,6 +150,7 @@ import { Playground as DivPlayground } from '../../src/components/Div/Div.storie
 import { Playground as DropZonePlayground } from '../../src/components/DropZone/DropZone.stories';
 import { Playground as FilePlayground } from '../../src/components/File/File.stories';
 import { Playground as FlexPlayground } from '../../src/components/Flex/Flex.stories';
+import { Playground as FloatingArrowPlayground } from '../../src/components/FloatingArrow/FloatingArrow.stories';
 import { Playground as FooterPlayground } from '../../src/components/Footer/Footer.stories';
 import { Playground as FormItemPlayground } from '../../src/components/FormItem/FormItem.stories';
 import { Playground as FormLayoutGroupPlayground } from '../../src/components/FormLayoutGroup/FormLayoutGroup.stories';
@@ -191,6 +194,7 @@ import { Playground as ScrollArrowPlayground } from '../../src/components/Scroll
 import { Playground as SearchPlayground } from '../../src/components/Search/Search.stories';
 import { Playground as SegmentedControlPlayground } from '../../src/components/SegmentedControl/SegmentedControl.stories';
 import { Playground as SelectPlayground } from '../../src/components/Select/Select.stories';
+import { Playground as SelectionControlPlayground } from '../../src/components/SelectionControl/SelectionControl.stories';
 import { Playground as SeparatorPlayground } from '../../src/components/Separator/Separator.stories';
 import { Playground as SimpleCellPlayground } from '../../src/components/SimpleCell/SimpleCell.stories';
 import { Playground as SimpleGridPlayground } from '../../src/components/SimpleGrid/SimpleGrid.stories';
@@ -251,6 +255,7 @@ export type ComponentConfigData = {
 
 export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
   ImageBaseBadge: {
+    customPath: 'Image/ImageBaseBadge',
     component: ImageBaseBadge,
     playgroundRender: ImageBaseBadgePlayground.render,
     args: {
@@ -260,6 +265,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     decorator: ImageDecorator,
   },
   ImageBaseFloatElement: {
+    customPath: 'Image/ImageBaseFloatElement',
     component: ImageBaseFloatElement,
     playgroundRender: ImageBaseFloatElementPlayground.render,
     args: {
@@ -269,6 +275,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     decorator: ImageDecorator,
   },
   ImageBaseOverlay: {
+    customPath: 'Image/ImageBaseOverlay',
     component: ImageBaseOverlay,
     playgroundRender: ImageBaseOverlayPlayground.render,
     args: {
@@ -359,6 +366,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     args: CustomScrollViewPlayground.args,
   },
   Tabbar: {
+    customPath: 'Epic/Tabbar',
     component: Tabbar,
     playgroundRender: TabbarPlayground.render,
     args: {
@@ -370,6 +378,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     minWidth: 300,
   },
   TabbarItem: {
+    customPath: 'Epic/Tabbar/TabbarItem',
     component: TabbarItem,
     playgroundRender: TabbarItemPlayground.render,
     args: { ...TabbarItemPlayground.args, children: <Icon28MessageOutline />, label: 'Messages' },
@@ -379,6 +388,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     playgroundRender: SplitLayoutPlayground.render,
   },
   SplitCol: {
+    customPath: 'SplitLayout/SplitCol',
     component: SplitCol,
     playgroundRender: SplitColPlayground.render,
     args: SplitColPlayground.args,
@@ -391,6 +401,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     component: PanelHeaderContentPreview,
   },
   PanelHeaderButton: {
+    customPath: 'PanelHeader/PanelHeaderButton',
     component: PanelHeaderButton,
     playgroundRender: PanelHeaderButtonPlayground.render,
   },
@@ -421,17 +432,18 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     maxWidth: 600,
   },
   HorizontalScroll: {
-    customPath: 'HorizontalScroll/HorizontalScroll',
     component: HorizontalScrollPreview,
     decorator: Group,
   },
   Footer: {
+    customPath: 'Group/Footer',
     component: Footer,
     playgroundRender: FooterPlayground.render,
     args: FooterPlayground.args,
     minWidth: 200,
   },
   Header: {
+    customPath: 'Group/Header',
     component: Header,
     playgroundRender: HeaderPlayground.render,
     args: {
@@ -490,47 +502,56 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     },
   },
   Title: {
+    customPath: 'Typography/Title',
     component: Title,
     playgroundRender: TitlePlayground.render,
     args: TitlePlayground.args,
   },
   Text: {
+    customPath: 'Typography/Text',
     component: Text,
     playgroundRender: TextPlayground.render,
     args: TextPlayground.args,
   },
   Subhead: {
+    customPath: 'Typography/Subhead',
     component: Subhead,
     playgroundRender: SubheadPlayground.render,
     args: SubheadPlayground.args,
   },
   DisplayTitle: {
+    customPath: 'Typography/DisplayTitle',
     component: DisplayTitle,
     playgroundRender: DisplayTitlePlayground.render,
     args: DisplayTitlePlayground.args,
     minWidth: 150,
   },
   EllipsisText: {
+    customPath: 'Typography/EllipsisText',
     component: EllipsisText,
     playgroundRender: EllipsisTextPlayground.render,
     args: EllipsisTextPlayground.args,
   },
   Footnote: {
+    customPath: 'Typography/Footnote',
     component: Footnote,
     playgroundRender: FootnotePlayground.render,
     args: FootnotePlayground.args,
   },
   Caption: {
+    customPath: 'Typography/Caption',
     component: Caption,
     playgroundRender: CaptionPlayground.render,
     args: CaptionPlayground.args,
   },
   Headline: {
+    customPath: 'Typography/Headline',
     component: Headline,
     playgroundRender: HeadlinePlayground.render,
     args: HeadlinePlayground.args,
   },
   Paragraph: {
+    customPath: 'Typography/Paragraph',
     component: Paragraph,
     playgroundRender: ParagraphPlayground.render,
     args: ParagraphPlayground.args,
@@ -562,6 +583,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     },
   },
   TabsItem: {
+    customPath: 'Tabs/TabsItem',
     component: TabsItem,
     playgroundRender: TabsItemPlayground.render,
     args: {
@@ -585,6 +607,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     args: SwitchPlayground.args,
   },
   SubnavigationButton: {
+    customPath: 'SubnavigationBar/SubnavigationButton',
     component: SubnavigationButton,
     playgroundRender: SubnavigationButtonPlayground.render,
     args: SubnavigationButtonPlayground.args,
@@ -669,6 +692,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     minWidth: 300,
   },
   PanelSpinner: {
+    customPath: 'Panel/PanelSpinner',
     component: PanelSpinner,
     playgroundRender: PanelSpinnerPlayground.render,
     args: PanelSpinnerPlayground.args,
@@ -738,6 +762,7 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     args: MarkPlayground.args,
   },
   List: {
+    customPath: 'Cell/List',
     component: List,
     playgroundRender: ListPlayground.render,
     args: ListPlayground.args,
@@ -1060,141 +1085,203 @@ export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {
     },
     minWidth: 300,
   },
+  SelectionControl: {
+    component: SelectionControl,
+    playgroundRender: SelectionControlPlayground.render,
+    args: SelectionControlPlayground.args,
+    minWidth: 150,
+  },
+  FloatingArrow: {
+    component: FloatingArrow,
+    playgroundRender: FloatingArrowPlayground.render,
+    args: FloatingArrowPlayground.args,
+    decorator: ({ children }) => (
+      <div
+        style={{
+          width: 60,
+          height: 30,
+          position: 'absolute',
+          insetBlockStart: '50%',
+          insetInlineStart: '50%',
+          transform: 'translate(-50%,-50%)',
+          border: '1px dashed black',
+          borderRadius: '4px',
+        }}
+      >
+        {children}
+      </div>
+    ),
+  },
 };
 
-export const CONFIG: Record<string, { title: string; components: string[] }> = {
-  Blocks: {
-    title: 'Blocks',
-    components: [
+const sortByAlphabet = (array: string[]) => {
+  return array.sort((a, b) => a.localeCompare(b));
+};
+
+export const CONFIG: Array<{ title: string; displayTitle: string; components: string[] }> = [
+  {
+    title: 'Layout',
+    displayTitle: 'Раскладка',
+    components: sortByAlphabet([
+      'ButtonGroup',
+      'CardGrid',
+      'CardScroll',
+      'CellButtonGroup',
+      'Div',
+      'Flex',
+      'FormLayoutGroup',
+      'Footer',
+      'Group',
+      'Header',
+      'PanelHeaderContent',
+      'RadioGroup',
+      'Separator',
+      'SimpleGrid',
+      'Spacing',
+      'SplitCol',
+      'SplitLayout',
+    ]),
+  },
+  {
+    title: 'Forms',
+    displayTitle: 'Формы и поля ввода',
+    components: sortByAlphabet([
+      'Checkbox',
+      'ChipsInput',
+      'ChipsSelect',
+      'DropZone',
+      'File',
+      'FormItem',
+      'Input',
+      'Radio',
+      'SegmentedControl',
+      'Select',
+      'Slider',
+      'Switch',
+      'Textarea',
+      'WriteBar',
+    ]),
+  },
+  {
+    title: 'Dates',
+    displayTitle: 'Работа с датами',
+    components: sortByAlphabet(['Calendar', 'CalendarRange', 'DateInput', 'DateRangeInput']),
+  },
+  {
+    title: 'Buttons',
+    displayTitle: 'Кнопки',
+    components: sortByAlphabet([
+      'Button',
+      'Cell',
+      'CellButton',
+      'IconButton',
+      'List',
+      'SimpleCell',
+      'ToolButton',
+    ]),
+  },
+  {
+    title: 'Navigation',
+    displayTitle: 'Навигация',
+    components: sortByAlphabet([
+      'Pagination',
+      'Panel',
+      'PanelHeader',
+      'PanelHeaderButton',
+      'PanelHeaderContext',
+      'PanelSpinner',
+      'SubnavigationBar',
+      'SubnavigationButton',
+      'Tabbar',
+      'TabbarItem',
+      'Tabs',
+      'TabsItem',
+    ]),
+  },
+  {
+    title: 'Feedback',
+    displayTitle: 'Обратная связь',
+    components: sortByAlphabet([
+      'Alert',
+      'Progress',
+      'ScreenSpinner',
+      'Skeleton',
+      'Snackbar',
+      'Spinner',
+    ]),
+  },
+  {
+    title: 'Modals',
+    displayTitle: 'Модальные окна',
+    components: sortByAlphabet([
+      'ModalCardBase',
+      'ModalDismissButton',
+      'ModalOutsideButton',
+      'ModalPage',
+      'ModalPageHeader',
+      'Popover',
+      'Popper',
+      'Tooltip',
+    ]),
+  },
+  {
+    title: 'Data Display',
+    displayTitle: 'Отображение данных',
+    components: sortByAlphabet([
       'Accordion',
       'Avatar',
       'Badge',
       'Banner',
-      'Button',
-      'ButtonGroup',
       'Card',
-      'CardGrid',
-      'CardScroll',
-      'Cell',
-      'CellButton',
-      'CellButtonGroup',
-      'ContentBadge',
-      'ContentCard',
+      'Chip',
       'Counter',
-      'Div',
-      'Footer',
       'Gallery',
-      'Gradient',
       'GridAvatar',
-      'Group',
-      'Header',
-      'HorizontalCell',
-      'IconButton',
+      'HorizontalScroll',
       'Image',
       'ImageBaseBadge',
       'ImageBaseFloatElement',
       'ImageBaseOverlay',
       'InfoRow',
-      'Link',
-      'List',
-      'Mark',
       'MiniInfoCell',
-      'ModalCardBase',
-      'Pagination',
-      'PanelSpinner',
+      'UsersStack',
+      'ContentBadge',
+      'ContentCard',
+      'HorizontalCell',
       'Placeholder',
-      'Progress',
       'RichCell',
+    ]),
+  },
+  {
+    title: 'Typography',
+    displayTitle: 'Типографика',
+    components: [
+      'Link',
+      'Mark',
+      ...sortByAlphabet([
+        'Caption',
+        'DisplayTitle',
+        'EllipsisText',
+        'Footnote',
+        'Headline',
+        'Paragraph',
+        'Subhead',
+        'Text',
+        'Title',
+      ]),
+    ],
+  },
+  {
+    title: 'Utils',
+    displayTitle: 'Утилиты',
+    components: sortByAlphabet([
+      'CustomScrollView',
+      'FloatingArrow',
+      'Gradient',
+      'OnboardingTooltip',
       'ScrollArrow',
       'Search',
-      'Separator',
-      'SimpleCell',
-      'Skeleton',
-      'Spinner',
-      'Spacing',
-      'SubnavigationBar',
-      'SubnavigationButton',
-      'Switch',
-      'Tabs',
-      'TabsItem',
-      'ToolButton',
-      'UsersStack',
-      'WriteBar',
-    ],
+      'SelectionControl',
+    ]),
   },
-  Forms: {
-    title: 'Forms',
-    components: [
-      'FormItem',
-      'Calendar',
-      'CalendarRange',
-      'Checkbox',
-      'ChipsInput',
-      'Chip',
-      'ChipsSelect',
-      'DateInput',
-      'DateRangeInput',
-      'DropZone',
-      'File',
-      'FormLayoutGroup',
-      'FormStatus',
-      'Input',
-      'Radio',
-      'RadioGroup',
-      'SegmentedControl',
-      'Select',
-      'Slider',
-      'Textarea',
-    ],
-  },
-  Typography: {
-    title: 'Typography',
-    components: [
-      'Caption',
-      'DisplayTitle',
-      'EllipsisText',
-      'Footnote',
-      'Headline',
-      'Paragraph',
-      'Subhead',
-      'Text',
-      'Title',
-    ],
-  },
-  Popouts: {
-    title: 'Popouts',
-    components: ['ActionSheet', 'ActionSheetItem', 'Alert', 'ScreenSpinner', 'Snackbar'],
-  },
-  Layout: {
-    title: 'Layout',
-    components: [
-      'CustomScrollView',
-      'HorizontalScroll',
-      'Flex',
-      'SimpleGrid',
-      'Panel',
-      'PanelHeader',
-      'PanelHeaderButton',
-      'PanelHeaderContent',
-      'PanelHeaderContext',
-      'SplitCol',
-      'SplitLayout',
-      'Tabbar',
-      'TabbarItem',
-    ],
-  },
-  Modals: {
-    title: 'Modals',
-    components: [
-      'ModalCard',
-      'ModalDismissButton',
-      'ModalOutsideButton',
-      'ModalPage',
-      'ModalPageHeader',
-    ],
-  },
-  Poppers: {
-    title: 'Poppers',
-    components: ['OnboardingTooltip', 'Tooltip', 'Popover', 'Popper'],
-  },
-};
+];

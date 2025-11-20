@@ -7,9 +7,10 @@ import { Div } from '../Div/Div';
 import { Popper, type PopperProps } from './Popper';
 
 const story: Meta<PopperProps> = {
-  title: 'Poppers/Popper',
+  title: 'Modals/Popper',
   component: Popper,
   parameters: createStoryParameters('Popper', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Модальные окна'],
 };
 
 export default story;

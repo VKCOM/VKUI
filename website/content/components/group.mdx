@@ -1,0 +1,281 @@
+---
+description: Компонент для визуальной группировки связанных элементов интерфейса.
+---
+
+<Overview group="layout">
+
+# Group [tag:component]
+
+Компонент для визуальной группировки связанных элементов интерфейса.
+Обеспечивает единое стилевое оформление, управление отступами и разделителями между блоками контента.
+
+</Overview>
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group header={<Header>Заголовок группы</Header>} separator="hide">
+    <Div>
+      <Text>Контент группы</Text>
+    </Div>
+    <Footer>Подвал группы</Footer>
+  </Group>
+  ```
+</Playground>
+
+## Вложенные Group
+
+Компонент `Group` можно вкладывать в другой компонент `Group`. Обратите внимание, что чаще всего вложенные
+компоненты должны иметь свойство `mode="plain"`, это задаёт им прозрачный фон и скрывает рамки.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group separator="hide">
+    <Group mode="plain">
+      <SimpleCell indicator="+7 ••• •• •• 96" before={<Icon28PhoneOutline />} onClick={() => {}}>
+        Номер телефона
+      </SimpleCell>
+      <SimpleCell indicator="g•••@gmail.com" before={<Icon28MailOutline />} onClick={() => {}}>
+        Email
+      </SimpleCell>
+    </Group>
+    <Group mode="plain">
+      <SimpleCell
+        indicator="Обновлён 3 года назад"
+        before={<Icon28KeyOutline />}
+        onClick={() => {}}
+      >
+        Пароль
+      </SimpleCell>
+      <SimpleCell indicator="Вкл." before={<Icon28CheckShieldDeviceOutline />} onClick={() => {}}>
+        Подтверждение входа
+      </SimpleCell>
+      <SimpleCell indicator="2" before={<Icon28DevicesOutline />} onClick={() => {}}>
+        Привязанные устройства
+      </SimpleCell>
+    </Group>
+  </Group>
+  ```
+</Playground>
+
+## Header [tag:component]
+
+Заголовок группы. Передаётся либо в свойство `header`, либо в начале `children`, либо в `Group.Header`.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Indicator>} after={<Switch label="Уведомления" />}>Уведомления</Header>
+  ```
+</Playground>
+
+### Рекомендуемые размеры иконок
+
+| Свойство         | Расположение            | Рекомендуемый размер |
+| ---------------- | ----------------------- | -------------------- |
+| `before`         | Слева от всего контента | `28px`               |
+| `beforeTitle`    | Слева от заголовка      | `16px`               |
+| `afterTitle`     | Справа от заголовка     | `16px`               |
+| `beforeSubtitle` | Слева от подзаголовка   | `12px`               |
+| `afterSubtitle`  | Справа от подзаголовка  | `12px`               |
+
+### Дополнительные элементы
+
+- `indicator` — отображает счётчик/статус:
+
+  ```jsx
+  <Header indicator={<Badge mode="prominent">12</Badge>}>Уведомления</Header>
+  ```
+
+- `after` — контент справа от всего заголовка:
+
+  ```jsx
+  <Header after={<Switch label="Настройки" />}>Настройки</Header>
+  ```
+
+### Пример использования
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group
+    mode="card"
+    separator="hide"
+    header={
+      <Header
+        before={<Icon28UserCircleFillBlue />}
+        beforeTitle={<Icon16LockOutline />}
+        afterTitle={<Icon16UnlockOutline />}
+        beforeSubtitle={<Icon12Tag />}
+        afterSubtitle={<Icon12Fire />}
+        subtitle="SOHN — Conrad"
+        subtitleComponent="h3"
+        indicator={
+          <Counter size="s" mode="primary" appearance="accent-red">
+            3
+          </Counter>
+        }
+        after={<Link href="#">Показать все</Link>}
+      >
+        Плейлисты
+      </Header>
+    }
+  >
+    <Div>
+      <Text>Контент</Text>
+    </Div>
+  </Group>
+  ```
+</Playground>
+
+## Footer [tag:component]
+
+Подвал группы. Передаётся в конце `children`.
+
+<Playground>
+  ```jsx
+  <Footer>Copyright © vk.com</Footer>
+  ```
+</Playground>
+
+### Доступность (a11y) [#a11y]
+
+#### Семантическая роль
+
+По умолчанию использует HTML-тег `<footer>`, дополнительно задаётся роль `role="contentinfo"` ([для поддержки Safari\<=13](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer#accessibility)).
+
+Предназначен для:
+
+- контактной информации;
+- ссылок на разделы сайта;
+- копирайта и юридических данных;
+- мета-информации о содержимом.
+
+#### Ключевые правила
+
+| Сценарий                   | Решение                       | Почему важно                       |
+| -------------------------- | ----------------------------- | ---------------------------------- |
+| Глобальный подвал страницы | Только один на страницу       | Соответствие стандартам `WAI-ARIA` |
+| Несколько подвалов         | Добавить `aria-label` каждому | Различение разделов скринридерами  |
+| Декоративный элемент       | `<Footer Component="div">`    | Избежать ложной семантики          |
+
+#### Контекст использования
+
+В данном примере первый `Footer` "локальный", потому что находится внутри секционного контента (компонент `Group`)
+и содержит мета-информацию, а второй `Footer` - глобальный, потому что относится ко всей странице.
+
+<Playground>
+  ```jsx
+  <Panel mode="plain">
+    <Group header={<Header size="s">Статьи</Header>}>
+      <SimpleCell onClick={() => {}}>
+        Связь между употреблением шоколада и получением Нобелевской премии
+      </SimpleCell>
+      <SimpleCell onClick={() => {}}>Кошка как нелинейный элемент в квантовой системе</SimpleCell>
+      <SimpleCell onClick={() => {}}>Алгоритм оптимального поедания пиццы</SimpleCell>
+      <Footer>Теги: наука, исследования</Footer>
+    </Group>
+    <Footer>
+      <Link href="#about">О нас</Link> | <Link href="#contact">Контакты</Link>
+    </Footer>
+  </Panel>
+  ```
+</Playground>
+
+#### Множество
+
+Несколько подвалов без контекста скринридеры воспринимают как дубли, чтобы этого избежать,
+добавляйте `aria-label` каждому компоненту:
+
+```jsx
+<Footer aria-label="Навигация">
+  <Link href="#about">О нас</Link>
+  <Link href="#contacts">Контакты</Link>
+</Footer>
+
+<Footer aria-label="Юридическая информация">
+  <Text>© 2025 Компания</Text>
+</Footer>
+```
+
+#### Пользовательский тэг
+
+Используйте `Component="div"` если:
+
+- контент не соответствует семантике подвала;
+- элемент используется для визуального оформления;
+- уже есть глобальный подвал на странице.
+
+```jsx
+// Декоративный раздел
+<Footer Component="div">Информация на данной странице является конфиденциальной.</Footer>
+```
+
+## Group.ExpandedContent [#group-expanded-content] [tag:component]
+
+Компенсирует внутренние отступы `Group`.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group header={<Header>Удаляем для HorizontalScroll отступы Group по горизонтали</Header>}>
+    <Group.ExpandedContent direction="inline">
+      <HorizontalScroll showArrows>
+        {Array.from({ length: 20 }).map((_, index) => {
+          return (
+            <HorizontalCell key={index} header={index}>
+              <Avatar size={56} />
+            </HorizontalCell>
+          );
+        })}
+      </HorizontalScroll>
+    </Group.ExpandedContent>
+  </Group>
+  ```
+</Playground>
+
+## Подкомпонентный подход
+
+Собрать `Group` самостоятельно можно с помощью следующих подкомпонентов:
+
+- `Group.Container` – служит оберткой, отвечающей за скругления и отступы внутри группы.
+  Принимает все основные свойства `Group`, кроме `header` и `description`.
+
+- `Group.Header` – отвечает за отрисовку заголовка. Соответствует свойству `header` у `Group`. Рекомендуется использовать подкомпонент
+  [`Header`](#header) в качестве содержимого.
+
+- `Group.Description` – отвечает за отрисовку подписи в нижней части группы. Соответствует свойству `description` у `Group`.
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Group.Container separator="hide">
+    <Group.Header>
+      <Header>Адреса</Header>
+    </Group.Header>
+    <CellButton onClick={() => {}}>Добавить домашний адрес</CellButton>
+    <CellButton onClick={() => {}}>Добавить рабочий адрес</CellButton>
+    <Group.Description>
+      Для использования в мини-приложениях, Delivery Club, VK Taxi и других сервисах ВКонтакте. Эти
+      адреса видны только Вам.
+    </Group.Description>
+  </Group.Container>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name={["Group", "Header", "Footer"]}>
+
+### Group [#group-api]
+
+### Group.Container [#group-container-api]
+
+### Group.Header [#group-header-api]
+
+### Group.Description [#group-description-api]
+
+### Group.ExpandedContent [#group-expanded-content-api]
+
+### Header [#header-api]
+
+### Footer [#footer-api]
+
+</PropsTable>

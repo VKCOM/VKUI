@@ -1,5 +1,7 @@
 import { ruleName } from './index.js';
 
+const testRule = createTestRule({ ruleName });
+
 testRule({
   ruleName,
   config: true,
@@ -16,17 +18,17 @@ testRule({
   reject: [
     {
       code: `.class{margin: 0 calc(var(--some-var) * -1)}`,
-      message: `Bad multiplication, swap operands`,
+      message: `Bad multiplication, swap operands (vkui-internal/bad-multiplication)`,
     },
     {
       code: `.class{margin: 0 calc(var(--some-var)*-1)}`,
-      message: `Bad multiplication, swap operands`,
+      message: `Bad multiplication, swap operands (vkui-internal/bad-multiplication)`,
     },
     {
       code: `.class{width: calc(
         (var(--some-var) * -1)
 )}`,
-      message: `Bad multiplication, swap operands`,
+      message: `Bad multiplication, swap operands (vkui-internal/bad-multiplication)`,
     },
   ],
 });

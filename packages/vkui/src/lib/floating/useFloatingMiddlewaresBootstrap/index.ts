@@ -27,6 +27,14 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    * Не оказывает влияния при `placement` значениях - `'auto' | 'auto-start' | 'auto-end'`
    */
   disableFlipMiddleware?: boolean;
+  /**
+   * Позволяет отключить смещение по главной оси,
+   * которое не даёт всплывающему элементу выходить за границы видимой области.
+   */
+  disableShiftMiddleware?: boolean;
+  /**
+   * Задаёт резервный вариант размещения по перпендикулярной оси.
+   */
   flipMiddlewareFallbackAxisSideDirection?: FlipMiddlewareOptions['fallbackAxisSideDirection'];
   /**
    * Отступ по главной оси.
@@ -54,7 +62,7 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    */
   sameWidth?: boolean;
   /**
-   * Массив кастомных модификаторов для Popper (необходимо мемоизировать).
+   * Позволяет задать или переопределить модификаторы библиотеки **Floating UI** (подробнее в документации про [middleware](https://floating-ui.com/docs/middleware)).
    */
   customMiddlewares?: UseFloatingMiddleware[];
   /**
@@ -75,7 +83,8 @@ export const useFloatingMiddlewaresBootstrap = ({
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
-  flipMiddlewareFallbackAxisSideDirection = 'start',
+  disableShiftMiddleware = false,
+  flipMiddlewareFallbackAxisSideDirection = 'end',
 }: UseFloatingMiddlewaresBootstrapOptions): {
   middlewares: UseFloatingMiddleware[];
   strictPlacement: Placement | undefined;
@@ -89,19 +98,35 @@ export const useFloatingMiddlewaresBootstrap = ({
       }),
     ];
 
-    // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
+    const shift = disableShiftMiddleware ? null : shiftMiddleware();
+
+    // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#conflict-with-autoplacementjs
     if (isAutoPlacement) {
       middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
+      if (shift) {
+        middlewares.push(shift);
+      }
     } else if (!disableFlipMiddleware) {
-      middlewares.push(
-        flipMiddleware({
-          fallbackAxisSideDirection: flipMiddlewareFallbackAxisSideDirection,
-          crossAxis: false,
-        }),
-      );
-    }
+      const flip = flipMiddleware({
+        crossAxis: 'alignment',
+        fallbackAxisSideDirection: flipMiddlewareFallbackAxisSideDirection,
+      });
 
-    middlewares.push(shiftMiddleware());
+      // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#combining-with-shiftjs
+      if (placement.includes('-')) {
+        middlewares.push(flip);
+        if (shift) {
+          middlewares.push(shift);
+        }
+      } else {
+        if (shift) {
+          middlewares.push(shift);
+        }
+        middlewares.push(flip);
+      }
+    } else if (shift) {
+      middlewares.push(shift);
+    }
 
     if (sameWidth) {
       middlewares.push(
@@ -119,7 +144,7 @@ export const useFloatingMiddlewaresBootstrap = ({
       middlewares.push(...customMiddlewares);
     }
 
-    // см. https://floating-ui.com/docs/arrow#order
+    // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/arrow.mdx#order
     if (arrow) {
       middlewares.push(
         arrowMiddleware({
@@ -141,6 +166,7 @@ export const useFloatingMiddlewaresBootstrap = ({
     arrowHeight,
     offsetByMainAxis,
     disableFlipMiddleware,
+    disableShiftMiddleware,
     flipMiddlewareFallbackAxisSideDirection,
     sameWidth,
     customMiddlewares,

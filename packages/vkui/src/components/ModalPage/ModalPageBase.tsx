@@ -61,7 +61,7 @@ export const ModalPageBase = ({
             ? function handleDismissButtonClick(event) {
                 onClose('click-close-button', event);
               }
-            : undefined
+            : noop
         }
         aria-label={modalDismissButtonLabel}
       >
@@ -71,7 +71,12 @@ export const ModalPageBase = ({
 
   return (
     <RootComponent role="document" baseClassName={styles.document} {...restProps}>
-      <div className={classNames(styles.children, isDesktop && styles.childrenDesktop)}>
+      <div
+        className={classNames(
+          styles.children,
+          isDesktop ? styles.childrenDesktop : styles.childrenMobile,
+        )}
+      >
         {hasReactNode(header) && header}
         <ModalPageContent
           getRootRef={getRef}

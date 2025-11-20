@@ -1,14 +1,20 @@
 import { act, useState } from 'react';
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
-import { baselineComponent, userEvent, waitCSSTransitionEnd } from '../../testing/utils';
+import {
+  baselineComponent,
+  userEvent,
+  waitCSSTransitionEnd,
+  withFakeTimers,
+} from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { type ModalCardProps } from '../ModalCard/types';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalPage } from './ModalPage';
+import styles from './ModalPage.module.css';
 
 export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
   await waitCSSTransitionEnd(
@@ -36,6 +42,70 @@ describe(ModalPage, () => {
     result.rerender(<ModalPage id="host" data-testid="host" />);
     await waitModalPageCSSTransitionEnd(result.getByTestId('host'));
     expect(result.queryByTestId('host')).not.toBeInTheDocument();
+  });
+
+  test('should not find overlay when use disableModalOverlay', async () => {
+    const result = render(
+      <ModalPage id="host" data-testid="host" modalOverlayTestId="overlay" disableModalOverlay />,
+    );
+    expect(result.queryByTestId('host')).not.toBeInTheDocument();
+
+    result.rerender(
+      <ModalPage
+        open
+        id="host"
+        data-testid="host"
+        modalOverlayTestId="overlay"
+        disableModalOverlay
+      />,
+    );
+    await waitModalPageCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.getByTestId('host')).toBeInTheDocument();
+
+    expect(result.queryByTestId('overlay')).toBe(null);
+  });
+
+  test('should open/close without animation with disableAnimation', () => {
+    const onOpen = vi.fn();
+    const onOpened = vi.fn();
+    const onClosed = vi.fn();
+
+    const Fixture = () => {
+      const [opened, setOpened] = React.useState<boolean>(false);
+
+      return (
+        <>
+          <Button onClick={() => setOpened(true)} data-testid="open-button">
+            Open
+          </Button>
+          <Button onClick={() => setOpened(false)} data-testid="close-button">
+            Close
+          </Button>
+          <ModalPage
+            open={opened}
+            id="host"
+            data-testid="host"
+            modalOverlayTestId="overlay"
+            onOpen={onOpen}
+            onOpened={onOpened}
+            onClosed={onClosed}
+            disableOpenAnimation
+            disableCloseAnimation
+            keepMounted
+          />
+        </>
+      );
+    };
+
+    render(<Fixture />);
+
+    fireEvent.click(screen.getByTestId('open-button'));
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onOpened).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('close-button'));
+    expect(onClosed).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId('overlay')).toHaveAttribute('hidden', '');
   });
 
   test('testid for modal page content', async () => {
@@ -78,7 +148,7 @@ describe(ModalPage, () => {
   });
 
   it('should hides close button by adaptivity props ', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_MOBILE}>
         <ModalPage
@@ -98,7 +168,7 @@ describe(ModalPage, () => {
   });
 
   it('should hides close button by hideCloseButton prop', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <ModalPage
@@ -119,7 +189,7 @@ describe(ModalPage, () => {
   });
 
   test('click on close button', async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     const h = render(
       <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
         <ModalPage
@@ -135,49 +205,54 @@ describe(ModalPage, () => {
     );
     await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
     fireEvent.click(h.getByTestId('dismiss-button'));
-    expect(onClose).toHaveBeenCalledTimes(1);
-    expect(onClose).toHaveBeenCalledWith('click-close-button', expect.any(Object));
+    expect(onClose).toHaveBeenCalledExactlyOnceWith('click-close-button', expect.any(Object));
   });
 
-  test('check disable focus trap', async () => {
-    const Fixture = () => {
-      const [open, setOpen] = useState(false);
-      return (
-        <>
-          <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-            <ModalPage
-              key="host"
-              id="host"
-              open={open}
-              modalDismissButtonTestId="dismiss-button"
-              disableFocusTrap
-              noFocusToDialog
-              data-testid="host"
-            />
-          </AdaptivityProvider>
-          <Button data-testid="open-button" onClick={() => setOpen(true)} />
-        </>
-      );
-    };
+  test(
+    'check disable focus trap',
+    withFakeTimers(async () => {
+      const Fixture = () => {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+              <ModalPage
+                key="host"
+                id="host"
+                open={open}
+                modalDismissButtonTestId="dismiss-button"
+                disableFocusTrap
+                noFocusToDialog
+                data-testid="host"
+              />
+            </AdaptivityProvider>
+            <Button data-testid="open-button" onClick={() => setOpen(true)} />
+          </>
+        );
+      };
 
-    const h = render(<Fixture />);
+      const h = render(<Fixture />);
 
-    const openButton = h.getByTestId('open-button');
-    fireEvent.click(openButton);
+      const openButton = h.getByTestId('open-button');
+      fireEvent.click(openButton);
 
-    await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
 
-    const dismissButton = h.getByTestId('dismiss-button');
-    dismissButton.focus();
-    expect(dismissButton).toHaveFocus();
+      const dismissButton = h.getByTestId('dismiss-button');
+      act(() => {
+        dismissButton.focus();
+      });
+      expect(dismissButton).toHaveFocus();
 
-    await userEvent.tab();
-    expect(openButton).toHaveFocus();
-  });
+      await userEvent.tab();
+      expect(openButton).toHaveFocus();
+      vi.runAllTimers();
+    }),
+  );
 
   describe('check restoreFocus prop', () => {
     const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
-      const [open, setOpen] = React.useState(false);
+      const [open, setOpen] = useState(false);
       return (
         <>
           <ConfigProvider platform="vkcom">
@@ -197,33 +272,98 @@ describe(ModalPage, () => {
       );
     };
 
-    it.each([true, false])('check restoreFocus=%s', async (restoreFocus) => {
-      jest.useFakeTimers();
-      const h = render(<Fixture restoreFocus={restoreFocus} />);
-      expect(h.queryByTestId('host')).toBeFalsy();
+    it.each([true, false])(
+      'check restoreFocus=%s',
+      withFakeTimers<[boolean]>(async (restoreFocus) => {
+        const h = render(<Fixture restoreFocus={restoreFocus} />);
+        expect(h.queryByTestId('host')).toBeFalsy();
 
-      const openButton = h.getByTestId('open-modal');
-      await act(async () => {
-        openButton.focus();
-      });
-      fireEvent.click(openButton);
-      expect(openButton).toHaveFocus();
-
-      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
-      expect(h.queryByTestId('host')).toBeTruthy();
-      jest.runAllTimers();
-      expect(h.getByTestId('dismiss-button')).toHaveFocus();
-
-      fireEvent.click(openButton);
-      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
-      expect(h.queryByTestId('host')).toBeFalsy();
-      jest.runAllTimers();
-
-      if (restoreFocus) {
+        const openButton = h.getByTestId('open-modal');
+        act(() => {
+          openButton.focus();
+        });
+        fireEvent.click(openButton);
         expect(openButton).toHaveFocus();
-      } else {
-        expect(openButton).not.toHaveFocus();
-      }
+
+        await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+        expect(h.queryByTestId('host')).toBeTruthy();
+        await act(vi.runAllTimers);
+        expect(h.getByTestId('dismiss-button')).toHaveFocus();
+
+        fireEvent.click(openButton);
+        await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+        expect(h.queryByTestId('host')).toBeFalsy();
+        await act(vi.runAllTimers);
+
+        if (restoreFocus) {
+          expect(openButton).toHaveFocus();
+        } else {
+          expect(openButton).not.toHaveFocus();
+        }
+      }),
+    );
+  });
+
+  describe('size prop', () => {
+    it.each([
+      ['s' as const, styles.hostDesktopMaxWidthS],
+      ['m' as const, styles.hostDesktopMaxWidthM],
+      ['l' as const, styles.hostDesktopMaxWidthL],
+    ])('applies preset class on desktop for size=%s', async (size, expectedClass) => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+          <ModalPage key="host" id="host" open size={size} noFocusToDialog data-testid="host" />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.getByTestId('host')).toHaveClass(expectedClass);
+    });
+
+    it('sets CSS variable for custom numeric size on desktop', async () => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+          <ModalPage key="host" id="host" open size={500} noFocusToDialog data-testid="host" />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.getByTestId('host')).toHaveStyle(
+        '--vkui_internal_ModalPage--desktopMaxWidth: 500px',
+      );
+    });
+
+    it('sets CSS variable for custom string size on desktop', async () => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+          <ModalPage
+            key="host"
+            id="host"
+            open
+            size="fit-content"
+            noFocusToDialog
+            data-testid="host"
+          />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      expect(h.getByTestId('host')).toHaveStyle(
+        '--vkui_internal_ModalPage--desktopMaxWidth: fit-content',
+      );
+    });
+
+    it('ignores size on mobile', async () => {
+      const h = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_MOBILE}>
+          <ModalPage key="host" id="host" open size="l" noFocusToDialog data-testid="host" />
+        </AdaptivityProvider>,
+      );
+
+      await waitModalPageCSSTransitionEnd(h.getByTestId('host'));
+      const el = h.getByTestId('host');
+      expect(el).toHaveClass(styles.hostMobile);
+      expect(el).not.toHaveClass(styles.hostDesktopMaxWidthS);
     });
   });
 });

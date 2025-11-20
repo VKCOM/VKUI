@@ -6,11 +6,17 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { callMultiple } from '../../lib/callMultiple';
-import type { HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
+import type { HasDataAttribute, HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden, type VisuallyHiddenProps } from '../VisuallyHidden/VisuallyHidden';
 import styles from './Switch.module.css';
+
+const warn = warnOnce('Switch');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -18,36 +24,111 @@ const sizeYClassNames = {
 };
 
 export interface SwitchProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+  extends Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
+    HasRootRef<HTMLLabelElement> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
+   */
+  slotProps?: {
+    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+      HasRootRef<HTMLLabelElement> &
+      HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
+}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Switch
+ * @see https://vkui.io/components/switch
  */
 export const Switch = ({
-  style,
-  className,
-  getRootRef,
   getRef,
-  checked: checkedProp,
+
+  // Input props
+  checked,
+  defaultChecked,
   disabled,
-  onBlur: onBlurProp,
-  onFocus: onFocusProp,
-  onClick,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
+  slotProps,
   ...restProps
 }: SwitchProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+  }
+
+  const { onClick: onRootClick, ...rootRest } = useMergeProps(restProps, slotProps?.root);
+
+  const {
+    checked: checkedProp,
+    onBlur: onInputBlur,
+    onFocus: onInputFocus,
+    onClick,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
+
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
-  const { focusVisible, onBlur, onFocus } = useFocusVisible();
+  const {
+    focusVisible,
+    onBlur: onFocusVisibleBlur,
+    onFocus: onFocusVisibleFocus,
+  } = useFocusVisible();
   const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: 'outside' });
-  const handleBlur = callMultiple(onBlur, onBlurProp);
-  const handleFocus = callMultiple(onFocus, onFocusProp);
+  const handleBlur = callMultiple(onFocusVisibleBlur, onInputBlur);
+  const handleFocus = callMultiple(onFocusVisibleFocus, onInputFocus);
 
   const [localUncontrolledChecked, setLocalUncontrolledChecked] = React.useState(
-    Boolean(restProps.defaultChecked),
+    Boolean(inputRest.defaultChecked),
   );
   const isControlled = checkedProp !== undefined;
 
@@ -64,15 +145,13 @@ export const Switch = ({
   );
 
   const inputProps: VisuallyHiddenProps<HTMLInputElement> = {
-    ...restProps,
     Component: 'input',
-    getRootRef: getRef,
     type: 'checkbox',
     role: 'switch',
-    disabled: disabled,
-    onBlur: onBlurProp,
-    onFocus: onFocusProp,
+    onBlur: handleBlur,
+    onFocus: handleFocus,
     onClick: callMultiple(syncUncontrolledCheckedStateOnClick, onClick),
+    ...inputRest,
   };
 
   if (isControlled) {
@@ -83,35 +162,30 @@ export const Switch = ({
   }
 
   return (
-    <label
-      className={classNames(
+    <RootComponent
+      Component="label"
+      baseClassName={classNames(
         styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         platform === 'ios' ? styles.ios : styles.default,
-        disabled && styles.disabled,
+        inputRest.disabled && styles.disabled,
         isRtl && styles.rtl,
         focusVisibleClassNames,
-        className,
       )}
-      style={style}
-      ref={getRootRef}
+      onClick={withLabelClickWrapper(onRootClick)}
+      {...rootRest}
     >
-      <VisuallyHidden
-        {...inputProps}
-        className={styles.inputNative}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-      />
+      <VisuallyHidden baseClassName={styles.inputNative} {...inputProps} />
       <span aria-hidden className={styles.inputFake}>
         <span className={styles.track} />
         <span
           aria-hidden
           className={classNames(
             styles.handle,
-            platform !== 'ios' && !disabled && styles.handleWithRipple,
+            platform !== 'ios' && !inputRest.disabled && styles.handleWithRipple,
           )}
         />
       </span>
-    </label>
+    </RootComponent>
   );
 };

@@ -10,7 +10,7 @@ import { GridAvatar, type GridAvatarProps } from './GridAvatar';
 type StoryGridAvatarProps = GridAvatarProps & { badged: boolean };
 
 const story: Meta<StoryGridAvatarProps> = {
-  title: 'Blocks/GridAvatar',
+  title: 'Data Display/GridAvatar',
   component: GridAvatar,
   parameters: createStoryParameters('GridAvatar', CanvasFullLayout),
   argTypes: {
@@ -25,6 +25,7 @@ const story: Meta<StoryGridAvatarProps> = {
     },
   },
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

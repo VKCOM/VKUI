@@ -4,8 +4,9 @@
   align-items: center;
   transform: translateX(
     calc(
-      -1px * var(--vkui_internal_Removable_remove_offset) *
-        var(--vkui_internal_Removable_remove_offset_direction)
+      -1px *
+      var(--vkui_internal_Removable_remove_offset) *
+      var(--vkui_internal_Removable_remove_offset_direction)
     )
   );
 
@@ -27,6 +28,15 @@
   flex-shrink: 0;
   color: var(--vkui--color_icon_secondary);
   border: 0;
+}
+
+.ios .action.indentation,
+.action.indentation {
+  inline-size: 44px;
+}
+
+.ios .action.indentation {
+  margin-inline: 2px;
 }
 
 .alignStart .action {
@@ -122,7 +132,8 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) .content,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormLayoutGroup--removable) .content {
+  :global(.vkuiInternalFormLayoutGroup--removable)
+  .content {
   flex-wrap: wrap;
   align-items: flex-start;
 }
@@ -134,7 +145,10 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--withTop) :global(.vkuiInternalFormItem__removable) ~ .offset,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormLayoutGroup--removable) :global(.vkuiInternalFormItem--withTop) ~ .offset {
+  :global(.vkuiInternalFormLayoutGroup--removable)
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  :global(.vkuiInternalFormItem--withTop)
+  ~ .offset {
   display: block;
   order: -1;
   inline-size: 100%;

@@ -1,0 +1,192 @@
+---
+description: Компонент для ввода и отображения множества значений.
+---
+
+<Overview group="forms">
+
+# ChipsInput [tag:component]
+
+Компонент для ввода и отображения множества значений.
+Позволяет пользователю добавлять, удалять и редактировать элементы списка.
+Каждый элемент представлен в виде отдельного компонента `Chip`.
+
+Связанные компоненты:
+
+- [`Chip`](/components/chip)
+
+</Overview>
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput
+    defaultValue={[
+      { value: 'red', label: 'Красный' },
+      { value: 'blue', label: 'Синий' },
+    ]}
+    placeholder="Введите значение"
+  />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<ChipsInput
+  defaultValue={[
+    {
+      value: 'red',
+      label: 'Красный',
+    },
+  ]}
+/>;
+
+// Контролируемое состояние
+const [colors, setColors] = React.useState([]);
+
+<ChipsInput value={colors} onChange={setColors} />;
+```
+
+## Управление вводом
+
+### Разделитель
+
+Задаётся свойством `delimiter`. Позволяет добавлять несколько элементов за раз, разделяя их указанным символом.
+
+Представляет собой символ, который будет использоваться как разделитель для автоматического создания опций из текста,
+введенного или вставленного в поле ввода. Например, при `delimiter=","` вставка текста "Красный,Синий" в поле ввода
+создаст два элемента - "Красный" и "Синий".
+
+Пока поддерживаются только строковые символы.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput placeholder="Используйте запятую" delimiter="," />
+  ```
+</Playground>
+
+### Потеря фокуса
+
+По умолчанию при потере полем фокуса добавления в список опций не происходит.
+С помощью свойства `addOnBlur` можно включить поведение, при котором потеря фокуса будет приводить к добавлению нового элемента.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput
+    defaultValue={[
+      {
+        value: 'red',
+        label: 'Красный',
+      },
+    ]}
+    placeholder="Введите значение"
+    addOnBlur
+  />
+  ```
+</Playground>
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput defaultValue={[{ value: 'red', label: 'Красный' }]} disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `ChipsInput` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput defaultValue={[{ value: 'red', label: 'Красный' }]} status="error" />
+  <ChipsInput defaultValue={[{ value: 'green', label: 'Зелёный' }]} status="valid" />
+  ```
+</Playground>
+
+## Кастомизация
+
+### Визуальное оформление
+
+С помощью свойства `renderChip` можно влиять на отображение конкретного значения. Вы можете изменить
+стандартный компонент `Chip` или использовать свой компонент:
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <ChipsInput
+    defaultValue={[
+      {
+        value: '1',
+        label: 'Алексей',
+        src: 'https://avatars.githubusercontent.com/u/91548592?s=50',
+      },
+      { value: '2', label: 'Никита', src: 'https://avatars.githubusercontent.com/u/32414396?s=50' },
+    ]}
+    renderChip={({ value, label, ...rest }, { src }) => (
+      <Chip value={value} before={<Avatar src={src} size={20} aria-hidden />} {...rest}>
+        {label}
+      </Chip>
+    )}
+  />
+  ```
+</Playground>
+
+Важно отметить, что первым параметром в обработчике `renderChip` идёт объект со свойствами, необходимыми для
+корректной работы `a11y`. Если для отображения опции вы используете свой компонент, убедитесь, что все эти свойства
+компонент получает и корректно обрабатывает. Вторым параметром идёт объект со значением конкретной опции
+(значение, переданное в `value`/`defaultValue`).
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность через стандартные `HTML`-атрибуты и `ARIA`-роли.
+
+Для улучшения доступности рекомендуется связывать компонент с текстовым описанием одним из следующих способов:
+
+- обернуть в `<label>`;
+
+  ```jsx
+  <label>
+    Список исполнителей
+    <ChipsInput placeholder="Введите название" />
+  </label>
+  ```
+
+- указать `id` или `aria-describedby` и передать в `<label>` или [`FormItem`](/components/form-item) через `htmlFor`;
+
+  ```jsx
+  <label htmlFor="chips">Список исполнителей</label>
+  <ChipsInput placeholder="Введите название" id="chips"/>
+  ```
+
+  ```jsx
+  <FormItem top="Список исполнителей" htmlFor="chips">
+    <ChipsInput placeholder="Введите название" id="chips" />
+  </FormItem>
+  ```
+
+- указать `aria-label`;
+
+  ```jsx
+  <ChipsInput placeholder="Введите название" aria-label="Список исполнителей" />
+  ```
+
+При необходимости, через свойство `chipsListLabel` можете указать описания списка выбранных опций.
+
+## Свойства и методы [#api]
+
+<PropsTable name="ChipsInput" />

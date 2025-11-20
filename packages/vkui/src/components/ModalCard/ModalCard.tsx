@@ -6,7 +6,7 @@ import { ModalCardInternal } from './ModalCardInternal';
 import type { ModalCardProps } from './types';
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalCard
+ * @see https://vkui.io/components/modal-card
  */
 export const ModalCard = ({
   id: idProp,
@@ -19,6 +19,7 @@ export const ModalCard = ({
   onClose,
   onClosed,
   keepMounted = false,
+  disableModalOverlay,
   ...restProps
 }: ModalCardProps): React.ReactNode => {
   const {
@@ -32,6 +33,7 @@ export const ModalCard = ({
     keepMounted,
     modalOverlayTestId,
     noFocusToDialog,
+    disableModalOverlay,
     onOpen,
     onOpened,
     onClose,

@@ -11,9 +11,10 @@ import {
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../../hooks/useAdaptivityConditionalRender';
 import { useExternRef } from '../../../hooks/useExternRef';
+import { useMergeProps } from '../../../hooks/useMergeProps';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { warnOnce } from '../../../lib/warnOnce';
-import type { HasRef, HasRootRef } from '../../../types';
+import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CheckboxInput.module.css';
@@ -29,9 +30,37 @@ function setIndeterminate(el: HTMLInputElement, indeterminate: boolean) {
 }
 
 export interface CheckboxInputProps
-  extends React.ComponentProps<'input'>,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLInputElement> {
+  extends Pick<
+      React.ComponentProps<'input'>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'>,
+    HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
+   */
+  slotProps?: {
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+  };
   /**
    * Неопределенное состояние чекбокса.
    */
@@ -65,21 +94,61 @@ export interface CheckboxInputProps
 const warn = warnOnce('Checkbox');
 
 export function CheckboxInput({
-  className,
-  style,
-  getRootRef,
   getRef,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange: onChangeProp,
+  onFocus,
+  onBlur,
+
+  // CheckboxInputProps
   indeterminate,
   defaultIndeterminate,
-  onChange,
   IconOnCompact = Icon20CheckBoxOn,
   IconOnRegular = Icon24CheckBoxOn,
   IconOffCompact = Icon20CheckBoxOff,
   IconOffRegular = Icon24CheckBoxOff,
   IconIndeterminate = Icon20CheckBoxIndetermanate,
+
+  slotProps,
   ...restProps
 }: CheckboxInputProps) {
-  const inputRef = useExternRef(getRef);
+  const rootRest = useMergeProps(restProps, slotProps?.root);
+
+  const {
+    onChange,
+    getRootRef: getInputRef,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange: onChangeProp,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
+
+  const inputRef = useExternRef<HTMLInputElement>(getInputRef);
+
   const platform = usePlatform();
   const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
 
@@ -96,7 +165,7 @@ export function CheckboxInput({
       if (
         defaultIndeterminate !== undefined &&
         indeterminate === undefined &&
-        restProps.checked === undefined &&
+        inputRest.checked === undefined &&
         inputRef.current
       ) {
         setIndeterminate(inputRef.current, false);
@@ -106,37 +175,37 @@ export function CheckboxInput({
       }
       onChange && onChange(event);
     },
-    [defaultIndeterminate, indeterminate, restProps.checked, onChange, inputRef],
+    [defaultIndeterminate, indeterminate, inputRest.checked, onChange, inputRef],
   );
 
   if (process.env.NODE_ENV === 'development') {
-    if (defaultIndeterminate && restProps.defaultChecked) {
+    /* istanbul ignore if: не проверяем в тестах */
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+    }
+
+    if (defaultIndeterminate && inputRest.defaultChecked) {
       warn('defaultIndeterminate и defaultChecked не могут быть true одновременно', 'error');
     }
 
-    if (indeterminate && restProps.checked) {
+    if (indeterminate && inputRest.checked) {
       warn('indeterminate и checked не могут быть true одновременно', 'error');
     }
 
-    if (restProps.defaultChecked && restProps.checked) {
+    if (inputRest.defaultChecked && inputRest.checked) {
       warn('defaultChecked и checked не могут быть true одновременно', 'error');
     }
   }
 
   return (
-    <RootComponent
-      baseClassName={styles.host}
-      className={className}
-      style={style}
-      getRootRef={getRootRef}
-    >
+    <RootComponent baseClassName={styles.host} {...rootRest}>
       <VisuallyHidden
-        {...restProps}
         Component="input"
         type="checkbox"
         onChange={handleChange}
-        className={styles.input}
         getRootRef={inputRef}
+        baseClassName={styles.input}
+        {...inputRest}
       />
       {platform === 'vkcom' ? (
         <IconOnCompact className={styles.iconOn} />

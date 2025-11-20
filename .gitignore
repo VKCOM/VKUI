@@ -5,9 +5,12 @@ PUBLISHING.md
 dist/
 storybook-static/
 out/
+_pagefind/
+.docgen/
 
 # Next
 .next/
+next-env.d.ts
 
 # Dependency directory
 node_modules/

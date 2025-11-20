@@ -29,9 +29,9 @@ describe(GridAvatar, () => {
     afterEach(() => setNodeEnv('test'));
 
     it(`should not show more than ${MAX_GRID_LENGTH} items in grid`, () => {
-      const error = jest.spyOn(console, 'error').mockImplementation(noop);
+      const error = vi.spyOn(console, 'error').mockImplementation(noop);
       render(<GridAvatarTest src={['#01', '#02', '#03', '#04', '#05']} />);
-      expect(error).toHaveBeenCalledWith(
+      expect(error).toHaveBeenCalledExactlyOnceWith(
         `%c[VKUI/GridAvatar] Длина массива src (5) больше максимальной (4)`,
         undefined,
       );

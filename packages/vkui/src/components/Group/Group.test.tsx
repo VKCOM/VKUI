@@ -135,14 +135,14 @@ describe('Group', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check DEV errors', () => {
-      const error = jest.spyOn(console, 'warn').mockImplementation(noop);
+      const error = vi.spyOn(console, 'warn').mockImplementation(noop);
       render(
         <Group role="tabpanel">
           <div />
         </Group>,
       );
 
-      expect(error).toHaveBeenCalledWith(
+      expect(error).toHaveBeenCalledExactlyOnceWith(
         '%c[VKUI/Group] При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"',
         undefined,
       );

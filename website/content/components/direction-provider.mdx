@@ -1,0 +1,74 @@
+---
+description: Компонент, позволяющий переопределить направление контента.
+---
+
+<Overview group="configuration">
+
+# DirectionProvider [tag:component]
+
+Компонент, позволяющий переопределить направление контента.
+
+</Overview>
+
+## Направление контента
+
+Задаётся свойством `value`.
+
+- `"ltr"` — направление "слева-направо" (для большинства языков);
+- `"rtl'` — направление "справа-налево" (для арабского, иврита и т.д.).
+
+```jsx
+<DirectionProvider value="rtl">
+  {/* часть вашего приложения, требующая переопределения направления контента */}
+</DirectionProvider>
+```
+
+> **Обратите внимание**
+>
+> Всегда добавляйте атрибут `dir` к корневому элементу внутри `DirectionProvider`.
+> Это необходимо для корректной работы логических `CSS`-свойств.
+>
+> Без указания атрибута `dir` браузер не сможет правильно интерпретировать логические свойства,
+> что приведет к некорректному отображению вёрстки.
+>
+> ```jsx {2,13,15}
+> function MyContent() {
+>   const direction = useDirection();
+>
+>   return (
+>     <div dir={direction}>
+>       <div style={{ marginInlineStart: '16px' }}>Отступ слева для LTR и справа для RTL</div>
+>     </div>
+>   );
+> }
+>
+> function App() {
+>   return (
+>     <DirectionProvider value="rtl">
+>       <MyContent />
+>     </DirectionProvider>
+>   );
+> }
+> ```
+
+## Хук useDirection [#use-direction]
+
+Для получения текущего направления контента используйте хук `useDirection`:
+
+```jsx
+import { useDirection } from '@vkontakte/vkui';
+```
+
+```jsx
+const direction = useDirection();
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="DirectionProvider">
+
+### DirectionProvider [#direction-provider-api]
+
+### useDirection [#use-direction-api]
+
+</PropsTable>

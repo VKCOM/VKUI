@@ -1,20 +1,55 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import type { HasDataAttribute, HasRef, HasRootRef } from '../../types';
+import { useMergeProps } from '../../hooks/useMergeProps';
+import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { SelectionControl } from '../SelectionControl/SelectionControl';
 import { SelectionControlLabel } from '../SelectionControl/SelectionControlLabel/SelectionControlLabel';
-import type { TappableProps } from '../Tappable/Tappable';
+import type { TappableOmitProps } from '../Tappable/Tappable';
 import { RadioInput } from './RadioInput/RadioInput';
 import styles from './Radio.module.css';
 
+const warn = warnOnce('Radio');
+
 export interface RadioProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    HasRef<HTMLInputElement>,
+  extends Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLLabelElement>,
     Pick<
-      TappableProps,
+      TappableOmitProps,
       'hoverMode' | 'activeMode' | 'hasHover' | 'hasActive' | 'focusVisibleMode'
     > {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
+   */
+  slotProps?: {
+    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+      HasRootRef<HTMLLabelElement> &
+      HasDataAttribute;
+    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
+  };
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
   /**
    * Дополнительное описание под основным текстом.
    */
@@ -24,44 +59,99 @@ export interface RadioProps
    */
   titleAfter?: React.ReactNode;
   /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ root: {...} }`.
+   *
    * Позволяет передавать data-* аттрибуты элементу label.
    **/
   labelProps?: HasDataAttribute;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Radio
+ * @see https://vkui.io/components/radio
  */
 export const Radio = ({
+  // RadioProps
   children,
   description,
-  style,
-  className,
-  getRootRef,
   titleAfter,
-  getRef,
   labelProps,
+  getRef,
+  className,
+
+  // Tappable props
   hoverMode,
   activeMode,
   hasHover,
   hasActive,
   focusVisibleMode,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
+  slotProps,
   ...restProps
 }: RadioProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development') {
+    if (labelProps) {
+      warn('Свойство `labelProps` устаревшее, используйте `slotProps={ root: {...} }`');
+    }
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+    }
+  }
+
+  const { onClick: onRootClick, ...rootRest } = useMergeProps(
+    {
+      className: classNames(styles.host, className),
+      ...labelProps,
+      ...restProps,
+    },
+    slotProps?.root,
+  );
+
+  const inputRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
+
   return (
     <SelectionControl
-      style={style}
-      className={classNames(styles.host, className)}
-      disabled={restProps.disabled}
-      getRootRef={getRootRef}
       hoverMode={hoverMode}
       activeMode={activeMode}
       hasHover={hasHover}
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
-      {...labelProps}
+      disabled={inputRest.disabled}
+      onClick={withLabelClickWrapper(onRootClick)}
+      {...rootRest}
     >
-      <RadioInput {...restProps} getRef={getRef} />
+      <RadioInput slotProps={{ input: inputRest }} />
       <SelectionControlLabel titleAfter={titleAfter} description={description}>
         {children}
       </SelectionControlLabel>

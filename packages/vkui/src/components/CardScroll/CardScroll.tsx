@@ -34,7 +34,7 @@ export interface CardScrollProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CardScroll
+ * @see https://vkui.io/components/card-scroll
  */
 export const CardScroll = ({
   children,

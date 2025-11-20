@@ -30,7 +30,10 @@ export interface ActionSheetProps
       SharedDropdownProps,
       'toggleRef' | 'popupOffsetDistance' | 'placement' | 'allowClickPropagation'
     >,
-    Omit<UseFocusTrapProps, 'onClose' | 'mount' | 'disabled' | 'captureEscapeKeyboardEvent'>,
+    Omit<
+      UseFocusTrapProps,
+      'onClose' | 'mount' | 'disabled' | 'captureEscapeKeyboardEvent' | 'mutationObserverOptions'
+    >,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**
    * Заголовок всплыващего окна.
@@ -70,7 +73,7 @@ export interface ActionSheetProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ActionSheet
+ * @see https://vkui.io/components/action-sheet
  */
 export const ActionSheet = ({
   children,

@@ -1,14 +1,19 @@
+import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { SwappedItemRange } from '../../hooks/useDraggableWithDomApi';
-import { baselineComponent } from '../../testing/utils';
+import {
+  ADOPTED_TOUCH_EVENTS_HANDLERS,
+  baselineComponent,
+  MOUSE_EVENTS_HANDLERS,
+  withFakeTimers,
+} from '../../testing/utils';
 import { Cell } from '../Cell/Cell';
 import { List } from './List';
-import draggerStyles from '../Cell/CellDragger/CellDragger.module.css';
 
 let isScrollRunning = false;
-jest.mock('../../hooks/useDraggableWithDomApi/autoScroll', () => {
-  const originalModule = jest.requireActual('../../hooks/useDraggableWithDomApi/autoScroll');
+vi.mock('../../hooks/useDraggableWithDomApi/autoScroll', async () => {
+  const originalModule = await vi.importActual('../../hooks/useDraggableWithDomApi/autoScroll');
   return {
     ...originalModule,
     createAutoScrollController: () => {
@@ -23,8 +28,8 @@ jest.mock('../../hooks/useDraggableWithDomApi/autoScroll', () => {
   };
 });
 
-jest.mock('../../lib/dom', () => {
-  const originalModule = jest.requireActual('../../lib/dom');
+vi.mock('../../lib/dom', async () => {
+  const originalModule = await vi.importActual('../../lib/dom');
   return {
     ...originalModule,
     getNearestOverflowAncestor: () => {
@@ -32,21 +37,15 @@ jest.mock('../../lib/dom', () => {
     },
   };
 });
-const mockTimers = () => {
-  jest.spyOn(window, 'requestAnimationFrame').mockImplementation((fn) => {
-    fn(1);
-    return 1;
-  });
-};
 
 const setupCell = (element: HTMLDivElement, index: number) => {
   let transform = '';
-  jest.spyOn(element.style, 'setProperty').mockImplementation((property, value) => {
+  vi.spyOn(element.style, 'setProperty').mockImplementation((property, value) => {
     if (property === 'transform') {
       transform = value || '';
     }
   });
-  jest.spyOn(element.style, 'removeProperty').mockImplementation((property) => {
+  vi.spyOn(element.style, 'removeProperty').mockImplementation((property) => {
     if (property === 'transform') {
       transform = '';
     }
@@ -58,7 +57,7 @@ const setupCell = (element: HTMLDivElement, index: number) => {
     y: cellHeight * index,
     height: cellHeight,
   });
-  jest.spyOn(element, 'getBoundingClientRect').mockImplementation(() => rect);
+  vi.spyOn(element, 'getBoundingClientRect').mockImplementation(() => rect);
 
   return {
     get transform() {
@@ -75,10 +74,10 @@ const setupCell = (element: HTMLDivElement, index: number) => {
 
 const setupList = (element: HTMLDivElement) => {
   let listScrollTop = 0;
-  jest.spyOn(element, 'scrollTop', 'get').mockImplementation(() => listScrollTop);
-  jest
-    .spyOn(element, 'scrollTop', 'set')
-    .mockImplementation((newScrollTop) => (listScrollTop = newScrollTop));
+  vi.spyOn(element, 'scrollTop', 'get').mockImplementation(() => listScrollTop);
+  vi.spyOn(element, 'scrollTop', 'set').mockImplementation(
+    (newScrollTop) => (listScrollTop = newScrollTop),
+  );
   return {
     get listScrollTop() {
       return listScrollTop;
@@ -89,13 +88,7 @@ const setupList = (element: HTMLDivElement) => {
   };
 };
 
-const getCellDraggerById = (testId: string) => {
-  const cellToDrag = screen.getByTestId(testId);
-  return cellToDrag.querySelector<HTMLElement>(`.${draggerStyles.host}`)!;
-};
-
 const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
-  mockTimers();
   let listSetup: ReturnType<typeof setupList>;
   let list;
   let swappedItems: SwappedItemRange | null = null;
@@ -128,6 +121,7 @@ const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
             key={index}
             draggable
             data-testid={`cell-${index}`}
+            draggerTestId={`dragger-${index}`}
             onDragFinish={onDragFinish}
           >
             {index} Item
@@ -157,41 +151,42 @@ const setup = ({ cellsCount = 3 }: { cellsCount?: number }) => {
   };
 };
 
-const dragCell = ({
+const dragCell = async ({
   testId,
   breakPoints,
   afterDragging,
   afterMove = {},
+  mouseEvents = [fireEvent.mouseDown, fireEvent.mouseMove, fireEvent.mouseUp],
 }: {
   testId: string;
   breakPoints: number[];
   afterMove?: Record<number, VoidFunction>;
   afterDragging?: VoidFunction;
+  mouseEvents?: Array<typeof fireEvent.mouseDown>;
 }) => {
-  const dragger = getCellDraggerById(testId);
-  fireEvent.mouseDown(dragger);
+  const [mouseDown, mouseMove, mouseUp] = mouseEvents;
+  const dragger = screen.getByTestId(testId);
+  mouseDown(dragger);
 
-  breakPoints.forEach((breakPoint, index) => {
-    fireEvent.mouseMove(dragger, {
+  await act(vi.runOnlyPendingTimers);
+
+  for (let index = 0; index < breakPoints.length; index++) {
+    const breakPoint = breakPoints[index];
+    mouseMove(dragger, {
       clientY: breakPoint,
-      shiftY: breakPoint,
     });
+    await act(vi.runOnlyPendingTimers);
     afterMove[index]?.();
-  });
+  }
+
+  await act(vi.runOnlyPendingTimers);
   afterDragging && afterDragging();
 
-  fireEvent.mouseUp(dragger);
+  mouseUp(dragger);
 };
 
 describe('List', () => {
   baselineComponent(List);
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-  afterEach(() => {
-    jest.useRealTimers();
-  });
 
   it('should have style gap', async () => {
     render(
@@ -207,72 +202,82 @@ describe('List', () => {
     expect(screen.getByTestId('list').style.gridGap).toBe('20px');
   });
 
-  it('check dnd is working', async () => {
-    const setupData = setup({});
-    const { getCellSetup } = setupData;
+  it.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
+    'check dnd is working',
+    withFakeTimers<[{ handlers: Array<typeof fireEvent.mouseDown> }]>(
+      async ({ handlers: mouseEvents }) => {
+        const setupData = setup({});
+        const { getCellSetup } = setupData;
 
-    dragCell({
-      testId: 'cell-0',
-      breakPoints: [5, 140, 140, 124],
-      afterDragging: () => {
-        const cell1Data = getCellSetup('cell-1');
-        expect(cell1Data.transform).toBe('');
-        const cell2Data = getCellSetup('cell-2');
-        expect(cell2Data.transform).toBe('translateY(50px)');
+        await dragCell({
+          testId: 'dragger-0',
+          breakPoints: [5, 140, 140, 124],
+          afterDragging: () => {
+            const cell1Data = getCellSetup('cell-1');
+            expect(cell1Data.transform).toBe('');
+            const cell2Data = getCellSetup('cell-2');
+            expect(cell2Data.transform).toBe('translateY(50px)');
+          },
+          afterMove: {
+            0: () => {
+              const cell1Data = getCellSetup('cell-1');
+              expect(cell1Data.transform).toBe('translateY(50px)');
+              const cell2Data = getCellSetup('cell-2');
+              expect(cell2Data.transform).toBe('translateY(50px)');
+            },
+          },
+          mouseEvents,
+        });
+
+        expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+
+        await dragCell({
+          testId: 'dragger-2',
+          breakPoints: [140, 140, 75, 140, 75],
+          afterDragging: () => {
+            const cell1Data = getCellSetup('cell-0');
+            expect(cell1Data.transform).toBe('');
+            const cell2Data = getCellSetup('cell-1');
+            expect(cell2Data.transform).toBe('translateY(50px)');
+          },
+          afterMove: {
+            0: () => {
+              const cell1Data = getCellSetup('cell-0');
+              expect(cell1Data.transform).toBe('');
+              const cell2Data = getCellSetup('cell-1');
+              expect(cell2Data.transform).toBe('');
+            },
+          },
+          mouseEvents,
+        });
+
+        expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
       },
-      afterMove: {
-        0: () => {
-          const cell1Data = getCellSetup('cell-1');
-          expect(cell1Data.transform).toBe('translateY(50px)');
-          const cell2Data = getCellSetup('cell-2');
-          expect(cell2Data.transform).toBe('translateY(50px)');
+    ),
+  );
+
+  it(
+    'check dnd with scroll working',
+    withFakeTimers(async () => {
+      const setupData = setup({});
+
+      isScrollRunning = false;
+      setupData.listScrollTop = 50;
+
+      await dragCell({
+        testId: 'dragger-0',
+        breakPoints: [5, 70, 90],
+        afterMove: {
+          1: () => {
+            vi.runAllTimers();
+            isScrollRunning = true;
+            setupData.listScrollTop = 30;
+            fireEvent.scroll(setupData.list);
+          },
         },
-      },
-    });
+      });
 
-    expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
-
-    dragCell({
-      testId: 'cell-2',
-      breakPoints: [140, 140, 75, 140, 75],
-      afterDragging: () => {
-        const cell1Data = getCellSetup('cell-0');
-        expect(cell1Data.transform).toBe('');
-        const cell2Data = getCellSetup('cell-1');
-        expect(cell2Data.transform).toBe('translateY(50px)');
-      },
-      afterMove: {
-        0: () => {
-          const cell1Data = getCellSetup('cell-0');
-          expect(cell1Data.transform).toBe('');
-          const cell2Data = getCellSetup('cell-1');
-          expect(cell2Data.transform).toBe('');
-        },
-      },
-    });
-
-    expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
-  });
-
-  it('check dnd with scroll working', () => {
-    const setupData = setup({});
-
-    isScrollRunning = false;
-    setupData.listScrollTop = 50;
-
-    dragCell({
-      testId: 'cell-0',
-      breakPoints: [5, 70, 90],
-      afterMove: {
-        1: () => {
-          jest.runAllTimers();
-          isScrollRunning = true;
-          setupData.listScrollTop = 30;
-          fireEvent.scroll(setupData.list);
-        },
-      },
-    });
-
-    expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
-  });
+      expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+    }),
+  );
 });

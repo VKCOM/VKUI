@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Image, type ImageProps } from './Image';
 
 const story: Meta<ImageProps> = {
-  title: 'Blocks/Image',
+  title: 'Data Display/Image',
   component: Image,
   parameters: createStoryParameters('Image', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
@@ -21,6 +21,7 @@ const story: Meta<ImageProps> = {
       },
     },
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

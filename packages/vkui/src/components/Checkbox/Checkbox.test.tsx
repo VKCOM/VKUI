@@ -1,50 +1,214 @@
-import * as React from 'react';
+import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { getDocumentBody } from '../../lib/dom';
 import { Platform } from '../../lib/platform';
-import { baselineComponent, fakeTimers, setNodeEnv, userEvent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv, userEvent, withFakeTimers } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Checkbox } from './Checkbox';
 
 describe('Checkbox', () => {
   baselineComponent((props) => <Checkbox {...props}>Checkbox</Checkbox>);
-  fakeTimers();
 
-  it('handles change', async () => {
-    const CheckboxController = () => {
-      const [checked, setChecked] = React.useState(false);
-      return (
-        <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
-          check
-        </Checkbox>
-      );
-    };
-    render(<CheckboxController />);
-    expect(screen.getByRole('checkbox')).not.toBeChecked();
-    await userEvent.click(screen.getByText('check'));
-    expect(screen.getByRole('checkbox')).toBeChecked();
-    await userEvent.click(screen.getByText('check'));
-    expect(screen.getByRole('checkbox')).not.toBeChecked();
-  });
+  it('should work with slotProps with SimpleCheckbox', () => {
+    const rootRef1 = createRef<HTMLLabelElement>();
+    const rootRef2 = createRef<HTMLLabelElement>();
+    const inputRef1 = createRef<HTMLInputElement>();
+    const inputRef2 = createRef<HTMLInputElement>();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onInputClick = vi.fn();
 
-  it('navigation by tab', async () => {
     render(
-      <>
-        <Checkbox data-testid="checkbox-1" />
-        <Checkbox data-testid="checkbox-2" />
-      </>,
+      <Checkbox
+        data-testid="checkbox"
+        className="rootClassName"
+        getRootRef={rootRef1}
+        getRef={inputRef1}
+        checked
+        name="input"
+        id="checkbox"
+        onChange={noop}
+        onClick={onRootClick1}
+        style={{
+          backgroundColor: 'rgb(255, 0, 0)',
+        }}
+        slotProps={{
+          root: {
+            'data-testid': 'root',
+            'className': 'rootClassName-2',
+            'style': {
+              color: 'rgb(255, 0, 0)',
+            },
+            'getRootRef': rootRef2,
+            'onClick': onRootClick2,
+          },
+          input: {
+            'className': 'inputClassName',
+            'getRootRef': inputRef2,
+            'data-testid': 'checkbox-2',
+            'checked': false,
+            'onClick': onInputClick,
+          },
+        }}
+      />,
     );
-    expect(getDocumentBody()).toHaveFocus();
 
-    await userEvent.tab();
-    expect(screen.getByTestId('checkbox-1')).toHaveFocus();
+    expect(screen.queryByTestId('checkbox')).not.toBeInTheDocument();
+    const input = screen.getByTestId('checkbox-2');
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveClass('inputClassName');
+    expect(input).toHaveAttribute('name', 'input');
+    expect(input).toHaveAttribute('id', 'checkbox');
+    expect(input).not.toBeChecked();
 
-    await userEvent.tab();
-    expect(screen.getByTestId('checkbox-2')).toHaveFocus();
+    const root = screen.getByTestId('root');
+    expect(root).toBeInTheDocument();
+    expect(root).toHaveClass('rootClassName');
+    expect(root).toHaveClass('rootClassName-2');
+    expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
+    expect(root).toHaveStyle('color: rgb(255, 0, 0)');
 
-    await userEvent.tab();
-    expect(getDocumentBody()).toHaveFocus();
+    expect(rootRef1.current).toBe(rootRef2.current);
+    expect(rootRef1.current).toBe(root);
+
+    expect(inputRef1.current).toBe(inputRef2.current);
+    expect(inputRef1.current).toBe(input);
+
+    fireEvent.click(input);
+    expect(onInputClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(root);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
+
+  it('should work with slotProps with CheckboxComponent', () => {
+    const rootRef1 = createRef<HTMLLabelElement>();
+    const rootRef2 = createRef<HTMLLabelElement>();
+    const inputRef1 = createRef<HTMLInputElement>();
+    const inputRef2 = createRef<HTMLInputElement>();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onInputClick = vi.fn();
+
+    render(
+      <Checkbox
+        data-testid="checkbox"
+        className="rootClassName"
+        getRootRef={rootRef1}
+        getRef={inputRef1}
+        checked
+        name="input"
+        id="checkbox"
+        onChange={noop}
+        onClick={onRootClick1}
+        style={{
+          backgroundColor: 'rgb(255, 0, 0)',
+        }}
+        slotProps={{
+          root: {
+            'data-testid': 'root',
+            'className': 'rootClassName-2',
+            'style': {
+              color: 'rgb(255, 0, 0)',
+            },
+            'getRootRef': rootRef2,
+            'onClick': onRootClick2,
+          },
+          input: {
+            'className': 'inputClassName',
+            'getRootRef': inputRef2,
+            'data-testid': 'checkbox-2',
+            'checked': false,
+            'onClick': onInputClick,
+          },
+        }}
+      >
+        Checkbox
+      </Checkbox>,
+    );
+
+    expect(screen.queryByTestId('checkbox')).not.toBeInTheDocument();
+    const input = screen.getByTestId('checkbox-2');
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveClass('inputClassName');
+    expect(input).toHaveAttribute('name', 'input');
+    expect(input).toHaveAttribute('id', 'checkbox');
+    expect(input).not.toBeChecked();
+
+    const root = screen.getByTestId('root');
+    expect(root).toBeInTheDocument();
+    expect(root).toHaveClass('rootClassName');
+    expect(root).toHaveClass('rootClassName-2');
+    expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
+    expect(root).toHaveStyle('color: rgb(255, 0, 0)');
+
+    expect(rootRef1.current).toBe(rootRef2.current);
+    expect(rootRef1.current).toBe(root);
+
+    expect(inputRef1.current).toBe(inputRef2.current);
+    expect(inputRef1.current).toBe(input);
+
+    fireEvent.click(input);
+    expect(onInputClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(root);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
+  });
+
+  it(
+    'handles change',
+    withFakeTimers(async () => {
+      const CheckboxController = () => {
+        const [checked, setChecked] = useState(false);
+        return (
+          <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
+            check
+          </Checkbox>
+        );
+      };
+      render(<CheckboxController />);
+      expect(screen.getByRole('checkbox')).not.toBeChecked();
+      await userEvent.click(screen.getByText('check'));
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+      expect(screen.getByRole('checkbox')).toBeChecked();
+      await userEvent.click(screen.getByText('check'));
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+      expect(screen.getByRole('checkbox')).not.toBeChecked();
+    }),
+  );
+
+  it(
+    'navigation by tab',
+    withFakeTimers(async () => {
+      render(
+        <>
+          <Checkbox slotProps={{ input: { 'data-testid': 'checkbox-1' } }} />
+          <Checkbox slotProps={{ input: { 'data-testid': 'checkbox-2' } }} />
+        </>,
+      );
+      expect(getDocumentBody()).toHaveFocus();
+
+      await userEvent.tab();
+      expect(screen.getByTestId('checkbox-1')).toHaveFocus();
+
+      await userEvent.tab();
+      expect(screen.getByTestId('checkbox-2')).toHaveFocus();
+
+      await userEvent.tab();
+      expect(getDocumentBody()).toHaveFocus();
+    }),
+  );
 
   it('check reset indeterminate when click to checkbox', () => {
     render(
@@ -68,7 +232,7 @@ describe('Checkbox', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls Checkbox', () => {
-      const errorStub = jest.spyOn(console, 'error');
+      const errorStub = vi.spyOn(console, 'error').mockImplementation(noop);
       render(
         <>
           <Checkbox defaultIndeterminate={true} defaultChecked={true} />
@@ -88,6 +252,7 @@ describe('Checkbox', () => {
         '%c[VKUI/Checkbox] defaultChecked и checked не могут быть true одновременно',
         undefined,
       ]);
+      errorStub.mockRestore();
     });
   });
 });

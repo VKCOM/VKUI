@@ -4,15 +4,19 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { UnstyledTextField } from '../UnstyledTextField/UnstyledTextField';
 import { useResizeTextarea } from './useResizeTextarea';
 import styles from './Textarea.module.css';
+
+const warn = warnOnce('Textarea');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -20,11 +24,44 @@ const sizeYClassNames = {
 };
 
 export interface TextareaProps
-  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onResize'>,
-    HasRef<HTMLTextAreaElement>,
+  extends Pick<
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+      | 'autoComplete'
+      | 'cols'
+      | 'dirName'
+      | 'disabled'
+      | 'maxLength'
+      | 'minLength'
+      | 'name'
+      | 'placeholder'
+      | 'readOnly'
+      | 'required'
+      | 'rows'
+      | 'value'
+      | 'wrap'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLElement>,
     HasAlign,
     FormFieldProps {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ textArea: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLTextAreaElement>;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `textArea`: свойства для прокидывания в поле ввода.
+   */
+  slotProps?: {
+    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+    textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
+      HasRootRef<HTMLTextAreaElement> &
+      HasDataAttribute;
+  };
   /**
    * Свойство управляющее автоматическим изменением высоты компонента.
    */
@@ -40,34 +77,99 @@ export interface TextareaProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Textarea
+ * @see https://vkui.io/components/textarea
  */
 export const Textarea = ({
-  grow = true,
-  style,
-  onResize,
-  className,
-  getRootRef,
-  getRef,
-  rows = 2,
-  maxHeight,
+  // FormFieldProps
   status,
-  onChange,
-  align,
   mode,
   after,
   before,
   afterAlign,
   beforeAlign,
-  value,
+  maxHeight,
+
+  // TextareaProps
+  grow = true,
+  onResize,
+  align,
+  getRef,
+
+  // textarea props
+  autoComplete,
+  cols,
+  dirName,
+  disabled,
+  maxLength,
+  minLength,
+  name,
+  placeholder,
+  readOnly,
+  required,
+  value: valueProp,
+  wrap,
+  rows = 2,
+  onChange: onChangeProp,
+  onFocus,
+  onBlur,
+  id,
+  inputMode,
+  defaultValue,
+  autoFocus,
+  tabIndex,
+  spellCheck,
+
+  slotProps,
   ...restProps
 }: TextareaProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ textArea: { getRootRef: ... } }`');
+  }
+
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
   const { window } = useDOM();
 
+  const { className, ...rootProps } = useMergeProps(restProps, slotProps?.root);
+
+  const {
+    onChange,
+    getRootRef: getTextAreaRef,
+    value,
+    ...textAreaRest
+  } = useMergeProps(
+    {
+      className: styles.el,
+      getRootRef: getRef,
+      autoComplete,
+      cols,
+      dirName,
+      disabled,
+      maxLength,
+      minLength,
+      name,
+      placeholder,
+      readOnly,
+      required,
+      value: valueProp,
+      wrap,
+      rows,
+      onChange: onChangeProp,
+      onFocus,
+      onBlur,
+      id,
+      inputMode,
+      defaultValue,
+      autoFocus,
+      tabIndex,
+      spellCheck,
+    },
+    slotProps?.textArea,
+  );
+
   const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
-  const elementRef = useExternRef(getRef, refResizeTextarea);
+  const elementRef = useExternRef(getTextAreaRef, refResizeTextarea);
 
   React.useEffect(resize, [resize, sizeY, platform, value]);
   useResizeObserver(window, resize);
@@ -81,9 +183,7 @@ export const Textarea = ({
         align === 'center' && styles.alignCenter,
         className,
       )}
-      style={style}
-      getRootRef={getRootRef}
-      disabled={restProps.disabled}
+      disabled={textAreaRest.disabled}
       status={status}
       mode={mode}
       after={after}
@@ -91,15 +191,15 @@ export const Textarea = ({
       afterAlign={afterAlign}
       beforeAlign={beforeAlign}
       maxHeight={maxHeight}
+      {...rootProps}
     >
       <UnstyledTextField
-        {...restProps}
         value={value}
         as="textarea"
         rows={rows}
-        className={styles.el}
-        onChange={callMultiple(onChange, resize)}
         getRootRef={elementRef}
+        onChange={callMultiple(onChange, resize)}
+        {...textAreaRest}
       />
     </FormField>
   );

@@ -1,98 +1,51 @@
-import { Configuration, DefinePlugin } from 'webpack';
-import type { Options } from '@swc/core';
-import path from 'path';
-import { readFileSync } from 'fs';
-import type { StorybookConfig } from '@storybook/react-webpack5';
-import WebpackCommonConfig from '../../../webpack.common.config';
-import { getStyleGuideComponents } from './helpers';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
+import type { StorybookConfig } from '@storybook/react-vite';
 
-const cssRegExpString = /\.css$/.toString();
+const require = createRequire(import.meta.url);
 
-function getCssRulesFromConfig(config: Configuration) {
-  return config.module!.rules?.filter((rule) =>
-    rule === '...' ? false : rule.test?.toString() === cssRegExpString,
-  );
-}
+const getGlobalAddonPath = (addonName: string, presetDir?: string) => {
+  const resolvedPath = path.dirname(require.resolve(path.join(addonName, 'package.json')));
+  return presetDir ? `${resolvedPath}/${presetDir}` : resolvedPath;
+};
 
-function excludeCssRulesFromConfig(config: Configuration) {
-  return config.module!.rules?.filter((rule) =>
-    rule === '...' ? false : rule.test?.toString() !== cssRegExpString,
-  );
-}
+const getLocalAddonPath = (addonName: string) => fileURLToPath(import.meta.resolve(addonName));
 
 const config: StorybookConfig = {
   stories: ['../docs/**/*.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-
   addons: [
-    './addons/source-tab',
-    getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-essentials'),
-    getAbsolutePath('@storybook/addon-interactions'),
-    getAbsolutePath('@storybook/addon-a11y'),
-    getAbsolutePath('@storybook/addon-designs'),
-    getAbsolutePath('@project-tools/storybook-addon-cartesian'),
-    './addons/colorScheme',
-    './addons/pointer',
-    './addons/customPanelHeaderAfter',
-    './addons/source-button',
-    './addons/documentation-button',
-    './addons/storybook-theme',
-    getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
+    getLocalAddonPath('./addons/source-tab'),
+    getGlobalAddonPath('@storybook/addon-links'),
+    getGlobalAddonPath('@storybook/addon-a11y'),
+    getGlobalAddonPath('@storybook/addon-designs', 'dist'),
+    getGlobalAddonPath('@storybook/addon-docs'),
+    getGlobalAddonPath('@project-tools/storybook-addon-cartesian'),
+    getLocalAddonPath('./addons/colorScheme'),
+    getLocalAddonPath('./addons/pointer'),
+    getLocalAddonPath('./addons/customPanelHeaderAfter'),
+    getLocalAddonPath('./addons/source-button'),
+    getLocalAddonPath('./addons/documentation-button'),
+    getLocalAddonPath('./addons/storybook-theme'),
   ],
-
-  framework: {
-    name: getAbsolutePath('@storybook/react-webpack5'),
-    options: {
-      fastRefresh: true,
-      builder: {
-        useSWC: true,
-        fsCache: true,
-      },
-    },
-  },
-
-  swc: (config: Options): Options => ({
-    ...config,
-    jsc: {
-      ...config.jsc,
-      transform: {
-        react: {
-          runtime: 'automatic',
-        },
-      },
-    },
-  }),
-
-  webpackFinal: async (config) => {
-    const commonCssRules = getCssRulesFromConfig(WebpackCommonConfig) ?? [];
-    const rulesWithoutCss = excludeCssRulesFromConfig(config) ?? [];
-
-    config.module!.rules = [...rulesWithoutCss, ...commonCssRules];
+  framework: getGlobalAddonPath('@storybook/react-vite'),
+  viteFinal: async (config) => {
+    const { mergeConfig } = await import('vite');
     const packageJSON = JSON.parse(readFileSync('./package.json', 'utf-8'));
-    config.plugins.push(
-      new DefinePlugin({
-        __STYLEGUIDE_COMPONENTS_CONFIG__: JSON.stringify(getStyleGuideComponents()),
-        __STYLEGUIDE_URL__: JSON.stringify(packageJSON.homepage),
+
+    return mergeConfig(config, {
+      define: {
+        __DOCS_BASE_URL__: JSON.stringify(packageJSON.homepage),
         __COMPONENTS_SOURCE_BASE_URL__: JSON.stringify(
           `${packageJSON.repository.url.replace('.git', '')}/tree/master/${packageJSON.repository.directory}`,
         ),
-      }),
-    );
-
-    return config;
+      },
+    });
   },
-
   typescript: {
     reactDocgen: 'react-docgen-typescript',
   },
-
-  docs: {
-    autodocs: false,
-  },
 };
 
-module.exports = config;
-
-function getAbsolutePath(value: string): any {
-  return path.dirname(require.resolve(path.join(value, 'package.json')));
-}
+export default config;

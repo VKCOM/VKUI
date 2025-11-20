@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`select transforms correctly 1`] = `
+exports[`select > transforms correctly 1`] = `
 "import { ChipsSelect, CustomSelect, Select as VKUISelect } from '@vkontakte/vkui';
 import React from 'react';
 

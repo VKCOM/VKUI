@@ -16,15 +16,15 @@ jobs:
       image: ${{ steps.result.outputs.value }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref }}
 
       # Создаем кэш для ветки один раз
       - name: Checkout LFS objects
-        uses: VKCOM/VKUI/.github/actions/lfs@master
+        uses: ./.github/actions/lfs
 
-      - uses: VKCOM/VKUI/.github/actions/get-playwright-docker-image@master
+      - uses: ./.github/actions/get-playwright-docker-image
         id: result
 
   test_e2e:
@@ -42,15 +42,15 @@ jobs:
     name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref }}
 
       - name: Checkout LFS objects
-        uses: VKCOM/VKUI/.github/actions/lfs@master
+        uses: ./.github/actions/lfs
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Run e2e tests for @vkontakte/vkui workspace
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`placeholder transforms correctly 1`] = `
+exports[`placeholder > transforms correctly 1`] = `
 "import { Button,ButtonGroup, Icon56UserAddOutline, Icon56UsersOutline, Placeholder } from '@vkontakte/vkui';
 import React from 'react';
 

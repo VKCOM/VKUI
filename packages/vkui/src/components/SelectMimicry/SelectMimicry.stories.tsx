@@ -27,6 +27,7 @@ const story: Meta<StorySelectMimicryProps> = {
     after: iconsPresets,
     before: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

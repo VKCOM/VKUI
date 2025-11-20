@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-floating-ui",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "license": "MIT",
   "bugs": "https://github.com/VKCOM/VKUI",
   "repository": {
@@ -71,7 +71,7 @@
   "scripts": {
     "prepack": "yarn run build",
     "build": "node --no-warnings=ExperimentalWarning --trace-warnings build.mjs",
-    "test": "yarn node --no-warnings=ExperimentalWarning --trace-warnings $(yarn bin jest)",
+    "test": "yarn run -T vitest run",
     "test:ci": "yarn test"
   },
   "peerDependencies": {
@@ -79,14 +79,11 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.1.2",
+    "@floating-ui/react-dom": "^2.1.6",
     "@swc/helpers": "^0.5.17"
   },
   "devDependencies": {
-    "@swc/core": "^1.11.24",
-    "@swc/jest": "^0.2.38",
-    "@types/jest": "^29.5.14",
-    "jest": "^29.7.0",
+    "@swc/core": "^1.13.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

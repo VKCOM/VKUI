@@ -6,9 +6,10 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useExternRef } from '../../../hooks/useExternRef';
 import { useFocusWithin } from '../../../hooks/useFocusWithin';
+import { useMergeProps } from '../../../hooks/useMergeProps';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { getFormFieldModeFromSelectType } from '../../../lib/select';
-import type { HasAlign, HasRef, HasRootRef } from '../../../types';
+import type { HasAlign, HasDataAttribute, HasRef, HasRootRef } from '../../../types';
 import { FormField, type FormFieldProps } from '../../FormField/FormField';
 import type { SelectType } from '../../Select/Select';
 import { SelectTypography } from '../../SelectTypography/SelectTypography';
@@ -27,10 +28,20 @@ export interface CustomSelectInputProps
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'mode' | 'type' | 'maxHeight'> {
+  slotProps?: {
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
+  };
   selectType?: SelectType;
   multiline?: boolean;
   labelTextTestId?: string;
   fetching?: boolean;
+  searchable?: boolean;
+  accessible?: boolean;
 }
 
 /**
@@ -38,47 +49,91 @@ export interface CustomSelectInputProps
  * @private
  */
 export const CustomSelectInput = ({
+  style: rootStyle,
+  className: rootClassName,
+  getRootRef: rootGetRootRef,
   align = 'left',
   getRef,
-  className,
-  getRootRef,
-  style,
   before,
   after,
   status,
   children,
-  placeholder,
+  placeholder: placeholderProp,
   selectType = 'default',
   multiline,
-  disabled,
   fetching,
   labelTextTestId,
+  searchable,
+  accessible,
+
+  slotProps,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
+  const { style, className, getRootRef, ...rootRest } = useMergeProps(
+    {
+      style: rootStyle,
+      className: rootClassName,
+      getRootRef: rootGetRootRef,
+    },
+    slotProps?.root,
+  );
+
+  const {
+    className: inputClassName,
+    value,
+    readOnly,
+    disabled,
+    placeholder,
+    ...inputProps
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      placeholder: placeholderProp,
+      ...restProps,
+    },
+    slotProps?.input,
+  );
+
   const title = children || placeholder;
-  const showLabelOrPlaceholder = !Boolean(restProps.value);
+  const showLabelOrPlaceholder = !Boolean(value);
 
   const handleRootRef = useExternRef(getRootRef);
   const focusWithin = useFocusWithin(handleRootRef);
 
+  const inputReadonly = readOnly || (disabled && fetching);
+
   const input = (
     <Text
       type="text"
-      {...restProps}
       disabled={disabled && !fetching}
-      readOnly={restProps.readOnly || (disabled && fetching)}
+      readOnly={inputReadonly}
       Component="input"
       normalize={false}
+      placeholder={children ? '' : placeholder}
       className={classNames(
         styles.el,
-        (restProps.readOnly || (showLabelOrPlaceholder && !focusWithin)) && styles.elCursorPointer,
+        (readOnly || (showLabelOrPlaceholder && !focusWithin)) && styles.elCursorPointer,
+        inputClassName,
       )}
-      getRootRef={getRef}
-      placeholder={children ? '' : placeholder}
+      value={value}
+      {...inputProps}
     />
   );
+
+  const inputHidden = React.useMemo(() => {
+    if (accessible) {
+      if (!searchable) {
+        return true;
+      }
+      return !focusWithin || (inputReadonly && !fetching);
+    } else {
+      return false;
+    }
+  }, [accessible, fetching, focusWithin, inputReadonly, searchable]);
+
+  const labelHidden = showLabelOrPlaceholder ? false : !inputHidden;
 
   const platform = usePlatform();
   return (
@@ -94,6 +149,10 @@ export const CustomSelectInput = ({
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         before && styles.hasBefore,
         after && styles.hasAfter,
+        inputHidden && styles.inputHidden,
+        labelHidden && styles.labelHidden,
+        accessible && styles.accessible,
+        value && styles.hasInputValue,
         className,
       )}
       getRootRef={handleRootRef}
@@ -102,6 +161,7 @@ export const CustomSelectInput = ({
       disabled={disabled}
       mode={getFormFieldModeFromSelectType(selectType)}
       status={status}
+      {...rootRest}
     >
       <div className={styles.inputGroup}>
         <div
@@ -111,7 +171,7 @@ export const CustomSelectInput = ({
           data-testid={labelTextTestId}
         >
           <SelectTypography selectType={selectType} className={styles.title}>
-            {showLabelOrPlaceholder && title}
+            {title}
           </SelectTypography>
         </div>
         {/* Чтобы отключить autosuggestion в iOS, тултипы которого начинают всплывать даже когда input
@@ -123,11 +183,7 @@ export const CustomSelectInput = ({
          * Делаем это только для режима read-only. Потому что проблема именно в режиме read-only.
          * Обертка вокруг инпута обрабатывает клики и передаёт фокус, так что на взаимодействии с инпутом это никак не скажется.
          **/}
-        {restProps.readOnly && platform === 'ios' ? (
-          <VisuallyHidden>{input}</VisuallyHidden>
-        ) : (
-          input
-        )}
+        {readOnly && platform === 'ios' ? <VisuallyHidden>{input}</VisuallyHidden> : input}
       </div>
     </FormField>
   );

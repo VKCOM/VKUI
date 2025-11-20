@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`visually-hidden-input transforms correctly 1`] = `
+exports[`visually-hidden-input > transforms correctly 1`] = `
 "import { VisuallyHidden } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';

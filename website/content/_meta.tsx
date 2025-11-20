@@ -1,13 +1,25 @@
 import type { MetaRecord } from 'nextra';
 
 const meta: MetaRecord = {
+  index: {
+    type: 'doc',
+    display: 'hidden',
+  },
   overview: {
-    type: 'page',
-    title: 'О системе',
+    type: 'doc',
+    title: 'Начало работы',
   },
   components: {
-    type: 'page',
+    type: 'doc',
     title: 'Компоненты',
+  },
+  integrations: {
+    type: 'doc',
+    title: 'Интеграции',
+  },
+  migrations: {
+    type: 'doc',
+    title: 'Миграции',
   },
   icons: {
     type: 'page',
@@ -20,13 +32,16 @@ const meta: MetaRecord = {
     href: 'https://vkcom.github.io/vkui-tokens/',
   },
   blog: {
-    type: 'page',
+    type: 'doc',
+    display: 'hidden',
     title: 'Блог',
     theme: {
       breadcrumb: false,
+      toc: false,
       sidebar: false,
       pagination: false,
       layout: 'full',
+      copyPage: false,
     },
   },
 };

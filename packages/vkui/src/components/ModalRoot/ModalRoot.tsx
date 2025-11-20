@@ -10,13 +10,14 @@ import type { ModalRootProps } from './types';
 
 const warn = warnOnce('ModalRoot');
 /**
- * @see https://vkcom.github.io/VKUI/#/ModalRoot
+ * @see https://vkui.io/components/modal-root
  */
 export const ModalRoot = ({
   activeModal,
   children,
   modalOverlayTestId,
   noFocusToDialog,
+  disableModalOverlay,
   usePortal,
   onOpen,
   onOpened,
@@ -31,6 +32,7 @@ export const ModalRoot = ({
       activeModal,
       modalOverlayTestId,
       noFocusToDialog,
+      disableModalOverlay,
 
       // callbacks
       onOpen,
@@ -56,18 +58,29 @@ export const ModalRoot = ({
             }
           : noop,
     }),
-    [activeModal, modalOverlayTestId, noFocusToDialog, onClose, onClosed, onOpen, onOpened],
+    [
+      activeModal,
+      disableModalOverlay,
+      modalOverlayTestId,
+      noFocusToDialog,
+      onClose,
+      onClosed,
+      onOpen,
+      onOpened,
+    ],
   );
   const modalOverlayRef = React.useRef<HTMLDivElement>(null);
   return (
     <AppRootPortal usePortal={usePortal}>
       <ModalRootContext.Provider value={contextValue}>
         <ModalRootOverlayContext.Provider value={modalOverlayRef}>
-          <ModalOverlay
-            position="fixed"
-            visible={typeof activeModal === 'string'}
-            getRootRef={modalOverlayRef}
-          />
+          {!disableModalOverlay && (
+            <ModalOverlay
+              position="fixed"
+              visible={typeof activeModal === 'string'}
+              getRootRef={modalOverlayRef}
+            />
+          )}
           {children}
         </ModalRootOverlayContext.Provider>
       </ModalRootContext.Provider>

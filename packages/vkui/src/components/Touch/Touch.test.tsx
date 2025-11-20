@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Icon12Add } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
 import { CardScroll } from '../CardScroll/CardScroll';
@@ -10,7 +10,7 @@ import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { View } from '../View/View';
-import { Touch } from './Touch';
+import { Touch, type TouchProps } from './Touch';
 
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent =>
@@ -24,7 +24,23 @@ function fireMouseSwipe(
   fireEvent.mouseDown(ops.startEl || e, asClientPos(start));
   move.forEach((p) => fireEvent.mouseMove(e, asClientPos(p)));
   fireEvent.mouseUp(e, asClientPos(move[move.length - 1]));
-  return fireEvent.click(e, asClientPos(move[move.length - 1]));
+
+  // Если это <a href="..."> — временно уберём href, чтобы jsdom не пытался навигировать.
+  const isAnchor =
+    e instanceof HTMLElement && e.tagName.toLowerCase() === 'a' && e.hasAttribute('href');
+  const hrefBackup = isAnchor ? e.getAttribute('href') : null;
+  if (isAnchor) {
+    e.removeAttribute('href');
+  }
+
+  try {
+    return fireEvent.click(e, asClientPos(move[move.length - 1]));
+  } finally {
+    // восстановим href в любом случае
+    if (isAnchor && hrefBackup !== null) {
+      e.setAttribute('href', hrefBackup);
+    }
+  }
 }
 
 function fireTouchSwipe(e: HTMLElement, [start, ...move]: any[], { end = true } = {}) {
@@ -57,14 +73,11 @@ const slideRight = (target: HTMLElement) =>
     [threshold, 0],
   ]);
 
-// reset touch detection
-afterEach(() => delete window['ontouchstart']);
-
 describe('Touch', () => {
   baselineComponent(Touch);
 
   it.each([true, false])('use stopPropagation={%s}', (stopPropagation) => {
-    const onMouseDown = jest.fn();
+    const onMouseDown = vi.fn();
     const result = render(
       <div data-testid="container" onMouseDown={onMouseDown}>
         <Touch stopPropagation={stopPropagation} data-testid="touch" />
@@ -81,6 +94,41 @@ describe('Touch', () => {
     unmount();
     fireEvent.mouseMove(document.body, { clientX: threshold });
     expect(moved).toBe(false);
+  });
+
+  it('should ignore compatible mousedown event after touch', () => {
+    const onStart = vitest.fn();
+    const onMove = vitest.fn();
+    const onEnd = vitest.fn();
+    render(<Touch onStart={onStart} onMove={onMove} onEnd={onEnd} data-testid="touch" />);
+
+    const touch = screen.getByTestId('touch');
+    fireEvent.touchStart(touch, {
+      changedTouches: [{ clientX: 0, clientY: 0 }],
+    });
+    fireEvent.mouseDown(touch, {
+      clientX: 0,
+      clientY: 0,
+    });
+    expect(onStart).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchMove(touch, {
+      changedTouches: [{ clientX: 10, clientY: 0 }],
+    });
+    fireEvent.mouseMove(document.body, {
+      clientX: 10,
+      clientY: 0,
+    });
+    expect(onMove).toHaveBeenCalledTimes(1);
+
+    fireEvent.touchEnd(touch, {
+      changedTouches: [{ clientX: 10, clientY: 0 }],
+    });
+    fireEvent.mouseUp(document.body, {
+      clientX: 10,
+      clientY: 0,
+    });
+    expect(onEnd).toHaveBeenCalledTimes(1);
   });
 
   describe('prevents browser drag behavior', () => {
@@ -102,8 +150,8 @@ describe('Touch', () => {
 
   describe('hover', () => {
     it('calls onEnter / onLeave with mouse', () => {
-      const onEnter = jest.fn();
-      const onLeave = jest.fn();
+      const onEnter = vi.fn();
+      const onLeave = vi.fn();
       render(<Touch data-testid="__t__" onEnter={onEnter} onLeave={onLeave} />);
       fireEvent.mouseEnter(screen.getByTestId('__t__'));
       expect(onEnter).toHaveBeenCalledTimes(1);
@@ -112,7 +160,7 @@ describe('Touch', () => {
     });
     it('simulates onLeave with touch', () => {
       window['ontouchstart'] = null;
-      const onLeave = jest.fn();
+      const onLeave = vi.fn();
       render(<Touch data-testid="__t__" onLeave={onLeave} />);
       fireTouchSwipe(screen.getByTestId('__t__'), [[0, 0]]);
       expect(onLeave).toHaveBeenCalledTimes(1);
@@ -131,8 +179,11 @@ describe('Touch', () => {
       'onEndX',
       'onEndY',
     ] as const;
-    const makeHandlers = (): { [k in (typeof keys)[number]]: jest.Mock } => {
-      return keys.reduce<any>((acc, k) => ({ ...acc, [k]: jest.fn() }), {});
+    const makeHandlers = () => {
+      return keys.reduce<Pick<TouchProps, (typeof keys)[number]>>(
+        (acc, k) => ({ ...acc, [k]: vi.fn() }),
+        {},
+      );
     };
     describe.each(['touch', 'mouse'])('using %s', (input) => {
       const fireGesture = input === 'touch' ? fireTouchSwipe : fireMouseSwipe;
@@ -179,15 +230,13 @@ describe('Touch', () => {
           const handlers = makeHandlers();
           render(<Touch {...handlers} data-testid="__t__" />);
           fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
-          expect(handlers.onStart).toHaveBeenCalledTimes(1);
-          expect(handlers.onStart).toHaveBeenCalledWith(emptyGesture(20, 20));
+          expect(handlers.onStart).toHaveBeenCalledExactlyOnceWith(emptyGesture(20, 20));
         });
         it('has all params end gesture on clean tap', () => {
           const handlers = makeHandlers();
           render(<Touch {...handlers} data-testid="__t__" />);
           fireGesture(screen.getByTestId('__t__'), [[20, 20]]);
-          expect(handlers.onEnd).toHaveBeenCalledTimes(1);
-          expect(handlers.onEnd).toHaveBeenCalledWith(emptyGesture(20, 20));
+          expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(emptyGesture(20, 20));
         });
       });
 
@@ -232,8 +281,7 @@ describe('Touch', () => {
           [20, 20],
           [20, 30],
         ]);
-        expect(handlers.onEnd).toHaveBeenCalledTimes(1);
-        expect(handlers.onEnd).toHaveBeenCalledWith(
+        expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
           expect.objectContaining({
             isSlideX: false,
             isSlideY: false,
@@ -252,7 +300,7 @@ describe('Touch', () => {
         ]);
         expect(handlers.onMoveX).not.toHaveBeenCalled();
         expect(handlers.onEndX).not.toHaveBeenCalled();
-        expect(handlers.onEnd).toHaveBeenCalledWith(
+        expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
           expect.objectContaining({
             isSlide: true,
             isSlideY: true,
@@ -278,7 +326,7 @@ describe('Touch', () => {
             ],
           ]);
           expect(handlers.onMove).toHaveBeenCalledTimes(1);
-          expect(handlers.onEnd).toHaveBeenCalledWith(
+          expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
             expect.objectContaining({ shiftX: 0, shiftY: 6 }),
           );
         });
@@ -299,8 +347,7 @@ describe('Touch', () => {
           );
           expect(handlers.onStart).toHaveBeenCalledTimes(1);
           expect(handlers.onMoveY).toHaveBeenCalledTimes(2);
-          expect(handlers.onEnd).toHaveBeenCalledTimes(1);
-          expect(handlers.onEnd).toHaveBeenCalledWith(
+          expect(handlers.onEnd).toHaveBeenCalledExactlyOnceWith(
             expect.objectContaining({ isSlideY: true, shiftY: 10 }),
           );
         });
@@ -387,9 +434,9 @@ describe('Touch', () => {
       expect(hasDefault).toBe(true);
     });
     it('handles onClickCapture', async () => {
-      const cb = jest.fn(() => null);
+      const cb = vi.fn(() => null);
       render(<Touch onClickCapture={cb} onMove={noop} data-testid="touch" />);
-      await userEvent.click(screen.getByTestId('touch'));
+      fireEvent.click(screen.getByTestId('touch'));
       expect(cb).toHaveBeenCalledTimes(1);
       cb.mockReset();
       slideRight(screen.getByTestId('touch'));
@@ -413,10 +460,10 @@ describe('Touch', () => {
       expect(clicked).toEqual(new Set());
     });
     it('handles click after slide', async () => {
-      const cb = jest.fn(() => null);
+      const cb = vi.fn(() => null);
       render(<Touch onClickCapture={cb} data-testid="touch" />);
       slideRight(screen.getByTestId('touch'));
-      await userEvent.click(screen.getByTestId('touch'));
+      fireEvent.click(screen.getByTestId('touch'));
       expect(cb).toHaveBeenCalled();
     });
     it('does not prevent click of a button after slide of a parent on mobile', () => {

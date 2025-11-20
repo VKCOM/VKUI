@@ -1,7 +1,7 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import { addDays, endOfDay, format, startOfDay } from 'date-fns';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { addDays, dateFormatter, endOfDay, startOfDay } from '../../lib/date';
 import { getDocumentBody } from '../../lib/dom';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { CalendarRange } from './CalendarRange';
 import dayStyles from '../CalendarDay/CalendarDay.module.css';
 import daysStyles from '../CalendarDays/CalendarDays.module.css';
@@ -11,17 +11,54 @@ const firstDayDate = new Date('2023-09-01T07:40:00.000Z');
 describe('CalendarRange', () => {
   baselineComponent(CalendarRange);
 
-  const triggerKeyDownEvent = (key: string) => {
-    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[0], {
+  const triggerKeyDownEvent = (key: string, first: boolean) => {
+    fireEvent.keyDown(getDocumentBody().getElementsByClassName(daysStyles.host)[first ? 0 : 1], {
       key,
       code: key,
     });
   };
 
-  const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+  const dayTestId = (day: Date) => dateFormatter.format(day);
+
+  it(
+    'checks aria roles',
+    withFakeTimers(
+      async () => {
+        const targetDate = new Date('2023-09-20T07:40:00.000Z');
+        render(<CalendarRange defaultValue={[targetDate, targetDate]} dayTestId={dayTestId} />);
+
+        expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
+        expect(screen.getByRole('grid', { name: 'октябрь 2023 г.' })).toBeDefined();
+        expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
+        expect(screen.getAllByRole('columnheader', { name: 'понедельник' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'вторник' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'среда' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'четверг' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'пятница' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'суббота' })).toHaveLength(2);
+        expect(screen.getAllByRole('columnheader', { name: 'воскресенье' })).toHaveLength(2);
+
+        let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+        expect(currentDate.getAttribute('aria-current')).toBe('date');
+        expect(currentDate.getAttribute('aria-selected')).toBe('true');
+
+        fireEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' }));
+
+        currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+        expect(currentDate.getAttribute('aria-current')).toBe('date');
+        expect(currentDate.getAttribute('aria-selected')).toBe('false');
+
+        const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
+        expect(selectedDate.getAttribute('aria-current')).toBe(null);
+        expect(selectedDate.getAttribute('aria-selected')).toBe('true');
+      },
+      { now: new Date('2023-09-20T07:40:00.000Z') },
+    ),
+    15_000,
+  );
 
   it('calls onChange when initial value is [null, null]', () => {
-    const onChangeStub = jest.fn();
+    const onChangeStub = vi.fn();
     render(
       <CalendarRange
         data-testid="calendar-range"
@@ -69,11 +106,10 @@ describe('CalendarRange', () => {
     expect(leftPartSelect).not.toBeNull();
     fireEvent.click(leftPartSelect);
 
-    expect(screen.getByRole('option', { selected: true, name: 'май' }));
+    expect(screen.getByRole('option', { selected: true, name: 'май' })).toBeInTheDocument();
   });
 
   it('check navigation by keyboard between two months', async () => {
-    jest.useFakeTimers();
     render(
       <CalendarRange
         value={[firstDayDate, firstDayDate]}
@@ -90,58 +126,118 @@ describe('CalendarRange', () => {
       expect(document.activeElement as HTMLElement).toBe(screen.getByTestId(dayTestId(date)));
     };
 
-    expect(screen.getByTestId(`left-month-picker-8`));
+    expect(screen.getByTestId(`left-month-picker-8`)).toBeInTheDocument();
 
-    triggerKeyDownEvent('ArrowLeft');
+    triggerKeyDownEvent('ArrowLeft', true);
 
-    expect(screen.getByTestId(`left-month-picker-7`));
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
     checkActiveDay(new Date(2023, 7, 31));
 
-    triggerKeyDownEvent('ArrowRight');
+    triggerKeyDownEvent('ArrowRight', true);
 
-    expect(screen.getByTestId(`left-month-picker-7`));
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
     checkActiveDay(new Date(2023, 8, 1));
 
-    triggerKeyDownEvent('ArrowUp');
+    triggerKeyDownEvent('ArrowRight', false);
+    checkActiveDay(new Date(2023, 8, 2));
 
-    expect(screen.getByTestId(`left-month-picker-7`));
-    checkActiveDay(new Date(2023, 7, 25));
+    triggerKeyDownEvent('ArrowUp', false);
 
-    triggerKeyDownEvent('ArrowDown');
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
+    checkActiveDay(new Date(2023, 7, 26));
 
-    expect(screen.getByTestId(`left-month-picker-7`));
-    checkActiveDay(new Date(2023, 8, 1));
+    triggerKeyDownEvent('ArrowDown', true);
+
+    expect(screen.getByTestId(`left-month-picker-7`)).toBeInTheDocument();
+    checkActiveDay(new Date(2023, 8, 2));
   });
 
-  it('checks day selection by keyboard', async () => {
-    jest.useFakeTimers();
-    const onChangeStub = jest.fn();
-    const startDate = new Date(2024, 2, 1);
-    const endDate = new Date(2024, 2, 10);
-    render(
-      <CalendarRange
-        value={[startDate, endDate]}
-        onChange={onChangeStub}
-        dayTestId={(day) => `${day.getDate()}`}
-      />,
-    );
-    await act(() => userEvent.click(screen.getAllByRole('gridcell', { selected: true })[0]));
-    expect(onChangeStub).toHaveBeenCalledTimes(1);
+  it(
+    'checks day selection by keyboard',
+    withFakeTimers(async () => {
+      const onChangeStub = vi.fn();
+      const startDate = new Date(2024, 2, 1);
+      const endDate = new Date(2024, 2, 10);
 
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
+      render(
+        <CalendarRange
+          value={[startDate, endDate]}
+          onChange={onChangeStub}
+          dayTestId={(day) => `${day.getDate()}`}
+        />,
+      );
+      await userEvent.click(screen.getAllByRole('gridcell', { selected: true })[0]);
+      expect(onChangeStub).toHaveBeenCalledTimes(1);
 
-    // выбираем день с помощью Space
-    await act(() => userEvent.keyboard(' '));
-    expect(onChangeStub).toHaveBeenCalledTimes(2);
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
-    // выбираем день с помощью Enter
-    await act(() => userEvent.keyboard('{Enter}'));
-    expect(onChangeStub).toHaveBeenCalledTimes(3);
-  });
+      await userEvent.keyboard('{ArrowLeft}');
+
+      // выбираем день с помощью Space
+      await userEvent.keyboard(' ');
+      expect(onChangeStub).toHaveBeenCalledTimes(2);
+      await userEvent.keyboard('{ArrowLeft}');
+      await userEvent.keyboard('{ArrowLeft}');
+      // выбираем день с помощью Enter
+      await userEvent.keyboard('{Enter}');
+      expect(onChangeStub).toHaveBeenCalledTimes(3);
+    }),
+  );
+
+  it(
+    'checks focusable days on each part of calendar',
+    withFakeTimers(async () => {
+      const startDate = new Date(2024, 2, 1);
+      const endDate = new Date(2024, 3, 10);
+      const onChangeStub = vi.fn();
+      render(
+        <CalendarRange
+          defaultValue={[startDate, endDate]}
+          onChange={onChangeStub}
+          dayTestId={dayTestId}
+        />,
+      );
+
+      // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+      await userEvent.click(screen.getByTestId(dayTestId(startDate)));
+      await userEvent.click(screen.getByTestId(dayTestId(endDate)));
+
+      // выбранные в данный момент дни диапазона имеют tabIndex = 0
+      expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
+      expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+
+      // выбираем новый диапазон в пределах левого календаря
+      await userEvent.click(screen.getByTestId(dayTestId(startDate)));
+      const sameMonthDate = addDays(startDate, 10);
+      await userEvent.click(screen.getByTestId(dayTestId(sameMonthDate)));
+
+      // уйдём с календаря и вернёмся
+      await userEvent.tab();
+      await userEvent.tab({ shift: true });
+
+      // только последний выбранный день диапазона имеет tabIndex="0"
+      expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('-1');
+      expect(screen.getByTestId(dayTestId(sameMonthDate)).getAttribute('tabindex')).toBe('0');
+
+      // выбираем новый диапазон где первая дата на левом календаре, а вторая на правом
+      await userEvent.click(screen.getByTestId(dayTestId(startDate)));
+      await userEvent.click(screen.getByTestId(dayTestId(endDate)));
+
+      // уйдём с календаря и вернёмся
+      await userEvent.tab();
+      await userEvent.tab({ shift: true });
+
+      // на каждом календре дни на которые пришлись последние клики имеют tabIndex="0"
+      expect(screen.getByTestId(dayTestId(endDate)).getAttribute('tabindex')).toBe('0');
+      await userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
+      await userEvent.tab({ shift: true });
+      expect(document.activeElement).toBe(screen.getByTestId(dayTestId(startDate)));
+      expect(screen.getByTestId(dayTestId(startDate)).getAttribute('tabindex')).toBe('0');
+    }),
+  );
 
   it('check click on same day', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarRange value={[firstDayDate, null]} onChange={onChange} dayTestId={dayTestId} />,
     );
@@ -155,7 +251,7 @@ describe('CalendarRange', () => {
   });
 
   it('check range working', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarRange value={[firstDayDate, null]} onChange={onChange} dayTestId={dayTestId} />,
     );
@@ -171,7 +267,7 @@ describe('CalendarRange', () => {
   });
 
   it('check reverse range select working', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const end = addDays(firstDayDate, 10);
     const start = firstDayDate;
     render(<CalendarRange value={[end, null]} onChange={onChange} dayTestId={dayTestId} />);
@@ -182,8 +278,7 @@ describe('CalendarRange', () => {
   });
 
   it('check reselect range after range selected', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const start = firstDayDate;
     const end = addDays(firstDayDate, 10);
     render(<CalendarRange value={[start, end]} onChange={onChange} dayTestId={dayTestId} />);

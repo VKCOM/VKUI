@@ -1,7 +1,12 @@
 import { act } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, fakeTimers, userEvent } from '../../testing/utils';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Tappable, type TappableProps } from './Tappable';
@@ -14,7 +19,6 @@ const tappable = () => screen.getByTestId('tappable');
 describe(Tappable, () => {
   baselineComponent(TappableTest);
 
-  fakeTimers();
   afterEach(() => delete window['ontouchstart']);
 
   it('Component: if no Component is passed Tappable becomes a div', () => {
@@ -34,6 +38,15 @@ describe(Tappable, () => {
       </TappableTest>,
     );
     expect(tappable().tagName.toLowerCase()).toMatch('div');
+  });
+
+  it('Component: if Component is undefined it should respect component autodetect', () => {
+    render(
+      <TappableTest href="https://vk.com" Component={undefined}>
+        VK Link
+      </TappableTest>,
+    );
+    expect(tappable().tagName.toLowerCase()).toMatch('a');
   });
 
   it('a11y(role): role gets set for custom button', () => {
@@ -122,51 +135,57 @@ describe(Tappable, () => {
     expect(tappable()).toHaveAttribute('aria-disabled', 'true');
   });
 
-  it('a11y(button): custom button keyboard events', async () => {
-    const handleClick = jest.fn();
-    render(<TappableTest onClick={handleClick}>Custom Button</TappableTest>);
+  it(
+    'a11y(button): custom button keyboard events',
+    withFakeTimers(async () => {
+      const handleClick = vi.fn();
+      render(<TappableTest onClick={handleClick}>Custom Button</TappableTest>);
 
-    // gets focused on tab
-    await userEvent.tab();
-    expect(tappable()).toHaveFocus();
+      // gets focused on tab
+      await userEvent.tab();
+      expect(tappable()).toHaveFocus();
 
-    // onClick gets called on Enter and Space
-    fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
-    expect(handleClick).toHaveBeenCalledTimes(1);
+      // onClick gets called on Enter and Space
+      fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
+      expect(handleClick).toHaveBeenCalledTimes(1);
 
-    fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
-    expect(handleClick).toHaveBeenCalledTimes(2);
-  });
+      fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
+      expect(handleClick).toHaveBeenCalledTimes(2);
+    }),
+  );
 
-  it('a11y(link): custom link keyboard events', async () => {
-    const handleClick = jest.fn();
-    render(
-      <TappableTest role="link" onClick={handleClick}>
-        Custom Link
-      </TappableTest>,
-    );
+  it(
+    'a11y(link): custom link keyboard events',
+    withFakeTimers(async () => {
+      const handleClick = vi.fn();
+      render(
+        <TappableTest role="link" onClick={handleClick}>
+          Custom Link
+        </TappableTest>,
+      );
 
-    // gets focused on tab
-    await userEvent.tab();
-    expect(tappable()).toHaveFocus();
+      // gets focused on tab
+      await userEvent.tab();
+      expect(tappable()).toHaveFocus();
 
-    // onClick gets called on Enter only
-    fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
-    expect(handleClick).toHaveBeenCalledTimes(1);
+      // onClick gets called on Enter only
+      fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
+      expect(handleClick).toHaveBeenCalledTimes(1);
 
-    fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
-    expect(handleClick).toHaveBeenCalledTimes(1);
-  });
+      fireEvent.keyDown(tappable(), { key: ' ', code: 'Space' });
+      expect(handleClick).toHaveBeenCalledTimes(1);
+    }),
+  );
 
   it('Tappable calls onKeyDown prop', () => {
-    const onKeyDown = jest.fn();
+    const onKeyDown = vi.fn();
     render(<TappableTest Component="div" onKeyDown={onKeyDown} />);
     fireEvent.keyDown(tappable(), {});
     expect(onKeyDown).toHaveBeenCalledTimes(1);
   });
 
   it('disabled: default Tappable w/ disabled does not react to events', () => {
-    const handleClick = jest.fn();
+    const handleClick = vi.fn();
     render(<TappableTest onClick={handleClick} disabled />);
 
     fireEvent.click(tappable());
@@ -177,7 +196,8 @@ describe(Tappable, () => {
   });
 
   describe('active', () => {
-    afterEach(() => jest.clearAllMocks());
+    fakeTimersForScope();
+    afterEach(() => vi.clearAllMocks());
 
     it('shows waves on android', async () => {
       const waveCount = () => document.querySelectorAll(`.${styles.wave}`).length;
@@ -194,7 +214,7 @@ describe(Tappable, () => {
       await waitFor(() => expect(waveCount()).toBe(1));
       await userEvent.click(screen.getByTestId('x'));
       await waitFor(() => expect(waveCount()).toBe(2));
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       // removes waves
       expect(waveCount()).toBe(0);
     });
@@ -203,51 +223,51 @@ describe(Tappable, () => {
       render(<TappableTest onClick={noop} />);
       await userEvent.click(tappable());
       await waitFor(() => expect(tappable()).toHaveClass(styles.activatedBackground));
-      act(jest.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(tappable()).not.toHaveClass(styles.activatedBackground);
     });
 
     it('activates during longtap', async () => {
       render(<TappableTest onClick={noop} />);
       fireEvent.pointerDown(tappable());
-      act(jest.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(tappable()).toHaveClass(styles.activatedBackground);
 
       fireEvent.pointerUp(tappable());
-      act(jest.runOnlyPendingTimers);
+      await act(vi.runOnlyPendingTimers);
       expect(tappable()).not.toHaveClass(styles.activatedBackground);
     });
 
     it('does not activate on child Tappable click', async () => {
       const result = render(
-        <Tappable onClick={jest.fn()} data-testid="parent">
-          <TappableTest onClick={jest.fn()} data-testid="child" />
+        <Tappable onClick={vi.fn()} data-testid="parent">
+          <TappableTest onClick={vi.fn()} data-testid="child" />
         </Tappable>,
       );
       const child = result.getByTestId('child');
       await userEvent.click(child);
       expect(child).toHaveClass(styles.activatedBackground);
       expect(result.getByTestId('parent')).not.toHaveClass(styles.activatedBackground);
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
     });
 
     describe('prevents early', () => {
-      it('on slide', () => {
+      it('on slide', async () => {
         render(<TappableTest />);
         fireEvent.mouseDown(tappable(), { clientX: 10 });
-        act(jest.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         fireEvent.mouseMove(tappable(), { clientX: 40 });
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
-      it('on multi-touch', () => {
+      it('on multi-touch', async () => {
         window.ontouchstart = null;
         render(<TappableTest />);
         fireEvent.touchStart(tappable(), {
           touches: [{}],
           changedTouches: [{}],
         });
-        act(jest.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         fireEvent.touchStart(tappable(), {
           touches: [{}, {}],
           changedTouches: [{}],
@@ -255,10 +275,10 @@ describe(Tappable, () => {
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
 
-      it('on disable', () => {
+      it('on disable', async () => {
         const h = render(<TappableTest />);
         fireEvent.mouseDown(tappable());
-        act(jest.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         h.rerender(<TappableTest disabled />);
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
@@ -282,7 +302,7 @@ describe(Tappable, () => {
           </TappableTest>,
         );
         fireEvent.mouseDown(tappable());
-        act(jest.runAllTimers);
+        await act(vi.runAllTimers);
         await userEvent.hover(screen.getByTestId('c'));
         expect(tappable()).not.toHaveClass(styles.activatedBackground);
       });
@@ -290,6 +310,7 @@ describe(Tappable, () => {
   });
 
   describe('hover', () => {
+    fakeTimersForScope();
     it('is not hovered by default', () => {
       const result = render(<Tappable onClick={noop} data-testid="x" />);
       expect(result.getByTestId('x')).not.toHaveClass(styles.hoveredBackground);

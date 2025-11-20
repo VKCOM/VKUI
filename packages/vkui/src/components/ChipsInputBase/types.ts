@@ -1,15 +1,10 @@
 import type * as React from 'react';
-import type {
-  HasAlign,
-  HasComponent,
-  HasDataAttribute,
-  HasRef,
-  HTMLAttributesWithRootRef,
-} from '../../types';
+import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { type FormFieldProps } from '../FormField/FormField';
 import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
+import { type ChipProps } from './Chip/Chip';
 
-export type NavigateTo = 'prev' | 'next' | 'last';
+export type NavigateTo = 'prev' | 'next' | 'last' | 'first';
 
 export type ChipOptionValue = string | number;
 
@@ -30,44 +25,6 @@ export type ChipOption = {
   disabled?: boolean;
   [index: string]: any;
 };
-
-export interface ChipProps
-  extends HasComponent,
-    HasDataAttribute,
-    HTMLAttributesWithRootRef<HTMLElement> {
-  /**
-   * Значение чипа.
-   */
-  value?: ChipOptionValue;
-  /**
-   * Можно ли удалить чип.
-   */
-  removable?: boolean;
-  /**
-   * Блокировка взаимодействия с чипом.
-   */
-  disabled?: boolean;
-  /**
-   * Режим только для чтения.
-   */
-  readOnly?: boolean;
-  /**
-   * Текст для кнопки удаления.
-   */
-  removeLabel?: string;
-  /**
-   * Контент перед основным содержимым.
-   */
-  before?: React.ReactNode;
-  /**
-   * Контент после основного содержимого.
-   */
-  after?: React.ReactNode;
-  /**
-   * Обработчик удаления чипа.
-   */
-  onRemove?: (event: React.MouseEvent, value: ChipOptionValue) => void;
-}
 
 export interface RenderChipProps extends ChipProps {
   /**
@@ -128,6 +85,10 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
   onInputChange?: OnInputChange;
   /**
    * Символ или строка, которая будет использоваться как разделитель для автоматического создания опций из текста, введенного в поле ввода.
+   * Принимает:
+   * - `string` - простая строка
+   * - `RegExp` - регулярное выражение
+   * - `string[]` - массив строк, по которым нужно разелять ввод.
    *
    * Работает в двух сценариях:
    * 1. При вводе разделителя - текст до разделителя автоматически преобразуется в новую опцию.
@@ -138,7 +99,7 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
    *    Например, при `delimiter=","` вставка "опция1,опция2,опция3" создаст
    *    три отдельные опции: "опция1", "опция2" и "опция3".
    */
-  delimiter?: string;
+  delimiter?: string | RegExp | string[];
 }
 
 /**
@@ -154,16 +115,28 @@ type UseChipsInputBaseOnlyNeededProps<O extends ChipOption = ChipOption> = Omit<
  */
 export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
   extends UseChipsInputBaseOnlyNeededProps<O>,
-    Omit<
+    Pick<
       React.InputHTMLAttributes<HTMLInputElement>,
-      keyof UseChipsInputBaseProps<O> | 'defaultChecked'
+      'readOnly' | 'onFocus' | 'onBlur' | 'placeholder'
     >,
-    HasRef<HTMLInputElement>,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur' | 'defaultValue'>,
+    HasRootRef<HTMLDivElement>,
     HasAlign {
   /**
-   * Ссылка на корневой элемент.
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
-  getRootRef?: React.Ref<HTMLDivElement>;
+  getRef?: React.Ref<HTMLInputElement>;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в поле ввода.
+   */
+  slotProps?: {
+    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
+    input?: React.InputHTMLAttributes<HTMLInputElement> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
   /**
    * Добавляет значение в список на событие `onBlur`.
    */
@@ -187,6 +160,10 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
    * Должна принимать обязательное свойство `onClick`.
    */
   ClearButton?: React.ComponentType<FormFieldClearButtonProps>;
+  /**
+   * `aria-label` для списка выбранных опций.
+   */
+  chipsListLabel?: string;
 }
 
 /**

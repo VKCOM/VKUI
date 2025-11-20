@@ -11,10 +11,13 @@ type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDa
 const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<StoryDateRangeInputProps> = {
-  title: 'Forms/DateRangeInput',
+  title: 'Dates/DateRangeInput',
   component: DateRangeInput,
   parameters: createStoryParameters('DateRangeInput', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
+    readOnly: {
+      control: { type: 'boolean' },
+    },
     value: {
       description: 'Используйте startDate и endDate для задания периода',
       control: false,
@@ -41,6 +44,7 @@ const story: Meta<StoryDateRangeInputProps> = {
     after: iconsPresets,
     renderDayContent: createCalendarDayRenderField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

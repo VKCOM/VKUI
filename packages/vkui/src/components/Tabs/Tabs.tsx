@@ -7,8 +7,10 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { useTabsController } from './TabsController';
+import { TabsControllerContext } from './TabsControllerContext';
+import { TabsModeContext } from './TabsModeContext';
 import styles from './Tabs.module.css';
-
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Режим отображения компонента.
@@ -33,29 +35,22 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    * либо выравниваются по контенту соответственно.
    */
   layoutFillMode?: 'auto' | 'stretched' | 'shrinked';
+  /**
+   * Идентификатор выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  selectedId?: string;
+  /**
+   * Идентификатор выбранной вкладки по умолчанию. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  defaultSelectedId?: string;
+  /**
+   * Обработчик изменения выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  onSelectedIdChange?: (id: string) => void;
 }
-
-/* eslint-disable jsdoc/require-jsdoc */
-export interface TabsContextProps {
-  mode: TabsProps['mode'];
-  withGaps: boolean;
-  layoutFillMode: NonNullable<TabsProps['layoutFillMode']>;
-  withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
-  scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
-}
-/* eslint-enable jsdoc/require-jsdoc */
-
-export const TabsModeContext: React.Context<TabsContextProps> =
-  React.createContext<TabsContextProps>({
-    mode: 'default',
-    withGaps: false,
-    layoutFillMode: 'auto',
-    withScrollToSelectedTab: false,
-    scrollBehaviorToSelectedTab: 'nearest',
-  });
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Tabs
+ * @see https://vkui.io/components/tabs
  */
 export const Tabs = ({
   children,
@@ -64,14 +59,33 @@ export const Tabs = ({
   withScrollToSelectedTab,
   scrollBehaviorToSelectedTab = 'nearest',
   layoutFillMode = 'auto',
+  selectedId,
+  defaultSelectedId,
+  onSelectedIdChange,
   ...restProps
 }: TabsProps): React.ReactNode => {
+  const controller = useTabsController({
+    selectedId,
+    defaultSelectedId,
+    onSelectedIdChange,
+  });
   const platform = usePlatform();
   const direction = useConfigDirection();
   const isTabFlow = role === 'tablist';
   const withGaps = mode === 'accent' || mode === 'secondary';
 
   const { tabsRef } = useTabsNavigation(isTabFlow, direction === 'rtl');
+
+  const tabsModeContext = React.useMemo(
+    () => ({
+      mode,
+      withGaps,
+      layoutFillMode,
+      withScrollToSelectedTab,
+      scrollBehaviorToSelectedTab,
+    }),
+    [mode, withGaps, layoutFillMode, withScrollToSelectedTab, scrollBehaviorToSelectedTab],
+  );
 
   return (
     <RootComponent
@@ -86,16 +100,10 @@ export const Tabs = ({
       role={role}
     >
       <div className={styles.in} ref={tabsRef}>
-        <TabsModeContext.Provider
-          value={{
-            mode,
-            withGaps,
-            layoutFillMode,
-            withScrollToSelectedTab,
-            scrollBehaviorToSelectedTab,
-          }}
-        >
-          {children}
+        <TabsModeContext.Provider value={tabsModeContext}>
+          <TabsControllerContext.Provider value={controller}>
+            {children}
+          </TabsControllerContext.Provider>
         </TabsModeContext.Provider>
       </div>
     </RootComponent>

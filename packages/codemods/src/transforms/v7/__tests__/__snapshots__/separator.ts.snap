@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`separator transforms correctly 1`] = `
+exports[`separator > transforms correctly 1`] = `
 "import { Separator } from '@vkontakte/vkui';
 import React from 'react';
 

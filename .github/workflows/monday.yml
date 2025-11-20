@@ -12,10 +12,10 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - uses: VKCOM/gh-actions/shared/node/corepack-up-pr@main
         with:

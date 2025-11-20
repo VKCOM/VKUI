@@ -43,12 +43,10 @@
   opacity: 0;
 }
 
-.host:hover .arrow {
+.showArrows .arrow {
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.withConstArrows .arrow,
-.withConstArrows:hover .arrow,
 .host .arrow:hover {
   opacity: 1;
 }
@@ -65,15 +63,21 @@
  * CMP:
  * Tabs
  */
+.withPadding,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs) .host {
+  :global(.vkuiInternalTabs)
+  .host {
   min-inline-size: 100%;
 }
 
+.withPadding .inWrapper::before,
+.withPadding .inWrapper::after,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs--withGaps) .inWrapper::after,
+  :global(.vkuiInternalTabs--withGaps)
+  .inWrapper::after,
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalTabs--withGaps) .inWrapper::before {
+  :global(.vkuiInternalTabs--withGaps)
+  .inWrapper::before {
   display: block;
   flex-shrink: 0;
   inline-size: var(--vkui--size_base_padding_horizontal--regular);

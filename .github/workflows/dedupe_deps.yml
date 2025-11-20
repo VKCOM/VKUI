@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Dedupe deps
         run: yarn dedupe

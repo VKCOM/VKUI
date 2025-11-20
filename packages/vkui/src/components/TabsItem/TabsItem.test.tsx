@@ -30,7 +30,7 @@ const TestTabs = () => {
 };
 
 const mockScrollIntoView = () => {
-  const scrollIntoViewMock = jest.fn();
+  const scrollIntoViewMock = vi.fn();
   Element.prototype.scrollIntoView = scrollIntoViewMock;
   return scrollIntoViewMock;
 };
@@ -54,7 +54,7 @@ describe('TabsItem', () => {
     const scrollIntoViewMock = mockScrollIntoView();
     fireEvent.click(secondTab);
 
-    expect(scrollIntoViewMock).toHaveBeenCalledWith({
+    expect(scrollIntoViewMock).toHaveBeenCalledExactlyOnceWith({
       inline: 'start',
       block: 'nearest',
       behavior: 'smooth',
@@ -65,7 +65,7 @@ describe('TabsItem', () => {
     render(<TestTabs />);
 
     const secondTab = screen.getByTestId<HTMLDivElement>('second');
-    jest.spyOn(secondTab, 'getBoundingClientRect').mockImplementation(() => {
+    vi.spyOn(secondTab, 'getBoundingClientRect').mockImplementation(() => {
       const rect = {
         top: -1,
       };
@@ -82,7 +82,7 @@ describe('TabsItem', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls TabsItem', () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+      const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
       const { rerender } = render(
         <TabsItem data-testid="first" selected={false}>
           test

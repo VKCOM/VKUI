@@ -28,7 +28,7 @@ export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEle
  * область на странице.
  *
  * @since 6.1.0
- * @see https://vkcom.github.io/VKUI/#/DropZone
+ * @see https://vkui.io/components/drop-zone
  */
 export const DropZone: React.FC<DropZoneProps> & {
   Grid: typeof DropZoneGrid;

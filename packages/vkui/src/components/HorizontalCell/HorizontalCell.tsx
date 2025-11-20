@@ -3,7 +3,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import type { CSSCustomProperties, HasRef, HasRootRef, LiteralUnion } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -27,7 +27,7 @@ const textAlignClassNames = {
 type HorizontalCellSizes = 's' | 'm' | 'l' | 'xl' | 'auto';
 
 export interface HorizontalCellProps
-  extends Omit<TappableProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
+  extends Omit<TappableOmitProps, 'size' | 'getRootRef' | 'title' | 'borderRadiusMode'>,
     HasRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
@@ -68,7 +68,7 @@ export interface HorizontalCellProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/HorizontalCell
+ * @see https://vkui.io/components/horizontal-cell
  */
 export const HorizontalCell = ({
   className,

@@ -3,6 +3,7 @@
 import { type AllHTMLAttributes } from 'react';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusTrap, type UseFocusTrapProps } from '../../hooks/useFocusTrap';
+import { DEFAULT_MUTATION_OBSERVER_OPTIONS } from '../../hooks/useMutationObserver';
 import type { HasComponent, HasRootRef } from '../../types';
 
 export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
@@ -11,9 +12,6 @@ export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
     HasRootRef<T>,
     HasComponent {}
 
-/**
- * @see https://vkcom.github.io/VKUI/#/FocusTrap
- */
 export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   Component = 'div',
   onClose,
@@ -25,6 +23,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
   getRootRef,
   children,
   captureEscapeKeyboardEvent = true,
+  mutationObserverOptions = DEFAULT_MUTATION_OBSERVER_OPTIONS,
   ...restProps
 }: FocusTrapProps<T>): React.ReactNode => {
   const ref = useExternRef<T>(getRootRef);
@@ -37,6 +36,7 @@ export const FocusTrap = <T extends HTMLElement = HTMLElement>({
     timeout,
     onClose,
     captureEscapeKeyboardEvent,
+    mutationObserverOptions,
   });
 
   return (

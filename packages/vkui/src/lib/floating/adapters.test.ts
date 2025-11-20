@@ -2,34 +2,43 @@ import { noop } from '@vkontakte/vkjs';
 import type { autoUpdate } from '@vkontakte/vkui-floating-ui/react-dom';
 import { autoUpdateFloatingElement } from './adapters';
 
-const autoUpdateLibDisposerStub = jest.fn();
-const autoUpdateLibStub = jest.fn().mockReturnValue(autoUpdateLibDisposerStub);
-jest.mock('@vkontakte/vkui-floating-ui/react-dom', () => {
+const autoUpdateLibDisposerStub = vi.fn();
+const autoUpdateLibStub = vi.fn().mockReturnValue(autoUpdateLibDisposerStub);
+vi.mock('@vkontakte/vkui-floating-ui/react-dom', () => {
   return {
     autoUpdate: (...args: Parameters<typeof autoUpdate>) => autoUpdateLibStub(...args),
   };
 });
 
-const customResizeObserverInstanceStub = {
-  observe: jest.fn(),
-  disconnect: jest.fn(),
-  appendToTheDOM: jest.fn(),
-};
-const customResizeObserverStub = jest.fn().mockImplementation(() => {
-  return customResizeObserverInstanceStub;
-});
+const customResizeObserverInstanceStub = vi.hoisted(() => ({
+  observe: vi.fn(),
+  disconnect: vi.fn(),
+  appendToTheDOM: vi.fn(),
+}));
 
-jest.mock('./customResizeObserver', () => {
+const CustomResizeObserverStub = vi.hoisted(() =>
+  vi.fn(
+    class MockCustomResizeObserver {
+      observe = customResizeObserverInstanceStub.observe.bind(customResizeObserverInstanceStub);
+      disconnect = customResizeObserverInstanceStub.disconnect.bind(
+        customResizeObserverInstanceStub,
+      );
+      appendToTheDOM = customResizeObserverInstanceStub.appendToTheDOM.bind(
+        customResizeObserverInstanceStub,
+      );
+    },
+  ),
+);
+
+vi.mock('./customResizeObserver', () => {
   return {
-    CustomResizeObserver: jest.fn().mockImplementation(() => {
-      return customResizeObserverStub();
-    }),
+    CustomResizeObserver: CustomResizeObserverStub,
   };
 });
 
 describe(autoUpdateFloatingElement, () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('does not use CustomResizeObserver if ResizeObserver is defined', () => {
@@ -37,7 +46,7 @@ describe(autoUpdateFloatingElement, () => {
     const reference = document.createElement('div');
     const floating = document.createElement('div');
 
-    autoUpdateFloatingElement(reference, floating, jest.fn(), { elementResize: true });
+    autoUpdateFloatingElement(reference, floating, vi.fn(), { elementResize: true });
 
     expect(autoUpdateLibStub).toHaveBeenLastCalledWith(
       expect.anything(),
@@ -46,7 +55,7 @@ describe(autoUpdateFloatingElement, () => {
       expect.objectContaining({ elementResize: true }),
     );
 
-    autoUpdateFloatingElement(reference, floating, jest.fn(), { elementResize: false });
+    autoUpdateFloatingElement(reference, floating, vi.fn(), { elementResize: false });
 
     expect(autoUpdateLibStub).toHaveBeenLastCalledWith(
       expect.anything(),
@@ -61,7 +70,7 @@ describe(autoUpdateFloatingElement, () => {
     const reference = document.createElement('div');
     const floating = document.createElement('div');
 
-    autoUpdateFloatingElement(reference, floating, jest.fn(), { elementResize: true });
+    autoUpdateFloatingElement(reference, floating, vi.fn(), { elementResize: true });
 
     expect(autoUpdateLibStub).toHaveBeenLastCalledWith(
       expect.anything(),
@@ -70,7 +79,7 @@ describe(autoUpdateFloatingElement, () => {
       expect.objectContaining({ elementResize: false }),
     );
 
-    expect(customResizeObserverStub.mock.instances.length).toBe(1);
+    expect(CustomResizeObserverStub.mock.instances.length).toBe(1);
   });
 
   test('calls disposer in unmount callback', () => {
@@ -78,7 +87,7 @@ describe(autoUpdateFloatingElement, () => {
     const reference = document.createElement('div');
     const floating = document.createElement('div');
 
-    const unmountCallback = autoUpdateFloatingElement(reference, floating, jest.fn(), {
+    const unmountCallback = autoUpdateFloatingElement(reference, floating, vi.fn(), {
       elementResize: true,
     });
 

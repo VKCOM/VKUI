@@ -64,13 +64,13 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
   );
 };
 
-export const HorizontalScrollWithHasMousePlayground = ({
+export const HorizontalScrollHoverTestPlayground = ({
   colorScheme,
   ...restProps
 }: ComponentPlaygroundProps) => {
   return (
     <ConfigProvider colorScheme={colorScheme}>
-      <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+      <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
         <AppDefaultWrapper>
           <HorizontalScroll
             {...restProps}
@@ -89,27 +89,8 @@ export const HorizontalScrollWithHasMousePlayground = ({
   );
 };
 
-export const HorizontalScrollWithoutHasMousePlayground = ({
-  colorScheme,
-  ...restProps
-}: ComponentPlaygroundProps) => {
-  return (
-    <ConfigProvider colorScheme={colorScheme}>
-      <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-        <AppDefaultWrapper>
-          <HorizontalScroll
-            {...restProps}
-            getRef={(element) => {
-              if (!element) {
-                return;
-              }
-              element.scrollLeft = 32;
-            }}
-          >
-            {items}
-          </HorizontalScroll>
-        </AppDefaultWrapper>
-      </AdaptivityProvider>
-    </ConfigProvider>
-  );
-};
+export const HorizontalScrollWithFocusVisible = (props: ComponentPlaygroundProps) => (
+  <ComponentPlayground {...props}>
+    {(props: HorizontalScrollProps) => <HorizontalScroll {...props}>{items}</HorizontalScroll>}
+  </ComponentPlayground>
+);

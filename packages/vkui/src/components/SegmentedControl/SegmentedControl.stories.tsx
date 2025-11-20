@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { SegmentedControl, type SegmentedControlProps } from './SegmentedControl';
@@ -15,6 +15,7 @@ const story: Meta<SegmentedControlProps> = {
       options: ['radiogroup', 'tablist'],
     },
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

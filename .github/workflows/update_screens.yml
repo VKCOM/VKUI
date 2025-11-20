@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - v6
+      - v7
       - '*-stable'
 
 run-name: Update screenshots for ${{ github.ref_name }}
@@ -16,13 +17,13 @@ jobs:
       image: ${{ steps.result.outputs.value }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Создаем кэш для ветки один раз
       - name: Checkout LFS objects
-        uses: VKCOM/VKUI/.github/actions/lfs@master
+        uses: ./.github/actions/lfs
 
-      - uses: VKCOM/VKUI/.github/actions/get-playwright-docker-image@master
+      - uses: ./.github/actions/get-playwright-docker-image
         id: result
 
   update_screens:
@@ -40,17 +41,17 @@ jobs:
     name: 'Run e2e tests for (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout LFS objects
-        uses: VKCOM/VKUI/.github/actions/lfs@master
+        uses: ./.github/actions/lfs
 
       - name: Install rsync && zip
         run: |
           apt-get install -y rsync zip
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Update screenshots
         # Почему HOME=/root см. https://github.com/microsoft/playwright/issues/6500
@@ -86,11 +87,11 @@ jobs:
     name: 'Collect updated screenshots and push changes'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download artifacts
         id: artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: packages/vkui/artifacts
 

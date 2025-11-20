@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -16,6 +16,7 @@ const story: Meta<TextareaProps> = {
     before: iconsPresets,
     after: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

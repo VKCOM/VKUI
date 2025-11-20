@@ -28,6 +28,8 @@ export interface ModalCardProps
   keepMounted?: boolean;
   /**
    * Отключает фокус на интерактивный элемент после открытия модалки.
+   *
+   * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
   noFocusToDialog?: boolean;
   /**
@@ -56,4 +58,18 @@ export interface ModalCardProps
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
+  /**
+   * Отключает отображение и взаимодействие с фоном модалки.
+   * > При использовании `ModalCard` внутри `ModalRoot` есть особенность использования этого свойства.
+   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-modal-overlay).
+   */
+  disableModalOverlay?: boolean;
+  /**
+   * Отключает анимацию открытия модалки.
+   */
+  disableOpenAnimation?: boolean;
+  /**
+   * Отключает анимацию закрытия модалки.
+   */
+  disableCloseAnimation?: boolean;
 }

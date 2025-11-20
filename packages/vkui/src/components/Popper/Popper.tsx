@@ -55,6 +55,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'customMiddlewares'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'disableShiftMiddleware'
   | 'flipMiddlewareFallbackAxisSideDirection'
 >;
 
@@ -83,6 +84,10 @@ export interface PopperCommonProps
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
   autoUpdateOnTargetResize?: boolean;
+  /**
+   * Пытаться обновлять позицию всплывающего элемента каждый фрейм.
+   */
+  autoUpdateOnAnimationFrame?: boolean;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -93,7 +98,7 @@ export interface PopperProps extends PopperCommonProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Popper
+ * @see https://vkui.io/components/popper
  */
 export const Popper = ({
   // UseFloatingMiddlewaresBootstrapProps
@@ -107,10 +112,12 @@ export const Popper = ({
   arrowPadding = DEFAULT_ARROW_PADDING,
   customMiddlewares,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
   flipMiddlewareFallbackAxisSideDirection,
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
+  autoUpdateOnAnimationFrame = false,
   strategy: strategyProp,
 
   // ArrowProps
@@ -142,6 +149,7 @@ export const Popper = ({
     hideWhenReferenceHidden,
     customMiddlewares,
     disableFlipMiddleware,
+    disableShiftMiddleware,
     flipMiddlewareFallbackAxisSideDirection,
   });
 
@@ -160,6 +168,7 @@ export const Popper = ({
       /* istanbul ignore next: не знаю как проверить */
       return autoUpdateFloatingElement(...args, {
         elementResize: autoUpdateOnTargetResize,
+        animationFrame: autoUpdateOnAnimationFrame,
       });
     },
   });

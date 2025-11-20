@@ -18,13 +18,14 @@ import { Placeholder } from '../Placeholder/Placeholder';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
 const story: Meta<ActionSheetProps> = {
-  title: 'Popouts/ActionSheet',
+  title: 'Modals/ActionSheet',
   component: ActionSheet,
   parameters: createStoryParameters('ActionSheet', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     title: StringArg,
     description: StringArg,
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;

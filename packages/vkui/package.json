@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "7.3.0",
+  "version": "7.10.0",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
@@ -45,7 +45,7 @@
     "directory": "packages/vkui"
   },
   "bugs": "https://github.com/VKCOM/VKUI/issues",
-  "homepage": "https://vkcom.github.io/VKUI/",
+  "homepage": "https://vkui.io/",
   "scripts": {
     "prepack": "yarn copy-essensial-files && yarn build",
     "copy-essensial-files": "cp ../../LICENSE . && cp ../../README.md .",
@@ -63,19 +63,20 @@
     "swc:es6": "yarn swc-base -d dist -s",
     "swc:cssm": "yarn swc-base -d dist/cssm -s --config-file ./cssm/cssm.swcrc",
     "tsc:es6": "yarn run -T cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration -p tsconfig.dist.json",
-    "test": "yarn run -T jest",
-    "test:ci": "yarn test --ci --silent --outputFile ../../test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='../../.nyc_output'",
+    "test": "yarn run -T vitest run --pool=vmThreads",
+    "test:watch": "yarn run -T vitest --pool=vmThreads",
+    "test:ci": "yarn run -T vitest run --reporter=json --outputFile=../../test-results.json --coverage",
     "test:e2e": "../../scripts/generate_env_docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update": "../../scripts/generate_env_docker.sh -u && docker compose --env-file=./.env.docker up --abort-on-container-exit",
-    "test:e2e:ci": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --config playwright-ct.config.mjs",
-    "test:e2e:ci:ui": "yarn run -T cross-env NODE_OPTIONS='--no-warnings' playwright test --ui --ui-port=4300 --ui-host=0.0.0.0 --config playwright-ct.config.mjs",
+    "test:e2e:ci": "yarn run -T cross-env NODE_OPTIONS='--experimental-transform-types --disable-warning=ExperimentalWarning' playwright test --config playwright-ct.config.ts",
+    "test:e2e:ci:ui": "yarn run -T cross-env NODE_OPTIONS='--experimental-transform-types --disable-warning=ExperimentalWarning' playwright test --ui --ui-port=4300 --ui-host=0.0.0.0 --config playwright-ct.config.ts",
     "test:e2e:ui": "../../scripts/generate_env_docker.sh -r test:e2e:ci:ui && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
     "lint:generated-files": "yarn run -T concurrently 'yarn:lint:generated-files:*'",
     "lint:generated-files:css-custom-medias": "yarn run -T tsc scripts/generateCSSCustomMedias.mjs --checkJs --module ESNext --moduleResolution node --resolveJsonModule --allowSyntheticDefaultImports --jsx react-jsx --noEmit && yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
     "lint:generated-files:css-modules": "yarn run generate:css-modules",
-    "storybook": "bash -c 'source .env && yarn run -T cross-env SANDBOX=\\.storybook storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
-    "storybook:build": "yarn run -T cross-env SANDBOX=\\.storybook FROM_STORYBOOK=1 storybook build",
+    "storybook": "bash -c 'source .env && yarn run -T storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
+    "storybook:build": "yarn run -T storybook build",
     "generate": "yarn run -T concurrently 'yarn:generate:*'",
     "generate:css-custom-medias": "node scripts/generateCSSCustomMedias.mjs",
     "generate:css-modules": "yarn run -T hcm 'src/**/*.css'"
@@ -85,21 +86,18 @@
     "react-dom": "^18.2.0 || ^19.0.0"
   },
   "dependencies": {
-    "@date-fns/tz": "^1.2.0",
     "@swc/helpers": "^0.5.17",
     "@vkontakte/icons": "^3.0.0",
-    "@vkontakte/vkjs": "^2.0.1",
-    "@vkontakte/vkui-floating-ui": "^0.2.3",
-    "date-fns": "^4.1.0"
+    "@vkontakte/vkjs": "^2.0.2",
+    "@vkontakte/vkui-date-fns-tz": "^0.0.6",
+    "@vkontakte/vkui-floating-ui": "^0.2.7"
   },
   "devDependencies": {
-    "@storybook/react": "8.6.12",
-    "@storybook/react-webpack5": "8.6.12",
+    "@biomejs/biome": "^2.3.5",
     "@types/node": "*",
+    "@types/postcss-import": "^14.0.3",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "storybook": "8.6.12",
-    "ts-node": "*"
+    "react-dom": "^18.3.1"
   },
   "size-limit": [
     {

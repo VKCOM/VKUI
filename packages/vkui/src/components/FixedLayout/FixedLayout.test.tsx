@@ -1,6 +1,5 @@
 import { act, type RefObject } from 'react';
 import { render } from '@testing-library/react';
-import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
@@ -8,15 +7,18 @@ import styles from './FixedLayout.module.css';
 
 let updateFunction: () => void;
 
-jest.mock('../../lib/floating/customResizeObserver', () => ({
-  CustomResizeObserver: jest.fn().mockImplementation((updateFunctionFn: () => void) => {
-    updateFunction = updateFunctionFn;
-    return {
-      observe: noop,
-      appendToTheDOM: noop,
-      disconnect: noop,
-    };
-  }),
+vi.mock('../../lib/floating/customResizeObserver', () => ({
+  CustomResizeObserver: vi.fn(
+    class MockCustomResizeObserver {
+      constructor(updateFunctionFn: () => void) {
+        updateFunction = updateFunctionFn;
+      }
+
+      observe = vi.fn();
+      appendToTheDOM = vi.fn();
+      disconnect = vi.fn();
+    },
+  ),
 }));
 
 describe('FixedLayout', () => {
@@ -35,9 +37,9 @@ describe('FixedLayout', () => {
       if (!element) {
         return;
       }
-      jest
-        .spyOn(element, 'getBoundingClientRect')
-        .mockImplementation(() => new DOMRect(0, 0, parentWidth, 800));
+      vi.spyOn(element, 'getBoundingClientRect').mockImplementation(
+        () => new DOMRect(0, 0, parentWidth, 800),
+      );
 
       parentRef.current = element;
     };
@@ -71,7 +73,7 @@ describe('FixedLayout', () => {
       if (!element) {
         return;
       }
-      jest.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
+      vi.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
 
       colRef.current = element;
     };

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`popout-wrapper transforms correctly 1`] = `
+exports[`popout-wrapper > transforms correctly 1`] = `
 "import { PopoutWrapper } from '@vkontakte/vkui';
 import React from 'react';
 

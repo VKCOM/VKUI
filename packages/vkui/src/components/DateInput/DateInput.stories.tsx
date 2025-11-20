@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { createCalendarTimezoneField } from '../../testing/presets/createCalendarTimezoneField';
@@ -10,11 +10,14 @@ import { DateInput, type DateInputProps } from './DateInput';
 const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<DateInputProps> = {
-  title: 'Forms/DateInput',
+  title: 'Dates/DateInput',
   component: DateInput,
   parameters: createStoryParameters('DateInput', CanvasFullLayout, DisableCartesianParam),
   args: { onChange: fn() },
   argTypes: {
+    readOnly: {
+      control: { type: 'boolean' },
+    },
     value: {
       control: { type: 'date' },
     },
@@ -24,6 +27,7 @@ const story: Meta<DateInputProps> = {
     renderCustomValue: StringArg,
     timezone: createCalendarTimezoneField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;

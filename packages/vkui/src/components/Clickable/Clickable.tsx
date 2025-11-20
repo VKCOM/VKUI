@@ -1,20 +1,18 @@
+'use client';
+
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { type FocusVisibleModeProps } from '../../hooks/useFocusVisibleClassName';
+import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { mergeCalls } from '../../lib/mergeCalls';
+import { clickByKeyboardHandler } from '../../lib/utils';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
-import { RealClickable } from './RealClickable';
 import { type StateProps } from './useState';
+import { ClickableLockStateContext, DEFAULT_ACTIVE_EFFECT_DELAY, useState } from './useState';
 import styles from './Clickable.module.css';
 
-export interface ClickableProps<T = HTMLElement>
-  extends RootComponentProps<T>,
-    FocusVisibleModeProps,
-    StateProps {}
-
-/**
- * Некликабельный компонент. Отключаем возможность нажимать на компонент.
- */
-const NonClickable = <T,>({
+function nonClickableProps<T>({
   href,
   onClick,
   onClickCapture,
@@ -27,8 +25,135 @@ const NonClickable = <T,>({
   activated,
   activeEffectDelay,
   focusVisibleMode,
+  DefaultComponent,
+  Component,
   ...restProps
-}: ClickableProps<T>) => <RootComponent {...restProps} />;
+}: ClickableProps<T>) {
+  return {
+    Component: Component || DefaultComponent,
+    ...restProps,
+    lockStateContextValue: {
+      lockHoverStateBubbling: undefined,
+      lockActiveStateBubbling: undefined,
+    },
+  };
+}
+
+function useClickableProps<T>({
+  baseClassName,
+  focusVisibleMode = 'inside',
+  activeClassName,
+  hoverClassName,
+  activeEffectDelay = DEFAULT_ACTIVE_EFFECT_DELAY,
+  hasHover = true,
+  hasActive = true,
+  hovered,
+  activated,
+  hasHoverWithChildren,
+  unlockParentHover,
+  onPointerEnter,
+  onPointerLeave,
+  onPointerDown,
+  onPointerCancel,
+  onPointerUp,
+  onBlur,
+  onFocus,
+  onKeyDown,
+  DefaultComponent,
+  ...restProps
+}: ClickableProps<T>) {
+  const { focusVisible, ...focusEvents } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({ focusVisible, mode: focusVisibleMode });
+
+  const {
+    stateClassName,
+    setLockHoverBubblingImmediate,
+    setLockActiveBubblingImmediate,
+    ...stateEvents
+  } = useState({
+    activeClassName,
+    hoverClassName,
+    activeEffectDelay,
+    hasHover,
+    hasActive,
+    hovered,
+    activated,
+    unlockParentHover,
+  });
+
+  const handlers = mergeCalls(
+    focusEvents,
+    stateEvents,
+    { onKeyDown: clickByKeyboardHandler },
+    {
+      onPointerEnter,
+      onPointerLeave,
+      onPointerDown,
+      onPointerCancel,
+      onPointerUp,
+      onBlur,
+      onFocus,
+      onKeyDown,
+    },
+  );
+
+  const lockStateContextValue = React.useMemo(
+    () => ({
+      lockHoverStateBubbling: hasHoverWithChildren ? noop : setLockHoverBubblingImmediate,
+      lockActiveStateBubbling: setLockActiveBubblingImmediate,
+    }),
+    [setLockHoverBubblingImmediate, setLockActiveBubblingImmediate, hasHoverWithChildren],
+  );
+
+  return {
+    baseClassName: classNames(
+      baseClassName,
+      styles.realClickable,
+      focusVisibleClassNames,
+      stateClassName,
+    ),
+    ...handlers,
+    ...restProps,
+    lockStateContextValue,
+  };
+}
+
+function useProps<T>(props: ClickableProps<T>): RootComponentProps<T> & {
+  lockStateContextValue: {
+    lockHoverStateBubbling: undefined | ((...args: any[]) => void);
+    lockActiveStateBubbling: undefined | ((...args: any[]) => void);
+  };
+} {
+  const commonProps = component(props);
+  const isClickable = checkClickable(props);
+
+  const {
+    baseClassName,
+    disabled, // Игнорируем disabled из пропсов, т.к. он обрабатывается в commonProps
+    Component,
+    ...restProps
+  } = props;
+
+  const nextProps = {
+    baseClassName: classNames(baseClassName, styles.host),
+    ...commonProps,
+    ...restProps,
+  };
+
+  const clickableProps = useClickableProps(nextProps);
+
+  return isClickable ? clickableProps : nonClickableProps(nextProps);
+}
+
+export interface ClickableProps<T = HTMLElement>
+  extends RootComponentProps<T>,
+    FocusVisibleModeProps,
+    StateProps {
+  /**
+   * Компонент который будет при передаче `onClick`. По умолчанию `"div"`.
+   */
+  DefaultComponent?: React.ElementType;
+}
 
 /**
  * Проверяем, является ли компонент кликабельным.
@@ -56,11 +181,12 @@ export function checkClickable<T>(props: ClickableProps<T>): boolean {
  */
 function component<T>({
   Component,
+  DefaultComponent = 'div',
   onClick,
   onClickCapture,
   href,
   disabled,
-}: RootComponentProps<T>): RootComponentProps<T> {
+}: ClickableProps<T>): RootComponentProps<T> {
   if (Component !== undefined) {
     return { Component, disabled };
   } else if (href !== undefined) {
@@ -83,7 +209,7 @@ function component<T>({
     };
   } else if (onClick !== undefined || onClickCapture !== undefined) {
     return {
-      Component: 'div',
+      Component: DefaultComponent,
       role: 'button',
       ...(disabled ? { 'aria-disabled': true } : { tabIndex: 0 }),
     };
@@ -105,21 +231,13 @@ function component<T>({
  * - a11y компонентов.
  */
 export const Clickable = <T,>(props: ClickableProps<T>): React.ReactNode => {
-  const commonProps = component(props);
-  const isClickable = checkClickable(props);
-  const Component = isClickable ? RealClickable : NonClickable;
-
-  const {
-    baseClassName,
-    disabled, // Игнорируем disabled из пропсов, т.к. он обрабатывается в commonProps
-    ...restProps
-  } = props;
+  const { lockStateContextValue, children, ...restProps } = useProps(props);
 
   return (
-    <Component
-      baseClassName={classNames(baseClassName, styles.host)}
-      {...commonProps}
-      {...restProps}
-    />
+    <RootComponent {...restProps}>
+      <ClickableLockStateContext.Provider value={lockStateContextValue}>
+        {children}
+      </ClickableLockStateContext.Provider>
+    </RootComponent>
   );
 };

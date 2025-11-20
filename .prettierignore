@@ -23,6 +23,7 @@ blob-report/
 all-blob-reports/
 .next/
 out/
+.docgen/
 
 packages/vkui/**/*.css.d.ts
 packages/vkui-floating-ui/**/*.d.ts
@@ -32,6 +33,8 @@ packages/vkui-floating-ui/**/*.esm.js
 packages/vkui-floating-ui/**/*.umd.js
 packages/vkui-floating-ui/**/package.json
 !packages/vkui-floating-ui/package.json
+packages/vkui-date-fns-tz/**/*.d.ts
+packages/vkui-date-fns-tz/**/*.js
 
 # Yarn
 .yarn/*

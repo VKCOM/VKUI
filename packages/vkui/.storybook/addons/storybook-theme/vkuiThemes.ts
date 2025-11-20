@@ -1,10 +1,10 @@
-import { create } from '@storybook/theming';
+import { create } from 'storybook/theming';
 import darkLogo from './vkui-logo-dark.svg';
 import lightLogo from './vkui-logo-light.svg';
 
 const commonProps = {
   brandTitle: 'VKUI Storybook',
-  brandUrl: 'https://vkcom.github.io/VKUI',
+  brandUrl: 'https://vkui.io/',
   brandTarget: '_blank',
 };
 

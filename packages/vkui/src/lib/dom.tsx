@@ -95,7 +95,13 @@ export function getTransformedParentCoords(element: Element): {
   let parentNode = element.parentNode;
   while (parentNode !== null) {
     if (isHTMLElement(parentNode)) {
-      const { transform, willChange } = getComputedStyle(parentNode);
+      let { transform, willChange } = getComputedStyle(parentNode);
+      if (transform === '') {
+        transform = 'unset';
+      }
+      if (willChange === '') {
+        willChange = 'unset';
+      }
       if (
         !TRANSFORM_DEFAULT_VALUES.includes(transform) ||
         !WILL_CHANGE_DEFAULT_VALUES.includes(willChange)
@@ -277,7 +283,16 @@ export const initializeBrowserGesturePreventionEffect = (window: Window): VoidFu
   };
 };
 
-const nonTextInputTypes = { button: true, submit: true, reset: true, color: true, file: true, image: true, checkbox: true, radio: true }; // prettier-ignore
+const nonTextInputTypes = {
+  button: true,
+  submit: true,
+  reset: true,
+  color: true,
+  file: true,
+  image: true,
+  checkbox: true,
+  radio: true,
+};
 
 export const isHTMLContentEditableElement = (
   el: Element | null,
@@ -288,7 +303,7 @@ export const isHTMLContentEditableElement = (
 
   if (el.tagName === 'INPUT') {
     // @ts-expect-error: TS2339 за счёт `tagName` удовлетворяемся, что это `HTMLInputElement`
-    return !nonTextInputTypes[el.type]; // prettier-ignore
+    return !nonTextInputTypes[el.type];
   }
 
   return (

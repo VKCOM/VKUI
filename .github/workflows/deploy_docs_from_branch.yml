@@ -1,0 +1,36 @@
+name: 'Deploy docs from specific branch'
+
+on: workflow_dispatch
+
+run-name: Deploy docs from ${{ github.ref_name }}
+
+jobs:
+  build_and_deploy_docs:
+    runs-on: ubuntu-latest
+    name: Build and deploy docs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Build VKUI
+        run: yarn build:vkui
+
+      - name: Build docs
+        run: |
+          yarn docs:website:build
+          yarn workspace @project-docs/website next-sitemap
+
+      - name: Publishing docs
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: website/out
+          clean: true
+          clean-exclude: |
+            [0-9].[0-9].[0-9]/
+            playground/
+          force: false

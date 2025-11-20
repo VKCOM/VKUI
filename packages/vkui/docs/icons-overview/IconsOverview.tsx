@@ -1,12 +1,13 @@
 'use client';
 
 import { type KeyboardEvent, type ReactNode, useCallback, useRef, useState } from 'react';
-import { Icon16Done } from '@vkontakte/icons';
+import { Icon16Done, Icon20RefreshOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
   AdaptivityProvider,
   AppRoot,
   Avatar,
+  Button,
   type ChipOption,
   ChipsSelect,
   ConfigProvider,
@@ -39,7 +40,7 @@ const filterConfig = (config: ConfigData[], query: string, sizes: string[]) => {
       return;
     }
     const icons: ConfigData['icons'] = sizeData.icons.filter((iconData) =>
-      iconData.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+      iconData.name.toLocaleLowerCase().includes(query),
     );
     if (icons.length) {
       resultConfig.push({
@@ -106,6 +107,7 @@ const IconsOverview = () => {
           config.map((configItem) => ({
             id: configItem.size,
             title: configItem.size,
+            displayTitle: configItem.size,
             items: configItem.icons,
           }))
         }
@@ -125,13 +127,27 @@ const IconsOverview = () => {
           </Tooltip>
         )}
         additionalHeaderItem={
-          <ChipsSelect
-            value={selectedSizes}
-            onChange={setSelectedSizes}
-            options={SIZES_OPTIONS}
-            placeholder="Выберите размеры иконок"
-            allowClearButton
-          />
+          <Flex gap={10} noWrap align="center">
+            <ChipsSelect
+              value={selectedSizes}
+              onChange={setSelectedSizes}
+              options={SIZES_OPTIONS}
+              placeholder="Выберите размеры иконок"
+              allowClearButton
+            />
+            {selectedSizes.length < SIZES_OPTIONS.length && (
+              <FlexItem flex="shrink">
+                <Button
+                  size="m"
+                  mode="secondary"
+                  before={<Icon20RefreshOutline />}
+                  onClick={() => setSelectedSizes(SIZES_OPTIONS)}
+                  rounded
+                  aria-label="Сбросить фильтры"
+                />
+              </FlexItem>
+            )}
+          </Flex>
         }
       />
       {snackbar}

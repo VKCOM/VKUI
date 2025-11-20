@@ -11,9 +11,10 @@ interface VisuallyHiddenProps
     HasComponent {}
 
 const story: Meta<VisuallyHiddenProps> = {
-  title: 'Service/VisuallyHidden',
+  title: 'Utils/VisuallyHidden',
   component: VisuallyHidden,
   parameters: createStoryParameters('VisuallyHidden', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

@@ -11,6 +11,7 @@ const story: Meta<RadioProps> = {
     titleAfter: StringArg,
     description: StringArg,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;

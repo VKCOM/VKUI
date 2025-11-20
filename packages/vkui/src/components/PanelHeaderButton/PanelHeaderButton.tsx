@@ -5,7 +5,7 @@ import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';
@@ -16,7 +16,7 @@ const platformClassNames = {
   vkcom: styles.vkcom,
 };
 
-export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
+export interface PanelHeaderButtonProps extends Omit<TappableOmitProps, 'label'> {
   /**
    * Флаг для обозначения первичной кнопки
    * Влияет на стилизацию кнопки.
@@ -53,7 +53,7 @@ const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
 const warn = warnOnce('PanelHeaderButton');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ * @see https://vkui.io/components/panel-header#panel-header-button
  */
 export const PanelHeaderButton = ({
   children,

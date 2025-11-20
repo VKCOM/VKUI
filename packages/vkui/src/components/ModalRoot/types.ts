@@ -101,6 +101,8 @@ type ModalRootBaseProps = {
 
   /**
    * Отключает фокус на контейнер диалогового окна при открытии.
+   *
+   * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
   noFocusToDialog?: boolean;
 
@@ -124,6 +126,11 @@ type ModalRootBaseProps = {
    * Будет вызвано при окончательном закрытии активной модалки с её id.
    */
   onClosed?: ModalRootCallbackFunction;
+
+  /**
+   * Отключает отображение и взаимодействие с фоном модалки.
+   */
+  disableModalOverlay?: boolean;
 };
 
 export interface ModalRootProps extends ModalRootBaseProps {

@@ -32,11 +32,13 @@
   max-inline-size: 100%;
 }
 
-.host.withAfter:not(.alignAfterStart).contentAlignStart .in {
+.host.withAfter:not(.alignAfterStart).contentAlignStart .in,
+.host:not(.withAfter).contentAlignStart .in {
   justify-content: flex-start;
 }
 
-.host.withAfter:not(.alignAfterStart).contentAlignEnd .in {
+.host.withAfter:not(.alignAfterStart).contentAlignEnd .in,
+.host:not(.withAfter).contentAlignEnd .in {
   justify-content: flex-end;
 }
 

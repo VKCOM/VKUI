@@ -1,26 +1,104 @@
+import { act, createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { ChipsInput } from './ChipsInput';
 
 describe(ChipsInput, () => {
-  baselineComponent(ChipsInput, {
-    a11yConfig: {
-      rules: {
-        // TODO: listbox не имеет label/title/labelledby
-        // https://dequeuniversity.com/rules/axe/4.9/aria-input-field-name?application=axeAPI
-        'aria-input-field-name': { enabled: false },
-        // TODO: combobox is not allowed as children of listbox
-        // https://dequeuniversity.com/rules/axe/4.9/aria-required-children?application=axeAPI
-        'aria-required-children': { enabled: false },
-        // TODO: real input has no assiciated label
-        // https://dequeuniversity.com/rules/axe/4.9/label?application=axeAPI
-        'label': { enabled: false },
-      },
-    },
-  });
+  baselineComponent((props) => (
+    <>
+      <label htmlFor="chips">Chips Input</label>
+      <ChipsInput {...props} id="chips" chipsListLabel="Выбранные опции" />
+    </>
+  ));
+
+  it(
+    'should work with slotProps',
+    withFakeTimers(async () => {
+      const rootRef1 = createRef<HTMLDivElement>();
+      const rootRef2 = createRef<HTMLDivElement>();
+      const inputRef1 = createRef<HTMLInputElement>();
+      const inputRef2 = createRef<HTMLInputElement>();
+      const onInputClick = vi.fn();
+      const onRootClick1 = vi.fn();
+      const onRootClick2 = vi.fn();
+      const onInputChange1 = vi.fn();
+      const onInputChange2 = vi.fn();
+
+      render(
+        <ChipsInput
+          value={[]}
+          inputValue="input-value"
+          onInputChange={onInputChange1}
+          data-testid="input"
+          className="rootClassName"
+          getRootRef={rootRef1}
+          getRef={inputRef1}
+          id="input"
+          placeholder="placeholder"
+          onClick={onRootClick1}
+          style={{
+            backgroundColor: 'rgb(255, 0, 0)',
+          }}
+          slotProps={{
+            root: {
+              'data-testid': 'root',
+              'className': 'rootClassName-2',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'getRootRef': rootRef2,
+              'onClick': onRootClick2,
+            },
+            input: {
+              'className': 'inputClassName',
+              'getRootRef': inputRef2,
+              'data-testid': 'input-2',
+              'onClick': onInputClick,
+              'value': 'input-value-2',
+              'onChange': onInputChange2,
+            },
+          }}
+        />,
+      );
+
+      expect(screen.queryByTestId('input')).not.toBeInTheDocument();
+      const input = screen.getByTestId('input-2');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveClass('inputClassName');
+      expect(input).toHaveValue('input-value-2');
+      expect(input).toHaveAttribute('id', 'input');
+      expect(input).toHaveAttribute('placeholder', 'placeholder');
+
+      const root = screen.getByTestId('root');
+      expect(root).toBeInTheDocument();
+      expect(root).toHaveClass('rootClassName');
+      expect(root).toHaveClass('rootClassName-2');
+      expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
+      expect(root).toHaveStyle('color: rgb(255, 0, 0)');
+
+      expect(rootRef1.current).toBe(rootRef2.current);
+      expect(rootRef1.current).toBe(root);
+
+      expect(inputRef1.current).toBe(inputRef2.current);
+      expect(inputRef1.current).toBe(input);
+
+      fireEvent.click(input);
+      expect(onInputClick).toHaveBeenCalledTimes(1);
+      expect(onRootClick1).toHaveBeenCalledTimes(1);
+      expect(onRootClick2).toHaveBeenCalledTimes(1);
+
+      fireEvent.click(root);
+      expect(onRootClick1).toHaveBeenCalledTimes(2);
+      expect(onRootClick2).toHaveBeenCalledTimes(2);
+
+      await userEvent.type(input, 'v');
+      expect(onInputChange1).toHaveBeenCalledTimes(1);
+      expect(onInputChange2).toHaveBeenCalledTimes(1);
+    }),
+  );
 
   it('check reset form event', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <form data-testid="form">
         <ChipsInput
@@ -48,11 +126,11 @@ describe(ChipsInput, () => {
 
     fireEvent(screen.getByTestId('form'), new Event('reset'));
 
-    expect(onChange).toBeCalledWith([]);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith([]);
   });
 
-  it('should clear value when click on remove button', async () => {
-    const onChange = jest.fn();
+  it('should clear value when click on remove button', () => {
+    const onChange = vi.fn();
     render(
       <ChipsInput
         id="color"
@@ -80,15 +158,13 @@ describe(ChipsInput, () => {
         onChange={onChange}
       />,
     );
-    await userEvent.click(screen.getByTestId('delete'));
-    expect(onChange).toBeCalledWith([]);
+    fireEvent.click(screen.getByTestId('delete'));
+    expect(onChange).toHaveBeenCalledExactlyOnceWith([]);
   });
 
   it('should show clear button when inputValue !== ""', () => {
     render(
       <ChipsInput
-        id="color"
-        placeholder="Введите цвета"
         ClearButton={(props) => (
           <div {...props} data-testid="delete">
             Delete
@@ -96,52 +172,128 @@ describe(ChipsInput, () => {
         )}
         allowClearButton
         value={[]}
-        inputValue="Синий"
+        slotProps={{
+          input: {
+            id: 'color',
+            placeholder: 'Введите цвета',
+            value: 'Синий',
+          },
+        }}
       />,
     );
     expect(screen.getByTestId('delete')).toBeInTheDocument();
   });
 
-  it('should delete option when keydown {Delete}', async () => {
-    const onChange = jest.fn();
-    const initialOptions = [
-      {
-        value: 'navarin',
-        label: 'Наваринского пламени с дымом',
-      },
-      {
-        value: 'red',
-        label: 'Красный',
-      },
-      {
-        value: 'blue',
-        label: 'Синий',
-      },
-    ];
-    const { container } = render(
-      <ChipsInput
-        id="color"
-        placeholder="Введите цвета"
-        value={initialOptions}
-        onChange={onChange}
-      />,
-    );
-    const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
-    chip.focus();
+  it(
+    'should delete option when keydown {Delete}',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      const initialOptions = [
+        {
+          value: 'navarin',
+          label: 'Наваринского пламени с дымом',
+        },
+        {
+          value: 'red',
+          label: 'Красный',
+        },
+        {
+          value: 'blue',
+          label: 'Синий',
+        },
+      ];
+      const { container } = render(
+        <ChipsInput
+          id="color"
+          placeholder="Введите цвета"
+          value={initialOptions}
+          onChange={onChange}
+        />,
+      );
+      const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
+      act(() => {
+        chip.focus();
+      });
 
-    await userEvent.keyboard('{Delete}');
+      await userEvent.keyboard('{Delete}');
 
-    const resultValue = [...initialOptions];
-    resultValue.pop();
-    expect(onChange).toBeCalledWith(resultValue);
-  });
+      const resultValue = [...initialOptions];
+      resultValue.pop();
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(resultValue);
+    }),
+  );
 
-  it('should add some options by splitting by delimiter', async () => {
-    const onChange = jest.fn();
-    render(
-      <ChipsInput
-        data-testid="input"
-        value={[
+  it.each<{
+    delimiter: string | RegExp | string[];
+    str: string;
+    expectedValues?: string[];
+    expectedInputValue?: string;
+  }>([
+    {
+      delimiter: ',',
+      str: 'Зеленый,Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: new RegExp(','),
+      str: 'Зеленый,Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: /\./,
+      str: 'Зеленый.Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: [',', '.'],
+      str: 'Зеленый,Фиолетовый.Красный',
+      expectedValues: ['Зеленый', 'Фиолетовый', 'Красный'],
+    },
+    {
+      delimiter: '.',
+      str: 'Зеленый.Фиолетовый',
+      expectedValues: ['Зеленый', 'Фиолетовый'],
+    },
+    {
+      delimiter: [' ', ',', '.', '|'],
+      str: 'Зеленый.Фиолетовый,Красный|Розовый Синий',
+      expectedValues: ['Зеленый', 'Фиолетовый', 'Красный', 'Розовый', 'Синий'],
+    },
+    {
+      delimiter: ['', ''],
+      str: 'Зеленый,Фиолетовый.Красный',
+      expectedInputValue: 'Зеленый,Фиолетовый.Красный',
+    },
+  ])(
+    'should correct use delimiter $delimiter',
+    ({ delimiter, str, expectedValues, expectedInputValue }) => {
+      const onChange = vi.fn();
+      render(
+        <ChipsInput
+          value={[
+            {
+              value: 'navarin',
+              label: 'Наваринского пламени с дымом',
+            },
+            {
+              value: 'red',
+              label: 'Красный',
+            },
+          ]}
+          onChange={onChange}
+          delimiter={delimiter}
+          slotProps={{
+            input: {
+              'data-testid': 'input',
+            },
+          }}
+        />,
+      );
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      if (expectedValues) {
+        expect(onChange).toHaveBeenCalledExactlyOnceWith([
           {
             value: 'navarin',
             label: 'Наваринского пламени с дымом',
@@ -150,30 +302,15 @@ describe(ChipsInput, () => {
             value: 'red',
             label: 'Красный',
           },
-        ]}
-        onChange={onChange}
-        delimiter=","
-      />,
-    );
-    fireEvent.input(screen.getByTestId('input'), { target: { value: 'Зеленый,Фиолетовый' } });
-    expect(onChange).toBeCalledWith([
-      {
-        value: 'navarin',
-        label: 'Наваринского пламени с дымом',
-      },
-      {
-        value: 'red',
-        label: 'Красный',
-      },
-      {
-        value: 'Зеленый',
-        label: 'Зеленый',
-      },
-      {
-        value: 'Фиолетовый',
-        label: 'Фиолетовый',
-      },
-    ]);
-    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe('');
-  });
+          ...expectedValues.map((value) => ({
+            value,
+            label: value,
+          })),
+        ]);
+      } else {
+        expect(onChange).not.toHaveBeenCalled();
+      }
+      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+    },
+  );
 });

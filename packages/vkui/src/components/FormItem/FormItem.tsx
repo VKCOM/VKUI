@@ -82,7 +82,7 @@ export interface FormItemProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/FormItem
+ * @see https://vkui.io/components/form-item
  */
 export const FormItem: React.FC<FormItemProps> & {
   Top: typeof FormItemTop;
@@ -104,6 +104,7 @@ export const FormItem: React.FC<FormItemProps> & {
   bottomId,
   noPadding,
   required = false,
+  disabled,
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
@@ -161,6 +162,7 @@ export const FormItem: React.FC<FormItemProps> & {
             removePlaceholder={removePlaceholder}
             indent={removable === 'indent'}
             noPadding={noPadding}
+            disabled={disabled}
           >
             <div className={classNames(styles.removable, 'vkuiInternalFormItem__removable')}>
               {wrappedChildren}

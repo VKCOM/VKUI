@@ -43,6 +43,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   placement = 'bottom-start',
   onPlacementChange,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
   trigger = 'click',
   strategy,
   content,
@@ -184,6 +185,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
     sameWidth,
     hideWhenReferenceHidden,
     disableFlipMiddleware,
+    disableShiftMiddleware,
     customMiddlewares,
 
     trigger,

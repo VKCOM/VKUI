@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rich-tooltip transforms correctly 1`] = `
+exports[`rich-tooltip > transforms correctly 1`] = `
 "import { RichTooltip } from '@vkontakte/vkui';
 import React from 'react';
 

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { type CustomTouchEvent, Touch, type TouchProps } from './Touch';
 
 const story: Meta<TouchProps> = {
-  title: 'Service/Touch',
+  title: 'Utils/Touch',
   component: Touch,
   args: {
     onClick: fn(),
@@ -21,6 +21,7 @@ const story: Meta<TouchProps> = {
     cantered: false,
     ...DisableCartesianParam,
   }),
+  tags: ['Утилиты'],
 };
 
 export default story;

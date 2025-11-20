@@ -54,7 +54,7 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   size?: 's' | 'm' | 'l';
   /**
    * Количество аватарок, которые будут показаны.
-   * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов.
+   * Если в массиве `photos` больше элементов и не используется размер `s`, то будет показано количество остальных элементов.
    */
   visibleCount?: number;
   /**
@@ -151,7 +151,7 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/UsersStack
+ * @see https://vkui.io/components/users-stack
  */
 export const UsersStack = ({
   photos = [],

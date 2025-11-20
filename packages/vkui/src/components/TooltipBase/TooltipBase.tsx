@@ -80,8 +80,6 @@ export interface TooltipBaseProps
 
 /**
  * Низкоуровневый компонент для отрисовки тултипа.
- * Примеры использования и Readme можно найти в документации Tooltip.
- * @see https://vkcom.github.io/VKUI/#/Tooltip
  * @private
  */
 export const TooltipBase = ({

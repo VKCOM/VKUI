@@ -3,16 +3,17 @@
 import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useColorScheme } from '../../hooks/useColorScheme';
 import { usePlatform } from '../../hooks/usePlatform';
 import { IconButton } from '../IconButton/IconButton';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './Banner.module.css';
 
-export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
+export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
   /**
    * Тип баннера.
    */
@@ -57,8 +58,9 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    *
    * - `light` – в качестве фона используется светлое изображение, цвет текста в баннере будет тёмным.
    * - `dark` – в качестве фона используется тёмное изображение, цвет текста будет светлым.
+   * - `auto` - цвет фона и текста будет зависеть от цветовой схемы приложения.
    */
-  imageTheme?: 'light' | 'dark';
+  imageTheme?: 'light' | 'dark' | 'auto';
   /**
    * При использовании `mode="image"`.
    *
@@ -66,7 +68,7 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    */
   background?: React.ReactNode;
   /**
-   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button).
+   * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button).
    *
    * - В режиме `tint` или `image` со светлым фоном используйте только с параметрами:
    *    - `mode="primary"`
@@ -74,7 +76,7 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
    * - В режиме `image` с тёмным фоном используйте с параметрами:
    *    - `appearance="overlay"`.
    *
-   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkui.io/components/button-group) с параметрами:
    *
    * - `gap="m" mode="horizontal" stretched`
    * - `gap="m" mode="vertical" stretched`.
@@ -83,11 +85,11 @@ export interface BannerProps extends Omit<TappableProps, 'title' | 'size'> {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Banner
+ * @see https://vkui.io/components/banner
  */
 export const Banner = ({
   mode = 'tint',
-  imageTheme = 'dark',
+  imageTheme: imageThemeProp = 'auto',
   size = 's',
   before,
   after: afterProp,
@@ -103,6 +105,9 @@ export const Banner = ({
   ...restProps
 }: BannerProps): React.ReactNode => {
   const platform = usePlatform();
+  const colorScheme = useColorScheme();
+
+  const imageTheme = imageThemeProp === 'auto' ? colorScheme : imageThemeProp;
 
   const HeaderTypography = size === 'm' ? Title : Headline;
   const SubheadTypography = size === 'm' ? Text : Subhead;

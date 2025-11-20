@@ -1,6 +1,6 @@
 import { CustomResizeObserver } from './customResizeObserver';
 
-const getComputedStyleStub = jest.fn().mockReturnValue({});
+const getComputedStyleStub = vi.fn().mockReturnValue({});
 global.getComputedStyle = getComputedStyleStub;
 
 interface IframeStub extends Partial<Omit<HTMLIFrameElement, 'contentWindow' | 'style'>> {
@@ -12,32 +12,36 @@ interface IframeStub extends Partial<Omit<HTMLIFrameElement, 'contentWindow' | '
 }
 
 function setup() {
-  const updateFunctionStub = jest.fn();
+  const updateFunctionStub = vi.fn();
 
   const iframeStub: IframeStub = {
     contentWindow: {
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
     },
     style: { margin: '20' },
   };
   const elementStub = {
     ownerDocument: {
-      createElement: jest.fn().mockReturnValue(iframeStub),
+      createElement: vi.fn().mockReturnValue(iframeStub),
     },
-    appendChild: jest.fn(),
-    removeChild: jest.fn(),
+    appendChild: vi.fn(),
+    removeChild: vi.fn(),
   };
 
   const mutationObserverInstanceStub = {
-    observe: jest.fn(),
-    disconnect: jest.fn(),
-    takeRecords: jest.fn(),
+    observe: vi.fn(),
+    disconnect: vi.fn(),
+    takeRecords: vi.fn(),
   };
 
-  const mutationObserverStub = jest.spyOn(global, 'MutationObserver').mockImplementation(() => {
-    return mutationObserverInstanceStub;
-  });
+  const mutationObserverStub = vi.spyOn(global, 'MutationObserver').mockImplementation(
+    class MockMutationObserver {
+      observe = mutationObserverInstanceStub.observe.bind(mutationObserverInstanceStub);
+      disconnect = mutationObserverInstanceStub.disconnect.bind(mutationObserverInstanceStub);
+      takeRecords = mutationObserverInstanceStub.takeRecords.bind(mutationObserverInstanceStub);
+    },
+  );
 
   return {
     updateFunctionStub,
@@ -54,8 +58,8 @@ describe(CustomResizeObserver, () => {
 
     const observer = new CustomResizeObserver(updateFunctionStub);
 
-    const observeUsingIframeStub = jest.spyOn(observer, 'observeUsingIframe');
-    const observeUsingMutationObserverStub = jest.spyOn(observer, 'observeUsingMutationObserver');
+    const observeUsingIframeStub = vi.spyOn(observer, 'observeUsingIframe');
+    const observeUsingMutationObserverStub = vi.spyOn(observer, 'observeUsingMutationObserver');
 
     getComputedStyleStub.mockReturnValue({ position: 'absolute' });
     observer.observe(elementStub as unknown as HTMLElement);
@@ -64,7 +68,7 @@ describe(CustomResizeObserver, () => {
     expect(observeUsingMutationObserverStub).toHaveBeenCalledTimes(0);
 
     // создает iframe
-    expect(elementStub.ownerDocument.createElement).toHaveBeenCalledWith('iframe');
+    expect(elementStub.ownerDocument.createElement).toHaveBeenCalledExactlyOnceWith('iframe');
 
     // с нужным набором стилей
     expect(iframeStub.style).toStrictEqual({
@@ -89,10 +93,10 @@ describe(CustomResizeObserver, () => {
     expect(observer.mutationObserverFallback).toBe(null);
 
     observer.appendToTheDOM();
-    expect(elementStub.appendChild).toHaveBeenCalledWith(iframeStub);
+    expect(elementStub.appendChild).toHaveBeenCalledExactlyOnceWith(iframeStub);
 
     // функция update подписана на событие resize у iframe.contentWindow
-    expect(iframeStub.contentWindow?.addEventListener).toHaveBeenCalledWith(
+    expect(iframeStub.contentWindow?.addEventListener).toHaveBeenCalledExactlyOnceWith(
       'resize',
       updateFunctionStub,
     );
@@ -101,13 +105,13 @@ describe(CustomResizeObserver, () => {
 
     expect(observer.records).toStrictEqual([]);
     // функций update отписана от события resize у iframe.contentWindow
-    expect(iframeStub.contentWindow.removeEventListener).toHaveBeenCalledWith(
+    expect(iframeStub.contentWindow.removeEventListener).toHaveBeenCalledExactlyOnceWith(
       'resize',
       updateFunctionStub,
     );
 
     // iframe удалён из DOM
-    expect(elementStub.removeChild).toHaveBeenCalledWith(iframeStub);
+    expect(elementStub.removeChild).toHaveBeenCalledExactlyOnceWith(iframeStub);
 
     // MutationObserver не был использован
     expect(mutationObserverStub.mock.instances.length).toBe(0);
@@ -119,8 +123,8 @@ describe(CustomResizeObserver, () => {
 
     const observer = new CustomResizeObserver(updateFunctionStub);
 
-    const observeUsingIframeStub = jest.spyOn(observer, 'observeUsingIframe');
-    const observeUsingMutationObserverStub = jest.spyOn(observer, 'observeUsingMutationObserver');
+    const observeUsingIframeStub = vi.spyOn(observer, 'observeUsingIframe');
+    const observeUsingMutationObserverStub = vi.spyOn(observer, 'observeUsingMutationObserver');
 
     // ожидаем, что будет использован MutationObserver
     getComputedStyleStub.mockReturnValue({ position: 'static' });
@@ -132,7 +136,7 @@ describe(CustomResizeObserver, () => {
     expect(observeUsingMutationObserverStub).toHaveBeenCalledTimes(1);
 
     expect(mutationObserverStub.mock.instances.length).toBe(1);
-    expect(mutationObserverInstanceStub.observe).toHaveBeenCalledWith(elementStub, {
+    expect(mutationObserverInstanceStub.observe).toHaveBeenCalledExactlyOnceWith(elementStub, {
       childList: true,
       subtree: true,
     });

@@ -5,10 +5,11 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Spinner, type SpinnerProps } from './Spinner';
 
 const story: Meta<SpinnerProps> = {
-  title: 'Blocks/Spinner',
+  title: 'Feedback/Spinner',
   component: Spinner,
   parameters: createStoryParameters('Spinner', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Обратная связь'],
 };
 
 export default story;

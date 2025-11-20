@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';
@@ -33,7 +33,7 @@ const alignContentClassNames = {
 
 type Align = 'start' | 'center' | 'end';
 
-export interface RichCellProps extends TappableProps {
+export interface RichCellProps extends TappableOmitProps {
   /**
    * Контейнер для текста над `children`.
    */
@@ -51,12 +51,12 @@ export interface RichCellProps extends TappableProps {
    */
   bottom?: React.ReactNode;
   /**
-   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
+   * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button) с параметрами:
    *
    * - `mode="primary" size="s"`
    * - `mode="secondary" size="s"`.
    *
-   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkui.io/components/button-group) с параметрами:
    *
    * - `mode="horizontal" gap="s" stretched`.
    */
@@ -96,7 +96,7 @@ export interface RichCellProps extends TappableProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/RichCell
+ * @see https://vkui.io/components/rich-cell
  */
 export const RichCell: React.FC<RichCellProps> & {
   Icon: typeof RichCellIcon;

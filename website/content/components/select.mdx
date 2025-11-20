@@ -1,0 +1,209 @@
+---
+description: Адаптивный компонент для выбора одного значения из списка опций.
+---
+
+<Overview group="forms">
+
+# Select [tag:component]
+
+Адаптивный компонент для выбора одного значения из списка опций. Автоматически переключается между компонентом
+[`NativeSelect`](/components/native-select) (для мобильных устройств) и [`CustomSelect`](/components/custom-select) (в остальных случаях).
+
+Связанные компоненты:
+
+- [`NativeSelect`](/components/native-select)
+- [`CustomSelect`](/components/custom-select)
+
+</Overview>
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <Select
+    defaultValue="2"
+    options={[
+      { value: '1', label: 'Опция 1' },
+      { value: '2', label: 'Опция 2' },
+      { value: '3', label: 'Опция 3' },
+    ]}
+  />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+const colors = [
+  {
+    value: 'red',
+    label: 'Красный',
+  },
+  {
+    value: 'green',
+    label: 'Зелёный',
+  },
+  {
+    value: 'blue',
+    label: 'Синий',
+  },
+];
+
+// Неконтролируемое состояние
+<Select options={colors} defaultValue="red" />;
+
+// Контролируемое состояние
+const [color, setColor] = React.useState('red');
+
+<Select options={colors} value={color} onChange={(_, newColor) => setColor(newColor)} />;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Select options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для визуализации валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `Select` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <Select options={[{ value: 'red', label: 'Красный' }]} defaultValue="red" status="error" />
+  <Select options={[{ value: 'green', label: 'Зеленый' }]} defaultValue="green" status="valid" />
+  ```
+</Playground>
+
+## Тестирование (e2e) [#e2e]
+
+Если `Select` отрисовывает `NativeSelect`, то достаточно передать `testId` через `data-*` аттрибут для поиска элемента на странице.
+Если `Select` отрисовывает `CustomSelect`, то следуйте рекомендациям из раздела "Тестирование (e2e)" компонента `CustomSelect`.
+
+```jsx
+<View activePanel="select">
+  <Panel id="select">
+    <PanelHeader>Select</PanelHeader>
+    <Group>
+      <FormItem
+        top="Администратор"
+        htmlFor="select-id"
+        bottom="Пример использования Select для выбора администратора из списка"
+      >
+        <Select
+          id="select-id"
+          placeholder="Не выбран"
+          options={getRandomUsers(10).map((user) => ({
+            label: user.name,
+            value: user.id,
+            avatar: user.photo_100,
+          }))}
+          renderOption={({ option, ...restProps }) => (
+            <CustomSelectOption
+              {...restProps}
+              key={option.value}
+              before={<Avatar size={24} src={option.avatar} />}
+            />
+          )}
+        />
+      </FormItem>
+    </Group>
+  </Panel>
+</View>
+```
+
+## Доступность (a11y) [#a11y]
+
+Старайтесь сопровождать элемент текстовым описанием, для корректной работы скринридеров.
+Для этого необходимо вручную передавать некоторые параметры:
+
+- При задании текстового описания с помощью элемента `label` передавайте `id` компонента в свойство `htmlFor` элемента `label`.
+  Это позволит фокусироваться на компоненте кликом по заголовку и автоматически добавит имя компоненту для скринридеров.
+- Если по какой-то причине текстовое описание компонента не получается обернуть в тэг `label`, то можно попробовать связать
+  текстовое описание с компонентом через [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby).
+  Для этого передайте `id` текстового элемента компоненту в свойство [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby).
+- При отсутствии по дизайну у выпадающего списка текстового описания старайтесь всё же его добавлять,
+  но прятать с помощью элемента `VisuallyHidden`, чтобы оно оставалось доступно для пользователей ассистивных технологий.
+  В крайнем случае используйте [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) аттрибут.
+- При использовании вместе с `FormItem` следуйте рекомендациям раздела "Цифровая доступность" компонента `FormItem`.
+
+Старайтесь сопровождать элемент свойством `placeholder`.
+
+Пример рекомендуемого использования компонента `Select` с текстовым описанием:
+
+- вместе с `label`
+
+```jsx
+<label htmlFor="select-id">Цвет</label>
+<Select
+  id="select-id"
+  placeholder="Не выбран"
+  options={[ id: 'red', name: 'Красный' ]}
+/>
+```
+
+- вместе с `FormItem`
+
+```jsx
+<FormItem top="Цвет" htmlFor="select-id">
+  <Select id="select-id" placeholder="Не выбран" options={[ id: 'red', name: 'Красный' ]} />
+</FormItem>
+```
+
+- вместе с `VisuallyHidden` (используя `label` и `htmlFor`)
+
+```jsx
+<VisuallyHidden Component="label" htmlFor="select-id">Цвет</VisuallyHidden>
+<Select
+  id="select-id"
+  placeholder="Не выбран"
+  options={[ id: 'red', name: 'Красный' ]}
+/>
+```
+
+- вместе с [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
+
+```jsx
+<span id="select-label-id">Цвет</span>
+<Select
+  aria-labelledby="select-label-id"
+  placeholder="Не выбран"
+  options={[ id: 'red', name: 'Красный' ]}
+/>
+```
+
+- вместе с `VisuallyHidden` (используя [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby))
+
+```jsx
+<VisuallyHidden Component="span" id="select-label-id">Цвет</VisuallyHidden>
+<Select
+  aria-labelledby="select-label-id"
+  placeholder="Не выбран"
+  options={[ id: 'red', name: 'Красный' ]}
+/>
+```
+
+- вместе с [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
+
+```jsx
+<Select aria-label="Цвет" placeholder="Не выбран" options={[ id: 'red', name: 'Красный' ]} />
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Select" />

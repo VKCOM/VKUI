@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { baselineComponent } from '../../testing/utils';
 import { CalendarHeader } from './CalendarHeader';
 import styles from './CalendarHeader.module.css';
 import customSelectOptionStyles from '../CustomSelectOption/CustomSelectOption.module.css';
@@ -20,7 +20,7 @@ describe('CalendarHeader', () => {
 
   it('displays prev month button by default', () => {
     const viewDate = new Date('1970-01-01');
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader viewDate={viewDate} onChange={onChange} prevMonthButtonTestId="prev-month" />,
     );
@@ -29,7 +29,7 @@ describe('CalendarHeader', () => {
   });
   it('displays next month button by default', () => {
     const viewDate = new Date('1970-01-01');
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader viewDate={viewDate} onChange={onChange} nextMonthButtonTestId="next-month" />,
     );
@@ -38,7 +38,7 @@ describe('CalendarHeader', () => {
   });
   it('do not display prev month and next month buttons if they hidden', () => {
     const viewDate = new Date('1970-01-01');
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={viewDate}
@@ -54,7 +54,7 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });
   it('do not display prev and next month buttons if isMonthDisabled return true', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={targetDate}
@@ -69,7 +69,7 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });
   it('do not display prev month button when set prevMonthHidden prop', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={targetDate}
@@ -82,7 +82,7 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('prev-month')).toBeFalsy();
   });
   it('do not display next month button when set nextMonthHidden prop', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarHeader
         viewDate={targetDate}
@@ -95,9 +95,8 @@ describe('CalendarHeader', () => {
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });
 
-  it('does not fire onChange when click on month dropdown item if isMonthDisabled return true', async () => {
-    const onChange = jest.fn();
-    jest.useFakeTimers();
+  it('does not fire onChange when click on month dropdown item if isMonthDisabled return true', () => {
+    const onChange = vi.fn();
     const { container } = render(
       <CalendarHeader
         viewDate={targetDate}
@@ -110,14 +109,13 @@ describe('CalendarHeader', () => {
     const monthPicker = screen.getByTestId('month-picker');
     fireEvent.click(monthPicker);
     const [januarySelectOption] = container.getElementsByClassName(customSelectOptionStyles.host);
-    await userEvent.click(januarySelectOption);
+    fireEvent.click(januarySelectOption);
 
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('does not fire onChange when click on year dropdown item if isYearDisabled return true', async () => {
-    const onChange = jest.fn();
-    jest.useFakeTimers();
+  it('does not fire onChange when click on year dropdown item if isYearDisabled return true', () => {
+    const onChange = vi.fn();
     const { container } = render(
       <CalendarHeader
         viewDate={targetDate}
@@ -130,31 +128,35 @@ describe('CalendarHeader', () => {
     const yearPicker = screen.getByTestId('year-picker');
     fireEvent.click(yearPicker);
     const [minYearSelectOption] = container.getElementsByClassName(customSelectOptionStyles.host);
-    await userEvent.click(minYearSelectOption);
+    fireEvent.click(minYearSelectOption);
 
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('fire onChange when click on year dropdown item', async () => {
-    const onChange = jest.fn();
-    jest.useFakeTimers();
+  it('fire onChange when click on year dropdown item', () => {
+    const onChange = vi.fn();
+    const yearDropdownTestId = (year: number) => `year-picker-${year}`;
+
     const { container } = render(
-      <CalendarHeader viewDate={targetDate} onChange={onChange} yearDropdownTestId="year-picker" />,
+      <CalendarHeader
+        viewDate={targetDate}
+        onChange={onChange}
+        yearDropdownTestId={yearDropdownTestId}
+      />,
     );
 
-    const yearPicker = screen.getByTestId('year-picker');
+    const yearPicker = screen.getByTestId(yearDropdownTestId(2023));
     fireEvent.click(yearPicker);
     const [minYearSelectOption] = container.getElementsByClassName(customSelectOptionStyles.host);
-    await userEvent.click(minYearSelectOption);
+    fireEvent.click(minYearSelectOption);
 
     expect(onChange).toHaveBeenCalled();
   });
 
   it('should not find prev month button', () => {
-    const onChange = jest.fn();
-    const isMonthDisabled = jest.fn();
+    const onChange = vi.fn();
+    const isMonthDisabled = vi.fn();
     isMonthDisabled.mockImplementation(() => true);
-    jest.useFakeTimers();
     const { container } = render(
       <CalendarHeader
         viewDate={new Date('2023-01-20T07:40:00.000Z')}
@@ -163,15 +165,14 @@ describe('CalendarHeader', () => {
         isMonthDisabled={isMonthDisabled}
       />,
     );
-    expect(isMonthDisabled).toHaveBeenCalledWith(11, 2022);
+    expect(isMonthDisabled).toHaveBeenLastCalledWith(11, 2022);
     expect(container.getElementsByClassName(styles.navIconPrev).length).toBe(0);
   });
 
   it('should not find next month button', () => {
-    const onChange = jest.fn();
-    const isMonthDisabled = jest.fn();
+    const onChange = vi.fn();
+    const isMonthDisabled = vi.fn();
     isMonthDisabled.mockImplementation(() => true);
-    jest.useFakeTimers();
     render(
       <CalendarHeader
         viewDate={new Date('2023-12-20T07:40:00.000Z')}
@@ -181,6 +182,7 @@ describe('CalendarHeader', () => {
         nextMonthButtonTestId="next-month"
       />,
     );
+    // eslint-disable-next-line @vitest/prefer-called-exactly-once-with
     expect(isMonthDisabled).toHaveBeenCalledWith(0, 2024);
     expect(screen.queryByTestId('next-month')).toBeFalsy();
   });

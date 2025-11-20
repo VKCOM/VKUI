@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`date-range-input transforms correctly 1`] = `
+exports[`date-range-input > transforms correctly 1`] = `
 "import { DateRangeInput } from '@vkontakte/vkui';
 import React from 'react';
 

@@ -73,11 +73,16 @@ export const ModalCardInternal = ({
   onClose = noop,
   onClosed,
   disableFocusTrap,
+  disableModalOverlay,
+  disableOpenAnimation,
+  disableCloseAnimation,
   ...restProps
 }: ModalCardInternalProps): ReactNode => {
   const platform = usePlatform();
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
-    enableAppear: true,
+    enableAppear: !disableOpenAnimation,
+    enableEnter: !disableOpenAnimation,
+    enableExit: !disableCloseAnimation,
     onEnter() {
       onOpen?.();
     },
@@ -115,11 +120,13 @@ export const ModalCardInternal = ({
         '--vkui_internal_ModalCard--safeAreaInsetBottom': '0px',
       }
     : styleProp;
-  const modalOverlay = (
+  const modalOverlay = !disableModalOverlay && (
     <ModalOverlay
       getRootRef={setBackdropEl}
       data-testid={modalOverlayTestId}
       visible={open}
+      disableOpenAnimation={disableOpenAnimation}
+      disableCloseAnimation={disableCloseAnimation}
       onClick={
         closable
           ? function handleBackdropClick(event) {
@@ -146,7 +153,12 @@ export const ModalCardInternal = ({
   });
 
   return (
-    <ModalOutlet hidden={hidden} isDesktop={isDesktop} onKeyDown={handleEscKeyDown}>
+    <ModalOutlet
+      hidden={hidden}
+      isDesktop={isDesktop}
+      onKeyDown={handleEscKeyDown}
+      disableModalOverlay={disableModalOverlay}
+    >
       {modalOverlay}
       <ModalCardBase
         {...restProps}

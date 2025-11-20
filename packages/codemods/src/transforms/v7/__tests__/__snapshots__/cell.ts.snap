@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`cell transforms correctly 1`] = `
+exports[`cell > transforms correctly 1`] = `
 "import { Cell } from '@vkontakte/vkui';
 import React from 'react';
 

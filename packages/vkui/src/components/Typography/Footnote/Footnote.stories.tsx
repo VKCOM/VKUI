@@ -5,10 +5,11 @@ import { createStoryParameters } from '../../../testing/storybook/createStoryPar
 import { Footnote, type FootnoteProps } from './Footnote';
 
 const story: Meta<FootnoteProps> = {
-  title: 'Typography/Footnote',
+  title: 'Typography/Typography/Footnote',
   component: Footnote,
   parameters: createStoryParameters('Footnote', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

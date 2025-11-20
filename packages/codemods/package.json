@@ -1,9 +1,9 @@
 {
   "name": "@vkontakte/vkui-codemods",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Codemods for automatic VKUI major version upgrade",
   "repository": "https://github.com/VKCOM/VKUI",
-  "homepage": "https://vkcom.github.io/VKUI/",
+  "homepage": "https://vkui.io/",
   "license": "MIT",
   "bin": "./dist/index.js",
   "files": [
@@ -15,27 +15,24 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "commander": "^13.1.0",
+    "commander": "^14.0.2",
     "cross-spawn": "^7.0.5",
     "jscodeshift": "^17.3.0",
     "prompts": "^2.4.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@swc/core": "^1.11.24",
-    "@swc/jest": "^0.2.38",
+    "@swc/core": "^1.13.5",
     "@types/cross-spawn": "^6.0.6",
-    "@types/jest": "^29.5.14",
     "@types/jscodeshift": "^17.3.0",
-    "@types/node": "^22.15.3",
-    "@types/prompts": "^2.4.9",
-    "jest": "^29.7.0",
-    "ts-node": "^10.9.2"
+    "@types/node": "^24.10.1",
+    "@types/prompts": "^2.4.9"
   },
   "scripts": {
     "prepack": "yarn run build",
     "build": "tsc",
-    "test": "jest",
+    "test": "yarn run -T vitest run --pool=vmThreads",
+    "test:update": "yarn test -u",
     "test:ci": "yarn test",
     "migrate": "jscodeshift"
   },

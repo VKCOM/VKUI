@@ -62,6 +62,8 @@ export const getNextChipOptionIndexByNavigateToProp = (
       return nextIndex > LAST_INDEX ? 0 : nextIndex;
     case 'last':
       return LAST_INDEX;
+    case 'first':
+      return 0;
     default:
       /* istanbul ignore next */
       return -1;

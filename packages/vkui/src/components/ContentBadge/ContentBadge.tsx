@@ -1,12 +1,16 @@
+'use client';
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { Caption } from '../Typography/Caption/Caption';
-import { Footnote } from '../Typography/Footnote/Footnote';
-import type { TypographyProps } from '../Typography/Typography';
+import { Tappable } from '../Tappable/Tappable';
+import { captionClassNames } from '../Typography/Caption/Caption';
+import { footnoteClassNames } from '../Typography/Footnote/Footnote';
+import { type TypographyProps, weightClassNames } from '../Typography/Typography';
 import { ContentBadgeContext } from './ContentBadgeContext';
-import { ContentBadgeSlotIcon } from './ContentBadgeSlotIcon';
+import { ContentBadgeIconSlot } from './ContentBadgeIconSlot';
 import type { ContentBadgeModeType, ContentBadgeSizeType } from './types';
 import styles from './ContentBadge.module.css';
 
@@ -80,47 +84,55 @@ export interface ContentBadgeProps
  * Используйте `ContentBadge.SlotIcon` для размещения иконок внутри `ContentBadge`.
  *
  * @since 6.1.0
- * @see https://vkcom.github.io/VKUI/#/ContentBadge
+ * @see https://vkui.io/components/content-badge
  */
 export const ContentBadge: React.FC<ContentBadgeProps> & {
-  SlotIcon: typeof ContentBadgeSlotIcon;
+  IconSlot: typeof ContentBadgeIconSlot;
+  /**
+   * @deprecated Since 7.3.4. Используйте `IconSlot`.
+   */
+  SlotIcon: typeof ContentBadgeIconSlot;
 } = ({
   appearance = 'accent',
   mode = 'primary',
   capsule,
   size = 'm',
   weight = '2',
-  className,
   children,
   ...restProps
 }: ContentBadgeProps) => {
-  const TypographyComponent = size === 'l' ? Footnote : Caption;
+  const { sizeY = 'none' } = useAdaptivity();
+  const typographyClassNames = size === 'l' ? footnoteClassNames(sizeY) : captionClassNames(sizeY);
 
   return (
-    <TypographyComponent
-      {...restProps}
-      weight={weight}
-      normalize
-      className={classNames(
-        className,
+    <Tappable
+      baseClassName={classNames(
         styles.host,
         size !== 's' && capsule && styles.capsule,
         mode === 'outline' && styles.modeOutline,
         appearanceClassNames[appearance][mode],
         sizeClassNames[size],
+        typographyClassNames,
+        weightClassNames(weight),
       )}
+      DefaultComponent="span"
+      hoverMode="opacity"
+      activeMode="opacity"
+      {...restProps}
     >
       <ContentBadgeContext.Provider
         value={{ isSingleChild: React.Children.count(children) === 1, size }}
       >
         {children}
       </ContentBadgeContext.Provider>
-    </TypographyComponent>
+    </Tappable>
   );
 };
 
-ContentBadge.SlotIcon = ContentBadgeSlotIcon;
+ContentBadge.IconSlot = ContentBadgeIconSlot;
+ContentBadge.SlotIcon = ContentBadgeIconSlot;
 
 if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ContentBadge.IconSlot, 'ContentBadge.IconSlot');
   defineComponentDisplayNames(ContentBadge.SlotIcon, 'ContentBadge.SlotIcon');
 }

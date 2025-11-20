@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`range-slider transforms correctly 1`] = `
+exports[`range-slider > transforms correctly 1`] = `
 "import { Slider } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -18,7 +18,7 @@ const App = () => {
 };"
 `;
 
-exports[`range-slider transforms correctly 2`] = `
+exports[`range-slider > transforms correctly 2`] = `
 "import { Slider, Slider as VKUIRangeSlider } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -34,7 +34,7 @@ const App = () => {
 };"
 `;
 
-exports[`range-slider transforms correctly 3`] = `
+exports[`range-slider > transforms correctly 3`] = `
 "import { Slider as VKUIRangeSlider } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';

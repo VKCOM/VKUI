@@ -3,9 +3,9 @@
 import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { setHours, setMinutes } from 'date-fns';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { callMultiple } from '../../lib/callMultiple';
+import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
@@ -232,8 +232,12 @@ export const CalendarTime = ({
             onInputChange={onHoursInputChange}
             onInputKeyDown={onSelectInputKeyDown}
             getSelectInputRef={hoursInputRef}
-            aria-label={changeHoursLabel}
-            data-testid={hoursTestId}
+            slotProps={{
+              input: {
+                'aria-label': changeHoursLabel,
+                'data-testid': hoursTestId,
+              },
+            }}
           />
         </AdaptivityProvider>
       </div>
@@ -250,8 +254,12 @@ export const CalendarTime = ({
             onInputChange={onMinutesInputChange}
             getSelectInputRef={minutesInputRef}
             onInputKeyDown={onSelectInputKeyDown}
-            aria-label={changeMinutesLabel}
-            data-testid={minutesTestId}
+            slotProps={{
+              input: {
+                'aria-label': changeMinutesLabel,
+                'data-testid': minutesTestId,
+              },
+            }}
           />
         </AdaptivityProvider>
       </div>

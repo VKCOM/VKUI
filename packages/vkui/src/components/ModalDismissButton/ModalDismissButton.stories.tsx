@@ -8,6 +8,7 @@ const story: Meta<ModalDismissButtonProps> = {
   title: 'Modals/ModalDismissButton',
   component: ModalDismissButton,
   parameters: createStoryParameters('ModalDismissButton', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Модальные окна'],
 };
 
 export default story;

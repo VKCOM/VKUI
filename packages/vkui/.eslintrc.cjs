@@ -33,6 +33,8 @@ module.exports = {
     Element: true,
   },
   rules: {
+    'react-hooks/immutability': 'warn', // TODO [#6919] поменять на 'error'
+    'react-hooks/refs': 'warn', // TODO [#6919] поменять на 'error'
     'no-restricted-imports': [
       'error',
       {
@@ -46,7 +48,6 @@ module.exports = {
           'styles',
           'testing',
           'types',
-          'storybook',
         ],
         patterns: [
           '@vkontakte/icons/dist/*',
@@ -59,7 +60,6 @@ module.exports = {
           'styles/*',
           'testing/*',
           'types/*',
-          'storybook/*',
         ],
       },
     ],
@@ -185,9 +185,16 @@ module.exports = {
     {
       files: ['src/**/*.test.{ts,tsx}', 'src/testing/*.{ts,tsx}'],
       env: {
-        jest: true,
+        '@vitest/env': true,
       },
+      // подключаем плагин и рекомендуемую (legacy) конфигурацию
+      extends: ['plugin:@vitest/legacy-recommended'],
+      plugins: ['@vitest'],
       rules: {
+        'react-hooks/globals': 'warn', // TODO [#6919] поменять на 'error' (при необходимости, точечно отключить в тестах)
+        '@vitest/valid-describe-callback': 'off',
+        '@vitest/expect-expect': 'off',
+        '@vitest/valid-title': 'off',
         'no-restricted-properties': 'off',
         'no-restricted-globals': 'off',
         'react/display-name': 'off',

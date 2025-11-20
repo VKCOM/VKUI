@@ -45,27 +45,27 @@ export const ContentBadgePlayground = (props: ComponentPlaygroundProps) => {
           </ContentBadge>
 
           <ContentBadge {...restProps} size={size} capsule={capsule}>
-            <ContentBadge.SlotIcon>
+            <ContentBadge.IconSlot>
               {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-            </ContentBadge.SlotIcon>
+            </ContentBadge.IconSlot>
             {children}
           </ContentBadge>
 
           <ContentBadge {...restProps} size={size} capsule={capsule}>
             {children}
-            <ContentBadge.SlotIcon>
+            <ContentBadge.IconSlot>
               {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-            </ContentBadge.SlotIcon>
+            </ContentBadge.IconSlot>
           </ContentBadge>
 
           <ContentBadge {...restProps} size={size} capsule={capsule}>
-            <ContentBadge.SlotIcon>
+            <ContentBadge.IconSlot>
               {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-            </ContentBadge.SlotIcon>
+            </ContentBadge.IconSlot>
             {children}
-            <ContentBadge.SlotIcon>
+            <ContentBadge.IconSlot>
               {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-            </ContentBadge.SlotIcon>
+            </ContentBadge.IconSlot>
           </ContentBadge>
 
           <ContentBadge
@@ -74,9 +74,9 @@ export const ContentBadgePlayground = (props: ComponentPlaygroundProps) => {
             // для варианта с одиночной иконкой зашиваем
             capsule
           >
-            <ContentBadge.SlotIcon>
+            <ContentBadge.IconSlot>
               {size === 'l' ? <Icon20ServicesFilled /> : <Icon16Services />}
-            </ContentBadge.SlotIcon>
+            </ContentBadge.IconSlot>
           </ContentBadge>
 
           {size === 's' ? <div style={captionStyle}>should ignore icons</div> : null}

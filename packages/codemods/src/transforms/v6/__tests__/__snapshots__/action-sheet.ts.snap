@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`action-sheet transforms correctly 1`] = `
+exports[`action-sheet > transforms correctly 1`] = `
 "import { ActionSheet, ActionSheetItem } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -16,7 +16,7 @@ const App = () => {
 };"
 `;
 
-exports[`action-sheet transforms correctly 2`] = `
+exports[`action-sheet > transforms correctly 2`] = `
 "import { ActionSheet } from '@vkontakte-fake/vkui';
 import React from 'react';
 

@@ -37,7 +37,7 @@ describe(useScrollLock, () => {
     test.each([true, false])('default behavior (width scroll: %s)', (withScroll) => {
       const clearWindowMeasuresMock = withScroll ? noop : mockWindowMeasures(-1, -1);
 
-      const beforeScrollLockFn = jest.fn();
+      const beforeScrollLockFn = vi.fn();
       const h = renderHook(useScrollLock, {
         wrapper: ({ children }) => (
           <GlobalScrollController elRef={createRef<HTMLElement>()}>
@@ -53,10 +53,11 @@ describe(useScrollLock, () => {
       expect(beforeScrollLockFn).toHaveBeenCalled();
 
       expect(getStyleAttributeObject(document.documentElement)).toEqual({
-        position: 'fixed',
-        top: `-${0}px`,
-        left: `-${0}px`,
-        right: '0px',
+        'position': 'fixed',
+        'top': `${0}px`,
+        'left': `${0}px`,
+        'right': '0px',
+        'overscroll-behavior': 'none',
         ...(withScroll
           ? {
               'overflow-x': 'scroll',
@@ -64,11 +65,13 @@ describe(useScrollLock, () => {
             }
           : {}),
       });
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe(
+        'none',
+      );
 
       h.rerender(false);
       expect(getStyleAttributeObject(document.documentElement)).toEqual({});
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
 
       clearWindowMeasuresMock();
     });
@@ -83,17 +86,20 @@ describe(useScrollLock, () => {
 
       expect(getStyleAttributeObject(document.documentElement)).toEqual({
         'position': 'fixed',
-        'top': `-${0}px`,
-        'left': `-${0}px`,
+        'top': `${0}px`,
+        'left': `${0}px`,
         'right': '0px',
         'overflow-x': 'scroll',
         'overflow-y': 'scroll',
+        'overscroll-behavior': 'none',
       });
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('none'); // prettier-ignore
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe(
+        'none',
+      );
 
       h.unmount();
       expect(getStyleAttributeObject(document.documentElement)).toEqual({});
-      expect(jestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
+      expect(vitestWorkaroundGetOverscrollBehaviorPropertyValue(document.documentElement)).toBe('');
     });
 
     test.each([true, false])('context api with locked=%s', (locked) => {
@@ -196,7 +202,7 @@ describe(useScrollLock, () => {
         ? mockElementMeasures(elRef.current!, -1, -1)
         : mockElementMeasures(elRef.current!, 1, 1);
 
-      const beforeScrollLockFn = jest.fn();
+      const beforeScrollLockFn = vi.fn();
       const h = renderHook(useScrollLock, {
         wrapper: ({ children }) => {
           return (
@@ -215,8 +221,8 @@ describe(useScrollLock, () => {
 
       expect(getStyleAttributeObject(elRef.current)).toEqual({
         position: 'absolute',
-        top: `-${0}px`,
-        left: `-${0}px`,
+        top: `${0}px`,
+        left: `${0}px`,
         right: '0px',
         ...(withScroll
           ? {
@@ -380,9 +386,9 @@ describe(useScrollLock, () => {
 });
 
 /**
- * В Jest через `el.getAttribute('style')` не получается получить свойство.
+ * В Vitest через `el.getAttribute('style')` не получается получить свойство.
  */
-function jestWorkaroundGetOverscrollBehaviorPropertyValue(el: HTMLElement) {
+function vitestWorkaroundGetOverscrollBehaviorPropertyValue(el: HTMLElement) {
   return el.style.overscrollBehavior;
 }
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`horizontal-scroll transforms correctly 1`] = `
+exports[`horizontal-scroll > transforms correctly 1`] = `
 "import { HorizontalScroll } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';

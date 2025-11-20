@@ -15,6 +15,7 @@ on:
         type: choice
         options:
           - '@vkontakte/vkui'
+          - '@vkontakte/vkui-floating-ui'
       git_release_tag:
         description: 'git release tag (ex: `v6.0.0`):'
         required: true
@@ -40,7 +41,7 @@ jobs:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
         id: artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           name: publish_workflow_payload
@@ -68,3 +69,42 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           releaseTag: ${{ needs.payload.outputs.git_release_tag }}
           latest: ${{ needs.payload.outputs.npm_tag == 'latest' }}
+
+  package_vkui_floating_ui_complete:
+    needs: ['payload']
+    if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui-floating-ui' }}
+    runs-on: ubuntu-latest
+    name: Complete @vkontakte/vkui-floating-ui
+    steps:
+      - name: get vkui-floating-ui version from git release tag
+        id: vkui_floating_ui_version
+        run: |
+          TAG="${{ needs.payload.outputs.git_release_tag }}"
+          VERSION="${TAG##*@}"
+          echo "value=$VERSION" >> $GITHUB_OUTPUT
+
+      # Обновляем версию vkui-floating-ui в vkui
+      - name: update vkui-floating-ui version in vkui
+        run: |
+          yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.vkui_floating_ui_version.outputs.value }}
+
+      # Создаем pull request с изменениями в ветке
+      - name: Create PR with changes
+        id: create_pull_request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: master
+          branch: ${{ env.RELEASE_BRANCH_NAME }}
+          commit-message: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.vkui_floating_ui_version.outputs.value }}'
+          delete-branch: true
+          title: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.vkui_floating_ui_version.outputs.value }}'
+          body: ''
+          labels: subpackage:@vkontakte/vkui-floating-ui, dependencies
+
+      # Добавляем майлстоун следующей минорной версии
+      - name: Add next minor version milestone to pull request
+        uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull_request_number: ${{ steps.create_pull_request.outputs.pull-request-number }}

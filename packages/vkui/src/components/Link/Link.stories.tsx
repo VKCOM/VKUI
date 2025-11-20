@@ -5,9 +5,10 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { Link, type LinkProps } from './Link';
 
 const story: Meta<LinkProps> = {
-  title: 'Blocks/Link',
+  title: 'Typography/Link',
   component: Link,
   parameters: createStoryParameters('Link', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Типографика'],
 };
 
 export default story;
@@ -16,7 +17,7 @@ type Story = StoryObj<LinkProps>;
 
 export const Playground: Story = {
   args: {
-    href: 'https://vkcom.github.io/VKUI/#/About',
+    href: 'https://vkui.io/overview/about',
     children: 'О VKUI',
     after: <Icon24ExternalLinkOutline width={16} height={16} />,
   },

@@ -5,13 +5,10 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
       - '.husky/**'
-      - '.codesandbox/**'
       - '.github/**'
       - '!.github/actions/**'
       - '.github/actions/**/*.yml'
       - '**/*.md'
-      - '!packages/vkui/src/**/*.md'
-      - '!styleguide/pages/**/*.md'
       - '**/__image_snapshots__/*.png'
 
 concurrency:
@@ -24,13 +21,12 @@ jobs:
     name: Detect what files changed
     outputs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
-      docs_styleguide: ${{ steps.changes.outputs.docs_styleguide }}
       docs_storybook: ${{ steps.changes.outputs.docs_storybook }}
-      docs_beta: ${{ steps.changes.outputs.docs_beta }}
+      docs_website: ${{ steps.changes.outputs.docs_website }}
       dependencies: ${{ steps.changes.outputs.dependencies }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Find changes
         uses: dorny/paths-filter@v3
@@ -44,10 +40,13 @@ jobs:
     name: Run linters
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
+
+      - name: Run Biome format
+        run: yarn run lint:format
 
       - name: Run Stylelint
         run: yarn run lint:style
@@ -67,7 +66,7 @@ jobs:
 
   test:
     name: Call reusable workflow
-    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_test.yml@master
+    uses: ./.github/workflows/reusable_workflow_test.yml
 
   test_report:
     if: ${{ !cancelled() && (success() || failure()) }}
@@ -76,7 +75,7 @@ jobs:
     name: Report unit test results
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: test-output
 
@@ -87,7 +86,7 @@ jobs:
     if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     needs: changed_files
     name: Call reusable workflow
-    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_test_e2e.yml@master
+    uses: ./.github/workflows/reusable_workflow_test_e2e.yml
 
   test_e2e_prepare_and_upload_report:
     if: ${{ !cancelled() && (success() || failure()) }}
@@ -96,13 +95,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Download Playwright blob reports from GitHub Actions Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: packages/vkui/artifacts
 
@@ -135,10 +134,10 @@ jobs:
     name: Build package
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Generate archive
         run: yarn workspace @vkontakte/vkui pack --out ../../out/_pkg.tgz
@@ -162,10 +161,10 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - uses: andresz1/size-limit-action@v1.8.0
         with:
@@ -177,26 +176,65 @@ jobs:
           build_script: 'size:ci'
           script: yarn run -T size-limit --json"
 
-  docs_styleguide_upload:
-    if: ${{ needs.changed_files.outputs.docs_styleguide == 'true' }}
+  diff_build:
+    if: ${{ needs.changed_files.outputs.package_vkui == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
-    name: Upload docs dist artifact (styleguide)
+    name: Generate Diff
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout PR branch
+        uses: actions/checkout@v5
 
-      - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+      - name: Node setup (pr)
+        uses: ./.github/actions/node-setup
 
-      - name: Build
-        run: yarn run docs:styleguide:build
+      - name: Build vkui PR (pr)
+        working-directory: packages/vkui
+        run: |
+          yarn run build
+          yarn exec biome format --write --config-path=diff.biome.json
 
-      - name: Upload dist
+      - name: Checkout target
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1
+          git checkout -f ${{ github.base_ref }}
+
+      - name: Node setup (target)
+        uses: ./.github/actions/node-setup
+
+      - name: Rename dist folder from pr
+        working-directory: packages/vkui
+        run: |
+          mv dist pr_dist
+
+      - name: Build vkui (target)
+        working-directory: packages/vkui
+        run: |
+          yarn run build
+          yarn exec biome format --write --config-path=diff.biome.json
+
+      - name: Generate diff
+        id: generate-diff
+        run: |
+          git diff --no-index packages/vkui/dist/ packages/vkui/pr_dist/ > code_diff.dif || true
+          if [ -s code_diff.dif ]; then
+            echo "has_diff=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_diff=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate HTML report
+        if: steps.generate-diff.outputs.has_diff == 'true'
+        run: |
+          mkdir diff
+          yarn run diff2html -i file -F diff/diff-report.html --summary open  --title "VKUI Bundle Diff" --style side -- code_diff.dif
+
+      - name: Upload report
+        if: steps.generate-diff.outputs.has_diff == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: styleguide-dist
-          path: styleguide/dist
+          name: diff-report
+          path: diff/
 
   docs_storybook_upload:
     if: ${{ needs.changed_files.outputs.docs_storybook == 'true' }}
@@ -205,10 +243,10 @@ jobs:
     name: Upload docs dist artifact (storybook)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Build
         run: yarn docs:storybook:build
@@ -219,40 +257,40 @@ jobs:
           name: storybook-dist
           path: packages/vkui/storybook-static
 
-  docs_beta_upload:
-    if: ${{ needs.changed_files.outputs.docs_beta == 'true' }}
+  docs_website_upload:
+    if: ${{ needs.changed_files.outputs.docs_website == 'true' }}
     needs: changed_files
     runs-on: ubuntu-latest
-    name: Upload docs dist artifact (beta)
+    name: Upload docs dist artifact
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Build VKUI
         run: yarn build:vkui
 
       - name: Build
-        run: yarn docs:beta:build
+        run: yarn docs:website:build
         env:
-          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}/docs-beta
+          NEXT_PUBLIC_VKUI_DOCS_BASE_PATH: /pull/${{ github.event.pull_request.number }}/${{ github.event.pull_request.head.sha }}
 
       - name: Upload dist
         uses: actions/upload-artifact@v4
         with:
-          name: docs-beta-dist
+          name: docs-website-dist
           path: website/out
 
   upload_pr_workflow_payload:
     # Дожидаемся выгрузки артефактов, на случай если вокрфлоу будет отменён или перезапушен
-    needs: [test, test_e2e_prepare_and_upload_report, docs_styleguide_upload, docs_storybook_upload]
+    needs: [test, test_e2e_prepare_and_upload_report, docs_storybook_upload]
     # Не используем always(), т.к. он не учитывает отмену воркфлоу
     # см. https://github.com/orgs/community/discussions/26303
     if: ${{ !cancelled() }}
     name: Call reusable workflow
-    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_pr_worfklow_payload.yml@master
+    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
 
@@ -263,14 +301,14 @@ jobs:
     name: Check dependencies
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Enable Corepack
         run: corepack enable
         shell: bash
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'

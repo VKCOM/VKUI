@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { usePrevious } from '../../hooks/usePrevious';
+import { millisecondsInSecond } from '../../lib/date';
 import { blurActiveElement, useDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
@@ -69,7 +70,7 @@ export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavId
 const warn = warnOnce('View');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/View
+ * @see https://vkui.io/components/view
  */
 export const View = ({
   activePanel: activePanelProp,
@@ -275,7 +276,7 @@ export const View = ({
   const handleTouchEndForIOSSwipeBackSimulation = (event: CustomTouchEvent) => {
     swipeBackPrevented.current = false;
     if (swipingBack) {
-      const speed = (swipeBackShift / event.duration) * 1000;
+      const speed = (swipeBackShift / event.duration) * millisecondsInSecond;
       if (swipeBackShift === 0) {
         onSwipeBackCancel();
       } else if (swipeBackShift >= (window!.innerWidth ?? 0)) {

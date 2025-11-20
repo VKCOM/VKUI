@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { format } from 'date-fns';
-import { baselineComponent, setNodeEnv, userEvent } from '../../testing/utils';
+import { noop } from '@vkontakte/vkjs';
+import { dateFormatter } from '../../lib/date';
+import { baselineComponent, setNodeEnv, userEvent, withFakeTimers } from '../../testing/utils';
 import { Calendar } from './Calendar';
 
 const targetDate = new Date('2023-09-20T07:40:00.000Z');
@@ -9,52 +10,58 @@ const lastDayDate = new Date('2023-09-30T07:40:00.000Z');
 const minDate = new Date('2023-09-15T10:35:00.000Z');
 const maxDate = new Date('2023-09-29T07:20:00.000Z');
 
-const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+const dayTestId = (day: Date) => dateFormatter.format(day);
 
 describe('Calendar', () => {
   baselineComponent(Calendar);
 
-  it('checks aria roles', async () => {
-    jest.useFakeTimers({ now: targetDate });
-    render(<Calendar defaultValue={targetDate} dayTestId={dayTestId} />);
+  it(
+    'checks aria roles',
+    withFakeTimers(
+      async () => {
+        render(<Calendar defaultValue={targetDate} dayTestId={dayTestId} />);
 
-    expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
-    expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
-    expect(screen.getByRole('columnheader', { name: 'понедельник' })).toBeDefined();
-    expect(screen.getByRole('columnheader', { name: 'вторник' })).toBeDefined();
-    expect(screen.getByRole('columnheader', { name: 'среда' })).toBeDefined();
-    expect(screen.getByRole('columnheader', { name: 'четверг' })).toBeDefined();
-    expect(screen.getByRole('columnheader', { name: 'пятница' })).toBeDefined();
-    expect(screen.getByRole('columnheader', { name: 'суббота' })).toBeDefined();
-    expect(screen.getByRole('columnheader', { name: 'воскресенье' })).toBeDefined();
+        expect(screen.getByRole('grid', { name: 'сентябрь 2023 г.' })).toBeDefined();
+        expect(screen.getByRole('gridcell', { name: 'среда, 20 сентября' })).toBeDefined();
+        expect(screen.getByRole('columnheader', { name: 'понедельник' })).toBeDefined();
+        expect(screen.getByRole('columnheader', { name: 'вторник' })).toBeDefined();
+        expect(screen.getByRole('columnheader', { name: 'среда' })).toBeDefined();
+        expect(screen.getByRole('columnheader', { name: 'четверг' })).toBeDefined();
+        expect(screen.getByRole('columnheader', { name: 'пятница' })).toBeDefined();
+        expect(screen.getByRole('columnheader', { name: 'суббота' })).toBeDefined();
+        expect(screen.getByRole('columnheader', { name: 'воскресенье' })).toBeDefined();
 
-    let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
-    expect(currentDate.getAttribute('aria-current')).toBe('date');
-    expect(currentDate.getAttribute('aria-selected')).toBe('true');
+        let currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+        expect(currentDate.getAttribute('aria-current')).toBe('date');
+        expect(currentDate.getAttribute('aria-selected')).toBe('true');
 
-    await act(() =>
-      userEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' })),
-    );
+        await act(() =>
+          userEvent.click(screen.getByRole('gridcell', { name: 'вторник, 19 сентября' })),
+        );
 
-    currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
-    expect(currentDate.getAttribute('aria-current')).toBe('date');
-    expect(currentDate.getAttribute('aria-selected')).toBe('false');
+        currentDate = screen.getByRole('gridcell', { name: 'среда, 20 сентября' });
+        expect(currentDate.getAttribute('aria-current')).toBe('date');
+        expect(currentDate.getAttribute('aria-selected')).toBe('false');
 
-    const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
-    expect(selectedDate.getAttribute('aria-current')).toBe(null);
-    expect(selectedDate.getAttribute('aria-selected')).toBe('true');
-  });
+        const selectedDate = screen.getByRole('gridcell', { name: 'вторник, 19 сентября' });
+        expect(selectedDate.getAttribute('aria-current')).toBe(null);
+        expect(selectedDate.getAttribute('aria-selected')).toBe('true');
+      },
+      { now: targetDate },
+    ),
+    15_000,
+  );
 
   it('fires onChange', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(<Calendar value={targetDate} onChange={onChange} dayTestId={dayTestId} />);
     fireEvent.click(screen.getByTestId(dayTestId(firstDayDate)));
-    expect(onChange).toHaveBeenCalledWith(firstDayDate);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(firstDayDate);
   });
 
   it('does not fire onChange with the value out of minDateTime/maxDateTime', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <Calendar
@@ -72,7 +79,7 @@ describe('Calendar', () => {
   });
 
   it('onChange respects minDateTime', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <Calendar
@@ -83,11 +90,11 @@ describe('Calendar', () => {
       />,
     );
     fireEvent.click(screen.getByTestId(dayTestId(minDate)));
-    expect(onChange).toHaveBeenCalledWith(minDate);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(minDate);
   });
 
   it('onChange respects maxDateTime', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <Calendar
@@ -98,137 +105,144 @@ describe('Calendar', () => {
       />,
     );
     fireEvent.click(screen.getByTestId(dayTestId(maxDate)));
-    expect(onChange).toHaveBeenCalledWith(maxDate);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(maxDate);
   });
 
-  it('check navigation by keyboard between two months', async () => {
-    jest.useFakeTimers();
+  it(
+    'check navigation by keyboard between two months',
+    withFakeTimers(async () => {
+      const monthDropdownTestId = (monthIndex: number) => `month-picker-${monthIndex}`;
 
-    const monthDropdownTestId = (monthIndex: number) => `month-picker-${monthIndex}`;
+      render(
+        <Calendar
+          value={lastDayDate}
+          dayTestId={dayTestId}
+          monthDropdownTestId={monthDropdownTestId}
+        />,
+      );
+      await userEvent.click(screen.getByTestId(dayTestId(lastDayDate)));
+      await userEvent.keyboard('{ArrowRight}');
 
-    render(
-      <Calendar
-        value={lastDayDate}
-        dayTestId={dayTestId}
-        monthDropdownTestId={monthDropdownTestId}
-      />,
-    );
-    fireEvent.click(screen.getByTestId(dayTestId(lastDayDate)));
-    await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByTestId(monthDropdownTestId(9))).toBeInTheDocument();
 
-    expect(screen.getByTestId(monthDropdownTestId(9))).toBeInTheDocument();
+      await userEvent.keyboard('{ArrowLeft}');
 
-    await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByTestId(monthDropdownTestId(8))).toBeInTheDocument();
 
-    expect(screen.getByTestId(monthDropdownTestId(8))).toBeInTheDocument();
+      await userEvent.keyboard('{ArrowDown}');
 
-    await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByTestId(monthDropdownTestId(9))).toBeInTheDocument();
 
-    expect(screen.getByTestId(monthDropdownTestId(9))).toBeInTheDocument();
+      await userEvent.keyboard('{ArrowUp}');
 
-    await userEvent.keyboard('{ArrowUp}');
+      expect(screen.getByTestId(monthDropdownTestId(8))).toBeInTheDocument();
+    }),
+  );
 
-    expect(screen.getByTestId(monthDropdownTestId(8))).toBeInTheDocument();
-  });
+  it(
+    'checks that previous focusable day still focusable after navigation out of Calendar using Tab',
+    withFakeTimers(async () => {
+      const day = new Date('2023-09-30T07:40:00.000Z');
+      const dayBeforeTarget = new Date('2023-09-29T07:40:00.000Z');
 
-  it('checks that previous focusable day still focusable after navigation out of Calendar using Tab', async () => {
-    jest.useFakeTimers();
-    const day = new Date('2023-09-30T07:40:00.000Z');
-    const dayBeforeTarget = new Date('2023-09-29T07:40:00.000Z');
+      render(
+        <div>
+          <Calendar value={day} dayTestId={dayTestId} />
+          <button type="button">Следующая кнопка</button>
+        </div>,
+      );
 
-    render(
-      <div>
-        <Calendar value={day} dayTestId={dayTestId} />
-        <button type="button">Следующая кнопка</button>
-      </div>,
-    );
+      const getTargetDay = () => screen.getByTestId(dayTestId(day));
+      const getDayBeforeTarget = () => screen.getByTestId(dayTestId(dayBeforeTarget));
 
-    const getTargetDay = () => screen.getByTestId(dayTestId(day));
-    const getDayBeforeTarget = () => screen.getByTestId(dayTestId(dayBeforeTarget));
+      // текущая дата календаря фокусируемая
+      expect(getTargetDay().tabIndex).toBe(0);
+      // соседний день нет
+      expect(getDayBeforeTarget().tabIndex).toBe(-1);
 
-    // текущая дата календаря фокусируемая
-    expect(getTargetDay().tabIndex).toBe(0);
-    // соседний день нет
-    expect(getDayBeforeTarget().tabIndex).toBe(-1);
+      // фокусируемся с помощью клика на текущем дне
+      await userEvent.click(getTargetDay());
+      // переходим на предыдущий день с помощью клавиатуры
+      await userEvent.keyboard('{ArrowLeft}');
 
-    // фокусируемся с помощью клика на текущем дне
-    await act(() => userEvent.click(getTargetDay()));
-    // переходим на предыдущий день с помощью клавиатуры
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
+      // текущая дата календаря больше не фокусируемая
+      expect(getTargetDay().tabIndex).toBe(-1);
+      // соседний день должен стать фокусируемым с клавиатуры
+      expect(getDayBeforeTarget().tabIndex).toBe(0);
 
-    // текущая дата календаря больше не фокусируемая
-    expect(getTargetDay().tabIndex).toBe(-1);
-    // соседний день должен стать фокусируемым с клавиатуры
-    expect(getDayBeforeTarget().tabIndex).toBe(0);
+      // уводим фокус с помощью клавиатуры за пределы календаря
+      await userEvent.tab();
+      expect(document.activeElement).toBe(screen.getByText('Следующая кнопка'));
 
-    // уводим фокус с помощью клавиатуры за пределы календаря
-    await act(() => userEvent.tab());
-    expect(document.activeElement).toBe(screen.getByText('Следующая кнопка'));
+      // на последний выбранный день календаря всё ещё можно сфокусироваться
+      expect(getDayBeforeTarget().tabIndex).toBe(0);
 
-    // на последний выбранный день календаря всё ещё можно сфокусироваться
-    expect(getDayBeforeTarget().tabIndex).toBe(0);
+      // возвращаемся назад с помощью Shift + Tab
+      await userEvent.tab({ shift: true });
+      // последний выбранный день снова в фокусе
+      expect(document.activeElement).toStrictEqual(getDayBeforeTarget());
+    }),
+  );
 
-    // возвращаемся назад с помощью Shift + Tab
-    await act(() => userEvent.tab({ shift: true }));
-    // последний выбранный день снова в фокусе
-    expect(document.activeElement).toStrictEqual(getDayBeforeTarget());
-  });
+  it(
+    'checks that Enter or Space triggers click on day cell',
+    withFakeTimers(async () => {
+      const day = new Date('2023-09-30T07:40:00.000Z');
 
-  it('checks that Enter or Space triggers click on day cell', async () => {
-    jest.useFakeTimers();
-    const day = new Date('2023-09-30T07:40:00.000Z');
+      const onChangeStub = vi.fn();
 
-    const onChangeStub = jest.fn();
+      render(<Calendar value={day} dayTestId={dayTestId} onChange={onChangeStub} />);
 
-    render(<Calendar value={day} dayTestId={dayTestId} onChange={onChangeStub} />);
+      const getTargetDay = () => screen.getByTestId(dayTestId(day));
 
-    const getTargetDay = () => screen.getByTestId(dayTestId(day));
+      // текущая дата календаря фокусируемая
+      expect(getTargetDay().tabIndex).toBe(0);
 
-    // текущая дата календаря фокусируемая
-    expect(getTargetDay().tabIndex).toBe(0);
+      // фокусируемся с помощью клика на текущем дне
+      await userEvent.click(getTargetDay());
 
-    // фокусируемся с помощью клика на текущем дне
-    await act(() => userEvent.click(getTargetDay()));
+      expect(onChangeStub).toHaveBeenCalledExactlyOnceWith(day);
+      // переходим на предыдущий день с помощью клавиатуры
+      await userEvent.keyboard('{ArrowLeft}');
+      await userEvent.keyboard('{ArrowLeft}');
+      await userEvent.keyboard('{ArrowLeft}');
 
-    expect(onChangeStub).toHaveBeenCalledWith(day);
-    // переходим на предыдущий день с помощью клавиатуры
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
+      // нажимаем Enter
+      await userEvent.keyboard('{Enter}');
+      expect(onChangeStub).toHaveBeenLastCalledWith(new Date('2023-09-27T07:40:00.000Z'));
 
-    // нажимаем Enter
-    await act(() => userEvent.keyboard('{Enter}'));
-    expect(onChangeStub).toHaveBeenLastCalledWith(new Date('2023-09-27T07:40:00.000Z'));
+      await userEvent.keyboard('{ArrowLeft}');
 
-    await act(() => userEvent.keyboard('{ArrowLeft}'));
+      // нажимаем Space
+      await userEvent.keyboard(' ');
+      expect(onChangeStub).toHaveBeenLastCalledWith(new Date('2023-09-26T07:40:00.000Z'));
+    }),
+  );
 
-    // нажимаем Space
-    await act(() => userEvent.keyboard(' '));
-    expect(onChangeStub).toHaveBeenLastCalledWith(new Date('2023-09-26T07:40:00.000Z'));
-  });
+  it(
+    'checks focusable days',
+    withFakeTimers(async () => {
+      render(<Calendar value={targetDate} dayTestId={dayTestId} />);
 
-  it('checks focusable days', async () => {
-    jest.useFakeTimers();
-    render(<Calendar value={targetDate} dayTestId={dayTestId} />);
+      // при открытии календаря focusable день соответствует значению в value
+      expect(screen.getByTestId('20.09.2023').tabIndex).toBe(0);
+      expect(screen.getByTestId('21.09.2023').tabIndex).toBe(-1);
 
-    // при открытии календаря focusable день соответствует значению в value
-    expect(screen.getByTestId('20.09.2023').tabIndex).toBe(0);
-    expect(screen.getByTestId('21.09.2023').tabIndex).toBe(-1);
+      await userEvent.click(screen.getByTestId('20.09.2023'));
+      // при переходе к следующему дню с клавиатуры, следующий день становится фокусируемым
+      await userEvent.keyboard('{ArrowRight}');
 
-    await act(() => userEvent.click(screen.getByTestId('20.09.2023')));
-    // при переходе к следующему дню с клавиатуры, следующий день становится фокусируемым
-    await act(() => userEvent.keyboard('{ArrowRight}'));
+      expect(screen.getByTestId('20.09.2023').tabIndex).toBe(-1);
+      expect(screen.getByTestId('21.09.2023').tabIndex).toBe(0);
 
-    expect(screen.getByTestId('20.09.2023').tabIndex).toBe(-1);
-    expect(screen.getByTestId('21.09.2023').tabIndex).toBe(0);
-
-    // при смене месяца факусируемым становится первый день месяца
-    await act(() => userEvent.click(screen.getByText(/Следующий месяц/)));
-    expect(screen.getByTestId('01.10.2023').tabIndex).toBe(0);
-  });
+      // при смене месяца факусируемым становится первый день месяца
+      await userEvent.click(screen.getByText(/Следующий месяц/));
+      expect(screen.getByTestId('01.10.2023').tabIndex).toBe(0);
+    }),
+  );
 
   it('should display correct timezone time', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <Calendar
         value={targetDate}
@@ -255,12 +269,11 @@ describe('Calendar', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check calls Calendar', () => {
-      const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+      const consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(noop);
 
       const { rerender } = render(<Calendar value={lastDayDate} disablePickers={false} size="s" />);
 
-      expect(consoleErrorMock).toHaveBeenCalledTimes(1);
-      expect(consoleErrorMock).toHaveBeenCalledWith(
+      expect(consoleErrorMock).toHaveBeenCalledExactlyOnceWith(
         "%c[VKUI/Calendar] Нельзя включить селекты выбора месяца/года, если размер календаря 's'",
         undefined,
       );

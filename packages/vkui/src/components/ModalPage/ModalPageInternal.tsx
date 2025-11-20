@@ -74,11 +74,16 @@ export const ModalPageInternal = ({
   onClose = noop,
   onClosed,
   disableFocusTrap,
+  disableModalOverlay,
+  disableOpenAnimation = false,
+  disableCloseAnimation = false,
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
-    enableAppear: true,
+    enableAppear: !disableOpenAnimation,
+    enableEnter: !disableOpenAnimation,
+    enableExit: !disableCloseAnimation,
     onEnter() {
       onOpen?.();
     },
@@ -117,15 +122,17 @@ export const ModalPageInternal = ({
   const handleSheetRef = useExternRef<HTMLDivElement>(setSheetEl, ref);
   const handleSheetScrollRef = useExternRef<HTMLDivElement>(setSheetScrollEl, getModalContentRef);
 
-  const [desktopMaxWidthClassName, desktopMaxWidthStyle] = resolveDesktopMaxWidth(
-    isDesktop ? desktopMaxWidth : 's',
-  );
+  const [desktopMaxWidthClassName, desktopMaxWidthStyle] = isDesktop
+    ? resolveDesktopMaxWidth(desktopMaxWidth)
+    : [undefined, undefined];
 
-  const modalOverlay = (
+  const modalOverlay = !disableModalOverlay && (
     <ModalOverlay
       getRootRef={setBackdropEl}
       data-testid={modalOverlayTestId}
       visible={open}
+      disableOpenAnimation={disableOpenAnimation}
+      disableCloseAnimation={disableCloseAnimation}
       onClick={
         closable
           ? function handleBackdropClick(event) {
@@ -147,7 +154,12 @@ export const ModalPageInternal = ({
   useScrollLock(!hidden);
 
   return (
-    <ModalOutlet hidden={hidden} isDesktop={isDesktop} onKeyDown={handleEscKeyDown}>
+    <ModalOutlet
+      hidden={hidden}
+      isDesktop={isDesktop}
+      onKeyDown={handleEscKeyDown}
+      disableModalOverlay={disableModalOverlay}
+    >
       {modalOverlay}
       <FocusTrap
         {...restProps}
@@ -207,16 +219,13 @@ const desktopMaxWidthClassNames = {
 function resolveDesktopMaxWidth(
   desktopMaxWidth: ModalPageInternalProps['size'] = 's',
 ): [string | undefined, CSSCustomProperties | undefined] {
-  if (typeof desktopMaxWidth === 'string') {
-    return [desktopMaxWidthClassNames[desktopMaxWidth], undefined];
+  if (typeof desktopMaxWidth === 'number') {
+    return [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': `${desktopMaxWidth}px` }];
   }
 
-  return [
-    undefined,
-    typeof desktopMaxWidth === 'number'
-      ? { '--vkui_internal_ModalPage--desktopMaxWidth': `${desktopMaxWidth}px` }
-      : undefined,
-  ];
+  return desktopMaxWidthClassNames.hasOwnProperty(desktopMaxWidth)
+    ? [desktopMaxWidthClassNames[desktopMaxWidth], undefined]
+    : [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': desktopMaxWidth }];
 }
 
 function getHeightCSSVariable(height?: number | string): CSSCustomProperties | undefined {

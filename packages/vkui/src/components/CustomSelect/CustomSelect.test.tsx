@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import type { Placement, useFloating } from '../../lib/floating';
@@ -8,15 +8,17 @@ import {
   setNodeEnv,
   userEvent,
   waitForFloatingPosition,
+  withFakeTimers,
 } from '../../testing/utils';
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
-import { CustomSelect, type CustomSelectRenderOption, type SelectProps } from './CustomSelect';
+import { CustomSelect, type SelectProps } from './CustomSelect';
+import { type CustomSelectRenderOption } from './types';
 import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;
-jest.mock('../../lib/floating', () => {
-  const originalModule = jest.requireActual('../../lib/floating');
+vi.mock('../../lib/floating', async () => {
+  const originalModule = (await vi.importActual('../../lib/floating')) as any;
   return {
     ...originalModule,
     useFloating: (...args: Parameters<typeof useFloating>) => {
@@ -31,7 +33,11 @@ jest.mock('../../lib/floating', () => {
   };
 });
 
+const INPUT_TEST_ID = 'inputTestId';
+
 const getCustomSelectValue = () => screen.getByTestId('labelTextTestId').textContent;
+
+const getInputValue = () => screen.getByTestId<HTMLInputElement>(INPUT_TEST_ID).value;
 
 const CustomSelectControlled = ({
   options,
@@ -41,7 +47,7 @@ const CustomSelectControlled = ({
 }: Omit<SelectProps, 'value'> & {
   initialValue?: string;
 }) => {
-  const [value, setValue] = React.useState<SelectProps['value']>(initialValue);
+  const [value, setValue] = useState<SelectProps['value']>(initialValue);
   const handleChange: SelectProps['onChange'] = (e, newValue) => {
     setValue(newValue);
     onChange?.(e, newValue);
@@ -50,15 +56,11 @@ const CustomSelectControlled = ({
 };
 
 const checkDropdownOpened = (opened = true) => {
-  if (opened) {
-    expect(screen.getByRole('listbox')).toBeInTheDocument();
-  } else {
-    expect(() => screen.getByRole('listbox')).toThrow();
-  }
+  expect(!!screen.queryByRole('listbox')).toBe(opened);
 };
 
 const triggerKeydownEvent = async (input: HTMLElement, key: string, code: string) => {
-  await React.act(async () => {
+  await act(async () => {
     fireEvent.keyDown(input, {
       key,
       code,
@@ -67,18 +69,18 @@ const triggerKeydownEvent = async (input: HTMLElement, key: string, code: string
 };
 
 const mockPropertiesToScroll = (defaultScrollTop = 0) => {
-  const setScrollTopStub = jest.fn();
+  const setScrollTopStub = vi.fn();
 
   const dropdownScroll = screen.getByRole('listbox').firstElementChild as HTMLElement;
-  jest.spyOn(dropdownScroll, 'offsetHeight', 'get').mockImplementation(() => 200);
-  jest.spyOn(dropdownScroll, 'scrollTop', 'get').mockImplementation(() => defaultScrollTop);
-  jest.spyOn(dropdownScroll, 'scrollTop', 'set').mockImplementation(setScrollTopStub);
+  vi.spyOn(dropdownScroll, 'offsetHeight', 'get').mockImplementation(() => 200);
+  vi.spyOn(dropdownScroll, 'scrollTop', 'get').mockImplementation(() => defaultScrollTop);
+  vi.spyOn(dropdownScroll, 'scrollTop', 'set').mockImplementation(setScrollTopStub);
 
   const optionHeight = 40;
 
   screen.getAllByRole('option').forEach((option, index) => {
-    jest.spyOn(option, 'offsetTop', 'get').mockImplementation(() => optionHeight * index);
-    jest.spyOn(option, 'offsetHeight', 'get').mockImplementation(() => optionHeight);
+    vi.spyOn(option, 'offsetTop', 'get').mockImplementation(() => optionHeight * index);
+    vi.spyOn(option, 'offsetHeight', 'get').mockImplementation(() => optionHeight);
   });
 
   return setScrollTopStub;
@@ -89,11 +91,145 @@ describe('CustomSelect', () => {
     placementStub = undefined;
   });
   baselineComponent((props) => (
-    <CustomSelect aria-label="Choose your user" {...props} options={[]} />
+    <CustomSelect
+      slotProps={{ input: { 'aria-label': 'Choose your user' } }}
+      {...props}
+      options={[]}
+    />
   ));
 
+  it(
+    'should work with slotProps',
+    withFakeTimers(async () => {
+      const rootRef1 = createRef<HTMLDivElement>();
+      const rootRef2 = createRef<HTMLDivElement>();
+      const selectRef1 = createRef<HTMLSelectElement>();
+      const selectRef2 = createRef<HTMLSelectElement>();
+      const inputRef1 = createRef<HTMLInputElement>();
+      const inputRef2 = createRef<HTMLInputElement>();
+
+      const onRootClick = vi.fn();
+      const onInputClick = vi.fn();
+      const onSelectClick1 = vi.fn();
+      const onSelectClick2 = vi.fn();
+
+      const onSelectFocus = vi.fn();
+      const onInputFocus = vi.fn();
+
+      render(
+        <CustomSelect
+          options={[
+            { value: 0, label: 'Mike' },
+            { value: 1, label: 'Josh' },
+          ]}
+          defaultValue={0}
+          data-testid="input"
+          required
+          className="rootClassName"
+          id="input"
+          name="select"
+          getRootRef={rootRef1}
+          onClick={onSelectClick1}
+          onFocus={onSelectFocus}
+          getRef={selectRef1}
+          getSelectInputRef={inputRef1}
+          nativeSelectTestId="select"
+          style={{
+            backgroundColor: 'rgb(255, 0, 0)',
+          }}
+          slotProps={{
+            root: {
+              'data-testid': 'root',
+              'className': 'rootClassName-2',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'getRootRef': rootRef2,
+              'onClick': onRootClick,
+            },
+            select: {
+              'className': 'selectClassName',
+              'getRootRef': selectRef2,
+              'data-testid': 'select-2',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'onClick': onSelectClick2,
+            },
+            input: {
+              'getRootRef': inputRef2,
+              'data-testid': 'input-2',
+              'className': 'inputClassName',
+              'style': {
+                color: 'rgb(255, 0, 0)',
+              },
+              'onClick': onInputClick,
+              'onFocus': onInputFocus,
+            },
+          }}
+        />,
+      );
+
+      expect(screen.queryByTestId('select')).not.toBeInTheDocument();
+      const select = screen.getByTestId('select-2');
+      expect(select).toBeInTheDocument();
+      expect(select.tagName).toBe('SELECT');
+      expect(select).toHaveClass('selectClassName');
+      expect(select).toHaveStyle('color: rgb(255, 0, 0)');
+      expect(select).toHaveAttribute('required');
+      expect(select).toHaveAttribute('name', 'select');
+
+      const root = screen.getByTestId('root');
+      expect(root.tagName).toBe('DIV');
+      expect(root).toBeInTheDocument();
+      expect(root).toHaveClass('rootClassName');
+      expect(root).toHaveClass('rootClassName-2');
+      expect(root).toHaveStyle('background-color: rgb(255, 0, 0)');
+      expect(root).toHaveStyle('color: rgb(255, 0, 0)');
+
+      expect(screen.queryByTestId('input')).not.toBeInTheDocument();
+      const input = screen.getByTestId('input-2');
+      expect(input.tagName).toBe('INPUT');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveClass('inputClassName');
+      expect(input).toHaveStyle('color: rgb(255, 0, 0)');
+      expect(input).toHaveAttribute('id', 'input');
+
+      expect(rootRef1.current).toBe(rootRef2.current);
+      expect(rootRef1.current).toBe(root);
+
+      expect(selectRef1.current).toBe(selectRef2.current);
+      expect(selectRef1.current).toBe(select);
+
+      expect(inputRef1.current).toBe(inputRef2.current);
+      expect(inputRef1.current).toBe(input);
+
+      fireEvent.click(input);
+      await act(async () => vi.runOnlyPendingTimers());
+      expect(onInputClick).toHaveBeenCalledTimes(1);
+
+      fireEvent.click(select);
+      expect(onSelectClick1).toHaveBeenCalledTimes(1);
+      expect(onSelectClick2).toHaveBeenCalledTimes(1);
+      expect(onInputFocus).toHaveBeenCalledTimes(1);
+      expect(onSelectFocus).toHaveBeenCalledTimes(1);
+
+      fireEvent.click(root);
+      await act(async () => vi.runOnlyPendingTimers());
+      expect(onRootClick).toHaveBeenCalledTimes(5);
+
+      fireEvent.focus(input);
+      expect(onInputFocus).toHaveBeenCalledTimes(2);
+      expect(onSelectFocus).toHaveBeenCalledTimes(2);
+
+      fireEvent.focus(select);
+      expect(onInputFocus).toHaveBeenCalledTimes(2);
+      expect(onSelectFocus).toHaveBeenCalledTimes(3);
+    }),
+  );
+
   it('Does not explode on NaN value', () => {
-    jest.spyOn(global.console, 'error').mockImplementationOnce((message) => {
+    vi.spyOn(global.console, 'error').mockImplementationOnce((message) => {
       if (message.includes('Received NaN')) {
         return;
       }
@@ -101,6 +237,74 @@ describe('CustomSelect', () => {
     });
     const h = render(<CustomSelect value={NaN} options={[]} />);
     expect(() => h.rerender(<CustomSelect value={NaN} options={[]} />)).not.toThrow();
+  });
+
+  it('should onChange not called when value=undefined and allowClearButton', () => {
+    const selectTypes = [
+      {
+        label: 'default',
+        value: 'default',
+      },
+      {
+        label: 'plain',
+        value: 'plain',
+      },
+      {
+        label: 'accent',
+        value: 'accent',
+      },
+    ];
+
+    const onChange = vi.fn();
+
+    render(
+      <CustomSelect
+        id="select-id"
+        placeholder="Не выбран"
+        options={selectTypes}
+        // Свойства для воспроизведения
+        allowClearButton
+        value={undefined}
+        onChange={onChange}
+      />,
+    );
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('should input value not empty with flag accessible', () => {
+    const { rerender } = render(
+      <CustomSelect
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        defaultValue={0}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
+      />,
+    );
+    expect(getInputValue()).toBe('');
+
+    rerender(
+      <CustomSelect
+        options={[
+          { value: 0, label: 'Mike' },
+          { value: 1, label: 'Josh' },
+        ]}
+        defaultValue={0}
+        accessible
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
+      />,
+    );
+    expect(getInputValue()).toBe('Mike');
   });
 
   it('works correctly as uncontrolled component', () => {
@@ -207,6 +411,8 @@ describe('CustomSelect', () => {
   });
 
   it('correctly converts from controlled to uncontrolled state', () => {
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(noop);
+
     const { rerender } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
@@ -230,6 +436,11 @@ describe('CustomSelect', () => {
       />,
     );
 
+    expect(consoleErrorSpy).toHaveBeenCalledExactlyOnceWith(
+      '%c[VKUI/CustomSelect] Похоже, что компонент был переведен из состояния Controlled в Uncontrolled. Пожалуйста, не делайте так. Если вам нужно отобразить невыбранное состояние компонента, используйте value=null вместо undefined',
+      undefined,
+    );
+
     expect(getCustomSelectValue()).toEqual('Josh');
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
@@ -238,6 +449,7 @@ describe('CustomSelect', () => {
     fireEvent.click(unselectedOption);
 
     expect(getCustomSelectValue()).toEqual('Mike');
+    consoleErrorSpy.mockRestore();
   });
 
   it('accept defaultValue', () => {
@@ -255,33 +467,43 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('Josh');
   });
 
-  it('is searchable', async () => {
+  it.each([false, true])('is searchable with accessible=%s', async (accessible) => {
     render(
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        accessible={accessible}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
     fireEvent.click(screen.getByTestId('labelTextTestId'));
-    await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
+    await waitFor(() => expect(screen.getByTestId(INPUT_TEST_ID)).toHaveFocus());
 
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
-    expect(screen.getByTestId<HTMLInputElement>('inputTestId').value).toBe('Mi');
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Mi' } });
+    expect(screen.getByTestId<HTMLInputElement>(INPUT_TEST_ID).value).toBe('Mi');
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
     expect(getCustomSelectValue()).toEqual('Mike');
+    if (accessible) {
+      expect(getInputValue()).toEqual('Mike');
+    } else {
+      expect(getInputValue()).toEqual('');
+    }
   });
 
   it('is custom searchable', () => {
@@ -289,7 +511,6 @@ describe('CustomSelect', () => {
       <CustomSelect
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'SPb', country: 'Russia' },
           { value: 1, label: 'Moscow', country: 'Russia' },
@@ -299,18 +520,23 @@ describe('CustomSelect', () => {
           option.label.toLowerCase().includes(value.toLowerCase()) ||
           option.country.toLowerCase().includes(value.toLowerCase())
         }
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
-    fireEvent.change(screen.getByTestId('inputTestId'), {
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), {
       target: { value: 'usa' },
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -321,16 +547,20 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Mi' } });
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Mi' } });
 
     await waitForFloatingPosition();
 
@@ -339,12 +569,16 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
           { value: 2, label: 'Mika' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -355,35 +589,43 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
         value={1}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
 
     await waitForFloatingPosition();
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Jo' } });
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Jo' } });
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Josh');
 
     rerender(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
         value={1}
         options={[
           { value: 0, label: 'Mike' },
           { value: 2, label: 'Mika' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -392,7 +634,6 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         searchable
-        data-testid="inputTestId"
         value={3}
         options={[
           { value: 3, label: 'Joe' },
@@ -400,6 +641,11 @@ describe('CustomSelect', () => {
           { value: 2, label: 'Mika' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -412,7 +658,6 @@ describe('CustomSelect', () => {
       <CustomSelectControlled
         searchable
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
         initialValue="3"
         options={[
           { value: '0', label: 'Не выбрано' },
@@ -420,14 +665,19 @@ describe('CustomSelect', () => {
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
-    fireEvent.change(screen.getByTestId('inputTestId'), { target: { value: 'Кат' } });
+    fireEvent.change(screen.getByTestId(INPUT_TEST_ID), { target: { value: 'Кат' } });
 
     expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Категория 3');
 
@@ -439,44 +689,48 @@ describe('CustomSelect', () => {
   });
 
   it('fires onOpen and onClose correctly', async () => {
-    const openCb = jest.fn(() => null);
-    const closeCb = jest.fn(() => null);
+    const openCb = vi.fn(() => null);
+    const closeCb = vi.fn(() => null);
     render(
       <CustomSelect
         onOpen={openCb}
         onClose={closeCb}
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
 
     await waitForFloatingPosition();
 
     expect(openCb).toHaveBeenCalledTimes(1);
 
-    fireEvent.blur(screen.getByTestId('inputTestId'));
+    fireEvent.blur(screen.getByTestId(INPUT_TEST_ID));
 
     expect(closeCb).toHaveBeenCalledTimes(1);
 
-    fireEvent.focus(screen.getByTestId('inputTestId'));
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.focus(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
 
     expect(openCb).toHaveBeenCalledTimes(2);
 
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -488,33 +742,37 @@ describe('CustomSelect', () => {
     const { rerender } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
           { value: 3, label: 'Bob' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
-    fireEvent.focus(screen.getByTestId('inputTestId'));
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.focus(screen.getByTestId(INPUT_TEST_ID));
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowDown',
       code: 'ArrowDown',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -523,16 +781,16 @@ describe('CustomSelect', () => {
 
     expect(getCustomSelectValue()).toEqual('Bob');
 
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -542,25 +800,29 @@ describe('CustomSelect', () => {
     rerender(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
         options={[
           { disabled: true, value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
           { value: 3, label: 'Bob' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'ArrowUp',
       code: 'ArrowUp',
     });
     await waitForFloatingPosition();
-    fireEvent.keyDown(screen.getByTestId('inputTestId'), {
+    fireEvent.keyDown(screen.getByTestId(INPUT_TEST_ID), {
       key: 'Enter',
       code: 'Enter',
     });
@@ -570,7 +832,7 @@ describe('CustomSelect', () => {
 
   // https://github.com/VKCOM/VKUI/issues/4066
   it('invalid value does not call onChange', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -587,7 +849,7 @@ describe('CustomSelect', () => {
   });
 
   it('clear value externally with empty value', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const { rerender } = render(
       <CustomSelect
@@ -620,12 +882,11 @@ describe('CustomSelect', () => {
   });
 
   it('clear value with default clear button', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const { unmount } = render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
         clearButtonTestId="clearButtonTestId"
         options={[
           { value: 0, label: 'Mike' },
@@ -634,16 +895,21 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         defaultValue={0}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
     expect(onChange).toHaveBeenCalledTimes(0);
     expect(getCustomSelectValue()).toEqual('Mike');
-    expect(screen.getByTestId('inputTestId')).not.toHaveFocus();
+    expect(screen.getByTestId(INPUT_TEST_ID)).not.toHaveFocus();
     fireEvent.click(screen.getByRole('button', { hidden: true }));
     expect(getCustomSelectValue()).toEqual('');
     // focus goes to select input
-    await waitFor(() => expect(screen.getByTestId('inputTestId')).toHaveFocus());
+    await waitFor(() => expect(screen.getByTestId(INPUT_TEST_ID)).toHaveFocus());
 
     expect(onChange).toHaveBeenCalledTimes(1);
 
@@ -672,11 +938,10 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): clearButton is not shown when option selected without props.value change', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
-        data-testid="inputTextId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -684,6 +949,11 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         value={null}
+        slotProps={{
+          input: {
+            'data-testid': 'inputTextId',
+          },
+        }}
       />,
     );
 
@@ -695,7 +965,7 @@ describe('CustomSelect', () => {
   });
 
   it('(uncontrolled): calls onChange when click on unselected option and does not call when click on selected ', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -733,7 +1003,7 @@ describe('CustomSelect', () => {
   });
 
   it('(uncontrolled): doesn not calls onChange when click default selected option when defaultValue is string and option value is number', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -744,7 +1014,7 @@ describe('CustomSelect', () => {
         ]}
         allowClearButton
         onChange={onChange}
-        defaultValue="0"
+        defaultValue={0}
       />,
     );
 
@@ -762,7 +1032,7 @@ describe('CustomSelect', () => {
 
   it('(controlled): calls onChange expected amount of times after clearing component and clicking on option without updating controlled prop value', async () => {
     // мы намеренно проверяем кейсы где при нажатии на опцию или на кнопку очистки value проп не меняется
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     const { rerender } = render(
       <CustomSelect
@@ -832,7 +1102,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): calls onChange when click on unselected option without value change', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
@@ -883,7 +1153,6 @@ describe('CustomSelect', () => {
     // onChange не должен вызываться.
     fireEvent.click(screen.getByTestId('labelTextTestId'));
     const selectedOptionThirdClick = screen.getByRole('option', {
-      selected: true,
       name: 'Mike',
     });
     fireEvent.mouseEnter(selectedOptionThirdClick);
@@ -894,7 +1163,7 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): does not call onChange on already selected', async () => {
-    const onChangeStub = jest.fn();
+    const onChangeStub = vi.fn();
 
     render(
       <CustomSelectControlled
@@ -961,12 +1230,11 @@ describe('CustomSelect', () => {
   });
 
   it('(controlled): does call onChange on option click when prop value is empty and value is not changing', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(
       <CustomSelect
         labelTextTestId="labelTextTestId"
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -974,6 +1242,11 @@ describe('CustomSelect', () => {
         allowClearButton
         onChange={onChange}
         value={null}
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+        }}
       />,
     );
 
@@ -981,7 +1254,7 @@ describe('CustomSelect', () => {
     expect(getCustomSelectValue()).toEqual('');
 
     // первый клик по не выбранной опции без изменения value
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
     const unselectedOptionFirstClick = screen.getByRole('option', {
       selected: false,
       name: 'Mike',
@@ -994,7 +1267,7 @@ describe('CustomSelect', () => {
     expect(onChange.mock.calls[0][1]).toBe('0');
 
     // второй клик по другой опции без изменения value
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
     const unselectedOptionSecondClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -1007,7 +1280,7 @@ describe('CustomSelect', () => {
     expect(onChange.mock.calls[1][1]).toBe('1');
 
     // третий клик по той же опции что и в предыдущий раз
-    fireEvent.click(screen.getByTestId('inputTestId'));
+    fireEvent.click(screen.getByTestId(INPUT_TEST_ID));
     const unselectedOptionThirdClick = screen.getByRole('option', {
       selected: false,
       name: 'Josh',
@@ -1155,10 +1428,9 @@ describe('CustomSelect', () => {
     expect(screen.queryByPlaceholderText('Не выбрано')).toBeFalsy();
   });
 
-  it('native select is reachable via nativeSelectTestId', () => {
+  it('native select is reachable via slotProps.select.data-testid', () => {
     render(
       <CustomSelect
-        nativeSelectTestId="nativeSelectTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1166,6 +1438,11 @@ describe('CustomSelect', () => {
         placeholder="Не выбрано"
         allowClearButton
         defaultValue={1}
+        slotProps={{
+          select: {
+            'data-testid': 'nativeSelectTestId',
+          },
+        }}
       />,
     );
 
@@ -1176,8 +1453,6 @@ describe('CustomSelect', () => {
   it('passes required prop to native select, not input', () => {
     render(
       <CustomSelect
-        nativeSelectTestId="nativeSelectTestId"
-        data-testid="inputTestId"
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
@@ -1186,13 +1461,21 @@ describe('CustomSelect', () => {
         allowClearButton
         defaultValue={1}
         required
+        slotProps={{
+          input: {
+            'data-testid': INPUT_TEST_ID,
+          },
+          select: {
+            'data-testid': 'nativeSelectTestId',
+          },
+        }}
       />,
     );
 
     const nativeSelect = screen.getByTestId<HTMLSelectElement>('nativeSelectTestId');
     expect(nativeSelect.required).toBeTruthy();
 
-    const input = screen.getByTestId<HTMLInputElement>('inputTestId');
+    const input = screen.getByTestId<HTMLInputElement>(INPUT_TEST_ID);
     expect(input.required).toBeFalsy();
   });
 
@@ -1202,71 +1485,28 @@ describe('CustomSelect', () => {
     };
     render(
       <CustomSelect
-        getSelectInputRef={inputRef}
         options={[
           { value: 0, label: 'Mike' },
           { value: 1, label: 'Josh' },
         ]}
         placeholder="Не выбрано"
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+          },
+        }}
       />,
     );
     expect(inputRef.current).not.toBeNull();
   });
 
-  it('check input should close popover and reset selected option', async () => {
-    jest.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement | null> = {
-      current: null,
-    };
-
-    render(
-      <CustomSelect
-        searchable={true}
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-        defaultValue="0"
-        getSelectInputRef={inputRef}
-      />,
-    );
-
-    const optionsHasFocused = () => {
-      return !!document.body.querySelector('[data-hovered="true"]');
-    };
-
-    checkDropdownOpened(false);
-
-    // Вводим текст в инпут
-    // И проверяем, что дропдаун открылся, а также что нет option в фокусе
-    await triggerKeydownEvent(inputRef.current!, 'К', 'KeyR');
-    checkDropdownOpened();
-    expect(optionsHasFocused()).toBeFalsy();
-
-    // Нажимаем стрелку вниз, тем самым фокусируемся на первом option
-    await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
-    checkDropdownOpened();
-    expect(optionsHasFocused()).toBeTruthy();
-
-    // Вводим еще текст, тем самым сбрасываем фокус с option
-    await triggerKeydownEvent(inputRef.current!, 'т', 'KeyN');
-    checkDropdownOpened();
-    expect(optionsHasFocused()).toBeFalsy();
-
-    // Нажимаем escape, тем самым закрывая дропдаун
-    await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
-    checkDropdownOpened(false);
-  });
-
-  it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', ' ', 'Spacebar', 'Enter'])(
-    'should open dropdown when keydown %s',
-    async (key) => {
-      jest.useFakeTimers();
+  it(
+    'check input should close popover and reset selected option',
+    withFakeTimers(async () => {
       const inputRef: React.RefObject<HTMLInputElement | null> = {
         current: null,
       };
+
       render(
         <CustomSelect
           searchable={true}
@@ -1277,62 +1517,140 @@ describe('CustomSelect', () => {
             { value: '3', label: 'Категория 3' },
           ]}
           defaultValue="0"
-          getSelectInputRef={inputRef}
+          slotProps={{
+            input: {
+              getRootRef: inputRef,
+            },
+          }}
         />,
       );
 
-      await React.act(async () => await userEvent.type(inputRef.current!, `{${key}}`));
-      checkDropdownOpened(true);
-    },
+      const optionsHasFocused = () => {
+        return !!document.body.querySelector('[data-hovered="true"]');
+      };
+
+      checkDropdownOpened(false);
+
+      // Вводим текст в инпут
+      // И проверяем, что дропдаун открылся, а также что нет option в фокусе
+      await triggerKeydownEvent(inputRef.current!, 'К', 'KeyR');
+      checkDropdownOpened();
+      expect(optionsHasFocused()).toBeFalsy();
+
+      // Нажимаем стрелку вниз, тем самым фокусируемся на первом option
+      await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
+      checkDropdownOpened();
+      expect(optionsHasFocused()).toBeTruthy();
+
+      // Вводим еще текст, тем самым сбрасываем фокус с option
+      await triggerKeydownEvent(inputRef.current!, 'т', 'KeyN');
+      checkDropdownOpened();
+      expect(optionsHasFocused()).toBeFalsy();
+
+      // Нажимаем escape, тем самым закрывая дропдаун
+      await triggerKeydownEvent(inputRef.current!, 'Escape', 'Escape');
+      checkDropdownOpened(false);
+    }),
   );
 
-  it('should render wrapper when use renderDropdown prop', () => {
-    render(
-      <CustomSelect
-        renderDropdown={({ defaultDropdownContent }) => (
-          <div data-testid="wrapper">{defaultDropdownContent}</div>
-        )}
-        data-testid="select"
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-        defaultValue="0"
-      />,
-    );
-    fireEvent.click(screen.getByTestId('select'));
+  it.each(['ArrowUp', 'ArrowDown', 'Backspace', 'Delete', 'Space', 'Enter', ' ', 'Spacebar'])(
+    'should open dropdown when keydown %s',
+    withFakeTimers(async (key) => {
+      const inputRef: React.RefObject<HTMLInputElement | null> = { current: null };
+      render(
+        <CustomSelect
+          searchable
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          defaultValue="0"
+          slotProps={{
+            input: {
+              getRootRef: inputRef,
+            },
+          }}
+        />,
+      );
+      act(() => {
+        inputRef.current?.focus();
+      });
+      await userEvent.keyboard(`{${key}}`);
 
-    expect(screen.getByTestId('wrapper')).toBeInTheDocument();
-    expect(screen.getAllByRole('option').length).toBe(4);
-  });
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
 
-  it('should call onInputChange callback when change input', async () => {
-    jest.useFakeTimers();
-    const inputRef: React.RefObject<HTMLInputElement | null> = {
-      current: null,
-    };
-    const onInputChange = jest.fn();
-    render(
-      <CustomSelect
-        getSelectInputRef={inputRef}
-        onInputChange={onInputChange}
-        options={[
-          { value: '0', label: 'Не выбрано' },
-          { value: '1', label: 'Категория 1' },
-          { value: '2', label: 'Категория 2' },
-          { value: '3', label: 'Категория 3' },
-        ]}
-        defaultValue="0"
-      />,
-    );
-    fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
-    expect(onInputChange).toHaveBeenCalledTimes(1);
+      checkDropdownOpened(true);
+    }),
+  );
 
-    fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
-    expect(onInputChange).toHaveBeenCalledTimes(2);
-  });
+  it(
+    'should render wrapper when use renderDropdown prop',
+    withFakeTimers(async () => {
+      render(
+        <CustomSelect
+          renderDropdown={({ defaultDropdownContent }) => (
+            <div data-testid="wrapper">{defaultDropdownContent}</div>
+          )}
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          defaultValue="0"
+          slotProps={{
+            input: {
+              'data-testid': 'select',
+            },
+          }}
+        />,
+      );
+      await userEvent.click(screen.getByTestId('select'));
+
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+
+      expect(screen.getByTestId('wrapper')).toBeInTheDocument();
+      expect(screen.getAllByRole('option').length).toBe(4);
+    }),
+  );
+
+  it(
+    'should call onInputChange callback when change input',
+    withFakeTimers(async () => {
+      const inputRef: React.RefObject<HTMLInputElement | null> = {
+        current: null,
+      };
+      const onInputChange = vi.fn();
+      render(
+        <CustomSelect
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          defaultValue="0"
+          slotProps={{
+            input: {
+              getRootRef: inputRef,
+              onChange: onInputChange,
+            },
+          }}
+        />,
+      );
+      fireEvent.change(inputRef.current!, { target: { value: 'Ка' } });
+      expect(onInputChange).toHaveBeenCalledTimes(1);
+
+      fireEvent.change(inputRef.current!, { target: { value: 'Кат' } });
+      expect(onInputChange).toHaveBeenCalledTimes(2);
+    }),
+  );
 
   it('check scroll to bottom to element', async () => {
     const inputRef: React.RefObject<HTMLInputElement | null> = {
@@ -1341,8 +1659,6 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="select"
-        getSelectInputRef={inputRef}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1354,6 +1670,12 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="4"
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1364,7 +1686,7 @@ describe('CustomSelect', () => {
 
     await triggerKeydownEvent(inputRef.current!, 'ArrowDown', 'ArrowDown');
 
-    expect(setScrollTop).toHaveBeenCalledWith(40);
+    expect(setScrollTop).toHaveBeenCalledExactlyOnceWith(40);
   });
 
   it('check scroll to up', async () => {
@@ -1374,8 +1696,6 @@ describe('CustomSelect', () => {
 
     render(
       <CustomSelect
-        data-testid="select"
-        getSelectInputRef={inputRef}
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1387,6 +1707,12 @@ describe('CustomSelect', () => {
           { value: '7', label: 'Категория 3' },
         ]}
         defaultValue="1"
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1397,25 +1723,29 @@ describe('CustomSelect', () => {
 
     await triggerKeydownEvent(inputRef.current!, 'ArrowUp', 'ArrowUp');
 
-    expect(setScrollTop).toHaveBeenCalledWith(0);
+    expect(setScrollTop).toHaveBeenCalledExactlyOnceWith(0);
   });
 
   it('should not hover disabled option', async () => {
     render(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1', disabled: true },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
     const option = screen.getByRole('option', { name: 'Категория 1' });
 
-    await React.act(async () => fireEvent.mouseMove(option, { clientY: 20 }));
+    await act(async () => fireEvent.mouseMove(option, { clientY: 20 }));
 
     expect(option.getAttribute('data-hovered')).toBe('false');
   });
@@ -1435,7 +1765,6 @@ describe('CustomSelect', () => {
     };
     render(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
@@ -1443,7 +1772,12 @@ describe('CustomSelect', () => {
           { value: '3', label: 'Категория 3' },
         ]}
         defaultValue="1"
-        getSelectInputRef={inputRef}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1452,32 +1786,101 @@ describe('CustomSelect', () => {
     expect(option.getAttribute('data-hovered')).toBe('true');
 
     if (expectedHover === 'false') {
-      await React.act(async () =>
-        fireEvent.mouseMove(inputRef.current!, { clientY: 20, clientX: 20 }),
-      );
+      await act(async () => fireEvent.mouseMove(inputRef.current!, { clientY: 20, clientX: 20 }));
     }
 
-    await React.act(async () => fireEvent.mouseLeave(option));
+    await act(async () => fireEvent.mouseLeave(option));
 
     expect(option.getAttribute('data-hovered')).toBe(expectedHover);
   });
+
+  it(
+    'check correct fetching status label',
+    withFakeTimers(async () => {
+      const Fixture = ({ fetching }: { fetching: boolean }) => (
+        <CustomSelect
+          fetching={fetching}
+          fetchingInProgressLabel="Список категорий загружается..."
+          fetchingCompletedLabel="Список категорий загружен."
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          slotProps={{
+            input: {
+              'data-testid': 'select',
+            },
+          }}
+        />
+      );
+
+      const { rerender } = render(<Fixture fetching />);
+
+      expect(screen.queryByText('Список категорий загружается...')).toBeTruthy();
+
+      rerender(<Fixture fetching={false} />);
+
+      expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
+      expect(screen.queryByText('Список категорий загружен.')).toBeTruthy();
+
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
+
+      expect(screen.queryByText('Список категорий загружается...')).toBeFalsy();
+      expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+    }),
+  );
+
+  it(
+    'check no status label by default',
+    withFakeTimers(async () => {
+      const Fixture = () => (
+        <CustomSelect
+          fetching={false}
+          fetchingCompletedLabel="Список категорий загружен."
+          options={[
+            { value: '0', label: 'Не выбрано' },
+            { value: '1', label: 'Категория 1' },
+            { value: '2', label: 'Категория 2' },
+            { value: '3', label: 'Категория 3' },
+          ]}
+          slotProps={{
+            input: {
+              'data-testid': 'select',
+            },
+          }}
+        />
+      );
+
+      render(<Fixture />);
+
+      expect(screen.queryByText('Список категорий загружен.')).toBeFalsy();
+    }),
+  );
 
   it('should not call select option when not focus to option', async () => {
     const inputRef: React.RefObject<HTMLInputElement | null> = {
       current: null,
     };
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CustomSelect
-        getSelectInputRef={inputRef}
         onChange={onChange}
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+            'getRootRef': inputRef,
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1492,7 +1895,7 @@ describe('CustomSelect', () => {
     afterEach(() => setNodeEnv('test'));
 
     it('check error when use different type of values', () => {
-      const errorStub = jest.spyOn(global.console, 'error').mockImplementationOnce(noop);
+      const errorStub = vi.spyOn(global.console, 'error').mockImplementationOnce(noop);
 
       render(
         <CustomSelect
@@ -1503,7 +1906,7 @@ describe('CustomSelect', () => {
         />,
       );
 
-      expect(errorStub).toHaveBeenCalledWith(
+      expect(errorStub).toHaveBeenCalledExactlyOnceWith(
         '%c[VKUI/CustomSelect] Некоторые значения ваших опций имеют разные типы. onChange всегда возвращает строковый тип.',
         undefined,
       );
@@ -1513,13 +1916,17 @@ describe('CustomSelect', () => {
   it('checks CustomSelect placement class for borders when dropdown is opened and closed during  placement change', async () => {
     const component = render(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
     fireEvent.click(screen.getByTestId('select'));
@@ -1532,13 +1939,17 @@ describe('CustomSelect', () => {
     placementStub = 'top';
     component.rerender(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
 
@@ -1550,13 +1961,17 @@ describe('CustomSelect', () => {
     placementStub = 'bottom';
     component.rerender(
       <CustomSelect
-        data-testid="select"
         options={[
           { value: '0', label: 'Не выбрано' },
           { value: '1', label: 'Категория 1' },
           { value: '2', label: 'Категория 2' },
           { value: '3', label: 'Категория 3' },
         ]}
+        slotProps={{
+          input: {
+            'data-testid': 'select',
+          },
+        }}
       />,
     );
 

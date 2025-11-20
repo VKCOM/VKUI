@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import type * as React from 'react';
-import type { HasAlign, HasRef, HTMLAttributesWithRootRef } from '../../types';
+import type { HasAlign, HasRef, HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
 import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import type { CustomTouchEvent, CustomTouchEventHandler } from '../Touch/Touch';
 import { type BulletsTestIds } from './Bullets';
@@ -80,13 +80,21 @@ export interface SlidesManagerState {
   layerWidth: number;
 }
 
+export type PredefinedEasingType = 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
+export type CubicBezierEasingType = [number, number, number, number];
+
 export interface BaseGalleryProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
     HasAlign,
     HasRef<HTMLElement>,
     BulletsTestIds,
     ScrollArrowsTestIds {
-  slideWidth?: string | number;
+  /**
+   * Размер слайда.
+   *
+   * Значение `"custom"` используется, если ширина у слайдов разная.
+   */
+  slideWidth?: LiteralUnion<'custom', string> | number;
   slideIndex?: number;
   onDragStart?: CustomTouchEventHandler;
   onDragEnd?: (e: CustomTouchEvent, targetIndex: number) => void;
@@ -121,6 +129,15 @@ export interface BaseGalleryProps
    */
   arrowNextLabel?: string;
   /**
+   * Текст для слайда. Делает его доступным для ассистивных технологий. Может быть функцией.
+   * По умолчанию устанавливает `aria-label` вида `${Номер слайда} из ${Количества слайдов}`.
+   */
+  slideLabel?: string | ((index: number, slidesCount: number) => string);
+  /**
+   * Описание роли для слайда, для лучше понимания пользователей скринридеров. По умолчанию - `Слайд`.
+   */
+  slideRoleDescription?: string;
+  /**
    * Передает атрибут `data-testid` для слайда.
    */
   slideTestId?: (index: number) => string;
@@ -134,4 +151,14 @@ export interface BaseGalleryProps
    * - `element`: пересчет позиции слайдов будет происходить при изменении размеров компонента.
    */
   resizeSource?: 'window' | 'element';
+  /**
+   * Длительность анимации смены слайда в миллисекундах.
+   */
+  animationDuration?: number;
+  /**
+   * Функция для анимации.
+   *
+   * Принимает одно из предопределённых значений или параметры функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier).
+   */
+  animationEasing?: PredefinedEasingType | CubicBezierEasingType;
 }

@@ -12,7 +12,7 @@ import { useExternRef } from './useExternRef';
 
 const warn = warnOnce('usePatchChildren');
 
-type InjectProps<T> = Omit<React.HTMLAttributes<T>, keyof React.DOMAttributes<T>> &
+type InjectProps<T> = React.HTMLAttributes<T> &
   React.Attributes & {
     ref?: React.Ref<T>;
   };

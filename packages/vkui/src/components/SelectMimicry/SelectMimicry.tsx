@@ -38,7 +38,7 @@ export interface SelectMimicryProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SelectMimicry
+ * @see https://vkui.io/components/select-mimicry
  */
 export const SelectMimicry = ({
   tabIndex = 0,

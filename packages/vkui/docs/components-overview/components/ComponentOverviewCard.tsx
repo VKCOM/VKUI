@@ -81,8 +81,8 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
       return '';
     }
     const baseUrl = `${window.location.href.split('iframe')[0]}`;
-    const componentUrl = customPath ? customPath.replace('/', '-') : componentName;
-    return `${baseUrl}?path=/story/${groupTitle.toLowerCase()}-${componentUrl.toLowerCase()}--playground`;
+    const componentUrl = customPath ? customPath.replace(/[\/ ]/g, '-') : componentName;
+    return `${baseUrl}?path=/story/${groupTitle.replace(/\s/g, '-').toLowerCase()}-${componentUrl.toLowerCase()}--playground`;
   }, [componentName, groupTitle, customPath, window]);
 
   const style: CSSCustomProperties = {
@@ -97,6 +97,8 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
       mode="shadow"
       className={classNames(styles.card, direction === 'rtl' && styles.rtl)}
       style={style}
+      aria-label={`${componentName} превью компонента`}
+      tabIndex={0}
     >
       {searchedQuery ? (
         <TitleWithSearch searchedQuery={searchedQuery} name={componentName} />
@@ -108,7 +110,6 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
       <div
         className={styles.componentWrapper}
         ref={containerRef}
-        aria-label={`${componentName} component preview`}
         // @ts-expect-error: TS2322 пока react нормально не поддерживает этот атрибут
         inert=""
       >

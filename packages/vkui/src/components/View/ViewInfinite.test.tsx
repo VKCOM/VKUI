@@ -1,13 +1,15 @@
 import { act, type ComponentType, Fragment, type ReactNode } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { type Mock } from 'vitest';
 import { getRandomUsers } from '../../testing/mock';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
   waitCSSTransitionEnd,
+  withFakeTimers,
 } from '../../testing/utils';
 import type { HasChildren } from '../../types';
 import { Avatar } from '../Avatar/Avatar';
@@ -24,15 +26,16 @@ import styles from './View.module.css';
 // Basically the same as View.test.tsx
 
 describe(ViewInfinite, () => {
-  fakeTimers();
   baselineComponent(ViewInfinite);
 
-  describe('With Panel', () =>
+  describe('With Panel', () => {
+    fakeTimersForScope(false);
     mountTest(() => (
       <ViewInfinite activePanel="panel">
         <Panel id="panel" />
       </ViewInfinite>
-    )));
+    ));
+  });
 
   describe('shows active panel', () => {
     const panels = [
@@ -51,49 +54,55 @@ describe(ViewInfinite, () => {
       expect(result.queryByTestId('p1')).toBeNull();
       expect(result.queryByTestId('p2')).not.toBeNull();
     });
-    it('calls onTransition', async () => {
-      const onTransition = jest.fn();
-      const result = render(
-        <ViewInfinite activePanel="p1" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      result.rerender(
-        <ViewInfinite activePanel="p2" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledTimes(1);
-      expect(onTransition).toHaveBeenCalledWith({
-        from: 'p1',
-        to: 'p2',
-        isBack: false,
-      });
-    });
-    it('detects back transition', async () => {
-      const onTransition = jest.fn();
-      const result = render(
-        <ViewInfinite activePanel="p2" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      result.rerender(
-        <ViewInfinite activePanel="p1" onTransition={onTransition}>
-          {panels}
-        </ViewInfinite>,
-      );
-      await waitCSSKeyframesAnimation(getViewPanelById('p2'));
-      await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledWith({
-        from: 'p2',
-        to: 'p1',
-        isBack: true,
-      });
-    });
+    it(
+      'calls onTransition',
+      withFakeTimers(async () => {
+        const onTransition = vi.fn();
+        const result = render(
+          <ViewInfinite activePanel="p1" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        result.rerender(
+          <ViewInfinite activePanel="p2" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
+        expect(onTransition).toHaveBeenCalledExactlyOnceWith({
+          from: 'p1',
+          to: 'p2',
+          isBack: false,
+        });
+      }),
+    );
+    it(
+      'detects back transition',
+      withFakeTimers(async () => {
+        const onTransition = vi.fn();
+        const result = render(
+          <ViewInfinite activePanel="p2" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        result.rerender(
+          <ViewInfinite activePanel="p1" onTransition={onTransition}>
+            {panels}
+          </ViewInfinite>,
+        );
+        await waitCSSKeyframesAnimation(getViewPanelById('p2'));
+        await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
+        expect(onTransition).toHaveBeenCalledExactlyOnceWith({
+          from: 'p2',
+          to: 'p1',
+          isBack: true,
+        });
+      }),
+    );
   });
 
   describe('blurs active element', () => {
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="focus" key="1">
         <input autoFocus data-testid="__autofocus__" />
@@ -101,40 +110,41 @@ describe(ViewInfinite, () => {
       <Panel id="other" key="2" />,
     ];
 
-    it('on activePanel change', () => {
+    it('on activePanel change', async () => {
       render(<ViewInfinite activePanel="focus">{panels}</ViewInfinite>).rerender(
         <ViewInfinite activePanel="other">{panels}</ViewInfinite>,
       );
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(document.activeElement === document.body).toBe(true);
     });
   });
 
   describe('can swipeBack', () => {
-    let nowMock: jest.SpyInstance;
+    fakeTimersForScope(false);
+    let nowMock: Mock<typeof Date.now>;
     beforeEach(() => {
-      nowMock = jest.spyOn(Date, 'now');
+      nowMock = vi.spyOn(Date, 'now');
     });
     afterEach(() => {
       nowMock && nowMock.mockClear();
     });
-    it('cancels swipeBack on swipe left', () => {
+    it('cancels swipeBack on swipe left', async () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
       fireEvent.mouseUp(view, { clientX: 0, clientY: 100 });
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
-    it('does swipeBack immediately on overscroll', () => {
+    it('does swipeBack immediately on overscroll', async () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: SWIPE_BACK_SHIFT_THRESHOLD, clientY: 100 });
       fireEvent.mouseMove(view, { clientX: window.innerWidth + 1, clientY: 100 });
       fireEvent.mouseUp(view);
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
@@ -173,7 +183,7 @@ describe(ViewInfinite, () => {
           <div data-testid="ex" key="" />,
           { onSwipeBackStart: () => 'prevent' },
         ],
-      ])('%s', (_name, component, props) => {
+      ])('%s', async (_name, component, props) => {
         const { view, ...events } = setupSwipeBack({
           Wrapper: Fragment,
           childrenForPanel2: component,
@@ -187,11 +197,11 @@ describe(ViewInfinite, () => {
         });
         fireEvent.mouseMove(elPreventSwipeBack, { clientX: window.innerWidth + 1, clientY: 100 });
         fireEvent.mouseUp(elPreventSwipeBack);
-        act(jest.runAllTimers);
+        await act(vi.runAllTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
 
-      it('should prevent swipe back if swiped to opposite', () => {
+      it('should prevent swipe back if swiped to opposite', async () => {
         const { view, ...events } = setupSwipeBack();
         fireEvent.mouseDown(view, { clientX: 50, clientY: 100 });
         fireEvent.mouseMove(view, {
@@ -199,7 +209,7 @@ describe(ViewInfinite, () => {
           clientY: 100,
         });
         fireEvent.mouseUp(view);
-        act(jest.runAllTimers);
+        await act(vi.runAllTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
       });
     });
@@ -237,7 +247,7 @@ describe(ViewInfinite, () => {
       expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
-    it('fails weak swipeBack', () => {
+    it('fails weak swipeBack', async () => {
       const { view, ...events } = setupSwipeBack();
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
       fireEvent.mouseMove(view, {
@@ -247,7 +257,7 @@ describe(ViewInfinite, () => {
       // speed to 0
       nowMock.mockImplementation(() => Infinity);
       fireEvent.mouseUp(view);
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).toHaveBeenCalledTimes(1);
     });
@@ -281,7 +291,7 @@ describe(ViewInfinite, () => {
       });
       fireEvent.mouseUp(view);
       rerender(<SwipeBack activePanel="p1" history={['p1']} />);
-      expect(scrollTo).toHaveBeenCalledWith(0, 22);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, 22);
     });
 
     describe('horizontal scrollable elements', () => {
@@ -334,7 +344,7 @@ describe(ViewInfinite, () => {
 
         scrollToLeftAndSwipe(0);
         expect(events.onSwipeBackStart).toHaveBeenCalledTimes(1);
-        act(jest.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         expect(events.onSwipeBack).toHaveBeenCalledTimes(1);
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
       });
@@ -365,7 +375,7 @@ describe(ViewInfinite, () => {
 
         scrollToLeftAndSwipe(100);
         expect(events.onSwipeBackStart).not.toHaveBeenCalled();
-        act(jest.runOnlyPendingTimers);
+        await act(vi.runOnlyPendingTimers);
         expect(events.onSwipeBack).not.toHaveBeenCalled();
         expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
 
@@ -377,7 +387,7 @@ describe(ViewInfinite, () => {
       });
     });
 
-    it('should prevent swipe back if Gallery is drag', () => {
+    it('should prevent swipe back if Gallery is drag', async () => {
       const { rerender, SwipeBack, getByTestId, ...events } = setupSwipeBack({
         childrenForPanel2: (
           <Gallery slideWidth="90%" align="center">
@@ -398,13 +408,14 @@ describe(ViewInfinite, () => {
       fireEvent.mouseMove(elSlide1, { clientX: window.innerWidth / 2, clientY: 100 });
       fireEvent.mouseUp(elSlide1);
       expect(events.onSwipeBackStart).not.toHaveBeenCalled();
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(events.onSwipeBack).not.toHaveBeenCalled();
       expect(events.onSwipeBackCancel).not.toHaveBeenCalled();
     });
   });
 
   describe('scroll control', () => {
+    fakeTimersForScope(false);
     const panels = [
       <Panel id="p1" data-testid="p1" key="1" />,
       <Panel id="p2" data-testid="p2" key="2" />,
@@ -431,7 +442,7 @@ describe(ViewInfinite, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p2'));
       await waitCSSKeyframesAnimation(getViewPanelById('p1'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, y);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, y);
     });
 
     it('resets scroll on forward navigation', async () => {
@@ -458,7 +469,7 @@ describe(ViewInfinite, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('p1'));
       await waitCSSKeyframesAnimation(getViewPanelById('p2'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, 0);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, 0);
     });
   });
 });
@@ -479,10 +490,10 @@ function setupSwipeBack({
   initialProps?: Partial<ViewInfiniteProps>;
 } = {}) {
   const events = {
-    onSwipeBack: jest.fn(),
-    onTransition: jest.fn(),
-    onSwipeBackStart: jest.fn(),
-    onSwipeBackCancel: jest.fn(),
+    onSwipeBack: vi.fn(),
+    onTransition: vi.fn(),
+    onSwipeBackStart: vi.fn(),
+    onSwipeBackCancel: vi.fn(),
   };
   const SwipeBack = (p: Partial<ViewInfiniteProps>) => (
     <Wrapper>

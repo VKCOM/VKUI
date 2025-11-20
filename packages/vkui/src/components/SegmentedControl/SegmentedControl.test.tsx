@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { act, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
@@ -40,7 +40,7 @@ describe('SegmentedControl', () => {
     });
 
     it('uses passed onChange', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
 
       render(<SegmentedControlTest onChange={onChange} defaultValue="fb" />);
 
@@ -99,12 +99,12 @@ describe('SegmentedControl', () => {
     });
 
     it('switches on click', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<SegmentedControlTabsTest onChange={onChange} defaultValue="fb" />);
 
       fireEvent.click(getTab(0));
 
-      expect(onChange).toHaveBeenCalledWith('vk');
+      expect(onChange).toHaveBeenCalledExactlyOnceWith('vk');
       expect(getTab(0)).toHaveAttribute('aria-selected', 'true');
       expect(getTab(2)).toHaveAttribute('aria-selected', 'false');
     });
@@ -112,7 +112,9 @@ describe('SegmentedControl', () => {
     it('supports keyboard navigation', () => {
       render(<SegmentedControlTabsTest defaultValue="vk" />);
 
-      getTab(0).focus();
+      act(() => {
+        getTab(0).focus();
+      });
       fireEvent.keyDown(getTab(0), { key: 'ArrowRight' });
       expect(document.activeElement).toBe(getTab(1));
 

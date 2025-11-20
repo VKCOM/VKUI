@@ -1,6 +1,6 @@
-import { act, render, screen } from '@testing-library/react';
-import { setHours, setMinutes } from 'date-fns';
-import { userEvent } from '../../testing/utils';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { setHours, setMinutes } from '../../lib/date';
+import { fakeTimersForScope, userEvent } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { CalendarTime } from './CalendarTime';
 
@@ -8,8 +8,7 @@ const dayDate = new Date('2023-09-01T07:40:00.000Z');
 
 describe('CalendarTime', () => {
   it('check onChange should called when select hours and minutes', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -24,22 +23,21 @@ describe('CalendarTime', () => {
       screen.getByTestId('minutes-picker'),
     ];
 
-    await userEvent.click(hourSelect);
+    fireEvent.click(hourSelect);
 
     const unselectedHourOption = screen.getByRole('option', { selected: false, name: '01' });
-    await userEvent.click(unselectedHourOption);
+    fireEvent.click(unselectedHourOption);
 
-    await userEvent.click(minuteSelect);
+    fireEvent.click(minuteSelect);
 
     const unselectedMinuteOption = screen.getByRole('option', { selected: false, name: '55' });
-    await userEvent.click(unselectedMinuteOption);
+    fireEvent.click(unselectedMinuteOption);
 
     expect(onChange.mock.calls).toEqual([[setHours(dayDate, 1)], [setMinutes(dayDate, 55)]]);
   });
 
   it('check onChange should not called when isDisabled true', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -55,21 +53,21 @@ describe('CalendarTime', () => {
       screen.getByTestId('minutes-picker'),
     ];
 
-    await userEvent.click(hourSelect);
+    fireEvent.click(hourSelect);
 
     const unselectedHourOption = screen.getByRole('option', { selected: false, name: '01' });
-    await userEvent.click(unselectedHourOption);
+    fireEvent.click(unselectedHourOption);
 
-    await userEvent.click(minuteSelect);
+    fireEvent.click(minuteSelect);
 
     const unselectedMinuteOption = screen.getByRole('option', { selected: false, name: '55' });
-    await userEvent.click(unselectedMinuteOption);
+    fireEvent.click(unselectedMinuteOption);
 
     expect(onChange).toHaveBeenCalledTimes(0);
   });
 
   it('should hide done button with doneButtonShow=false', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -82,7 +80,7 @@ describe('CalendarTime', () => {
   });
 
   it('should disable done button with doneButtonDisabled=false', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -96,7 +94,7 @@ describe('CalendarTime', () => {
   });
 
   it('should render custom done button', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <CalendarTime
         onChange={onChange}
@@ -112,8 +110,8 @@ describe('CalendarTime', () => {
   });
 
   describe('Keyboard Navigation', () => {
+    fakeTimersForScope();
     it('should handle Tab navigation between hours, minutes and done button', async () => {
-      jest.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -148,7 +146,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes and done button', async () => {
-      jest.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -184,7 +181,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Tab navigation between hours, minutes without done button', async () => {
-      jest.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -214,7 +210,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Enter navigation between hours, minutes without done button', async () => {
-      jest.useFakeTimers();
       render(
         <div>
           <CalendarTime
@@ -245,7 +240,6 @@ describe('CalendarTime', () => {
     });
 
     it('should handle Shift+Tab navigation', async () => {
-      jest.useFakeTimers();
       render(
         <CalendarTime
           value={dayDate}
@@ -260,66 +254,72 @@ describe('CalendarTime', () => {
       const doneButton = screen.getByTestId('done-button');
 
       // Начинаем с кнопки "Готово"
-      doneButton.focus();
+      act(() => {
+        doneButton.focus();
+      });
       expect(document.activeElement).toBe(doneButton);
 
       // Shift+Tab к минутам
-      await act(() => userEvent.tab({ shift: true }));
+      await userEvent.tab({ shift: true });
       expect(document.activeElement).toBe(minutesInput);
 
       // // Shift+Tab к часам
-      await act(() => userEvent.tab({ shift: true }));
+      await userEvent.tab({ shift: true });
       expect(document.activeElement).toBe(hoursInput);
     });
   });
 
   describe('Time Input', () => {
+    fakeTimersForScope();
     it('should handle direct time input in hours field', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
 
       const hoursInput = screen.getByTestId('hours-picker');
       await userEvent.type(hoursInput, '15');
+      await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 15));
+      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 15));
     });
 
     it('should handle direct time input in minutes field', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
 
       const minutesInput = screen.getByTestId('minutes-picker');
       await userEvent.type(minutesInput, '30');
+      await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 30));
+      expect(onChange).toHaveBeenLastCalledWith(setMinutes(dayDate, 30));
     });
 
     it('should not call onChange for invalid hours input', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
 
       const hoursInput = screen.getByTestId('hours-picker');
       await userEvent.type(hoursInput, '25'); // Невалидное значение часов
+      await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setHours(dayDate, 2));
-      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(setHours(dayDate, 2));
     });
 
     it('should not call onChange for invalid minutes input', async () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
 
       const minutesInput = screen.getByTestId('minutes-picker');
       await userEvent.type(minutesInput, '61'); // Невалидное значение минут
+      await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledWith(setMinutes(dayDate, 6));
-      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(setMinutes(dayDate, 6));
     });
   });
 
   describe('Done Button', () => {
+    fakeTimersForScope();
     it('should call onDoneButtonClick when done button is clicked', async () => {
-      const onDoneButtonClick = jest.fn();
+      const onDoneButtonClick = vi.fn();
       render(
         <CalendarTime
           value={dayDate}
@@ -329,7 +329,8 @@ describe('CalendarTime', () => {
       );
 
       const doneButton = screen.getByTestId('done-button');
-      await userEvent.click(doneButton);
+      fireEvent.click(doneButton);
+      await act(async () => vi.runOnlyPendingTimers());
 
       expect(onDoneButtonClick).toHaveBeenCalledTimes(1);
     });

@@ -58,10 +58,10 @@ updates:
         patterns:
           - 'stylelint*'
           - '@vkontakte/stylelint-config'
-      jest:
+      vitest:
         patterns:
-          - 'jest*'
-          - '@types/jest*'
+          - 'vitest*'
+          - '@vitest*'
       testing-library:
         patterns:
           - '@testing-library/*'
@@ -69,10 +69,6 @@ updates:
         patterns:
           - 'size-limit'
           - '@size-limit/*'
-      prettier:
-        patterns:
-          - 'prettier'
-          - '@vkontakte/prettier-config'
       swc:
         patterns:
           - '@swc/*'
@@ -86,9 +82,6 @@ updates:
           - '@next/*'
     versioning-strategy: increase
     open-pull-requests-limit: 20
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
 
   # GitHub Actions
 
@@ -98,6 +91,3 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'

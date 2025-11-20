@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`popper transforms correctly 1`] = `
+exports[`popper > transforms correctly 1`] = `
 "import { Popper } from '@vkontakte/vkui';
 import React from 'react';
 
@@ -21,7 +21,7 @@ const App = () => {
 };"
 `;
 
-exports[`popper transforms correctly 2`] = `
+exports[`popper > transforms correctly 2`] = `
 "import { Popper as VKUIPopper } from '@vkontakte/vkui';
 import React from 'react';
 

@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../testing/storybook/createStoryParame
 import { ActionSheetItem, type ActionSheetItemProps } from './ActionSheetItem';
 
 const story: Meta<ActionSheetItemProps> = {
-  title: 'Popouts/ActionSheetItem',
+  title: 'Modals/ActionSheet/ActionSheetItem',
   component: ActionSheetItem,
   parameters: createStoryParameters('ActionSheetItem', CanvasFullLayout, DisableCartesianParam),
   argTypes: {

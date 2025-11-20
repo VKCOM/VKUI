@@ -17,7 +17,7 @@ jobs:
   pr_workflow_payload:
     if: ${{ github.event.workflow_run.event == 'pull_request' }}
     name: Call reusable workflow
-    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_pr_worfklow_payload.yml@master
+    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: download
 
@@ -30,7 +30,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ env.PR_HEAD_REPOSITORY_FULL_NAME }}
           ref: ${{ env.PR_HEAD_BRANCH }}
@@ -89,22 +89,22 @@ jobs:
           playwrightReportURL: ${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/playwright-report/index.html
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy_styleguide:
+  deploy_docs_website:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
     runs-on: ubuntu-latest
-    name: Deploy docs (styleguide)
+    name: Deploy docs
     outputs:
       url: ${{ steps.url.outputs.value }}
     steps:
-      - name: Download styleguide dist artifact
+      - name: Download dist artifact
         id: artifact
         uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
         with:
-          name: styleguide-dist
-          path: styleguide-dist/
+          name: docs-website-dist
+          path: docs-website-dist/
 
-      - name: Upload styleguide S3
+      - name: Upload docs S3
         if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
         id: deploy
         uses: VKCOM/gh-actions/VKUI/s3@main
@@ -114,46 +114,13 @@ jobs:
           awsBucket: ${{ vars.AWS_BUCKET }}
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
           command: upload
-          commandUploadSrc: styleguide-dist/
-          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/styleguide
+          commandUploadSrc: docs-website-dist/
+          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}
 
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/styleguide/index.html" >> $GITHUB_OUTPUT
-
-  deploy_docs_beta:
-    needs: pr_workflow_payload
-    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
-    name: Deploy docs (beta)
-    outputs:
-      url: ${{ steps.url.outputs.value }}
-    steps:
-      - name: Download docs-beta dist artifact
-        id: artifact
-        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
-        with:
-          name: docs-beta-dist
-          path: docs-beta-dist/
-
-      - name: Upload docs beta S3
-        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
-        id: deploy
-        uses: VKCOM/gh-actions/VKUI/s3@main
-        with:
-          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
-          awsBucket: ${{ vars.AWS_BUCKET }}
-          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
-          command: upload
-          commandUploadSrc: docs-beta-dist/
-          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/docs-beta
-
-      - name: Create doc url
-        if: ${{ steps.deploy.outcome == 'success' }}
-        id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/docs-beta/overview/about.html" >> $GITHUB_OUTPUT
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/overview/about/index.html" >> $GITHUB_OUTPUT
 
   deploy_storybook:
     needs: pr_workflow_payload
@@ -181,12 +148,12 @@ jobs:
           awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
           command: upload
           commandUploadSrc: storybook-dist/
-          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/storybook
+          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/playground
 
       - name: Create doc url
         if: ${{ steps.deploy.outcome == 'success' }}
         id: url
-        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/storybook/index.html" >> $GITHUB_OUTPUT
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/playground/index.html" >> $GITHUB_OUTPUT
 
   deploy_package:
     needs: pr_workflow_payload
@@ -221,19 +188,93 @@ jobs:
         id: url
         run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/pkg/@vkontakte/vkui/_pkg.tgz" >> $GITHUB_OUTPUT
 
+  deploy_diff:
+    needs: pr_workflow_payload
+    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
+    runs-on: ubuntu-latest
+    name: Deploy diff
+    outputs:
+      has_diff: ${{ steps.artifact.outputs.found_artifact }}
+      url: ${{ steps.url.outputs.value }}
+    steps:
+      - name: Download package artifact
+        id: artifact
+        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
+        with:
+          name: diff-report
+          path: diff/
+
+      - name: Upload
+        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
+        id: deploy
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: diff/
+          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/diff
+
+      - name: Create doc url
+        if: ${{ steps.deploy.outcome == 'success' }}
+        id: url
+        run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/diff/diff-report.html" >> $GITHUB_OUTPUT
+
+  diff_comment:
+    needs:
+      - deploy_diff
+      - pr_workflow_payload
+    runs-on: ubuntu-latest
+    name: Diff comment
+    steps:
+      - name: Find diff URL comment
+        uses: peter-evans/find-comment@v4
+        id: find_url_comment
+        with:
+          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: <!-- diff_report_url -->
+
+      - name: Create or update comment with not empty diff
+        if: ${{ needs.deploy_diff.outputs.has_diff == 'true' }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          body: |
+            <!-- diff_report_url -->
+            📊 Найдены изменения в собранных файлах: [Отчет](${{ needs.deploy_diff.outputs.url }})
+
+            Commit ${{ env.PR_HEAD_SHA }}
+          edit-mode: replace
+
+      - name: Create or update comment with empty diff
+        if: ${{ needs.deploy_diff.outputs.has_diff == 'false' }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
+          issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
+          body: |
+            <!-- diff_report_url -->
+            ✅ Изменений в собранных файлах нет
+
+            Commit ${{ env.PR_HEAD_SHA }}
+          edit-mode: replace
+
   docs_comment:
     needs:
       - deploy_storybook
-      - deploy_styleguide
-      - deploy_docs_beta
+      - deploy_docs_website
       - deploy_package
       - pr_workflow_payload
-    if: ${{ needs.deploy_styleguide.outputs.url != '' || needs.deploy_storybook.outputs.url != '' || needs.deploy_docs_beta.outputs.url != '' || needs.deploy_package.outputs.url != '' }}
+    if: ${{ needs.deploy_storybook.outputs.url != '' || needs.deploy_docs_website.outputs.url != '' || needs.deploy_package.outputs.url != '' }}
     runs-on: ubuntu-latest
     name: Docs comment
     steps:
       - name: Find docs URLs comment
-        uses: peter-evans/find-comment@v3
+        uses: peter-evans/find-comment@v4
         id: find_url_comment
         with:
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -241,7 +282,7 @@ jobs:
           body-includes: <!-- docs_urls -->
 
       - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.find_url_comment.outputs.comment-id }}
           issue-number: ${{ needs.pr_workflow_payload.outputs.pr_number }}
@@ -249,9 +290,8 @@ jobs:
             <!-- docs_urls -->
             ## 👀 Docs deployed
 
-            - ${{ (needs.deploy_styleguide.outputs.url != '' && '✅') || '❌' }} [Styleguide](${{ needs.deploy_styleguide.outputs.url }})
-            - ${{ (needs.deploy_storybook.outputs.url != '' && '✅') || '❌' }} [Storybook](${{ needs.deploy_storybook.outputs.url }})
-            - ${{ (needs.deploy_docs_beta.outputs.url != '' && '✅') || '❌' }} [Docs beta](${{ needs.deploy_docs_beta.outputs.url }})
+            - ${{ (needs.deploy_docs_website.outputs.url != '' && '✅') || '❌' }} [Website](${{ needs.deploy_docs_website.outputs.url }})
+            - ${{ (needs.deploy_storybook.outputs.url != '' && '✅') || '❌' }} [Playground](${{ needs.deploy_storybook.outputs.url }})
 
             ## 📦 Package ${{ (needs.deploy_package.outputs.url != '' && '✅') || '❌' }}
 

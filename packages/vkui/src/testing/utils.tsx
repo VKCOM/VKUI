@@ -10,7 +10,8 @@ import {
 // eslint-disable-next-line no-restricted-imports -- используем здесь setup
 import userEventLib from '@testing-library/user-event';
 import { noop } from '@vkontakte/vkjs';
-import { configureAxe, type JestAxeConfigureOptions, toHaveNoViolations } from 'jest-axe';
+import { configureAxe } from 'vitest-axe';
+import * as matchers from 'vitest-axe/matchers';
 import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
@@ -18,30 +19,45 @@ import { isHTMLElement } from '../lib/dom';
 import type { ImgOnlyAttributes } from '../lib/utils';
 import type { HasChildren } from '../types';
 
-export const testIf = (condition: boolean) => (condition ? it : it.skip);
+type AxeConfigureOptions = Parameters<typeof configureAxe>[0];
 
 export const defaultAxe = configureAxe({
   /**
    * @see https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md
    */
 });
-expect.extend(toHaveNoViolations);
+expect.extend(matchers);
 
 /**
- * Переконфигурируем работу userEvent под jest
+ * Переконфигурируем работу userEvent под vitest
  *
  * https://github.com/testing-library/user-event/issues/833
  */
 export const userEvent = userEventLib.setup({
-  advanceTimers: jest.advanceTimersByTime,
+  advanceTimers: vi.advanceTimersByTime.bind(vi),
 });
 
-export function fakeTimers() {
-  beforeEach(() => jest.useFakeTimers());
+export function fakeTimersForScope(runPendingTimers = true) {
+  beforeEach(() => vi.useFakeTimers());
   afterEach(() => {
-    jest.runOnlyPendingTimers();
-    jest.useRealTimers();
+    runPendingTimers && vi.runOnlyPendingTimers();
+    vi.useRealTimers();
   });
+}
+
+export function withFakeTimers<T extends any[]>(
+  testFn: (...args: T) => void | PromiseLike<void>,
+  options: Parameters<typeof vi.useFakeTimers>[0] = {},
+) {
+  return async (...args: T) => {
+    vi.clearAllTimers();
+    vi.useFakeTimers(options);
+    try {
+      return await testFn(...args);
+    } finally {
+      vi.useRealTimers();
+    }
+  };
 }
 
 export const imgOnlyAttributes: ImgOnlyAttributes = {
@@ -67,7 +83,7 @@ export type ComponentTestOptions = {
   style?: boolean;
   adaptivity?: AdaptivityProps;
   a11y?: boolean;
-  a11yConfig?: JestAxeConfigureOptions;
+  a11yConfig?: AxeConfigureOptions;
   getRootRef?: boolean;
 };
 
@@ -81,38 +97,37 @@ export function mountTest(Component: React.ComponentType<any>) {
     try {
       result = render(<Component />);
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(result).toBeTruthy();
     } catch {}
 
     try {
       result!.rerender(<Component />);
       await waitForFloatingPosition();
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(result!).toBeTruthy();
     } catch {}
 
     try {
       // unmount
       result!.unmount();
-      act(jest.runAllTimers);
+      await act(vi.runAllTimers);
       expect(result!).toBeTruthy();
     } catch {}
   });
 }
 
-export function a11yTest(Component: React.ComponentType<any>, axeConfig?: JestAxeConfigureOptions) {
+export function a11yTest(Component: React.ComponentType<any>, axeConfig?: AxeConfigureOptions) {
   it('a11y: has no violations', async () => {
     const { container } = render(<Component />);
     await waitForFloatingPosition();
-    jest.useRealTimers();
+    vi.useRealTimers();
+    const vitestAxe = axeConfig ? configureAxe(axeConfig) : defaultAxe;
+    const results = await vitestAxe(container, {});
 
-    const jestAxe = axeConfig ? configureAxe(axeConfig) : defaultAxe;
-    const results = await jestAxe(container, {});
-
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     expect(results).toHaveNoViolations();
-  });
+  }, 20_000);
 }
 
 export function getRootRefTest(Component: React.ComponentType<any>) {
@@ -130,7 +145,7 @@ export function getRootRefTest(Component: React.ComponentType<any>) {
 
     render(<Component getRootRef={ref} />);
     await waitForFloatingPosition();
-    act(jest.runAllTimers);
+    await act(vi.runAllTimers);
 
     expect(ref.current).toBeTruthy();
   });
@@ -159,10 +174,7 @@ export function baselineComponent<Props extends object>(
     : RawComponent;
 
   describe(testName, () => {
-    beforeAll(() => {
-      jest.clearAllTimers();
-      jest.useFakeTimers();
-    });
+    fakeTimersForScope(false);
 
     mountTest(Component);
 
@@ -174,10 +186,10 @@ export function baselineComponent<Props extends object>(
       it('forwards attributes', async () => {
         const cls = 'Custom';
         const { rerender } = render(
-          <Component data-testid="__cmp__" className={cls} style={{ background: 'red' }} />,
+          <Component data-testid="__cmp__" className={cls} style={{ backgroundColor: 'red' }} />,
         );
         await waitForFloatingPosition();
-        act(jest.runAllTimers);
+        await act(vi.runAllTimers);
         // forward DOM attributes
         if (domAttr) {
           expect(screen.queryByTestId('__cmp__')).toBeTruthy();
@@ -192,13 +204,13 @@ export function baselineComponent<Props extends object>(
           const customClassList = Array.from(styledNode.classList).filter((item) => item !== cls);
           // forwards style
           if (style) {
-            expect(styledNode.style.background).toBe('red');
+            expect(styledNode.style.backgroundColor).toBe('red');
           }
           const customStyleCount = styledNode.style.length;
 
           rerender(<Component />);
           await waitForFloatingPosition();
-          act(jest.runAllTimers);
+          await act(vi.runAllTimers);
 
           // does not replace default className
           if (className) {
@@ -207,7 +219,7 @@ export function baselineComponent<Props extends object>(
           // does not replace default styles
           if (style) {
             expect(styledNode.style.length).toEqual(
-              styledNode.style.background ? customStyleCount : customStyleCount - 1,
+              styledNode.style.backgroundColor ? customStyleCount : customStyleCount - 1,
             );
           }
         }
@@ -250,11 +262,11 @@ export function mockRect(el: HTMLElement | null, data: DOMRectInit) {
 
 export const mockScrollContext = (
   getY: () => number,
-): [React.ComponentType<HasChildren>, jest.Mock] => {
+): [React.ComponentType<HasChildren>, ReturnType<typeof vi.fn>] => {
   const getScroll = () => ({ x: 0, y: getY() });
-  const scrollTo = jest.fn();
-  const incrementScrollLockCounter = jest.fn();
-  const decrementScrollLockCounter = jest.fn();
+  const scrollTo = vi.fn();
+  const incrementScrollLockCounter = vi.fn();
+  const decrementScrollLockCounter = vi.fn();
   return [
     (props) => (
       <ScrollContext.Provider
@@ -414,7 +426,7 @@ export async function waitCSSKeyframesAnimation(
   const { runOnlyPendingTimers } = options;
   await fireEventPatch(el, 'animationStart');
   await fireEventPatch(el, 'animationEnd');
-  act(runOnlyPendingTimers ? jest.runOnlyPendingTimers : noop);
+  act(runOnlyPendingTimers ? vi.runOnlyPendingTimers : noop);
   await fireEventPatch(el, 'animationStart');
   await fireEventPatch(el, 'animationEnd');
 }
@@ -428,15 +440,15 @@ export const withRegExp = (v: string) => new RegExp(v);
 export const matchMediaMock = (queries?: string | string[]) => {
   Object.defineProperty(global, 'matchMedia', {
     writable: true,
-    value: jest.fn().mockImplementation((query) => ({
+    value: vi.fn().mockImplementation((query: string) => ({
       matches: queries ? queries.includes(query) : false,
       media: query,
       onchange: null,
-      addListener: jest.fn(), // устарело
-      removeListener: jest.fn(), // устарело
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
+      addListener: vi.fn(), // устарело
+      removeListener: vi.fn(), // устарело
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
     })),
   });
 };
@@ -491,7 +503,36 @@ export function mouseEventMock({
 }
 
 export function setNodeEnv(value: 'development' | 'production' | 'test') {
-  Object.defineProperty(process.env, 'NODE_ENV', {
-    value,
-  });
+  vi.stubEnv('NODE_ENV', value);
 }
+
+const TOUCH_TO_MOUSE_HANDLER = new WeakMap<
+  typeof fireEvent.touchStart,
+  typeof fireEvent.mouseDown
+>();
+TOUCH_TO_MOUSE_HANDLER.set(fireEvent.touchStart, fireEvent.mouseDown);
+TOUCH_TO_MOUSE_HANDLER.set(fireEvent.touchMove, fireEvent.mouseMove);
+TOUCH_TO_MOUSE_HANDLER.set(fireEvent.touchEnd, fireEvent.mouseUp);
+
+const adoptedTouchEvent = (fn: typeof fireEvent.touchStart): typeof fireEvent.mouseDown => {
+  return (element, options) => {
+    const typedOptions = options as { clientX: number; clientY: number } | undefined;
+    const handler = TOUCH_TO_MOUSE_HANDLER.get(fn);
+    return handler!(
+      element,
+      touchEventMock({ clientX: typedOptions?.clientX, clientY: typedOptions?.clientY }),
+    );
+  };
+};
+
+export const MOUSE_EVENTS_HANDLERS: Array<typeof fireEvent.mouseDown> = [
+  fireEvent.mouseDown,
+  fireEvent.mouseMove,
+  fireEvent.mouseUp,
+];
+
+export const ADOPTED_TOUCH_EVENTS_HANDLERS: Array<typeof fireEvent.mouseDown> = [
+  adoptedTouchEvent(fireEvent.touchStart),
+  adoptedTouchEvent(fireEvent.touchMove),
+  adoptedTouchEvent(fireEvent.touchEnd),
+];

@@ -8,8 +8,8 @@ import {
   Icon20ChevronRightOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { addMonths, setMonth, setYear, subMonths } from 'date-fns';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
+import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
@@ -257,13 +257,16 @@ export const CalendarHeader = ({
               onChange={onMonthsChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeMonthLabel}
-              data-testid={
-                typeof monthDropdownTestId === 'string'
-                  ? monthDropdownTestId
-                  : monthDropdownTestId?.(currentMonth)
-              }
               onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
+              slotProps={{
+                input: {
+                  'aria-label': changeMonthLabel,
+                  'data-testid':
+                    typeof monthDropdownTestId === 'string'
+                      ? monthDropdownTestId
+                      : monthDropdownTestId?.(currentMonth),
+                },
+              }}
             />
             <CustomSelect
               className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
@@ -275,9 +278,16 @@ export const CalendarHeader = ({
               onChange={onYearChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeYearLabel}
-              data-testid={yearDropdownTestId}
               onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
+              slotProps={{
+                input: {
+                  'aria-label': changeYearLabel,
+                  'data-testid':
+                    typeof yearDropdownTestId === 'string'
+                      ? yearDropdownTestId
+                      : yearDropdownTestId?.(currentYear),
+                },
+              }}
             />
           </div>
         </AdaptivityProvider>

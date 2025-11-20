@@ -57,7 +57,7 @@ const resolveAppearance = (
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Progress
+ * @see https://vkui.io/components/progress
  */
 export const Progress = ({
   value = 0,

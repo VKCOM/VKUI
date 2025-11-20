@@ -6,9 +6,10 @@ import { Flex } from '../Flex/Flex';
 import { DirectionProvider, type DirectionProviderProps } from './DirectionProvider';
 
 const story: Meta<DirectionProviderProps> = {
-  title: 'Service/DirectionProvider',
+  title: 'Configuration/DirectionProvider',
   component: DirectionProvider,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Конфигурация'],
 };
 
 export default story;

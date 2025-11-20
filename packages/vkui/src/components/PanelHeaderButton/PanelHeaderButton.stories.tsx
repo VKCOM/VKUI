@@ -22,7 +22,7 @@ import {
 import { PanelHeaderButton, type PanelHeaderButtonProps } from './PanelHeaderButton';
 
 const story: Meta<PanelHeaderButtonProps> = {
-  title: 'Layout/PanelHeaderButton',
+  title: 'Navigation/PanelHeader/PanelHeaderButton',
   component: PanelHeaderButton,
   parameters: createStoryParameters('PanelHeaderButton', CanvasFullLayout, DisableCartesianParam),
   args: {

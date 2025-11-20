@@ -1,0 +1,177 @@
+---
+description: Контейнер для реализации интерфейса многоколоночной структурой.
+---
+
+<Overview group="layout">
+
+# SplitLayout [tag:component]
+
+Контейнер для реализации интерфейса многоколоночной структурой – за реализацию колонки отвечает [`SplitCol`](#split-col).
+
+Помимо многоколоночной структуры, за счёт [`SplitCol`](#split-col) со свойством `autoSpaced`, обеспечивает боковые отступы для
+экранов на базе [`Panel`](/components/panel).
+
+Связанные страницы и компоненты:
+
+- [Навигация](/overview/navigation)
+- [`Panel`](/components/panel)
+- [`PanelHeader`](/components/panel-header)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+## Применение компонента
+
+<Callout>Компонент должен быть один на всё приложение.</Callout>
+
+Достаточно будет объявить `SplitLayout` один раз ближе к корню приложения (см. [Навигация | Предварительная настройка](/overview/navigation#initial-setup)).
+
+## Выравнивание
+
+За выравнивание контента по горизонтали отвечает свойство `center`.
+
+- `true` — весь контент выравнивается по центру;
+- `false` — выравнивание не применяется.
+
+## Сквозная шапка
+
+Для реализации сквозной шапки между колонками используется свойство `header` с передачей в него компонента [`PanelHeader`](/components/panel-header).
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const platform = usePlatform();
+const hasHeader = platform !== 'vkcom';
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+    {viewWidth.tabletPlus && (
+      <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
+        <Panel mode="card">
+          {hasHeader && <PanelHeader />}
+          <Group>
+            <Div>Колонка слева</Div>
+          </Group>
+        </Panel>
+      </SplitCol>
+    )}
+    <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
+      <Panel mode="card">
+        <PanelHeader>Шапка</PanelHeader>
+        <Group mode="card">
+          <Div>Колонка справа</Div>
+        </Group>
+      </Panel>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+<Callout>
+Для платформы vkcom шапку передавать не нужно. Для определения платформы используйте хук [`usePlatform`](/components/platform-provider#use-platform).
+
+```jsx showLineNumbers filename="src/App.tsx"
+import { SplitLayout, SplitCol, usePlatform } from '@vkontakte/vkui';
+
+export default function App() {
+  const platform = usePlatform();
+  const hasHeader = platform !== 'vkcom';
+
+  return (
+    <SplitLayout header={hasHeader && <PanelHeader delimiter="none" />}>
+      {/* остальной контент */}
+    </SplitLayout>
+  );
+}
+```
+
+</Callout>
+
+## SplitCol [#split-col] [tag:component]
+
+Подкомпонент для отрисовки колонки в многоколоночном интерфейсе.
+
+### Позиционирование
+
+Свойство `fixed` даёт возможность задать стиль `position: fixed` для колонки.
+Обычно используется для боковых колонок, не позволяя им прокручиваться с основным контентом и всегда оставаться в области видимости.
+
+- `true` — стиль применяется;
+- `false` — стиль не применяется.
+
+### Размеры
+
+С помощью свойств `width`, `minWidth` и `maxWidth` можно управлять шириной колонки. Принимаются либо числовое (в пикселях), либо
+строковое (токены или другие единицы измерения) значения.
+
+```jsx
+<SplitCol width="100%" maxWidth={560}>
+  {/* контент */}
+</SplitCol>
+```
+
+Свойство `stretchedOnMobile` позволит колонке растягиваться на всю доступную ширину на устройствах шириной меньше `tablet`.
+
+### Отступы
+
+Свойство `autoSpaced` добавляет фиксированные боковые отступы колонке на устройствах с шириной больше `smallTablet`.
+
+### Анимации [#animation]
+
+Через свойство `animate` можно управлять включением/отключением анимаций при переходах во [`View`](/components/view). По умолчанию
+анимации при переходах включены только для мобильных устройств.
+
+## Свойства и методы [#api]
+
+<PropsTable name={["SplitLayout", "SplitCol"]}>
+### SplitLayout [#split-layout-api]
+
+### SplitCol [#split-col-api]
+
+</PropsTable>

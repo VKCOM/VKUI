@@ -1,0 +1,76 @@
+---
+description: Компонент для ввода текстовой информации.
+---
+
+<Overview group="forms">
+
+# Input [tag:component]
+
+Компонент для ввода текстовой информации. Представляет собой однострочное текстовое поле, которое позволяет пользователю вводить и редактировать текст.
+
+</Overview>
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input name="input" placeholder="Введите текст" />
+  ```
+</Playground>
+
+## Режим работы
+
+Компонент поддерживает работу как в неконтролируемом режиме, так и контролируемом. Это стандартное поведение
+React-компонентов, прочитать про это можно в [документации React](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+Для использования неконтролируемого режима достаточно просто _не_ передавать `value` или передавать `defaultValue`, если
+требуется задать значение по умолчанию.
+Для контролируемого режима используйте связку свойств `value`/`onChange` для задания значения и его изменения.
+
+```jsx
+// Неконтролируемое состояние
+<Input name="name" defaultValue="Текст" />;
+
+// Контролируемое состояние
+const [text, setText] = React.useState('Текст');
+
+<Input name="input" value={text} onChange={(event) => setText(event.target.value)} />;
+```
+
+## Состояния
+
+### `disabled`
+
+Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
+
+> Если вы используете `Input` вместе с `FormItem`, то свойство `disabled` следует указывать и у `Input`, и у `FormItem`.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input name="input" defaultValue="Недоступно" disabled />
+  ```
+</Playground>
+
+## Валидация
+
+Свойство `status` используется для состояния валидации компонента - некорректности заполненного поля (значение `"error"`)
+или успешной валидации (значение `"valid"`).
+
+> Если вы используете `Input` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
+> [`FormItem`](/components/form-item).
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  <Input status="valid" name="valid" placeholder="Введите текст" />
+  <Input status="error" name="error" placeholder="Введите текст" />
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Компонент обеспечивает базовую доступность, поддерживая все стандартные `HTML`-атрибуты для полей ввода.
+
+Для улучшения доступности рекомендуется использовать обёртку `FormItem` для компонента `Input` для
+поддержки заголовка и описания поля.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Input" />

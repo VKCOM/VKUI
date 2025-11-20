@@ -1,0 +1,31 @@
+---
+description: Компонент сбрасывает user-agent stylesheets таких полей ввода, как <input> и <textarea>.
+---
+
+<Overview group="utils">
+
+# UnstyledTextField [tag:component]
+
+Компонент сбрасывает [User-agent stylesheets](https://www.geeksforgeeks.org/what-is-a-user-agent-stylesheet/)
+таких полей ввода, как `<input>` и `<textarea>`.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <UnstyledTextField as="input" placeholder="Стилей нет..." />
+  ```
+</Playground>
+
+Используйте данный компонент, если вы разрабатываете своё поле вода и хотите сбросить все браузерные стили, которые
+применяются по умолчанию к таким компонентам,как `<input>` и `<textarea>`.
+
+## Обязательные свойства
+
+### Тэг компонента
+
+Используйте свойства `as`, которое позволяет задать тип поля ввода (`"textarea"` или `"input"`).
+
+## Свойства и методы [#api]
+
+<PropsTable name="UnstyledTextField" />

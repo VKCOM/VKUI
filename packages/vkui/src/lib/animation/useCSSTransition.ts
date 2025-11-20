@@ -1,9 +1,10 @@
-import { type TransitionEvent, type TransitionEventHandler, useEffect, useRef } from 'react';
+import { type TransitionEvent, type TransitionEventHandler, useRef, useState } from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useStableCallback } from '../../hooks/useStableCallback';
-import { useStateWithPrev } from '../../hooks/useStateWithPrev';
+import { millisecondsInSecond } from '../date';
+import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
-/* istanbul ignore next: особенность рендера в браузере когда меняется className, в Jest не воспроизвести */
+/* istanbul ignore next: особенность рендера в браузере когда меняется className, в Vitest не воспроизвести */
 const forceReflowForFixNewMountedElement = (node: Element | null) => void node?.scrollTop;
 
 export type UseCSSTransitionState =
@@ -37,6 +38,8 @@ export type UseCSSTransition<Ref extends Element = Element> = [
   },
 ];
 
+const TRANSITION_FALLBACK_DELAY = 100;
+
 /**
  * Хук основан на компоненте `CSSTransition` из библиотеки `react-transition-group`.
  *
@@ -64,9 +67,10 @@ export const useCSSTransition = <Ref extends Element = Element>(
   const onExit = useStableCallback(onExitProp || noop);
   const onExiting = useStableCallback(onExitingProp || noop);
   const onExited = useStableCallback(onExitedProp || noop);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ref = useRef<Ref | null>(null);
-  const [[state, prevState], setState] = useStateWithPrev<UseCSSTransitionState>(() => {
+  const [state, setState] = useState<UseCSSTransitionState>(() => {
     if (!inProp) {
       return 'exited';
     }
@@ -79,7 +83,14 @@ export const useCSSTransition = <Ref extends Element = Element>(
     return 'entered';
   });
 
-  useEffect(
+  const clearTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+
+  useIsomorphicLayoutEffect(
     function updateState() {
       if (inProp) {
         switch (state) {
@@ -150,9 +161,6 @@ export const useCSSTransition = <Ref extends Element = Element>(
       inProp,
 
       state,
-      prevState,
-      setState,
-
       enableAppear,
       enableEnter,
       onEnter,
@@ -166,27 +174,58 @@ export const useCSSTransition = <Ref extends Element = Element>(
     ],
   );
 
-  const onTransitionEnd = (event: TransitionEvent) => {
-    /* istanbul ignore if: на всякий случай предупреждаем всплытие, нет смысла проверять условие */
-    if (event.target !== ref.current) {
-      return;
-    }
+  const completeTransition = useStableCallback((event?: TransitionEvent) => {
+    clearTimer();
 
     switch (state) {
       case 'appearing':
         setState('appeared');
-        onEntered(event.propertyName, true);
+        onEntered(event?.propertyName, true);
         break;
       case 'entering':
         setState('entered');
-        onEntered(event.propertyName);
+        onEntered(event?.propertyName);
         break;
       case 'exiting':
         setState('exited');
-        onExited(event.propertyName);
+        onExited(event?.propertyName);
         break;
     }
-  };
+  });
+
+  useIsomorphicLayoutEffect(
+    function scheduleTransitionCompletionFallback() {
+      const el = ref.current;
+      if (!el) {
+        return;
+      }
+
+      if (state === 'appearing' || state === 'entering' || state === 'exiting') {
+        const style = getComputedStyle(el);
+
+        const parseTime = (s: string) =>
+          s.includes('ms') ? parseFloat(s) : parseFloat(s) * millisecondsInSecond;
+
+        const duration =
+          Math.max(...style.transitionDuration.split(',').map(parseTime)) +
+          Math.max(...style.transitionDelay.split(',').map(parseTime));
+
+        if (duration <= 0) {
+          completeTransition();
+          return;
+        }
+
+        // fallback если onTransitionEnd не пришёл
+        // TRANSITION_FALLBACK_DELAY, чтобы минимизировать вероятность,
+        // что setTimeout сработает раньше onTransitionEnd
+        timerRef.current = setTimeout(completeTransition, duration + TRANSITION_FALLBACK_DELAY);
+
+        return clearTimer;
+      }
+      return;
+    },
+    [completeTransition, state],
+  );
 
   return [
     state,
@@ -194,7 +233,7 @@ export const useCSSTransition = <Ref extends Element = Element>(
       ref,
       onTransitionEnd:
         state !== 'appeared' && state !== 'entered' && state !== 'exited'
-          ? onTransitionEnd
+          ? completeTransition
           : undefined,
     },
   ];

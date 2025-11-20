@@ -18,7 +18,7 @@ export interface GroupProps extends GroupContainerProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Group
+ * @see https://vkui.io/components/group
  */
 export const Group: React.FC<GroupProps> & {
   Container: typeof GroupContainer;

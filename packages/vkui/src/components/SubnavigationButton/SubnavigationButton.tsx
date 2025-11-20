@@ -5,7 +5,7 @@ import { Icon16Dropdown } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import type { HasChildren, HasComponent } from '../../types';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SubnavigationButton.module.css';
@@ -32,7 +32,7 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
+export interface SubnavigationButtonProps extends Omit<TappableOmitProps, 'size'> {
   /**
    * Стиль отображения кнопки.
    */
@@ -86,7 +86,7 @@ const SubnavigationButtonTypography = ({
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
+ * @see https://vkui.io/components/subnavigation-bar#subnavigation-button
  */
 export const SubnavigationButton = ({
   mode = 'primary',

@@ -1,10 +1,22 @@
-export default {
-  'about': 'О VKUI',
-  'quick-start': 'Быстрый старт',
-  'setup-modes': 'Режимы подключения',
+import type { MetaRecord } from 'nextra';
+
+const meta: MetaRecord = {
+  'about': 'Обзор',
+  'install': 'Установка',
+  'usage': 'Использование',
+  '#': {
+    type: 'separator',
+    title: 'Погружение',
+  },
+  'navigation': 'Навигация',
   'adaptivity': 'Адаптивность',
-  'platforms-and-themes': 'Платформы и темы',
-  'structure': 'Структура экранов',
-  'integrations': 'Интеграции',
-  'advanced': 'Advanced',
+  'ssr': 'Серверный рендеринг',
+  '##': {
+    type: 'separator',
+    title: 'Кастомизация',
+  },
+  'design-tokens': 'Дизайн-токены',
+  'themes': 'Темы',
 };
+
+export default meta;

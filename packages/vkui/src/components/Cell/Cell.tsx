@@ -51,10 +51,14 @@ export interface CellProps
    * Текст для кнопки перетаскивания ячейки.
    */
   draggerLabel?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки перетаскивания ячейки.
+   */
+  draggerTestId?: string;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Cell
+ * @see https://vkui.io/components/cell
  */
 export const Cell: React.FC<CellProps> & {
   Checkbox: typeof CellCheckbox;
@@ -79,12 +83,15 @@ export const Cell: React.FC<CellProps> & {
   style,
   toggleButtonTestId,
   removeButtonTestId,
+  draggerTestId,
+  href: hrefProp,
   ...restProps
 }: CellProps) => {
   const [dragging, setDragging] = React.useState(false);
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
   const Component = selectable ? 'label' : ComponentProps;
+  const href = selectable ? undefined : hrefProp;
 
   const platform = usePlatform();
 
@@ -96,6 +103,7 @@ export const Cell: React.FC<CellProps> & {
       className={classNames(styles.dragger, !before && !selectable && styles.controlNoBefore)}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
+      data-testid={draggerTestId}
     >
       {draggerLabel}
     </CellDragger>
@@ -132,6 +140,7 @@ export const Cell: React.FC<CellProps> & {
     hasActive: hasActive,
     hasHover: hasActive && !removable,
     disabled,
+    href,
     ...restProps,
     className: styles.content,
     // чтобы свойство, если не определено, не присутствовало в

@@ -1,16 +1,17 @@
 import type { MDXComponents } from 'nextra/mdx-components';
-import { useMDXComponents as getNextraComponents } from 'nextra/mdx-components';
-import { Anchor } from '../components';
+import { Anchor, TOC } from '../components';
 import { Callout } from './Callout/Callout';
 import { Code } from './Code/Code';
 import { H1 } from './H1';
 import { HeadingLink } from './HeadingLink/HeadingLink';
 import { Main } from './Main/Main';
-import { Overview } from './Overview/Overview';
+import { PackageManagers } from './PackageManagers/PackageManagers';
 import { Pre } from './Pre/Pre';
+import { Steps } from './Steps/Steps';
+import { Table, Td, Th, Tr } from './Table/Table';
 import styles from './index.module.css';
 
-const DEFAULT_COMPONENTS = getNextraComponents({
+const DEFAULT_COMPONENTS: MDXComponents = {
   h1: H1,
   h2: (props) => <HeadingLink Tag="h2" {...props} />,
   h3: (props) => <HeadingLink Tag="h3" {...props} />,
@@ -20,17 +21,31 @@ const DEFAULT_COMPONENTS = getNextraComponents({
   ul: (props) => <ul className={styles.ul} {...props} />,
   ol: (props) => <ol className={styles.ol} {...props} />,
   li: (props) => <li className={styles.li} {...props} />,
-  blockquote: (props) => <blockquote {...props} />,
+  blockquote: (props) => <Callout {...props} />,
   hr: (props) => <hr className={styles.hr} {...props} />,
   a: Anchor,
   p: (props) => <p className={styles.paragraph} {...props} />,
   pre: Pre,
   code: Code,
   strong: (props) => <strong className={styles.strong} {...props} />,
-  wrapper: Main,
-  Overview,
+  wrapper: ({ toc, ...restProps }) => {
+    return (
+      <>
+        <Main {...restProps} />
+        <TOC toc={toc} />
+      </>
+    );
+  },
   Callout,
-});
+  Steps,
+  PackageManagers,
+  details: (props) => <details className={styles.details} {...props} />,
+  summary: (props) => <summary className={styles.summary} {...props} />,
+  table: Table,
+  td: Td,
+  th: Th,
+  tr: Tr,
+};
 
 export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
   return {
@@ -38,3 +53,5 @@ export const getMdxComponents = (components?: MDXComponents): MDXComponents => {
     ...components,
   };
 };
+
+export { Callout, Code, HeadingLink, Table, Td, Th, Tr };

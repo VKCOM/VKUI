@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon20More } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
+import { useArgs } from 'storybook/preview-api';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
@@ -49,6 +49,7 @@ const story: Meta<ModalCardProps> = {
       </>
     );
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;

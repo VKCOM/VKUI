@@ -52,7 +52,7 @@ export interface CustomScrollViewProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CustomScrollView
+ * @see https://vkui.io/components/custom-scroll-view
  */
 export const CustomScrollView = ({
   className,

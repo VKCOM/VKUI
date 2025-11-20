@@ -17,18 +17,18 @@ jobs:
     name: Add labels
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Patch
         if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
-        uses: VKCOM/VKUI/.github/actions/add-label-to-pull-request@master
+        uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
           label: 'ci:cherry-pick:patch'
 
       - name: VKUI-tokens
         if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
-        uses: VKCOM/VKUI/.github/actions/add-label-to-pull-request@master
+        uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
           label: 'vkui-tokens'
@@ -41,10 +41,10 @@ jobs:
     if: ${{ github.event.action == 'opened' && github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Fetch Dependabot metadata
         id: metadata
@@ -114,10 +114,9 @@ jobs:
     name: Check code formatting
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
-
-      - name: Run Prettier
-        run: yarn run lint:prettier
+        uses: ./.github/actions/node-setup
+      - name: Run Biome format
+        run: yarn run lint:format

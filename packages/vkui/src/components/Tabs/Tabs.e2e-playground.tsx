@@ -7,7 +7,8 @@ import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { HorizontalScroll } from '../HorizontalScroll/HorizontalScroll';
 import { TabsItem, type TabsItemProps } from '../TabsItem/TabsItem';
-import { Tabs, TabsModeContext, type TabsProps } from './Tabs';
+import { Tabs, type TabsProps } from './Tabs';
+import { TabsModeContext } from './TabsModeContext';
 
 function useIconByMode() {
   const { mode } = React.useContext(TabsModeContext);
@@ -41,6 +42,7 @@ const Unscrollable = ({
   );
 };
 
+// TODO: Удалить HorizontalScroll вместе с `vkuiInternalTabs--withGaps`
 const Scrollable = ({ disabled }: { disabled?: boolean }) => {
   const beforeIconByMode = useIconByMode();
 
@@ -151,27 +153,30 @@ export const TabsItemsFlexModePlayground = (props: ComponentPlaygroundProps) => 
       propSets={[
         {
           mode: ['default', 'accent', 'secondary'],
-          children: [
-            <>
-              <TabsItem onClick={noop}>Unscrollable</TabsItem>
-              <TabsItem onClick={noop} selected>
-                Unscrollable
-              </TabsItem>
-            </>,
-            <HorizontalScroll key="scrolled" arrowSize="m">
+          layoutFillMode: ['auto', 'shrinked', 'stretched'],
+        },
+      ]}
+    >
+      {(props: TabsProps) => (
+        <>
+          <Tabs {...props}>
+            <TabsItem onClick={noop}>Unscrollable</TabsItem>
+            <TabsItem onClick={noop} selected>
+              Unscrollable
+            </TabsItem>
+          </Tabs>
+          <HorizontalScroll key="scrolled" arrowSize="m" withPadding={props.mode !== 'default'}>
+            <Tabs {...props}>
               <TabsItem onClick={noop} key="groups">
                 Scrollable
               </TabsItem>
               <TabsItem onClick={noop} key="news" selected>
                 Scrollable
               </TabsItem>
-            </HorizontalScroll>,
-          ],
-          layoutFillMode: ['auto', 'shrinked', 'stretched'],
-        },
-      ]}
-    >
-      {(props: TabsProps) => <Tabs {...props} />}
+            </Tabs>
+          </HorizontalScroll>
+        </>
+      )}
     </ComponentPlayground>
   );
 };

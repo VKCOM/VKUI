@@ -2,6 +2,8 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { useMergeProps } from '../../../hooks/useMergeProps';
+import { withLabelClickWrapper } from '../../../lib/withLabelClickWrapper';
 import { Tappable } from '../../Tappable/Tappable';
 import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
@@ -13,35 +15,99 @@ const sizeYClassNames = {
 };
 
 export function CheckboxSimple({
-  children,
-  className,
-  style,
-  getRootRef,
+  // CheckboxProps
+  getRef,
   description,
-  hoverMode,
-  activeMode,
+  titleAfter,
+  noPadding,
+  children,
+
+  // CheckboxInputProps
+  indeterminate,
+  defaultIndeterminate,
+  IconOnCompact,
+  IconOnRegular,
+  IconOffCompact,
+  IconOffRegular,
+  IconIndeterminate,
+
+  // Tappable props
+  hoverMode: hoverModeProp,
+  activeMode: activeModeProp,
   hasHover,
   hasActive,
   focusVisibleMode,
-  titleAfter,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
+  slotProps,
   ...restProps
 }: CheckboxProps) {
+  const { onClick, ...rootRest } = useMergeProps(restProps, slotProps?.root);
+
+  const inputRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
+
   const { sizeY = 'none' } = useAdaptivity();
+
+  const hoverMode = hoverModeProp || (noPadding ? 'opacity' : 'background');
+  const activeMode = activeModeProp || (noPadding ? 'opacity' : 'background');
 
   return (
     <Tappable
-      className={classNames(className, styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
-      style={style}
-      disabled={restProps.disabled}
-      getRootRef={getRootRef}
+      baseClassName={classNames(
+        styles.host,
+        !noPadding && styles.withPadding,
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+      )}
+      disabled={inputRest.disabled}
       hoverMode={hoverMode}
       activeMode={activeMode}
       hasHover={hasHover}
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       Component="label"
+      onClick={withLabelClickWrapper(onClick)}
+      {...rootRest}
     >
-      <CheckboxInput {...restProps} />
+      <CheckboxInput
+        indeterminate={indeterminate}
+        defaultIndeterminate={defaultIndeterminate}
+        IconIndeterminate={IconIndeterminate}
+        IconOnCompact={IconOnCompact}
+        IconOnRegular={IconOnRegular}
+        IconOffCompact={IconOffCompact}
+        IconOffRegular={IconOffRegular}
+        slotProps={{ input: inputRest }}
+      />
     </Tappable>
   );
 }

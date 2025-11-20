@@ -1,0 +1,122 @@
+---
+description: Компонент всплывающей подсказки.
+---
+
+<Overview group="modals">
+
+# Tooltip [tag:component]
+
+Небольшое всплывающее окно-подсказка, открывающееся при наведении мыши на `children` (или при нажатии на мобильных устройствах).
+В качестве содержимого рекомендуется использовать только текст.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Tooltip placement="right" description="Привет">
+    <Button>Наведи</Button>
+  </Tooltip>
+  ```
+</Playground>
+
+## Пользовательская стрелка
+
+Воспользуйтесь свойством `ArrowIcon`, чтобы переопределить иконку, которая используется по умолчанию.
+
+Пользовательский компонент иконки должен удовлетворять следующим требованиям:
+
+1. Иконка по умолчанию должна быть отрисована в направлении вверх.
+2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
+   растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
+   (смотри https://github.com/VKCOM/VKUI/pull/4496).
+3. Убедитесь, что компонент принимает все валидные для SVG параметры.
+4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
+5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
+
+<Playground>
+
+```jsx
+const ARROW_HEIGHT = 11;
+
+const CustomIcon = (props) => {
+  return (
+    <svg
+      width="80"
+      height={ARROW_HEIGHT}
+      viewBox={`0 0 80 ${ARROW_HEIGHT}`}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path d="M40 0C33 5.5 20 10 0 10v1h80v-1C60 10 47 5.5 40 0Z" fill="currentColor" />
+    </svg>
+  );
+};
+
+return (
+  <Tooltip
+    description="У этого тултипа кастомная стрелка"
+    offsetByCrossAxis={ARROW_HEIGHT}
+    arrowPadding={6}
+    ArrowIcon={CustomIcon}
+    shown
+  >
+    <Button>Якорь</Button>
+  </Tooltip>
+);
+```
+
+</Playground>
+
+## Хук useTooltip [#use-tooltip]
+
+Вы можете использовать хук `useTooltip`, который позволяет устанавливать якорный элемент для `Tooltip`,
+не прокидывая его в качестве `children`:
+
+<Playground>
+
+```jsx
+const { anchorRef, anchorProps, tooltip } = useTooltip({
+  placement: 'right',
+  description: 'Привет',
+});
+
+return (
+  <>
+    {tooltip}
+    <Button getRootRef={anchorRef} {...anchorProps}>
+      Наведи на меня
+    </Button>
+  </>
+);
+```
+
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+### Использование `disableTriggerOnFocus`
+
+Использования `disableTriggerOnFocus` приводит к тому, что единственным механизмом активации тултипа остается `"hover"`, из-за этого события наведения не генерируются при клавиатурной навигации или скринридером.
+
+В связи с этим данное свойство стоит использовать только для декоративных элементов с `aria-hidden`.
+
+```jsx
+<Tooltip
+  aria-hidden="true"
+  disableTriggerOnFocus
+  description="Какая-то информация"
+  aria-label="Тултип с какой-то информацией"
+>
+  <Button>Якорь</Button>
+</Popover>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Tooltip">
+
+### Tooltip [#tooltip-api]
+
+### useTooltip [#use-tooltip-api]
+
+</PropsTable>

@@ -69,7 +69,7 @@ describe('AppRoot', () => {
 
   it('should return expected context', () => {
     let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
-    const contextCallback = jest.fn().mockImplementation((ctx) => {
+    const contextCallback = vi.fn().mockImplementation((ctx) => {
       portalRoot = ctx.portalRoot;
       return null;
     });
@@ -78,7 +78,7 @@ describe('AppRoot', () => {
         <AppRootContext.Consumer>{contextCallback}</AppRootContext.Consumer>
       </AppRoot>,
     );
-    expect(contextCallback).toHaveBeenCalledWith({
+    expect(contextCallback).toHaveBeenCalledExactlyOnceWith({
       safeAreaInsets: {},
       userSelectMode: undefined,
       appRoot: { current: result.getByTestId('app-root') },
@@ -121,8 +121,8 @@ describe('AppRoot', () => {
   });
 
   it('should not call enableScrollLock if scroll is already locked', () => {
-    const incrementScrollLockCounterStub = jest.fn();
-    const decrementScrollLockCounterStub = jest.fn();
+    const incrementScrollLockCounterStub = vi.fn();
+    const decrementScrollLockCounterStub = vi.fn();
     const scrollContextStub: ScrollContextInterface = {
       getScroll: () => ({ x: 0, y: 0 }),
       scrollTo: noop,
@@ -171,7 +171,7 @@ describe('AppRoot', () => {
     it('should accept custom portal root', () => {
       const customPortalRoot = document.createElement('div');
       let portalRoot: React.RefObject<HTMLElement | null> = React.createRef();
-      const contextCallback = jest.fn().mockImplementation((ctx) => {
+      const contextCallback = vi.fn().mockImplementation((ctx) => {
         portalRoot.current = ctx.portalRoot ?? null;
         return null;
       });

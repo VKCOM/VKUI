@@ -1,22 +1,18 @@
 'use client';
 
 import * as React from 'react';
+import { isSameDate } from '@vkontakte/vkjs';
+import { useCalendar } from '../../hooks/useCalendar';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { isFirstDay, isLastDay } from '../../lib/calendar';
 import {
   addMonths,
   endOfDay,
-  isAfter,
-  isBefore,
-  isSameDay,
-  isSameMonth,
   isWithinInterval,
+  MONDAY,
   startOfDay,
   subMonths,
-} from 'date-fns';
-import { useCalendar } from '../../hooks/useCalendar';
-import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { Keys, pressedKey } from '../../lib/accessibility';
-import { isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
-import { isHTMLElement } from '../../lib/dom';
+} from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDays,
@@ -29,9 +25,11 @@ import {
   type CalendarHeaderTestsProps,
 } from '../CalendarHeader/CalendarHeader';
 import { RootComponent } from '../RootComponent/RootComponent';
+import type { DateRangeType } from './types';
+import { useCalendarKeyboardNavigation, useIsDayFocusable } from './utils';
 import styles from './CalendarRange.module.css';
 
-export type DateRangeType = [Date | null, Date | null];
+export type { DateRangeType };
 
 export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
   /**
@@ -81,6 +79,12 @@ export interface CalendarRangeProps
   disablePickers?: boolean;
   /**
    * `aria-label` для изменения дня.
+   *
+   * @deprecated Since 7.4.0.
+   *
+   * Будет удалeно в **VKUI v8**. Использовалось для задания aria-label для контейнера дней в календаре.
+   * Теперь этот контейнер является таблицей (с помощью role="grid") и
+   * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
   changeDayLabel?: string;
   /**
@@ -106,26 +110,26 @@ const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
     return false;
   }
 
-  return isWithinInterval(day, { start: startOfDay(value[0]), end: endOfDay(value[1]) });
+  return isWithinInterval(day, [startOfDay(value[0]), endOfDay(value[1])]);
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CalendarRange
+ * @see https://vkui.io/components/calendar-range
  */
 export const CalendarRange = ({
-  value: valueProp,
+  'value': valueProp,
   defaultValue,
   onChange,
   disablePast,
   disableFuture,
   shouldDisableDate,
-  weekStartsOn = 1,
+  weekStartsOn = MONDAY,
   disablePickers,
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
-  changeDayLabel = 'Изменить день',
+  'aria-label': ariaLabel = 'Календарь',
   prevMonthIcon,
   nextMonthIcon,
   listenDayChangesForUpdate,
@@ -156,7 +160,6 @@ export const CalendarRange = ({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
@@ -164,33 +167,19 @@ export const CalendarRange = ({
   const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
 
-  const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent) => {
-      const key = pressedKey(event);
-
-      if (key && NAVIGATION_KEYS.includes(key)) {
-        event.preventDefault();
-
-        const newFocusedDay = navigateDate(focusedDay ?? value?.[1], key);
-
-        if (
-          newFocusedDay &&
-          !isSameMonth(newFocusedDay, viewDate) &&
-          !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
-        ) {
-          setViewDate(newFocusedDay);
-        }
-        setFocusedDay(newFocusedDay);
-        return;
-      }
-
-      if ((key === Keys.ENTER || key === Keys.SPACE) && isHTMLElement(event.target)) {
-        event.preventDefault();
-        event.target.click?.();
-      }
-    },
-    [focusedDay, setFocusedDay, setViewDate, value, viewDate],
-  );
+  const {
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    handleFirstCalendarKeyDown,
+    handleSecondCalendarKeyDown,
+    handleDayFocus,
+  } = useCalendarKeyboardNavigation({
+    focusedDay,
+    setFocusedDay,
+    value,
+    viewDates: [viewDate, secondViewDate],
+    setViewDate,
+  });
 
   const getNewValue = React.useCallback(
     (date: Date): DateRangeType => {
@@ -201,11 +190,11 @@ export const CalendarRange = ({
       }
 
       const [start] = value;
-      if (start && isSameDay(date, start)) {
+      if (start && isSameDate(date, start)) {
         return [startOfDay(start), endOfDay(start)];
-      } else if (start && isBefore(date, start)) {
+      } else if (start && date < start) {
         return [startOfDay(date), endOfDay(start)];
-      } else if (start && isAfter(date, start)) {
+      } else if (start && date > start) {
         return [start, endOfDay(date)];
       }
       return value;
@@ -225,31 +214,33 @@ export const CalendarRange = ({
 
   const isDayActive = React.useCallback(
     (day: Date) =>
-      Boolean((value?.[0] && isSameDay(day, value[0])) || (value?.[1] && isSameDay(day, value[1]))),
+      Boolean(
+        (value?.[0] && isSameDate(day, value[0])) || (value?.[1] && isSameDate(day, value[1])),
+      ),
     [value],
   );
 
   const isDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDay(day, value[1]))),
+      Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDate(day, value[1]))),
     [value],
   );
 
   const isHintedDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDay(day, hintedDate[1]))),
+      Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDate(day, hintedDate[1]))),
     [hintedDate],
   );
 
   const isDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))),
+      Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDate(day, value[0]))),
     [value],
   );
 
   const isHintedDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDay(day, hintedDate[0]))),
+      Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDate(day, hintedDate[0]))),
     [hintedDate],
   );
 
@@ -270,8 +261,41 @@ export const CalendarRange = ({
     [setViewDate],
   );
 
+  const isDayFocusableInFirstCalendar = useIsDayFocusable({
+    value,
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    viewDate,
+    isDayActive,
+  });
+
+  const isDayFocusableInSecondCalendar = useIsDayFocusable({
+    value,
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    viewDate: secondViewDate,
+    isDayActive,
+  });
+
+  const onDayFocus = React.useCallback(
+    (date: Date) => {
+      if (focusedDay && isSameDate(focusedDay, date)) {
+        return;
+      }
+
+      setFocusedDay(date);
+      handleDayFocus(date);
+    },
+    [focusedDay, handleDayFocus, setFocusedDay],
+  );
+
   return (
-    <RootComponent {...props} baseClassName={styles.host} getRootRef={getRootRef}>
+    <RootComponent
+      aria-label={ariaLabel}
+      {...props}
+      baseClassName={styles.host}
+      getRootRef={getRootRef}
+    >
       <div className={styles.inner}>
         <CalendarHeader
           viewDate={viewDate}
@@ -293,8 +317,10 @@ export const CalendarRange = ({
           viewDate={viewDate}
           value={value}
           weekStartsOn={weekStartsOn}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleFirstCalendarKeyDown}
+          onDayFocus={onDayFocus}
           isDayFocused={isDayFocused}
+          isDayFocusable={isDayFocusableInFirstCalendar}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -308,7 +334,6 @@ export const CalendarRange = ({
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
           renderDayContent={renderDayContent}
-          aria-label={changeDayLabel}
           dayTestId={dayTestId}
         />
       </div>
@@ -333,9 +358,10 @@ export const CalendarRange = ({
           viewDate={secondViewDate}
           value={value}
           weekStartsOn={weekStartsOn}
-          aria-label={changeDayLabel}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleSecondCalendarKeyDown}
+          onDayFocus={onDayFocus}
           isDayFocused={isDayFocused}
+          isDayFocusable={isDayFocusableInSecondCalendar}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -349,8 +375,6 @@ export const CalendarRange = ({
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
           renderDayContent={renderDayContent}
-          tabIndex={0}
-          onBlur={resetSelectedDay}
           dayTestId={dayTestId}
         />
       </div>

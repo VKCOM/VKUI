@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { addDays, format } from 'date-fns';
-import { baselineComponent, userEvent } from '../../testing/utils';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { addDays, dateFormatter } from '../../lib/date';
+import {
+  baselineComponent,
+  fakeTimersForScope,
+  userEvent,
+  withFakeTimers,
+} from '../../testing/utils';
 import { DateRangeInput } from './DateRangeInput';
 
 const startDate = new Date(2024, 6, 20);
 const endDate = new Date(2024, 6, 31);
 
-const dayTestId = (day: Date) => format(day, 'dd.MM.yyyy');
+const dayTestId = (day: Date) => dateFormatter.format(day);
 
 const testsProps = {
   startDateTestsProps: {
@@ -65,137 +70,494 @@ describe('DateRangeInput', () => {
     expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
   });
 
-  it('should correct update value when typing text in input', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
-    render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        onChange={onChange}
-        changeStartDayLabel=""
-        changeStartMonthLabel=""
-        changeStartYearLabel=""
-        changeEndDayLabel=""
-        changeEndMonthLabel=""
-        changeEndYearLabel=""
-        {...testsProps}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
+  it(
+    'check correct readonly state',
+    withFakeTimers(async () => {
+      render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          readOnly={true}
+          {...testsProps}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
 
-    await userEvent.type(startDates, '10');
-    await userEvent.type(startMonths, '04');
-    await userEvent.type(startYears, '2023');
+      inputLikes.forEach((inputLike) => {
+        expect(inputLike).toHaveAttribute('aria-readonly', 'true');
+      });
 
-    await userEvent.type(endDates, '15');
-    await userEvent.type(endMonths, '06');
-    await userEvent.type(endYears, '2024');
+      await userEvent.type(startDates, '10');
+      await userEvent.type(startMonths, '04');
+      await userEvent.type(startYears, '2023');
 
-    const normalized = convertInputsToNumbers(inputLikes);
-    expect(normalized).toEqual([10, 4, 2023, 15, 6, 2024]);
+      await userEvent.type(endDates, '15');
+      await userEvent.type(endMonths, '06');
+      await userEvent.type(endYears, '2024');
 
-    expect(onChange).toBeCalledTimes(6);
-  });
+      const normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
 
-  it('should call onChange callback when change data by calendar', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
-    const { container } = render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        onChange={onChange}
-        changeStartDayLabel=""
-        changeStartMonthLabel=""
-        changeStartYearLabel=""
-        changeEndDayLabel=""
-        changeEndMonthLabel=""
-        changeEndYearLabel=""
-        {...testsProps}
-        calendarTestsProps={{
-          dayTestId,
-        }}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const [dates] = inputLikes;
+      expect(screen.queryByTestId(testsProps.clearButtonTestId)).toBeNull();
+    }),
+  );
 
-    await userEvent.click(dates);
+  it(
+    'should correct update value when typing text in input',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          onChange={onChange}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          {...testsProps}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [startDates, startMonths, startYears, endDates, endMonths, endYears] = inputLikes;
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
+      await userEvent.type(startDates, '10');
+      await userEvent.type(startMonths, '04');
+      await userEvent.type(startYears, '2023');
 
-    const resultStartDate = new Date(startDate);
-    resultStartDate.setDate(15);
+      await userEvent.type(endDates, '15');
+      await userEvent.type(endMonths, '06');
+      await userEvent.type(endYears, '2024');
 
-    fireEvent.click(screen.getByTestId(dayTestId(resultStartDate)));
+      const normalized = convertInputsToNumbers(inputLikes);
+      expect(normalized).toEqual([10, 4, 2023, 15, 6, 2024]);
 
-    expect(onChange.mock.calls).toEqual([[[resultStartDate, null]]]);
+      expect(onChange).toHaveBeenCalledTimes(6);
+    }),
+  );
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
-  });
+  it(
+    'should call onChange callback when change data by calendar',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      const { container } = render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          onChange={onChange}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          {...testsProps}
+          calendarTestsProps={{
+            dayTestId,
+          }}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [dates] = inputLikes;
 
-  it('should not update value when typing incorrect date in input', async () => {
-    jest.useFakeTimers();
-    const onChange = jest.fn();
-    render(
-      <DateRangeInput
-        value={[startDate, endDate]}
-        onChange={onChange}
-        changeStartDayLabel=""
-        changeStartMonthLabel=""
-        changeStartYearLabel=""
-        changeEndDayLabel=""
-        changeEndMonthLabel=""
-        changeEndYearLabel=""
-        {...testsProps}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const startDates = inputLikes[0];
-    const endDates = inputLikes[3];
+      await userEvent.click(dates);
 
-    await userEvent.type(startDates, '40');
-    await userEvent.type(endDates, '32');
+      expect(container.contains(document.activeElement)).toBeTruthy();
 
-    expect(onChange).toBeCalledTimes(0);
-  });
+      const resultStartDate = new Date(startDate);
+      resultStartDate.setDate(15);
 
-  it('should call onCalendarClose callback when calendar was closed', async () => {
-    jest.useFakeTimers();
-    const onCalendarOpenChanged = jest.fn();
-    const { container } = render(
-      <DateRangeInput
-        value={[startDate, null]}
-        onCalendarOpenChanged={onCalendarOpenChanged}
-        {...testsProps}
-        calendarTestsProps={{
-          dayTestId,
-        }}
-      />,
-    );
-    const inputLikes = getInputsLike();
-    const [dates] = inputLikes;
+      fireEvent.click(screen.getByTestId(dayTestId(resultStartDate)));
 
-    await userEvent.click(dates);
+      expect(onChange.mock.calls).toEqual([[[resultStartDate, null]]]);
 
-    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(1);
-    expect(onCalendarOpenChanged.mock.calls[0][0]).toBeTruthy();
+      expect(container.contains(document.activeElement)).toBeTruthy();
+    }),
+  );
 
-    expect(container.contains(document.activeElement)).toBeTruthy();
-    await userEvent.click(screen.getByTestId(dayTestId(addDays(startDate, 10))));
+  it(
+    'should not update value when typing incorrect date in input',
+    withFakeTimers(async () => {
+      const onChange = vi.fn();
+      render(
+        <DateRangeInput
+          value={[startDate, endDate]}
+          onChange={onChange}
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          {...testsProps}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const startDates = inputLikes[0];
+      const endDates = inputLikes[3];
 
-    expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
-    expect(onCalendarOpenChanged.mock.calls[1][0]).toBeFalsy();
+      await userEvent.type(startDates, '40');
+      await userEvent.type(endDates, '32');
 
-    expect(container.contains(document.activeElement)).toBeFalsy();
-  });
+      expect(onChange).toHaveBeenCalledTimes(0);
+    }),
+  );
+
+  it(
+    'should call onCalendarClose callback when calendar was closed',
+    withFakeTimers(async () => {
+      const onCalendarOpenChanged = vi.fn();
+      const { container } = render(
+        <DateRangeInput
+          value={[startDate, null]}
+          onCalendarOpenChanged={onCalendarOpenChanged}
+          {...testsProps}
+          calendarTestsProps={{
+            dayTestId,
+          }}
+        />,
+      );
+      const inputLikes = getInputsLike();
+      const [dates] = inputLikes;
+
+      await userEvent.click(dates);
+
+      expect(onCalendarOpenChanged).toHaveBeenCalledExactlyOnceWith(true);
+
+      expect(container.contains(document.activeElement)).toBeTruthy();
+      await userEvent.click(screen.getByTestId(dayTestId(addDays(startDate, 10))));
+
+      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
+      expect(onCalendarOpenChanged).toHaveBeenLastCalledWith(false);
+
+      expect(container.contains(document.activeElement)).toBeFalsy();
+    }),
+  );
 
   it('should call onChange with undefined when click on clear button', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<DateRangeInput value={[startDate, endDate]} onChange={onChange} {...testsProps} />);
 
     fireEvent.click(screen.getByTestId(testsProps.clearButtonTestId));
 
-    expect(onChange).toHaveBeenCalledWith(undefined);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(undefined);
+  });
+
+  it(
+    'should toggle calendar open state on calendar icon click',
+    withFakeTimers(async () => {
+      const onCalendarOpenChanged = vi.fn();
+      render(
+        <DateRangeInput
+          showCalendarLabel="Показать календарь"
+          onCalendarOpenChanged={onCalendarOpenChanged}
+          showCalendarButtonTestId="show-calendar"
+        />,
+      );
+
+      // проверяем, что календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+
+      const calendarIcon = screen.getByTestId('show-calendar');
+      await userEvent.click(calendarIcon);
+
+      expect(onCalendarOpenChanged).toHaveBeenCalledExactlyOnceWith(true);
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+
+      await userEvent.click(calendarIcon);
+
+      expect(onCalendarOpenChanged).toHaveBeenCalledTimes(2);
+      expect(onCalendarOpenChanged).toHaveBeenLastCalledWith(false);
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+    }),
+  );
+
+  describe('keyboard', () => {
+    fakeTimersForScope();
+    it('controls focus when arrows or tab keys are pressed', async () => {
+      render(
+        <div>
+          <button type="button">Предыдущая кнопка</button>
+          <DateRangeInput {...testsProps} />
+        </div>,
+      );
+
+      const [
+        startDayPicker,
+        startMonthPicker,
+        startYearPicker,
+        endDayPicker,
+        endMonthPicker,
+        endYearPicker,
+      ] = getInputsLike();
+
+      await act(() => userEvent.click(startDayPicker));
+      expect(document.activeElement).toBe(startDayPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(startMonthPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(startYearPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(endDayPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(endMonthPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(endYearPicker);
+
+      await act(() => userEvent.tab());
+      expect(document.activeElement).toBe(
+        screen.getByRole('button', { name: 'Показать календарь' }),
+      );
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(endYearPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(endMonthPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(endDayPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(startYearPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(startMonthPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(startDayPicker);
+
+      await act(() => userEvent.keyboard('{ArrowRight}'));
+      expect(document.activeElement).toBe(startMonthPicker);
+
+      await act(() => userEvent.keyboard('{ArrowLeft}'));
+      expect(document.activeElement).toBe(startDayPicker);
+
+      await act(() => userEvent.keyboard('{ArrowLeft}'));
+      expect(document.activeElement).toBe(startDayPicker);
+
+      await act(() => userEvent.tab({ shift: true }));
+      expect(document.activeElement).toBe(screen.getByText('Предыдущая кнопка'));
+    });
+
+    it('clears part of input data by pressing delete', async () => {
+      render(
+        <DateRangeInput
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          value={[startDate, endDate]}
+          onChange={vi.fn()}
+          {...testsProps}
+        />,
+      );
+
+      const inputLikes = getInputsLike();
+      const [startDayPicker] = inputLikes;
+
+      await act(() => userEvent.click(startDayPicker));
+      expect(document.activeElement).toBe(startDayPicker);
+
+      let normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{Del}'));
+
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([0, 7, 2024, 31, 7, 2024]);
+    });
+
+    it('changes input values by arrow keys', async () => {
+      render(
+        <DateRangeInput
+          changeStartDayLabel=""
+          changeStartMonthLabel=""
+          changeStartYearLabel=""
+          changeEndDayLabel=""
+          changeEndMonthLabel=""
+          changeEndYearLabel=""
+          value={[startDate, endDate]}
+          onChange={vi.fn()}
+          {...testsProps}
+        />,
+      );
+
+      const inputLikes = getInputsLike();
+      const [dayPicker] = inputLikes;
+
+      await act(() => userEvent.click(dayPicker));
+      expect(document.activeElement).toBe(dayPicker);
+
+      let normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([20, 7, 2024, 31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{ArrowUp}'));
+
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([21, 7, 2024, 31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{ArrowRight}'));
+      await act(() => userEvent.keyboard('{ArrowDown}'));
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([21, 6, 2024, 31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{ArrowRight}'));
+      await act(() => userEvent.keyboard('{ArrowDown}'));
+
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([21, 6, 2023, 31, 7, 2024]);
+
+      await act(() => userEvent.keyboard('{Del}'));
+      await act(() => userEvent.keyboard('2'));
+      await act(() => userEvent.keyboard('0'));
+      await act(() => userEvent.keyboard('0'));
+      await act(() => userEvent.keyboard('1'));
+      normalizedDate = convertInputsToNumbers(inputLikes);
+      expect(normalizedDate).toEqual([21, 6, 2001, 31, 7, 2024]);
+    });
+  });
+
+  describe('accessible mode', () => {
+    fakeTimersForScope(false);
+    it('opens/closes calendar with keyboard/mouse', async () => {
+      const onCalendarOpenChangedStub = vi.fn();
+      render(
+        <DateRangeInput
+          accessible
+          onCalendarOpenChanged={onCalendarOpenChangedStub}
+          {...testsProps}
+        />,
+      );
+
+      const inputLikesLabels = [
+        'День начала',
+        'Месяц начала',
+        'Год начала',
+        'День окончания',
+        'Месяц окончания',
+        'Год окончания',
+      ];
+
+      for (const inputLabel of inputLikesLabels) {
+        onCalendarOpenChangedStub.mockClear();
+        // фокусируемся на одном из полей инпута
+        await userEvent.tab();
+        // фокус на инпуте
+        const inputPart = screen.getByRole('spinbutton', { name: inputLabel });
+        expect(document.activeElement).toBe(inputPart);
+
+        // календарь при фокусе закрыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+
+        // нажимаем пробел
+        await userEvent.keyboard(' ');
+        // календарь открыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+        await act(vi.runOnlyPendingTimers);
+
+        // onCalendarOpenChanged вызван лишь раз
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+        onCalendarOpenChangedStub.mockClear();
+
+        // фокус на кнопке в календаре
+        expect(document.activeElement).toBe(
+          screen.getByRole('button', { name: /Предыдущий месяц/ }),
+        );
+
+        // закрываем, нажимая Esc
+        await userEvent.keyboard('{Escape}');
+        // календарь закрыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+        await act(vi.runOnlyPendingTimers);
+
+        // onCalendarOpenChanged вызван лишь раз
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+        onCalendarOpenChangedStub.mockClear();
+
+        // фокус возвращается на часть инпутa
+        expect(document.activeElement).toBe(inputPart);
+
+        // кликаем на ту же часть инпута чтобы открыть календарь
+        await userEvent.click(inputPart);
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+
+        // onCalendarOpenChanged вызван лишь раз
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+        onCalendarOpenChangedStub.mockClear();
+
+        // закрываем, нажимая Esc
+        await userEvent.keyboard('{Escape}');
+        await act(vi.runOnlyPendingTimers);
+
+        // фокус возвращается на часть инпутa
+        expect(document.activeElement).toBe(inputPart);
+      }
+    }, 15_000);
+
+    it('does not close calendar when Escape is pressed to close inner dropdown (month, year)', async () => {
+      const onCalendarOpenChangedStub = vi.fn();
+      const dateNow = new Date();
+      render(
+        <DateRangeInput
+          value={[dateNow, addDays(dateNow, 1)]}
+          accessible
+          onCalendarOpenChanged={onCalendarOpenChangedStub}
+          calendarTestsProps={{
+            leftPartHeaderTestsData: {
+              monthDropdownTestId: 'month-dropdown',
+              yearDropdownTestId: 'year-dropdown',
+            },
+          }}
+        />,
+      );
+
+      // проверяем, что календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+
+      const calendarIcon = screen.getByText('Показать календарь');
+      await userEvent.click(calendarIcon);
+
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+
+      const calendarSelectsIds = ['month-dropdown', 'year-dropdown'];
+
+      for (const selectTestId of calendarSelectsIds) {
+        // dropdown закрыт
+        expect(screen.queryByRole('listbox')).toBeFalsy();
+        // открываем дропдаун одного из селектов
+        await userEvent.click(screen.getByTestId(selectTestId));
+        // dropdown открыт
+        expect(screen.queryByRole('listbox')).toBeTruthy();
+
+        // закрываем дропдаун с помощью Escape
+        await userEvent.keyboard('{Escape}');
+        expect(screen.queryByRole('listbox')).toBeFalsy();
+
+        // календарь всё ещё должен быть открыт
+        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
+        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
+      }
+
+      // закрываем календарь с помощью Escape
+      await userEvent.keyboard('{Escape}');
+      // календарь закрыт
+      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
+      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(2);
+    });
   });
 });

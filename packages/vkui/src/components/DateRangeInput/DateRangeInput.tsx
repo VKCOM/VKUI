@@ -3,13 +3,12 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { isAfter } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { callMultiple } from '../../lib/callMultiple';
-import { format, isMatch, parse } from '../../lib/date';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
+import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import type { HasRootRef } from '../../types';
 import {
@@ -18,19 +17,20 @@ import {
   type CalendarRangeTestsProps,
   type DateRangeType,
 } from '../CalendarRange/CalendarRange';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
-import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
+import { NumberInputLike } from '../NumberInputLike/NumberInputLike';
 import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import styles from './DateRangeInput.module.css';
 import dateInputStyles from '../DateInput/DateInput.module.css';
 
 const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+  none: dateInputStyles.sizeYNone,
+  compact: dateInputStyles.sizeYCompact,
 };
 
 type DateTestsProps = {
@@ -88,6 +88,7 @@ export interface DateRangeInputProps
       | 'nextMonthIcon'
       | 'renderDayContent'
     >,
+    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateRangeInputTestsProps {
@@ -107,6 +108,10 @@ export interface DateRangeInputProps
    * Обработчик изменения состояния открытия календаря.
    */
   onCalendarOpenChanged?: (opened: boolean) => void;
+  /**
+   * Label для календаря.
+   */
+  calendarLabel?: string;
   /**
    * Label для кнопки очистки. Делает доступным для ассистивных технологий.
    */
@@ -143,6 +148,21 @@ export interface DateRangeInputProps
    * Отключение открытия календаря.
    */
   disableCalendar?: boolean;
+  /**
+   * Позволяет отключить захват фокуса при появлении календаря.
+   */
+  disableFocusTrap?: UseFocusTrapProps['disabled'];
+  /**
+   * Включает режим в котором DateRangeInput доступен
+   * для ассистивных технологий.
+   * В этом режиме:
+   * - календарь больше не открывает при фокусе на DateRangeInput;
+   * - иконка календаря видна всегда, чтобы пользователи
+   * ассистивных технологий могли открыть календарь по клику на иконку;
+   * - календарь при открытии получает фокус, клавиатурный
+   * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
+   */
+  accessible?: boolean; // TODO [>=8]: включить по умолчанию.
 }
 
 const elementsConfig = (index: number) => {
@@ -185,17 +205,24 @@ const getInternalValue = (value: CalendarRangeProps['value']) => {
   return newValue;
 };
 
+const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['tabindex'],
+};
+
 /**
- * @see https://vkcom.github.io/VKUI/#/DateRangeInput
+ * @see https://vkui.io/components/date-range-input
  */
 export const DateRangeInput = ({
   shouldDisableDate,
   disableFuture,
   disablePast,
-  value: valueProp,
+  'value': valueProp,
   defaultValue,
   onChange,
-  calendarPlacement: calendarPlacementProp = 'bottom-start',
+  'calendarPlacement': calendarPlacementProp = 'bottom-start',
   style,
   className,
   closeOnChange = true,
@@ -204,24 +231,24 @@ export const DateRangeInput = ({
   name,
   autoFocus,
   disabled,
-  onClick,
-  onFocus,
+  disableFocusTrap,
+  restoreFocus,
+  calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
-  changeDayLabel = 'Изменить день',
-  changeMonthLabel = 'Изменить месяц',
-  changeYearLabel = 'Изменить год',
-  changeStartDayLabel = 'Изменить день начала',
-  changeStartMonthLabel = 'Изменить месяц начала',
-  changeStartYearLabel = 'Изменить год начала',
-  changeEndDayLabel = 'Изменить день окончания',
-  changeEndMonthLabel = 'Изменить месяц окончания',
-  changeEndYearLabel = 'Изменить год окончания',
+  changeMonthLabel = 'Месяц',
+  changeYearLabel = 'Год',
+  changeStartDayLabel = 'День начала',
+  changeStartMonthLabel = 'Месяц начала',
+  changeStartYearLabel = 'Год начала',
+  changeEndDayLabel = 'День окончания',
+  changeEndMonthLabel = 'Месяц окончания',
+  changeEndYearLabel = 'Год окончания',
   clearFieldLabel = 'Очистить поле',
   showCalendarLabel = 'Показать календарь',
+  'aria-label': ariaLabel = '',
   prevMonthIcon,
   nextMonthIcon,
-  disableCalendar = false,
   onCalendarOpenChanged,
   renderDayContent,
   calendarTestsProps,
@@ -230,6 +257,10 @@ export const DateRangeInput = ({
   clearButtonTestId,
   showCalendarButtonTestId,
   id,
+  accessible,
+  readOnly,
+  'disableCalendar': disableCalendarProp = false,
+  before,
   ...props
 }: DateRangeInputProps): React.ReactNode => {
   const daysStartRef = React.useRef<HTMLSpanElement>(null);
@@ -238,6 +269,8 @@ export const DateRangeInput = ({
   const daysEndRef = React.useRef<HTMLSpanElement>(null);
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
+
+  const disableCalendar = readOnly ? true : disableCalendarProp;
 
   const _onChange = React.useCallback(
     (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
@@ -287,7 +320,7 @@ export const DateRangeInput = ({
       const end = isEndValid
         ? parse(formattedEndValue, mask, (valueExists && value?.[1]) || now)
         : null;
-      if (start && end && isAfter(end, start)) {
+      if (start && end && end > start) {
         updateValue([start, end]);
       }
     },
@@ -307,6 +340,7 @@ export const DateRangeInput = ({
     open,
     openCalendar,
     closeCalendar,
+    toggleCalendar,
     internalValue,
     handleKeyDown,
     setFocusedElement,
@@ -317,13 +351,14 @@ export const DateRangeInput = ({
     maxElement: 5,
     refs,
     autoFocus,
-    disabled,
+    disabled: disabled || readOnly,
     elementsConfig,
     onClear,
     onInternalValueChange,
     getInternalValue,
     value,
     onCalendarOpenChanged,
+    accessible,
   });
 
   const { sizeY = 'none' } = useAdaptivity();
@@ -347,103 +382,190 @@ export const DateRangeInput = ({
   const [calendarPlacement, setCalendarPlacement] =
     React.useState<PlacementWithAuto>(calendarPlacementProp);
 
+  const { locale } = useConfigProvider();
+  const currentDateLabel = React.useMemo(() => {
+    if (!value) {
+      return null;
+    }
+    const [startDate, endDate] = value;
+    if (!startDate || !endDate) {
+      return null;
+    }
+    return [
+      new Intl.DateTimeFormat(locale, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(startDate),
+      new Intl.DateTimeFormat(locale, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(endDate),
+    ].join(' - ');
+  }, [locale, value]);
+
+  const currentDateLabelId = React.useId();
+  const ariaLabelId = React.useId();
+
+  const showCalendarOnInputAreaClick = React.useCallback(() => {
+    handleFieldEnter();
+    if (accessible) {
+      openCalendar();
+    }
+  }, [handleFieldEnter, openCalendar, accessible]);
+
+  const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
+  const showClearButton = value && !readOnly;
+
   return (
     <FormField
       style={style}
-      className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
+      className={classNames(
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        !!before && dateInputStyles.hasBefore,
+        (showCalendarButton || showClearButton) && dateInputStyles.hasAfter,
+        className,
+      )}
       getRootRef={handleRootRef}
+      role="group"
+      aria-labelledby={`${ariaLabelId} ${currentDateLabelId}`}
+      before={before}
       after={
-        value ? (
-          <IconButton hoverMode="opacity" onClick={clear} data-testid={clearButtonTestId}>
-            <VisuallyHidden>{clearFieldLabel}</VisuallyHidden>
-            <Icon16Clear />
-          </IconButton>
-        ) : (
-          <IconButton
-            hoverMode="opacity"
-            onClick={openCalendar}
-            data-testid={showCalendarButtonTestId}
-          >
-            <VisuallyHidden>{showCalendarLabel}</VisuallyHidden>
-            <Icon20CalendarOutline />
-          </IconButton>
-        )
+        <>
+          {showCalendarButton ? (
+            <IconButton
+              hoverMode="opacity"
+              label={showCalendarLabel}
+              onClick={toggleCalendar}
+              data-testid={showCalendarButtonTestId}
+            >
+              <Icon20CalendarOutline />
+            </IconButton>
+          ) : null}
+          {showClearButton ? (
+            <IconButton
+              hoverMode="opacity"
+              label={clearFieldLabel}
+              onClick={clear}
+              data-testid={clearButtonTestId}
+            >
+              <Icon16Clear />
+            </IconButton>
+          ) : null}
+        </>
       }
       disabled={disabled}
-      onClick={callMultiple(handleFieldEnter, onClick)}
-      onFocus={callMultiple(handleFieldEnter, onFocus)}
       {...props}
     >
       <div className={dateInputStyles.wrapper}>
+        {ariaLabel && <VisuallyHidden id={ariaLabelId}>{ariaLabel}</VisuallyHidden>}
+        {currentDateLabel && (
+          <VisuallyHidden id={currentDateLabelId}>{currentDateLabel}</VisuallyHidden>
+        )}
         <VisuallyHidden
           id={id}
           Component="input"
+          readOnly
+          aria-hidden
           name={name}
+          tabIndex={readOnly ? 0 : -1}
           value={
             value
-              ? `${value[0] ? format(value[0], 'dd.MM.yyyy') : ''} - ${
-                  value[1] ? format(value[1], 'dd.MM.yyyy') : ''
+              ? `${value[0] ? dateFormatter.format(value[0]) : ''} - ${
+                  value[1] ? dateFormatter.format(value[1]) : ''
                 }`
               : ''
           }
+          onFocus={handleFieldEnter}
         />
-        <Text className={dateInputStyles.input} onKeyDown={handleKeyDown}>
-          <InputLike
+        <Text
+          className={dateInputStyles.input}
+          onClick={showCalendarOnInputAreaClick}
+          normalize={false}
+        >
+          <NumberInputLike
+            value={internalValue[0]}
+            minValue={1}
+            maxValue={31}
+            onKeyDown={readOnly ? undefined : handleKeyDown}
             length={2}
             getRootRef={daysStartRef}
             index={0}
+            readOnly={readOnly}
             onElementSelect={setFocusedElement}
-            value={internalValue[0]}
             label={changeStartDayLabel}
             data-testid={startDateTestsProps?.day}
           />
           <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
+          <NumberInputLike
+            value={internalValue[1]}
+            minValue={1}
+            maxValue={12}
+            onKeyDown={handleKeyDown}
             length={2}
             getRootRef={monthsStartRef}
             index={1}
             onElementSelect={setFocusedElement}
-            value={internalValue[1]}
+            readOnly={readOnly}
             label={changeStartMonthLabel}
             data-testid={startDateTestsProps?.month}
           />
           <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
+          <NumberInputLike
+            value={internalValue[2]}
+            minValue={1}
+            maxValue={275750}
+            onKeyDown={handleKeyDown}
             length={4}
             getRootRef={yearsStartRef}
             index={2}
             onElementSelect={setFocusedElement}
-            value={internalValue[2]}
+            readOnly={readOnly}
             label={changeStartYearLabel}
             data-testid={startDateTestsProps?.year}
           />
           <InputLikeDivider>{' — '}</InputLikeDivider>
-          <InputLike
+          <NumberInputLike
+            value={internalValue[3]}
+            minValue={1}
+            maxValue={31}
+            onKeyDown={handleKeyDown}
             length={2}
             getRootRef={daysEndRef}
             index={3}
             onElementSelect={setFocusedElement}
-            value={internalValue[3]}
+            readOnly={readOnly}
             label={changeEndDayLabel}
             data-testid={endDateTestsProps?.day}
           />
           <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
+          <NumberInputLike
+            value={internalValue[4]}
+            minValue={1}
+            maxValue={12}
+            onKeyDown={handleKeyDown}
             length={2}
             getRootRef={monthsEndRef}
             index={4}
             onElementSelect={setFocusedElement}
-            value={internalValue[4]}
+            readOnly={readOnly}
             label={changeEndMonthLabel}
             data-testid={endDateTestsProps?.month}
           />
           <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
+          <NumberInputLike
+            value={internalValue[5]}
+            minValue={1}
+            maxValue={275750}
+            onKeyDown={handleKeyDown}
             length={4}
             getRootRef={yearsEndRef}
             index={5}
             onElementSelect={setFocusedElement}
-            value={internalValue[5]}
+            readOnly={readOnly}
             label={changeEndYearLabel}
             data-testid={endDateTestsProps?.year}
           />
@@ -456,25 +578,33 @@ export const DateRangeInput = ({
           placement={calendarPlacement}
           onPlacementChange={setCalendarPlacement}
         >
-          <CalendarRange
-            value={value}
-            onChange={onCalendarChange}
-            disablePast={disablePast}
-            disableFuture={disableFuture}
-            shouldDisableDate={shouldDisableDate}
+          <FocusTrap
             onClose={closeCalendar}
-            getRootRef={calendarRef}
-            disablePickers={disablePickers}
-            prevMonthLabel={prevMonthLabel}
-            nextMonthLabel={nextMonthLabel}
-            changeMonthLabel={changeMonthLabel}
-            changeYearLabel={changeYearLabel}
-            changeDayLabel={changeDayLabel}
-            prevMonthIcon={prevMonthIcon}
-            nextMonthIcon={nextMonthIcon}
-            renderDayContent={renderDayContent}
-            {...calendarTestsProps}
-          />
+            disabled={disableFocusTrap ?? !accessible}
+            restoreFocus={restoreFocus ?? Boolean(accessible)}
+            captureEscapeKeyboardEvent={false}
+            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
+          >
+            <CalendarRange
+              value={value}
+              role="dialog"
+              onChange={onCalendarChange}
+              aria-label={calendarLabel}
+              disablePast={disablePast}
+              disableFuture={disableFuture}
+              shouldDisableDate={shouldDisableDate}
+              getRootRef={calendarRef}
+              disablePickers={disablePickers}
+              prevMonthLabel={prevMonthLabel}
+              nextMonthLabel={nextMonthLabel}
+              changeMonthLabel={changeMonthLabel}
+              changeYearLabel={changeYearLabel}
+              prevMonthIcon={prevMonthIcon}
+              nextMonthIcon={nextMonthIcon}
+              renderDayContent={renderDayContent}
+              {...calendarTestsProps}
+            />
+          </FocusTrap>
         </Popper>
       )}
     </FormField>

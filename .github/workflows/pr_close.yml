@@ -16,24 +16,24 @@ jobs:
     # см. https://github.com/orgs/community/discussions/26303
     if: ${{ !cancelled() }}
     name: Call reusable workflow
-    uses: VKCOM/VKUI/.github/workflows/reusable_workflow_pr_worfklow_payload.yml@master
+    uses: ./.github/workflows/reusable_workflow_pr_worfklow_payload.yml
     with:
       action: upload
       override_pr_number: ${{ inputs.pr_number_by_workflow_dispatch }}
 
-  v6:
-    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'v6')
+  v7:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:v7')
     concurrency: ci-stable
     runs-on: ubuntu-latest
-    name: v6 Patch
+    name: v7 Patch
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout (for maintainer's PR)
         if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
@@ -42,7 +42,7 @@ jobs:
         shell: bash
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
 
@@ -56,7 +56,7 @@ jobs:
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
-          targetBranch: v6
+          targetBranch: v7
           needScreenshots: true
 
   patch:
@@ -67,11 +67,11 @@ jobs:
     steps:
       - name: Checkout (for forked PR)
         if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout (for maintainer's PR)
         if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
@@ -80,7 +80,7 @@ jobs:
         shell: bash
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
 
@@ -106,10 +106,10 @@ jobs:
       new_floating_ui_version: ${{ steps.check_floating_ui_updated.outputs.new_version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Dependabot metadata
         id: metadata
@@ -148,12 +148,13 @@ jobs:
       issues: write
       pull-requests: write
       contents: write
+      actions: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node setup
-        uses: VKCOM/VKUI/.github/actions/node-setup@master
+        uses: ./.github/actions/node-setup
 
       - name: Get vkui-floating-ui version
         id: get_version
@@ -188,47 +189,21 @@ jobs:
 
       # Запускаем форкфлоу скрипта публикации
       - name: Publish new version
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'publish.yml',
-              ref: ${{ env.RELEASE_BRANCH_NAME }},
+              ref: "${{ env.RELEASE_BRANCH_NAME }}",
               inputs: {
                 package_name: '@vkontakte/vkui-floating-ui',
-                custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}"
+                custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}",
                 latest: true,
-                close_milestone: false,
+                close_milestone: false
               }
             })
-
-      # Обновляем версию vkui-floating-ui в vkui
-      - name: update vkui-floating-ui version in vkui
-        run: |
-          yarn workspace @vkontakte/vkui add @vkontakte/vkui-floating-ui@${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}
-
-      # Создаем pull request с изменениями в ветке
-      - name: Create PR with changes
-        id: create_pull_request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: master
-          branch: ${{ env.RELEASE_BRANCH_NAME }}
-          commit-message: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
-          delete-branch: true
-          title: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}'
-          body: ''
-          labels: subpackage:@vkontakte/vkui-floating-ui, dependencies
-
-      # Добавляем майлстоун следующей минорной версии
-      - name: Add next minor version milestone to pull request
-        uses: VKCOM/gh-actions/VKUI/add-next-minor-milestone@main
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull_request_number: ${{ steps.create_pull_request.outputs.pull-request-number }}
 
   update-release-notes:
     if: ${{ github.event.pull_request.merged == true
@@ -242,7 +217,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Get vkui version
         id: get_version

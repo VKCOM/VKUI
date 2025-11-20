@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`image-base transforms correctly 1`] = `
+exports[`image-base > transforms correctly 1`] = `
 "import { Image, ImageBase, Avatar as VKUIAvatar } from '@vkontakte/vkui';
 import React from 'react';
 

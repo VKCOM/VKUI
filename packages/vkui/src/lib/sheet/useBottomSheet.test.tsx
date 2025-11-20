@@ -61,11 +61,11 @@ const DEFAULT_PROPS: UseBottomSheetOptions = {
 
 describe(useBottomSheet, () => {
   beforeEach(() => {
-    jest.useFakeTimers({ now: new Date('2024-01-01T00:00:00') });
+    vi.useFakeTimers({ now: new Date('2024-01-01T00:00:00') });
     requestAnimationFrameMock.init();
   });
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     requestAnimationFrameMock.destroy();
   });
 
@@ -136,7 +136,7 @@ describe(useBottomSheet, () => {
 
         fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
         fireEvent.touchMove(
           sheetEl,
           touchEventMock({
@@ -153,7 +153,7 @@ describe(useBottomSheet, () => {
 
         expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
         fireEvent.touchEnd(sheetEl);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -200,14 +200,14 @@ describe(useBottomSheet, () => {
         const target = r.getByTestId(testId);
         fireEvent.touchStart(target, touchEventMock({ clientY: 0, target }));
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
         fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
         fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
         requestAnimationFrameMock.triggerNextAnimationFrame();
 
         expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
         fireEvent.touchEnd(target);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -266,14 +266,14 @@ describe(useBottomSheet, () => {
         const target = sheetScrollEl;
         fireEvent.touchStart(sheetScrollEl, touchEventMock({ clientY: 0, target }));
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
         fireEvent.touchMove(sheetScrollEl, touchEventMock({ clientY: touchMoveFrom, target }));
         fireEvent.touchMove(sheetScrollEl, touchEventMock({ clientY: touchMoveTo, target }));
         requestAnimationFrameMock.triggerNextAnimationFrame();
 
         expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
         fireEvent.touchEnd(sheetEl);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -334,14 +334,14 @@ describe(useBottomSheet, () => {
         const target = r.getByTestId('targetEl');
         fireEvent.touchStart(target, touchEventMock({ clientY: 0, target }));
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
         fireEvent.touchMove(target, touchEventMock({ clientY: touchMoveFrom, target }));
         fireEvent.touchMove(target, touchEventMock({ clientY: touchMoveTo, target }));
         requestAnimationFrameMock.triggerNextAnimationFrame();
 
         expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
         fireEvent.touchEnd(sheetEl);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -350,9 +350,21 @@ describe(useBottomSheet, () => {
   });
 
   describe.each([
-    { snapPoint: 'auto' as const, initialPropertyValue: '', mutatedPropertyValue: `${sheetPropertyValue('auto', SHEET_HEIGHT, DRAG_OFFSET, SHEET_HEIGHT)}px` }, // prettier-ignore
-    { snapPoint: { initial: 50, detents: DETENTS_A }, initialPropertyValue: '50%', mutatedPropertyValue: `${sheetPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT)}%` }, // prettier-ignore
-    { snapPoint: { initial: 100, detents: DETENTS_B }, initialPropertyValue: '100%', mutatedPropertyValue: `${sheetPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT)}%` }, // prettier-ignore
+    {
+      snapPoint: 'auto' as const,
+      initialPropertyValue: '',
+      mutatedPropertyValue: `${sheetPropertyValue('auto', SHEET_HEIGHT, DRAG_OFFSET, SHEET_HEIGHT)}px`,
+    },
+    {
+      snapPoint: { initial: 50, detents: DETENTS_A },
+      initialPropertyValue: '50%',
+      mutatedPropertyValue: `${sheetPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT)}%`,
+    },
+    {
+      snapPoint: { initial: 100, detents: DETENTS_B },
+      initialPropertyValue: '100%',
+      mutatedPropertyValue: `${sheetPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT)}%`,
+    },
   ])(
     'swipe down (snapPoint: $snapPoint):',
     ({ snapPoint, initialPropertyValue, mutatedPropertyValue }) => {
@@ -375,7 +387,7 @@ describe(useBottomSheet, () => {
 
         fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
         fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
         fireEvent.touchMove(
           sheetEl,
@@ -385,7 +397,7 @@ describe(useBottomSheet, () => {
 
         expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
         fireEvent.touchEnd(sheetEl);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -431,7 +443,7 @@ describe(useBottomSheet, () => {
         const target = r.getByTestId('targetEl');
         fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
         fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
         fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
         requestAnimationFrameMock.triggerNextAnimationFrame();
@@ -439,7 +451,7 @@ describe(useBottomSheet, () => {
         expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
         expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('hidden');
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
         fireEvent.touchEnd(sheetEl);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -490,7 +502,7 @@ describe(useBottomSheet, () => {
           const target = r.getByTestId('header');
           fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
 
-          jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+          vi.setSystemTime(new Date('2024-01-01T00:00:00'));
           fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
           fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
           requestAnimationFrameMock.triggerNextAnimationFrame();
@@ -498,7 +510,7 @@ describe(useBottomSheet, () => {
           expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
           expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('');
 
-          jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+          vi.setSystemTime(new Date('2024-01-01T00:00:02'));
           fireEvent.touchEnd(sheetEl);
           requestAnimationFrameMock.triggerNextAnimationFrame();
           fireEvent.transitionEnd(sheetEl);
@@ -554,7 +566,7 @@ describe(useBottomSheet, () => {
         const target = r.getByTestId(testId);
         fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
         fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
         fireEvent.touchMove(
           target,
@@ -562,7 +574,7 @@ describe(useBottomSheet, () => {
         );
         requestAnimationFrameMock.triggerNextAnimationFrame();
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
         fireEvent.touchEnd(target);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -570,7 +582,7 @@ describe(useBottomSheet, () => {
         expect(sheetEl.style.getPropertyValue('--sheet')).toBe('100%');
 
         // обратно в 50%
-        jest.setSystemTime(new Date('2024-01-01T00:00:04'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:04'));
         fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
         fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
         fireEvent.touchMove(
@@ -579,7 +591,7 @@ describe(useBottomSheet, () => {
         );
         requestAnimationFrameMock.triggerNextAnimationFrame();
 
-        jest.setSystemTime(new Date('2024-01-01T00:00:06'));
+        vi.setSystemTime(new Date('2024-01-01T00:00:06'));
         fireEvent.touchEnd(target);
         requestAnimationFrameMock.triggerNextAnimationFrame();
         fireEvent.transitionEnd(sheetEl);
@@ -608,7 +620,7 @@ describe(useBottomSheet, () => {
       fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
       let time = new Date('2024-01-01T00:00:00');
-      jest.setSystemTime(time);
+      vi.setSystemTime(time);
       fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
       fireEvent.touchMove(
         sheetEl,
@@ -620,7 +632,7 @@ describe(useBottomSheet, () => {
       requestAnimationFrameMock.triggerNextAnimationFrame();
 
       time.setMilliseconds(10);
-      jest.setSystemTime(time);
+      vi.setSystemTime(time);
       fireEvent.touchEnd(sheetEl);
       requestAnimationFrameMock.triggerNextAnimationFrame();
       fireEvent.transitionEnd(sheetEl);
@@ -631,7 +643,7 @@ describe(useBottomSheet, () => {
       fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
       time = new Date('2024-01-01T00:00:02');
-      jest.setSystemTime(time);
+      vi.setSystemTime(time);
       fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
       fireEvent.touchMove(
         sheetEl,
@@ -640,7 +652,7 @@ describe(useBottomSheet, () => {
       requestAnimationFrameMock.triggerNextAnimationFrame();
 
       time.setMilliseconds(10);
-      jest.setSystemTime(time);
+      vi.setSystemTime(time);
       fireEvent.touchEnd(sheetEl);
       requestAnimationFrameMock.triggerNextAnimationFrame();
       fireEvent.transitionEnd(sheetEl);
@@ -663,7 +675,7 @@ describe(useBottomSheet, () => {
       const sheetEl = r.getByTestId('sheetEl');
       Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-      const onDismiss = jest.fn();
+      const onDismiss = vi.fn();
       const h = renderHook(() => useBottomSheet(true, { ...props, onDismiss }));
       act(() => h.result.current[0].setSheetEl(sheetEl));
 
@@ -678,7 +690,7 @@ describe(useBottomSheet, () => {
 
       fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
-      jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
       fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
       fireEvent.touchMove(
         sheetEl,
@@ -686,7 +698,7 @@ describe(useBottomSheet, () => {
       );
       requestAnimationFrameMock.triggerNextAnimationFrame();
 
-      jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
       fireEvent.touchEnd(sheetEl);
       requestAnimationFrameMock.triggerNextAnimationFrame();
       fireEvent.transitionEnd(sheetEl);
@@ -696,12 +708,12 @@ describe(useBottomSheet, () => {
       expect(sheetEl.style.getPropertyValue('--sheet')).toBe('');
     });
 
-    test('– by drag velocity', () => {
+    test('– by drag velocity', async () => {
       const r = render(<div data-testid="sheetEl" />);
       const sheetEl = r.getByTestId('sheetEl');
       Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-      const onDismiss = jest.fn();
+      const onDismiss = vi.fn();
       const h = renderHook(() => useBottomSheet(true, { ...props, onDismiss }));
       act(() => h.result.current[0].setSheetEl(sheetEl));
 
@@ -717,7 +729,7 @@ describe(useBottomSheet, () => {
       fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
       let time = new Date('2024-01-01T00:00:00');
-      jest.setSystemTime(time);
+      vi.setSystemTime(time);
       fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
       fireEvent.touchMove(
         sheetEl,
@@ -729,7 +741,7 @@ describe(useBottomSheet, () => {
       requestAnimationFrameMock.triggerNextAnimationFrame();
 
       time.setMilliseconds(10);
-      jest.setSystemTime(time);
+      vi.setSystemTime(time);
       fireEvent.touchEnd(sheetEl);
       requestAnimationFrameMock.triggerNextAnimationFrame();
       fireEvent.transitionEnd(sheetEl);
@@ -742,9 +754,23 @@ describe(useBottomSheet, () => {
 
   describe('backdrop:', () => {
     test.each([
-      { snapPoint: 'auto' as const, backdropOpacity: backdropOpacityPropertyValue('auto', SHEET_HEIGHT, DRAG_OFFSET, SHEET_HEIGHT) }, // prettier-ignore
-      { snapPoint: { initial: 50, detents: DETENTS_A }, backdropOpacity: backdropOpacityPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT) }, // prettier-ignore
-      { snapPoint: { initial: 100, detents: DETENTS_B }, backdropOpacity: backdropOpacityPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT) }, // prettier-ignore
+      {
+        snapPoint: 'auto' as const,
+        backdropOpacity: backdropOpacityPropertyValue(
+          'auto',
+          SHEET_HEIGHT,
+          DRAG_OFFSET,
+          SHEET_HEIGHT,
+        ),
+      },
+      {
+        snapPoint: { initial: 50, detents: DETENTS_A },
+        backdropOpacity: backdropOpacityPropertyValue(50, 50, DRAG_OFFSET, SHEET_HEIGHT),
+      },
+      {
+        snapPoint: { initial: 100, detents: DETENTS_B },
+        backdropOpacity: backdropOpacityPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT),
+      },
     ])('- basic usage (snapPoint: $snapPoint)', ({ snapPoint, backdropOpacity }) => {
       const props = { ...DEFAULT_PROPS, snapPoint };
       const r = render(
@@ -776,7 +802,7 @@ describe(useBottomSheet, () => {
 
       fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
-      jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
       fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
       fireEvent.touchMove(
         sheetEl,
@@ -786,7 +812,7 @@ describe(useBottomSheet, () => {
 
       expect(backdropEl.style.getPropertyValue('--backdrop')).toBe(`${backdropOpacity}`);
 
-      jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
       fireEvent.touchEnd(sheetEl);
       requestAnimationFrameMock.triggerNextAnimationFrame();
       fireEvent.transitionEnd(sheetEl);
@@ -795,7 +821,7 @@ describe(useBottomSheet, () => {
       expect(backdropEl.style.getPropertyValue('--backdrop')).toBe('');
     });
 
-    it('- changes opacity relative initialSnapPoint', () => {
+    it('- changes opacity relative initialSnapPoint', async () => {
       const DRAG_TO_HALF_OF_SHEET_HEIGHT = DRAG_OFFSET + SHEET_HEIGHT / 2;
 
       const r = render(
@@ -827,7 +853,7 @@ describe(useBottomSheet, () => {
 
       fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
-      jest.setSystemTime(new Date('2024-01-01T00:00:00'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
       fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
       fireEvent.touchMove(
         sheetEl,
@@ -837,13 +863,13 @@ describe(useBottomSheet, () => {
 
       expect(backdropEl.style.getPropertyValue('--backdrop')).toBe('1');
 
-      jest.setSystemTime(new Date('2024-01-01T00:00:02'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
       fireEvent.touchEnd(sheetEl);
       requestAnimationFrameMock.triggerNextAnimationFrame();
       fireEvent.transitionEnd(sheetEl);
 
       // обратно в 50%
-      jest.setSystemTime(new Date('2024-01-01T00:00:04'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:04'));
       fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
       fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
       fireEvent.touchMove(
@@ -867,7 +893,7 @@ describe(useBottomSheet, () => {
         `${backdropOpacityPropertyValue(50, 100, DRAG_TO_HALF_OF_SHEET_HEIGHT, SHEET_HEIGHT)}`,
       );
 
-      jest.setSystemTime(new Date('2024-01-01T00:00:06'));
+      vi.setSystemTime(new Date('2024-01-01T00:00:06'));
       fireEvent.touchEnd(sheetEl);
       requestAnimationFrameMock.triggerNextAnimationFrame();
       fireEvent.transitionEnd(sheetEl);

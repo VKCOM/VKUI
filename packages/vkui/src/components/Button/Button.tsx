@@ -6,7 +6,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import '../Tappable/Tappable.module.css';
 import '../Spinner/Spinner.module.css';
 import styles from './Button.module.css';
@@ -83,10 +83,10 @@ export interface VKUIButtonProps extends HasAlign {
   rounded?: boolean;
 }
 
-export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
+export interface ButtonProps extends Omit<TappableOmitProps, 'size'>, VKUIButtonProps {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Button
+ * @see https://vkui.io/components/button
  */
 export const Button = ({
   size = 's',
@@ -113,7 +113,7 @@ export const Button = ({
     <Tappable
       hoverMode={styles.hover}
       activeMode={styles.active}
-      Component={restProps.href ? 'a' : 'button'}
+      {...(restProps.href === undefined && { Component: 'button' })}
       focusVisibleMode="outside"
       disabled={loading || disabled}
       {...restProps}

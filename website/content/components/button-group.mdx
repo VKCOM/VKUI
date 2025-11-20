@@ -1,0 +1,83 @@
+---
+description: Компонент, который позволяет группировать кнопки и управлять их расположением и выравниванием.
+---
+
+<Overview group="layout">
+
+# ButtonGroup [tag:component]
+
+Компонент, который позволяет группировать кнопки
+(компонент [`Button`](/components/button)) и управлять их расположением и выравниванием.
+Поддерживает как горизонтальное, так и вертикальное расположение кнопок,
+а также позволяет настраивать отступы между ними.
+
+Связанные компоненты:
+
+- [`Button`](/components/button)
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <ButtonGroup>
+    <Button>Button</Button>
+    <Button>Button</Button>
+    <Button>Button</Button>
+  </ButtonGroup>
+  ```
+</Playground>
+
+## Особенности использования
+
+- `ButtonGroup` не управляет свойствами вложенных кнопок или групп кнопок.
+  Параметры, такие как размер, цвет или состояние кнопок, должны быть установлены на самих кнопках.
+- При использовании свойства `stretched`, для вложенных кнопок или групп кнопок необходимо самостоятельно определять,
+  должны ли они также растягиваться.
+
+## Вложенные `ButtonGroup`
+
+`ButtonGroup` поддерживает вложенные `ButtonGroup` для создания более сложных структур.
+
+<Playground>
+  ```jsx
+  <ButtonGroup mode="vertical" gap="m">
+    <Button size="l" appearance="accent" stretched>
+      Разрешить
+    </Button>
+    <Button size="l" appearance="accent" stretched>
+      Завершить
+    </Button>
+    <ButtonGroup mode="horizontal" gap="s" stretched>
+      <Button size="l" appearance="negative" stretched>
+        Не сейчас
+      </Button>
+      <Button size="l" appearance="positive" stretched>
+        Продолжить
+      </Button>
+    </ButtonGroup>
+  </ButtonGroup>
+  ```
+</Playground>
+
+## Выравнивание кнопок
+
+Если вы используете свойство `stretched` для `ButtonGroup`, то можно указать свойство `align`,
+которое позволит управлять выравниванием кнопок по горизонтали.
+
+<Playground>
+  ```jsx
+  <ButtonGroup gap="s" stretched align="right">
+    <Button before={<Icon12Add />} aria-label="Добавить" />
+    <Button before={<Icon12Favorite />} aria-label="В Избранное" />
+  </ButtonGroup>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- `ButtonGroup` является контейнером для кнопок, поэтому основная ответственность за доступность лежит на самих кнопках.
+- По умолчанию использует `role="group"`
+
+## Свойства и методы [#api]
+
+<PropsTable name="ButtonGroup" />

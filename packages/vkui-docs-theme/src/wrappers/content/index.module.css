@@ -1,7 +1,11 @@
 .root {
   display: flex;
   margin-inline: auto;
-  color: var(--vkui--color_text_subhead);
+  font-family: var(--vkui--font_family_base);
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  font-weight: var(--vkui--font_weight_base3);
+  line-height: 24px;
+  color: var(--vkui_docs--color_text_primary);
   background-color: var(--vkui--color_background_content);
 }
 
@@ -12,6 +16,7 @@
 .blog {
   flex-direction: column;
   max-inline-size: var(--vkui_docs_blog--max-width);
+  min-block-size: calc(100vh - var(--vkui_docs--footer-height) - var(--vkui_docs--navbar-height));
   padding-block-start: var(--vkui--spacing_size_4xl);
   padding-block-end: 60px;
   padding-inline: 40px;

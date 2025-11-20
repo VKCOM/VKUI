@@ -3,12 +3,18 @@
 import * as React from 'react';
 import { Icon16Clear, Icon20CalendarOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { startOfDay, startOfMinute } from 'date-fns';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
-import { format, isMatch, parse } from '../../lib/date';
+import {
+  dateFormatter,
+  dateTimeFormatter,
+  isMatch,
+  parse,
+  startOfDay,
+  startOfMinute,
+} from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
@@ -17,8 +23,8 @@ import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
-import { InputLike } from '../InputLike/InputLike';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
+import { NumberInputLike } from '../NumberInputLike/NumberInputLike';
 import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -208,8 +214,15 @@ const getInternalValue = (value: CalendarProps['value']) => {
   return newValue;
 };
 
+const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['tabindex'],
+};
+
 /**
- * @see https://vkcom.github.io/VKUI/#/DateInput
+ * @see https://vkui.io/components/date-input
  */
 export const DateInput = ({
   enableTime,
@@ -232,8 +245,6 @@ export const DateInput = ({
   name,
   autoFocus,
   disabled,
-  onClick,
-  onFocus,
   accessible,
   calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
@@ -253,7 +264,6 @@ export const DateInput = ({
   onPrevMonth,
   prevMonthIcon,
   nextMonthIcon,
-  disableCalendar = false,
   renderDayContent,
   onCalendarOpenChanged,
   calendarTestsProps,
@@ -270,7 +280,10 @@ export const DateInput = ({
   timezone,
   restoreFocus,
   disableFocusTrap,
+  readOnly,
+  'disableCalendar': disableCalendarProp = false,
   'aria-label': ariaLabel = '',
+  before,
   ...props
 }: DateInputProps): React.ReactNode => {
   const daysRef = React.useRef<HTMLSpanElement>(null);
@@ -278,6 +291,8 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
+
+  const disableCalendar = readOnly ? true : disableCalendarProp;
 
   const { value, updateValue, setInternalValue, getLastUpdatedValue, clearValue } =
     useDateInputValue({
@@ -337,7 +352,7 @@ export const DateInput = ({
     maxElement,
     refs,
     autoFocus,
-    disabled,
+    disabled: disabled || readOnly,
     elementsConfig,
     onClear: clearValue,
     onInternalValueChange,
@@ -417,16 +432,25 @@ export const DateInput = ({
     }
   }, [handleFieldEnter, openCalendar, accessible]);
 
+  const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
+  const showClearButton = value && !readOnly;
+
   return (
     <FormField
       style={style}
-      className={classNames(sizeY !== 'regular' && sizeYClassNames[sizeY], className)}
+      className={classNames(
+        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        !!before && styles.hasBefore,
+        (showCalendarButton || showClearButton) && styles.hasAfter,
+        className,
+      )}
       getRootRef={handleRootRef}
       role="group"
       aria-labelledby={`${ariaLabelId} ${currentDateLabelId}`}
+      before={before}
       after={
         <React.Fragment>
-          {!disableCalendar && (accessible || (!accessible && !value)) ? (
+          {showCalendarButton ? (
             <IconButton
               hoverMode="opacity"
               label={showCalendarLabel}
@@ -436,7 +460,7 @@ export const DateInput = ({
               <Icon20CalendarOutline />
             </IconButton>
           ) : null}
-          {value ? (
+          {showClearButton ? (
             <IconButton
               hoverMode="opacity"
               label={clearFieldLabel}
@@ -449,7 +473,6 @@ export const DateInput = ({
         </React.Fragment>
       }
       disabled={disabled}
-      onClick={onClick}
       {...props}
     >
       <div className={styles.wrapper}>
@@ -462,9 +485,15 @@ export const DateInput = ({
           Component="input"
           readOnly
           aria-hidden
-          tabIndex={-1}
+          tabIndex={readOnly ? 0 : -1}
           name={name}
-          value={value ? format(value, enableTime ? "dd.MM.yyyy'T'HH:mm" : 'dd.MM.yyyy') : ''}
+          value={
+            value
+              ? enableTime
+                ? dateTimeFormatter.format(value)
+                : dateFormatter.format(value)
+              : ''
+          }
           onFocus={handleFieldEnter}
         />
         <Text
@@ -475,92 +504,82 @@ export const DateInput = ({
           Component="span" // для <span> нормализация не нужна
           onClick={showCalendarOnInputAreaClick}
         >
-          <InputLike
+          <NumberInputLike
+            value={internalValue[0]}
+            minValue={1}
+            maxValue={31}
             length={2}
             getRootRef={daysRef}
             index={0}
             onKeyDown={handleKeyDown}
             onElementSelect={setFocusedElement}
-            value={internalValue[0]}
             label={changeDayLabel}
+            readOnly={readOnly}
             data-testid={dayFieldTestId}
-            role="spinbutton"
-            aria-valuemin={1}
-            aria-valuemax={31}
-            aria-valuetext={internalValue[0]}
-            aria-label={changeDayLabel}
           />
           <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
+          <NumberInputLike
+            value={internalValue[1]}
+            minValue={1}
+            maxValue={12}
             length={2}
             getRootRef={monthsRef}
             index={1}
             onElementSelect={setFocusedElement}
             onKeyDown={handleKeyDown}
-            value={internalValue[1]}
+            readOnly={readOnly}
             label={changeMonthLabel}
             data-testid={monthFieldTestId}
-            role="spinbutton"
-            aria-valuemin={1}
-            aria-valuemax={12}
-            aria-valuetext={internalValue[1]}
-            aria-label={changeMonthLabel}
           />
           <InputLikeDivider>.</InputLikeDivider>
-          <InputLike
+          <NumberInputLike
+            value={internalValue[2]}
+            minValue={1}
+            maxValue={275750}
             length={4}
             getRootRef={yearsRef}
             index={2}
             onElementSelect={setFocusedElement}
-            value={internalValue[2]}
+            readOnly={readOnly}
             label={changeYearLabel}
             onKeyDown={handleKeyDown}
             data-testid={yearFieldTestId}
-            role="spinbutton"
-            aria-valuemin={1}
-            aria-valuemax={275750}
-            aria-valuetext={internalValue[2]}
-            aria-label={changeYearLabel}
           />
           {enableTime && (
             <React.Fragment>
               <InputLikeDivider className={styles.inputTimeDivider}> </InputLikeDivider>
-              <InputLike
+              <NumberInputLike
+                value={internalValue[3]}
+                minValue={1}
+                maxValue={24}
                 length={2}
                 getRootRef={hoursRef}
                 index={3}
                 onElementSelect={setFocusedElement}
-                value={internalValue[3]}
+                readOnly={readOnly}
                 label={changeHoursLabel}
                 onKeyDown={handleKeyDown}
                 data-testid={hourFieldTestId}
-                role="spinbutton"
-                aria-valuemin={1}
-                aria-valuemax={24}
-                aria-valuetext={internalValue[3]}
-                aria-label={changeHoursLabel}
               />
               <InputLikeDivider>:</InputLikeDivider>
-              <InputLike
+              <NumberInputLike
+                value={internalValue[4]}
+                minValue={1}
+                maxValue={59}
                 length={2}
                 getRootRef={minutesRef}
                 index={4}
                 onElementSelect={setFocusedElement}
-                value={internalValue[4]}
+                readOnly={readOnly}
                 label={changeMinutesLabel}
                 onKeyDown={handleKeyDown}
                 data-testid={minuteFieldTestId}
-                role="spinbutton"
-                aria-valuemin={1}
-                aria-valuemax={59}
-                aria-valuetext={internalValue[4]}
-                aria-label={changeMinutesLabel}
               />
             </React.Fragment>
           )}
         </Text>
         {customValue && (
-          <Text className={styles.customValue} aria-hidden>
+          <Text className={styles.customValue} aria-hidden normalize={false}>
             {customValue}
           </Text>
         )}
@@ -578,6 +597,7 @@ export const DateInput = ({
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
             captureEscapeKeyboardEvent={false}
+            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <Calendar
               aria-label={calendarLabel}

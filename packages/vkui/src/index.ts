@@ -5,6 +5,7 @@ import './styles/focusVisible.module.css';
 import './styles/animationFades.module.css';
 import './styles/transformOriginByPlacement.module.css';
 import './styles/gaps.module.css';
+import './styles/layout.css';
 
 export { AppRoot } from './components/AppRoot/AppRoot';
 export { AppRootPortal } from './components/AppRoot/AppRootPortal';
@@ -201,6 +202,8 @@ export { SimpleCell } from './components/SimpleCell/SimpleCell';
 export type { SimpleCellProps } from './components/SimpleCell/SimpleCell';
 export { CellButton } from './components/CellButton/CellButton';
 export type { CellButtonProps } from './components/CellButton/CellButton';
+export { CellButtonGroup } from './components/CellButtonGroup/CellButtonGroup';
+export type { CellButtonGroupProps } from './components/CellButtonGroup/CellButtonGroup';
 export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';
 export type { HorizontalCellProps } from './components/HorizontalCell/HorizontalCell';
 export { HorizontalCellShowMore } from './components/HorizontalScroll/HorizontalCellShowMore/HorizontalCellShowMore';
@@ -254,6 +257,8 @@ export { Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';
 export { Spacing } from './components/Spacing/Spacing';
 export type { SpacingProps } from './components/Spacing/Spacing';
+export { Box } from './components/Box/Box';
+export type { BoxProps } from './components/Box/Box';
 export { Placeholder } from './components/Placeholder/Placeholder';
 export type {
   PlaceholderProps,
@@ -281,7 +286,7 @@ export type { CustomPaginationPageButtonProps } from './components/Pagination/Pa
 export type { CustomPaginationNavigationButton } from './components/Pagination/PaginationNavigationButton/PaginationNavigationButton';
 export { Accordion } from './components/Accordion/Accordion';
 export type { AccordionProps } from './components/Accordion/Accordion';
-export { AccordionContext } from './components/Accordion/AccordionContext';
+export { AccordionContext, useAccordionContext } from './components/Accordion/AccordionContext';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
 export type { AccordionContentProps } from './components/Accordion/AccordionContent';
 
@@ -307,9 +312,9 @@ export { DropZone } from './components/DropZone/DropZone';
 export type { DropZoneProps } from './components/DropZone/DropZone';
 export { Input } from './components/Input/Input';
 export type { InputProps } from './components/Input/Input';
+export type { ChipProps } from './components/ChipsInputBase/Chip/Chip';
 export { Chip } from './components/ChipsInputBase/Chip/Chip';
 export type {
-  ChipProps,
   ChipOption,
   RenderChipProps,
   ChipOptionValue,
@@ -341,10 +346,12 @@ export type { NativeSelectProps } from './components/NativeSelect/NativeSelect';
 export { CustomSelect } from './components/CustomSelect/CustomSelect';
 export type {
   SelectProps,
-  CustomSelectOptionInterface,
-  CustomSelectRenderOption,
   CustomSelectClearButtonProps,
 } from './components/CustomSelect/CustomSelect';
+export type {
+  CustomSelectOptionInterface,
+  CustomSelectRenderOption,
+} from './components/CustomSelect/types';
 export { CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export type { CustomSelectOptionProps } from './components/CustomSelectOption/CustomSelectOption';
 export { SegmentedControl } from './components/SegmentedControl/SegmentedControl';
@@ -459,6 +466,7 @@ export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useCSSKeyframesAnimationController as unstable_useCSSKeyframesAnimationController } from './lib/animation';
 export { useFocusVisible } from './hooks/useFocusVisible';
+export { useReducedMotion as unstable_useReducedMotion } from './lib/animation';
 
 /**
  * Utils

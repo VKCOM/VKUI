@@ -29,7 +29,7 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CardGrid
+ * @see https://vkui.io/components/card-grid
  */
 export const CardGrid = ({
   size = 's',

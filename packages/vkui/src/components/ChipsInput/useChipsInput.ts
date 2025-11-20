@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { escapeRegExp } from '@vkontakte/vkjs';
 import { useCustomEnsuredControl, useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { simulateReactInput, type SimulateReactInputTargetState } from '../../lib/react';
@@ -35,6 +36,25 @@ export const transformValue = <O extends ChipOption>(
     label: getOptionLabel(option),
     value: getOptionValue(option),
   }));
+
+function getRegExpFromArray(separators: string[]) {
+  const validSeparators = separators.filter((s) => s.length > 0);
+  if (validSeparators.length === 0) {
+    return null;
+  }
+  const escaped = validSeparators.map((s) => escapeRegExp(s));
+  return new RegExp(`(?:${escaped.join('|')})`);
+}
+
+function getRegexFromDelimiter(delimiter: string | RegExp | string[]): RegExp | null {
+  if (delimiter instanceof RegExp) {
+    return delimiter;
+  }
+  if (typeof delimiter === 'string') {
+    return new RegExp(escapeRegExp(delimiter));
+  }
+  return getRegExpFromArray(delimiter);
+}
 
 interface ToggleOption<O extends ChipOption> {
   (optionsForAdd: Array<O | string>, isNewValue: true): void;
@@ -115,7 +135,7 @@ export const useChipsInput = <O extends ChipOption>({
             ? getNewOptionData(option.value, option.label)
             : getNewOptionData(option, typeof option === 'string' ? option : '');
           resolvedNextOptionsSet.add(resolvedOption.value);
-          return resolvedOption;
+          return isLikeObjectOption ? { ...option, ...resolvedOption } : resolvedOption;
         });
 
         const nextValue = prevValue.filter(
@@ -178,13 +198,14 @@ export const useChipsInput = <O extends ChipOption>({
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, canCreate = true) => {
       const newInputValue = e.target.value;
-      if (!delimiter || !newInputValue.includes(delimiter) || !canCreate) {
+      const delimiterRegex = delimiter ? getRegexFromDelimiter(delimiter) : null;
+      if (!delimiterRegex || !delimiterRegex.test(newInputValue) || !canCreate) {
         setInputChange(e);
         return;
       }
       const values = newInputValue
         .trim()
-        .split(delimiter)
+        .split(delimiterRegex)
         .map((v) => v.trim())
         .filter(Boolean);
 

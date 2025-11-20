@@ -2,6 +2,8 @@
 import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
+import { type Mock } from 'vitest';
 import { setRef } from '../lib/utils';
 import type { HasRootRef } from '../types';
 import { usePatchChildren } from './usePatchChildren';
@@ -40,19 +42,21 @@ const WrapperWithUsePatchChildrenRef = ({
   return <div data-testid="child">{child}</div>;
 };
 
-jest.mock('../lib/warnOnce', () => ({
+vi.mock('../lib/warnOnce', () => ({
   warnOnce: () => () => console.error('custom-error'),
 }));
 
-jest.mock('./useEffectDev', () => ({
+vi.mock('./useEffectDev', () => ({
   useEffectDev: React.useEffect,
 }));
 
+type ConsoleErrorArgs = Parameters<typeof console.error>;
+
 describe(usePatchChildren, () => {
-  let consoleErrorMock: jest.SpyInstance<any, string[]> = jest.fn();
+  let consoleErrorMock: Mock<typeof console.log> = vi.fn();
   beforeAll(() => {
     consoleErrorMock.mockRestore();
-    consoleErrorMock = jest.spyOn(global.console, 'error').mockImplementation();
+    consoleErrorMock = vi.spyOn(global.console, 'error').mockImplementation(noop);
   });
   afterAll(() => {
     consoleErrorMock.mockRestore();
@@ -61,11 +65,13 @@ describe(usePatchChildren, () => {
     consoleErrorMock.mockClear();
   });
   const isReactErrorFound = () =>
-    consoleErrorMock.mock.calls.some((call) =>
+    consoleErrorMock.mock.calls.some((call: ConsoleErrorArgs) =>
       call.some((arg) => arg.startsWith('Warning: React')),
     );
   const isCustomErrorFound = () =>
-    consoleErrorMock.mock.calls.some((call) => call.some((arg) => arg.startsWith('custom-error')));
+    consoleErrorMock.mock.calls.some((call: ConsoleErrorArgs) =>
+      call.some((arg) => arg.startsWith('custom-error')),
+    );
 
   it('returns React and custom errors if children is not expected', () => {
     const Component = (props: React.DOMAttributes<HTMLDivElement>) => <div {...props} />;
@@ -147,10 +153,10 @@ describe(usePatchChildren, () => {
     ({ type, event, hasOwnEvent }) => {
       const reactElementRef = React.createRef<HTMLDivElement>();
       const ownEvent = {
-        someIntValue: 1,
-        someBoolValue: false,
-        onMouseEnter: jest.fn(),
-        onMouseLeave: jest.fn(),
+        someintvalue: 1,
+        someboolvalue: 'false',
+        onMouseEnter: vi.fn(),
+        onMouseLeave: vi.fn(),
       };
 
       let reactElement: React.ReactNode = null;
@@ -168,8 +174,8 @@ describe(usePatchChildren, () => {
       }
 
       const injectedEvents = {
-        [event]: jest.fn(),
-        onClick: jest.fn(),
+        [event]: vi.fn(),
+        onClick: vi.fn(),
       };
 
       render(
@@ -183,8 +189,8 @@ describe(usePatchChildren, () => {
         fireEvent.click(reactElementRef.current!);
       });
 
-      expect(ownEvent.someIntValue).toBe(1);
-      expect(ownEvent.someBoolValue).toBeFalsy();
+      expect(ownEvent.someintvalue).toBe(1);
+      expect(ownEvent.someboolvalue).toBe('false');
       expect(ownEvent.onMouseEnter).toHaveBeenCalledTimes(hasOwnEvent ? 1 : 0);
       expect(ownEvent.onMouseLeave).toHaveBeenCalledTimes(0);
       expect(injectedEvents.onMouseEnter).toHaveBeenCalledTimes(1);
