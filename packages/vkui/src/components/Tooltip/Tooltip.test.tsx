@@ -4,6 +4,10 @@ import { Button } from '../Button/Button';
 import { Tooltip, type TooltipProps } from './Tooltip';
 import { useTooltip } from './useTooltip';
 
+vi.mock('../../hooks/useHoverSupported', () => ({
+  useHoverSupported: vi.fn(() => true),
+}));
+
 describe(Tooltip, () => {
   baselineComponent((props) => (
     <Tooltip shown description="test" {...props}>
