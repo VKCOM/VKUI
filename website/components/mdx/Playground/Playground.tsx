@@ -42,8 +42,8 @@ export function Playground({
         <PlaygroundPreview {...restProps} />
         <PlaygroundToolbar setCodeVisible={setCodeVisible} codeVisible={codeVisible} />
         {codeVisible && (
-          <div className={styles.code}>
-            <LiveEditor style={{ whiteSpace: 'nowrap' }} />
+          <div className={styles.codeBlock}>
+            <LiveEditor className={styles.code} />
           </div>
         )}
       </LiveProvider>
