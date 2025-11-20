@@ -91,23 +91,39 @@ type OpenCustomModal = {
   ): OpenPageReturn;
 };
 
-// API предоставляемое хуком `useModalRoot`
+/**
+ * API предоставляемое хуком `useModalRoot`
+ */
 export type ModalRootApi = {
-  // Метод для открытия ModalCard, принимает свойства ModalCard.
-  // Возращает  объект типа OpenModalReturn
+  /**
+   * Метод для открытия `ModalCard`, принимает свойства `ModalCard`.
+   * Возращает  объект типа `OpenModalReturn`.
+   */
   openModalCard: (props: OpenModalCardProps) => OpenCardReturn;
-  // Метод для открытия ModalPage, принимает свойства ModalPage.
-  // Возращает  объект типа OpenModalReturn
+  /**
+   * Метод для открытия `ModalPage`, принимает свойства `ModalPage`.
+   * Возращает  объект типа `OpenModalReturn`.
+   */
   openModalPage: (props: OpenModalPageProps) => OpenPageReturn;
-  // Метод для открытия кастомного модального окна на базе `ModalCard` или `ModalPage`.
+  /**
+   * Метод для открытия кастомного модального окна на базе `ModalCard` или `ModalPage`.
+   */
   openCustomModal: OpenCustomModal;
-  // Метод для изменения свойств уже созданных модалок. Принимает id и новые свойства, которые нужно переопределить.
+  /**
+   * Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
+   */
   update: (...args: UpdateArgs) => void;
-  // Метод для закрытия определенного модального окна. Принимает id модального окна.
+  /**
+   * Метод для закрытия определенного модального окна. Принимает `id` модального окна.
+   */
   close: (id: string) => void;
-  // Метод для закрытия всех модальных окон.
+  /**
+   * Метод для закрытия всех модальных окон.
+   */
   closeAll: () => void;
-  // Метод для изменения флага saveHistory
+  /**
+   * Метод для изменения флага `saveHistory`
+   */
   setSaveHistory: (saveHistory: boolean) => void;
 };
 
