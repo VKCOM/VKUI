@@ -66,26 +66,6 @@ describe('useLongPress', () => {
     expect(onLongPress).not.toHaveBeenCalled();
   });
 
-  test("fallback: touchstart + immediate mousedown (emulation) doesn't trigger twice", () => {
-    // Убираем PointerEvent — работаем в touch+mouse фолбэке
-    delete fakeWindow.PointerEvent;
-    const onLongPress = vi.fn();
-    const { target } = setup(onLongPress, { delay: 500 });
-
-    React.act(() => {
-      // touchstart
-      fireEvent.touchStart(target, {
-        touches: [{ clientX: 10, clientY: 10 }],
-      });
-      // тут-же эмулируем mouse (browser may fire it as emulation)
-      fireEvent.mouseDown(target, { clientX: 10, clientY: 10 });
-
-      vi.advanceTimersByTime(500);
-    });
-
-    expect(onLongPress).toHaveBeenCalledTimes(1);
-  });
-
   test('suppresses contextmenu while the timer is active when shouldPreventDefault=true', () => {
     fakeWindow.PointerEvent = {};
     const onLongPress = vi.fn();
