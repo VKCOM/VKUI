@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
-import { useBooleanRef } from '../../../hooks/useBooleanRef.ts';
+import { useBooleanRef } from '../../../hooks/useBooleanRef';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
 import { useLongPress } from '../../../hooks/useLongPress';
