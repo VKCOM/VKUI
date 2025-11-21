@@ -135,6 +135,7 @@ type ModalRootBaseProps = {
 
 export interface ModalRootProps extends ModalRootBaseProps {
   children: React.ReactElement | Iterable<React.ReactElement>;
+  onOverlayClosed?: () => void;
 }
 
 type ModalRootContextBaseInterface = {

@@ -5,8 +5,10 @@ import { classNames } from '@vkontakte/vkjs';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
+import { type HasChildren } from '../../types';
 import { AppRootContext } from './AppRootContext';
 import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
+import { ModalsController } from './ModalContext';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
 import { useSafeAreaInsetsMemo } from './helpers';
 import type {
@@ -81,7 +83,19 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * и отключить это поведение.
    */
   disableSettingVKUIClassesInRuntime?: boolean;
+  /**
+   * Флаг, включающий менеджер модальных окон на уровне приложения, чтобы можно было использовать
+   * хук [`useModalsApi`](https://vkui.io/components/use-modal-root#use-modals-api).
+   */
+  enableModalsController?: boolean;
 }
+
+const ModalsControllerWrapper = ({
+  enable = false,
+  children,
+}: { enable?: boolean } & HasChildren) => {
+  return enable ? <ModalsController>{children}</ModalsController> : children;
+};
 
 /**
  * @see https://vkui.io/components/app-root
@@ -98,6 +112,7 @@ export const AppRoot = ({
   userSelectMode,
   disableSettingVKUIClassesInRuntime,
   className,
+  enableModalsController = false,
   ...props
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
@@ -157,7 +172,11 @@ export const AppRoot = ({
 
   return mode === 'partial' ? (
     <AppRootContext.Provider value={contextValue}>
-      <ScrollController elRef={appRootRef}>{children}</ScrollController>
+      <ScrollController elRef={appRootRef}>
+        <ModalsControllerWrapper enable={enableModalsController}>
+          {children}
+        </ModalsControllerWrapper>
+      </ScrollController>
     </AppRootContext.Provider>
   ) : (
     <AppRootContext.Provider value={contextValue}>
@@ -173,7 +192,11 @@ export const AppRoot = ({
         )}
         {...props}
       >
-        <ScrollController elRef={appRootRef}>{children}</ScrollController>
+        <ScrollController elRef={appRootRef}>
+          <ModalsControllerWrapper enable={enableModalsController}>
+            {children}
+          </ModalsControllerWrapper>
+        </ScrollController>
       </AppRootStyleContainer>
     </AppRootContext.Provider>
   );
