@@ -6,7 +6,7 @@ import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 interface UseDateInputValueOptions {
   value?: Date | null;
   defaultValue?: Date | null;
-  onChange?: (value?: Date) => void;
+  onChange?: (value?: Date | null) => void;
   timezone?: string;
 }
 
@@ -82,7 +82,7 @@ export const useDateInputValue = ({
   const clearValue = () => {
     setInternalValue(null);
     lastUpdatedValueRef.current = null;
-    onChange?.(undefined);
+    onChange?.(null);
   };
 
   return {

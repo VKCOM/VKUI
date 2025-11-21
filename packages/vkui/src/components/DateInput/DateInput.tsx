@@ -376,7 +376,7 @@ export const DateInput = ({
   );
 
   const onCalendarChange = React.useCallback(
-    (value?: Date | undefined) => {
+    (value?: Date | null) => {
       if (!value) {
         return;
       }
