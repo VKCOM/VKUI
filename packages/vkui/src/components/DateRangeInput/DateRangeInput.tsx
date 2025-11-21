@@ -272,15 +272,10 @@ export const DateRangeInput = ({
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
 
-  const _onChange = React.useCallback(
-    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
-    [onChange],
-  );
-
   const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
     value: valueProp,
     defaultValue,
-    onChange: _onChange,
+    onChange,
   });
 
   const onInternalValueChange = React.useCallback(
@@ -366,7 +361,7 @@ export const DateRangeInput = ({
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
   const onCalendarChange = React.useCallback(
-    (newValue: DateRangeType | undefined) => {
+    (newValue?: DateRangeType | null) => {
       updateValue(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
         removeFocusFromField();

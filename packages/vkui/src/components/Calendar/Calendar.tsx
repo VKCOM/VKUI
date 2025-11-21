@@ -115,7 +115,7 @@ export interface CalendarProps
   /**
    * Обработчик изменения выбранной даты.
    */
-  onChange?: (value?: Date) => void; // TODO [>=8]: поменять тип на `(value?: Date | null) => void`
+  onChange?: (value?: Date | null) => void;
   /**
    * Функция для проверки запрета выбора даты.
    */
@@ -201,7 +201,7 @@ export const Calendar = ({
 }: CalendarProps): React.ReactNode => {
   const _onChange = React.useCallback(
     (date: Date | null | undefined) => {
-      onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
+      onChange?.(convertDateFromTimeZone(date, timezone));
     },
     [onChange, timezone],
   );
