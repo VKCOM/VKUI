@@ -146,28 +146,30 @@
 - [ ] в чате сопровождающих оповестить о планируемом релизе
 
 Для непосредственного запуска релизов и пререлизов (`alpha`/`beta`-версии) используются Github Actions. Запуск осуществляется
-со [страницы релиза](https://github.com/VKCOM/VKUI/actions/workflows/publish.yml) или [страницы пререлиза](https://github.com/VKCOM/VKUI/actions/workflows/publish_prerelease.yml).
-Выпуск пререлиза обычно не подразумевает наличие `Milestone`/`Release Notes`, поэтому этих шагов в процессе не будет,
-но будет возможность указать `npm`-тэги (`alpha`, `beta`, `rc`). В остальном поля ничем не отличаются, а разделение было
-сделано для того, чтобы не перегружать форму с полями.
+со [страницы релиза](https://github.com/VKCOM/VKUI/actions/workflows/publish.yml).
 
 - **Use workflow from**: выбираем базовую ветку, из которой будет запущен релиз. Для выпуска **VKUI** минорных версий
   это будет `master`, для патчей - соответствующая `stable`-ветка.
 
-- **package's name**: для **VKUI** поле будет `@vkontakte/vkui`.
+- **[1] Package's name**: для **VKUI** поле будет `@vkontakte/vkui`.
 
-- **version type**: выбираем тип релиза - патч, минор или мажор. Обычно для **VKUI** выпуск из `stable`-ветки
-  соответствует изменениям типа `patch`, из `master` - `minor`.
+- **[2] Version type (!!! CHOOSE THE RIGHT BRANCH BEFORE !!!)** – выбираем тип релиза (см. [npm-version](https://docs.npmjs.com/cli/v9/commands/npm-version)).
+  Обычно для **VKUI** выпуск из `stable`-ветки соответствует изменениям типа `patch`, из `master` - `minor` или `major`. Аналогично
+  и для пре-релизов.
 
-- **use syntax x.y.z...**: данное поле может быть полезно, если вам необходимо выпустить кастомную версию, которая не
-  подчиняется релизному циклу.
+- **[3] NPM preid, ex, 0.0.0-beta.0 (it will be enabled only for pre-releases)** – выставляет постфикс при выставлении `prepatch`,
+  `preminor`, `premajor` или `prerelease`. В остальных случаях игнорируется. Выбранное значение будет использоваться по умолчанию
+  для `npm` тэга (см. шаг **[4]** ниже).
 
-- **whether to close associated...**: включенный флаг позволяет в автоматическом режиме закрывать соответствующий релизу
-  `Milestone` (все задачи, включенные в этот `Milestone`, получат комментарий-уведомление о вышедшем релизе). Актуально
-  только для релиза **VKUI**.
+- **[4] NPM tag (for stable release default is 'latest', for pre-release is preid)** – помечает опубликованный релиз `npm` тэгом
+  и проставляет такой же тэг в соответствующем `Release Notes`.
 
-- **set latest tag**: помечает опубликованный релиз в `npm` тэгом `latest` (проставляет такой же тэг в соответствующем
-  `Release Notes`).
+- **Whether to close associated milestone after publish (milestone should be exist)** – включенный флаг позволяет в автоматическом
+  режиме закрывать соответствующий релизу `Milestone` (все задачи, включенные в этот `Milestone`, получат комментарий-уведомление
+  о вышедшем релизе). Актуально только для релиза **VKUI**.
+
+- **Custom SemVer version (it will disable steps [2] and [3])** – данное поле может быть полезно, если вам необходимо выпустить
+  кастомную версию, которая не подчиняется релизному циклу.
 
 ## Другие пакеты
 

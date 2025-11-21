@@ -3,13 +3,13 @@ description: It bump version of provided package
 
 inputs:
   package_name:
-    description: package's name
+    description: Package's name
     required: true
-  new_version:
-    description: <newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease
+  version_type:
+    description: <custom> | major | minor | patch | premajor | preminor | prepatch | prerelease
     required: true
-  pre_id:
-    description: tag for NPM artifact
+  prerelease_id:
+    description: Prerelease identifier
     required: false
 
 outputs:
@@ -17,6 +17,8 @@ outputs:
     value: ${{ steps.internal_id_prev_version.outputs.value }}
   next_version:
     value: ${{ steps.internal_id_next_version.outputs.value }}
+  is_stable_release:
+    value: ${{ steps.internal_id_is_stable_release.outputs.value }}
 
 runs:
   using: composite
@@ -27,16 +29,26 @@ runs:
       shell: bash
 
     - name: Bump ${{ inputs.package_name }} package by version type
-      if: ${{ !inputs.pre_id }}
-      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.new_version }}
+      if: ${{ !inputs.prerelease_id }}
+      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.version_type }}
       shell: bash
 
     - name: Bump ${{ inputs.package_name }} package by version type (with --preid flag)
-      if: ${{ inputs.pre_id }}
-      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.new_version }} --preid ${{ inputs.pre_id }}
+      if: ${{ inputs.prerelease_id }}
+      run: yarn workspace ${{ inputs.package_name }} run g:npm:version ${{ inputs.version_type }} --preid ${{ inputs.prerelease_id }}
       shell: bash
 
     - name: Saving new version to env
       id: internal_id_next_version
       run: echo "value=$(yarn workspace ${{ inputs.package_name }} node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Detect release type
+      id: internal_id_is_stable_release
+      run: |
+        if yarn run semver ${{ steps.internal_id_next_version.outputs.value }} --range '>=0.0.0'; then
+          echo "value=true" >> $GITHUB_OUTPUT
+        else
+          echo "value=false" >> $GITHUB_OUTPUT
+        fi
       shell: bash
