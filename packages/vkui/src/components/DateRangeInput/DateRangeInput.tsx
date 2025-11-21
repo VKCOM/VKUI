@@ -162,7 +162,7 @@ export interface DateRangeInputProps
    * - календарь при открытии получает фокус, клавиатурный
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean; // TODO [>=8]: включить по умолчанию.
+  accessible?: boolean /* TODO [>=v9] удалить свойство */;
 }
 
 const elementsConfig = (index: number) => {
@@ -257,7 +257,7 @@ export const DateRangeInput = ({
   clearButtonTestId,
   showCalendarButtonTestId,
   id,
-  accessible,
+  accessible = true,
   readOnly,
   'disableCalendar': disableCalendarProp = false,
   before,

@@ -280,6 +280,7 @@ describe('CustomSelect', () => {
           { value: 1, label: 'Josh' },
         ]}
         defaultValue={0}
+        accessible={false}
         slotProps={{
           input: {
             'data-testid': INPUT_TEST_ID,

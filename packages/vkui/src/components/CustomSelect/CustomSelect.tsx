@@ -241,7 +241,7 @@ export interface SelectProps<
    * Включает режим в котором выбранное значение `CustomSelect` читается скринридерами корректно.
    * В данном режиме введенное в поле ввода значение не сбрасывается при потере фокуса.
    */
-  accessible?: boolean /* TODO [>=v8] включить по умолчанию */;
+  accessible?: boolean /* TODO [>=v9] удалить свойство */;
   /**
    * Текстовая метка для индикации процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Список опций загружается..."`.
    */
@@ -290,7 +290,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     labelTextTestId,
     nativeSelectTestId,
     'onInputKeyDown': onInputKeyDownProp,
-    accessible = false,
+    accessible = true,
     fetchingInProgressLabel,
     fetchingCompletedLabel,
 
