@@ -35,14 +35,14 @@ export type ReorderProps<ITEM = string> = Omit<ReorderRootProps, 'children'> & {
   TriggerIcon?: ReorderTriggerIconProps['Icon'];
 };
 
-const onReorder = <ITEM = string,>({ from, to }: SwappedItemRange, list: ITEM[]): ITEM[] => {
+const onReorder = <ITEM = string>({ from, to }: SwappedItemRange, list: ITEM[]): ITEM[] => {
   const _list = [...list];
   _list.splice(from, 1);
   _list.splice(to, 0, list[from]);
   return _list;
 };
 
-const defaultGetId = <ITEM = string,>(item: ITEM): string | number => {
+const defaultGetId = <ITEM = string>(item: ITEM): string | number => {
   if (typeof item === 'string' || typeof item === 'number') {
     return item;
   }
