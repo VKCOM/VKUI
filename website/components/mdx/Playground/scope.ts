@@ -149,6 +149,8 @@ import {
   UsersStack,
   useScroll,
   useScrollLock,
+  useSnackbar,
+  useSnackbarApi,
   useTodayDate,
   useTooltip,
   View,
@@ -315,4 +317,6 @@ export const scope: Record<string, unknown> = {
   useTooltip,
   usePagination,
   usePopover,
+  useSnackbar,
+  useSnackbarApi,
 };
