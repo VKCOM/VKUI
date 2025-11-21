@@ -160,6 +160,7 @@ describe('DateInput', () => {
           changeDayLabel=""
           changeHoursLabel=""
           changeMinutesLabel=""
+          accessible={false}
           {...testIds}
         />,
       );
@@ -184,7 +185,7 @@ describe('DateInput', () => {
     'should call onChange with zero sec/ms',
     withFakeTimers(async () => {
       const onChange = vi.fn();
-      render(<DateInput value={undefined} onChange={onChange} {...testIds} />);
+      render(<DateInput value={undefined} onChange={onChange} accessible={false} {...testIds} />);
       const inputLikes = getInputsLike();
 
       const [dates, months, years] = inputLikes;
@@ -455,7 +456,7 @@ describe('DateInput', () => {
       render(
         <div>
           <button type="button">Предыдущая кнопка</button>
-          <DateInput enableTime {...testIds} />
+          <DateInput enableTime accessible={false} {...testIds} />
         </div>,
       );
 
@@ -516,6 +517,7 @@ describe('DateInput', () => {
           changeMinutesLabel=""
           value={date}
           onChange={vi.fn()}
+          accessible={false}
           {...testIds}
         />,
       );
@@ -545,6 +547,7 @@ describe('DateInput', () => {
           changeMinutesLabel=""
           value={date}
           onChange={vi.fn()}
+          accessible={false}
           {...testIds}
         />,
       );
@@ -593,6 +596,7 @@ describe('DateInput', () => {
           changeMinutesLabel=""
           value={date}
           onChange={vi.fn()}
+          accessible={false}
           {...testIds}
         />,
       );
