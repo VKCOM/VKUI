@@ -26,7 +26,7 @@ jobs:
       dependencies: ${{ steps.changes.outputs.dependencies }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Find changes
         uses: dorny/paths-filter@v3
@@ -40,7 +40,7 @@ jobs:
     name: Run linters
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -95,7 +95,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -134,7 +134,7 @@ jobs:
     name: Build package
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -161,7 +161,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -183,7 +183,7 @@ jobs:
     name: Generate Diff
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup (pr)
         uses: ./.github/actions/node-setup
@@ -243,7 +243,7 @@ jobs:
     name: Upload docs dist artifact (storybook)
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -264,7 +264,7 @@ jobs:
     name: Upload docs dist artifact
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -301,7 +301,7 @@ jobs:
     name: Check dependencies
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Enable Corepack
         run: corepack enable
