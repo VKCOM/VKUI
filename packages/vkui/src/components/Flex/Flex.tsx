@@ -4,13 +4,16 @@ import {
   columnGapClassNames,
   type GapProp,
   type GapsProp,
+  resolveLayoutProps,
   rowGapClassNames,
 } from '../../lib/layouts';
+import type { LayoutProps } from '../../lib/layouts/types';
 import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
 import { FlexItem, type FlexItemProps } from './FlexItem/FlexItem';
 import styles from './Flex.module.css';
+import flexItemStyles from './FlexItem/FlexItem.module.css';
 
 export type { FlexItemProps };
 
@@ -31,6 +34,14 @@ const alignClassNames = {
   baseline: styles.alignBaseline,
 };
 
+const alignSelfClassNames = {
+  start: flexItemStyles.alignSelfStart,
+  end: flexItemStyles.alignSelfEnd,
+  center: flexItemStyles.alignSelfCenter,
+  baseline: flexItemStyles.alignSelfBaseline,
+  stretch: flexItemStyles.alignSelfStretch,
+};
+
 type FlexContentProps =
   | 'start'
   | 'end'
@@ -39,7 +50,9 @@ type FlexContentProps =
   | 'space-between'
   | 'space-evenly';
 
-export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
+export interface FlexProps
+  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
+    LayoutProps {
   /**
    * Направление осей, эквивалентно `flex-direction`.
    */
@@ -70,12 +83,20 @@ export interface FlexProps extends Omit<RootComponentProps<HTMLElement>, 'baseCl
    * Для инвертирования направления, эквивалентно `row-reverse` `column-reverse`.
    */
   reverse?: boolean;
+  /**
+   * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `align-self`.
+   */
+  alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
 }
 
 /**
  * @see https://vkui.io/components/flex
  */
 export const Flex: React.FC<FlexProps> & {
+  /**
+   * @deprecated Since 7.11.0. Будет удалено в **VKUI v9**.
+   * Используйте компонент `Flex`.
+   */
   Item: typeof FlexItem;
 } = ({
   gap = 0,
@@ -86,13 +107,15 @@ export const Flex: React.FC<FlexProps> & {
   direction = 'row',
   reverse = false,
   children,
-  ...props
+  alignSelf,
+  ...restProps
 }: FlexProps) => {
   const [rowGap, columnGap] = calculateGap(gap);
+  const resolvedProps = resolveLayoutProps(restProps);
 
   return (
     <RootComponent
-      {...props}
+      {...resolvedProps}
       baseClassName={classNames(
         styles.host,
         !noWrap && styles.wrap,
@@ -100,6 +123,7 @@ export const Flex: React.FC<FlexProps> & {
         direction !== 'row' && styles.directionColumn,
         margin !== 'none' && styles.marginAuto,
         align && alignClassNames[align],
+        alignSelf && alignSelfClassNames[alignSelf],
         justify && justifyClassNames[justify],
         getGapsPresets(rowGap, columnGap),
       )}
