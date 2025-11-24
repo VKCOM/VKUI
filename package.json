@@ -41,7 +41,7 @@
     "@vitest/eslint-plugin": "^1.4.3",
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/stylelint-config": "^4.1.0",
-    "@vkontakte/vkui-tokens": "4.70.0",
+    "@vkontakte/vkui-tokens": "4.71.0",
     "autoprefixer": "^10.4.22",
     "canvas": "^3.2.0",
     "clean-webpack-plugin": "^4.0.0",
