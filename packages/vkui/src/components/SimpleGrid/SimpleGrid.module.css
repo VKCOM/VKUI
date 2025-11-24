@@ -7,6 +7,14 @@
   gap: var(--vkui_internal--row_gap) var(--vkui_internal--column_gap);
 }
 
+.displayNone {
+  display: none;
+}
+
+.displayInlineGrid {
+  display: inline-grid;
+}
+
 .marginAuto {
   margin-block: var(--vkui--size_base_padding_vertical--regular);
   margin-inline: var(--vkui--size_base_padding_horizontal--regular);

@@ -42,6 +42,11 @@ const alignSelfClassNames = {
   stretch: flexItemStyles.alignSelfStretch,
 };
 
+const displayClassNames = {
+  'none': styles.displayNone,
+  'inline-flex': styles.displayInlineFlex,
+};
+
 type FlexContentProps =
   | 'start'
   | 'end'
@@ -87,6 +92,10 @@ export interface FlexProps
    * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `align-self`.
    */
   alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
+  /**
+   * Возможность задать css-свойство `display`.
+   */
+  display?: 'none' | 'flex' | 'inline-flex';
 }
 
 /**
@@ -108,6 +117,7 @@ export const Flex: React.FC<FlexProps> & {
   reverse = false,
   children,
   alignSelf,
+  display = 'flex',
   ...restProps
 }: FlexProps) => {
   const [rowGap, columnGap] = calculateGap(gap);
@@ -126,6 +136,7 @@ export const Flex: React.FC<FlexProps> & {
         alignSelf && alignSelfClassNames[alignSelf],
         justify && justifyClassNames[justify],
         getGapsPresets(rowGap, columnGap),
+        display !== 'flex' && displayClassNames[display],
       )}
       baseStyle={getGapsByUser(rowGap, columnGap)}
     >

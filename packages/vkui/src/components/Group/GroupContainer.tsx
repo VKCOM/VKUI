@@ -5,6 +5,8 @@ import { classNames } from '@vkontakte/vkjs';
 import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import type { SizeTypeValues } from '../../lib/adaptivity';
+import { resolveLayoutProps } from '../../lib/layouts';
+import type { LayoutProps } from '../../lib/layouts/types';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
@@ -59,8 +61,11 @@ function useGroupMode(
   return 'none';
 }
 
+type OmitAllPaddingProps<T> = { [K in keyof T as K extends `padding${string}` ? never : K]: T[K] };
+
 export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
-  HasComponent & {
+  HasComponent &
+  OmitAllPaddingProps<LayoutProps> & {
     /**
     `show` (только для `mode="plain"`) - разделитель всегда показывается
     `hide` - разделитель всегда спрятан,
@@ -90,6 +95,7 @@ export const GroupContainer = ({
   tabIndex: tabIndexProp,
   ...restProps
 }: GroupContainerProps) => {
+  const resolvedProps = resolveLayoutProps(restProps);
   const isInsideModal = useModalContext().id !== null;
   const { sizeX = 'none' } = useAdaptivity();
 
@@ -131,7 +137,7 @@ export const GroupContainer = ({
     <>
       <RootComponent
         Component="section"
-        {...restProps}
+        {...resolvedProps}
         tabIndex={tabIndex}
         baseClassName={classNames(
           'vkuiInternalGroup',

@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { resolveLayoutProps } from '../../lib/layouts';
+import type { LayoutProps } from '../../lib/layouts/types';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './RadioGroup.module.css';
 
-export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement>, LayoutProps {
   /**
    * Режим расположения элементов.
    */
@@ -17,14 +19,18 @@ export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElemen
 export const RadioGroup = ({
   mode = 'vertical',
   ...restProps
-}: RadioGroupProps): React.ReactNode => (
-  <RootComponent
-    baseClassName={classNames(
-      styles.host,
-      'vkuiInternalRadioGroup',
-      mode === 'horizontal' && styles.modeHorizontal,
-    )}
-    role="radiogroup"
-    {...restProps}
-  />
-);
+}: RadioGroupProps): React.ReactNode => {
+  const resolvedProps = resolveLayoutProps(restProps);
+
+  return (
+    <RootComponent
+      baseClassName={classNames(
+        styles.host,
+        'vkuiInternalRadioGroup',
+        mode === 'horizontal' && styles.modeHorizontal,
+      )}
+      role="radiogroup"
+      {...resolvedProps}
+    />
+  );
+};

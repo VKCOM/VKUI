@@ -24,6 +24,11 @@ const alignClassNames = {
   baseline: styles.alignBaseline,
 };
 
+const displayClassNames = {
+  'none': styles.displayNone,
+  'inline-grid': styles.displayInlineGrid,
+};
+
 export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
   /**
    * Количество колонок.
@@ -51,6 +56,10 @@ export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, '
    * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
   align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
+  /**
+   * Возможность задать css-свойство `display`.
+   */
+  display?: 'none' | 'grid' | 'inline-grid';
 }
 
 /**
@@ -62,6 +71,7 @@ export const SimpleGrid = ({
   margin = 'none',
   minColWidth,
   align = 'stretch',
+  display = 'grid',
   ...props
 }: SimpleGridProps) => {
   const style: CSSCustomProperties = {};
@@ -87,6 +97,7 @@ export const SimpleGrid = ({
         minColWidth && styles.withMinWidth,
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
+        display !== 'grid' && displayClassNames[display],
       )}
       baseStyle={style}
     />
