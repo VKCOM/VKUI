@@ -16,11 +16,11 @@ describe('GroupExpandedContent', () => {
       direction: 'block',
       className: styles.expandedContentBlock,
     },
-  ])(
-    'should have className "$className" with direction "$direction"',
-    async ({ direction, className }) => {
-      render(<GroupExpandedContent direction={direction}>Content</GroupExpandedContent>);
-      expect(screen.getByText('Content')).toHaveClass(className);
-    },
-  );
+  ])('should have className "$className" with direction "$direction"', async ({
+    direction,
+    className,
+  }) => {
+    render(<GroupExpandedContent direction={direction}>Content</GroupExpandedContent>);
+    expect(screen.getByText('Content')).toHaveClass(className);
+  });
 });

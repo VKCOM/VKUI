@@ -21,13 +21,14 @@ describe(useOrientationChange, () => {
     { angle: 90, type: 'landscape', useDeprecated: false },
     { angle: 0, type: 'portrait', useDeprecated: true },
     { angle: 90, type: 'landscape', useDeprecated: true },
-  ])(
-    'returns $type if angle is $angle (useDeprecated="$useDeprecated")',
-    ({ angle, type, useDeprecated }) => {
-      mockScreenOrientation(angle, useDeprecated);
+  ])('returns $type if angle is $angle (useDeprecated="$useDeprecated")', ({
+    angle,
+    type,
+    useDeprecated,
+  }) => {
+    mockScreenOrientation(angle, useDeprecated);
 
-      const { result } = renderHook(useOrientationChange);
-      expect(result.current).toBe(type);
-    },
-  );
+    const { result } = renderHook(useOrientationChange);
+    expect(result.current).toBe(type);
+  });
 });

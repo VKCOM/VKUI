@@ -115,104 +115,103 @@ describe(useBottomSheet, () => {
           [0, DRAG_Y + 1],
         ] as const,
       },
-    ])(
-      '- until pan gesture becomes expected ($type)',
-      ({ touchMove: [touchMoveFrom, touchMoveTo] }) => {
-        const r = render(<div data-testid="sheetEl" />);
-        const sheetEl = r.getByTestId('sheetEl');
-        Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
+    ])('- until pan gesture becomes expected ($type)', ({
+      touchMove: [touchMoveFrom, touchMoveTo],
+    }) => {
+      const r = render(<div data-testid="sheetEl" />);
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-        const h = renderHook(() => useBottomSheet(true, props));
-        act(() => h.result.current[0].setSheetEl(sheetEl));
+      const h = renderHook(() => useBottomSheet(true, props));
+      act(() => h.result.current[0].setSheetEl(sheetEl));
 
-        r.rerender(
-          <div
-            data-testid="sheetEl"
-            style={h.result.current[0].initialStyle}
-            {...h.result.current[1]}
-          />,
-        );
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+      r.rerender(
+        <div
+          data-testid="sheetEl"
+          style={h.result.current[0].initialStyle}
+          {...h.result.current[1]}
+        />,
+      );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
+      fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-        fireEvent.touchMove(
-          sheetEl,
-          touchEventMock({
-            clientX: touchMoveFrom[0],
-            clientY: touchMoveFrom[1],
-            target: sheetEl,
-          }),
-        );
-        fireEvent.touchMove(
-          sheetEl,
-          touchEventMock({ clientX: touchMoveTo[0], clientY: touchMoveTo[1], target: sheetEl }),
-        );
-        requestAnimationFrameMock.triggerNextAnimationFrame();
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(
+        sheetEl,
+        touchEventMock({
+          clientX: touchMoveFrom[0],
+          clientY: touchMoveFrom[1],
+          target: sheetEl,
+        }),
+      );
+      fireEvent.touchMove(
+        sheetEl,
+        touchEventMock({ clientX: touchMoveTo[0], clientY: touchMoveTo[1], target: sheetEl }),
+      );
+      requestAnimationFrameMock.triggerNextAnimationFrame();
 
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-        fireEvent.touchEnd(sheetEl);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
-      },
-    );
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(sheetEl);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
+    });
 
-    test.each([BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE_KEY, 'external'])(
-      '- immediately if pannedEl is not valid (pannedEl is %s)',
-      (testId) => {
-        const r = render(
-          <>
-            <div data-testid="sheetEl">
-              <div
-                data-testid={BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE_KEY}
-                {...BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE}
-              />
-            </div>
-            <div data-testid="external" />
-          </>,
-        );
-        const sheetEl = r.getByTestId('sheetEl');
-        Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
-
-        const h = renderHook(() => useBottomSheet(true, props));
-        act(() => h.result.current[0].setSheetEl(sheetEl));
-
-        r.rerender(
-          <>
+    test.each([
+      BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE_KEY,
+      'external',
+    ])('- immediately if pannedEl is not valid (pannedEl is %s)', (testId) => {
+      const r = render(
+        <>
+          <div data-testid="sheetEl">
             <div
-              data-testid="sheetEl"
-              style={h.result.current[0].initialStyle}
-              {...h.result.current[1]}
-            >
-              <div
-                data-testid={BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE_KEY}
-                {...BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE}
-              />
-            </div>
-            <div data-testid="external" />
-          </>,
-        );
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+              data-testid={BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE_KEY}
+              {...BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE}
+            />
+          </div>
+          <div data-testid="external" />
+        </>,
+      );
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-        const target = r.getByTestId(testId);
-        fireEvent.touchStart(target, touchEventMock({ clientY: 0, target }));
+      const h = renderHook(() => useBottomSheet(true, props));
+      act(() => h.result.current[0].setSheetEl(sheetEl));
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-        fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
-        fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
-        requestAnimationFrameMock.triggerNextAnimationFrame();
+      r.rerender(
+        <>
+          <div
+            data-testid="sheetEl"
+            style={h.result.current[0].initialStyle}
+            {...h.result.current[1]}
+          >
+            <div
+              data-testid={BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE_KEY}
+              {...BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE}
+            />
+          </div>
+          <div data-testid="external" />
+        </>,
+      );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+      const target = r.getByTestId(testId);
+      fireEvent.touchStart(target, touchEventMock({ clientY: 0, target }));
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-        fireEvent.touchEnd(target);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
-      },
-    );
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(target);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
+    });
 
     test.each([
       {
@@ -229,56 +228,56 @@ describe(useBottomSheet, () => {
             },
           ]
         : []),
-    ])(
-      '- until vertical scrolling on sheetScrollEl becomes expected ($description)',
-      ({ scroll, touchMove: [touchMoveFrom, touchMoveTo] }) => {
-        const r = render(
-          <div data-testid="sheetEl">
-            <div data-testid="sheetScrollEl">scroll</div>
-          </div>,
-        );
+    ])('- until vertical scrolling on sheetScrollEl becomes expected ($description)', ({
+      scroll,
+      touchMove: [touchMoveFrom, touchMoveTo],
+    }) => {
+      const r = render(
+        <div data-testid="sheetEl">
+          <div data-testid="sheetScrollEl">scroll</div>
+        </div>,
+      );
 
-        const sheetEl = r.getByTestId('sheetEl');
-        Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-        const sheetScrollEl = r.getByTestId('sheetScrollEl');
-        Object.defineProperty(sheetScrollEl, 'scrollTop', { value: scroll.scrollTop });
-        Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
-        Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: scroll.scrollHeight });
+      const sheetScrollEl = r.getByTestId('sheetScrollEl');
+      Object.defineProperty(sheetScrollEl, 'scrollTop', { value: scroll.scrollTop });
+      Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
+      Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: scroll.scrollHeight });
 
-        const h = renderHook(() => useBottomSheet(true, props));
-        act(() => {
-          h.result.current[0].setSheetEl(sheetEl);
-          h.result.current[0].setSheetScrollEl(sheetScrollEl);
-        });
+      const h = renderHook(() => useBottomSheet(true, props));
+      act(() => {
+        h.result.current[0].setSheetEl(sheetEl);
+        h.result.current[0].setSheetScrollEl(sheetScrollEl);
+      });
 
-        r.rerender(
-          <div
-            data-testid="sheetEl"
-            style={h.result.current[0].initialStyle}
-            {...h.result.current[1]}
-          >
-            <div data-testid="sheetScrollEl">scroll</div>
-          </div>,
-        );
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+      r.rerender(
+        <div
+          data-testid="sheetEl"
+          style={h.result.current[0].initialStyle}
+          {...h.result.current[1]}
+        >
+          <div data-testid="sheetScrollEl">scroll</div>
+        </div>,
+      );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        const target = sheetScrollEl;
-        fireEvent.touchStart(sheetScrollEl, touchEventMock({ clientY: 0, target }));
+      const target = sheetScrollEl;
+      fireEvent.touchStart(sheetScrollEl, touchEventMock({ clientY: 0, target }));
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-        fireEvent.touchMove(sheetScrollEl, touchEventMock({ clientY: touchMoveFrom, target }));
-        fireEvent.touchMove(sheetScrollEl, touchEventMock({ clientY: touchMoveTo, target }));
-        requestAnimationFrameMock.triggerNextAnimationFrame();
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(sheetScrollEl, touchEventMock({ clientY: touchMoveFrom, target }));
+      fireEvent.touchMove(sheetScrollEl, touchEventMock({ clientY: touchMoveTo, target }));
+      requestAnimationFrameMock.triggerNextAnimationFrame();
 
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-        fireEvent.touchEnd(sheetEl);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
-      },
-    );
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(sheetEl);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
+    });
 
     test.each([
       {
@@ -295,58 +294,58 @@ describe(useBottomSheet, () => {
             },
           ]
         : []),
-    ])(
-      '- immediately if vertical scrolling on pannedEl is scrolled ($description)',
-      ({ scroll, touchMove: [touchMoveFrom, touchMoveTo] }) => {
-        const r = render(
-          <div data-testid="sheetEl">
-            <div data-testid="innerScrollEl">
-              <div data-testid="targetEl" />
-            </div>
-          </div>,
-        );
+    ])('- immediately if vertical scrolling on pannedEl is scrolled ($description)', ({
+      scroll,
+      touchMove: [touchMoveFrom, touchMoveTo],
+    }) => {
+      const r = render(
+        <div data-testid="sheetEl">
+          <div data-testid="innerScrollEl">
+            <div data-testid="targetEl" />
+          </div>
+        </div>,
+      );
 
-        const sheetEl = r.getByTestId('sheetEl');
-        Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-        const innerScrollEl = r.getByTestId('innerScrollEl');
-        innerScrollEl.style.setProperty('overflow-y', 'scroll');
-        Object.defineProperty(innerScrollEl, 'scrollTop', { value: scroll.scrollTop });
-        Object.defineProperty(innerScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
-        Object.defineProperty(innerScrollEl, 'scrollHeight', { value: scroll.scrollHeight });
+      const innerScrollEl = r.getByTestId('innerScrollEl');
+      innerScrollEl.style.setProperty('overflow-y', 'scroll');
+      Object.defineProperty(innerScrollEl, 'scrollTop', { value: scroll.scrollTop });
+      Object.defineProperty(innerScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
+      Object.defineProperty(innerScrollEl, 'scrollHeight', { value: scroll.scrollHeight });
 
-        const h = renderHook(() => useBottomSheet(true, props));
-        act(() => h.result.current[0].setSheetEl(sheetEl));
+      const h = renderHook(() => useBottomSheet(true, props));
+      act(() => h.result.current[0].setSheetEl(sheetEl));
 
-        r.rerender(
-          <div
-            data-testid="sheetEl"
-            style={h.result.current[0].initialStyle}
-            {...h.result.current[1]}
-          >
-            <div data-testid="innerScrollEl">
-              <div data-testid="targetEl" />
-            </div>
-          </div>,
-        );
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+      r.rerender(
+        <div
+          data-testid="sheetEl"
+          style={h.result.current[0].initialStyle}
+          {...h.result.current[1]}
+        >
+          <div data-testid="innerScrollEl">
+            <div data-testid="targetEl" />
+          </div>
+        </div>,
+      );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        const target = r.getByTestId('targetEl');
-        fireEvent.touchStart(target, touchEventMock({ clientY: 0, target }));
+      const target = r.getByTestId('targetEl');
+      fireEvent.touchStart(target, touchEventMock({ clientY: 0, target }));
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-        fireEvent.touchMove(target, touchEventMock({ clientY: touchMoveFrom, target }));
-        fireEvent.touchMove(target, touchEventMock({ clientY: touchMoveTo, target }));
-        requestAnimationFrameMock.triggerNextAnimationFrame();
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(target, touchEventMock({ clientY: touchMoveFrom, target }));
+      fireEvent.touchMove(target, touchEventMock({ clientY: touchMoveTo, target }));
+      requestAnimationFrameMock.triggerNextAnimationFrame();
 
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(expectedSheetPropertyValue);
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-        fireEvent.touchEnd(sheetEl);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
-      },
-    );
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(sheetEl);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
+    });
   });
 
   describe.each([
@@ -365,240 +364,241 @@ describe(useBottomSheet, () => {
       initialPropertyValue: '100%',
       mutatedPropertyValue: `${sheetPropertyValue(100, 100, DRAG_OFFSET, SHEET_HEIGHT)}%`,
     },
-  ])(
-    'swipe down (snapPoint: $snapPoint):',
-    ({ snapPoint, initialPropertyValue, mutatedPropertyValue }) => {
-      test('– with empty content', () => {
-        const r = render(<div data-testid="sheetEl" />);
-        const sheetEl = r.getByTestId('sheetEl');
-        Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
+  ])('swipe down (snapPoint: $snapPoint):', ({
+    snapPoint,
+    initialPropertyValue,
+    mutatedPropertyValue,
+  }) => {
+    test('– with empty content', () => {
+      const r = render(<div data-testid="sheetEl" />);
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-        const h = renderHook(() => useBottomSheet(true, { ...DEFAULT_PROPS, snapPoint }));
-        act(() => h.result.current[0].setSheetEl(sheetEl));
+      const h = renderHook(() => useBottomSheet(true, { ...DEFAULT_PROPS, snapPoint }));
+      act(() => h.result.current[0].setSheetEl(sheetEl));
 
-        r.rerender(
-          <div
-            data-testid="sheetEl"
-            style={h.result.current[0].initialStyle}
-            {...h.result.current[1]}
-          />,
-        );
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
-
-        fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
-
-        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-        fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
-        fireEvent.touchMove(
-          sheetEl,
-          touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target: sheetEl }),
-        );
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
-
-        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-        fireEvent.touchEnd(sheetEl);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
-
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
-      });
-
-      test('– with sheet scroll (scroll should be blocked)', () => {
-        const r = render(
-          <div data-testid="sheetEl">
-            <div data-testid="sheetScrollEl">
-              <div data-testid="targetEl" />
-            </div>
-          </div>,
-        );
-        const sheetEl = r.getByTestId('sheetEl');
-        Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
-
-        const sheetScrollEl = r.getByTestId('sheetScrollEl');
-        Object.defineProperty(sheetScrollEl, 'scrollTop', { value: 0 });
-        Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
-        Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: SCROLL_HEIGHT });
-
-        const h = renderHook(() => useBottomSheet(true, { ...DEFAULT_PROPS, snapPoint }));
-        act(() => {
-          h.result.current[0].setSheetEl(sheetEl);
-          h.result.current[0].setSheetScrollEl(sheetScrollEl);
-        });
-
-        r.rerender(
-          <div
-            data-testid="sheetEl"
-            style={h.result.current[0].initialStyle}
-            {...h.result.current[1]}
-          >
-            <div data-testid="sheetScrollEl">
-              <div data-testid="targetEl" />
-            </div>
-          </div>,
-        );
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
-
-        const target = r.getByTestId('targetEl');
-        fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
-
-        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-        fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
-        fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
-        expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('hidden');
-
-        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-        fireEvent.touchEnd(sheetEl);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
-
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
-        expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('');
-      });
-
-      test.each([{ scrollTop: 0 }, { scrollTop: 10 }])(
-        '- with header, scroll should not be blocked (scrollTop: $scrollTop)',
-        ({ scrollTop }) => {
-          const r = render(
-            <div data-testid="sheetEl">
-              <div data-testid="header">header</div>
-              <div data-testid="sheetScrollEl">
-                <div data-testid="targetEl" />
-              </div>
-            </div>,
-          );
-          const sheetEl = r.getByTestId('sheetEl');
-          Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
-
-          const sheetScrollEl = r.getByTestId('sheetScrollEl');
-          Object.defineProperty(sheetScrollEl, 'scrollTop', { value: scrollTop });
-          Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
-          Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: SCROLL_HEIGHT });
-
-          const h = renderHook(() => useBottomSheet(true, { ...DEFAULT_PROPS, snapPoint }));
-          act(() => {
-            h.result.current[0].setSheetEl(sheetEl);
-            h.result.current[0].setSheetScrollEl(sheetScrollEl);
-          });
-
-          r.rerender(
-            <div
-              data-testid="sheetEl"
-              style={h.result.current[0].initialStyle}
-              {...h.result.current[1]}
-            >
-              <div data-testid="header">header</div>
-              <div data-testid="sheetScrollEl">
-                <div data-testid="targetEl" />
-              </div>
-            </div>,
-          );
-          expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
-
-          const target = r.getByTestId('header');
-          fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
-
-          vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-          fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
-          fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
-          requestAnimationFrameMock.triggerNextAnimationFrame();
-
-          expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
-          expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('');
-
-          vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-          fireEvent.touchEnd(sheetEl);
-          requestAnimationFrameMock.triggerNextAnimationFrame();
-          fireEvent.transitionEnd(sheetEl);
-
-          expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
-          expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('');
-        },
+      r.rerender(
+        <div
+          data-testid="sheetEl"
+          style={h.result.current[0].initialStyle}
+          {...h.result.current[1]}
+        />,
       );
-    },
-  );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
+
+      fireEvent.touchStart(sheetEl, touchEventMock({ clientX: 0, clientY: 0, target: sheetEl }));
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(sheetEl, touchEventMock({ clientY: DRAG_Y, target: sheetEl }));
+      fireEvent.touchMove(
+        sheetEl,
+        touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target: sheetEl }),
+      );
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(sheetEl);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
+
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
+    });
+
+    test('– with sheet scroll (scroll should be blocked)', () => {
+      const r = render(
+        <div data-testid="sheetEl">
+          <div data-testid="sheetScrollEl">
+            <div data-testid="targetEl" />
+          </div>
+        </div>,
+      );
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
+
+      const sheetScrollEl = r.getByTestId('sheetScrollEl');
+      Object.defineProperty(sheetScrollEl, 'scrollTop', { value: 0 });
+      Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
+      Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: SCROLL_HEIGHT });
+
+      const h = renderHook(() => useBottomSheet(true, { ...DEFAULT_PROPS, snapPoint }));
+      act(() => {
+        h.result.current[0].setSheetEl(sheetEl);
+        h.result.current[0].setSheetScrollEl(sheetScrollEl);
+      });
+
+      r.rerender(
+        <div
+          data-testid="sheetEl"
+          style={h.result.current[0].initialStyle}
+          {...h.result.current[1]}
+        >
+          <div data-testid="sheetScrollEl">
+            <div data-testid="targetEl" />
+          </div>
+        </div>,
+      );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
+
+      const target = r.getByTestId('targetEl');
+      fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
+      expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('hidden');
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(sheetEl);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
+
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
+      expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('');
+    });
+
+    test.each([
+      { scrollTop: 0 },
+      { scrollTop: 10 },
+    ])('- with header, scroll should not be blocked (scrollTop: $scrollTop)', ({ scrollTop }) => {
+      const r = render(
+        <div data-testid="sheetEl">
+          <div data-testid="header">header</div>
+          <div data-testid="sheetScrollEl">
+            <div data-testid="targetEl" />
+          </div>
+        </div>,
+      );
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
+
+      const sheetScrollEl = r.getByTestId('sheetScrollEl');
+      Object.defineProperty(sheetScrollEl, 'scrollTop', { value: scrollTop });
+      Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
+      Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: SCROLL_HEIGHT });
+
+      const h = renderHook(() => useBottomSheet(true, { ...DEFAULT_PROPS, snapPoint }));
+      act(() => {
+        h.result.current[0].setSheetEl(sheetEl);
+        h.result.current[0].setSheetScrollEl(sheetScrollEl);
+      });
+
+      r.rerender(
+        <div
+          data-testid="sheetEl"
+          style={h.result.current[0].initialStyle}
+          {...h.result.current[1]}
+        >
+          <div data-testid="header">header</div>
+          <div data-testid="sheetScrollEl">
+            <div data-testid="targetEl" />
+          </div>
+        </div>,
+      );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
+
+      const target = r.getByTestId('header');
+      fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y + DRAG_OFFSET, target }));
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(mutatedPropertyValue);
+      expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('');
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(sheetEl);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
+
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe(initialPropertyValue);
+      expect(sheetScrollEl.style.getPropertyValue('overflow-y')).toBe('');
+    });
+  });
 
   describe('collapse/expand:', () => {
-    test.each(['sheetEl', 'targetInnerSheetScrollEl'])(
-      '– by drag to half of viewport (data-testid="$testId")',
-      (testId) => {
-        const DRAG_TO_HALF_OF_SHEET_HEIGHT = DRAG_OFFSET + SHEET_HEIGHT / 2;
+    test.each([
+      'sheetEl',
+      'targetInnerSheetScrollEl',
+    ])('– by drag to half of viewport (data-testid="$testId")', (testId) => {
+      const DRAG_TO_HALF_OF_SHEET_HEIGHT = DRAG_OFFSET + SHEET_HEIGHT / 2;
 
-        const r = render(
-          <div data-testid="sheetEl">
-            <div data-testid="sheetScrollEl">
-              <div data-testid="targetInnerSheetScrollEl" />
-            </div>
-          </div>,
-        );
-        const sheetEl = r.getByTestId('sheetEl');
-        Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
+      const r = render(
+        <div data-testid="sheetEl">
+          <div data-testid="sheetScrollEl">
+            <div data-testid="targetInnerSheetScrollEl" />
+          </div>
+        </div>,
+      );
+      const sheetEl = r.getByTestId('sheetEl');
+      Object.defineProperty(sheetEl, 'offsetHeight', { value: SHEET_HEIGHT });
 
-        const sheetScrollEl = r.getByTestId('sheetScrollEl');
-        Object.defineProperty(sheetScrollEl, 'scrollTop', { value: 0 });
-        Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
-        Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: SCROLL_HEIGHT });
+      const sheetScrollEl = r.getByTestId('sheetScrollEl');
+      Object.defineProperty(sheetScrollEl, 'scrollTop', { value: 0 });
+      Object.defineProperty(sheetScrollEl, 'clientHeight', { value: SHEET_HEIGHT });
+      Object.defineProperty(sheetScrollEl, 'scrollHeight', { value: SCROLL_HEIGHT });
 
-        const h = renderHook(() => useBottomSheet(true, DEFAULT_PROPS));
-        act(() => {
-          h.result.current[0].setSheetEl(sheetEl);
-          h.result.current[0].setSheetScrollEl(sheetScrollEl);
-        });
+      const h = renderHook(() => useBottomSheet(true, DEFAULT_PROPS));
+      act(() => {
+        h.result.current[0].setSheetEl(sheetEl);
+        h.result.current[0].setSheetScrollEl(sheetScrollEl);
+      });
 
-        r.rerender(
-          <div
-            data-testid="sheetEl"
-            style={h.result.current[0].initialStyle}
-            {...h.result.current[1]}
-          >
-            <div data-testid="header">header</div>
-            <div data-testid="sheetScrollEl">
-              <div data-testid="targetInnerSheetScrollEl" />
-            </div>
-          </div>,
-        );
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe('50%');
+      r.rerender(
+        <div
+          data-testid="sheetEl"
+          style={h.result.current[0].initialStyle}
+          {...h.result.current[1]}
+        >
+          <div data-testid="header">header</div>
+          <div data-testid="sheetScrollEl">
+            <div data-testid="targetInnerSheetScrollEl" />
+          </div>
+        </div>,
+      );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe('50%');
 
-        const target = r.getByTestId(testId);
-        fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
+      const target = r.getByTestId(testId);
+      fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:00'));
-        fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
-        fireEvent.touchMove(
-          target,
-          touchEventMock({ clientY: DRAG_Y - DRAG_TO_HALF_OF_SHEET_HEIGHT, target }),
-        );
-        requestAnimationFrameMock.triggerNextAnimationFrame();
+      vi.setSystemTime(new Date('2024-01-01T00:00:00'));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
+      fireEvent.touchMove(
+        target,
+        touchEventMock({ clientY: DRAG_Y - DRAG_TO_HALF_OF_SHEET_HEIGHT, target }),
+      );
+      requestAnimationFrameMock.triggerNextAnimationFrame();
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:02'));
-        fireEvent.touchEnd(target);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
+      vi.setSystemTime(new Date('2024-01-01T00:00:02'));
+      fireEvent.touchEnd(target);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
 
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe('100%');
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe('100%');
 
-        // обратно в 50%
-        vi.setSystemTime(new Date('2024-01-01T00:00:04'));
-        fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
-        fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
-        fireEvent.touchMove(
-          target,
-          touchEventMock({ clientY: DRAG_Y + DRAG_TO_HALF_OF_SHEET_HEIGHT, target }),
-        );
-        requestAnimationFrameMock.triggerNextAnimationFrame();
+      // обратно в 50%
+      vi.setSystemTime(new Date('2024-01-01T00:00:04'));
+      fireEvent.touchStart(target, touchEventMock({ clientX: 0, clientY: 0, target }));
+      fireEvent.touchMove(target, touchEventMock({ clientY: DRAG_Y, target }));
+      fireEvent.touchMove(
+        target,
+        touchEventMock({ clientY: DRAG_Y + DRAG_TO_HALF_OF_SHEET_HEIGHT, target }),
+      );
+      requestAnimationFrameMock.triggerNextAnimationFrame();
 
-        vi.setSystemTime(new Date('2024-01-01T00:00:06'));
-        fireEvent.touchEnd(target);
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        fireEvent.transitionEnd(sheetEl);
+      vi.setSystemTime(new Date('2024-01-01T00:00:06'));
+      fireEvent.touchEnd(target);
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      fireEvent.transitionEnd(sheetEl);
 
-        expect(sheetEl.style.getPropertyValue('--sheet')).toBe('50%');
-      },
-    );
+      expect(sheetEl.style.getPropertyValue('--sheet')).toBe('50%');
+    });
 
     test('– by drag velocity', () => {
       const r = render(<div data-testid="sheetEl" />);

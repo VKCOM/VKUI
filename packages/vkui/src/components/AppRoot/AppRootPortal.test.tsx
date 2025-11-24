@@ -46,74 +46,72 @@ describe('AppRootPortal', () => {
     expect(screen.getByTestId('portal-root').childElementCount).toBe(0);
   });
 
-  it.each(['embedded', 'partial'] as const)(
-    'uses document.body by default for portal if nothing specific is provided in %s mode',
-    (mode) => {
-      const TestComponent = ({ mode }: { mode: AppRootProps['mode'] }) => {
-        const [opened, setOpened] = React.useState(false);
+  it.each([
+    'embedded',
+    'partial',
+  ] as const)('uses document.body by default for portal if nothing specific is provided in %s mode', (mode) => {
+    const TestComponent = ({ mode }: { mode: AppRootProps['mode'] }) => {
+      const [opened, setOpened] = React.useState(false);
 
-        return (
-          <AppRoot mode={mode}>
-            <button
-              onClick={() => {
-                setOpened((opened) => !opened);
-              }}
-            >
-              Toggle modal
-            </button>
-            {opened ? (
-              <AppRootPortal>
-                <div>content</div>
-              </AppRootPortal>
-            ) : null}
-          </AppRoot>
-        );
-      };
-
-      render(<TestComponent mode={mode} />);
-
-      expect(document.body.childElementCount).toBe(1);
-
-      fireEvent.click(screen.getByText(/Toggle modal/));
-
-      expect(document.body.childElementCount).toBe(2);
-    },
-  );
-
-  it.each(['embedded', 'partial'] as const)(
-    'uses provided to AppRoot portalRoot in %s mode',
-    (mode) => {
-      render(<TestComponent appRootProps={{ mode }} />);
-
-      fireEvent.click(screen.getByText(/Toggle modal/));
-
-      expect(screen.getByTestId('portal-root').childElementCount).toBe(1);
-    },
-  );
-
-  it.each(['embedded', 'partial'] as const)(
-    'uses provided to AppRoot portalRoot directly as HTMLElement in %s mode when element is set via state update',
-    (mode) => {
-      const TestComponent = ({ mode }: { mode: AppRootProps['mode'] }) => {
-        const [portalRootElement, setPortalRootElement] = React.useState<HTMLDivElement | null>(
-          null,
-        );
-
-        return (
-          <AppRoot mode={mode} portalRoot={portalRootElement}>
+      return (
+        <AppRoot mode={mode}>
+          <button
+            onClick={() => {
+              setOpened((opened) => !opened);
+            }}
+          >
+            Toggle modal
+          </button>
+          {opened ? (
             <AppRootPortal>
               <div>content</div>
             </AppRootPortal>
-            <div data-testid="portal-root" ref={setPortalRootElement} />
-          </AppRoot>
-        );
-      };
+          ) : null}
+        </AppRoot>
+      );
+    };
 
-      render(<TestComponent mode={mode} />);
+    render(<TestComponent mode={mode} />);
 
-      expect(screen.getByTestId('portal-root').childElementCount).toBe(1);
-    },
-  );
+    expect(document.body.childElementCount).toBe(1);
+
+    fireEvent.click(screen.getByText(/Toggle modal/));
+
+    expect(document.body.childElementCount).toBe(2);
+  });
+
+  it.each([
+    'embedded',
+    'partial',
+  ] as const)('uses provided to AppRoot portalRoot in %s mode', (mode) => {
+    render(<TestComponent appRootProps={{ mode }} />);
+
+    fireEvent.click(screen.getByText(/Toggle modal/));
+
+    expect(screen.getByTestId('portal-root').childElementCount).toBe(1);
+  });
+
+  it.each([
+    'embedded',
+    'partial',
+  ] as const)('uses provided to AppRoot portalRoot directly as HTMLElement in %s mode when element is set via state update', (mode) => {
+    const TestComponent = ({ mode }: { mode: AppRootProps['mode'] }) => {
+      const [portalRootElement, setPortalRootElement] = React.useState<HTMLDivElement | null>(null);
+
+      return (
+        <AppRoot mode={mode} portalRoot={portalRootElement}>
+          <AppRootPortal>
+            <div>content</div>
+          </AppRootPortal>
+          <div data-testid="portal-root" ref={setPortalRootElement} />
+        </AppRoot>
+      );
+    };
+
+    render(<TestComponent mode={mode} />);
+
+    expect(screen.getByTestId('portal-root').childElementCount).toBe(1);
+  });
 
   it('does not use portal when portal is disabled in AppRoot', () => {
     render(<TestComponent appRootProps={{ mode: 'partial', disablePortal: true }} />);

@@ -238,25 +238,25 @@ describe('AppRoot', () => {
       expect(document.documentElement).toHaveClass('vkui--layout-plain');
     });
 
-    it.each(['embedded', 'partial'] as const)(
-      'does not add layout classes to html element in %s mode',
-      (mode) => {
-        const component = render(<AppRoot mode={mode} />);
+    it.each([
+      'embedded',
+      'partial',
+    ] as const)('does not add layout classes to html element in %s mode', (mode) => {
+      const component = render(<AppRoot mode={mode} />);
 
-        expect(document.documentElement).not.toHaveClass('vkui--layout-card');
-        expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+      expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+      expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
 
-        component.rerender(<AppRoot mode={mode} layout="card" />);
+      component.rerender(<AppRoot mode={mode} layout="card" />);
 
-        expect(document.documentElement).not.toHaveClass('vkui--layout-card');
-        expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+      expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+      expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
 
-        component.rerender(<AppRoot mode={mode} layout="plain" />);
+      component.rerender(<AppRoot mode={mode} layout="plain" />);
 
-        expect(document.documentElement).not.toHaveClass('vkui--layout-card');
-        expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
-      },
-    );
+      expect(document.documentElement).not.toHaveClass('vkui--layout-card');
+      expect(document.documentElement).not.toHaveClass('vkui--layout-plain');
+    });
 
     it('does not add class="vkui" to html element but adds vkui__root to AppRoot parent in embedded mode', () => {
       const component = render(<AppRoot mode="embedded" />);
@@ -270,14 +270,14 @@ describe('AppRoot', () => {
       expect(component.container).not.toHaveClass('vkui__root');
     });
 
-    it.each(['full', 'embedded'] as const)(
-      'adds nothing in %s mode with disableSettingVKUIClassesInRuntime prop',
-      (mode) => {
-        const component = render(<AppRoot mode={mode} disableSettingVKUIClassesInRuntime />);
-        expect(document.documentElement).not.toHaveClass('vkui');
-        expect(component.container).not.toHaveClass('vkui__root');
-      },
-    );
+    it.each([
+      'full',
+      'embedded',
+    ] as const)('adds nothing in %s mode with disableSettingVKUIClassesInRuntime prop', (mode) => {
+      const component = render(<AppRoot mode={mode} disableSettingVKUIClassesInRuntime />);
+      expect(document.documentElement).not.toHaveClass('vkui');
+      expect(component.container).not.toHaveClass('vkui__root');
+    });
 
     it('adds nothing in "partial" mode', () => {
       const component = render(<AppRoot mode="partial" data-testid="app-root" />);
@@ -317,37 +317,34 @@ describe('AppRoot', () => {
         ColorScheme.DARK,
         { android: { dark: CUSTOM_TOKEN_CLASS_NAME } },
       ],
-    ])(
-      'should use %s tokensClassName if platform="%s" colorScheme="%s" tokensClassNames={%o}',
-      (type, platform, colorScheme, tokensClassNames) => {
-        const { unmount } = render(
-          <ConfigProvider
-            platform={platform}
-            colorScheme={colorScheme}
-            tokensClassNames={tokensClassNames}
-          >
-            <AppRoot />
-          </ConfigProvider>,
-        );
-        const tokensClassName =
-          type === 'default'
-            ? DEFAULT_TOKENS_CLASS_NAMES[platform][colorScheme]
-            : CUSTOM_TOKEN_CLASS_NAME;
-        expect(document.documentElement).toHaveClass(tokensClassName);
-        unmount();
-        expect(document.documentElement).not.toHaveClass(tokensClassName);
-      },
-    );
+    ])('should use %s tokensClassName if platform="%s" colorScheme="%s" tokensClassNames={%o}', (type, platform, colorScheme, tokensClassNames) => {
+      const { unmount } = render(
+        <ConfigProvider
+          platform={platform}
+          colorScheme={colorScheme}
+          tokensClassNames={tokensClassNames}
+        >
+          <AppRoot />
+        </ConfigProvider>,
+      );
+      const tokensClassName =
+        type === 'default'
+          ? DEFAULT_TOKENS_CLASS_NAMES[platform][colorScheme]
+          : CUSTOM_TOKEN_CLASS_NAME;
+      expect(document.documentElement).toHaveClass(tokensClassName);
+      unmount();
+      expect(document.documentElement).not.toHaveClass(tokensClassName);
+    });
 
-    it.each(['embedded', 'partial'] as const)(
-      'does not add token classname to html element in %s mode',
-      (mode) => {
-        const { unmount } = render(<AppRoot mode={mode} />);
-        expect(document.documentElement.classList.toString()).toBe('');
-        unmount();
-        expect(document.documentElement.classList.toString()).toBe('');
-      },
-    );
+    it.each([
+      'embedded',
+      'partial',
+    ] as const)('does not add token classname to html element in %s mode', (mode) => {
+      const { unmount } = render(<AppRoot mode={mode} />);
+      expect(document.documentElement.classList.toString()).toBe('');
+      unmount();
+      expect(document.documentElement.classList.toString()).toBe('');
+    });
   });
 
   it('should add tokensClassName to embedded element of AppRoot inner full AppRoot and removes on unmount', async () => {

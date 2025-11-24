@@ -28,18 +28,17 @@ describe(mergeStyle, () => {
       output: { color: 'blue' },
     },
   ] as const)('mergeStyle($a, $b) is $output', ({ a, b, output }) =>
-    expect(mergeStyle(a, b)).toStrictEqual(output),
-  );
+    expect(mergeStyle(a, b)).toStrictEqual(output));
 
   const testStyles = { display: 'flex' };
   const copyTestStyles = { ...testStyles };
 
-  it.each([[[undefined, testStyles]], [[testStyles, undefined]]] as const)(
-    'mergeStyle(%p) is not copy',
-    ([a, b]) => {
-      const result = mergeStyle(a, b);
-      expect(result).toBe(testStyles);
-      expect(result).not.toBe(copyTestStyles);
-    },
-  );
+  it.each([
+    [[undefined, testStyles]],
+    [[testStyles, undefined]],
+  ] as const)('mergeStyle(%p) is not copy', ([a, b]) => {
+    const result = mergeStyle(a, b);
+    expect(result).toBe(testStyles);
+    expect(result).not.toBe(copyTestStyles);
+  });
 });
