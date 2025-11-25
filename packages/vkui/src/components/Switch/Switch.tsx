@@ -94,6 +94,7 @@ export const Switch = ({
     onBlur: onInputBlur,
     onFocus: onInputFocus,
     onClick,
+    className: inputClassName,
     ...inputRest
   } = useMergeProps(
     {
@@ -175,7 +176,7 @@ export const Switch = ({
       onClick={withLabelClickWrapper(onRootClick)}
       {...rootRest}
     >
-      <VisuallyHidden baseClassName={styles.inputNative} {...inputProps} />
+      <VisuallyHidden className={classNames(inputClassName, styles.inputNative)} {...inputProps} />
       <span aria-hidden className={styles.inputFake}>
         <span className={styles.track} />
         <span

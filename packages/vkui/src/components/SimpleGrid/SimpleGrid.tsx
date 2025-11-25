@@ -31,9 +31,7 @@ const displayClassNames = {
   'inline-grid': styles.displayInlineGrid,
 };
 
-export interface SimpleGridProps
-  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
-    LayoutProps {
+export interface SimpleGridProps extends RootComponentProps<HTMLElement>, LayoutProps {
   /**
    * Количество колонок.
    */
@@ -94,7 +92,6 @@ export const SimpleGrid = ({
 
   return (
     <RootComponent
-      {...resolvedProps}
       baseClassName={classNames(
         styles.host,
         margin !== 'none' && marginClassNames[margin],
@@ -105,6 +102,7 @@ export const SimpleGrid = ({
         display !== 'grid' && displayClassNames[display],
       )}
       baseStyle={style}
+      {...resolvedProps}
     />
   );
 };

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../../hooks/useMergeProps';
 import { warnOnce } from '../../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../../types';
@@ -99,7 +100,7 @@ export function RadioInput({
 
   const rootRest = useMergeProps(restProps, slotProps?.root);
 
-  const inputProps = useMergeProps(
+  const { className: inputClassName, ...inputProps } = useMergeProps(
     {
       getRootRef: getRef,
       checked,
@@ -120,7 +121,12 @@ export function RadioInput({
 
   return (
     <RootComponent {...rootRest}>
-      <VisuallyHidden Component="input" type="radio" baseClassName={styles.input} {...inputProps} />
+      <VisuallyHidden
+        Component="input"
+        type="radio"
+        className={classNames(inputClassName, styles.input)}
+        {...inputProps}
+      />
       <RadioIcon />
     </RootComponent>
   );
