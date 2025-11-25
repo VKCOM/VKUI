@@ -167,11 +167,12 @@ const [colors, setColors] = React.useState([]);
         { value: 'blue', label: 'Синий' },
       ]}
       placeholder="Введите значение"
+      className="my-root-class"
+      data-testid="chips-input-root"
+      id="colors-input-id"
       slotProps={{
         root: {
           id: 'chips-input-root-id',
-          className: 'my-root-class',
-          'data-testid': 'chips-input-root',
         },
         input: {
           className: 'my-input-class',

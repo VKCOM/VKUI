@@ -104,11 +104,12 @@ const [gender, setGender] = React.useState('f');
 
   return (
     <NativeSelect
+      className="my-root-class"
+      data-testid="native-select-root"
+      id="native-select-id"
       slotProps={{
         root: {
           id: 'select-root-id',
-          className: 'my-root-class',
-          'data-testid': 'select-root',
         },
         select: {
           className: 'my-select-class',

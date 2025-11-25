@@ -102,11 +102,12 @@ const [checked, setChecked] = React.useState(false);
   return (
     <Checkbox
       defaultChecked={false}
+      className="my-root-class"
+      data-testid="checkbox-root"
+      id="checkbox-input-id"
       slotProps={{
         root: {
           id: 'checkbox-root-id',
-          className: 'my-root-class',
-          'data-testid': 'checkbox-root',
         },
         input: {
           className: 'my-input-class',

@@ -512,11 +512,12 @@ return (
         { value: 3, label: 'Йошкар-Ола' },
       ]}
       placeholder="Выберите город"
+      className="my-root-class"
+      data-testid="select-root"
+      id="custom-select-input-id"
       slotProps={{
         root: {
           id: 'select-root-id',
-          className: 'my-root-class',
-          'data-testid': 'select-root',
         },
         input: {
           className: 'my-input-class',

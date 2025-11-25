@@ -31,11 +31,12 @@ description: Компонент для загрузки файлов.
 
   return (
     <File
+      className="my-root-class"
+      data-testid="file-root"
+      id="file-input-id"
       slotProps={{
         root: {
           id: 'file-root-id',
-          className: 'my-root-class',
-          'data-testid': 'file-root',
         },
         input: {
           className: 'my-input-class',
