@@ -153,6 +153,8 @@ export interface DateRangeInputProps
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
   /**
+   * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
+   *
    * Включает режим в котором DateRangeInput доступен
    * для ассистивных технологий.
    * В этом режиме:

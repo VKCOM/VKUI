@@ -238,6 +238,8 @@ export interface SelectProps<
    */
   onInputKeyDown?: (e: React.KeyboardEvent, isOpen: boolean) => void;
   /**
+   * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
+   *
    * Включает режим в котором выбранное значение `CustomSelect` читается скринридерами корректно.
    * В данном режиме введенное в поле ввода значение не сбрасывается при потере фокуса.
    */

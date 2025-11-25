@@ -158,6 +158,8 @@ export interface DateInputProps
    */
   timezone?: string;
   /**
+   * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
+   *
    * Включает режим в котором DateInput доступен
    * для ассистивных технологий.
    * В этом режиме:

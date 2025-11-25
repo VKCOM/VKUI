@@ -12,7 +12,7 @@ description: Компонент для поля даты и времени.
 
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateInput accessible />
+  <DateInput />
   ```
 </Playground>
 
@@ -38,12 +38,12 @@ React-компонентов, прочитать про это можно в [д
 
 ```jsx
 // Неконтролируемое состояние
-<DateInput defaultValue={new Date()} accessible />;
+<DateInput defaultValue={new Date()} />;
 
 // Контролируемое состояние
 const [date, setDate] = React.useState(new Date());
 
-<DateInput value={date} onChange={setDate} accessible />;
+<DateInput value={date} onChange={setDate} />;
 ```
 
 ## Состояния
@@ -54,7 +54,7 @@ const [date, setDate] = React.useState(new Date());
 
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateInput defaultValue={new Date()} disabled accessible />
+  <DateInput defaultValue={new Date()} disabled />
   ```
 </Playground>
 
@@ -69,8 +69,8 @@ const [date, setDate] = React.useState(new Date());
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <Flex direction="column" gap="m">
-    <DateInput status="error" defaultValue={new Date()} accessible />
-    <DateInput status="valid" defaultValue={new Date()} accessible />
+    <DateInput status="error" defaultValue={new Date()} />
+    <DateInput status="valid" defaultValue={new Date()} />
   </Flex>
   ```
 </Playground>
@@ -95,10 +95,9 @@ const [date, setDate] = React.useState(new Date());
 
 Новое, доступное поведение можно включить с помощью нового свойства `accessible`.
 
-> Настоятельно рекомендуем включить режим `accessible` доступным уже сейчас. В VKUI v8 режим `accessible` будет включен
-> по умолчанию.
+С `v8` этой свойство включено по умолчанию. Рекомендуется не отключать это поведение, так как этот флаг будет выключен в `v9`
 
-Вот список изменений которые отличают поведение со свойством `accessible` от поведения по умолчанию:
+Вот список изменений которые отличают поведение со свойством `accessible` от поведения без:
 
 - иконка календаря видна постоянно (раньше она была видна, только если в `DateInput` нет значения);
 - календарь открывается только по клику по иконке календаря, по клику на поле ввода и нажатию клавиши `<Space>`,
@@ -114,18 +113,18 @@ const [date, setDate] = React.useState(new Date());
 ```jsx
 <label>
   День рождения
-  <DateInput aria-label="День рождения" accessible />
+  <DateInput aria-label="День рождения" />
 </label>
 ```
 
 ```jsx
 <label htmlFor="date"> День рождения</label>
-<DateInput id="date" aria-label="День рождения" accessible />
+<DateInput id="date" aria-label="День рождения" />
 ```
 
 ```jsx
 <FormItem top="День рождения" htmlFor="date">
-  <DateInput id="date" aria-label="День рождения" accessible />
+  <DateInput id="date" aria-label="День рождения" />
 </FormItem>
 ```
 
