@@ -199,11 +199,12 @@ return (
     <WriteBar
       before={<WriteBarIcon mode="attach" />}
       placeholder="Введите сообщение..."
+      className="my-root-class"
+      data-testid="write-bar-root"
+      id="write-bar-textarea-id"
       slotProps={{
         root: {
           id: 'write-bar-root-id',
-          className: 'my-root-class',
-          'data-testid': 'write-bar-root',
         },
         input: {
           className: 'my-textarea-class',

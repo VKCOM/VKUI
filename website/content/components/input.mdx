@@ -76,11 +76,12 @@ const [text, setText] = React.useState('Текст');
   return (
     <Input
       defaultValue="Пример со slotProps"
+      className="my-root-class"
+      data-testid="input-root"
+      id="input-id"
       slotProps={{
         root: {
           id: 'input-root-id',
-          className: 'my-root-class',
-          'data-testid': 'input-root',
         },
         input: {
           className: 'my-input-class',

@@ -85,11 +85,12 @@ const [checked, setChecked] = React.useState(false);
   return (
     <Radio
       defaultChecked={false}
+      className="my-root-class"
+      data-testid="radio-root"
+      id="radio-input-id"
       slotProps={{
         root: {
           id: 'radio-root-id',
-          className: 'my-root-class',
-          'data-testid': 'radio-root',
         },
         input: {
           className: 'my-input-class',

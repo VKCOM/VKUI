@@ -62,11 +62,12 @@ const [checked, setChecked] = React.useState(false);
   return (
     <Switch
       defaultChecked
+      className="my-root-class"
+      data-testid="switch-root"
+      id="switch-input-id"
       slotProps={{
         root: {
           id: 'switch-root-id',
-          className: 'my-root-class',
-          'data-testid': 'switch-root',
         },
         input: {
           className: 'my-input-class',

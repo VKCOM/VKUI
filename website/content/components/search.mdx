@@ -99,11 +99,12 @@ const [value, setValue] = React.useState('Поиск');
   return (
     <Search
       defaultValue="Пример со slotProps"
+      className="my-root-class"
+      data-testid="search-root"
+      id="search-input-id"
       slotProps={{
         root: {
           id: 'search-root-id',
-          className: 'my-root-class',
-          'data-testid': 'search-root',
         },
         input: {
           className: 'my-input-class',

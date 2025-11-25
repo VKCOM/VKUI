@@ -76,11 +76,12 @@ const [text, setText] = React.useState('Текст');
   return (
     <Textarea
       defaultValue="Пример со slotProps"
+      className="my-root-class"
+      data-testid="textarea-root"
+      id="textarea-id"
       slotProps={{
         root: {
           id: 'textarea-root-id',
-          className: 'my-root-class',
-          'data-testid': 'textarea-root',
         },
         input: {
           className: 'my-textarea-class',

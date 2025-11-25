@@ -146,11 +146,9 @@ const contentRef = React.useRef();
 
 return (
   <SplitLayout
+    className="my-root-class"
+    data-testid="split-layout-root"
     slotProps={{
-      root: {
-         className: 'my-root-class',
-        'data-testid': 'split-layout-root',
-      },
       content: {
          className: 'my-content-class',
         'data-testid': 'split-layout-content',
