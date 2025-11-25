@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent, useRef } from 'react';
+import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Keys, pressedKey } from '../../lib/accessibility';
@@ -8,10 +8,8 @@ import { callMultiple } from '../../lib/callMultiple';
 import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
-import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
+import { CalendarTimePicker } from './CalendarTimePicker';
 import styles from './CalendarTime.module.css';
-
-const selectFilterFn = () => true;
 
 export type CalendarTimeTestsProps = {
   /**
@@ -90,17 +88,6 @@ for (let i = 0; i < 60; i += 1) {
   minutes.push({ value: i, label: String(i).padStart(2, '0') });
 }
 
-const validateValue = (
-  value: string,
-  validValues: Array<{
-    value: number;
-    label: string;
-  }>,
-): boolean => {
-  const numValue = Number(value);
-  return !isNaN(numValue) && validValues.some((v) => v.value === numValue);
-};
-
 export const CalendarTime = ({
   value,
   onChange,
@@ -131,37 +118,6 @@ export const CalendarTime = ({
         return { ...minute, disabled: isDayDisabled(setMinutes(value, minute.value), true) };
       })
     : minutes;
-
-  const onPickerValueChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    validate: (numericValue: string) => boolean,
-    setter: (value: Date, numericValue: number) => Date,
-  ) => {
-    const numericValue = e.target.value.replace(/\D/g, '');
-    e.target.value = numericValue;
-    if (validate(numericValue)) {
-      onChange?.(setter(value, Number(numericValue)));
-    }
-  };
-
-  const onHoursInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateValue(numValue, localHours), setHours);
-  };
-
-  const onMinutesInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onPickerValueChange(e, (numValue) => validateValue(numValue, localMinutes), setMinutes);
-  };
-
-  const onHoursChange = React.useCallback(
-    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
-      onChange?.(setHours(value, Number(newValue))),
-    [onChange, value],
-  );
-  const onMinutesChange = React.useCallback(
-    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
-      onChange?.(setMinutes(value, Number(newValue))),
-    [onChange, value],
-  );
 
   const onPickerKeyDown = (e: React.KeyboardEvent) => {
     const key = pressedKey(e);
@@ -220,53 +176,29 @@ export const CalendarTime = ({
 
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
-      <div className={styles.picker}>
-        <AdaptivityProvider sizeY="compact">
-          <CustomSelect
-            // TODO: избавиться от accessible={false}
-            accessible={false}
-            value={value.getHours()}
-            options={localHours}
-            onChange={onHoursChange}
-            forceDropdownPortal={false}
-            searchable
-            filterFn={selectFilterFn}
-            onInputChange={onHoursInputChange}
-            onInputKeyDown={onSelectInputKeyDown}
-            getSelectInputRef={hoursInputRef}
-            slotProps={{
-              input: {
-                'aria-label': changeHoursLabel,
-                'data-testid': hoursTestId,
-              },
-            }}
-          />
-        </AdaptivityProvider>
-      </div>
+      <CalendarTimePicker
+        value={value}
+        getNumericValue={(v) => v.getHours()}
+        onChange={onChange}
+        options={localHours}
+        setTime={setHours}
+        onInputKeyDown={onSelectInputKeyDown}
+        inputRef={hoursInputRef}
+        inputLabel={changeHoursLabel}
+        inputTestId={hoursTestId}
+      />
       <div className={styles.divider}>:</div>
-      <div className={styles.picker}>
-        <AdaptivityProvider sizeY="compact">
-          <CustomSelect
-            // TODO: избавиться от accessible={false}
-            accessible={false}
-            value={value.getMinutes()}
-            options={localMinutes}
-            onChange={onMinutesChange}
-            forceDropdownPortal={false}
-            searchable
-            filterFn={selectFilterFn}
-            onInputChange={onMinutesInputChange}
-            getSelectInputRef={minutesInputRef}
-            onInputKeyDown={onSelectInputKeyDown}
-            slotProps={{
-              input: {
-                'aria-label': changeMinutesLabel,
-                'data-testid': minutesTestId,
-              },
-            }}
-          />
-        </AdaptivityProvider>
-      </div>
+      <CalendarTimePicker
+        value={value}
+        getNumericValue={(v) => v.getMinutes()}
+        onChange={onChange}
+        options={localMinutes}
+        setTime={setMinutes}
+        onInputKeyDown={onSelectInputKeyDown}
+        inputRef={minutesInputRef}
+        inputLabel={changeMinutesLabel}
+        inputTestId={minutesTestId}
+      />
       {doneButtonShow && (
         <div className={styles.button}>
           <AdaptivityProvider sizeY="compact">{renderDoneButton()}</AdaptivityProvider>

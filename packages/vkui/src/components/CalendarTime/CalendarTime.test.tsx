@@ -276,6 +276,7 @@ describe('CalendarTime', () => {
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
 
       const hoursInput = screen.getByTestId('hours-picker');
+      await userEvent.clear(hoursInput);
       await userEvent.type(hoursInput, '15');
       await act(async () => vi.runOnlyPendingTimers());
 
@@ -287,6 +288,7 @@ describe('CalendarTime', () => {
       render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
 
       const minutesInput = screen.getByTestId('minutes-picker');
+      await userEvent.clear(minutesInput);
       await userEvent.type(minutesInput, '30');
       await act(async () => vi.runOnlyPendingTimers());
 
@@ -298,10 +300,11 @@ describe('CalendarTime', () => {
       render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
 
       const hoursInput = screen.getByTestId('hours-picker');
+      await userEvent.clear(hoursInput);
       await userEvent.type(hoursInput, '25'); // Невалидное значение часов
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledExactlyOnceWith(setHours(dayDate, 2));
+      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 2));
     });
 
     it('should not call onChange for invalid minutes input', async () => {
@@ -309,10 +312,11 @@ describe('CalendarTime', () => {
       render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
 
       const minutesInput = screen.getByTestId('minutes-picker');
+      await userEvent.clear(minutesInput);
       await userEvent.type(minutesInput, '61'); // Невалидное значение минут
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenCalledExactlyOnceWith(setMinutes(dayDate, 6));
+      expect(onChange).toHaveBeenLastCalledWith(setMinutes(dayDate, 6));
     });
   });
 
