@@ -48,9 +48,9 @@ export const CalendarTimePicker = ({
 }: CalendarTimePickerProps) => {
   const [inputValue, setInputValue] = useState<string | undefined>(undefined);
 
-  const onBlur = () => {
+  const onBlur = React.useCallback(() => {
     setInputValue(undefined);
-  };
+  }, []);
 
   const _onChange = React.useCallback(
     (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
