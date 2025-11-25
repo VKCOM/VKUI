@@ -49,6 +49,36 @@ const [checked, setChecked] = React.useState(false);
   ```
 </Playground>
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и скрытый `input`.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <Switch
+      defaultChecked
+      slotProps={{
+        root: {
+          id: 'switch-root-id',
+          className: 'my-root-class',
+          'data-testid': 'switch-root',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'switch',
+          getRootRef: inputRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Доступность реализована на основе рекомендаций из [Switch WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/).

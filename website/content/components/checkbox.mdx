@@ -89,6 +89,38 @@ const [checked, setChecked] = React.useState(false);
   ```
 </Playground>
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <Checkbox
+      defaultChecked={false}
+      slotProps={{
+        root: {
+          id: 'checkbox-root-id',
+          className: 'my-root-class',
+          'data-testid': 'checkbox-root',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'checkbox',
+          getRootRef: inputRef,
+        },
+      }}
+    >
+      Уведомления включены
+    </Checkbox>
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент `Checkbox` обеспечивает базовую доступность, используя нативные `HTML`-элементы `input[type="checkbox"]` и `label`.

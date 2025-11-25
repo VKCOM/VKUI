@@ -72,6 +72,38 @@ const [checked, setChecked] = React.useState(false);
   то используйте [`Checkbox`](/components/checkbox) или [`Switch`](/components/switch);
 - для выбора нескольких значений из списка используйте [`Checkbox`](/components/checkbox).
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и скрытый `input`.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <Radio
+      defaultChecked={false}
+      slotProps={{
+        root: {
+          id: 'radio-root-id',
+          className: 'my-root-class',
+          'data-testid': 'radio-root',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'radio',
+          getRootRef: inputRef,
+        },
+      }}
+    >
+      Оплата картой
+    </Radio>
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент `Radio` обеспечивает базовую доступность, используя нативные HTML-элементы `input[type="radio"]` и `label`.
