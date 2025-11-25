@@ -223,6 +223,8 @@ export const CalendarTime = ({
       <div className={styles.picker}>
         <AdaptivityProvider sizeY="compact">
           <CustomSelect
+            // TODO: избавиться от accessible={false}
+            accessible={false}
             value={value.getHours()}
             options={localHours}
             onChange={onHoursChange}
@@ -245,6 +247,8 @@ export const CalendarTime = ({
       <div className={styles.picker}>
         <AdaptivityProvider sizeY="compact">
           <CustomSelect
+            // TODO: избавиться от accessible={false}
+            accessible={false}
             value={value.getMinutes()}
             options={localMinutes}
             onChange={onMinutesChange}

@@ -153,6 +153,8 @@ export interface DateRangeInputProps
    */
   disableFocusTrap?: UseFocusTrapProps['disabled'];
   /**
+   * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
+   *
    * Включает режим в котором DateRangeInput доступен
    * для ассистивных технологий.
    * В этом режиме:
@@ -162,7 +164,7 @@ export interface DateRangeInputProps
    * - календарь при открытии получает фокус, клавиатурный
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean; // TODO [>=8]: включить по умолчанию.
+  accessible?: boolean /* TODO [>=v9] удалить свойство */;
 }
 
 const elementsConfig = (index: number) => {
@@ -257,7 +259,7 @@ export const DateRangeInput = ({
   clearButtonTestId,
   showCalendarButtonTestId,
   id,
-  accessible,
+  accessible = true,
   readOnly,
   'disableCalendar': disableCalendarProp = false,
   before,
