@@ -2,9 +2,7 @@ import { resolveLayoutProps } from '../../lib/layouts';
 import type { LayoutProps } from '../../lib/layouts/types';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
 
-export interface BoxProps
-  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName' | 'baseStyle'>,
-    LayoutProps {}
+export interface BoxProps extends RootComponentProps<HTMLElement>, LayoutProps {}
 
 /**
  * @see https://vkui.io/components/box
