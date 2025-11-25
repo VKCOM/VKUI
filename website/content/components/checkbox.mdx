@@ -91,7 +91,7 @@ const [checked, setChecked] = React.useState(false);
 
 ## Кастомизация
 
-Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и скрытый `input`.
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
 
 Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
 
@@ -104,6 +104,7 @@ const [checked, setChecked] = React.useState(false);
       defaultChecked={false}
       slotProps={{
         root: {
+          id: 'checkbox-root-id',
           className: 'my-root-class',
           'data-testid': 'checkbox-root',
         },
