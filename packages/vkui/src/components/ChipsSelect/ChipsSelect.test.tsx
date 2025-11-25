@@ -593,31 +593,30 @@ describe('ChipsSelect', () => {
     it.each([
       { creatable: true, description: 'adds custom chip' },
       { creatable: false, description: 'does not add custom chip' },
-    ])(
-      '$description when `addOnBlur` provided and `creatable` is $creatable',
-      async ({ creatable }) => {
-        const onChange = vi.fn();
-        const result = render(
-          <ChipsSelect
-            creatable={creatable}
-            addOnBlur
-            options={colors}
-            defaultValue={[]}
-            onChange={onChange}
-          />,
-        );
+    ])('$description when `addOnBlur` provided and `creatable` is $creatable', async ({
+      creatable,
+    }) => {
+      const onChange = vi.fn();
+      const result = render(
+        <ChipsSelect
+          creatable={creatable}
+          addOnBlur
+          options={colors}
+          defaultValue={[]}
+          onChange={onChange}
+        />,
+      );
 
-        await userEvent.type(result.getByRole('combobox'), customChip.label);
-        await waitForFloatingPosition();
-        await userEvent.click(document.body);
+      await userEvent.type(result.getByRole('combobox'), customChip.label);
+      await waitForFloatingPosition();
+      await userEvent.click(document.body);
 
-        if (creatable) {
-          expect(onChange).toHaveBeenCalledExactlyOnceWith([customChip]);
-        } else {
-          expect(onChange).not.toHaveBeenCalledWith([]);
-        }
-      },
-    );
+      if (creatable) {
+        expect(onChange).toHaveBeenCalledExactlyOnceWith([customChip]);
+      } else {
+        expect(onChange).not.toHaveBeenCalledWith([]);
+      }
+    });
   });
 
   it.each([{ readOnly: false }, { readOnly: true }])(
@@ -808,60 +807,62 @@ describe.each<{
     str: 'Зеленый,Фиолетовый.Красный',
     expectedInputValue: 'Зеленый,Фиолетовый.Красный',
   },
-])(
-  'should correct use delimiter $delimiter',
-  ({ delimiter, str, expectedValues, expectedInputValue }) => {
-    fakeTimersForScope();
-    it('should add some options by splitting by delimiter when creatable', async () => {
-      const onChange = vi.fn();
-      render(
-        <ChipsSelect
-          options={[]}
-          defaultValue={[]}
-          data-testid="input"
-          onChange={onChange}
-          delimiter={delimiter}
-          creatable
-        />,
-      );
-      await act(async () => {
-        fireEvent.input(screen.getByTestId('input'), {
-          target: { value: str },
-        });
-        vi.runOnlyPendingTimers();
+])('should correct use delimiter $delimiter', ({
+  delimiter,
+  str,
+  expectedValues,
+  expectedInputValue,
+}) => {
+  fakeTimersForScope();
+  it('should add some options by splitting by delimiter when creatable', async () => {
+    const onChange = vi.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        data-testid="input"
+        onChange={onChange}
+        delimiter={delimiter}
+        creatable
+      />,
+    );
+    await act(async () => {
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
       });
-      if (expectedValues) {
-        expect(onChange).toHaveBeenCalledExactlyOnceWith(
-          expectedValues.map((value) => ({
-            value,
-            label: value,
-          })),
-        );
-      } else {
-        expect(onChange).not.toHaveBeenCalled();
-      }
-      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+      vi.runOnlyPendingTimers();
     });
-
-    it('should not add some options by splitting by delimiter when not creatable', async () => {
-      const onChange = vi.fn();
-      render(
-        <ChipsSelect
-          options={[]}
-          defaultValue={[]}
-          data-testid="input"
-          onChange={onChange}
-          delimiter={delimiter}
-        />,
+    if (expectedValues) {
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(
+        expectedValues.map((value) => ({
+          value,
+          label: value,
+        })),
       );
-      await act(async () => {
-        fireEvent.input(screen.getByTestId('input'), {
-          target: { value: str },
-        });
-        vi.runOnlyPendingTimers();
-      });
+    } else {
       expect(onChange).not.toHaveBeenCalled();
-      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
+    }
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+  });
+
+  it('should not add some options by splitting by delimiter when not creatable', async () => {
+    const onChange = vi.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        data-testid="input"
+        onChange={onChange}
+        delimiter={delimiter}
+      />,
+    );
+    await act(async () => {
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      vi.runOnlyPendingTimers();
     });
-  },
-);
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
+  });
+});

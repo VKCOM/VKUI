@@ -120,87 +120,87 @@ describe(useCustomEnsuredControl, () => {
     return <input type="number" value={value} onChange={handleChange} />;
   };
 
-  it.each([{ useFunction: true }, { useFunction: false }])(
-    'should work like uncontrolled (useFunction: $useFunction)',
-    (prop) => {
-      const handleChange = vi.fn((value: number) => value);
-      const rendered = render(
-        <UseCustomEnsuredControlComponent
-          key="uncontrolled"
-          defaultValue={1}
-          onChange={handleChange}
-          {...prop}
-        />,
-      );
-      const valueEl = rendered.getByRole('spinbutton');
+  it.each([
+    { useFunction: true },
+    { useFunction: false },
+  ])('should work like uncontrolled (useFunction: $useFunction)', (prop) => {
+    const handleChange = vi.fn((value: number) => value);
+    const rendered = render(
+      <UseCustomEnsuredControlComponent
+        key="uncontrolled"
+        defaultValue={1}
+        onChange={handleChange}
+        {...prop}
+      />,
+    );
+    const valueEl = rendered.getByRole('spinbutton');
 
-      expect(valueEl).toHaveValue(1);
-      expect(handleChange).not.toHaveBeenCalled();
+    expect(valueEl).toHaveValue(1);
+    expect(handleChange).not.toHaveBeenCalled();
 
-      fireEvent.change(valueEl, { target: { value: 2 } });
-      // сразу проверяем disabled состояние
-      rendered.rerender(
-        <UseCustomEnsuredControlComponent
-          key="uncontrolled"
-          disabled
-          defaultValue={1}
-          onChange={handleChange}
-        />,
-      );
-      fireEvent.change(valueEl, { target: { value: 3 } });
+    fireEvent.change(valueEl, { target: { value: 2 } });
+    // сразу проверяем disabled состояние
+    rendered.rerender(
+      <UseCustomEnsuredControlComponent
+        key="uncontrolled"
+        disabled
+        defaultValue={1}
+        onChange={handleChange}
+      />,
+    );
+    fireEvent.change(valueEl, { target: { value: 3 } });
 
-      expect(valueEl).toHaveValue(2);
-      expect(handleChange).toHaveReturnedWith(2);
-    },
-  );
+    expect(valueEl).toHaveValue(2);
+    expect(handleChange).toHaveReturnedWith(2);
+  });
 
-  it.each([{ useFunction: true }, { useFunction: false }])(
-    'should work like controlled (useFunction: $useFunction)',
-    (prop) => {
-      const handleChange = vi.fn((value: number) => value);
-      const prevValue = 1;
-      const rendered = render(
-        <UseCustomEnsuredControlComponent
-          key="controlled"
-          value={prevValue}
-          defaultValue={prevValue}
-          onChange={handleChange}
-          {...prop}
-        />,
-      );
-      const valueEl = rendered.getByRole('spinbutton');
+  it.each([
+    { useFunction: true },
+    { useFunction: false },
+  ])('should work like controlled (useFunction: $useFunction)', (prop) => {
+    const handleChange = vi.fn((value: number) => value);
+    const prevValue = 1;
+    const rendered = render(
+      <UseCustomEnsuredControlComponent
+        key="controlled"
+        value={prevValue}
+        defaultValue={prevValue}
+        onChange={handleChange}
+        {...prop}
+      />,
+    );
+    const valueEl = rendered.getByRole('spinbutton');
 
-      expect(valueEl).toHaveValue(prevValue);
-      expect(handleChange).not.toHaveBeenCalled();
+    expect(valueEl).toHaveValue(prevValue);
+    expect(handleChange).not.toHaveBeenCalled();
 
-      const nextValue = prevValue + 1;
-      fireEvent.change(valueEl, { target: { value: nextValue } });
+    const nextValue = prevValue + 1;
+    fireEvent.change(valueEl, { target: { value: nextValue } });
 
-      expect(valueEl).toHaveValue(prevValue);
-      expect(handleChange).toHaveReturnedWith(nextValue);
+    expect(valueEl).toHaveValue(prevValue);
+    expect(handleChange).toHaveReturnedWith(nextValue);
 
-      rendered.rerender(
-        <UseCustomEnsuredControlComponent
-          key="controlled"
-          value={nextValue}
-          defaultValue={prevValue}
-          onChange={handleChange}
-        />,
-      );
-      // сразу проверяем disabled состояние
-      rendered.rerender(
-        <UseCustomEnsuredControlComponent
-          key="controlled"
-          disabled
-          value={nextValue}
-          defaultValue={1}
-          onChange={handleChange}
-        />,
-      );
-      fireEvent.change(valueEl, { target: { value: 3 } });
+    rendered.rerender(
+      <UseCustomEnsuredControlComponent
+        key="controlled"
+        value={nextValue}
+        defaultValue={prevValue}
+        onChange={handleChange}
+      />,
+    );
+    // сразу проверяем disabled состояние
+    rendered.rerender(
+      <UseCustomEnsuredControlComponent
+        key="controlled"
+        disabled
+        value={nextValue}
+        defaultValue={1}
+        onChange={handleChange}
+      />,
+    );
+    fireEvent.change(valueEl, { target: { value: 3 } });
 
-      expect(valueEl).toHaveValue(nextValue);
-      expect(handleChange).toHaveBeenCalledTimes(1);
-    },
-  );
+    expect(valueEl).toHaveValue(nextValue);
+    expect(handleChange).toHaveBeenCalledTimes(1);
+  });
 });

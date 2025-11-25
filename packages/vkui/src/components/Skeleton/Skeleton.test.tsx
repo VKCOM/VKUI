@@ -40,16 +40,18 @@ describe('Skeleton', () => {
       },
       className: styles.disableAnimation,
     },
-  ])(
-    'should have $cssVariable = $expectedValue with props $props',
-    ({ props, expectedValue, cssVariable, className }) => {
-      render(<Skeleton {...props} data-testid="skeleton" />);
-      expectedValue &&
-        cssVariable &&
-        expect(screen.getByTestId('skeleton')).toHaveStyle(`${cssVariable}: ${expectedValue}`);
-      className && expect(screen.getByTestId('skeleton')).toHaveClass(className);
-    },
-  );
+  ])('should have $cssVariable = $expectedValue with props $props', ({
+    props,
+    expectedValue,
+    cssVariable,
+    className,
+  }) => {
+    render(<Skeleton {...props} data-testid="skeleton" />);
+    expectedValue &&
+      cssVariable &&
+      expect(screen.getByTestId('skeleton')).toHaveStyle(`${cssVariable}: ${expectedValue}`);
+    className && expect(screen.getByTestId('skeleton')).toHaveClass(className);
+  });
 
   it('should delay visibility', () => {
     render(<Skeleton visibilityDelay={200} />);
