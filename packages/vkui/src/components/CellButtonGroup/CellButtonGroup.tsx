@@ -1,11 +1,10 @@
 import * as React from 'react';
-import type { LayoutProps } from '../../lib/layouts/types';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { type HTMLAttributesWithRootRef } from '../../types';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { CellButtonGroupSeparator } from './CellButtonGroupSeparator/CellButtonGroupSeparator';
 
-export type CellButtonGroupProps = HTMLAttributesWithRootRef<HTMLDivElement> & LayoutProps;
+export type CellButtonGroupProps = HTMLAttributesWithRootRef<HTMLDivElement>;
 
 /**
  * @since 7.2.0

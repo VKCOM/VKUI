@@ -6,8 +6,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
-import { resolveLayoutProps } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
 import type { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
@@ -85,8 +83,7 @@ export interface FormFieldOwnProps
   extends React.AllHTMLAttributes<HTMLElement>,
     HasRootRef<HTMLElement>,
     HasComponent,
-    FormFieldProps,
-    LayoutProps {
+    FormFieldProps {
   /**
    * Блокировка взаимодействия с компонентом.
    */
@@ -107,13 +104,14 @@ export const FormField = ({
   afterAlign = 'center',
   disabled,
   mode = 'default',
+  className,
   maxHeight,
+  style,
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
   const { sizeY = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
-  const { style, className, ...restResolvedProps } = resolveLayoutProps(restProps);
 
   const focusWithin = useFocusWithin(elRef);
   const focusVisibleClassNames = useFocusVisibleClassName({
@@ -133,7 +131,7 @@ export const FormField = ({
 
   return (
     <Component
-      {...restResolvedProps}
+      {...restProps}
       ref={elRef}
       style={{
         maxHeight,

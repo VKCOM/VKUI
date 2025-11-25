@@ -4,8 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { resolveLayoutProps } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -18,8 +16,7 @@ const sizeYClassNames = {
 
 export interface FormLayoutGroupProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
-    RemovableProps,
-    LayoutProps {
+    RemovableProps {
   /**
    * Направление отображения элементов формы.
    */
@@ -54,7 +51,6 @@ export const FormLayoutGroup = ({
   const { sizeY = 'none' } = useAdaptivity();
   const isRemovable = removable && mode === 'horizontal';
   const rootEl = useExternRef(getRootRef);
-  const resolvedProps = resolveLayoutProps(restProps);
 
   return (
     <RootComponent
@@ -70,7 +66,7 @@ export const FormLayoutGroup = ({
         segmented && classNames(styles.segmented, 'vkuiInternalFormLayoutGroup--segmented'),
       )}
       disabled={disabled}
-      {...resolvedProps}
+      {...restProps}
     >
       {isRemovable ? (
         <Removable

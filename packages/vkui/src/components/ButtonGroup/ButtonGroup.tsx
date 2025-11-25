@@ -1,6 +1,4 @@
 import { classNames } from '@vkontakte/vkjs';
-import { resolveLayoutProps } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
 import type { AlignType, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './ButtonGroup.module.css';
@@ -22,7 +20,7 @@ const stylesAlign = {
   right: styles.alignRight,
 };
 
-export interface ButtonGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement>, LayoutProps {
+export interface ButtonGroupProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Задает расположение элементов внутри группы, вертикальное или горизонтальное.
    */
@@ -53,8 +51,6 @@ export const ButtonGroup = ({
   align = 'left' /* NOTE: Чтобы блоки по-умолчанию не растягивались на всю ширину контейнера */,
   ...restProps
 }: ButtonGroupProps): React.ReactNode => {
-  const resolvedProps = resolveLayoutProps(restProps);
-
   return (
     <RootComponent
       baseClassName={classNames(
@@ -65,7 +61,7 @@ export const ButtonGroup = ({
         stylesAlign[align],
       )}
       role="group"
-      {...resolvedProps}
+      {...restProps}
     />
   );
 };
