@@ -60,7 +60,7 @@ const [value, setValue] = React.useState('Поиск');
           </Div>
         )}
       >
-        {renderButton(<Icon24Filter />)}
+        {renderButton(<Icon24Filter />, { 'aria-label': 'Фильтры' })}
       </Popover>
     )}
   />
@@ -84,6 +84,35 @@ const [value, setValue] = React.useState('Поиск');
 <Playground>
   ```jsx
   <Search after="Сброс" />
+  ```
+</Playground>
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <Search
+      defaultValue="Пример со slotProps"
+      slotProps={{
+        root: {
+          id: 'search-root-id',
+          className: 'my-root-class',
+          'data-testid': 'search-root',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: inputRef,
+        },
+      }}
+    />
+  )
   ```
 </Playground>
 
