@@ -151,6 +151,39 @@ const [colors, setColors] = React.useState([]);
 компонент получает и корректно обрабатывает. Вторым параметром идёт объект со значением конкретной опции
 (значение, переданное в `value`/`defaultValue`).
 
+## slotProps
+
+Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и `input`.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <ChipsInput
+      defaultValue={[
+        { value: 'red', label: 'Красный' },
+        { value: 'blue', label: 'Синий' },
+      ]}
+      placeholder="Введите значение"
+      slotProps={{
+        root: {
+          className: 'my-root-class',
+          'data-testid': 'chips-input-root',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: inputRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент обеспечивает базовую доступность через стандартные `HTML`-атрибуты и `ARIA`-роли.

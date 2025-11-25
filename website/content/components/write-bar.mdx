@@ -186,6 +186,36 @@ return (
   ```
 </Playground>
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и `textarea`.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  const textareaRef = React.useRef();
+
+  return (
+    <WriteBar
+      before={<WriteBarIcon mode="attach" />}
+      placeholder="Введите сообщение..."
+      slotProps={{
+        root: {
+          className: 'my-root-class',
+          'data-testid': 'write-bar-root',
+        },
+        input: {
+          className: 'my-textarea-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: textareaRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
 ### Доступность (a11y) [#a11y]
 
 Укажите текстовое описание одним из способов:

@@ -64,6 +64,35 @@ const [text, setText] = React.useState('Текст');
   ```
 </Playground>
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и `textarea`.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  const textareaRef = React.useRef();
+
+  return (
+    <Textarea
+      defaultValue="Пример со slotProps"
+      slotProps={{
+        root: {
+          className: 'my-root-class',
+          'data-testid': 'textarea-root',
+        },
+        input: {
+          className: 'my-textarea-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: textareaRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент обеспечивает базовую доступность, используя нативный элемент `<textarea>`,

@@ -133,6 +133,68 @@ export default function App() {
 
 </Callout>
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, позволяющее переопределять свойства внутренних элементов, таких как корневой контейнер и `content`.
+
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+const contentRef = React.useRef();
+
+return (
+  <SplitLayout
+    slotProps={{
+      root: {
+         className: 'my-root-class',
+        'data-testid': 'split-layout-root',
+      },
+      content: {
+         className: 'my-content-class',
+        'data-testid': 'split-layout-content',
+        getRootRef: contentRef,
+      },
+    }}
+  >
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+
 ## SplitCol [#split-col] [tag:component]
 
 Подкомпонент для отрисовки колонки в многоколоночном интерфейсе.
