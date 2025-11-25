@@ -10,33 +10,30 @@ describe('RichCell', () => {
     ['start', styles.content, styles.alignAfterStart],
     ['center', styles.host, styles.alignAfterCenter],
     ['end', styles.host, styles.alignAfterEnd],
-  ])(
-    'should have correct position of after element',
-    (afterAlign, expectedContainerStyle, alignClassName) => {
-      const { container } = render(
-        <RichCell
-          data-testid="rich-cell"
-          overTitle="Subhead"
-          subtitle="Text"
-          extraSubtitle="Caption"
-          afterAlign={afterAlign}
-          after={<div data-testid="after" />}
-          afterCaption="After Caption"
-        >
-          Children
-        </RichCell>,
-      );
-      expect(screen.getByTestId('rich-cell')).toHaveClass(alignClassName);
-      const expectedContainer = container.getElementsByClassName(expectedContainerStyle)[0];
-      const afterElement = Array.prototype.find.call(
-        expectedContainer.children,
-        (element: HTMLElement) => {
-          return element.classList.contains(styles.contentAfter);
-        },
-      );
-      expect(afterElement).toBeTruthy();
-    },
-  );
+  ])('should have correct position of after element', (afterAlign, expectedContainerStyle, alignClassName) => {
+    const { container } = render(
+      <RichCell
+        data-testid="rich-cell"
+        overTitle="Subhead"
+        subtitle="Text"
+        extraSubtitle="Caption"
+        afterAlign={afterAlign}
+        after={<div data-testid="after" />}
+        afterCaption="After Caption"
+      >
+        Children
+      </RichCell>,
+    );
+    expect(screen.getByTestId('rich-cell')).toHaveClass(alignClassName);
+    const expectedContainer = container.getElementsByClassName(expectedContainerStyle)[0];
+    const afterElement = Array.prototype.find.call(
+      expectedContainer.children,
+      (element: HTMLElement) => {
+        return element.classList.contains(styles.contentAfter);
+      },
+    );
+    expect(afterElement).toBeTruthy();
+  });
 
   it.each<[Exclude<RichCellProps['contentAlign'], undefined>, string]>([
     ['start', styles.contentAlignStart],

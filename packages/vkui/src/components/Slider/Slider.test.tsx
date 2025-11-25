@@ -156,155 +156,155 @@ describe(Slider, () => {
     });
   });
 
-  describe.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
-    'change with drag',
-    ({ handlers: mouseEvents }) => {
-      const [mouseDown, mouseMove, mouseUp] = mouseEvents;
+  describe.each([
+    { handlers: MOUSE_EVENTS_HANDLERS },
+    { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS },
+  ])('change with drag', ({ handlers: mouseEvents }) => {
+    const [mouseDown, mouseMove, mouseUp] = mouseEvents;
 
-      it('moves start', async () => {
-        render(<Slider />);
-        const slider = screen.getByRole('slider');
+    it('moves start', async () => {
+      render(<Slider />);
+      const slider = screen.getByRole('slider');
 
-        mouseDown(slider);
+      mouseDown(slider);
 
-        mouseMove(slider, pointerPos(40));
-        expect(slider).toHaveValue('40');
+      mouseMove(slider, pointerPos(40));
+      expect(slider).toHaveValue('40');
 
-        mouseMove(slider, pointerPos(50));
-        expect(slider).toHaveValue('50');
+      mouseMove(slider, pointerPos(50));
+      expect(slider).toHaveValue('50');
 
-        mouseUp(slider);
-      });
+      mouseUp(slider);
+    });
 
-      it('moves start (multiple)', async () => {
-        render(
+    it('moves start (multiple)', async () => {
+      render(
+        <Slider
+          multiple
+          defaultValue={[30, 70]}
+          startThumbTestId="startSlider"
+          endThumbTestId="endSlider"
+        />,
+      );
+      const startSlider = screen.getByTestId('startSlider');
+      const endSlider = screen.getByTestId('endSlider');
+
+      mouseDown(startSlider);
+
+      mouseMove(startSlider, pointerPos(40));
+      expect(startSlider).toHaveValue('40');
+      expect(endSlider).toHaveValue('70');
+
+      mouseMove(startSlider, pointerPos(50));
+      expect(startSlider).toHaveValue('50');
+      expect(endSlider).toHaveValue('70');
+
+      mouseUp(startSlider);
+    });
+
+    it('moves end (multiple)', async () => {
+      render(<Slider multiple defaultValue={[30, 70]} />);
+      const [startSlider, endSlider] = screen.getAllByRole('slider');
+
+      mouseDown(endSlider);
+
+      mouseMove(endSlider, pointerPos(40));
+      expect(startSlider).toHaveValue('30');
+      expect(endSlider).toHaveValue('40');
+
+      mouseMove(endSlider, pointerPos(50));
+      expect(startSlider).toHaveValue('30');
+      expect(endSlider).toHaveValue('50');
+
+      mouseUp(endSlider);
+    });
+
+    it('should prevent change of direction on over drag', () => {
+      render(<Slider multiple defaultValue={[30, 70]} />);
+      const [startSlider, endSlider] = screen.getAllByRole('slider');
+
+      mouseDown(startSlider);
+
+      mouseMove(startSlider, pointerPos(80));
+      expect(startSlider).toHaveValue('70');
+      expect(endSlider).toHaveValue('70');
+
+      mouseUp(startSlider);
+    });
+  });
+
+  describe.each([
+    { handlers: MOUSE_EVENTS_HANDLERS },
+    { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS },
+  ])('check rtl view', ({ handlers: mouseEvents }) => {
+    const [mouseDown, mouseMove, mouseUp] = mouseEvents;
+    it('moves start', async () => {
+      render(
+        <DirectionProvider value="rtl">
+          <Slider />
+        </DirectionProvider>,
+      );
+      const slider = screen.getByRole('slider');
+
+      mouseDown(slider);
+
+      mouseMove(slider, pointerPos(40));
+      expect(slider).toHaveValue('60');
+
+      mouseMove(slider, pointerPos(50));
+      expect(slider).toHaveValue('50');
+
+      mouseUp(slider);
+    });
+
+    it('moves start (multiple)', async () => {
+      render(
+        <DirectionProvider value="rtl">
           <Slider
             multiple
             defaultValue={[30, 70]}
             startThumbTestId="startSlider"
             endThumbTestId="endSlider"
-          />,
-        );
-        const startSlider = screen.getByTestId('startSlider');
-        const endSlider = screen.getByTestId('endSlider');
+          />
+        </DirectionProvider>,
+      );
+      const startSlider = screen.getByTestId('startSlider');
+      const endSlider = screen.getByTestId('endSlider');
 
-        mouseDown(startSlider);
+      mouseDown(startSlider);
 
-        mouseMove(startSlider, pointerPos(40));
-        expect(startSlider).toHaveValue('40');
-        expect(endSlider).toHaveValue('70');
+      mouseMove(startSlider, pointerPos(40));
+      expect(startSlider).toHaveValue('60');
+      expect(endSlider).toHaveValue('70');
 
-        mouseMove(startSlider, pointerPos(50));
-        expect(startSlider).toHaveValue('50');
-        expect(endSlider).toHaveValue('70');
+      mouseMove(startSlider, pointerPos(50));
+      expect(startSlider).toHaveValue('50');
+      expect(endSlider).toHaveValue('70');
 
-        mouseUp(startSlider);
-      });
+      mouseUp(startSlider);
+    });
 
-      it('moves end (multiple)', async () => {
-        render(<Slider multiple defaultValue={[30, 70]} />);
-        const [startSlider, endSlider] = screen.getAllByRole('slider');
+    it('moves end (multiple)', async () => {
+      render(
+        <DirectionProvider value="rtl">
+          <Slider multiple defaultValue={[30, 70]} />
+        </DirectionProvider>,
+      );
+      const [startSlider, endSlider] = screen.getAllByRole('slider');
 
-        mouseDown(endSlider);
+      mouseDown(endSlider);
 
-        mouseMove(endSlider, pointerPos(40));
-        expect(startSlider).toHaveValue('30');
-        expect(endSlider).toHaveValue('40');
+      mouseMove(endSlider, pointerPos(40));
+      expect(startSlider).toHaveValue('30');
+      expect(endSlider).toHaveValue('60');
 
-        mouseMove(endSlider, pointerPos(50));
-        expect(startSlider).toHaveValue('30');
-        expect(endSlider).toHaveValue('50');
+      mouseMove(endSlider, pointerPos(50));
+      expect(startSlider).toHaveValue('30');
+      expect(endSlider).toHaveValue('50');
 
-        mouseUp(endSlider);
-      });
-
-      it('should prevent change of direction on over drag', () => {
-        render(<Slider multiple defaultValue={[30, 70]} />);
-        const [startSlider, endSlider] = screen.getAllByRole('slider');
-
-        mouseDown(startSlider);
-
-        mouseMove(startSlider, pointerPos(80));
-        expect(startSlider).toHaveValue('70');
-        expect(endSlider).toHaveValue('70');
-
-        mouseUp(startSlider);
-      });
-    },
-  );
-
-  describe.each([{ handlers: MOUSE_EVENTS_HANDLERS }, { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS }])(
-    'check rtl view',
-    ({ handlers: mouseEvents }) => {
-      const [mouseDown, mouseMove, mouseUp] = mouseEvents;
-      it('moves start', async () => {
-        render(
-          <DirectionProvider value="rtl">
-            <Slider />
-          </DirectionProvider>,
-        );
-        const slider = screen.getByRole('slider');
-
-        mouseDown(slider);
-
-        mouseMove(slider, pointerPos(40));
-        expect(slider).toHaveValue('60');
-
-        mouseMove(slider, pointerPos(50));
-        expect(slider).toHaveValue('50');
-
-        mouseUp(slider);
-      });
-
-      it('moves start (multiple)', async () => {
-        render(
-          <DirectionProvider value="rtl">
-            <Slider
-              multiple
-              defaultValue={[30, 70]}
-              startThumbTestId="startSlider"
-              endThumbTestId="endSlider"
-            />
-          </DirectionProvider>,
-        );
-        const startSlider = screen.getByTestId('startSlider');
-        const endSlider = screen.getByTestId('endSlider');
-
-        mouseDown(startSlider);
-
-        mouseMove(startSlider, pointerPos(40));
-        expect(startSlider).toHaveValue('60');
-        expect(endSlider).toHaveValue('70');
-
-        mouseMove(startSlider, pointerPos(50));
-        expect(startSlider).toHaveValue('50');
-        expect(endSlider).toHaveValue('70');
-
-        mouseUp(startSlider);
-      });
-
-      it('moves end (multiple)', async () => {
-        render(
-          <DirectionProvider value="rtl">
-            <Slider multiple defaultValue={[30, 70]} />
-          </DirectionProvider>,
-        );
-        const [startSlider, endSlider] = screen.getAllByRole('slider');
-
-        mouseDown(endSlider);
-
-        mouseMove(endSlider, pointerPos(40));
-        expect(startSlider).toHaveValue('30');
-        expect(endSlider).toHaveValue('60');
-
-        mouseMove(endSlider, pointerPos(50));
-        expect(startSlider).toHaveValue('30');
-        expect(endSlider).toHaveValue('50');
-
-        mouseUp(endSlider);
-      });
-    },
-  );
+      mouseUp(endSlider);
+    });
+  });
 
   describe('with tooltip', () => {
     fakeTimersForScope();
