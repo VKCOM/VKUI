@@ -110,13 +110,13 @@ export const WriteBarIcon = ({
       Component="button"
       hasHover={false}
       activeMode={styles.active}
-      {...restProps}
       baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
         mode === 'send' && styles.modeSend,
         mode === 'done' && styles.modeDone,
       )}
+      {...restProps}
     >
       <span className={styles.in}>
         {label && <VisuallyHidden>{label}</VisuallyHidden>}

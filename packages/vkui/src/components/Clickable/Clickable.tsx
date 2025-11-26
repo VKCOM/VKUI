@@ -7,7 +7,11 @@ import { type FocusVisibleModeProps } from '../../hooks/useFocusVisibleClassName
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { clickByKeyboardHandler } from '../../lib/utils';
-import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';
+import {
+  RootComponent,
+  type RootComponentExtendProps,
+  type RootComponentProps,
+} from '../RootComponent/RootComponent';
 import { type StateProps } from './useState';
 import { ClickableLockStateContext, DEFAULT_ACTIVE_EFFECT_DELAY, useState } from './useState';
 import styles from './Clickable.module.css';
@@ -118,12 +122,13 @@ function useClickableProps<T>({
   };
 }
 
-function useProps<T>(props: ClickableProps<T>): RootComponentProps<T> & {
-  lockStateContextValue: {
-    lockHoverStateBubbling: undefined | ((...args: any[]) => void);
-    lockActiveStateBubbling: undefined | ((...args: any[]) => void);
-  };
-} {
+function useProps<T>(props: ClickableProps<T>): RootComponentProps<T> &
+  RootComponentExtendProps & {
+    lockStateContextValue: {
+      lockHoverStateBubbling: undefined | ((...args: any[]) => void);
+      lockActiveStateBubbling: undefined | ((...args: any[]) => void);
+    };
+  } {
   const commonProps = component(props);
   const isClickable = checkClickable(props);
 
@@ -147,6 +152,7 @@ function useProps<T>(props: ClickableProps<T>): RootComponentProps<T> & {
 
 export interface ClickableProps<T = HTMLElement>
   extends RootComponentProps<T>,
+    RootComponentExtendProps,
     FocusVisibleModeProps,
     StateProps {
   /**

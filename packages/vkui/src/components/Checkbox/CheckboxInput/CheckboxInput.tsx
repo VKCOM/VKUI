@@ -127,6 +127,7 @@ export function CheckboxInput({
   const {
     onChange,
     getRootRef: getInputRef,
+    className: inputClassName,
     ...inputRest
   } = useMergeProps(
     {
@@ -204,7 +205,7 @@ export function CheckboxInput({
         type="checkbox"
         onChange={handleChange}
         getRootRef={inputRef}
-        baseClassName={styles.input}
+        className={classNames(inputClassName, styles.input)}
         {...inputRest}
       />
       {platform === 'vkcom' ? (

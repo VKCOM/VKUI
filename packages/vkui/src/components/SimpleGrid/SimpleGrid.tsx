@@ -24,7 +24,7 @@ const alignClassNames = {
   baseline: styles.alignBaseline,
 };
 
-export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
+export interface SimpleGridProps extends RootComponentProps<HTMLElement> {
   /**
    * Количество колонок.
    */
@@ -79,7 +79,6 @@ export const SimpleGrid = ({
 
   return (
     <RootComponent
-      {...props}
       baseClassName={classNames(
         styles.host,
         margin !== 'none' && marginClassNames[margin],
@@ -89,6 +88,7 @@ export const SimpleGrid = ({
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
       )}
       baseStyle={style}
+      {...props}
     />
   );
 };
