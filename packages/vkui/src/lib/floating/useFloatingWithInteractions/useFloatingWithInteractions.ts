@@ -321,15 +321,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     [shownLocalState, shownFinalState, willBeHide, onShownChanged],
   );
 
-  const referencePropsRef = React.useRef<ReferenceProps>({});
-  const floatingPropsRef = React.useRef<FloatingProps>({ style: {} });
-
-  useIsomorphicLayoutEffect(() => {
-    referencePropsRef.current = {};
-  }, [triggerOnHover, triggerOnFocus, triggerOnClick]);
+  const referenceProps: ReferenceProps = {};
+  const floatingProps: FloatingProps = { style: {} };
 
   if (shownFinalState) {
-    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties({
+    floatingProps.style = convertFloatingDataToReactCSSProperties({
       strategy,
       x,
       y,
@@ -337,42 +333,42 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     });
 
     if (disableInteractive) {
-      floatingPropsRef.current.style.pointerEvents = 'none';
+      floatingProps.style.pointerEvents = 'none';
     }
   }
 
   if (triggerOnFocus) {
-    referencePropsRef.current.onFocus = handleFocusOnReference;
-    referencePropsRef.current.onBlur = handleBlurOnReference;
+    referenceProps.onFocus = handleFocusOnReference;
+    referenceProps.onBlur = handleBlurOnReference;
   }
 
   if (triggerOnClick) {
-    referencePropsRef.current.onClick = handleClickOnReference;
+    referenceProps.onClick = handleClickOnReference;
   }
 
   if (triggerOnHover) {
-    referencePropsRef.current.onMouseOver = handleMouseEnterOnBoth;
+    referenceProps.onMouseOver = handleMouseEnterOnBoth;
 
     if (closeAfterClick && !triggerOnClick) {
-      referencePropsRef.current.onClick = handleClickOnReferenceForOnlyClose;
+      referenceProps.onClick = handleClickOnReferenceForOnlyClose;
     }
 
     if (!disableInteractive) {
-      floatingPropsRef.current.onMouseOver = handleMouseEnterOnBoth;
+      floatingProps.onMouseOver = handleMouseEnterOnBoth;
     }
   }
 
   if (triggerOnHover || triggerOnFocus) {
-    referencePropsRef.current.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
+    referenceProps.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
 
     if (!disableInteractive) {
-      floatingPropsRef.current.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
+      floatingProps.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
     }
   }
 
   if (shownFinalState) {
-    floatingPropsRef.current.onAnimationStart = handleFloatingAnimationStart;
-    floatingPropsRef.current.onAnimationEnd = handleFloatingAnimationEnd;
+    floatingProps.onAnimationStart = handleFloatingAnimationStart;
+    floatingProps.onAnimationEnd = handleFloatingAnimationEnd;
   }
 
   return {
@@ -380,8 +376,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     shown: shownFinalState,
     willBeHide,
     refs,
-    referenceProps: referencePropsRef.current,
-    floatingProps: floatingPropsRef.current,
+    referenceProps,
+    floatingProps,
     middlewareData,
     onClose: handleOnClose,
     // FocusTrap уже определяет нажатие на ESC, поэтому название события содержит конкретный код
