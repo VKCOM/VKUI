@@ -54,6 +54,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   'inputValue': inputValueProp = DEFAULT_INPUT_VALUE,
   addOnBlur,
   onInputChange,
+  autoFocus,
   'disabled': disabledProp,
   'readOnly': readOnlyProp,
   'onFocus': onFocusProp,
@@ -108,6 +109,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       onBlur: onBlurProp,
       id: idProp,
       placeholder: placeholderProp,
+      autoFocus,
     },
     slotProps?.input,
   );
