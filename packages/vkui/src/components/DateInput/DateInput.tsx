@@ -79,7 +79,6 @@ export interface DateInputProps
       | 'disableFuture'
       | 'enableTime'
       | 'shouldDisableDate'
-      | 'onChange'
       | 'value'
       | 'defaultValue'
       | 'doneButtonText'
@@ -108,6 +107,10 @@ export interface DateInputProps
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
+  /**
+   * Обработчик изменения выбранной даты.
+   */
+  onChange?: (value: Date | null) => void;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
@@ -378,10 +381,7 @@ export const DateInput = ({
   );
 
   const onCalendarChange = React.useCallback(
-    (value?: Date | undefined) => {
-      if (!value) {
-        return;
-      }
+    (value: Date) => {
       if (enableTime) {
         setInternalValue(value);
         return;

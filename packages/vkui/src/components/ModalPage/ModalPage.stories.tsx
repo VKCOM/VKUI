@@ -180,7 +180,7 @@ export const ModalPageWithFilters: Story = {
     const [, updateArgs] = useArgs();
     const close = () => updateArgs({ open: false });
 
-    const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>(new Date(1901, 0, 1));
+    const [dateOfBirth, setDateOfBirth] = useState<Date | null>(new Date(1901, 0, 1));
     const { sizeX } = useAdaptivityConditionalRender();
 
     return (

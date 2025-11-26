@@ -249,7 +249,7 @@ describe('DateRangeInput', () => {
 
     fireEvent.click(screen.getByTestId(testsProps.clearButtonTestId));
 
-    expect(onChange).toHaveBeenCalledExactlyOnceWith(undefined);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(null);
   });
 
   it(

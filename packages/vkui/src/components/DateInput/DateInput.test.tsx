@@ -394,7 +394,7 @@ describe('DateInput', () => {
 
     fireEvent.click(screen.getByTestId(testIds.clearButtonTestId));
 
-    expect(onChange).toHaveBeenCalledExactlyOnceWith(undefined);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(null);
   });
 
   it('should toggle calendar open state on calendar icon click', async () => {

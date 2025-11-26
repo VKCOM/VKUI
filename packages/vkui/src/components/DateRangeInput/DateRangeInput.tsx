@@ -74,7 +74,6 @@ export interface DateRangeInputProps
       | 'disablePast'
       | 'disableFuture'
       | 'shouldDisableDate'
-      | 'onChange'
       | 'value'
       | 'defaultValue'
       | 'weekStartsOn'
@@ -92,6 +91,10 @@ export interface DateRangeInputProps
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateRangeInputTestsProps {
+  /**
+   * Обработчик изменения выбранного промежутка.
+   */
+  onChange?: (value: DateRangeType | null) => void;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
@@ -274,15 +277,10 @@ export const DateRangeInput = ({
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
 
-  const _onChange = React.useCallback(
-    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
-    [onChange],
-  );
-
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null>({
     value: valueProp,
-    defaultValue,
-    onChange: _onChange,
+    defaultValue: defaultValue as DateRangeType | null,
+    onChange,
   });
 
   const onInternalValueChange = React.useCallback(
@@ -334,7 +332,7 @@ export const DateRangeInput = ({
     [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
   );
 
-  const onClear = React.useCallback(() => updateValue(undefined), [updateValue]);
+  const onClear = React.useCallback(() => updateValue(null), [updateValue]);
 
   const {
     rootRef,
@@ -368,7 +366,7 @@ export const DateRangeInput = ({
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
   const onCalendarChange = React.useCallback(
-    (newValue: DateRangeType | undefined) => {
+    (newValue: DateRangeType) => {
       updateValue(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
         removeFocusFromField();
