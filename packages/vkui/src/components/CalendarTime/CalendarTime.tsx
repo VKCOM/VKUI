@@ -195,9 +195,9 @@ export const CalendarTime = ({
     [],
   );
 
-  const onSelectInputKeyDown = (e: React.KeyboardEvent) => {
+  const onSelectInputKeyDown = (e: React.KeyboardEvent, isOpen: boolean) => {
     onPickerKeyDown(e);
-    stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen(e, false);
+    stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen(e, isOpen);
   };
 
   const renderDoneButton = () => {
