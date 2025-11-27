@@ -26,7 +26,10 @@ const useRestoreFocus = ({
   ref: RefObject<HTMLElement | null>;
 }) => {
   const restoreFocusRef = useRef(restoreFocus);
-  restoreFocusRef.current = restoreFocus;
+  useIsomorphicLayoutEffect(() => {
+    restoreFocusRef.current = restoreFocus;
+  }, [restoreFocus]);
+
   const [restoreFocusTo, setRestoreFocusTo] = useState<Element | null>(null);
 
   const restoreFocusImpl = useStableCallback(() => {
