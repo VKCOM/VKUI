@@ -4,7 +4,6 @@ import { type ChangeEvent, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Keys, pressedKey } from '../../lib/accessibility';
-import { callMultiple } from '../../lib/callMultiple';
 import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
@@ -187,7 +186,7 @@ export const CalendarTime = ({
     }
   };
 
-  const stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
+  const stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
     (event: React.KeyboardEvent, isOpen: boolean) => {
       if (isOpen && event.key === 'Escape') {
         event.stopPropagation();
@@ -196,10 +195,10 @@ export const CalendarTime = ({
     [],
   );
 
-  const onSelectInputKeyDown = callMultiple(
-    onPickerKeyDown,
-    stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen,
-  );
+  const onSelectInputKeyDown = (e: React.KeyboardEvent) => {
+    onPickerKeyDown(e);
+    stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen(e, false);
+  };
 
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
