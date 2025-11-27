@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import * as React from 'react';
 import { useDOM } from '../lib/dom';
 import { useBooleanState } from './useBooleanState';
-import { useGlobalEventListener } from './useGlobalEventListener';
 
 export interface UseDateInputDependencies<T, D> {
   maxElement: number;
@@ -126,9 +125,16 @@ export function useDateInput<T extends HTMLElement, D>({
     setFocusedElement(0);
   }, [focusedElement]);
 
-  useGlobalEventListener(document, 'click', handleClickOutside, {
-    capture: true,
-  });
+  React.useEffect(() => {
+    document!.addEventListener('click', handleClickOutside, {
+      capture: true,
+    });
+
+    return () =>
+      document!.removeEventListener('click', handleClickOutside, {
+        capture: true,
+      });
+  }, [document, handleClickOutside]);
 
   React.useEffect(() => {
     setInternalValue(getInternalValue(value));

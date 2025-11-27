@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { type CSSCustomProperties } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
@@ -37,16 +36,17 @@ const RemovableIosWithRemove = ({
   const disabledRef = React.useRef(true);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
-  useGlobalEventListener(
-    window,
-    'click',
-    () => {
+  React.useEffect(() => {
+    const listener = () => {
       if (removeOffset > 0) {
         updateRemoveOffset(0);
       }
-    },
-    { capture: true },
-  );
+    };
+
+    window?.addEventListener('click', listener, { capture: true });
+
+    return () => window?.removeEventListener('click', listener, { capture: true });
+  }, [removeOffset, window]);
 
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {

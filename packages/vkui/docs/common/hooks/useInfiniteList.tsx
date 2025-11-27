@@ -1,6 +1,5 @@
 import { type ReactNode, type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { Spinner } from '../../../src';
-import { useGlobalEventListener } from '../../../src/hooks/useGlobalEventListener';
 import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
 import { useDOM } from '../../../src/lib/dom';
 
@@ -141,7 +140,11 @@ export const useInfiniteList = <Section extends { id: string }>(
 
   useResizeObserver(containerRef, () => requestAnimationFrame(showMoreVisible));
 
-  useGlobalEventListener(window, 'scroll', recalculateVisibleSections);
+  useEffect(() => {
+    window?.addEventListener('scroll', recalculateVisibleSections);
+
+    return window?.removeEventListener('scroll', recalculateVisibleSections);
+  }, [recalculateVisibleSections]);
 
   const remappedSections: Array<RemappedSection<Section>> = useMemo(() => {
     return data.mountedSections
