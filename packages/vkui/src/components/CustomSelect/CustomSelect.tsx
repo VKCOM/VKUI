@@ -714,13 +714,38 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     lastMousePositionRef.current = { x: e.clientX, y: e.clientY };
   };
 
+  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    onRootClick?.(event);
+    passClickAndFocusToInputOnClick(event);
+  };
+
+  const onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    onRootMouseDown?.(event);
+    preventInputBlurWhenClickInsideFocusedSelectArea(event);
+  };
+
+  const onMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    onRootMouseMove?.(event);
+    updateLastMousePosition(event);
+  };
+
+  const onCustomSelectInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    onFocus();
+    onInputFocus?.(event);
+  };
+
+  const onCustomSelectInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    onBlur();
+    onInputBlur?.(event);
+  };
+
   return (
     <RootComponent
       baseClassName={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
       getRootRef={handleRootRef}
-      onClick={callMultiple(onRootClick, passClickAndFocusToInputOnClick)}
-      onMouseDown={callMultiple(onRootMouseDown, preventInputBlurWhenClickInsideFocusedSelectArea)}
-      onMouseMove={callMultiple(onRootMouseMove, updateLastMousePosition)}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
       {...rootRest}
     >
       <CustomSelectInput
@@ -746,8 +771,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
             value: inputValue,
             readOnly: readOnly || !searchable,
             placeholder,
-            onFocus: callMultiple(onFocus, onInputFocus),
-            onBlur: callMultiple(onBlur, onInputBlur),
+            onFocus: onCustomSelectInputFocus,
+            onBlur: onCustomSelectInputBlur,
             onKeyDown: !readOnly
               ? callMultiple(handleInputKeyDown, onNativeInputKeyDown)
               : onNativeInputKeyDown,

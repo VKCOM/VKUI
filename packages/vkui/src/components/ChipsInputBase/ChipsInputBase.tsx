@@ -7,7 +7,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
-import { callMultiple } from '../../lib/callMultiple';
 import {
   contains as checkTargetIsInputEl,
   contains,
@@ -301,6 +300,19 @@ export const ChipsInputBase = <O extends ChipOption>({
     e.preventDefault();
   };
 
+  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!disabled) {
+      handleRootClick(event);
+    }
+
+    onRootClick?.(event);
+  };
+
+  const onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    handleRootMouseDown(event);
+    onRootMouseDown?.(event);
+  };
+
   return (
     <FormField
       Component="div"
@@ -314,8 +326,8 @@ export const ChipsInputBase = <O extends ChipOption>({
       status={status}
       mode={mode}
       maxHeight={maxHeight}
-      onClick={disabled ? onRootClick : callMultiple(handleRootClick, onRootClick)}
-      onMouseDown={callMultiple(handleRootMouseDown, onRootMouseDown)}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
       {...rootRest}
     >
       <div
