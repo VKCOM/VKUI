@@ -36,23 +36,14 @@ describe(PopoutWrapper, () => {
         className: styles.absolute,
       },
       {
-        fixed: false,
-        className: '',
-      },
-      {
-        fixed: true,
-        className: styles.fixed,
-      },
-      {
         className: styles.fixed,
       },
     ])('should have className $className when use strategy $strategy, fixed $fixed', ({
       strategy,
-      fixed,
       className,
     }) => {
       const result = render(
-        <PopoutWrapper strategy={strategy} fixed={fixed} data-testid="popout-wrapper" />,
+        <PopoutWrapper strategy={strategy} data-testid="popout-wrapper" />,
       );
       const locator = result.getByTestId('popout-wrapper');
       className && expect(locator).toHaveClass(className);
