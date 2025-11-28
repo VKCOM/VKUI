@@ -73,7 +73,14 @@ function StubContent() {
 export const FixedLayoutPlayground = (
   props: ComponentPlaygroundProps & Pick<FixedLayoutProps, 'vertical' | 'filled'>,
 ) => (
-  <ComponentPlayground isFixedComponent {...props}>
+  <ComponentPlayground
+    isFixedComponent
+    componentStateHeight={{
+      android: 727 - 16,
+      ios: 896 - 16,
+    }}
+    {...props}
+  >
     {() => {
       const { vertical, filled } = props;
       return (

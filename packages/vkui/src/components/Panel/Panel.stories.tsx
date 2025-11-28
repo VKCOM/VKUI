@@ -27,12 +27,12 @@ export default story;
 type Story = StoryObj<PanelProps>;
 
 export const Playground: Story = {
-  render: function Render() {
+  render: function Render(props) {
     const [activePanel, setActivePanel] = React.useState('panel1');
 
     return (
       <View activePanel={activePanel}>
-        <Panel id="panel1">
+        <Panel id="panel1" {...props}>
           <PanelHeader>More</PanelHeader>
           <Group>
             <Cell
@@ -58,7 +58,7 @@ export const Playground: Story = {
             </Cell>
           </Group>
         </Panel>
-        <Panel id="panel2">
+        <Panel id="panel2" {...props}>
           <PanelHeader
             delimiter="spacing"
             before={<PanelHeaderBack onClick={() => setActivePanel('panel1')} />}
@@ -82,7 +82,7 @@ export const Playground: Story = {
             </Cell>
           </Group>
         </Panel>
-        <Panel id="panel3" centered>
+        <Panel id="panel3" centered {...props}>
           <PanelHeader before={<PanelHeaderBack onClick={() => setActivePanel('panel2')} />}>
             Out Cinema
           </PanelHeader>

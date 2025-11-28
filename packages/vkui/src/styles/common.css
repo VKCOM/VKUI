@@ -1,3 +1,4 @@
+/* stylelint-disable selector-max-type */
 /*
  * .vkui класс в режиме full необходим на элементе html,
  * чтобы правильно устанавливалось значение color-scheme,
@@ -18,27 +19,24 @@
  * А переключение между темами задавалось бы через медиа выражения
  * с помощью prefers-color-scheme.
  * */
-/* stylelint-disable-next-line selector-max-type */
 .vkui > body,
 .vkui,
 .vkui__root {
-  block-size: 100%;
-  padding: 0;
-  margin: 0;
   color-scheme: var(--vkui--colors_scheme);
 }
 
 .vkui {
-  /*
-   * TODO [>=8]: Убрать background с html элемента, но для этого надо
-   * чтобы height у всех родителей Panel вплоть до html имели
-   * min-height: 100% вместо height: 100% иначе фон html выглядывает в
-   * многоколоночном режиме если чуть ниже проскролить контент.
-   */
+  /* см. https://github.com/VKCOM/VKUI/pull/7739 */
   background: var(--vkui--color_background);
 }
 
+.vkui > body {
+  inline-size: 100%;
+  margin: 0;
+}
+
 .vkui__root {
+  inline-size: 100%;
   /* чтобы можно было ограничить размеры приложения
    * извне с помощью max-height, max-width */
   max-inline-size: inherit;
@@ -62,4 +60,31 @@
 .vkui--disable-overscroll-behavior {
   /* Safari >= 16 */
   overscroll-behavior-y: none;
+}
+
+/*
+  #sticky_issue
+
+  Делаем `<html>` Flexbox'ом и задаем минимальную высоту, чтобы растянуть `<body>` без `block-size: 100%`,
+  потому что из-за него элемент с `position: sticky` уходит вверх при скролле большого контента.
+
+  см. https://stackoverflow.com/questions/30962863/holy-grail-layout-with-flex-and-always-visible-header
+*/
+.vkui {
+  display: flex;
+  min-block-size: 100%;
+}
+
+/*
+  #sticky_issue
+
+  1. Используем `flex: 1` вместо `block-size: 100%`, чтобы растянуть `<body>` и `vkui__root`.
+  2. Делаем их также Flexbox'ом, чтобы для внутренних элементов срабатывал `block-size: 100%`,
+    в частности у `AppRoot`.
+*/
+.vkui__root,
+.vkui > body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }

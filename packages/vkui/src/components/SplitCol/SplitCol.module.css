@@ -34,20 +34,18 @@
   }
 }
 
-.fixed {
-  flex-grow: 1;
-  flex-shrink: 1;
-  inline-size: 1px;
-  block-size: 100%;
-}
-
 .fixedInner {
-  position: fixed;
+  position: sticky;
   inset-block-start: 0;
   inline-size: inherit;
   min-inline-size: inherit;
   max-inline-size: inherit;
-  block-size: inherit;
-  overflow: hidden;
-  transform: translateZ(0);
+  block-size: 100%;
+  max-block-size: calc(
+    100vh -
+    var(--vkui_internal--safe_area_inset_top) -
+    var(--vkui_internal--safe_area_inset_bottom)
+  );
+  max-block-size: 100dvh; /* Graceful Degradation (см. https://caniuse.com/?search=dvh) */
+  backface-visibility: hidden;
 }
