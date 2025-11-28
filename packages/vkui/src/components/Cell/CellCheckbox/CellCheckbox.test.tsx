@@ -12,23 +12,23 @@ describe('CellCheckbox', () => {
     </label>
   ));
 
-  describe.each([Platform.IOS, Platform.VKCOM])(
-    'should use circle icon in platform %s',
-    (platform) => {
-      it.each<CellCheckboxProps['type']>(['auto', 'circle'])('with type %s ', (type) => {
-        const { container } = render(
-          <ConfigProvider platform={platform}>
-            <CellCheckbox type={type} />
-          </ConfigProvider>,
-        );
-        const iconsOff = container.getElementsByClassName(styles.iconOff)[0];
-        expect(iconsOff.querySelector('.vkuiIcon--check_circle_off_20')).toBeInTheDocument();
-        expect(iconsOff.querySelector('.vkuiIcon--check_circle_off_24')).toBeInTheDocument();
+  describe.each([
+    Platform.IOS,
+    Platform.VKCOM,
+  ])('should use circle icon in platform %s', (platform) => {
+    it.each<CellCheckboxProps['type']>(['auto', 'circle'])('with type %s ', (type) => {
+      const { container } = render(
+        <ConfigProvider platform={platform}>
+          <CellCheckbox type={type} />
+        </ConfigProvider>,
+      );
+      const iconsOff = container.getElementsByClassName(styles.iconOff)[0];
+      expect(iconsOff.querySelector('.vkuiIcon--check_circle_off_20')).toBeInTheDocument();
+      expect(iconsOff.querySelector('.vkuiIcon--check_circle_off_24')).toBeInTheDocument();
 
-        const iconsOn = container.getElementsByClassName(styles.iconOn)[0];
-        expect(iconsOn.querySelector('.vkuiIcon--check_circle_on_20')).toBeInTheDocument();
-        expect(iconsOn.querySelector('.vkuiIcon--check_circle_on_24')).toBeInTheDocument();
-      });
-    },
-  );
+      const iconsOn = container.getElementsByClassName(styles.iconOn)[0];
+      expect(iconsOn.querySelector('.vkuiIcon--check_circle_on_20')).toBeInTheDocument();
+      expect(iconsOn.querySelector('.vkuiIcon--check_circle_on_24')).toBeInTheDocument();
+    });
+  });
 });
