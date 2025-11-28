@@ -79,6 +79,10 @@ return (
 > При этом в **Safari >= 16** такой проблему нет, т.к. в нём блокирование **pull-to-refresh** решается в одно свойство [`overscroll-behavior-y: none;`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y).
 > Это свойство автоматически выставляется на `html` при открытии модального окна и удаляется при закрытии.
 
+## Хук `useModalRoot`
+
+Для более удобного управления модальными окнами вы можете использовать менеджер в виде хука [`useModalRoot`](/components/use-modal-root)
+
 ## FAQ
 
 ### Создание обёрток для `ModalPage` / `ModalCard`
