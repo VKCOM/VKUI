@@ -147,7 +147,6 @@ export const Alert = ({
         style={style}
         onClick={close}
         getRootRef={getRootRef}
-        strategy="fixed"
       >
         <AlertBase {...restProps} closing={closing} setClosing={setClosing} />
       </PopoutWrapper>

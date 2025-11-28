@@ -179,7 +179,6 @@ export const ActionSheet = ({
         className={className}
         style={style}
         onClick={onCloseWithOther}
-        strategy="fixed"
       >
         {actionSheet}
       </PopoutWrapper>
