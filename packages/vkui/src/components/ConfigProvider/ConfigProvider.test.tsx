@@ -1,13 +1,12 @@
-'use no memo';
-
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens/constants';
 import { baselineComponent } from '../../testing/utils';
 import { ConfigProvider } from './ConfigProvider';
 import {
   ConfigProviderContext,
   type ConfigProviderContextInterface,
+  useConfigProvider,
 } from './ConfigProviderContext';
 import { ConfigProviderOverride } from './ConfigProviderOverride';
 
@@ -41,12 +40,6 @@ describe(ConfigProvider, () => {
   });
 
   describe('inherits properties from parent ConfigProvider context', () => {
-    let config: ConfigProviderContextInterface | undefined;
-    const ReadConfig = () => {
-      config = React.useContext(ConfigProviderContext);
-      return null;
-    };
-
     const defaultConfig: ConfigProviderContextInterface = {
       platform: 'vkcom',
       colorScheme: 'dark',
@@ -70,26 +63,21 @@ describe(ConfigProvider, () => {
       ['direction', 'rtl'],
     ])('%s => %s', (prop, value) => {
       const newConfig = { [prop]: value };
-      render(
-        <ConfigProvider {...defaultConfig}>
-          <ConfigProvider {...newConfig}>
-            <ReadConfig />
-          </ConfigProvider>
-        </ConfigProvider>,
-      );
 
-      expect(config).toEqual(expect.objectContaining({ ...defaultConfig, [prop]: value }));
+      const { result } = renderHook(useConfigProvider, {
+        wrapper: ({ children }) => (
+          <ConfigProvider {...defaultConfig}>
+            <ConfigProvider {...newConfig}>{children}</ConfigProvider>
+          </ConfigProvider>
+        ),
+      });
+
+      expect(result.current).toEqual(expect.objectContaining({ ...defaultConfig, [prop]: value }));
     });
   });
 });
 
 describe(ConfigProviderOverride, () => {
-  let config: ConfigProviderContextInterface | undefined;
-  const ReadConfig = () => {
-    config = React.useContext(ConfigProviderContext);
-    return null;
-  };
-
   const defaultConfig: ConfigProviderContextInterface = {
     platform: 'vkcom',
     colorScheme: 'dark',
@@ -113,14 +101,15 @@ describe(ConfigProviderOverride, () => {
     ['direction', 'rtl'],
   ])('%s => %s', (prop, value) => {
     const newConfig = { [prop]: value };
-    render(
-      <ConfigProvider {...defaultConfig}>
-        <ConfigProviderOverride {...newConfig}>
-          <ReadConfig />
-        </ConfigProviderOverride>
-      </ConfigProvider>,
-    );
 
-    expect(config).toEqual(expect.objectContaining({ ...defaultConfig, [prop]: value }));
+    const { result } = renderHook(useConfigProvider, {
+      wrapper: ({ children }) => (
+        <ConfigProvider {...defaultConfig}>
+          <ConfigProviderOverride {...newConfig}>{children}</ConfigProviderOverride>
+        </ConfigProvider>
+      ),
+    });
+
+    expect(result.current).toEqual(expect.objectContaining({ ...defaultConfig, [prop]: value }));
   });
 });
