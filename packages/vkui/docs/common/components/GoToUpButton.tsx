@@ -19,9 +19,9 @@ export const GoToUpButton = () => {
   );
 
   useEffect(() => {
-    window?.addEventListener('scroll', updateVisibility);
+    window!.addEventListener('scroll', updateVisibility);
 
-    return () => window?.removeEventListener('scroll', updateVisibility);
+    return () => window!.removeEventListener('scroll', updateVisibility);
   }, [updateVisibility]);
 
   return (
