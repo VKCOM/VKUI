@@ -7,9 +7,7 @@ const isFocusWithin = <T extends Element>(ref: T, document: Document) =>
 
 export function useFocusWithin(ref: React.RefObject<HTMLElement | null>): boolean {
   const { document } = useDOM();
-  const [focusWithin, setFocusWithin] = React.useState<boolean>(() =>
-    ref.current && document ? isFocusWithin(ref.current, document) : false,
-  );
+  const [focusWithin, setFocusWithin] = React.useState<boolean>(false);
 
   useIsomorphicLayoutEffect(function handleAutoFocus() {
     /* istanbul ignore if: невозможный кейс, т.к. в SSR эффекты не вызываются. Проверка на будущее, если вдруг эффект будет вызываться. */
