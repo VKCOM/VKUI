@@ -99,11 +99,11 @@ export function useTabsNavigation(enabled = true, isRtl = false) {
   );
 
   React.useEffect(() => {
-    document?.addEventListener('keydown', handleDocumentKeydown, {
+    document!.addEventListener('keydown', handleDocumentKeydown, {
       capture: true,
     });
     return () =>
-      document?.removeEventListener('keydown', handleDocumentKeydown, {
+      document!.removeEventListener('keydown', handleDocumentKeydown, {
         capture: true,
       });
   }, [document, handleDocumentKeydown]);

@@ -141,9 +141,9 @@ export const useInfiniteList = <Section extends { id: string }>(
   useResizeObserver(containerRef, () => requestAnimationFrame(showMoreVisible));
 
   useEffect(() => {
-    window?.addEventListener('scroll', recalculateVisibleSections);
+    window!.addEventListener('scroll', recalculateVisibleSections);
 
-    return () => window?.removeEventListener('scroll', recalculateVisibleSections);
+    return () => window!.removeEventListener('scroll', recalculateVisibleSections);
   }, [recalculateVisibleSections]);
 
   const remappedSections: Array<RemappedSection<Section>> = useMemo(() => {

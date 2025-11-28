@@ -43,9 +43,9 @@ const RemovableIosWithRemove = ({
       }
     };
 
-    window?.addEventListener('click', listener, { capture: true });
+    window!.addEventListener('click', listener, { capture: true });
 
-    return () => window?.removeEventListener('click', listener, { capture: true });
+    return () => window!.removeEventListener('click', listener, { capture: true });
   }, [removeOffset, window]);
 
   const onRemoveTransitionEnd = () => {
