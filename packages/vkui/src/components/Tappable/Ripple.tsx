@@ -45,10 +45,10 @@ export const useRipple = (
   /**
    * Коллекция нажатий и таймеров задержки появления волны.
    */
-  const pointerDelayTimers = React.useMemo(
-    () => new Map<number, ReturnType<typeof setTimeout>>(),
-    [],
-  );
+  const pointerDelayTimers = React.useRef<Map<number, ReturnType<typeof setTimeout>>>(null);
+  if (pointerDelayTimers.current === null) {
+    pointerDelayTimers.current = new Map();
+  }
 
   React.useEffect(
     function setClearClicksTimeout() {
@@ -67,7 +67,7 @@ export const useRipple = (
     const filteredClicks = clicks.filter((click) => click.id + WAVE_LIVE > dateNow);
 
     setClicks([...filteredClicks, { x, y, id: dateNow, pointerId }]);
-    pointerDelayTimers.delete(pointerId);
+    pointerDelayTimers.current!.delete(pointerId);
   }
 
   /**
@@ -78,16 +78,16 @@ export const useRipple = (
     const x = e.clientX - (left ?? 0);
     const y = e.clientY - (top ?? 0);
 
-    pointerDelayTimers.set(
+    pointerDelayTimers.current!.set(
       e.pointerId,
       setTimeout(() => addClick(x, y, e.pointerId), DELAY),
     );
   };
 
   const onPointerCancel: React.PointerEventHandler<HTMLSpanElement> = (e) => {
-    const timer = pointerDelayTimers.get(e.pointerId);
+    const timer = pointerDelayTimers.current!.get(e.pointerId);
     clearTimeout(timer);
-    pointerDelayTimers.delete(e.pointerId);
+    pointerDelayTimers.current!.delete(e.pointerId);
   };
 
   // WARNING: не использовать для рендеринга

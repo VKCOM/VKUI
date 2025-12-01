@@ -36,7 +36,7 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
 
   return (
     <AppRootPortal usePortal={usePortal}>
-      <PopoutWrapper className={className} style={style} noBackground strategy="fixed">
+      <PopoutWrapper className={className} style={style} noBackground>
         <ScreenSpinnerContainer
           state={state}
           mode={mode}
