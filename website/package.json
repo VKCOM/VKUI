@@ -24,6 +24,6 @@
     "react-live": "^4.1.8",
     "slug": "^11.0.1",
     "typescript": "*",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.9"
   }
 }
