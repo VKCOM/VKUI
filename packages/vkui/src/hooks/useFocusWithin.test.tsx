@@ -9,7 +9,10 @@ describe(useFocusWithin, () => {
   let focusWithin: boolean | undefined = undefined;
   const Playground = (props: React.HTMLAttributes<HTMLDivElement>) => {
     const ref = React.useRef<HTMLInputElement>(null);
-    focusWithin = useFocusWithin(ref);
+    const focus = useFocusWithin(ref);
+    React.useEffect(() => {
+      focusWithin = focus;
+    });
 
     return <input data-testid="input" ref={ref} {...props} />;
   };
