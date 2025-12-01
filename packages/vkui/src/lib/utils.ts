@@ -85,11 +85,7 @@ export const isDOMTypeElement = <
 export function isValidNotReactFragmentElement(
   children: Parameters<typeof React.isValidElement>[0],
 ): children is React.ReactElement<Record<PropertyKey, any>> {
-  return (
-    React.isValidElement(children) &&
-    // @ts-expect-error: TS2339 $$typeof всегда symbol, в отличии от type, благодаря этому пропускаем лишние проверки на тип.
-    children.$$typeof !== Symbol.for('react.fragment')
-  );
+  return React.isValidElement(children) && children.$$typeof !== Symbol.for('react.fragment');
 }
 
 export function isForwardRefElement<
