@@ -197,10 +197,10 @@ export const ChipsSelect = <Option extends ChipOption>({
   // input native props
   disabled: disabledProp,
   readOnly: readOnlyProp,
-  id: idProp,
   onFocus: onFocusProp,
   onBlur: onBlurProp,
-  onKeyDown: onKeyDownProp,
+  id: idProp,
+  placeholder: placeholderProp,
 
   slotProps,
   ...restProps
@@ -213,6 +213,7 @@ export const ChipsSelect = <Option extends ChipOption>({
     disabled,
     readOnly,
     id: labelledbyId,
+    placeholder,
     onFocus,
     onBlur,
     onKeyDown,
@@ -225,10 +226,10 @@ export const ChipsSelect = <Option extends ChipOption>({
       onChange: onInputChangeProp,
       disabled: disabledProp,
       readOnly: readOnlyProp,
-      id: idProp,
       onFocus: onFocusProp,
       onBlur: onBlurProp,
-      onKeyDown: onKeyDownProp,
+      id: idProp,
+      placeholder: placeholderProp,
     },
     slotProps?.input,
   );
@@ -613,6 +614,12 @@ export const ChipsSelect = <Option extends ChipOption>({
         onClear={clearOptions}
         // a11y
         chipsListLabel={chipsListLabel}
+        disabled={disabled}
+        readOnly={readOnly}
+        id={labelledbyId}
+        placeholder={placeholder}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         slotProps={{
           ...slotProps,
           input: {
@@ -624,11 +631,6 @@ export const ChipsSelect = <Option extends ChipOption>({
             'getRootRef': inputRef,
             'value': inputValue,
             'onChange': onInputChange,
-            disabled,
-            readOnly,
-            'id': labelledbyId,
-            'onFocus': handleFocus,
-            'onBlur': handleBlur,
             'onKeyDown': handleKeyDown,
             ...inputRest,
           },

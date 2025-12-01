@@ -257,13 +257,16 @@ export const CalendarHeader = ({
               onChange={onMonthsChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeMonthLabel}
-              data-testid={
-                typeof monthDropdownTestId === 'string'
-                  ? monthDropdownTestId
-                  : monthDropdownTestId?.(currentMonth)
-              }
               onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
+              slotProps={{
+                input: {
+                  'aria-label': changeMonthLabel,
+                  'data-testid':
+                    typeof monthDropdownTestId === 'string'
+                      ? monthDropdownTestId
+                      : monthDropdownTestId?.(currentMonth),
+                },
+              }}
             />
             <CustomSelect
               className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
@@ -275,13 +278,16 @@ export const CalendarHeader = ({
               onChange={onYearChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeYearLabel}
-              data-testid={
-                typeof yearDropdownTestId === 'string'
-                  ? yearDropdownTestId
-                  : yearDropdownTestId?.(currentYear)
-              }
               onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
+              slotProps={{
+                input: {
+                  'aria-label': changeYearLabel,
+                  'data-testid':
+                    typeof yearDropdownTestId === 'string'
+                      ? yearDropdownTestId
+                      : yearDropdownTestId?.(currentYear),
+                },
+              }}
             />
           </div>
         </AdaptivityProvider>

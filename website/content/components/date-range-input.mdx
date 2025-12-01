@@ -14,7 +14,7 @@ description: Компонент для поля выбора диапазона 
 
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
-  <DateRangeInput accessible />
+  <DateRangeInput />
   ```
 </Playground>
 
@@ -40,12 +40,12 @@ React-компонентов, прочитать про это можно в [д
 
 ```jsx
 // Неконтролируемое состояние
-<DateRangeInput defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]} accessible />;
+<DateRangeInput defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]} />;
 
 // Контролируемое состояние
 const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 10)]);
 
-<DateRangeInput value={date} onChange={setDate} accessible />;
+<DateRangeInput value={date} onChange={setDate} />;
 ```
 
 ## Состояния
@@ -59,7 +59,6 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
   <DateRangeInput
     defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
     disabled
-    accessible
   />
   ```
 </Playground>
@@ -78,12 +77,10 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
     <DateRangeInput
       status="error"
       defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
-      accessible
     />
     <DateRangeInput
       status="valid"
       defaultValue={[new Date(2024, 2, 1), new Date(2024, 2, 10)]}
-      accessible
     />
   </Flex>
   ```
@@ -109,10 +106,9 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 
 Новое, доступное поведение можно включить с помощью нового свойства `accessible`.
 
-> Настоятельно рекомендуем включить режим `accessible` доступным уже сейчас. В VKUI v8 режим `accessible` будет включен
-> по умолчанию.
+С `v8` этой свойство включено по умолчанию. Рекомендуется не отключать это поведение, так как этот флаг будет выключен в `v9`
 
-Вот список изменений которые отличают поведение со свойством `accessible` от поведения по умолчанию:
+Вот список изменений которые отличают поведение со свойством `accessible` от поведения без:
 
 - иконка календаря видна постоянно (раньше она была видна, только если в `DateRangeInput` нет значения);
 - календарь открывается только по клику по иконке календаря, по клику на поле ввода и нажатию клавиши `<Space>`,
@@ -128,7 +124,7 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 ```jsx
 <label>
   Период проживания
-  <DateRangeInput aria-label="Период проживания" accessible />
+  <DateRangeInput aria-label="Период проживания" />
 </label>
 ```
 
@@ -137,13 +133,12 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 <DateRangeInput
   id="date"
   aria-label="Срок действия договора"
-  accessible
 />
 ```
 
 ```jsx
 <FormItem top="Период бронирования" htmlFor="date">
-  <DateRangeInput id="date" aria-label="Период бронирования" accessible />
+  <DateRangeInput id="date" aria-label="Период бронирования" />
 </FormItem>
 ```
 

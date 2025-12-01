@@ -99,6 +99,11 @@
 /**
  * Mode "image"
  */
+
+.modeImage {
+  color: var(--vkui--color_text_primary_invariably);
+}
+
 .modeImage.host {
   background-color: var(--vkui--color_background_secondary);
 }

@@ -55,14 +55,12 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
  * @see https://vkui.io/components/split-layout
  */
 export const SplitLayout = ({
-  header,
-  children,
-  getRootRef,
-  getRef,
-  className,
-  center,
-  modal,
   popout,
+  modal,
+  header,
+  center,
+  getRef,
+  children,
 
   slotProps,
   ...restProps
@@ -72,15 +70,8 @@ export const SplitLayout = ({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ content: { getRootRef: ... } }`');
   }
 
-  const rootRest = useMergeProps({ getRootRef }, slotProps?.root);
-  const contentRest = useMergeProps(
-    {
-      getRootRef: getRef,
-      className,
-      ...restProps,
-    },
-    slotProps?.content,
-  );
+  const rootRest = useMergeProps(restProps, slotProps?.root);
+  const contentRest = useMergeProps({ getRootRef: getRef }, slotProps?.content);
 
   const platform = usePlatform();
 

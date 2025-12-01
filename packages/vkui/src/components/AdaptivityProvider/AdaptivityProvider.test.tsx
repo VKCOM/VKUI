@@ -343,6 +343,7 @@ describe('AdaptiveProvider and useAdaptivityWithJSMediaQueries should return sim
         render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...inProps} />);
 
         // AdaptivityProvider results
+        // eslint-disable-next-line @vitest/no-standalone-expect
         expect(adaptivityProviderResultsRef.current?.adaptivityProviderResults).toMatchObject(
           outProps,
         );
@@ -354,6 +355,7 @@ describe('AdaptiveProvider and useAdaptivityWithJSMediaQueries should return sim
         render(<TestAdaptiveProvider ref={adaptivityProviderResultsRef} {...inProps} />);
 
         // useAdaptivityWithJSMediaQueries results
+        // eslint-disable-next-line @vitest/no-standalone-expect
         expect(
           adaptivityProviderResultsRef.current?.adaptivityWithJsMediaQueriesHookResults,
         ).toMatchObject(outProps);

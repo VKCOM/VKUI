@@ -58,7 +58,7 @@ export const CustomSelectInput = ({
   after,
   status,
   children,
-  placeholder,
+  placeholder: placeholderProp,
   selectType = 'default',
   multiline,
   fetching,
@@ -85,10 +85,12 @@ export const CustomSelectInput = ({
     value,
     readOnly,
     disabled,
+    placeholder,
     ...inputProps
   } = useMergeProps(
     {
       getRootRef: getRef,
+      placeholder: placeholderProp,
       ...restProps,
     },
     slotProps?.input,

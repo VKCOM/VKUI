@@ -1,4 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
+import { resolveLayoutProps } from '../../lib/layouts';
+import type { LayoutProps } from '../../lib/layouts/types';
 import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -6,7 +8,11 @@ import styles from './Separator.module.css';
 
 export const CUSTOM_CSS_TOKEN_FOR_USER_SIZE = '--vkui_internal--spacing_size';
 
-export interface SeparatorProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+type PickAllFlexProps<T> = { [K in keyof T as K extends `flex${string}` ? K : never]: T[K] };
+
+export interface SeparatorProps
+  extends HTMLAttributesWithRootRef<HTMLDivElement>,
+    PickAllFlexProps<LayoutProps> {
   /**
    * Стиль отображения разделителя.
    */
@@ -62,9 +68,11 @@ export const Separator = ({
     CUSTOM_CSS_TOKEN_FOR_USER_SIZE,
     size,
   );
+  const resolvedProps = resolveLayoutProps(restProps);
+
   return (
     <RootComponent
-      {...restProps}
+      {...resolvedProps}
       baseClassName={classNames(
         padding && styles.padded,
         appearanceClassNames[appearance],

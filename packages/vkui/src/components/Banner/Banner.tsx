@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Icon24Cancel, Icon24Chevron, Icon24Dismiss, Icon24DismissDark } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useColorScheme } from '../../hooks/useColorScheme';
 import { usePlatform } from '../../hooks/usePlatform';
 import { IconButton } from '../IconButton/IconButton';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
@@ -57,8 +58,9 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
    *
    * - `light` – в качестве фона используется светлое изображение, цвет текста в баннере будет тёмным.
    * - `dark` – в качестве фона используется тёмное изображение, цвет текста будет светлым.
+   * - `auto` - цвет фона и текста будет зависеть от цветовой схемы приложения.
    */
-  imageTheme?: 'light' | 'dark';
+  imageTheme?: 'light' | 'dark' | 'auto';
   /**
    * При использовании `mode="image"`.
    *
@@ -87,7 +89,7 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
  */
 export const Banner = ({
   mode = 'tint',
-  imageTheme = 'dark',
+  imageTheme: imageThemeProp = 'auto',
   size = 's',
   before,
   after: afterProp,
@@ -103,6 +105,9 @@ export const Banner = ({
   ...restProps
 }: BannerProps): React.ReactNode => {
   const platform = usePlatform();
+  const colorScheme = useColorScheme();
+
+  const imageTheme = imageThemeProp === 'auto' ? colorScheme : imageThemeProp;
 
   const HeaderTypography = size === 'm' ? Title : Headline;
   const SubheadTypography = size === 'm' ? Text : Subhead;

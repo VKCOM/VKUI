@@ -79,7 +79,6 @@ export interface DateInputProps
       | 'disableFuture'
       | 'enableTime'
       | 'shouldDisableDate'
-      | 'onChange'
       | 'value'
       | 'defaultValue'
       | 'doneButtonText'
@@ -108,6 +107,10 @@ export interface DateInputProps
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
+  /**
+   * Обработчик изменения выбранной даты.
+   */
+  onChange?: (value: Date | null) => void;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
@@ -158,6 +161,8 @@ export interface DateInputProps
    */
   timezone?: string;
   /**
+   * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
+   *
    * Включает режим в котором DateInput доступен
    * для ассистивных технологий.
    * В этом режиме:
@@ -167,7 +172,7 @@ export interface DateInputProps
    * - календарь при открытии получает фокус, клавиатурный
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean /* TODO [>=v8] включить по умолчанию */;
+  accessible?: boolean /* TODO [>=v9] удалить свойство */;
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
@@ -245,7 +250,7 @@ export const DateInput = ({
   name,
   autoFocus,
   disabled,
-  accessible,
+  accessible = true,
   calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
@@ -376,10 +381,7 @@ export const DateInput = ({
   );
 
   const onCalendarChange = React.useCallback(
-    (value?: Date | undefined) => {
-      if (!value) {
-        return;
-      }
+    (value: Date) => {
       if (enableTime) {
         setInternalValue(value);
         return;
