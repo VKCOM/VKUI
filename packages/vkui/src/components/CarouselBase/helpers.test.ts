@@ -112,20 +112,23 @@ describe(calculateIndent, () => {
       isRtl: true,
       result: -800,
     },
-  ])(
-    'should return $result when targetIndex $targetIndex and isCenterWithCustomWidth $isCenterWithCustomWidth',
-    ({ slidesManager, result, isCenterAlign, targetIndex, isRtl }) => {
-      expect(
-        calculateIndent({
-          targetIndex,
-          slidesManager,
-          isCenter: isCenterAlign,
-          looped: true,
-          isRtl,
-        }),
-      ).toBe(result);
-    },
-  );
+  ])('should return $result when targetIndex $targetIndex and isCenterWithCustomWidth $isCenterWithCustomWidth', ({
+    slidesManager,
+    result,
+    isCenterAlign,
+    targetIndex,
+    isRtl,
+  }) => {
+    expect(
+      calculateIndent({
+        targetIndex,
+        slidesManager,
+        isCenter: isCenterAlign,
+        looped: true,
+        isRtl,
+      }),
+    ).toBe(result);
+  });
 });
 
 describe(getShiftedIndexes, () => {
@@ -142,12 +145,14 @@ describe(getShiftedIndexes, () => {
       availableWidth: 600,
       result: [3, 2, 1],
     },
-  ])(
-    'should return $result with direction $direction, availableWidth $availableWidth',
-    ({ direction, slides, availableWidth, result }) => {
-      expect(getShiftedIndexes(direction, slides, availableWidth)).toEqual(result);
-    },
-  );
+  ])('should return $result with direction $direction, availableWidth $availableWidth', ({
+    direction,
+    slides,
+    availableWidth,
+    result,
+  }) => {
+    expect(getShiftedIndexes(direction, slides, availableWidth)).toEqual(result);
+  });
 });
 
 describe(getLoopPoints, () => {
@@ -187,16 +192,18 @@ describe(getLoopPoints, () => {
       containerWidth: 220,
       result: [-1000, -1000],
     },
-  ])(
-    'should return correct result $result with containerWidth $containerWidth',
-    ({ slidesManager, result, containerWidth, isRtl }) => {
-      expect(
-        getLoopPoints(slidesManager, containerWidth, isRtl).map(({ target }) => {
-          return target(1000);
-        }),
-      ).toEqual(result);
-    },
-  );
+  ])('should return correct result $result with containerWidth $containerWidth', ({
+    slidesManager,
+    result,
+    containerWidth,
+    isRtl,
+  }) => {
+    expect(
+      getLoopPoints(slidesManager, containerWidth, isRtl).map(({ target }) => {
+        return target(1000);
+      }),
+    ).toEqual(result);
+  });
 });
 
 describe(getTargetIndex, () => {
@@ -236,12 +243,15 @@ describe(getTargetIndex, () => {
       currentShiftXDelta: -25,
       resultIndex: 0,
     },
-  ])(
-    'should return $resultIndex with slideIndex $slideIndex, currentShiftX $currentShiftX, currentShiftXDelta $currentShiftXDelta',
-    ({ slides, slideIndex, currentShiftX, currentShiftXDelta, resultIndex }) => {
-      expect(
-        getTargetIndex({ slides, slideIndex, currentShiftX, currentShiftXDelta, looped: true }),
-      ).toBe(resultIndex);
-    },
-  );
+  ])('should return $resultIndex with slideIndex $slideIndex, currentShiftX $currentShiftX, currentShiftXDelta $currentShiftXDelta', ({
+    slides,
+    slideIndex,
+    currentShiftX,
+    currentShiftXDelta,
+    resultIndex,
+  }) => {
+    expect(
+      getTargetIndex({ slides, slideIndex, currentShiftX, currentShiftXDelta, looped: true }),
+    ).toBe(resultIndex);
+  });
 });

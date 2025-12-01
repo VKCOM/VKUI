@@ -5,6 +5,14 @@
   display: flex;
 }
 
+.displayNone {
+  display: none;
+}
+
+.displayInlineFlex {
+  display: inline-flex;
+}
+
 .marginAuto {
   --vkui_internal--flex_original_margin_inline: var(--vkui--size_base_padding_horizontal--regular);
   --vkui_internal--flex_original_margin_block: var(--vkui--size_base_padding_vertical--regular);

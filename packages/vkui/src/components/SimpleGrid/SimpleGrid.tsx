@@ -3,8 +3,10 @@ import {
   calculateGap,
   columnGapClassNames,
   type GapsProp,
+  resolveLayoutProps,
   rowGapClassNames,
 } from '../../lib/layouts';
+import type { LayoutProps } from '../../lib/layouts/types';
 import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
@@ -24,7 +26,14 @@ const alignClassNames = {
   baseline: styles.alignBaseline,
 };
 
-export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
+const displayClassNames = {
+  'none': styles.displayNone,
+  'inline-grid': styles.displayInlineGrid,
+};
+
+export interface SimpleGridProps
+  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
+    LayoutProps {
   /**
    * Количество колонок.
    */
@@ -51,6 +60,10 @@ export interface SimpleGridProps extends Omit<RootComponentProps<HTMLElement>, '
    * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
   align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
+  /**
+   * Возможность задать css-свойство `display`.
+   */
+  display?: 'none' | 'grid' | 'inline-grid';
 }
 
 /**
@@ -62,8 +75,10 @@ export const SimpleGrid = ({
   margin = 'none',
   minColWidth,
   align = 'stretch',
-  ...props
+  display = 'grid',
+  ...restProps
 }: SimpleGridProps) => {
+  const resolvedProps = resolveLayoutProps(restProps);
   const style: CSSCustomProperties = {};
   const [rowGap, columnGap] = calculateGap(gap);
   if (typeof rowGap === 'number') {
@@ -79,7 +94,7 @@ export const SimpleGrid = ({
 
   return (
     <RootComponent
-      {...props}
+      {...resolvedProps}
       baseClassName={classNames(
         styles.host,
         margin !== 'none' && marginClassNames[margin],
@@ -87,6 +102,7 @@ export const SimpleGrid = ({
         minColWidth && styles.withMinWidth,
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
         typeof rowGap === 'string' && rowGapClassNames[rowGap],
+        display !== 'grid' && displayClassNames[display],
       )}
       baseStyle={style}
     />

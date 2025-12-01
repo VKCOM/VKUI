@@ -38,7 +38,21 @@ function RadioIcon() {
 }
 
 export interface RadioInputProps
-  extends Omit<React.ComponentProps<'input'>, 'type'>,
+  extends Pick<
+      React.ComponentProps<'input'>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLLabelElement> {
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
@@ -60,10 +74,22 @@ export interface RadioInputProps
 }
 
 export function RadioInput({
-  className,
-  style,
-  getRootRef,
   getRef,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
   slotProps,
   ...restProps
 }: RadioInputProps) {
@@ -71,9 +97,26 @@ export function RadioInput({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
-  const rootRest = useMergeProps({ className, style, getRootRef }, slotProps?.root);
+  const rootRest = useMergeProps(restProps, slotProps?.root);
 
-  const inputProps = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  const inputProps = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   return (
     <RootComponent {...rootRest}>

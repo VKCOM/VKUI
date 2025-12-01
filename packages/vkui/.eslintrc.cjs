@@ -195,6 +195,7 @@ module.exports = {
         '@vitest/valid-describe-callback': 'off',
         '@vitest/expect-expect': 'off',
         '@vitest/valid-title': 'off',
+        '@vitest/no-conditional-expect': 'off',
         'no-restricted-properties': 'off',
         'no-restricted-globals': 'off',
         'react/display-name': 'off',

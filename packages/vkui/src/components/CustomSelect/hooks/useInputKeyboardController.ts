@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Keys, pressedKey } from '../../../lib/accessibility';
-import { callMultiple } from '../../../lib/callMultiple';
 import { type SelectProps } from '../CustomSelect';
 import { type UseFocusedOptionControllerReturn } from './useFocusedOptionController';
 
@@ -87,10 +86,10 @@ export function useInputKeyboardController({
     },
     [opened, onInputKeyDown],
   );
-  const _onInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void = callMultiple(
-    handleKeyDownSelect,
-    handleInputKeydown,
-  );
+  const _onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    handleKeyDownSelect(event);
+    handleInputKeydown(event);
+  };
 
   return _onInputKeyDown;
 }

@@ -94,7 +94,7 @@ export interface CalendarRangeProps
   /**
    * Обработчик изменения выбранного промежутка.
    */
-  onChange?: (value: DateRangeType | undefined) => void; // TODO [>=8]: поменять тип на `(value?: DateRangeType | null) => void`
+  onChange?: (value: DateRangeType) => void;
   /**
    * Функция для проверки запрета выбора даты.
    */
@@ -140,14 +140,15 @@ export const CalendarRange = ({
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
-  const _onChange = React.useCallback(
-    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
-    [onChange],
-  );
+  const _onChange = (newRange: DateRangeType | null) => {
+    if (newRange && onChange) {
+      onChange(newRange);
+    }
+  };
 
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null>({
     value: valueProp,
-    defaultValue,
+    defaultValue: defaultValue as DateRangeType | null,
     onChange: _onChange,
   });
 

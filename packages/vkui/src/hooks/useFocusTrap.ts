@@ -12,6 +12,11 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { useMutationObserver } from './useMutationObserver';
 import { useStableCallback } from './useStableCallback';
 
+function isFocusableElement(el: Element): boolean {
+  // eslint-disable-next-line no-restricted-properties
+  return FOCUSABLE_ELEMENTS_LIST.some((sel) => el.matches(sel));
+}
+
 const useRestoreFocus = ({
   restoreFocus,
   timeout,
@@ -21,7 +26,10 @@ const useRestoreFocus = ({
   ref: RefObject<HTMLElement | null>;
 }) => {
   const restoreFocusRef = useRef(restoreFocus);
-  restoreFocusRef.current = restoreFocus;
+  useIsomorphicLayoutEffect(() => {
+    restoreFocusRef.current = restoreFocus;
+  }, [restoreFocus]);
+
   const [restoreFocusTo, setRestoreFocusTo] = useState<Element | null>(null);
 
   const restoreFocusImpl = useStableCallback(() => {
@@ -31,6 +39,15 @@ const useRestoreFocus = ({
         : restoreFocusRef.current;
 
     if (!shouldRestoreFocus) {
+      return;
+    }
+
+    const activeElement = getActiveElementByAnotherElement(ref.current);
+    if (
+      activeElement &&
+      !ref.current?.contains(activeElement) &&
+      isFocusableElement(activeElement)
+    ) {
       return;
     }
 

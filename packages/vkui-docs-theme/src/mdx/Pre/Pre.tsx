@@ -38,7 +38,6 @@ export function Pre({
         <pre className={classNames(styles.pre, className)} ref={preRef} {...props}>
           {children}
         </pre>
-        {copy === '' && !(filename || header) && <CopyButton getValue={getValue} />}
       </Flex>
     </div>
   );

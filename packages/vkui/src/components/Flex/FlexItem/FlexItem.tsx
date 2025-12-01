@@ -1,4 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
+import { warnOnce } from '../../../lib/warnOnce';
 import type { HasChildren } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import type { RootComponentProps } from '../../RootComponent/RootComponent';
@@ -41,6 +42,8 @@ export interface FlexItemProps
   flexBasis?: number | string;
 }
 
+const warn = warnOnce('Flex.Item');
+
 export const FlexItem = ({
   children,
   alignSelf,
@@ -48,6 +51,10 @@ export const FlexItem = ({
   flexBasis,
   ...rest
 }: FlexItemProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development') {
+    warn('Компонент Flex.Item устарел, используйте компонент Flex в качестве альтернативы.');
+  }
+
   return (
     <RootComponent
       {...rest}

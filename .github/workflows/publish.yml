@@ -1,38 +1,49 @@
-name: 'Publish release'
-run-name: Publish release ${{ inputs.package_name }} ${{ inputs.new_version }} ${{ inputs.custom_version }} (tag ${{ inputs.latest == true && 'latest' || 'legacy' }})
+name: Publish release
+run-name: Publish release ${{ inputs.package_name }} ${{ inputs.custom_version || inputs.version_type }}, close_milestone is ${{ inputs.close_milestone }} (tag ${{ inputs.npm_tag || 'see in workflow' }})
 
 on:
   workflow_dispatch:
     inputs:
       package_name:
-        description: "package's name:"
+        description: "[1] Package's name:"
         required: true
         type: choice
         options:
-          - '@vkontakte/vkui'
-          - '@vkontakte/vkui-floating-ui'
-          - '@vkontakte/vkui-date-fns-tz'
-          - '@vkontakte/vkui-codemods'
-      new_version:
-        description: 'version type:'
+          - "@vkontakte/vkui"
+          - "@vkontakte/vkui-floating-ui"
+          - "@vkontakte/vkui-date-fns-tz"
+          - "@vkontakte/vkui-codemods"
+      version_type:
+        description: "[2] Version type (!!! CHOOSE THE RIGHT BRANCH BEFORE !!!):"
         required: true
         type: choice
-        default: 'minor'
         options:
           - patch
           - minor
           - major
-      custom_version:
-        description: 'use syntax x.y.z, without "v" (it will ignore "version type" parameter):'
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+      prerelease_id:
+        description: "[3] NPM preid, ex, 0.0.0-beta.0 (it will be enabled only for pre-releases):"
+        required: false
+        type: choice
+        default: "beta"
+        options:
+          - alpha
+          - beta
+          - rc
+      npm_tag:
+        description: "[4] NPM tag (for stable release default is 'latest', for pre-release is preid)"
         required: false
       close_milestone:
-        description: 'whether to close associated milestone after publish'
+        description: "Whether to close associated milestone after publish (milestone should be exist)"
         type: boolean
         default: true
-      latest:
-        description: 'set latest tag'
-        type: boolean
-        default: true
+      custom_version:
+        description: "Custom SemVer version (it will disable steps [2] and [3]):"
+        required: false
 
 jobs:
   publish:
@@ -42,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
@@ -54,15 +65,15 @@ jobs:
         uses: ./.github/actions/publish-workflow-2-bump-version
         with:
           package_name: ${{ inputs.package_name }}
-          new_version: ${{ inputs.custom_version || inputs.new_version }}
+          version_type: ${{ inputs.custom_version || inputs.version_type }}
+          prerelease_id: ${{ inputs.prerelease_id }}
 
       - name: Run pre-publish checks
         uses: ./.github/actions/publish-workflow-3-validation
         with:
           package_name: ${{ inputs.package_name }}
 
-      - name: Complete publish
-        id: complete_publish
+      - name: Complete publish (for prerelease)
         uses: ./.github/actions/publish-workflow-4-complete
         with:
           branch: ${{ github.ref }}
@@ -70,7 +81,7 @@ jobs:
           next_version: ${{ steps.updated_versions_info.outputs.next_version }}
           package_name: ${{ inputs.package_name }}
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          npm_token: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
-          npm_tag: ${{ inputs.latest == true && 'latest' || 'legacy' }}
+          npm_tag: ${{ inputs.npm_tag || (fromJson(steps.updated_versions_info.outputs.is_stable_release) == true && 'latest') || inputs.prerelease_id }}
           close_milestone: ${{ inputs.close_milestone == true }}
           disable_git_tag_with_namespace: ${{ inputs.package_name == '@vkontakte/vkui' }}
+          prerelease: ${{ fromJson(steps.updated_versions_info.outputs.is_stable_release) == false }}

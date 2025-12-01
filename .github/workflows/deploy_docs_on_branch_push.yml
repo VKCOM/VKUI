@@ -34,7 +34,7 @@ jobs:
     name: Cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Delete old artifacts for the next documentation version
         uses: VKCOM/gh-actions/VKUI/s3@main
@@ -53,7 +53,7 @@ jobs:
     needs: cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -85,7 +85,7 @@ jobs:
     needs: cleanup
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
