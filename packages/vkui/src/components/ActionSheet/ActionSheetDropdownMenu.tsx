@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useEffectDev } from '../../hooks/useEffectDev';
-import { useEventListener } from '../../hooks/useEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
@@ -47,18 +46,20 @@ export const ActionSheetDropdownMenu = ({
     }
   }, [toggleRef]);
 
-  const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
-    const dropdownElement = elementRef?.current;
-    if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-      onClose?.();
-    }
-  });
-
   React.useEffect(() => {
+    const listener = (e: MouseEvent) => {
+      const dropdownElement = elementRef?.current;
+      if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
+        onClose?.();
+      }
+    };
+
     setTimeout(() => {
-      bodyClickListener.add(document!.body);
+      document!.body.addEventListener('click', listener);
     });
-  }, [bodyClickListener, document]);
+
+    return () => document!.body.removeEventListener('click', listener);
+  }, [onClose, document]);
 
   const targetRef = React.useMemo(() => {
     if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
