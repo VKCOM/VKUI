@@ -30,13 +30,13 @@ const simulateDrag = (element: HTMLDivElement, points: number[]) => {
 const Slide = ({
   children,
   width = 200,
-  ...rest
+  getRef,
 }: {
   children: React.ReactNode;
   width?: number;
   getRef: React.Ref<HTMLDivElement>;
 }) => (
-  <div style={{ fontSize: '72px', width }} ref={rest.getRef}>
+  <div style={{ fontSize: '72px', width }} ref={getRef}>
     {children}
   </div>
 );
