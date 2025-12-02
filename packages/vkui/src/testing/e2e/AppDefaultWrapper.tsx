@@ -1,4 +1,4 @@
-import type { CSSProperties, HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
 import { TEST_CLASS_NAMES } from './constants';
