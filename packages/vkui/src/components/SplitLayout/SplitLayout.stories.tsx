@@ -87,6 +87,9 @@ export const Playground: Story = {
                     alert
                   </Cell>
                 </Group>
+                <Group>
+                  <AdditionalContent />
+                </Group>
               </Panel>
             </SplitCol>
           )}
@@ -108,54 +111,7 @@ export const Playground: Story = {
                     Введите адрес страницы в поле поиска
                   </Placeholder>
                   {children}
-                  <Accordion>
-                    <Accordion.Summary>Lorem ipsum dolor?</Accordion.Summary>
-                    <Accordion.Content>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
-                      voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad
-                      esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum
-                      dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate
-                      voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
-                      facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit
-                      amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem
-                      corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis,
-                      ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti
-                      cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat
-                      explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur
-                      adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
-                      sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo
-                      illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing
-                      elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis
-                      rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
-                      aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-                      aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora
-                      commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam?
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
-                      voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad
-                      esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum
-                      dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate
-                      voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
-                      facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit
-                      amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem
-                      corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis,
-                      ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
-                      consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti
-                      cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat
-                      explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur
-                      adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
-                      sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo
-                      illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing
-                      elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis
-                      rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
-                      aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-                      aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora
-                      commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam?
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
-                      voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad
-                      esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam?
-                    </Accordion.Content>
-                  </Accordion>
+                  <AdditionalContent />
                 </Group>
               </Panel>
 
@@ -261,3 +217,51 @@ export const Empty: Story = {
     );
   },
 };
+
+function AdditionalContent() {
+  return (
+    <Accordion>
+      <Accordion.Summary>Lorem ipsum dolor?</Accordion.Summary>
+      <Accordion.Content>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate
+        voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa
+        fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora
+        commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem
+        corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat
+        explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi
+        ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit
+        amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque
+        id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum
+        adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
+        aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse
+        nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam?
+      </Accordion.Content>
+    </Accordion>
+  );
+}
