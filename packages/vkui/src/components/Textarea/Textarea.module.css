@@ -14,6 +14,16 @@
   color: var(--vkui--color_text_primary);
 }
 
+.sizeYCompact .el {
+  padding-block: 8px;
+}
+
+@media (--sizeY-compact) {
+  .sizeYNone .el {
+    padding-block: 8px;
+  }
+}
+
 .el[cols] {
   inline-size: initial;
 }
