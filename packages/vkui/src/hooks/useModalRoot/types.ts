@@ -75,22 +75,6 @@ export type CustomModalPayload<
   additionalProps?: AdditionalProps;
 };
 
-type OpenCustomModal = {
-  <AdditionalProps extends object>(
-    type: 'card',
-    props:
-      | CustomModalPayload<OpenModalCardProps, AdditionalProps>
-      | React.ComponentType<CustomModalProps<OpenModalCardProps, AdditionalProps>>,
-  ): OpenCardReturn;
-
-  <AdditionalProps extends object>(
-    type: 'page',
-    props:
-      | CustomModalPayload<OpenModalPageProps, AdditionalProps>
-      | React.ComponentType<CustomModalProps<OpenModalPageProps, AdditionalProps>>,
-  ): OpenPageReturn;
-};
-
 /**
  * API предоставляемое хуком `useModalRoot`
  */
@@ -106,9 +90,21 @@ export type ModalRootApi = {
    */
   openModalPage: (props: OpenModalPageProps) => OpenPageReturn;
   /**
-   * Метод для открытия кастомного модального окна на базе `ModalCard` или `ModalPage`.
+   * Метод для открытия кастомного модального окна на базе `ModalCard`.
    */
-  openCustomModal: OpenCustomModal;
+  openCustomModalCard: <AdditionalProps extends object>(
+    props:
+      | CustomModalPayload<OpenModalCardProps, AdditionalProps>
+      | React.ComponentType<CustomModalProps<OpenModalCardProps, AdditionalProps>>,
+  ) => OpenCardReturn;
+  /**
+   * Метод для открытия кастомного модального окна на базе `ModalCard`.
+   */
+  openCustomModalPage: <AdditionalProps extends object>(
+    props:
+      | CustomModalPayload<OpenModalPageProps, AdditionalProps>
+      | React.ComponentType<CustomModalProps<OpenModalPageProps, AdditionalProps>>,
+  ) => OpenPageReturn;
   /**
    * Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
    */

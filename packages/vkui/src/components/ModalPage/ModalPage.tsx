@@ -27,6 +27,8 @@ export const ModalPage = ({
   settlingHeight = 50,
   dynamicContentHeight,
   disableModalOverlay,
+  disableOpenAnimation,
+  disableCloseAnimation,
   keepMounted = false,
   ...restProps
 }: ModalPageProps) => {
@@ -36,6 +38,8 @@ export const ModalPage = ({
     keepMounted,
     modalOverlayTestId,
     disableModalOverlay,
+    disableOpenAnimation,
+    disableCloseAnimation,
     noFocusToDialog,
     onOpen,
     onOpened,

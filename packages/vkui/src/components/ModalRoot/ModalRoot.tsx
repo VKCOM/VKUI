@@ -24,6 +24,8 @@ export const ModalRoot = ({
   onClose,
   onClosed,
   onOverlayClosed,
+  disableCloseAnimation,
+  disableOpenAnimation,
 }: ModalRootProps): React.ReactNode => {
   const contextValue = React.useMemo(
     () => ({
@@ -34,6 +36,8 @@ export const ModalRoot = ({
       modalOverlayTestId,
       noFocusToDialog,
       disableModalOverlay,
+      disableCloseAnimation,
+      disableOpenAnimation,
 
       // callbacks
       onOpen,
@@ -61,7 +65,9 @@ export const ModalRoot = ({
     }),
     [
       activeModal,
+      disableCloseAnimation,
       disableModalOverlay,
+      disableOpenAnimation,
       modalOverlayTestId,
       noFocusToDialog,
       onClose,
@@ -81,6 +87,8 @@ export const ModalRoot = ({
               visible={typeof activeModal === 'string'}
               getRootRef={modalOverlayRef}
               onClosed={onOverlayClosed}
+              disableCloseAnimation={disableCloseAnimation}
+              disableOpenAnimation={disableOpenAnimation}
             />
           )}
           {children}

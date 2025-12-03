@@ -118,14 +118,14 @@ export const Playground: Story = {
 
     const openCustomModal = (type: 'card' | 'page') => {
       if (type === 'card') {
-        api.openCustomModal('card', {
+        api.openCustomModalCard({
           component: ModalCardComponent,
           additionalProps: {
             openNextModal: openCustomModal,
           },
         });
       } else {
-        api.openCustomModal('page', {
+        api.openCustomModalPage({
           component: ModalPageComponent,
           additionalProps: {
             openNextModal: openCustomModal,

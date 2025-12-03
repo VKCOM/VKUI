@@ -131,6 +131,15 @@ type ModalRootBaseProps = {
    * Отключает отображение и взаимодействие с фоном модалки.
    */
   disableModalOverlay?: boolean;
+
+  /**
+   * Отключает анимацию появления .
+   */
+  disableOpenAnimation?: boolean;
+  /**
+   * Отключает анимацию закрытия модалки.
+   */
+  disableCloseAnimation?: boolean;
 };
 
 export interface ModalRootProps extends ModalRootBaseProps {

@@ -26,7 +26,8 @@ description: Хук для работы с модальными окнами([`M
 
 - `openModalCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
 - `openModalPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
-- `openCustomModal: (type: 'card' | 'page', props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals).
+- `openCustomModalPage: (props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна на базе `ModalPage`. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals).
+- `openCustomModalCard: (props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна на базе `ModalCard`. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals).
 - `update: (id: string, type: 'card' | 'page', props: T) => void` - Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
 - `close: (id: string) => void` - Метод для закрытия определенного модального окна. Принимает id модального окна.
 - `closeAll: () => void` - Метод для закрытия всех созданных модальных окон.
@@ -179,12 +180,9 @@ return (
 ## Пользовательские модальные окна [#custom-modals]
 
 Иногда нужно, чтобы место вызова модального окна и его верстка были независимы друг от друга.
-Для этого в `useModalRoot` есть метод **`openCustomModal`**, который позволяет отрисовать модальное окно произвольного вида на базе `ModalCard` или `ModalPage`.
+Для этого в `useModalRoot` есть методы **`openCustomModalCard`** и **`openCustomModalPage`**, который позволяет отрисовать модальное окно произвольного вида на базе `ModalCard` или `ModalPage`.
 
-### Параметры `openCustomModal`
 
-- **`type: 'card' | 'page'`** – базовый тип модального окна, от которого будет наследоваться пользовательское.
-- **`props: CustomModalPayload`** – настройки модального окна (см. ниже).
 
 ### `CustomModalPayload` [#custom-modal-props]
 
@@ -218,7 +216,7 @@ return (
 ### Как это работает
 
 1. Вы пишете **свой компонент модалки**, который внутри использует `ModalCard` или `ModalPage`. В него автоматически попадут все свойства + методы `update` и `close`.
-2. Через `api.openCustomModal(type, { component, props })` вы «регистрируете» это окно и открываете его.
+2. Через `api.openCustomModalCard({ component, props })` вы «регистрируете» это окно и открываете его.
 3. При необходимости можно передавать **дополнительные props** и управлять логикой изнутри.
 
 <Playground>
@@ -303,14 +301,14 @@ const [api, contextHolder] = useModalRoot();
 
 const openCustomModal = (type: 'card' | 'page') => {
   if (type === 'card') {
-    api.openCustomModal('card', {
+    api.openCustomModalCard({
       component: ModalCardComponent,
       additionalProps: {
         openNextModal: openCustomModal,
       },
     });
   } else {
-    api.openCustomModal('page', {
+    api.openCustomModalPage({
       component: ModalPageComponent,
       additionalProps: {
         openNextModal: openCustomModal,
@@ -341,7 +339,7 @@ return (
 
 ### Модальные окна без дополнительных свойств
 
-Если вы хотите показать модальное окно, не прокидывая ничего в него снаружи, то можете в качестве второго параметра в `openCustomModal` прокинуть саму функцию отрисовки компонента.
+Если вы хотите показать модальное окно, не прокидывая ничего в него снаружи, то можете в качестве параметра в `openCustomModalPage`/`openCustomModalCard` прокинуть саму функцию отрисовки компонента.
 
 <Playground>
 
@@ -406,11 +404,11 @@ const ModalPageComponent = ({
 const [api, contextHolder] = useModalRoot();
 
 const openModalCard = () => {
-  api.openCustomModal('card', ModalCardComponent);
+  api.openCustomModalCard(ModalCardComponent);
 };
 
 const openModalPage = () => {
-  api.openCustomModal('page', ModalPageComponent);
+  api.openCustomModalPage(ModalPageComponent);
 };
 
 return (

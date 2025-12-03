@@ -219,7 +219,7 @@ describe('useModalRoot', () => {
 
     render(<Fixture setApi={setApi} />);
     act(() => {
-      getApi().openCustomModal('card', {
+      getApi().openCustomModalCard({
         id: 'modal-1',
         component: ModalCardComponent,
         additionalProps: {
@@ -265,7 +265,7 @@ describe('useModalRoot', () => {
 
     render(<Fixture setApi={setApi} />);
     act(() => {
-      getApi().openCustomModal('page', {
+      getApi().openCustomModalPage({
         id: 'modal-1',
         component: ModalPageComponent,
         additionalProps: {
@@ -310,7 +310,7 @@ describe('useModalRoot', () => {
 
     render(<Fixture setApi={setApi} />);
     act(() => {
-      getApi().openCustomModal('page', ModalPageComponent);
+      getApi().openCustomModalPage(ModalPageComponent);
     });
 
     fireEvent.click(screen.getByTestId('additional-button'));
