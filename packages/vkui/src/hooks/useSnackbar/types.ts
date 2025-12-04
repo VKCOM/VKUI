@@ -74,11 +74,11 @@ export namespace SnackbarApi {
     /**
      * Метод для изменения отступа контейнера снекбаров от верха.
      */
-    setVerticalOffsetTop: (offset: VerticalOffset) => void;
+    setVerticalOffsetYStart: (offset: VerticalOffset) => void;
     /**
      * Метод для изменения отступа контейнера снекбаров от низа.
      */
-    setVerticalOffsetBottom: (offset: VerticalOffset) => void;
+    setVerticalOffsetYEnd: (offset: VerticalOffset) => void;
   }
 }
 
@@ -97,11 +97,11 @@ export namespace UseSnackbar {
     /**
      * Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда на странице используется компонент `FixedLayout`.
      */
-    verticalOffsetTop?: SnackbarApi.VerticalOffset;
+    verticalOffsetYStart?: SnackbarApi.VerticalOffset;
     /**
      * Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда на странице используется компонент `FixedLayout`.
      */
-    verticalOffsetBottom?: SnackbarApi.VerticalOffset;
+    verticalOffsetYEnd?: SnackbarApi.VerticalOffset;
   }
 
   export type Return = [SnackbarApi.Api, React.ReactElement | null];

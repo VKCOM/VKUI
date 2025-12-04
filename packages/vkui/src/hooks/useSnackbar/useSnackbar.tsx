@@ -45,8 +45,8 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
       closeAll: actions.closeAll,
       setMaxSnackbarsCount: config.setMaxSnackbarsCount,
       setQueueStrategy: config.setQueueStrategy,
-      setVerticalOffsetTop: config.setVerticalOffsetTop,
-      setVerticalOffsetBottom: config.setVerticalOffsetBottom,
+      setVerticalOffsetYStart: config.setVerticalOffsetYStart,
+      setVerticalOffsetYEnd: config.setVerticalOffsetYEnd,
     };
   }, [
     actions.close,
@@ -56,8 +56,8 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
     actions.update,
     config.setMaxSnackbarsCount,
     config.setQueueStrategy,
-    config.setVerticalOffsetBottom,
-    config.setVerticalOffsetTop,
+    config.setVerticalOffsetYEnd,
+    config.setVerticalOffsetYStart,
   ]);
 
   const onSnackbarOpen = React.useCallback(
@@ -112,8 +112,8 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
             placement={placement as SnackbarPlacement}
             onSnackbarContainerClosed={snackbarState.removeSnackbar}
             onSnackbarOpen={onSnackbarOpen}
-            verticalOffsetTop={config.verticalOffsetTop}
-            verticalOffsetBottom={config.verticalOffsetBottom}
+            verticalOffsetYStart={config.verticalOffsetYStart}
+            verticalOffsetYEnd={config.verticalOffsetYEnd}
           />
         ))}
       </>
@@ -122,8 +122,8 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
     onSnackbarOpen,
     snackbarState.removeSnackbar,
     snackbarsMap,
-    config.verticalOffsetBottom,
-    config.verticalOffsetTop,
+    config.verticalOffsetYEnd,
+    config.verticalOffsetYStart,
   ]);
 
   return [api, holder];

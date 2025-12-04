@@ -1,7 +1,7 @@
 .host {
   --vkui_internal--snackbars_container_in_padding: 8px;
-  --vkui_internal--snackbars_container_offset_top: 0px;
-  --vkui_internal--snackbars_container_offset_bottom: 0px;
+  --vkui_internal--snackbars_container_offset_y_start: 0px;
+  --vkui_internal--snackbars_container_offset_y_end: 0px;
 
   position: fixed;
   padding: var(--vkui_internal--snackbars_container_in_padding);
@@ -18,7 +18,7 @@
 .placementTopEnd {
   inset-block-start: calc(
     var(--vkui_internal--safe_area_inset_top) +
-    var(--vkui_internal--snackbars_container_offset_top)
+    var(--vkui_internal--snackbars_container_offset_y_start)
   );
   flex-direction: column-reverse;
 }
@@ -28,7 +28,7 @@
 .placementBottomEnd {
   inset-block-end: calc(
     var(--vkui_internal--safe_area_inset_bottom) +
-    var(--vkui_internal--snackbars_container_offset_bottom)
+    var(--vkui_internal--snackbars_container_offset_y_end)
   );
   flex-direction: column;
 }
@@ -57,5 +57,5 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalEpic--hasTabbar) .host {
-  --vkui_internal--snackbars_container_offset_bottom: var(--vkui_internal--tabbar_height);
+  --vkui_internal--snackbars_container_offset_y_end: var(--vkui_internal--tabbar_height);
 }

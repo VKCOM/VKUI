@@ -7,26 +7,26 @@ const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 export type UseSnackbarConfigReturn = {
   maxSnackbarsCount: number;
   queueStrategy: 'queue' | 'shift';
-  verticalOffsetTop: number | string | undefined;
-  verticalOffsetBottom: number | string | undefined;
+  verticalOffsetYStart: number | string | undefined;
+  verticalOffsetYEnd: number | string | undefined;
   setMaxSnackbarsCount: (count: number) => void;
   setQueueStrategy: (strategy: 'queue' | 'shift') => void;
-  setVerticalOffsetTop: (offset: number | string | undefined) => void;
-  setVerticalOffsetBottom: (offset: number | string | undefined) => void;
+  setVerticalOffsetYStart: (offset: number | string | undefined) => void;
+  setVerticalOffsetYEnd: (offset: number | string | undefined) => void;
 };
 
 export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnackbarConfigReturn => {
   const {
     maxSnackbarsCount: maxSnackbarsCountProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
     queueStrategy: queueStrategyProp = 'queue',
-    verticalOffsetTop: verticalOffsetTopProp,
-    verticalOffsetBottom: verticalOffsetBottomProp,
+    verticalOffsetYStart: verticalOffsetYStartProp,
+    verticalOffsetYEnd: verticalOffsetYEndProp,
   } = params;
 
   const [maxSnackbarsCount, setMaxSnackbarsCount] = React.useState(maxSnackbarsCountProp);
   const [queueStrategy, setQueueStrategy] = React.useState(queueStrategyProp);
-  const [verticalOffsetTop, setVerticalOffsetTop] = React.useState(verticalOffsetTopProp);
-  const [verticalOffsetBottom, setVerticalOffsetBottom] = React.useState(verticalOffsetBottomProp);
+  const [verticalOffsetYStart, setVerticalOffsetYStart] = React.useState(verticalOffsetYStartProp);
+  const [verticalOffsetYEnd, setVerticalOffsetYEnd] = React.useState(verticalOffsetYEndProp);
 
   useIsomorphicLayoutEffect(
     () => setMaxSnackbarsCount(maxSnackbarsCountProp),
@@ -34,22 +34,22 @@ export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnack
   );
   useIsomorphicLayoutEffect(() => setQueueStrategy(queueStrategyProp), [queueStrategyProp]);
   useIsomorphicLayoutEffect(
-    () => setVerticalOffsetTop(verticalOffsetTopProp),
-    [verticalOffsetTopProp],
+    () => setVerticalOffsetYStart(verticalOffsetYStartProp),
+    [verticalOffsetYStartProp],
   );
   useIsomorphicLayoutEffect(
-    () => setVerticalOffsetBottom(verticalOffsetBottomProp),
-    [verticalOffsetBottomProp],
+    () => setVerticalOffsetYEnd(verticalOffsetYEndProp),
+    [verticalOffsetYEndProp],
   );
 
   return {
     maxSnackbarsCount,
     queueStrategy,
-    verticalOffsetTop,
-    verticalOffsetBottom,
+    verticalOffsetYStart,
+    verticalOffsetYEnd,
     setMaxSnackbarsCount,
     setQueueStrategy,
-    setVerticalOffsetTop,
-    setVerticalOffsetBottom,
+    setVerticalOffsetYStart,
+    setVerticalOffsetYEnd,
   };
 };
