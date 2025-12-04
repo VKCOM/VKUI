@@ -7,9 +7,6 @@ type ActiveModalPropsResult = {
   disableCloseAnimation: boolean;
 };
 
-/**
- * Получает свойства активного модала
- */
 export const useActiveModalProps = (state: ModalRootState): ActiveModalPropsResult => {
   return React.useMemo(
     () => ({

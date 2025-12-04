@@ -21,7 +21,6 @@ export const useModalRoot = ({
     useModalActions({
       modalState,
       saveHistory,
-      setOverlayShowed,
     });
 
   const activeModalProps = useActiveModalProps(state);
@@ -58,6 +57,10 @@ export const useModalRoot = ({
       setOverlayShowed(false);
       props.onOverlayClosed?.();
     };
+    const onOverlayShowed = () => {
+      setOverlayShowed(true);
+      props.onOverlayShowed?.();
+    };
 
     const shouldRender = state.modals.length > 0 || (!disableModalOverlay && overlayShowed);
 
@@ -73,6 +76,7 @@ export const useModalRoot = ({
         disableModalOverlay={disableModalOverlay}
         modals={state.modals}
         activeModal={state.activeModal}
+        onOverlayShowed={onOverlayShowed}
         onOverlayClosed={onOverlayClosed}
       />
     );

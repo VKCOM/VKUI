@@ -5,9 +5,6 @@ export type ModalRootState = {
   activeModal: string | null;
 };
 
-/**
- * Удаляет модал из состояния по id
- */
 export const removeModalFromState = (state: ModalRootState, id: string): ModalRootState => {
   const { modals } = state;
   const newModals = modals.filter(({ id: modalId }) => id !== modalId);
@@ -17,9 +14,6 @@ export const removeModalFromState = (state: ModalRootState, id: string): ModalRo
   };
 };
 
-/**
- * Устанавливает предыдущий активный модал при закрытии текущего
- */
 export const setPrevActiveModal = (
   state: ModalRootState,
   id: string,
@@ -45,9 +39,6 @@ export const setPrevActiveModal = (
   };
 };
 
-/**
- * Обновляет пропсы модала
- */
 export const updateModalPropsInState = (
   state: ModalRootState,
   id: string,
@@ -92,9 +83,6 @@ export const updateModalPropsInState = (
   };
 };
 
-/**
- * Закрывает все модалы кроме активного
- */
 export const closeAllModals = (
   state: ModalRootState,
   needCloseModals: Set<string>,
@@ -133,9 +121,6 @@ export const closeModal = (
   }
 };
 
-/**
- * Добавляет новый модал в состояние
- */
 export const addModalToState = (
   state: ModalRootState,
   modalData: ModalRootItem,
@@ -150,9 +135,6 @@ export const addModalToState = (
   };
 };
 
-/**
- * Получает свойство активного модала
- */
 export const getActiveModalProp = <T = any>(
   state: ModalRootState,
   propGetter: (modal: ModalRootItem) => T | undefined,

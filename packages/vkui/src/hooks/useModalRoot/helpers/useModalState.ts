@@ -22,9 +22,6 @@ export type UseModalStateReturn = {
   closePrevActiveIfNoHistory: () => void;
 };
 
-/**
- * Хук для управления состоянием модалов
- */
 export const useModalState = (): UseModalStateReturn => {
   const [state, setState] = React.useState<ModalRootState>({
     activeModal: null,

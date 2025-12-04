@@ -32,6 +32,7 @@ export interface ModalOverlayProps
   position?: 'absolute' | 'fixed';
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
   onClosed?: () => void;
+  onShowed?: () => void;
   disableOpenAnimation?: boolean;
   disableCloseAnimation?: boolean;
 }
@@ -45,6 +46,7 @@ export const ModalOverlay = ({
   getRootRef,
   onClick,
   onClosed,
+  onShowed,
   disableOpenAnimation,
   disableCloseAnimation,
   ...restProps
@@ -54,6 +56,7 @@ export const ModalOverlay = ({
     enableEnter: !disableOpenAnimation,
     enableExit: !disableCloseAnimation,
     onExited: onClosed,
+    onEntered: onShowed,
   });
   const handleRef = useExternRef(getRootRef, ref);
 

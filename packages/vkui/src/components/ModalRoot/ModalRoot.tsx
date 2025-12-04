@@ -24,6 +24,7 @@ export const ModalRoot = ({
   onClose,
   onClosed,
   onOverlayClosed,
+  onOverlayShowed,
   disableCloseAnimation,
   disableOpenAnimation,
 }: ModalRootProps): React.ReactNode => {
@@ -86,6 +87,7 @@ export const ModalRoot = ({
               position="fixed"
               visible={typeof activeModal === 'string'}
               getRootRef={modalOverlayRef}
+              onShowed={onOverlayShowed}
               onClosed={onOverlayClosed}
               disableCloseAnimation={disableCloseAnimation}
               disableOpenAnimation={disableOpenAnimation}

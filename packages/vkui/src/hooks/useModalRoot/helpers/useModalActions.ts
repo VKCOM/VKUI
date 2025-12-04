@@ -20,9 +20,6 @@ type CreateModalCallbacks = {
   onClosed: () => void;
 };
 
-/**
- * Создает callback'и для модала
- */
 const createModalCallbacks = (
   id: string,
   modalProps: OpenModalPageProps | OpenModalCardProps,
@@ -48,9 +45,6 @@ const createModalCallbacks = (
   return { onClose, onClosed };
 };
 
-/**
- * Создает данные для модала
- */
 const createModalData = (
   item: ModalRootItem,
   id: string,
@@ -111,18 +105,10 @@ const resolveProps = <
 export type UseModalActionsProps = {
   modalState: UseModalStateReturn;
   saveHistory: boolean;
-  setOverlayShowed: (showed: boolean) => void;
 };
 
-/**
- * Хук для создания действий с модалами (open, update, close и т.д.)
- */
-export const useModalActions = ({
-  modalState,
-  saveHistory,
-  setOverlayShowed,
-}: UseModalActionsProps) => {
-  const { close, setPrevActive, removeModal, addModal, needCloseModals, updateModalProps, state } =
+export const useModalActions = ({ modalState, saveHistory }: UseModalActionsProps) => {
+  const { close, setPrevActive, removeModal, addModal, needCloseModals, updateModalProps } =
     modalState;
 
   const open = React.useCallback(
@@ -131,7 +117,6 @@ export const useModalActions = ({
         (item.type === 'custom-card' || item.type === 'custom-page' ? item.modalProps : item) || {};
 
       const id = modalProps.id || uuidv4();
-      setOverlayShowed(true);
 
       let resolvePromise: () => void;
       const promise = new Promise<void>((resolve) => {
@@ -163,17 +148,7 @@ export const useModalActions = ({
         },
       };
     },
-    [
-      setOverlayShowed,
-      setPrevActive,
-      removeModal,
-      needCloseModals,
-      close,
-      saveHistory,
-      state.activeModal,
-      addModal,
-      modalState,
-    ],
+    [setPrevActive, removeModal, needCloseModals, close, saveHistory, addModal, modalState],
   );
 
   const update: ModalRootApi['update'] = React.useCallback(

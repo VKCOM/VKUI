@@ -98,7 +98,7 @@ export type ModalRootApi = {
       | React.ComponentType<CustomModalProps<OpenModalCardProps, AdditionalProps>>,
   ) => OpenCardReturn;
   /**
-   * Метод для открытия кастомного модального окна на базе `ModalCard`.
+   * Метод для открытия кастомного модального окна на базе `ModalPage`.
    */
   openCustomModalPage: <AdditionalProps extends object>(
     props:
