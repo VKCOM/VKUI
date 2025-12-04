@@ -2642,7 +2642,7 @@ __metadata:
     "@shikijs/transformers": "npm:^3.17.0"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
-    next: "npm:^15.5.6"
+    next: "npm:^15.5.7"
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.6.0"
     pagefind: "npm:^1.4.0"
@@ -5156,13 +5156,13 @@ __metadata:
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.71.0"
-    next: "npm:^15.5.6"
+    next: "npm:^15.5.7"
     nextra: "npm:^4.6.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     scroll-into-view-if-needed: "npm:^3.1.0"
   peerDependencies:
-    next: ^15.5.6
+    next: ^15.5.7
     nextra: ^4.6.0
     react: ^18.3.1
     react-dom: ^18.3.1
@@ -13596,7 +13596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^15.5.6":
+"next@npm:^15.5.7":
   version: 15.5.7
   resolution: "next@npm:15.5.7"
   dependencies:
