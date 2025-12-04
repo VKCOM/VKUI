@@ -66,7 +66,7 @@ export namespace SnackbarApi {
     /**
      * Метод для изменения максимального числа открытых снекбаров в один момент.
      */
-    setMaxSnackbarsCount: (count: number) => void;
+    setLimit: (count: number) => void;
     /**
      * Метод для изменения поведения переполнения очереди снекбаров.
      */
@@ -87,7 +87,7 @@ export namespace UseSnackbar {
     /**
      * Максимальное число открытых на одном `placement` снекбаров
      */
-    maxSnackbarsCount?: number;
+    limit?: number;
     /**
      * Поведение переполнения очереди снекбаров:
      * - `"queue"` - снекбары не откроются, пока для них не появится место. Значение по умолчанию.

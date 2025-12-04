@@ -20,7 +20,7 @@ const resolveMobilePlacement = (
 
 export type UseSnackbarActionsProps = {
   snackbarState: UseSnackbarStateReturn;
-  maxSnackbarsCount: number;
+  limit: number;
   queueStrategy: 'queue' | 'shift';
   isDesktop: boolean;
   snackbarsMapRef: React.RefObject<SnackbarsMap>;
@@ -28,7 +28,7 @@ export type UseSnackbarActionsProps = {
 
 export const useSnackbarActions = ({
   snackbarState,
-  maxSnackbarsCount,
+  limit,
   queueStrategy,
   isDesktop,
   snackbarsMapRef,
@@ -44,7 +44,7 @@ export const useSnackbarActions = ({
       const placementSnackbars = snackbarsMapRef.current[resolvedPlacement] || [];
 
       const withOverflow =
-        queueStrategy === 'shift' && placementSnackbars.length >= maxSnackbarsCount;
+        queueStrategy === 'shift' && placementSnackbars.length >= limit;
 
       let resolvePromise: () => void;
       const promise = new Promise<void>((resolve) => {
@@ -93,7 +93,7 @@ export const useSnackbarActions = ({
     },
     [
       isDesktop,
-      maxSnackbarsCount,
+      limit,
       queueStrategy,
       snackbarsMapRef,
       snackbarState.state.snackbarsToClose,

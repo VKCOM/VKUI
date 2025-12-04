@@ -17,7 +17,7 @@ const story: Meta<UseSnackbar.Parameters> = {
   component: () => <div />,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
-    maxSnackbarsCount: {
+    limit: {
       control: 'number',
     },
     queueStrategy: {

@@ -11,8 +11,8 @@ const TestComponent: React.FC<
   UseSnackbar.Parameters & {
     apiRef: React.RefObject<SnackbarApi.Api | null>;
   }
-> = ({ apiRef, maxSnackbarsCount, queueStrategy }) => {
-  const [snackbarApi, snackbar] = useSnackbar({ maxSnackbarsCount, queueStrategy });
+> = ({ apiRef, limit, queueStrategy }) => {
+  const [snackbarApi, snackbar] = useSnackbar({ limit, queueStrategy });
 
   React.useImperativeHandle(apiRef, () => snackbarApi);
 
@@ -180,8 +180,8 @@ describe('useSnackbar', () => {
     }),
   );
 
-  it('check maxSnackbarsCount with queueStrategy="queue"', async () => {
-    render(<TestComponent apiRef={apiRef} maxSnackbarsCount={1} />);
+  it('check limit with queueStrategy="queue"', async () => {
+    render(<TestComponent apiRef={apiRef} limit={1} />);
 
     let snackbar2: string | null = null;
     act(() => {
@@ -204,9 +204,9 @@ describe('useSnackbar', () => {
   });
 
   it(
-    'check maxSnackbarsCount with queueStrategy="shift"',
+    'check limit with queueStrategy="shift"',
     withFakeTimers(async () => {
-      render(<TestComponent apiRef={apiRef} queueStrategy="shift" maxSnackbarsCount={1} />);
+      render(<TestComponent apiRef={apiRef} queueStrategy="shift" limit={1} />);
 
       act(() => {
         apiRef.current?.open({

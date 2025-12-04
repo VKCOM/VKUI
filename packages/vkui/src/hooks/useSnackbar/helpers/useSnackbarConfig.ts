@@ -5,11 +5,11 @@ import { type UseSnackbar } from '../types';
 const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 
 export type UseSnackbarConfigReturn = {
-  maxSnackbarsCount: number;
+  limit: number;
   queueStrategy: 'queue' | 'shift';
   verticalOffsetYStart: number | string | undefined;
   verticalOffsetYEnd: number | string | undefined;
-  setMaxSnackbarsCount: (count: number) => void;
+  setLimit: (count: number) => void;
   setQueueStrategy: (strategy: 'queue' | 'shift') => void;
   setVerticalOffsetYStart: (offset: number | string | undefined) => void;
   setVerticalOffsetYEnd: (offset: number | string | undefined) => void;
@@ -17,20 +17,20 @@ export type UseSnackbarConfigReturn = {
 
 export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnackbarConfigReturn => {
   const {
-    maxSnackbarsCount: maxSnackbarsCountProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
+    limit: limitProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
     queueStrategy: queueStrategyProp = 'queue',
     verticalOffsetYStart: verticalOffsetYStartProp,
     verticalOffsetYEnd: verticalOffsetYEndProp,
   } = params;
 
-  const [maxSnackbarsCount, setMaxSnackbarsCount] = React.useState(maxSnackbarsCountProp);
+  const [limit, setLimit] = React.useState(limitProp);
   const [queueStrategy, setQueueStrategy] = React.useState(queueStrategyProp);
   const [verticalOffsetYStart, setVerticalOffsetYStart] = React.useState(verticalOffsetYStartProp);
   const [verticalOffsetYEnd, setVerticalOffsetYEnd] = React.useState(verticalOffsetYEndProp);
 
   useIsomorphicLayoutEffect(
-    () => setMaxSnackbarsCount(maxSnackbarsCountProp),
-    [maxSnackbarsCountProp],
+    () => setLimit(limitProp),
+    [limitProp],
   );
   useIsomorphicLayoutEffect(() => setQueueStrategy(queueStrategyProp), [queueStrategyProp]);
   useIsomorphicLayoutEffect(
@@ -43,11 +43,11 @@ export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnack
   );
 
   return {
-    maxSnackbarsCount,
+    limit,
     queueStrategy,
     verticalOffsetYStart,
     verticalOffsetYEnd,
-    setMaxSnackbarsCount,
+    setLimit,
     setQueueStrategy,
     setVerticalOffsetYStart,
     setVerticalOffsetYEnd,

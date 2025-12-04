@@ -18,7 +18,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 - `verticalOffsetYStart: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
 - `verticalOffsetYEnd: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть нижнюю границу снекбаров.
-- `maxSnackbarsCount: number` - Максимальное число открытых на одном `placement` уведомлений.
+- `limit: number` - Максимальное число открытых на одном `placement` уведомлений.
 - `queueStrategy: "queue" | "shift"` - Поведение переполнения очереди снекбаров.
   `"queue"` - снекбары не откроются, пока для них не появится место. Значение по умолчанию.
   `"shift"` - снекбары форсируют закрытие более старых снекбаров, чтобы освободить место.
@@ -35,7 +35,7 @@ import { BlockWrapper } from '@/components/wrappers';
 - `close(id: string): void` — Метод для закрытия снекбара по `id`.
 - `closeAll(): void` — Метод для закрытия всех снекбаров.
 - `update(id: string, config: SnackbarApi.UpdateSnackbarProps): void` - Метод для обновления свойств уведомления. Можно поменять любое свойство, кроме 'id' и 'placement'.
-- `setMaxSnackbarsCount(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
+- `setLimit(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
 - `setQueueStrategy(behavior: SnackbarApi.QueueStrategy): void` - Метод для изменения поведения переполнения очереди снекбаров.
 - `setVerticalOffsetYStart(offset: SnackbarApi.VerticalOffset): void` - Метод для изменения отступа контейнера снекбаров от верха.
 - `setVerticalOffsetYEnd(offset: SnackbarApi.VerticalOffset): void` - Метод для изменения отступа контейнера снекбаров снизу.

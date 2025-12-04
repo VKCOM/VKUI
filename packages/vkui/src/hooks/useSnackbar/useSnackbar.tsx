@@ -30,7 +30,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
 
   const actions = useSnackbarActions({
     snackbarState,
-    maxSnackbarsCount: config.maxSnackbarsCount,
+    limit: config.limit,
     queueStrategy: config.queueStrategy,
     isDesktop,
     snackbarsMapRef,
@@ -43,7 +43,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
       update: actions.update,
       close: actions.close,
       closeAll: actions.closeAll,
-      setMaxSnackbarsCount: config.setMaxSnackbarsCount,
+      setLimit: config.setLimit,
       setQueueStrategy: config.setQueueStrategy,
       setVerticalOffsetYStart: config.setVerticalOffsetYStart,
       setVerticalOffsetYEnd: config.setVerticalOffsetYEnd,
@@ -54,7 +54,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
     actions.open,
     actions.openCustom,
     actions.update,
-    config.setMaxSnackbarsCount,
+    config.setLimit,
     config.setQueueStrategy,
     config.setVerticalOffsetYEnd,
     config.setVerticalOffsetYStart,
@@ -77,7 +77,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
         (snackbar) => !snackbarState.state.snackbarsToClose.has(snackbar.id),
       );
 
-      if (notCloseSnackbars.length < config.maxSnackbarsCount) {
+      if (notCloseSnackbars.length < config.limit) {
         placementSnackbars.push({
           ...snackbar,
           snackbarProps: {
@@ -92,7 +92,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
   }, [
     snackbarState.state.snackbars,
     snackbarState.state.snackbarsToClose,
-    config.maxSnackbarsCount,
+    config.limit,
   ]);
 
   React.useEffect(() => {
