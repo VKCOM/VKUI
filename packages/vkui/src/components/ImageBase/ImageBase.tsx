@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
@@ -198,8 +197,8 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
-  const mouseOverHandlersRef = useRef<VoidFunction[]>([]);
-  const mouseOutHandlersRef = useRef<VoidFunction[]>([]);
+  const [mouseOverHandlers] = React.useState<VoidFunction[]>([]);
+  const [mouseOutHandlers] = React.useState<VoidFunction[]>([]);
 
   const hasSrc = src || srcSet;
   const fallbackIcon = failed || !hasSrc ? fallbackIconProp : null;
@@ -245,20 +244,20 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   );
 
   const onMouseOver = () => {
-    mouseOverHandlersRef.current.forEach((fn) => fn());
+    mouseOverHandlers.forEach((fn) => fn());
   };
 
   const onMouseOut = () => {
-    mouseOutHandlersRef.current.forEach((fn) => fn());
+    mouseOutHandlers.forEach((fn) => fn());
   };
 
   const contextValue = React.useMemo(
     () => ({
       size,
-      onMouseOverHandlers: mouseOverHandlersRef.current,
-      onMouseOutHandlers: mouseOutHandlersRef.current,
+      onMouseOverHandlers: mouseOverHandlers,
+      onMouseOutHandlers: mouseOutHandlers,
     }),
-    [size],
+    [mouseOutHandlers, mouseOverHandlers, size],
   );
 
   const imgStyles:
