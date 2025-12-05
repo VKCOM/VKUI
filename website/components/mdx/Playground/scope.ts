@@ -119,6 +119,7 @@ import {
   Skeleton,
   Slider,
   Snackbar,
+  SnackbarsManagerProvider,
   Spacing,
   Spinner,
   SplitCol,
@@ -319,4 +320,5 @@ export const scope: Record<string, unknown> = {
   usePopover,
   useSnackbar,
   useSnackbarApi,
+  SnackbarsManagerProvider,
 };

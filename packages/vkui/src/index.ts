@@ -462,7 +462,10 @@ export { type Orientation, useOrientationChange } from './hooks/useOrientationCh
 export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
 export { useScrollLock, useManualScroll as useScroll } from './components/AppRoot/ScrollContext';
-export { useSnackbarApi } from './components/AppRoot/SnackbarContext';
+export {
+  useSnackbarApi,
+  SnackbarsManagerProvider,
+} from './components/SnackbarsManagerProvider/SnackbarsManagerProvider';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';

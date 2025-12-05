@@ -4,6 +4,7 @@
   --vkui_internal--snackbars_container_offset_y_end: 0px;
 
   position: fixed;
+  z-index: var(--vkui--z_index_popout);
   padding: var(--vkui_internal--snackbars_container_in_padding);
 }
 

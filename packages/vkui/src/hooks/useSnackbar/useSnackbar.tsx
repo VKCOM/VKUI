@@ -47,6 +47,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
       setQueueStrategy: config.setQueueStrategy,
       setVerticalOffsetYStart: config.setVerticalOffsetYStart,
       setVerticalOffsetYEnd: config.setVerticalOffsetYEnd,
+      setZIndex: config.setZIndex,
     };
   }, [
     actions.close,
@@ -58,6 +59,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
     config.setQueueStrategy,
     config.setVerticalOffsetYEnd,
     config.setVerticalOffsetYStart,
+    config.setZIndex,
   ]);
 
   const onSnackbarOpen = React.useCallback(
@@ -110,6 +112,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
             onSnackbarOpen={onSnackbarOpen}
             verticalOffsetYStart={config.verticalOffsetYStart}
             verticalOffsetYEnd={config.verticalOffsetYEnd}
+            zIndex={config.zIndex}
           />
         ))}
       </>
@@ -120,6 +123,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
     snackbarsMap,
     config.verticalOffsetYEnd,
     config.verticalOffsetYStart,
+    config.zIndex,
   ]);
 
   return [api, holder];

@@ -3,8 +3,7 @@
 import { useContext } from 'react';
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
-import { useSnackbar } from '../../hooks/useSnackbar';
-import { type SnackbarApi } from '../../hooks/useSnackbar';
+import { type SnackbarApi, useSnackbar, type UseSnackbar } from '../../hooks/useSnackbar';
 import { type HasChildren } from '../../types';
 
 const SnackbarApiContext = React.createContext<SnackbarApi.Api>({
@@ -37,8 +36,11 @@ export const useSnackbarApi = () => {
   return useContext(SnackbarApiContext);
 };
 
-export const SnackbarsController = ({ children }: HasChildren) => {
-  const [api, snackbarHolder] = useSnackbar();
+export const SnackbarsManagerProvider = ({
+  children,
+  ...restProps
+}: HasChildren & UseSnackbar.Parameters) => {
+  const [api, snackbarHolder] = useSnackbar(restProps);
 
   return (
     <SnackbarApiContext.Provider value={api}>

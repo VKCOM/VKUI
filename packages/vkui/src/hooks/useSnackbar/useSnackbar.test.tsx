@@ -11,8 +11,14 @@ const TestComponent: React.FC<
   UseSnackbar.Parameters & {
     apiRef: React.RefObject<SnackbarApi.Api | null>;
   }
-> = ({ apiRef, limit, queueStrategy }) => {
-  const [snackbarApi, snackbar] = useSnackbar({ limit, queueStrategy });
+> = ({ apiRef, limit, queueStrategy, verticalOffsetYStart, verticalOffsetYEnd, zIndex }) => {
+  const [snackbarApi, snackbar] = useSnackbar({
+    limit,
+    queueStrategy,
+    verticalOffsetYStart,
+    verticalOffsetYEnd,
+    zIndex,
+  });
 
   React.useImperativeHandle(apiRef, () => snackbarApi);
 
@@ -48,10 +54,16 @@ describe('useSnackbar', () => {
       render(<TestComponent apiRef={apiRef} />);
 
       act(() => {
-        apiRef.current?.open({ children: 'Test Snackbar 1', placement: 'top-start' });
+        apiRef.current?.open({
+          children: 'Test Snackbar 1',
+          placement: 'top-start',
+        });
       });
       act(() => {
-        apiRef.current?.open({ children: 'Test Snackbar 2', placement: 'bottom-end' });
+        apiRef.current?.open({
+          children: 'Test Snackbar 2',
+          placement: 'bottom-end',
+        });
       });
 
       expect(screen.queryByText('Test Snackbar 1')).toBeInTheDocument();
@@ -81,7 +93,7 @@ describe('useSnackbar', () => {
 
       act(() => {
         const { id } = apiRef.current!.open({
-          'children': 'Test Snackbar to close',
+          children: 'Test Snackbar to close',
           'data-testid': 'snackbar',
         });
         snackbarId = id;
@@ -96,7 +108,9 @@ describe('useSnackbar', () => {
       expect(snackbar).not.toBeInTheDocument();
       expect(snackbarWrapper).toBeInTheDocument();
 
-      await waitCSSKeyframesAnimation(snackbarWrapper, { runOnlyPendingTimers: true });
+      await waitCSSKeyframesAnimation(snackbarWrapper, {
+        runOnlyPendingTimers: true,
+      });
       expect(snackbar).not.toBeInTheDocument();
       expect(snackbarWrapper).not.toBeInTheDocument();
     }),
@@ -117,7 +131,9 @@ describe('useSnackbar', () => {
       );
 
       expect(screen.queryByText('Auto Close Snackbar')).toBeInTheDocument();
-      await waitCSSKeyframesAnimation(screen.getByRole('alert'), { runOnlyPendingTimers: true });
+      await waitCSSKeyframesAnimation(screen.getByRole('alert'), {
+        runOnlyPendingTimers: true,
+      });
 
       expect(onClose).toHaveBeenCalledTimes(1);
       expect(screen.queryByText('Auto Close Snackbar')).not.toBeInTheDocument();
@@ -131,7 +147,7 @@ describe('useSnackbar', () => {
 
     act(() => {
       const { id } = apiRef.current!.open({
-        'children': 'Test Snackbar to close',
+        children: 'Test Snackbar to close',
         'data-testid': 'snackbar',
       });
       snackbarId = id;
@@ -139,7 +155,9 @@ describe('useSnackbar', () => {
     expect(screen.queryByText('Test Snackbar to close')).toBeInTheDocument();
 
     act(() => {
-      apiRef.current?.update(snackbarId!, { children: 'Updated test Snackbar to close' });
+      apiRef.current?.update(snackbarId!, {
+        children: 'Updated test Snackbar to close',
+      });
     });
 
     expect(screen.queryByText('Test Snackbar to close')).not.toBeInTheDocument();
@@ -155,7 +173,7 @@ describe('useSnackbar', () => {
 
       act(() => {
         snackbarApi = apiRef.current!.open({
-          'children': 'Test Snackbar to close',
+          children: 'Test Snackbar to close',
           'data-testid': 'snackbar',
         });
       });
@@ -175,7 +193,9 @@ describe('useSnackbar', () => {
 
       React.act(() => snackbarApi!.close());
 
-      await waitCSSKeyframesAnimation(screen.getByRole('alert'), { runOnlyPendingTimers: true });
+      await waitCSSKeyframesAnimation(screen.getByRole('alert'), {
+        runOnlyPendingTimers: true,
+      });
       expect(closePromiseResolved).toBeTruthy();
     }),
   );
@@ -185,10 +205,16 @@ describe('useSnackbar', () => {
 
     let snackbar2: string | null = null;
     act(() => {
-      apiRef.current?.open({ children: 'Test Snackbar 1', placement: 'top-start' });
+      apiRef.current?.open({
+        children: 'Test Snackbar 1',
+        placement: 'top-start',
+      });
     });
     act(() => {
-      const { id } = apiRef.current!.open({ children: 'Test Snackbar 2', placement: 'top-start' });
+      const { id } = apiRef.current!.open({
+        children: 'Test Snackbar 2',
+        placement: 'top-start',
+      });
       snackbar2 = id;
     });
 
@@ -210,16 +236,16 @@ describe('useSnackbar', () => {
 
       act(() => {
         apiRef.current?.open({
-          'children': 'Test Snackbar 1',
+          children: 'Test Snackbar 1',
           'data-testid': 'snackbar-1',
-          'placement': 'top-start',
+          placement: 'top-start',
         });
       });
       act(() => {
         apiRef.current?.open({
-          'children': 'Test Snackbar 2',
+          children: 'Test Snackbar 2',
           'data-testid': 'snackbar-2',
-          'placement': 'top-start',
+          placement: 'top-start',
         });
       });
 
@@ -230,7 +256,9 @@ describe('useSnackbar', () => {
       const snackbarWrapper = snackbar.parentElement!.parentElement!;
 
       await waitCSSKeyframesAnimation(snackbar, { runOnlyPendingTimers: true });
-      await waitCSSKeyframesAnimation(snackbarWrapper, { runOnlyPendingTimers: true });
+      await waitCSSKeyframesAnimation(snackbarWrapper, {
+        runOnlyPendingTimers: true,
+      });
     }),
   );
 
@@ -309,5 +337,159 @@ describe('useSnackbar', () => {
     });
 
     expect(screen.queryByText('Test Snackbar')).toBeInTheDocument();
+  });
+
+  it('should apply zIndex to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} zIndex={9999} />);
+
+    act(() => {
+      apiRef.current?.open({ children: 'Test Snackbar with zIndex' });
+    });
+
+    const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toBeInTheDocument();
+    expect(snackbarContainer).toHaveStyle({ zIndex: '9999' });
+  });
+
+  it('should apply zIndex as string to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} zIndex="1000" />);
+
+    act(() => {
+      apiRef.current?.open({ children: 'Test Snackbar with zIndex string' });
+    });
+
+    const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toBeInTheDocument();
+    expect(snackbarContainer).toHaveStyle({ zIndex: '1000' });
+  });
+
+  it('should dynamically update zIndex using setZIndex', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} zIndex={100} />);
+
+    act(() => {
+      apiRef.current?.open({ children: 'Test Snackbar' });
+    });
+
+    let snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toHaveStyle({ zIndex: '100' });
+
+    act(() => {
+      apiRef.current?.setZIndex(500);
+    });
+
+    snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toHaveStyle({ zIndex: '500' });
+  });
+
+  it('should apply verticalOffsetYStart to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYStart={50} />);
+
+    act(() => {
+      apiRef.current?.open({
+        children: 'Test Snackbar with offset',
+        placement: 'top',
+      });
+    });
+
+    const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toBeInTheDocument();
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_start': '50px',
+    });
+  });
+
+  it('should apply verticalOffsetYStart as string to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYStart="3rem" />);
+
+    act(() => {
+      apiRef.current?.open({
+        children: 'Test Snackbar with offset string',
+        placement: 'top',
+      });
+    });
+
+    const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toBeInTheDocument();
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_start': '3rem',
+    });
+  });
+
+  it('should dynamically update verticalOffsetYStart using setVerticalOffsetYStart', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYStart={20} />);
+
+    act(() => {
+      apiRef.current?.open({ children: 'Test Snackbar', placement: 'top' });
+    });
+
+    let snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_start': '20px',
+    });
+
+    act(() => {
+      apiRef.current?.setVerticalOffsetYStart(80);
+    });
+
+    snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_start': '80px',
+    });
+  });
+
+  it('should apply verticalOffsetYEnd to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYEnd={60} />);
+
+    act(() => {
+      apiRef.current?.open({
+        children: 'Test Snackbar with offset',
+        placement: 'bottom',
+      });
+    });
+
+    const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toBeInTheDocument();
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_end': '60px',
+    });
+  });
+
+  it('should apply verticalOffsetYEnd as string to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYEnd="2.5rem" />);
+
+    act(() => {
+      apiRef.current?.open({
+        children: 'Test Snackbar with offset string',
+        placement: 'bottom',
+      });
+    });
+
+    const snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toBeInTheDocument();
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_end': '2.5rem',
+    });
+  });
+
+  it('should dynamically update verticalOffsetYEnd using setVerticalOffsetYEnd', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYEnd={30} />);
+
+    act(() => {
+      apiRef.current?.open({ children: 'Test Snackbar', placement: 'bottom' });
+    });
+
+    let snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_end': '30px',
+    });
+
+    act(() => {
+      apiRef.current?.setVerticalOffsetYEnd(90);
+    });
+
+    snackbarContainer = container.firstChild?.firstChild as HTMLElement;
+    expect(snackbarContainer).toHaveStyle({
+      '--vkui_internal--snackbars_container_offset_y_end': '90px',
+    });
   });
 });

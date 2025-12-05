@@ -9,10 +9,12 @@ export type UseSnackbarConfigReturn = {
   queueStrategy: 'queue' | 'shift';
   verticalOffsetYStart: number | string | undefined;
   verticalOffsetYEnd: number | string | undefined;
+  zIndex: number | string | undefined;
   setLimit: (count: number) => void;
   setQueueStrategy: (strategy: 'queue' | 'shift') => void;
   setVerticalOffsetYStart: (offset: number | string | undefined) => void;
   setVerticalOffsetYEnd: (offset: number | string | undefined) => void;
+  setZIndex: (zIndex: number | string | undefined) => void;
 };
 
 export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnackbarConfigReturn => {
@@ -21,12 +23,14 @@ export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnack
     queueStrategy: queueStrategyProp = 'queue',
     verticalOffsetYStart: verticalOffsetYStartProp,
     verticalOffsetYEnd: verticalOffsetYEndProp,
+    zIndex: zIndexProp,
   } = params;
 
   const [limit, setLimit] = React.useState(limitProp);
   const [queueStrategy, setQueueStrategy] = React.useState(queueStrategyProp);
   const [verticalOffsetYStart, setVerticalOffsetYStart] = React.useState(verticalOffsetYStartProp);
   const [verticalOffsetYEnd, setVerticalOffsetYEnd] = React.useState(verticalOffsetYEndProp);
+  const [zIndex, setZIndex] = React.useState(zIndexProp);
 
   useIsomorphicLayoutEffect(() => setLimit(limitProp), [limitProp]);
   useIsomorphicLayoutEffect(() => setQueueStrategy(queueStrategyProp), [queueStrategyProp]);
@@ -38,15 +42,18 @@ export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnack
     () => setVerticalOffsetYEnd(verticalOffsetYEndProp),
     [verticalOffsetYEndProp],
   );
+  useIsomorphicLayoutEffect(() => setZIndex(zIndexProp), [zIndexProp]);
 
   return {
     limit,
     queueStrategy,
     verticalOffsetYStart,
     verticalOffsetYEnd,
+    zIndex,
     setLimit,
     setQueueStrategy,
     setVerticalOffsetYStart,
     setVerticalOffsetYEnd,
+    setZIndex,
   };
 };

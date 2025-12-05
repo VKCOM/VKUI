@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { type SnackbarApi } from '../../hooks/useSnackbar';
-import { SnackbarsController, useSnackbarApi } from './SnackbarContext';
+import { SnackbarsManagerProvider, useSnackbarApi } from './SnackbarsManagerProvider';
 
 const TestComponent: React.FC<{ apiRef: React.RefObject<SnackbarApi.Api | null> }> = ({
   apiRef,
@@ -24,9 +24,9 @@ describe('SnackbarContext', () => {
 
   it('should provide Snackbar API to children', () => {
     render(
-      <SnackbarsController>
+      <SnackbarsManagerProvider>
         <TestComponent apiRef={apiRef} />
-      </SnackbarsController>,
+      </SnackbarsManagerProvider>,
     );
 
     expect(screen.getByText('Snackbar API available')).toBeInTheDocument();

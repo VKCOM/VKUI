@@ -79,6 +79,10 @@ export namespace SnackbarApi {
      * Метод для изменения отступа контейнера снекбаров от низа.
      */
     setVerticalOffsetYEnd: (offset: VerticalOffset) => void;
+    /**
+     * Метод для изменения z-index контейнера снекбаров.
+     */
+    setZIndex: (zIndex: number | string) => void;
   }
 }
 
@@ -102,6 +106,10 @@ export namespace UseSnackbar {
      * Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда на странице используется компонент `FixedLayout`.
      */
     verticalOffsetYEnd?: SnackbarApi.VerticalOffset;
+    /**
+     * Свойство для установки стиля `z-index` на контейнере снекбаров.
+     */
+    zIndex?: number | string;
   }
 
   export type Return = [SnackbarApi.Api, React.ReactElement | null];

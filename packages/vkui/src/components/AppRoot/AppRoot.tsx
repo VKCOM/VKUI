@@ -5,11 +5,9 @@ import { classNames } from '@vkontakte/vkjs';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
 import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
-import { type HasChildren } from '../../types';
 import { AppRootContext } from './AppRootContext';
 import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
 import { ElementScrollController, GlobalScrollController } from './ScrollContext';
-import { SnackbarsController } from './SnackbarContext';
 import { useSafeAreaInsetsMemo } from './helpers';
 import type {
   AppRootLayout,
@@ -83,19 +81,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * и отключить это поведение.
    */
   disableSettingVKUIClassesInRuntime?: boolean;
-  /**
-   * Флаг, включающий менеджер снекбаров на уровне приложения, чтобы можно было использовать
-   * хук [`useSnackbarApi`](https://vkui.io/components/use-snackbar#use-snackbar-api).
-   */
-  enableSnackbarsController?: boolean;
 }
-
-const SnackbarControllerWrapper = ({
-  enable = false,
-  children,
-}: { enable?: boolean } & HasChildren) => {
-  return enable ? <SnackbarsController>{children}</SnackbarsController> : children;
-};
 
 /**
  * @see https://vkui.io/components/app-root
@@ -112,7 +98,6 @@ export const AppRoot = ({
   userSelectMode,
   disableSettingVKUIClassesInRuntime,
   className,
-  enableSnackbarsController,
   ...props
 }: AppRootProps): React.ReactNode => {
   const appRootRef = React.useRef<HTMLDivElement | null>(null);
@@ -172,11 +157,7 @@ export const AppRoot = ({
 
   return mode === 'partial' ? (
     <AppRootContext.Provider value={contextValue}>
-      <ScrollController elRef={appRootRef}>
-        <SnackbarControllerWrapper enable={enableSnackbarsController}>
-          {children}
-        </SnackbarControllerWrapper>
-      </ScrollController>
+      <ScrollController elRef={appRootRef}>{children}</ScrollController>
     </AppRootContext.Provider>
   ) : (
     <AppRootContext.Provider value={contextValue}>
@@ -192,11 +173,7 @@ export const AppRoot = ({
         )}
         {...props}
       >
-        <ScrollController elRef={appRootRef}>
-          <SnackbarControllerWrapper enable={enableSnackbarsController}>
-            {children}
-          </SnackbarControllerWrapper>
-        </ScrollController>
+        <ScrollController elRef={appRootRef}>{children}</ScrollController>
       </AppRootStyleContainer>
     </AppRootContext.Provider>
   );
