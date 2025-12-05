@@ -56,3 +56,16 @@ export const closeAllSnackbarsInState = (
     snackbarsToClose: new Set(showedSnackbars),
   };
 };
+
+export const closeOverflowedSnackbarsInState = (
+  state: SnackbarState,
+  placementSnackbars: SnackbarItem[],
+) => {
+  const snackbarToClose = placementSnackbars.find((snackbar) => {
+    return !state.snackbarsToClose.has(snackbar.id);
+  });
+  if (snackbarToClose) {
+    return closeSnackbarInState(state, snackbarToClose.id);
+  }
+  return state;
+};

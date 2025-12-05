@@ -33,8 +33,15 @@ export const useSnackbarActions = ({
   isDesktop,
   snackbarsMapRef,
 }: UseSnackbarActionsProps) => {
-  const { addSnackbar, updateSnackbar, closeSnackbar, closeAll, removeSnackbar, showedSnackbars } =
-    snackbarState;
+  const {
+    addSnackbar,
+    updateSnackbar,
+    closeSnackbar,
+    closeAll,
+    removeSnackbar,
+    showedSnackbars,
+    closeOverflowedSnackbars,
+  } = snackbarState;
 
   const onOpenSnackbarImpl = React.useCallback(
     (item: CommonOnOpenPayload): SnackbarApi.OpenSnackbarReturn => {
@@ -53,12 +60,7 @@ export const useSnackbarActions = ({
       const id = item.id || uuidv4();
 
       if (withOverflow) {
-        const snackbarToClose = placementSnackbars.find((snackbar) => {
-          return !snackbarState.state.snackbarsToClose.has(snackbar.id);
-        });
-        if (snackbarToClose) {
-          closeSnackbar(snackbarToClose.id);
-        }
+        closeOverflowedSnackbars(placementSnackbars);
       }
 
       addSnackbar({
@@ -95,12 +97,12 @@ export const useSnackbarActions = ({
       limit,
       queueStrategy,
       snackbarsMapRef,
-      snackbarState.state.snackbarsToClose,
       closeSnackbar,
       addSnackbar,
       showedSnackbars,
       removeSnackbar,
       updateSnackbar,
+      closeOverflowedSnackbars,
     ],
   );
 

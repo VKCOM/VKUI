@@ -8,7 +8,7 @@ import { Icon24ThumbsUpOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
 import { Checkbox } from '../../components/Checkbox/Checkbox';
 import { Flex } from '../../components/Flex/Flex';
-import { useSnackbarManager, type UseSnackbar } from '../../hooks/useSnackbarManager';
+import { type UseSnackbar, useSnackbarManager } from '../../hooks/useSnackbarManager';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { type SnackbarPlacement, type SnackbarProps } from './types';
 

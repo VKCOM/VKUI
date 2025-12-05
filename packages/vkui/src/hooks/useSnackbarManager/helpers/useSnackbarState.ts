@@ -3,6 +3,7 @@ import { type SnackbarItem } from '../types';
 import {
   addSnackbarToState,
   closeAllSnackbarsInState,
+  closeOverflowedSnackbarsInState,
   closeSnackbarInState,
   removeSnackbarFromState,
   type SnackbarState,
@@ -17,6 +18,7 @@ export type UseSnackbarStateReturn = {
   updateSnackbar: (id: string, config: Partial<SnackbarItem['snackbarProps']>) => void;
   closeSnackbar: (id: string) => void;
   closeAll: (showedSnackbars: Set<string>) => void;
+  closeOverflowedSnackbars: (placementSnackbars: SnackbarItem[]) => void;
 };
 
 export const useSnackbarState = (): UseSnackbarStateReturn => {
@@ -50,6 +52,10 @@ export const useSnackbarState = (): UseSnackbarStateReturn => {
     setState((oldState) => closeAllSnackbarsInState(oldState, showedSnackbars));
   }, []);
 
+  const closeOverflowedSnackbars = React.useCallback((placementSnackbars: SnackbarItem[]) => {
+    setState((oldState) => closeOverflowedSnackbarsInState(oldState, placementSnackbars));
+  }, []);
+
   return {
     state,
     showedSnackbars,
@@ -58,5 +64,6 @@ export const useSnackbarState = (): UseSnackbarStateReturn => {
     updateSnackbar,
     closeSnackbar,
     closeAll,
+    closeOverflowedSnackbars,
   };
 };
