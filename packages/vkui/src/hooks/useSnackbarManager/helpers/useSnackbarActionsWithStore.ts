@@ -5,9 +5,8 @@ import {
   type CustomSnackbar,
   type SnackbarApi,
   type SnackbarPlacement,
-  type SnackbarsMap,
 } from '../types';
-import { type UseSnackbarStateReturn } from './useSnackbarState';
+import type { SnackbarStore } from './createSnackbarStore';
 
 const resolveMobilePlacement = (
   placement: SnackbarPlacement,
@@ -18,39 +17,47 @@ const resolveMobilePlacement = (
   return 'bottom-start';
 };
 
-export type UseSnackbarActionsProps = {
-  snackbarState: UseSnackbarStateReturn;
+export type UseSnackbarActionsWithStoreProps = {
+  store: SnackbarStore;
   limit: number;
   queueStrategy: 'queue' | 'shift';
   isDesktop: boolean;
-  snackbarsMapRef: React.RefObject<SnackbarsMap>;
 };
 
-export const useSnackbarActions = ({
-  snackbarState,
+export const useSnackbarActionsWithStore = ({
+  store,
   limit,
   queueStrategy,
   isDesktop,
-  snackbarsMapRef,
-}: UseSnackbarActionsProps) => {
-  const {
-    addSnackbar,
-    updateSnackbar,
-    closeSnackbar,
-    closeAll,
-    removeSnackbar,
-    showedSnackbars,
-    closeOverflowedSnackbars,
-  } = snackbarState;
+}: UseSnackbarActionsWithStoreProps) => {
+  // Use refs for values that change but shouldn't cause re-renders
+  const limitRef = React.useRef(limit);
+  const queueStrategyRef = React.useRef(queueStrategy);
+  const isDesktopRef = React.useRef(isDesktop);
+
+  React.useEffect(() => {
+    limitRef.current = limit;
+  }, [limit]);
+
+  React.useEffect(() => {
+    queueStrategyRef.current = queueStrategy;
+  }, [queueStrategy]);
+
+  React.useEffect(() => {
+    isDesktopRef.current = isDesktop;
+  }, [isDesktop]);
 
   const onOpenSnackbarImpl = React.useCallback(
     (item: CommonOnOpenPayload): SnackbarApi.OpenSnackbarReturn => {
       const placement: SnackbarPlacement = item.snackbarProps?.placement || 'bottom-start';
-      const resolvedPlacement = isDesktop ? placement : resolveMobilePlacement(placement);
+      const resolvedPlacement = isDesktopRef.current
+        ? placement
+        : resolveMobilePlacement(placement);
 
-      const placementSnackbars = snackbarsMapRef.current[resolvedPlacement] || [];
+      const placementSnackbars = store.getSnackbarsByPlacement(resolvedPlacement, limitRef.current);
 
-      const withOverflow = queueStrategy === 'shift' && placementSnackbars.length >= limit;
+      const withOverflow =
+        queueStrategyRef.current === 'shift' && placementSnackbars.length >= limitRef.current;
 
       let resolvePromise: () => void;
       const promise = new Promise<void>((resolve) => {
@@ -60,10 +67,10 @@ export const useSnackbarActions = ({
       const id = item.id || uuidv4();
 
       if (withOverflow) {
-        closeOverflowedSnackbars(placementSnackbars);
+        store.closeOverflowedSnackbars(placementSnackbars);
       }
 
-      addSnackbar({
+      store.addSnackbar({
         ...item,
         id,
         snackbarProps: {
@@ -80,30 +87,19 @@ export const useSnackbarActions = ({
       return {
         id,
         close: () => {
-          if (showedSnackbars.current.has(id)) {
-            closeSnackbar(id);
+          if (store.showedSnackbars.has(id)) {
+            store.closeSnackbar(id);
           } else {
-            removeSnackbar(id);
+            store.removeSnackbar(id);
           }
         },
-        update: (newProps) => updateSnackbar(id, newProps),
+        update: (newProps) => store.updateSnackbar(id, newProps),
         onClose: <R>(resolve?: () => R) => {
           return promise.then(resolve);
         },
       };
     },
-    [
-      isDesktop,
-      limit,
-      queueStrategy,
-      snackbarsMapRef,
-      closeSnackbar,
-      addSnackbar,
-      showedSnackbars,
-      removeSnackbar,
-      updateSnackbar,
-      closeOverflowedSnackbars,
-    ],
+    [store],
   );
 
   const open: SnackbarApi.Api['open'] = React.useCallback(
@@ -145,25 +141,25 @@ export const useSnackbarActions = ({
 
   const update: SnackbarApi.Api['update'] = React.useCallback(
     (id, config) => {
-      updateSnackbar(id, config);
+      store.updateSnackbar(id, config);
     },
-    [updateSnackbar],
+    [store],
   );
 
   const close: SnackbarApi.Api['close'] = React.useCallback(
     (id) => {
-      if (showedSnackbars.current.has(id)) {
-        closeSnackbar(id);
+      if (store.showedSnackbars.has(id)) {
+        store.closeSnackbar(id);
       } else {
-        removeSnackbar(id);
+        store.removeSnackbar(id);
       }
     },
-    [closeSnackbar, removeSnackbar, showedSnackbars],
+    [store],
   );
 
   const closeAllSnackbars: SnackbarApi.Api['closeAll'] = React.useCallback(() => {
-    closeAll(showedSnackbars.current);
-  }, [closeAll, showedSnackbars]);
+    store.closeAll(store.showedSnackbars);
+  }, [store]);
 
   return {
     open,

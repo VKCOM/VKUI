@@ -1,31 +1,27 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { SnackbarsContainer } from './components/SnackbarsContainer';
-import { useIsDesktop } from './helpers/useIsDesktop';
-import { useSnackbarActions } from './helpers/useSnackbarActions';
-import { useSnackbarConfig } from './helpers/useSnackbarConfig';
-import { useSnackbarState } from './helpers/useSnackbarState';
-import {
-  type SnackbarApi,
-  type SnackbarPlacement,
-  type SnackbarsMap,
-  type UseSnackbar,
-} from './types';
+import * as React from "react";
+import { SnackbarHolder } from "./components/SnackbarHolder";
+import { createSnackbarStore } from "./helpers/createSnackbarStore";
+import { useIsDesktop } from "./helpers/useIsDesktop";
+import { useSnackbarActionsWithStore } from "./helpers/useSnackbarActionsWithStore";
+import { useSnackbarConfig } from "./helpers/useSnackbarConfig";
+import { type SnackbarApi, type UseSnackbar } from "./types";
 
-export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnackbar.Return => {
+export const useSnackbarManager = (
+  params: UseSnackbar.Parameters = {}
+): UseSnackbar.Return => {
   const config = useSnackbarConfig(params);
-  const snackbarState = useSnackbarState();
-  const snackbarsMapRef = React.useRef<SnackbarsMap>({});
+
+  const [store] = React.useState(createSnackbarStore);
 
   const isDesktop = useIsDesktop();
 
-  const actions = useSnackbarActions({
-    snackbarState,
+  const actions = useSnackbarActionsWithStore({
+    store,
     limit: config.limit,
     queueStrategy: config.queueStrategy,
     isDesktop,
-    snackbarsMapRef,
   });
 
   const api = React.useMemo<SnackbarApi.Api>(() => {
@@ -54,67 +50,21 @@ export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnac
     config.setZIndex,
   ]);
 
-  const onSnackbarOpen = React.useCallback(
-    (id: string) => {
-      snackbarState.showedSnackbars.current.add(id);
-    },
-    [snackbarState.showedSnackbars],
-  );
-
-  const snackbarsMap: SnackbarsMap = React.useMemo(() => {
-    const map: SnackbarsMap = {};
-    snackbarState.state.snackbars.forEach((snackbar) => {
-      const placement = snackbar.snackbarProps.placement;
-      const placementSnackbars = map[placement] || [];
-
-      const notCloseSnackbars = placementSnackbars.filter(
-        (snackbar) => !snackbarState.state.snackbarsToClose.has(snackbar.id),
-      );
-
-      if (notCloseSnackbars.length < config.limit) {
-        placementSnackbars.push({
-          ...snackbar,
-          snackbarProps: {
-            ...snackbar.snackbarProps,
-            open: snackbarState.state.snackbarsToClose.has(snackbar.id) ? false : undefined,
-          },
-        });
-      }
-      map[placement] = placementSnackbars;
-    });
-    return map;
-  }, [snackbarState.state.snackbars, snackbarState.state.snackbarsToClose, config.limit]);
-
-  React.useEffect(() => {
-    snackbarsMapRef.current = snackbarsMap;
-  }, [snackbarsMap]);
-
   const holder = React.useMemo(() => {
-    if (!Object.keys(snackbarsMap).length) {
-      return null;
-    }
     return (
-      <>
-        {Object.entries(snackbarsMap).map(([placement, snackbars]) => (
-          <SnackbarsContainer
-            key={placement}
-            snackbars={snackbars}
-            placement={placement as SnackbarPlacement}
-            onSnackbarContainerClosed={snackbarState.removeSnackbar}
-            onSnackbarOpen={onSnackbarOpen}
-            verticalOffsetYStart={config.verticalOffsetYStart}
-            verticalOffsetYEnd={config.verticalOffsetYEnd}
-            zIndex={config.zIndex}
-          />
-        ))}
-      </>
+      <SnackbarHolder
+        store={store}
+        limit={config.limit}
+        verticalOffsetYStart={config.verticalOffsetYStart}
+        verticalOffsetYEnd={config.verticalOffsetYEnd}
+        zIndex={config.zIndex}
+      />
     );
   }, [
-    onSnackbarOpen,
-    snackbarState.removeSnackbar,
-    snackbarsMap,
-    config.verticalOffsetYEnd,
+    store,
+    config.limit,
     config.verticalOffsetYStart,
+    config.verticalOffsetYEnd,
     config.zIndex,
   ]);
 
