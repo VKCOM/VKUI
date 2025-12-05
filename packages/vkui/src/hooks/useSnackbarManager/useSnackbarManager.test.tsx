@@ -5,14 +5,14 @@ import { Flex } from '../../components/Flex/Flex';
 import { Snackbar } from '../../components/Snackbar/Snackbar';
 import { waitCSSKeyframesAnimation, withFakeTimers } from '../../testing/utils';
 import { type CustomSnackbar, type SnackbarApi, type UseSnackbar } from './types';
-import { useSnackbar } from './useSnackbar';
+import { useSnackbarManager } from './useSnackbarManager';
 
 const TestComponent: React.FC<
   UseSnackbar.Parameters & {
     apiRef: React.RefObject<SnackbarApi.Api | null>;
   }
 > = ({ apiRef, limit, queueStrategy, verticalOffsetYStart, verticalOffsetYEnd, zIndex }) => {
-  const [snackbarApi, snackbar] = useSnackbar({
+  const [snackbarApi, snackbar] = useSnackbarManager({
     limit,
     queueStrategy,
     verticalOffsetYStart,
@@ -25,7 +25,7 @@ const TestComponent: React.FC<
   return <div>{snackbar}</div>;
 };
 
-describe('useSnackbar', () => {
+describe('useSnackbarManager', () => {
   const apiRef: React.RefObject<SnackbarApi.Api | null> = {
     current: null,
   };

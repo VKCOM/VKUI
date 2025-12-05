@@ -8,12 +8,12 @@ import { Icon24ThumbsUpOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
 import { Checkbox } from '../../components/Checkbox/Checkbox';
 import { Flex } from '../../components/Flex/Flex';
-import { useSnackbar, type UseSnackbar } from '../../hooks/useSnackbar';
+import { useSnackbarManager, type UseSnackbar } from '../../hooks/useSnackbarManager';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { type SnackbarPlacement, type SnackbarProps } from './types';
 
 const story: Meta<UseSnackbar.Parameters> = {
-  title: 'Utils/useSnackbar',
+  title: 'Utils/useSnackbarManager',
   component: () => <div />,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
@@ -50,7 +50,7 @@ const COLUMNS = [PLACEMENT.slice(0, 2), PLACEMENT.slice(2, 4), PLACEMENT.slice(4
 
 export const Playground: Story = {
   render: function Render(props) {
-    const [snackbarApi, contextHolder] = useSnackbar(props);
+    const [snackbarApi, contextHolder] = useSnackbarManager(props);
     const [snackbars, setSnackbars] = React.useState<Set<string>>(new Set());
     const [autoHide, setAutoHide] = React.useState(true);
 

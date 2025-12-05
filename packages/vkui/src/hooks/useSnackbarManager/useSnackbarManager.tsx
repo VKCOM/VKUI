@@ -13,7 +13,7 @@ import {
   type UseSnackbar,
 } from './types';
 
-export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Return => {
+export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnackbar.Return => {
   const config = useSnackbarConfig(params);
   const snackbarState = useSnackbarState();
   const snackbarsMapRef = React.useRef<SnackbarsMap>({});

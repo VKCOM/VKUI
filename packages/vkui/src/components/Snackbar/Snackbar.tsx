@@ -10,7 +10,7 @@ import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
-import { SnackbarsContainerContext } from '../../hooks/useSnackbar/components/SnackbarsContainerContext';
+import { SnackbarsContainerContext } from '../../hooks/useSnackbarManager/components/SnackbarsContainerContext';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { callMultiple } from '../../lib/callMultiple';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
