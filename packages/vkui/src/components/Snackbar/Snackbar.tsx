@@ -103,10 +103,7 @@ export interface SnackbarProps
    */
   offsetY?: React.CSSProperties['bottom'];
   /**
-   * Управление состоянием открытия снекбара:
-   * При `open = undefined` - работает как обычно
-   * При `open = true` - снекбар будет открыт при любых действиях со снекбаром
-   * При `open = false` - запустится анимация закрытия снекбара, и в конце анимации вызовется `onClose`.
+   * Для контролируемого управления состоянием открытия снекбара.
    */
   open?: boolean;
 }
@@ -152,8 +149,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   );
 
   const platform = usePlatform();
-  const { isInsideSnackbarContainer, onSnackbarOpen, onSnackbarClosed } =
-    useContext(SnackbarsContainerContext);
+  const { isInsideContainer, onOpen, onClosed } = useContext(SnackbarsContainerContext);
 
   const [open, setOpen] = React.useState(openProp !== undefined ? openProp : true);
   const [touched, setTouched] = React.useState(false);
@@ -174,8 +170,8 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
     {
-      onEnter: id ? () => onSnackbarOpen(id) : undefined,
-      onExited: callMultiple(onClose, id ? () => onSnackbarClosed(id) : undefined),
+      onEnter: id ? () => onOpen(id) : undefined,
+      onExited: callMultiple(onClose, id ? () => onClosed(id) : undefined),
     },
     false,
     true,
@@ -332,7 +328,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       role="presentation"
       baseClassName={classNames(
         styles.host,
-        !isInsideSnackbarContainer && styles.fixed,
+        !isInsideContainer && styles.fixed,
         platform === 'ios' && styles.ios,
         touched && styles.touched,
         placementClassNames[placement],

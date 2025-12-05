@@ -49,7 +49,7 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
   const [snackbarsWrappersToClose, setSnackbarsWrappersToClose] = React.useState<Set<string>>(
     new Set(),
   );
-  const onSnackbarClosed = React.useCallback((id: string) => {
+  const onClosed = React.useCallback((id: string) => {
     setSnackbarsWrappersToClose((oldState) => new Set([...oldState, id]));
   }, []);
 
@@ -66,11 +66,11 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
 
   const contextValue: SnackbarsContainerContextData = React.useMemo(
     () => ({
-      isInsideSnackbarContainer: true,
-      onSnackbarClosed,
-      onSnackbarOpen,
+      isInsideContainer: true,
+      onClosed,
+      onOpen: onSnackbarOpen,
     }),
-    [onSnackbarClosed, onSnackbarOpen],
+    [onClosed, onSnackbarOpen],
   );
 
   const containerStyles: CSSCustomProperties = {

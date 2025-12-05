@@ -89,11 +89,7 @@ export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Re
       map[placement] = placementSnackbars;
     });
     return map;
-  }, [
-    snackbarState.state.snackbars,
-    snackbarState.state.snackbarsToClose,
-    config.limit,
-  ]);
+  }, [snackbarState.state.snackbars, snackbarState.state.snackbarsToClose, config.limit]);
 
   React.useEffect(() => {
     snackbarsMapRef.current = snackbarsMap;

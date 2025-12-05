@@ -28,10 +28,7 @@ export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnack
   const [verticalOffsetYStart, setVerticalOffsetYStart] = React.useState(verticalOffsetYStartProp);
   const [verticalOffsetYEnd, setVerticalOffsetYEnd] = React.useState(verticalOffsetYEndProp);
 
-  useIsomorphicLayoutEffect(
-    () => setLimit(limitProp),
-    [limitProp],
-  );
+  useIsomorphicLayoutEffect(() => setLimit(limitProp), [limitProp]);
   useIsomorphicLayoutEffect(() => setQueueStrategy(queueStrategyProp), [queueStrategyProp]);
   useIsomorphicLayoutEffect(
     () => setVerticalOffsetYStart(verticalOffsetYStartProp),

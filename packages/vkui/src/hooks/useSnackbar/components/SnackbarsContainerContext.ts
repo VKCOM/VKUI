@@ -2,13 +2,13 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 
 export type SnackbarsContainerContextData = {
-  isInsideSnackbarContainer: boolean;
-  onSnackbarClosed: (id: string) => void;
-  onSnackbarOpen: (id: string) => void;
+  isInsideContainer: boolean;
+  onClosed: (id: string) => void;
+  onOpen: (id: string) => void;
 };
 
 export const SnackbarsContainerContext = React.createContext<SnackbarsContainerContextData>({
-  isInsideSnackbarContainer: false,
-  onSnackbarClosed: noop,
-  onSnackbarOpen: noop,
+  isInsideContainer: false,
+  onClosed: noop,
+  onOpen: noop,
 });

@@ -43,8 +43,7 @@ export const useSnackbarActions = ({
 
       const placementSnackbars = snackbarsMapRef.current[resolvedPlacement] || [];
 
-      const withOverflow =
-        queueStrategy === 'shift' && placementSnackbars.length >= limit;
+      const withOverflow = queueStrategy === 'shift' && placementSnackbars.length >= limit;
 
       let resolvePromise: () => void;
       const promise = new Promise<void>((resolve) => {
