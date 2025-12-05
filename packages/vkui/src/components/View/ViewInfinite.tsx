@@ -28,17 +28,9 @@ import styles from './View.module.css';
 
 const warn = warnOnce('ViewInfinite');
 
-interface Scrolls {
-  [index: string]: Array<number | undefined>;
-}
-
-interface ViewsScrolls {
-  [index: string]: Scrolls;
-}
-
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-export let scrollsCache: ViewsScrolls = {};
+export let scrollsCache = new Map<string, Map<string, Array<number | undefined>>>();
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 export type TransitionParams = { from: string | null; to: string | null };
@@ -142,7 +134,8 @@ class ViewInfiniteComponent extends React.Component<
   };
 
   private swipeBackPrevented = false;
-  private scrolls = scrollsCache[getNavId(this.props, warn) as string] || {};
+  private readonly scrolls: Map<string, Array<number | undefined>> =
+    scrollsCache.get(getNavId(this.props, warn) as string) || new Map();
   private transitionFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
   private readonly animationFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
@@ -163,7 +156,7 @@ class ViewInfiniteComponent extends React.Component<
   componentWillUnmount() {
     const id = getNavId(this.props);
     if (id) {
-      scrollsCache[id] = this.scrolls;
+      scrollsCache.set(id, this.scrolls);
     }
     if (this.animationFinishTimeout) {
       clearTimeout(this.animationFinishTimeout);
@@ -193,15 +186,11 @@ class ViewInfiniteComponent extends React.Component<
 
       this.blurActiveElement();
 
-      const prevScrolls = this.scrolls[prevProps.activePanel] || [];
-      const scrolls = {
-        ...this.scrolls,
-        [prevProps.activePanel]: [
-          ...prevScrolls,
-          this.props.scroll?.getScroll({ compensateKeyboardHeight: false }).y,
-        ],
-      };
-      this.scrolls = scrolls;
+      const prevScrolls = this.scrolls.get(prevProps.activePanel) || [];
+      this.scrolls.set(prevProps.activePanel, [
+        ...prevScrolls,
+        this.props.scroll?.getScroll({ compensateKeyboardHeight: false }).y,
+      ]);
 
       if (this.shouldDisableTransitionMotion()) {
         this.flushTransition(prevProps.activePanel, isBack);
@@ -223,18 +212,14 @@ class ViewInfiniteComponent extends React.Component<
       const prevPanel = this.state.swipeBackPrevPanel;
       let scrollPosition: undefined | number = undefined;
 
-      this.scrolls = {
-        ...this.scrolls,
-      };
-
       if (prevPanel !== null) {
-        const prevPanelScrolls = [...(this.scrolls[prevPanel] || [])].slice(0, -1);
-        this.scrolls[prevPanel] = prevPanelScrolls;
+        const prevPanelScrolls = [...(this.scrolls.get(prevPanel) || [])].slice(0, -1);
+        this.scrolls.set(prevPanel, prevPanelScrolls);
       }
       if (nextPanel !== null) {
-        const newPanelScrolls = [...(this.scrolls[nextPanel] || [])];
+        const newPanelScrolls = [...(this.scrolls.get(nextPanel) || [])];
         scrollPosition = newPanelScrolls.pop();
-        this.scrolls[nextPanel] = newPanelScrolls;
+        this.scrolls.set(nextPanel, newPanelScrolls);
       }
 
       this.setState(
@@ -274,12 +259,9 @@ class ViewInfiniteComponent extends React.Component<
       !this.state.swipeBackResult &&
       this.state.activePanel !== null
     ) {
-      const newPanelScrolls = [...(this.scrolls[this.state.activePanel] || [])];
+      const newPanelScrolls = [...(this.scrolls.get(this.state.activePanel) || [])];
       const scrollPosition = newPanelScrolls.pop();
-      this.scrolls = {
-        ...this.scrolls,
-        [this.state.activePanel]: newPanelScrolls,
-      };
+      this.scrolls.set(this.state.activePanel, newPanelScrolls);
 
       this.props.scroll?.scrollTo(0, scrollPosition);
     }
@@ -352,15 +334,12 @@ class ViewInfiniteComponent extends React.Component<
   flushTransition(prevPanel: string, isBack: boolean) {
     const activePanel = this.props.activePanel;
 
-    const prevPanelScrolls = [...(this.scrolls[prevPanel] || [])].slice(0, -1);
-    const newPanelScrolls = [...(this.scrolls[activePanel] || [])];
+    const prevPanelScrolls = [...(this.scrolls.get(prevPanel) || [])].slice(0, -1);
+    const newPanelScrolls = [...(this.scrolls.get(activePanel) || [])];
     const scrollPosition = isBack ? newPanelScrolls.pop() : 0;
     if (isBack) {
-      this.scrolls = {
-        ...this.scrolls,
-        [prevPanel]: prevPanelScrolls,
-        [activePanel]: newPanelScrolls,
-      };
+      this.scrolls.set(prevPanel, prevPanelScrolls);
+      this.scrolls.set(activePanel, newPanelScrolls);
     }
 
     this.setState(
@@ -472,11 +451,11 @@ class ViewInfiniteComponent extends React.Component<
       if (this.state.activePanel !== null) {
         // Note: вызываем закрытие клавиатуры. В iOS это нативное поведение при свайпе.
         this.blurActiveElement();
-        const prevScrolls = this.scrolls[this.state.activePanel] || [];
-        this.scrolls = {
-          ...this.scrolls,
-          [this.state.activePanel]: [...prevScrolls, this.props.scroll?.getScroll().y],
-        };
+        const prevScrolls = this.scrolls.get(this.state.activePanel) || [];
+        this.scrolls.set(this.state.activePanel, [
+          ...prevScrolls,
+          this.props.scroll?.getScroll().y,
+        ]);
       }
 
       this.setState({
@@ -646,7 +625,7 @@ class ViewInfiniteComponent extends React.Component<
               const compensateScroll =
                 isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
               const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
-              const scrollList = (panelId && this.scrolls[panelId]) || [];
+              const scrollList = (panelId && this.scrolls.get(panelId)) || [];
               const scroll = scrollList[scrollList.length - 1] || 0;
 
               return (
