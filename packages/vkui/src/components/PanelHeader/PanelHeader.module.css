@@ -1,20 +1,18 @@
 .host {
   position: relative;
+  z-index: var(
+    --vkui_internal--z_index_panel_header
+  ); /* см. https://github.com/VKCOM/VKUI/issues/5571 */
 }
 
-.static.hasFixed::before {
-  display: block;
-  content: '';
+.hasFixed {
+  position: sticky;
+  inset-block-start: 0;
+  backface-visibility: hidden;
 }
 
 .host:not(.static):not(.hasFixed) {
-  /* см. https://github.com/VKCOM/VKUI/issues/5571 */
-  z-index: var(--vkui_internal--z_index_panel_header);
   block-size: 0;
-}
-
-.fixed {
-  z-index: var(--vkui_internal--z_index_panel_header);
 }
 
 .in {
@@ -22,6 +20,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  block-size: var(--vkui_internal--panel_header_height);
+  padding-block-start: var(--vkui_internal--safe_area_inset_top);
   white-space: nowrap;
   background: var(--vkui--color_background_content);
 }
@@ -62,12 +62,6 @@
   font-family: var(--vkui--font_family_accent);
   font-weight: 500;
   color: var(--vkui--color_text_primary);
-}
-
-.host::before,
-.in {
-  block-size: var(--vkui_internal--panel_header_height);
-  padding-block-start: var(--vkui_internal--safe_area_inset_top);
 }
 
 .after {
@@ -242,11 +236,6 @@
 /**
  * VKCOM
  */
-.vkcom {
-  position: relative;
-  z-index: var(--vkui_internal--z_index_panel_header);
-}
-
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .vkcom.sizeXRegular:not(:global(.vkuiInternalModalPageHeader__in)):not(.sep):not(.trnsp)
 .in::after {
@@ -304,8 +293,24 @@
   flex-basis: 0;
 }
 
+.sizeXRegular.hasSpacingDelimiter {
+  margin-block-end: var(--vkui--spacing_size_2xl);
+}
+
+@media (--sizeX-regular) {
+  .sizeXNone.hasSpacingDelimiter {
+    margin-block-end: var(--vkui--spacing_size_2xl);
+  }
+}
+
 .separator {
-  margin-block-start: calc(-1 * var(--vkui--size_border--regular));
+  position: absolute;
+  inset-block-start: calc(
+    var(--vkui_internal--panel_header_height) +
+    var(--vkui_internal--safe_area_inset_top) -
+    var(--vkui--size_border--regular)
+  );
+  inline-size: 100%;
 }
 
 /* stylelint-disable-next-line selector-max-universal */

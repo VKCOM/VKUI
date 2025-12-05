@@ -20,6 +20,15 @@ export interface InternalVKUITestOptions {
 }
 
 export interface ScreenshotWithClipToContentOptions {
+  /**
+   * @see https://playwright.dev/docs/screenshots#full-page-screenshots
+   * @default true
+   */
+  fullPage?: boolean;
+  /**
+   * Задаёт область, до которой нужно обрезать скриншот.
+   * @default DEFAULT_CROP_TO_CONTENT_SELECTOR
+   */
   cropToContentSelector?: string;
 }
 

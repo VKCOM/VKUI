@@ -120,7 +120,6 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
         styles.host,
         viewWidthToClassName(breakpointClassNames, viewWidth),
         autoSpaced && classNames(styles.spacedAuto, 'vkuiInternalSplitCol--spaced-auto'),
-        fixed && styles.fixed,
         stretchedOnMobile && styles.stretchedOnMobile,
       )}
     >

@@ -13,11 +13,9 @@ import type {
   HTMLAttributesWithRootRef,
 } from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
-import { Spacing } from '../Spacing/Spacing';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
@@ -143,7 +141,6 @@ export const PanelHeader = ({
   delimiter = 'auto',
   shadow,
   getRef,
-  getRootRef,
   fixed,
   typographyProps,
   ...restProps
@@ -155,7 +152,8 @@ export const PanelHeader = ({
   const isFixed = fixed !== undefined ? fixed : !isVKCOM;
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
   const staticSeparatorVisible = !float && separatorVisible;
-  const staticSpacingVisible = !float && (delimiter === 'auto' || delimiter === 'spacing');
+  const staticSpacingVisible =
+    !isVKCOM && !float && (delimiter === 'auto' || delimiter === 'spacing');
 
   return (
     <RootComponent
@@ -170,40 +168,26 @@ export const PanelHeader = ({
         shadow && styles.shadow,
         !float && classNames(styles.static, 'vkuiInternalPanelHeader--static'),
         staticSeparatorVisible && classNames(styles.sep, 'vkuiInternalPanelHeader--sep'),
+        staticSpacingVisible && styles.hasSpacingDelimiter,
         !before && classNames(styles.noBefore, 'vkuiInternalPanelHeader--no-before'),
         !after && styles.noAfter,
         isFixed && styles.hasFixed,
         sizeX !== 'compact' && sizeXClassNames[sizeX],
         sizeY !== 'regular' && sizeYClassNames[sizeY],
       )}
-      getRootRef={isFixed ? getRootRef : getRef}
     >
-      {isFixed ? (
-        <FixedLayout
-          className={classNames(styles.fixed, 'vkuiInternalPanelHeader__fixed')}
-          vertical="top"
-          getRootRef={getRef}
-        >
-          <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
-            {children}
-          </PanelHeaderIn>
-        </FixedLayout>
-      ) : (
-        <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
-          {children}
-        </PanelHeaderIn>
-      )}
-      {!isVKCOM && (
-        <>
-          {staticSeparatorVisible && adaptiveSizeX.compact && (
-            <Separator className={adaptiveSizeX.compact.className} padding />
+      <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
+        {children}
+      </PanelHeaderIn>
+      {isVKCOM
+        ? separatorVisible && <Separator className={styles.separator} />
+        : staticSeparatorVisible &&
+          adaptiveSizeX.compact && (
+            <Separator
+              className={classNames(adaptiveSizeX.compact.className, styles.separator)}
+              padding
+            />
           )}
-          {staticSpacingVisible && adaptiveSizeX.regular && (
-            <Spacing className={adaptiveSizeX.regular.className} size={16} />
-          )}
-        </>
-      )}
-      {separatorVisible && isVKCOM && <Separator className={styles.separator} />}
     </RootComponent>
   );
 };
