@@ -93,7 +93,7 @@ describe('useSnackbar', () => {
 
       act(() => {
         const { id } = apiRef.current!.open({
-          children: 'Test Snackbar to close',
+          "children": 'Test Snackbar to close',
           'data-testid': 'snackbar',
         });
         snackbarId = id;
@@ -147,7 +147,7 @@ describe('useSnackbar', () => {
 
     act(() => {
       const { id } = apiRef.current!.open({
-        children: 'Test Snackbar to close',
+        "children": 'Test Snackbar to close',
         'data-testid': 'snackbar',
       });
       snackbarId = id;
@@ -173,7 +173,7 @@ describe('useSnackbar', () => {
 
       act(() => {
         snackbarApi = apiRef.current!.open({
-          children: 'Test Snackbar to close',
+          "children": 'Test Snackbar to close',
           'data-testid': 'snackbar',
         });
       });
@@ -236,16 +236,16 @@ describe('useSnackbar', () => {
 
       act(() => {
         apiRef.current?.open({
-          children: 'Test Snackbar 1',
+          "children": 'Test Snackbar 1',
           'data-testid': 'snackbar-1',
-          placement: 'top-start',
+          "placement": 'top-start',
         });
       });
       act(() => {
         apiRef.current?.open({
-          children: 'Test Snackbar 2',
+          "children": 'Test Snackbar 2',
           'data-testid': 'snackbar-2',
-          placement: 'top-start',
+          "placement": 'top-start',
         });
       });
 
@@ -475,7 +475,7 @@ describe('useSnackbar', () => {
     const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYEnd={30} />);
 
     act(() => {
-      apiRef.current?.open({ children: 'Test Snackbar', placement: 'bottom' });
+      apiRef.current?.open({ children: 'Tst Snackbar', placement: 'bottom' });
     });
 
     let snackbarContainer = container.firstChild?.firstChild as HTMLElement;

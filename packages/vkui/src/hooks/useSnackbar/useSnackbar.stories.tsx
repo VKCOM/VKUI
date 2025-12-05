@@ -83,7 +83,7 @@ export const Playground: Story = {
     return (
       <>
         <Flex direction="column" gap="2xl">
-          <Flex gap="2xl">
+          <Flex gap={3}>
             {COLUMNS.map((placements) => (
               <Flex direction="column" gap="xl" key={placements.join('_')}>
                 {placements.map((placement) => (

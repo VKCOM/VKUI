@@ -25,10 +25,10 @@ interface SnackbarsContainerProps
 const placementClassNames = {
   'top-start': styles.placementTopStart,
   'top-end': styles.placementTopEnd,
-  top: styles.placementTop,
+  "top": styles.placementTop,
   'bottom-start': styles.placementBottomStart,
   'bottom-end': styles.placementBottomEnd,
-  bottom: styles.placementBottom,
+  "bottom": styles.placementBottom,
 };
 
 const resolveOffset = (offset: SnackbarApi.VerticalOffset | undefined): string => {

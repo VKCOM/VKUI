@@ -1,10 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { BREAKPOINTS } from '../../lib/adaptivity';
-import { heightPlus, widthPlus } from '../../lib/adaptivity/breakpoints';
-import { useMediaQuery } from '../useMediaQuery';
 import { SnackbarsContainer } from './components/SnackbarsContainer';
+import { useIsDesktop } from './helpers/useIsDesktop';
 import { useSnackbarActions } from './helpers/useSnackbarActions';
 import { useSnackbarConfig } from './helpers/useSnackbarConfig';
 import { useSnackbarState } from './helpers/useSnackbarState';
@@ -15,18 +13,12 @@ import {
   type UseSnackbar,
 } from './types';
 
-const DESKTOP_MEDIA_QUERY = `${widthPlus(
-  BREAKPOINTS.SMALL_TABLET,
-)} and (pointer: fine), ${widthPlus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(
-  BREAKPOINTS.MEDIUM_HEIGHT,
-)}`;
-
 export const useSnackbar = (params: UseSnackbar.Parameters = {}): UseSnackbar.Return => {
   const config = useSnackbarConfig(params);
   const snackbarState = useSnackbarState();
   const snackbarsMapRef = React.useRef<SnackbarsMap>({});
 
-  const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY);
+  const isDesktop = useIsDesktop();
 
   const actions = useSnackbarActions({
     snackbarState,

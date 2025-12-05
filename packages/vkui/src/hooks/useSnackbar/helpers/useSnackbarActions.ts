@@ -11,11 +11,11 @@ import { type UseSnackbarStateReturn } from './useSnackbarState';
 
 const resolveMobilePlacement = (
   placement: SnackbarPlacement,
-): Extract<SnackbarPlacement, 'top' | 'bottom'> => {
+): Extract<SnackbarPlacement, 'top' | 'bottom-start'> => {
   if (placement.startsWith('top')) {
     return 'top';
   }
-  return 'bottom';
+  return 'bottom-start';
 };
 
 export type UseSnackbarActionsProps = {
