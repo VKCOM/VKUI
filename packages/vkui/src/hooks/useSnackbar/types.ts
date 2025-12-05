@@ -22,7 +22,7 @@ export namespace CustomSnackbar {
 }
 
 export namespace SnackbarApi {
-  export type OpenProps = PartialFields<Omit<SnackbarProps, 'open' | 'offsetY'>, 'onClose'> &
+  export type OpenProps = PartialFields<Omit<SnackbarProps, 'open' | 'offsetY'>, 'onClosed'> &
     HasDataAttribute;
 
   export type UpdateSnackbarProps = Omit<OpenProps, 'id' | 'placement'>;

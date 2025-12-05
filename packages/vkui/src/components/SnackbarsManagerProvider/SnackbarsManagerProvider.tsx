@@ -30,6 +30,7 @@ const SnackbarApiContext = React.createContext<SnackbarApi.Api>({
   setQueueStrategy: noop,
   setVerticalOffsetYStart: noop,
   setVerticalOffsetYEnd: noop,
+  setZIndex: noop,
 });
 
 export const useSnackbarApi = () => {

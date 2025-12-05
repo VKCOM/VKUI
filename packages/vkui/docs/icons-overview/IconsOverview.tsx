@@ -74,7 +74,7 @@ const IconsOverview = () => {
       .then(() => {
         setSnackbar(
           <Snackbar
-            onClose={() => setSnackbar(null)}
+            onClosed={() => setSnackbar(null)}
             before={
               <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
                 <Icon16Done fill="#fff" width={14} height={14} />

@@ -68,9 +68,9 @@ export const useSnackbarActions = ({
           ...item.snackbarProps,
           id,
           placement: resolvedPlacement,
-          onClose: () => {
+          onClosed: () => {
             resolvePromise!();
-            item.snackbarProps?.onClose?.();
+            item.snackbarProps?.onClosed?.();
           },
         },
       });
