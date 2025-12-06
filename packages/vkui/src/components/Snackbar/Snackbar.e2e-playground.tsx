@@ -47,7 +47,7 @@ const SnackBarCommon = ({
         const offsetY =
           platform === 'ios' || platform === 'android' ? offsetYByPlacement[placement!] : 0;
         return (
-          <Snackbar placement={placement} action="Action" offsetY={offsetY} onClose={noop}>
+          <Snackbar placement={placement} action="Action" offsetY={offsetY} onClosed={noop}>
             placement=&quot;{placement}&quot; offsetY=&#123;{offsetY}&#125;
           </Snackbar>
         );
@@ -77,7 +77,7 @@ export const SnackbarModePlayground = (props: ComponentPlaygroundProps) => {
       ]}
     >
       {({ mode }: Pick<SnackbarProps, 'mode'>) => (
-        <Snackbar mode={mode} action={`Action (mode=${mode})`} onClose={noop}>
+        <Snackbar mode={mode} action={`Action (mode=${mode})`} onClosed={noop}>
           Text message
         </Snackbar>
       )}

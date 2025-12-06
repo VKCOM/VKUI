@@ -34,7 +34,7 @@ export function PlatformPicker({ className }: { className?: string }) {
           console.warn(error);
           setSnackbar(
             <Snackbar
-              onClose={() => setSnackbar(null)}
+              onClosed={() => setSnackbar(null)}
               before={<Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />}
             >
               {`Не удалось загрузить токены для темы ${newThemeName}`}
