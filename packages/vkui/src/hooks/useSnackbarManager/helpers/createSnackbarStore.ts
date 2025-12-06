@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import type { SnackbarItem, SnackbarPlacement } from "../types";
+import type { SnackbarItem, SnackbarPlacement } from '../types';
 import {
   addSnackbarToState,
   closeAllSnackbarsInState,
@@ -9,22 +9,16 @@ import {
   removeSnackbarFromState,
   type SnackbarState,
   updateSnackbarPropsInState,
-} from "./snackbarStateHelpers";
+} from './snackbarStateHelpers';
 
 export type SnackbarStore = {
   getState: () => SnackbarState;
-  getSnackbarsByPlacement: (
-    placement: SnackbarPlacement,
-    limit: number
-  ) => SnackbarItem[];
+  getSnackbarsByPlacement: (placement: SnackbarPlacement, limit: number) => SnackbarItem[];
   subscribe: (listener: () => void) => () => void;
   showedSnackbars: Set<string>;
   addSnackbar: (snackbar: SnackbarItem) => void;
   removeSnackbar: (id: string) => void;
-  updateSnackbar: (
-    id: string,
-    config: Partial<SnackbarItem["snackbarProps"]>
-  ) => void;
+  updateSnackbar: (id: string, config: Partial<SnackbarItem['snackbarProps']>) => void;
   closeSnackbar: (id: string) => void;
   closeAll: (showedSnackbars: Set<string>) => void;
   closeOverflowedSnackbars: (placementSnackbars: SnackbarItem[]) => void;
@@ -55,9 +49,7 @@ export const createSnackbarStore = (): SnackbarStore => {
         if (snackbar.snackbarProps.placement !== placement) {
           continue;
         }
-        const notClosedCount = result.filter(
-          (s) => !state.snackbarsToClose.has(s.id)
-        ).length;
+        const notClosedCount = result.filter((s) => !state.snackbarsToClose.has(s.id)).length;
         if (notClosedCount < limit) {
           result.push(snackbar);
         }
@@ -86,9 +78,7 @@ export const createSnackbarStore = (): SnackbarStore => {
       setState((oldState) => closeAllSnackbarsInState(oldState, showed));
     },
     closeOverflowedSnackbars: (placementSnackbars) => {
-      setState((oldState) =>
-        closeOverflowedSnackbarsInState(oldState, placementSnackbars)
-      );
+      setState((oldState) => closeOverflowedSnackbarsInState(oldState, placementSnackbars));
     },
   };
 };

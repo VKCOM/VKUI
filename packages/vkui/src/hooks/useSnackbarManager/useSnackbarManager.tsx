@@ -1,16 +1,14 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { SnackbarHolder } from "./components/SnackbarHolder";
-import { createSnackbarStore } from "./helpers/createSnackbarStore";
-import { useIsDesktop } from "./helpers/useIsDesktop";
-import { useSnackbarActionsWithStore } from "./helpers/useSnackbarActionsWithStore";
-import { useSnackbarConfig } from "./helpers/useSnackbarConfig";
-import { type SnackbarApi, type UseSnackbar } from "./types";
+import * as React from 'react';
+import { SnackbarHolder } from './components/SnackbarHolder';
+import { createSnackbarStore } from './helpers/createSnackbarStore';
+import { useIsDesktop } from './helpers/useIsDesktop';
+import { useSnackbarActionsWithStore } from './helpers/useSnackbarActionsWithStore';
+import { useSnackbarConfig } from './helpers/useSnackbarConfig';
+import { type SnackbarApi, type UseSnackbar } from './types';
 
-export const useSnackbarManager = (
-  params: UseSnackbar.Parameters = {}
-): UseSnackbar.Return => {
+export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnackbar.Return => {
   const config = useSnackbarConfig(params);
 
   const [store] = React.useState(createSnackbarStore);
@@ -60,13 +58,7 @@ export const useSnackbarManager = (
         zIndex={config.zIndex}
       />
     );
-  }, [
-    store,
-    config.limit,
-    config.verticalOffsetYStart,
-    config.verticalOffsetYEnd,
-    config.zIndex,
-  ]);
+  }, [store, config.limit, config.verticalOffsetYStart, config.verticalOffsetYEnd, config.zIndex]);
 
   return [api, holder];
 };

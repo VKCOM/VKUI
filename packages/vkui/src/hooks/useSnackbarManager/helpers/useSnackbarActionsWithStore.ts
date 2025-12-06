@@ -30,7 +30,6 @@ export const useSnackbarActionsWithStore = ({
   queueStrategy,
   isDesktop,
 }: UseSnackbarActionsWithStoreProps) => {
-  // Use refs for values that change but shouldn't cause re-renders
   const limitRef = React.useRef(limit);
   const queueStrategyRef = React.useRef(queueStrategy);
   const isDesktopRef = React.useRef(isDesktop);
