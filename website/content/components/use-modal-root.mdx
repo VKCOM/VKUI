@@ -50,15 +50,27 @@ const [api, contextHolder] = useModalRoot();
 const openModalCard = () => {
   const { close } = api.openModalCard({
     icon: <Icon56NotificationOutline />,
-    title: 'Приложение запрашивает разрешение на отправку Вам уведомлений',
+    title: "Приложение запрашивает разрешение на отправку Вам уведомлений",
     actions: (
       <React.Fragment>
         <Spacing size={16} />
         <ButtonGroup gap="m" stretched>
-          <Button key="deny" size="l" mode="secondary" stretched onClick={() => close()}>
+          <Button
+            key="deny"
+            size="l"
+            mode="secondary"
+            stretched
+            onClick={() => close()}
+          >
             Запретить
           </Button>
-          <Button key="allow" size="l" mode="primary" stretched onClick={() => close()}>
+          <Button
+            key="allow"
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => close()}
+          >
             Разрешить
           </Button>
         </ButtonGroup>
@@ -71,7 +83,9 @@ const openModalPage = () => {
   const { close } = api.openModalPage({
     dynamicContentHeight: true,
     header: (
-      <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
+      <ModalPageHeader
+        before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+      >
         Информация о пользователе
       </ModalPageHeader>
     ),
@@ -121,17 +135,27 @@ return (
 ```jsx
 const [api, contextHolder] = useModalRoot();
 
-const openModal = (type: 'card' | 'page') => {
-  if (type === 'card') {
+const openModal = (type: "card" | "page") => {
+  if (type === "card") {
     const { close } = api.openModalCard({
       icon: <Icon56NotificationOutline />,
-      title: 'Modal Card Title',
+      title: "Modal Card Title",
       actions: (
         <ButtonGroup stretched mode="vertical">
-          <Button size="l" mode="primary" stretched onClick={() => openModal('page')}>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openModal("page")}
+          >
             Открыть ModalPage
           </Button>
-          <Button size="l" mode="primary" stretched onClick={() => openModal('card')}>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openModal("card")}
+          >
             Открыть ModalCard
           </Button>
           <Button size="l" mode="secondary" stretched onClick={() => close()}>
@@ -143,14 +167,20 @@ const openModal = (type: 'card' | 'page') => {
   } else {
     const { close } = api.openModalPage({
       header: (
-        <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
+        <ModalPageHeader
+          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+        >
           Вложенная модальная страница
         </ModalPageHeader>
       ),
       children: (
         <Group>
-          <CellButton onClick={() => openModal('page')}>Open ModalPage</CellButton>
-          <CellButton onClick={() => openModal('card')}>Open ModalCard</CellButton>
+          <CellButton onClick={() => openModal("page")}>
+            Open ModalPage
+          </CellButton>
+          <CellButton onClick={() => openModal("card")}>
+            Open ModalCard
+          </CellButton>
         </Group>
       ),
     });
@@ -160,19 +190,22 @@ const openModal = (type: 'card' | 'page') => {
 return (
   <>
     <Flex direction="column" gap="m">
-      <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
+      <Checkbox
+        defaultChecked
+        onChange={(e) => api.setSaveHistory(e.target.checked)}
+      >
         Сохранять историю открытия
       </Checkbox>
-      <Button appearance="overlay" onClick={() => openModal('page')}>
+      <Button appearance="overlay" onClick={() => openModal("page")}>
         Открыть ModalPage
       </Button>
-      <Button appearance="overlay" onClick={() => openModal('card')}>
+      <Button appearance="overlay" onClick={() => openModal("card")}>
         Открыть ModalCard
       </Button>
     </Flex>
     {contextHolder}
   </>
-)
+);
 ```
 
 </Playground>
@@ -181,8 +214,6 @@ return (
 
 Иногда нужно, чтобы место вызова модального окна и его верстка были независимы друг от друга.
 Для этого в `useModalRoot` есть методы **`openCustomModalCard`** и **`openCustomModalPage`**, который позволяет отрисовать модальное окно произвольного вида на базе `ModalCard` или `ModalPage`.
-
-
 
 ### `CustomModalPayload` [#custom-modal-props]
 
@@ -227,17 +258,30 @@ const ModalCardComponent = ({
   update,
   openNextModal,
   modalProps,
-}: CustomModalProps<OpenModalCardProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
+}: CustomModalProps<
+  OpenModalCardProps,
+  { openNextModal: (type: "card" | "page") => void }
+>) => {
   return (
     <ModalCard
       icon={<Icon56NotificationOutline />}
       title="Modal Card Title"
       actions={
         <ButtonGroup stretched mode="vertical">
-          <Button size="l" mode="primary" stretched onClick={() => openNextModal('page')}>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openNextModal("page")}
+          >
             Открыть ModalPage
           </Button>
-          <Button size="l" mode="primary" stretched onClick={() => openNextModal('card')}>
+          <Button
+            size="l"
+            mode="primary"
+            stretched
+            onClick={() => openNextModal("card")}
+          >
             Открыть ModalCard
           </Button>
           <Button size="l" mode="secondary" stretched onClick={() => close()}>
@@ -261,7 +305,10 @@ const ModalPageComponent = ({
   openNextModal,
   close,
   modalProps,
-}: CustomModalProps<OpenModalPageProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
+}: CustomModalProps<
+  OpenModalPageProps,
+  { openNextModal: (type: "card" | "page") => void }
+>) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivityConditionalRender();
 
@@ -271,14 +318,20 @@ const ModalPageComponent = ({
         <ModalPageHeader
           before={
             sizeX.compact &&
-            platform === 'android' && (
-              <PanelHeaderClose className={sizeX.compact.className} onClick={() => close()} />
+            platform === "android" && (
+              <PanelHeaderClose
+                className={sizeX.compact.className}
+                onClick={() => close()}
+              />
             )
           }
           after={
             sizeX.compact &&
-            platform === 'ios' && (
-              <PanelHeaderButton onClick={() => close()} className={sizeX.compact.className}>
+            platform === "ios" && (
+              <PanelHeaderButton
+                onClick={() => close()}
+                className={sizeX.compact.className}
+              >
                 <Icon24Dismiss />
               </PanelHeaderButton>
             )
@@ -290,8 +343,12 @@ const ModalPageComponent = ({
       {...modalProps}
     >
       <Group>
-        <CellButton onClick={() => openNextModal('page')}>Open ModalPage</CellButton>
-        <CellButton onClick={() => openNextModal('card')}>Open ModalCard</CellButton>
+        <CellButton onClick={() => openNextModal("page")}>
+          Open ModalPage
+        </CellButton>
+        <CellButton onClick={() => openNextModal("card")}>
+          Open ModalCard
+        </CellButton>
       </Group>
     </ModalPage>
   );
@@ -299,8 +356,8 @@ const ModalPageComponent = ({
 
 const [api, contextHolder] = useModalRoot();
 
-const openCustomModal = (type: 'card' | 'page') => {
-  if (type === 'card') {
+const openCustomModal = (type: "card" | "page") => {
+  if (type === "card") {
     api.openCustomModalCard({
       component: ModalCardComponent,
       additionalProps: {
@@ -320,13 +377,16 @@ const openCustomModal = (type: 'card' | 'page') => {
 return (
   <>
     <Flex direction="column" gap="m">
-      <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
+      <Checkbox
+        defaultChecked
+        onChange={(e) => api.setSaveHistory(e.target.checked)}
+      >
         Сохранять историю открытия
       </Checkbox>
-      <Button appearance="overlay" onClick={() => openCustomModal('page')}>
+      <Button appearance="overlay" onClick={() => openCustomModal("page")}>
         Открыть ModalPage
       </Button>
-      <Button appearance="overlay" onClick={() => openCustomModal('card')}>
+      <Button appearance="overlay" onClick={() => openCustomModal("card")}>
         Открыть ModalCard
       </Button>
     </Flex>
@@ -344,7 +404,6 @@ return (
 <Playground>
 
 ```jsx
-
 const ModalCardComponent = ({
   close,
   modalProps,
@@ -357,10 +416,22 @@ const ModalCardComponent = ({
         <React.Fragment>
           <Spacing size={16} />
           <ButtonGroup gap="m" stretched>
-            <Button key="deny" size="l" mode="secondary" stretched onClick={() => close()}>
+            <Button
+              key="deny"
+              size="l"
+              mode="secondary"
+              stretched
+              onClick={() => close()}
+            >
               Запретить
             </Button>
-            <Button key="allow" size="l" mode="primary" stretched onClick={() => close()}>
+            <Button
+              key="allow"
+              size="l"
+              mode="primary"
+              stretched
+              onClick={() => close()}
+            >
               Разрешить
             </Button>
           </ButtonGroup>
@@ -379,7 +450,9 @@ const ModalPageComponent = ({
     <ModalPage
       dynamicContentHeight
       header={
-        <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
+        <ModalPageHeader
+          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
+        >
           Информация о пользователе
         </ModalPageHeader>
       }
@@ -400,7 +473,6 @@ const ModalPageComponent = ({
   );
 };
 
-
 const [api, contextHolder] = useModalRoot();
 
 const openModalCard = () => {
@@ -420,79 +492,6 @@ return (
       Открыть ModalCard
     </Button>
     {contextHolder}
-  </Flex>
-);
-```
-
-</Playground>
-
-# useModalsApi [#use-modals-api]
-
-Хук для еще большего упрощения работы с модальными окнами.
-
-> **Важно**: Для его работы необходимо, чтобы ваше приложение было обернуто в [`AppRoot`](/components/app-root) со свойством `enableModalsController`.
-
-Отличие от `useModalRoot`, в том, что ничего не принимает и возвращает только объект с [API](/components/use-modal-root#modal-root-api).
-
-## Пример использования
-
-<Playground enableModalsController={true}>
-
-```jsx
-const api = useModalsApi();
-
-const openModalCard = () => {
-  const { close } = api.openModalCard({
-    icon: <Icon56NotificationOutline />,
-    title: 'Приложение запрашивает разрешение на отправку Вам уведомлений',
-    actions: (
-      <React.Fragment>
-        <Spacing size={16} />
-        <ButtonGroup gap="m" stretched>
-          <Button key="deny" size="l" mode="secondary" stretched onClick={() => close()}>
-            Запретить
-          </Button>
-          <Button key="allow" size="l" mode="primary" stretched onClick={() => close()}>
-            Разрешить
-          </Button>
-        </ButtonGroup>
-      </React.Fragment>
-    ),
-  });
-};
-
-const openModalPage = () => {
-  const { close } = api.openModalPage({
-    dynamicContentHeight: true,
-    header: (
-      <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
-        Информация о пользователе
-      </ModalPageHeader>
-    ),
-    children: (
-      <Group>
-        <Cell>
-          <InfoRow header="Дата рождения">5 ноября 1994</InfoRow>
-        </Cell>
-        <Cell>
-          <InfoRow header="Родной город">Санкт-Петербург</InfoRow>
-        </Cell>
-        <Cell>
-          <InfoRow header="Место работы">Команда ВКонтакте</InfoRow>
-        </Cell>
-      </Group>
-    ),
-  });
-};
-
-return (
-  <Flex gap="2xl">
-    <Button mode="primary" appearance="overlay" onClick={openModalPage}>
-      Открыть ModalPage
-    </Button>
-    <Button mode="secondary" onClick={openModalCard}>
-      Открыть ModalCard
-    </Button>
   </Flex>
 );
 ```

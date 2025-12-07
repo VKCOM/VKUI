@@ -143,7 +143,6 @@ import {
   useAdaptivityWithJSMediaQueries,
   useFocusVisible,
   useModalRoot,
-  useModalsApi,
   usePagination,
   usePatchChildren,
   usePlatform,
@@ -318,5 +317,4 @@ export const scope: Record<string, unknown> = {
   usePagination,
   usePopover,
   useModalRoot,
-  useModalsApi,
 };

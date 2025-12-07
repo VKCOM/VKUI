@@ -37,7 +37,6 @@ function DefaultWrapper({
 }
 
 export interface PlaygroundPreviewProps extends Pick<FlexProps, 'direction' | 'align' | 'justify'> {
-  enableModalsController?: boolean;
   className?: string;
   Wrapper?: React.ComponentType;
 }
@@ -45,7 +44,6 @@ export interface PlaygroundPreviewProps extends Pick<FlexProps, 'direction' | 'a
 export function PlaygroundPreview({
   className,
   Wrapper = DefaultWrapper,
-  enableModalsController = false,
   ...restProps
 }: PlaygroundPreviewProps) {
   const { error } = React.useContext(LiveContext);
@@ -65,12 +63,7 @@ export function PlaygroundPreview({
       {error && <LiveError />}
       {playgroundLoading && <PanelSpinner />}
       {mounted && !playgroundLoading && (
-        <AppRoot
-          style={{ height: '100%', width: '100%' }}
-          mode="partial"
-          scroll="contain"
-          enableModalsController={enableModalsController}
-        >
+        <AppRoot style={{ height: '100%', width: '100%' }} mode="partial" scroll="contain">
           <ConfigProvider
             platform={platform}
             colorScheme={colorScheme}

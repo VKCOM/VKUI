@@ -468,7 +468,6 @@ export {
   type CustomModalPayload,
 } from './hooks/useModalRoot';
 export { useScrollLock, useManualScroll as useScroll } from './components/AppRoot/ScrollContext';
-export { useModalsApi } from './components/AppRoot/ModalContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
