@@ -1,23 +1,72 @@
-'use client';
+"use client";
 
-import { ModalCard } from '../../components/ModalCard/ModalCard';
-import { ModalPage } from '../../components/ModalPage/ModalPage';
-import { ModalRoot } from '../../components/ModalRoot/ModalRoot';
-import { type ModalRootProps } from '../../components/ModalRoot/types';
-import { type ModalRootItem } from './types';
+import * as React from "react";
+import { ModalCard } from "../../components/ModalCard/ModalCard";
+import { ModalPage } from "../../components/ModalPage/ModalPage";
+import { ModalRoot } from "../../components/ModalRoot/ModalRoot";
+import { type ModalRootProps } from "../../components/ModalRoot/types";
+import { type ModalStore } from "./helpers/createModalStore";
+import { useActiveModalProps } from "./helpers/useActiveModalProps";
 
-type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
-  modals: ModalRootItem[];
-  activeModal: string | null;
+type ContextHolderProps = Omit<ModalRootProps, "activeModal" | "children"> & {
+  store: ModalStore;
 };
 
-export function ContextHolder({ modals, ...modalRootProps }: ContextHolderProps) {
+export function ContextHolder({
+  store,
+  onOverlayClosed: onOverlayClosedProp,
+  onOverlayShowed: onOverlayShowedProp,
+  disableModalOverlay: disableModalOverlayProp,
+  disableOpenAnimation: disableOpenAnimationProp,
+  disableCloseAnimation: disableCloseAnimationProp,
+  ...restProps
+}: ContextHolderProps) {
+  const state = React.useSyncExternalStore(
+    store.subscribe,
+    store.getState,
+    store.getState
+  );
+
+  const activeModalProps = useActiveModalProps(state);
+
+  const disableModalOverlay =
+    disableModalOverlayProp || activeModalProps.disableModalOverlay;
+  const disableOpenAnimation =
+    disableOpenAnimationProp || activeModalProps.disableOpenAnimation;
+  const disableCloseAnimation =
+    disableCloseAnimationProp || activeModalProps.disableCloseAnimation;
+
+  const onOverlayClosed = React.useCallback(() => {
+    store.setOverlayShowed(false);
+    onOverlayClosedProp?.();
+  }, [store, onOverlayClosedProp]);
+
+  const onOverlayShowed = React.useCallback(() => {
+    store.setOverlayShowed(true);
+    onOverlayShowedProp?.();
+  }, [store, onOverlayShowedProp]);
+
+  const shouldRender =
+    state.modals.length > 0 || (!disableModalOverlay && state.overlayShowed);
+
+  if (!shouldRender) {
+    return null;
+  }
+
   return (
-    <ModalRoot {...modalRootProps}>
-      {modals.map((modalData) => {
+    <ModalRoot
+      {...restProps}
+      activeModal={state.activeModal}
+      disableModalOverlay={disableModalOverlay}
+      disableOpenAnimation={disableOpenAnimation}
+      disableCloseAnimation={disableCloseAnimation}
+      onOverlayClosed={onOverlayClosed}
+      onOverlayShowed={onOverlayShowed}
+    >
+      {state.modals.map((modalData) => {
         switch (modalData.type) {
-          case 'custom-page':
-          case 'custom-card':
+          case "custom-page":
+          case "custom-card":
             const Modal = modalData.component;
             return (
               <Modal
@@ -29,9 +78,9 @@ export function ContextHolder({ modals, ...modalRootProps }: ContextHolderProps)
                 close={modalData.close}
               />
             );
-          case 'card':
+          case "card":
             return <ModalCard key={modalData.id} {...modalData} />;
-          case 'page':
+          case "page":
             return <ModalPage key={modalData.id} {...modalData} />;
         }
       })}

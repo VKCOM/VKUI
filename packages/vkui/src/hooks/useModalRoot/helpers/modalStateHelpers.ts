@@ -1,11 +1,28 @@
-import { type ModalRootItem } from '../types';
+import { type ModalRootItem } from "../types";
 
 export type ModalRootState = {
   modals: ModalRootItem[];
   activeModal: string | null;
+  overlayShowed: boolean;
 };
 
-export const removeModalFromState = (state: ModalRootState, id: string): ModalRootState => {
+export const setOverlayShowedInState = (
+  state: ModalRootState,
+  overlayShowed: boolean
+): ModalRootState => {
+  if (state.overlayShowed === overlayShowed) {
+    return state;
+  }
+  return {
+    ...state,
+    overlayShowed,
+  };
+};
+
+export const removeModalFromState = (
+  state: ModalRootState,
+  id: string
+): ModalRootState => {
   const { modals } = state;
   const newModals = modals.filter(({ id: modalId }) => id !== modalId);
   return {
@@ -17,14 +34,16 @@ export const removeModalFromState = (state: ModalRootState, id: string): ModalRo
 export const setPrevActiveModal = (
   state: ModalRootState,
   id: string,
-  needCloseModals: Set<string>,
+  needCloseModals: Set<string>
 ): ModalRootState => {
   const { modals, activeModal } = state;
   let newActiveModal = activeModal;
 
   needCloseModals.add(id);
 
-  const activeModalIndex = modals.findIndex(({ id: modalId }) => id === modalId);
+  const activeModalIndex = modals.findIndex(
+    ({ id: modalId }) => id === modalId
+  );
   if (activeModal === id && activeModalIndex === modals.length - 1) {
     if (modals.length === 1) {
       newActiveModal = null;
@@ -34,6 +53,7 @@ export const setPrevActiveModal = (
   }
 
   return {
+    ...state,
     activeModal: newActiveModal,
     modals,
   };
@@ -42,13 +62,13 @@ export const setPrevActiveModal = (
 export const updateModalPropsInState = (
   state: ModalRootState,
   id: string,
-  props: Omit<ModalRootItem, 'type' | 'id'>,
+  props: Omit<ModalRootItem, "type" | "id">
 ): ModalRootState => {
   const { modals } = state;
 
   const cleanProps = { ...props };
-  if ('id' in cleanProps) {
-    delete cleanProps['id'];
+  if ("id" in cleanProps) {
+    delete cleanProps["id"];
   }
 
   const modalIndex = modals.findIndex((modal) => modal.id === id);
@@ -59,8 +79,8 @@ export const updateModalPropsInState = (
   const currentModal = modals[modalIndex];
   const newModalProps = (() => {
     switch (currentModal.type) {
-      case 'custom-page':
-      case 'custom-card':
+      case "custom-page":
+      case "custom-card":
         return {
           ...currentModal,
           modalProps: {
@@ -68,8 +88,8 @@ export const updateModalPropsInState = (
             ...cleanProps,
           },
         };
-      case 'card':
-      case 'page':
+      case "card":
+      case "page":
         return {
           ...currentModal,
           ...cleanProps,
@@ -79,13 +99,17 @@ export const updateModalPropsInState = (
 
   return {
     ...state,
-    modals: [...modals.slice(0, modalIndex), newModalProps, ...modals.slice(modalIndex + 1)],
+    modals: [
+      ...modals.slice(0, modalIndex),
+      newModalProps,
+      ...modals.slice(modalIndex + 1),
+    ],
   };
 };
 
 export const closeAllModals = (
   state: ModalRootState,
-  needCloseModals: Set<string>,
+  needCloseModals: Set<string>
 ): ModalRootState => {
   const { modals, activeModal } = state;
   const newModals = modals.filter(({ id: modalId }) => activeModal === modalId);
@@ -95,6 +119,7 @@ export const closeAllModals = (
   }
 
   return {
+    ...state,
     modals: newModals,
     activeModal: null,
   };
@@ -106,7 +131,7 @@ export const closeAllModals = (
 export const closeModal = (
   state: ModalRootState,
   id: string,
-  needCloseModals: Set<string>,
+  needCloseModals: Set<string>
 ): ModalRootState => {
   const { activeModal } = state;
 
@@ -123,13 +148,14 @@ export const closeModal = (
 
 export const addModalToState = (
   state: ModalRootState,
-  modalData: ModalRootItem,
+  modalData: ModalRootItem
 ): ModalRootState => {
   if (state.modals.find((modal) => modal.id === modalData.id)) {
     return state;
   }
 
   return {
+    ...state,
     modals: [...state.modals, modalData],
     activeModal: modalData.id || null,
   };
@@ -137,13 +163,15 @@ export const addModalToState = (
 
 export const getActiveModalProp = <T = any>(
   state: ModalRootState,
-  propGetter: (modal: ModalRootItem) => T | undefined,
+  propGetter: (modal: ModalRootItem) => T | undefined
 ): T | undefined => {
   if (!state.activeModal) {
     return undefined;
   }
 
-  const activeModalProps = state.modals.find((modal) => modal.id === state.activeModal);
+  const activeModalProps = state.modals.find(
+    (modal) => modal.id === state.activeModal
+  );
   if (!activeModalProps) {
     return undefined;
   }

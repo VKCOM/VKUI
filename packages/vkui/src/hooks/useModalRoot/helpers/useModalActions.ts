@@ -13,7 +13,7 @@ import {
   type OpenModalPageProps,
   type OpenPageReturn,
 } from '../types';
-import { type UseModalStateReturn } from './useModalState';
+import type { ModalStore } from './createModalStore';
 
 type CreateModalCallbacks = {
   onClose: (reason: ModalPageCloseReason, event?: UIEvent<HTMLElement>) => void;
@@ -23,20 +23,18 @@ type CreateModalCallbacks = {
 const createModalCallbacks = (
   id: string,
   modalProps: OpenModalPageProps | OpenModalCardProps,
-  setPrevActive: (id: string) => void,
-  removeModal: (id: string) => void,
-  needCloseModals: React.RefObject<Set<string>>,
+  store: ModalStore,
   resolvePromise: () => void,
 ): CreateModalCallbacks => {
   const onClose: OpenModalPageProps['onClose'] = (reason, event) => {
-    setPrevActive(id);
+    store.setPrevActive(id);
     modalProps.onClose?.(reason, event);
   };
 
   const onClosed = () => {
-    if (needCloseModals.current.has(id)) {
-      removeModal(id);
-      needCloseModals.current.delete(id);
+    if (store.needCloseModals.has(id)) {
+      store.removeModal(id);
+      store.needCloseModals.delete(id);
       resolvePromise();
     }
     modalProps.onClosed?.();
@@ -103,13 +101,16 @@ const resolveProps = <
 };
 
 export type UseModalActionsProps = {
-  modalState: UseModalStateReturn;
+  store: ModalStore;
   saveHistory: boolean;
 };
 
-export const useModalActions = ({ modalState, saveHistory }: UseModalActionsProps) => {
-  const { close, setPrevActive, removeModal, addModal, needCloseModals, updateModalProps } =
-    modalState;
+export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) => {
+  const saveHistoryRef = React.useRef(saveHistory);
+
+  React.useEffect(() => {
+    saveHistoryRef.current = saveHistory;
+  }, [saveHistory]);
 
   const open = React.useCallback(
     <T extends ModalRootItem>(item: T) => {
@@ -123,32 +124,25 @@ export const useModalActions = ({ modalState, saveHistory }: UseModalActionsProp
         resolvePromise = resolve;
       });
 
-      const callbacks = createModalCallbacks(
-        id,
-        modalProps,
-        setPrevActive,
-        removeModal,
-        needCloseModals,
-        resolvePromise!,
-      );
+      const callbacks = createModalCallbacks(id, modalProps, store, resolvePromise!);
 
       const newModalData = createModalData(item, id, callbacks);
 
-      if (!saveHistory) {
-        modalState.closePrevActiveIfNoHistory();
+      if (!saveHistoryRef.current) {
+        store.closePrevActiveIfNoHistory();
       }
 
-      addModal(newModalData);
+      store.addModal(newModalData);
 
       return {
         id,
-        close: () => close(id),
+        close: () => store.closeModal(id),
         onClose: <R>(resolve?: () => R) => {
           return promise.then(resolve);
         },
       };
     },
-    [setPrevActive, removeModal, needCloseModals, close, saveHistory, addModal, modalState],
+    [store],
   );
 
   const update: ModalRootApi['update'] = React.useCallback(
@@ -156,9 +150,9 @@ export const useModalActions = ({ modalState, saveHistory }: UseModalActionsProp
       // Тип нужен только для улучшения типизации при вызове функции
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [id, _, props] = args;
-      updateModalProps(id, props);
+      store.updateModalProps(id, props);
     },
-    [updateModalProps],
+    [store],
   );
 
   const openModalCard: ModalRootApi['openModalCard'] = React.useCallback(
@@ -245,6 +239,17 @@ export const useModalActions = ({ modalState, saveHistory }: UseModalActionsProp
     [open, update],
   );
 
+  const close: ModalRootApi['close'] = React.useCallback(
+    (id) => {
+      store.closeModal(id);
+    },
+    [store],
+  );
+
+  const closeAll: ModalRootApi['closeAll'] = React.useCallback(() => {
+    store.closeAll();
+  }, [store]);
+
   return {
     openModalPage,
     openModalCard,
@@ -252,5 +257,6 @@ export const useModalActions = ({ modalState, saveHistory }: UseModalActionsProp
     openCustomModalPage,
     close,
     update,
+    closeAll,
   };
 };
