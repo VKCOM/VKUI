@@ -1,25 +1,22 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { classNames } from "@vkontakte/vkjs";
-import { useKeyboardInputTracker } from "../../hooks/useKeyboardInputTracker";
-import { useSyncHTMLWithBaseVKUIClasses } from "../../hooks/useSyncHTMLWithBaseVKUIClasses";
-import { useSyncHTMLWithTokens } from "../../hooks/useSyncHTMLWithTokens";
-import { AppRootContext } from "./AppRootContext";
-import { AppRootStyleContainer } from "./AppRootStyleContainer/AppRootStyleContainer";
-import {
-  ElementScrollController,
-  GlobalScrollController,
-} from "./ScrollContext";
-import { useSafeAreaInsetsMemo } from "./helpers";
+import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
+import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
+import { useSyncHTMLWithBaseVKUIClasses } from '../../hooks/useSyncHTMLWithBaseVKUIClasses';
+import { useSyncHTMLWithTokens } from '../../hooks/useSyncHTMLWithTokens';
+import { AppRootContext } from './AppRootContext';
+import { AppRootStyleContainer } from './AppRootStyleContainer/AppRootStyleContainer';
+import { ElementScrollController, GlobalScrollController } from './ScrollContext';
+import { useSafeAreaInsetsMemo } from './helpers';
 import type {
   AppRootLayout,
   AppRootMode,
   AppRootScroll,
   AppRootUserSelectMode,
   SafeAreaInsets,
-} from "./types";
-import styles from "./AppRoot.module.css";
+} from './types';
+import styles from './AppRoot.module.css';
 
 const layoutClassNames = {
   card: styles.layoutCard,
@@ -91,8 +88,8 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const AppRoot = ({
   children,
-  mode = "full",
-  scroll = "global",
+  mode = 'full',
+  scroll = 'global',
   portalRoot,
   disablePortal = false,
   disableParentTransformForPositionFixedElements,
@@ -113,7 +110,7 @@ export const AppRoot = ({
       appRoot: appRootRef,
       portalRoot,
       safeAreaInsets,
-      embedded: mode === "embedded",
+      embedded: mode === 'embedded',
       mode,
       disablePortal,
       layout,
@@ -130,7 +127,7 @@ export const AppRoot = ({
       mode,
       safeAreaInsets,
       userSelectMode,
-    ]
+    ],
   );
 
   /*
@@ -140,7 +137,7 @@ export const AppRoot = ({
    * - цвет системного сколлбара зависит от color-sheme свойства, значение которого задётся токенами и должно быть выставлено именно на html элементе.
    * В режме SSR пользователи сами могу задать этот класс на html-элементе. главное, чтобы он соответствовал переданным platform и appearence свойствам.
    */
-  useSyncHTMLWithTokens({ appRootRef, enable: mode === "full" });
+  useSyncHTMLWithTokens({ appRootRef, enable: mode === 'full' });
   /*
    * По умолчанию VKUI будет выставлять .vkui на html и .vkui__root на контейнере в режиме full.
    * В режиме embedded будет выставлять только .vkui__root и .vkui__root--embedded на контейнере.
@@ -150,16 +147,15 @@ export const AppRoot = ({
     appRootRef,
     mode,
     layout,
-    enable: mode !== "partial" && !disableSettingVKUIClassesInRuntime,
+    enable: mode !== 'partial' && !disableSettingVKUIClassesInRuntime,
   });
 
   const ScrollController = React.useMemo(
-    () =>
-      scroll === "contain" ? ElementScrollController : GlobalScrollController,
-    [scroll]
+    () => (scroll === 'contain' ? ElementScrollController : GlobalScrollController),
+    [scroll],
   );
 
-  return mode === "partial" ? (
+  return mode === 'partial' ? (
     <AppRootContext.Provider value={contextValue}>
       <ScrollController elRef={appRootRef}>{children}</ScrollController>
     </AppRootContext.Provider>
@@ -171,9 +167,9 @@ export const AppRoot = ({
           className,
           styles.host,
           layout && layoutClassNames[layout],
-          mode === "embedded" && !disableParentTransformForPositionFixedElements
+          mode === 'embedded' && !disableParentTransformForPositionFixedElements
             ? styles.transformForPositionFixedElements
-            : undefined
+            : undefined,
         )}
         {...props}
       >

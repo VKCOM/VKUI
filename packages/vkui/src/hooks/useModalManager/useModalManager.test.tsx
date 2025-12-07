@@ -7,31 +7,31 @@ import { waitCSSTransitionEndConditionally } from '../../components/ModalRoot/Mo
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import {
   type CustomModalProps,
-  type ModalRootApi,
+  type ModalManagerApi,
   type OpenModalCardProps,
   type OpenModalPageProps,
-  type UseModalRootProps,
+  type UseModalManagerProps,
 } from './types';
-import { useModalRoot } from './useModalRoot';
+import { useModalManager } from './useModalManager';
 
 const Fixture = ({
   setApi,
   saveHistory = true,
-}: { setApi: (api: ModalRootApi) => void } & Pick<UseModalRootProps, 'saveHistory'>) => {
-  const [api, contextHolder] = useModalRoot({ saveHistory });
+}: { setApi: (api: ModalManagerApi) => void } & Pick<UseModalManagerProps, 'saveHistory'>) => {
+  const [api, contextHolder] = useModalManager({ saveHistory });
   useIsomorphicLayoutEffect(() => {
     setApi(api);
   }, []);
   return <>{contextHolder}</>;
 };
 
-describe('useModalRoot', () => {
-  let api: ModalRootApi | null = null;
+describe('useModalManager', () => {
+  let api: ModalManagerApi | null = null;
   const getApi = () => {
     expect(api).toBeTruthy();
     return api!;
   };
-  const setApi = (newApi: ModalRootApi) => {
+  const setApi = (newApi: ModalManagerApi) => {
     api = newApi;
   };
   beforeEach(() => {
@@ -165,7 +165,7 @@ describe('useModalRoot', () => {
 
   it('check working with return data', async () => {
     render(<Fixture setApi={setApi} />);
-    let cardApi: ReturnType<ModalRootApi['openModalCard']>;
+    let cardApi: ReturnType<ModalManagerApi['openModalCard']>;
     act(() => {
       cardApi = getApi().openModalCard({
         'title': 'Title',

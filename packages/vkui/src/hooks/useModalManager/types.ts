@@ -4,7 +4,7 @@ import { type ModalPageProps } from '../../components/ModalPage/types';
 import { type ModalRootProps } from '../../components/ModalRoot/types';
 import { type HasDataAttribute } from '../../types';
 
-export type UseModalRootProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
+export type UseModalManagerProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
   saveHistory?: boolean;
 };
 
@@ -36,7 +36,7 @@ export type CustomModalCardItem = Pick<OpenCardReturn, 'update' | 'close'> & {
   modalProps?: OpenModalCardProps;
 };
 
-export type ModalRootItem =
+export type ModalManagerItem =
   | ModalPageItem
   | ModalCardItem
   | CustomModalPageItem
@@ -76,9 +76,9 @@ export type CustomModalPayload<
 };
 
 /**
- * API предоставляемое хуком `useModalRoot`
+ * API предоставляемое хуком `useModalManager`
  */
-export type ModalRootApi = {
+export type ModalManagerApi = {
   /**
    * Метод для открытия `ModalCard`, принимает свойства `ModalCard`.
    * Возращает  объект типа `OpenModalReturn`.
@@ -123,4 +123,4 @@ export type ModalRootApi = {
   setSaveHistory: (saveHistory: boolean) => void;
 };
 
-export type UseModalRootReturn = [ModalRootApi, React.ReactElement | null];
+export type UseModalManagerReturn = [ModalManagerApi, React.ReactElement | null];

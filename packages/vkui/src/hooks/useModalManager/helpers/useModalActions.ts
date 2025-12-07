@@ -6,8 +6,8 @@ import {
   type CustomModalCardItem,
   type CustomModalPayload,
   type CustomModalProps,
-  type ModalRootApi,
-  type ModalRootItem,
+  type ModalManagerApi,
+  type ModalManagerItem,
   type OpenCardReturn,
   type OpenModalCardProps,
   type OpenModalPageProps,
@@ -44,10 +44,10 @@ const createModalCallbacks = (
 };
 
 const createModalData = (
-  item: ModalRootItem,
+  item: ModalManagerItem,
   id: string,
   callbacks: CreateModalCallbacks,
-): ModalRootItem => {
+): ModalManagerItem => {
   const { onClose, onClosed } = callbacks;
 
   switch (item.type) {
@@ -113,7 +113,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
   }, [saveHistory]);
 
   const open = React.useCallback(
-    <T extends ModalRootItem>(item: T) => {
+    <T extends ModalManagerItem>(item: T) => {
       const modalProps: OpenModalPageProps | OpenModalCardProps =
         (item.type === 'custom-card' || item.type === 'custom-page' ? item.modalProps : item) || {};
 
@@ -145,7 +145,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [store],
   );
 
-  const update: ModalRootApi['update'] = React.useCallback(
+  const update: ModalManagerApi['update'] = React.useCallback(
     (...args) => {
       // Тип нужен только для улучшения типизации при вызове функции
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -155,7 +155,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [store],
   );
 
-  const openModalCard: ModalRootApi['openModalCard'] = React.useCallback(
+  const openModalCard: ModalManagerApi['openModalCard'] = React.useCallback(
     (props) => {
       const result: Omit<OpenCardReturn, 'update'> = open({
         ...props,
@@ -169,7 +169,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [open, update],
   );
 
-  const openModalPage: ModalRootApi['openModalPage'] = React.useCallback(
+  const openModalPage: ModalManagerApi['openModalPage'] = React.useCallback(
     (props) => {
       const result = open({
         ...props,
@@ -183,7 +183,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [open, update],
   );
 
-  const openCustomModalCard: ModalRootApi['openCustomModalCard'] = React.useCallback(
+  const openCustomModalCard: ModalManagerApi['openCustomModalCard'] = React.useCallback(
     (props) => {
       const {
         id,
@@ -211,7 +211,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [open, update],
   );
 
-  const openCustomModalPage: ModalRootApi['openCustomModalPage'] = React.useCallback(
+  const openCustomModalPage: ModalManagerApi['openCustomModalPage'] = React.useCallback(
     (props) => {
       const {
         id,
@@ -239,14 +239,14 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [open, update],
   );
 
-  const close: ModalRootApi['close'] = React.useCallback(
+  const close: ModalManagerApi['close'] = React.useCallback(
     (id) => {
       store.closeModal(id);
     },
     [store],
   );
 
-  const closeAll: ModalRootApi['closeAll'] = React.useCallback(() => {
+  const closeAll: ModalManagerApi['closeAll'] = React.useCallback(() => {
     store.closeAll();
   }, [store]);
 

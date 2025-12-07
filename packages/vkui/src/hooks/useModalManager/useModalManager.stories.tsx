@@ -23,19 +23,19 @@ import {
   type CustomModalProps,
   type OpenModalCardProps,
   type OpenModalPageProps,
-  type UseModalRootProps,
+  type UseModalManagerProps,
 } from './types';
-import { useModalRoot } from './useModalRoot';
+import { useModalManager } from './useModalManager';
 
-const story: Meta<UseModalRootProps> = {
-  title: 'Utils/useModalRoot',
+const story: Meta<UseModalManagerProps> = {
+  title: 'Utils/useModalManager',
   component: () => <div />,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };
 
 export default story;
 
-type Story = StoryObj<UseModalRootProps>;
+type Story = StoryObj<UseModalManagerProps>;
 
 const ModalCardComponent = ({
   close,
@@ -114,7 +114,7 @@ const ModalPageComponent = ({
 
 export const Playground: Story = {
   render: function Render(props) {
-    const [api, contextHolder] = useModalRoot(props);
+    const [api, contextHolder] = useModalManager(props);
 
     const openCustomModal = (type: 'card' | 'page') => {
       if (type === 'card') {

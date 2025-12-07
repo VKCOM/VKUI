@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { getActiveModalProp, type ModalRootState } from "./modalStateHelpers";
+import * as React from 'react';
+import { getActiveModalProp, type ModalManagerState } from './modalStateHelpers';
 
 type ActiveModalPropsResult = {
   disableModalOverlay: boolean;
@@ -9,30 +9,28 @@ type ActiveModalPropsResult = {
   disableCloseAnimation: boolean;
 };
 
-export const useActiveModalProps = (
-  state: ModalRootState
-): ActiveModalPropsResult => {
+export const useActiveModalProps = (state: ModalManagerState): ActiveModalPropsResult => {
   return React.useMemo(
     () => ({
       disableModalOverlay:
         getActiveModalProp(state, (modal) => {
-          return modal.type === "custom-card" || modal.type === "custom-page"
+          return modal.type === 'custom-card' || modal.type === 'custom-page'
             ? modal.modalProps?.disableModalOverlay
             : modal.disableModalOverlay;
         }) ?? false,
       disableOpenAnimation:
         getActiveModalProp(state, (modal) => {
-          return modal.type === "custom-card" || modal.type === "custom-page"
+          return modal.type === 'custom-card' || modal.type === 'custom-page'
             ? modal.modalProps?.disableOpenAnimation
             : modal.disableOpenAnimation;
         }) ?? false,
       disableCloseAnimation:
         getActiveModalProp(state, (modal) => {
-          return modal.type === "custom-card" || modal.type === "custom-page"
+          return modal.type === 'custom-card' || modal.type === 'custom-page'
             ? modal.modalProps?.disableCloseAnimation
             : modal.disableCloseAnimation;
         }) ?? false,
     }),
-    [state]
+    [state],
   );
 };

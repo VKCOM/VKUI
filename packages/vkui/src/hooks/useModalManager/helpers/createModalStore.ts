@@ -1,27 +1,24 @@
-"use client";
+'use client';
 
-import { type ModalRootItem } from "../types";
+import { type ModalManagerItem } from '../types';
 import {
   addModalToState,
   closeAllModals,
   closeModal,
-  type ModalRootState,
+  type ModalManagerState,
   removeModalFromState,
   setOverlayShowedInState,
   setPrevActiveModal,
   updateModalPropsInState,
-} from "./modalStateHelpers";
+} from './modalStateHelpers';
 
 export type ModalStore = {
-  getState: () => ModalRootState;
+  getState: () => ModalManagerState;
   subscribe: (listener: () => void) => () => void;
   needCloseModals: Set<string>;
-  addModal: (modalData: ModalRootItem) => void;
+  addModal: (modalData: ModalManagerItem) => void;
   removeModal: (id: string) => void;
-  updateModalProps: (
-    id: string,
-    props: Omit<ModalRootItem, "type" | "id">
-  ) => void;
+  updateModalProps: (id: string, props: Omit<ModalManagerItem, 'type' | 'id'>) => void;
   closeModal: (id: string) => void;
   closeAll: () => void;
   setPrevActive: (id: string) => void;
@@ -30,7 +27,7 @@ export type ModalStore = {
 };
 
 export const createModalStore = (): ModalStore => {
-  let state: ModalRootState = {
+  let state: ModalManagerState = {
     activeModal: null,
     modals: [],
     overlayShowed: false,
@@ -42,7 +39,7 @@ export const createModalStore = (): ModalStore => {
     listeners.forEach((listener) => listener());
   };
 
-  const setState = (updater: (oldState: ModalRootState) => ModalRootState) => {
+  const setState = (updater: (oldState: ModalManagerState) => ModalManagerState) => {
     const newState = updater(state);
     if (newState !== state) {
       state = newState;
@@ -78,11 +75,7 @@ export const createModalStore = (): ModalStore => {
     closePrevActiveIfNoHistory: () => {
       setState((oldState) => {
         if (oldState.activeModal) {
-          return setPrevActiveModal(
-            oldState,
-            oldState.activeModal,
-            needCloseModals
-          );
+          return setPrevActiveModal(oldState, oldState.activeModal, needCloseModals);
         }
         return oldState;
       });

@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { ContextHolder } from "./ContextHolder";
-import { createModalStore } from "./helpers/createModalStore";
-import { useModalActions } from "./helpers/useModalActions";
+import * as React from 'react';
+import { ContextHolder } from './ContextHolder';
+import { createModalStore } from './helpers/createModalStore';
+import { useModalActions } from './helpers/useModalActions';
 import {
-  type ModalRootApi,
-  type UseModalRootProps,
-  type UseModalRootReturn,
-} from "./types";
+  type ModalManagerApi,
+  type UseModalManagerProps,
+  type UseModalManagerReturn,
+} from './types';
 
-export const useModalRoot = ({
+export const useModalManager = ({
   saveHistory: saveHistoryProp = true,
   ...props
-}: UseModalRootProps = {}): UseModalRootReturn => {
+}: UseModalManagerProps = {}): UseModalManagerReturn => {
   const [store] = React.useState(createModalStore);
   const [saveHistory, setSaveHistory] = React.useState(saveHistoryProp);
 
@@ -34,7 +34,7 @@ export const useModalRoot = ({
     saveHistory,
   });
 
-  const api: ModalRootApi = React.useMemo(
+  const api: ModalManagerApi = React.useMemo(
     () => ({
       openModalPage,
       openModalCard,
@@ -53,7 +53,7 @@ export const useModalRoot = ({
       openModalCard,
       openModalPage,
       update,
-    ]
+    ],
   );
 
   const contextHolder: React.ReactElement | null = React.useMemo(() => {

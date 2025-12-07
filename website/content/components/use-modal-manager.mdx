@@ -4,7 +4,7 @@ description: Хук для работы с модальными окнами([`M
 
 <Overview type="hook">
 
-# useModalRoot
+# useModalManager
 
 Хук для работы с модальными окнами([`ModalPage`](/components/modal-page), [`ModalCard`](/components/modal-card)).
 
@@ -19,15 +19,15 @@ description: Хук для работы с модальными окнами([`M
 
 Кортеж:
 
-1. `ModalRootApi` - API для работы с модальными окнами.
+1. `ModalManagerApi` - API для работы с модальными окнами.
 2. `React.ReactElement | null` - ReactElement, который необходимо встроить в DOM дерево.
 
-### ModalRootApi [#modal-root-api]
+### ModalManagerApi [#modal-manager-api]
 
-- `openModalCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
-- `openModalPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-root#open-modal-return).
-- `openCustomModalPage: (props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна на базе `ModalPage`. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals).
-- `openCustomModalCard: (props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна на базе `ModalCard`. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-root#custom-modals).
+- `openModalCard: (props: OpenModalCardProps) => OpenModalReturn` - Метод для открытия `ModalCard`, принимает свойства `ModalCard`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-manager#open-modal-return).
+- `openModalPage: (props: OpenModalPageProps) => OpenModalReturn` - Метод для открытия `ModalPage`, принимает свойства `ModalPage`. Возвращает объект типа [`OpenModalReturn`](/components/use-modal-manager#open-modal-return).
+- `openCustomModalPage: (props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна на базе `ModalPage`. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-manager#custom-modals).
+- `openCustomModalCard: (props: CustomModalPayload) => OpenModalReturn` - Метод для открытия пользовательского модального окна на базе `ModalCard`. Более подробно можно почитать в разделе ["Пользовательские модальные окна"](/components/use-modal-manager#custom-modals).
 - `update: (id: string, type: 'card' | 'page', props: T) => void` - Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
 - `close: (id: string) => void` - Метод для закрытия определенного модального окна. Принимает id модального окна.
 - `closeAll: () => void` - Метод для закрытия всех созданных модальных окон.
@@ -45,32 +45,20 @@ description: Хук для работы с модальными окнами([`M
 <Playground>
 
 ```jsx
-const [api, contextHolder] = useModalRoot();
+const [api, contextHolder] = useModalManager();
 
 const openModalCard = () => {
   const { close } = api.openModalCard({
     icon: <Icon56NotificationOutline />,
-    title: "Приложение запрашивает разрешение на отправку Вам уведомлений",
+    title: 'Приложение запрашивает разрешение на отправку Вам уведомлений',
     actions: (
       <React.Fragment>
         <Spacing size={16} />
         <ButtonGroup gap="m" stretched>
-          <Button
-            key="deny"
-            size="l"
-            mode="secondary"
-            stretched
-            onClick={() => close()}
-          >
+          <Button key="deny" size="l" mode="secondary" stretched onClick={() => close()}>
             Запретить
           </Button>
-          <Button
-            key="allow"
-            size="l"
-            mode="primary"
-            stretched
-            onClick={() => close()}
-          >
+          <Button key="allow" size="l" mode="primary" stretched onClick={() => close()}>
             Разрешить
           </Button>
         </ButtonGroup>
@@ -83,9 +71,7 @@ const openModalPage = () => {
   const { close } = api.openModalPage({
     dynamicContentHeight: true,
     header: (
-      <ModalPageHeader
-        before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
-      >
+      <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
         Информация о пользователе
       </ModalPageHeader>
     ),
@@ -124,38 +110,28 @@ return (
 
 ## История открытия модальных окон
 
-При использовании хука `useModalRoot` история открытых модальных окон сохраняется по умолчанию.
+При использовании хука `useModalManager` история открытых модальных окон сохраняется по умолчанию.
 Чтобы отключить это поведение вы можете:
 
-- прокинуть в `useModalRoot` свойство `saveHistory`;
+- прокинуть в `useModalManager` свойство `saveHistory`;
 - использовать метод `setSaveHistory` в api.
 
 <Playground>
 
 ```jsx
-const [api, contextHolder] = useModalRoot();
+const [api, contextHolder] = useModalManager();
 
-const openModal = (type: "card" | "page") => {
-  if (type === "card") {
+const openModal = (type: 'card' | 'page') => {
+  if (type === 'card') {
     const { close } = api.openModalCard({
       icon: <Icon56NotificationOutline />,
-      title: "Modal Card Title",
+      title: 'Modal Card Title',
       actions: (
         <ButtonGroup stretched mode="vertical">
-          <Button
-            size="l"
-            mode="primary"
-            stretched
-            onClick={() => openModal("page")}
-          >
+          <Button size="l" mode="primary" stretched onClick={() => openModal('page')}>
             Открыть ModalPage
           </Button>
-          <Button
-            size="l"
-            mode="primary"
-            stretched
-            onClick={() => openModal("card")}
-          >
+          <Button size="l" mode="primary" stretched onClick={() => openModal('card')}>
             Открыть ModalCard
           </Button>
           <Button size="l" mode="secondary" stretched onClick={() => close()}>
@@ -167,20 +143,14 @@ const openModal = (type: "card" | "page") => {
   } else {
     const { close } = api.openModalPage({
       header: (
-        <ModalPageHeader
-          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
-        >
+        <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
           Вложенная модальная страница
         </ModalPageHeader>
       ),
       children: (
         <Group>
-          <CellButton onClick={() => openModal("page")}>
-            Open ModalPage
-          </CellButton>
-          <CellButton onClick={() => openModal("card")}>
-            Open ModalCard
-          </CellButton>
+          <CellButton onClick={() => openModal('page')}>Open ModalPage</CellButton>
+          <CellButton onClick={() => openModal('card')}>Open ModalCard</CellButton>
         </Group>
       ),
     });
@@ -190,16 +160,13 @@ const openModal = (type: "card" | "page") => {
 return (
   <>
     <Flex direction="column" gap="m">
-      <Checkbox
-        defaultChecked
-        onChange={(e) => api.setSaveHistory(e.target.checked)}
-      >
+      <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
         Сохранять историю открытия
       </Checkbox>
-      <Button appearance="overlay" onClick={() => openModal("page")}>
+      <Button appearance="overlay" onClick={() => openModal('page')}>
         Открыть ModalPage
       </Button>
-      <Button appearance="overlay" onClick={() => openModal("card")}>
+      <Button appearance="overlay" onClick={() => openModal('card')}>
         Открыть ModalCard
       </Button>
     </Flex>
@@ -213,7 +180,7 @@ return (
 ## Пользовательские модальные окна [#custom-modals]
 
 Иногда нужно, чтобы место вызова модального окна и его верстка были независимы друг от друга.
-Для этого в `useModalRoot` есть методы **`openCustomModalCard`** и **`openCustomModalPage`**, который позволяет отрисовать модальное окно произвольного вида на базе `ModalCard` или `ModalPage`.
+Для этого в `useModalManager` есть методы **`openCustomModalCard`** и **`openCustomModalPage`**, который позволяет отрисовать модальное окно произвольного вида на базе `ModalCard` или `ModalPage`.
 
 ### `CustomModalPayload` [#custom-modal-props]
 
@@ -258,30 +225,17 @@ const ModalCardComponent = ({
   update,
   openNextModal,
   modalProps,
-}: CustomModalProps<
-  OpenModalCardProps,
-  { openNextModal: (type: "card" | "page") => void }
->) => {
+}: CustomModalProps<OpenModalCardProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
   return (
     <ModalCard
       icon={<Icon56NotificationOutline />}
       title="Modal Card Title"
       actions={
         <ButtonGroup stretched mode="vertical">
-          <Button
-            size="l"
-            mode="primary"
-            stretched
-            onClick={() => openNextModal("page")}
-          >
+          <Button size="l" mode="primary" stretched onClick={() => openNextModal('page')}>
             Открыть ModalPage
           </Button>
-          <Button
-            size="l"
-            mode="primary"
-            stretched
-            onClick={() => openNextModal("card")}
-          >
+          <Button size="l" mode="primary" stretched onClick={() => openNextModal('card')}>
             Открыть ModalCard
           </Button>
           <Button size="l" mode="secondary" stretched onClick={() => close()}>
@@ -305,10 +259,7 @@ const ModalPageComponent = ({
   openNextModal,
   close,
   modalProps,
-}: CustomModalProps<
-  OpenModalPageProps,
-  { openNextModal: (type: "card" | "page") => void }
->) => {
+}: CustomModalProps<OpenModalPageProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivityConditionalRender();
 
@@ -318,20 +269,14 @@ const ModalPageComponent = ({
         <ModalPageHeader
           before={
             sizeX.compact &&
-            platform === "android" && (
-              <PanelHeaderClose
-                className={sizeX.compact.className}
-                onClick={() => close()}
-              />
+            platform === 'android' && (
+              <PanelHeaderClose className={sizeX.compact.className} onClick={() => close()} />
             )
           }
           after={
             sizeX.compact &&
-            platform === "ios" && (
-              <PanelHeaderButton
-                onClick={() => close()}
-                className={sizeX.compact.className}
-              >
+            platform === 'ios' && (
+              <PanelHeaderButton onClick={() => close()} className={sizeX.compact.className}>
                 <Icon24Dismiss />
               </PanelHeaderButton>
             )
@@ -343,21 +288,17 @@ const ModalPageComponent = ({
       {...modalProps}
     >
       <Group>
-        <CellButton onClick={() => openNextModal("page")}>
-          Open ModalPage
-        </CellButton>
-        <CellButton onClick={() => openNextModal("card")}>
-          Open ModalCard
-        </CellButton>
+        <CellButton onClick={() => openNextModal('page')}>Open ModalPage</CellButton>
+        <CellButton onClick={() => openNextModal('card')}>Open ModalCard</CellButton>
       </Group>
     </ModalPage>
   );
 };
 
-const [api, contextHolder] = useModalRoot();
+const [api, contextHolder] = useModalManager();
 
-const openCustomModal = (type: "card" | "page") => {
-  if (type === "card") {
+const openCustomModal = (type: 'card' | 'page') => {
+  if (type === 'card') {
     api.openCustomModalCard({
       component: ModalCardComponent,
       additionalProps: {
@@ -377,16 +318,13 @@ const openCustomModal = (type: "card" | "page") => {
 return (
   <>
     <Flex direction="column" gap="m">
-      <Checkbox
-        defaultChecked
-        onChange={(e) => api.setSaveHistory(e.target.checked)}
-      >
+      <Checkbox defaultChecked onChange={(e) => api.setSaveHistory(e.target.checked)}>
         Сохранять историю открытия
       </Checkbox>
-      <Button appearance="overlay" onClick={() => openCustomModal("page")}>
+      <Button appearance="overlay" onClick={() => openCustomModal('page')}>
         Открыть ModalPage
       </Button>
-      <Button appearance="overlay" onClick={() => openCustomModal("card")}>
+      <Button appearance="overlay" onClick={() => openCustomModal('card')}>
         Открыть ModalCard
       </Button>
     </Flex>
@@ -416,22 +354,10 @@ const ModalCardComponent = ({
         <React.Fragment>
           <Spacing size={16} />
           <ButtonGroup gap="m" stretched>
-            <Button
-              key="deny"
-              size="l"
-              mode="secondary"
-              stretched
-              onClick={() => close()}
-            >
+            <Button key="deny" size="l" mode="secondary" stretched onClick={() => close()}>
               Запретить
             </Button>
-            <Button
-              key="allow"
-              size="l"
-              mode="primary"
-              stretched
-              onClick={() => close()}
-            >
+            <Button key="allow" size="l" mode="primary" stretched onClick={() => close()}>
               Разрешить
             </Button>
           </ButtonGroup>
@@ -450,9 +376,7 @@ const ModalPageComponent = ({
     <ModalPage
       dynamicContentHeight
       header={
-        <ModalPageHeader
-          before={<PanelHeaderBack label="Назад" onClick={() => close()} />}
-        >
+        <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => close()} />}>
           Информация о пользователе
         </ModalPageHeader>
       }
@@ -473,7 +397,7 @@ const ModalPageComponent = ({
   );
 };
 
-const [api, contextHolder] = useModalRoot();
+const [api, contextHolder] = useModalManager();
 
 const openModalCard = () => {
   api.openCustomModalCard(ModalCardComponent);
@@ -497,3 +421,4 @@ return (
 ```
 
 </Playground>
+
