@@ -446,7 +446,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     scrollToElement(findSelectedIndex(filteredOptions, selectedOptionValue), true);
   };
 
-  const { opened, open, close, toggleOpened } = useDropdownOpenedController({
+  const [opened, open, close, toggleOpened] = useDropdownOpenedController({
     onOpen: callMultiple(selectFocusedValue, onOpen),
     onOpened: scrollToSelectedOption,
     onClose,
