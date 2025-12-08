@@ -130,16 +130,40 @@ describe(OnboardingTooltip, () => {
     setNodeEnv('development');
     const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
 
-    const component = render(<OnboardingTooltip onClose={noop} title="title" />);
+    const component = render(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop} title="title">
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
     expect(warn).not.toHaveBeenCalled();
 
-    component.rerender(<OnboardingTooltip onClose={noop} aria-label="title" />);
+    component.rerender(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop} aria-label="title">
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
     expect(warn).not.toHaveBeenCalled();
 
-    component.rerender(<OnboardingTooltip onClose={noop} aria-labelledby="labelId" />);
+    component.rerender(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop} aria-labelledby="labelId">
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
     expect(warn).not.toHaveBeenCalled();
 
-    component.rerender(<OnboardingTooltip onClose={noop} />);
+    component.rerender(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop}>
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
 
     expect(warn.mock.calls[0][0]).toBe(
       '%c[VKUI/OnboardingTooltip] Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
