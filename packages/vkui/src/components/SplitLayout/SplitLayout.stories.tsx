@@ -9,6 +9,7 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { Accordion } from '../Accordion/Accordion';
 import { Alert } from '../Alert/Alert';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
@@ -41,7 +42,7 @@ const panels = ['panel 1', 'panel 2', 'panel 3'];
 const modals = ['modal 1', 'modal 2'];
 
 export const Playground: Story = {
-  render: function Render() {
+  render: function Render({ children, ...restProps }: SplitLayoutProps) {
     const platform = usePlatform();
     const { viewWidth } = useAdaptivityConditionalRender();
     const [panel, setPanel] = React.useState(panels[0]);
@@ -52,7 +53,7 @@ export const Playground: Story = {
 
     return (
       <React.Fragment>
-        <SplitLayout center header={!isVKCOM && <PanelHeader delimiter="none" />}>
+        <SplitLayout center header={!isVKCOM && <PanelHeader delimiter="none" />} {...restProps}>
           {viewWidth.tabletPlus && (
             <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
               <Panel>
@@ -86,6 +87,9 @@ export const Playground: Story = {
                     alert
                   </Cell>
                 </Group>
+                <Group>
+                  <AdditionalContent />
+                </Group>
               </Panel>
             </SplitCol>
           )}
@@ -106,6 +110,8 @@ export const Playground: Story = {
                   <Placeholder icon={<Icon56MentionOutline />}>
                     Введите адрес страницы в поле поиска
                   </Placeholder>
+                  {children}
+                  <AdditionalContent />
                 </Group>
               </Panel>
 
@@ -168,3 +174,94 @@ export const Playground: Story = {
     );
   },
 };
+
+export const Empty: Story = {
+  render: function Render() {
+    const { viewWidth } = useAdaptivityConditionalRender();
+    return (
+      <SplitLayout>
+        {viewWidth.tabletPlus && (
+          <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+            <div
+              style={{
+                padding: 12,
+                height: '100%',
+                boxSizing: 'border-box',
+                color: 'white',
+                backgroundColor: 'tomato',
+              }}
+            >
+              Фиксированная колонка слева
+            </div>
+          </SplitCol>
+        )}
+        <SplitCol>
+          <div
+            style={{
+              padding: 12,
+              height: '1000px',
+              boxSizing: 'border-box',
+              color: 'white',
+              backgroundColor: 'steelblue',
+            }}
+          >
+            Колонка справа
+            {viewWidth.tabletMinus && (
+              <p className={viewWidth.tabletMinus.className}>
+                ⚠️ колонка слева спрятана по условию адаптивности
+              </p>
+            )}
+          </div>
+        </SplitCol>
+      </SplitLayout>
+    );
+  },
+};
+
+function AdditionalContent() {
+  return (
+    <Accordion>
+      <Accordion.Summary>Lorem ipsum dolor?</Accordion.Summary>
+      <Accordion.Content>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate
+        voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa
+        fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora
+        commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem
+        corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat
+        explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi
+        ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit
+        amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque
+        id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum
+        adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
+        aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse
+        nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam?
+      </Accordion.Content>
+    </Accordion>
+  );
+}

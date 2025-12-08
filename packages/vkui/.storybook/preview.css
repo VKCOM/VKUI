@@ -5,7 +5,7 @@
 @import '../src/styles/adaptivity.module.css';
 @import '../src/styles/common.css';
 
-/* stylelint-disable-next-line selector-max-id */
-#root {
-  block-size: 100%;
+/* Перебиваем стили Storybook под наши правила для `<body>` в `common.css` */
+.sb-show-main.sb-main-fullscreen {
+  display: inherit;
 }
