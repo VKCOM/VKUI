@@ -6243,7 +6243,7 @@ __metadata:
     css-loader: "npm:7.1.2"
     css-minimizer-webpack-plugin: "npm:^7.0.3"
     dotenv: "npm:^17.2.3"
-    finalhandler: "npm:2.1.0"
+    finalhandler: "npm:2.1.1"
     html-webpack-plugin: "npm:^5.6.5"
     mini-css-extract-plugin: "npm:^2.9.4"
     playwright: "npm:1.57.0"
@@ -9753,9 +9753,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"finalhandler@npm:2.1.0":
-  version: 2.1.0
-  resolution: "finalhandler@npm:2.1.0"
+"finalhandler@npm:2.1.1":
+  version: 2.1.1
+  resolution: "finalhandler@npm:2.1.1"
   dependencies:
     debug: "npm:^4.4.0"
     encodeurl: "npm:^2.0.0"
@@ -9763,7 +9763,7 @@ __metadata:
     on-finished: "npm:^2.4.1"
     parseurl: "npm:^1.3.3"
     statuses: "npm:^2.0.1"
-  checksum: 10/b2bd68c310e2c463df0ab747ab05f8defbc540b8c3f2442f86e7d084ac8acbc31f8cae079931b7f5a406521501941e3395e963de848a0aaf45dd414adeb5ff4e
+  checksum: 10/f4ba75c23408d8f9d393c3e875b9452e84d68c925411a6e67b7efa678b0bed5075ef33def4bb65ed8e0dd37c92a3ea354bcbde07303cd4dc2550e12b95885067
   languageName: node
   linkType: hard
 
