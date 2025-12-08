@@ -24,15 +24,7 @@ import {
 } from './utils';
 import styles from './View.module.css';
 
-interface Scrolls {
-  [index: string]: number | undefined;
-}
-
-interface ViewsScrolls {
-  [index: string]: Scrolls;
-}
-
-export let scrollsCache: ViewsScrolls = {};
+export const scrollsCache = new Map<string, Map<string, number | undefined>>();
 
 export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavIdProps {
   /**
@@ -85,12 +77,14 @@ export const View = ({
   ...restProps
 }: ViewProps): React.ReactNode => {
   const id = getNavId({ nav, id: restProps.id });
-  const scrolls = React.useRef(scrollsCache[id as string] || {});
+  const [scrolls] = React.useState(
+    () => scrollsCache.get(id as string) || new Map<string, number | undefined>(),
+  );
   const layoutEffectCall = useLayoutEffectCall();
 
   React.useEffect(() => () => {
     if (id) {
-      scrollsCache[id] = scrolls.current;
+      scrollsCache.set(id, scrolls);
     }
   });
 
@@ -148,7 +142,7 @@ export const View = ({
   const flushTransition = React.useCallback(
     (prevPanel: string, isBackTransition: boolean) => {
       if (isBackTransition) {
-        scrolls.current[prevPanel] = 0;
+        scrolls.set(prevPanel, 0);
       }
       setPrevPanel(null);
       setNextPanel(null);
@@ -158,7 +152,7 @@ export const View = ({
       setIsBack(isBackTransition);
 
       layoutEffectCall(() => {
-        scroll?.scrollTo(0, isBackTransition ? scrolls.current[activePanelProp] : 0);
+        scroll?.scrollTo(0, isBackTransition ? scrolls.get(activePanelProp) : 0);
         onTransition &&
           onTransition({
             isBack: isBackTransition,
@@ -167,7 +161,7 @@ export const View = ({
           });
       });
     },
-    [activePanelProp, layoutEffectCall, onTransition, scroll],
+    [activePanelProp, layoutEffectCall, onTransition, scroll, scrolls],
   );
 
   const handleAnimatedTargetAnimationEnd = () => {
@@ -253,7 +247,7 @@ export const View = ({
       if (activePanel !== null) {
         // Note: вызываем закрытие клавиатуры. В iOS это нативное поведение при свайпе.
         blurActiveElement(document);
-        scrolls.current[activePanel] = scroll?.getScroll().y;
+        scrolls.set(activePanel, scroll?.getScroll().y);
       }
 
       setSwipingBack(true);
@@ -344,7 +338,7 @@ export const View = ({
         .find((id) => id === prevActivePanel || id === activePanelProp);
 
       const isBackTransition = firstLayerId === activePanelProp;
-      scrolls.current[prevActivePanel] = scroll?.getScroll({ compensateKeyboardHeight: false }).y;
+      scrolls.set(prevActivePanel, scroll?.getScroll({ compensateKeyboardHeight: false }).y);
 
       if (disableAnimation) {
         flushTransition(prevActivePanel, isBackTransition);
@@ -365,7 +359,7 @@ export const View = ({
       const nextPanel = activePanelProp;
       const prevPanel = prevActivePanel;
       if (prevSwipeBackPrevPanel) {
-        scrolls.current[prevSwipeBackPrevPanel] = 0;
+        scrolls.set(prevSwipeBackPrevPanel, 0);
       }
 
       setSwipeBackPrevPanel(null);
@@ -380,7 +374,7 @@ export const View = ({
 
       layoutEffectCall(() => {
         if (nextPanel !== null) {
-          scroll?.scrollTo(0, scrolls.current[nextPanel]);
+          scroll?.scrollTo(0, scrolls.get(nextPanel));
         }
         prevOnTransition &&
           prevOnTransition({
@@ -421,6 +415,7 @@ export const View = ({
     swipeBackNextPanel,
     swipeBackResult,
     layoutEffectCall,
+    scrolls,
   ]);
 
   React.useEffect(
@@ -436,7 +431,7 @@ export const View = ({
           swipeBackCancelledByMovingPanelBackToInitialPoint) &&
         activePanel !== null
       ) {
-        scroll?.scrollTo(0, scrolls.current[activePanel]);
+        scroll?.scrollTo(0, scrolls.get(activePanel));
       }
     },
     [
@@ -447,6 +442,7 @@ export const View = ({
       prevSwipeBackShift,
       activePanel,
       scroll,
+      scrolls,
     ],
   );
 
@@ -488,7 +484,7 @@ export const View = ({
             let scrollCompensateStyle: React.CSSProperties | undefined = undefined;
 
             if (isPanelPrev || (isPanelNext && isBack) || isSwipeBackPrev || isSwipeBackNext) {
-              const marginTop = scrolls.current[panelId];
+              const marginTop = scrolls.get(panelId);
               if (marginTop !== undefined) {
                 scrollCompensateStyle = { marginTop: -1 * marginTop };
               }

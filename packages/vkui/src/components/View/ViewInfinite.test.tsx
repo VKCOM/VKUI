@@ -280,7 +280,7 @@ describe(ViewInfinite, () => {
 
     it('restores scroll after cancelled swipeBack (mouse up during the move)', () => {
       let y = 101;
-      scrollsCache['scroll']['p1'] = [22];
+      scrollsCache.get('scroll')?.set('p1', [22]);
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
       const { view, rerender, SwipeBack } = setupSwipeBack({ Wrapper: MockScroll });
       fireEvent.mouseDown(view, { clientX: 0, clientY: 100 });
