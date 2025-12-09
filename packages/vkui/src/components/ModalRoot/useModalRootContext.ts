@@ -3,13 +3,7 @@ import { ModalRootContext } from './ModalRootContext';
 import type { UseModalRootContext } from './types';
 
 export const useModalRootContext = (): UseModalRootContext => {
-  const {
-    activeModal,
-    isInsideModal,
-    onClose: onCloseContext,
-    updateModalHeight,
-    registerModal,
-  } = useContext(ModalRootContext);
+  const { activeModal, isInsideModal, onClose: onCloseContext } = useContext(ModalRootContext);
 
   const onClose = useCallback(() => {
     if (onCloseContext && activeModal !== null && activeModal !== undefined) {
@@ -17,5 +11,5 @@ export const useModalRootContext = (): UseModalRootContext => {
     }
   }, [activeModal, onCloseContext]);
 
-  return { activeModal, isInsideModal, onClose, updateModalHeight, registerModal };
+  return { activeModal, isInsideModal, onClose };
 };
