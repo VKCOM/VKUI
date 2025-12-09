@@ -207,11 +207,7 @@ export const Search = ({
   );
 
   const inputRef = useExternRef(getInputRef);
-  const {
-    value: isFocused,
-    setTrue: setFocusedTrue,
-    setFalse: setFocusedFalse,
-  } = useBooleanState(false);
+  const [isFocused, setFocusedTrue, setFocusedFalse] = useBooleanState(false);
   const generatedId = React.useId();
   const inputId = id ? id : `search-${generatedId}`;
 

@@ -7,34 +7,34 @@ describe('useBooleanState', () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: false,
     });
-    expect(result.current.value).toEqual(false);
+    expect(result.current[0]).toEqual(false);
   });
   it('sets value to false', () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: true,
     });
     act(() => {
-      result.current.setFalse();
+      result.current[2]();
     });
-    expect(result.current.value).toEqual(false);
+    expect(result.current[0]).toEqual(false);
   });
   it('sets value to true', () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: false,
     });
     act(() => {
-      result.current.setTrue();
+      result.current[1]();
     });
-    expect(result.current.value).toEqual(true);
+    expect(result.current[0]).toEqual(true);
   });
   it('toggles value', () => {
     const { result } = renderHook(useBooleanState, {
       initialProps: false,
     });
     act(() => {
-      result.current.toggle();
+      result.current[3]();
     });
-    expect(result.current.value).toEqual(true);
+    expect(result.current[0]).toEqual(true);
   });
 
   it('functions remain unchanged', () => {
@@ -45,13 +45,13 @@ describe('useBooleanState', () => {
     const firstRender = { ...result.current };
 
     act(() => {
-      result.current.setTrue();
-      result.current.setFalse();
-      result.current.toggle();
+      result.current[1]();
+      result.current[2]();
+      result.current[3]();
     });
 
-    expect(result.current.setFalse).toBe(firstRender.setFalse);
-    expect(result.current.setTrue).toBe(firstRender.setTrue);
-    expect(result.current.toggle).toBe(firstRender.toggle);
+    expect(result.current[1]).toBe(firstRender[1]);
+    expect(result.current[2]).toBe(firstRender[2]);
+    expect(result.current[3]).toBe(firstRender[3]);
   });
 });
