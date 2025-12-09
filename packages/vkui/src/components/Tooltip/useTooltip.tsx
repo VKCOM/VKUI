@@ -8,9 +8,13 @@ import {
   useFloatingElement,
   type UseFloatingElementProps,
 } from '../../hooks/useFloatingElement';
+import { useHoverSupported } from '../../hooks/useHoverSupported';
 import { animationFadeClassNames } from '../../lib/animation';
 import { getArrowCoordsByMiddlewareData } from '../../lib/floating';
-import { type ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
+import {
+  type ReferenceProps,
+  type TriggerType,
+} from '../../lib/floating/useFloatingWithInteractions/types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { TooltipBase } from '../TooltipBase/TooltipBase';
 import { type TooltipProps } from './Tooltip';
@@ -53,6 +57,7 @@ export const useTooltip = ({
   onShownChange,
   hoverDelay = 150,
   strategy,
+  longPressDelay,
 
   // инверсированные св-ва для useFloatingWithInteractions
   enableInteractive = false,
@@ -75,6 +80,16 @@ export const useTooltip = ({
 }: UseTooltipProps): UseTooltipResult => {
   const generatedId = React.useId();
   const tooltipId = idProp || generatedId;
+
+  const hoverSupported = useHoverSupported();
+
+  const trigger: TriggerType = (() => {
+    if (hoverSupported) {
+      return disableTriggerOnFocus ? 'hover' : ['hover', 'focus'];
+    } else {
+      return 'long-press';
+    }
+  })();
 
   const renderFloatingComponent = useCallback(
     ({
@@ -157,12 +172,13 @@ export const useTooltip = ({
     defaultShown,
     shown: shownProp,
     onShownChange,
-    trigger: disableTriggerOnFocus ? 'hover' : ['hover', 'focus'],
+    trigger,
     onReferenceHiddenChange,
     hoverDelay,
     closeAfterClick: !disableCloseAfterClick,
     disableInteractive: !enableInteractive,
     strategy,
+    longPressDelay,
 
     onPlacementChange,
 
