@@ -370,7 +370,6 @@ export const HorizontalScroll = ({
       <div
         className={classNames(styles.in, focusVisibleClassNames)}
         ref={scrollerRef}
-        tabIndex={0}
         {...focusEvents}
       >
         <ContentWrapperComponent
