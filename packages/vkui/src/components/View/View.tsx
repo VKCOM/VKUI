@@ -437,25 +437,16 @@ export const View = ({
     [swipeBackResult, swipingBack, activePanel, scroll, scrolls],
   );
 
-  React.useEffect(() => {
+  /**
+   * @see https://github.com/VKCOM/VKUI/pull/9274
+   */
+  React.useEffect(function updateAfterAll() {
     prevActivePanel.current = activePanelProp;
-  });
-  React.useEffect(() => {
     prevSwipingBack.current = swipingBack;
-  });
-  React.useEffect(() => {
     prevBrowserSwipe.current = browserSwipe;
-  });
-  React.useEffect(() => {
     prevSwipeBackResult.current = swipeBackResult;
-  });
-  React.useEffect(() => {
     prevSwipeBackShift.current = swipeBackShift;
-  });
-  React.useEffect(() => {
     prevSwipeBackPrevPanel.current = swipeBackPrevPanel;
-  });
-  React.useEffect(() => {
     prevOnTransition.current = onTransition;
   });
 
