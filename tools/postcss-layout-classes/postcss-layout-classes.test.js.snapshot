@@ -710,6 +710,9 @@ exports[`generate layout classes 1`] = `
 .vkui-position-fixed {
     position: fixed;
 }
+.vkui-position-sticky {
+    position: sticky;
+}
 .vkui-flex-grow-inherit {
     flex-grow: inherit;
 }
