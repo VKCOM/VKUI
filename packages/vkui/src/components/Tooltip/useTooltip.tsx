@@ -46,6 +46,7 @@ export const useTooltip = ({
   disableShiftMiddleware = false,
   disableTriggerOnFocus = false,
   onReferenceHiddenChange,
+  overflowPadding,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -153,6 +154,7 @@ export const useTooltip = ({
     hideWhenReferenceHidden,
     disableFlipMiddleware,
     disableShiftMiddleware,
+    overflowPadding,
 
     defaultShown,
     shown: shownProp,
