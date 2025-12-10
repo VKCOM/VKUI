@@ -1,9 +1,9 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { useCounter } from '../../hooks/useCounter';
 import { useDOM } from '../../lib/dom';
 import type { HasChildren } from '../../types';
 
@@ -19,13 +19,13 @@ const clearDisableScrollStyle = (node: HTMLElement) => {
   });
 };
 
-const getPageYOffsetWithoutKeyboardHeight = (window: Window) => {
+const getPageYOffsetWithoutKeyboardHeight = (window: Window, scrollTop: number) => {
   // Note: здесь расчёт на то, что `clientHeight` равен `window.innerHeight`.
   //  Это достигается тем, что тегу `html` задали`height: 100%` и у него нет отступов сверху и снизу. Если есть отступы,
   //  то надо задать `box-sizing: border-box`, чтобы они не учитывались.
   const diffOfClientHeightAndViewportHeight =
     window.document.documentElement.clientHeight - window.innerHeight;
-  return window.pageYOffset - diffOfClientHeightAndViewportHeight;
+  return scrollTop - diffOfClientHeightAndViewportHeight;
 };
 
 export type GetScrollOptions = {
@@ -36,11 +36,11 @@ export interface ScrollContextInterface {
   getScroll: (this: void, options?: GetScrollOptions) => { x: number; y: number };
   scrollTo: (this: void, x?: number, y?: number) => void;
   /**
-   * Увеличивает счетчик блокировки прокрутки
+   * Увеличивает счетчик блокировки прокрутки.
    */
   incrementScrollLockCounter: (this: void) => void;
   /**
-   * Уменьшает счетчик блокировки прокрутки
+   * Уменьшает счетчик блокировки прокрутки.
    */
   decrementScrollLockCounter: (this: void) => void;
   beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
@@ -58,52 +58,150 @@ export const useScroll = (): ScrollContextInterface => React.useContext(ScrollCo
 
 /**
  * Управляет блокировкой окна в зависимости от внутреннего счетчика.
- * Если счетчик больше нуля, требуется заблокировать прокрутку
+ * Если счетчик больше нуля, требуется заблокировать прокрутку.
  */
 function useScrollLockController(enableScrollLock: () => void, disableScrollLock: () => void) {
-  const [count, { increment: incrementScrollLockCounter, decrement: decrementScrollLockCounter }] =
-    useCounter(0);
+  const countRef = React.useRef(0);
 
-  const needLockScroll = count > 0;
-
-  React.useEffect(() => {
-    if (needLockScroll) {
+  const updateScrollLock = React.useCallback(() => {
+    if (countRef.current > 0) {
       enableScrollLock();
     } else {
       disableScrollLock();
     }
-  }, [needLockScroll, enableScrollLock, disableScrollLock]);
+  }, [enableScrollLock, disableScrollLock]);
 
-  return {
-    incrementScrollLockCounter,
-    decrementScrollLockCounter,
-  };
+  const incrementScrollLockCounter = React.useCallback(() => {
+    countRef.current += 1;
+    updateScrollLock();
+  }, [updateScrollLock]);
+
+  const decrementScrollLockCounter = React.useCallback(() => {
+    countRef.current -= 1;
+    updateScrollLock();
+  }, [updateScrollLock]);
+
+  return [incrementScrollLockCounter, decrementScrollLockCounter];
+}
+
+export function useManualScroll(): Pick<ScrollContextInterface, 'scrollTo' | 'getScroll'> {
+  const { scrollTo, getScroll } = React.useContext(ScrollContext);
+  return React.useMemo(
+    () => ({
+      scrollTo,
+      getScroll,
+    }),
+    [getScroll, scrollTo],
+  );
 }
 
 export interface ScrollControllerProps extends HasChildren {
-  elRef: React.RefObject<HTMLElement>;
+  elRef: React.RefObject<HTMLElement | null>;
 }
+
+const _scrollTo = ({
+  x,
+  y,
+  scrollWidth,
+  clientWidth,
+  scrollHeight,
+  clientHeight,
+  scrollLockEnabled,
+  lockedElement,
+  elementToScroll,
+}: {
+  x: number;
+  y: number;
+  scrollWidth: number;
+  clientWidth: number;
+  scrollHeight: number;
+  clientHeight: number;
+  scrollLockEnabled: boolean;
+  lockedElement: HTMLElement;
+  elementToScroll: Window | HTMLElement;
+}) => {
+  // Some iOS versions do not normalize scroll — do it manually.
+  const left = x ? clamp(x, 0, scrollWidth - clientWidth) : 0;
+  const top = y ? clamp(y, 0, scrollHeight - clientHeight) : 0;
+
+  if (scrollLockEnabled) {
+    Object.assign(lockedElement.style, {
+      left: `-${left}px`,
+      top: `-${top}px`,
+    });
+  } else {
+    elementToScroll.scrollTo({
+      left,
+      top,
+    });
+  }
+};
+
+const _getScroll = ({
+  xOffset,
+  yOffset,
+  element,
+  scrollLockEnabled,
+  customCalcY = (v) => v,
+}: {
+  xOffset: number;
+  yOffset: number;
+  element: HTMLElement;
+  scrollLockEnabled: boolean;
+  customCalcY?: (scrollTop: number) => number;
+}) => {
+  const elementStyles = element.style;
+  const [scrollLeft, scrollTop] = scrollLockEnabled
+    ? [-parseFloat(elementStyles.left || '0'), -parseFloat(elementStyles.top || '0')]
+    : [xOffset, yOffset];
+  return {
+    x: scrollLeft || 0,
+    y: customCalcY(scrollTop) || 0,
+  };
+};
 
 export const GlobalScrollController = ({ children }: ScrollControllerProps): React.ReactNode => {
   const { window, document } = useDOM();
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
+  const scrollLockEnabledRef = React.useRef(false);
 
   const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
-    (options = { compensateKeyboardHeight: true }) => ({
-      x: window!.pageXOffset,
-      y: options.compensateKeyboardHeight
-        ? getPageYOffsetWithoutKeyboardHeight(window!)
-        : window!.pageYOffset,
-    }),
-    [window],
+    (options = { compensateKeyboardHeight: true }) => {
+      if (!window || !document) {
+        return { x: 0, y: 0 };
+      }
+      return _getScroll({
+        xOffset: window.pageXOffset,
+        yOffset: window.pageYOffset,
+        element: document.documentElement,
+        scrollLockEnabled: scrollLockEnabledRef.current,
+        customCalcY: (scrollTop) =>
+          options.compensateKeyboardHeight
+            ? getPageYOffsetWithoutKeyboardHeight(window, scrollTop)
+            : scrollTop,
+      });
+    },
+    [document, window],
   );
   const scrollTo = React.useCallback<ScrollContextInterface['scrollTo']>(
     (x = 0, y = 0) => {
-      // Some iOS versions do not normalize scroll — do it manually.
-      window!.scrollTo(
-        x ? clamp(x, 0, document!.body.scrollWidth - window!.innerWidth) : 0,
-        y ? clamp(y, 0, document!.body.scrollHeight - window!.innerHeight) : 0,
-      );
+      if (!window || !document) {
+        return;
+      }
+      _scrollTo({
+        x,
+        y,
+
+        scrollWidth: document.body.scrollWidth,
+        clientWidth: window.innerWidth,
+
+        scrollHeight: document.body.scrollHeight,
+        clientHeight: window.innerHeight,
+
+        scrollLockEnabled: scrollLockEnabledRef.current,
+        lockedElement: document.documentElement,
+        elementToScroll: window,
+      });
     },
     [document, window],
   );
@@ -112,14 +210,11 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
     beforeScrollLockFnSetRef.current.forEach((fn) => {
       fn();
     });
-
-    const scrollY = window!.pageYOffset;
-    const scrollX = window!.pageXOffset;
+    const { x: scrollX, y: scrollY } = getScroll({ compensateKeyboardHeight: false });
     const overflowY = window!.innerWidth > document!.documentElement.clientWidth ? 'scroll' : '';
     const overflowX = window!.innerHeight > document!.documentElement.clientHeight ? 'scroll' : '';
 
-    Object.assign(document!.documentElement.style, { overscrollBehavior: 'none' });
-    Object.assign(document!.body.style, {
+    Object.assign(document!.documentElement.style, {
       position: 'fixed',
       top: `-${scrollY}px`,
       left: `-${scrollX}px`,
@@ -128,18 +223,19 @@ export const GlobalScrollController = ({ children }: ScrollControllerProps): Rea
       overflowY,
       overflowX,
     });
-  }, [document, window]);
+
+    scrollLockEnabledRef.current = true;
+  }, [document, getScroll, window]);
 
   const disableScrollLock = React.useCallback(() => {
-    const scrollY = document!.body.style.top;
-    const scrollX = document!.body.style.left;
+    const scrollData = getScroll({ compensateKeyboardHeight: false });
+    clearDisableScrollStyle(document!.documentElement);
+    scrollLockEnabledRef.current = false;
 
-    Object.assign(document!.documentElement.style, { overscrollBehavior: '' });
-    clearDisableScrollStyle(document!.body);
-    window!.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
-  }, [document, window]);
+    scrollTo(scrollData.x, scrollData.y);
+  }, [document, getScroll, scrollTo]);
 
-  const { incrementScrollLockCounter, decrementScrollLockCounter } = useScrollLockController(
+  const [incrementScrollLockCounter, decrementScrollLockCounter] = useScrollLockController(
     enableScrollLock,
     disableScrollLock,
   );
@@ -163,22 +259,41 @@ export const ElementScrollController = ({
   children,
 }: ScrollControllerProps): React.ReactNode => {
   const beforeScrollLockFnSetRef = React.useRef<Set<() => void>>(new Set());
+  const scrollLockEnabledRef = React.useRef(false);
 
-  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(
-    () => ({
-      x: elRef.current?.scrollLeft ?? 0,
-      y: elRef.current?.scrollTop ?? 0,
-    }),
-    [elRef],
-  );
+  const getScroll = React.useCallback<ScrollContextInterface['getScroll']>(() => {
+    const element = elRef.current;
+    if (!element) {
+      return { x: 0, y: 0 };
+    }
+    return _getScroll({
+      xOffset: element.scrollLeft,
+      yOffset: element.scrollTop,
+      element: element,
+      scrollLockEnabled: scrollLockEnabledRef.current,
+    });
+  }, [elRef]);
+
   const scrollTo = React.useCallback<ScrollContextInterface['scrollTo']>(
     (x = 0, y = 0) => {
       const el = elRef.current;
-      // Some iOS versions do not normalize scroll — do it manually.
-      el?.scrollTo(
-        x ? clamp(x, 0, el.scrollWidth - el.clientWidth) : 0,
-        y ? clamp(y, 0, el.scrollHeight - el.clientHeight) : 0,
-      );
+      if (!el) {
+        return;
+      }
+      _scrollTo({
+        x,
+        y,
+
+        scrollWidth: el.scrollWidth,
+        clientWidth: el.clientWidth,
+
+        scrollHeight: el.scrollHeight,
+        clientHeight: el.clientHeight,
+
+        scrollLockEnabled: scrollLockEnabledRef.current,
+        lockedElement: el,
+        elementToScroll: el,
+      });
     },
     [elRef],
   );
@@ -192,20 +307,21 @@ export const ElementScrollController = ({
       fn();
     });
 
-    const scrollY = el.scrollTop;
-    const scrollX = el.scrollLeft;
+    const { x: scrollX, y: scrollY } = getScroll();
+
     const overflowY = el.scrollWidth > el.clientWidth ? 'scroll' : '';
     const overflowX = el.scrollHeight > el.clientHeight ? 'scroll' : '';
 
     Object.assign(el.style, {
       position: 'absolute',
+      right: '0',
       top: `-${scrollY}px`,
       left: `-${scrollX}px`,
-      right: '0',
       overflowY,
       overflowX,
     });
-  }, [elRef]);
+    scrollLockEnabledRef.current = true;
+  }, [elRef, getScroll]);
 
   const disableScrollLock = React.useCallback(() => {
     const el = elRef.current;
@@ -213,14 +329,14 @@ export const ElementScrollController = ({
       return;
     }
 
-    const scrollY = el.style.top;
-    const scrollX = el.style.left;
-
+    const scrollData = getScroll();
     clearDisableScrollStyle(el);
-    el.scrollTo(-parseInt(scrollX || '0'), -parseInt(scrollY || '0'));
-  }, [elRef]);
+    scrollLockEnabledRef.current = false;
 
-  const { incrementScrollLockCounter, decrementScrollLockCounter } = useScrollLockController(
+    scrollTo(scrollData.x, scrollData.y);
+  }, [elRef, getScroll, scrollTo]);
+
+  const [incrementScrollLockCounter, decrementScrollLockCounter] = useScrollLockController(
     enableScrollLock,
     disableScrollLock,
   );
@@ -240,9 +356,9 @@ export const ElementScrollController = ({
 };
 
 /**
- * Блокирует прокрутку окна
+ * Блокирует прокрутку окна.
  *
- * @param enabled - если false то не будет блокировать
+ * @param enabled - Если false то не будет блокировать.
  */
 export const useScrollLock = (enabled = true): void => {
   const { incrementScrollLockCounter, decrementScrollLockCounter } = useScroll();

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useGlobals, addons, useStorybookApi } from '@storybook/manager-api';
-import { styled } from '@storybook/theming';
-import { SET_GLOBALS } from '@storybook/core-events';
-import { IconButton } from '@storybook/components';
+import { useGlobals, addons, useStorybookApi } from 'storybook/manager-api';
+import { styled } from 'storybook/theming';
+import { SET_GLOBALS } from 'storybook/internal/core-events';
+import { IconButton } from 'storybook/internal/components';
 import { SunIcon, MoonIcon } from '@storybook/icons';
 import { PARAM_KEY, SET_STORYBOOK_THEME } from './constants';
 import { vkuiDarkTheme, vkuiLightTheme } from './vkuiThemes';

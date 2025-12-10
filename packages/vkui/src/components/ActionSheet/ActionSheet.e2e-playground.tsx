@@ -3,7 +3,7 @@ import { Icon28SettingsOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import {
   AppDefaultWrapper,
-  type AppWrapperProps,
+  type AppDefaultWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
   TEST_CLASS_NAMES,
@@ -12,8 +12,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
-const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppDefaultWrapper scroll="contain" {...restProps}>
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
+  <AppDefaultWrapper disablePortal scroll="contain" {...restProps}>
     {children}
   </AppDefaultWrapper>
 );
@@ -29,10 +29,15 @@ const ActionSheetWrapper = (props: ActionSheetProps) => {
       </button>
       <ActionSheet
         {...props}
-        style={{
-          // Перебиваем "absolute", чтобы не задавать фиксированную высоту для тестов под iOS и Android
-          position: 'relative',
-        }}
+        style={
+          platform === 'vkcom'
+            ? undefined
+            : {
+                // Перебиваем "absolute", чтобы не задавать фиксированную
+                // высоту для тестов под iOS и Android
+                position: 'relative',
+              }
+        }
         toggleRef={toggleRef}
         onClose={noop}
       />
@@ -45,7 +50,9 @@ const propSets = [
     children: [
       [
         <ActionSheetItem key="1">Элемент</ActionSheetItem>,
-        <ActionSheetItem key="2">Второй элемент</ActionSheetItem>,
+        <ActionSheetItem key="2" disabled>
+          Второй элемент
+        </ActionSheetItem>,
         <ActionSheetItem key="3" before={<Icon28SettingsOutline />}>
           Третий элемент
         </ActionSheetItem>,

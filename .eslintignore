@@ -10,3 +10,10 @@ playwright-report/
 blob-report/
 all-blob-reports/
 tmp/
+out/
+.next/
+next-env.d.ts
+*.css.d.ts
+vitest.d.ts
+_pagefind/
+.docgen/

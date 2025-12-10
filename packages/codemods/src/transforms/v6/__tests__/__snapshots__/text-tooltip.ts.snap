@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`text-tooltip should apply after \`transforms/tooltip.ts\` 1`] = `
+exports[`text-tooltip > should apply after \`transforms/tooltip.ts\` 1`] = `
 "import { Tooltip as TextTooltip } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <TextTooltip
         offsetByCrossAxis={0}
         offsetByMainAxis={0}
@@ -17,18 +17,18 @@ const App = () => {
       </TextTooltip>
       <TextTooltip hoverDelay={5}>123</TextTooltip>
       <TextTooltip hoverDelay={[0, 5]}>123</TextTooltip>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;
 
-exports[`text-tooltip transforms correctly 1`] = `
+exports[`text-tooltip > transforms correctly 1`] = `
 "import { Tooltip as TextTooltip } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <TextTooltip
         offsetByCrossAxis={0}
         offsetByMainAxis={0}
@@ -39,7 +39,7 @@ const App = () => {
       </TextTooltip>
       <TextTooltip hoverDelay={5}>123</TextTooltip>
       <TextTooltip hoverDelay={[0, 5]}>123</TextTooltip>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

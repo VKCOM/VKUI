@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -6,6 +5,7 @@ import { Footnote } from '../Typography/Footnote/Footnote';
 import { ScreenSpinnerContext } from './context';
 import { type ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
+import stylesDelay from '../../styles/animationVisibilityDelay.module.css';
 
 const stateClassNames = {
   cancelable: styles.stateCancelable,
@@ -20,14 +20,15 @@ const modeClassNames = {
 };
 
 type ScreenSpinnerContainerProps = HTMLAttributesWithRootRef<HTMLSpanElement> &
-  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'label' | 'customIcon'>;
+  Pick<ScreenSpinnerProps, 'state' | 'mode' | 'label' | 'customIcon' | 'visibilityDelay'>;
 
-export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
+export const ScreenSpinnerContainer = ({
   state = 'loading',
   mode = 'shadow',
   customIcon,
   label,
   children,
+  visibilityDelay,
   ...restProps
 }: ScreenSpinnerContainerProps) => {
   return (
@@ -38,6 +39,7 @@ export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
           modeClassNames[mode],
           state !== 'loading' && stateClassNames[state],
           hasReactNode(label) && styles.hasLabel,
+          visibilityDelay && stylesDelay.visibilityDelay,
         )}
         {...restProps}
       >
@@ -51,5 +53,3 @@ export const ScreenSpinnerContainer: React.FC<ScreenSpinnerContainerProps> = ({
     </ScreenSpinnerContext.Provider>
   );
 };
-
-ScreenSpinnerContainer.displayName = 'ScreenSpinnerContainer';

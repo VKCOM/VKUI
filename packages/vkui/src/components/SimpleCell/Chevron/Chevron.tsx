@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { Icon16Chevron, Icon24ChevronCompactRight } from '@vkontakte/icons';
 

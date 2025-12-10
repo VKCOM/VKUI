@@ -1,0 +1,62 @@
+---
+description: Компонент для обновления контента жестом "потянуть вниз".
+---
+
+<Overview group="feedback">
+
+# PullToRefresh [tag:component]
+
+Компонент для обновления контента жестом "потянуть вниз".
+Работает на сенсорных устройствах и поддерживает управление состоянием загрузки.
+
+</Overview>
+
+<Playground style={{ userSelect: 'none', alignItems: 'unset', height: 150, overflow: 'auto' }}>
+
+```jsx
+const [users, setUsers] = React.useState([]);
+const [fetching, setFetching] = React.useState(true);
+
+const onRefresh = React.useCallback(() => {
+  setFetching(true);
+
+  setTimeout(() => {
+    setFetching(false);
+    setUsers(Array.from({ length: 20 }));
+  }, 2000);
+}, []);
+
+return (
+  <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
+    <Div>
+      {!users.length && <Text>Потяните вниз</Text>}
+      {users.map((_, i) => {
+        return (
+          <Cell key={i} before={<Avatar />}>
+            {i}
+          </Cell>
+        );
+      })}
+    </Div>
+  </PullToRefresh>
+);
+```
+
+</Playground>
+
+## Обязательные свойства
+
+### Обработчик `onRefresh`
+
+Функция обновления данных (прим.: функция должна быть мемоизированным обработчиком)
+
+## Особенности работы
+
+### Управление состоянием
+
+- Устанавливайте `isFetching={true}` при начале загрузки.
+- Устанавливайте `isFetching={false}` после завершения загрузки.
+
+## Свойства и методы [#api]
+
+<PropsTable name="PullToRefresh" />

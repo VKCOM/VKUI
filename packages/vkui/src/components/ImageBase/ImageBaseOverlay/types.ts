@@ -18,8 +18,15 @@ export interface ImageBaseOverlayCommonProps
    * - `"always"` – всегда показывать.
    *
    * > По умолчанию определяется в зависимости от того, есть ли у пользователя мышь или нет.
+   * > Определение просиходит с помощью двойного рендера, так что на устройствах без мыши
+   * > оверлей покажется не раньше второго рендера.
+   * > Если это критично (например при SSR), то старайтесь явно указывать значение `visibility`, либо используйте
+   * > [AdaptivityProvider](#/AdaptivityProvider) для того, чтобы явно определить `hasPointer`.
    */
   visibility?: 'on-hover' | 'always';
+  /**
+   * `className` для компонента.
+   */
   className?: string;
 }
 
@@ -49,5 +56,8 @@ export interface ImageBaseOverlayNonInteractiveProps extends ImageBaseOverlayCom
    * такое поведение, что дает возможность передавать отдельные интерактивные элементы в `children`.
    */
   onClick?: undefined;
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
 }

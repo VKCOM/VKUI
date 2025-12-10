@@ -42,6 +42,8 @@ const EVENT_KEY_TO_COMMON_KEY_MAP = new Map([
   [' ', Keys.SPACE],
   ['Tab', Keys.TAB],
   ['Escape', Keys.ESCAPE],
+  ['Delete', Keys.DELETE],
+  ['Backspace', Keys.BACKSPACE],
   ['Home', Keys.HOME],
   ['End', Keys.END],
   ['ArrowLeft', Keys.ARROW_LEFT],
@@ -67,6 +69,8 @@ export function pressedKey<T extends KeyboardEvent | React.KeyboardEvent>(
   | 'ArrowDown'
   | 'PageUp'
   | 'PageDown'
+  | 'Backspace'
+  | 'Delete'
   | null {
   const foundKey = EVENT_KEY_TO_COMMON_KEY_MAP.get(event.key);
   return foundKey ? foundKey : null;
@@ -166,8 +170,8 @@ export function hasAccessibleName({
  * @private
  */
 export const getHorizontalFocusGoTo = (
-  keys: Extract<KeysValues, 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight'>,
-): 'prev' | 'next' => {
+  keys: Extract<KeysValues, 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight' | 'Home' | 'End'>,
+): 'prev' | 'next' | 'first' | 'last' => {
   switch (keys) {
     case Keys.ARROW_UP:
     case Keys.ARROW_LEFT:
@@ -175,5 +179,9 @@ export const getHorizontalFocusGoTo = (
     case Keys.ARROW_DOWN:
     case Keys.ARROW_RIGHT:
       return 'next';
+    case Keys.HOME:
+      return 'first';
+    case Keys.END:
+      return 'last';
   }
 };

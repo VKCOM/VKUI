@@ -1,4 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
+import { warnOnce } from '../../../lib/warnOnce';
 import type { HasChildren } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import type { RootComponentProps } from '../../RootComponent/RootComponent';
@@ -23,7 +24,7 @@ export interface FlexItemProps
   extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
     HasChildren {
   /**
-   * Для задания выравнивания, отлично от родительского, эквивалентно `align-self`
+   * Для задания выравнивания, отлично от родительского, эквивалентно `align-self`.
    */
   alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
   /**
@@ -32,27 +33,32 @@ export interface FlexItemProps
    * - `grow` соответствует значению `1 0 auto`
    * - `shrink` соответствует значению `0 1 auto`
    * - `content` соответствует значению `1 1 auto`
-   * - `fixed` соответствует значению `0 0 auto`
+   * - `fixed` соответствует значению `0 0 auto`.
    */
   flex?: 'grow' | 'shrink' | 'content' | 'fixed';
   /**
-   * Изначальный размер элемента, эквивалентно `flex-basis`
+   * Изначальный размер элемента, эквивалентно `flex-basis`.
    */
   flexBasis?: number | string;
 }
+
+const warn = warnOnce('Flex.Item');
 
 export const FlexItem = ({
   children,
   alignSelf,
   flex,
   flexBasis,
-  style,
   ...rest
 }: FlexItemProps): React.ReactNode => {
+  if (process.env.NODE_ENV === 'development') {
+    warn('Компонент Flex.Item устарел, используйте компонент Flex в качестве альтернативы.');
+  }
+
   return (
     <RootComponent
       {...rest}
-      style={{ flexBasis, ...style }}
+      baseStyle={{ flexBasis }}
       baseClassName={classNames(
         alignSelf && alignSelfClassNames[alignSelf],
         flex && flexClassNames[flex],

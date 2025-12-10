@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import {
   autoUpdateFloatingElement,
@@ -11,6 +12,7 @@ import {
   usePlacementChangeCallback,
   type VirtualElement,
 } from '../../lib/floating';
+import { useReferenceHiddenChangeCallback } from '../../lib/floating/useReferenceHiddenChangeCallback';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -45,12 +47,16 @@ type AllowedFloatingComponentProps = Pick<
   | 'onShownChange'
   | 'defaultShown'
   | 'hideWhenReferenceHidden'
+  | 'onReferenceHiddenChange'
   | 'sameWidth'
   | 'zIndex'
+  | 'strategy'
   | 'usePortal'
   | 'customMiddlewares'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'disableShiftMiddleware'
+  | 'flipMiddlewareFallbackAxisSideDirection'
 >;
 
 export interface PopperCommonProps
@@ -68,7 +74,7 @@ export interface PopperCommonProps
    * 1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`).
    * 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
    *    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
-   *    (см. https://github.com/VKCOM/VKUI/pull/4496).
+   *    (смотри https://github.com/VKCOM/VKUI/pull/4496).
    * 3. Передайте высоту иконки в параметр `arrowHeight`. В значении высоты можно исключить хак с `1px` из п.2.
    * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
@@ -78,14 +84,21 @@ export interface PopperCommonProps
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
   autoUpdateOnTargetResize?: boolean;
+  /**
+   * Пытаться обновлять позицию всплывающего элемента каждый фрейм.
+   */
+  autoUpdateOnAnimationFrame?: boolean;
 }
 
 export interface PopperProps extends PopperCommonProps {
-  targetRef: React.RefObject<HTMLElement> | VirtualElement;
+  /**
+   * Ref на якорный элемент.
+   */
+  targetRef: React.RefObject<HTMLElement | null> | VirtualElement;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Popper
+ * @see https://vkui.io/components/popper
  */
 export const Popper = ({
   // UseFloatingMiddlewaresBootstrapProps
@@ -99,9 +112,13 @@ export const Popper = ({
   arrowPadding = DEFAULT_ARROW_PADDING,
   customMiddlewares,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
+  flipMiddlewareFallbackAxisSideDirection,
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
+  autoUpdateOnAnimationFrame = false,
+  strategy: strategyProp,
 
   // ArrowProps
   arrowProps,
@@ -112,8 +129,10 @@ export const Popper = ({
   getRootRef,
   children,
   usePortal = true,
-  style: styleProp,
   onPlacementChange,
+  onReferenceHiddenChange,
+  zIndex,
+  style,
   ...restProps
 }: PopperProps): React.ReactNode => {
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
@@ -130,6 +149,8 @@ export const Popper = ({
     hideWhenReferenceHidden,
     customMiddlewares,
     disableFlipMiddleware,
+    disableShiftMiddleware,
+    flipMiddlewareFallbackAxisSideDirection,
   });
 
   const {
@@ -141,16 +162,20 @@ export const Popper = ({
     middlewareData,
   } = useFloating({
     placement: strictPlacement,
+    strategy: strategyProp,
     middleware: middlewares,
     whileElementsMounted(...args) {
       /* istanbul ignore next: не знаю как проверить */
       return autoUpdateFloatingElement(...args, {
         elementResize: autoUpdateOnTargetResize,
+        animationFrame: autoUpdateOnAnimationFrame,
       });
     },
   });
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
+
+  useReferenceHiddenChangeCallback(middlewareData.hide, onReferenceHiddenChange);
 
   const { arrow: arrowCoords } = middlewareData;
 
@@ -160,21 +185,26 @@ export const Popper = ({
     refs.setReference('current' in targetRef ? targetRef.current : targetRef);
   }, [refs.setReference, targetRef]);
 
+  const dropdownStyle =
+    typeof zIndex !== 'undefined'
+      ? {
+          zIndex,
+        }
+      : undefined;
+
   const dropdown = (
     <RootComponent
       {...restProps}
+      style={mergeStyle(dropdownStyle, style)}
       baseClassName={styles.host}
       getRootRef={handleRootRef}
-      style={{
-        ...convertFloatingDataToReactCSSProperties(
-          floatingPositionStrategy,
-          floatingDataX,
-          floatingDataY,
-          sameWidth ? null : undefined,
-          middlewareData,
-        ),
-        ...styleProp,
-      }}
+      baseStyle={convertFloatingDataToReactCSSProperties({
+        strategy: floatingPositionStrategy,
+        x: floatingDataX,
+        y: floatingDataY,
+        initialWidth: sameWidth ? null : undefined,
+        middlewareData,
+      })}
     >
       {arrow && (
         <FloatingArrow

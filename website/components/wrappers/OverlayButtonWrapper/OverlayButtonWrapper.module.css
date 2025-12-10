@@ -1,0 +1,6 @@
+.root {
+  padding-block: var(--vkui--spacing_size_3xl);
+  padding-inline: var(--vkui--spacing_size_3xl);
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  border-radius: var(--vkui--size_border_radius_paper--regular);
+}

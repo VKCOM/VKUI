@@ -1,0 +1,40 @@
+.root {
+  position: relative;
+  inline-size: 100%;
+  margin-block: var(--vkui--spacing_size_3xl);
+  overflow: auto;
+  background-color: rgb(127, 143, 160, 0.08);
+  border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+  border-radius: 8px;
+
+  --vkui_docs--code-background: transparent;
+  --vkui_docs--code-inline-padding: 0px;
+  --vkui_docs--code-block-padding: 0px;
+}
+
+.pre {
+  flex: 1;
+  max-block-size: 460px;
+  padding-block: var(--vkui--spacing_size_xl);
+  padding-inline: var(--vkui--spacing_size_xl);
+  contain: paint;
+  overflow-x: auto;
+  font-size: 14px;
+  -webkit-font-smoothing: auto;
+}
+
+.buttons {
+  display: flex;
+  color: var(--vkui--color_icon_tertiary);
+}
+
+/* stylelint-disable-next-line selector-max-universal */
+.buttons > *:not(:last-child) {
+  margin-inline-end: var(--vkui--spacing_size_xs);
+}
+
+.header {
+  padding-inline: var(--vkui--spacing_size_m) 0;
+  background-color: rgb(127, 143, 160, 0.05);
+  border-block-end: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+}

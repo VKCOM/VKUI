@@ -18,13 +18,16 @@ const sizeYClassNames = {
 };
 
 export interface DisplayTitleProps extends TypographyProps {
+  /**
+   * Уровень заголовка (от 1 до 4).
+   */
   level?: '1' | '2' | '3' | '4';
 }
 
 /**
  * Используется для крупных заголовков.
  *
- * @see https://vkcom.github.io/VKUI/#/DisplayTitle
+ * @see https://vkui.io/components/typography#display-title
  */
 export const DisplayTitle = ({
   className,

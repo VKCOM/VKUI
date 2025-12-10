@@ -1,22 +1,23 @@
 import * as React from 'react';
-import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
+import { Icon20More, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import {
   AppDefaultWrapper,
-  type AppWrapperProps,
+  type AppDefaultWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { Image } from '../Image/Image';
-import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
+import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
 import { Spacing } from '../Spacing/Spacing';
 import { Textarea } from '../Textarea/Textarea';
 import { UsersStack } from '../UsersStack/UsersStack';
-import { ModalCard, type ModalCardProps } from './ModalCard';
+import { ModalCard } from './ModalCard';
+import type { ModalCardProps } from './types';
 
-const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppDefaultWrapper scroll="contain" {...restProps}>
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
+  <AppDefaultWrapper scroll="contain" disablePortal {...restProps}>
     {children}
   </AppDefaultWrapper>
 );
@@ -39,6 +40,7 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
               </Button>
             </React.Fragment>,
           ],
+          disableModalOverlay: [false, true],
         },
         {
           nav: ['2'],
@@ -127,15 +129,52 @@ export const ModalCardPlayground = (props: ComponentPlaygroundProps) => {
       AppWrapper={AppWrapper}
     >
       {(props: ModalCardProps) => (
-        <div style={{ height: 500, transform: 'translateZ(0)' }}>
-          <ModalRoot
-            activeModal={props.nav}
+        <div style={{ height: 500, overflow: 'hidden', transform: 'translateZ(0)' }}>
+          <ModalCard
+            open
             // Note: с включенным фокусом ломаются скриншоты на движке Webkit из-за фокуса сразу
             // на несколько окон
             noFocusToDialog
-          >
-            <ModalCard {...props} />
-          </ModalRoot>
+            {...props}
+          />
+        </div>
+      )}
+    </ComponentPlayground>
+  );
+};
+
+export const ModalCardOutsideButtonPlayground = (props: ComponentPlaygroundProps) => {
+  return (
+    <ComponentPlayground
+      {...props}
+      propSets={[
+        {
+          nav: ['1'],
+          title: ['Расскажите о себе'],
+          actions: [
+            <Button key="action" size="l" mode="primary" stretched>
+              Сохранить
+            </Button>,
+          ],
+          dismissButtonMode: ['inside', 'outside', 'none'],
+          outsideButtons: [
+            <ModalOutsideButton aria-label="More" key="outside">
+              <Icon20More />
+            </ModalOutsideButton>,
+          ],
+        },
+      ]}
+      AppWrapper={AppWrapper}
+    >
+      {(props: ModalCardProps) => (
+        <div style={{ height: 300, overflow: 'hidden', transform: 'translateZ(0)' }}>
+          <ModalCard
+            open
+            // Note: с включенным фокусом ломаются скриншоты на движке Webkit из-за фокуса сразу
+            // на несколько окон
+            noFocusToDialog
+            {...props}
+          />
         </div>
       )}
     </ComponentPlayground>

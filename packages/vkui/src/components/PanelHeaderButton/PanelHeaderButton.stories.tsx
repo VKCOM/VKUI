@@ -1,20 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { PanelHeaderBack as PanelHeaderBackCmp } from '../PanelHeaderBack/PanelHeaderBack';
-import { PanelHeaderClose as PanelHeaderCloseCmp } from '../PanelHeaderClose/PanelHeaderClose';
+import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import {
+  PanelHeaderBack as PanelHeaderBackCmp,
+  type PanelHeaderBackProps,
+} from '../PanelHeaderBack/PanelHeaderBack';
+import {
+  PanelHeaderClose as PanelHeaderCloseCmp,
+  type PanelHeaderCloseProps,
+} from '../PanelHeaderClose/PanelHeaderClose';
 import {
   PanelHeaderEdit as PanelHeaderEditCmp,
   type PanelHeaderEditProps,
 } from '../PanelHeaderEdit/PanelHeaderEdit';
-import { PanelHeaderSubmit as PanelHeaderSubmitCmp } from '../PanelHeaderSubmit/PanelHeaderSubmit';
+import {
+  PanelHeaderSubmit as PanelHeaderSubmitCmp,
+  type PanelHeaderSubmitProps,
+} from '../PanelHeaderSubmit/PanelHeaderSubmit';
 import { PanelHeaderButton, type PanelHeaderButtonProps } from './PanelHeaderButton';
 
 const story: Meta<PanelHeaderButtonProps> = {
-  title: 'Layout/PanelHeaderButton',
+  title: 'Navigation/PanelHeader/PanelHeaderButton',
   component: PanelHeaderButton,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('PanelHeaderButton', CanvasFullLayout, DisableCartesianParam),
   args: {
     onClick: noop,
   },
@@ -22,9 +32,9 @@ const story: Meta<PanelHeaderButtonProps> = {
 
 export default story;
 
-type Story = StoryObj<PanelHeaderButtonProps>;
+type PlaygroundStory = StoryObj<PanelHeaderButtonProps>;
 
-export const Playground: Story = {
+export const Playground: PlaygroundStory = {
   render: (args) => {
     return (
       <PanelHeaderButton {...args}>
@@ -34,28 +44,48 @@ export const Playground: Story = {
   },
 };
 
-export const PanelHeaderClose: Story = {
+type PanelHeaderCloseStory = StoryObj<PanelHeaderCloseProps>;
+
+export const PanelHeaderClose: PanelHeaderCloseStory = {
   render: (args) => {
     return <PanelHeaderCloseCmp {...args} />;
   },
 };
 
-export const PanelHeaderBack: Story = {
+type PanelHeaderBackStory = StoryObj<PanelHeaderBackProps>;
+
+export const PanelHeaderBack: PanelHeaderBackStory = {
+  argTypes: {
+    hideLabelOnVKCom: {
+      type: 'boolean',
+    },
+    hideLabelOnIOS: {
+      type: 'boolean',
+    },
+  },
   render: (args) => {
     return <PanelHeaderBackCmp {...args} />;
   },
 };
 
-export const PanelHeaderEdit: StoryObj<PanelHeaderEditProps> = {
+type PanelHeaderEditStory = StoryObj<PanelHeaderEditProps>;
+
+export const PanelHeaderEdit: PanelHeaderEditStory = {
   args: {
     isActive: true,
+  },
+  argTypes: {
+    doneLabel: StringArg,
+    editLabel: StringArg,
   },
   render: (args) => {
     return <PanelHeaderEditCmp {...args} />;
   },
 };
 
-export const PanelHeaderSubmit: Story = {
+type PanelHeaderSubmitStory = StoryObj<PanelHeaderSubmitProps>;
+
+export const PanelHeaderSubmit: PanelHeaderSubmitStory = {
   render: (args) => {
     return <PanelHeaderSubmitCmp {...args} />;
   },

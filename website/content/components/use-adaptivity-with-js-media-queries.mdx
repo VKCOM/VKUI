@@ -1,0 +1,57 @@
+---
+description: Хук, возвращающий расширенную версию параметров адаптивности.
+---
+
+<Overview type="hook">
+# useAdaptivityWithJSMediaQueries
+
+Хук возвращает расширенную версию [параметров адаптивности](/overview/adaptivity#adaptivity-props). Условия реализованы через
+[matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia).
+
+Связанные страницы:
+
+- [Адаптивность](/overview/adaptivity)
+- [Серверный рендер | Примечание к адаптивности](/overview/ssr#adaptivity-note)
+
+</Overview>
+
+## Когда использовать?
+
+Используйте когда нужно показать или скрыть элемент интерфейса по тому или иному брейкпоинту, но при условии, что вы:
+
+- либо **не поддерживаете SSR**;
+- либо **у вас есть компонент, который не показывается при первом рендере**.
+
+В библиотеке хук используется для всплывающих окон как раз из-за того, что они удовлетворяют условию показа только после первого
+рендера.
+
+## Пример использования
+
+Предположим, что нам не нужна поддержка SSR, чтобы реализовать пример из [`useAdaptivityConditionalRender`](/components/use-adaptivity-conditional-render) –
+показываем левую колонку [`SplitLayout`](/components/split-layout) только на настольных экранах.
+
+```jsx {9,13}
+import {
+  SplitLayout,
+  SplitCol,
+  PanelHeader,
+  useAdaptivityWithJSMediaQueries,
+} from '@vkontakte/vkui';
+
+export function App() {
+  const { isDesktop } = useAdaptivityWithJSMediaQueries();
+
+  return (
+    <SplitLayout header={<PanelHeader delimiter="none" />}>
+      {isDesktop && (
+        <SplitCol fixed width={280} maxWidth={280}>
+          {/* ... */}
+        </SplitCol>
+      )}
+      <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
+        {/* ... */}
+      </SplitCol>
+    </SplitLayout>
+  );
+}
+```

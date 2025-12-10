@@ -9,7 +9,7 @@ on:
         options:
           - '@vkontakte/vkui'
           - '@vkontakte/vkui-floating-ui'
-          - '@vkontakte/vkui-token-translator'
+          - '@vkontakte/vkui-date-fns-tz'
         required: true
       version:
         description: 'type version: x.y.z (without "v")'
@@ -28,7 +28,7 @@ jobs:
         run: corepack enable
         shell: bash
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'

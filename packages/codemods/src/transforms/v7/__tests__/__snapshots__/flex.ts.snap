@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`flex transforms correctly 1`] = `
+exports[`flex > transforms correctly 1`] = `
 "import { Flex } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Flex
         direction="column"
         gap={[10, 20]}
@@ -25,7 +25,7 @@ const App = () => {
         gap={20}
         align="center"
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

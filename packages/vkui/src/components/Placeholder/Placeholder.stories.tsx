@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Placeholder, type PlaceholderProps } from './Placeholder';
 
 const story: Meta<PlaceholderProps> = {
-  title: 'Blocks/Placeholder',
+  title: 'Data Display/Placeholder',
   component: Placeholder,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Placeholder', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Отображение данных'],
 };
 
 export default story;

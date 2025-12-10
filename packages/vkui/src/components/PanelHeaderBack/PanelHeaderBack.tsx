@@ -10,6 +10,7 @@ import {
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { PlatformType } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
@@ -25,9 +26,16 @@ const sizeXClassNames = {
   compact: styles.backSizeXCompact,
 };
 
-export interface PanelHeaderBackProps extends Omit<PanelHeaderButtonProps, 'children'> {
-  children?: string;
-}
+export type PanelHeaderBackProps = Omit<PanelHeaderButtonProps, 'children'> & {
+  /**
+   * Скрыть надпись на платформе `vkcom`.
+   */
+  hideLabelOnVKCom?: boolean;
+  /**
+   * Скрыть надпись на платформе `ios`.
+   */
+  hideLabelOnIOS?: boolean;
+};
 
 const getBackIcon = (platform: PlatformType) => {
   switch (platform) {
@@ -51,33 +59,36 @@ const getBackIcon = (platform: PlatformType) => {
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ * @see https://vkui.io/components/panel-header#panel-header-back
  */
 export const PanelHeaderBack = ({
-  label,
+  label = 'Назад',
   className,
-  children = 'Назад',
+  hideLabelOnVKCom = false,
+  hideLabelOnIOS = false,
   ...restProps
-}: PanelHeaderButtonProps): React.ReactNode => {
+}: PanelHeaderBackProps): React.ReactNode => {
   const platform = usePlatform();
+  const direction = useConfigDirection();
   const { sizeX = 'none' } = useAdaptivity();
   // также label нужно скрывать при platform === 'ios' && sizeX === regular
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
-  const showLabel = platform === 'vkcom' || platform === 'ios';
+  const showLabel =
+    (platform === 'vkcom' && !hideLabelOnVKCom) || (platform === 'ios' && !hideLabelOnIOS);
 
   return (
     <PanelHeaderButton
       {...restProps}
       className={classNames(
         sizeX !== 'regular' && sizeXClassNames[sizeX],
-        platform === 'ios' && styles['backIos'],
-        platform === 'vkcom' && styles['backVkcom'],
-        showLabel && !!label && styles['backHasLabel'],
+        platform === 'ios' && styles.backIos,
+        platform === 'vkcom' && styles.backVkcom,
+        showLabel && !!label && styles.backHasLabel,
+        direction === 'rtl' && styles.rtl,
         className,
       )}
-      label={showLabel && label}
+      label={showLabel ? label : label && <VisuallyHidden>{label}</VisuallyHidden>}
     >
-      {children && <VisuallyHidden>{children}</VisuallyHidden>}
       {getBackIcon(platform)}
     </PanelHeaderButton>
   );

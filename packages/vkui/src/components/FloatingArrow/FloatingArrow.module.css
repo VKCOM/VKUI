@@ -3,10 +3,10 @@
 }
 
 .in {
-  content: '';
   display: block;
+  content: '';
 
-  /* см. Примечание 1 в FloatingArrow.tsx. */
+  /* см. "Примечание" в DefaultIcon.tsx. */
   transform: translateY(1px);
 }
 

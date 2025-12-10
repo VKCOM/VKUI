@@ -9,11 +9,11 @@ import styles from './Placeholder.module.css';
 export interface PlaceholderContainerProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
   /**
-   * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер
+   * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер.
    */
   stretched?: boolean;
   /**
-   * Убирает отступы у компонента
+   * Убирает отступы у компонента.
    */
   noPadding?: boolean;
 }
@@ -39,18 +39,18 @@ const PlaceholderIcon = (props: PlaceholderIconProps): React.ReactNode => (
   <RootComponent baseClassName={styles.icon} {...props} />
 );
 
-export type PlaceholderHeaderProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderTitleProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
-const PlaceholderTitle = ({ className, ...restProps }: PlaceholderHeaderProps): React.ReactNode => (
+const PlaceholderTitle = ({ className, ...restProps }: PlaceholderTitleProps): React.ReactNode => (
   <Title level="2" weight="2" className={classNames(className, styles.title)} {...restProps} />
 );
 
-export type PlaceholderTextProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
+export type PlaceholderDescriptionProps = HTMLAttributesWithRootRef<HTMLElement> & HasComponent;
 
 const PlaceholderDescription = ({
   className,
   ...restProps
-}: PlaceholderTextProps): React.ReactNode => (
+}: PlaceholderDescriptionProps): React.ReactNode => (
   <Headline weight="3" className={classNames(className, styles.description)} {...restProps} />
 );
 
@@ -62,21 +62,21 @@ const PlaceholderActions = (props: PlaceholderActionsProps): React.ReactNode => 
 
 export interface PlaceholderProps extends PlaceholderContainerProps {
   /**
-   * Иконка
+   * Иконка.
    */
   icon?: React.ReactNode;
   /**
-   * Заголовок плейсхолдера
+   * Заголовок плейсхолдера.
    */
   title?: React.ReactNode;
   /**
-   * Кнопка действия
+   * Кнопка действия.
    */
   action?: React.ReactNode;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Placeholder
+ * @see https://vkui.io/components/placeholder
  */
 export const Placeholder: React.FC<PlaceholderProps> & {
   Container: typeof PlaceholderContainer;

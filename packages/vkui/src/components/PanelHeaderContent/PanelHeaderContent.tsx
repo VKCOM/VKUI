@@ -23,13 +23,28 @@ const sizeYClassNames = {
 };
 
 export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Компонент отображаемый после содержимого.
+   */
   aside?: React.ReactNode;
+  /**
+   * Компонент отображаемый до содержимого.
+   */
   before?: React.ReactNode;
+  /**
+   * Подпись под основным текстом.
+   */
   subtitle?: React.ReactNode;
 }
 
 interface PanelHeaderChildrenProps extends HasChildren {
+  /**
+   * Есть ли подпись.
+   */
   hasSubtitle: boolean;
+  /**
+   * Есть ли `before`.
+   */
   hasBefore: boolean;
 }
 
@@ -50,7 +65,7 @@ const PanelHeaderChildren = ({ hasSubtitle, hasBefore, children }: PanelHeaderCh
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderContent
+ * @see https://vkui.io/components/panel-header#panel-header-content
  */
 export const PanelHeaderContent = ({
   aside,

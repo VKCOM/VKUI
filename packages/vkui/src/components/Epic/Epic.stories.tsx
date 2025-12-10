@@ -12,6 +12,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge } from '../Badge/Badge';
 import { Cell } from '../Cell/Cell';
 import { Counter } from '../Counter/Counter';
@@ -28,9 +29,10 @@ import { View } from '../View/View';
 import { Epic, type EpicProps } from './Epic';
 
 const story: Meta<EpicProps> = {
-  title: 'Layout/Epic',
+  title: 'Navigation/Epic',
   component: Epic,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Epic', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Навигация'],
 };
 
 export default story;
@@ -135,7 +137,7 @@ export const Example: Story = {
                     selected={activeStory === 'messages'}
                     data-story="messages"
                     indicator={
-                      <Counter size="s" mode="prominent">
+                      <Counter size="s" mode="primary" appearance="accent-red">
                         12
                       </Counter>
                     }

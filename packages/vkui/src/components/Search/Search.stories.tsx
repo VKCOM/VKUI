@@ -1,13 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
 import { Search, type SearchProps } from './Search';
 
 const story: Meta<SearchProps> = {
-  title: 'Blocks/Search',
+  title: 'Utils/Search',
   component: Search,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Search', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

@@ -1,13 +1,15 @@
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../../storybook/constants';
+import { createStoryParameters } from '../../../testing/storybook/createStoryParameters';
 import { Headline, type HeadlineProps } from './Headline';
 
 const story: Meta<HeadlineProps> = {
-  title: 'Typography/Headline',
+  title: 'Typography/Typography/Headline',
   component: Headline,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('Headline', CanvasFullLayout),
   decorators: [withCartesian],
+  tags: ['Типографика'],
 };
 
 export default story;

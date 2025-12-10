@@ -1,6 +1,5 @@
 .host {
   position: fixed;
-  box-sizing: border-box;
   /**
    * ⚠️ WARNING ⚠️
    * `left: auto` решает следующие задачи:
@@ -13,6 +12,7 @@
    */
   inset-inline-start: auto;
   z-index: var(--vkui_internal--z_index_fixed_layout);
+  box-sizing: border-box;
   padding-inline: var(--vkui_internal--safe_area_inset_left)
     var(--vkui_internal--safe_area_inset_right);
 }
@@ -22,13 +22,13 @@
 }
 
 .verticalTop {
-  inline-size: 100%;
   inset-block-start: 0;
+  inline-size: 100%;
 }
 
 .verticalBottom {
-  inline-size: 100%;
   inset-block-end: 0;
+  inline-size: 100%;
   padding-block-end: var(--vkui_internal--safe_area_inset_bottom);
 }
 
@@ -39,19 +39,21 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalEpic--hasTabbar) .verticalBottom {
   padding-block-end: calc(
-    var(--vkui_internal--tabbar_height) + var(--vkui_internal--safe_area_inset_bottom)
+    var(--vkui_internal--tabbar_height) +
+    var(--vkui_internal--safe_area_inset_bottom)
   );
 }
 
 /**
  * CMP:
- * PanelHeader
+ * PanelHeaderContext
  */
 /* stylelint-disable selector-max-universal, selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader) ~ .verticalTop,
-:global(.vkuiInternalPanelHeader) ~ * .verticalTop:not(:global(.vkuiInternalPanelHeader__fixed)) {
+:global(.vkuiInternalPanelHeader) ~ * .verticalTop {
   inset-block-start: calc(
-    var(--vkui_internal--panel_header_height) + var(--vkui_internal--safe_area_inset_top)
+    var(--vkui_internal--panel_header_height) +
+    var(--vkui_internal--safe_area_inset_top)
   );
 }
 /* stylelint-enable selector-max-universal, selector-pseudo-class-disallowed-list */

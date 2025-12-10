@@ -35,7 +35,7 @@ describe('SimpleCell', () => {
   });
 
   it('handles disabled', () => {
-    const clickStub = jest.fn();
+    const clickStub = vi.fn();
     render(
       <SimpleCell data-testid="test" onClick={clickStub} disabled>
         Язык

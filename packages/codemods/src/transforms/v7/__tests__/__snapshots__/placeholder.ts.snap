@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`placeholder transforms correctly 1`] = `
+exports[`placeholder > transforms correctly 1`] = `
 "import { Button,ButtonGroup, Icon56UserAddOutline, Icon56UsersOutline, Placeholder } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* Проверяем переименование свойства header */}
       <Placeholder
         icon={<Icon56UsersOutline />}
@@ -34,7 +34,7 @@ const App = () => {
           </ButtonGroup>
         </Placeholder.Actions>
       </Placeholder.Container>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

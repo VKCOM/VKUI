@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
-import type { HasChildren } from '../../types';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
+import { type HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
-import { AccordionContext } from './AccordionContext';
+import { AccordionContext, type AccordionContextProps } from './AccordionContext';
 import { AccordionSummary } from './AccordionSummary';
 
 function useAccordionId(id: AccordionProps['id']) {
@@ -17,6 +17,9 @@ function useAccordionId(id: AccordionProps['id']) {
 }
 
 export interface AccordionProps extends HasChildren {
+  /**
+   * Используется для генерации id для заголовка и контента(a11y).
+   */
   id?: string;
   /**
    * Управляет раскрытием и скрытием контента.
@@ -27,12 +30,22 @@ export interface AccordionProps extends HasChildren {
    */
   defaultExpanded?: boolean;
   /**
-   * Функция изменения
+   * Возвращает новое значение при изменении раскрытия/сворачивания контента.
    */
-  onChange?: (e: boolean) => void;
+  onChange?: (newValue: boolean) => void;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
+  /**
+   * Нужно ли удалять из DOM контент при сворачивании.
+   */
+  unmountOnCollapsed?: boolean;
 }
 
+/**
+ * @see https://vkui.io/components/accordion
+ */
 export const Accordion: React.FC<AccordionProps> & {
   Summary: typeof AccordionSummary;
   Content: typeof AccordionContent;
@@ -42,6 +55,7 @@ export const Accordion: React.FC<AccordionProps> & {
   defaultExpanded = false,
   onChange: onChangeProp,
   children,
+  unmountOnCollapsed = false,
   ...restProps
 }: AccordionProps) => {
   const { labelId, contentId } = useAccordionId(id);
@@ -53,20 +67,24 @@ export const Accordion: React.FC<AccordionProps> & {
     disabled: restProps.disabled,
   });
 
-  const context = useObjectMemo({
-    labelId,
-    contentId,
-    expanded: expanded || false,
-    onChange,
-  });
+  const context = React.useMemo<AccordionContextProps>(
+    () => ({
+      labelId,
+      contentId,
+      expanded: expanded || false,
+      unmountOnCollapsed,
+      onChange,
+    }),
+    [contentId, expanded, labelId, onChange, unmountOnCollapsed],
+  );
 
   return <AccordionContext.Provider value={context}>{children}</AccordionContext.Provider>;
 };
 
-Accordion.displayName = 'Accordion';
-
 Accordion.Summary = AccordionSummary;
-Accordion.Summary.displayName = 'Accordion.Summary';
-
 Accordion.Content = AccordionContent;
-Accordion.Content.displayName = 'Accordion.Content';
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(Accordion.Summary, 'Accordion.Summary');
+  defineComponentDisplayNames(Accordion.Content, 'Accordion.Content');
+}

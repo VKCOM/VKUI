@@ -2,18 +2,22 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { usePlatform } from '../../hooks/usePlatform';
-import { pressedKey } from '../../lib/accessibility';
-import { useDOM } from '../../lib/dom';
+import { useTabsNavigation } from '../../hooks/useTabsNavigation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
+import { useTabsController } from './TabsController';
+import { TabsControllerContext } from './TabsControllerContext';
+import { TabsModeContext } from './TabsModeContext';
 import styles from './Tabs.module.css';
-
 export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Режим отображения компонента.
+   */
   mode?: 'default' | 'accent' | 'secondary';
   /**
-   * Включает прокрутку контейнера до активной (`selected`) вкладки
+   * Включает прокрутку контейнера до активной (`selected`) вкладки.
    * @since 5.10.0
    */
   withScrollToSelectedTab?: boolean;
@@ -28,30 +32,25 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    *  - равномерно занимают всю доступную ширину при вложении в `HorizontalScroll`
    *  - равномерно занимают всю доступную ширину при `mode=default` и platform !== 'VKCOM'
    * При `stretched` и `shrinked` вкладки либо равномерно занимают всю ширину,
-   * либо выравниваются по контенту соответственно
+   * либо выравниваются по контенту соответственно.
    */
   layoutFillMode?: 'auto' | 'stretched' | 'shrinked';
+  /**
+   * Идентификатор выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  selectedId?: string;
+  /**
+   * Идентификатор выбранной вкладки по умолчанию. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  defaultSelectedId?: string;
+  /**
+   * Обработчик изменения выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
+   */
+  onSelectedIdChange?: (id: string) => void;
 }
-
-export interface TabsContextProps {
-  mode: TabsProps['mode'];
-  withGaps: boolean;
-  layoutFillMode: NonNullable<TabsProps['layoutFillMode']>;
-  withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
-  scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
-}
-
-export const TabsModeContext: React.Context<TabsContextProps> =
-  React.createContext<TabsContextProps>({
-    mode: 'default',
-    withGaps: false,
-    layoutFillMode: 'auto',
-    withScrollToSelectedTab: false,
-    scrollBehaviorToSelectedTab: 'nearest',
-  });
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Tabs
+ * @see https://vkui.io/components/tabs
  */
 export const Tabs = ({
   children,
@@ -60,108 +59,33 @@ export const Tabs = ({
   withScrollToSelectedTab,
   scrollBehaviorToSelectedTab = 'nearest',
   layoutFillMode = 'auto',
+  selectedId,
+  defaultSelectedId,
+  onSelectedIdChange,
   ...restProps
 }: TabsProps): React.ReactNode => {
+  const controller = useTabsController({
+    selectedId,
+    defaultSelectedId,
+    onSelectedIdChange,
+  });
   const platform = usePlatform();
-  const { document } = useDOM();
-
+  const direction = useConfigDirection();
   const isTabFlow = role === 'tablist';
-
-  const tabsRef = React.useRef<HTMLDivElement>(null);
-
   const withGaps = mode === 'accent' || mode === 'secondary';
 
-  const getTabEls = () => {
-    if (!tabsRef.current) {
-      return [];
-    }
+  const { tabsRef } = useTabsNavigation(isTabFlow, direction === 'rtl');
 
-    return Array.from(
-      // eslint-disable-next-line no-restricted-properties
-      tabsRef.current.querySelectorAll<HTMLDivElement>('[role=tab]:not([disabled])'),
-    );
-  };
-
-  const handleDocumentKeydown = (event: KeyboardEvent) => {
-    if (!document || !tabsRef.current || !isTabFlow) {
-      return;
-    }
-
-    const key = pressedKey(event);
-
-    switch (key) {
-      case 'ArrowLeft':
-      case 'ArrowRight':
-      case 'End':
-      case 'Home': {
-        const tabEls = getTabEls();
-        const currentFocusedElIndex = tabEls.findIndex((el) => document.activeElement === el);
-        if (currentFocusedElIndex === -1) {
-          return;
-        }
-
-        let nextIndex = 0;
-        if (key === 'Home') {
-          nextIndex = 0;
-        } else if (key === 'End') {
-          nextIndex = tabEls.length - 1;
-        } else {
-          const offset = key === 'ArrowRight' ? 1 : -1;
-          nextIndex = currentFocusedElIndex + offset;
-        }
-
-        const nextTabEl = tabEls[nextIndex];
-
-        if (nextTabEl) {
-          event.preventDefault();
-          nextTabEl.focus();
-        }
-
-        break;
-      }
-      /*
-       В JAWS и NVDA стрелка вниз активирует контент.
-       Это не прописано в стандартах, но по ссылке ниже это рекомендуется делать.
-       https://inclusive-components.design/tabbed-interfaces/
-      */
-      case 'ArrowDown': {
-        const tabEls = getTabEls();
-        const currentFocusedEl = tabEls.find((el) => document.activeElement === el);
-
-        if (!currentFocusedEl || currentFocusedEl.getAttribute('aria-selected') !== 'true') {
-          return;
-        }
-
-        const relatedContentElId = currentFocusedEl.getAttribute('aria-controls');
-        if (!relatedContentElId) {
-          return;
-        }
-
-        // eslint-disable-next-line no-restricted-properties
-        const relatedContentEl = document.getElementById(relatedContentElId);
-        if (!relatedContentEl) {
-          return;
-        }
-
-        event.preventDefault();
-        relatedContentEl.focus();
-
-        break;
-      }
-      case 'Space':
-      case 'Enter': {
-        const tabEls = getTabEls();
-        const currentFocusedEl = tabEls.find((el) => document.activeElement === el);
-        if (currentFocusedEl) {
-          currentFocusedEl.click();
-        }
-      }
-    }
-  };
-
-  useGlobalEventListener(document, 'keydown', handleDocumentKeydown, {
-    capture: true,
-  });
+  const tabsModeContext = React.useMemo(
+    () => ({
+      mode,
+      withGaps,
+      layoutFillMode,
+      withScrollToSelectedTab,
+      scrollBehaviorToSelectedTab,
+    }),
+    [mode, withGaps, layoutFillMode, withScrollToSelectedTab, scrollBehaviorToSelectedTab],
+  );
 
   return (
     <RootComponent
@@ -176,16 +100,10 @@ export const Tabs = ({
       role={role}
     >
       <div className={styles.in} ref={tabsRef}>
-        <TabsModeContext.Provider
-          value={{
-            mode,
-            withGaps,
-            layoutFillMode,
-            withScrollToSelectedTab,
-            scrollBehaviorToSelectedTab,
-          }}
-        >
-          {children}
+        <TabsModeContext.Provider value={tabsModeContext}>
+          <TabsControllerContext.Provider value={controller}>
+            {children}
+          </TabsControllerContext.Provider>
         </TabsModeContext.Provider>
       </div>
     </RootComponent>

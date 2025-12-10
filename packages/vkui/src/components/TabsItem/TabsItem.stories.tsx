@@ -2,14 +2,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Badge } from '../Badge/Badge';
 import { Counter } from '../Counter/Counter';
 import { TabsItem, type TabsItemProps } from './TabsItem';
 
 const story: Meta<TabsItemProps> = {
-  title: 'Blocks/TabsItem',
+  title: 'Navigation/Tabs/TabsItem',
   component: TabsItem,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('TabsItem', CanvasFullLayout, DisableCartesianParam),
   args: {
     onClick: noop,
   },
@@ -31,7 +32,7 @@ const story: Meta<TabsItemProps> = {
       additionalPresets: {
         Badge: <Badge mode="prominent">Есть обновления</Badge>,
         Counter: (
-          <Counter mode="prominent" size="s">
+          <Counter mode="primary" appearance="accent-red" size="s">
             3
           </Counter>
         ),
@@ -48,6 +49,8 @@ type Story = StoryObj<TabsItemProps>;
 export const Playground: Story = {
   args: {
     children: 'Сообщества',
+    before: 'Icon20NewsfeedOutline',
+    after: 'Icon16Dropdown',
   },
   decorators: [
     (Component) => (
@@ -84,7 +87,7 @@ export const WithCounter: Story = {
     before: 'Icon20UsersOutline',
     after: 'Icon16Dropdown',
     status: (
-      <Counter mode="prominent" size="s">
+      <Counter mode="primary" appearance="accent-red" size="s">
         3
       </Counter>
     ),

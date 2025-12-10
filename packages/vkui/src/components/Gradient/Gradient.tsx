@@ -10,17 +10,17 @@ const modeStyles = {
 
 export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Тип градиента
+   * Тип градиента.
    */
   mode?: 'tint' | 'default' | 'overlay';
   /**
-   * Направление градиента
+   * Направление градиента.
    */
   to?: 'top' | 'bottom';
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Gradient
+ * @see https://vkui.io/components/gradient
  */
 export const Gradient = ({
   mode = 'default',

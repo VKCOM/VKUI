@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Icon24ChevronCompactLeft, Icon24ChevronCompactRight } from '@vkontakte/icons';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { type PaginationPageType, usePagination } from '../../hooks/usePagination';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -17,7 +18,6 @@ import {
   PaginationPageButton,
 } from './PaginationPage/PaginationPageButton';
 import { PaginationPageEllipsis } from './PaginationPage/PaginationPageEllipsis';
-import { getPageLabelDefault } from './utils';
 import styles from './Pagination.module.css';
 
 export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElement>, 'onChange'> {
@@ -38,7 +38,7 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    */
   totalPages?: number;
   /**
-   * Блокировка всех кнопок.
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
   /**
@@ -65,6 +65,9 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * [a11y] Метка для обозначения блока навигации.
    */
   navigationLabel?: string;
+  /**
+   * Тип элемента отрисовки блока навигации.
+   */
   navigationLabelComponent?: HasComponent['Component'];
   /**
    * [a11y] Метка для кнопки навигации назад.
@@ -76,25 +79,46 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   nextButtonLabel?: string;
   /**
    * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
+   *
+   * > Note: По возможности лучше не использовать,
+   * так как компонент и так проставляет номер страницы в разметку,
+   * что достаточно для пользователей скринридеров.
+   * Дополнительная информация скорее будет избыточна,
+   * так как будет зачитываться для каждой кнопки при перемещении по списку.
    */
   getPageLabel?: (isCurrent: boolean) => string;
+  /**
+   * Обработчик изменения выбранной страницы.
+   */
   onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
   /**
    * Функция для кастомного рендера кнопок страниц.
    *
-   * > Note: `CustomPaginationPageButtonProps` наследует API [Tappable](https://vkcom.github.io/VKUI/#/Tappable).
+   * > Note: `CustomPaginationPageButtonProps` наследует API [Tappable](https://vkui.io/components/tappable).
    */
   renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
   /**
    Функция для кастомного рендера кнопок навигации `prev` и `next`.
    *
-   * > Note: `CustomPaginationNavigationButton` наследует API [Button](https://vkcom.github.io/VKUI/#/Button).
+   * > Note: `CustomPaginationNavigationButton` наследует API [Button](https://vkui.io/components/button).
    */
   renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
+  /**
+   * Передает атрибут `data-testid` для кнопок страниц.
+   */
+  pageButtonTestId?: (day: PaginationPageType, active: boolean) => string;
+  /**
+   * Передает атрибут `data-testid` для кнопки `prev`.
+   */
+  prevButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки `next`.
+   */
+  nextButtonTestId?: string;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Pagination
+ * @see https://vkui.io/components/pagination
  */
 export const Pagination = ({
   currentPage = 1,
@@ -105,16 +129,21 @@ export const Pagination = ({
   prevButtonCaption = 'Назад',
   nextButtonCaption = 'Вперёд',
   navigationButtonsStyle = 'icon',
-  getPageLabel = getPageLabelDefault,
-  navigationLabel = 'Навигация по страницам',
+  getPageLabel,
+  navigationLabel = 'Страницы',
   navigationLabelComponent = 'h2',
   prevButtonLabel = 'Перейти на предыдущую страницу',
   nextButtonLabel = 'Перейти на следующую страницу',
   onChange,
   renderPageButton,
+  pageButtonTestId,
+  prevButtonTestId,
+  nextButtonTestId,
   renderNavigationButton,
   ...resetProps
 }: PaginationProps): React.ReactNode => {
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
   const pages = usePagination({
     currentPage,
     totalPages,
@@ -156,17 +185,18 @@ export const Pagination = ({
 
   const renderPages = React.useCallback(
     (page: PaginationPageType) => {
+      const isCurrent = page === currentPage;
+      const dataTestId = pageButtonTestId?.(page, isCurrent);
+
       switch (page) {
         case 'start-ellipsis':
         case 'end-ellipsis':
           return (
             <li key={page}>
-              <PaginationPageEllipsis disabled={disabled} />
+              <PaginationPageEllipsis disabled={disabled} data-testid={dataTestId} />
             </li>
           );
         default: {
-          const isCurrent = page === currentPage;
-
           return (
             <li key={page}>
               <PaginationPageButton
@@ -176,6 +206,7 @@ export const Pagination = ({
                 disabled={disabled}
                 sizeY={sizeY}
                 renderPageButton={renderPageButton}
+                data-testid={dataTestId}
               >
                 {page}
               </PaginationPageButton>
@@ -184,23 +215,33 @@ export const Pagination = ({
         }
       }
     },
-    [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY],
+    [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY, pageButtonTestId],
   );
 
+  const navigationLabelId = React.useId();
+
   return (
-    <RootComponent Component="nav" role="navigation" {...resetProps}>
-      <VisuallyHidden Component={navigationLabelComponent}>{navigationLabel}</VisuallyHidden>
+    <RootComponent
+      Component="nav"
+      role="navigation"
+      aria-labelledby={navigationLabelId}
+      {...resetProps}
+    >
+      <VisuallyHidden id={navigationLabelId} Component={navigationLabelComponent}>
+        {navigationLabel}
+      </VisuallyHidden>
       <ul className={styles.list}>
         <li className={styles.prevButtonContainer}>
           <PaginationNavigationButton
             type="prev"
             style={navigationButtonsStyle}
             caption={prevButtonCaption}
-            Icon={Icon24ChevronCompactLeft}
+            Icon={isRtl ? Icon24ChevronCompactRight : Icon24ChevronCompactLeft}
             a11yLabel={prevButtonLabel}
             disabled={isFirstPage || disabled}
             onClick={handlePrevClick}
             data-page={prevPage}
+            data-testid={prevButtonTestId}
             renderNavigationButton={renderNavigationButton}
           />
         </li>
@@ -210,11 +251,12 @@ export const Pagination = ({
             type="next"
             style={navigationButtonsStyle}
             caption={nextButtonCaption}
-            Icon={Icon24ChevronCompactRight}
+            Icon={isRtl ? Icon24ChevronCompactLeft : Icon24ChevronCompactRight}
             a11yLabel={nextButtonLabel}
             disabled={isLastPage || disabled}
             onClick={handleNextClick}
             data-page={nextPage}
+            data-testid={nextButtonTestId}
             renderNavigationButton={renderNavigationButton}
           />
         </li>

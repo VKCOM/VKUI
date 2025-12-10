@@ -7,10 +7,7 @@ import styles from './AvatarBadge.module.css';
 
 export type AvatarBadgeProps = ImageBaseBadgeProps;
 
-export const AvatarBadge: React.FC<AvatarBadgeProps> = ({
-  className,
-  ...restProps
-}: AvatarBadgeProps) => {
+export const AvatarBadge = ({ className, ...restProps }: AvatarBadgeProps) => {
   const { size } = React.useContext(ImageBaseContext);
   return (
     <ImageBase.Badge
@@ -19,5 +16,3 @@ export const AvatarBadge: React.FC<AvatarBadgeProps> = ({
     />
   );
 };
-
-AvatarBadge.displayName = 'Avatar.Badge';

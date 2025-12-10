@@ -15,7 +15,7 @@ export type TextProps = TypographyProps;
 /**
  * Основной наборный текст.
  *
- * @see https://vkcom.github.io/VKUI/#/Text
+ * @see https://vkui.io/components/typography#text
  */
 export const Text = ({
   className,

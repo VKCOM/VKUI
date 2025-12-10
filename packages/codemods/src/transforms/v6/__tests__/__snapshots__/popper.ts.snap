@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`popper transforms correctly 1`] = `
+exports[`popper > transforms correctly 1`] = `
 "import { Popper } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Popper offsetByMainAxis={0}>content</Popper>
       <Popper offsetByCrossAxis={0}>content</Popper>
       <Popper arrowProps={{
@@ -16,12 +16,12 @@ const App = () => {
       <Popper usePortal={document.getElementById('root')}>content</Popper>
       <Popper usePortal={document.getElementById('root')}>content</Popper>
       <Popper children={() => <div>content</div>} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;
 
-exports[`popper transforms correctly 2`] = `
+exports[`popper > transforms correctly 2`] = `
 "import { Popper as VKUIPopper } from '@vkontakte/vkui';
 import React from 'react';
 

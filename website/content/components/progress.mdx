@@ -1,0 +1,75 @@
+---
+description: Компонент для визуализации прогресса выполнения задачи.
+---
+
+<Overview group="feedback">
+
+# Progress [tag:component]
+
+Компонент для визуализации прогресса выполнения задачи. Поддерживает различные стили оформления и настройку высоты.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress value={25} />
+  ```
+</Playground>
+
+## Предустановленные цвета
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <FormItem id="progresslabel" top="Прогресс">
+    <Progress aria-labelledby="progresslabel" value={40} />
+  </FormItem>
+  <FormItem id="progresslabelNegative" top="Ошибка">
+    <Progress appearance="negative" aria-labelledby="progresslabelNegative" value={75} />
+  </FormItem>
+  <FormItem id="progresslabelPositive" top="Завершено">
+    <Progress appearance="positive" aria-labelledby="progresslabelPositive" value={100} />
+  </FormItem>
+  ```
+</Playground>
+
+## Пользовательские цвета
+
+Используйте свойство `appearance` для задания произвольного цвета полоски прогресса. Поддерживаются:
+
+### HEX-коды
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress appearance="#FFA500" value={45} />
+  ```
+</Playground>
+
+### CSS-переменные
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <div style={{ '--custom-progress': '#00FF00' }}>
+    <Progress appearance="var(--custom-progress)" value={80} />
+  </div>
+  ```
+</Playground>
+
+## Прозрачный фон
+
+Для отключения фона можно использовать свойство `trackDisable`:
+
+<Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
+  ```jsx
+  <Progress appearance="#FFA500" trackDisable value={65} />
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+Доступность реализована на основе рекомендаций из [Meter WAI-ARIA design pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/).
+
+## Свойства и методы [#api]
+
+<PropsTable name="Progress" />

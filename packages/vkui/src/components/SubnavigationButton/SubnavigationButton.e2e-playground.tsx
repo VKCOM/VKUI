@@ -23,7 +23,7 @@ export const SubnavigationButtonPlayground = (props: ComponentPlaygroundProps) =
         },
         {
           after: [
-            <Counter key="counter" mode="prominent" size="s">
+            <Counter key="counter" mode="primary" appearance="accent-red" size="s">
               3
             </Counter>,
           ],
@@ -51,6 +51,7 @@ export const SubnavigationButtonPlayground = (props: ComponentPlaygroundProps) =
             </Counter>,
           ],
           children: ['Фильтры'],
+          disabled: [undefined, true],
         },
       ]}
     >

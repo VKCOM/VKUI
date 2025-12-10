@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { AdaptivityProvider, type AdaptivityProviderProps } from './AdaptivityProvider';
 
 const story: Meta<AdaptivityProviderProps> = {
-  title: 'Service/AdaptivityProvider',
+  title: 'Configuration/AdaptivityProvider',
   component: AdaptivityProvider,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('AdaptivityProvider', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Конфигурация'],
 };
 
 export default story;

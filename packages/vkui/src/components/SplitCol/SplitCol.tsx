@@ -5,7 +5,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -50,26 +49,38 @@ function useTransitionAnimate(animateProp?: boolean) {
 }
 
 export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Ширина колонки.
+   */
   width?: number | string;
+  /**
+   * Максимальная ширина колонки.
+   */
   maxWidth?: number | string;
+  /**
+   * Минимальная ширина колонки.
+   */
   minWidth?: number | string;
   /**
-   * Если false, то переходы между Panel происходят без анимации
+   * Если false, то переходы между Panel происходят без анимации.
    */
   animate?: boolean;
   /**
-   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`
+   * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`.
    */
   autoSpaced?: boolean;
+  /**
+   * Фиксированное положение колонки.
+   */
   fixed?: boolean;
   /**
-   * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`
+   * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`.
    */
   stretchedOnMobile?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SplitCol
+ * @see https://vkui.io/components/split-layout#split-col
  */
 export const SplitCol = (props: SplitColProps): React.ReactNode => {
   const {
@@ -79,7 +90,6 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
     minWidth,
     animate: animateProp,
     fixed,
-    style,
     autoSpaced,
     stretchedOnMobile,
     getRootRef,
@@ -89,26 +99,27 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
   const { viewWidth } = useAdaptivity();
   const animate = useTransitionAnimate(animateProp);
 
-  const contextValue = useObjectMemo({
-    colRef: baseRef,
-    animate,
-  });
+  const contextValue = React.useMemo(
+    () => ({
+      colRef: baseRef,
+      animate,
+    }),
+    [animate, baseRef],
+  );
 
   return (
     <RootComponent
       {...restProps}
-      style={{
+      baseStyle={{
         width,
         maxWidth,
         minWidth,
-        ...style,
       }}
       getRootRef={baseRef}
       baseClassName={classNames(
         styles.host,
         viewWidthToClassName(breakpointClassNames, viewWidth),
         autoSpaced && classNames(styles.spacedAuto, 'vkuiInternalSplitCol--spaced-auto'),
-        fixed && styles.fixed,
         stretchedOnMobile && styles.stretchedOnMobile,
       )}
     >

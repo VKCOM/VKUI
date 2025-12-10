@@ -1,6 +1,6 @@
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { ImageWithParentWithBorderRadius } from './ImageBase.e2e-playground';
+import { ImageWithBrokenSrc, ImageWithParentWithBorderRadius } from './ImageBase.e2e-playground';
 
 test.describe('ImageBase', () => {
   test.use({
@@ -18,6 +18,15 @@ test.describe('ImageBase', () => {
     // сейчас мы прячем фон после загрузки изображения, чтобы он не выглядывал, а тут проверяем, что такой ситуации больше не происходит.
     await mount(<ImageWithParentWithBorderRadius {...componentPlaygroundProps} />);
     await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 500)));
+    await expectScreenshotClippedToContent();
+  });
+
+  test('Broken src cases', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<ImageWithBrokenSrc {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
 });

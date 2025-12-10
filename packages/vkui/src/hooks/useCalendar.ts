@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { addMonths, endOfDay, isAfter, isBefore, isSameDay, startOfDay, subMonths } from 'date-fns';
+import { isSameDate } from '@vkontakte/vkjs';
 import type { CalendarProps } from '../components/Calendar/Calendar';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, isDayMinMaxRestricted } from '../lib/calendar';
+import { addMonths, endOfDay, startOfDay, subMonths } from '../lib/date';
 
 export interface UseCalendarDependencies
   extends Pick<
@@ -15,7 +16,7 @@ export interface UseCalendarDependencies
     | 'disableFuture'
     | 'disablePast'
   > {
-  value?: Array<Date | null> | Date;
+  value?: Array<Date | null> | Date | null;
 }
 
 export function useCalendar({
@@ -37,13 +38,14 @@ export function useCalendar({
   setFocusedDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
   isDayFocused: (day: Date) => boolean;
   isDayDisabled: (day: Date, withTime?: boolean) => boolean;
-  resetSelectedDay: () => void;
   isMonthDisabled: (month: number, year?: number) => boolean;
   isYearDisabled: (year: number) => boolean;
 } {
   const [viewDate, setViewDate] = React.useState(
     (Array.isArray(value) ? value[0] : value) ?? new Date(),
   );
+  // соответствует дню, на котором сейчас есть фокус
+  // меняется при переключении дней с помощью стрелок
   const [focusedDay, setFocusedDay] = React.useState<Date>();
 
   const setPrevMonth = React.useCallback(() => {
@@ -64,7 +66,7 @@ export function useCalendar({
   );
 
   const isDayFocused = React.useCallback(
-    (day: Date) => Boolean(focusedDay && isSameDay(day, focusedDay)),
+    (day: Date) => Boolean(focusedDay && isSameDate(day, focusedDay)),
     [focusedDay],
   );
 
@@ -75,10 +77,10 @@ export function useCalendar({
         return shouldDisableDate(day);
       }
       if (disableFuture) {
-        return isAfter(startOfDay(day), now);
+        return startOfDay(day) > now;
       }
       if (disablePast) {
-        return isBefore(endOfDay(day), now);
+        return endOfDay(day) < now;
       }
       if (minDateTime || maxDateTime) {
         return isDayMinMaxRestricted(day, { min: minDateTime, max: maxDateTime, withTime });
@@ -138,10 +140,6 @@ export function useCalendar({
     [disableFuture, disablePast, minDateTime, maxDateTime],
   );
 
-  const resetSelectedDay = React.useCallback(() => {
-    setFocusedDay(undefined);
-  }, [setFocusedDay]);
-
   return {
     viewDate,
     setViewDate: handleSetViewDate,
@@ -151,7 +149,6 @@ export function useCalendar({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   };

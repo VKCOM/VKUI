@@ -5,10 +5,11 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasComponent } from '../../types';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
 
@@ -19,7 +20,7 @@ const sizeYClassNames = {
 
 export interface SimpleCellOwnProps extends HasComponent {
   /**
-   * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
+   * Иконка 28 или `<Avatar size={28|32|40|48|72} />`.
    */
   before?: React.ReactNode;
   /**
@@ -59,30 +60,30 @@ export interface SimpleCellOwnProps extends HasComponent {
    */
   after?: React.ReactNode;
   /**
-   * Помечает ячейку неактивной
+   * Блокировка взаимодействия с компонентом.
    */
   disabled?: boolean;
   /**
-   * Управляет видимостью иконки шеврона `›`
+   * Управляет видимостью иконки шеврона `›`.
    *
    * - `auto` - добавляет шеврон справа только для платформы `ios`;
    * - `always` - всегда показывает шеврон.
    */
   chevron?: 'auto' | 'always';
   /**
-   * Размер chevron
+   * Размер chevron.
    */
   chevronSize?: 's' | 'm';
   /**
-   * Включает многострочный режим для отображения текста
+   * Включает многострочный режим для отображения текста.
    */
   multiline?: boolean;
 }
 
-export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
+export interface SimpleCellProps extends SimpleCellOwnProps, TappableOmitProps {}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SimpleCell
+ * @see https://vkui.io/components/simple-cell
  */
 export const SimpleCell = ({
   badgeBeforeTitle,
@@ -98,7 +99,6 @@ export const SimpleCell = ({
   overTitle,
   subtitle,
   extraSubtitle,
-  className,
   chevronSize = 'm',
   ...restProps
 }: SimpleCellProps): React.ReactNode => {
@@ -112,12 +112,11 @@ export const SimpleCell = ({
   return (
     <Tappable
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         restProps.disabled && styles.disabled,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         multiline && styles.mult,
-        className,
       )}
     >
       <div className={classNames(styles.before, platform === 'ios' && styles.beforeIos)}>
@@ -127,12 +126,14 @@ export const SimpleCell = ({
         {overTitle && (
           <Subhead Component="span" className={classNames(styles.text, styles.overTitle)}>
             {overTitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Subhead>
         )}
         <div className={styles.content}>
           {badgeBeforeTitle && <span className={styles.badge}>{badgeBeforeTitle}</span>}
           <Headline Component="span" className={styles.children} weight="3">
             {children}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Headline>
           {hasReactNode(badgeAfterTitle) && <span className={styles.badge}>{badgeAfterTitle}</span>}
         </div>
@@ -141,6 +142,7 @@ export const SimpleCell = ({
             {badgeBeforeSubtitle && <span className={styles.badge}>{badgeBeforeSubtitle}</span>}
             <Footnote normalize={false} className={classNames(styles.text, styles.subtitle)}>
               {subtitle}
+              <VisuallyHidden>&nbsp;</VisuallyHidden>
             </Footnote>
             {badgeAfterSubtitle && <span className={styles.badge}>{badgeAfterSubtitle}</span>}
           </div>
@@ -148,6 +150,7 @@ export const SimpleCell = ({
         {extraSubtitle && (
           <Footnote className={classNames(styles.text, styles.extraSubtitle)}>
             {extraSubtitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
           </Footnote>
         )}
       </div>

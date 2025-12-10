@@ -3,7 +3,7 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getFetchPriorityProp } from '../../lib/utils';
 import type { HasComponent, HasRef, HasRootRef } from '../../types';
 import { Card, type CardProps } from '../Card/Card';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Headline } from '../Typography/Headline/Headline';
@@ -13,38 +13,46 @@ import styles from './ContentCard.module.css';
 export interface ContentCardProps
   extends HasRootRef<HTMLDivElement>,
     HasComponent,
-    Omit<TappableProps, 'getRootRef' | 'crossOrigin' | 'title'>,
+    Omit<TappableOmitProps, 'getRootRef' | 'crossOrigin' | 'title' | 'src'>,
     Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>,
     HasRef<HTMLImageElement> {
   /**
-   Текст над заголовком
+   Текст над заголовком.
    */
   overTitle?: React.ReactNode;
   /**
-   Заголовок
+   Заголовок.
    */
   title?: React.ReactNode;
   /**
-   Позволяет поменять тег используемый для заголовка
+   Позволяет поменять тег используемый для заголовка.
    */
   titleComponent?: React.ElementType;
   /**
-   Текст
+   Текст.
    */
   description?: React.ReactNode;
   /**
-   Нижний текст
+   Нижний текст.
    */
   caption?: React.ReactNode;
   /**
-    Максимальная высота изображения
+    Максимальная высота изображения.
    */
   maxHeight?: number;
+  /**
+   * Внешний вид карточки.
+   */
   mode?: CardProps['mode'];
+  /**
+   * Пользовательское значения стиля `object-fit` для картинки
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
+   */
+  imageObjectFit?: React.CSSProperties['objectFit'];
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ContentCard
+ * @see https://vkui.io/components/content-card
  */
 export const ContentCard = ({
   overTitle,
@@ -63,7 +71,7 @@ export const ContentCard = ({
   src,
   srcSet,
   alt = '',
-  width,
+  width = '100%',
   height,
   crossOrigin,
   decoding,
@@ -72,6 +80,7 @@ export const ContentCard = ({
   sizes,
   useMap,
   fetchPriority,
+  imageObjectFit,
   hasHover = false,
   hasActive = false,
   Component = 'li',
@@ -86,10 +95,10 @@ export const ContentCard = ({
       className={classNames(restProps.disabled && styles.disabled, className)}
     >
       <Tappable
-        {...restProps}
         hasHover={hasHover}
         hasActive={hasActive}
-        className={styles.tappable}
+        {...restProps}
+        baseClassName={styles.tappable}
       >
         {(src || srcSet) && (
           <img
@@ -106,8 +115,8 @@ export const ContentCard = ({
             useMap={useMap}
             {...getFetchPriorityProp(fetchPriority)}
             height={height}
-            style={{ maxHeight }}
-            width="100%"
+            width={width}
+            style={{ maxHeight, objectFit: imageObjectFit }}
           />
         )}
         <div className={styles.body}>

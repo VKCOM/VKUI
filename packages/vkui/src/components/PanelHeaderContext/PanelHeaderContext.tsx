@@ -18,12 +18,20 @@ const sizeXClassNames = {
 };
 
 export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Управление состоянием всплывающего элемента
+   * true - элемент открыт, false - элемент закрыт.
+   */
   opened: boolean;
+
+  /**
+   * Обработчик закрытия всплывающего элемента.
+   */
   onClose: VoidFunction;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderContext
+ * @see https://vkui.io/components/panel-header-context
  */
 export const PanelHeaderContext = ({
   children,

@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
 import {
@@ -17,6 +19,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/DefaultIcon';
 import type { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { onboardingTooltipContainerAttr } from './OnboardingTooltipContainer';
@@ -36,6 +39,8 @@ type AllowedFloatingComponentProps = Pick<
   | 'children'
   | 'onPlacementChange'
   | 'disableFlipMiddleware'
+  | 'disableShiftMiddleware'
+  | 'disableFocusTrap'
 >;
 
 type AllowedTooltipBaseProps = Omit<
@@ -57,24 +62,29 @@ type AllowedFloatingArrowProps = {
 export interface OnboardingTooltipProps
   extends AllowedFloatingComponentProps,
     AllowedTooltipBaseProps,
-    AllowedFloatingArrowProps {
+    AllowedFloatingArrowProps,
+    Pick<UseFocusTrapProps, 'restoreFocus'> {
   /**
    * Скрывает стрелку, указывающую на якорный элемент.
    */
   disableArrow?: boolean;
   /**
-   * Callback, который вызывается при клике по любому месту в пределах экрана.
+   * Обработчик, который вызывается при нажатии по любому месту в пределах экрана.
    */
   onClose?: (this: void) => void;
+  /**
+   * [a11y] Метка для подложки-кнопки, для описания того, что произойдёт при нажатии.
+   */
+  overlayLabel?: string;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Tooltip
+ * @see https://vkui.io/components/onboarding-tooltip
  */
 export const OnboardingTooltip = ({
-  id: idProp,
+  'id': idProp,
   children,
-  shown: shownProp = true,
+  'shown': shownProp = true,
   arrowPadding = DEFAULT_ARROW_PADDING,
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   offsetByMainAxis = 0,
@@ -82,13 +92,20 @@ export const OnboardingTooltip = ({
   arrowOffset = 0,
   isStaticArrowOffset = false,
   onClose,
-  placement: placementProp = 'bottom-start',
+  'placement': placementProp = 'bottom-start',
   maxWidth = TOOLTIP_MAX_WIDTH,
-  style: styleProp,
+  'style': styleProp,
   getRootRef,
   disableArrow = false,
   onPlacementChange,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
+  overlayLabel = 'Закрыть',
+  title,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  restoreFocus,
+  disableFocusTrap,
   ...restProps
 }: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -109,6 +126,7 @@ export const OnboardingTooltip = ({
     arrowHeight,
     arrowPadding,
     disableFlipMiddleware,
+    disableShiftMiddleware,
   });
   const {
     x: floatingDataX,
@@ -129,25 +147,39 @@ export const OnboardingTooltip = ({
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
 
+  const titleId = React.useId();
+  if (process.env.NODE_ENV === 'development' && !title && !ariaLabel && !ariaLabelledBy) {
+    warn(
+      'Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+  }
+
   let tooltip: React.ReactPortal | null = null;
   if (shown) {
-    const floatingStyle = convertFloatingDataToReactCSSProperties(
-      positionStrategy,
-      floatingDataX,
-      floatingDataY,
-    );
-
-    if (styleProp) {
-      Object.assign(floatingStyle, styleProp);
-    }
+    const floatingStyle = convertFloatingDataToReactCSSProperties({
+      strategy: positionStrategy,
+      x: floatingDataX,
+      y: floatingDataY,
+    });
 
     tooltip = createPortal(
-      <>
+      <FocusTrap
+        role="dialog"
+        aria-modal="true"
+        aria-label={ariaLabel}
+        aria-labelledby={title ? titleId : ariaLabel ? undefined : ariaLabelledBy}
+        onClose={onClose}
+        disabled={disableFocusTrap}
+        restoreFocus={restoreFocus}
+      >
+        <button aria-label={overlayLabel} className={styles.overlay} onClickCapture={onClose} />
         <TooltipBase
           {...restProps}
           id={tooltipId}
+          title={title}
+          titleId={title ? titleId : undefined}
           getRootRef={tooltipRef}
-          style={floatingStyle}
+          style={mergeStyle(floatingStyle, styleProp)}
           maxWidth={maxWidth}
           arrowProps={
             disableArrow
@@ -161,8 +193,7 @@ export const OnboardingTooltip = ({
                 }
           }
         />
-        <div className={styles.overlay} onClickCapture={onClose} />
-      </>,
+      </FocusTrap>,
       tooltipContainer,
     );
   }

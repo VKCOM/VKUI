@@ -1,0 +1,41 @@
+---
+description: Хук для отслеживания предпочтения пользователя в уменьшении анимации.
+---
+
+<Overview type="hook" forcedPath="lib/animation/useReducedMotion.ts">
+
+# unstable_useReducedMotion
+
+Хук для отслеживания предпочтения пользователя в уменьшении анимации.
+
+</Overview>
+
+## Возвращаемое значение
+
+Возвращает `true`, если пользователь предпочитает уменьшенную анимацию,
+`false` - если нет, и `undefined` во время серверного рендеринга или во время
+первого рендеринга на клиенте.
+
+## Пример использования
+
+```jsx
+const App = () => {
+  const reducedMotion = useReducedMotion();
+
+  return (
+    <Icon24Spinner>
+      {reducedMotion === false && (
+        <animateTransform
+          attributeType="XML"
+          attributeName="transform"
+          type="rotate"
+          from={`0 12 12`}
+          to={`360 12 12`}
+          dur="0.7s"
+          repeatCount="indefinite"
+        />
+      )}
+    </Icon24Spinner>
+  );
+};
+```

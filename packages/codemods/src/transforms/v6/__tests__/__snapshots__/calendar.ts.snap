@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`calendar transforms correctly 1`] = `
+exports[`calendar > transforms correctly 1`] = `
 "import { Calendar } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = ({ value, setValue, ...rest }) => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Calendar
         value={value}
         onChange={setValue}
@@ -19,7 +19,7 @@ const App = ({ value, setValue, ...rest }) => {
         changeMinutesLabel="changeMinutesLabel"
         changeHoursLabel="changeHoursLabel"
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

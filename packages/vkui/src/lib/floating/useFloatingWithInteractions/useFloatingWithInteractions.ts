@@ -33,6 +33,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   // UseFloating
   placement: placementProp = 'bottom',
+  strategy: strategyProp = 'fixed',
   middlewares,
   hoverDelay = 0,
   closeAfterClick = false,
@@ -73,7 +74,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const blockMouseEnterRef = React.useRef(false);
   const blockFocusRef = React.useRef(false);
-  const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleCloseOnReferenceClickOutsideDisabled =
     disabled || disableCloseOnClickOutside || willBeHide || !shownLocalState.shown;
@@ -84,7 +85,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   // Библиотека `floating-ui`
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
-    strategy: 'fixed',
+    strategy: strategyProp,
     placement: placementProp,
     middleware: middlewares,
     whileElementsMounted,
@@ -129,7 +130,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       return;
     }
     if (blockFocusRef.current) {
-      /* istanbul ignore next: в Jest не воспроизводится баг на вебе (cм. onRestoreFocus) */
+      /* istanbul ignore next: в Vitest не воспроизводится баг на вебе (cм. onRestoreFocus) */
       blockFocusRef.current = false;
       return;
     }
@@ -229,9 +230,21 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     commitShownLocalState(false, 'callback');
   }, [commitShownLocalState]);
 
-  const handleRestoreFocus = React.useCallback(
-    () => (triggerOnFocus ? blockFocusRef.current : true),
-    [triggerOnFocus],
+  const handleRestoreFocus: UseFloatingWithInteractionsReturn['onRestoreFocus'] = React.useCallback(
+    (restoreFocus = true) => {
+      if (!restoreFocus) {
+        return false;
+      }
+      if (restoreFocus === true) {
+        return triggerOnFocus ? blockFocusRef.current : true;
+      } else if (restoreFocus === 'anchor-element') {
+        return refs.reference.current as HTMLElement;
+      } else if (restoreFocus instanceof HTMLElement) {
+        return restoreFocus;
+      }
+      return false;
+    },
+    [refs.reference, triggerOnFocus],
   );
 
   const handleEscapeKeyDown = React.useCallback(() => {
@@ -308,55 +321,54 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     [shownLocalState, shownFinalState, willBeHide, onShownChanged],
   );
 
-  const referencePropsRef = React.useRef<ReferenceProps>({});
-  const floatingPropsRef = React.useRef<FloatingProps>({ style: {} });
+  const referenceProps: ReferenceProps = {};
+  const floatingProps: FloatingProps = { style: {} };
 
   if (shownFinalState) {
-    floatingPropsRef.current.style = convertFloatingDataToReactCSSProperties(
+    floatingProps.style = convertFloatingDataToReactCSSProperties({
       strategy,
       x,
       y,
-      undefined,
       middlewareData,
-    );
+    });
 
     if (disableInteractive) {
-      floatingPropsRef.current.style.pointerEvents = 'none';
+      floatingProps.style.pointerEvents = 'none';
     }
   }
 
   if (triggerOnFocus) {
-    referencePropsRef.current.onFocus = handleFocusOnReference;
-    referencePropsRef.current.onBlur = handleBlurOnReference;
+    referenceProps.onFocus = handleFocusOnReference;
+    referenceProps.onBlur = handleBlurOnReference;
   }
 
   if (triggerOnClick) {
-    referencePropsRef.current.onClick = handleClickOnReference;
+    referenceProps.onClick = handleClickOnReference;
   }
 
   if (triggerOnHover) {
-    referencePropsRef.current.onMouseOver = handleMouseEnterOnBoth;
+    referenceProps.onMouseOver = handleMouseEnterOnBoth;
 
     if (closeAfterClick && !triggerOnClick) {
-      referencePropsRef.current.onClick = handleClickOnReferenceForOnlyClose;
+      referenceProps.onClick = handleClickOnReferenceForOnlyClose;
     }
 
     if (!disableInteractive) {
-      floatingPropsRef.current.onMouseOver = handleMouseEnterOnBoth;
+      floatingProps.onMouseOver = handleMouseEnterOnBoth;
     }
   }
 
   if (triggerOnHover || triggerOnFocus) {
-    referencePropsRef.current.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
+    referenceProps.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
 
     if (!disableInteractive) {
-      floatingPropsRef.current.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
+      floatingProps.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
     }
   }
 
   if (shownFinalState) {
-    floatingPropsRef.current.onAnimationStart = handleFloatingAnimationStart;
-    floatingPropsRef.current.onAnimationEnd = handleFloatingAnimationEnd;
+    floatingProps.onAnimationStart = handleFloatingAnimationStart;
+    floatingProps.onAnimationEnd = handleFloatingAnimationEnd;
   }
 
   return {
@@ -364,8 +376,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     shown: shownFinalState,
     willBeHide,
     refs,
-    referenceProps: referencePropsRef.current,
-    floatingProps: floatingPropsRef.current,
+    referenceProps,
+    floatingProps,
     middlewareData,
     onClose: handleOnClose,
     // FocusTrap уже определяет нажатие на ESC, поэтому название события содержит конкретный код

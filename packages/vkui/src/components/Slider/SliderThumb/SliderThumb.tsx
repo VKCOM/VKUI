@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
@@ -70,11 +71,7 @@ export const SliderThumb = ({
     middleware: memoizedMiddlewares,
   });
 
-  const {
-    value: isHovered,
-    setTrue: setHoveredTrue,
-    setFalse: setHoveredFalse,
-  } = useBooleanState(false);
+  const [isHovered, setHoveredTrue, setHoveredFalse] = useBooleanState(false);
 
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 
@@ -118,11 +115,11 @@ export const SliderThumb = ({
         <TooltipBase
           appearance="neutral"
           getRootRef={refs.setFloating}
-          style={convertFloatingDataToReactCSSProperties(
-            floatingPositionStrategy,
-            floatingDataX,
-            floatingDataY,
-          )}
+          style={convertFloatingDataToReactCSSProperties({
+            strategy: floatingPositionStrategy,
+            x: floatingDataX,
+            y: floatingDataY,
+          })}
           arrowProps={{
             coords: arrowCoords,
             placement: resolvedPlacement,

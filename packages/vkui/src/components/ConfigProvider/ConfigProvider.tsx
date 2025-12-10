@@ -3,58 +3,48 @@
 import * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
-import { TokensClassProvider } from '../../lib/tokens';
+import { useAutoDetectDirection } from '../../hooks/useAutoDetectDirection';
+import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';
 import { excludeKeysWithUndefined } from '../../lib/utils';
 import {
   ConfigProviderContext,
   type ConfigProviderContextInterface,
   useConfigProvider,
+  useConfigProviderContextMemo,
 } from './ConfigProviderContext';
 
 export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ConfigProvider
+ * @see https://vkui.io/components/config-provider
  */
 export const ConfigProvider = (propsRaw: ConfigProviderProps): React.ReactNode => {
   const props = excludeKeysWithUndefined(propsRaw);
   const parentConfig = useConfigProvider();
 
-  const {
-    children,
-    hasCustomPanelHeaderAfter,
-    customPanelHeaderAfterMinWidth,
-    isWebView,
-    transitionMotionEnabled,
-    platform,
-    locale,
-    colorScheme: colorSchemeProp,
-    tokensClassNames,
-  } = {
+  const mergeProps = {
     ...parentConfig,
     ...props,
   };
 
-  const colorScheme = useAutoDetectColorScheme(colorSchemeProp);
+  const colorScheme = useAutoDetectColorScheme(mergeProps.colorScheme);
+  const direction = useAutoDetectDirection(mergeProps.direction);
 
-  const configContext = useObjectMemo({
-    hasCustomPanelHeaderAfter,
-    customPanelHeaderAfterMinWidth,
-    isWebView,
-    transitionMotionEnabled,
-    platform,
-    locale,
-    tokensClassNames,
+  const configContext = useConfigProviderContextMemo({
+    ...mergeProps,
     colorScheme,
+    direction,
   });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
       <IconAppearanceProvider value={colorScheme}>
-        <TokensClassProvider>{children}</TokensClassProvider>
+        <TokensClassProvider>{mergeProps.children}</TokensClassProvider>
       </IconAppearanceProvider>
     </ConfigProviderContext.Provider>
   );

@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
-import { usePrevious } from '../../hooks/usePrevious';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
@@ -29,10 +28,14 @@ export const useCSSKeyframesAnimationController = (
   }: UseCSSAnimationControllerCallback = {},
   disableInitAnimation = false,
 ): [AnimationState, AnimationHandlers] => {
-  const [state, setState] = useState<AnimationState>(() =>
+  const [state, setState] = React.useState<AnimationState>(() =>
     disableInitAnimation ? (stateProp === 'enter' ? 'entered' : 'exited') : stateProp,
   );
-  const prevState = usePrevious(stateProp);
+
+  const prevStateRef = React.useRef<'enter' | 'exit' | undefined>(undefined);
+  React.useEffect(() => {
+    prevStateRef.current = stateProp;
+  });
 
   const onAnimationStart = () => {
     if (state === 'enter') {
@@ -67,6 +70,8 @@ export const useCSSKeyframesAnimationController = (
 
   useIsomorphicLayoutEffect(
     function updateState() {
+      const prevState = prevStateRef.current;
+
       if (prevState === stateProp) {
         return;
       }
@@ -89,7 +94,7 @@ export const useCSSKeyframesAnimationController = (
           break;
       }
     },
-    [state, prevState, stateProp, onEnter, onExit],
+    [state, stateProp, onEnter, onExit],
   );
 
   return [state, { onAnimationStart, onAnimationEnd }];

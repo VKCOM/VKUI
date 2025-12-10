@@ -1,6 +1,7 @@
 'use client';
 
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { ChipsInputBase } from '../ChipsInputBase/ChipsInputBase';
 import type { ChipOption, ChipsInputBaseProps } from '../ChipsInputBase/types';
 import type { FormFieldProps } from '../FormField/FormField';
@@ -9,15 +10,15 @@ import { useChipsInput, type UseChipsInputProps } from './useChipsInput';
 export interface ChipsInputProps<Option extends ChipOption>
   extends ChipsInputBaseProps<Option>,
     UseChipsInputProps<Option>,
-    Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after'> {
+    Pick<FormFieldProps, 'status' | 'mode' | 'before' | 'after' | 'maxHeight'> {
   /**
-   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
   allowClearButton?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ChipsInput
+ * @see https://vkui.io/components/chips-input
  */
 export const ChipsInput = <Option extends ChipOption>({
   // option
@@ -28,17 +29,53 @@ export const ChipsInput = <Option extends ChipOption>({
   // input
   getRef,
   inputValue: inputValueProp,
-  defaultInputValue: inputDefaultValueProp,
+  defaultInputValue: defaultInputValueProp,
   onInputChange: onInputChangeProp,
   getOptionValue,
   getOptionLabel,
   getNewOptionData,
+  disabled: disabledProp,
+  readOnly: readOnlyProp,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
+  id: idProp,
+  placeholder: placeholderProp,
 
   // other
-  disabled,
   allowClearButton,
+  delimiter,
+
+  slotProps,
   ...restProps
 }: ChipsInputProps<Option>): React.ReactNode => {
+  const {
+    getRootRef: getInputRef,
+    value: resolvedInputValue,
+    defaultValue: resolvedInputDefaultValue,
+    onChange: resolvedOnInputChange,
+    disabled,
+    readOnly,
+    onFocus,
+    onBlur,
+    id,
+    placeholder,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      value: inputValueProp,
+      defaultValue: defaultInputValueProp,
+      onChange: onInputChangeProp,
+      disabled: disabledProp,
+      readOnly: readOnlyProp,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      id: idProp,
+      placeholder: placeholderProp,
+    },
+    slotProps?.input,
+  );
+
   const {
     value,
     addOptionFromInput,
@@ -59,27 +96,39 @@ export const ChipsInput = <Option extends ChipOption>({
     getNewOptionData,
 
     // input
-    inputValue: inputValueProp,
-    defaultInputValue: inputDefaultValueProp,
-    onInputChange: onInputChangeProp,
+    inputValue: resolvedInputValue as string,
+    defaultInputValue: resolvedInputDefaultValue as string,
+    onInputChange: resolvedOnInputChange,
 
     // other
     disabled,
+    delimiter,
   });
-  const inputRef = useExternRef(getRef, inputRefHook);
+  const inputRef = useExternRef(getInputRef, inputRefHook);
 
   return (
     <ChipsInputBase
-      {...restProps}
-      disabled={disabled}
       value={value}
       clearButtonShown={allowClearButton && (!!value.length || !!inputValue.length)}
       onAddChipOption={addOptionFromInput}
       onRemoveChipOption={removeOption}
       onClear={clearOptions}
-      getRef={inputRef}
-      inputValue={inputValue}
-      onInputChange={onInputChange}
+      slotProps={{
+        ...slotProps,
+        input: {
+          getRootRef: inputRef,
+          value: inputValue,
+          onChange: onInputChange,
+          ...inputRest,
+        },
+      }}
+      disabled={disabled}
+      readOnly={readOnly}
+      onFocus={onFocusProp}
+      onBlur={onBlur}
+      id={id}
+      placeholder={placeholder}
+      {...restProps}
     />
   );
 };

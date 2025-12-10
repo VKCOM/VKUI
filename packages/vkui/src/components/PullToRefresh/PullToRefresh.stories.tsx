@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomInt, getRandomUser, getRandomUsers } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
@@ -10,13 +11,11 @@ import { List } from '../List/List';
 import { PullToRefresh, type PullToRefreshProps } from './PullToRefresh';
 
 const story: Meta<PullToRefreshProps> = {
-  title: 'Blocks/PullToRefresh',
+  title: 'Feedback/PullToRefresh',
   component: PullToRefresh,
-  parameters: {
-    ...CanvasFullLayout,
-    ...DisableCartesianParam,
-  },
+  parameters: createStoryParameters('PullToRefresh', CanvasFullLayout, DisableCartesianParam),
   decorators: [withSinglePanel, withVKUILayout],
+  tags: ['Обратная связь'],
 };
 
 export default story;

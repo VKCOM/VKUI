@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
 import { FormField, type FormFieldProps } from './FormField';
 
@@ -10,11 +11,12 @@ const iconsPresets = getFormFieldIconsPresets();
 const story: Meta<FormFieldProps> = {
   title: 'Forms/FormField',
   component: FormField,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('FormField', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     before: iconsPresets,
     after: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;
@@ -25,6 +27,7 @@ export const Playground: Story = {
   render: (args) => (
     <FormField {...args}>
       <input
+        aria-label="Напишите сообщение..."
         style={{
           position: 'relative',
           display: 'block',

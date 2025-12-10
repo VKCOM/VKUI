@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "echo no build",
-    "test": "yarn run --top-level jest",
+    "test": "node --test '**/*.test.*'",
+    "test:update-snapshots": "node --test-update-snapshots --test '**/*.test.*'",
     "test:ci": "yarn test"
   }
 }

@@ -1,0 +1,210 @@
+---
+description: Компонент для удобной работы с pointer-событиями.
+---
+
+<Overview group="utils">
+
+# Touch [tag:component]
+
+Компонент для удобной работы с `pointer`-событиями.
+Позволяет отслеживать свайпы, нажатия и движения указателя, а также управлять их поведением.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const circleStyle = {
+  width: 40,
+  height: 40,
+  borderRadius: '50%',
+  background: 'var(--vkui--color_background_accent)',
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  marginLeft: -20,
+  marginTop: -20,
+  touchAction: 'none',
+};
+
+const containerStyle = {
+  height: 200,
+  border: '8px solid var(--vkui--color_icon_secondary)',
+  position: 'relative',
+};
+
+const [shiftX, setShiftX] = React.useState(0);
+const [shiftY, setShiftY] = React.useState(0);
+const [limitX, setLimitX] = React.useState(0);
+const [limitY, setLimitY] = React.useState(0);
+
+const circleRef = React.useRef(null);
+const startX = React.useRef(0);
+const startY = React.useRef(0);
+
+React.useLayoutEffect(() => {
+  setLimitX(circleRef.current.offsetLeft);
+  setLimitY(circleRef.current.offsetTop);
+});
+
+const getValueWithLimit = (value, limit) => {
+  return value > limit ? limit : value < -limit ? -limit : value;
+};
+
+const onMove = (e) => {
+  const shiftX = startX.current + e.shiftX;
+  const shiftY = startY.current + e.shiftY;
+
+  setShiftX(getValueWithLimit(shiftX, limitX));
+  setShiftY(getValueWithLimit(shiftY, limitY));
+};
+
+const onEnd = (e) => {
+  const shiftX = startX.current + e.shiftX;
+  const shiftY = startY.current + e.shiftY;
+
+  startX.current = getValueWithLimit(shiftX, limitX);
+  startY.current = getValueWithLimit(shiftY, limitY);
+};
+
+const limitExceeded = Math.abs(shiftX) >= limitX || Math.abs(shiftY) >= limitY;
+
+return (
+  <div
+    style={{
+      ...containerStyle,
+      borderColor: limitExceeded
+        ? 'var(--vkui--color_icon_negative)'
+        : 'var(--vkui--color_icon_secondary)',
+    }}
+  >
+    <Touch
+      getRootRef={circleRef}
+      onMove={onMove}
+      onEnd={onEnd}
+      style={{
+        ...circleStyle,
+        transform: `translate(${shiftX}px, ${shiftY}px)`,
+      }}
+    />
+  </div>
+);
+```
+
+</Playground>
+
+Данный компонент представляет собой унифицированный интерфейс для обработки пользовательских взаимодействий
+на различных устройствах (десктопы с мышью, сенсорные устройства).
+`Touch` подходит для реализации компонентов, которые требуют кросс-платформенной обработки касаний.
+Примерами таких компонентов являются [`Slider`](/components/slider), [`Gallery`](/components/gallery)
+или [`PullToRefresh`](/components/pull-to-refresh), которые работают на базе `Touch`.
+
+> **Обратите внимание**
+>
+> Если вам нужен интерактивный компонент по типу кнопки для обработки событий нажатия,
+> то используйте компонент [`Tappable`](/components/tappable).
+
+## Обработка взаимодействия
+
+Компонент позволяет обрабатывать различные фазы взаимодействия через соответствующие обработчики:
+
+### Начало взаимодействия
+
+- `onStart` — общий обработчик начала перемещения;
+- `onStartX` — обработчик начала горизонтального перемещения;
+- `onStartY` — обработчик начала вертикального перемещения.
+
+### Движение
+
+- `onMove` — общий обработчик перемещения;
+- `onMoveX` — обработчик горизонтального перемещения;
+- `onMoveY` — обработчик вертикального перемещения.
+
+### Завершение взаимодействия
+
+- `onEnd` - общий обработчик завершения перемещения;
+- `onEndX` - обработчик завершения горизонтального перемещения;
+- `onEndY` - обработчик завершения вертикального перемещения.
+
+### Параметры взаимодействия
+
+Каждый обработчик, перечисленный выше, содержит в параметре объект со следующей информацией:
+
+- `startX` и `startY` — начальные горизонтальные и вертикальные координаты указателя соответственно;
+- `startT` — время начала взаимодействия;
+- `duration` — длительность взаимодействия в миллисекундах;
+- `isPressed` — флаг активного нажатия;
+- `isY` и `isX` — флаги вертикального и горизонтального перемещения соответственно;
+- `isSlideY` и `isSlideX` — флаги вертикального и горизонтального свайпа соответственно;
+- `isSlide` — общий флаг свайпа;
+- `clientX` и `clientY` — текущие координаты указателя;
+- `shiftX` и `shiftY` — смещение относительно начальной точки по горизонтали и вертикали соответственно;
+- `shiftXAbs` и `shiftYAbs` — абсолютное смещение по горизонтали и вертикали соответственно;
+- `originalEvent` — оригинальное событие.
+
+## События наведения/снятия указателя
+
+Данные обработчики вызываются только для указателя, который поддерживает события `pointerenter`/`pointerleave`, и мыши.
+
+- `onEnter` — обработчик входа курсора в область
+- `onLeave` — обработчик выхода курсора из области
+
+Свойство `usePointerHover` позволяет использовать только `pointer`-события для наведения, что работает даже на отключенных элементах:
+
+```jsx
+<Touch usePointerHover onEnter={handleEnter} onLeave={handleLeave}>
+  <input disabled /> {/* `onEnter` и `onLeave` сработают при взаимодействии с полем  */}
+</Touch>
+```
+
+## Настройка поведения
+
+### Пороговое значение свайпа
+
+Свойство `slideThreshold` определяет минимальное расстояние в пикселях, необходимое для активации свайпа. По умолчанию равно `5`.
+
+```jsx
+<Touch slideThreshold={10}>
+  <div>Свайп активируется при перемещении на 10px</div>
+</Touch>
+```
+
+### Предотвращение кликов
+
+Свойство `noSlideClick` позволяет блокировать клики после распознавания свайпа:
+
+```jsx
+<Touch noSlideClick onMove={handleMove}>
+  <a href="/link">Ссылка не будет активироваться в случае свайпа</a>
+</Touch>
+```
+
+### Управление всплытием событий
+
+Свойство `stopPropagation` позволяет остановить всплытие событий:
+
+```jsx
+<Touch stopPropagation onStart={handleStart} onMove={handleMove} onEnd={handleEnd}>
+  <div>События не будут всплывать выше</div>
+</Touch>
+```
+
+### Фаза capture
+
+Свойство `useCapture` позволяет использовать фазу `capture` для событий:
+
+```jsx
+<Touch useCapture onStart={handleStart}>
+  <div>События будут перехватываться в фазе `capture`</div>
+</Touch>
+```
+
+## Мультитач
+
+При обнаружении мультитача (более одного касания) жест прерывается и вызывается обработчик `onEnd`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Touch" />

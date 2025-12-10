@@ -1,0 +1,42 @@
+/* stylelint-disable selector-max-type, selector-max-universal */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul,
+menu {
+  list-style: none;
+}
+
+/* :not(:has(*:focus)) позволяет не триггерить скролл при потере фокуса с модальных окон */
+html:not(:has(*:focus)) {
+  scroll-padding-block-start: var(--vkui_docs--navbar-height);
+}
+
+body {
+  font-family: var(--vkui--font_family_base);
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  font-weight: var(--vkui--font_weight_base3);
+  line-height: var(--vkui--font_paragraph--line_height--regular);
+  background-color: var(--vkui--color_background_content);
+}
+
+.yes-uwu {
+  display: none;
+}
+
+.uwu .no-uwu {
+  display: none;
+}
+
+.uwu .yes-uwu {
+  display: block;
+}

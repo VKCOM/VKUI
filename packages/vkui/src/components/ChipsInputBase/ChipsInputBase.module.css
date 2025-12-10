@@ -1,17 +1,25 @@
 .host {
   --vkui_internal--chips_input_base_container_gap: 4px;
 
+  position: relative;
+  z-index: var(--vkui_internal--z_index_form_field_element);
+  display: flex;
   flex-grow: 1;
   flex-shrink: 1;
-  position: relative;
-  display: flex;
   flex-wrap: wrap;
   max-inline-size: 100%;
-  list-style: none;
-  margin: 0;
   padding: var(--vkui_internal--chips_input_base_container_gap);
-  z-index: var(--vkui_internal--z_index_form_field_element);
+  margin: 0;
   overflow: hidden;
+}
+
+.listBox {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-inline-size: 100%;
+  overflow: hidden;
+  list-style: none;
 }
 
 .chip {
@@ -20,29 +28,29 @@
 }
 
 .el {
-  flex: 1;
   position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 1;
   inline-size: 100%;
-  margin-block: 2px 4px;
-  margin-inline: 10px 2px;
   padding: 0;
   color: var(--vkui--color_text_primary);
+  appearance: none;
   background: transparent;
   border: 0;
   box-shadow: none;
-  appearance: none;
 }
 
+.hasPlaceholder .el,
+.hasInputValue .el,
 .el:not(:read-only):focus {
   min-inline-size: 64px;
+  padding-block: 2px 4px;
+  padding-inline: 10px 2px;
 }
 
 .el::-ms-clear {
   display: none;
-}
-
-.el:disabled {
-  opacity: var(--vkui--opacity_disable_accessibility);
 }
 
 .el::placeholder {
@@ -60,9 +68,9 @@
 }
 
 .hasPlaceholder .el {
-  white-space: nowrap;
+  block-size: 100%;
   text-overflow: ellipsis;
-  margin-inline: calc(12px - var(--vkui_internal--chips_input_base_container_gap)) 0;
+  white-space: nowrap;
 }
 
 /**

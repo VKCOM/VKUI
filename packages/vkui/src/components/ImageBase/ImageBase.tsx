@@ -2,12 +2,26 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
 import { minOr } from '../../lib/comparing';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { getFetchPriorityProp } from '../../lib/utils';
-import type { AnchorHTMLAttributesOnly, HasRef, HasRootRef, LiteralUnion } from '../../types';
+import type {
+  AnchorHTMLAttributesOnly,
+  CSSCustomProperties,
+  HasRef,
+  HasRootRef,
+  LiteralUnion,
+} from '../../types';
 import { Clickable } from '../Clickable/Clickable';
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge/ImageBaseBadge';
+import {
+  type FloatElementIndentation,
+  type FloatElementPlacement,
+  ImageBaseFloatElement,
+  type ImageBaseFloatElementProps,
+} from './ImageBaseFloatElement/ImageBaseFloatElement';
 import { ImageBaseOverlay, type ImageBaseOverlayProps } from './ImageBaseOverlay/ImageBaseOverlay';
 import { ImageBaseContext } from './context';
 import type { ImageBaseContextProps, ImageBaseExpectedIconProps, ImageBaseSize } from './types';
@@ -20,6 +34,9 @@ export type {
   ImageBaseBadgeProps,
   ImageBaseOverlayProps,
   ImageBaseContextProps,
+  ImageBaseFloatElementProps,
+  FloatElementPlacement,
+  FloatElementIndentation,
 };
 
 export {
@@ -49,11 +66,11 @@ export interface ImageBaseProps
    */
   size?: LiteralUnion<ImageBaseSize, number>;
   /**
-   * Ширина изображения
+   * Ширина изображения.
    */
   widthSize?: number | string;
   /**
-   * Высота изображения
+   * Высота изображения.
    */
   heightSize?: number | string;
   /**
@@ -81,14 +98,28 @@ export interface ImageBaseProps
   withTransparentBackground?: boolean;
   /**
    * Пользовательское значения стиля object-fit
-   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit)
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
    */
   objectFit?: React.CSSProperties['objectFit'];
   /**
+   * Пользовательское значения стиля object-position
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position).
+   */
+  objectPosition?: React.CSSProperties['objectPosition'];
+  /**
    * Флаг для сохранения пропорций картинки.
-   * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки
+   * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки.
    */
   keepAspectRatio?: boolean;
+  /**
+   * Смотри https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming.
+   */
+  elementTiming?: string;
+  /**
+   * Пользовательское значения стиля filter
+   * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).
+   */
+  filter?: React.CSSProperties['filter'];
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -120,11 +151,12 @@ const sizeToNumber = (size: number | string | undefined): number | undefined => 
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ImageBase
+ * @see https://vkui.io/components/image-base
  */
 export const ImageBase: React.FC<ImageBaseProps> & {
   Badge: typeof ImageBaseBadge;
   Overlay: typeof ImageBaseOverlay;
+  FloatElement: typeof ImageBaseFloatElement;
 } = ({
   alt,
   crossOrigin,
@@ -142,7 +174,6 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   height: heightImg,
   widthSize,
   heightSize,
-  style,
   noBorder = false,
   fallbackIcon: fallbackIconProp,
   children,
@@ -150,10 +181,15 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   onError,
   withTransparentBackground,
   objectFit = 'cover',
+  objectPosition,
+  filter,
   keepAspectRatio = false,
+  getRootRef,
+  elementTiming,
   ...restProps
 }: ImageBaseProps) => {
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
+  const wrapperRef = useExternRef(getRootRef);
 
   const width = widthSize ?? (keepAspectRatio ? undefined : size);
   const height = heightSize ?? (keepAspectRatio ? undefined : size);
@@ -161,14 +197,15 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
-  const hasSrc = src || srcSet;
-  const needShowFallbackIcon = (failed || !hasSrc) && React.isValidElement(fallbackIconProp);
+  const [mouseOverHandlers] = React.useState<VoidFunction[]>([]);
+  const [mouseOutHandlers] = React.useState<VoidFunction[]>([]);
 
-  const fallbackIcon = needShowFallbackIcon ? fallbackIconProp : null;
+  const hasSrc = src || srcSet;
+  const fallbackIcon = failed || !hasSrc ? fallbackIconProp : null;
 
   if (process.env.NODE_ENV === 'development') {
     validateSize(size);
-    if (fallbackIcon) {
+    if (React.isValidElement(fallbackIcon)) {
       validateFallbackIcon(size, { name: 'fallbackIcon', value: fallbackIcon });
     }
   }
@@ -206,15 +243,52 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     [imgRef, loaded],
   );
 
+  const onMouseOver = () => {
+    mouseOverHandlers.forEach((fn) => fn());
+  };
+
+  const onMouseOut = () => {
+    mouseOutHandlers.forEach((fn) => fn());
+  };
+
+  const contextValue = React.useMemo(
+    () => ({
+      size,
+      onMouseOverHandlers: mouseOverHandlers,
+      onMouseOutHandlers: mouseOutHandlers,
+    }),
+    [mouseOutHandlers, mouseOverHandlers, size],
+  );
+
+  const imgStyles:
+    | CSSCustomProperties<React.CSSProperties['objectPosition'] | React.CSSProperties['filter']>
+    | undefined =
+    objectPosition || filter
+      ? {
+          '--vkui_internal--ImageBase_object_position': objectPosition,
+          '--vkui_internal--ImageBase_object_filter': filter,
+        }
+      : undefined;
+
+  const keepAspectRationStyles = keepAspectRatio
+    ? {
+        width: widthImg || width,
+        height: heightImg || height,
+      }
+    : undefined;
+
   return (
-    <ImageBaseContext.Provider value={{ size }}>
+    <ImageBaseContext.Provider value={contextValue}>
       <Clickable
-        style={{ width, height, ...style }}
+        baseStyle={{ width, height }}
         baseClassName={classNames(
           styles.host,
-          loaded && styles.loaded,
+          hasSrc && loaded && styles.loaded,
           withTransparentBackground && styles.transparentBackground,
         )}
+        getRootRef={wrapperRef}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
         {...restProps}
       >
         {hasSrc && (
@@ -224,20 +298,16 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             className={classNames(
               styles.img,
               getObjectFitClassName(objectFit),
+              objectPosition && styles.withObjectPosition,
+              filter && styles.withFilter,
               keepAspectRatio && styles.imgKeepRatio,
+              failed && styles.imgHiddenAlt,
             )}
             crossOrigin={crossOrigin}
             decoding={decoding}
             loading={loading}
             referrerPolicy={referrerPolicy}
-            style={
-              keepAspectRatio
-                ? {
-                    width: widthImg || width,
-                    height: heightImg || height,
-                  }
-                : undefined
-            }
+            style={mergeStyle(keepAspectRationStyles, imgStyles)}
             sizes={sizes}
             src={src}
             srcSet={srcSet}
@@ -246,6 +316,8 @@ export const ImageBase: React.FC<ImageBaseProps> & {
             height={heightImg}
             onLoad={handleImageLoad}
             onError={handleImageError}
+            // @ts-expect-error: TS2322 отсутствует в @types/react
+            elementtiming={elementTiming} // eslint-disable-line react/no-unknown-property
             {...getFetchPriorityProp(fetchPriority)}
           />
         )}
@@ -256,11 +328,12 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     </ImageBaseContext.Provider>
   );
 };
-
-ImageBase.displayName = 'ImageBase';
-
 ImageBase.Badge = ImageBaseBadge;
-ImageBase.Badge.displayName = 'ImageBase.Badge';
-
 ImageBase.Overlay = ImageBaseOverlay;
-ImageBase.Overlay.displayName = 'ImageBase.Overlay';
+ImageBase.FloatElement = ImageBaseFloatElement;
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(ImageBase.Badge, 'ImageBase.Badge');
+  defineComponentDisplayNames(ImageBase.Overlay, 'ImageBase.Overlay');
+  defineComponentDisplayNames(ImageBase.FloatElement, 'ImageBase.FloatElement');
+}

@@ -1,0 +1,80 @@
+---
+description: Компонент стрелки для навигации в компонентах горизонтальных прокруток и галереях.
+---
+
+<Overview group="utils">
+
+# ScrollArrow [tag:component]
+
+Компонент стрелки для навигации в компонентах горизонтальных прокруток и галереях.
+Используется внутри [`HorizontalScroll`](/components/horizontal-scroll) и [`Gallery`](/components/gallery).
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <ScrollArrow direction="up" />
+  ```
+</Playground>
+
+## Обязательные свойства
+
+### Направление стрелки
+
+Задается свойством `direction`.
+
+```jsx
+<ScrollArrow direction="up" />
+<ScrollArrow direction="right" />
+<ScrollArrow direction="down" />
+<ScrollArrow direction="left" />
+```
+
+## Вертикальное смещение
+
+Задается свойством `offsetY`, принимает числовое и строковое значение:
+
+```jsx
+<ScrollArrow direction="up" offsetY="-5px" label="Скролл к началу" />
+```
+
+## Пользовательские иконки
+
+Кастомную иконку можно прокинуть в свойство `children` компонента:
+
+<Playground>
+  ```jsx
+  <ScrollArrow direction="left">
+    <Icon24ArrowLeftSquareOutline />
+  </ScrollArrow>
+  ```
+</Playground>
+
+## Особенности
+
+- Автоматическая поддержка `RTL`.
+- Поддерживаются все свойства HTML-элемента `<button>`.
+
+## Доступность (a11y) [#a11y]
+
+### Обязательные параметры
+
+- Всегда указывайте `label` для скринридеров.
+- Используйте семантические названия действий:
+
+  ```jsx
+  <ScrollArrow direction="left" label="Предыдущий слайд" />
+  ```
+
+### Автоматические метки
+
+Если `label` не указан, используется текст по умолчанию в зависимости от значения `direction`:
+
+- `left`: "Прокрутить влево".
+- `right`: "Прокрутить вправо".
+- `up`: "Прокрутить вверх".
+- `down`: "Прокрутить вниз".
+
+## Свойства и методы [#api]
+
+<PropsTable name="ScrollArrow" />

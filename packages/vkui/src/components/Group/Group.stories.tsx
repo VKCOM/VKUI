@@ -10,6 +10,7 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { CellButton } from '../CellButton/CellButton';
 import { Playground as BasicCellButton } from '../CellButton/CellButton.stories';
 import { Header } from '../Header/Header';
@@ -17,9 +18,10 @@ import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Group, type GroupProps } from './Group';
 
 const story: Meta<GroupProps> = {
-  title: 'Blocks/Group',
+  title: 'Layout/Group',
   component: Group,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Group', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

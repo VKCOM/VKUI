@@ -1,6 +1,7 @@
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
-import type { PartialStoryFn } from '@storybook/types';
+import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Div } from '../Div/Div';
 import { CustomScrollView, type CustomScrollViewProps } from './CustomScrollView';
 
@@ -13,6 +14,7 @@ const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
       width: '100%',
       maxWidth: '600px',
       maxHeight: '300px',
+      boxSizing: 'content-box',
     }}
   >
     <Story />
@@ -20,9 +22,10 @@ const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
 );
 
 const story: Meta<CustomScrollViewProps> = {
-  title: 'Layout/CustomScrollView',
+  title: 'Utils/CustomScrollView',
   component: CustomScrollView,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('CustomScrollView', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;
@@ -36,6 +39,7 @@ export const Playground: Story = {
       <Div
         style={{
           width: 1440,
+          boxSizing: 'content-box',
         }}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a

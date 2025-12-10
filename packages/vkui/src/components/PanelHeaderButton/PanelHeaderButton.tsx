@@ -5,7 +5,7 @@ import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
 import styles from './PanelHeaderButton.module.css';
@@ -16,13 +16,23 @@ const platformClassNames = {
   vkcom: styles.vkcom,
 };
 
-export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
+export interface PanelHeaderButtonProps extends Omit<TappableOmitProps, 'label'> {
+  /**
+   * Флаг для обозначения первичной кнопки
+   * Влияет на стилизацию кнопки.
+   */
   primary?: boolean;
-  // TODO [>=7]: добавить св-во `indicator`, чтобы разграничить кейсы
-  label?: React.ReactNode;
+  /**
+   * Текст или содержимое кнопки.
+   */
+  label?: React.ReactNode; // TODO [>=8]: добавить св-во indicator, чтобы разграничить кейсы.
 }
 
 interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
+  /**
+   * Флаг для обозначения первичной кнопки
+   * Наследуется от PanelHeaderButtonProps['primary'].
+   */
   primary?: PanelHeaderButtonProps['primary'];
 }
 
@@ -43,13 +53,12 @@ const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {
 const warn = warnOnce('PanelHeaderButton');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ * @see https://vkui.io/components/panel-header#panel-header-button
  */
 export const PanelHeaderButton = ({
   children,
   primary = false,
   label,
-  className,
   ...restProps
 }: PanelHeaderButtonProps): React.ReactNode => {
   const isPrimitive = isPrimitiveReactNode(children);
@@ -84,22 +93,24 @@ export const PanelHeaderButton = ({
       warn(COMMON_WARNINGS.a11y[restProps.href ? 'link-name' : 'button-name'], 'error');
     }
   }
+  const elements = [label, children].filter((item) => !!item);
+
+  const onlyPrimitive = elements.length === 1 && isPrimitiveReactNode(elements[0]);
 
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
-      {...restProps}
       hoverMode={hoverMode}
       activeEffectDelay={200}
       activeMode={activeMode}
-      className={classNames(
+      {...restProps}
+      baseClassName={classNames(
         styles.host,
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        isPrimitive && styles.primitive,
+        onlyPrimitive && styles.primitive,
         !isPrimitive && !isPrimitiveLabel && styles.notPrimitive,
-        className,
       )}
     >
       {isPrimitive ? <ButtonTypography primary={primary}>{children}</ButtonTypography> : children}

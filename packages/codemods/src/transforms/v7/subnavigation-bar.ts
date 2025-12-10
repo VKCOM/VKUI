@@ -1,25 +1,11 @@
-import { API, Collection, FileInfo, JSCodeshift, JSXAttribute } from 'jscodeshift';
-import { getImportInfo, renameProp } from '../../codemod-helpers';
+import { API, Collection, FileInfo, JSCodeshift } from 'jscodeshift';
+import { getImportInfo, getStringValueFromAttribute, renameProp } from '../../codemod-helpers';
 import { report } from '../../report';
 import { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 
 function replaceModeToFixed(j: JSCodeshift, source: Collection, api: API, localName: string) {
-  const getValueFromAttribute = (attribute: JSXAttribute): string | null => {
-    if (attribute.value?.type === 'StringLiteral') {
-      return attribute.value.value;
-    }
-    if (attribute.value?.type === 'JSXExpressionContainer') {
-      const expression = attribute.value.expression;
-      if (expression.type === 'StringLiteral') {
-        return expression.value;
-      }
-      return null;
-    }
-    return null;
-  };
-
   source
     .find(j.JSXElement, {
       openingElement: {
@@ -31,7 +17,7 @@ function replaceModeToFixed(j: JSCodeshift, source: Collection, api: API, localN
     .find(j.JSXAttribute)
     .filter((attribute) => attribute.node.name.name === 'mode')
     .forEach((attr) => {
-      const value = getValueFromAttribute(attr.node);
+      const value = getStringValueFromAttribute(attr.node);
       if (value === null) {
         report(
           api,

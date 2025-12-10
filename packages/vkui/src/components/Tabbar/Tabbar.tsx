@@ -9,11 +9,11 @@ import styles from './Tabbar.module.css';
 
 export interface TabbarProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Флаг, который скрывает тень (Android) или границы (iOS)
+   * Флаг, который скрывает тень (Android) или границы (iOS).
    */
   plain?: boolean;
   /**
-   * Задает расположение элементов (вертикальное/горизонтальное)
+   * Задает расположение элементов (вертикальное/горизонтальное).
    */
   mode?: 'vertical' | 'horizontal' | 'auto';
 }
@@ -35,7 +35,7 @@ const getItemsLayoutClassName = (
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Tabbar
+ * @see https://vkui.io/components/epic#tabbar
  */
 export const Tabbar = ({ plain = false, mode, ...restProps }: TabbarProps): React.ReactNode => {
   const platform = usePlatform();

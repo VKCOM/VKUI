@@ -1,5 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Caption } from '../Typography/Caption/Caption';
@@ -19,27 +22,39 @@ const avatarsPositionStyles = {
 };
 
 export type UsersStackRenderWrapperProps = {
+  /**
+   * Контент для обертки.
+   */
   children: React.ReactElement;
+  /**
+   * Путь до фотографии.
+   */
   ['data-src']: string;
 };
 
 export type UsersStackPhoto = {
+  /**
+   * Путь до фотографии.
+   */
   src: string;
+  /**
+   * Функция для рендера обертки над фотографией.
+   */
   renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactElement;
 };
 
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`:
+   * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`.
    */
   photos?: string[] | UsersStackPhoto[];
   /**
-   * Размер аватарок
+   * Размер аватарок.
    */
   size?: 's' | 'm' | 'l';
   /**
    * Количество аватарок, которые будут показаны.
-   * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов
+   * Если в массиве `photos` больше элементов и не используется размер `s`, то будет показано количество остальных элементов.
    */
   visibleCount?: number;
   /**
@@ -50,13 +65,19 @@ export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   count?: number;
   /**
    * Определяет положение аватаров
-   * Режим `block-start` рекомендуется использовать с размером `m`
+   * Режим `block-start` рекомендуется использовать с размером `m`.
    */
   avatarsPosition?: 'inline-start' | 'block-start' | 'inline-end';
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {
+  /**
+   * Размер фотографии.
+   */
   photoSize: number;
+  /**
+   * Тип обрезания фотографии.
+   */
   direction: 'circle' | 'right' | 'left';
 }
 
@@ -71,6 +92,13 @@ function PathElement({ photoSize, direction, ...props }: PathElementProps) {
 
     case 'right':
       switch (photoSize) {
+        case 16:
+          return (
+            <path
+              d="M14,13.285A8 8 0 0 1 8 16A8 8 0 0 1 8 0A8 8 0 0 1 14 2.715A8 8 0 0 0 14,13.285"
+              {...props}
+            />
+          );
         case 24:
           return (
             <path
@@ -123,7 +151,7 @@ const photoSizes: Record<NonNullable<UsersStackProps['size']>, PhotoSizeType> = 
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/UsersStack
+ * @see https://vkui.io/components/users-stack
  */
 export const UsersStack = ({
   photos = [],
@@ -135,12 +163,14 @@ export const UsersStack = ({
   ...restProps
 }: UsersStackProps): React.ReactNode => {
   const cmpId = React.useId();
+  const direction = useConfigDirection();
 
   const canShowOthers = count > 0 && count < 100 && size !== 's';
   const CounterTypography = size === 'l' ? Footnote : Caption;
 
   const photoSize = photoSizes[size];
-  const directionClip = canShowOthers ? 'right' : 'left';
+  const directionClip =
+    direction === 'ltr' ? (canShowOthers ? 'right' : 'left') : canShowOthers ? 'left' : 'right';
 
   const photosElements = photos.slice(0, visibleCount).map((photo, i) => {
     const direction = i === 0 && !canShowOthers ? 'circle' : directionClip;
@@ -153,7 +183,12 @@ export const UsersStack = ({
     const photoSrc = isPhotoType ? photo.src : photo;
 
     let photoElement = (
-      <svg xmlns="http://www.w3.org/2000/svg" className={styles.photo} aria-hidden display="block">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className={classNames(styles.photo, styles.item)}
+        aria-hidden
+        display="block"
+      >
         <defs>
           <PathElement id={id} direction={direction} photoSize={photoSize} />
         </defs>
@@ -183,7 +218,7 @@ export const UsersStack = ({
 
   const othersElement = canShowOthers ? (
     <div className={styles.photoWrapper}>
-      <CounterTypography caps weight="1" className={classNames(styles.photo, styles.photoOthers)}>
+      <CounterTypography caps weight="1" className={classNames(styles.item, styles.counter)}>
         +{count}
       </CounterTypography>
     </div>

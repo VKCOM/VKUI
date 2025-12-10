@@ -5,15 +5,21 @@ import { RootComponent, type RootComponentProps } from '../RootComponent/RootCom
 import styles from './AspectRatio.module.css';
 
 export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'> {
+  /**
+   * `className` для компонента.
+   */
   className?: string;
   /**
    * По умолчанию, вложенный контент будет растягиваться и заполнять весь блок.
    */
   mode?: 'stretch' | 'none';
   /**
-   * Например 16 / 9, 4 / 3, 1920 / 1080
+   * Например:
+   * - в виде числа: 16 / 9, 4 / 3, 1920 / 1080,
+   * - в виде css переменной: `var(--css-aspect-ratio-var)`
+   * - в виде сложного выражения: `calc(<какие-то вычисления>)`.
    */
-  ratio: number;
+  ratio: number | string;
 }
 
 /**
@@ -21,22 +27,21 @@ export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 
  * Его можно использовать для отображения изображений, карт, видео и других медиафайлов.
 
  * @since 5.5.0
- * @see https://vkcom.github.io/VKUI/#/AspectRatio
+ * @see https://vkui.io/components/aspect-ratio
  */
 export function AspectRatio({
   ratio,
   mode = 'stretch',
-  style: styleProp,
   ...props
-}: AspectRatioProps): JSX.Element {
+}: AspectRatioProps): React.JSX.Element {
   const style: React.CSSProperties & CSSCustomProperties = {
-    '--vkui_internal--aspect_ratio': String(ratio),
+    '--vkui_internal--aspect_ratio': typeof ratio === 'number' ? String(ratio) : ratio,
   };
 
   return (
     <RootComponent
       baseClassName={classNames(styles.host, mode === 'stretch' && styles.modeStretch)}
-      style={{ ...styleProp, ...style }}
+      baseStyle={style}
       {...props}
     />
   );

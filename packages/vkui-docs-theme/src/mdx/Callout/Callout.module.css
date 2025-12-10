@@ -1,0 +1,26 @@
+.root {
+  display: flex;
+  padding-block: var(--vkui--spacing_size_xl);
+  padding-inline: var(--vkui--spacing_size_xl);
+  margin: 0;
+  background-color: var(--vkui--color_background_tertiary_alpha);
+  border-inline-start: 4px solid var(--vkui--color_accent_orange);
+  border-radius: 6px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-inline-size: 0;
+  margin-inline-start: var(--vkui--spacing_size_xl);
+}
+
+.root:not(:last-child) {
+  margin-block-end: 16px;
+}
+
+.root:not(:first-child) {
+  margin-block-start: 16px;
+}

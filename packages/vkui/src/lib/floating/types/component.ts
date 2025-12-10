@@ -1,6 +1,7 @@
 import type * as React from 'react';
 import type { UseFloatingMiddlewaresBootstrapOptions } from '../useFloatingMiddlewaresBootstrap';
 import type {
+  RestoreFocusType,
   UseFloatingWithInteractionsProps,
   UseFloatingWithInteractionsReturn,
 } from '../useFloatingWithInteractions';
@@ -44,7 +45,7 @@ export interface FloatingComponentProps
   /**
    * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
    */
-  restoreFocus?: boolean;
+  restoreFocus?: RestoreFocusType;
   /**
    * Перебивает zIndex заданный по умолчанию.
    */
@@ -58,4 +59,14 @@ export interface FloatingComponentProps
    * чтобы всплывающий элемент вместился в эту область видимости.
    */
   onPlacementChange?: OnPlacementChange;
+  /**
+   * Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.
+   *
+   * > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента
+   */
+  onReferenceHiddenChange?: (hidden: boolean) => void;
+  /**
+   * Позволяет отключить захват фокуса.
+   */
+  disableFocusTrap?: boolean;
 }

@@ -3,14 +3,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { UsersStack } from '../UsersStack/UsersStack';
 import { MiniInfoCell, type MiniInfoCellProps } from './MiniInfoCell';
 
 const story: Meta<MiniInfoCellProps> = {
-  title: 'Blocks/MiniInfoCell',
+  title: 'Data Display/MiniInfoCell',
   component: MiniInfoCell,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('MiniInfoCell', CanvasFullLayout),
   decorators: [withCartesian],
   argTypes: {
     before: createFieldWithPresets({
@@ -31,6 +32,7 @@ const story: Meta<MiniInfoCellProps> = {
       },
     }),
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

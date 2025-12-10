@@ -3,15 +3,16 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout } from '../../storybook/constants';
 import { IconExampleForBadgeBasedOnImageBaseSize } from '../../testing/icons';
 import { getAvatarUrl } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { imageBaseSizes } from '../ImageBase/types';
 import { GridAvatar, type GridAvatarProps } from './GridAvatar';
 
 type StoryGridAvatarProps = GridAvatarProps & { badged: boolean };
 
 const story: Meta<StoryGridAvatarProps> = {
-  title: 'Blocks/GridAvatar',
+  title: 'Data Display/GridAvatar',
   component: GridAvatar,
-  parameters: CanvasFullLayout,
+  parameters: createStoryParameters('GridAvatar', CanvasFullLayout),
   argTypes: {
     badged: {
       control: 'boolean',
@@ -24,6 +25,7 @@ const story: Meta<StoryGridAvatarProps> = {
     },
   },
   decorators: [withCartesian],
+  tags: ['Отображение данных'],
 };
 
 export default story;

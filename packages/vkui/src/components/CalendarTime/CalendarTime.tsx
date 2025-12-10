@@ -1,22 +1,73 @@
 'use client';
 
+import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { setHours, setMinutes } from 'date-fns';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { Button } from '../Button/Button';
-import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
+import { Button, type ButtonProps } from '../Button/Button';
+import { CalendarTimePicker } from './CalendarTimePicker';
 import styles from './CalendarTime.module.css';
 
-export interface CalendarTimeProps {
-  value: Date;
+export type CalendarTimeTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора часа в календаре.
+   */
+  hoursTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора минут в календаре.
+   */
+  minutesTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки "Готово" в календаре.
+   */
+  doneButtonTestId?: string;
+};
+
+export type CalendarDoneButtonProps = {
+  /**
+   * Кастомное отображение кнопки `"Done"`.
+   */
+  DoneButton?: React.ComponentType<ButtonProps>;
+  /**
+   * Текст отображаемый в кнопке `"Done"`.
+   */
   doneButtonText?: string;
+  /**
+   * Управление отображением кнопки `"Done"`.
+   */
   doneButtonShow?: boolean;
+  /**
+   * Блокировка взаимодействия с кнопкой "Done".
+   */
   doneButtonDisabled?: boolean;
-  changeHoursLabel?: string;
-  changeMinutesLabel?: string;
-  onChange?: (value: Date) => void;
+  /**
+   * Обработки нажатия на кнопку `"Done"`.
+   */
   onDoneButtonClick?: () => void;
+};
+
+export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
+  /**
+   * Отображаемая дата.
+   */
+  value: Date;
+  /**
+   * Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий.
+   */
+  changeHoursLabel?: string;
+  /**
+   * Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий.
+   */
+  changeMinutesLabel?: string;
+  /**
+   * Обработчик изменения времени.
+   */
+  onChange?: (value: Date) => void;
+  /**
+   * Функция для проверки блокировки выбора даты и времени.
+   */
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
 }
 
@@ -46,7 +97,15 @@ export const CalendarTime = ({
   doneButtonText = 'Готово',
   doneButtonDisabled = false,
   doneButtonShow = true,
+  minutesTestId,
+  hoursTestId,
+  doneButtonTestId,
+  DoneButton,
 }: CalendarTimeProps): React.ReactNode => {
+  const hoursInputRef = useRef<HTMLInputElement | null>(null);
+  const minutesInputRef = useRef<HTMLInputElement | null>(null);
+  const doneButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const localHours = isDayDisabled
     ? hours.map((hour) => {
         return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };
@@ -59,52 +118,89 @@ export const CalendarTime = ({
       })
     : minutes;
 
-  const onHoursChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange?.(setHours(value, Number(newValue))),
-    [onChange, value],
+  const onPickerKeyDown = (e: React.KeyboardEvent) => {
+    const key = pressedKey(e);
+    /* Мы хотим иметь возможность быстро, по Enter перемещаться между
+     * селектами с часами и минутами, также как мы это делаем по нажатию на Tab */
+    if (key !== Keys.ENTER) {
+      return;
+    }
+
+    const steps = [hoursInputRef, minutesInputRef, doneButtonRef].filter((ref) =>
+      Boolean(ref.current),
+    );
+    const currentStepIndex = steps.findIndex((step) => step.current === e.target);
+    const nextStepIndex = currentStepIndex + 1;
+    if (nextStepIndex >= steps.length) {
+      return;
+    }
+    const nextStep = steps[nextStepIndex];
+
+    if (nextStep.current) {
+      e.preventDefault();
+      nextStep.current?.focus();
+    }
+  };
+
+  const stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
+    (event: React.KeyboardEvent, isOpen: boolean) => {
+      if (isOpen && event.key === 'Escape') {
+        event.stopPropagation();
+      }
+    },
+    [],
   );
-  const onMinutesChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange?.(setMinutes(value, Number(newValue))),
-    [onChange, value],
-  );
+
+  const onSelectInputKeyDown = (e: React.KeyboardEvent, isOpen: boolean) => {
+    onPickerKeyDown(e);
+    stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen(e, isOpen);
+  };
+
+  const renderDoneButton = () => {
+    const ButtonComponent = DoneButton ?? Button;
+    return (
+      <ButtonComponent
+        mode="secondary"
+        onClick={onDoneButtonClick}
+        size="l"
+        getRootRef={doneButtonRef}
+        onKeyDown={onPickerKeyDown}
+        disabled={doneButtonDisabled}
+        data-testid={doneButtonTestId}
+      >
+        {doneButtonText}
+      </ButtonComponent>
+    );
+  };
 
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
-      <div className={styles.picker}>
-        <AdaptivityProvider sizeY="compact">
-          <CustomSelect
-            value={value.getHours()}
-            options={localHours}
-            onChange={onHoursChange}
-            forceDropdownPortal={false}
-            aria-label={changeHoursLabel}
-          />
-        </AdaptivityProvider>
-      </div>
+      <CalendarTimePicker
+        value={value}
+        getNumericValue={(v) => v.getHours()}
+        onChange={onChange}
+        options={localHours}
+        setTime={setHours}
+        onInputKeyDown={onSelectInputKeyDown}
+        inputRef={hoursInputRef}
+        inputLabel={changeHoursLabel}
+        inputTestId={hoursTestId}
+      />
       <div className={styles.divider}>:</div>
-      <div className={styles.picker}>
-        <AdaptivityProvider sizeY="compact">
-          <CustomSelect
-            value={value.getMinutes()}
-            options={localMinutes}
-            onChange={onMinutesChange}
-            forceDropdownPortal={false}
-            aria-label={changeMinutesLabel}
-          />
-        </AdaptivityProvider>
-      </div>
+      <CalendarTimePicker
+        value={value}
+        getNumericValue={(v) => v.getMinutes()}
+        onChange={onChange}
+        options={localMinutes}
+        setTime={setMinutes}
+        onInputKeyDown={onSelectInputKeyDown}
+        inputRef={minutesInputRef}
+        inputLabel={changeMinutesLabel}
+        inputTestId={minutesTestId}
+      />
       {doneButtonShow && (
         <div className={styles.button}>
-          <AdaptivityProvider sizeY="compact">
-            <Button
-              mode="secondary"
-              onClick={onDoneButtonClick}
-              size="l"
-              disabled={doneButtonDisabled}
-            >
-              {doneButtonText}
-            </Button>
-          </AdaptivityProvider>
+          <AdaptivityProvider sizeY="compact">{renderDoneButton()}</AdaptivityProvider>
         </div>
       )}
     </div>

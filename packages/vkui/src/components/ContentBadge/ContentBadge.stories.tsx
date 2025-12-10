@@ -1,14 +1,17 @@
 import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
-import type { PartialStoryFn } from '@storybook/types';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';
+import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { Flex } from '../Flex/Flex';
 import { Group } from '../Group/Group';
 import { ContentBadge, type ContentBadgeProps } from './ContentBadge';
 
 const meta: Meta<ContentBadgeProps> = {
-  title: 'Blocks/ContentBadge',
+  title: 'Data Display/ContentBadge',
   component: ContentBadge,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ContentBadge', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Отображение данных'],
 };
 
 export default meta;
@@ -30,39 +33,39 @@ const Container = (Story: PartialStoryFn<ReactRenderer>) => (
 
 type DefaultStory = StoryObj<ContentBadgeProps>;
 
-export const Default: DefaultStory = {
+export const Playground: DefaultStory = {
   decorators: [Container],
   render({ children = 'Text', size, ...restProps }) {
     return (
-      <>
+      <Flex align="center" gap={24}>
         <ContentBadge {...restProps} size={size}>
           {children}
         </ContentBadge>
 
         <ContentBadge {...restProps} size={size}>
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
           {children}
         </ContentBadge>
 
         <ContentBadge {...restProps} size={size}>
           {children}
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
         </ContentBadge>
 
         <ContentBadge {...restProps} size={size}>
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
           {children}
-          <ContentBadge.SlotIcon>
+          <ContentBadge.IconSlot>
             {size === 'l' ? <Icon16Services /> : <Icon12Services />}
-          </ContentBadge.SlotIcon>
+          </ContentBadge.IconSlot>
         </ContentBadge>
-      </>
+      </Flex>
     );
   },
 };
@@ -81,9 +84,9 @@ export const SingleIcon: SingleIconStory = {
 
     return (
       <ContentBadge {...restProps} size={size}>
-        <ContentBadge.SlotIcon>
+        <ContentBadge.IconSlot>
           {size === 'l' ? <Icon20ServicesFilled /> : <Icon16Services />}
-        </ContentBadge.SlotIcon>
+        </ContentBadge.IconSlot>
       </ContentBadge>
     );
   },

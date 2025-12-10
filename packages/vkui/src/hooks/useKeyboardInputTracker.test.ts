@@ -13,21 +13,20 @@ describe(useKeyboardInputTracker, () => {
     key,
     code: key,
   }));
-  it.each(ALL_KEYBOARD_EXPECTED_EVENTS)(
-    'should returns true when user calls keyDown event with code $key',
-    (event) => {
-      const result = renderHook(() => useKeyboardInputTracker());
-      expect(result.result.current.current).toBeFalsy();
+  it.each(
+    ALL_KEYBOARD_EXPECTED_EVENTS,
+  )('should returns true when user calls keyDown event with code $key', (event) => {
+    const result = renderHook(() => useKeyboardInputTracker());
+    expect(result.result.current.current).toBeFalsy();
 
-      fireEvent.keyDown(document, event);
-      expect(result.result.current.current).toBeTruthy();
+    fireEvent.keyDown(document, event);
+    expect(result.result.current.current).toBeTruthy();
 
-      act(() => {
-        document.dispatchEvent(new Event(DISABLE_KEYBOARD_INPUT_EVENT_NAME, { bubbles: true }));
-      });
-      expect(result.result.current.current).toBeFalsy();
-    },
-  );
+    act(() => {
+      document.dispatchEvent(new Event(DISABLE_KEYBOARD_INPUT_EVENT_NAME, { bubbles: true }));
+    });
+    expect(result.result.current.current).toBeFalsy();
+  });
 
   it('should returns true/false when user calls custom event', () => {
     const result = renderHook(() => useKeyboardInputTracker());

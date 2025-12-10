@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon56MentionOutline, Icon56UsersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
 import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
@@ -12,9 +13,10 @@ import { View } from '../View/View';
 import { SplitCol, type SplitColProps } from './SplitCol';
 
 const story: Meta<SplitColProps> = {
-  title: 'Layout/SplitCol',
+  title: 'Layout/SplitLayout/SplitCol',
   component: SplitCol,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('SplitCol', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

@@ -1,0 +1,240 @@
+---
+description: Компонент для создания адаптивного слайдера изображений с поддержкой жестов и автоматической прокрутки.
+---
+
+<Overview group="data-display">
+
+# Gallery [tag:component]
+
+Компонент для создания адаптивного слайдера изображений с поддержкой жестов и автоматической прокрутки.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" align="center">
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
+
+## Автопрокрутка
+
+Компонент поддерживает автопрокрутку слайдов. Для этого нужно использовать свойство `timeout` (в миллисекундах)
+отличное от нуля.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" align="center" timeout={3000}>
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
+
+## Зацикленная галерея
+
+Используйте свойство `looped`, чтобы список слайдов прокручивался зацикленно.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" bullets="dark" showArrows looped>
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
+  </Gallery>
+  ```
+</Playground>
+
+## Кастомизация стрелок навигации
+
+Для кастомизации стрелок навигации используйте следующие свойства:
+
+- `arrowSize` - контролирует размер стрелки;
+- `arrowAreaHeight` - размер активной зоны стрелок. Определяет область вокруг стрелок, реагирующую на взаимодействие пользователя:
+  - `stretch` - на всю высоту галереи
+  - `fit` - фиксированная высота
+- `showArrows` - флаг, определяющий нужно ли показывать стрелки при наведении.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" showArrows arrowAreaHeight="fit" arrowSize="s">
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
+
+## Индикатор прогресса
+
+Для более удобного использования компонента можно включить индикатор прогресса с помощью свойства `bullets`:
+
+- `false` - значение по умолчанию, индикатор скрыт;
+- `light` - включает отображение в светлом варианте;
+- `dark` - включает отображение в светлом варианте.
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="90%" bullets="dark" showArrows>
+    <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+    <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+  </Gallery>
+  ```
+</Playground>
+
+## Контролируемое состояние
+
+Используйте `slideIndex` и `onChange` для ручного управления состоянием.
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [slideIndex, setSlideIndex] = React.useState(0);
+return (
+  <>
+    <Gallery slideWidth="90%" align="center" slideIndex={slideIndex} onChange={setSlideIndex}>
+      <div style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} />
+      <div style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} />
+      <div style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} />
+    </Gallery>
+    <Flex gap="m" margin="auto" justify="center">
+      <Button size="s" onClick={() => setSlideIndex((slideIndex + 2) % 3)}>
+        Предыдущий
+      </Button>
+      <Button size="s" onClick={() => setSlideIndex((slideIndex + 1) % 3)}>
+        Следующий
+      </Button>
+    </Flex>
+  </>
+);
+```
+
+</Playground>
+
+## Слайды разных размеров
+
+Если необходимо сделать так, чтобы у каждого слайда была своя ширина, необходимо задать свойство `slideWidth="custom"`:
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery slideWidth="custom">
+    <div
+      style={{
+        width: 200,
+        backgroundColor: 'var(--vkui--color_background_negative)',
+      }}
+    />
+    <div
+      style={{
+        width: 120,
+        backgroundColor: 'var(--vkui--color_background_positive)',
+      }}
+    />
+    <div
+      style={{
+        width: 70,
+        backgroundColor: 'var(--vkui--color_background_accent)',
+      }}
+    />
+    <div
+      style={{
+        width: 220,
+        backgroundColor: 'var(--vkui--color_icon_secondary)',
+      }}
+    />
+  </Gallery>
+  ```
+</Playground>
+
+## Параметры анимации
+
+С помощью свойств `animationDuration` и `animationEasing` можно изменить такие параметры анимации смены слайдов, как длительность
+и функция анимации соответственно. Свойство `animationEasing` принимает одно из предопределенных значений анимации или позволяет
+задать пользовательское значение через массив, элементы которого соответствуют параметрам аналогичной CSS-функции [cubic-bezier](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier).
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Gallery
+    slideWidth="90%"
+    bullets="dark"
+    showArrows
+    animationDuration={1000}
+    animationEasing={[0, 0, 0.2, 1]}
+  >
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="1" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="2" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_accent)' }} title="3" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_negative)' }} title="4" />
+    <Placeholder style={{ backgroundColor: 'var(--vkui--color_background_positive)' }} title="5" />
+  </Gallery>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+### 1. Навигация
+
+- По возможности не оставляйте пользователя без возможности навигации по галерее вручную. Не полагайтесь только на автоматическую прокрутку
+- **Кастомизируйте подписи кнопок:** Задавайте понятные метки через свойства:
+  ```jsx
+  arrowPrevLabel = 'Предыдущий слайд';
+  arrowNextLabel = 'Следующий слайд';
+  ```
+
+### 2. Метаданные галереи
+
+**Добавьте смысловой ярлык:** Используйте `aria-label` или `aria-labelledby` с конкретным описанием:
+
+```jsx
+// Плохо
+aria-label="Карусель" // роль указывается автоматически через `aria-roledescription="Карусель"`
+
+// Хорошо
+aria-label="Фотографии нового смартфона"
+```
+
+### 3. Описание слайдов
+
+**Уникальные метки для каждого слайда:** Используйте `slideLabel` с функцией, генерирующей конкретные описания:
+
+```jsx
+// Плохо (нет конкретного обозначения, что на слайде)
+slideLabel={({ index, total }) => `Слайд ${index}`}
+
+// Хорошо
+slideLabel={({ index, total }) => `Техническая схема (${index + 1} из ${total})`}
+```
+
+### 4. Контент внутри слайдов
+
+**Обязательно для изображений:** Всегда добавляйте осмысленный `alt`:
+
+```jsx
+// Плохо (неконкретное описание)
+<img src="product.jpg" alt="Картинка" />
+
+// Хорошо
+<img src="product.jpg" alt="Смартфон на белом фоне с открытой коробкой" />
+```
+
+### 5. Дополнительные настройки
+
+**Кастомизация ролей:** При необходимости переопределяйте стандартные описания:
+
+```jsx
+aria-roledescription="Карусель" // Для галереи
+slideRoleDescription="Изображение продукта" // Для слайда
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Gallery" />

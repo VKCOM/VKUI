@@ -3,11 +3,10 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useEffectDev } from '../../hooks/useEffectDev';
-import { useEventListener } from '../../hooks/useEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
+import { stopPropagation } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
@@ -30,6 +29,8 @@ export const ActionSheetDropdownMenu = ({
   placement,
   onAnimationStart,
   onAnimationEnd,
+  allowClickPropagation = false,
+  onClick,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
   const { document } = useDOM();
@@ -37,27 +38,29 @@ export const ActionSheetDropdownMenu = ({
   const { sizeY } = useAdaptivityWithJSMediaQueries();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
-  useEffectDev(() => {
-    const toggleEl = getEl(toggleRef);
-    if (!toggleEl) {
-      warn(`Свойство "toggleRef" не передано`, 'error');
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      const toggleEl = getEl(toggleRef);
+      if (!toggleEl) {
+        warn(`Свойство "toggleRef" не передано`, 'error');
+      }
     }
   }, [toggleRef]);
 
-  const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
-    const dropdownElement = elementRef?.current;
-    if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-      onClose?.();
-    }
-  });
-
   React.useEffect(() => {
-    setTimeout(() => {
-      bodyClickListener.add(document!.body);
-    });
-  }, [bodyClickListener, document]);
+    const listener = (e: MouseEvent) => {
+      const dropdownElement = elementRef?.current;
+      if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
+        onClose?.();
+      }
+    };
 
-  const onClick = React.useCallback((e: React.MouseEvent<HTMLElement>) => e.stopPropagation(), []);
+    setTimeout(() => {
+      document!.body.addEventListener('click', listener);
+    });
+
+    return () => document!.body.removeEventListener('click', listener);
+  }, [onClose, document]);
 
   const targetRef = React.useMemo(() => {
     if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
@@ -66,6 +69,13 @@ export const ActionSheetDropdownMenu = ({
 
     return { current: toggleRef as HTMLElement };
   }, [toggleRef]);
+
+  const handleClick = allowClickPropagation
+    ? onClick
+    : (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagation(event);
+        onClick?.(event);
+      };
 
   return (
     <Popper
@@ -86,7 +96,7 @@ export const ActionSheetDropdownMenu = ({
       onAnimationStart={onAnimationStart}
       onAnimationEnd={onAnimationEnd}
     >
-      <FocusTrap onClose={onClose} {...restProps} onClick={onClick}>
+      <FocusTrap onClose={onClose} {...restProps} onClick={handleClick}>
         {children}
       </FocusTrap>
     </Popper>

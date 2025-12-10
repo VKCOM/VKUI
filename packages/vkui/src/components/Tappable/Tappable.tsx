@@ -28,10 +28,27 @@ function hasPointerClassName(hasPointer: boolean | undefined) {
 export interface TappableProps extends ClickableProps, StateProps {
   /**
    * Задает border-radius элементу
-   * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`
+   * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`.
    */
   borderRadiusMode?: 'auto' | 'inherit';
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство устарело и будет удалено в `v8`, используйте свойство `activeMode`.
+   */
+  activeClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство устарело и будет удалено в `v8`, используйте свойство `hoverMode`.
+   */
+  hoverClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
 }
+
+// TODO [>=8]: = React.AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>
+//
+// NOTE: Возможно стоит вообще запретить компонентам расширяться от TappableProps?
+export type TappableOmitProps = Omit<TappableProps, 'DefaultComponent'>;
 
 export const Tappable = ({
   baseClassName,
@@ -60,6 +77,7 @@ export const Tappable = ({
   return (
     <Clickable
       baseClassName={classNames(
+        'vkuiInternalTappable',
         baseClassName,
         styles.host,
         sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],

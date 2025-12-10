@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Icon16Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import type { HTMLAttributesWithRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
-import { Tappable } from '../Tappable/Tappable';
+import { type RootComponentProps } from '../RootComponent/RootComponent';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';
 
@@ -19,7 +18,12 @@ const stylesTextWrap = {
   short: styles.textWrapShort,
 };
 
-export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+export interface MiniInfoCellProps
+  extends Pick<
+      TappableOmitProps,
+      'hoverMode' | 'activeMode' | 'hovered' | 'activated' | 'hasHover' | 'hasActive'
+    >,
+    RootComponentProps<HTMLDivElement> {
   /**
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
@@ -28,7 +32,7 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
 
   /**
    * Содержимое справа.<br />
-   * `<UsersStack size="s" />` или `<Avatar size={24} />`
+   * `<UsersStack size="s" />` или `<Avatar size={24} />`.
    */
   after?: React.ReactNode;
 
@@ -47,18 +51,18 @@ export interface MiniInfoCellProps extends HTMLAttributesWithRootRef<HTMLDivElem
    *
    * - `nowrap` – в одну строку, текст не переносится и обрезается.
    * - `short` – максимально отображается 3 строки, остальное обрезается.
-   * - `full` – текст отображается полностью. В дизайне это свойство `multiline`
+   * - `full` – текст отображается полностью. В дизайне это свойство `multiline`.
    */
   textWrap?: 'nowrap' | 'short' | 'full';
 
   /**
-   * Передавать `true`, если предполагается переход при клике по ячейке.
+   * Передавать `true`, если предполагается переход при нажатии на ячейку.
    */
   chevron?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/MiniInfoCell
+ * @see https://vkui.io/components/mini-info-cell
  */
 export const MiniInfoCell = ({
   before,
@@ -67,14 +71,12 @@ export const MiniInfoCell = ({
   mode = 'base',
   textWrap = 'nowrap',
   chevron = false,
-  className,
   ...restProps
 }: MiniInfoCellProps): React.ReactNode => {
   const cellClasses = classNames(
     styles.host,
     stylesTextWrap[textWrap],
     mode !== 'base' && stylesMode[mode],
-    className,
   );
 
   const cellContent = (
@@ -90,13 +92,9 @@ export const MiniInfoCell = ({
     </React.Fragment>
   );
 
-  return restProps.onClick ? (
-    <Tappable Component="div" role="button" {...restProps} className={cellClasses}>
+  return (
+    <Tappable {...restProps} baseClassName={cellClasses}>
       {cellContent}
     </Tappable>
-  ) : (
-    <RootComponent {...restProps} baseClassName={cellClasses}>
-      {cellContent}
-    </RootComponent>
   );
 };

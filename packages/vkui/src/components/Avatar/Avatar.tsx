@@ -1,5 +1,10 @@
 import { classNames } from '@vkontakte/vkjs';
-import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
+import { ImageBase, type ImageBaseProps } from '../ImageBase/ImageBase';
+import {
+  ImageBaseOverlay,
+  type ImageBaseOverlayProps,
+} from '../ImageBase/ImageBaseOverlay/ImageBaseOverlay';
 import { AvatarBadge, type AvatarBadgeProps } from './AvatarBadge/AvatarBadge';
 import {
   AvatarBadgeWithPreset,
@@ -64,7 +69,7 @@ export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightS
    * 3: 'yellow'
    * 4: 'green'
    * 5: 'l-blue'
-   * 6: 'violet'
+   * 6: 'violet'.
    *
    * > Если необходимо задать свой градиент, то используйте значение `"custom"` и определите цвет градиента либо через
    * > свой класс в `className`, либо через `style={{ backgroundImage: "..." }}`.
@@ -73,7 +78,7 @@ export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightS
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Avatar
+ * @see https://vkui.io/components/avatar
  */
 export const Avatar: React.FC<AvatarProps> & {
   Badge: typeof AvatarBadge;
@@ -123,15 +128,13 @@ export const Avatar: React.FC<AvatarProps> & {
   );
 };
 
-Avatar.displayName = 'Avatar';
-
 Avatar.Badge = AvatarBadge;
-Avatar.Badge.displayName = 'Avatar.Badge';
-
 Avatar.BadgeWithPreset = AvatarBadgeWithPreset;
-Avatar.BadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';
-
-Avatar.Overlay = ImageBase.Overlay;
-Avatar.Overlay.displayName = 'Avatar.Overlay';
-
+Avatar.Overlay = ImageBaseOverlay;
 Avatar.getInitialsFontSize = getInitialsFontSize;
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(Avatar.Badge, 'Avatar.Badge');
+  defineComponentDisplayNames(Avatar.BadgeWithPreset, 'Avatar.BadgeWithPreset');
+  defineComponentDisplayNames(Avatar.Overlay, 'Avatar.Overlay');
+}

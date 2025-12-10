@@ -1,0 +1,50 @@
+{
+  "name": "@vkontakte/vkui-docs-theme",
+  "version": "0.0.1",
+  "description": "Basic VKUI style theme for documentation sites",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VKCOM/VKUI.git",
+    "directory": "packages/vkui-docs-theme"
+  },
+  "homepage": "https://vkcom.github.io/VKUI/",
+  "license": "MIT",
+  "type": "module",
+  "module": "index.ts",
+  "exports": {
+    "./styles.css": "./styles.css",
+    ".": {
+      "import": "./index.ts"
+    }
+  },
+  "files": [
+    "src",
+    "index.ts",
+    "styles.css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "@vkontakte/icons": "^3.0.0",
+    "@vkontakte/vkjs": "^2.0.2",
+    "@vkontakte/vkui": "workspace:^",
+    "@vkontakte/vkui-tokens": "4.71.0",
+    "scroll-into-view-if-needed": "^3.1.0"
+  },
+  "devDependencies": {
+    "next": "^15.5.7",
+    "nextra": "^4.6.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "peerDependencies": {
+    "next": "^15.5.7",
+    "nextra": "^4.6.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "scripts": {
+    "test": "echo no test"
+  }
+}

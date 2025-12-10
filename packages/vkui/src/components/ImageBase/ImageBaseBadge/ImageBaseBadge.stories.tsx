@@ -3,7 +3,7 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/cons
 import { ImageBaseBadge, type ImageBaseBadgeProps } from './ImageBaseBadge';
 
 const story: Meta<ImageBaseBadgeProps> = {
-  title: 'Blocks/ImageBaseBadge',
+  title: 'Data Display/ImageBase/ImageBaseBadge',
   component: ImageBaseBadge,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
 };

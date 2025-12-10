@@ -28,6 +28,7 @@ export const CustomSelectPlayground = (props: ComponentPlaygroundProps) => {
         <CustomSelect
           placeholder="Не выбрана"
           {...props}
+          accessible
           options={[
             { value: 1, label: 'Россия' },
             { value: 2, label: 'Украина' },
@@ -55,8 +56,13 @@ export const CustomSelectNoMaxHeightPlayground = (props: ComponentPlaygroundProp
         >
           <CustomSelect
             placeholder="Не выбрана"
-            data-testid="target-select"
+            slotProps={{
+              input: {
+                'data-testid': 'target-select',
+              },
+            }}
             {...props}
+            accessible
             options={[
               { value: 1, label: 'Гарри Поттер и философский камень' },
               { value: 2, label: 'Гарри Поттер и Тайная комната' },
@@ -78,12 +84,17 @@ export const CustomSelectNoMaxHeightPlayground = (props: ComponentPlaygroundProp
 
 export const CustomSelectOptionScrollPlayground = (props: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground {...props} propSets={[{ value: [7] }]}>
+    <ComponentPlayground {...props} propSets={[{ value: [7], forceDropdownPortal: [false] }]}>
       {(props: SelectProps) => (
         <div style={{ height: 200 }}>
           <CustomSelect
-            data-testid="target-select"
+            slotProps={{
+              input: {
+                'data-testid': 'target-select',
+              },
+            }}
             {...props}
+            accessible
             options={[
               { value: 1, label: 'Гарри Поттер и философский камень' },
               { value: 2, label: 'Гарри Поттер и Тайная комната' },

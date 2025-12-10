@@ -1,19 +1,24 @@
 'use client';
 
-import { type ChangeEventHandler } from 'react';
+import { type ChangeEvent, type ChangeEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasAlign, HasRef, HasRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { DropdownIcon } from '../DropdownIcon/DropdownIcon';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
+import { RootComponent } from '../RootComponent/RootComponent';
 import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
+
+const warn = warnOnce('NativeSelect');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -32,64 +37,92 @@ export const NOT_SELECTED = {
   CUSTOM: null,
 };
 
+/**
+ * @visibleName NativeSelect
+ */
 export const remapFromSelectValueToNativeValue = (value: SelectValue): NativeSelectValue =>
   value === NOT_SELECTED.CUSTOM ? NOT_SELECTED.NATIVE : value;
 
 export const remapFromNativeValueToSelectValue = (value: NativeSelectValue): SelectValue =>
   value === NOT_SELECTED.NATIVE ? NOT_SELECTED.CUSTOM : value;
 
+export type NativeHTMLSelectProps = Omit<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
+  'multiple' | 'value' | 'defaultValue' | 'onChange'
+>;
+
 export interface NativeSelectProps
-  extends Omit<
+  extends Pick<
       React.SelectHTMLAttributes<HTMLSelectElement>,
-      'multiple' | 'value' | 'defaultValue' | 'onChange'
+      'disabled' | 'required' | 'autoFocus' | 'name' | 'onFocus' | 'onBlur' | 'onClick'
     >,
-    HasRef<HTMLSelectElement>,
+    Omit<
+      React.HTMLAttributes<HTMLDivElement>,
+      'defaultValue' | 'onChange' | 'onFocus' | 'onBlur' | 'onClick'
+    >,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Pick<FormFieldProps, 'before' | 'status'> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `select`: свойства для прокидывания в нативный `select`.
+   */
+  slotProps?: {
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasDataAttribute &
+      HasRootRef<HTMLDivElement>;
+    select?: NativeHTMLSelectProps & HasRootRef<HTMLSelectElement> & HasDataAttribute;
+  };
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ select: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLSelectElement>;
   /**
    * Выбранное значение.
    *
    * > ⚠️  Важно: При прокидывании `undefined` компонент будет считаться `Uncontrolled`.
    * >
-   * > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`
+   * > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`.
    */
   value?: SelectValue;
   /**
-   * см. `value`
+   * См. `value`.
    */
   defaultValue?: SelectValue;
   /**
-   * Коллбэк срабатывающий при изменении выбранного значения.
+   * Обработчик, срабатывающий при изменении выбранного значения.
+   * Вторым параметром прокидывается новое значение.
+   *
+   * > ⚠️ Лучше использовать второй параметр при работе с компонентом.
    */
-  onChange?: (newValue: SelectValue) => void;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
+  /**
+   * Текст-подсказка при отсутствии выбранного значения.
+   */
   placeholder?: string;
+  /**
+   * Флаг для включения многострочного режима.
+   */
   multiline?: boolean;
+  /**
+   * Тип селекта, влияющий на отображение.
+   */
   selectType?: SelectType;
   /**
-   * Иконка раскрывающегося списка
+   * Иконка раскрывающегося списка.
    */
   icon?: React.ReactNode;
 }
 
-export interface SelectState {
-  value?: React.SelectHTMLAttributes<HTMLSelectElement>['value'];
-  title?: string;
-  notSelected?: boolean;
-}
-
 /**
- * @see https://vkcom.github.io/VKUI/#/NativeSelect
+ * @see https://vkui.io/components/native-select
  */
-const NativeSelect = ({
-  style,
+export const NativeSelect = ({
+  // NativeSelectProps
+  children,
   align,
   placeholder,
-  children,
-  className,
-  getRef,
-  getRootRef,
-  disabled,
   multiline,
   selectType = 'default',
   status,
@@ -98,12 +131,38 @@ const NativeSelect = ({
   onChange,
   value,
   defaultValue,
+  getRef,
+
+  // Select props
+  disabled,
+  required,
+  autoFocus,
+  id,
+  name,
+  onClick,
+  onFocus,
+  onBlur,
+
+  slotProps,
   ...restProps
 }: NativeSelectProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ select: { getRootRef: ... } }`');
+  }
+
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
-  const selectRef = useExternRef(getRef);
   const { sizeY = 'none' } = useAdaptivity();
+
+  const { className, style, getRootRef, ...rootRest } = useMergeProps(restProps, slotProps?.root);
+
+  const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
+    { getRootRef: getRef, disabled, required, autoFocus, id, name, onClick, onFocus, onBlur },
+    slotProps?.select,
+  );
+
+  const selectRef = useExternRef(getSelectRef);
 
   const checkSelectedOption = () => {
     const selectedOption = selectRef.current?.options[selectRef.current.selectedIndex];
@@ -115,7 +174,13 @@ const NativeSelect = ({
 
   const _onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const newValue = remapFromNativeValueToSelectValue(e.target.value);
-    onChange?.(newValue);
+    if (e.target.value === NOT_SELECTED.NATIVE) {
+      e.target.value = '';
+    }
+    if (e.currentTarget.value === NOT_SELECTED.NATIVE) {
+      e.currentTarget.value = '';
+    }
+    onChange?.(e, newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
 
@@ -135,28 +200,29 @@ const NativeSelect = ({
       )}
       style={style}
       getRootRef={getRootRef}
-      disabled={disabled}
+      disabled={selectRest.disabled}
       before={before}
       after={icon}
       status={status}
       mode={getFormFieldModeFromSelectType(selectType)}
+      {...rootRest}
     >
-      <select
-        {...restProps}
+      <RootComponent
+        Component="select"
+        baseClassName={styles.el}
         value={value !== undefined ? remapFromSelectValueToNativeValue(value) : value}
         defaultValue={
           defaultValue !== undefined
             ? remapFromSelectValueToNativeValue(defaultValue)
             : defaultValue
         }
-        disabled={disabled}
-        className={styles.el}
         onChange={callMultiple(_onChange, checkSelectedOption)}
-        ref={selectRef}
+        getRootRef={selectRef}
+        {...selectRest}
       >
         {placeholder && <option value={NOT_SELECTED.NATIVE}>{placeholder}</option>}
         {children}
-      </select>
+      </RootComponent>
       <div className={styles.container} aria-hidden>
         <SelectTypography className={styles.title} selectType={selectType}>
           {title}
@@ -165,5 +231,3 @@ const NativeSelect = ({
     </FormField>
   );
 };
-
-export { NativeSelect };

@@ -1,0 +1,12 @@
+.root {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  padding: var(--vkui--spacing_size_xl);
+}
+
+@media (--viewWidth-smallTabletMinus) {
+  .root {
+    padding: 0;
+  }
+}

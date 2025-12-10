@@ -7,12 +7,17 @@ export const ProgressPlayground = (props: ComponentPlaygroundProps): React.React
       {...props}
       propSets={[
         {
-          appearance: [undefined, 'negative', 'positive'],
+          appearance: [undefined, 'negative', 'positive', '#c805f5'],
           value: [30],
         },
         {
           height: [10],
           value: [30],
+        },
+        {
+          appearance: ['accent'],
+          value: [30],
+          trackDisable: [true],
         },
       ]}
     >

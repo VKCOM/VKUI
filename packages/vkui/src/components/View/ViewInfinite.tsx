@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
+import { millisecondsInSecond } from '../../lib/date';
 import { canUseDOM, type DOMProps, withDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
@@ -27,39 +28,44 @@ import styles from './View.module.css';
 
 const warn = warnOnce('ViewInfinite');
 
-interface Scrolls {
-  [index: string]: Array<number | undefined>;
-}
-
-interface ViewsScrolls {
-  [index: string]: Scrolls;
-}
-
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-export let scrollsCache: ViewsScrolls = {};
+export let scrollsCache = new Map<string, Map<string, Array<number | undefined>>>();
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 export type TransitionParams = { from: string | null; to: string | null };
 
 export interface ViewInfiniteProps
   extends HTMLAttributesWithRootRef<HTMLElement>,
     HasPlatform,
     NavIdProps {
+  /**
+   * `id` активной панели.
+   */
   activePanel: string;
+  /**
+   * Обработчик, который вызывается при завершении анимации смены активной панели.
+   */
   onTransition?: (params: TransitionParams & { isBack: boolean }) => void;
   /**
-   * callback свайпа назад
+   * Обработчик свайпа назад.
    */
   onSwipeBack?: () => void;
   /**
-   * callback начала анимации свайпа назад.
+   * Обработчик начала анимации свайпа назад.
    */
   onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
   /**
-   * callback завершения анимации отмененного пользователем свайпа
+   * Обработчик завершения анимации отмененного пользователем свайпа.
    */
   onSwipeBackCancel?: () => void;
+  /**
+   * Массив из id панелей в порядке открытия.
+   */
   history?: string[];
+  /**
+   * Функция проверки перехода назад.
+   */
   isBackCheck?: (params: TransitionParams) => boolean;
   /**
    * @ignore
@@ -75,6 +81,7 @@ export interface ViewInfiniteProps
   scroll?: ScrollContextInterface;
 }
 
+/* eslint-disable jsdoc/require-jsdoc */
 export interface ViewInfiniteState {
   animated: boolean;
 
@@ -93,6 +100,7 @@ export interface ViewInfiniteState {
 
   browserSwipe: boolean;
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 class ViewInfiniteComponent extends React.Component<
   ViewInfiniteProps & DOMProps,
@@ -126,7 +134,8 @@ class ViewInfiniteComponent extends React.Component<
   };
 
   private swipeBackPrevented = false;
-  private scrolls = scrollsCache[getNavId(this.props, warn) as string] || {};
+  private readonly scrolls: Map<string, Array<number | undefined>> =
+    scrollsCache.get(getNavId(this.props, warn) as string) || new Map();
   private transitionFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
   private readonly animationFinishTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
@@ -139,7 +148,7 @@ class ViewInfiniteComponent extends React.Component<
   }
 
   get panels() {
-    return React.Children.toArray(this.props.children) as React.ReactElement[];
+    return React.Children.toArray(this.props.children) as Array<React.ReactElement<NavIdProps>>;
   }
 
   panelNodes: { [id: string]: HTMLDivElement | null } = {};
@@ -147,7 +156,7 @@ class ViewInfiniteComponent extends React.Component<
   componentWillUnmount() {
     const id = getNavId(this.props);
     if (id) {
-      scrollsCache[id] = this.scrolls;
+      scrollsCache.set(id, this.scrolls);
     }
     if (this.animationFinishTimeout) {
       clearTimeout(this.animationFinishTimeout);
@@ -177,15 +186,11 @@ class ViewInfiniteComponent extends React.Component<
 
       this.blurActiveElement();
 
-      const prevScrolls = this.scrolls[prevProps.activePanel] || [];
-      const scrolls = {
-        ...this.scrolls,
-        [prevProps.activePanel]: [
-          ...prevScrolls,
-          this.props.scroll?.getScroll({ compensateKeyboardHeight: false }).y,
-        ],
-      };
-      this.scrolls = scrolls;
+      const prevScrolls = this.scrolls.get(prevProps.activePanel) || [];
+      this.scrolls.set(prevProps.activePanel, [
+        ...prevScrolls,
+        this.props.scroll?.getScroll({ compensateKeyboardHeight: false }).y,
+      ]);
 
       if (this.shouldDisableTransitionMotion()) {
         this.flushTransition(prevProps.activePanel, isBack);
@@ -207,18 +212,14 @@ class ViewInfiniteComponent extends React.Component<
       const prevPanel = this.state.swipeBackPrevPanel;
       let scrollPosition: undefined | number = undefined;
 
-      this.scrolls = {
-        ...this.scrolls,
-      };
-
       if (prevPanel !== null) {
-        const prevPanelScrolls = [...(this.scrolls[prevPanel] || [])].slice(0, -1);
-        this.scrolls[prevPanel] = prevPanelScrolls;
+        const prevPanelScrolls = [...(this.scrolls.get(prevPanel) || [])].slice(0, -1);
+        this.scrolls.set(prevPanel, prevPanelScrolls);
       }
       if (nextPanel !== null) {
-        const newPanelScrolls = [...(this.scrolls[nextPanel] || [])];
+        const newPanelScrolls = [...(this.scrolls.get(nextPanel) || [])];
         scrollPosition = newPanelScrolls.pop();
-        this.scrolls[nextPanel] = newPanelScrolls;
+        this.scrolls.set(nextPanel, newPanelScrolls);
       }
 
       this.setState(
@@ -258,12 +259,9 @@ class ViewInfiniteComponent extends React.Component<
       !this.state.swipeBackResult &&
       this.state.activePanel !== null
     ) {
-      const newPanelScrolls = [...(this.scrolls[this.state.activePanel] || [])];
+      const newPanelScrolls = [...(this.scrolls.get(this.state.activePanel) || [])];
       const scrollPosition = newPanelScrolls.pop();
-      this.scrolls = {
-        ...this.scrolls,
-        [this.state.activePanel]: newPanelScrolls,
-      };
+      this.scrolls.set(this.state.activePanel, newPanelScrolls);
 
       this.props.scroll?.scrollTo(0, scrollPosition);
     }
@@ -336,15 +334,12 @@ class ViewInfiniteComponent extends React.Component<
   flushTransition(prevPanel: string, isBack: boolean) {
     const activePanel = this.props.activePanel;
 
-    const prevPanelScrolls = [...(this.scrolls[prevPanel] || [])].slice(0, -1);
-    const newPanelScrolls = [...(this.scrolls[activePanel] || [])];
+    const prevPanelScrolls = [...(this.scrolls.get(prevPanel) || [])].slice(0, -1);
+    const newPanelScrolls = [...(this.scrolls.get(activePanel) || [])];
     const scrollPosition = isBack ? newPanelScrolls.pop() : 0;
     if (isBack) {
-      this.scrolls = {
-        ...this.scrolls,
-        [prevPanel]: prevPanelScrolls,
-        [activePanel]: newPanelScrolls,
-      };
+      this.scrolls.set(prevPanel, prevPanelScrolls);
+      this.scrolls.set(activePanel, newPanelScrolls);
     }
 
     this.setState(
@@ -456,11 +451,11 @@ class ViewInfiniteComponent extends React.Component<
       if (this.state.activePanel !== null) {
         // Note: вызываем закрытие клавиатуры. В iOS это нативное поведение при свайпе.
         this.blurActiveElement();
-        const prevScrolls = this.scrolls[this.state.activePanel] || [];
-        this.scrolls = {
-          ...this.scrolls,
-          [this.state.activePanel]: [...prevScrolls, this.props.scroll?.getScroll().y],
-        };
+        const prevScrolls = this.scrolls.get(this.state.activePanel) || [];
+        this.scrolls.set(this.state.activePanel, [
+          ...prevScrolls,
+          this.props.scroll?.getScroll().y,
+        ]);
       }
 
       this.setState({
@@ -486,7 +481,7 @@ class ViewInfiniteComponent extends React.Component<
     this.swipeBackPrevented = false;
 
     if (this.state.swipingBack && this.window) {
-      const speed = (this.state.swipeBackShift / event.duration) * 1000;
+      const speed = (this.state.swipeBackShift / event.duration) * millisecondsInSecond;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
@@ -624,13 +619,13 @@ class ViewInfiniteComponent extends React.Component<
           }
         >
           <div className={styles.panels}>
-            {panels.map((panel: React.ReactElement) => {
+            {panels.map((panel) => {
               const panelId = getNavId(panel.props, warn);
               const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
               const compensateScroll =
                 isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
               const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
-              const scrollList = (panelId && this.scrolls[panelId]) || [];
+              const scrollList = (panelId && this.scrolls.get(panelId)) || [];
               const scroll = scrollList[scrollList.length - 1] || 0;
 
               return (
@@ -646,7 +641,9 @@ class ViewInfiniteComponent extends React.Component<
                     swipeBackResult === 'fail' && styles.panelSwipeBackFailed,
                   )}
                   onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : undefined}
-                  ref={(el) => panelId !== undefined && (this.panelNodes[panelId] = el)}
+                  ref={(el) => {
+                    panelId !== undefined && (this.panelNodes[panelId] = el);
+                  }}
                   style={this.calcPanelSwipeStyles(panelId)}
                   key={panelId}
                 >

@@ -1,0 +1,128 @@
+---
+description: Компонент для создания кнопок в виде строк.
+---
+
+<Overview group="buttons">
+
+# CellButton [tag:component]
+
+Компонент для создания кнопок в виде строк. Используется для списков действий, меню настроек и других сценариев,
+где требуется компактное отображение интерактивных элементов.
+
+Связанные компоненты:
+
+- [`CellButtonGroup`](/components/cell-button-group)
+
+</Overview>
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}}>Добавить родственника</CellButton>
+  ```
+</Playground>
+
+## Визуальное оформление
+
+### Цвет
+
+Задаётся свойством `appearance`.
+
+#### `"neutral"`
+
+Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="neutral">
+    Скрыть раздел
+  </CellButton>
+  ```
+</Playground>
+
+#### `"accent"`
+
+Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="accent">
+    Добавить родственника
+  </CellButton>
+  ```
+</Playground>
+
+#### `"negative"`
+
+Значение задаёт кнопке цвет критических действий (чаще всего красный).
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} appearance="negative">
+    Удалить беседу
+  </CellButton>
+  ```
+</Playground>
+
+## Выравнивание
+
+Задается свойством `centered`.
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton onClick={() => {}} centered before={<Icon24Add />}>
+    Центрированная кнопка
+  </CellButton>
+  ```
+</Playground>
+
+## Особенности
+
+### Наследование свойств
+
+Поддерживает все свойства [`SimpleCell`](/components/simple-cell):
+
+- `before` / `after`
+- `subtitle` / `extraSubtitle`
+- `multiline`
+- `disabled`
+
+Пример с дополнительным контентом:
+
+<Playground style={{ maxWidth: 270 }}>
+  ```jsx
+  <CellButton
+    before={<Icon28WalletOutline />}
+    subtitle="Баланс: 500 ₽"
+    after={<Counter>3</Counter>}
+    onClick={() => {}}
+  >
+    Кошелёк
+  </CellButton>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- Для иконок без текста используйте `aria-label`.
+- Сочетайте с семантическими тегами:
+
+  ```jsx
+  <CellButton Component="a" href="/settings">
+    Настройки
+  </CellButton>
+  ```
+
+- Для скринридеров:
+
+  ```jsx
+  <CellButton>
+    Создать документ
+    <VisuallyHidden>Нажмите Enter для активации</VisuallyHidden>
+  </CellButton>
+  ```
+
+- Также стоит ознакомиться с рекомендациями по доступности компонента [`SimpleCell`](/components/simple-cell#a11y)
+
+## Свойства и методы [#api]
+
+<PropsTable name="CellButton" />

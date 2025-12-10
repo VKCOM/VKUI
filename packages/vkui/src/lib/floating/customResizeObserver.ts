@@ -42,8 +42,9 @@ export class CustomResizeObserver {
     iframe: HTMLIFrameElement;
   }> = [];
   mutationObserverFallback: MutationObserver | null = null;
+  private readonly updateFunction: () => void;
 
-  constructor(private readonly updateFunction: () => void) {
+  constructor(updateFunction: () => void) {
     this.updateFunction = updateFunction;
   }
 
@@ -68,7 +69,6 @@ export class CustomResizeObserver {
 
   observeUsingIframe(element: HTMLElement): void {
     const iframe = element.ownerDocument.createElement('iframe');
-    iframe.src = 'javascript:void(0)';
     iframe.ariaHidden = 'true';
     iframe.tabIndex = -1;
     Object.assign(iframe.style, defaultIframeStyles);

@@ -1,8 +1,9 @@
-import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createCalendarDayRenderField } from '../../testing/presets/createCalendarDayRenderField';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { useCustomArgs } from '../../testing/useCustomArgs';
 import { DateRangeInput, type DateRangeInputProps } from './DateRangeInput';
 
 type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDate: number };
@@ -10,10 +11,13 @@ type StoryDateRangeInputProps = DateRangeInputProps & { startDate: number; endDa
 const iconsPresets = getFormFieldIconsPresets();
 
 const story: Meta<StoryDateRangeInputProps> = {
-  title: 'Forms/DateRangeInput',
+  title: 'Dates/DateRangeInput',
   component: DateRangeInput,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('DateRangeInput', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
+    readOnly: {
+      control: { type: 'boolean' },
+    },
     value: {
       description: 'Используйте startDate и endDate для задания периода',
       control: false,
@@ -40,6 +44,7 @@ const story: Meta<StoryDateRangeInputProps> = {
     after: iconsPresets,
     renderDayContent: createCalendarDayRenderField(),
   },
+  tags: ['Работа с датами'],
 };
 
 export default story;
@@ -47,8 +52,8 @@ export default story;
 type Story = StoryObj<StoryDateRangeInputProps>;
 
 export const Playground: Story = {
-  render: function Render() {
-    const [{ value, startDate, endDate, ...args }, updateArgs] = useArgs();
+  render: function Render({ startDate, endDate, ...args }) {
+    const [, updateArgs] = useCustomArgs();
 
     const handleDateRangeUpdate: DateRangeInputProps['onChange'] = (updatedValue) => {
       const [changedStartDate, changedEndDate] = updatedValue || [null, null];

@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { Icon24Cancel } from '@vkontakte/icons';
@@ -16,7 +17,7 @@ type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> & {
   cancelLabel?: ScreenSpinnerProps['cancelLabel'];
 };
 
-const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
+const ScreenSpinnerCancelIcon = ({
   onKeyDown,
   'aria-label': ariaLabel = 'Отменить',
   ...restProps
@@ -41,9 +42,7 @@ const ScreenSpinnerCancelIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
   );
 };
 
-ScreenSpinnerCancelIcon.displayName = 'ScreenSpinnerCancelIcon';
-
-export const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
+export const ScreenSpinnerSwapIcon = ({
   cancelLabel,
   ...restProps
 }: ScreenSpinnerSwapIconProps) => {
@@ -73,5 +72,3 @@ export const ScreenSpinnerSwapIcon: React.FC<ScreenSpinnerSwapIconProps> = ({
     </RootComponent>
   );
 };
-
-ScreenSpinnerSwapIcon.displayName = 'ScreenSpinnerSwapIcon';

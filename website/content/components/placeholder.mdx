@@ -1,0 +1,107 @@
+---
+description: Компонент для отображения заглушек при отсутствии контента или ошибках.
+---
+
+<Overview group="data-display">
+
+# Placeholder [tag:component]
+
+Компонент для отображения заглушек при отсутствии контента или ошибках.
+Обеспечивает единый стиль для пустых состояний интерфейса.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Placeholder title="Находите друзей">
+    Здесь будут отображаться люди, которых вы добавите в друзья
+  </Placeholder>
+  ```
+</Playground>
+
+## Полноэкранный режим (stretched)
+
+Используется когда:
+
+- Нет других элементов на экране;
+- Нужно акцентировать внимание на состоянии;
+- Требуется центральное позиционирование.
+
+## Отображение нескольких кнопок
+
+Чтобы отобразить несколько кнопок, в свойство `action` можно прокинуть несколько кнопок обернутых в [`ButtonGroup`](/components/button-group):
+
+<Playground>
+  ```jsx
+  <Placeholder
+    title="Находите друзей"
+    action={
+      <ButtonGroup mode="vertical" align="center">
+        <Button size="m">Найти друзей</Button>
+        <Button size="m" mode="tertiary">
+          Подробнее
+        </Button>
+      </ButtonGroup>
+    }
+  >
+    Здесь будут отображаться люди, которых вы добавите в друзья.
+  </Placeholder>
+  ```
+</Playground>
+
+> Используйте не более 3-х кнопок.
+>
+> При работе с несколькими кнопками важно учитывать иерархию их значимости, определяя, какая из них является основной,
+> а какая вспомогательной.
+
+## Рекомендации по использованию
+
+- Используйте `outline` иконки (иконки с префиксом `Outline` в `@vkontakte/icons`).
+- Используйте кнопки размера `l`.
+- Режимы кнопок `primary` или `tertiary`.
+- Не используйте вместе с другим контентом при `stretched=true`.
+- Избегайте небольших иконок (меньше `56px`).
+- Не размещайте интерактивные элементы нигде, кроме `action`.
+
+## Подкомпонентый подход
+
+Компонент можно использовать в подкомпонентном подходе:
+
+<Playground>
+  ```jsx
+  <Placeholder.Container>
+    <Placeholder.Icon>
+      <Icon56UserAddOutline />
+    </Placeholder.Icon>
+    <Placeholder.Title>Находите друзей</Placeholder.Title>
+    <Placeholder.Description>
+      Здесь будут отображаться люди, которых вы добавите в друзья.
+    </Placeholder.Description>
+    <Placeholder.Actions>
+      <ButtonGroup mode="vertical" align="center">
+        <Button size="m">Найти друзей</Button>
+        <Button size="m" mode="tertiary">
+          Скрыть
+        </Button>
+      </ButtonGroup>
+    </Placeholder.Actions>
+  </Placeholder.Container>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Placeholder">
+### Placeholder [#placeholder-api]
+
+### Placeholder.Container [#placeholder-container-api]
+
+### Placeholder.Icon [#placeholder-icon-api]
+
+### Placeholder.Title [#placeholder-title-api]
+
+### Placeholder.Description [#placeholder-description-api]
+
+### Placeholder.Actions [#placeholder-actions-api]
+
+</PropsTable>

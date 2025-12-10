@@ -1,0 +1,60 @@
+---
+description: Хук, возвращающий расширенную версию параметров адаптивности.
+---
+
+<Overview type="hook" forcedPath="hooks/useAdaptivityConditionalRender/useAdaptivityConditionalRender.tsx">
+# useAdaptivityConditionalRender
+
+Хук возвращает расширенную версию [параметров адаптивности](/overview/adaptivity#adaptivity-props), каждый из которых имеет
+дополнительную мета-информацию. Условия реализованы через [CSS Media Query](https://developer.mozilla.org/en-US/docs/Web/CSS/@media).
+
+Связанные страницы:
+
+- [Адаптивность](/overview/adaptivity)
+- [Серверный рендер | Примечание к адаптивности](/overview/ssr#adaptivity-note)
+
+</Overview>
+
+## Когда использовать? [#when-to-use]
+
+Используйте когда нужно показать или скрыть элемент интерфейса по тому или иному брейкпоинту.
+
+## Особенности работы [#behavior-specifics]
+
+Если вы переопределили адаптивность через [`AdaptivityProvider`](/components/adaptivity-provider), то значение у каждого отдельного
+параметра адаптивности может быть двух типов:
+
+- `false` – мы строго задали какой-то из параметров адаптивности. Например, при `<AdaptivityProvider viewWidth={ViewWidth.MOBILE}>`
+  значение `viewWidth.tabletPlus` будет `false`, т.к. мы говорим, что у нас всегда мобильный вид.
+
+- `{ className: string }` – в CSS-класс, который на основе CSS Media Query будет переключать видимость вашего элемента через `display: none`.
+
+## Пример использования [#example]
+
+Показываем левую колонку [`SplitLayout`](/components/split-layout) только на настольных экранах.
+
+```jsx {9,13,14}
+import {
+  SplitLayout,
+  SplitCol,
+  PanelHeader,
+  useAdaptivityConditionalRender,
+} from '@vkontakte/vkui';
+
+export function App() {
+  const { viewWidth } = useAdaptivityConditionalRender();
+
+  return (
+    <SplitLayout header={<PanelHeader delimiter="none" />}>
+      {viewWidth.tabletPlus && (
+        <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+          {/* ... */}
+        </SplitCol>
+      )}
+      <SplitCol maxWidth="560px" stretchedOnMobile autoSpaced>
+        {/* ... */}
+      </SplitCol>
+    </SplitLayout>
+  );
+}
+```

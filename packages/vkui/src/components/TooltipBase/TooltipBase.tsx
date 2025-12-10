@@ -24,7 +24,7 @@ const stylesAppearance = {
 export interface TooltipBaseProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children' | 'title'> {
   /**
-   * Стиль отображения подсказки
+   * Стиль отображения подсказки.
    */
   appearance?: 'accent' | 'neutral' | 'white' | 'black' | 'inversion';
   /**
@@ -35,6 +35,11 @@ export interface TooltipBaseProps
    * Заголовок тултипа.
    */
   title?: React.ReactNode;
+  /**
+   * [a11y] Id для заголовка тултипа.
+   * Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`.
+   */
+  titleId?: string;
   /**
    * Для показа указателя, требуется передать хотя бы `coords` и `placement`.
    */
@@ -47,14 +52,14 @@ export interface TooltipBaseProps
    * 1. Иконка по умолчанию должна быть направлена вверх (a.k.a `IconUp`).
    * 2. Чтобы избежать проблемы с пространством между стрелкой и контентом на некоторых экранах,
    *    растяните кривую по высоте на `1px` и увеличьте на этот размер `height` и `viewBox` SVG.
-   *    (см. https://github.com/VKCOM/VKUI/pull/4496).
+   *    (смотри https://github.com/VKCOM/VKUI/pull/4496).
    * 3. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    * 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
    */
   ArrowIcon?: FloatingArrowProps['Icon'];
   /**
-   * Пользовательские css-классы, будут добавлены на root-элемент
+   * Пользовательские css-классы, будут добавлены на root-элемент.
    */
   className?: string;
   /**
@@ -75,8 +80,6 @@ export interface TooltipBaseProps
 
 /**
  * Низкоуровневый компонент для отрисовки тултипа.
- * Примеры использования и Readme можно найти в документации Tooltip
- * @see https://vkcom.github.io/VKUI/#/Tooltip
  * @private
  */
 export const TooltipBase = ({
@@ -85,6 +88,7 @@ export const TooltipBase = ({
   ArrowIcon = DefaultIcon,
   description,
   title,
+  titleId,
   maxWidth = TOOLTIP_MAX_WIDTH,
   closeIconLabel = 'Закрыть',
   onCloseIconClick,
@@ -110,8 +114,14 @@ export const TooltipBase = ({
       )}
       <div className={styles.content} style={maxWidth !== null ? { maxWidth } : undefined}>
         <div>
-          {hasReactNode(title) && <Subhead weight="2">{title}</Subhead>}
-          {hasReactNode(description) && <Subhead>{description}</Subhead>}
+          {hasReactNode(title) && (
+            <Subhead id={titleId} className={styles.title} weight="2">
+              {title}
+            </Subhead>
+          )}
+          {hasReactNode(description) && (
+            <Subhead className={styles.description}>{description}</Subhead>
+          )}
         </div>
         {typeof onCloseIconClick === 'function' && (
           <Tappable

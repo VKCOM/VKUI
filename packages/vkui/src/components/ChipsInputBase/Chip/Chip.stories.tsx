@@ -3,11 +3,11 @@ import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/cons
 import { getAvatarUrl } from '../../../testing/mock';
 import { createFieldWithPresets } from '../../../testing/presets';
 import { Avatar } from '../../Avatar/Avatar';
-import type { ChipProps } from '../types';
+import type { ChipProps } from './Chip';
 import { Chip } from './Chip';
 
 const story: Meta<ChipProps> = {
-  title: 'Forms/Chip',
+  title: 'Data Display/Chip',
   component: Chip,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   argTypes: {
@@ -21,6 +21,7 @@ const story: Meta<ChipProps> = {
       iconSizes: ['16'],
     }),
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

@@ -1,11 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import type { HasRef, HasRootRef } from '../../../types';
+import { useMergeProps } from '../../../hooks/useMergeProps';
+import { warnOnce } from '../../../lib/warnOnce';
+import type { HasDataAttribute, HasRootRef } from '../../../types';
 import { AdaptiveIconRenderer } from '../../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './RadioInput.module.css';
+
+const warn = warnOnce('Radio.Input');
 
 function RadioIcon24(props: React.ComponentProps<'svg'>) {
   return (
@@ -34,26 +38,89 @@ function RadioIcon() {
 }
 
 export interface RadioInputProps
-  extends Omit<React.ComponentProps<'input'>, 'type'>,
-    HasRootRef<HTMLLabelElement>,
-    HasRef<HTMLInputElement> {}
+  extends Pick<
+      React.ComponentProps<'input'>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
+    HasRootRef<HTMLLabelElement> {
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
+   */
+  slotProps?: {
+    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+      HasRootRef<HTMLLabelElement> &
+      HasDataAttribute;
+    input?: Omit<React.ComponentProps<'input'>, 'type'> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
+}
 
 export function RadioInput({
-  className,
-  style,
-  getRootRef,
   getRef,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
+  slotProps,
   ...restProps
 }: RadioInputProps) {
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+  }
+
+  const rootRest = useMergeProps(restProps, slotProps?.root);
+
+  const inputProps = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
+
   return (
-    <RootComponent className={className} style={style} getRootRef={getRootRef}>
-      <VisuallyHidden
-        {...restProps}
-        Component="input"
-        type="radio"
-        baseClassName={styles.input}
-        getRootRef={getRef}
-      />
+    <RootComponent {...rootRest}>
+      <VisuallyHidden Component="input" type="radio" baseClassName={styles.input} {...inputProps} />
       <RadioIcon />
     </RootComponent>
   );

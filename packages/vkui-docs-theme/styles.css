@@ -1,0 +1,20 @@
+/* vkui-tokens */
+@import '@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariables.css'
+  (prefers-color-scheme: light);
+@import '@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariables.css'
+  (prefers-color-scheme: dark);
+@import '@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/onlyVariablesLocal.css';
+@import '@vkontakte/vkui-tokens/themes/vkBaseDark/cssVars/declarations/onlyVariablesLocal.css';
+
+/* VKUI styles */
+@import '../vkui/src/styles/constants.css';
+@import '../vkui/src/styles/common.css';
+@import '../vkui/src/styles/dynamicTokens.css';
+@import '../vkui/src/styles/adaptivity.module.css';
+
+/* Docs styles */
+@import './styles/constants.css';
+@import './styles/colors.css';
+
+/* Global styles */
+@import './styles/global.css';

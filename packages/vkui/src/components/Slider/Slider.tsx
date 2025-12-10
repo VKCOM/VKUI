@@ -3,9 +3,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { type CustomTouchEvent, type CustomTouchEventHandler, Touch } from '../Touch/Touch';
 import { SliderThumb } from './SliderThumb/SliderThumb';
 import {
@@ -34,9 +36,21 @@ const sizeClassNames = {
 
 export interface SliderBaseProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
+  /**
+   * Минимальное значение слайдера.
+   */
   min?: number;
+  /**
+   * Максимальное значение слайдера.
+   */
   max?: number;
+  /**
+   * Шаг изменения значения слайдера.
+   */
   step?: number;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
   /**
    * Тоже самое, что и `aria-label`, но на вход можно получать индекс текущего ползунка и в зависимости от этого выдавать разный текст.
@@ -52,29 +66,64 @@ export interface SliderBaseProps
    * > Перебивает `aria-valuetext`.
    */
   getAriaValueText?: (value: number, index: number) => string;
+  /**
+   * Включает отображение всплывающей подсказки при взаимодействии с ползунком.
+   */
   withTooltip?: boolean;
   /**
    * Размер ползунка.
    */
   size?: 's' | 'm' | 'l';
+  /**
+   * Передает атрибут `data-testid` для первого ползунка.
+   */
+  startThumbTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для второго ползунка когда `multiple=true`.
+   */
+  endThumbTestId?: string;
 }
 
 export interface SliderProps extends SliderBaseProps {
+  /**
+   * Флаг множественного выбора (должен быть false или не указан).
+   */
   multiple?: false;
+  /**
+   * Текущее значение слайдера.
+   */
   value?: number;
+  /**
+   * Значение слайдера по умолчанию.
+   */
   defaultValue?: number;
+  /**
+   * Обработчик изменения значения слайдера.
+   */
   onChange?: (value: number, event: CustomTouchEvent | React.ChangeEvent) => void;
 }
 
 export interface SliderMultipleProps extends SliderBaseProps {
+  /**
+   * Флаг множественного выбора (должен быть true).
+   */
   multiple: true;
+  /**
+   * Текущие значения слайдера в виде массива [начальное, конечное].
+   */
   value?: [number, number];
+  /**
+   * Значения слайдера по умолчанию в виде массива [начальное, конечное].
+   */
   defaultValue?: [number, number];
+  /**
+   * Обработчик изменения значений слайдера.
+   */
   onChange?: (value: [number, number], event: CustomTouchEvent | React.ChangeEvent) => void;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Slider
+ * @see https://vkui.io/components/slider
  */
 export const Slider = ({
   step = 1,
@@ -88,12 +137,17 @@ export const Slider = ({
   getRootRef,
   getAriaLabel,
   getAriaValueText,
+  startThumbTestId,
+  endThumbTestId,
   onChange,
   withTooltip,
   size = 'l',
+  style: styleProp,
   ...restProps
 }: SliderProps | SliderMultipleProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
 
   const isControlled = valueProp !== undefined;
   const [localValue, setValue] = React.useState(defaultValue);
@@ -153,7 +207,10 @@ export const Slider = ({
     // @ts-expect-error: TS2345 в VKUITouchEvent плохо описаны типы. `target` это просто `EventTarget`.
     const foundDraggingType = getDraggingTypeByTargetDataset(event.originalEvent.target);
 
-    const nextStartX = event.startX - nextContainerX;
+    let nextStartX = event.startX - nextContainerX;
+    if (isRtl) {
+      nextStartX = nextContainerWidth - nextStartX;
+    }
     const nextValue = offsetToValue(nextStartX, nextContainerWidth, min, max, step);
     const nextDragging = snapDirection(value, nextValue, foundDraggingType);
 
@@ -195,7 +252,7 @@ export const Slider = ({
     const { startX, containerWidth, dragging } = gesture;
 
     const { shiftX = 0 } = event;
-    const nextStartX = startX + shiftX;
+    const nextStartX = startX + (isRtl ? -shiftX : shiftX);
     const nextValue = offsetToValue(nextStartX, containerWidth, min, max, step);
 
     changeValue(updateInternalStateValue(value, nextValue, min, max, dragging), event);
@@ -221,6 +278,11 @@ export const Slider = ({
     );
   };
 
+  const style: CSSCustomProperties = {
+    '--vkui_internal--Slider_start_value': String(startValueInPercent),
+    '--vkui_internal--Slider_end_value': String(endReversedValueInPercent),
+  };
+
   return (
     <Touch
       data-value={multiple ? `${startValue},${endValue}` : startValue}
@@ -230,33 +292,30 @@ export const Slider = ({
         disabled && styles.disabled,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         sizeClassNames[size],
+        multiple && styles.multiple,
+        isRtl && styles.rtl,
         className,
       )}
+      style={mergeStyle(styleProp, style)}
+      getRootRef={getRootRef}
       onStart={disabled ? undefined : handlePointerStart}
       onMove={disabled ? undefined : handlePointerMove}
       onEnd={disabled ? undefined : handlePointerEnd}
     >
       <div className={styles.track} />
-      <div
-        className={styles.trackFill}
-        style={
-          multiple
-            ? { left: `${startValueInPercent}%`, right: `${100 - endReversedValueInPercent}%` }
-            : { width: `${startValueInPercent}%` }
-        }
-      />
+      <div className={styles.trackFill} />
       <div ref={thumbsContainerRef} className={styles.thumbs}>
         <SliderThumb
           data-type="start"
-          className={styles.thumb}
+          className={classNames(styles.thumb, styles.thumbStart)}
           style={{
-            left: `${startValueInPercent}%`,
             // Меняем местами порядок слоёв, иначе, при достижении `start` и `end` 100%, `end` будет перекрывать `start`.
             zIndex: multiple && startValueInPercent >= 50 ? 2 : undefined,
           }}
           withTooltip={withTooltip}
           inputProps={{
             'data-type': 'start',
+            'data-testid': startThumbTestId,
             'ref': thumbStartInputRef,
             'step': step,
             'min': min,
@@ -273,11 +332,11 @@ export const Slider = ({
         {multiple && (
           <SliderThumb
             data-type="end"
-            className={styles.thumb}
-            style={{ left: `${endReversedValueInPercent}%` }}
+            className={classNames(styles.thumb, styles.thumbEnd)}
             withTooltip={withTooltip}
             inputProps={{
               'data-type': 'end',
+              'data-testid': endThumbTestId,
               'ref': thumbEndInputRef,
               'step': step,
               'min': startValue,

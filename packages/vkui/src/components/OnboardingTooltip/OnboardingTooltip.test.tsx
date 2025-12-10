@@ -1,6 +1,7 @@
 import { Fragment, type HtmlHTMLAttributes, type ReactElement } from 'react';
 import { render, screen } from '@testing-library/react';
-import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { noop } from '@vkontakte/vkjs';
+import { baselineComponent, setNodeEnv, waitForFloatingPosition } from '../../testing/utils';
 import type { HasRootRef } from '../../types';
 import { OnboardingTooltip, type OnboardingTooltipProps } from './OnboardingTooltip';
 import { OnboardingTooltipContainer } from './OnboardingTooltipContainer';
@@ -20,7 +21,7 @@ describe(OnboardingTooltip, () => {
   baselineComponent(
     (props) => (
       <OnboardingTooltipContainer>
-        <OnboardingTooltip shown description="text" {...props}>
+        <OnboardingTooltip shown title="Text element" description="text" {...props}>
           <div />
         </OnboardingTooltip>
       </OnboardingTooltipContainer>
@@ -84,27 +85,27 @@ describe(OnboardingTooltip, () => {
 
   describe('preserves child ref', () => {
     it('on DOM child', async () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       await renderTooltip(
         <OnboardingTooltip>
           <div ref={ref} data-testid="xxx" />
         </OnboardingTooltip>,
       );
-      expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
+      expect(ref).toHaveBeenCalledExactlyOnceWith(screen.getByTestId('xxx'));
     });
     it('on VKUI child', async () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       await renderTooltip(
         <OnboardingTooltip>
           <RootRef getRootRef={ref} data-testid="xxx" />
         </OnboardingTooltip>,
       );
-      expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
+      expect(ref).toHaveBeenCalledExactlyOnceWith(screen.getByTestId('xxx'));
     });
   });
 
   it('should call onPlacementChange', async () => {
-    const onPlacementChange = jest.fn();
+    const onPlacementChange = vi.fn();
 
     const Fixture = (props: OnboardingTooltipProps) => (
       <OnboardingTooltipContainer data-testid="container">
@@ -122,6 +123,52 @@ describe(OnboardingTooltip, () => {
     result.rerender(<Fixture placement="auto" onPlacementChange={onPlacementChange} />);
     await waitForFloatingPosition();
 
-    expect(onPlacementChange).toHaveBeenCalledWith('top');
+    expect(onPlacementChange).toHaveBeenCalledExactlyOnceWith('top');
+  });
+
+  it('shows warning if title and area attributes are not provided', () => {
+    setNodeEnv('development');
+    const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
+
+    const component = render(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop} title="title">
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop} aria-label="title">
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop} aria-labelledby="labelId">
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
+    expect(warn).not.toHaveBeenCalled();
+
+    component.rerender(
+      <OnboardingTooltipContainer>
+        <OnboardingTooltip onClose={noop}>
+          <div />
+        </OnboardingTooltip>
+      </OnboardingTooltipContainer>,
+    );
+
+    expect(warn.mock.calls[0][0]).toBe(
+      '%c[VKUI/OnboardingTooltip] Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
+    );
+
+    setNodeEnv('test');
   });
 });

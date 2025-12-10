@@ -1,0 +1,266 @@
+---
+description: Компонент, предназначенный для создания заголовочной секции (шапки) внутри компонента Panel.
+---
+
+<Overview group="navigation">
+
+# PanelHeader [tag:component]
+
+Компонент, предназначенный для создания заголовочной секции (шапки) внутри компонента [`Panel`](/components/panel).
+
+Связанные компоненты:
+
+- [`Panel`](/components/panel)
+- [`PanelHeaderContext`](/components/panel-header-context)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper}>
+  ```jsx
+  <PanelHeader before={<PanelHeaderClose />} after={<Avatar size={36} />} delimiter="none">
+    Стартовый экран
+  </PanelHeader>
+  ```
+</Playground>
+
+## Заголовок
+
+Основной текст следует передавать в свойство `children`. В зависимости от платформы заголовок будет либо
+располагаться слева, либо будет выровнен по центру (платформа iOS).
+
+Дополнительно есть возможность передать в свойстве `typographyProps` параметры для типографического элемента заголовка,
+например, `Component` (тэг для рендеринга компонента, `span` по умолчанию) или `data`-атрибуты.
+
+> Если вы хотите использовать в качестве заголовка не только текст, но и подзаголовок и/или иконки и аватары,
+> воспользуйтесь специальным подкомпонентом [`PanelHeaderContent`](#panel-header-content), который также передаётся в `children`.
+
+## Контент в начале
+
+Используйте свойства `before` для добавления дополнительного контента слева от заголовка.
+Наиболее частый вариант использования свойства `before` - иконки (например "Назад", "Закрыть") или текстовые кнопки (на платформе iOS).
+Также допускается использовать компонент `Avatar` (размером `28px` или `36px`).
+
+## Контент в конце
+
+Используйте свойства `after` для добавления дополнительного контента справа от заголовка.
+Наиболее частый вариант использования свойства `after` - иконки и компонент `Avatar` (размером `28px` или `36px`).
+Допускается использование нескольких иконок одновременно (компонент автоматически расставит между ними отступы).
+
+## Внешний вид
+
+### Прозрачный фон
+
+Булево свойство `transparent` позволяет задать компоненту прозрачный фон.
+
+<Playground Wrapper={FixedLayoutWrapper}>
+  ```jsx
+  <PanelHeader
+    before={<PanelHeaderClose />}
+    after={<Avatar size={36} />}
+    transparent
+    delimiter="none"
+  >
+    Стартовый экран
+  </PanelHeader>
+  ```
+</Playground>
+
+## Позиционирование
+
+### Плавающая шапка
+
+Свойство `float`
+
+Свойство `fixed` позволяет шапке выбиваться из потока и фиксироваться сверху при прокрутке основного контента.
+
+- `true` - шапка фиксируется сверху;
+- `false` - шапка остаётся в потоке и прокручивается вместе с контентом.
+
+По умолчанию значение `true` на всех платформах, кроме `vkcom`.
+
+## Разделитель
+
+Используйте свойство `delimiter`, оно позволяет управлять типом разделителя (разделительная линия или отступ).
+Доступны следующие значения:
+
+- `"none"` - разделитель отсутствует;
+- `"separator"` - добвляется разделительная линия при условии, что это либо платформа `vkcom`,
+  либо платформа android/iOS на мобильных устройствах;
+- `"spacing"` - добавляется отступ, если это платформа android/iOS на планшетах и десктопах;
+- `"auto"` - автоматически подбирает разделительную линию или отступ в зависимости от
+  удовлетворяющих условий `"separator"` или `"spacing"`.
+
+Исключения, в которых разделительная линия после шапки не нужна (включая мобильные устройства android/iOS):
+
+- если в `PanelHeader` рисуется [`Search`](/components/search);
+- если после `PanelHeader` рисуется `Search`;
+- если после `PanelHeader` рисуется [`Banner`](/components/banner);
+- если в `PanelHeader` рисуются [`Tabs`](/components/tabs);
+- любой другой элемент, визуально разделяющий шапку и основной контент.
+
+В таких случаях передавайте в `PanelHeader` свойство `delimiter="spacing"`, это позволит сохранить отступ
+на планшетах и десктопах, но обеспечит отсутствие разделительной линии для мобильных устройствах.
+
+<Playground Wrapper={FixedLayoutWrapper}>
+  ```jsx
+  <Panel>
+    <PanelHeader delimiter="spacing" before={<PanelHeaderClose />} after={<Avatar size={36} />}>
+      Стартовый экран
+    </PanelHeader>
+    <Group mode="plain" separator="hide">
+      <Div>
+        <Text>Контент</Text>
+      </Div>
+    </Group>
+  </Panel>
+  ```
+</Playground>
+
+## PanelHeaderButton [#panel-header-button] [tag:component]
+
+Подкомпонент для отрисовки кнопки в шапке – передаётся в свойство `before` и/или `after`.
+
+<Playground>
+  ```jsx
+  <PanelHeaderButton aria-label="Уведомления">
+    <Icon28Notifications />
+  </PanelHeaderButton>
+  ```
+</Playground>
+
+### Контент
+
+В качестве содержимого компонента передавайте в свойство `children` либо [иконку](https://vkcom.github.io/icons/),
+либо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для android.
+
+Обратите внимание, что для планшетов и десктопов рекомендуется использовать кнопки размером `24px`,
+а для мобильных устройств - размером `28px` (возможно, будет полезен [AdaptiveIconRenderer](/components/adaptive-icon-renderer)).
+
+Если нужно несколько кнопок в ряд, то используйте `React.Fragment`:
+
+<Playground>
+  ```jsx
+  <React.Fragment>
+    <PanelHeaderButton aria-label="Настройки">
+      <Icon28SettingsOutline />
+    </PanelHeaderButton>
+    <PanelHeaderButton aria-label="Уведомления">
+      <Icon28Notifications />
+    </PanelHeaderButton>
+  </React.Fragment>
+  ```
+</Playground>
+
+### Пресеты
+
+#### PanelHeaderBack [#panel-header-back]
+
+Кнопка назад в экранах в рамках одного сценария ([`View`](/components/view)). Внутри инкапсулирована логика показа нужной иконки для платформы.
+Также можно передать свойство `label`, для отображения текста, который будет виден на платформах vkcom и iOS, но будет скрыт на Android.
+С помощью свойств `hideLabelOnVKCom` и `hideLabelOnIOS` можно также визуально скрыть `label` на соответствующих платформах, он будет виден только для скринридеров.
+
+<Playground>
+  ```jsx
+  <PanelHeaderBack />
+  ```
+</Playground>
+
+#### PanelHeaderClose [#panel-header-close]
+
+Кнопка "Отмена" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root). На iOS будет
+показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28CancelOutline />` или `<Icon24CancelOutline />`. Если
+передать свойство `label`, то на Android и Desktop он будет скрыт, но виден для скринридеров.
+
+<Playground>
+  ```jsx
+  <PanelHeaderClose />
+  ```
+</Playground>
+
+#### PanelHeaderEdit [#panel-header-edit]
+
+Кнопка "Редактировать". Принимает свойство `isActive`, которое определяет состояние кнопки (включен ли режим редактирования).
+Для указания кастомных текстов для состояний можно использовать соответствующие свойства `doneLabel` и `editLabel`. Данные тексты
+будут видны на iOS, а на Android и Desktop они будет скрыты, но видны для скринридеров.
+
+<Playground>
+  ```jsx
+  <PanelHeaderEdit />
+  ```
+</Playground>
+
+#### PanelHeaderSubmit [#panel-header-submit]
+
+Кнопка "Готово" в модальных окнах для закрытия текущего [`View`](/components/view) в рамках [`View`](/components/root) и сохранения
+какого-либо результата. На iOS будет показан текст, передаваемый как `label`, на Android и Desktop - `<Icon28DoneOutline />`
+или `<Icon24DoneOutline />`. Если передать свойство `label`, то на Android и Desktop текст будет скрыт, но виден для скринридеров.
+
+<Playground>
+  ```jsx
+  <PanelHeaderSubmit />
+  ```
+</Playground>
+
+## PanelHeaderContent [#panel-header-content] [tag:component]
+
+Подкомпонент, предназначенный для создания сложного контента, включая добавление аватаров и подзаголовков.
+
+<Playground style={{ width: 270 }}>
+  ```jsx
+  <PanelHeaderContent subtitle="был в сети сегодня, в 18:46" before={<Avatar size={36} />}>
+    Жук Петрович
+  </PanelHeaderContent>
+  ```
+</Playground>
+
+### Текстовые элементы
+
+#### Заголовок
+
+Текст заголовка следует передавать в свойство `children` данного компонента.
+
+#### Дополнительный контент заголовка
+
+В свойство `aside` можно передать дополнительный контент (чаще всего, иконку размером `12px`), который будет
+располагаться справа от заголовка.
+
+#### Подзаголовок
+
+Подзаголовок, располагающийся под заголовком, следует передавать в свойство `subtitle`.
+
+### Контент в начале
+
+В компоненте доступна возможность добавления дополнительного контента в начале через свойство `before`.
+Наиболее частый вариант использования свойства `before` - аватары (компонент `Avatar`).
+
+Следует руководствоваться следующими правилами:
+
+- на мобильных устройствах старайтесь использовать аватары размером `36px`;
+- на планшетах и десктопах аватары размером `32px`.
+
+### Обработчики событий
+
+Компонент позволяет обрабатывать нажатия через свойство `onClick`. В таком случае вся шапка становится кликабельным
+элементом (`role="button"`), поэтому старайтесь не вкладывать другие интерактивные элементы (кнопки, ссылки), чтобы
+не нарушать `a11y`.
+
+## Свойства и методы [#api]
+
+<PropsTable name={["PanelHeader", "PanelHeaderButton", "PanelHeaderBack", "PanelHeaderClose", "PanelHeaderEdit", "PanelHeaderSubmit", "PanelHeaderContent"]}>
+### PanelHeader [#panel-header-api]
+
+### PanelHeaderButton [#panel-header-button-api]
+
+### PanelHeaderBack [#panel-header-back-api]
+
+### PanelHeaderClose [#panel-header-close-api]
+
+### PanelHeaderEdit [#panel-header-edit-api]
+
+### PanelHeaderSubmit [#panel-header-submit-api]
+
+### PanelHeaderContent [#panel-header-content-api]
+
+</PropsTable>

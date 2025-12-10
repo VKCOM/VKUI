@@ -4,10 +4,12 @@ const MAX_FONT_SIZE = 30;
 const MAX_IMAGE_BASE_SIZE: ImageBaseSize = 96;
 const RELATIVE_SIZE = MAX_FONT_SIZE / MAX_IMAGE_BASE_SIZE;
 
+export type GetInitialsFontSizeType = (avatarSize: number) => number;
+
 /**
  * По возможности выставляем размеры по дизайн-системе. Иначе высчитываем.
  */
-export function getInitialsFontSize(avatarSize: number): number {
+export const getInitialsFontSize: GetInitialsFontSizeType = (avatarSize) => {
   if (avatarSize <= 16) {
     return 5;
   } else if (avatarSize <= 24) {
@@ -33,4 +35,4 @@ export function getInitialsFontSize(avatarSize: number): number {
   const calculatedFontSize = Math.ceil(avatarSize * RELATIVE_SIZE);
   const evenFix = calculatedFontSize % 2;
   return calculatedFontSize + evenFix;
-}
+};

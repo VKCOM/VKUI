@@ -1,0 +1,150 @@
+---
+description: Инструкция по запуску приложения с базовой структурой и навигацией на VKUI.
+---
+
+<Overview type="doc">
+# Использование
+
+После выполнения шагов из предыдущей страницы [Установка](/overview/install), у вас уже должно запускаться минимально работающее
+приложение. На данной странице рассмотрим простой пример использования и рекомендации по дальнейшим шагам.
+
+Примеры продолжим создавать в контексте шаблона [React + TypeScript + Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts).
+
+</Overview>
+
+## Быстрый старт [#quick-start]
+
+Предлагаем начать с импортирования компонента [`Button`](/components/button):
+
+```jsx filename="src/App.tsx"
+import { Button } from '@vkontakte/vkui';
+
+export default function App() {
+  return (
+    <Button mode="outline" size="l">
+      Привет, мир!
+    </Button>
+  );
+}
+```
+
+На странице должно появиться что-то похожее:
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Button mode="outline" size="l">
+    Привет, мир!
+  </Button>
+  ```
+</Playground>
+
+## Навигационные слои [#navigation]
+
+Каждое приложение состоит из набора экранов, отображающих информацию. В VKUI предусмотрены специальные компоненты для реализации
+экранов и организации навигации между ними. Подробное описание этих компонентов представлено в разделе [Навигация](/overview/navigation).
+Ниже приведён базовый пример их использования.
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
+
+```jsx
+import { useState } from 'react';
+import {
+  SplitLayout,
+  SplitCol,
+  View,
+  Panel,
+  PanelHeader,
+  Group,
+  CellButton,
+  usePlatform,
+} from '@vkontakte/vkui';
+
+const [activePanel, setActivePanel] = useState('feed-panel');
+const platform = usePlatform();
+
+return (
+  <SplitLayout header={platform !== 'vkcom' && <PanelHeader delimiter="none" />}>
+    <SplitCol width="100%" stretchedOnMobile autoSpaced>
+      <View activePanel={activePanel}>
+        <Panel id="feed-panel">
+          <PanelHeader>Лента</PanelHeader>
+          <Placeholder
+            action={
+              <Button onClick={() => setActivePanel('profile-panel')}>Перейти в Профиль</Button>
+            }
+            stretched
+          >
+            <Icon56NewsfeedOutline />
+          </Placeholder>
+        </Panel>
+        <Panel id="profile-panel">
+          <PanelHeader>Профиль</PanelHeader>
+          <Placeholder
+            action={<Button onClick={() => setActivePanel('feed-panel')}>Вернуться в Ленту</Button>}
+            stretched
+          >
+            <Icon56UserCircleOutline />
+          </Placeholder>
+        </Panel>
+      </View>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>
+
+## Многоколоночный интерфейс [#multiple-columns]
+
+Если на мобильных устройствах приходится ограничивать количество элементов в одной области, то на настольных, напротив, можно
+размещать их значительно больше. Для этого интерфейс, как правило, делится на колонки. Для этого в библиотеке есть компонент
+[`SplitLayout`](/components/split-layout) с подкомпонентом [`SplitCol`](/components/split-layout#split-col). Детали будут также
+на странице [Навигация](/overview/navigation).
+
+Приведём адаптивный пример работы `SplitLayout`:
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const { viewWidth } = useAdaptivityConditionalRender();
+
+return (
+  <SplitLayout>
+    {viewWidth.tabletPlus && (
+      <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+        <div
+          style={{
+            padding: 12,
+            color: 'white',
+            backgroundColor: 'tomato',
+          }}
+        >
+          Фиксированная колонка слева
+        </div>
+      </SplitCol>
+    )}
+    <SplitCol>
+      <div
+        style={{
+          padding: 12,
+          color: 'white',
+          backgroundColor: 'steelblue',
+        }}
+      >
+        Колонка справа
+        {viewWidth.tabletMinus && (
+          <p className={viewWidth.tabletMinus.className}>
+            ⚠️ колонка слева спрятана по условию адаптивности
+          </p>
+        )}
+      </div>
+    </SplitCol>
+  </SplitLayout>
+);
+```
+
+</Playground>

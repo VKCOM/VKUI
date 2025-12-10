@@ -1,0 +1,22 @@
+.root {
+  margin-block: var(--vkui--spacing_size_4xl);
+  overflow: hidden;
+  border: 1px solid var(--vkui_docs--color_stroke_separator_secondary);
+  border-radius: 8px;
+}
+
+.codeBlock {
+  background-color: rgb(126, 142, 160, 0.08);
+}
+
+.code {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.skeleton {
+  align-items: center;
+  justify-content: center;
+  block-size: 192px;
+  margin-block: var(--vkui--spacing_size_4xl);
+}

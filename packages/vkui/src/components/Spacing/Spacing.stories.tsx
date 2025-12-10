@@ -1,14 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28BlockOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Group } from '../Group/Group';
 import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Spacing, type SpacingProps } from './Spacing';
 
 const story: Meta<SpacingProps> = {
-  title: 'Blocks/Spacing',
+  title: 'Layout/Spacing',
   component: Spacing,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Spacing', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

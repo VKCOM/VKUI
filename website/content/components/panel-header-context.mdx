@@ -1,0 +1,70 @@
+---
+description: Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку.
+---
+
+<Overview group="navigation">
+# PanelHeaderContext [tag:component]
+
+Компонент, позволяющий реализовать всплывающее меню при нажатии на шапку. Может быть полезен для реализации дополнительной навигации
+по разделам приложения. Размещайте данный компонент _рядом_ с компонентом [`PanelHeader`](/components/panel-header).
+
+Связанные компоненты:
+
+- [`PanelHeader`](/components/panel-header)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper}>
+
+```jsx
+const [contextOpened, setContextOpened] = React.useState(false);
+
+const toggleContext = () => {
+  setContextOpened((prev) => !prev);
+};
+
+return (
+  <Panel>
+    <PanelHeader>
+      <PanelHeaderContent onClick={toggleContext}>Нажми</PanelHeaderContent>
+    </PanelHeader>
+    <PanelHeaderContext opened={contextOpened} onClose={toggleContext}>
+      <SimpleCell onClick={() => setContextOpened(false)}>Пункт один</SimpleCell>
+      <SimpleCell onClick={() => setContextOpened(false)}>Пункт два</SimpleCell>
+    </PanelHeaderContext>
+    <Group>
+      <div style={{ height: 150 }} />
+    </Group>
+  </Panel>
+);
+```
+
+</Playground>
+
+## Контент
+
+Содержимое меню передавайте в свойство `children`. Несмотря на то, что вы можете передать любые компоненты,
+для реализации пунктов меню рекомендуется использовать компонент `SimpleCell`.
+
+## Состояния
+
+### Раскрытие
+
+Свойство `opened` позволяет показывать и скрывать компонент.
+
+- `false` — компонент скрыт (по умолчанию);
+- `true` — компонент раскрыт.
+
+## Обработчики событий
+
+Свойство `onClose` принимает обработчик скрытия компонента, который будет вызван при завершении анимации.
+
+Обратите внимание, что компонент обрабатывает любые нажатия внутри своей области, если вы не хотите, чтобы
+нажатие на элементы внутри всплывающего меню приводили к его скрытию, останавливайте всплытие события нажатия
+через [`event.stopPropagation()`](https://developer.mozilla.org/ru/docs/Web/API/Event/stopPropagation).
+
+## Свойства и методы [#api]
+
+<PropsTable name="PanelHeaderContext" />

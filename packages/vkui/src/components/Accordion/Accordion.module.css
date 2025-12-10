@@ -69,33 +69,33 @@
 }
 @keyframes animation-accordion-fade-in {
   0% {
-    opacity: 0;
     block-size: var(--vkui_internal--AccordionContent_height);
+    opacity: 0;
   }
 
   50% {
-    opacity: 0;
     block-size: var(--vkui_internal--AccordionContent_height);
+    opacity: 0;
   }
 
   100% {
-    opacity: 1;
     block-size: var(--vkui_internal--AccordionContent_height);
+    opacity: 1;
   }
 }
 @keyframes animation-accordion-fade-out {
   0% {
-    opacity: 1;
     block-size: var(--vkui_internal--AccordionContent_height);
+    opacity: 1;
   }
 
   50% {
-    opacity: 0;
     block-size: var(--vkui_internal--AccordionContent_height);
+    opacity: 0;
   }
 
   100% {
-    opacity: 0;
     block-size: var(--vkui_internal--AccordionContent_height);
+    opacity: 0;
   }
 }

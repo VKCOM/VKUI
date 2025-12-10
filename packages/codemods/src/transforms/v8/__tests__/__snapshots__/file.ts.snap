@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`file > transforms correctly 1`] = `
+"import { File } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <File
+        id="file"
+        name="file"
+        tabIndex={-1}
+        autoFocus
+        size="m"
+        align="center"
+        mode="secondary"
+        stretched
+        accept=".txt"
+        multiple
+        onClick={() => {}}
+        onChange={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "input",
+            "aria-label": "input",
+            placeholder: "file"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

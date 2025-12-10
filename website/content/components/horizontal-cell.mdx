@@ -1,0 +1,42 @@
+---
+description: Компонент для отображения карточек в горизонтальной прокрутке.
+---
+
+<Overview group="data-display">
+
+# HorizontalCell [tag:component]
+
+Компонент для отображения карточек в горизонтальной прокрутке.
+Оптимизирован для использования внутри `HorizontalScroll`.
+Автоматически адаптирует отступы под платформу и предоставляет гибкие настройки размеров.
+
+Связанные компоненты:
+
+- [`HorizontalScroll`](/components/horizontal-scroll)
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <HorizontalCell size="l" title="Awesome Mix Vol.2" subtitle="New Tribute Kings">
+    <Image size={128} src="https://sun9-53.userapi.com/c637816/v637816450/4a6d9/lvCvft600Zc.jpg" />
+  </HorizontalCell>
+  ```
+</Playground>
+
+## Контент
+
+Рекомендации по размеру контента в зависимости от переданного `size`:
+
+| Размер (`size`)   | Рекомендуемый контент               | Макс. ширина  |
+| ----------------- | ----------------------------------- | ------------- |
+| `s`               | `<Avatar size={56}/>`               | `56px`        |
+| `m`               | `<Avatar size={88} mode='app'/>`    | `88px`        |
+| `l`               | `<Avatar size={128} mode='image'/>` | `128px`       |
+| `xl`              | Широкие изображения                 | `220px`       |
+| `auto`            | Контент произвольной ширины         | не ограничена |
+| Числовое значение | Любые пользовательские размеры      | задаётся явно |
+
+## Свойства и методы [#api]
+
+<PropsTable name="HorizontalCell" />

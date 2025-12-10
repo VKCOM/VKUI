@@ -1,10 +1,9 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
-  HorizontalScrollMobilePlayground,
+  HorizontalScrollHoverTestPlayground,
   HorizontalScrollSmallTabletPlayground,
-  HorizontalScrollWithHasMousePlayground,
-  HorizontalScrollWithoutHasMousePlayground,
+  HorizontalScrollWithFocusVisible,
 } from './HorizontalScroll.e2e-playground';
 
 test.describe('HorizontalScroll', () => {
@@ -26,24 +25,6 @@ test.describe('HorizontalScroll', () => {
 });
 
 test.describe('HorizontalScroll', () => {
-  test.use({
-    onlyForPlatforms: ['android'],
-    adaptivityProviderProps: {
-      viewWidth: ViewWidth.MOBILE,
-      hasPointer: false,
-    },
-  });
-  test('ViewWidth.MOBILE hasPointer=false', async ({
-    mount,
-    expectScreenshotClippedToContent,
-    componentPlaygroundProps,
-  }) => {
-    await mount(<HorizontalScrollMobilePlayground {...componentPlaygroundProps} />);
-    await expectScreenshotClippedToContent();
-  });
-});
-
-test.describe('HorizontalScroll', () => {
   const DATA_TESTID = 'horizontal-scroll';
   const CUSTOM_ROOT_SELECTOR = `[data-testid="${DATA_TESTID}"]`;
 
@@ -54,7 +35,7 @@ test.describe('HorizontalScroll', () => {
     componentPlaygroundProps,
   }) => {
     await mount(
-      <HorizontalScrollWithHasMousePlayground
+      <HorizontalScrollHoverTestPlayground
         {...componentPlaygroundProps}
         data-testid={DATA_TESTID}
       />,
@@ -66,24 +47,26 @@ test.describe('HorizontalScroll', () => {
       cropToContentSelector: CUSTOM_ROOT_SELECTOR,
     });
   });
+});
 
-  test('does not have arrows without mouse', async ({
+test.describe('HorizontalScroll', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      hasPointer: true,
+    },
+    onlyForPlatforms: ['android'],
+  });
+
+  test('State: Focus Visible', async ({
     mount,
     page,
     expectScreenshotClippedToContent,
     componentPlaygroundProps,
   }) => {
-    await mount(
-      <HorizontalScrollWithoutHasMousePlayground
-        {...componentPlaygroundProps}
-        data-testid={DATA_TESTID}
-      />,
-    );
-
-    await page.hover(CUSTOM_ROOT_SELECTOR);
-
-    await expectScreenshotClippedToContent({
-      cropToContentSelector: CUSTOM_ROOT_SELECTOR,
-    });
+    await mount(<HorizontalScrollWithFocusVisible {...componentPlaygroundProps} />);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.keyboard.press('Tab');
+    await expectScreenshotClippedToContent();
   });
 });

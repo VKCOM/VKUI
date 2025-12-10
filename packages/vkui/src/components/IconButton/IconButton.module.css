@@ -1,21 +1,26 @@
 .host {
+  position: relative;
+  display: block;
+  inline-size: fit-content;
+  block-size: 48px;
+  padding: 0;
+  margin: 0;
+  color: currentColor;
   appearance: none;
   background: none;
   border: 0;
-  box-shadow: none;
-  display: block;
-  color: currentColor;
-  padding: 0;
-  margin: 0;
-  position: relative;
-  block-size: 48px;
-  inline-size: fit-content;
 
   /**
    * Чтобы закргуление было равно половине высоты.
    * см. https://stackoverflow.com/questions/27233295/possible-to-make-border-radius-equal-to-half-the-total-height-without-javascript
    */
   border-radius: 9999px;
+  box-shadow: none;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.host :global(.vkuiIcon) {
+  box-sizing: content-box;
 }
 
 .sizeYCompact {
@@ -43,6 +48,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeYCompact :global(.vkuiIcon--16),
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .sizeYCompact :global(.vkuiIcon--16.vkuiIcon--w-8) {
   padding: 14px;
 }
@@ -74,6 +80,7 @@
 
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .sizeYNone :global(.vkuiIcon--16),
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   .sizeYNone :global(.vkuiIcon--16.vkuiIcon--w-8) {
     padding: 14px;
   }
@@ -97,23 +104,30 @@
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .host,
-:global(.vkuiInternalFormLayoutGroup--removable) :global(.vkuiInternalRemovable__content) > .host,
-:global(.vkuiInternalFormField__after) .host {
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  :global(.vkuiInternalFormLayoutGroup--removable)
+  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  :global(.vkuiInternalRemovable__content)
+  > .host,
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  :global(.vkuiInternalFormField__after)
+  .host {
   display: flex;
-  align-items: center;
   align-content: center;
+  align-items: center;
   justify-content: center;
   inline-size: var(--vkui--size_field_height--regular);
   block-size: var(--vkui--size_field_height--regular);
   border-radius: var(--vkui--size_border_radius--regular);
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after)
   .host
   :global(.vkuiIcon):global(.vkuiIcon):global(.vkuiIcon) {
   padding: 0;
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormField__after) .sizeYCompact {
@@ -121,13 +135,14 @@
   block-size: var(--vkui--size_field_height--compact);
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .sizeYCompact,
 :global(.vkuiInternalFormLayoutGroup--removable)
   :global(.vkuiInternalRemovable__content)
   > .sizeYCompact {
   block-size: var(--vkui--size_field_height--compact);
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 @media (--sizeY-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
@@ -136,13 +151,14 @@
     block-size: var(--vkui--size_field_height--compact);
   }
 
-  /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+  /* stylelint-disable selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalFormItem--removable) :global(.vkuiInternalRemovable__content) > .sizeYNone,
   :global(.vkuiInternalFormLayoutGroup--removable)
     :global(.vkuiInternalRemovable__content)
     > .sizeYNone {
     block-size: var(--vkui--size_field_height--compact);
   }
+  /* stylelint-enable selector-pseudo-class-disallowed-list */
 }
 
 /**

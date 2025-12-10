@@ -1,5 +1,5 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import type { ChipProps } from '../types';
+import type { ChipProps } from './Chip';
 import { Chip } from './Chip';
 
 export const ChipPlayground = (props: ComponentPlaygroundProps) => {
@@ -10,6 +10,10 @@ export const ChipPlayground = (props: ComponentPlaygroundProps) => {
         {
           removable: [false, true],
           $adaptivity: 'y',
+        },
+        {
+          mode: ['secondary'],
+          removable: [true],
         },
       ]}
     >

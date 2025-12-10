@@ -1,0 +1,13 @@
+.content {
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: calc(100vh - var(--vkui_docs--navbar-height));
+  padding-block: 32px 60px;
+  padding-inline: 40px;
+}
+
+@media (--viewWidth-smallTabletMinus) {
+  .content {
+    padding-inline: var(--vkui--spacing_size_2xl);
+  }
+}

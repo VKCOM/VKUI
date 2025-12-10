@@ -42,7 +42,7 @@ export interface ButtonGroupProps extends HTMLAttributesWithRootRef<HTMLDivEleme
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ButtonGroup
+ * @see https://vkui.io/components/button-group
  */
 export const ButtonGroup = ({
   mode = 'horizontal',

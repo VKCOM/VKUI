@@ -1,0 +1,130 @@
+---
+description: Компонент для навигации по страницам с поддержкой сложных сценариев отображения.
+---
+
+<Overview group="navigation">
+
+# Pagination [tag:component]
+
+Компонент для навигации по страницам с поддержкой сложных сценариев отображения.
+Особое внимание уделено цифровой доступности и гибкой кастомизации.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Pagination currentPage={5} totalPages={10} />
+  ```
+</Playground>
+
+## Стиль кнопок навигации
+
+Задается свойством `navigationButtonsStyle`:
+
+<Playground direction="column">
+  ```jsx
+  <Pagination navigationButtonsStyle="icon" currentPage={5} totalPages={10} />
+  <Pagination navigationButtonsStyle="caption" currentPage={5} totalPages={10} />
+  <Pagination navigationButtonsStyle="both" currentPage={5} totalPages={10} />
+  ```
+</Playground>
+
+## Кастомизация элементов
+
+С помощью свойств `renderPageButton` и `renderNavigationButton` можно отрисовать кастомные кнопки навигации и кнопки перехода по страницам.
+
+- В `renderPageButton` прокидывается объект с пропсами типа `CustomPaginationPageButtonProps` - наследует API [`Tappable`](/components/tappable).
+- в `renderNavigationButton` прокидывается объект с пропсами типа `CustomPaginationNavigationButton` наследует API [`Button`](/components/button).
+
+В примере ниже мы задаём пользовательские кнопки навигации и даём возможность показать всплывающую подсказку
+при наведении на конкретную страницу:
+
+<Playground>
+
+```jsx
+const [currentPage, setCurrentPage] = React.useState(5);
+
+return (
+  <Pagination
+    onChange={setCurrentPage}
+    renderPageButton={(props) => (
+      <Tooltip title={`Страница ${props['data-page']}`}>
+        <Tappable {...props} />
+      </Tooltip>
+    )}
+    renderNavigationButton={(props) => <Button {...props} mode="primary" />}
+    currentPage={currentPage}
+    totalPages={10}
+  />
+);
+```
+
+</Playground>
+
+## Хук usePagination [#use-pagination]
+
+Для полного контроля над отображением используйте хук:
+
+<Playground>
+
+```jsx
+const items = usePagination({
+  totalPages: 10,
+  currentPage: 5,
+});
+
+// items → [1, 'start-ellipsis', 4, 5, 6, 'end-ellipsis', 10]
+
+return (
+  <nav>
+    {items.map((item) =>
+      item === 'start-ellipsis' || item === 'end-ellipsis' ? (
+        <span key={item}>...</span>
+      ) : (
+        <button key={item}>{item}</button>
+      ),
+    )}
+  </nav>
+);
+```
+
+</Playground>
+
+### Когда использовать хук
+
+- Нестандартный UI пагинации.
+- Интеграция с кастомной логикой.
+- Сложные анимации переходов.
+
+## Доступность (a11y) [#a11y]
+
+Компонент использует `<nav role="navigation">` и связывает элементы через `aria-labelledby`,
+поддерживая семантику навигации.
+
+Дополнительно убедитесь, что:
+
+- заданы уникальные метки, если на странице несколько компонентов:
+
+  ```jsx
+  // ❌ Плохо (дублирующиеся метки)
+  <Pagination navigationLabel="Страницы" />
+  <Pagination navigationLabel="Страницы" />
+
+  // ✅ Хорошо
+  <Pagination navigationLabel="Страницы статей" />
+  <Pagination navigationLabel="Страницы комментариев" />
+  ```
+
+- в `navigationLabel` не используется слова "Навигация" или слова близких по значению,
+  так как скринридер и так зачитывает это видя тег `nav` или `role="navigation"`.
+  Лучше ограничиться чем-то вроде "Страницы".
+
+## Свойства и методы [#api]
+
+<PropsTable name="Pagination">
+
+### Pagination [#pagination-api]
+
+### usePagination [#use-pagination-api]
+
+</PropsTable>

@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers, type UserExtendedInterface } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { Header } from '../Header/Header';
@@ -12,9 +13,9 @@ import { Spinner } from '../Spinner/Spinner';
 import { HorizontalScroll, type HorizontalScrollProps } from './HorizontalScroll';
 
 const story: Meta<HorizontalScrollProps> = {
-  title: 'Layout/HorizontalScroll/HorizontalScroll',
+  title: 'Data Display/HorizontalScroll',
   component: HorizontalScroll,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('HorizontalScroll', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     showArrows: {
       options: ['None', 'Always', 'False', 'True'],
@@ -28,6 +29,7 @@ const story: Meta<HorizontalScrollProps> = {
     },
   },
   decorators: [withCartesian, withSinglePanel, withVKUILayout],
+  tags: ['Отображение данных'],
 };
 
 export default story;
@@ -37,7 +39,7 @@ type Story = StoryObj<HorizontalScrollProps>;
 export const Playground: Story = {
   render: function Render(args) {
     const [commonFriends, setCommonFriends] = React.useState<UserExtendedInterface[]>([]);
-    const timer = React.useRef<ReturnType<typeof setTimeout>>();
+    const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     React.useEffect(() => {
       // Эмуляция загрузки

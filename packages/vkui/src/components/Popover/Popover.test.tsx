@@ -1,9 +1,11 @@
 'use no memo';
 
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
+import { Button } from '../Button/Button';
 import { Popover, type PopoverProps } from './Popover';
+import { usePopover } from './usePopover';
 import styles from './Popover.module.css';
 
 describe(Popover, () => {
@@ -53,7 +55,7 @@ describe(Popover, () => {
   });
 
   it('should call onPlacementChange', async () => {
-    const onPlacementChange = jest.fn();
+    const onPlacementChange = vi.fn();
 
     const Fixture = (props: PopoverProps) => (
       <Popover defaultShown {...props}>
@@ -69,7 +71,7 @@ describe(Popover, () => {
     result.rerender(<Fixture placement="auto" onPlacementChange={onPlacementChange} />);
     await waitForFloatingPosition();
 
-    expect(onPlacementChange).toHaveBeenCalledWith('top');
+    expect(onPlacementChange).toHaveBeenCalledExactlyOnceWith('top');
   });
 
   it('passes popover ref to ref prop of children that uses React.forwardRef', async () => {
@@ -78,7 +80,10 @@ describe(Popover, () => {
       HTMLDivElement,
       React.HTMLAttributes<HTMLDivElement>
     >(function Component(props, ref) {
-      componentRef = ref;
+      React.useEffect(() => {
+        componentRef = ref;
+      });
+
       return (
         <div {...props} ref={ref}>
           Component with ref
@@ -153,7 +158,7 @@ describe(Popover, () => {
   });
 
   it('should call onClose by content', async () => {
-    const onShownChange = jest.fn();
+    const onShownChange = vi.fn();
 
     const Fixture = () => (
       <Popover
@@ -179,7 +184,7 @@ describe(Popover, () => {
     result.rerender(<Fixture />);
     await waitForFloatingPosition();
     expect(result.queryByTestId('popover')).not.toBeInTheDocument();
-    expect(onShownChange).toHaveBeenCalledWith(false, 'callback');
+    expect(onShownChange).toHaveBeenCalledExactlyOnceWith(false, 'callback');
   });
 
   it('check keepMounted=true, popover not unmount when close', async () => {
@@ -212,5 +217,46 @@ describe(Popover, () => {
 
     expect(result.getByTestId('popover')).toBeInTheDocument();
     expect(result.getByTestId('popover').parentElement).toHaveClass(styles.hidden);
+  });
+
+  it('should position popover with provided strategy', async () => {
+    const result = render(
+      <Popover defaultShown content="Some popover" strategy="absolute" data-testid="popover">
+        <div>Target</div>
+      </Popover>,
+    );
+
+    await waitForFloatingPosition();
+
+    expect(result.getByTestId('popover').parentElement).toHaveStyle('position: absolute');
+  });
+
+  it('check working with usePopover hook', async () => {
+    const onShownChange = vi.fn();
+    const Fixture = () => {
+      const { anchorRef, anchorProps, popover } = usePopover({
+        'trigger': 'click',
+        'onShownChange': onShownChange,
+        'content': 'Some popover',
+        'data-testid': 'popover',
+      });
+      return (
+        <>
+          {popover}
+          <Button {...anchorProps} data-testid="target" getRootRef={anchorRef}>
+            Click me
+          </Button>
+        </>
+      );
+    };
+
+    const result = render(<Fixture />);
+    await waitForFloatingPosition();
+    expect(result.queryByTestId('popover')).toBeFalsy();
+
+    fireEvent.click(screen.getByTestId('target'));
+    await waitForFloatingPosition();
+    expect(result.queryByTestId('popover')).toBeTruthy();
+    expect(onShownChange).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,10 +1,11 @@
 'use client';
 
-import { type MouseEventHandler } from 'react';
 import * as React from 'react';
+import { type MouseEventHandler } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalOnClickOutside } from '../../hooks/useGlobalOnClickOutside';
+import { useGlobalOnEventOutside } from '../../hooks/useGlobalOnClickOutside';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { Keys } from '../../lib/accessibility';
 import type { Placement } from '../../lib/floating';
 import { defaultFilterFn } from '../../lib/select';
@@ -77,17 +78,20 @@ export interface ChipsSelectProps<O extends ChipOption>
     UseChipsSelectProps<O>,
     Pick<FormFieldProps, 'status' | 'mode' | 'before'>,
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'> {
+  /**
+   * Расположение выпадающего списка.
+   */
   placement?: 'top' | 'bottom';
   /**
-   * Отрисовка Spinner вместо списка опций в выпадающем списке
+   * Отрисовка Spinner вместо списка опций в выпадающем списке.
    */
   fetching?: boolean;
   /**
-   * Закрытие выпадающего списка после выбора элемента
+   * Закрытие выпадающего списка после выбора элемента.
    */
   closeAfterSelect?: boolean;
   /**
-   * Ширина раскрывающегося списка зависит от контента
+   * Ширина раскрывающегося списка зависит от контента.
    */
   dropdownAutoWidth?: boolean;
   /**
@@ -95,22 +99,24 @@ export interface ChipsSelectProps<O extends ChipOption>
    */
   forceDropdownPortal?: boolean;
   /**
-   * Передача `data-testid`.
+   * Передает атрибут `data-testid` для дропдауна.
    */
   dropdownTestId?: string;
   /**
-   * Иконка раскрывающегося списка
+   * Иконка раскрывающегося списка.
    */
   icon?: React.ReactNode;
   /**
-   * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`)
+   * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`).
    */
   addOnBlur?: boolean;
   /**
-   * Отключает максимальную высоту по умолчанию
+   * Отключает максимальную высоту по умолчанию.
    */
   noMaxHeight?: boolean;
-
+  /**
+   * Функция для отрисовки кастомной опции в выпадающем списке.
+   */
   renderOption?: (props: CustomSelectOptionProps, option: O) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
@@ -122,27 +128,26 @@ export interface ChipsSelectProps<O extends ChipOption>
     defaultDropdownContent: React.ReactNode;
   }) => React.ReactNode;
   /**
-   * Событие срабатывающее перед onChange
+   * Событие срабатывающее перед `onChange`.
    */
   onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
 
   /**
-   * Отступ от выпадающего списка
+   * Отступ от выпадающего списка.
    */
   dropdownOffsetDistance?: number;
 
   /**
-   * Если `true`, то справа будет отображаться кнопка для очистки значения
+   * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
   allowClearButton?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ChipsSelect
+ * @see https://vkui.io/components/chips-select
  */
 export const ChipsSelect = <Option extends ChipOption>({
   // FormFieldProps
-  id: labelledbyId,
   getRootRef,
   className,
   status = 'default',
@@ -161,6 +166,7 @@ export const ChipsSelect = <Option extends ChipOption>({
   forceDropdownPortal,
   noMaxHeight = false,
   filterFn = defaultFilterFn,
+  sortFn = false,
   dropdownTestId,
   onClose,
   onOpen,
@@ -172,24 +178,62 @@ export const ChipsSelect = <Option extends ChipOption>({
   value: valueProp,
   defaultValue,
   inputValue: inputValueProp,
-  defaultInputValue,
-  disabled,
-  readOnly,
+  defaultInputValue: defaultInputValueProp,
   getOptionValue = getOptionValueDefault,
   getOptionLabel = getOptionLabelDefault,
   getNewOptionData = getNewOptionDataDefault,
   renderChip = renderChipDefault,
   renderOption = renderOptionDefault,
   onChange,
-  onFocus: onFocusProp,
   onInputChange: onInputChangeProp,
-  onBlur: onBlurProp,
-  onKeyDown: onKeyDownProp,
   dropdownOffsetDistance = 0,
   allowClearButton,
   clearButtonTestId,
+  delimiter,
+
+  // a11y
+  chipsListLabel,
+
+  // input native props
+  disabled: disabledProp,
+  readOnly: readOnlyProp,
+  onFocus: onFocusProp,
+  onBlur: onBlurProp,
+  id: idProp,
+  placeholder: placeholderProp,
+
+  slotProps,
   ...restProps
 }: ChipsSelectProps<Option>): React.ReactNode => {
+  const {
+    getRootRef: getInputRef,
+    value: resolvedInputValue,
+    defaultValue: resolvedDefaultInputValue,
+    onChange: resolvedOnInputChange,
+    disabled,
+    readOnly,
+    id: labelledbyId,
+    placeholder,
+    onFocus,
+    onBlur,
+    onKeyDown,
+    ...inputRest
+  } = useMergeProps(
+    {
+      getRootRef: getRef,
+      value: inputValueProp,
+      defaultValue: defaultInputValueProp,
+      onChange: onInputChangeProp,
+      disabled: disabledProp,
+      readOnly: readOnlyProp,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      id: idProp,
+      placeholder: placeholderProp,
+    },
+    slotProps?.input,
+  );
+
   const {
     // Связано с ChipsInputProps
     // option
@@ -222,26 +266,28 @@ export const ChipsSelect = <Option extends ChipOption>({
     getNewOptionData,
 
     // input
-    inputValue: inputValueProp,
-    defaultInputValue,
-    onInputChange: onInputChangeProp,
+    inputValue: resolvedInputValue as string,
+    defaultInputValue: resolvedDefaultInputValue as string,
+    onInputChange: resolvedOnInputChange,
 
     // dropdown
     options: optionsProp,
     emptyText,
     creatable,
     filterFn,
+    sortFn,
     selectedBehavior,
     onClose,
     onOpen,
 
     // other
     disabled,
+    delimiter,
   });
 
   // Связано с ChipsInputProps
   const rootRef = useExternRef(getRootRef);
-  const inputRef = useExternRef(getRef, inputRefHook);
+  const inputRef = useExternRef(getInputRef, inputRefHook);
 
   // Связано с CustomSelectDropdownProps
   const [dropdownVerticalPlacement, setDropdownVerticalPlacement] = React.useState<
@@ -262,8 +308,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   const dropdownScrollBoxRef = React.useRef<HTMLDivElement>(null);
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (onFocusProp) {
-      onFocusProp(event);
+    if (onFocus) {
+      onFocus(event);
     }
 
     if (!readOnly) {
@@ -273,8 +319,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (onBlurProp) {
-      onBlurProp(event);
+    if (onBlur) {
+      onBlur(event);
     }
 
     // Не добавляем значение, если его нужно выбрать строго из списка
@@ -340,8 +386,8 @@ export const ChipsSelect = <Option extends ChipOption>({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (onKeyDownProp) {
-      onKeyDownProp(event);
+    if (onKeyDown) {
+      onKeyDown(event);
     }
 
     if (event.defaultPrevented || readOnly) {
@@ -420,7 +466,8 @@ export const ChipsSelect = <Option extends ChipOption>({
     setOpened(false);
   }, [setOpened]);
 
-  useGlobalOnClickOutside(
+  useGlobalOnEventOutside(
+    'mousedown', // см. https://github.com/VKCOM/VKUI/pull/8582
     handleClickOutside,
     opened ? rootRef : null,
     opened ? dropdownScrollBoxRef : null,
@@ -428,10 +475,8 @@ export const ChipsSelect = <Option extends ChipOption>({
 
   const onDropdownIconClick: MouseEventHandler<SVGSVGElement> = React.useCallback(
     (e) => {
-      if (opened) {
-        e.preventDefault();
-        setOpened(false);
-      }
+      e.preventDefault();
+      setOpened(!opened);
     },
     [opened, setOpened],
   );
@@ -543,13 +588,9 @@ export const ChipsSelect = <Option extends ChipOption>({
   return (
     <>
       <ChipsInputBase
-        {...restProps}
-        disabled={disabled}
-        readOnly={readOnly}
         clearButtonShown={clearButtonShown}
         clearButtonTestId={clearButtonTestId}
         // FormFieldProps
-        id={labelledbyId}
         getRootRef={rootRef}
         className={classNames(styles.host, openedClassNames, className)}
         status={status}
@@ -571,20 +612,30 @@ export const ChipsSelect = <Option extends ChipOption>({
         onRemoveChipOption={removeOption}
         renderChip={renderChip}
         onClear={clearOptions}
-        // input
-        getRef={inputRef}
-        inputValue={inputValue}
-        onInputChange={onInputChange}
+        // a11y
+        chipsListLabel={chipsListLabel}
+        disabled={disabled}
+        readOnly={readOnly}
+        id={labelledbyId}
+        placeholder={placeholder}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
-        // a11y
-        role="combobox"
-        aria-expanded={opened}
-        aria-autocomplete="list"
-        aria-controls={opened ? dropdownId : undefined}
-        aria-activedescendant={opened ? dropdownCurrentItemId : undefined}
-        aria-haspopup="listbox"
+        slotProps={{
+          ...slotProps,
+          input: {
+            'role': 'combobox',
+            'aria-expanded': opened,
+            'aria-autocomplete': 'list',
+            'aria-activedescendant': opened ? dropdownCurrentItemId : undefined,
+            'aria-haspopup': 'listbox',
+            'getRootRef': inputRef,
+            'value': inputValue,
+            'onChange': onInputChange,
+            'onKeyDown': handleKeyDown,
+            ...inputRest,
+          },
+        }}
+        {...restProps}
       />
       {opened && (
         <CustomSelectDropdown

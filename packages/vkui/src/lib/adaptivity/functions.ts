@@ -108,12 +108,42 @@ export function getSizeY(
  *
  * ⚠️ При передаче 'vkcom' всегда будет возвращать `true`.
  */
-export function tryToCheckIsDesktop(viewWidth: ViewWidthType, viewHeight: ViewHeightType, hasPointer: undefined | boolean, platform?: PlatformType): boolean; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: ViewWidthType, viewHeight: undefined, hasPointer: boolean, platform?: PlatformType): boolean; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidthType, viewHeight: undefined, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined | ViewHeightType, hasPointer: undefined, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined, viewHeight: undefined, hasPointer: undefined | boolean, platform?: PlatformType): null; // prettier-ignore
-export function tryToCheckIsDesktop(viewWidth: undefined | ViewWidthType, viewHeight: undefined | ViewHeightType, hasPointer: undefined | boolean, platform?: PlatformType): null | boolean; // prettier-ignore
+export function tryToCheckIsDesktop(
+  viewWidth: ViewWidthType,
+  viewHeight: ViewHeightType,
+  hasPointer: undefined | boolean,
+  platform?: PlatformType,
+): boolean;
+export function tryToCheckIsDesktop(
+  viewWidth: ViewWidthType,
+  viewHeight: undefined,
+  hasPointer: boolean,
+  platform?: PlatformType,
+): boolean;
+export function tryToCheckIsDesktop(
+  viewWidth: undefined | ViewWidthType,
+  viewHeight: undefined,
+  hasPointer: undefined,
+  platform?: PlatformType,
+): null;
+export function tryToCheckIsDesktop(
+  viewWidth: undefined,
+  viewHeight: undefined | ViewHeightType,
+  hasPointer: undefined,
+  platform?: PlatformType,
+): null;
+export function tryToCheckIsDesktop(
+  viewWidth: undefined,
+  viewHeight: undefined,
+  hasPointer: undefined | boolean,
+  platform?: PlatformType,
+): null;
+export function tryToCheckIsDesktop(
+  viewWidth: undefined | ViewWidthType,
+  viewHeight: undefined | ViewHeightType,
+  hasPointer: undefined | boolean,
+  platform?: PlatformType,
+): null | boolean;
 export function tryToCheckIsDesktop(
   viewWidth: undefined | ViewWidthType,
   viewHeight: undefined | ViewHeightType,

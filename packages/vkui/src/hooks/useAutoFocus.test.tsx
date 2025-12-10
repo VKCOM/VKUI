@@ -11,7 +11,7 @@ const Playground = ({ autoFocus, ...props }: React.HTMLAttributes<HTMLDivElement
 
 describe(useAutoFocus, () => {
   it('autoFocus not set', () => {
-    const onFocus = jest.fn();
+    const onFocus = vi.fn();
     render(<Playground onFocus={onFocus} />);
 
     expect(onFocus).not.toHaveBeenCalled();
@@ -21,7 +21,7 @@ describe(useAutoFocus, () => {
   });
 
   it('set autoFocus', () => {
-    const onFocus = jest.fn();
+    const onFocus = vi.fn();
     render(<Playground onFocus={onFocus} autoFocus />);
 
     expect(onFocus).toHaveBeenCalled();

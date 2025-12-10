@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`alert transforms correctly 1`] = `
+exports[`alert > transforms correctly 1`] = `
 "import { Alert } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Alert
         actions={[
           {
@@ -23,7 +23,7 @@ const App = () => {
         actionsAlign="left"
         actionsLayout="horizontal"
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

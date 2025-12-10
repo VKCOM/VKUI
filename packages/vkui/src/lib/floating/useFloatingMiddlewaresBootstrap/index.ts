@@ -3,17 +3,18 @@ import {
   arrowMiddleware,
   autoPlacementMiddleware,
   flipMiddleware,
+  type FlipMiddlewareOptions,
   hideMiddleware,
   offsetMiddleware,
   shiftMiddleware,
   sizeMiddleware,
 } from '../adapters';
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
-import type {
-  ArrowOptions,
-  Placement,
-  PlacementWithAuto,
-  UseFloatingMiddleware,
+import {
+  type ArrowOptions,
+  type Placement,
+  type PlacementWithAuto,
+  type UseFloatingMiddleware,
 } from '../types/common';
 
 export interface UseFloatingMiddlewaresBootstrapOptions {
@@ -26,6 +27,15 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    * Не оказывает влияния при `placement` значениях - `'auto' | 'auto-start' | 'auto-end'`
    */
   disableFlipMiddleware?: boolean;
+  /**
+   * Позволяет отключить смещение по главной оси,
+   * которое не даёт всплывающему элементу выходить за границы видимой области.
+   */
+  disableShiftMiddleware?: boolean;
+  /**
+   * Задаёт резервный вариант размещения по перпендикулярной оси.
+   */
+  flipMiddlewareFallbackAxisSideDirection?: FlipMiddlewareOptions['fallbackAxisSideDirection'];
   /**
    * Отступ по главной оси.
    */
@@ -52,7 +62,7 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    */
   sameWidth?: boolean;
   /**
-   * Массив кастомных модификаторов для Popper (необходимо мемоизировать).
+   * Позволяет задать или переопределить модификаторы библиотеки **Floating UI** (подробнее в документации про [middleware](https://floating-ui.com/docs/middleware)).
    */
   customMiddlewares?: UseFloatingMiddleware[];
   /**
@@ -73,6 +83,8 @@ export const useFloatingMiddlewaresBootstrap = ({
   customMiddlewares,
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
+  disableShiftMiddleware = false,
+  flipMiddlewareFallbackAxisSideDirection = 'end',
 }: UseFloatingMiddlewaresBootstrapOptions): {
   middlewares: UseFloatingMiddleware[];
   strictPlacement: Placement | undefined;
@@ -86,18 +98,35 @@ export const useFloatingMiddlewaresBootstrap = ({
       }),
     ];
 
-    // см. https://floating-ui.com/docs/flip#conflict-with-autoplacement
+    const shift = disableShiftMiddleware ? null : shiftMiddleware();
+
+    // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#conflict-with-autoplacementjs
     if (isAutoPlacement) {
       middlewares.push(autoPlacementMiddleware({ alignment: getAutoPlacementAlign(placement) }));
+      if (shift) {
+        middlewares.push(shift);
+      }
     } else if (!disableFlipMiddleware) {
-      middlewares.push(
-        flipMiddleware({
-          fallbackAxisSideDirection: 'start',
-        }),
-      );
-    }
+      const flip = flipMiddleware({
+        crossAxis: 'alignment',
+        fallbackAxisSideDirection: flipMiddlewareFallbackAxisSideDirection,
+      });
 
-    middlewares.push(shiftMiddleware());
+      // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#combining-with-shiftjs
+      if (placement.includes('-')) {
+        middlewares.push(flip);
+        if (shift) {
+          middlewares.push(shift);
+        }
+      } else {
+        if (shift) {
+          middlewares.push(shift);
+        }
+        middlewares.push(flip);
+      }
+    } else if (shift) {
+      middlewares.push(shift);
+    }
 
     if (sameWidth) {
       middlewares.push(
@@ -115,7 +144,7 @@ export const useFloatingMiddlewaresBootstrap = ({
       middlewares.push(...customMiddlewares);
     }
 
-    // см. https://floating-ui.com/docs/arrow#order
+    // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/arrow.mdx#order
     if (arrow) {
       middlewares.push(
         arrowMiddleware({
@@ -131,16 +160,18 @@ export const useFloatingMiddlewaresBootstrap = ({
 
     return { middlewares, strictPlacement: isAutoPlacement ? undefined : placement };
   }, [
+    placement,
     offsetByCrossAxis,
-    arrowRef,
     arrow,
     arrowHeight,
-    arrowPadding,
     offsetByMainAxis,
+    disableFlipMiddleware,
+    disableShiftMiddleware,
+    flipMiddlewareFallbackAxisSideDirection,
     sameWidth,
     customMiddlewares,
-    placement,
     hideWhenReferenceHidden,
-    disableFlipMiddleware,
+    arrowRef,
+    arrowPadding,
   ]);
 };

@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { noop } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Tappable, type TappableProps } from './Tappable';
 
 const story: Meta<TappableProps> = {
-  title: 'Blocks/Tappable',
+  title: 'Utils/Tappable',
   component: Tappable,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Tappable', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;

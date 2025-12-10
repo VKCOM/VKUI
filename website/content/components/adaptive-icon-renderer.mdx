@@ -1,0 +1,53 @@
+---
+description: Компонент для автоматического рендера иконок в зависимости от размера интерфейса.
+---
+
+<Overview group="utils">
+
+# AdaptiveIconRenderer [tag:component]
+
+Компонент для автоматического рендера иконок в зависимости от [размера интерфейса](/overview/adaptivity#sizes) – `compact` или `regular`.
+
+Связанные страницы:
+
+- [Адаптивность](/overview/adaptivity)
+
+</Overview>
+
+## Когда использовать? [#when-to-use]
+
+В зависимости от размера экрана, желательно использовать тот или иной размер иконок. На настольных экранах стоит использовать иконки
+меньшего размера, для мобильных большего. Предложения по конкретным размерам можно найти в документациях компонентов.
+
+## Пример использования [#example]
+
+В примере ниже мы "искусственно" переопределяем адаптивность через [`AdaptivityProvider`](/components/adaptivity-provider),
+для того, чтобы наглядно убедиться в разном размере отображаемых иконок.
+В реальных условиях достаточно просто использовать `AdaptiveIconRenderer`, который будет самостоятельно
+определять, когда необходимо показать тот или иной размер иконки.
+
+<Playground direction="column">
+  ```jsx
+  <AdaptivityProvider sizeY="compact">
+    <Text>Icon size 24</Text>
+    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+  </AdaptivityProvider>
+  <AdaptivityProvider sizeY="regular">
+    <Text>Icon size 28</Text>
+    <AdaptiveIconRenderer IconCompact={Icon24SmileOutline} IconRegular={Icon28SmileOutline} />
+  </AdaptivityProvider>
+  ```
+</Playground>
+
+## Передача свойств в иконки [#providing-props-to-icons]
+
+```jsx
+const StyledIcon24 = (props) => <Icon24SmileOutline {...props} className="my-class-24" />;
+const StyledIcon28 = (props) => <Icon28SmileOutline {...props} className="my-class-28" />;
+
+<AdaptiveIconRenderer IconCompact={StyledIcon24} IconRegular={StyledIcon28} />;
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="AdaptiveIconRenderer" />

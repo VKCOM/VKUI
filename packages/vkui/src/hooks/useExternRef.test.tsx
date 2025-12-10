@@ -18,16 +18,30 @@ describe(useExternRef, () => {
       render(<OuterRef />);
     });
     it('keeps inner ref.current up-to-date', () => {
-      let firstRef: React.MutableRefObject<any> | undefined = undefined;
+      let firstRef: React.RefObject<any> | undefined = undefined;
       let counter = 0;
       const RefForwarder = (props: HasRef<any>) => {
         const ref = useExternRef(props.getRef);
-        firstRef = firstRef || ref;
-        counter += 1;
-        ref.current = counter;
+        React.useEffect(() => {
+          firstRef = firstRef || ref;
+          counter += 1;
+          ref.current = counter;
+        });
         return null;
       };
-      render(<RefForwarder getRef={() => null} />).rerender(<RefForwarder getRef={() => null} />);
+      render(
+        <RefForwarder
+          getRef={() => {
+            null;
+          }}
+        />,
+      ).rerender(
+        <RefForwarder
+          getRef={() => {
+            null;
+          }}
+        />,
+      );
       expect((firstRef as any)?.current).toBe(counter);
     });
   });
@@ -69,12 +83,12 @@ describe(useExternRef, () => {
       expect(ref.current).toBeInTheDocument();
     });
     it('when ref identity changes', () => {
-      const secondRef = jest.fn();
+      const secondRef = vi.fn();
       render(<RefForwarder getRef={noop} />).rerender(<RefForwarder getRef={secondRef} />);
       expect(secondRef).toHaveBeenCalled();
     });
     it('once per identity', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       render(<RefForwarder getRef={ref} />).rerender(<RefForwarder getRef={ref} />);
       expect(ref).toHaveBeenCalledTimes(1);
     });

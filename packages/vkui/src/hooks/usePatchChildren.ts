@@ -7,26 +7,18 @@ import {
 } from '../lib/utils';
 import { warnOnce } from '../lib/warnOnce';
 import type { HasRootRef } from '../types';
-import { useEffectDev } from './useEffectDev';
 import { useExternRef } from './useExternRef';
 
 const warn = warnOnce('usePatchChildren');
 
-type InjectProps<T> = Omit<React.HTMLAttributes<T>, keyof React.DOMAttributes<T>> &
+type InjectProps<T> = React.HTMLAttributes<T> &
   React.Attributes & {
     ref?: React.Ref<T>;
   };
 
 type ExpectedReactElement<T> = React.ReactElement<HasRootRef<T> & React.DOMAttributes<T>>;
 
-type ChildrenElement<T> =
-  | ExpectedReactElement<T>
-  | React.ReactText
-  | React.ReactFragment
-  | React.ReactPortal
-  | boolean
-  | null
-  | undefined;
+type ChildrenElement<T> = ExpectedReactElement<T> | React.ReactNode;
 
 /**
  * Хук позволяет пропатчить переданный компонент так, чтобы можно было получить ссылку на его
@@ -55,7 +47,7 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
   children?: ChildrenElement<ElementType>,
   injectProps?: InjectProps<ElementType>,
   externRef?: React.Ref<ElementType>,
-): [React.MutableRefObject<ElementType | null>, ChildrenElement<ElementType> | undefined] => {
+): [React.RefObject<ElementType | null>, ChildrenElement<ElementType> | undefined] => {
   const isValidElementResult = isValidNotReactFragmentElement(children);
   const isDOMTypeElementResult =
     isValidElementResult &&
@@ -84,14 +76,16 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
 
   const patchedChildren = isValidElementResult ? React.cloneElement(children, props) : children;
 
-  useEffectDev(() => {
-    if (!childRef.current && !shouldUseRef) {
-      warn(
-        'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
-        'error',
-      );
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      if (!childRef.current && !shouldUseRef) {
+        warn(
+          'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
+          'error',
+        );
+      }
     }
-  }, [isValidElementResult ? children.type : null, shouldUseRef, childRef]);
+  }, [shouldUseRef, childRef]);
 
   return [childRef, patchedChildren];
 };

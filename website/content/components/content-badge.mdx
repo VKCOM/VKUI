@@ -1,0 +1,200 @@
+---
+description: Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса.
+---
+
+<Overview group="data-display">
+
+# ContentBadge [tag:component]
+
+Компонент для выделения статусов, категорий и счётчиков рядом с элементами интерфейса.
+Используется в ячейках, кнопках и навигации.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <ContentBadge>Новинка</ContentBadge>
+  ```
+</Playground>
+
+## Режим отображения
+
+Определяется свойством `mode`:
+
+- `primary` — акцентный вариант с заливкой, используется для выделения ключевого статуса,
+  важных меток или основного действия;
+- `secondary` — контурный стиль с прозрачным фоном, подходит для второстепенных меток,
+  дополнительных статусов или менее приоритетных элементов;
+- `outline` — минималистичный контур без фона, применяется для нейтральных подсказок,
+  неактивных или малозначимых состояний.
+
+## Визуальное оформление
+
+### Цвет
+
+Определяется свойством `appearance`.
+
+#### `"accent"`
+
+Задаёт компоненту акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
+
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="accent">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="accent">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="accent">
+    Новинка
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"neutral"`
+
+Задаёт компоненту нейтральный цвет, который также может являться альтернативным акцентным цветом компонента.
+
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="neutral">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="neutral">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="neutral">
+    Нет в наличии
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"accent-green"`
+
+Значение задаёт компоненту цвет для позитивных статусов (чаще всего зеленый).
+
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="accent-green">
+    Активно
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="accent-green">
+    Активно
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="accent-green">
+    Активно
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"accent-red"`
+
+Значение задаёт компоненту цвет для "горящих" статусов (чаще всего красных).
+
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="accent-red">
+    70%
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="accent-red">
+    70%
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="accent-red">
+    70%
+  </ContentBadge>
+  ```
+</Playground>
+
+#### `"overlay"`
+
+Значение цвета используется для статусов, располагающихся поверх цветных элементов или фото.
+
+import { OverlayButtonWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={OverlayButtonWrapper}>
+  ```jsx
+  <ContentBadge mode="primary" appearance="overlay">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="overlay">
+    Нет в наличии
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="overlay">
+    Нет в наличии
+  </ContentBadge>
+  ```
+</Playground>
+
+### Скругление
+
+Свойство `capsule` включает приближение значения закругления к форме круга:
+
+- для `size="m"` и `size="l"` — приближает к овальной форме;
+- для `size="s"` - свойство не поддерживается.
+
+<Playground>
+  ```jsx
+  <ContentBadge capsule size="m">
+    Новинка
+  </ContentBadge>
+  <ContentBadge capsule size="l">
+    Новинка
+  </ContentBadge>
+  ```
+</Playground>
+
+## Размер
+
+Определяется свойством `size`:
+
+- `s` — компактный (только текст, без иконок);
+- `m` — стандартный с поддержкой иконок `16px`;
+- `l` — крупный с иконками `20px`.
+
+<Playground>
+  ```jsx
+  <ContentBadge size="s">Новинка</ContentBadge>
+  <ContentBadge size="m">Новинка</ContentBadge>
+  <ContentBadge size="l">Новинка</ContentBadge>
+  ```
+</Playground>
+
+## Работа с иконками
+
+Используйте `ContentBadge.SlotIcon` для вставки одиночной иконки:
+
+- для `size="s"` - иконки не поддерживаются;
+- для `size="m"` — рекомендуемый размер `12px` при наличии текста, для одиночной иконки `16px`;
+- для `size="l"` — рекомендуемый размер `16px` при наличии текста, для одиночной иконки `20px`.
+
+<Playground>
+  ```jsx
+  <ContentBadge size="m" appearance="accent-green">
+    <ContentBadge.SlotIcon>
+      <Icon12Tag />
+    </ContentBadge.SlotIcon>
+    Доступно по скидке
+  </ContentBadge>
+  <ContentBadge size="l" appearance="neutral">
+    Заблокировано
+    <ContentBadge.SlotIcon>
+      <Icon16LockOutline />
+    </ContentBadge.SlotIcon>
+  </ContentBadge>
+  <ContentBadge size="l" appearance="accent-red">
+    <ContentBadge.SlotIcon>
+      <Icon20CrownVerified />
+    </ContentBadge.SlotIcon>
+  </ContentBadge>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="ContentBadge">
+### ContentBadge [#content-badge-api]
+
+### ContentBadge.SlotIcon [#content-badge-slot-icon-api]
+
+</PropsTable>

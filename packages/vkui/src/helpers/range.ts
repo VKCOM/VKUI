@@ -24,3 +24,7 @@ export function rangeIncrement(from: number, to: number, step = 1): number[] {
 
   return range(from, to, step);
 }
+
+export function inRange(number: number, from: number, to: number) {
+  return number >= from && number <= to;
+}

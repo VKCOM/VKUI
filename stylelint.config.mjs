@@ -1,23 +1,36 @@
 import path from 'node:path';
-import shared from './shared.js';
-
-const { VKUI_PACKAGE } = shared;
 
 const config = {
-  extends: ['stylelint-config-standard', '@vkontakte/stylelint-config'],
+  extends: [
+    'stylelint-config-standard',
+    '@vkontakte/stylelint-config',
+    'stylelint-config-recess-order',
+  ],
   plugins: [
     '@project-tools/stylelint-plugin-vkui',
     'stylelint-media-use-custom-media',
     'stylelint-value-no-unknown-custom-properties',
     'stylelint-use-logical',
-    'stylelint-prettier',
   ],
   rules: {
-    'prettier/prettier': true,
+    'property-no-deprecated': [true, { ignoreProperties: ['/^-.*-box-orient$/'] }],
     'block-no-empty': null,
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,
     'comment-whitespace-inside': null,
+    'declaration-property-value-keyword-no-deprecated': [
+      true,
+      {
+        /**
+         * Сейчас ругается на `word-break: break-word;`.
+         *
+         * Можно поменять на `overflow-wrap: break-word;`, но нужно проверить, что работает одинаково.
+         *
+         * Заигноренно в рамках PR https://github.com/VKCOM/VKUI/pull/8152
+         */
+        ignoreKeywords: 'break-word',
+      },
+    ],
     'no-descending-specificity': null,
     'no-duplicate-selectors': null,
     'value-keyword-case': null,
@@ -57,20 +70,25 @@ const config = {
       true,
       {
         importFrom: [
-          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_CONSTANTS),
-          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_DYNAMIC_TOKENS),
-          path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_MISSED_THEME_TOKENS),
+          path.join(import.meta.dirname, 'packages/vkui/src/styles/constants.css'),
+          path.join(import.meta.dirname, 'packages/vkui/src/styles/dynamicTokens.css'),
+          path.join(import.meta.dirname, 'packages/vkui/src/styles/missedThemeTokens.css'),
           path.join(
             import.meta.dirname,
             'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css',
           ),
+          path.join(import.meta.dirname, 'packages/vkui-docs-theme/styles/constants.css'),
+          path.join(import.meta.dirname, 'packages/vkui-docs-theme/styles/colors.css'),
         ],
       },
     ],
     'csstools/media-use-custom-media': [
       'known',
       {
-        importFrom: path.join(import.meta.dirname, VKUI_PACKAGE.PATHS.CSS_CUSTOM_MEDIAS),
+        importFrom: path.join(
+          import.meta.dirname,
+          'packages/vkui/src/styles/customMedias.generated.css',
+        ),
       },
     ],
     'selector-pseudo-class-disallowed-list': ['global'],
@@ -82,6 +100,25 @@ const config = {
     'property-disallowed-list': null,
     'csstools/use-logical': 'always',
   },
+  overrides: [
+    {
+      files: [
+        `${path.join(import.meta.dirname, 'website')}/**/*.css`,
+        `${path.join(import.meta.dirname, 'packages/vkui-docs-theme')}/**/*.css`,
+      ],
+      rules: {
+        'csstools/media-use-custom-media': [
+          'known',
+          {
+            importFrom: path.join(
+              import.meta.dirname,
+              'packages/vkui/src/styles/customMedias.generated.css',
+            ),
+          },
+        ],
+      },
+    },
+  ],
 };
 
 export default config;

@@ -1,158 +1,159 @@
 .host {
+  display: flex;
   inline-size: 100%;
-  block-size: 100%;
-  overflow: hidden;
-  position: absolute;
-  box-sizing: border-box;
-  pointer-events: none;
-}
-
-.host:focus {
+  block-size: var(--vkui_internal_ModalPage--userHeight);
+  margin-inline: auto;
+  pointer-events: initial;
   outline: none;
 }
 
-.desktop {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* Mobile */
+.hostMobile {
+  --vkui_internal_ModalPage--userHeight: 100%;
 
-.inWrap {
-  inline-size: 100%;
-  block-size: 100%;
   position: absolute;
-  inset-inline: 0;
   inset-block-end: 0;
-  margin-inline: auto;
-  display: flex;
-  align-items: flex-end;
-  pointer-events: initial;
-  transform: translateY(100%);
-  transition: transform 320ms var(--vkui--animation_easing_platform);
-}
-
-.ios .inWrap {
-  transition: transform 400ms var(--vkui--animation_easing_platform);
-}
-
-.desktop .inWrap {
-  position: relative;
-  align-items: initial;
-  margin-block: 32px;
-  margin-inline: 56px;
-  block-size: auto;
-  max-block-size: 640px;
-  opacity: 0;
-  transform: none;
-  transition: opacity 340ms var(--vkui--animation_easing_platform);
-}
-
-@media (max-height: 672px) {
-  .desktop .inWrap {
-    max-block-size: calc(100% - 32px * 2);
-  }
-}
-
-.sizeS .inWrap {
+  inset-inline: 0;
+  box-sizing: border-box;
   max-inline-size: var(--vkui--size_popup_small--regular);
-}
-
-.sizeM .inWrap {
-  max-inline-size: var(--vkui--size_popup_medium--regular);
-}
-
-.sizeL .inWrap {
-  max-inline-size: var(--vkui--size_popup_large--regular);
-}
-
-.in {
-  background-color: var(--vkui--color_background_modal);
-  overflow: visible;
-  position: relative;
-  box-sizing: border-box;
-  inline-size: 100%;
-  block-size: 100%;
-  display: flex;
-  flex-direction: column;
-  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
-  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
-
-  --vkui_internal--background: var(--vkui--color_background_modal);
-}
-
-.desktop .in {
-  block-size: auto;
-  box-shadow: var(--vkui--elevation3);
-  border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
-  border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
-}
-
-.header {
-  inline-size: 100%;
-}
-
-.contentWrap {
-  position: relative;
-  display: flex;
-  block-size: 100%;
-  flex-direction: column;
-  overflow: hidden;
-  border-end-start-radius: inherit;
-  border-end-end-radius: inherit;
-}
-
-.header:empty + .contentWrap {
-  border-radius: inherit;
-}
-
-.content {
-  block-size: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  box-sizing: border-box;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.desktop .content,
-:global(.vkuiInternalModalRoot__modal--expandable) .content {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.desktop .contentIn,
-:global(.vkuiInternalModalRoot__modal--expandable) .contentIn {
-  block-size: 100%;
-}
-
-/* существует для того, чтобы использовать в расчёте translateY
- * чтобы поднять ModalPage не только на высоту контента, но и на высоту bottom-inset
- * особенно важно для ModalPage c динамической высотой
- */
-.bottomInset {
-  block-size: var(--vkui_internal--safe_area_inset_bottom);
-  flex-shrink: 0;
-}
-
-/**
- * CMP:
- * ModalRoot
- *
- * [дополнительно] также ищи в файле `ModalRoot__modal--expandable`
- */
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot--touched) .inWrap {
-  transition: none;
-}
-
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot--switching) .inWrap {
   pointer-events: none;
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalRoot__modal--collapsed) .content,
-:global(.vkuiInternalModalRoot__modal--dragging) .content {
-  overflow: hidden;
+.hostMobileSafeAreaInsetTop {
+  max-block-size: calc(100% - var(--vkui_internal--safe_area_inset_top));
+}
+
+.hostMobileSafeAreaInsetTopWithCustomOffset {
+  max-block-size: calc(
+    100% -
+    (var(--vkui_internal--safe_area_inset_top) + var(--vkui_internal--panel_header_height))
+  );
+}
+
+/* Desktop */
+.hostDesktop {
+  --vkui_internal_ModalPage--desktopMaxWidth: 100%;
+  --vkui_internal_ModalPage--desktopMaxHeight: 640px;
+  --vkui_internal_ModalPage--userHeight: auto;
+
+  position: relative;
+  box-sizing: content-box;
+  max-inline-size: var(--vkui_internal_ModalPage--desktopMaxWidth);
+  max-block-size: min(var(--vkui_internal_ModalPage--desktopMaxHeight), 100%);
+  margin-block: auto;
+}
+
+.hostDesktopMaxWidthS {
+  --vkui_internal_ModalPage--desktopMaxWidth: var(--vkui--size_popup_small--regular);
+}
+
+.hostDesktopMaxWidthM {
+  --vkui_internal_ModalPage--desktopMaxWidth: var(--vkui--size_popup_medium--regular);
+}
+
+.hostDesktopMaxWidthL {
+  --vkui_internal_ModalPage--desktopMaxWidth: var(--vkui--size_popup_large--regular);
+}
+
+.document {
+  box-sizing: border-box;
+
+  /*
+   * Удерживает высоту в пределах 100% родителя при переполнении контента.
+   */
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  inline-size: 100%;
+}
+
+/* Mobile */
+.documentMobile {
+  --vkui_internal_ModalPageDocument--snapPoint: auto;
+  --vkui_internal_ModalPageDocument--safeAreaInsetBottom: var(
+    --vkui_internal--safe_area_inset_bottom
+  );
+
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  block-size: var(--vkui_internal_ModalPageDocument--snapPoint);
+  max-block-size: 100%;
+  pointer-events: auto;
   touch-action: pan-y;
+  transform: translate3d(0, 0, 0);
+  transition: block-size 0.4s var(--vkui_internal--spring-easing);
+}
+
+.documentMobile.documentStateEnter {
+  transform: translate3d(0, 100%, 0);
+}
+
+.documentMobile.documentStateEntering {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.5s var(--vkui_internal--slide-easing) 0.1s;
+}
+
+.documentMobile.documentStateExiting {
+  transform: translate3d(0, 100%, 0);
+  transition: transform 0.2s ease;
+}
+
+.documentMobile.documentStateExited {
+  transform: translate3d(0, 100%, 0);
+}
+
+/* Desktop */
+.documentDesktop {
+  position: relative;
+  block-size: auto;
+}
+
+.documentDesktop.documentStateEnter {
+  opacity: 0;
+}
+
+.documentDesktop.documentStateEntering {
+  opacity: 1;
+  transition: opacity 0.2s ease-in 0.1s;
+}
+
+.documentDesktop.documentStateExiting {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.documentDesktop.documentStateExited {
+  opacity: 0;
+}
+
+.children {
+  box-sizing: border-box;
+  /*
+   * Удерживает высоту в пределах 100% родителя при переполнении контента.
+   *
+   * - см. `ModalPageHeader`
+   * - см. `ModalPageContent`
+   * - см. `ModalPageFooter`
+   */
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: hidden;
+  background-color: var(--vkui--color_background_modal);
+  border-start-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-start-end-radius: var(--vkui--size_border_radius_paper--regular);
+}
+
+.childrenMobile {
+  padding-block-end: var(--vkui_internal_ModalPageDocument--safeAreaInsetBottom);
+}
+
+/* Desktop */
+.childrenDesktop {
+  border-end-start-radius: var(--vkui--size_border_radius_paper--regular);
+  border-end-end-radius: var(--vkui--size_border_radius_paper--regular);
+  box-shadow: var(--vkui--elevation3);
 }

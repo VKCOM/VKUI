@@ -3,6 +3,7 @@ import { noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Div } from '../Div/Div';
 import { Panel } from '../Panel/Panel';
@@ -12,9 +13,9 @@ import { View } from '../View/View';
 import { PanelHeaderContent, type PanelHeaderContentProps } from './PanelHeaderContent';
 
 const story: Meta<PanelHeaderContentProps> = {
-  title: 'Layout/PanelHeaderContent',
+  title: 'Navigation/PanelHeader/PanelHeaderContent',
   component: PanelHeaderContent,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('PanelHeaderContent', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
 };
 
@@ -24,7 +25,7 @@ type Story = StoryObj<PanelHeaderContentProps>;
 
 const PANEL_ID = 'panel1';
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render() {
     const platform = usePlatform();
 

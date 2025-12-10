@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useConfigDirection } from '../../../hooks/useConfigDirection';
 import {
   getBadgeIconSizeByImageBaseSize,
   ImageBase,
@@ -21,11 +22,13 @@ export interface AvatarBadgeWithPresetProps
   preset?: 'online' | 'online-mobile';
 }
 
-export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
+export const AvatarBadgeWithPreset = ({
   preset = 'online',
   className,
   ...restProps
 }: AvatarBadgeWithPresetProps) => {
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
   const { size } = React.useContext(ImageBaseContext);
   const badgeSize = getBadgeIconSizeByImageBaseSize(size);
   const isOnlinePreset = preset === 'online';
@@ -35,12 +38,10 @@ export const AvatarBadgeWithPreset: React.FC<AvatarBadgeWithPresetProps> = ({
   return (
     <ImageBase.Badge
       background="stroke"
-      className={classNames(styles.host, presetClassName, className)}
+      className={classNames(styles.host, isRtl && styles.rtl, presetClassName, className)}
       {...restProps}
     >
       <Icon width={badgeSize} height={badgeSize} />
     </ImageBase.Badge>
   );
 };
-
-AvatarBadgeWithPreset.displayName = 'Avatar.BadgeWithPreset';

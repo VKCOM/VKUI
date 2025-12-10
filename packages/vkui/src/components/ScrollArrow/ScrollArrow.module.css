@@ -1,35 +1,35 @@
 .host {
-  cursor: pointer;
-  user-select: auto;
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  transition: opacity 0.15s;
-  transition-timing-function: var(--vkui--animation_easing_platform);
   display: flex;
   justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  user-select: auto;
+  background-color: transparent;
+  border: 0;
+  transition: opacity 0.15s;
+  transition-timing-function: var(--vkui--animation_easing_platform);
 }
 
 .directionLeft,
 .directionRight {
-  block-size: 100%;
   flex-direction: column;
+  block-size: 100%;
 }
 
 .directionUp,
 .directionDown {
-  inline-size: 100%;
   flex-direction: row;
+  inline-size: 100%;
 }
 
 .icon {
   position: relative;
-  background-color: var(--vkui--color_background_contrast_themed);
-  color: var(--vkui--color_icon_secondary);
-  box-shadow: var(--vkui--elevation3);
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--vkui--color_icon_secondary);
+  background-color: var(--vkui--color_background_contrast_themed);
+  box-shadow: var(--vkui--elevation3);
 }
 
 .sizeS .icon {
@@ -45,26 +45,27 @@
 }
 
 .directionLeft {
-  padding-inline-start: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-inline-start: 0;
+  padding-inline-start: var(--vkui--size_base_padding_horizontal--regular, 16px);
 }
 
 .directionRight {
-  padding-inline-end: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-inline-end: 0;
+  padding-inline-end: var(--vkui--size_base_padding_horizontal--regular, 16px);
 }
 
 .directionUp {
-  padding-block-start: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-block-start: 0;
+  padding-block-start: var(--vkui--size_base_padding_horizontal--regular, 16px);
 }
 
 .directionDown {
-  padding-block-end: var(--vkui--size_base_padding_horizontal--regular, 16px);
   inset-block-end: 0;
+  padding-block-end: var(--vkui--size_base_padding_horizontal--regular, 16px);
 }
 
-.directionLeft .defaultIcon {
+.directionLeft:not(.rtl) .defaultIcon,
+.directionRight.rtl .defaultIcon {
   transform: rotate(180deg);
 }
 

@@ -1,19 +1,63 @@
+'use client';
+
 import * as React from 'react';
-import type { HasRef, HasRootRef } from '../../types';
+import { useMergeProps } from '../../hooks/useMergeProps';
+import { warnOnce } from '../../lib/warnOnce';
+import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import { Button, type VKUIButtonProps } from '../Button/Button';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
+const warn = warnOnce('File');
+
 export interface FileProps
   extends Omit<VKUIButtonProps, 'type'>,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'>,
-    HasRef<HTMLInputElement>,
-    HasRootRef<HTMLElement> {}
+    Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'name'
+      | 'value'
+      | 'accept'
+      | 'capture'
+      | 'multiple'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
+    HasRootRef<HTMLElement> {
+  /**
+   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLInputElement>;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `input`: свойства для прокидывания в скрытый `input`.
+   */
+  slotProps?: {
+    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+      HasRootRef<HTMLLabelElement> &
+      HasDataAttribute;
+    input?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> &
+      HasRootRef<HTMLInputElement> &
+      HasDataAttribute;
+  };
+}
 
 /**
- * @see https://vkcom.github.io/VKUI/#/File
+ * @see https://vkui.io/components/file
  */
 export const File = ({
+  // FileProps
+  getRootRef,
   children = 'Выберите файл',
+  getRef,
+
+  // VKUIButtonProps
   align = 'left',
   size,
   mode,
@@ -21,18 +65,62 @@ export const File = ({
   before,
   after,
   loading,
-  className,
-  style,
-  getRef,
-  getRootRef,
   appearance,
+
+  // Input props
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  accept,
+  capture,
+  multiple,
+  onChange,
+  onFocus,
+  onBlur,
+
+  slotProps,
   ...restProps
 }: FileProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && getRef) {
+    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+  }
+
+  const { onClick, ...rootRest } = useMergeProps(
+    {
+      getRootRef: getRootRef as React.Ref<HTMLLabelElement>,
+      ...restProps,
+    },
+    slotProps?.root,
+  );
+  const inputRest = useMergeProps(
+    {
+      getRootRef: getRef,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      accept,
+      capture,
+      multiple,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
+
   return (
     <Button
       Component="label"
       align={align}
-      className={className}
       stretched={stretched}
       mode={mode}
       appearance={appearance}
@@ -40,11 +128,11 @@ export const File = ({
       before={before}
       after={after}
       loading={loading}
-      style={style}
-      getRootRef={getRootRef}
-      disabled={restProps.disabled}
+      disabled={inputRest.disabled}
+      onClick={withLabelClickWrapper(onClick)}
+      {...rootRest}
     >
-      <VisuallyHidden title="" {...restProps} Component="input" type="file" getRootRef={getRef} />
+      <VisuallyHidden title="" Component="input" type="file" {...inputRest} />
       {children}
     </Button>
   );

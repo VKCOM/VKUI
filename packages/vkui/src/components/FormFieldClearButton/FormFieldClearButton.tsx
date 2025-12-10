@@ -7,8 +7,17 @@ import type { HasDataAttribute } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 
 export interface FormFieldClearButtonProps extends HasDataAttribute {
+  /**
+   * `className` для компонента.
+   */
   className?: string;
+  /**
+   * Обработчик нажатия на кнопку.
+   */
   onClick: () => void;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
 }
 

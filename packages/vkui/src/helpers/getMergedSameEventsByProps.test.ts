@@ -5,23 +5,21 @@ import { getMergedSameEventsByProps } from './getMergedSameEventsByProps';
 const getMockedArgs = () => ({
   mainProps: {
     someIntValue: 1,
-    onCallCommonDefinedFn: jest.fn(
-      (event: { stopPropagation?: boolean }) => event?.stopPropagation,
-    ),
-    onCallCommonUndefinedFn: jest.fn(),
-    onCallDefinedFn: jest.fn(),
+    onCallCommonDefinedFn: vi.fn((event: { stopPropagation?: boolean }) => event?.stopPropagation),
+    onCallCommonUndefinedFn: vi.fn(),
+    onCallDefinedFn: vi.fn(),
     onCallUndefinedFn: undefined,
   },
   secondProps: {
     someIntValue: 1,
     someBoolValue: false,
-    onCallCommonDefinedFn: jest.fn((event) => {
+    onCallCommonDefinedFn: vi.fn((event) => {
       if (event) {
         event.stopPropagation = true;
       }
     }),
     onCallCommonUndefinedFn: undefined,
-    onCallOnlyInPropsFn: jest.fn(),
+    onCallOnlyInPropsFn: vi.fn(),
   },
 });
 
@@ -87,6 +85,6 @@ describe(getMergedSameEventsByProps, () => {
     });
 
     expect(mainProps.onCallCommonDefinedFn).toHaveReturnedWith(true);
-    expect(props.onCallCommonDefinedFn).toHaveBeenCalledWith({ stopPropagation: true });
+    expect(props.onCallCommonDefinedFn).toHaveBeenCalledExactlyOnceWith({ stopPropagation: true });
   });
 });

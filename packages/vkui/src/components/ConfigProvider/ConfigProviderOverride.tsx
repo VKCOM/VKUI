@@ -1,19 +1,22 @@
 'use client';
 
 import * as React from 'react';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
 import {
   ConfigProviderContext,
   type ConfigProviderContextInterface,
   useConfigProvider,
+  useConfigProviderContextMemo,
 } from './ConfigProviderContext';
 
 export interface ConfigProviderOverrideProps extends Partial<ConfigProviderContextInterface> {
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
 }
 
 /**
- * Компонент предназначен для перебивания одного из значений контекста
+ * Компонент предназначен для перебивания одного из значений контекста.
  */
 export function ConfigProviderOverride({
   children,
@@ -21,10 +24,7 @@ export function ConfigProviderOverride({
 }: ConfigProviderOverrideProps): React.ReactNode {
   const parentConfig = useConfigProvider();
 
-  const configContext = useObjectMemo({
-    ...parentConfig,
-    ...contextValue,
-  });
+  const configContext = useConfigProviderContextMemo({ ...parentConfig, ...contextValue });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>

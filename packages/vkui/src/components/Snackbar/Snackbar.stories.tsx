@@ -4,14 +4,15 @@ import { Icon24ThumbsUpOutline, Icon28ErrorCircleOutline } from '@vkontakte/icon
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Image } from '../Image/Image';
 import { Snackbar, type SnackbarProps } from './Snackbar';
 
 const story: Meta<SnackbarProps> = {
-  title: 'Popouts/Snackbar',
+  title: 'Feedback/Snackbar',
   component: Snackbar,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Snackbar', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['24', '28'],
@@ -34,6 +35,7 @@ const story: Meta<SnackbarProps> = {
     subtitle: StringArg,
     offsetY: StringArg,
   },
+  tags: ['Обратная связь'],
 };
 
 export default story;

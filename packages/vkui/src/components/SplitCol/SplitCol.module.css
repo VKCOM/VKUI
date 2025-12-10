@@ -1,9 +1,9 @@
 .host {
-  block-size: 100%;
-  inline-size: 1px;
+  position: relative;
   flex-grow: 1;
   flex-shrink: 1;
-  position: relative;
+  inline-size: 1px;
+  block-size: 100%;
 }
 
 .viewWidthSmallTabletPlus.spacedAuto {
@@ -34,20 +34,20 @@
   }
 }
 
-.fixed {
-  block-size: 100%;
-  inline-size: 1px;
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
 .fixedInner {
-  block-size: inherit;
+  position: sticky;
+  inset-block-start: 0;
+  display: flex;
+  flex-direction: column;
   inline-size: inherit;
   min-inline-size: inherit;
   max-inline-size: inherit;
-  position: fixed;
-  transform: translateZ(0);
-  overflow: hidden;
-  inset-block-start: 0;
+  block-size: auto; /* Иначе высота будет как у всей страницы */
+  min-block-size: calc(
+    100vh -
+    var(--vkui_internal--safe_area_inset_top) -
+    var(--vkui_internal--safe_area_inset_bottom)
+  );
+  min-block-size: 100dvh; /* Graceful Degradation (см. https://caniuse.com/?search=dvh) */
+  backface-visibility: hidden;
 }

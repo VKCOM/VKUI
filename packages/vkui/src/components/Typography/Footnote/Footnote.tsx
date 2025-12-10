@@ -2,6 +2,7 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
+import { type SizeTypeValues } from '../../../lib/adaptivity';
 import { type HasCaps, Typography, type TypographyProps } from '../Typography';
 import styles from './Footnote.module.css';
 
@@ -10,12 +11,20 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
+export function footnoteClassNames(sizeY: 'none' | SizeTypeValues, caps = false) {
+  return classNames(
+    styles.host,
+    sizeY !== 'regular' && sizeYClassNames[sizeY],
+    caps && styles.caps,
+  );
+}
+
 export interface FootnoteProps extends TypographyProps, HasCaps {}
 
 /**
  * Используется для основных подписей.
  *
- * @see https://vkcom.github.io/VKUI/#/Footnote
+ * @see https://vkui.io/components/typography#footnote
  */
 export const Footnote = ({
   className,
@@ -32,12 +41,7 @@ export const Footnote = ({
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(
-        className,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
-        styles.host,
-        caps && styles.caps,
-      )}
+      className={classNames(className, footnoteClassNames(sizeY, caps))}
       {...restProps}
     />
   );

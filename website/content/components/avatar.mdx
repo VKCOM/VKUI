@@ -1,0 +1,166 @@
+---
+description: Компонент для отображения аватара пользователя — фотографии, инициалов или графики. Наследует все свойства HTML-элемента `<img>`.
+---
+
+<Overview group="data-display">
+# Avatar [tag:component]
+
+Компонент для отображения аватара пользователя — фотографии, инициалов или графики. Наследует все свойства HTML-элемента `<img>`.
+
+</Overview>
+
+## Основные варианты
+
+### Изображение
+
+Основной вариант, использует стандартный `<img>` под капотом.
+
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/61377022?s=50" alt="Фото пользователя" />
+  ```
+</Playground>
+
+### Инициалы
+
+Отображаются, если изображение не удалось загрузить или передано пустое свойство `src`.
+
+<Playground>
+  ```jsx
+  <Avatar initials="ВК" />
+  ```
+</Playground>
+
+Рекомендации по использованию инициалов:
+
+- рекомендуемая длина — не более 2 символов;
+- размер шрифта автоматически адаптируется под размер аватара.
+
+#### Градиентный фон
+
+Помимо стандартного фона инициалы можно размещать на градиентном фоне.
+Всего поддерживается 6 видов разных градиентов.
+
+<Playground>
+  ```jsx
+  <Avatar initials="ВК" gradientColor={6} />
+  ```
+</Playground>
+
+При необходимости можно использовать кастомный градиент (с помощью `className`/`style`):
+
+```jsx
+<Avatar gradientColor="custom" style={{ backgroundImage: 'linear-gradient(...)' }} />
+```
+
+> Может быть полезна функция [`calcInitialsAvatarColor`](#calcinitialsavatarcolor).
+
+## Размеры
+
+<Playground>
+  ```jsx
+  {return [16, 20, 24, 28, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96].map((size) => (
+    <Avatar key={size} src="https://avatars.githubusercontent.com/u/32414396?s=100" size={size} />
+  ))}
+  ```
+</Playground>
+
+## Дополнительные элементы
+
+### Бейдж
+
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/26322098?s=56" size={56}>
+    <Avatar.Badge background="stroke">
+      <Icon20GiftCircleFillRed />
+    </Avatar.Badge>
+  </Avatar>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getBadgeIconSizeByImageBaseSize`](/components/image-base#getbadgeiconsizebyimagebasesize).
+
+### Готовый пресет бейджа
+
+Подкомпонент `Avatar.BadgeWithPreset` предоставляет готовые пресеты `Avatar.Badge`.
+При передаче в свойство `preset` значения `online` используется иконка `Icon12Circle`,
+а при значении `online-mobile` иконка `Icon12OnlineMobile`.
+
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/14944123?s=50" size={48}>
+    <Avatar.BadgeWithPreset preset="online" />
+  </Avatar>
+  <Avatar src="https://avatars.githubusercontent.com/u/7431217?s=50" size={48}>
+    <Avatar.BadgeWithPreset preset="online-mobile" />
+  </Avatar>
+  ```
+</Playground>
+
+### Иконка-заглушка
+
+На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
+Размер иконки-заглушки должен зависеть от размеров аватара.
+
+<Playground>
+  ```jsx
+  <Avatar fallbackIcon={<Icon3218CircleOutline />} />
+  ```
+</Playground>
+
+> Может быть полезна функция [`getFallbackIconSizeByImageBaseSize`](/components/image-base#getfallbackiconsizebyimagebasesize).
+
+### Наложение
+
+<Playground>
+  ```jsx
+  <Avatar src="https://avatars.githubusercontent.com/u/91548592?s=50">
+    <Avatar.Overlay theme="dark" visibility="always">
+      <Icon24Camera />
+    </Avatar.Overlay>
+  </Avatar>
+  ```
+</Playground>
+
+> Может быть полезна функция [`getOverlayIconSizeByImageBaseSize`](/components/image-base#getoverlayiconsizebyimagebasesize).
+
+> Обратите внимание, что свойство `visibility` подкомпонента `Avatar.Overlay` по умолчанию
+> зависит от наличия указателя на устройстве. Так, на мобильных устройствах наложение будет
+> показано всегда, а например, на десктопах наложение активно только при наведении на аватар.
+
+## Вспомогательные функции
+
+### calcInitialsAvatarColor
+
+Для динамического определения градиента под пользователя используйте функцию `calcInitialsAvatarColor`.
+Она генерирует значение градиента по формуле `user_id % 6 + 1`.
+Например, у пользователя с `user_id={106}` будет 5-й (`"l-blue"`) цвет градиента.
+
+```jsx
+import { calcInitialsAvatarColor } from '@vkontakte/vkui';
+
+// userId определён где-то выше
+<Avatar initials="ВК" gradientColor={calcInitialsAvatarColor(userId)} />;
+```
+
+## Особенности
+
+Компонент поддерживает следующие возможности:
+
+- автоматическая адаптация размера шрифта для инициалов;
+- поддержка всех стандартных HTML-атрибутов `<img>`;
+- сохранение пропорций изображения при изменении размеров.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Avatar">
+### Avatar [#avatar-api]
+
+### Avatar.Badge [#avatar-badge-api]
+
+### Avatar.BadgeWithPreset [#avatar-badge-with-preset-api]
+
+### Avatar.Overlay [#avatar-overlay-api]
+
+</PropsTable>

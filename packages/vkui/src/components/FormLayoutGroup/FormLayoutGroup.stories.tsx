@@ -1,14 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { DateInput } from '../DateInput/DateInput';
 import { FormItem } from '../FormItem/FormItem';
 import { Input } from '../Input/Input';
 import { Select } from '../Select/Select';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { FormLayoutGroup, type FormLayoutGroupProps } from './FormLayoutGroup';
 
 const story: Meta<FormLayoutGroupProps> = {
-  title: 'Forms/FormLayoutGroup',
+  title: 'Layout/FormLayoutGroup',
   component: FormLayoutGroup,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('FormLayoutGroup', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;
@@ -28,6 +32,40 @@ export const Playground: Story = {
             value: i,
           }))}
           defaultValue="@mail.ru"
+        />
+      </FormItem>
+    </FormLayoutGroup>
+  ),
+};
+
+export const AccessibleHorizontalSegmeted: Story = {
+  render: (args) => (
+    <FormLayoutGroup mode="horizontal" segmented {...args}>
+      <FormItem>
+        <VisuallyHidden Component="label" htmlFor="nikname-id">
+          Никнейм или имя
+        </VisuallyHidden>
+        <Input id="nickname-id" placeholder="Никнейм или имя" />
+      </FormItem>
+      <FormItem>
+        <VisuallyHidden Component="label" htmlFor="link-or-id-input-id">
+          Ссылка на ID
+        </VisuallyHidden>
+        <Input id="link-or-id-input-id" placeholder="Ссылка на ID" />
+      </FormItem>
+      <FormItem>
+        <VisuallyHidden Component="label" htmlFor="date-id">
+          Дата или диапазон
+        </VisuallyHidden>
+        <DateInput
+          id="date-id"
+          renderCustomValue={(date: Date | undefined) =>
+            date ? undefined : (
+              <span aria-hidden style={{ color: 'var(--vkui--color_text_secondary)' }}>
+                Дата или диапазон
+              </span>
+            )
+          }
         />
       </FormItem>
     </FormLayoutGroup>

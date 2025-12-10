@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeCalls } from '../../lib/mergeCalls';
@@ -5,25 +7,25 @@ import { useStateWithDelay } from './useStateWithDelay';
 
 export interface StateProps {
   /**
-   * Указывает, должен ли компонент реагировать на hover-состояние
+   * Указывает, должен ли компонент реагировать на `hover`-состояние.
    */
   hasHover?: boolean;
   /**
-   * Позволяет управлять hovered-состоянием извне
+   * Позволяет управлять `hovered`-состоянием извне.
    */
   hovered?: boolean;
   /**
-   * Позволяет управлять activated-состоянием извне
+   * Позволяет управлять `activated`-состоянием извне.
    */
   activated?: boolean;
   /**
-   * Указывает, должен ли компонент реагировать на active-состояние
+   * Указывает, должен ли компонент реагировать на `active`-состояние.
    */
   hasActive?: boolean;
 
   /**
    * Позволяет родительскому компоненту
-   * иметь hovered-cостояние при наведении
+   * иметь `hovered`-cостояние при наведении
    * на любой дочерний элемент.
    * По умолчанию состояние hovered у родителя сбрасывается.
    *
@@ -54,17 +56,17 @@ export interface StateProps {
   unlockParentHover?: boolean;
 
   /**
-   * Длительность показа `activated`-состояния
+   * Длительность показа `active`-состояния.
    */
   activeEffectDelay?: number;
 
   /**
-   * Стиль подсветки active-состояния
+   * Стиль подсветки `active`-состояния.
    */
   activeClassName?: string;
 
   /**
-   * Стиль подсветки hover-состояния
+   * Стиль подсветки `hover`-состояния.
    */
   hoverClassName?: string;
 }
@@ -75,16 +77,21 @@ const ACTIVE_DELAY = 70;
 
 interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
   /**
-   * Блокирование активации состояний
+   * Блокирование активации состояний.
    */
-  lockState: boolean;
-  setParentStateLock: (v: boolean) => void;
+  lockState?: boolean;
+  setParentStateLock?: (v: boolean) => void;
 }
 
 /**
- * Управляет наведением на компонент, игнорирует тач события
+ * Управляет наведением на компонент, игнорирует тач события.
  */
-function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: UseHoverProps) {
+export function useHover({
+  hovered,
+  hasHover = true,
+  lockState = false,
+  setParentStateLock = noop,
+}: UseHoverProps = {}) {
   const [hoveredStateLocal, setHoveredStateLocal] = React.useState(false);
 
   const prevIsHoveredRef = React.useRef<boolean | undefined>(undefined);
@@ -93,12 +100,13 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
     (isHover: boolean) => {
       setHoveredStateLocal(isHover);
 
-      const isHovered = calculateStateValue({
-        hasState: hasHover,
-        isLocked: lockState,
-        stateValueControlled: Boolean(hovered),
-        stateValueLocal: isHover,
-      });
+      const isHovered =
+        hovered ??
+        calculateStateValue({
+          hasState: hasHover,
+          isLocked: lockState,
+          stateValueLocal: isHover,
+        });
 
       // проверка сделана чтобы реже вызывать обновление состояния
       // контекста родителя
@@ -122,12 +130,13 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
     handleHover(false);
   };
 
-  const isHovered = calculateStateValue({
-    hasState: hasHover,
-    isLocked: lockState,
-    stateValueControlled: Boolean(hovered),
-    stateValueLocal: hoveredStateLocal,
-  });
+  const isHovered =
+    hovered ??
+    calculateStateValue({
+      hasState: hasHover,
+      isLocked: lockState,
+      stateValueLocal: hoveredStateLocal,
+    });
 
   return {
     isHovered,
@@ -138,20 +147,20 @@ function useHover({ hovered, hasHover = true, lockState, setParentStateLock }: U
 
 interface UseActiveProps extends Pick<StateProps, 'activated' | 'activeEffectDelay' | 'hasActive'> {
   /**
-   * Блокирование активации состояний
+   * Блокирование активации состояний.
    */
-  lockStateRef: React.MutableRefObject<boolean>;
+  lockState: boolean;
   setParentStateLock: (v: boolean) => void;
 }
 
 /**
- * Управляет активацией компонента
+ * Управляет активацией компонента.
  */
 function useActive({
   activated,
   activeEffectDelay,
   hasActive = true,
-  lockStateRef,
+  lockState,
   setParentStateLock,
 }: UseActiveProps) {
   // передаём setParentStateLock, чтобы функция вызывалась вместе с установкой стейта,
@@ -159,24 +168,27 @@ function useActive({
   const [activatedState, setActivated] = useStateWithDelay<boolean>(false, 0, setParentStateLock);
 
   // Список нажатий которые не требуется отменять
-  const pointersUp = React.useMemo(() => new Set<number>(), []);
+  const pointersUpRef = React.useRef<Set<number>>(null);
+  if (pointersUpRef.current === null) {
+    pointersUpRef.current = new Set<number>();
+  }
 
   const onPointerDown = () => {
-    if (lockStateRef.current) {
+    if (lockState) {
       return;
     }
 
     setActivated(true, ACTIVE_DELAY);
     // намеренно выставляем lock, так как setActivated вызов отложен
-    // а у отложенного setActivated setParentStateLock тоже вызовится отложенно
+    // а у отложенного setActivated setParentStateLock тоже вызовется отложено
     // родитель сейчас тоже обработает это же событие PointerDown
     // если мы не залочим activatedState у родителя сейчас, то родитель выставит active состояние
     setParentStateLock(true);
   };
 
   const onPointerCancel: React.PointerEventHandler = (e) => {
-    if (pointersUp.has(e.pointerId)) {
-      pointersUp.delete(e.pointerId);
+    if (pointersUpRef.current!.has(e.pointerId)) {
+      pointersUpRef.current!.delete(e.pointerId);
       return;
     }
 
@@ -184,9 +196,9 @@ function useActive({
   };
 
   const onPointerUp: React.PointerEventHandler = (e) => {
-    pointersUp.add(e.pointerId);
+    pointersUpRef.current!.add(e.pointerId);
 
-    if (lockStateRef.current) {
+    if (lockState) {
       return;
     }
 
@@ -194,12 +206,13 @@ function useActive({
     setActivated(false, activeEffectDelay);
   };
 
-  const isActivated = calculateStateValue({
-    hasState: hasActive,
-    isLocked: lockStateRef.current,
-    stateValueControlled: Boolean(activated),
-    stateValueLocal: activatedState,
-  });
+  const isActivated =
+    activated ??
+    calculateStateValue({
+      hasState: hasActive,
+      isLocked: lockState,
+      stateValueLocal: activatedState,
+    });
 
   return {
     isActivated,
@@ -222,7 +235,7 @@ export const ClickableLockStateContext: React.Context<ClickableLockStateContextI
   });
 
 /**
- * Блокирует стейт на всплытие
+ * Блокирует стейт на всплытие.
  */
 function useLockState(
   setParentStateLockBubbling: (v: boolean) => void,
@@ -242,29 +255,32 @@ function useLockState(
 
 function useLockRef(
   setParentStateLockBubbling: (v: boolean) => void,
-): readonly [React.MutableRefObject<boolean>, (v: boolean) => void, (...args: any[]) => void] {
-  const lockStateRef = React.useRef(false);
+): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
+  const [lockState, setLockState] = React.useState(false);
 
   const setStateLockBubblingImmediate = React.useCallback(
     (isLock: boolean) => {
-      lockStateRef.current = isLock;
+      setLockState(isLock);
       setParentStateLockBubbling(isLock);
     },
     [setParentStateLockBubbling],
   );
 
-  return [lockStateRef, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
+  return [lockState, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
 }
 
 /**
- * Управляет состоянием компонента
+ * Управляет состоянием компонента.
  */
 export function useState({
   hovered,
   hasHover,
+  activated,
   hasActive,
+  activeEffectDelay,
   unlockParentHover,
-  ...restProps
+  hoverClassName,
+  activeClassName,
 }: StateProps): {
   stateClassName: string;
   setLockHoverBubblingImmediate: (...args: any[]) => void;
@@ -275,7 +291,7 @@ export function useState({
 
   const [lockHoverState, setParentStateLockHoverBubbling, setLockHoverBubblingImmediate] =
     useLockState(unlockParentHover ? noop : lockHoverStateBubbling);
-  const [lockActiveStateRef, setParentStateLockActiveBubbling, setLockActiveBubblingImmediate] =
+  const [lockActiveState, setParentStateLockActiveBubbling, setLockActiveBubblingImmediate] =
     useLockRef(lockActiveStateBubbling);
 
   const { isHovered, ...hoverEvent } = useHover({
@@ -286,15 +302,14 @@ export function useState({
   });
 
   const { isActivated, ...activeEvent } = useActive({
-    ...restProps,
-    lockStateRef: lockActiveStateRef,
+    activated,
+    hasActive,
+    activeEffectDelay,
+    lockState: lockActiveState,
     setParentStateLock: setParentStateLockActiveBubbling,
   });
 
-  const stateClassName = classNames(
-    isHovered && restProps.hoverClassName,
-    isActivated && restProps.activeClassName,
-  );
+  const stateClassName = classNames(isHovered && hoverClassName, isActivated && activeClassName);
   const handlers = mergeCalls(hoverEvent, activeEvent);
 
   return {
@@ -309,13 +324,11 @@ export function useState({
 function calculateStateValue({
   hasState,
   isLocked,
-  stateValueControlled,
   stateValueLocal,
 }: {
   hasState: boolean;
   isLocked: boolean;
-  stateValueControlled: boolean;
   stateValueLocal: boolean;
 }): boolean {
-  return hasState && !isLocked && (stateValueControlled || stateValueLocal);
+  return hasState && !isLocked && stateValueLocal;
 }

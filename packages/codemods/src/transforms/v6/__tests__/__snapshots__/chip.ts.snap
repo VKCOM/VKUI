@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`chip transforms correctly 1`] = `
+exports[`chip > transforms correctly 1`] = `
 "import { Chip } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Chip value="Чип" removable={true} removeLabel="Удалить">
         Чип
       </Chip>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

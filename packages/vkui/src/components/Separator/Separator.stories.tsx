@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28Notifications, Icon28SlidersOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Div } from '../Div/Div';
 import { Group } from '../Group/Group';
 import { Link } from '../Link/Link';
@@ -8,9 +9,10 @@ import { SimpleCell } from '../SimpleCell/SimpleCell';
 import { Separator, type SeparatorProps } from './Separator';
 
 const story: Meta<SeparatorProps> = {
-  title: 'Blocks/Separator',
+  title: 'Layout/Separator',
   component: Separator,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Separator', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Раскладка'],
 };
 
 export default story;

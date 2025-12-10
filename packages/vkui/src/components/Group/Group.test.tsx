@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
+import { ModalContext } from '../../context/ModalContext';
 import type { SizeTypeValues } from '../../lib/adaptivity';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import {
   AppRootContext,
   type AppRootContextInterface,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../AppRoot/AppRootContext';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import { Group, type GroupProps } from './Group';
 import styles from './Group.module.css';
 
@@ -64,35 +64,32 @@ describe('Group', () => {
       sizeX: undefined,
       className: styles.modeNone,
     },
-  ])(
-    'should have className $className with mode $mode isInsideModal $isInsideModal sizeX $sizeX',
-    ({ mode, isInsideModal, sizeX, layout, className }) => {
-      render(
-        <AppRootContext.Provider
-          value={{
-            ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
-            layout,
-          }}
-        >
-          <AdaptivityContext.Provider value={{ sizeX }}>
-            <ModalRootContext.Provider
-              value={{
-                isInsideModal,
-                updateModalHeight: noop,
-                registerModal: noop,
-              }}
-            >
-              <Group mode={mode} data-testid="group">
-                <div />
-              </Group>
-            </ModalRootContext.Provider>
-          </AdaptivityContext.Provider>
-        </AppRootContext.Provider>,
-      );
+  ])('should have className $className with mode $mode isInsideModal $isInsideModal sizeX $sizeX', ({
+    mode,
+    isInsideModal,
+    sizeX,
+    layout,
+    className,
+  }) => {
+    render(
+      <AppRootContext.Provider
+        value={{
+          ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
+          layout,
+        }}
+      >
+        <AdaptivityContext.Provider value={{ sizeX }}>
+          <ModalContext.Provider value={isInsideModal ? 'test' : null}>
+            <Group mode={mode} data-testid="group">
+              <div />
+            </Group>
+          </ModalContext.Provider>
+        </AdaptivityContext.Provider>
+      </AppRootContext.Provider>,
+    );
 
-      expect(screen.getByTestId('group')).toHaveClass(className);
-    },
-  );
+    expect(screen.getByTestId('group')).toHaveClass(className);
+  });
 
   it.each(['show', 'hide', 'auto'] as const)('should force show separator', (separator) => {
     const getSeparatorEl = (container: HTMLElement) =>
@@ -136,20 +133,22 @@ describe('Group', () => {
     }
   });
 
-  it('check DEV errors', () => {
-    process.env.NODE_ENV = 'development';
-    const error = jest.spyOn(console, 'warn').mockImplementation(noop);
-    render(
-      <Group role="tabpanel">
-        <div />
-      </Group>,
-    );
+  describe('DEV errors', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
 
-    expect(error).toHaveBeenCalledWith(
-      '%c[VKUI/Group] При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"',
-      undefined,
-    );
+    it('check DEV errors', () => {
+      const error = vi.spyOn(console, 'warn').mockImplementation(noop);
+      render(
+        <Group role="tabpanel">
+          <div />
+        </Group>,
+      );
 
-    process.env.NODE_ENV = 'test';
+      expect(error).toHaveBeenCalledExactlyOnceWith(
+        '%c[VKUI/Group] При использовании роли "tabpanel" необходимо задать значение свойств "aria-controls" и "id"',
+        undefined,
+      );
+    });
   });
 });

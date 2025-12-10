@@ -5,7 +5,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasAccessibleName } from '../../lib/accessibility';
 import { COMMON_WARNINGS, warnOnce } from '../../lib/warnOnce';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './IconButton.module.css';
 
@@ -14,9 +14,9 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 } as const;
 
-export interface IconButtonProps extends TappableProps {
+export interface IconButtonProps extends TappableOmitProps {
   /**
-   * Текст кнопки-иконки. Делает ее доступной для ассистивных технологий
+   * Текст кнопки-иконки. Делает ее доступной для ассистивных технологий.
    */
   label?: string;
 }
@@ -24,14 +24,9 @@ export interface IconButtonProps extends TappableProps {
 const warn = warnOnce('IconButton');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/IconButton
+ * @see https://vkui.io/components/icon-button
  */
-export const IconButton = ({
-  label,
-  children,
-  className,
-  ...restProps
-}: IconButtonProps): React.ReactNode => {
+export const IconButton = ({ label, children, ...restProps }: IconButtonProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeY = 'none' } = useAdaptivity();
 
@@ -53,11 +48,10 @@ export const IconButton = ({
       activeMode="background"
       Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         platform === 'ios' && styles.ios,
-        className,
       )}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}

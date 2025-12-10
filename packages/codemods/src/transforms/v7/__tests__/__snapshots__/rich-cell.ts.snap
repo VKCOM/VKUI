@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rich-cell transforms correctly 1`] = `
+exports[`rich-cell > transforms correctly 1`] = `
 "import { Avatar, RichCell } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   const text = "Text"
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <RichCell
         before={<Avatar size={72} src="" />}
         overTitle="Subhead"
@@ -28,7 +28,7 @@ const App = () => {
       >
         Children
       </RichCell>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

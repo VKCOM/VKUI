@@ -6,17 +6,16 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
 export const REDUCE_MOTION_MEDIA_QUERY = 'screen and (prefers-reduced-motion: reduce)';
 
-export const useReducedMotion = (): boolean => {
+/**
+ * Хук для отслеживания предпочтения пользователя в уменьшении анимации.
+ *
+ * @returns {boolean | undefined} Возвращает `true`, если пользователь предпочитает уменьшенную анимацию,
+ * `false` - если нет, и `undefined` во время серверного рендеринга или во время первого рендеринга на клиенте.
+ */
+export const useReducedMotion = (): boolean | undefined => {
   const { window } = useDOM();
-  const initial = React.useMemo(
-    () =>
-      window
-        ? window.matchMedia(REDUCE_MOTION_MEDIA_QUERY).matches
-        : /* istanbul ignore next: на текущий момент, покрытие данного кейса неинтересно  */
-          false,
-    [window],
-  );
-  const reducedMotion = React.useRef(initial);
+
+  const [reducedMotion, setReducedMotion] = React.useState<boolean | undefined>(undefined);
 
   useIsomorphicLayoutEffect(() => {
     /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
@@ -24,15 +23,15 @@ export const useReducedMotion = (): boolean => {
       return;
     }
     const match = window.matchMedia(REDUCE_MOTION_MEDIA_QUERY);
-    reducedMotion.current = match.matches;
+    setReducedMotion(match.matches);
     /* istanbul ignore next: на текущий момент, покрытие данного кейса неинтересно  */
     const handleMediaQueryChange = (event: MediaQueryListEvent) => {
       /* istanbul ignore next */
-      reducedMotion.current = event.matches;
+      setReducedMotion(event.matches);
     };
     matchMediaListAddListener(match, handleMediaQueryChange);
     return () => matchMediaListRemoveListener(match, handleMediaQueryChange);
   }, [window]);
 
-  return reducedMotion.current;
+  return reducedMotion;
 };

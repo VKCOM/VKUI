@@ -17,18 +17,17 @@ jobs:
     name: Add labels
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Patch
-        # TODO [>=7]: заменить условие после релиза v7 на ${ { startsWith(github.event.pull_request.title, 'fix') }}
-        if: false
+        if: ${{ startsWith(github.event.pull_request.title, 'fix') }}
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
-          label: 'patch'
+          label: 'ci:cherry-pick:patch'
 
       - name: VKUI-tokens
-        if: ${{ github.actor == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
+        if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, '@vkontakte/vkui-tokens') }}
         uses: ./.github/actions/add-label-to-pull-request
         with:
           issue_number: ${{ github.event.pull_request.number }}
@@ -39,10 +38,10 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    if: ${{ github.event.action == 'opened' && github.actor == 'dependabot[bot]' }}
+    if: ${{ github.event.action == 'opened' && github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -115,10 +114,9 @@ jobs:
     name: Check code formatting
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
-
-      - name: Run Prettier
-        run: yarn run lint:prettier
+      - name: Run Biome format
+        run: yarn run lint:format

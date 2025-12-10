@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "@project-tools/postcss-layout-classes",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo no build",
+    "test": "node --test '**/*.test.*'",
+    "test:update-snapshots": "node --test-update-snapshots --test '**/*.test.*'",
+    "test:ci": "yarn test"
+  }
+}

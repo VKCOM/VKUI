@@ -16,13 +16,16 @@ const sizeYClassNames = {
 };
 
 export interface HeadlineProps extends TypographyProps {
+  /**
+   * Уровень заголовка (от 1 до 2).
+   */
   level?: '1' | '2';
 }
 
 /**
  * Используется для подзаголовков.
  *
- * @see https://vkcom.github.io/VKUI/#/Headline
+ * @see https://vkui.io/components/typography#headline
  */
 export const Headline = ({
   className,

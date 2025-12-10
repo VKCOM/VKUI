@@ -17,22 +17,33 @@ import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './Root.module.css';
 
 export interface RootProps extends HTMLAttributesWithRootRef<HTMLDivElement>, NavIdProps {
+  /**
+   * `id` активной `View`.
+   */
   activeView: string;
+  /**
+   * Обработчик, который вызывается при завершении анимации смены активной `View`.
+   */
   onTransition?: (params: { isBack: boolean; from: string; to: string }) => void;
+  /**
+   * Коллекция `View`. У каждой `View` должен быть `id`.
+   */
   children: React.ReactElement | Iterable<React.ReactElement>;
 }
 
+/* eslint-disable jsdoc/require-jsdoc */
 export interface RootState {
   activeView: string;
   transition: boolean;
   isBack?: boolean;
   prevView?: string;
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 const warn = warnOnce('Root');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Root
+ * @see https://vkui.io/components/root
  */
 export const Root = ({
   children,
@@ -44,14 +55,14 @@ export const Root = ({
   const scroll = React.useContext(ScrollContext);
   const platform = usePlatform();
   const { document } = useDOM();
-  const scrolls = React.useRef<Record<string, number>>({}).current;
-  const viewNodes = React.useRef<Record<string, HTMLElement | null>>({}).current;
+  const [scrolls] = React.useState(() => new Map<string, number>());
+  const [viewNodes] = React.useState(() => new Map<string, HTMLElement | null>());
 
   const { transitionMotionEnabled = true } = useConfigProvider();
   const { animate } = React.useContext(SplitColContext);
   const disableAnimation = !transitionMotionEnabled || !animate;
 
-  const views = React.Children.toArray(children) as React.ReactElement[];
+  const views = React.Children.toArray(children) as Array<React.ReactElement<NavIdProps>>;
 
   const [{ prevView, activeView, transition, isBack }, _setState] = React.useState<RootState>({
     activeView: _activeView,
@@ -61,7 +72,7 @@ export const Root = ({
     if (panel !== activeView) {
       const viewIds = views.map((view) => getNavId(view.props, warn));
       const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
-      scrolls[activeView] = scroll.getScroll().y;
+      scrolls.set(activeView, scroll.getScroll().y);
       _setState({
         activeView: panel,
         prevView: activeView,
@@ -84,7 +95,7 @@ export const Root = ({
   useIsomorphicLayoutEffect(() => {
     if (!transition && prevView) {
       // Закончился переход
-      scroll.scrollTo(0, isBack ? scrolls[activeView] : 0);
+      scroll.scrollTo(0, isBack ? scrolls.get(activeView) : 0);
       onTransition &&
         onTransition({
           isBack: Boolean(isBack),
@@ -127,7 +138,9 @@ export const Root = ({
         return (
           <div
             key={viewId}
-            ref={(e) => viewId && (viewNodes[viewId] = e)}
+            ref={(e) => {
+              viewId && viewNodes.set(viewId, e);
+            }}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
             className={classNames(
               styles.view,
@@ -142,7 +155,7 @@ export const Root = ({
                 <div
                   className={styles.scrollCompensation}
                   style={{
-                    marginTop: compensateScroll ? viewId && -(scrolls[viewId] ?? 0) : undefined,
+                    marginTop: compensateScroll ? viewId && -(scrolls.get(viewId) ?? 0) : undefined,
                   }}
                 >
                   {view}

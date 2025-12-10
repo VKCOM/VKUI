@@ -4,6 +4,7 @@ import { noop } from '@vkontakte/vkjs';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Badge } from '../Badge/Badge';
 import { Group } from '../Group/Group';
@@ -12,9 +13,9 @@ import { Switch } from '../Switch/Switch';
 import { SimpleCell, type SimpleCellProps } from './SimpleCell';
 
 const story: Meta<SimpleCellProps> = {
-  title: 'Blocks/SimpleCell',
+  title: 'Buttons/SimpleCell',
   component: SimpleCell,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('SimpleCell', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     overTitle: StringArg,
     extraSubtitle: StringArg,
@@ -72,6 +73,7 @@ const story: Meta<SimpleCellProps> = {
       },
     }),
   },
+  tags: ['Кнопки'],
 };
 
 export default story;

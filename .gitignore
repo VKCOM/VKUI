@@ -4,6 +4,13 @@ PUBLISHING.md
 # Builds
 dist/
 storybook-static/
+out/
+_pagefind/
+.docgen/
+
+# Next
+.next/
+next-env.d.ts
 
 # Dependency directory
 node_modules/
@@ -59,3 +66,6 @@ __diff_output__
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+*.css.d.ts
+*.d.ts.map

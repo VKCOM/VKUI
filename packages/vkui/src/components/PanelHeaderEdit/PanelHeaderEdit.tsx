@@ -15,23 +15,23 @@ import {
 } from '../PanelHeaderButton/PanelHeaderButton';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 
-export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
+export interface PanelHeaderEditProps extends Omit<PanelHeaderButtonProps, 'label' | 'children'> {
   /**
-   * Включен ли режим редактирования
+   * Включен ли режим редактирования.
    */
   isActive?: boolean;
   /**
-   * Текст кнопки, когда режим редактирования не активен. Визуально скрыт везде, кроме iOS
+   * Текст кнопки, когда режим редактирования не активен. Визуально скрыт везде, кроме iOS.
    */
   editLabel?: string;
   /**
-   * Текст кнопки при активном режиме редактирования для выхода из него. Визуально скрыт везде, кроме iOS
+   * Текст кнопки при активном режиме редактирования для выхода из него. Визуально скрыт везде, кроме iOS.
    */
   doneLabel?: string;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PanelHeaderButton
+ * @see https://vkui.io/components/panel-header#panel-header-edit
  */
 export const PanelHeaderEdit = ({
   isActive = false,
@@ -43,17 +43,15 @@ export const PanelHeaderEdit = ({
   const label = isActive ? doneLabel : editLabel;
 
   return (
-    <PanelHeaderButton {...restProps}>
-      {platform === 'ios' ? (
-        label
-      ) : (
-        <>
-          <VisuallyHidden>{label}</VisuallyHidden>
-          <AdaptiveIconRenderer
-            IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
-            IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
-          />
-        </>
+    <PanelHeaderButton
+      {...restProps}
+      label={platform === 'ios' ? label : label && <VisuallyHidden>{label}</VisuallyHidden>}
+    >
+      {platform !== 'ios' && (
+        <AdaptiveIconRenderer
+          IconCompact={isActive ? Icon24DoneOutline : Icon24PenOutline}
+          IconRegular={isActive ? Icon28DoneOutline : Icon28EditOutline}
+        />
       )}
     </PanelHeaderButton>
   );

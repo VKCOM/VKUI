@@ -10,7 +10,7 @@ type RenderHookProps = {
 
 describe('usePlacementChangeCallback', () => {
   it('calls callback on initial render when initial placement differ from resolvedPlacement', () => {
-    const onPlacementChangeStub = jest.fn();
+    const onPlacementChangeStub = vi.fn();
 
     renderHook<void, RenderHookProps>(
       ({ initialPlacement, resolvedPlacement, onPlacementChange }) =>
@@ -28,7 +28,7 @@ describe('usePlacementChangeCallback', () => {
   });
 
   it('it calls callback only when the placement changed', () => {
-    const onPlacementChangeStub = jest.fn();
+    const onPlacementChangeStub = vi.fn();
     const defaultProps: RenderHookProps = {
       initialPlacement: 'bottom',
       resolvedPlacement: 'bottom',

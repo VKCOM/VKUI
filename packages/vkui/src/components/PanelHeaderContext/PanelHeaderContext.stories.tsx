@@ -10,6 +10,7 @@ import {
 import { noop } from '@vkontakte/vkjs';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Cell } from '../Cell/Cell';
 import { Div } from '../Div/Div';
 import { Panel } from '../Panel/Panel';
@@ -21,20 +22,18 @@ import { View } from '../View/View';
 import { PanelHeaderContext, type PanelHeaderContextProps } from './PanelHeaderContext';
 
 const story: Meta<PanelHeaderContextProps> = {
-  title: 'Layout/PanelHeaderContext',
+  title: 'Navigation/PanelHeaderContext',
   component: PanelHeaderContext,
-  parameters: {
-    ...CanvasFullLayout,
-    ...DisableCartesianParam,
-  },
+  parameters: createStoryParameters('PanelHeaderContext', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Навигация'],
 };
 
 export default story;
 
 type Story = StoryObj<PanelHeaderContextProps>;
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render() {
     const [contextOpened, setContextOpened] = React.useState(true);
     const [mode, setMode] = React.useState<string | undefined>('all');

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
   IconExampleForFallbackBasedOnImageBaseSize,
@@ -16,13 +17,19 @@ const base64Image =
   'gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA' +
   'SUVORK5CYII=';
 
+const base64ImageValue = withLabel(base64Image, 'base64');
+
 export const ImagePlayground = (props: ComponentPlaygroundProps) => {
+  const [removeSrc, setRemoveSrc] = React.useState(base64Image);
+
+  React.useEffect(() => setRemoveSrc(''), []);
+
   return (
     <ComponentPlayground
       {...props}
       propSets={[
         {
-          src: [undefined, base64Image],
+          src: [undefined, base64ImageValue],
           fallbackIcon: [
             undefined,
             <IconExampleForFallbackBasedOnImageBaseSize key="fallback-icon" />,
@@ -72,12 +79,12 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
           ],
         },
         {
-          src: [base64Image],
+          src: [base64ImageValue],
           widthSize: [64],
           heightSize: [48],
         },
         {
-          src: [base64Image],
+          src: [base64ImageValue],
           widthSize: [48],
           heightSize: [64],
         },
@@ -98,8 +105,12 @@ export const ImagePlayground = (props: ComponentPlaygroundProps) => {
           borderEndEndRadius: ['l'],
         },
         {
-          src: [base64Image],
+          src: [base64ImageValue],
           children: ['CH'],
+        },
+        {
+          // Проверяем что фон не убирается если убрать ссылку
+          src: [removeSrc],
         },
       ]}
     >
@@ -114,7 +125,7 @@ export const ImageFocusVisiblePlayground = (props: ComponentPlaygroundProps) => 
     propSets={[
       {
         size: [72],
-        src: [base64Image],
+        src: [base64ImageValue],
       },
     ]}
   >
@@ -128,7 +139,7 @@ export const ImageFocusVisibleOverlayPlayground = (props: ComponentPlaygroundPro
     propSets={[
       {
         size: [72],
-        src: [base64Image],
+        src: [base64ImageValue],
         children: [
           <React.Fragment key="overlay-base">
             <Image.Overlay theme="light" visibility="always" onClick={noop}>

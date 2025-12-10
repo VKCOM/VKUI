@@ -16,6 +16,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     .find(j.ImportSpecifier)
     .forEach((path) => {
       if (
+        typeof path.value.imported.name === 'string' &&
         ['withInsets', 'useInsets', 'PromoBanner', 'getPlatformClassName'].includes(
           path.value.imported.name,
         )

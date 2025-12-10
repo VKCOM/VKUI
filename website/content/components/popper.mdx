@@ -1,0 +1,92 @@
+---
+description: Низкоуровневый компонент для отрисовки выпадающего блока.
+---
+
+<Overview group="modals">
+
+# Popper [tag:component]
+
+Низкоуровневый компонент для отрисовки выпадающего блока.
+Единственная его задача — корректно позиционироваться рядом с целевым элементом.
+
+</Overview>
+
+<Playground>
+
+```jsx
+const [shown, setShown] = React.useState(false);
+const buttonRef = React.useRef(null);
+
+return (
+  <React.Fragment>
+    <Button getRootRef={buttonRef} onClick={() => setShown(!shown)}>
+      {shown ? 'Закрыть' : 'Открыть'}
+    </Button>
+    {shown && (
+      <Popper usePortal={false} targetRef={buttonRef}>
+        Привет
+      </Popper>
+    )}
+  </React.Fragment>
+);
+```
+
+</Playground>
+
+## Виртуальный элемент
+
+Помимо ссылки на DOM элемент, `Popper` можем принимать координаты виртуального элемента.
+Виртуальный элемент представляет из себя объект со свойством `getBoundingClientRect()`.
+
+> Чтобы не задавать все свойства координат вручную,
+> можно использовать [DOMRect.fromRect](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect/fromRect_static)
+
+<Playground>
+
+```jsx
+const [virtualElement, setVirtualElement] = React.useState(() =>
+  DOMRect.fromRect({
+    x: -200,
+    y: -200,
+    width: 10,
+    height: 10,
+  }),
+);
+
+const handleClick = (event) => {
+  setVirtualElement(({ width, height }) =>
+    DOMRect.fromRect({
+      x: event.clientX,
+      y: event.clientY,
+      width,
+      height,
+    }),
+  );
+};
+
+return (
+  <>
+    <Div onClick={handleClick}>Нажми в любое место этого текста</Div>
+    <Popper
+      arrow
+      arrowProps={{ iconStyle: { color: 'green' } }}
+      placement="bottom"
+      usePortal={false}
+      style={{ padding: '9px 12px', backgroundColor: 'green', color: '#fff' }}
+      targetRef={{
+        getBoundingClientRect() {
+          return virtualElement;
+        },
+      }}
+    >
+      Привет
+    </Popper>
+  </>
+);
+```
+
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Popper" />

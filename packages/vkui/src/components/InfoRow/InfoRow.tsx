@@ -7,11 +7,14 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './InfoRow.module.css';
 
 export interface InfoRowProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
+  /**
+   * Элемент, отображаемый над содержимым.
+   */
   header: React.ReactNode;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/InfoRow
+ * @see https://vkui.io/components/info-row
  */
 export const InfoRow = ({
   header,

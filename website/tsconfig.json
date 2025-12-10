@@ -1,0 +1,40 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES6",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "allowJs": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/docgen.json": [".docgen/docgen.json"],
+      "@/components/*": ["components/*"],
+      "@/stores/*": ["stores/*"],
+      "@/providers/*": ["providers/*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "*.mjs",
+    ".next/types/**/*.ts",
+    "content/_app.tsx",
+    "next-env.d.ts",
+    "postcss.config.js",
+    "raw.d.ts",
+    "generated.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "out/types/**/*.ts"
+  ]
+}

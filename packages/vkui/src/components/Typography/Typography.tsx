@@ -10,7 +10,24 @@ const stylesWeight = {
   '3': styles.weight3,
 };
 
+const stylesAlign = {
+  start: styles.alignStart,
+  center: styles.alignCenter,
+  end: styles.alignEnd,
+};
+
+export function weightClassNames(weight: '1' | '2' | '3' | undefined, useAccentWeight = false) {
+  if (!weight) {
+    return '';
+  }
+
+  return classNames(stylesWeight[weight], useAccentWeight && styles.accent);
+}
+
 export interface HasCaps {
+  /**
+   * Отображение текста в верхнем регистре.
+   */
   caps?: boolean;
 }
 
@@ -25,17 +42,21 @@ export interface TypographyProps
   /**
    * Включает акцентный тип начертания шрифта.
    * Используются токены fontWeightAccent[1, 2, 3]
-   * Используется только вместе с `weight`
+   * Используется только вместе с `weight`.
    */
   useAccentWeight?: boolean;
   /**
-   * Убирает внешние отступы
+   * Убирает внешние отступы.
    */
   normalize?: boolean;
   /**
-   * Делает блок инлайновым
+   * Делает блок инлайновым.
    */
   inline?: boolean;
+  /**
+   * Выравнивание текста. Не имеет эффекта при inline={true}.
+   */
+  align?: 'start' | 'center' | 'end';
 }
 
 export const Typography = ({
@@ -44,6 +65,7 @@ export const Typography = ({
   Component = 'span',
   normalize,
   inline,
+  align,
   ...restProps
 }: TypographyProps): React.ReactNode => (
   <RootComponent
@@ -52,8 +74,8 @@ export const Typography = ({
       styles.host,
       normalize && styles.normalize,
       inline && styles.inline,
-      weight && stylesWeight[weight],
-      weight && useAccentWeight && styles.accent,
+      weightClassNames(weight, useAccentWeight),
+      align && stylesAlign[align],
     )}
     {...restProps}
   />

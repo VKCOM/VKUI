@@ -1,5 +1,6 @@
 'use client';
 
+import { type ChangeEvent } from 'react';
 import * as React from 'react';
 import {
   Icon12Dropdown,
@@ -7,8 +8,8 @@ import {
   Icon20ChevronRightOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
-import { addMonths, setMonth, setYear, subMonths } from 'date-fns';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
+import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
@@ -21,28 +22,87 @@ import styles from './CalendarHeader.module.css';
 
 type ArrowMonthProps = Omit<React.AllHTMLAttributes<HTMLElement>, 'onClick' | 'aria-label'>;
 
+export type CalendarHeaderTestsProps = {
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора месяца в заголовке календаря.
+   */
+  monthDropdownTestId?: string | ((monthIndex: number) => string);
+  /**
+   * Передает атрибут `data-testid` для дропдауна выбора года в заголовке календаря.
+   */
+  yearDropdownTestId?: string | ((year: number) => string);
+  /**
+   * Передает атрибут `data-testid` для кнопки перехода к следующему месяцу в заголовке календаря.
+   */
+  nextMonthButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки перехода к предыдущему месяцу в заголовке календаря.
+   */
+  prevMonthButtonTestId?: string;
+};
+
 export interface CalendarHeaderProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'> {
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+    CalendarHeaderTestsProps {
+  /**
+   * Отображаемая дата.
+   */
   viewDate: Date;
   /**
-   * Скрывает иконку для переключения на предыдущий месяц
+   * Скрывает иконку для переключения на предыдущий месяц.
    */
   prevMonthHidden?: boolean;
   /**
-   * Скрывает иконку для переключения на следующий месяц
+   * Скрывает иконку для переключения на следующий месяц.
    */
   nextMonthHidden?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года.
+   */
   disablePickers?: boolean;
+  /**
+   * `aria-label` для кнопки предыдущего месяца.
+   */
   prevMonthLabel?: string;
+  /**
+   * `aria-label` для кнопки следующего месяца.
+   */
   nextMonthLabel?: string;
+  /**
+   * `aria-label` для селектора месяца.
+   */
   changeMonthLabel?: string;
+  /**
+   * `aria-label` для селектора года.
+   */
   changeYearLabel?: string;
+  /**
+   * Кастомная иконка для кнопки предыдущего месяца.
+   */
   prevMonthIcon?: React.ReactNode;
+  /**
+   * Кастомная иконка для кнопки следующего месяца.
+   */
   nextMonthIcon?: React.ReactNode;
+  /**
+   * Дополнительные свойства для кнопки предыдущего месяца.
+   */
   prevMonthProps?: ArrowMonthProps;
+  /**
+   * Дополнительные свойства для кнопки следующего месяца.
+   */
   nextMonthProps?: ArrowMonthProps;
+  /**
+   * Функция для проверки блокировки месяца.
+   */
   isMonthDisabled?: (monthNumber: number, year?: number) => boolean;
+  /**
+   * Функция для проверки блокировки года.
+   */
   isYearDisabled?: (yearNumber: number) => boolean;
+  /**
+   * Обработчик изменения отображаемой даты.
+   */
   onChange: (viewDate: Date) => void;
   /**
    * Нажатие на кнопку переключения на следующий месяц.
@@ -76,15 +136,22 @@ export const CalendarHeader = ({
   ),
   isMonthDisabled,
   isYearDisabled,
+  monthDropdownTestId,
+  yearDropdownTestId,
+  prevMonthButtonTestId,
+  nextMonthButtonTestId,
   ...restProps
 }: CalendarHeaderProps): React.ReactNode => {
-  const { locale } = useConfigProvider();
+  const { locale, direction } = useConfigProvider();
+
   const onMonthsChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange(setMonth(viewDate, Number(newValue))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange(setMonth(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
   const onYearChange = React.useCallback(
-    (newValue: SelectProps['value']) => onChange(setYear(viewDate, Number(newValue))),
+    (_: ChangeEvent<HTMLSelectElement>, newValue: SelectProps['value']) =>
+      onChange(setYear(viewDate, Number(newValue))),
     [onChange, viewDate],
   );
 
@@ -136,19 +203,29 @@ export const CalendarHeader = ({
     );
   }
 
+  const stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
+    (event: React.KeyboardEvent, isOpen: boolean) => {
+      if (isOpen && event.key === 'Escape') {
+        event.stopPropagation();
+      }
+    },
+    [],
+  );
+
   return (
     <RootComponent baseClassName={styles.host} {...restProps}>
       {!prevMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
+            baseClassName={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
             onClick={onPrevMonth}
+            data-testid={prevMonthButtonTestId}
             {...restPrevMonthProps}
           >
             <VisuallyHidden>
               {prevMonthLabel}, {formatter.format(subMonths(viewDate, 1))}
             </VisuallyHidden>
-            {prevMonthIcon}
+            {direction === 'ltr' ? prevMonthIcon : nextMonthIcon}
           </Tappable>
         </AdaptivityProvider>
       )}
@@ -180,7 +257,16 @@ export const CalendarHeader = ({
               onChange={onMonthsChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeMonthLabel}
+              onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
+              slotProps={{
+                input: {
+                  'aria-label': changeMonthLabel,
+                  'data-testid':
+                    typeof monthDropdownTestId === 'string'
+                      ? monthDropdownTestId
+                      : monthDropdownTestId?.(currentMonth),
+                },
+              }}
             />
             <CustomSelect
               className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
@@ -192,7 +278,16 @@ export const CalendarHeader = ({
               onChange={onYearChange}
               forceDropdownPortal={false}
               selectType="accent"
-              aria-label={changeYearLabel}
+              onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
+              slotProps={{
+                input: {
+                  'aria-label': changeYearLabel,
+                  'data-testid':
+                    typeof yearDropdownTestId === 'string'
+                      ? yearDropdownTestId
+                      : yearDropdownTestId?.(currentYear),
+                },
+              }}
             />
           </div>
         </AdaptivityProvider>
@@ -200,14 +295,15 @@ export const CalendarHeader = ({
       {!nextMonthHidden && (
         <AdaptivityProvider sizeX="regular">
           <Tappable
-            className={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
+            baseClassName={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
             onClick={onNextMonth}
+            data-testid={nextMonthButtonTestId}
             {...restNextMonthProps}
           >
             <VisuallyHidden>
               {nextMonthLabel}, {formatter.format(addMonths(viewDate, 1))}
             </VisuallyHidden>
-            {nextMonthIcon}
+            {direction === 'ltr' ? nextMonthIcon : prevMonthIcon}
           </Tappable>
         </AdaptivityProvider>
       )}

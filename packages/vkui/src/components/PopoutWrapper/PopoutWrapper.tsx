@@ -18,17 +18,27 @@ const stylesAlignY = {
   bottom: styles.alignYBottom,
 };
 
+const stylesStrategy = {
+  fixed: styles.fixed,
+  absolute: styles.absolute,
+  none: undefined,
+};
+
 export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * Позволяет сделать прозрачную подложку
+   * Позволяет сделать прозрачную подложку.
    */
   noBackground?: boolean;
   /**
-   * Включает фиксированное позиционирование.
+   * Стратегия позиционирования:
    *
-   * По умолчанию у компонента не задан никакой `position`.
+   * - `fixed`: у контейнера выставлен `position: fixed`
+   * - `absolute`: у контейнера выставлен `position: absolute`
+   * - `none`: у контейнера не выставлен `position`.
+   *
+   * @default 'fixed'
    */
-  fixed?: boolean;
+  strategy?: 'fixed' | 'absolute' | 'none';
   /**
    * Выравнивает контент по горизонтали.
    */
@@ -41,37 +51,41 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * Спрячет компонент через fade-out анимацию.
    */
   closing?: boolean;
+  /**
+   * Позволяет задать z-index через токен или числом.
+   */
+  zIndex?: number | string;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/PopoutWrapper
+ * @see https://vkui.io/components/popout-wrapper
  */
 export const PopoutWrapper = ({
   alignY = 'center',
   alignX = 'center',
   closing = false,
   noBackground = false,
-  fixed = true,
+  strategy = 'fixed',
   children,
   onClick,
+  zIndex = 'var(--vkui--z_index_popout)',
   ...restProps
-}: PopoutWrapperProps): React.ReactNode => {
-  return (
-    <RootComponent
-      {...restProps}
-      baseClassName={classNames(
-        styles.host,
-        stylesAlignY[alignY],
-        stylesAlignX[alignX],
-        closing ? styles.closing : styles.opened,
-        fixed && styles.fixed,
-        !noBackground && styles.masked,
-      )}
-    >
-      <div className={styles.container}>
-        <div className={styles.overlay} onClick={onClick} />
-        <div className={styles.content}>{children}</div>
-      </div>
-    </RootComponent>
-  );
-};
+}: PopoutWrapperProps): React.ReactNode => (
+  <RootComponent
+    {...restProps}
+    baseClassName={classNames(
+      styles.host,
+      stylesAlignY[alignY],
+      stylesAlignX[alignX],
+      closing ? styles.closing : styles.opened,
+      strategy && stylesStrategy[strategy],
+      !noBackground && styles.masked,
+    )}
+    baseStyle={{ zIndex }}
+  >
+    <div className={styles.container}>
+      <div className={styles.overlay} onClick={onClick} />
+      <div className={styles.content}>{children}</div>
+    </div>
+  </RootComponent>
+);

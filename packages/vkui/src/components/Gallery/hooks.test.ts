@@ -1,36 +1,71 @@
+import { act } from 'react';
 import { fireEvent, renderHook } from '@testing-library/react';
+import { fakeTimersForScope } from '../../testing/utils.tsx';
 import { useAutoPlay } from './hooks';
 
 describe(useAutoPlay, () => {
+  fakeTimersForScope(false);
   it('should call callback when fire event visibilitychange', () => {
-    jest.useFakeTimers();
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     let visibilityState: Document['visibilityState'] = 'visible';
 
-    jest.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
+    vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
 
-    renderHook(() => useAutoPlay(100, 0, callback));
-    jest.runAllTimers();
+    renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
+    vi.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(1);
 
     fireEvent(document, new Event('visibilitychange'));
-    jest.runAllTimers();
+    vi.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(2);
 
     visibilityState = 'hidden';
 
     fireEvent(document, new Event('visibilitychange'));
-    jest.runAllTimers();
+    vi.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(2);
   });
 
   it('should not call callback when timeout = 0', () => {
-    jest.useFakeTimers();
-    const callback = jest.fn();
+    const callback = vi.fn();
 
-    renderHook(() => useAutoPlay(0, 0, callback));
-    jest.runAllTimers();
+    renderHook(() => useAutoPlay({ timeout: 0, slideIndex: 0, onNext: callback }));
+    vi.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(0);
+  });
+
+  it('check controls working', async () => {
+    const callback = vi.fn();
+
+    let visibilityState: Document['visibilityState'] = 'visible';
+
+    vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => visibilityState);
+
+    const res = renderHook(() => useAutoPlay({ timeout: 100, slideIndex: 0, onNext: callback }));
+    await act(vi.runAllTimers);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // Останавливаем работу хука
+    act(() => {
+      res.result.current[0]();
+    });
+    res.rerender();
+    // Срабатывает события visibilityChange
+    fireEvent(document, new Event('visibilitychange'));
+    await act(vi.runAllTimers);
+    // Но callback не срабатыват по истечению таймеров
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // Восстанавливаем работу хука
+    act(() => {
+      res.result.current[1]();
+    });
+    res.rerender();
+    // Срабатывает события visibilityChange
+    fireEvent(document, new Event('visibilitychange'));
+    await act(vi.runAllTimers);
+    // callback срабатыват по истечению таймеров
+    expect(callback).toHaveBeenCalledTimes(2);
   });
 });

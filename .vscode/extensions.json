@@ -5,7 +5,7 @@
   // List of extensions which should be recommended for users of this workspace.
   "recommendations": [
     "stylelint.vscode-stylelint",
-    "esbenp.prettier-vscode",
+    "biomejs.biome",
     "unifiedjs.vscode-mdx",
     "dbaeumer.vscode-eslint",
     "clinyong.vscode-css-modules",

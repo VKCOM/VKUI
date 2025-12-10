@@ -3,9 +3,10 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
@@ -18,30 +19,61 @@ import styles from './ActionSheet.module.css';
 
 type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
 export interface ActionSheetOnCloseOptions {
+  /**
+   * Причина закрытия всплывающего элемента.
+   */
   closedBy: CloseInitiators;
 }
 
 export interface ActionSheetProps
   extends Pick<
       SharedDropdownProps,
-      'toggleRef' | 'popupOffsetDistance' | 'placement' | 'autoFocus'
+      'toggleRef' | 'popupOffsetDistance' | 'placement' | 'allowClickPropagation'
+    >,
+    Omit<
+      UseFocusTrapProps,
+      'onClose' | 'mount' | 'disabled' | 'captureEscapeKeyboardEvent' | 'mutationObserverOptions'
     >,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
+  /**
+   * Заголовок всплыващего окна.
+   */
   title?: React.ReactNode;
+  /**
+   * Описание всплыващего окна, под заголовком.
+   */
   description?: React.ReactNode;
   /**
-   * Закрыть попап по клику снаружи.
+   * Закрыть всплыващее окно по нажатию снаружи.
    */
   onClose: (options: ActionSheetOnCloseOptions) => void;
   /**
    * Только мобильный iOS.
    */
   iosCloseItem?: React.ReactNode;
+  /**
+   * Режим отображения компонента:
+   *
+   * - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
+   * - `menu` –  отображение в виде всплывающего элемента, относительно якорного элемента.
+   */
   mode?: 'sheet' | 'menu';
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство не используется и будет удалено в `v8`.
+   */
+  mount?: boolean;
+  /**
+   * @deprecated Since 7.3.0.
+   *
+   * Свойство не используется и будет удалено в `v8`.
+   */
+  disabled?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/ActionSheet
+ * @see https://vkui.io/components/action-sheet
  */
 export const ActionSheet = ({
   children,
@@ -58,7 +90,7 @@ export const ActionSheet = ({
 }: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
   const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
-  const onCloseWithOther = () => setClosingBy('other');
+  const onCloseWithOther = React.useCallback(() => setClosingBy('other'), []);
   const actionCallbackRef = React.useRef(noop);
 
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
@@ -93,7 +125,10 @@ export const ActionSheet = ({
       },
     [],
   );
-  const contextValue = useObjectMemo({ onItemClick, mode, onClose: onCloseWithOther });
+  const contextValue = React.useMemo(
+    () => ({ onItemClick, mode, onClose: onCloseWithOther }),
+    [mode, onCloseWithOther, onItemClick],
+  );
 
   const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
 
@@ -135,20 +170,18 @@ export const ActionSheet = ({
     </ActionSheetContext.Provider>
   );
 
-  if (mode === 'menu') {
-    return actionSheet;
-  }
-
   return (
-    <PopoutWrapper
-      closing={Boolean(closingBy)}
-      alignY="bottom"
-      className={className}
-      style={style}
-      onClick={onCloseWithOther}
-      fixed
-    >
-      {actionSheet}
-    </PopoutWrapper>
+    <AppRootPortal>
+      <PopoutWrapper
+        noBackground={mode === 'menu'}
+        closing={Boolean(closingBy)}
+        alignY="bottom"
+        className={className}
+        style={style}
+        onClick={onCloseWithOther}
+      >
+        {actionSheet}
+      </PopoutWrapper>
+    </AppRootPortal>
   );
 };

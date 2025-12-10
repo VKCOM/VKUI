@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`popover transforms correctly 1`] = `
+exports[`popover > transforms correctly 1`] = `
 "import { Popover } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Popover trigger="click">content</Popover>
       <Popover offsetByMainAxis={0}>content</Popover>
       <Popover offsetByCrossAxis={0}>content</Popover>
@@ -16,7 +16,7 @@ const App = () => {
       <Popover hoverDelay={[5, 10]}>content</Popover>
       <Popover hoverDelay={5}>content</Popover>
       <Popover hoverDelay={[0, 5]}>content</Popover>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

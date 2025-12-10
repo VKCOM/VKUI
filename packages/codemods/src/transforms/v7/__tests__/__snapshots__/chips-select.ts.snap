@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`chips-select transforms correctly 1`] = `
+exports[`chips-select > transforms correctly 1`] = `
 "import { ChipsSelect } from '@vkontakte/vkui';
 import React from 'react';
 
@@ -16,7 +16,7 @@ const App = () => {
   const [selectedColors, setSelectedColors] = React.useState(() => colors.slice(0, 2));
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ChipsSelect
         id="colors"
         value={selectedColors}
@@ -24,8 +24,9 @@ const App = () => {
         options={colors}
         placeholder="Не выбраны"
         creatable="Добавить цвет"
-        allowClearButton={true} />
-    </React.Fragment>)
+        allowClearButton={true}
+        {...props} />
+    </React.Fragment>
   );
 };"
 `;

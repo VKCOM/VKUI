@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`appearance-provider transforms correctly 1`] = `
+exports[`appearance-provider > transforms correctly 1`] = `
 "import { AppearanceProvider } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <AppearanceProvider value={appearance}>...</AppearanceProvider>
       <AppearanceProvider value={() => getSome()}>...</AppearanceProvider>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

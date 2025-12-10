@@ -1,14 +1,16 @@
 import { fireEvent } from '@testing-library/react';
-import { getFakeMouseEvent, getFakeTouchEvent } from '../testing/utils';
+import { mouseEventMock, touchEventMock } from '../testing/utils';
 import {
   contains,
   getActiveElementByAnotherElement,
   getBoundingClientRect,
   getDocumentBody,
   getFirstTouchEventData,
+  getNearestOverflowAncestor,
   getScrollHeight,
   getScrollRect,
   getTransformedParentCoords,
+  hasSelectionWithRangeType,
   initializeBrowserGesturePreventionEffect,
   TRANSFORM_DEFAULT_VALUES,
   WILL_CHANGE_DEFAULT_VALUES,
@@ -20,13 +22,13 @@ const getChildElOfParentWithTransformedStyle = (
   const rootEl = document.createElement('div');
   const parentEl = document.createElement('div');
   const parentElRect = new DOMRect(0, 100, 1280, 768);
-  parentEl.getBoundingClientRect = jest.fn(() => new DOMRect(0, 100, 1280, 768));
+  parentEl.getBoundingClientRect = vi.fn(() => new DOMRect(0, 100, 1280, 768));
   Object.entries({ transform: 'none', willChange: 'auto', ...stylesProp }).forEach(
     ([key, value]) => (parentEl.style[key as any] = value),
   );
   const childEl = document.createElement('div');
   const childElRect = new DOMRect(10, 10, 100, 50);
-  childEl.getBoundingClientRect = jest.fn(() => childElRect);
+  childEl.getBoundingClientRect = vi.fn(() => childElRect);
   parentEl.appendChild(childEl);
   rootEl.appendChild(parentEl);
   return { parentEl, parentElRect, childEl, childElRect };
@@ -79,12 +81,12 @@ describe(getScrollRect, () => {
     { scrollTop: 0, viewportHeight: 768 },
     { scrollTop: 10, viewportHeight: 768 },
   ])('[window] should return correct y edges for %j', ({ scrollTop, viewportHeight }) => {
-    jest
-      .spyOn(document.documentElement, 'clientHeight', 'get')
-      .mockImplementation(() => viewportHeight);
+    vi.spyOn(document.documentElement, 'clientHeight', 'get').mockImplementation(
+      () => viewportHeight,
+    );
     const rect = new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : scrollTop, 1280, viewportHeight);
     window.scrollY = document.documentElement.scrollTop = scrollTop;
-    document.documentElement.getBoundingClientRect = jest.fn(() => rect);
+    document.documentElement.getBoundingClientRect = vi.fn(() => rect);
     const { relative, edges } = getScrollRect(window);
     expect(relative).toEqual(rect);
     expect(edges).toEqual({ y: [0, viewportHeight] });
@@ -99,7 +101,7 @@ describe(getScrollRect, () => {
     const rect = new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : scrollTop, 1280, viewportHeight);
     const scrollEl = document.createElement('div');
     window.scrollY = scrollEl.scrollTop = scrollTop;
-    scrollEl.getBoundingClientRect = jest.fn(() => rect);
+    scrollEl.getBoundingClientRect = vi.fn(() => rect);
     const { relative, edges } = getScrollRect(scrollEl);
     expect(relative).toEqual(rect);
     expect(edges).toEqual({ y: [0, viewportHeight] });
@@ -110,10 +112,10 @@ describe(getScrollHeight, () => {
   const getScrollHeightMock = () => 1000;
   const scrollEl = document.createElement('div');
   beforeEach(() => {
-    jest
-      .spyOn(document.documentElement, 'scrollHeight', 'get')
-      .mockImplementation(getScrollHeightMock);
-    jest.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(getScrollHeightMock);
+    vi.spyOn(document.documentElement, 'scrollHeight', 'get').mockImplementation(
+      getScrollHeightMock,
+    );
+    vi.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(getScrollHeightMock);
   });
   test.each([
     ['window', window],
@@ -156,12 +158,12 @@ describe(getBoundingClientRect, () => {
     const HTML_CLIENT_HEIGHT = 768;
     const HTML_SCROLL_HEIGHT = 2000;
 
-    jest
-      .spyOn(document.documentElement, 'clientHeight', 'get')
-      .mockImplementation(() => HTML_CLIENT_HEIGHT);
+    vi.spyOn(document.documentElement, 'clientHeight', 'get').mockImplementation(
+      () => HTML_CLIENT_HEIGHT,
+    );
 
     // Симулируем, что на странице не указан `html, body { height: 100% }` (или `height: 100vh`).
-    document.documentElement.getBoundingClientRect = jest.fn(
+    document.documentElement.getBoundingClientRect = vi.fn(
       () => new DOMRect(0, 0, 1280, HTML_SCROLL_HEIGHT),
     );
 
@@ -227,14 +229,20 @@ describe(contains, () => {
 });
 
 describe(getFirstTouchEventData, () => {
+  const createTouchEvent = (type: string, clientX: number, clientY: number) =>
+    new TouchEvent(type, touchEventMock({ clientX, clientY }));
+
+  const createMouserEvent = (type: string, clientX: number, clientY: number) =>
+    new MouseEvent(type, mouseEventMock({ clientX, clientY }));
+
   it.each([
-    { type: 'touchstart', event: getFakeTouchEvent('touchstart', 10, 10) },
-    { type: 'touchmove', event: getFakeTouchEvent('touchmove', 10, 10) },
-    { type: 'touchend', event: getFakeTouchEvent('touchend', 10, 10) },
-    { type: 'mousedown', event: getFakeMouseEvent('mousedown', 10, 10) },
-    { type: 'mousemove', event: getFakeMouseEvent('mousemove', 10, 10) },
-    { type: 'mouseup', event: getFakeMouseEvent('mouseup', 10, 10) },
-    { type: 'mouseleave', event: getFakeMouseEvent('mouseleave', 10, 10) },
+    { type: 'touchstart', event: createTouchEvent('touchstart', 10, 10) },
+    { type: 'touchmove', event: createTouchEvent('touchmove', 10, 10) },
+    { type: 'touchend', event: createTouchEvent('touchend', 10, 10) },
+    { type: 'mousedown', event: createMouserEvent('mousedown', 10, 10) },
+    { type: 'mousemove', event: createMouserEvent('mousemove', 10, 10) },
+    { type: 'mouseup', event: createMouserEvent('mouseup', 10, 10) },
+    { type: 'mouseleave', event: createMouserEvent('mouseleave', 10, 10) },
   ])('should return touch data for expected event type (#type)', ({ event }) => {
     const { clientX, clientY } = getFirstTouchEventData(event);
     expect(clientX).toBe(10);
@@ -250,7 +258,7 @@ describe(getFirstTouchEventData, () => {
 
 describe(initializeBrowserGesturePreventionEffect, () => {
   it('should set and unset CSS class to <html />', () => {
-    const dispose = jest.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
+    const dispose = vi.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
 
     expect(document.documentElement).toHaveClass('vkui--disable-overscroll-behavior');
 
@@ -261,10 +269,10 @@ describe(initializeBrowserGesturePreventionEffect, () => {
   });
 
   it('should prevent touchmove event', () => {
-    const dispose = jest.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
+    const dispose = vi.fn().mockImplementation(initializeBrowserGesturePreventionEffect(window));
 
-    const preventDefault = jest.fn();
-    const stopPropagation = jest.fn();
+    const preventDefault = vi.fn();
+    const stopPropagation = vi.fn();
     const touchMoveEvent = new TouchEvent('touchmove');
     Object.assign(touchMoveEvent, { preventDefault, stopPropagation });
 
@@ -277,5 +285,60 @@ describe(initializeBrowserGesturePreventionEffect, () => {
     fireEvent(window, touchMoveEvent);
     expect(preventDefault).toHaveBeenCalledTimes(1);
     expect(stopPropagation).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe(getNearestOverflowAncestor, () => {
+  it('should return window if it is last traversable Node', () => {
+    const rootNode = document.createElement('div');
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node)).toBe(window);
+  });
+
+  it('should return null if parent node is terminal node', () => {
+    const rootNode = document.createElement('div');
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node, innerNode)).toBeNull();
+  });
+
+  it('should return parent with overflow', () => {
+    const rootNode = document.createElement('div');
+    rootNode.style.overflowY = 'scroll';
+    const innerNode = document.createElement('div');
+    const node = document.createElement('div');
+    innerNode.appendChild(node);
+    rootNode.appendChild(innerNode);
+    document.body.appendChild(rootNode);
+    expect(getNearestOverflowAncestor(node)).toBe(rootNode);
+  });
+});
+
+describe(hasSelectionWithRangeType, () => {
+  it('should be false by default', () => {
+    expect(hasSelectionWithRangeType(null)).toBeFalsy();
+  });
+
+  it.each([
+    {
+      value: () => ({ type: 'Range' }),
+      result: true,
+    },
+    {
+      value: () => null,
+      result: false,
+    },
+  ])('should be $result', ({ value, result }) => {
+    const getSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', { configurable: true, value });
+    expect(hasSelectionWithRangeType(null)).toBe(result);
+    Object.defineProperty(window, 'getSelection', { configurable: true, value: getSelection });
   });
 });

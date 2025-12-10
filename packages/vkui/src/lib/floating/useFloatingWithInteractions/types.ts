@@ -1,8 +1,9 @@
-import type {
-  Placement,
-  UseFloatingData,
-  UseFloatingMiddleware,
-  UseFloatingRefs,
+import {
+  type FloatingPositionStrategy,
+  type Placement,
+  type UseFloatingData,
+  type UseFloatingMiddleware,
+  type UseFloatingRefs,
 } from '../types/common';
 
 export type InteractiveTriggerType = 'click' | 'hover' | 'focus';
@@ -10,6 +11,8 @@ export type InteractiveTriggerType = 'click' | 'hover' | 'focus';
 export type ManualTriggerType = 'manual';
 
 export type TriggerType = ManualTriggerType | InteractiveTriggerType | InteractiveTriggerType[];
+
+export type RestoreFocusType = boolean | 'anchor-element' | HTMLElement;
 
 export type ShownChangeReason =
   | 'click-outside'
@@ -23,6 +26,15 @@ export type OnShownChange = (shown: boolean, reason?: ShownChangeReason) => void
 
 export interface UseFloatingWithInteractionsProps {
   placement?: Placement;
+  /**
+   * Стратегия позиционирования всплывающего элемента.
+   *
+   * - `"fixed"` - позиционируется, используя `position: fixed`. Является значением по умолчанию
+   * - `"absolute"` - позиционируется, используя `position: absolute`, относительно ближайшего элемента с `position: relative`
+   *
+   * > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative`
+   */
+  strategy?: FloatingPositionStrategy;
   middlewares?: UseFloatingMiddleware[];
   /**
    * Механика вызова всплывающего элемента.
@@ -37,6 +49,8 @@ export interface UseFloatingWithInteractionsProps {
    * > ⚠️`"hover"` на тач-устройствах будет работать как `"click"`, с одним лишь нюансом, что
    * > не будет закрываться при повторном нажатии на целевой элемент. Для закрытия необходимо нажать
    * > на область вне целевого элемента и выпадающего окна.
+   *
+   * **Избегайте использования `trigger="hover"` как единственного механизма активации, так как пользователи клавиатуры или скринридеров не смогут использовать компонент**
    */
   trigger?: TriggerType;
   /**
@@ -110,5 +124,5 @@ export interface UseFloatingWithInteractionsReturn<T extends HTMLElement = HTMLE
   middlewareData: UseFloatingData['middlewareData'];
   onClose: (this: void) => void;
   onEscapeKeyDown?: (this: void) => void;
-  onRestoreFocus: (this: void) => boolean;
+  onRestoreFocus: (restoreFocus?: RestoreFocusType) => boolean | HTMLElement;
 }

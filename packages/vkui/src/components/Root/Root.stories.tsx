@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { CellButton } from '../CellButton/CellButton';
 import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
@@ -10,10 +11,11 @@ import { View } from '../View/View';
 import { Root, type RootProps } from './Root';
 
 const story: Meta<RootProps> = {
-  title: 'Layout/Root',
+  title: 'Navigation/Root',
   component: Root,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Root', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Навигация'],
 };
 
 export default story;

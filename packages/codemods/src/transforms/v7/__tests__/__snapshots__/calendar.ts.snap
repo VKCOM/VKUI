@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`calendar transforms correctly 1`] = `
+exports[`calendar > transforms correctly 1`] = `
 "import { Calendar } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   const callback = () => {}
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Calendar
         onChange={() => {}}
         enableTime={true}
@@ -22,7 +22,7 @@ const App = () => {
         disableFuture={true}
         onDoneButtonClick={callback}
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

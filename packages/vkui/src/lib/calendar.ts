@@ -1,20 +1,21 @@
+import { isSameDate } from '@vkontakte/vkjs';
+import { clamp as clampNumber } from '../helpers/math';
+import { Keys, type KeysValues } from './accessibility';
 import {
   addDays,
+  addMonths,
   addWeeks,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
-  isAfter,
-  isBefore,
-  isFirstDayOfMonth,
   isLastDayOfMonth,
-  isSameDay,
+  MONDAY,
   startOfMonth,
   startOfWeek,
   subDays,
+  subMonths,
   subWeeks,
-} from 'date-fns';
-import { clamp as clampNumber } from '../helpers/math';
+} from './date';
 
 export const DEFAULT_MAX_YEAR = 9999;
 // 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
@@ -58,7 +59,7 @@ export const getMonths = (
 
   for (let i = 0; i < 12; i++) {
     months.push({
-      label: formatter.format(new Date('1970-01-01').setMonth(i)),
+      label: formatter.format(new Date(2023, i, 15)),
       value: i,
     });
   }
@@ -70,31 +71,57 @@ export const getDaysNames = (
   now: Date,
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6,
   locale?: string,
-): string[] => {
-  const formatter = new Intl.DateTimeFormat(locale, {
+): Array<{ short: string; long: string }> => {
+  const shortFormatter = new Intl.DateTimeFormat(locale, {
     weekday: 'short',
   });
-  return eachDayOfInterval({
-    start: startOfWeek(now, { weekStartsOn }),
-    end: endOfWeek(now, { weekStartsOn }),
-  }).map((day) => formatter.format(day));
+  const longFormatter = new Intl.DateTimeFormat(locale, {
+    weekday: 'long',
+  });
+  return eachDayOfInterval(
+    startOfWeek(now, { weekStartsOn }),
+    endOfWeek(now, { weekStartsOn }),
+  ).map((day) => ({ short: shortFormatter.format(day), long: longFormatter.format(day) }));
 };
 
-export const navigateDate = (date?: Date | null, key?: string): Date => {
+export const NAVIGATION_KEYS: KeysValues[] = [
+  Keys.ARROW_UP,
+  Keys.ARROW_DOWN,
+  Keys.ARROW_LEFT,
+  Keys.ARROW_RIGHT,
+  Keys.HOME,
+  Keys.END,
+  Keys.PAGE_UP,
+  Keys.PAGE_DOWN,
+];
+
+export const navigateDate = (date?: Date | null, key?: (typeof NAVIGATION_KEYS)[number]): Date => {
   let newDate = date ?? new Date();
 
   switch (key) {
-    case 'ArrowRight':
+    case Keys.ARROW_RIGHT:
       newDate = addDays(newDate, 1);
       break;
-    case 'ArrowLeft':
+    case Keys.ARROW_LEFT:
       newDate = subDays(newDate, 1);
       break;
-    case 'ArrowUp':
+    case Keys.ARROW_UP:
       newDate = subWeeks(newDate, 1);
       break;
-    case 'ArrowDown':
+    case Keys.ARROW_DOWN:
       newDate = addWeeks(newDate, 1);
+      break;
+    case Keys.HOME:
+      newDate = startOfWeek(newDate, { weekStartsOn: MONDAY });
+      break;
+    case Keys.END:
+      newDate = endOfWeek(newDate, { weekStartsOn: MONDAY });
+      break;
+    case Keys.PAGE_UP:
+      newDate = subMonths(newDate, 1);
+      break;
+    case Keys.PAGE_DOWN:
+      newDate = addMonths(newDate, 1);
       break;
   }
 
@@ -109,7 +136,7 @@ export const getWeeks = (viewDate: Date, weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
   let current = start;
   const nestedWeeks: Date[][] = [];
   let lastDay = null;
-  while (isBefore(current, end)) {
+  while (current < end) {
     const weekNumber = Math.floor(count / 7);
     nestedWeeks[weekNumber] = nestedWeeks[weekNumber] || [];
     const day = current.getDay();
@@ -135,7 +162,7 @@ export const setTimeEqual = (to: Date, from?: Date | null): Date => {
 };
 
 export const isFirstDay = (day: Date, dayOfWeek: number): boolean =>
-  dayOfWeek === 0 || isFirstDayOfMonth(day);
+  dayOfWeek === 0 || day.getDate() === 1;
 
 export const isLastDay = (day: Date, dayOfWeek: number): boolean =>
   dayOfWeek === 6 || isLastDayOfMonth(day);
@@ -145,10 +172,10 @@ export const isLastDay = (day: Date, dayOfWeek: number): boolean =>
  */
 export function clamp(day: Date, options: { min?: Date; max?: Date } = {}): Date {
   const { min, max } = options;
-  if (min && isBefore(day, min)) {
+  if (min && day < min) {
     return min;
   }
-  if (max && isAfter(day, max)) {
+  if (max && day > max) {
     return max;
   }
   return day;
@@ -162,8 +189,8 @@ export function isDayMinMaxRestricted(
   options: { min?: Date; max?: Date; withTime?: boolean } = {},
 ): boolean {
   const { min, max, withTime = false } = options;
-  if (!withTime && ((min && isSameDay(day, min)) || (max && isSameDay(day, max)))) {
+  if (!withTime && ((min && isSameDate(day, min)) || (max && isSameDate(day, max)))) {
     return false;
   }
-  return Boolean((min && isBefore(day, min)) || (max && isAfter(day, max)));
+  return Boolean((min && day < min) || (max && day > max));
 }

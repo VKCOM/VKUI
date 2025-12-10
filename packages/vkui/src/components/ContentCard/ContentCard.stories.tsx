@@ -1,16 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ContentCard, type ContentCardProps } from './ContentCard';
 
 const story: Meta<ContentCardProps> = {
-  title: 'Blocks/ContentCard',
+  title: 'Data Display/ContentCard',
   component: ContentCard,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ContentCard', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     disabled: {
       control: { type: 'boolean' },
     },
   },
+  tags: ['Отображение данных'],
 };
 
 export default story;

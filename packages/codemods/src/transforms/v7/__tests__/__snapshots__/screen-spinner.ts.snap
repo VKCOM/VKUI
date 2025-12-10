@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`screen-spinner transforms correctly 1`] = `
+exports[`screen-spinner > transforms correctly 1`] = `
 "import { ScreenSpinner } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* Проверяем удаление size */}
       <ScreenSpinner state="loading" />
       <ScreenSpinner.Container>
@@ -22,7 +22,7 @@ const App = () => {
         <ScreenSpinner.Loader />
         <ScreenSpinner.SwapIcon />
       </ScreenSpinner.Container>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

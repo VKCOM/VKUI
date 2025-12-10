@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`date-input transforms correctly 1`] = `
+exports[`date-input > transforms correctly 1`] = `
 "import { DateInput } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <DateInput
         value={value}
         prevMonthLabel="prevMonthLabel"
@@ -19,7 +19,7 @@ const App = () => {
         clearFieldLabel="clearFieldLabel"
         showCalendarLabel="showCalendarLabel"
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

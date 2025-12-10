@@ -2,15 +2,16 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Counter } from '../Counter/Counter';
 import { Group } from '../Group/Group';
 import { Link } from '../Link/Link';
 import { Header, type HeaderProps } from './Header';
 
 const story: Meta<HeaderProps> = {
-  title: 'Blocks/Header',
+  title: 'Layout/Group/Header',
   component: Header,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('Header', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     before: createFieldWithPresets({
       iconSizes: ['28'],
@@ -43,13 +44,14 @@ const story: Meta<HeaderProps> = {
       additionalPresets: {
         Text: '12',
         Counter: (
-          <Counter size="s" mode="prominent">
+          <Counter size="s" mode="primary" appearance="accent-red">
             3
           </Counter>
         ),
       },
     }),
   },
+  tags: ['Раскладка'],
 };
 
 export default story;

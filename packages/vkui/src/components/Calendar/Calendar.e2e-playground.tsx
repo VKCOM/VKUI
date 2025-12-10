@@ -7,7 +7,7 @@ import { Calendar, type CalendarProps } from './Calendar';
 
 export const CalendarPlayground = (props: ComponentPlaygroundProps) => {
   return (
-    <ComponentPlayground
+    <ComponentPlayground<CalendarProps>
       {...props}
       propSets={[
         {
@@ -62,6 +62,10 @@ export const CalendarPlayground = (props: ComponentPlaygroundProps) => {
           value: [new Date('1970-05-05')],
           minDateTime: [new Date('1970-05-03')],
           maxDateTime: [new Date('1970-05-10')],
+        },
+        {
+          value: [new Date('1970-05-05')],
+          $direction: 'rtl',
         },
       ]}
     >

@@ -7,7 +7,7 @@ export const AspectRatioPlayground = (props: ComponentPlaygroundProps) => {
       {...props}
       propSets={[
         {
-          ratio: [1 / 1, 3 / 4, 16 / 9],
+          ratio: [1 / 1, 3 / 4, 16 / 9, '1', 'calc(16 / 9)'],
           children: [<div key="" style={{ background: 'green' }} />],
           mode: ['stretch'],
         },

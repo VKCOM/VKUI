@@ -1,0 +1,102 @@
+---
+description: Компонент для отображения индикатора загрузки.
+---
+
+<Overview group="feedback">
+
+# Spinner [tag:component]
+
+Компонент для отображения индикатора загрузки. Используется во время выполнения асинхронных операций.
+
+Связанные компоненты:
+
+- [`ScreenSpinner`](/components/screen-spinner)
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <Spinner />
+  ```
+</Playground>
+
+## Настройка отображения
+
+### Размеры
+
+Задаются свойством `size`:
+
+<Playground aria-busy={true} aria-live="polite">
+  ```jsx
+  <Spinner size="xl" />
+  <Spinner size="l" />
+  <Spinner size="m" />
+  <Spinner size="s" />
+  ```
+</Playground>
+
+### Анимация
+
+Можно отключить анимацию с помощью свойства `disableAnimation`:
+
+<Playground>
+  ```jsx
+  <Spinner disableAnimation />
+  ```
+</Playground>
+
+### Цвет
+
+По умолчанию наследует цвет родителя (определённое css-свойство `color`).
+
+Для ручного управления цветом используйте свойство `noColor`:
+
+<Playground>
+  ```jsx
+  <div style={{ color: '#FF0000' }}>
+    <Spinner noColor />
+  </div>
+  ```
+</Playground>
+
+## Когда использовать
+
+- Во время загрузки данных.
+- При выполнении фоновых операций.
+- В сочетании с кнопками/формами.
+
+## Альтернатива
+
+Для полной блокировки интерфейса используйте [`ScreenSpinner`](/components/screen-spinner):
+
+```jsx
+<ScreenSpinner state="loading" />
+```
+
+## Доступность (a11y) [#a11y]
+
+### Базовые требования
+
+Чтобы уведомить о выполнении асинхронного процесса пользователей скринридеров, проставьте на контейнер,
+в котором выполняется процесс, метки [`aria-busy`](https://doka.guide/a11y/aria-busy/) и [`aria-live`](https://doka.guide/a11y/aria-live/)
+
+```jsx
+<div aria-busy={true} aria-live="polite">
+  <Spinner />
+</div>
+```
+
+### Пользовательский текст для скринридеров
+
+Чтобы заменить текст, который прочитает скринридер, передайте его в `children`.
+Он будет скрыт визуально, но останется доступным для ассистивных технологий.
+
+```jsx
+<Spinner>
+  <VisuallyHidden>Идёт загрузка профиля...</VisuallyHidden>
+</Spinner>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Spinner" />

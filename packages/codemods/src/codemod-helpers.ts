@@ -185,7 +185,7 @@ export const removeProps = (
         if (attr.type === 'JSXSpreadAttribute') {
           needToShowReport = true;
         }
-        return false;
+        return true;
       });
       path.node.openingElement.attributes = newAttributes;
     });
@@ -205,6 +205,22 @@ export const removeAttribute = (
   attributes?.splice(attributes?.indexOf(attribute), 1);
 };
 
+/**
+ * @description Функция достает из атрибута строковое значение. Если вернулся null, значит значение не строковое
+ */
+export const getStringValueFromAttribute = (attribute: JSXAttribute): string | null => {
+  if (attribute.value?.type === 'StringLiteral') {
+    return attribute.value.value;
+  }
+  if (attribute.value?.type === 'JSXExpressionContainer') {
+    const expression = attribute.value.expression;
+    if (expression.type === 'StringLiteral') {
+      return expression.value;
+    }
+  }
+  return null;
+};
+
 interface AttributeManipulatorAPI {
   keyTo?: string | ((k?: string) => string);
   reportText?: string | (() => string);
@@ -212,12 +228,23 @@ interface AttributeManipulatorAPI {
   action?: 'rename' | 'remove';
 }
 
-export type AttributeManipulator = Record<string, AttributeManipulatorAPI>;
+export type AttributeManipulatorDeclaration = Record<string, AttributeManipulatorAPI>;
+
+export type AttributeReplacers = {
+  keyTo(k?: string): string;
+  valueTo(attributeKeyValue: JSXAttribute['value']): JSXAttribute['value'];
+  action: AttributeManipulatorAPI['action'];
+};
+
+export interface AttributeManipulator {
+  has(attributeKey: string | JSXIdentifier): boolean;
+  getReplacers(attributeKeyProp: string | JSXIdentifier): AttributeReplacers | undefined;
+}
 
 export const createAttributeManipulator = (
   props: Record<string, AttributeManipulatorAPI>,
   api: API,
-) => {
+): AttributeManipulator => {
   const map = new Map<string, AttributeManipulatorAPI>(Object.entries(props));
 
   return {
@@ -245,7 +272,7 @@ export const createAttributeManipulator = (
           }
           return found.keyTo(attributeKey);
         },
-        valueTo(attributeKeyValue: JSXAttribute['value']) {
+        valueTo(attributeKeyValue) {
           if (!found || !found.valueTo) {
             return attributeKeyValue;
           }

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`select transforms correctly 1`] = `
+exports[`select > transforms correctly 1`] = `
 "import { Select } from '@vkontakte/vkui';
 import React from 'react';
 
@@ -22,14 +22,14 @@ const App = () => {
   ];
 
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Select
         id="select-type-select-id"
         value={selectType}
         placeholder="Не задан"
         options={selectTypes}
         onChange={(e) => setSelectType(e.target.value)} />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

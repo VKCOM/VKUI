@@ -16,18 +16,26 @@ export function getAutoPlacementAlign(placement: AutoPlacementType): 'start' | '
   return align === 'start' || align === 'end' ? align : null;
 }
 
+export type ConvertFloatingDataArgs = {
+  strategy: FloatingPositionStrategy;
+  x: UseFloatingData['x'];
+  y: UseFloatingData['y'];
+  initialWidth?: React.CSSProperties['width'] | null;
+  middlewareData?: UseFloatingData['middlewareData'];
+};
+
 /**
  * Note: не используем `translate3d`, чтобы в лишний раз не выносить в отдельный слой и не занимать память в GPU.
  *
  * см. https://floating-ui.com/docs/react#positioning
  */
-export function convertFloatingDataToReactCSSProperties(
-  strategy: FloatingPositionStrategy,
-  x: UseFloatingData['x'],
-  y: UseFloatingData['y'],
-  initialWidth: React.CSSProperties['width'] | null = 'max-content',
-  middlewareData?: UseFloatingData['middlewareData'],
-): React.CSSProperties {
+export function convertFloatingDataToReactCSSProperties({
+  strategy,
+  x,
+  y,
+  initialWidth = 'max-content',
+  middlewareData,
+}: ConvertFloatingDataArgs): React.CSSProperties {
   const styles: React.CSSProperties = {
     position: strategy,
     top: y,

@@ -1,0 +1,136 @@
+---
+description: Компонент для отображения компактной информации или быстрых действий.
+---
+
+<Overview group="data-display">
+
+# MiniInfoCell [tag:component]
+
+Компонент для отображения компактной информации или быстрых действий.
+Идеален для метаданных, статусов и кратких уведомлений.
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="full">
+    ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с
+    безграничными возможностями и миллионами пользователей.
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Основные свойства
+
+<Playground>
+  ```jsx
+  <MiniInfoCell
+    before={<Icon20ArticleOutline />}
+    after={<Avatar size={24} initials="СД" />}
+    mode="accent"
+    textWrap="short"
+  >
+    Место работы: Команда ВКонтакте
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Структура элемента
+
+### Визуальные элементы
+
+- **before** - иконка `20px` слева.
+- **after** - контент справа (`<UsersStack size="s" />` или `<Avatar size={24} />`).
+
+### Текстовые режимы
+
+Свойство `textWrap` управляет переносом текста:
+
+- `nowrap` - одна строка, остальной контент ограничивается `...`;
+- `short` - контент ограничен тремя строками, остальной контент ограничивается `...`;
+- `full` - полный текст с переносами.
+
+## Режимы отображения
+
+### `mode="base"` (по умолчанию)
+
+Стандартный стиль для информации:
+
+<Playground>
+  ```jsx
+  <MiniInfoCell before={<Icon20GlobeOutline />}>vk.com/team</MiniInfoCell>
+  ```
+</Playground>
+
+### `mode="accent"`
+
+Акцентное выделение:
+
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="accent" before={<Icon20WorkOutline />}>
+    Место работы: Команда ВКонтакте
+  </MiniInfoCell>
+  ```
+</Playground>
+
+### `mode="add"`
+
+Призыв к действию:
+
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="add" before={<Icon20EducationOutline />} onClick={() => {}} chevron>
+    Укажите место учёбы
+  </MiniInfoCell>
+  ```
+</Playground>
+
+### `mode="more"`
+
+Индикатор дополнительной информации:
+
+<Playground>
+  ```jsx
+  <MiniInfoCell mode="more" before={<Icon20InfoCircleOutline />} onClick={() => {}} chevron>
+    Подробная информация
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Особенности
+
+### Шеврон (chevron)
+
+Используйте для интерактивных элементов:
+
+<Playground>
+  ```jsx
+  <MiniInfoCell chevron onClick={() => {}} before={<Icon20GearOutline />}>
+    Настройки профиля
+  </MiniInfoCell>
+  ```
+</Playground>
+
+## Рекомендации
+
+- Для иконок используйте только 20px версии;
+- В режиме `add` обязательно добавляйте обработчик `onClick`;
+- Избегайте длинных текстов в `nowrap` режиме;
+- Для групп элементов используйте общий `Group` с отступами;
+
+## Доступность (a11y) [#a11y]
+
+- Для кликабельных элементов добавляйте `aria-label`.
+
+- Сочетайте с семантическими тегами:
+
+  ```jsx
+  <MiniInfoCell Component="a" href="/settings">
+    {/*...*/}
+  </MiniInfoCell>
+  ```
+
+## Свойства и методы [#api]
+
+<PropsTable name="MiniInfoCell" />

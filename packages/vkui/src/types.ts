@@ -51,7 +51,8 @@ export interface Version {
 export type AnchorHTMLAttributesOnly = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   keyof React.HTMLAttributes<HTMLAnchorElement>
->;
+> &
+  React.AriaAttributes;
 
 /**
  * Проверяет, является ли тип подтипом другого.
@@ -65,7 +66,10 @@ export type Exact<A, B> = A extends B ? B : never;
 /**
  * Для возможности указывать css custom properties
  */
-export type CSSCustomProperties<T extends string | undefined = string> = Record<`--${string}`, T>;
+export type CSSCustomProperties<T extends string | number | undefined = string> = Record<
+  `--${string}`,
+  T
+>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Nothing {}

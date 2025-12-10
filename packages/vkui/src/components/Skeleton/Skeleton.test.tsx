@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Skeleton, type SkeletonProps } from './Skeleton';
 import styles from './Skeleton.module.css';
+import stylesDelay from '../../styles/animationVisibilityDelay.module.css';
 
 describe('Skeleton', () => {
   baselineComponent(Skeleton);
@@ -39,14 +40,22 @@ describe('Skeleton', () => {
       },
       className: styles.disableAnimation,
     },
-  ])(
-    'should have $cssVariable = $expectedValue with props $props',
-    ({ props, expectedValue, cssVariable, className }) => {
-      render(<Skeleton {...props} data-testid="skeleton" />);
-      expectedValue &&
-        cssVariable &&
-        expect(screen.getByTestId('skeleton')).toHaveStyle(`${cssVariable}: ${expectedValue}`);
-      className && expect(screen.getByTestId('skeleton')).toHaveClass(className);
-    },
-  );
+  ])('should have $cssVariable = $expectedValue with props $props', ({
+    props,
+    expectedValue,
+    cssVariable,
+    className,
+  }) => {
+    render(<Skeleton {...props} data-testid="skeleton" />);
+    expectedValue &&
+      cssVariable &&
+      expect(screen.getByTestId('skeleton')).toHaveStyle(`${cssVariable}: ${expectedValue}`);
+    className && expect(screen.getByTestId('skeleton')).toHaveClass(className);
+  });
+
+  it('should delay visibility', () => {
+    render(<Skeleton visibilityDelay={200} />);
+
+    expect(document.querySelector(`.${stylesDelay.visibilityDelay}`)).not.toBeNull();
+  });
 });

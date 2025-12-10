@@ -5,7 +5,7 @@ import { Icon16Dropdown } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import type { HasChildren, HasComponent } from '../../types';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Caption } from '../Typography/Caption/Caption';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import styles from './SubnavigationButton.module.css';
@@ -32,23 +32,38 @@ const sizeYClassNames = {
   compact: styles.sizeYCompact,
 };
 
-export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
+export interface SubnavigationButtonProps extends Omit<TappableOmitProps, 'size'> {
+  /**
+   * Стиль отображения кнопки.
+   */
   mode?: 'primary' | 'outline' | 'tertiary';
+  /**
+   * Тип внешнего вида кнопки.
+   */
   appearance?: 'accent' | 'neutral';
+  /**
+   * Размер кнопки.
+   */
   size?: 's' | 'm' | 'l';
+  /**
+   * Выбранное состояние.
+   */
   selected?: boolean;
   /**
-   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`
+   * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`.
    */
   textLevel?: '1' | '2' | '3';
   /**
-   * Рекомендуется использовать только иконки с размером 24
+   * Рекомендуется использовать только иконки с размером 24.
    */
   before?: React.ReactNode;
   /**
-   * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`
+   * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`.
    */
   after?: React.ReactNode;
+  /**
+   * Нужно ли отображать иконку `"chevron"`.
+   */
   chevron?: boolean;
 }
 
@@ -71,7 +86,7 @@ const SubnavigationButtonTypography = ({
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/SubnavigationButton
+ * @see https://vkui.io/components/subnavigation-bar#subnavigation-button
  */
 export const SubnavigationButton = ({
   mode = 'primary',
@@ -83,24 +98,23 @@ export const SubnavigationButton = ({
   after,
   chevron,
   children,
-  className,
   ...restProps
 }: SubnavigationButtonProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
 
   return (
     <Tappable
-      {...restProps}
       hasActive={false}
       focusVisibleMode="outside"
-      className={classNames(
+      {...restProps}
+      baseClassName={classNames(
         styles.host,
         sizeStyles[size],
         modeStyles[mode],
         appearanceStyles[appearance],
         selected && styles.selected,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
+        restProps.disabled && styles.disabled,
       )}
     >
       <span className={styles.in}>

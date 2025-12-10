@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -10,7 +11,8 @@ import { Title } from '../Typography/Title/Title';
 import styles from './Alert.module.css';
 
 interface AlertTypography extends HasChildren {
-  id: string;
+  'id': string;
+  'data-testid'?: string;
 }
 export const AlertTitle = (props: AlertTypography): React.ReactNode => {
   const platform = usePlatform();

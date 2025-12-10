@@ -1,0 +1,112 @@
+---
+description: Компонент для создания набора сценариев из View и возможностью переключаться между ними.
+---
+
+<Overview group="navigation">
+
+# Root [tag:component]
+
+Компонент для создания набора сценариев из [`View`](/components/view) и возможностью переключаться между ними.
+
+Связанные страницы:
+
+- [Навигация](/overview/navigation)
+
+</Overview>
+
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415, overflow: 'hidden' }}>
+
+```jsx
+const [activeView, setActiveView] = useState('view-1');
+return (
+  <Root activeView={activeView}>
+    <View id="view-1" activePanel="view-1-panel">
+      <Panel id="view-1-panel">
+        <PanelHeader>Сценарий 1</PanelHeader>
+        <Placeholder stretched>
+          <Button appearance="positive" onClick={() => setActiveView('view-2')}>
+            Перейти к Сценарию 2
+          </Button>
+        </Placeholder>
+      </Panel>
+    </View>
+    <View id="view-2" activePanel="view-2-panel">
+      <Panel id="view-2-panel">
+        <PanelHeader>Сценарий 2</PanelHeader>
+        <Placeholder stretched>
+          <Button appearance="negative" onClick={() => setActiveView('view-1')}>
+            Вернуться к Сценарию 1
+          </Button>
+        </Placeholder>
+      </Panel>
+    </View>
+  </Root>
+);
+```
+
+</Playground>
+
+## Применение компонента
+
+Принимает необходимое количество [`View`](/components/view) с уникальным `id`. Далее `id` с нужным сценарием передаётся в свойство
+`activeView`.
+
+```
+Root
+  └─ View N
+    └─ Panel N
+      └─ PanelHeader
+      └─ <content>
+```
+
+> Если вы выносите сценарий с [`View`](/components/view) в отдельный компонент, то `id` должен передаваться непосредственно в
+> компонент-обёртку и уже после проксироваться во [`View`](/components/view).
+>
+> ```jsx showLineNumbers filename="src/router.tsx" {2-4,13-14}
+> const MyView = ({ id }) => {
+>   // проксируем `id` в View */
+>   return (
+>     <View id={id} activePanel="<panel-id>">
+>       ...
+>     </View>
+>   );
+> };
+>
+> export const Router = () => {
+>   return (
+>     <Root activeView="my-view">
+>       {/* передаём `id` в компонент-обёртку */}
+>       <MyView id="my-view" />
+>     </Root>
+>   );
+> };
+> ```
+>
+> Иначе `Root` не сможет найти `id` из `activeView` среди прямых потомков в `children`.
+
+## Обработчики событий
+
+### `onTransition`
+
+Свойство `onTransition` принимает обработчик, который вызывается при завершении анимации смены активной `View`.
+
+```jsx
+function transitionHandler({
+  // Произошел аыа
+  isBack: boolean;
+  // Уникальный идентификатор `View`, откуда произошел переход
+  from: string;
+  // Уникальный идентификатор `View`, куда произошел переход
+  to: string;
+}) {
+    // обработчик
+}
+
+<Root onTransition={transitionHandler}>{/* views */}</Root>;
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="Root" />

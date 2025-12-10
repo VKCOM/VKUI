@@ -1,187 +1,187 @@
 .level1 {
-  font-size: var(--vkui--font_display_title1--font_size--regular);
-  line-height: var(--vkui--font_display_title1--line_height--regular);
-  font-weight: var(--vkui--font_display_title1--font_weight--regular);
   font-family: var(--vkui--font_display_title1--font_family--regular);
+  font-size: var(--vkui--font_display_title1--font_size--regular);
+  font-weight: var(--vkui--font_display_title1--font_weight--regular);
+  line-height: var(--vkui--font_display_title1--line_height--regular);
 }
 
 .sizeYCompact.level1 {
+  font-family: var(
+    --vkui--font_display_title1--font_family--compact,
+    var(--vkui--font_display_title1--font_family--regular)
+  );
   font-size: var(
     --vkui--font_display_title1--font_size--compact,
     var(--vkui--font_display_title1--font_size--regular)
-  );
-  line-height: var(
-    --vkui--font_display_title1--line_height--compact,
-    var(--vkui--font_display_title1--line_height--regular)
   );
   font-weight: var(
     --vkui--font_display_title1--font_weight--compact,
     var(--vkui--font_display_title1--font_weight--regular)
   );
-  font-family: var(
-    --vkui--font_display_title1--font_family--compact,
-    var(--vkui--font_display_title1--font_family--regular)
+  line-height: var(
+    --vkui--font_display_title1--line_height--compact,
+    var(--vkui--font_display_title1--line_height--regular)
   );
 }
 
 @media (--sizeY-compact) {
   .sizeYNone.level1 {
+    font-family: var(
+      --vkui--font_display_title1--font_family--compact,
+      var(--vkui--font_display_title1--font_family--regular)
+    );
     font-size: var(
       --vkui--font_display_title1--font_size--compact,
       var(--vkui--font_display_title1--font_size--regular)
-    );
-    line-height: var(
-      --vkui--font_display_title1--line_height--compact,
-      var(--vkui--font_display_title1--line_height--regular)
     );
     font-weight: var(
       --vkui--font_display_title1--font_weight--compact,
       var(--vkui--font_display_title1--font_weight--regular)
     );
-    font-family: var(
-      --vkui--font_display_title1--font_family--compact,
-      var(--vkui--font_display_title1--font_family--regular)
+    line-height: var(
+      --vkui--font_display_title1--line_height--compact,
+      var(--vkui--font_display_title1--line_height--regular)
     );
   }
 }
 
 .level2 {
-  font-size: var(--vkui--font_display_title2--font_size--regular);
-  line-height: var(--vkui--font_display_title2--line_height--regular);
-  font-weight: var(--vkui--font_display_title2--font_weight--regular);
   font-family: var(--vkui--font_display_title2--font_family--regular);
+  font-size: var(--vkui--font_display_title2--font_size--regular);
+  font-weight: var(--vkui--font_display_title2--font_weight--regular);
+  line-height: var(--vkui--font_display_title2--line_height--regular);
 }
 
 .sizeYCompact.level2 {
+  font-family: var(
+    --vkui--font_display_title2--font_family--compact,
+    var(--vkui--font_display_title2--font_family--regular)
+  );
   font-size: var(
     --vkui--font_display_title2--font_size--compact,
     var(--vkui--font_display_title2--font_size--regular)
-  );
-  line-height: var(
-    --vkui--font_display_title2--line_height--compact,
-    var(--vkui--font_display_title2--line_height--regular)
   );
   font-weight: var(
     --vkui--font_display_title2--font_weight--compact,
     var(--vkui--font_display_title2--font_weight--regular)
   );
-  font-family: var(
-    --vkui--font_display_title2--font_family--compact,
-    var(--vkui--font_display_title2--font_family--regular)
+  line-height: var(
+    --vkui--font_display_title2--line_height--compact,
+    var(--vkui--font_display_title2--line_height--regular)
   );
 }
 
 @media (--sizeY-compact) {
   .sizeYNone.level2 {
+    font-family: var(
+      --vkui--font_display_title2--font_family--compact,
+      var(--vkui--font_display_title2--font_family--regular)
+    );
     font-size: var(
       --vkui--font_display_title2--font_size--compact,
       var(--vkui--font_display_title2--font_size--regular)
-    );
-    line-height: var(
-      --vkui--font_display_title2--line_height--compact,
-      var(--vkui--font_display_title2--line_height--regular)
     );
     font-weight: var(
       --vkui--font_display_title2--font_weight--compact,
       var(--vkui--font_display_title2--font_weight--regular)
     );
-    font-family: var(
-      --vkui--font_display_title2--font_family--compact,
-      var(--vkui--font_display_title2--font_family--regular)
+    line-height: var(
+      --vkui--font_display_title2--line_height--compact,
+      var(--vkui--font_display_title2--line_height--regular)
     );
   }
 }
 
 .level3 {
-  font-size: var(--vkui--font_display_title3--font_size--regular);
-  line-height: var(--vkui--font_display_title3--line_height--regular);
-  font-weight: var(--vkui--font_display_title3--font_weight--regular);
   font-family: var(--vkui--font_display_title3--font_family--regular);
+  font-size: var(--vkui--font_display_title3--font_size--regular);
+  font-weight: var(--vkui--font_display_title3--font_weight--regular);
+  line-height: var(--vkui--font_display_title3--line_height--regular);
 }
 
 .sizeYCompact.level3 {
+  font-family: var(
+    --vkui--font_display_title3--font_family--compact,
+    var(--vkui--font_display_title3--font_family--regular)
+  );
   font-size: var(
     --vkui--font_display_title3--font_size--compact,
     var(--vkui--font_display_title3--font_size--regular)
-  );
-  line-height: var(
-    --vkui--font_display_title3--line_height--compact,
-    var(--vkui--font_display_title3--line_height--regular)
   );
   font-weight: var(
     --vkui--font_display_title3--font_weight--compact,
     var(--vkui--font_display_title3--font_weight--regular)
   );
-  font-family: var(
-    --vkui--font_display_title3--font_family--compact,
-    var(--vkui--font_display_title3--font_family--regular)
+  line-height: var(
+    --vkui--font_display_title3--line_height--compact,
+    var(--vkui--font_display_title3--line_height--regular)
   );
 }
 
 @media (--sizeY-compact) {
   .sizeYNone.level3 {
+    font-family: var(
+      --vkui--font_display_title3--font_family--compact,
+      var(--vkui--font_display_title3--font_family--regular)
+    );
     font-size: var(
       --vkui--font_display_title3--font_size--compact,
       var(--vkui--font_display_title3--font_size--regular)
-    );
-    line-height: var(
-      --vkui--font_display_title3--line_height--compact,
-      var(--vkui--font_display_title3--line_height--regular)
     );
     font-weight: var(
       --vkui--font_display_title3--font_weight--compact,
       var(--vkui--font_display_title3--font_weight--regular)
     );
-    font-family: var(
-      --vkui--font_display_title3--font_family--compact,
-      var(--vkui--font_display_title3--font_family--regular)
+    line-height: var(
+      --vkui--font_display_title3--line_height--compact,
+      var(--vkui--font_display_title3--line_height--regular)
     );
   }
 }
 
 .level4 {
-  font-size: var(--vkui--font_display_title4--font_size--regular);
-  line-height: var(--vkui--font_display_title4--line_height--regular);
-  font-weight: var(--vkui--font_display_title4--font_weight--regular);
   font-family: var(--vkui--font_display_title4--font_family--regular);
+  font-size: var(--vkui--font_display_title4--font_size--regular);
+  font-weight: var(--vkui--font_display_title4--font_weight--regular);
+  line-height: var(--vkui--font_display_title4--line_height--regular);
 }
 
 .sizeYCompact.level4 {
+  font-family: var(
+    --vkui--font_display_title4--font_family--compact,
+    var(--vkui--font_display_title4--font_family--regular)
+  );
   font-size: var(
     --vkui--font_display_title4--font_size--compact,
     var(--vkui--font_display_title4--font_size--regular)
-  );
-  line-height: var(
-    --vkui--font_display_title4--line_height--compact,
-    var(--vkui--font_display_title4--line_height--regular)
   );
   font-weight: var(
     --vkui--font_display_title4--font_weight--compact,
     var(--vkui--font_display_title4--font_weight--regular)
   );
-  font-family: var(
-    --vkui--font_display_title4--font_family--compact,
-    var(--vkui--font_display_title4--font_family--regular)
+  line-height: var(
+    --vkui--font_display_title4--line_height--compact,
+    var(--vkui--font_display_title4--line_height--regular)
   );
 }
 
 @media (--sizeY-compact) {
   .sizeYNone.level4 {
+    font-family: var(
+      --vkui--font_display_title4--font_family--compact,
+      var(--vkui--font_display_title4--font_family--regular)
+    );
     font-size: var(
       --vkui--font_display_title4--font_size--compact,
       var(--vkui--font_display_title4--font_size--regular)
-    );
-    line-height: var(
-      --vkui--font_display_title4--line_height--compact,
-      var(--vkui--font_display_title4--line_height--regular)
     );
     font-weight: var(
       --vkui--font_display_title4--font_weight--compact,
       var(--vkui--font_display_title4--font_weight--regular)
     );
-    font-family: var(
-      --vkui--font_display_title4--font_family--compact,
-      var(--vkui--font_display_title4--font_family--regular)
+    line-height: var(
+      --vkui--font_display_title4--line_height--compact,
+      var(--vkui--font_display_title4--line_height--regular)
     );
   }
 }

@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
-const { makePostcssPlugins } = require('./packages/vkui/scripts/postcss');
+const { makePostcssPlugins } = require('./packages/vkui/scripts/postcss.cjs');
 
 const isProduction = process.env.NODE_ENV === 'production';
 

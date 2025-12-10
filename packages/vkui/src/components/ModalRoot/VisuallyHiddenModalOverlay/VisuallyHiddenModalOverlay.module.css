@@ -1,0 +1,6 @@
+.host {
+  position: absolute;
+  inset: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}

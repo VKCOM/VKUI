@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`search > transforms correctly 1`] = `
+"import { Search } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  return (
+    <React.Fragment>
+      <Search
+        value=""
+        id="search"
+        disabled={false}
+        onChange={() => {}}
+        after={null}
+        name="input"
+        autoComplete="off"
+        placeholder="Search"
+        onIconClick={() => {}}
+        onFindButtonClick={() => {}}
+        onFocus={() => {}}
+        onBlur={() => {}}
+        onClick={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "input",
+            "aria-label": "input"
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

@@ -1,8 +1,11 @@
 import { noop } from '@vkontakte/vkjs';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  AppDefaultWrapper,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
 import { ViewWidth } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { Avatar } from '../Avatar/Avatar';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';
@@ -26,6 +29,11 @@ export const HorizontalScrollMobilePlayground = (props: ComponentPlaygroundProps
           arrowSize: ['s', 'm'],
           children: [items],
         },
+        {
+          showArrows: ['always'],
+          $direction: 'rtl',
+          children: [items],
+        },
       ]}
     >
       {baseRender}
@@ -44,6 +52,11 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
           arrowOffsetY: [-10],
           children: [items],
         },
+        {
+          showArrows: ['always'],
+          dir: ['rtl'],
+          children: [items],
+        },
       ]}
     >
       {baseRender}
@@ -51,14 +64,14 @@ export const HorizontalScrollSmallTabletPlayground = (props: ComponentPlayground
   );
 };
 
-export const HorizontalScrollWithHasMousePlayground = ({
+export const HorizontalScrollHoverTestPlayground = ({
   colorScheme,
   ...restProps
 }: ComponentPlaygroundProps) => {
   return (
     <ConfigProvider colorScheme={colorScheme}>
-      <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-        <AppRoot>
+      <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+        <AppDefaultWrapper>
           <HorizontalScroll
             {...restProps}
             getRef={(element) => {
@@ -70,33 +83,14 @@ export const HorizontalScrollWithHasMousePlayground = ({
           >
             {items}
           </HorizontalScroll>
-        </AppRoot>
+        </AppDefaultWrapper>
       </AdaptivityProvider>
     </ConfigProvider>
   );
 };
 
-export const HorizontalScrollWithoutHasMousePlayground = ({
-  colorScheme,
-  ...restProps
-}: ComponentPlaygroundProps) => {
-  return (
-    <ConfigProvider colorScheme={colorScheme}>
-      <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
-        <AppRoot>
-          <HorizontalScroll
-            {...restProps}
-            getRef={(element) => {
-              if (!element) {
-                return;
-              }
-              element.scrollLeft = 32;
-            }}
-          >
-            {items}
-          </HorizontalScroll>
-        </AppRoot>
-      </AdaptivityProvider>
-    </ConfigProvider>
-  );
-};
+export const HorizontalScrollWithFocusVisible = (props: ComponentPlaygroundProps) => (
+  <ComponentPlayground {...props}>
+    {(props: HorizontalScrollProps) => <HorizontalScroll {...props}>{items}</HorizontalScroll>}
+  </ComponentPlayground>
+);

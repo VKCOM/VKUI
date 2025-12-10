@@ -55,6 +55,18 @@ describe('Typography', () => {
       props: { normalize: true, inline: true },
       hasClassName: `${styles.normalize} ${styles.inline}`,
     },
+    {
+      props: { align: 'start' },
+      hasClassName: `${styles.alignStart}`,
+    },
+    {
+      props: { align: 'center' },
+      hasClassName: `${styles.alignCenter}`,
+    },
+    {
+      props: { align: 'end' },
+      hasClassName: `${styles.alignEnd}`,
+    },
   ])('it should have className $hasClassName with props $props', ({ props, hasClassName }) => {
     render(<Typography {...props}>Test</Typography>);
 

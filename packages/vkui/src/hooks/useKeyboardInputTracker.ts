@@ -29,7 +29,7 @@ const EVENT_OPTIONS = {
  *
  * @private
  */
-export function useKeyboardInputTracker(): React.MutableRefObject<boolean> {
+export function useKeyboardInputTracker(): React.RefObject<boolean> {
   const { document } = useDOM();
   const keyboardFocusingStartedRef = React.useRef(false);
 
@@ -54,15 +54,31 @@ export function useKeyboardInputTracker(): React.MutableRefObject<boolean> {
     };
 
     document.addEventListener('keydown', handleKeydown, EVENT_OPTIONS);
-    document.addEventListener(ENABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomEnableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
-    document.addEventListener(DISABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomDisableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
+    document.addEventListener(
+      ENABLE_KEYBOARD_INPUT_EVENT_NAME,
+      handleCustomEnableKeyboardEvent,
+      EVENT_OPTIONS,
+    );
+    document.addEventListener(
+      DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+      handleCustomDisableKeyboardEvent,
+      EVENT_OPTIONS,
+    );
     document.addEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
     document.addEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
 
     return () => {
       document.removeEventListener('keydown', handleKeydown, EVENT_OPTIONS);
-      document.removeEventListener(ENABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomEnableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
-      document.removeEventListener(DISABLE_KEYBOARD_INPUT_EVENT_NAME, handleCustomDisableKeyboardEvent, EVENT_OPTIONS); // prettier-ignore
+      document.removeEventListener(
+        ENABLE_KEYBOARD_INPUT_EVENT_NAME,
+        handleCustomEnableKeyboardEvent,
+        EVENT_OPTIONS,
+      );
+      document.removeEventListener(
+        DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+        handleCustomDisableKeyboardEvent,
+        EVENT_OPTIONS,
+      );
       document.removeEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
       document.removeEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
     };

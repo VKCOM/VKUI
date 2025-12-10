@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 export type SnackbarPlacement =
   | 'top-start'
   | 'top'

@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`chips-select > transforms correctly 1`] = `
+"import { ChipsSelect } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  const onInputChange = () => {};
+
+  return (
+    <React.Fragment>
+      <ChipsSelect
+        value="value"
+        options={[]}
+        id="favoriteGroups"
+        inputValue="value"
+        defaultInputValue="defaultValue"
+        onInputChange={onInputChange}
+        disabled={false}
+        readOnly={true}
+        onFocus={() => {}}
+        onBlur={() => {}}
+        onKeyDown={() => {}}
+        onChange={() => {}}
+        onClick={() => {}}
+        onMouseDown={() => {}}
+        onChangeStart={() => {}}
+        onClose={() => {}}
+        onOpen={() => {}}
+        slotProps={{
+          input: {
+            getRootRef: inputRef,
+            "data-testid": "input",
+            required: true
+          }
+        }} />
+    </React.Fragment>
+  );
+};"
+`;

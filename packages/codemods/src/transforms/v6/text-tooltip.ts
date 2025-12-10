@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import type { API, Collection, FileInfo, JSXAttribute } from 'jscodeshift';
 import {
-  type AttributeManipulator,
+  type AttributeManipulatorDeclaration,
   createAttributeManipulator,
   getImportInfo,
 } from '../../codemod-helpers';
@@ -11,7 +11,7 @@ export const parser = 'tsx';
 
 const componentName = 'unstable_TextTooltip';
 
-const ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
+const ATTRIBUTE_MANIPULATOR: AttributeManipulatorDeclaration = {
   offsetSkidding: {
     keyTo: 'offsetByCrossAxis',
   },
@@ -41,7 +41,7 @@ const ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
 };
 
 const FORCE_PORTAL = 'forcePortal';
-const COMPLEX_ATTRIBUTE_MANIPULATOR: AttributeManipulator = {
+const COMPLEX_ATTRIBUTE_MANIPULATOR: AttributeManipulatorDeclaration = {
   [FORCE_PORTAL]: {
     keyTo: 'usePortal',
   },

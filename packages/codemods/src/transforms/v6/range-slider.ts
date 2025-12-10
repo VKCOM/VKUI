@@ -25,7 +25,11 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     .find(j.ImportSpecifier, { imported: { name: 'Slider' } });
 
   componentImport.forEach((path) => {
-    if (path.node.local && path.node.local.name !== path.node.imported.name) {
+    if (
+      path.node.local &&
+      path.node.local.name !== path.node.imported.name &&
+      typeof path.node.local.name === 'string'
+    ) {
       localImportName = path.node.local.name;
       needRename = false;
     }

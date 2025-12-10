@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import type { ChipOption } from '../ChipsInputBase/types';
 
 export type FocusActionType = 'next' | 'prev';

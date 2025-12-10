@@ -1,29 +1,18 @@
-'use no memo';
-
-import { render } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import {
-  type ConfigProviderContextInterface,
-  useConfigProvider,
-} from '../ConfigProvider/ConfigProviderContext';
+import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { PlatformProvider } from './PlatformProvider';
 
 describe('PlatformProvider', () => {
   it('override config context', () => {
-    let config: ConfigProviderContextInterface | undefined;
-    const ReadConfig = () => {
-      config = useConfigProvider();
-      return null;
-    };
+    const { result } = renderHook(useConfigProvider, {
+      wrapper: ({ children }) => (
+        <ConfigProvider platform="android">
+          <PlatformProvider value="ios">{children}</PlatformProvider>
+        </ConfigProvider>
+      ),
+    });
 
-    render(
-      <ConfigProvider platform="android">
-        <PlatformProvider value="ios">
-          <ReadConfig />
-        </PlatformProvider>
-      </ConfigProvider>,
-    );
-
-    expect(config).toEqual(expect.objectContaining({ platform: 'ios' }));
+    expect(result.current).toEqual(expect.objectContaining({ platform: 'ios' }));
   });
 });

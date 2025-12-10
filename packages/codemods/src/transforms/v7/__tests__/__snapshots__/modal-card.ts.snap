@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`modal-card transforms correctly 1`] = `
+exports[`modal-card > transforms correctly 1`] = `
 "import { Button, ModalCard, ModalCardBase } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ModalCardBase
         dismissButtonMode="inside"
         dismissLabel="Закрыть"
@@ -37,7 +37,7 @@ const App = () => {
           </React.Fragment>
         }
       />
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

@@ -14,11 +14,14 @@ export interface CellButtonProps extends SimpleCellProps {
    * > Режим `centered` переопределяет токен для темы `"accent"`.
    */
   appearance?: 'accent' | 'neutral' | 'negative';
+  /**
+   * Возможность центрирования содержимого компонента.
+   */
   centered?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CellButton
+ * @see https://vkui.io/components/cell-button
  */
 export const CellButton = ({
   centered = false,

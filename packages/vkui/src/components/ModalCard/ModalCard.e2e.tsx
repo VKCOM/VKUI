@@ -1,6 +1,6 @@
 import { test } from '@vkui-e2e/test';
 import { ViewWidth } from '../../lib/adaptivity';
-import { ModalCardPlayground } from './ModalCard.e2e-playground';
+import { ModalCardOutsideButtonPlayground, ModalCardPlayground } from './ModalCard.e2e-playground';
 
 test.describe('ModalCard', () => {
   test.use({
@@ -40,6 +40,25 @@ test.describe(() => {
     componentPlaygroundProps,
   }) => {
     await mount(<ModalCardPlayground {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+});
+
+test.describe('ModalCard', () => {
+  test.use({
+    adaptivityProviderProps: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+      sizeY: 'compact',
+    },
+    onlyForPlatforms: ['ios', 'android'],
+    onlyForColorSchemes: ['light'],
+  });
+  test('OutsideButton', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<ModalCardOutsideButtonPlayground {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
 });

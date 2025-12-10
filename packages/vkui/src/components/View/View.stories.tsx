@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getRandomUsers } from '../../testing/mock';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Alert } from '../Alert/Alert';
 import { Avatar } from '../Avatar/Avatar';
 import { CellButton } from '../CellButton/CellButton';
@@ -18,14 +19,13 @@ import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { View, type ViewProps } from './View';
 
 const story: Meta<ViewProps> = {
-  title: 'Layout/View',
+  title: 'Navigation/View',
   component: View,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('View', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Навигация'],
 };
 
 export default story;
@@ -171,30 +171,27 @@ export const SwipeBlockExample: Story = {
 
     return (
       <ConfigProviderOverride platform="ios" isWebView>
-        <SplitLayout popout={popoutWithRestriction}>
-          <SplitCol>
-            <View
-              history={history}
-              activePanel={activePanel}
-              onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
-              onSwipeBack={goBack}
-            >
-              <Panel id="main">
-                <MainPanelContent onProfileClick={handleProfileClick} />
-              </Panel>
-              <Panel id="profile">
-                <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
-              </Panel>
-              <Panel id="settings">
-                <SettingsPanelContent
-                  name={userName}
-                  onChangeName={setUserName}
-                  onBack={handleBackForPreventIfNeeded}
-                />
-              </Panel>
-            </View>
-          </SplitCol>
-        </SplitLayout>
+        <View
+          history={history}
+          activePanel={activePanel}
+          onSwipeBackStart={handleSwipeBackStartForPreventIfNeeded}
+          onSwipeBack={goBack}
+        >
+          <Panel id="main">
+            <MainPanelContent onProfileClick={handleProfileClick} />
+          </Panel>
+          <Panel id="profile">
+            <ProfilePanelContent onSettingsClick={handleSettingsClick} onBack={goBack} />
+          </Panel>
+          <Panel id="settings">
+            <SettingsPanelContent
+              name={userName}
+              onChangeName={setUserName}
+              onBack={handleBackForPreventIfNeeded}
+            />
+          </Panel>
+        </View>
+        {popoutWithRestriction}
       </ConfigProviderOverride>
     );
   },

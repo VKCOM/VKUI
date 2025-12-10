@@ -25,6 +25,9 @@ export const CheckboxPlayground = (props: ComponentPlaygroundProps) => {
           disabled: [undefined, true],
           $adaptivity: 'y',
         },
+        {
+          noPadding: [false, true],
+        },
       ]}
     >
       {baseRender}

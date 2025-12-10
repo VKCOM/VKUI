@@ -4,7 +4,7 @@ import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { PlatformProvider, type PlatformProviderProps } from './PlatformProvider';
 
 const story: Meta<PlatformProviderProps> = {
-  title: 'Service/PlatformProvider',
+  title: 'Configuration/PlatformProvider',
   component: PlatformProvider,
   argTypes: {
     value: {
@@ -15,6 +15,7 @@ const story: Meta<PlatformProviderProps> = {
     },
   },
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  tags: ['Конфигурация'],
 };
 
 export default story;

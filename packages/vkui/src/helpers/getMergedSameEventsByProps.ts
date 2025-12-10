@@ -16,7 +16,7 @@ const isFunctionExistInProps = <Props extends Record<PropertyKey, any>>(
  * @private
  */
 export const getMergedSameEventsByProps = <
-  T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
+  T extends keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any>,
   MainProps extends React.ComponentProps<T>,
   OnlyFnPropsByMain extends PickOnlyFunctionProps<MainProps>,
 >(

@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`subnavigation-button transforms correctly 1`] = `
+exports[`subnavigation-button > transforms correctly 1`] = `
 "import { SubnavigationButton } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <SubnavigationButton
         chevron={true}
         selected={true}
@@ -14,7 +14,7 @@ const App = () => {
       >
         Button
       </SubnavigationButton>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

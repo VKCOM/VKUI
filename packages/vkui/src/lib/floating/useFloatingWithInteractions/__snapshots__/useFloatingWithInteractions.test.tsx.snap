@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`useFloatingWithInteractions tests with snapshot should be hidden state 1`] = `
+exports[`useFloatingWithInteractions > tests with snapshot > should be hidden state 1`] = `
 {
   "floatingProps": {
     "onMouseLeave": [Function],
@@ -34,7 +34,7 @@ exports[`useFloatingWithInteractions tests with snapshot should be hidden state 
 }
 `;
 
-exports[`useFloatingWithInteractions tests with snapshot should be shown state 1`] = `
+exports[`useFloatingWithInteractions > tests with snapshot > should be shown state 1`] = `
 {
   "floatingProps": {
     "onAnimationEnd": [Function],
@@ -77,7 +77,7 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state 1
 }
 `;
 
-exports[`useFloatingWithInteractions tests with snapshot should be shown state with disabled close on esc key and click outside events 1`] = `
+exports[`useFloatingWithInteractions > tests with snapshot > should be shown state with disabled close on esc key and click outside events 1`] = `
 {
   "floatingProps": {
     "onAnimationEnd": [Function],
@@ -120,7 +120,7 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state w
 }
 `;
 
-exports[`useFloatingWithInteractions tests with snapshot should be shown state with disabled interactive feature 1`] = `
+exports[`useFloatingWithInteractions > tests with snapshot > should be shown state with disabled interactive feature 1`] = `
 {
   "floatingProps": {
     "onAnimationEnd": [Function],
@@ -162,7 +162,7 @@ exports[`useFloatingWithInteractions tests with snapshot should be shown state w
 }
 `;
 
-exports[`useFloatingWithInteractions tests with snapshot should return default values 1`] = `
+exports[`useFloatingWithInteractions > tests with snapshot > should return default values 1`] = `
 {
   "floatingProps": {
     "style": {},

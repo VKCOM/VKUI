@@ -4,10 +4,10 @@
   display: flex;
   align-items: center;
   min-block-size: 48px;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+  color: var(--vkui--color_text_primary);
   white-space: nowrap;
   text-decoration: none;
-  color: var(--vkui--color_text_primary);
-  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .mult {
@@ -25,6 +25,7 @@
 .before {
   display: flex;
   align-items: center;
+  align-self: stretch;
   padding-block: var(--vkui--spacing_size_s);
   padding-inline-end: var(--vkui_internal--SimpleCell-before-inline-padding-end);
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
@@ -32,6 +33,7 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .before > :global(.vkuiIcon) {
+  box-sizing: content-box;
   padding-inline-end: var(--vkui--spacing_size_xs);
 }
 
@@ -46,12 +48,12 @@
 
 .middle {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
-  padding-block: var(--vkui--spacing_size_l);
-  max-inline-size: 100%;
-  flex-grow: 1;
   min-inline-size: 0;
+  max-inline-size: 100%;
+  padding-block: var(--vkui--spacing_size_l);
   overflow: hidden;
 }
 
@@ -65,8 +67,8 @@
 }
 
 .text {
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .subtitle,
@@ -78,24 +80,20 @@
   display: flex;
   align-content: flex-start;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   max-inline-size: 100%;
 }
 
-.host:not(.mult) .content {
-  justify-content: flex-start;
-}
-
 .children {
-  color: inherit;
-  text-overflow: ellipsis;
-  overflow: hidden;
   display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
 }
 
 .mult .children,
 .mult .subtitle {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
 }
 
 .badge {
@@ -112,23 +110,26 @@
 
 .indicator {
   flex-shrink: 0;
-  color: var(--vkui--color_text_secondary);
   min-inline-size: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
   padding-inline-start: var(--vkui--spacing_size_xl);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--vkui--color_text_secondary);
+  white-space: nowrap;
 }
 
 .after {
-  flex-shrink: 0;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
+  align-self: stretch;
+  padding-inline-start: var(--vkui--spacing_size_xl);
   color: var(--vkui_internal--icon_color, var(--vkui--color_icon_accent));
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .after > :global(.vkuiIcon) {
+  box-sizing: content-box;
   padding-inline-start: var(--vkui--spacing_size_m);
 }
 
@@ -139,6 +140,9 @@
 
 .chevronIcon {
   color: var(--vkui--color_icon_tertiary);
+}
+
+.chevronIcon:not(:first-child) {
   padding-inline-start: var(--vkui--spacing_size_xl);
 }
 

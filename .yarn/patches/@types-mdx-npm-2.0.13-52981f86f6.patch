@@ -1,0 +1,12 @@
+diff --git a/types.d.ts b/types.d.ts
+index 498bb694de2e6a62f14d3fe998dc538aff920fc6..719f0ea55bb472e2df0e38a06df88d5ad6156b44 100644
+--- a/types.d.ts
++++ b/types.d.ts
+@@ -1,5 +1,7 @@
+ // Internal helper types
+ 
++import type { JSX } from "react/jsx-runtime";
++
+ /**
+  * This is the global JSX.ElementType if it’s defined, otherwise never.
+  */

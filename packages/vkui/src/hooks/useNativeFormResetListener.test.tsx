@@ -34,7 +34,7 @@ const CustomFormItemComponent = ({
 
 describe(useNativeFormResetListener, () => {
   it('should reset state of custom form item component', () => {
-    const hookCallback = jest.fn();
+    const hookCallback = vi.fn();
     const result = render(
       <form>
         <CustomFormItemComponent
@@ -52,7 +52,7 @@ describe(useNativeFormResetListener, () => {
     fireEvent.click(result.getByTestId('reset'));
 
     expect(customFormItemLocator).toHaveTextContent('');
-    expect(hookCallback).toHaveBeenCalledWith(
+    expect(hookCallback).toHaveBeenCalledExactlyOnceWith(
       expect.objectContaining({
         isTrusted: true,
       }),
@@ -63,7 +63,7 @@ describe(useNativeFormResetListener, () => {
     { Wrapper: 'form' as const, props: { disabledRef: true }, description: 'ref is null' },
     { Wrapper: 'div' as const, props: {}, description: 'form is not exist' },
   ])('should be disabled if $description', ({ Wrapper, props }) => {
-    const hookCallback = jest.fn();
+    const hookCallback = vi.fn();
     const result = render(
       <Wrapper>
         <CustomFormItemComponent

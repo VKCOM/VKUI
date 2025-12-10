@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`simple-cell transforms correctly 1`] = `
+exports[`simple-cell > transforms correctly 1`] = `
 "import { SimpleCell } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <SimpleCell
         onClick={() => {}}
         chevron="auto"
@@ -29,7 +29,7 @@ const App = () => {
       >
         Геолокация
       </SimpleCell>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

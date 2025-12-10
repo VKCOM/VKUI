@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -10,9 +11,6 @@ export interface ScrollSaverProps extends HasChildren {
   saveScroll: (this: void, scroll: number) => any;
 }
 
-/**
- * @see https://vkcom.github.io/VKUI/#/ScrollSaver
- */
 export const ScrollSaver = ({
   children,
   initialScroll,

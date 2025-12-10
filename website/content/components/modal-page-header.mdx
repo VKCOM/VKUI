@@ -1,0 +1,46 @@
+---
+description: Шапка для модальных страниц.
+---
+
+<Overview group="modals">
+
+# ModalPageHeader [tag:component]
+
+Шапка в модальных страницах.
+Имеет очень похожую логику на [`PanelHeader`](/components/panel-header): два свойства `before` и `after` для иконок и
+название модальной страницы, передаваемое как `children`.
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const platform = usePlatform();
+
+return (
+  <ModalPageHeader
+    before={platform !== 'ios' && <PanelHeaderClose />}
+    after={<PanelHeaderSubmit />}
+  >
+    Заголовок модальной страницы
+  </ModalPageHeader>
+);
+```
+
+</Playground>
+
+## Требования по расположению кнопок
+
+- На Android **слева** может быть [`PanelHeaderClose`](/components/panel-header#panel-header-close).
+- На iOS **справа** должна быть кнопка закрытия. Это может быть либо [`PanelHeaderButton`](/components/panel-header#panel-header-button)
+  с иконкой `<Icon24Dismiss />`, либо [`PanelHeaderClose`](/components/panel-header#panel-header-close)
+  или [`PanelHeaderSubmit`](/components/panel-header#panel-header-submit).
+- Если произойдёт навигация вперёд внутри модального окна, то **слева** в шапке останется **только** кнопка назад.
+
+Также на Android могут быть какие-то дополнительные кнопки-иконки справа, а на iOS – слева.
+
+## Свойства и методы [#api]
+
+<PropsTable name="ModalPageHeader" />

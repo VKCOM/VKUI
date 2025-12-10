@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`spinner transforms correctly 1`] = `
+exports[`spinner > transforms correctly 1`] = `
 "import { Spinner } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <Spinner size="xl" />
       <Spinner size="l" />
       <Spinner size="m" />
       <Spinner size="s">Кастомный текст вместо "Загружается...", который озвучит скринридер</Spinner>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

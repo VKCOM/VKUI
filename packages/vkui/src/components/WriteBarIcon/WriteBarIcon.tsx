@@ -36,7 +36,7 @@ export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButton
    * Валидные значения:
    * - `attach` – иконка прикрепления, текст по умолчанию — "Прикрепить файл";
    * - `send` – иконка отправки, текст по умолчанию — "Отправить";
-   * - `done` – иконка отправки в режиме редактирования, текст по умолчанию — "Готово";
+   * - `done` – иконка отправки в режиме редактирования, текст по умолчанию — "Готово".
    */
   mode?: 'attach' | 'send' | 'done';
   /**
@@ -52,13 +52,12 @@ export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButton
 const warn = warnOnce('WriteBarIcon');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/WriteBarIcon
+ * @see https://vkui.io/components/write-bar#write-bar-icon
  */
 export const WriteBarIcon = ({
   mode,
   children,
   count,
-  className,
   label: labelProp,
   ...restProps
 }: WriteBarIconProps): React.ReactNode => {
@@ -108,16 +107,15 @@ export const WriteBarIcon = ({
 
   return (
     <Tappable
-      {...restProps}
       Component="button"
       hasHover={false}
       activeMode={styles.active}
-      className={classNames(
+      {...restProps}
+      baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
         mode === 'send' && styles.modeSend,
         mode === 'done' && styles.modeDone,
-        className,
       )}
     >
       <span className={styles.in}>

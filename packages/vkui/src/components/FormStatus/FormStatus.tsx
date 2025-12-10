@@ -5,12 +5,18 @@ import { Banner } from '../Banner/Banner';
 import styles from './FormStatus.module.css';
 
 export interface FormStatusProps extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'title'> {
+  /**
+   * Режим отображения компонента.
+   */
   mode?: 'default' | 'error';
+  /**
+   * Основной текст.
+   */
   title?: React.ReactNode;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/FormStatus
+ * @see https://vkui.io/components/form-status
  */
 export const FormStatus = ({
   mode,

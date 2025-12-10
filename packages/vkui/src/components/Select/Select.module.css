@@ -1,35 +1,35 @@
 .host {
   position: relative;
-  cursor: pointer;
   box-sizing: border-box;
   font-family: var(--vkui--font_family_base);
+  cursor: pointer;
 }
 
 .el {
-  display: block;
   position: absolute;
-  appearance: none;
-  border: 0;
-  inset-inline-start: 0;
   inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--vkui_internal--z_index_form_field_side);
+  display: block;
   inline-size: 100%;
   block-size: 100%;
-  opacity: 0;
-  z-index: var(--vkui_internal--z_index_form_field_side);
-  font-size: var(--vkui--font_paragraph--font_size--regular);
   font-family: inherit;
+  font-size: var(--vkui--font_paragraph--font_size--regular);
+  appearance: none;
+  border: 0;
+  opacity: 0;
 }
 
 .container {
-  align-self: center;
-  flex-grow: 1;
-  flex-shrink: 1;
-  padding-inline: 12px 0;
-  color: var(--vkui--color_text_primary);
-  box-sizing: border-box;
   position: relative;
   z-index: var(--vkui_internal--z_index_form_field_element);
+  box-sizing: border-box;
+  flex-grow: 1;
+  flex-shrink: 1;
+  align-self: center;
+  padding-inline: 12px 0;
   overflow: hidden;
+  color: var(--vkui--color_text_primary);
 }
 
 .hasBefore .container {
@@ -56,8 +56,8 @@
 
 .host:not(.multiline) .title {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .empty .title {

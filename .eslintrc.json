@@ -5,6 +5,7 @@
     "browser": true,
     "node": true
   },
+  "ignorePatterns": ["examples/**"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["import", "unicorn", "eslint-plugin-react-compiler"],
   "parserOptions": {
@@ -17,16 +18,20 @@
       "spread": true
     }
   },
-  "extends": [
-    "plugin:@vkontakte/eslint-plugin/react-typescript", // "Preset 1"
-    "prettier" // "Preset 2" (overrides "Preset 1")
-  ],
+  "extends": ["plugin:@vkontakte/eslint-plugin/react-typescript"],
   "rules": {
     "@typescript-eslint/method-signature-style": "error",
     "@typescript-eslint/explicit-member-accessibility": "off", // [Reason] overrides "Preset 1"
     "@typescript-eslint/no-unnecessary-condition": "off", // [Reason] overrides "Preset 1"
     "@typescript-eslint/no-magic-numbers": "off", // [Reason] overrides "Preset 1"
     "@typescript-eslint/no-non-null-assertion": "off", // [Reason] overrides "Preset 1"
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-extra-parens": "off",
+    "@typescript-eslint/quotes": "off",
+    "react/jsx-indent": "off",
+    "space-before-function-paren": "off",
+    "comma-spacing": "off",
+    "max-len": "off",
     "@typescript-eslint/ban-ts-comment": [
       "error",
       {
@@ -60,6 +65,11 @@
             "position": "before"
           },
           {
+            "group": "external",
+            "pattern": "@/**",
+            "position": "after"
+          },
+          {
             "pattern": "*.css",
             "group": "index",
             "patternOptions": { "matchBase": true },
@@ -83,6 +93,8 @@
     "unicorn/expiring-todo-comments": ["error"],
     "no-console": "error",
     "react-compiler/react-compiler": 2,
-    "no-useless-computed-key": "error"
+    "no-useless-computed-key": "error",
+
+    "spaced-comment": ["error", "always", { "exceptions": ["#__PURE__"] }]
   }
 }

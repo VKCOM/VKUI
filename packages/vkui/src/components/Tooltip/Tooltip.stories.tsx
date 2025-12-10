@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Button } from '../Button/Button';
 import { Tooltip, type TooltipProps } from './Tooltip';
 
 const story: Meta<TooltipProps> = {
-  title: 'Poppers/Tooltip',
+  title: 'Modals/Tooltip',
   component: Tooltip,
-  parameters: DisableCartesianParam,
+  parameters: createStoryParameters('Tooltip', DisableCartesianParam),
+  tags: ['Модальные окна'],
 };
 
 export default story;

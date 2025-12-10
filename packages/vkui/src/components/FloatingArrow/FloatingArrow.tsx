@@ -2,15 +2,18 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
 import type { HasDataAttribute, HTMLAttributesWithRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { DefaultIcon } from './DefaultIcon';
 import styles from './FloatingArrow.module.css';
 
 export type Coords = {
+  /** Координата x. */
   x?: number;
+  /** Координата y. */
   y?: number;
 };
 
-const placementClassNames = {
+export const placementClassNames = {
   right: styles.placementRight,
   bottom: styles.placementBottom,
   left: styles.placementLeft,
@@ -27,15 +30,32 @@ export interface FloatingArrowProps
    * Включает абсолютное смещение по `offset`.
    */
   isStaticOffset?: boolean;
+  /**
+   * Координаты стрелки.
+   */
   coords?: Coords;
+  /**
+   * Расположение всплывающего элемента.
+   */
   placement?: Placement;
+  /**
+   * Стили иконки.
+   */
   iconStyle?: React.CSSProperties;
+  /**
+   * `className` для иконки.
+   */
   iconClassName?: string;
+  /**
+   * Иконка для отображения стрелки.
+   */
   Icon?: React.ComponentType<React.SVGAttributes<SVGSVGElement>>;
 }
 
 /**
- * @private
+ * Иконка-стрелка для всплывающих окон.
+ *
+ * @since 7.0.0
  */
 export const FloatingArrow = ({
   offset,
@@ -44,7 +64,6 @@ export const FloatingArrow = ({
   iconStyle,
   iconClassName,
   placement = 'bottom',
-  getRootRef,
   Icon = DefaultIcon,
   ...restProps
 }: FloatingArrowProps): React.ReactNode => {
@@ -56,14 +75,13 @@ export const FloatingArrow = ({
   );
 
   return (
-    <div
-      ref={getRootRef}
-      style={arrowStyles}
-      className={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
+    <RootComponent
+      baseStyle={arrowStyles}
+      baseClassName={classNames(styles.host, arrowPlacement && placementClassNames[arrowPlacement])}
       {...restProps}
     >
       <Icon className={classNames(styles.in, iconClassName)} style={iconStyle} />
-    </div>
+    </RootComponent>
   );
 };
 

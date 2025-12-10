@@ -2,15 +2,16 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getAvatarUrl } from '../../testing/mock';
 import { createFieldWithPresets } from '../../testing/presets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { ModalCardBase, type ModalCardBaseProps } from './ModalCardBase';
 
 const story: Meta<ModalCardBaseProps> = {
-  title: 'Blocks/ModalCardBase',
+  title: 'Modals/ModalCardBase',
   component: ModalCardBase,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ModalCardBase', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     icon: createFieldWithPresets({
       iconSizes: ['56'],
@@ -55,6 +56,7 @@ const story: Meta<ModalCardBaseProps> = {
       },
     }),
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { Tabs } from '../Tabs/Tabs';
 import { TabsItem } from './TabsItem';
 
@@ -30,16 +30,20 @@ const TestTabs = () => {
 };
 
 const mockScrollIntoView = () => {
-  const scrollIntoViewMock = jest.fn();
+  const scrollIntoViewMock = vi.fn();
   Element.prototype.scrollIntoView = scrollIntoViewMock;
   return scrollIntoViewMock;
 };
 
 describe('TabsItem', () => {
   baselineComponent(TabsItem, {
-    // TODO [a11y]: "Certain ARIA roles must be contained by particular parents (aria-required-parent)"
-    //              https://dequeuniversity.com/rules/axe/4.5/aria-required-parent?application=axeAPI
-    a11y: false,
+    a11yConfig: {
+      rules: {
+        // TODO [a11y]: "Certain ARIA roles must be contained by particular parents (aria-required-parent)"
+        //              https://dequeuniversity.com/rules/axe/4.5/aria-required-parent?application=axeAPI
+        'aria-required-parent': { enabled: false },
+      },
+    },
   });
 
   it('should scroll to tab', () => {
@@ -50,7 +54,7 @@ describe('TabsItem', () => {
     const scrollIntoViewMock = mockScrollIntoView();
     fireEvent.click(secondTab);
 
-    expect(scrollIntoViewMock).toHaveBeenCalledWith({
+    expect(scrollIntoViewMock).toHaveBeenCalledExactlyOnceWith({
       inline: 'start',
       block: 'nearest',
       behavior: 'smooth',
@@ -61,7 +65,7 @@ describe('TabsItem', () => {
     render(<TestTabs />);
 
     const secondTab = screen.getByTestId<HTMLDivElement>('second');
-    jest.spyOn(secondTab, 'getBoundingClientRect').mockImplementation(() => {
+    vi.spyOn(secondTab, 'getBoundingClientRect').mockImplementation(() => {
       const rect = {
         top: -1,
       };
@@ -73,27 +77,29 @@ describe('TabsItem', () => {
     expect(scrollIntoViewMock).toHaveBeenCalledTimes(0);
   });
 
-  it('check DEV warnings', () => {
-    process.env.NODE_ENV = 'development';
-    const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
-    const { rerender } = render(
-      <TabsItem data-testid="first" selected={false}>
-        test
-      </TabsItem>,
-    );
-    expect(warn.mock.calls[0][0]).toBe(
-      '%c[VKUI/TabsItem] Передайте в "aria-controls" id контролируемого блока',
-    );
+  describe('DEV errros', () => {
+    beforeEach(() => setNodeEnv('development'));
+    afterEach(() => setNodeEnv('test'));
 
-    rerender(
-      <TabsItem aria-controls="control" data-testid="first" selected={false}>
-        test
-      </TabsItem>,
-    );
-    expect(warn.mock.calls[1][0]).toBe(
-      '%c[VKUI/TabsItem] Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока',
-    );
+    it('check calls TabsItem', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
+      const { rerender } = render(
+        <TabsItem data-testid="first" selected={false}>
+          test
+        </TabsItem>,
+      );
+      expect(warn.mock.calls[0][0]).toBe(
+        '%c[VKUI/TabsItem] Передайте в "aria-controls" id контролируемого блока',
+      );
 
-    process.env.NODE_ENV = 'test';
+      rerender(
+        <TabsItem aria-controls="control" data-testid="first" selected={false}>
+          test
+        </TabsItem>,
+      );
+      expect(warn.mock.calls[1][0]).toBe(
+        '%c[VKUI/TabsItem] Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока',
+      );
+    });
   });
 });

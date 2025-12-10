@@ -9,7 +9,7 @@ export const PullToRefreshPlayground = (
   return (
     <ComponentPlayground {...playgroundProps} platform="vkcom">
       {({ ...props }: PullToRefreshProps) => (
-        <Div style={{ width: '300px', paddingLeft }}>
+        <Div style={{ width: '300px', paddingLeft, boxSizing: 'content-box' }}>
           <PullToRefresh {...props}>
             <div
               style={{
@@ -44,7 +44,7 @@ export const PullToRefreshChildrenPositionPlayground = (props: ComponentPlaygrou
   return (
     <ComponentPlayground {...props} platform="vkcom">
       {({ ...props }: PullToRefreshProps) => (
-        <Div style={{ width: '300px', height: '500px', display: 'flex' }}>
+        <Div style={{ width: '300px', height: '500px', display: 'flex', boxSizing: 'content-box' }}>
           <PullToRefresh {...props}>
             <div
               style={{

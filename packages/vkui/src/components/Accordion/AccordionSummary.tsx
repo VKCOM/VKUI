@@ -22,7 +22,7 @@ export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'chevron'> 
   iconPosition?: 'before' | 'after';
 }
 
-export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
+export const AccordionSummary = ({
   after,
   before,
   ExpandIcon = Icon24ChevronDown,
@@ -69,5 +69,3 @@ export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
     </SimpleCell>
   );
 };
-
-AccordionSummary.displayName = 'AccordionSummary';

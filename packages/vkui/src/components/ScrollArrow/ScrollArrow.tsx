@@ -1,6 +1,9 @@
+'use client';
+
 import * as React from 'react';
 import { Icon16Chevron, Icon24Chevron } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import type { HasRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -38,17 +41,20 @@ export interface ScrollArrowProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     HasRootRef<HTMLButtonElement> {
   /**
-   * Направление стрелки
+   * Направление стрелки.
    */
   direction: 'up' | 'right' | 'down' | 'left';
   /**
-   * Размер стрелки
+   * Размер стрелки.
    */
   size?: 's' | 'm';
   /**
    * Смещает иконку кнопки навигации по вертикали.
    */
   offsetY?: number | string;
+  /**
+   * [a11y]: Используется для ассистивных технологий.
+   */
   label?: string;
 }
 
@@ -56,7 +62,7 @@ export interface ScrollArrowProps
  * Компонент стрелки. Используется в [HorizontalScroll](#/HorizontalScroll) и [Gallery](#/Gallery).
  *
  * @since 5.4.0
- * @see https://vkcom.github.io/VKUI/#/ScrollArrow
+ * @see https://vkui.io/components/scroll-arrow
  */
 export const ScrollArrow = ({
   size = 'm',
@@ -66,13 +72,19 @@ export const ScrollArrow = ({
   children = <ArrowIcon size={size} />,
   ...restProps
 }: ScrollArrowProps): React.ReactNode => {
+  const textDirection = useConfigDirection();
   const label = labelProp ?? labelDirection[direction];
 
   return (
     <RootComponent
       Component="button"
       type="button"
-      baseClassName={classNames(styles.host, stylesSize[size], stylesDirection[direction])}
+      baseClassName={classNames(
+        styles.host,
+        stylesSize[size],
+        stylesDirection[direction],
+        textDirection === 'rtl' && styles.rtl,
+      )}
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}

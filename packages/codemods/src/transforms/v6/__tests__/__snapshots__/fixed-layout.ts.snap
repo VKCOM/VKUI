@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fixed-layout transforms correctly 1`] = `
+exports[`fixed-layout > transforms correctly 1`] = `
 "import { FixedLayout } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <FixedLayout getRootRef={ref2}>...</FixedLayout>
       <FixedLayout getRootRef={ref1} boolValue>...</FixedLayout>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

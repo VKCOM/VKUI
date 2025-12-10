@@ -1,12 +1,15 @@
-import '../src/styles/constants.css';
-import '../src/styles/themes.css';
-import '../src/styles/common.css';
-import '../src/styles/dynamicTokens.css';
-import '../src/styles/adaptivity.module.css';
-
+import { spyOn } from 'storybook/test';
 import { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
+// Выносим отдельно, чтобы файл обрабатывался postcss плагином
+import '../src/styles/layout.css';
+import './preview.css';
+
+declare global {
+  const __DOCS_BASE_URL__: string;
+  const __COMPONENTS_SOURCE_BASE_URL__: string;
+}
 
 interface CustomViewPortItem {
   name: string;
@@ -36,6 +39,25 @@ const customViewports = Object.entries(BREAKPOINTS).reduce<Record<string, Custom
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: [
+          'Introduction',
+          'Layout',
+          ['Group', ['*', 'Header', 'Footer']],
+          'Forms',
+          'Dates',
+          'Buttons',
+          'Navigation',
+          'Feedback',
+          'Modals',
+          'Data Display',
+          'Typography',
+          'Configuration',
+          'Utils',
+        ],
+      },
+    },
     docs: {
       source: {
         type: 'dynamic',
@@ -48,20 +70,23 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    viewport: { viewports: customViewports },
+    viewport: {
+      options: customViewports,
+    },
     backgrounds: { disable: true },
     cartesian: { disabled: true },
   },
+  initialGlobals: {
+    docsBaseUrl: __DOCS_BASE_URL__,
+    componentsSourceBaseUrl: __COMPONENTS_SOURCE_BASE_URL__,
+    colorScheme: 'light',
+    hasPointer: true,
+    storybookTheme: 'light',
+    hasCustomPanelHeaderAfter: false,
+    direction: 'ltr',
+    writingMode: 'horizontal-tb',
+  },
   globalTypes: {
-    colorScheme: {
-      defaultValue: 'light',
-    },
-    hasPointer: {
-      defaultValue: true,
-    },
-    storybookTheme: {
-      defaultValue: 'light',
-    },
     platform: {
       name: 'Platform',
       description: 'Platform for components',
@@ -75,12 +100,10 @@ const preview: Preview = {
     },
     hasCustomPanelHeaderAfter: {
       description: 'Hide "after" prop of PanelHeader for custom floating "after" element',
-      defaultValue: false,
     },
     direction: {
       name: 'Direction',
       description: "Attribute indicating the directionality of the element's text",
-      defaultValue: 'ltr',
       toolbar: {
         items: [
           { value: 'ltr', icon: 'menu', title: 'ltr' },
@@ -92,7 +115,6 @@ const preview: Preview = {
       name: 'Writing mode',
       description:
         'Sets whether lines of text are laid out horizontally or vertically, as well as the direction in which blocks progress',
-      defaultValue: 'horizontal-tb',
       toolbar: {
         icon: 'redirect',
         items: ['horizontal-tb', 'vertical-rl', 'vertical-lr'],
@@ -107,3 +129,15 @@ const preview: Preview = {
 };
 
 export default preview;
+
+export const beforeEach = function beforeEach() {
+  spyOn(console, 'log').mockName('console.log');
+  spyOn(console, 'warn').mockName('console.warn');
+  spyOn(console, 'error').mockName('console.error');
+  spyOn(console, 'info').mockName('console.info');
+  spyOn(console, 'debug').mockName('console.debug');
+  spyOn(console, 'trace').mockName('console.trace');
+  spyOn(console, 'count').mockName('console.count');
+  spyOn(console, 'dir').mockName('console.dir');
+  spyOn(console, 'assert').mockName('console.assert');
+};

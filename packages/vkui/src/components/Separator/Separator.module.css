@@ -25,19 +25,19 @@
 
 .sized.directionHorizontal {
   display: flex;
-  block-size: var(--vkui_internal--spacing_size);
   align-items: var(--vkui_internal--separator_align, center);
+  block-size: var(--vkui_internal--spacing_size);
 }
 
 .sized.directionVertical {
-  inline-size: var(--vkui_internal--spacing_size);
   justify-content: var(--vkui_internal--separator_align, center);
+  inline-size: var(--vkui_internal--spacing_size);
 }
 
 .in {
   margin: 0;
-  background: currentColor;
   color: inherit;
+  background: currentColor;
   border: 0;
 }
 

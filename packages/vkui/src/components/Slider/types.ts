@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 export type InternalValueState = [number, number | null];
 
 export type InternalDraggingType = 'start' | 'end';

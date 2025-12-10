@@ -1,21 +1,21 @@
 .host {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  background: var(--vkui--color_background_contrast_themed);
-  border: 0.5px solid var(--vkui--color_separator_primary);
-  box-sizing: border-box;
-  box-shadow: var(--vkui--elevation1);
-  border-radius: 8px;
   inline-size: 305px;
   padding: 12px;
+  background: var(--vkui--color_background_contrast_themed);
+  border: 0.5px solid var(--vkui--color_separator_primary);
+  border-radius: 8px;
+  box-shadow: var(--vkui--elevation1);
 }
 
 .time {
-  border-block-start: 1px solid var(--vkui--color_separator_primary);
-  margin-block: 12px 0;
-  margin-inline: -12px;
   padding-block: 12px 0;
   padding-inline: 12px;
+  margin-block: 12px 0;
+  margin-inline: -12px;
+  border-block-start: 1px solid var(--vkui--color_separator_primary);
 }
 
 .header {

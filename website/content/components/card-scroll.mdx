@@ -1,0 +1,100 @@
+---
+description: Компонент для создания горизонтально прокручиваемых списков Card.
+---
+
+<Overview group="layout">
+
+# CardScroll [tag:component]
+
+Компонент для создания горизонтально прокручиваемых списков [`Card`](/components/card).
+Отвечает за ширину карточки и прокрутку при переполнении. Обеспечивает гибкую настройку базовой разметки.
+
+Связанные компоненты:
+
+- [Card](/components/card)
+- [ContentCard](/components/content-card)
+
+</Overview>
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardScroll size="s">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 66}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardScroll>
+  ```
+</Playground>
+
+## Размер карточек
+
+Свойство `size` задаёт ширину каждой карточки и накладывает определённые ограничения на её пропорции.
+Соблюдение пропорций осуществляется самостоятельно
+(например, с помощью компонента [`AspectRatio`](/components/aspect-ratio), как в примере выше).
+
+| Размер  | Пропорции                      | Особенности                   |
+| ------- | ------------------------------ | ----------------------------- |
+| `s`     | высота 66% (≈1:1.5) от ширины  | Компактные элементы           |
+| `m`     | высота 42% (≈1:2.38) от ширины | Универсальный размер          |
+| `l`     | высота 29% (≈1:3.45) от ширины | Широкие элементы              |
+| `false` | Авто                           | Ширина определяется контентом |
+
+## Управление видимостью стрелок
+
+В реализации `CardScroll` используется компонент [`HorizontalScroll`](/components/horizontal-scroll).
+Поэтому для управления видимостью стрелок можно использовать свойство `showArrows` компонента `HorizontalScroll`:
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <CardScroll size="m" showArrows="always">
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+    <Card mode="shadow">
+      <AspectRatio ratio={100 / 42}>
+        <div />
+      </AspectRatio>
+    </Card>
+  </CardScroll>
+  ```
+</Playground>
+
+## Доступность (a11y) [#a11y]
+
+- По умолчанию используется семантический список (`<ul>`).
+- Для несписочных структур меняйте тег через свойство `CardsListComponent`.
+
+## Свойства и методы [#api]
+
+<PropsTable name="CardScroll" />

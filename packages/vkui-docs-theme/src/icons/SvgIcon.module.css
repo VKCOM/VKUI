@@ -1,0 +1,15 @@
+.icon {
+  display: block;
+}
+
+.verticalAlignMiddle {
+  vertical-align: middle;
+}
+
+.colorMedium {
+  color: var(--vkui--color_icon_medium);
+}
+
+.colorPrimary {
+  color: var(--vkui--color_icon_primary);
+}

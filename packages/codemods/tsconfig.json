@@ -5,7 +5,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": false,
     "isolatedModules": false,
-    "strict": true
+    "strict": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json"],
   "exclude": ["**/__testfixtures__", "**/__tests__", "node_modules"],

@@ -2,16 +2,18 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
 import { UIPanGestureRecognizer } from '../../lib/touch';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { HasDataAttribute, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { Button } from '../Button/Button';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Basic, type BasicProps } from './subcomponents/Basic/Basic';
@@ -46,6 +48,17 @@ export interface SnackbarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'role'>,
     BasicProps {
   /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `root`: свойства для прокидывания в корень компонента;
+   * - `action`: свойства для прокидывания в кнопку действия.
+   */
+  slotProps?: {
+    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+      HasRootRef<HTMLDivElement> &
+      HasDataAttribute;
+    action?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+  };
+  /**
    * Задаёт расположение компонента.
    *
    * > Note: в мобильном режиме:
@@ -59,19 +72,19 @@ export interface SnackbarProps
   placement?: SnackbarPlacement;
   /**
    * Название кнопки действия в уведомлении
-   * Не может использоваться одновременно с `subtitle`
+   * Не может использоваться одновременно с `subtitle`.
    */
   action?: React.ReactNode;
   /**
-   * Будет вызвано при клике на кнопку действия
+   * Будет вызвано при нажатии на кнопку действия.
    */
   onActionClick?: (event: React.MouseEvent) => void;
   /**
-   * Время в миллисекундах, через которое плашка скроется
+   * Время в миллисекундах, через которое плашка скроется.
    */
   duration?: number;
   /**
-   * Обработчик закрытия уведомления
+   * Обработчик закрытия уведомления.
    */
   onClose: () => void;
   /**
@@ -81,7 +94,7 @@ export interface SnackbarProps
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Snackbar
+ * @see https://vkui.io/components/snackbar
  */
 export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   placement = 'bottom-start',
@@ -91,19 +104,38 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   before,
   after,
   duration = 4000,
-  onActionClick,
+  onActionClick: onActionClickProp,
   onClose,
   mode = 'default',
   subtitle,
   offsetY,
-  style,
-  getRootRef,
+  getRootRef: getRootRefProp,
+
+  slotProps,
   ...restProps
 }: SnackbarProps) => {
+  const { getRootRef, ...rootRest } = useMergeProps(
+    {
+      getRootRef: getRootRefProp,
+      ...restProps,
+    },
+    slotProps?.root,
+  );
+
+  const { onClick: onActionClick, ...actionRest } = useMergeProps(
+    {
+      onClick: onActionClickProp,
+    },
+    slotProps?.action,
+  );
+
   const platform = usePlatform();
 
   const [open, setOpen] = React.useState(true);
   const [touched, setTouched] = React.useState(false);
+
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
 
   const rootRef = useExternRef(getRootRef);
   const focused = useFocusWithin(rootRef);
@@ -113,7 +145,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const shiftDataRef = React.useRef<ShiftData | null>(null);
 
   const rafRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
-  const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const closeTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const mediaQueries = useMediaQueries();
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     open ? 'enter' : 'exit',
@@ -159,7 +191,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   const handleActionClick = (event: React.MouseEvent) => {
     close();
     if (action) {
-      onActionClick?.(event);
+      onActionClick?.(event as React.MouseEvent<HTMLElement>);
     }
   };
 
@@ -182,6 +214,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
         placement,
         shiftDataRef.current,
         panGestureRecognizer.current.delta(),
+        isRtl,
       );
 
       if (shiftDataRef.current.shifted) {
@@ -204,6 +237,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
         shiftDataRef.current,
         getRelativeBoundingClientRect(rootRef.current!, inRef.current!),
         panGestureRecognizer.current.velocity(),
+        isRtl,
       )
     ) {
       close();
@@ -250,7 +284,6 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   return (
     <RootComponent
-      {...restProps}
       role="presentation"
       baseClassName={classNames(
         styles.host,
@@ -258,9 +291,11 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
         touched && styles.touched,
         placementClassNames[placement],
         animationStateClassNames[animationState],
+        isRtl && styles.rtl,
       )}
-      style={resolveOffsetYCssStyle(placement, style, offsetY)}
+      baseStyle={resolveOffsetYCssStyle(placement, offsetY)}
       getRootRef={rootRef}
+      {...rootRest}
     >
       <div
         role="alert"
@@ -296,6 +331,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
                 }
                 size="s"
                 onClick={handleActionClick}
+                {...actionRest}
               >
                 {action}
               </Button>

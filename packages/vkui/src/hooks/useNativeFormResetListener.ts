@@ -2,7 +2,7 @@ import type * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 export const useNativeFormResetListener = (
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   handler: (event: Event) => void,
 ): void => {
   useIsomorphicLayoutEffect(() => {

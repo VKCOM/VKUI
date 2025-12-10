@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { Placement } from '../../lib/floating';
@@ -11,19 +13,19 @@ export interface CustomSelectDropdownProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     Pick<CustomScrollViewProps, 'overscrollBehavior'>,
     HasDataAttribute {
-  targetRef: React.RefObject<HTMLElement>;
+  targetRef: React.RefObject<HTMLElement | null>;
   placement?: Placement;
   scrollBoxRef?: React.Ref<HTMLDivElement>;
   fetching?: boolean;
   offsetDistance?: number;
   /**
-   * Ширина раскрывающегося списка зависит от контента
+   * Ширина раскрывающегося списка зависит от контента.
    */
   autoWidth?: boolean;
   forcePortal?: boolean;
   onPlacementChange?: (placement: Placement) => void;
   /**
-   * Отключает максимальную высоту по умолчанию
+   * Отключает максимальную высоту по умолчанию.
    */
   noMaxHeight?: boolean;
 }
@@ -58,12 +60,15 @@ export const CustomSelectDropdown = ({
       )}
       usePortal={forcePortal}
       autoUpdateOnTargetResize
+      flipMiddlewareFallbackAxisSideDirection="none"
       {...restProps}
     >
       <CustomScrollView
         getRootRef={scrollBoxRef}
         className={noMaxHeight ? undefined : styles.inWithMaxHeight}
         overscrollBehavior={overscrollBehavior}
+        tabIndex={-1}
+        aria-busy={fetching}
       >
         {fetching ? (
           <div className={styles.fetching}>

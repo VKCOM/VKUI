@@ -1,29 +1,49 @@
 'use client';
 
 import * as React from 'react';
+import { isSameDate } from '@vkontakte/vkjs';
+import { useCalendar } from '../../hooks/useCalendar';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { isFirstDay, isLastDay } from '../../lib/calendar';
 import {
   addMonths,
   endOfDay,
-  isAfter,
-  isBefore,
-  isSameDay,
-  isSameMonth,
   isWithinInterval,
+  MONDAY,
   startOfDay,
   subMonths,
-} from 'date-fns';
-import { useCalendar } from '../../hooks/useCalendar';
-import { isFirstDay, isLastDay, navigateDate } from '../../lib/calendar';
+} from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
+import {
+  CalendarDays,
+  type CalendarDaysProps,
+  type CalendarDaysTestsProps,
+} from '../CalendarDays/CalendarDays';
+import {
+  CalendarHeader,
+  type CalendarHeaderProps,
+  type CalendarHeaderTestsProps,
+} from '../CalendarHeader/CalendarHeader';
 import { RootComponent } from '../RootComponent/RootComponent';
+import type { DateRangeType } from './types';
+import { useCalendarKeyboardNavigation, useIsDayFocusable } from './utils';
 import styles from './CalendarRange.module.css';
 
-export type DateRangeType = [Date | null, Date | null];
+export type { DateRangeType };
+
+export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части.
+   */
+  leftPartHeaderTestsData?: CalendarHeaderTestsProps;
+  /**
+   * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части.
+   */
+  rightPartHeaderTestsData?: CalendarHeaderTestsProps;
+};
 
 export interface CalendarRangeProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'defaultValue'>,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthLabel'
@@ -33,49 +53,105 @@ export interface CalendarRangeProps
       | 'prevMonthIcon'
       | 'nextMonthIcon'
     >,
-    Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'> {
-  value?: DateRangeType;
+    Pick<CalendarDaysProps, 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    CalendarRangeTestsProps {
+  /**
+   * Текущий выбранный промежуток.
+   */
+  value?: DateRangeType | null;
+  /**
+   * Начальный промежуток при монтировании.
+   */
+  defaultValue?: DateRangeType | null;
+  /**
+   * Запрещает выбор даты в прошлом.
+   * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
+   */
   disablePast?: boolean;
+  /**
+   * Запрещает выбор даты в будущем.
+   * Применяется, если не задано `shouldDisableDate`.
+   */
   disableFuture?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года.
+   */
   disablePickers?: boolean;
+  /**
+   * `aria-label` для изменения дня.
+   *
+   * @deprecated Since 7.4.0.
+   *
+   * Будет удалeно в **VKUI v8**. Использовалось для задания aria-label для контейнера дней в календаре.
+   * Теперь этот контейнер является таблицей (с помощью role="grid") и
+   * в aria-label рендерится текущий открытый в календаре месяц и год.
+   */
   changeDayLabel?: string;
+  /**
+   * День недели, с которого начинается неделя.
+   */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  onChange?: (value: DateRangeType | undefined) => void;
+  /**
+   * Обработчик изменения выбранного промежутка.
+   */
+  onChange?: (value: DateRangeType) => void;
+  /**
+   * Функция для проверки запрета выбора даты.
+   */
   shouldDisableDate?: (value: Date) => boolean;
+  /**
+   * @deprecated Свойство не используется.
+   */
   onClose?: () => void;
 }
 
-const getIsDaySelected = (day: Date, value?: DateRangeType) => {
+const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
   if (!value?.[0] || !value[1]) {
     return false;
   }
 
-  return isWithinInterval(day, { start: startOfDay(value[0]), end: endOfDay(value[1]) });
+  return isWithinInterval(day, [startOfDay(value[0]), endOfDay(value[1])]);
 };
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CalendarRange
+ * @see https://vkui.io/components/calendar-range
  */
 export const CalendarRange = ({
-  value,
+  'value': valueProp,
+  defaultValue,
   onChange,
   disablePast,
   disableFuture,
   shouldDisableDate,
-  onClose,
-  weekStartsOn = 1,
+  weekStartsOn = MONDAY,
   disablePickers,
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
-  changeDayLabel = 'Изменить день',
+  'aria-label': ariaLabel = 'Календарь',
   prevMonthIcon,
   nextMonthIcon,
   listenDayChangesForUpdate,
   renderDayContent,
+  dayTestId,
+  leftPartHeaderTestsData,
+  rightPartHeaderTestsData,
+  getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
+  const _onChange = (newRange: DateRangeType | null) => {
+    if (newRange && onChange) {
+      onChange(newRange);
+    }
+  };
+
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null>({
+    value: valueProp,
+    defaultValue: defaultValue as DateRangeType | null,
+    onChange: _onChange,
+  });
+
   const {
     viewDate,
     setViewDate,
@@ -85,32 +161,26 @@ export const CalendarRange = ({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({ value, disableFuture, disablePast, shouldDisableDate });
+
   const [hintedDate, setHintedDate] = React.useState<DateRangeType>();
   const secondViewDate = addMonths(viewDate, 1);
 
-  const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-        event.preventDefault();
-      }
-
-      const newFocusedDay = navigateDate(focusedDay ?? value?.[1], event.key);
-
-      if (
-        newFocusedDay &&
-        !isSameMonth(newFocusedDay, viewDate) &&
-        !isSameMonth(newFocusedDay, addMonths(viewDate, 1))
-      ) {
-        setViewDate(newFocusedDay);
-      }
-      setFocusedDay(newFocusedDay);
-    },
-    [focusedDay, setFocusedDay, setViewDate, value, viewDate],
-  );
+  const {
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    handleFirstCalendarKeyDown,
+    handleSecondCalendarKeyDown,
+    handleDayFocus,
+  } = useCalendarKeyboardNavigation({
+    focusedDay,
+    setFocusedDay,
+    value,
+    viewDates: [viewDate, secondViewDate],
+    setViewDate,
+  });
 
   const getNewValue = React.useCallback(
     (date: Date): DateRangeType => {
@@ -121,11 +191,11 @@ export const CalendarRange = ({
       }
 
       const [start] = value;
-      if (start && isSameDay(date, start)) {
+      if (start && isSameDate(date, start)) {
         return [startOfDay(start), endOfDay(start)];
-      } else if (start && isBefore(date, start)) {
+      } else if (start && date < start) {
         return [startOfDay(date), endOfDay(start)];
-      } else if (start && isAfter(date, start)) {
+      } else if (start && date > start) {
         return [start, endOfDay(date)];
       }
       return value;
@@ -135,41 +205,43 @@ export const CalendarRange = ({
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      onChange?.(getNewValue(date));
+      updateValue(getNewValue(date));
       setHintedDate(undefined);
     },
-    [onChange, getNewValue],
+    [updateValue, getNewValue],
   );
 
   const isDaySelected = React.useCallback((day: Date) => getIsDaySelected(day, value), [value]);
 
   const isDayActive = React.useCallback(
     (day: Date) =>
-      Boolean((value?.[0] && isSameDay(day, value[0])) || (value?.[1] && isSameDay(day, value[1]))),
+      Boolean(
+        (value?.[0] && isSameDate(day, value[0])) || (value?.[1] && isSameDate(day, value[1])),
+      ),
     [value],
   );
 
   const isDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDay(day, value[1]))),
+      Boolean(isLastDay(day, dayOfWeek) || (value?.[1] && isSameDate(day, value[1]))),
     [value],
   );
 
   const isHintedDaySelectionEnd = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDay(day, hintedDate[1]))),
+      Boolean(isLastDay(day, dayOfWeek) || (hintedDate?.[1] && isSameDate(day, hintedDate[1]))),
     [hintedDate],
   );
 
   const isDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDay(day, value[0]))),
+      Boolean(isFirstDay(day, dayOfWeek) || (value?.[0] && isSameDate(day, value[0]))),
     [value],
   );
 
   const isHintedDaySelectionStart = React.useCallback(
     (day: Date, dayOfWeek: number) =>
-      Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDay(day, hintedDate[0]))),
+      Boolean(isFirstDay(day, dayOfWeek) || (hintedDate?.[0] && isSameDate(day, hintedDate[0]))),
     [hintedDate],
   );
 
@@ -190,8 +262,41 @@ export const CalendarRange = ({
     [setViewDate],
   );
 
+  const isDayFocusableInFirstCalendar = useIsDayFocusable({
+    value,
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    viewDate,
+    isDayActive,
+  });
+
+  const isDayFocusableInSecondCalendar = useIsDayFocusable({
+    value,
+    focusableDayOnFirstCalendar,
+    focusableDayOnSecondCalendar,
+    viewDate: secondViewDate,
+    isDayActive,
+  });
+
+  const onDayFocus = React.useCallback(
+    (date: Date) => {
+      if (focusedDay && isSameDate(focusedDay, date)) {
+        return;
+      }
+
+      setFocusedDay(date);
+      handleDayFocus(date);
+    },
+    [focusedDay, handleDayFocus, setFocusedDay],
+  );
+
   return (
-    <RootComponent {...props} baseClassName={styles.host}>
+    <RootComponent
+      aria-label={ariaLabel}
+      {...props}
+      baseClassName={styles.host}
+      getRootRef={getRootRef}
+    >
       <div className={styles.inner}>
         <CalendarHeader
           viewDate={viewDate}
@@ -207,13 +312,16 @@ export const CalendarRange = ({
           prevMonthIcon={prevMonthIcon}
           isMonthDisabled={isMonthDisabled}
           isYearDisabled={isYearDisabled}
+          {...leftPartHeaderTestsData}
         />
         <CalendarDays
           viewDate={viewDate}
           value={value}
           weekStartsOn={weekStartsOn}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleFirstCalendarKeyDown}
+          onDayFocus={onDayFocus}
           isDayFocused={isDayFocused}
+          isDayFocusable={isDayFocusableInFirstCalendar}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -227,7 +335,7 @@ export const CalendarRange = ({
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
           renderDayContent={renderDayContent}
-          aria-label={changeDayLabel}
+          dayTestId={dayTestId}
         />
       </div>
       <div className={styles.inner}>
@@ -245,14 +353,16 @@ export const CalendarRange = ({
           nextMonthIcon={nextMonthIcon}
           isMonthDisabled={isMonthDisabled}
           isYearDisabled={isYearDisabled}
+          {...rightPartHeaderTestsData}
         />
         <CalendarDays
           viewDate={secondViewDate}
           value={value}
           weekStartsOn={weekStartsOn}
-          aria-label={changeDayLabel}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleSecondCalendarKeyDown}
+          onDayFocus={onDayFocus}
           isDayFocused={isDayFocused}
+          isDayFocusable={isDayFocusableInSecondCalendar}
           onDayChange={onDayChange}
           isDaySelected={isDaySelected}
           isDayActive={isDayActive}
@@ -266,8 +376,7 @@ export const CalendarRange = ({
           isDayDisabled={isDayDisabled}
           listenDayChangesForUpdate={listenDayChangesForUpdate}
           renderDayContent={renderDayContent}
-          tabIndex={0}
-          onBlur={resetSelectedDay}
+          dayTestId={dayTestId}
         />
       </div>
     </RootComponent>

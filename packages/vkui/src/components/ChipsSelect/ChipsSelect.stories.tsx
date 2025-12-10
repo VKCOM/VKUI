@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import { Icon12Download } from '@vkontakte/icons';
+import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import type { ChipOption } from '../ChipsInputBase/types';
 import { FormItem } from '../FormItem/FormItem';
 import { ChipsSelect, type ChipsSelectProps } from './ChipsSelect';
@@ -12,11 +13,12 @@ const iconsPresets = getFormFieldIconsPresets();
 const story: Meta<ChipsSelectProps<ChipOption>> = {
   title: 'Forms/ChipsSelect',
   component: ChipsSelect,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ChipsSelect', CanvasFullLayout, DisableCartesianParam),
   args: { onChange: fn(), onChangeStart: fn(), onInputChange: fn() },
   argTypes: {
     before: iconsPresets,
   },
+  tags: ['Формы и поля ввода'],
 };
 
 export default story;
@@ -41,10 +43,17 @@ const groups = [
 export const Playground: Story = {
   render: (args) => (
     <FormItem top="Выберите музыкальные группы" htmlFor="chips-select" style={{ width: 320 }}>
-      <ChipsSelect {...args} id="chips-select" />
+      <ChipsSelect aria-label="Выберите музыкальные группы" {...args} id="chips-select" />
     </FormItem>
   ),
   args: {
     options: groups,
+    defaultValue: [
+      {
+        value: '1',
+        label: 'Arctic Monkeys',
+      },
+      { value: '4', label: 'FACE' },
+    ],
   },
 };

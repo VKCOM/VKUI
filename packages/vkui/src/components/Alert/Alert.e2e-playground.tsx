@@ -1,13 +1,14 @@
 import {
   AppDefaultWrapper,
-  type AppWrapperProps,
+  type AppDefaultWrapperProps,
   ComponentPlayground,
   type ComponentPlaygroundProps,
 } from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { Alert, type AlertActionInterface, type AlertProps } from './Alert';
 
-const AppWrapper = ({ children, ...restProps }: AppWrapperProps) => (
-  <AppDefaultWrapper scroll="contain" {...restProps}>
+const AppWrapper = ({ children, ...restProps }: AppDefaultWrapperProps) => (
+  <AppDefaultWrapper scroll="contain" disablePortal {...restProps}>
     {children}
   </AppDefaultWrapper>
 );
@@ -81,10 +82,16 @@ export const AlertLongWordPlayground = (props: ComponentPlaygroundProps) => {
       propSets={[
         {
           title: [
-            'Оченьоченьоченьдлинноенеразрывноеслововзаголовкекотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
+            withLabel(
+              'Оченьоченьоченьдлинноенеразрывноеслововзаголовкекотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
+              'Very long title',
+            ),
           ],
           description: [
-            'Оченьоченьоченьдлинноенеразрывноеслововописаниикотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
+            withLabel(
+              'Оченьоченьоченьдлинноенеразрывноеслововописаниикотороедолжнопереноситьсянановуюстрочкуиневыходитьзаграницы',
+              'Very long description',
+            ),
           ],
         },
       ]}

@@ -1,9 +1,13 @@
 import { Icon16Add } from '@vkontakte/icons';
 import { noop } from '@vkontakte/vkjs';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  AppDefaultWrapper,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Search, type SearchProps } from './Search';
 
@@ -15,6 +19,7 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
         {
           value: [undefined, 'value'],
           icon: [undefined, <Icon16Add key="" />],
+          $direction: true,
         },
         {
           value: ['value'],
@@ -23,7 +28,10 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           value: [
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis ultrices purus id tempor',
+            withLabel(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi venenatis ultrices purus id tempor',
+              'Long value',
+            ),
           ],
         },
         {
@@ -35,7 +43,11 @@ export const SearchPlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: SearchProps) => <Search style={{ maxWidth: '320px' }} {...props} />}
+      {({ dir, ...props }: SearchProps) => (
+        <div dir={dir}>
+          <Search style={{ maxWidth: '320px' }} {...props} />
+        </div>
+      )}
     </ComponentPlayground>
   );
 };
@@ -44,17 +56,15 @@ export const SearchTestFocusOnIOSPlayground = ({ colorScheme }: ComponentPlaygro
   return (
     <ConfigProvider platform="ios" colorScheme={colorScheme}>
       <AdaptivityProvider sizeY="regular">
-        <AppRoot
-          mode="embedded"
+        <AppDefaultWrapper
+          disableDecorations
           style={{
             height: 'auto',
-            position: 'absolute',
             width: BREAKPOINTS.MOBILE,
-            background: 'var(--vkui--color_background_content)',
           }}
         >
           <Search after="after" />
-        </AppRoot>
+        </AppDefaultWrapper>
       </AdaptivityProvider>
     </ConfigProvider>
   );

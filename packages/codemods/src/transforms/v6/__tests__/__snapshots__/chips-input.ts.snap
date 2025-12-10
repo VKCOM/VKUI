@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`chips-input transforms correctly 1`] = `
+exports[`chips-input > transforms correctly 1`] = `
 "import { ChipsInput } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <ChipsInput id="color" value={colors} placeholder="Введите название цвета">
         Чип
       </ChipsInput>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

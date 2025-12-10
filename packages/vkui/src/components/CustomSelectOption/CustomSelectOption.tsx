@@ -3,8 +3,9 @@
 import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -49,15 +50,15 @@ export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLD
   /**
    * Блокирует весь блок.
    *
-   * > ⚠️  Важно: если CustomSelectOption используется внутри [Select](https://vkcom.github.io/VKUI/#/Select), [CustomSelect](https://vkcom.github.io/VKUI/#/CustomSelect) или [ChipsSelect](https://vkcom.github.io/VKUI/#/ChipsSelect), то свойство явно должно выставляться только через структуру `options`.
-   * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkcom.github.io/VKUI/#/CustomSelect) и [ChipsSelect](https://vkcom.github.io/VKUI/#/ChipsSelect) не будут знать об актуальном состоянии
+   * > ⚠️  Важно: если CustomSelectOption используется внутри [Select](https://vkui.io/components/select), [CustomSelect](https://vkui.io/components/custom-select) или [ChipsSelect](https://vkui.io/components/chips-select), то свойство явно должно выставляться только через структуру `options`.
+   * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkui.io/components/custom-select) и [ChipsSelect](https://vkui.io/components/chips-select) не будут знать об актуальном состоянии
    * опции.
    */
   disabled?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CustomSelectOption
+ * @see https://vkui.io/components/custom-select#custom-select-option
  */
 export const CustomSelectOption = ({
   children,
@@ -74,15 +75,14 @@ export const CustomSelectOption = ({
   ...restProps
 }: CustomSelectOptionProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
-  const style = React.useMemo(
+  const style: (React.CSSProperties & CSSCustomProperties<number>) | undefined = React.useMemo(
     () =>
       hierarchy > 0
         ? {
             '--vkui_internal--custom_select_option_hierarchy_level': hierarchy,
-            ...styleProp,
           }
-        : styleProp,
-    [hierarchy, styleProp],
+        : undefined,
+    [hierarchy],
   );
   const hovered = hoveredProp && !disabled ? true : false;
 
@@ -103,7 +103,7 @@ export const CustomSelectOption = ({
         hierarchy > 0 && styles.hierarchy,
         className,
       )}
-      style={style}
+      style={mergeStyle(style, styleProp)}
     >
       {hasReactNode(before) && <div className={styles.before}>{before}</div>}
       <div className={styles.main}>

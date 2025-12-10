@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`custom-scroll-view transforms correctly 1`] = `
+exports[`custom-scroll-view > transforms correctly 1`] = `
 "import { CustomScrollView, Div, Flex } from '@vkontakte/vkui';
 import React, {useRef} from 'react';
 
 const App = () => {
   const ref = useRef();
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* Проверяем удаление старый пропов */}
       <CustomScrollView className={"className"} enableHorizontalScroll>
         <Flex>
@@ -22,7 +22,7 @@ const App = () => {
           <Div/>
         </Flex>
       </CustomScrollView>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

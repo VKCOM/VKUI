@@ -1,0 +1,45 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  min-block-size: 150px;
+  padding-block: var(--vkui--spacing_size_m);
+  padding-inline: var(--vkui--spacing_size_m);
+  background-color: var(--vkui_docs--playground_color_background);
+  background-image:
+    linear-gradient(120deg, transparent 32px, var(--vkui_docs--playground_pattern_color) 32px),
+    linear-gradient(240deg, transparent 32px, var(--vkui_docs--playground_pattern_color) 32px);
+  background-position:
+    10px 10px,
+    10px 10px;
+  background-size: 23px 28px;
+
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_color_background: #f7f7f7;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_pattern_color: rgb(0, 0, 0, 0.08);
+}
+
+.rootDark {
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_color_background: #0e0e0f;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_pattern_color: rgb(255, 255, 255, 0.08);
+}
+
+.error {
+  color: var(--vkui--color_accent_red);
+}
+
+.wrapper {
+  inline-size: 100%;
+}
+
+.appRoot {
+  inline-size: 100%;
+  max-inline-size: inherit;
+  block-size: 100%;
+  max-block-size: inherit;
+}

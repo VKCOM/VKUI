@@ -25,3 +25,7 @@ d097bd0981e57982c5aac2ed823b4f0f3397cfaf
 # chore(eslint): turn on @typescript-eslint/consistent-type-imports
 # https://github.com/VKCOM/VKUI/pull/7429/commits/c208be6cfd9de0161f1470519ab80a4ae2c04777
 c208be6cfd9de0161f1470519ab80a4ae2c04777
+
+# tech: add plugin `stylelint-config-recess-order` to ordering styles
+# https://github.com/VKCOM/VKUI/pull/8235/commits/3757083f3af7dbad54f2a591a38b15f32b70483a
+3757083f3af7dbad54f2a591a38b15f32b70483a

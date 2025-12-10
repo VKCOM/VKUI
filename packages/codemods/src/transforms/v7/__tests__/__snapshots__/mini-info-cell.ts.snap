@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`mini-info-cell transforms correctly 1`] = `
+exports[`mini-info-cell > transforms correctly 1`] = `
 "import { Icon20WorkOutline, MiniInfoCell } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
   return (
-    (<React.Fragment>
+    <React.Fragment>
       <MiniInfoCell
         before={<Icon20WorkOutline />}
         mode="add"
@@ -25,7 +25,7 @@ const App = () => {
       >
         Укажите место учёбы
       </MiniInfoCell>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

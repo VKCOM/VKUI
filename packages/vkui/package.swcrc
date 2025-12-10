@@ -1,6 +1,6 @@
 {
-  "$schema": "https://json.schemastore.org/swcrc",
-  "exclude": ["\\.(test|spec|e2e|e2e-playground|stories)\\.[jt]sx?$", "testing/", "storybook/"],
+  "$schema": "https://swc.rs/schema.json",
+  "exclude": ["\\.(test|spec|e2e|e2e-playground|stories|d)\\.[jt]sx?$", "testing/", "storybook/"],
 
   "module": {
     "type": "es6",
@@ -29,7 +29,7 @@
         [
           "swc-plugin-css-modules",
           {
-            "generate_scoped_name": "[folder]__[local]--[hash:base64:5]"
+            "generate_scoped_name": "vkui[folder]__[local]"
           }
         ],
         [

@@ -2,50 +2,55 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { millisecondsInSecond } from 'date-fns/constants';
+import { mergeStyle } from '../../helpers/mergeStyle';
+import { useBooleanState } from '../../hooks/useBooleanState';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { usePrevious } from '../../hooks/usePrevious';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
+import { useStateWithPrev } from '../../hooks/useStateWithPrev';
+import { millisecondsInSecond } from '../../lib/date';
 import { useDOM } from '../../lib/dom';
+import { animationVisibilityDelayStyles } from '../../styles/animationVisibilityDelay';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Skeleton.module.css';
+import stylesDelay from '../../styles/animationVisibilityDelay.module.css';
 
 const CUSTOM_PROPERTY_GRADIENT_LEFT = '--vkui_internal--skeleton_gradient_left';
 
 /**
- * Синхронизирует анимацию скелетонов с помощью временных отрезков
+ * Синхронизирует анимацию скелетонов с помощью временных отрезков.
  *
  * ## visibilitychange
  *
  * В синхронизацию не заложен механизм перехода на оптимизации браузеров при
  * переходе на другую вкладку, поскольку нет уверенности в реальности таких
  * кейсов со скелетонами. Если такой кейс принесут, необходимо обработать
- * событие `visibilitychange` используя функцию `syncAnimation`
+ * событие `visibilitychange` используя функцию `syncAnimation`.
  *
- * https://developer.chrome.com/blog/page-lifecycle-api/
+ * Смотри https://developer.chrome.com/blog/page-lifecycle-api/.
  *
- * @param duration длительность анимации в секундах
+ * @param duration Длительность анимации в секундах.
  */
 function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
-  const [isAnimationStarted, setIsAnimationStarted] = React.useState<boolean>(false);
+  const [isAnimationStarted, setIsAnimationStartedTrue, setIsAnimationStartedFalse] =
+    useBooleanState();
   const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const syncAnimation = React.useCallback(() => {
     clearTimeout(timer.current);
-    setIsAnimationStarted(false);
+    setIsAnimationStartedFalse();
 
     const durationInMilliseconds = duration * millisecondsInSecond;
     const delay = durationInMilliseconds - (performance.now() % durationInMilliseconds);
 
-    timer.current = setTimeout(() => setIsAnimationStarted(true), delay);
+    timer.current = setTimeout(setIsAnimationStartedTrue, delay);
 
     return () => clearTimeout(timer.current);
-  }, [duration]);
+  }, [duration, setIsAnimationStartedFalse, setIsAnimationStartedTrue]);
 
   React.useEffect(() => {
     if (disableAnimation) {
-      setIsAnimationStarted(false);
+      setIsAnimationStartedFalse();
       return;
     }
 
@@ -54,18 +59,18 @@ function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
     }
 
     return syncAnimation();
-  }, [disableAnimation, isAnimationStarted, syncAnimation]);
+  }, [disableAnimation, isAnimationStarted, setIsAnimationStartedFalse, syncAnimation]);
 
   return isAnimationStarted;
 }
 
 /**
- * Вычисляет позицию скелетона
+ * Вычисляет позицию скелетона.
  */
-function useSkeletonPosition(rootRef: React.MutableRefObject<HTMLElement | null>) {
+function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
   const { document, window } = useDOM();
-  const [skeletonGradientLeft, setSkeletonGradientLeft] = React.useState('0');
-  const prevSkeletonGradientLeft = usePrevious(skeletonGradientLeft);
+  const [[skeletonGradientLeft, prevSkeletonGradientLeft], setSkeletonGradientLeft] =
+    useStateWithPrev('0');
 
   const updatePosition = React.useCallback(() => {
     const el = rootRef.current;
@@ -78,10 +83,10 @@ function useSkeletonPosition(rootRef: React.MutableRefObject<HTMLElement | null>
     if (prevSkeletonGradientLeft !== gradientValue) {
       setSkeletonGradientLeft(gradientValue);
     }
-  }, [document, prevSkeletonGradientLeft, rootRef]);
+  }, [document, prevSkeletonGradientLeft, rootRef, setSkeletonGradientLeft]);
 
   React.useEffect(updatePosition, [updatePosition]);
-  useGlobalEventListener(window, 'resize', updatePosition);
+  useResizeObserver(window, updatePosition);
 
   return skeletonGradientLeft;
 }
@@ -100,24 +105,29 @@ export interface SkeletonProps
       | 'margin'
     > {
   /**
-   * Начальный цвет анимации
+   * Начальный цвет анимации.
    */
   colorFrom?: string;
 
   /**
-   * Финальный цвет анимации
+   * Финальный цвет анимации.
    */
   colorTo?: string;
 
   /**
-   * Выключает анимацию, в результате чего показывается только один цвет
+   * Выключает анимацию, в результате чего показывается только один цвет.
    */
   noAnimation?: boolean;
 
   /**
-   * Длительность анимации в секундах
+   * Длительность анимации в секундах.
    */
   duration?: number;
+
+  /**
+   * Задерживает отрисовку элемента на заданное количество миллисекунд.
+   */
+  visibilityDelay?: number;
 }
 
 /**
@@ -130,6 +140,9 @@ export interface SkeletonProps
  * > вписывается в слоты компонентов, которые обычно ожидают текст.
  *
  * @since 6.1.0
+ *
+ * @see https://vkui.io/components/skeleton
+ *
  */
 export const Skeleton = ({
   width,
@@ -139,7 +152,6 @@ export const Skeleton = ({
   maxWidth,
   maxInlineSize,
   borderRadius,
-  style,
   children,
   colorFrom,
   colorTo,
@@ -147,6 +159,7 @@ export const Skeleton = ({
   duration,
   margin,
   getRootRef,
+  visibilityDelay,
   ...restProps
 }: SkeletonProps): React.ReactNode => {
   const rootRef = useExternRef(getRootRef);
@@ -182,8 +195,12 @@ export const Skeleton = ({
     <RootComponent
       getRootRef={rootRef}
       Component="span"
-      baseClassName={classNames(styles.host, disableAnimation && styles.disableAnimation)}
-      style={{ ...skeletonStyle, ...style }}
+      baseClassName={classNames(
+        styles.host,
+        disableAnimation && styles.disableAnimation,
+        visibilityDelay && stylesDelay.visibilityDelay,
+      )}
+      baseStyle={mergeStyle(skeletonStyle, animationVisibilityDelayStyles(visibilityDelay))}
       {...restProps}
     >
       {children || <>&zwnj;</>}

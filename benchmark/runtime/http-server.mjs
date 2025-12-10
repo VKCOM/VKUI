@@ -12,6 +12,7 @@ dotenv.config({
     path.resolve(import.meta.dirname, '../.env'),
   ],
   override: true,
+  quiet: true,
 });
 
 const host = process.env.WEB_SERVER_HOST;

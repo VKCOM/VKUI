@@ -31,6 +31,13 @@ describe('Spacing', () => {
     expect(h.container.firstElementChild).toHaveStyle(`${CUSTOM_CSS_TOKEN_FOR_USER_GAP}: 16px`);
   });
 
+  it('should use css variable size', () => {
+    const h = render(<Spacing size="--my-custom-var" />);
+    expect(h.container.firstElementChild).toHaveStyle(
+      `${CUSTOM_CSS_TOKEN_FOR_USER_GAP}: var(--my-custom-var)`,
+    );
+  });
+
   it('should preserve user style', () => {
     const h = render(<Spacing size={16} style={{ fontSize: 12 }} />);
     expect(h.container.firstElementChild).toHaveStyle(

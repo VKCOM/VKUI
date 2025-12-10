@@ -1,7 +1,6 @@
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { type FocusVisibleMode } from '../../hooks/useFocusVisibleClassName';
-import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Tappable, type TappableProps } from './Tappable';
 
 export const TappablePlayground = (props: ComponentPlaygroundProps) => {
@@ -22,11 +21,7 @@ export const TappablePlayground = (props: ComponentPlaygroundProps) => {
         },
       ]}
     >
-      {(props: TappableProps) => (
-        <AdaptivityProvider hasHover>
-          <Tappable onClick={noop} {...props} />
-        </AdaptivityProvider>
-      )}
+      {(props: TappableProps) => <Tappable onClick={noop} {...props} />}
     </ComponentPlayground>
   );
 };

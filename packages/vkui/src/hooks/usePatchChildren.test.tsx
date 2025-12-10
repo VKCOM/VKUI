@@ -2,6 +2,8 @@
 import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
+import { type Mock } from 'vitest';
 import { setRef } from '../lib/utils';
 import type { HasRootRef } from '../types';
 import { usePatchChildren } from './usePatchChildren';
@@ -19,8 +21,8 @@ const ComponentWithForwardRef = React.forwardRef<
 >((props, ref) => <div ref={ref} {...props}></div>);
 
 type WrapperWithUsePatchChildrenRefProps = {
-  childRef?: React.RefObject<HTMLDivElement>;
-  refHook?: React.RefObject<HTMLDivElement>;
+  childRef?: React.RefObject<HTMLDivElement | null>;
+  refHook?: React.RefObject<HTMLDivElement | null>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const WrapperWithUsePatchChildrenRef = ({
@@ -40,19 +42,19 @@ const WrapperWithUsePatchChildrenRef = ({
   return <div data-testid="child">{child}</div>;
 };
 
-jest.mock('../lib/warnOnce', () => ({
+vi.mock('../lib/warnOnce', () => ({
   warnOnce: () => () => console.error('custom-error'),
 }));
 
-jest.mock('./useEffectDev', () => ({
-  useEffectDev: React.useEffect,
-}));
+vi.stubEnv('NODE_ENV', 'development');
+
+type ConsoleErrorArgs = Parameters<typeof console.error>;
 
 describe(usePatchChildren, () => {
-  let consoleErrorMock: jest.SpyInstance<any, string[]> = jest.fn();
+  let consoleErrorMock: Mock<typeof console.log> = vi.fn();
   beforeAll(() => {
     consoleErrorMock.mockRestore();
-    consoleErrorMock = jest.spyOn(global.console, 'error').mockImplementation();
+    consoleErrorMock = vi.spyOn(global.console, 'error').mockImplementation(noop);
   });
   afterAll(() => {
     consoleErrorMock.mockRestore();
@@ -61,11 +63,13 @@ describe(usePatchChildren, () => {
     consoleErrorMock.mockClear();
   });
   const isReactErrorFound = () =>
-    consoleErrorMock.mock.calls.some((call) =>
+    consoleErrorMock.mock.calls.some((call: ConsoleErrorArgs) =>
       call.some((arg) => arg.startsWith('Warning: React')),
     );
   const isCustomErrorFound = () =>
-    consoleErrorMock.mock.calls.some((call) => call.some((arg) => arg.startsWith('custom-error')));
+    consoleErrorMock.mock.calls.some((call: ConsoleErrorArgs) =>
+      call.some((arg) => arg.startsWith('custom-error')),
+    );
 
   it('returns React and custom errors if children is not expected', () => {
     const Component = (props: React.DOMAttributes<HTMLDivElement>) => <div {...props} />;
@@ -142,84 +146,84 @@ describe(usePatchChildren, () => {
     { type: 'element', event: 'onMouseEnter', hasOwnEvent: true },
     { type: 'component', event: 'onMouseEnter', hasOwnEvent: false },
     { type: 'component', event: 'onMouseEnter', hasOwnEvent: true },
-  ])(
-    'should inject $event event to $type (hasOwnEvent: $hasOwnEvent)',
-    ({ type, event, hasOwnEvent }) => {
-      const reactElementRef = React.createRef<HTMLDivElement>();
-      const ownEvent = {
-        someIntValue: 1,
-        someBoolValue: false,
-        onMouseEnter: jest.fn(),
-        onMouseLeave: jest.fn(),
-      };
+  ])('should inject $event event to $type (hasOwnEvent: $hasOwnEvent)', ({
+    type,
+    event,
+    hasOwnEvent,
+  }) => {
+    const reactElementRef = React.createRef<HTMLDivElement>();
+    const ownEvent = {
+      someintvalue: 1,
+      someboolvalue: 'false',
+      onMouseEnter: vi.fn(),
+      onMouseLeave: vi.fn(),
+    };
 
-      let reactElement: React.ReactNode = null;
-      switch (type) {
-        case 'element': {
-          const props = hasOwnEvent ? ownEvent : {};
-          reactElement = <div ref={reactElementRef} {...props} />;
-          break;
-        }
-        case 'component': {
-          const props = hasOwnEvent ? ownEvent : {};
-          reactElement = <ComponentWithGetRootRef getRootRef={reactElementRef} {...props} />;
-          break;
-        }
+    let reactElement: React.ReactNode = null;
+    switch (type) {
+      case 'element': {
+        const props = hasOwnEvent ? ownEvent : {};
+        reactElement = <div ref={reactElementRef} {...props} />;
+        break;
       }
-
-      const injectedEvents = {
-        [event]: jest.fn(),
-        onClick: jest.fn(),
-      };
-
-      render(
-        <WrapperWithUsePatchChildrenRef {...injectedEvents}>
-          {reactElement}
-        </WrapperWithUsePatchChildrenRef>,
-      );
-
-      act(() => {
-        fireEvent.mouseEnter(reactElementRef.current!);
-        fireEvent.click(reactElementRef.current!);
-      });
-
-      expect(ownEvent.someIntValue).toBe(1);
-      expect(ownEvent.someBoolValue).toBeFalsy();
-      expect(ownEvent.onMouseEnter).toHaveBeenCalledTimes(hasOwnEvent ? 1 : 0);
-      expect(ownEvent.onMouseLeave).toHaveBeenCalledTimes(0);
-      expect(injectedEvents.onMouseEnter).toHaveBeenCalledTimes(1);
-      expect(injectedEvents.onClick).toHaveBeenCalledTimes(1);
-    },
-  );
-
-  it.each([{ type: 'fragment' }, { type: 'array' }])(
-    'should ignore invalid like $type',
-    ({ type }) => {
-      const refByTestingHook = React.createRef<HTMLDivElement>();
-
-      let reactElement: React.ReactNode = null;
-      switch (type) {
-        case 'fragment': {
-          reactElement = <React.Fragment>Fragment</React.Fragment>;
-          break;
-        }
-        case 'array': {
-          reactElement = [<div key="1" />, <div key="2" />];
-          break;
-        }
+      case 'component': {
+        const props = hasOwnEvent ? ownEvent : {};
+        reactElement = <ComponentWithGetRootRef getRootRef={reactElementRef} {...props} />;
+        break;
       }
+    }
 
-      const result = render(
-        <WrapperWithUsePatchChildrenRef childRef={refByTestingHook}>
-          {reactElement}
-        </WrapperWithUsePatchChildrenRef>,
-      );
+    const injectedEvents = {
+      [event]: vi.fn(),
+      onClick: vi.fn(),
+    };
 
-      act(() => {
-        expect(refByTestingHook.current).toBeNull();
-      });
+    render(
+      <WrapperWithUsePatchChildrenRef {...injectedEvents}>
+        {reactElement}
+      </WrapperWithUsePatchChildrenRef>,
+    );
 
-      expect(result.getByTestId('child')).not.toBeEmptyDOMElement();
-    },
-  );
+    act(() => {
+      fireEvent.mouseEnter(reactElementRef.current!);
+      fireEvent.click(reactElementRef.current!);
+    });
+
+    expect(ownEvent.someintvalue).toBe(1);
+    expect(ownEvent.someboolvalue).toBe('false');
+    expect(ownEvent.onMouseEnter).toHaveBeenCalledTimes(hasOwnEvent ? 1 : 0);
+    expect(ownEvent.onMouseLeave).toHaveBeenCalledTimes(0);
+    expect(injectedEvents.onMouseEnter).toHaveBeenCalledTimes(1);
+    expect(injectedEvents.onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it.each([{ type: 'fragment' }, { type: 'array' }])('should ignore invalid like $type', ({
+    type,
+  }) => {
+    const refByTestingHook = React.createRef<HTMLDivElement>();
+
+    let reactElement: React.ReactNode = null;
+    switch (type) {
+      case 'fragment': {
+        reactElement = <React.Fragment>Fragment</React.Fragment>;
+        break;
+      }
+      case 'array': {
+        reactElement = [<div key="1" />, <div key="2" />];
+        break;
+      }
+    }
+
+    const result = render(
+      <WrapperWithUsePatchChildrenRef childRef={refByTestingHook}>
+        {reactElement}
+      </WrapperWithUsePatchChildrenRef>,
+    );
+
+    act(() => {
+      expect(refByTestingHook.current).toBeNull();
+    });
+
+    expect(result.getByTestId('child')).not.toBeEmptyDOMElement();
+  });
 });

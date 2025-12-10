@@ -9,7 +9,7 @@ export type VisuallyHiddenProps<T> = RootComponentProps<T>;
  * доступным для ассистивных технологий. По умолчанию — `span`.
  *
  * @since 5.4.0
- * @see https://vkcom.github.io/VKUI/#/VisuallyHidden
+ * @see https://vkui.io/components/visually-hidden
  */
 export const VisuallyHidden = <T,>({
   Component = 'span',

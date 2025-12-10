@@ -1,9 +1,8 @@
 import type { LiteralUnion } from '../../types';
+import type { DesignSystemSize } from './types';
 import styles from '../../styles/gaps.module.css';
 
-type GapPresets = '2xs' | 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
-
-export const columnGapClassNames: Record<GapPresets, string> = {
+export const columnGapClassNames: Record<DesignSystemSize, string> = {
   '2xs': styles['-column-gap--2xs'],
   'xs': styles['-column-gap--xs'],
   's': styles['-column-gap--s'],
@@ -15,7 +14,7 @@ export const columnGapClassNames: Record<GapPresets, string> = {
   '4xl': styles['-column-gap--4xl'],
 };
 
-export const rowGapClassNames: Record<GapPresets, string> = {
+export const rowGapClassNames: Record<DesignSystemSize, string> = {
   '2xs': styles['-row-gap--2xs'],
   'xs': styles['-row-gap--xs'],
   's': styles['-row-gap--s'],
@@ -27,7 +26,7 @@ export const rowGapClassNames: Record<GapPresets, string> = {
   '4xl': styles['-row-gap--4xl'],
 };
 
-export type GapProp = LiteralUnion<GapPresets, number>;
+export type GapProp = LiteralUnion<DesignSystemSize, number>;
 
 export type GapsProp = GapProp | [GapProp, GapProp];
 
@@ -37,7 +36,7 @@ export type GapsProp = GapProp | [GapProp, GapProp];
 export function calculateGap(
   gap: GapsProp | undefined,
 ): [GapProp, GapProp] | [undefined, undefined] {
-  if (!gap) {
+  if (gap === undefined) {
     return [undefined, undefined];
   }
   if (typeof gap === 'number' || typeof gap === 'string') {

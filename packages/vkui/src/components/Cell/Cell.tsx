@@ -17,38 +17,48 @@ export interface CellProps
   extends Omit<SimpleCellProps, 'getRootRef'>,
     RemovableProps,
     HasRootRef<HTMLDivElement> {
+  /**
+   * Режим отображения ячейки:
+   *
+   * - "removable": добавляется кнопка для удаления
+   * - "selectable": добавляется чекбокс для выбора.
+   */
   mode?: 'removable' | 'selectable';
   /**
-   * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
+   * В режиме перетаскивания ячейка перестает реагировать на нажатие, то есть при нажатии переданный `onClick` вызываться не будет.
    */
   draggable?: boolean;
   /**
-   * Имя для input в режиме selectable
+   * Имя для `input` в режиме `selectable`.
    */
   name?: string;
   /**
-   * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
+   * В режиме `selectable` реагирует на входящие значения пропса `cheсked`, как зависящий напрямую от входящего значения.
    */
   checked?: boolean;
   /**
-   * В режиме selectable реагирует на входящие значения пропса defaultChecked как неконтролируемый компонент
+   * В режиме `selectable` реагирует на входящие значения пропса `defaultChecked` как неконтролируемый компонент.
    */
   defaultChecked?: boolean;
   /**
-   * Коллбэк срабатывает при завершении перетаскивания.
-   * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
+   * Обработчик, срабатывающий при завершении перетаскивания.
+   * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В обработчике есть объект с полями `from` и `to`.
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
   onDragFinish?: (swappedItemRange: SwappedItemRange) => void;
   /**
-   * Текст для кнопки перетаскивания ячейки
+   * Текст для кнопки перетаскивания ячейки.
    */
   draggerLabel?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки перетаскивания ячейки.
+   */
+  draggerTestId?: string;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Cell
+ * @see https://vkui.io/components/cell
  */
 export const Cell: React.FC<CellProps> & {
   Checkbox: typeof CellCheckbox;
@@ -73,12 +83,15 @@ export const Cell: React.FC<CellProps> & {
   style,
   toggleButtonTestId,
   removeButtonTestId,
+  draggerTestId,
+  href: hrefProp,
   ...restProps
 }: CellProps) => {
   const [dragging, setDragging] = React.useState(false);
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
   const Component = selectable ? 'label' : ComponentProps;
+  const href = selectable ? undefined : hrefProp;
 
   const platform = usePlatform();
 
@@ -90,6 +103,7 @@ export const Cell: React.FC<CellProps> & {
       className={classNames(styles.dragger, !before && !selectable && styles.controlNoBefore)}
       onDragStateChange={setDragging}
       onDragFinish={onDragFinish}
+      data-testid={draggerTestId}
     >
       {draggerLabel}
     </CellDragger>
@@ -120,13 +134,13 @@ export const Cell: React.FC<CellProps> & {
     dragging && styles.dragging,
     platform === 'ios' && styles.ios,
     removable && styles.removable,
-    Component === 'label' && styles.selectable,
   );
 
   const simpleCellProps: SimpleCellProps = {
     hasActive: hasActive,
     hasHover: hasActive && !removable,
     disabled,
+    href,
     ...restProps,
     className: styles.content,
     // чтобы свойство, если не определено, не присутствовало в

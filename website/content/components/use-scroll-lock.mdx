@@ -1,0 +1,49 @@
+---
+description: Хук для блокировки прокрутки страницы.
+---
+
+<Overview type="hook" forcedPath="components/AppRoot/ScrollContext.tsx">
+
+# useScrollLock
+
+Хук для блокировки прокрутки страницы. Полезен при открытии модальных окон или всплывающих элементов,
+которые требуют ограничения взаимодействия с фоном.
+
+</Overview>
+
+## Обязательные условия
+
+> Убедитесь, что ваше приложение обёрнуто в компонент [`AppRoot`](/components/app-root),
+> так как именно через этот компонент определяет контекст для управления прокруткой.
+
+## Особенности
+
+- Блокировка устанавливается на тег `html`.
+- Блокировка автоматически снимается при размонтировании компонента.
+- Поддерживается вызов нескольких `useScrollLock` (прокрутка страницы будет неактивна, пока все всплывающие элементы
+  не будут закрыты).
+
+## Пример использования
+
+```jsx
+const App = () => {
+  const [opened, setOpened] = React.useState(false);
+
+  // Блокируем полосу прокрутки при открытии всплывающего окна
+  useScrollLock(opened);
+
+  return (
+    <div>
+      <h1>My Awesome App</h1>
+      <label htmlFor="toggle">Toggle popout</label>
+      <input
+        id="toggle"
+        type="checkbox"
+        checked={opened}
+        onChange={(e) => setOpened(e.target.checked)}
+      />
+      {opened && <PopoutWrapper>Some content</PopoutWrapper>}
+    </div>
+  );
+};
+```

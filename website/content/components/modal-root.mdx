@@ -1,0 +1,151 @@
+---
+description: Менеджер модальных окон.
+---
+
+<Overview group="utils">
+
+# ModalRoot [tag:component]
+
+Менеджер модальных окон.
+
+</Overview>
+
+<Playground>
+
+```jsx
+const [activeModal, setActiveModal] = React.useState(null);
+
+const close = () => setActiveModal(null);
+
+const modalRoot = (
+  <ModalRoot activeModal={activeModal} onClose={close}>
+    <ModalPage id="modal1" onClose={close}>
+      <Placeholder
+        action={
+          <ButtonGroup mode="vertical" align="center">
+            <Button onClick={() => setActiveModal('modal2')}>Открыть карточку</Button>
+            <Button onClick={close}>Закрыть</Button>
+          </ButtonGroup>
+        }
+      />
+    </ModalPage>
+    <ModalCard id="modal2" onClose={close}>
+      <Placeholder
+        action={
+          <ButtonGroup mode="vertical" align="center">
+            <Button onClick={() => setActiveModal('modal1')}>Вернуться назад</Button>
+            <Button onClick={close}>Закрыть</Button>
+          </ButtonGroup>
+        }
+      />
+    </ModalCard>
+  </ModalRoot>
+);
+
+return (
+  <>
+    {modalRoot}
+    <Button onClick={() => setActiveModal('modal1')}>Открыть окно</Button>
+  </>
+);
+```
+
+</Playground>
+
+## Спецификация
+
+В качестве `children` принимает коллекцию [`ModalPage`](/components/modal-page) и/или [`ModalCard`](/components/modal-card). У каждого модального окна
+должен быть уникальный `id`.
+
+Свойство `activeModal` переключает между модальными окнами.
+
+- При смене значения свойства `activeModal` происходит плавный переход от одного модального окна к другому.
+- При установке `activeModal` как `null` текущее модальное окно закрывается.
+
+`ModalRoot` принимает свойство `onClose`, которое будет вызвано с идентификатором текущего активного модального окна
+или карточки после смахивания вниз или нажатия на крестик или нажатия на оверлей. Приложение должно установить в качестве нового
+значения `activeModal` либо идентификатор предыдущей модалки, либо `null` для скрытия. Каждой конкретной [`ModalPage`](/components/modal-page)
+или [`ModalCard`](/components/modal-card) можно передать свой обработчик `onClose`, если нужно переопределить поведение.
+
+Также при использовании `ModalRoot` создаётся общий `ModalOverlay` для переданных компонентов, чтобы избегать моргания при
+переключении модальных окон.
+
+> **Safari**
+>
+> В браузере **Safari < 16** на **iOS** сворачивание вниз [`ModalPage`](/components/modal-page) и [`ModalCard`](/components/modal-card) может вызвать функцию
+> **pull-to-refresh**. Попытка блокировать это поведение приводит к другим проблемам, например, к блокированию скролла (cм. https://github.com/VKCOM/VKUI/issues/335),
+> поэтому проблема остаётся как данность.
+>
+> При этом в **Safari >= 16** такой проблему нет, т.к. в нём блокирование **pull-to-refresh** решается в одно свойство [`overscroll-behavior-y: none;`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y).
+> Это свойство автоматически выставляется на `html` при открытии модального окна и удаляется при закрытии.
+
+## FAQ
+
+### Создание обёрток для `ModalPage` / `ModalCard`
+
+Вы можете создавать обертки для `ModalPage` / `ModalCard`, но нужно учитывать, что бизнес-логика должна либо вызываться внутри `ModalPage` / `ModalCard`,
+либо включаться в зависимости от контекста `useModalRootContext()`, т.к. `ModalRoot` лишь передаёт через контекст
+свойство `activeModal`, а `ModalPage` / `ModalCard` сравнивают его значение со своим `id` / `nav` – если совпадает,
+монтируются; иначе размонтируются.
+
+```jsx
+const SomeAsyncEffect = () => {
+  const [data, setData] = useState({});
+  useEffect(function fetchData() {
+    // Здесь логика, которая должна вызываться при показе окна
+    fetch('...')
+      .then((r) => r.json())
+      .then(setData);
+  }, []);
+  return <div>{data}</div>;
+};
+
+const ModalPageWrapper = ({ id, ...restProps }) => {
+  const { activeModal } = useModalRootContext();
+
+  useEffect(
+    function enableSomeEffect() {
+      if (id === activeModal) {
+        // Здесь логика, которая должна вызываться при показе окна
+      }
+    },
+    [id, activeModal],
+  );
+
+  return (
+    <ModalPage id={id} {...restProps}>
+      <SomeAsyncEffect />
+    </ModalPage>
+  );
+};
+
+const App = () => {
+  return (
+    <ModalRoot activeModal="example-1">
+      <ModalPageWrapper id="example-1" />
+      {/* или */}
+      <ModalPage id="example-2">
+        <SomeAsyncEffect />
+      </ModalPage>
+    </ModalRoot>
+  );
+};
+```
+
+> У `ModalPage` и `ModalCard` есть параметр `keepMounted`, при передаче этого параметра следует учитывать, что компонент будет
+> рендериться всегда, поэтому бизнес-логика будет срабатывать в любом случае.
+
+### Отключение заднего фона у конкретного модального окна
+
+Если вам необходимо отключить отображение фона для конкретной модалки в `ModalRoot` вы можете сделать так:
+
+```jsx
+<ModalRoot activeModal={activeModal} disableModalOverlay={activeModal === 'modal-1'}>
+  <ModalPage id="modal-1" />
+  <ModalPage id="modal-2" />
+</ModalRoot>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="ModalRoot" />

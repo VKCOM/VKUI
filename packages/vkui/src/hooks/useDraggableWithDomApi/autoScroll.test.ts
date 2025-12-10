@@ -8,7 +8,7 @@ const MAX_SCROLL_Y = SCROLL_HEIGHT - VIEWPORT_HEIGHT;
 
 const setScrollTop = (scrollEl: HTMLElement, scrollTop: number) => {
   window.scrollY = scrollEl.scrollTop = scrollTop;
-  scrollEl.getBoundingClientRect = jest.fn(
+  scrollEl.getBoundingClientRect = vi.fn(
     () => new DOMRect(0, scrollTop > 0 ? -1 * scrollTop : 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT),
   );
 };
@@ -16,7 +16,7 @@ const setScrollTop = (scrollEl: HTMLElement, scrollTop: number) => {
 const initScrollElData = (scrollEl: HTMLElement, scrollTop: number) => {
   setScrollTop(scrollEl, scrollTop);
 
-  jest.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(() => SCROLL_HEIGHT);
+  vi.spyOn(scrollEl, 'scrollHeight', 'get').mockImplementation(() => SCROLL_HEIGHT);
 
   Object.defineProperty(scrollEl, 'scrollBy', {
     value: (_: number, y: number) => {
@@ -51,14 +51,13 @@ describe('getAutoScrollingData', () => {
       expect(shouldScrolling).toBeTruthy();
     });
 
-    test.each([[EDGE_SIZE + 1, 1]])(
-      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`,
-      (clientY, scrollTop) => {
-        initScrollElData(scrollEl, scrollTop);
-        const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
-        expect(shouldScrolling).toBeFalsy();
-      },
-    );
+    test.each([
+      [EDGE_SIZE + 1, 1],
+    ])(`should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`, (clientY, scrollTop) => {
+      initScrollElData(scrollEl, scrollTop);
+      const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
+      expect(shouldScrolling).toBeFalsy();
+    });
   });
 
   describe('bottom edge', () => {
@@ -72,14 +71,13 @@ describe('getAutoScrollingData', () => {
       expect(shouldScrolling).toBeFalsy();
     });
 
-    test.each([[VIEWPORT_HEIGHT - EDGE_SIZE - 1, 0]])(
-      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`,
-      (clientY, scrollTop) => {
-        initScrollElData(scrollEl, scrollTop);
-        const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
-        expect(shouldScrolling).toBeFalsy();
-      },
-    );
+    test.each([
+      [VIEWPORT_HEIGHT - EDGE_SIZE - 1, 0],
+    ])(`should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`, (clientY, scrollTop) => {
+      initScrollElData(scrollEl, scrollTop);
+      const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
+      expect(shouldScrolling).toBeFalsy();
+    });
   });
 });
 

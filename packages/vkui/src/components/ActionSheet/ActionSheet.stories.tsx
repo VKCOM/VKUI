@@ -11,55 +11,54 @@ import {
   Icon28SubtitlesOutline,
 } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam, StringArg } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { ActionSheetItem, type ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { Button } from '../Button/Button';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 
 const story: Meta<ActionSheetProps> = {
-  title: 'Popouts/ActionSheet',
+  title: 'Modals/ActionSheet',
   component: ActionSheet,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('ActionSheet', CanvasFullLayout, DisableCartesianParam),
   argTypes: {
     title: StringArg,
     description: StringArg,
   },
+  tags: ['Модальные окна'],
 };
 
 export default story;
 
 type Story = StoryObj<ActionSheetProps & { items: ActionSheetItemProps[] }>;
 
-export const Base: Story = {
+export const Playground: Story = {
   render: function Render({ items, ...args }) {
     const baseToggleRef = React.useRef(null);
     const [visible, setVisible] = React.useState(true);
-    const popout = visible ? (
-      <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
-        {items.map(({ children, ...rest }, index) => (
-          <ActionSheetItem key={index} {...rest}>
-            {children}
-          </ActionSheetItem>
-        ))}
-      </ActionSheet>
-    ) : null;
 
     return (
-      <SplitLayout center popout={popout}>
-        <SplitCol width="100%" maxWidth="560px" stretchedOnMobile autoSpaced>
-          <Placeholder stretched>
-            <Button
-              getRootRef={baseToggleRef}
-              onClick={() => setVisible(true)}
-              aria-expanded={visible}
-            >
-              Открыть
-            </Button>
-          </Placeholder>
-        </SplitCol>
-      </SplitLayout>
+      <React.Fragment>
+        <Placeholder stretched>
+          <Button
+            getRootRef={baseToggleRef}
+            onClick={() => setVisible(true)}
+            aria-expanded={visible}
+          >
+            Открыть
+          </Button>
+        </Placeholder>
+
+        {visible ? (
+          <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
+            {items.map(({ children, ...rest }, index) => (
+              <ActionSheetItem key={index} {...rest}>
+                {children}
+              </ActionSheetItem>
+            ))}
+          </ActionSheet>
+        ) : null}
+      </React.Fragment>
     );
   },
   args: {
@@ -74,7 +73,7 @@ export const Base: Story = {
 };
 
 export const WithIcon: Story = {
-  ...Base,
+  ...Playground,
   args: {
     items: [
       { before: <Icon28EditOutline />, children: 'Редактировать профиль' },
@@ -87,7 +86,7 @@ export const WithIcon: Story = {
 };
 
 export const WithSubtitle: Story = {
-  ...Base,
+  ...Playground,
   args: {
     items: [
       { before: <Icon28SettingsOutline />, subtitle: 'Авто', children: 'Качество' },
@@ -107,7 +106,7 @@ export const WithSubtitle: Story = {
 };
 
 export const WithTitle: Story = {
-  ...Base,
+  ...Playground,
   args: {
     title: 'Вы действительно хотите удалить это видео из Ваших видео?',
     items: [{ mode: 'destructive', children: 'Удалить видео' }],
@@ -115,7 +114,7 @@ export const WithTitle: Story = {
 };
 
 export const WithSelectable: Story = {
-  ...Base,
+  ...Playground,
   args: {
     items: [
       { name: 'menu', selectable: true, children: 'Лучшие друзья', defaultChecked: true },

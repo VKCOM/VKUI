@@ -7,34 +7,52 @@ import styles from './CustomScrollView.module.css';
 
 const overscrollBehaviorClassNames = {
   auto: undefined,
-  contain: styles.boxOverscrollBehaviorContain,
-  none: styles.boxOverscrollBehaviorNone,
+  contain: styles.overscrollBehaviorContain,
+  none: styles.overscrollBehaviorNone,
+};
+
+const scrollBehaviorClassNames = {
+  auto: undefined,
+  smooth: styles.scrollBehaviorSmooth,
 };
 
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
+  /**
+   * `className` для компонента.
+   */
   className?: HTMLDivElement['className'];
+  /**
+   * Обработчик события `scroll`.
+   */
   onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
+  /**
+   * Содержимое.
+   */
   children: React.ReactNode;
   /**
-   * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior)
+   * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior).
    */
   overscrollBehavior?: 'auto' | 'contain' | 'none';
   /**
-   * Включение отображения горизонтального скролла
+   * Поведение scroll-behavior, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior).
+   */
+  scrollBehavior?: 'auto' | 'smooth';
+  /**
+   * Включение отображения горизонтального скролла.
    */
   enableHorizontalScroll?: boolean;
   /**
-   * Скрытие скроллбара
+   * Скрытие скроллбара.
    *
-   * > В версии ниже Firefox 64 будет виден скролл
+   * > В версии ниже Firefox 64 будет виден скролл.
    */
   scrollbarHidden?: boolean;
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/CustomScrollView
+ * @see https://vkui.io/components/custom-scroll-view
  */
 export const CustomScrollView = ({
   className,
@@ -43,6 +61,7 @@ export const CustomScrollView = ({
   onScroll,
   getRootRef,
   overscrollBehavior = 'auto',
+  scrollBehavior = 'auto',
   scrollbarHidden = false,
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
@@ -53,6 +72,7 @@ export const CustomScrollView = ({
         styles.host,
         enableHorizontalScroll && styles.horizontalScrollEnabled,
         overscrollBehaviorClassNames[overscrollBehavior],
+        scrollBehaviorClassNames[scrollBehavior],
         scrollbarHidden && styles.scrollbarHidden,
       )}
       ref={getRootRef}

@@ -3,7 +3,6 @@
 import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
@@ -19,6 +18,9 @@ const stylesVertical = {
 };
 
 export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement>, HasComponent {
+  /**
+   * Положение по вертикали, либо сверху, либо снизу.
+   */
   vertical?: 'top' | 'bottom';
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
@@ -32,15 +34,8 @@ export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
   useParentWidth?: boolean;
 }
 
-export interface FixedLayoutState {
-  position: 'absolute' | null;
-  top: number;
-  bottom: number;
-  width: string;
-}
-
 /**
- * @see https://vkcom.github.io/VKUI/#/FixedLayout
+ * @see https://vkui.io/components/fixed-layout
  */
 export const FixedLayout = ({
   children,
@@ -92,7 +87,7 @@ export const FixedLayout = ({
   };
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
 
-  useGlobalEventListener(window, 'resize', doResize);
+  useResizeObserver(window, doResize);
   useResizeObserver(useParentWidth ? parentRef : colRef, doResize);
 
   return (

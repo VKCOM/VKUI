@@ -16,9 +16,9 @@ updates:
       - dependency-name: '@types/react*'
         update-types: ['version-update:semver-major']
       # Игнорируем https://www.npmjs.com/package/eslint-plugin-react-compiler/v/0.0.0 (это самый первый релиз),
-      # чтобы использовать только экспериментальные версии и версии выше.
+      # и экспериментальные версии, так как они слишком нестабильные.
       - dependency-name: 'eslint-plugin-react-compiler'
-        versions: ['0.0.0']
+        versions: ['<0.0.1']
     groups:
       react:
         patterns:
@@ -58,10 +58,10 @@ updates:
         patterns:
           - 'stylelint*'
           - '@vkontakte/stylelint-config'
-      jest:
+      vitest:
         patterns:
-          - 'jest*'
-          - '@types/jest*'
+          - 'vitest*'
+          - '@vitest*'
       testing-library:
         patterns:
           - '@testing-library/*'
@@ -69,10 +69,6 @@ updates:
         patterns:
           - 'size-limit'
           - '@size-limit/*'
-      prettier:
-        patterns:
-          - 'prettier'
-          - '@vkontakte/prettier-config'
       swc:
         patterns:
           - '@swc/*'
@@ -80,11 +76,12 @@ updates:
       rspack:
         patterns:
           - '@rspack/*'
+      next:
+        patterns:
+          - 'next'
+          - '@next/*'
     versioning-strategy: increase
     open-pull-requests-limit: 20
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'
 
   # GitHub Actions
 
@@ -94,6 +91,3 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-    reviewers:
-      - 'VKCOM/vk-sec'
-      - 'VKCOM/vkui-core'

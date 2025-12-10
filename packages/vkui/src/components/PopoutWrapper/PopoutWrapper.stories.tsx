@@ -1,16 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { SplitCol } from '../SplitCol/SplitCol';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 
 const story: Meta<PopoutWrapperProps> = {
-  title: 'Popouts/PopoutWrapper',
+  title: 'Utils/PopoutWrapper',
   component: PopoutWrapper,
-  parameters: {
-    ...CanvasFullLayout,
-    ...DisableCartesianParam,
-  },
+  parameters: createStoryParameters('PopoutWrapper', CanvasFullLayout, DisableCartesianParam),
+  tags: ['Утилиты'],
 };
 
 export default story;
@@ -19,11 +16,9 @@ type Story = StoryObj<PopoutWrapperProps>;
 
 export const Playground: Story = {
   render: (args) => (
-    <SplitLayout popout={<PopoutWrapper {...args} />}>
-      <SplitCol>
-        <div />
-      </SplitCol>
-    </SplitLayout>
+    <div style={{ width: 500, height: 500, position: 'relative' }}>
+      <PopoutWrapper {...args} />
+    </div>
   ),
   args: {
     children: 'Some content',

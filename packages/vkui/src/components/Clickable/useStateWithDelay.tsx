@@ -17,7 +17,7 @@ type DispatchWithDelay<S> = (value: S, delay?: number) => void;
  * }
  * ```
  *
- * Есть возможность передать функцию-коллбэк, которая будет
+ * Есть возможность передать функцию-обработчик, которая будет
  * вызвана сразу после вызова setState с новым значением стейта
  * в качестве аргумента.
  *
@@ -41,7 +41,7 @@ export function useStateWithDelay<S>(
   onStateChange: (v: S) => void = noop,
 ): [S, DispatchWithDelay<React.SetStateAction<S>>] {
   const [value, setValue] = React.useState(initialState);
-  const timeout = React.useRef<ReturnType<typeof setTimeout>>();
+  const timeout = React.useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const handleSetValue = React.useCallback(
     (nextValue: React.SetStateAction<S>) => {

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';
@@ -14,12 +14,26 @@ const sizeYClassNames = {
 };
 
 const alignAfterClassNames = {
-  start: styles.contentAfterAlignStart,
-  center: styles.contentAfterAlignCenter,
-  end: styles.contentAfterAlignEnd,
+  start: styles.alignAfterStart,
+  center: styles.alignAfterCenter,
+  end: styles.alignAfterEnd,
 };
 
-export interface RichCellProps extends TappableProps {
+const alignBeforeClassNames = {
+  start: styles.alignBeforeStart,
+  center: styles.alignBeforeCenter,
+  end: styles.alignBeforeEnd,
+};
+
+const alignContentClassNames = {
+  start: styles.contentAlignStart,
+  center: styles.contentAlignCenter,
+  end: styles.contentAlignEnd,
+};
+
+type Align = 'start' | 'center' | 'end';
+
+export interface RichCellProps extends TappableOmitProps {
   /**
    * Контейнер для текста над `children`.
    */
@@ -37,14 +51,14 @@ export interface RichCellProps extends TappableProps {
    */
   bottom?: React.ReactNode;
   /**
-   * Кнопки-действия. Принимает [`Button`](https://vkcom.github.io/VKUI/#/Button) с параметрами:
+   * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button) с параметрами:
    *
    * - `mode="primary" size="s"`
-   * - `mode="secondary" size="s"`
+   * - `mode="secondary" size="s"`.
    *
-   * Для набора кнопок используйте [`ButtonGroup`](https://vkcom.github.io/VKUI/#/ButtonGroup) с параметрами:
+   * Для набора кнопок используйте [`ButtonGroup`](https://vkui.io/components/button-group) с параметрами:
    *
-   * - `mode="horizontal" gap="s" stretched`
+   * - `mode="horizontal" gap="s" stretched`.
    */
   actions?: React.ReactNode;
   /**
@@ -60,11 +74,19 @@ export interface RichCellProps extends TappableProps {
    */
   afterCaption?: React.ReactNode;
   /**
-   * Выравнивание after компонента по вертикали
+   * Выравнивание before компонента по вертикали.
    */
-  afterAlign?: 'start' | 'center' | 'end';
+  beforeAlign?: Align;
   /**
-   * Убирает анимацию нажатия.
+   * Выравнивание центрального контента по вертикали.
+   */
+  contentAlign?: Align;
+  /**
+   * Выравнивание after компонента по вертикали.
+   */
+  afterAlign?: Align;
+  /**
+   * Блокировка взаимодействия с компонентом. Убирает анимацию нажатия.
    */
   disabled?: boolean;
   /**
@@ -74,7 +96,7 @@ export interface RichCellProps extends TappableProps {
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/RichCell
+ * @see https://vkui.io/components/rich-cell
  */
 export const RichCell: React.FC<RichCellProps> & {
   Icon: typeof RichCellIcon;
@@ -89,18 +111,20 @@ export const RichCell: React.FC<RichCellProps> & {
   bottom,
   actions,
   multiline,
-  className,
+  beforeAlign = 'start',
+  contentAlign = 'start',
   afterAlign = 'start',
   ...restProps
 }: RichCellProps) => {
   const { sizeY = 'none' } = useAdaptivity();
+  const withAfter = after || afterCaption;
 
   const afterRender = () => {
-    if (!after && !afterCaption) {
+    if (!withAfter) {
       return;
     }
     return (
-      <div className={classNames(styles.contentAfter, alignAfterClassNames[afterAlign])}>
+      <div className={styles.contentAfter}>
         {after && <div className={styles.afterChildren}>{after}</div>}
         {afterCaption && <div className={styles.afterCaption}>{afterCaption}</div>}
       </div>
@@ -110,38 +134,39 @@ export const RichCell: React.FC<RichCellProps> & {
   return (
     <Tappable
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
         !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        className,
+        withAfter && styles.withAfter,
+        withAfter && alignAfterClassNames[afterAlign],
+        before && alignBeforeClassNames[beforeAlign],
+        alignContentClassNames[contentAlign],
       )}
     >
       {before && <div className={styles.before}>{before}</div>}
-      <div className={styles.inWrapper}>
-        <div className={styles.in}>
-          <div className={styles.content}>
-            <div className={styles.contentBefore}>
-              {overTitle && (
-                <Subhead Component="div" className={styles.overTitle}>
-                  {overTitle}
-                </Subhead>
-              )}
-              <div className={styles.children}>{children}</div>
-              {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
-              {extraSubtitle && (
-                <Subhead Component="div" className={styles.extraSubtitle}>
-                  {extraSubtitle}
-                </Subhead>
-              )}
-            </div>
-            {afterAlign === 'start' && afterRender()}
+      <div className={styles.in}>
+        <div className={styles.content}>
+          <div className={styles.contentBefore}>
+            {overTitle && (
+              <Subhead Component="div" className={styles.overTitle}>
+                {overTitle}
+              </Subhead>
+            )}
+            <div className={styles.children}>{children}</div>
+            {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+            {extraSubtitle && (
+              <Subhead Component="div" className={styles.extraSubtitle}>
+                {extraSubtitle}
+              </Subhead>
+            )}
           </div>
-          {bottom && <div className={styles.bottom}>{bottom}</div>}
-          {actions && <div className={styles.actions}>{actions}</div>}
+          {afterAlign === 'start' && afterRender()}
         </div>
-        {afterAlign !== 'start' && afterRender()}
+        {bottom && <div className={styles.bottom}>{bottom}</div>}
+        {actions && <div className={styles.actions}>{actions}</div>}
       </div>
+      {afterAlign !== 'start' && afterRender()}
     </Tappable>
   );
 };

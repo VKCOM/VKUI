@@ -2,9 +2,9 @@
   --vkui_internal--view_animation_translateY_initial: 80px;
 
   position: relative;
-  block-size: 100%;
   inline-size: 100%;
-  word-wrap: break-word;
+  block-size: 100%;
+  overflow-wrap: break-word;
 }
 
 @media (--reduce-motion) {
@@ -19,15 +19,15 @@
 }
 
 .panelOverlay {
-  display: none;
   position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--vkui_internal--z_index_panel_header_fade);
+  display: none;
   inline-size: 100%;
   block-size: 100%;
-  inset-inline-start: 0;
-  inset-block-start: 0;
-  background-color: #000;
   pointer-events: none;
-  z-index: var(--vkui_internal--z_index_panel_header_fade);
+  background-color: #000;
 }
 
 .panelPrev .panelOverlay {
@@ -47,7 +47,7 @@
 }
 
 .panelSwipeBackNext .panelOverlay {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgb(0, 0, 0, 0.1);
 }
 
 .panelSwipeBackNext.panelSwipeBackSuccess .panelOverlay,
@@ -64,8 +64,8 @@
 }
 
 .panels {
-  block-size: 100%;
   inline-size: 100%;
+  block-size: 100%;
 }
 
 .panelIn {
@@ -74,9 +74,9 @@
 
 .panel {
   position: relative;
+  box-sizing: border-box;
   inline-size: 100%;
   block-size: 100%;
-  box-sizing: border-box;
   isolation: isolate;
 }
 
@@ -167,9 +167,9 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.ios.noMotion .panel :global(.vkuiInternalPanel__in),
 .noMotion .panel,
-.ios.noMotion .panel,
-.ios.noMotion .panel :global(.vkuiInternalPanel__in) {
+.ios.noMotion .panel {
   animation: none;
 }
 

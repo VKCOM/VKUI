@@ -3,14 +3,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Icon28PrivacyOutline, Icon28SettingsOutline, Icon28UserOutline } from '@vkontakte/icons';
 import { withSinglePanel, withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { Cell } from '../Cell/Cell';
 import { Group } from '../Group/Group';
 import { List, type ListProps } from './List';
 
 const story: Meta<ListProps> = {
-  title: 'Blocks/List',
+  title: 'Buttons/Cell/List',
   component: List,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('List', CanvasFullLayout, DisableCartesianParam),
 };
 
 export default story;

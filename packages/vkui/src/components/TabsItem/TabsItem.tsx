@@ -4,12 +4,12 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
-import { type TabsContextProps, TabsModeContext } from '../Tabs/Tabs';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { TabsControllerContext } from '../Tabs/TabsControllerContext';
+import { TabsModeContext } from '../Tabs/TabsModeContext';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Headline } from '../Typography/Headline/Headline';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
@@ -35,7 +35,8 @@ export interface TabsItemProps
   extends HTMLAttributesWithRootRef<HTMLElement>,
     AnchorHTMLAttributesOnly,
     Pick<
-      TappableProps,
+      TappableOmitProps,
+      | 'Component'
       | 'activeMode'
       | 'hoverMode'
       | 'hovered'
@@ -54,56 +55,58 @@ export interface TabsItemProps
   /**
    * Добавляет элемент слева от `after`.
    *
-   * - `React.ReactElement` – либо [`Badge`](https://vkcom.github.io/VKUI/#/Badge) с параметром `mode="prominent"`.
-   *   либо [`Counter`](https://vkcom.github.io/VKUI/#/Counter) с параметрами `mode="prominent" size="s"`.
+   * - `React.ReactElement` – либо [`Badge`](https://vkui.io/components/badge) с параметром `mode="prominent"`.
+   *   Либо [`Counter`](https://vkui.io/components/counter) с параметрами `mode="prominent" size="s"`.
    * - `number` – для показа текстового блока с переданным числом.
    */
   status?: React.ReactElement | number;
   /**
    * Добавляет иконку справа.
    *
-   * Например, `<Icon16Dropdown />`
+   * Например, `<Icon16Dropdown />`.
    */
   after?: React.ReactNode;
+  /**
+   * Флаг для отображения выбранного состояния.
+   */
   selected?: boolean;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
   disabled?: boolean;
 }
 
 const warn = warnOnce('TabsItem');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/TabsItem
+ * @see https://vkui.io/components/tabs#tabs-item
  */
 export const TabsItem = ({
   before,
   children,
   status,
   after,
-  selected = false,
-  className,
+  selected: selectedProp = false,
   role = 'tab',
   tabIndex: tabIndexProp,
   getRootRef,
   hoverMode = styles.hover,
   activeMode = '',
-  hovered,
-  activated,
-  hasHover,
   hasActive = false,
   focusVisibleMode = 'inside',
+  id,
+  onClick,
   ...restProps
 }: TabsItemProps): React.ReactNode => {
   const { sizeY = 'none' } = useAdaptivity();
-  const {
-    mode,
-    withGaps,
-    layoutFillMode,
-    scrollBehaviorToSelectedTab,
-    withScrollToSelectedTab,
-  }: TabsContextProps = React.useContext(TabsModeContext);
+  const { mode, withGaps, layoutFillMode, scrollBehaviorToSelectedTab, withScrollToSelectedTab } =
+    React.useContext(TabsModeContext);
+  const controller = React.useContext(TabsControllerContext);
   let statusComponent = null;
 
   const isTabFlow = role === 'tab';
+
+  const selected = selectedProp || (!!id && controller?.selectedTab === id);
 
   if (hasReactNode(status)) {
     statusComponent =
@@ -127,7 +130,7 @@ export const TabsItem = ({
   if (process.env.NODE_ENV === 'development' && isTabFlow) {
     if (!restProps['aria-controls']) {
       warn(`Передайте в "aria-controls" id контролируемого блока`, 'warn');
-    } else if (!restProps['id']) {
+    } else if (!id) {
       warn(
         `Передайте "id" компоненту для использования в "aria-labelledby" контролируемого блока`,
         'warn',
@@ -142,14 +145,20 @@ export const TabsItem = ({
 
   const rootRef = useExternRef(getRootRef);
 
-  const prevSelected = usePrevious(selected);
-  const isInitialRender = prevSelected === undefined;
-  const shouldScrollToSelected =
-    withScrollToSelectedTab && !isInitialRender && prevSelected !== selected && selected;
+  const prevSelectedRef = React.useRef<boolean | undefined>(undefined);
 
   const { document } = useDOM();
   React.useEffect(
     function scrollToSelectedItem() {
+      const isInitialRender = prevSelectedRef.current === undefined;
+      const shouldScrollToSelected =
+        withScrollToSelectedTab &&
+        !isInitialRender &&
+        prevSelectedRef.current !== selected &&
+        selected;
+
+      prevSelectedRef.current = selected;
+
       if (!shouldScrollToSelected || !rootRef.current || !document) {
         return;
       }
@@ -177,32 +186,40 @@ export const TabsItem = ({
          **/
       }
     },
-    [rootRef, document, shouldScrollToSelected, scrollBehaviorToSelectedTab],
+    [rootRef, document, scrollBehaviorToSelectedTab, withScrollToSelectedTab, selected],
+  );
+
+  const _onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(
+    (e) => {
+      onClick?.(e);
+      if (id) {
+        controller?.onChange(id);
+      }
+    },
+    [id, onClick, controller],
   );
 
   return (
     <Tappable
-      {...restProps}
       getRootRef={rootRef}
-      className={classNames(
+      hoverMode={hoverMode}
+      activeMode={activeMode}
+      hasActive={hasActive}
+      focusVisibleMode={focusVisibleMode}
+      role={role}
+      aria-selected={selected}
+      tabIndex={tabIndex}
+      baseClassName={classNames(
         styles.host,
         mode && stylesMode[mode],
         selected && styles.selected,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
-        className,
       )}
-      hoverMode={hoverMode}
-      activeMode={activeMode}
-      hasHover={hasHover}
-      hasActive={hasActive}
-      hovered={hovered}
-      activated={activated}
-      focusVisibleMode={focusVisibleMode}
-      role={role}
-      aria-selected={selected}
-      tabIndex={tabIndex}
+      onClick={controller ? _onClick : onClick}
+      id={id}
+      {...restProps}
     >
       {before && <div className={styles.before}>{before}</div>}
       <Headline

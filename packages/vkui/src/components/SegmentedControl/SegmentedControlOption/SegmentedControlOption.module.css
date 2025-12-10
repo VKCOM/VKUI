@@ -1,19 +1,19 @@
 .host {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
   block-size: 100%;
+  color: var(--vkui--color_text_primary);
+  appearance: none;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
   border: 0;
   border-radius: inherit;
-  background: transparent;
-  color: var(--vkui--color_text_primary);
   transition: color 100ms ease-out;
-  user-select: none;
-  box-sizing: border-box;
-  cursor: pointer;
-  appearance: none;
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
 }
 
 .hover {

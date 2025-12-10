@@ -2,10 +2,11 @@ import { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   baselineComponent,
-  fakeTimers,
+  fakeTimersForScope,
   mockScrollContext,
   mountTest,
   waitCSSKeyframesAnimation,
+  withFakeTimers,
 } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { View } from '../View/View';
@@ -27,16 +28,16 @@ const views = [
 describe(Root, () => {
   baselineComponent(Root);
 
-  fakeTimers();
-
-  describe('With View', () =>
+  describe('With View', () => {
+    fakeTimersForScope(false);
     mountTest(() => (
       <Root activeView="view">
         <View id="view" activePanel="">
           <></>
         </View>
       </Root>
-    )));
+    ));
+  });
 
   describe('shows active view', () => {
     it('on mount', () => {
@@ -54,11 +55,12 @@ describe(Root, () => {
   });
 
   describe('calls onTransition', () => {
+    fakeTimersForScope(false);
     it.each([
       ['with animation', true],
       ['without animation', false],
     ])('%s', async (_name, animate) => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const result = render(
         <ConfigProvider transitionMotionEnabled={animate}>
           <Root activeView="v1" onTransition={onTransition}>
@@ -74,15 +76,14 @@ describe(Root, () => {
         </ConfigProvider>,
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v2'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledTimes(1);
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenCalledExactlyOnceWith({
         from: 'v1',
         to: 'v2',
         isBack: false,
       });
     });
     it('detects back transition', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const h = render(
         <Root activeView="v2" onTransition={onTransition}>
           {views}
@@ -95,14 +96,14 @@ describe(Root, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v2'));
       await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenLastCalledWith({
         from: 'v2',
         to: 'v1',
         isBack: true,
       });
     });
     it('once on rapid transitions', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const h = render(
         <Root activeView="v2" onTransition={onTransition}>
           {views}
@@ -122,14 +123,14 @@ describe(Root, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v3'), { runOnlyPendingTimers: true });
       expect(onTransition).toHaveBeenCalledTimes(2);
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenLastCalledWith({
         from: 'v1',
         to: 'v3',
         isBack: false,
       });
     });
     it('once on "canceled" transition', async () => {
-      const onTransition = jest.fn();
+      const onTransition = vi.fn();
       const h = render(
         <Root activeView="v1" onTransition={onTransition}>
           {views}
@@ -150,7 +151,7 @@ describe(Root, () => {
       await waitCSSKeyframesAnimation(getViewPanelById('v2'));
       await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
       expect(onTransition).toHaveBeenCalledTimes(2);
-      expect(onTransition).toHaveBeenCalledWith({
+      expect(onTransition).toHaveBeenLastCalledWith({
         from: 'v2',
         to: 'v1',
         isBack: true,
@@ -160,25 +161,29 @@ describe(Root, () => {
 
   describe('blurs active element', () => {
     const renderFocused = () => render(<input autoFocus data-testid="__autofocus__" />);
-    it('on activeView change', () => {
-      renderFocused();
-      const views = [
-        <View id="focus" activePanel="" key="1">
-          <></>
-        </View>,
-        <View id="other" activePanel="" key="2">
-          <></>
-        </View>,
-      ];
-      render(<Root activeView="focus">{views}</Root>).rerender(
-        <Root activeView="other">{views}</Root>,
-      );
-      act(jest.runAllTimers);
-      expect(document.activeElement === document.body).toBe(true);
-    });
+    it(
+      'on activeView change',
+      withFakeTimers(async () => {
+        renderFocused();
+        const views = [
+          <View id="focus" activePanel="" key="1">
+            <></>
+          </View>,
+          <View id="other" activePanel="" key="2">
+            <></>
+          </View>,
+        ];
+        render(<Root activeView="focus">{views}</Root>).rerender(
+          <Root activeView="other">{views}</Root>,
+        );
+        await act(vi.runAllTimers);
+        expect(document.activeElement === document.body).toBe(true);
+      }),
+    );
   });
 
   describe('scroll control', () => {
+    fakeTimersForScope(false);
     it('restores on back navigation', async () => {
       let y = 101;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
@@ -200,7 +205,7 @@ describe(Root, () => {
       );
       await waitCSSKeyframesAnimation(getViewPanelById('v2'));
       await waitCSSKeyframesAnimation(getViewPanelById('v1'), { runOnlyPendingTimers: true });
-      expect(scrollTo).toHaveBeenCalledWith(0, y);
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, y);
     });
     it('resets on forward navigation', async () => {
       let y = 101;

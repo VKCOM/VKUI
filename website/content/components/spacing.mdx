@@ -1,0 +1,44 @@
+---
+description: Компонент для создания вертикальных отступов между элементами интерфейса.
+---
+
+<Overview group="layout">
+
+# Spacing [tag:component]
+
+Компонент для создания вертикальных отступов между элементами интерфейса.
+
+</Overview>
+
+## Основное использование
+
+import { BlockWrapper } from '@/components/wrappers';
+
+<Playground Wrapper={BlockWrapper}>
+  ```jsx
+  <Text>Текст над отступом</Text>
+  <Spacing size="4xl" />
+  <Text>Текст под отступом</Text>
+  ```
+</Playground>
+
+## Размеры отступа
+
+Задаются свойством `size`.
+Принимает значения дизайн-системы (например, `"s"`, `"m"`, `"l"`), числовые значения и `CSS`-переменные.
+
+```jsx
+<Spacing size="xs" /> // 4px
+<Spacing size={32} /> // 32px
+<Spacing size="var(--custom-spacing)" /> // Кастомная CSS-переменная
+```
+
+## Особенности
+
+- Не принимает контент (свойство `children` устарело).
+- Для горизонтальных разделителей используйте [`Separator`](/components/separator).
+- Работает как прозрачный блок заданной высоты.
+
+## Свойства и методы [#api]
+
+<PropsTable name="Spacing" />

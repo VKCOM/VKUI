@@ -1,6 +1,5 @@
-import { act, type MutableRefObject } from 'react';
+import { act, type RefObject } from 'react';
 import { render } from '@testing-library/react';
-import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
@@ -8,25 +7,28 @@ import styles from './FixedLayout.module.css';
 
 let updateFunction: () => void;
 
-jest.mock('../../lib/floating/customResizeObserver', () => ({
-  CustomResizeObserver: jest.fn().mockImplementation((updateFunctionFn: () => void) => {
-    updateFunction = updateFunctionFn;
-    return {
-      observe: noop,
-      appendToTheDOM: noop,
-      disconnect: noop,
-    };
-  }),
+vi.mock('../../lib/floating/customResizeObserver', () => ({
+  CustomResizeObserver: vi.fn(
+    class MockCustomResizeObserver {
+      constructor(updateFunctionFn: () => void) {
+        updateFunction = updateFunctionFn;
+      }
+
+      observe = vi.fn();
+      appendToTheDOM = vi.fn();
+      disconnect = vi.fn();
+    },
+  ),
 }));
 
 describe('FixedLayout', () => {
   baselineComponent(FixedLayout);
 
   it('check update width by parent width', async () => {
-    const parentRef: MutableRefObject<HTMLDivElement | null> = {
+    const parentRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
-    const layoutRef: MutableRefObject<HTMLDivElement | null> = {
+    const layoutRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
     let parentWidth = 500;
@@ -35,9 +37,9 @@ describe('FixedLayout', () => {
       if (!element) {
         return;
       }
-      jest
-        .spyOn(element, 'getBoundingClientRect')
-        .mockImplementation(() => new DOMRect(0, 0, parentWidth, 800));
+      vi.spyOn(element, 'getBoundingClientRect').mockImplementation(
+        () => new DOMRect(0, 0, parentWidth, 800),
+      );
 
       parentRef.current = element;
     };
@@ -59,10 +61,10 @@ describe('FixedLayout', () => {
   });
 
   it('check update width by column width', async () => {
-    const colRef: MutableRefObject<HTMLDivElement | null> = {
+    const colRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
-    const layoutRef: MutableRefObject<HTMLDivElement | null> = {
+    const layoutRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
     let colWidth = 280;
@@ -71,7 +73,7 @@ describe('FixedLayout', () => {
       if (!element) {
         return;
       }
-      jest.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
+      vi.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
 
       colRef.current = element;
     };
@@ -113,7 +115,7 @@ describe('FixedLayout', () => {
         className: styles.verticalBottom,
       },
     ])('should have className $className when use props $props', ({ props, className }) => {
-      const layoutRef: MutableRefObject<HTMLDivElement | null> = {
+      const layoutRef: RefObject<HTMLDivElement | null> = {
         current: null,
       };
       render(

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useGlobals } from '@storybook/manager-api';
-import { IconButton } from '@storybook/components';
+import { useGlobals } from 'storybook/manager-api';
+import { IconButton } from 'storybook/internal/components';
 import { ButtonIcon } from '@storybook/icons';
 import { PARAM_KEY } from './constants';
 

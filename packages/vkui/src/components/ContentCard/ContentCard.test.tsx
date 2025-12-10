@@ -7,7 +7,7 @@ const ContentCardTest = (props: ContentCardProps) => (
   <ContentCard
     overTitle="VKUI"
     title="ContentCard example"
-    caption="VKUI Styleguide > Blocks > ContentCard"
+    caption="ContentCard caption"
     {...props}
     data-testid="card"
   />
@@ -35,7 +35,7 @@ describe('ContentCard', () => {
   });
 
   it('[img] passes ref to img', () => {
-    const refCallback = jest.fn();
+    const refCallback = vi.fn();
     render(<ContentCardTest src="/image.png" getRef={refCallback} />);
 
     expect(refCallback).toHaveBeenCalled();
@@ -49,12 +49,18 @@ describe('ContentCard', () => {
     });
   });
 
+  it('[img] passes `imageObjectFit`', () => {
+    render(<ContentCardTest src="/image.png" imageObjectFit="contain" />);
+
+    expect(img()).toHaveStyle('object-fit: contain;');
+  });
+
   it('[onClick] is disabled when there is no onClick', () => {
     render(<ContentCardTest />);
     const el = screen.getByTestId('card');
 
     expect(el.tagName.toLowerCase()).toBe('div');
-    expect(el.role).toBeUndefined();
+    expect(el.role).toBeNull();
     expect(el.getAttribute('disabled')).toBeNull();
     expect(el.getAttribute('aria-disabled')).toBeNull();
   });

@@ -12,7 +12,7 @@ export const EllipsisTextPlayground = (props: ComponentPlaygroundProps) => {
       ]}
     >
       {(props: EllipsisTextProps) => (
-        <div style={{ width: 200, padding: 20 }}>
+        <div style={{ width: 200, padding: 20, boxSizing: 'content-box' }}>
           <EllipsisText {...props}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud

@@ -20,6 +20,17 @@ export const ChipsInputPlayground = (props: ComponentPlaygroundProps) => {
           disabled: [undefined, true],
         },
         {
+          value: [
+            [{ value: '2', label: 'Звери' }],
+            [
+              { value: '1', label: 'Arctic Monkeys' },
+              { value: '2', label: 'Depeche Mode' },
+            ],
+            [],
+          ],
+          inputValue: ['Другая'],
+        },
+        {
           $adaptivity: 'y',
         },
         {

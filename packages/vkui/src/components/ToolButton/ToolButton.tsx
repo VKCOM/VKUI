@@ -6,7 +6,7 @@ import {
   AdaptiveIconRenderer,
   type AdaptiveIconRendererProps,
 } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
-import { Tappable, type TappableProps } from '../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import styles from './ToolButton.module.css';
 
 const stylesMode = {
@@ -31,9 +31,18 @@ const sizeYClassNames = {
   regular: styles.sizeYRegular,
 };
 
-export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProps {
+export interface ToolButtonProps extends TappableOmitProps, AdaptiveIconRendererProps {
+  /**
+   * Режим отображения компонента.
+   */
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline';
+  /**
+   * Внешний вид компонента.
+   */
   appearance?: 'accent' | 'neutral';
+  /**
+   * Направление контента.
+   */
   direction?: 'row' | 'column';
   /**
    * Задаёт `50%` закругления для контейнера.
@@ -48,13 +57,12 @@ export interface ToolButtonProps extends TappableProps, AdaptiveIconRendererProp
  * для форматирования. Их можно использовать как кнопки для разового действия
  * или для включения/выключения режима.
  *
- * @see https://vkcom.github.io/VKUI/#/ToolButton
+ * @see https://vkui.io/components/tool-button
  */
 export const ToolButton = ({
   mode = 'primary',
   appearance = 'accent',
   direction = 'row',
-  className,
   children,
   IconCompact,
   IconRegular,
@@ -70,8 +78,7 @@ export const ToolButton = ({
       activeMode={styles.active}
       Component={restProps.href ? 'a' : 'button'}
       focusVisibleMode="outside"
-      className={classNames(
-        className,
+      baseClassName={classNames(
         styles.host,
         rounded && getRoundedClassName(direction, hasChildren),
         hasChildren && direction === 'row' && styles.withFakeEndIcon,

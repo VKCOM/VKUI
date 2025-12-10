@@ -1,13 +1,22 @@
 import { Icon20CopyOutline, Icon20TrashSimpleOutline } from '@vkontakte/icons';
-import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
+import {
+  AppDefaultWrapper,
+  ComponentPlayground,
+  type ComponentPlaygroundProps,
+} from '@vkui-e2e/playground-helpers';
+import { withLabel } from '@vkui-e2e/utils';
 import { BREAKPOINTS } from '../../lib/adaptivity';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
-import { AppRoot } from '../AppRoot/AppRoot';
 import { ColorSchemeProvider } from '../ColorSchemeProvider/ColorSchemeProvider';
 import { Div } from '../Div/Div';
 import { Flex } from '../Flex/Flex';
 import { IconButton } from '../IconButton/IconButton';
 import { Textarea, type TextareaProps } from './Textarea';
+
+const longMultilineValueExample = withLabel(
+  'Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры',
+  'Long multiline value',
+);
 
 export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
   return (
@@ -29,18 +38,14 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
         },
         {
           cols: [4],
-          defaultValue: [
-            'Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры',
-          ],
+          defaultValue: [longMultilineValueExample],
         },
         {
           status: ['error', 'valid'],
         },
         {
           align: ['center', 'right'],
-          defaultValue: [
-            'Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры',
-          ],
+          defaultValue: [longMultilineValueExample],
         },
         {
           mode: ['plain'],
@@ -57,10 +62,12 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
               </IconButton>
             </Flex>,
           ],
-          defaultValue: [
-            'Музыка\nСпорт\nФотография\nПлавание\nПрограммирование\nПутешествия\nКниги\nСериалы\nФильмы\nНастольные игры',
-          ],
+          defaultValue: [longMultilineValueExample],
           afterAlign: ['start', 'end'],
+        },
+        {
+          value: ['text'],
+          rows: [1],
         },
       ]}
     >
@@ -71,11 +78,10 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
 
 export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProps) => {
   return (
-    <AppRoot
-      mode="embedded"
+    <AppDefaultWrapper
+      disableDecorations
       style={{
         height: 'auto',
-        position: 'absolute',
         width: BREAKPOINTS.MOBILE,
       }}
     >
@@ -86,6 +92,6 @@ export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProp
           </Div>
         </AdaptivityProvider>
       </ColorSchemeProvider>
-    </AppRoot>
+    </AppDefaultWrapper>
   );
 };

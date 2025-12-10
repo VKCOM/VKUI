@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { Button, type ButtonProps } from '../../Button/Button';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -11,6 +13,7 @@ export interface PaginationNavigationButtonOpts {
   'disabled'?: boolean;
   'onClick': (event: React.MouseEvent<HTMLElement>) => void;
   'data-page': number | undefined;
+  'data-testid': string | undefined;
 }
 
 export interface PaginationNavigationButtonProps extends PaginationNavigationButtonOpts {
@@ -22,7 +25,7 @@ export interface PaginationNavigationButtonProps extends PaginationNavigationBut
  */
 const getButtonPropsFromPaginationNavigationButton = (
   opts: PaginationNavigationButtonOpts,
-): ButtonProps & { 'data-page': number | undefined } => {
+): ButtonProps & { 'data-page': number | undefined; 'data-testid': string | undefined } => {
   const icon: React.ReactElement | null =
     opts.style !== 'caption' ? (
       <>
@@ -50,7 +53,8 @@ const getButtonPropsFromPaginationNavigationButton = (
     'onClick': opts.onClick,
     'children': caption,
     'data-page': opts['data-page'],
-  } satisfies ButtonProps & { 'data-page': number | undefined };
+    'data-testid': opts['data-testid'],
+  } satisfies ButtonProps & { 'data-page': number | undefined; 'data-testid': string | undefined };
 };
 
 /**

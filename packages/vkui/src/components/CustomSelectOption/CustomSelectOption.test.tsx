@@ -6,14 +6,18 @@ describe('CustomSelectOption', () => {
   baselineComponent(
     (props) => <CustomSelectOption {...props}>CustomSelectOption</CustomSelectOption>,
     {
-      // TODO [a11y]: "Certain ARIA roles must be contained by particular parents (aria-required-parent)"
-      //              https://dequeuniversity.com/rules/axe/4.5/aria-required-parent?application=axeAPI
-      a11y: false,
+      a11yConfig: {
+        rules: {
+          // TODO [a11y]: "Certain ARIA roles must be contained by particular parents (aria-required-parent)"
+          //              https://dequeuniversity.com/rules/axe/4.5/aria-required-parent?application=axeAPI
+          'aria-required-parent': { enabled: false },
+        },
+      },
     },
   );
 
   it('does not handle onClick when disabled', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     const { rerender } = render(
       <CustomSelectOption onClick={onClick}>Дмитрий Безуглый</CustomSelectOption>,

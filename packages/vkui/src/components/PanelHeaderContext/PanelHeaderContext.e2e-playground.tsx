@@ -33,7 +33,7 @@ export const PanelHeaderContextPlayground = (props: ComponentPlaygroundProps) =>
             <View activePanel="context2">
               <Panel id="context2">
                 <PanelHeader
-                  before={<PanelHeaderBack onClick={noop} />}
+                  before={<PanelHeaderBack onClick={noop} hideLabelOnVKCom hideLabelOnIOS />}
                   after={
                     <PanelHeaderButton onClick={noop}>
                       <Icon28AddOutline />

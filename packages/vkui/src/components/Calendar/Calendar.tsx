@@ -1,29 +1,54 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { classNames, isSameDate } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
-import { clamp, isFirstDay, isLastDay, navigateDate, setTimeEqual } from '../../lib/calendar';
+import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
+import { Keys, pressedKey } from '../../lib/accessibility';
+import {
+  clamp,
+  isFirstDay,
+  isLastDay,
+  navigateDate,
+  NAVIGATION_KEYS,
+  setTimeEqual,
+} from '../../lib/calendar';
+import {
+  convertDateFromTimeZone,
+  convertDateToTimeZone,
+  isSameMonth,
+  startOfMonth,
+} from '../../lib/date';
+import { isHTMLElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { CalendarDays, type CalendarDaysProps } from '../CalendarDays/CalendarDays';
-import { CalendarHeader, type CalendarHeaderProps } from '../CalendarHeader/CalendarHeader';
-import { CalendarTime, type CalendarTimeProps } from '../CalendarTime/CalendarTime';
+import {
+  CalendarDays,
+  type CalendarDaysProps,
+  type CalendarDaysTestsProps,
+} from '../CalendarDays/CalendarDays';
+import {
+  CalendarHeader,
+  type CalendarHeaderProps,
+  type CalendarHeaderTestsProps,
+} from '../CalendarHeader/CalendarHeader';
+import {
+  type CalendarDoneButtonProps,
+  CalendarTime,
+  type CalendarTimeProps,
+  type CalendarTimeTestsProps,
+} from '../CalendarTime/CalendarTime';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Calendar.module.css';
 
+export type CalendarTestsProps = CalendarDaysTestsProps &
+  CalendarHeaderTestsProps &
+  CalendarTimeTestsProps;
+
 export interface CalendarProps
-  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange'>,
-    Pick<
-      CalendarTimeProps,
-      | 'changeHoursLabel'
-      | 'changeMinutesLabel'
-      | 'doneButtonText'
-      | 'doneButtonDisabled'
-      | 'doneButtonShow'
-    >,
+  extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'onChange' | 'defaultValue'>,
+    Pick<CalendarTimeProps, 'changeHoursLabel' | 'changeMinutesLabel'>,
     Pick<
       CalendarHeaderProps,
       | 'prevMonthLabel'
@@ -37,8 +62,17 @@ export interface CalendarProps
       | 'prevMonthProps'
       | 'nextMonthProps'
     >,
-    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'> {
-  value?: Date;
+    Pick<CalendarDaysProps, 'dayProps' | 'listenDayChangesForUpdate' | 'renderDayContent'>,
+    CalendarDoneButtonProps,
+    CalendarTestsProps {
+  /**
+   * Текущая выбранная дата.
+   */
+  value?: Date | null;
+  /**
+   * Начальная дата при монтировании.
+   */
+  defaultValue?: Date | null;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
@@ -49,29 +83,54 @@ export interface CalendarProps
    * Применяется, если не задано `shouldDisableDate`.
    */
   disableFuture?: boolean;
-  enableTime?: boolean;
-  disablePickers?: boolean;
-  changeDayLabel?: string;
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  showNeighboringMonth?: boolean;
-  size?: 's' | 'm';
-  onChange?: (value?: Date) => void;
   /**
-   * Позволяет запретить выбор даты.
+   * Включает выбор времени.
+   */
+  enableTime?: boolean;
+  /**
+   * Отключает селекторы выбора месяца/года.
+   */
+  disablePickers?: boolean;
+  /**
+   * `aria-label` для изменения дня.
+   *
+   * @deprecated Будет удалeно в **VKUI v8**.
+   * Использовалось для задания aria-label для контейнера дней в календаре.
+   * Теперь этот контейнер является таблицей (с помощью role="grid") и
+   * в aria-label рендерится текущий открытый в календаре месяц и год.
+   */
+  changeDayLabel?: string;
+  /**
+   * День недели, с которого начинается неделя.
+   */
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * Показывать дни соседних месяцев.
+   */
+  showNeighboringMonth?: boolean;
+  /**
+   * Размер календаря.
+   */
+  size?: 's' | 'm';
+  /**
+   * Обработчик изменения выбранной даты.
+   */
+  onChange?: (value: Date) => void;
+  /**
+   * Функция для проверки запрета выбора даты.
    */
   shouldDisableDate?: (value: Date) => boolean;
-  onDoneButtonClick?: () => void;
   /**
    * Дата отображаемого месяца.
    * При использовании обновление даты должно происходить вне компонента.
    */
   viewDate?: Date;
   /**
-   * Изменение даты в шапке календаря.
+   * Обработчик изменения даты в шапке календаря.
    */
   onHeaderChange?: (value: Date) => void;
   /**
-   * Минимальные дата и время, которые можно выбрать
+   * Минимальные дата и время, которые можно выбрать.
    * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
   minDateTime?: Date;
@@ -80,15 +139,21 @@ export interface CalendarProps
    * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
   maxDateTime?: Date;
+  /**
+   * Часовой пояс для отображения даты.
+   */
+  timezone?: string;
 }
 
 const warn = warnOnce('Calendar');
 
 /**
- * @see https://vkcom.github.io/VKUI/#/Calendar
+ * @see https://vkui.io/components/calendar
  */
 export const Calendar = ({
-  value,
+  getRootRef,
+  'value': valueProp,
+  defaultValue,
   onChange,
   disablePast,
   disableFuture,
@@ -98,8 +163,10 @@ export const Calendar = ({
   doneButtonText,
   doneButtonDisabled,
   doneButtonShow,
+  DoneButton,
   weekStartsOn = 1,
   disablePickers,
+  'aria-label': ariaLabel = 'Календарь',
   changeHoursLabel = 'Изменить час',
   changeMinutesLabel = 'Изменить минуту',
   prevMonthLabel = 'Предыдущий месяц',
@@ -107,9 +174,8 @@ export const Calendar = ({
   changeMonthLabel = 'Изменить месяц',
   changeYearLabel = 'Изменить год',
   showNeighboringMonth,
-  changeDayLabel = 'Изменить день',
   size = 'm',
-  viewDate: externalViewDate,
+  'viewDate': externalViewDate,
   onHeaderChange,
   onNextMonth,
   onPrevMonth,
@@ -122,8 +188,38 @@ export const Calendar = ({
   renderDayContent,
   minDateTime,
   maxDateTime,
+  timezone,
+  minutesTestId,
+  hoursTestId,
+  doneButtonTestId,
+  prevMonthButtonTestId,
+  nextMonthButtonTestId,
+  monthDropdownTestId,
+  yearDropdownTestId,
+  dayTestId,
   ...props
 }: CalendarProps): React.ReactNode => {
+  const _onChange = React.useCallback(
+    (date: Date | null) => {
+      const newDate = convertDateFromTimeZone(date, timezone);
+      if (newDate && onChange) {
+        onChange(newDate);
+      }
+    },
+    [onChange, timezone],
+  );
+
+  const [value, updateValue] = useCustomEnsuredControl<Date | null>({
+    value: valueProp,
+    defaultValue: defaultValue as Date | null,
+    onChange: _onChange,
+  });
+
+  const timeZonedValue: Date | null | undefined = React.useMemo(
+    () => convertDateToTimeZone(value, timezone),
+    [timezone, value],
+  );
+
   const {
     viewDate,
     setViewDate,
@@ -133,11 +229,10 @@ export const Calendar = ({
     setFocusedDay,
     isDayFocused,
     isDayDisabled,
-    resetSelectedDay,
     isMonthDisabled,
     isYearDisabled,
   } = useCalendar({
-    value,
+    value: timeZonedValue,
     disableFuture,
     disablePast,
     shouldDisableDate,
@@ -147,12 +242,14 @@ export const Calendar = ({
     minDateTime,
     maxDateTime,
   });
+  // соотвествует дню, на котором можно сфокусироваться с помощью Tab
+  const [focusableDay, setFocusableDay] = React.useState<Date>();
 
   useIsomorphicLayoutEffect(() => {
-    if (value) {
-      setViewDate(value);
+    if (timeZonedValue) {
+      setViewDate(timeZonedValue);
     }
-  }, [value]);
+  }, [timeZonedValue]);
 
   if (process.env.NODE_ENV === 'development' && !disablePickers && size === 's') {
     warn("Нельзя включить селекты выбора месяца/года, если размер календаря 's'", 'error');
@@ -164,38 +261,108 @@ export const Calendar = ({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      const key = pressedKey(event);
+      if (key && NAVIGATION_KEYS.includes(key)) {
         event.preventDefault();
+
+        const newFocusedDay = navigateDate(focusedDay ?? timeZonedValue, key);
+
+        if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
+          setViewDate(newFocusedDay);
+        }
+        setFocusedDay(newFocusedDay);
+        setFocusableDay(newFocusedDay);
+
+        return;
       }
 
-      const newFocusedDay = navigateDate(focusedDay ?? value, event.key);
+      if (key === Keys.TAB) {
+        setFocusedDay(undefined);
+        setFocusableDay(focusedDay);
 
-      if (newFocusedDay && !isSameMonth(newFocusedDay, viewDate)) {
-        setViewDate(newFocusedDay);
+        return;
       }
-      setFocusedDay(newFocusedDay);
+
+      if ((key === Keys.ENTER || key === Keys.SPACE) && isHTMLElement(event.target)) {
+        event.preventDefault();
+        event.target.click?.();
+      }
     },
-    [focusedDay, setFocusedDay, setViewDate, value, viewDate],
+    [focusedDay, setFocusedDay, setFocusableDay, setViewDate, timeZonedValue, viewDate],
   );
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      let actualDate = setTimeEqual(date, value);
+      let actualDate = setTimeEqual(date, timeZonedValue);
       if (minDateTime || maxDateTime) {
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
-      onChange?.(actualDate);
+      updateValue(actualDate);
     },
-    [value, onChange, maxDateTime, minDateTime],
+    [timeZonedValue, updateValue, maxDateTime, minDateTime],
   );
 
+  const onDayFocus = React.useCallback(
+    (date: Date) => {
+      if (focusedDay && isSameDate(focusedDay, date)) {
+        return;
+      }
+
+      setFocusedDay(date);
+      if (!focusableDay || !isSameDate(date, focusableDay)) {
+        setFocusableDay(date);
+      }
+    },
+    [focusableDay, focusedDay, setFocusedDay],
+  );
+
+  // activeDay это день в календаре соответствующий значению в инпуте
   const isDayActive = React.useCallback(
-    (day: Date) => Boolean(value && isSameDay(day, value)),
-    [value],
+    (day: Date) => Boolean(timeZonedValue && isSameDate(day, timeZonedValue)),
+    [timeZonedValue],
+  );
+
+  const isFocusableDayInViewDateMonth = focusableDay && isSameMonth(focusableDay, viewDate);
+  const isInputValueDateInViewDateMonth = timeZonedValue && isSameMonth(timeZonedValue, viewDate);
+  /**
+   * Функция позволяет проверить является ли день в календаре днём на который
+   * можно попасть с помощью Tab.
+   * Единственный день в таблице календаря у которого есть tabIndex="0"
+   * Чтобы на него можно было попасть из заголовка календаря.
+   */
+  const isDayFocusable = React.useCallback(
+    (day: Date) => {
+      // если focusableDay день находится среди дней открытого сейчас месяца, то такой день получит tabIndex="0",
+      if (isFocusableDayInViewDateMonth) {
+        return isSameDate(focusableDay, day);
+      }
+
+      // при открытии календаря focusableDay не определён,
+      // поэтому tabIndex="0" будет у дня, соответствующего дню в инпуте
+      if (isInputValueDateInViewDateMonth) {
+        return isDayActive(day);
+      }
+
+      // при переключении месяца любая навигация с помощью Tab начинается
+      // с первого дня месяца.
+      return isSameDate(startOfMonth(viewDate), day);
+    },
+    [
+      focusableDay,
+      viewDate,
+      isDayActive,
+      isFocusableDayInViewDateMonth,
+      isInputValueDateInViewDateMonth,
+    ],
   );
 
   return (
-    <RootComponent {...props} baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}>
+    <RootComponent
+      aria-label={ariaLabel}
+      {...props}
+      baseClassName={classNames(styles.host, size === 's' && styles.sizeS)}
+      getRootRef={getRootRef}
+    >
       <CalendarHeader
         viewDate={externalViewDate || viewDate}
         onChange={setViewDate}
@@ -213,39 +380,47 @@ export const Calendar = ({
         nextMonthProps={nextMonthProps}
         isMonthDisabled={isMonthDisabled}
         isYearDisabled={isYearDisabled}
+        nextMonthButtonTestId={nextMonthButtonTestId}
+        prevMonthButtonTestId={prevMonthButtonTestId}
+        monthDropdownTestId={monthDropdownTestId}
+        yearDropdownTestId={yearDropdownTestId}
       />
       <CalendarDays
         viewDate={externalViewDate || viewDate}
-        value={value}
+        value={timeZonedValue}
         weekStartsOn={weekStartsOn}
-        isDayFocused={isDayFocused}
-        tabIndex={0}
-        aria-label={changeDayLabel}
         onKeyDown={handleKeyDown}
         onDayChange={onDayChange}
         isDayActive={isDayActive}
+        onDayFocus={onDayFocus}
+        isDayFocused={isDayFocused}
+        isDayFocusable={isDayFocusable}
         isDaySelectionStart={isFirstDay}
         isDaySelectionEnd={isLastDay}
         isDayDisabled={isDayDisabled}
-        onBlur={resetSelectedDay}
         showNeighboringMonth={showNeighboringMonth}
         size={size}
         dayProps={dayProps}
         listenDayChangesForUpdate={listenDayChangesForUpdate}
         renderDayContent={renderDayContent}
+        dayTestId={dayTestId}
       />
-      {enableTime && value && size !== 's' && (
+      {enableTime && timeZonedValue && size !== 's' && (
         <div className={styles.time}>
           <CalendarTime
-            value={value}
-            onChange={onChange}
+            value={timeZonedValue}
+            onChange={updateValue}
             onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
             doneButtonDisabled={doneButtonDisabled}
             doneButtonShow={doneButtonShow}
+            DoneButton={DoneButton}
             changeHoursLabel={changeHoursLabel}
             changeMinutesLabel={changeMinutesLabel}
             isDayDisabled={minDateTime || maxDateTime ? isDayDisabled : undefined}
+            minutesTestId={minutesTestId}
+            hoursTestId={hoursTestId}
+            doneButtonTestId={doneButtonTestId}
           />
         </div>
       )}

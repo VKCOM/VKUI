@@ -1,11 +1,16 @@
-jest.autoMockOff();
+import { describe } from 'vitest';
 import { defineSnapshotTestFromFixture } from '../../../testHelpers/testHelper';
 
 const name = 'image-overlay';
 const fixtures = ['image', 'image-base'] as const;
 
-describe(name, () => {
-  fixtures.forEach((test) =>
-    defineSnapshotTestFromFixture(__dirname, name, global.TRANSFORM_OPTIONS, `${name}/${test}`),
-  );
+describe(name, async () => {
+  for (const testName of fixtures) {
+    await defineSnapshotTestFromFixture(
+      __dirname,
+      name,
+      global.TRANSFORM_OPTIONS,
+      `${name}/${testName}`,
+    );
+  }
 });

@@ -29,17 +29,19 @@ export const withVKUIWrapper: Decorator = (Component, context) => {
     writingMode,
   } = context.globals;
 
-  const { centered } = context.parameters;
+  const { centered, background } = context.parameters;
 
   const style: React.CSSProperties = {
     writingMode,
     ...(centered ? CenteredStyle : {}),
+    background,
   };
 
   return (
     <ConfigProvider
       platform={platform}
       colorScheme={colorScheme}
+      direction={direction}
       hasCustomPanelHeaderAfter={hasCustomPanelHeaderAfter}
     >
       <AdaptivityProvider hasPointer={hasPointer}>

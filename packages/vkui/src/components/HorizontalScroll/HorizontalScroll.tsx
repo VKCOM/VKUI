@@ -1,16 +1,21 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityHasPointer } from '../../hooks/useAdaptivityHasPointer';
-import { useDirection } from '../../hooks/useDirection';
+import { classNames, noop } from '@vkontakte/vkjs';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusVisible } from '../../hooks/useFocusVisible';
+import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { easeInOutSine } from '../../lib/fx';
+import { mergeCalls } from '../../lib/mergeCalls';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import { useHover } from '../Clickable/useState';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import styles from './HorizontalScroll.module.css';
 
+/* eslint-disable jsdoc/require-jsdoc */
 interface ScrollContext {
   scrollElement: HTMLElement | null;
   scrollAnimationDuration: number;
@@ -21,11 +26,12 @@ interface ScrollContext {
   onScrollStart: VoidFunction;
   /**
    * Начальная ширина прокрутки.
-   * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
+   * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate.
    */
   initialScrollWidth: number;
   textDirection: 'ltr' | 'rtl';
 }
+/* eslint-enable jsdoc/require-jsdoc */
 
 export type ScrollPositionHandler = (currentPosition: number) => number;
 
@@ -33,36 +39,69 @@ export interface HorizontalScrollProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
-   * Функция для расчета величины прокрутки при клике на левую стрелку.
+   * Функция для расчета величины прокрутки при нажатии на левую стрелку.
    */
   getScrollToLeft?: ScrollPositionHandler;
   /**
-   * Функция для расчета величины прокрутки при клике на правую стрелку.
+   * Функция для расчета величины прокрутки при нажатии на правую стрелку.
    */
   getScrollToRight?: ScrollPositionHandler;
+  /**
+   * Размер стрелок.
+   */
   arrowSize?: ScrollArrowProps['size'];
   /**
    * Смещает иконки кнопок навигации по вертикали.
    */
   arrowOffsetY?: number | string;
+  /**
+   * Показывать ли стрелки.
+   */
   showArrows?: boolean | 'always';
+  /**
+   * Длительность анимации скролла.
+   */
   scrollAnimationDuration?: number;
   /**
    * Добавляет возможность прокручивать контент на любое колесо мыши.
    * По умолчанию прокручивается как любой горизонтальный контент через shift.
    */
   scrollOnAnyWheel?: boolean;
+  /**
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента.
+   */
+  prevButtonTestId?: string;
+  /**
+   * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента.
+   */
+  nextButtonTestId?: string;
+  /**
+   * Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`.
+   */
+  ContentWrapperComponent?: React.ElementType;
+  /**
+   * `ref` для обертки над контентом, прокинутым в `children`.
+   */
+  contentWrapperRef?: React.Ref<HTMLElement>;
+  /**
+   * Специфичный `className` для обертки над контентом, прокинутым в `children`.
+   */
+  contentWrapperClassName?: string;
+  /**
+   * Добавляет отступы для контента внутри.
+   */
+  withPadding?: boolean;
 }
 
 /**
- * timing method
+ * Timing method.
  */
 function now() {
   return performance && performance.now ? performance.now() : Date.now();
 }
 
 /**
- * Округление к большему по модулю
+ * Округление к большему по модулю.
  *
  * ## Пример
  *
@@ -79,13 +118,13 @@ function roundingAwayFromZero(value: number): number {
 
 /**
  * Округляем el.scrollLeft
- * https://github.com/VKCOM/VKUI/pull/2445
+ * https://github.com/VKCOM/VKUI/pull/2445.
  */
 const roundUpElementScrollLeft = (el: HTMLElement) => roundingAwayFromZero(el.scrollLeft);
 
 /**
  * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
- * Константа взята из полифила (468), на дизайн-ревью уточнили до 250
+ * Константа взята из полифила (468), на дизайн-ревью уточнили до 250.
  * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
  */
 const SCROLL_ONE_FRAME_TIME = 250;
@@ -106,18 +145,25 @@ function doScroll({
   }
 
   /**
-   * крайнее значение сдвига
+   * Крайнее значение сдвига.
    */
   const extremeScrollLeft =
     (textDirection === 'ltr' ? 1 : -1) * (initialScrollWidth - scrollElement.offsetWidth);
 
-  let startScrollLeft = roundUpElementScrollLeft(scrollElement);
-  let endScrollLeft = getScrollPosition(startScrollLeft);
+  const startScrollLeft = roundUpElementScrollLeft(scrollElement);
+  const remappedStartScrollLeft = startScrollLeft * (textDirection === 'rtl' ? -1 : 1);
+
+  let endScrollLeft = getScrollPosition(remappedStartScrollLeft);
+
+  const diff = endScrollLeft - remappedStartScrollLeft;
+  if (textDirection === 'rtl') {
+    endScrollLeft = startScrollLeft - diff;
+  }
 
   onScrollStart();
 
   /**
-   * Если окончание прокрутки вышло за ноль
+   * Если окончание прокрутки вышло за ноль.
    */
   if (startScrollLeft * endScrollLeft < 0) {
     endScrollLeft = 0;
@@ -155,7 +201,7 @@ function doScroll({
 }
 
 /**
- * @see https://vkcom.github.io/VKUI/#/HorizontalScroll
+ * @see https://vkui.io/components/horizontal-scroll
  */
 export const HorizontalScroll = ({
   children,
@@ -167,22 +213,35 @@ export const HorizontalScroll = ({
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   scrollOnAnyWheel = false,
+  prevButtonTestId,
+  nextButtonTestId,
+  // ContentWrapper
+  ContentWrapperComponent = 'div',
+  contentWrapperRef,
+  contentWrapperClassName,
+  withPadding,
+  onPointerEnter,
+  onPointerLeave,
+  onMouseEnter,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
-  const [canScrollRight, setCanScrollRight] = React.useState(false);
-  const [directionRef, textDirection] = useDirection<HTMLDivElement>();
-  const direction = textDirection || 'ltr';
-  const setCanScrollStart = direction === 'ltr' ? setCanScrollLeft : setCanScrollRight;
-  const setCanScrollEnd = direction === 'ltr' ? setCanScrollRight : setCanScrollLeft;
+  const [canScrollStart, setCanScrollStart] = React.useState(false);
+  const [canScrollEnd, setCanScrollEnd] = React.useState(false);
+  const { focusVisible, ...focusEvents } = useFocusVisible();
+  const focusVisibleClassNames = useFocusVisibleClassName({
+    focusVisible,
+  });
+
+  const direction = useConfigDirection();
+  const isRtl = direction === 'rtl';
 
   const isCustomScrollingRef = React.useRef(false);
 
-  const scrollerRef = useExternRef(getRef, directionRef);
+  const scrollerRef = useExternRef(getRef);
 
   const animationQueue = React.useRef<VoidFunction[]>([]);
 
-  const hasPointer = useAdaptivityHasPointer();
+  const { isHovered, ...hoverHandlers } = useHover();
 
   const scrollTo = React.useCallback(
     (getScrollPosition: ScrollPositionHandler) => {
@@ -208,102 +267,118 @@ export const HorizontalScroll = ({
     [scrollerRef, scrollAnimationDuration, direction, setCanScrollEnd],
   );
 
-  const scrollToLeft = React.useCallback(() => {
+  const scrollToStart = React.useCallback(() => {
     const getScrollPosition =
       getScrollToLeft ?? ((i: number) => i - scrollerRef.current!.offsetWidth);
     scrollTo(getScrollPosition);
   }, [getScrollToLeft, scrollTo, scrollerRef]);
 
-  const scrollToRight = React.useCallback(() => {
+  const scrollToEnd = React.useCallback(() => {
     const getScrollPosition =
       getScrollToRight ?? ((i: number) => i + scrollerRef.current!.offsetWidth);
     scrollTo(getScrollPosition);
   }, [getScrollToRight, scrollTo, scrollerRef]);
 
   const calculateArrowsVisibility = React.useCallback(() => {
-    if (showArrows && hasPointer && scrollerRef.current && !isCustomScrollingRef.current) {
+    if (showArrows && scrollerRef.current && !isCustomScrollingRef.current) {
       const scrollElement = scrollerRef.current;
+      const scrollLeft = scrollElement.scrollLeft;
 
-      setCanScrollStart(scrollElement.scrollLeft !== 0);
+      setCanScrollStart(isRtl ? scrollLeft < 0 : scrollLeft > 0);
       setCanScrollEnd(
         Math.abs(roundUpElementScrollLeft(scrollElement)) + scrollElement.offsetWidth <
           scrollElement.scrollWidth,
       );
     }
-  }, [showArrows, hasPointer, scrollerRef, setCanScrollStart, setCanScrollEnd]);
+  }, [showArrows, scrollerRef, isRtl]);
 
   React.useEffect(calculateArrowsVisibility, [calculateArrowsVisibility, children]);
 
-  const _onWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
-    },
-    [scrollerRef],
-  );
-
-  /**
-   * Прокрутка с помощью любого колеса мыши
-   */
-  const onScrollWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      _onWheel(e);
-      e.preventDefault();
-    },
-    [_onWheel],
-  );
-
-  const onArrowWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      if (e.deltaX || (e.deltaY && scrollOnAnyWheel)) {
-        _onWheel(e);
+  useIsomorphicLayoutEffect(
+    function addWheelEventHandler() {
+      const scrollEl = scrollerRef.current;
+      if (!scrollEl) {
+        return noop;
       }
+      /**
+       * Прокрутка с помощью любого колеса мыши.
+       */
+      const onWheel = (e: WheelEvent) => {
+        scrollerRef.current!.scrollBy({ left: e.deltaX + e.deltaY, behavior: 'auto' });
+        e.preventDefault();
+      };
+
+      const listenerOptions = { passive: false };
+
+      if (scrollOnAnyWheel) {
+        scrollEl.addEventListener('wheel', onWheel, listenerOptions);
+      }
+      scrollEl.addEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+
+      return () => {
+        if (scrollOnAnyWheel) {
+          // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для wheel нет passive свойства
+          scrollEl.removeEventListener('wheel', onWheel, listenerOptions);
+        }
+        // @ts-expect-error: TS2769 В интерфейсе EventListenerOptions для scroll нет passive свойства
+        scrollEl.removeEventListener('scroll', calculateArrowsVisibility, listenerOptions);
+      };
     },
-    [_onWheel, scrollOnAnyWheel],
+    [scrollOnAnyWheel, calculateArrowsVisibility, scrollerRef],
   );
+
+  const handlers = mergeCalls(hoverHandlers, { onPointerEnter, onPointerLeave });
 
   return (
     <RootComponent
       {...restProps}
+      {...handlers}
       baseClassName={classNames(
         styles.host,
         'vkuiInternalHorizontalScroll',
-        showArrows === 'always' && styles.withConstArrows,
+        (showArrows === 'always' || isHovered) && styles.showArrows,
+        isRtl && styles.rtl,
+        withPadding && styles.withPadding,
       )}
+      // FIXME: onMouseEnter из restProps затирается, а при callMultiply орет линтер на рефы.
       onMouseEnter={calculateArrowsVisibility}
     >
-      {showArrows && (hasPointer || hasPointer === undefined) && canScrollLeft && (
+      {showArrows && canScrollStart && (
         <ScrollArrow
-          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrowLeft' : undefined}
+          data-testid={prevButtonTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="left"
           aria-hidden
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowLeft)}
-          onClick={scrollToLeft}
-          onWheel={onArrowWheel}
+          onClick={scrollToStart}
         />
       )}
-      {showArrows && (hasPointer || hasPointer === undefined) && canScrollRight && (
+      {showArrows && canScrollEnd && (
         <ScrollArrow
-          data-testid={process.env.NODE_ENV === 'test' ? 'ScrollArrowRight' : undefined}
+          data-testid={nextButtonTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
           direction="right"
           aria-hidden
           tabIndex={-1}
           className={classNames(styles.arrow, styles.arrowRight)}
-          onClick={scrollToRight}
-          onWheel={onArrowWheel}
+          onClick={scrollToEnd}
         />
       )}
       <div
-        className={styles.in}
+        className={classNames(styles.in, focusVisibleClassNames)}
         ref={scrollerRef}
-        onScroll={calculateArrowsVisibility}
-        onWheel={scrollOnAnyWheel ? onScrollWheel : undefined}
+        tabIndex={0}
+        {...focusEvents}
       >
-        <div className={styles.inWrapper}>{children}</div>
+        <ContentWrapperComponent
+          className={classNames(styles.inWrapper, contentWrapperClassName)}
+          ref={contentWrapperRef}
+        >
+          {children}
+        </ContentWrapperComponent>
       </div>
     </RootComponent>
   );

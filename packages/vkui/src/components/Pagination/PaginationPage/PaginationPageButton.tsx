@@ -1,11 +1,12 @@
+/* eslint-disable jsdoc/require-jsdoc */
+
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { type SizeTypeValues } from '../../../lib/adaptivity';
-import { Tappable, type TappableProps } from '../../Tappable/Tappable';
+import { Tappable, type TappableOmitProps } from '../../Tappable/Tappable';
 import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import type { PaginationProps } from '../Pagination';
-import { getPageLabelDefault } from '../utils';
 import { getPaginationPageClassNames } from './usePaginationPageClasses';
 import styles from './PaginationPage.module.css';
 
@@ -23,10 +24,10 @@ export interface PaginationPageButtonProps extends PaginationPageButtonOpts {
 
 const getTappablePropsFromPaginationPage = (
   opts: PaginationPageButtonOpts,
-): TappableProps & { 'data-page': number } => {
+): TappableOmitProps & { 'data-page': number } => {
   const {
     isCurrent = false,
-    getPageLabel = getPageLabelDefault,
+    getPageLabel,
     children,
     className,
     disabled,
@@ -40,6 +41,7 @@ const getTappablePropsFromPaginationPage = (
     sizeY,
   });
 
+  const pageLabel = getPageLabel?.(isCurrent);
   return {
     'className': classNames(pageClassNames, className),
     'activeMode': styles.stateActive,
@@ -49,7 +51,7 @@ const getTappablePropsFromPaginationPage = (
     'disabled': disabled,
     'children': (
       <Text normalize={false}>
-        <VisuallyHidden>{getPageLabel(isCurrent)} </VisuallyHidden>
+        {pageLabel && <VisuallyHidden>{pageLabel} </VisuallyHidden>}
         {children}
       </Text>
     ),

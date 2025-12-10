@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`form-item transforms correctly 1`] = `
+exports[`form-item > transforms correctly 1`] = `
 "import { FormItem } from '@vkontakte/vkui';
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -9,7 +9,7 @@ const App = () => {
   const flag = true;
   const calculateMultiline = () => true;
   return (
-    (<React.Fragment>
+    <React.Fragment>
       {/* test 1: should find TopLabel inside top prop */}
       <FormItem
         top={
@@ -106,7 +106,7 @@ const App = () => {
         }>
         <div/>
       </FormItem>
-    </React.Fragment>)
+    </React.Fragment>
   );
 };"
 `;

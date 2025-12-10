@@ -17,5 +17,5 @@ export function useStableCallback<Args extends unknown[], Return>(
   useIsomorphicLayoutEffect(() => {
     ref.current = fn;
   });
-  return React.useRef((...args: Args) => (0, ref.current)(...args)).current;
+  return React.useCallback((...args: Args) => (0, ref.current)(...args), []);
 }

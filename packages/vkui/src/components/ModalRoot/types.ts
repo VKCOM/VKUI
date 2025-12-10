@@ -1,115 +1,72 @@
-import type { DOMContextInterface } from '../../lib/dom';
-import type { HasPlatform } from '../../types';
-import type { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+/* eslint-disable jsdoc/require-jsdoc */
 
-export type ModalType = 'page' | 'card';
+import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
 
-export type TranslateRange = [number, number];
+export type ModalRootActiveModal = string | null;
 
-export type ModalsState = { [index: string]: ModalsStateEntry };
+export type ModalRootCallbackFunction = (modalId: string) => void;
 
-export interface ModalElements {
-  modalElement?: HTMLElement | null;
-  innerElement?: HTMLElement | null;
-  headerElement?: HTMLElement | null;
-  contentElement?: HTMLElement | null;
-  bottomInset?: HTMLElement | null;
-}
-
-export interface ModalsStateEntry extends ModalElements {
-  id: string | null;
+type ModalRootBaseProps = {
   /**
-   * Событие начала открытия модалки.
+   * Открывает модальное окно с переданным id.
    */
-  onOpen?: VoidFunction;
-  /**
-   * Событие открытия модалки.
-   */
-  onOpened?: VoidFunction;
-  /**
-   * Событие начала закрытия модалки.
-   */
-  onClose?: VoidFunction;
-  /**
-   * Событие закрытия модалки.
-   */
-  onClosed?: VoidFunction;
-  type?: ModalType;
-
-  settlingHeight?: number;
-  expandable?: boolean;
+  activeModal?: ModalRootActiveModal;
 
   /**
-   * Процент текущего сдвига модалки
-   */
-  translateY?: number;
-  /**
-   * Процент сдвига модалки в изначальном состоянии
-   */
-  translateYFrom?: number;
-  /**
-   * Процент сдвига модалки во время взаимодействия с ней (потянуть, чтобы открыть или закрыть)
-   */
-  translateYCurrent?: number;
-
-  touchStartContentScrollTop?: number;
-  touchMovePositive?: boolean | null;
-  touchShiftYPercent?: number;
-
-  expanded?: boolean;
-  collapsed?: boolean;
-  hidden?: boolean;
-
-  contentScrolled?: boolean;
-  contentScrollStopTimeout?: ReturnType<typeof setTimeout>;
-
-  expandedRange?: TranslateRange;
-  collapsedRange?: TranslateRange;
-  hiddenRange?: TranslateRange;
-  /**
-   * Отключает возможность закрыть модалку стандартными способами
-   */
-  preventClose?: boolean;
-}
-
-export interface ModalRootProps {
-  activeModal?: string | null;
-  children: React.ReactElement | Iterable<React.ReactElement>;
-
-  /**
-   * Будет вызвано при начале открытия активной модалки с её id
-   */
-  onOpen?: (modalId: string) => void;
-
-  /**
-   * Будет вызвано при окончательном открытии активной модалки с её id
-   */
-  onOpened?: (modalId: string) => void;
-
-  /**
-   * Будет вызвано при начале закрытия активной модалки с её id
-   */
-  onClose?: (modalId: string) => void;
-
-  /**
-   * Будет вызвано при окончательном закрытии активной модалки с её id
-   */
-  onClosed?: (modalId: string) => void;
-
-  /**
-   * `data-testid` для маски
+   * `data-testid` для маски.
    */
   modalOverlayTestId?: string;
 
   /**
    * Отключает фокус на контейнер диалогового окна при открытии.
+   *
+   * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
   noFocusToDialog?: boolean;
+
+  usePortal?: AppRootPortalProps['usePortal'];
+  /**
+   * Будет вызвано при начале открытия активной модалки с её id.
+   */
+  onOpen?: ModalRootCallbackFunction;
+
+  /**
+   * Будет вызвано при окончательном открытии активной модалки с её id.
+   */
+  onOpened?: ModalRootCallbackFunction;
+
+  /**
+   * Будет вызвано при начале закрытия активной модалки с её id.
+   */
+  onClose?: ModalRootCallbackFunction;
+
+  /**
+   * Будет вызвано при окончательном закрытии активной модалки с её id.
+   */
+  onClosed?: ModalRootCallbackFunction;
+
+  /**
+   * Отключает отображение и взаимодействие с фоном модалки.
+   */
+  disableModalOverlay?: boolean;
+};
+
+export interface ModalRootProps extends ModalRootBaseProps {
+  children: React.ReactElement | Iterable<React.ReactElement>;
 }
 
-export interface ModalRootWithDOMProps extends HasPlatform, ModalRootProps, DOMContextInterface {
+type ModalRootContextBaseInterface = {
   /**
-   * @ignore
+   * Обозначает, в контексте ли модального окна мы сейчас.
    */
-  configProvider?: ConfigProviderContextInterface;
+  isInsideModal: boolean;
+};
+
+export interface ModalRootContextInterface
+  extends ModalRootContextBaseInterface,
+    ModalRootBaseProps {}
+
+export interface UseModalRootContext extends ModalRootContextBaseInterface {
+  activeModal?: string | null;
+  onClose?: VoidFunction;
 }

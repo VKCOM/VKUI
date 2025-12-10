@@ -16,6 +16,7 @@ const story: Meta<ModalPageHeaderProps> = {
   component: ModalPageHeader,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
   decorators: [withVKUILayout],
+  tags: ['Модальные окна'],
 };
 
 export default story;
@@ -26,11 +27,10 @@ const MODAL_ID = 'MODAL_ID';
 
 const HeaderButton = ({ children }: { children: React.ReactNode }) => {
   const { onClose } = React.useContext(ModalRootContext);
-
-  return <PanelHeaderButton onClick={onClose}>{children}</PanelHeaderButton>;
+  return <PanelHeaderButton onClick={() => onClose?.(MODAL_ID)}>{children}</PanelHeaderButton>;
 };
 
-export const Example: Story = {
+export const Playground: Story = {
   render: function Render(args) {
     const platform = usePlatform();
 

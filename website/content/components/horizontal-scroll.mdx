@@ -1,0 +1,213 @@
+---
+description: Компонент для показа большого количества элементов с горизонтальной прокруткой.
+---
+
+<Overview group="data-display">
+
+# HorizontalScroll [tag:component]
+
+Компонент для показа большого количества элементов с горизонтальной прокруткой.
+Поддерживается навигация жестами и с клавиатуры. Лучше всего подходит для отображения множества компонентов `HorizontalCell`.
+
+Связанные компоненты:
+
+- [`HorizontalCell`](/components/horizontal-cell)
+
+</Overview>
+
+<Playground>
+  ```jsx
+  <HorizontalScroll getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+    {Array.from({ length: 20 }).map((_, index) => {
+      return (
+        <HorizontalCell onClick={() => {}} key={index} title={index}>
+          <Avatar size={56} />
+        </HorizontalCell>
+      );
+    })}
+  </HorizontalScroll>
+  ```
+</Playground>
+
+## Параметры прокрутки
+
+### Величина прокрутки
+
+С помощью свойств `getScrollToLeft` и `getScrollToRight` можно определять величину сдвига прокрутки при нажатии
+на левую и правую стрелки навигации соответственно.
+
+```jsx
+function handleScrollToLeft(currentPosition) {
+  // сдвигаем текущее положение прокрутки на 120px назад
+  return currentPosition - 120;
+}
+
+function handleScrollToRight(currentPosition) {
+  // сдвигаем текущее положение прокрутки на 120px вперёд
+  return currentPosition + 120;
+}
+
+<HorizontalScroll getScrollToLeft={handleScrollToLeft} getScrollToRight={handleScrollToRight}>
+  {/* контент для прокрутки */}
+</HorizontalScroll>;
+```
+
+По умолчанию сдвиг происходит на всю ширину видимого контента.
+
+### Длительность анимации прокрутки
+
+Свойство `scrollAnimationDuration` позволяет управлять длительностью (в миллисекундах)
+анимации прокрутки при нажатии на одну из стрелок навигации.
+
+По умолчанию значение равно `250`.
+
+### Прокрутка колесом мыши
+
+По умолчанию горизонтальная прокрутка компонента с помощью мыши возможна при зажатие клавиши `shift` (это стандартное поведение,
+позволяющее разграничить вертикальную и горизонтальную прокрутку).
+
+Добавить возможность прокручивать контент безусловно колесом мыши можно с помощью свойства `scrollOnAnyWheel`.
+В таком случае, если мышь находится над компонентом `HorizontalScroll` и его потомками, то активируется прокрутка по
+горизонтали.
+
+> Единственное ограничение — горизонтальная прокрутка не работает при условии нахождения в области стрелок навигации,
+> в таком случае сработает нативная прокрутка страницы по вертикали.
+
+## Стрелки навигации
+
+Элементы позволяют осуществлять прокрутку по горизонтали.
+
+### Видимость стрелок
+
+Задаётся свойством `showArrows`.
+
+- `true` — стрелки показываются при наведении на компонент (по умолчанию);
+- `false` — стрелки скрыты;
+- `"always"` — стрелки всегда видны.
+
+Стрелки автоматически скрываются, когда достигнут край прокрутки.
+
+### Размер стрелок
+
+Задаётся свойством `arrowSize`.
+
+- `"s"` — уменьшенный размер;
+- `"m"` — стандартный размер (по умолчанию).
+
+### Смещение стрелок по вертикали
+
+Свойство `arrowOffsetY` позволяет задать сдвиг по вертикали.
+Принимает либо числовое значение (в пикселях) или строковое (для возможности задать значение токеном).
+Положительное значение сдвигает стрелку вниз, отрицательное — вверх.
+
+## Обёртка для контента
+
+Если вам требуется изменить тэг компонента (по умолчанию `div`), который оборачивает ваш контент, например, для
+реализации нативного списка (тэги `ul`/`li`), используйте свойство `ContentWrapperComponent`.
+
+Также с помощью свойства `contentWrapperClassName` можно передать свой `CSS`-класс на эту обёртку,
+а с помощью свойства `contentWrapperRef` получить ссылку на `DOM`-элемент этой обёртки ([`ref`-объект](https://react.dev/learn/manipulating-the-dom-with-refs))
+
+```jsx
+const refContainer = React.useRef(null);
+
+<HorizontalScroll
+  ContentWrapperComponent="ul"
+  contentWrapperRef={refContainer}
+  contentWrapperClassName="custom-class"
+>
+  <li>Первый</li>
+  <li>Второй</li>
+  <li>Третий</li>
+</HorizontalScroll>;
+```
+
+## Поддержка RTL
+
+Компонент автоматически поддерживает `RTL`-режим, в котором стрелки меняют своё направление,
+а прокрутка работает в обратном направлении.
+
+## Тестирование (e2e) [#e2e]
+
+Для возможности тестирования доступны свойства с постфиксом `*TestId`, которые вы можете использовать,
+чтобы находить необходимые части компонента:
+
+- `nextButtonTestId` — `id` стрелки навигации в направлении следующего элемента;
+- `prevButtonTestId` — `id` стрелки навигации в направлении предыдущего элемента.
+
+## HorizontalCellShowMore [#horizontal-cell-show-more]
+
+Компонент для отображения кнопки "Показать все", используется в `HorizontalScroll` в конце списка.
+
+<Playground>
+  ```jsx
+  <HorizontalScroll getScrollToLeft={(i) => i - 120} getScrollToRight={(i) => i + 120}>
+    <HorizontalCell size="m" onClick={() => {}} title="Первый">
+      <Image size={88} borderRadius="l" />
+    </HorizontalCell>
+    <HorizontalCell size="m" onClick={() => {}} title="Второй">
+      <Image size={88} borderRadius="l" />
+    </HorizontalCell>
+    <HorizontalCellShowMore onClick={() => {}} size="m" height={56} centered />
+  </HorizontalScroll>
+  ```
+</Playground>
+
+### Размеры
+
+Задаётся свойством `size`.
+
+- `"s"` — уменьшенный размер (по умолчанию);
+- `"m"` — стандартный размер.
+
+Если вы используется в качестве контента `HorizontalScroll` элементы `<HorizontalCell size="s"`,
+то рекомендуется задавать размер `size="s"` для `HorizontalCellShowMore`, во всех остальных случаях подойдет `size="m"`.
+
+### Высота
+
+Задаётся свойством `height`. Должна соответствовать высоте соседних элементов.
+
+```jsx
+<HorizontalScroll>
+  <HorizontalCell size="xl" title="Команда" subtitle="4 фотографии">
+    <img />
+  </HorizontalCell>
+  <HorizontalCell size="xl" title="Медиагалерея Вконтакте" subtitle="64 фотографии">
+    <img />
+  </HorizontalCell>
+  <HorizontalCellShowMore size="m" height={124} />
+</HorizontalScroll>
+```
+
+> Свойство не имеет эффекта при `size="s"`.
+
+### Текст
+
+Задаётся через `children`.
+
+- для `size="s"` по умолчанию отображается "Все";
+- для `size="m"` по умолчанию отображается "Показать все".
+
+```jsx
+<HorizontalCellShowMore size="m">Ещё</HorizontalCellShowMore>
+```
+
+### Выравнивание
+
+Задаётся свойством `centered`.
+
+- `false` — стандартное выравнивание (по умолчанию);
+- `true` — выравнивание по центру относительно родителя.
+
+```jsx
+<HorizontalCellShowMore centered />
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name={["HorizontalScroll", "HorizontalScroll/HorizontalCellShowMore/HorizontalCellShowMore"]}>
+### HorizontalScroll [#horizontal-scroll-api]
+
+### HorizontalCellShowMore [#horizontal-cell-show-more-api]
+
+</PropsTable>

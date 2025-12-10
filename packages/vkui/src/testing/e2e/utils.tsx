@@ -1,10 +1,12 @@
 import * as React from 'react';
-import type { Locator } from '@playwright/test';
 import type {
   AdaptivityProps,
   SizeProps,
 } from '../../components/AdaptivityProvider/AdaptivityContext';
+import { getValueByKey } from '../../helpers/getValueByKey';
 import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
+import { type Direction } from '../../lib/direction';
+import { type PlatformType } from '../../lib/platform';
 
 export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {
@@ -21,9 +23,27 @@ export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   }
 }
 
+class CustomValueWithLabel<T> {
+  public value: T;
+  public label: string;
+  public constructor(value: T, label: string) {
+    this.value = value;
+    this.label = label;
+  }
+}
+
+type ComponentStateHeightState = { componentStateHeight?: number };
+
+type DecoratedPropValue<T> = T | CustomValueWithLabel<T>;
+
+type DirectionProps = { dir: Direction };
+
 type AdaptivityFlag = boolean | 'x' | 'y';
-type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & {
+type DirectionFlag = boolean | Direction;
+type PropDesc<Props> = { [K in keyof Props]?: Array<DecoratedPropValue<Props[K]>> } & {
   $adaptivity?: AdaptivityFlag;
+  $componentStateHeight?: Partial<Record<PlatformType, number>>;
+  $direction?: DirectionFlag;
 };
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
@@ -37,16 +57,45 @@ function getAdaptivity(adaptivity?: AdaptivityFlag) {
   return extra;
 }
 
-type TestProps<Props> = Array<Props & SizeProps>;
-type CartesianOptions = { adaptive: boolean };
+function getDirection(directionFlag?: DirectionFlag): PropDesc<DirectionProps> | undefined {
+  const dir: PropDesc<DirectionProps>['dir'] = [];
+  if (directionFlag && directionFlag !== 'rtl') {
+    dir.push('ltr');
+  }
+  if (directionFlag && directionFlag !== 'ltr') {
+    dir.push('rtl');
+  }
+  return dir.length
+    ? {
+        dir,
+      }
+    : undefined;
+}
+
+function getComponentStateHeight(
+  componentStateHeight: Partial<Record<PlatformType, number>> | undefined,
+  platform: PlatformType,
+): PropDesc<ComponentStateHeightState> | undefined {
+  if (componentStateHeight && componentStateHeight[platform] !== undefined) {
+    return {
+      componentStateHeight: [componentStateHeight[platform]],
+    };
+  }
+  return undefined;
+}
+
+type TestProps<Props> = Array<Props & SizeProps & ComponentStateHeightState>;
+type CartesianOptions = { adaptive: boolean; platform: PlatformType };
 
 function cartesian<Props>(
-  { $adaptivity, ...propDesc }: PropDesc<Props>,
+  { $adaptivity, $direction, $componentStateHeight, ...propDesc }: PropDesc<Props>,
   ops: CartesianOptions,
 ): TestProps<Props> {
   propDesc = {
     ...propDesc,
     ...getAdaptivity(ops.adaptive ? $adaptivity : false),
+    ...getDirection($direction),
+    ...getComponentStateHeight($componentStateHeight, ops.platform),
   };
   return Object.entries(propDesc).reduce<TestProps<Props>>(
     (acc, [prop, values]: [string, any]) => {
@@ -73,29 +122,63 @@ export function multiCartesian<Props>(
   return propSets.reduce((acc, ortho) => acc.concat(cartesian(ortho, ops) as any), []);
 }
 
+export function isCustomValueWithLabel<T>(value: any): value is CustomValueWithLabel<T> {
+  return value instanceof CustomValueWithLabel;
+}
+
+export function withLabel<T>(value: T, label: string) {
+  return new CustomValueWithLabel(value, label);
+}
+
+function defaultFormatFunction(key: string, valueString: string): string {
+  return `${key}=${valueString}`;
+}
+
+function stringify(prop: string, value: any): string {
+  if (value === true) {
+    return prop;
+  }
+  if (typeof value === 'undefined') {
+    return `${prop}?`;
+  }
+  const valueMapper = getValueByKey(
+    typeof value,
+    {
+      function: () => '[function]',
+      object: () => {
+        if (isCustomValueWithLabel(value)) {
+          return `[${value.label}]`;
+        }
+        if (value instanceof Date) {
+          return new Intl.DateTimeFormat('ru').format(value);
+        }
+        if (value === null) {
+          return 'null';
+        }
+        if (
+          React.isValidElement(value) ||
+          (Array.isArray(value) && value.every((node: any) => React.isValidElement(node)))
+        ) {
+          return '<jsx>';
+        }
+        if (Array.isArray(value)) {
+          return '[array]';
+        }
+        return '[object]';
+      },
+      string: () => `"${value}"`,
+      symbol: () => `[${value.toString().toLowerCase()}]`,
+    },
+    () => value.toString(),
+  );
+
+  return defaultFormatFunction(prop, valueMapper());
+}
+
 export function prettyProps(props: any) {
   return Object.entries(props)
     .sort(([key1], [key2]) => Number(key1 > key2))
-    .map(([prop, value]: [string, any]) => {
-      if (value === undefined) {
-        return `${prop}=undefined`;
-      }
-      if (value === true) {
-        return prop;
-      }
-      if (
-        React.isValidElement(value) ||
-        (Array.isArray(value) && value.every((node: any) => React.isValidElement(node)))
-      ) {
-        return `${prop}=<jsx>`;
-      }
-      if (prop === 'style' || prop === 'src' || prop === 'photos') {
-        const _value = JSON.stringify(value);
-
-        return `${prop}=${_value.replace(/"\\?data:.+?"+?/gi, '{base64}')}`;
-      }
-      return `${prop}=${JSON.stringify(value)}`;
-    })
+    .map(([prop, value]: [string, any]) => stringify(prop, value))
     .join(' ');
 }
 
@@ -133,10 +216,3 @@ export function generateCustomScreenshotName(
     .join(' ')
     .toLocaleLowerCase();
 }
-
-export const getLocatorMouseCoords = async (locator: Locator): Promise<[number, number]> => {
-  const boundingBox = await locator.boundingBox();
-  return boundingBox
-    ? [boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2]
-    : [0, 0];
-};

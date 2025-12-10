@@ -1,7 +1,11 @@
+'use client';
+
 import * as React from 'react';
 import type { ColorSchemeType } from '../../lib/colorScheme';
+import { type Direction } from '../../lib/direction';
 import { platform, type PlatformType } from '../../lib/platform';
-import { DEFAULT_TOKENS_CLASS_NAMES, type TokensClassNames } from '../../lib/tokens';
+import { DEFAULT_TOKENS_CLASS_NAMES } from '../../lib/tokens/constants';
+import { type TokensClassNames } from '../../lib/tokens/types';
 
 export interface ConfigProviderContextInterface {
   /**
@@ -9,9 +13,9 @@ export interface ConfigProviderContextInterface {
    *
    * В условиях когда:
    * - `isWebView={true}`
-   * - platform="ios"
+   * - platform="ios".
    *
-   * для компонента `View` включается возможность навигации через смахивание.
+   * Для компонента `View` включается возможность навигации через смахивание.
    */
   isWebView: boolean;
   /**
@@ -26,21 +30,21 @@ export interface ConfigProviderContextInterface {
    * Задаёт необходимый минимальную ширину слота `after` в `PanelHeader` под пользовательский
    * "плавающий" элемент (например, ширина панели управления webview).
    *
-   * Учитывается только при `hasCustomPanelHeaderAfter={true}` (см. документацию `hasCustomPanelHeaderAfter`).
+   * Учитывается только при `hasCustomPanelHeaderAfter={true}` (см документацию `hasCustomPanelHeaderAfter`).
    *
    * @default 90
    */
   customPanelHeaderAfterMinWidth: number | string;
   /**
-   * Тип цветовой схемы – `light` или `dark`
+   * Тип цветовой схемы – `light` или `dark`.
    */
   colorScheme: ColorSchemeType | undefined;
   /**
-   * Включена ли анимация переходов между экранами в `Root` и `View`
+   * Включена ли анимация переходов между экранами в `Root` и `View`.
    */
   transitionMotionEnabled: boolean;
   /**
-   * Платформа
+   * Платформа.
    */
   platform: PlatformType;
   /**
@@ -67,9 +71,18 @@ export interface ConfigProviderContextInterface {
    */
   tokensClassNames: TokensClassNames;
   /**
-   * Строка с языковой меткой BCP 47
+   * Строка с языковой меткой BCP 47.
    */
   locale: string;
+  /**
+   * Направление контента.
+   *
+   * При использовании определенного значения, важно установить атрибут `dir` с таким же значением либо на дочерний элемент,
+   * либо на все страницу в целом.
+   *
+   * @default Определяется автоматически в зависимости от значения атрибута `dir` установленного на `body` страницы
+   */
+  direction: Direction | undefined;
 }
 
 export const ConfigProviderContext: React.Context<ConfigProviderContextInterface> =
@@ -82,7 +95,46 @@ export const ConfigProviderContext: React.Context<ConfigProviderContextInterface
     colorScheme: undefined, // undefined обозначает что тема должна определиться автоматически
     tokensClassNames: DEFAULT_TOKENS_CLASS_NAMES,
     locale: 'ru',
+    direction: undefined,
   });
 
 export const useConfigProvider = (): ConfigProviderContextInterface =>
   React.useContext(ConfigProviderContext);
+
+export function useConfigProviderContextMemo(config: ConfigProviderContextInterface) {
+  const {
+    isWebView,
+    hasCustomPanelHeaderAfter,
+    customPanelHeaderAfterMinWidth,
+    colorScheme,
+    transitionMotionEnabled,
+    platform,
+    tokensClassNames,
+    locale,
+    direction,
+  } = config;
+
+  return React.useMemo<ConfigProviderContextInterface>(() => {
+    return {
+      isWebView,
+      hasCustomPanelHeaderAfter,
+      customPanelHeaderAfterMinWidth,
+      colorScheme,
+      transitionMotionEnabled,
+      platform,
+      tokensClassNames,
+      locale,
+      direction,
+    };
+  }, [
+    isWebView,
+    hasCustomPanelHeaderAfter,
+    customPanelHeaderAfterMinWidth,
+    colorScheme,
+    transitionMotionEnabled,
+    platform,
+    tokensClassNames,
+    locale,
+    direction,
+  ]);
+}

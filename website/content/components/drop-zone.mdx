@@ -1,0 +1,99 @@
+---
+description: Компонент, который позволяет пользователям загружать файлы, перетаскивая их в специальную область на странице.
+---
+
+<Overview group="forms">
+
+# DropZone [tag:component]
+
+Компонент, который позволяет пользователям загружать файлы, перетаскивая их в специальную область на странице.
+
+</Overview>
+
+<Playground>
+
+```jsx
+<DropZone.Grid>
+  <DropZone
+    onDragOver={(event) => {
+      event.preventDefault();
+    }}
+    onDrop={(event) => {
+      event.preventDefault();
+
+      const files = event.dataTransfer.files;
+      const fileNames = Array.from(files).map((file) => file.name);
+      alert(`Файлы: \n${fileNames.join('\n')}`);
+    }}
+  >
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+</DropZone.Grid>
+```
+
+</Playground>
+
+## Структура
+
+Подкомпонент `DropZone.Grid` предназначен для расположения нескольких `DropZone` по заданной сетке.
+Можно выбрать направление расположения в строку или столбец с помощью свойства `direction`.
+При расположении в столбец первый компонент `DropZone` растягивается на всю доступную ширину.
+
+<Playground>
+
+```jsx
+<DropZone.Grid direction="row">
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+  <DropZone>
+    <Placeholder title="Быстрая отправка">Перенесите файл сюда для быстрой отправки.</Placeholder>
+  </DropZone>
+</DropZone.Grid>
+```
+
+</Playground>
+
+## Функция-рендер
+
+Для более гибкой настройки внешнего вида можно использовать функцию-рендер, которая даёт доступ к свойству `active`,
+позволяющему определить, находится ли файл над специальной областью:
+
+<Playground>
+
+```jsx
+<DropZone
+  onDragOver={(event) => {
+    event.preventDefault();
+  }}
+  onDrop={(event) => {
+    event.preventDefault();
+  }}
+>
+  {({ active }) => (
+    <Placeholder
+      icon={<Icon56CameraOutline fill={active ? 'var(--vkui--color_icon_accent)' : undefined} />}
+      title="Загрузка файлов"
+    >
+      {active ? 'Отпустите файлы здесь.' : 'Перенесите файл сюда.'}
+    </Placeholder>
+  )}
+</DropZone>
+```
+
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="DropZone">
+### DropZone [#drop-zone-api]
+
+### DropZone.Grid [#drop-zone-grid-api]
+
+</PropsTable>

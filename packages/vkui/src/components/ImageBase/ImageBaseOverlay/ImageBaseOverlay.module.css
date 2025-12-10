@@ -1,12 +1,12 @@
 .host {
   position: absolute;
-  z-index: var(--vkui_internal--z_index_image_base_overlay);
   inset-block-start: 0;
   inset-inline-start: 0;
+  z-index: var(--vkui_internal--z_index_image_base_overlay);
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   inline-size: 100%;
   block-size: 100%;
   border: 0;

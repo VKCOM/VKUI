@@ -1,59 +1,299 @@
-import { render, screen } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import { act, useState } from 'react';
+import * as React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { ViewWidth } from '../../lib/adaptivity';
+import {
+  baselineComponent,
+  userEvent,
+  waitCSSTransitionEnd,
+  withFakeTimers,
+} from '../../testing/utils';
+import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
+import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ModalCard } from './ModalCard';
+import { type ModalCardProps } from './types';
 
-describe('ModalCard', () => {
-  baselineComponent((p) => <ModalCard nav="id" {...p} />, {
-    // TODO [a11y]: "ARIA dialog and alertdialog nodes should have an accessible name (aria-dialog-name)"
-    //              https://dequeuniversity.com/rules/axe/4.5/aria-dialog-name?application=axeAPI
-    a11y: false,
+export const waitModalCardCSSTransitionEnd = async (el: HTMLElement) =>
+  await waitCSSTransitionEnd(el);
+
+/**
+ * Большинство логики покрыто в `ModalRoot.test.tsx`.
+ */
+describe(ModalCard, () => {
+  baselineComponent((p) => <ModalCard title="Title" open nav="id" {...p} />);
+
+  test('mount and unmount', async () => {
+    const result = render(<ModalCard id="host" data-testid="host" />);
+    expect(result.queryByTestId('host')).not.toBeInTheDocument();
+
+    result.rerender(<ModalCard open id="host" data-testid="host" />);
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.getByTestId('host')).toBeInTheDocument();
+
+    result.rerender(<ModalCard id="host" data-testid="host" />);
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.queryByTestId('host')).not.toBeInTheDocument();
   });
 
-  test('testid for modal card content', () => {
-    const { rerender } = render(<ModalCard nav="id" />);
+  test('should not find overlay when use disableModalOverlay', async () => {
+    const result = render(
+      <ModalCard id="host" data-testid="host" modalOverlayTestId="overlay" disableModalOverlay />,
+    );
+    expect(result.queryByTestId('host')).not.toBeInTheDocument();
 
-    expect(screen.queryByTestId('modal-page-id')).not.toBeTruthy();
-    expect(screen.queryByTestId('modal-dismiss-button')).not.toBeTruthy();
-
-    rerender(
+    result.rerender(
       <ModalCard
+        open
+        id="host"
+        data-testid="host"
+        modalOverlayTestId="overlay"
+        disableModalOverlay
+      />,
+    );
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.getByTestId('host')).toBeInTheDocument();
+
+    expect(result.queryByTestId('overlay')).toBe(null);
+  });
+
+  test('should open/close without animation with disableAnimation', () => {
+    const onOpen = vi.fn();
+    const onOpened = vi.fn();
+    const onClosed = vi.fn();
+
+    const Fixture = () => {
+      const [opened, setOpened] = React.useState<boolean>(false);
+
+      return (
+        <>
+          <Button onClick={() => setOpened(true)} data-testid="open-button">
+            Open
+          </Button>
+          <Button onClick={() => setOpened(false)} data-testid="close-button">
+            Close
+          </Button>
+          <ModalCard
+            open={opened}
+            id="host"
+            data-testid="host"
+            modalOverlayTestId="overlay"
+            onOpen={onOpen}
+            onOpened={onOpened}
+            onClosed={onClosed}
+            disableOpenAnimation
+            disableCloseAnimation
+            keepMounted
+          />
+        </>
+      );
+    };
+
+    render(<Fixture />);
+
+    fireEvent.click(screen.getByTestId('open-button'));
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(onOpened).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId('close-button'));
+    expect(onClosed).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId('overlay')).toHaveAttribute('hidden', '');
+  });
+
+  test('testid for modal card content', async () => {
+    const result = render(<ModalCard key="host" nav="host" open data-testid="host" />);
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.queryByTestId('modal-dismiss-button')).not.toBeTruthy();
+
+    result.rerender(
+      <ModalCard
+        key="host"
         nav="id"
-        data-testid="modal-page-id"
+        open
+        data-testid="host"
         modalDismissButtonTestId="modal-dismiss-button"
       />,
     );
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.queryByTestId('modal-dismiss-button')).not.toBeTruthy();
 
-    expect(screen.queryByTestId('modal-page-id')).toBeTruthy();
-    expect(screen.queryByTestId('modal-dismiss-button')).not.toBeTruthy();
-
-    rerender(
+    result.rerender(
       <ConfigProvider platform="vkcom">
-        <ModalCard nav="id" modalDismissButtonTestId="modal-dismiss-button" />
+        <ModalCard
+          key="host"
+          nav="host"
+          open
+          data-testid="host"
+          modalDismissButtonTestId="modal-dismiss-button"
+        />
       </ConfigProvider>,
     );
-
-    expect(screen.queryByTestId('modal-dismiss-button')).toBeTruthy();
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
+    expect(result.queryByTestId('modal-dismiss-button')).toBeTruthy();
   });
 
-  test('can specify tags for header and subheader', () => {
-    const { rerender } = render(
-      <ModalCard title="Баскетбол на выходных" description="Приглашение в беседу" />,
+  test('can specify tags for header and subheader', async () => {
+    const result = render(
+      <ModalCard
+        open
+        data-testid="host"
+        title="Баскетбол на выходных"
+        description="Приглашение в беседу"
+      />,
     );
-
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
     expect(screen.getByText('Баскетбол на выходных').tagName.toLowerCase()).toMatch('span');
     expect(screen.getByText('Приглашение в беседу').tagName.toLowerCase()).toMatch('span');
 
-    rerender(
+    result.rerender(
       <ModalCard
+        open
+        data-testid="host"
         title="Баскетбол на выходных"
         titleComponent="h2"
         description="Приглашение в беседу"
         descriptionComponent="h3"
       />,
     );
-
+    await waitModalCardCSSTransitionEnd(result.getByTestId('host'));
     expect(screen.getByText('Баскетбол на выходных').tagName.toLowerCase()).toMatch('h2');
     expect(screen.getByText('Приглашение в беседу').tagName.toLowerCase()).toMatch('h3');
+  });
+
+  it('should hides close button by dismissButtonMode prop', async () => {
+    const onClose = vi.fn();
+    const h = render(
+      <ModalCard
+        key="host"
+        id="host"
+        open
+        dismissButtonMode="none"
+        modalDismissButtonTestId="dismiss-button"
+        data-testid="host"
+        onClose={onClose}
+      />,
+    );
+    await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
+    expect(h.queryByTestId('dismiss-button')).toBeFalsy();
+    expect(onClose).toHaveBeenCalledTimes(0);
+  });
+
+  test('click on close button', async () => {
+    const onClose = vi.fn();
+    const h = render(
+      <ConfigProvider platform="vkcom">
+        <ModalCard
+          key="host"
+          id="host"
+          open
+          modalDismissButtonTestId="dismiss-button"
+          data-testid="host"
+          onClose={onClose}
+        />
+      </ConfigProvider>,
+    );
+    await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
+    fireEvent.click(h.getByTestId('dismiss-button'));
+    expect(onClose).toHaveBeenCalledExactlyOnceWith('click-close-button');
+  });
+
+  test(
+    'check disable focus trap',
+    withFakeTimers(async () => {
+      const Fixture = () => {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} hasPointer>
+              <ModalCard
+                key="host"
+                id="host"
+                open={open}
+                modalDismissButtonTestId="dismiss-button"
+                data-testid="host"
+                disableFocusTrap
+              />
+            </AdaptivityProvider>
+            <Button data-testid="open-button" onClick={() => setOpen(true)} />
+          </>
+        );
+      };
+
+      const h = render(<Fixture />);
+
+      const openButton = h.getByTestId('open-button');
+      act(() => {
+        fireEvent.click(openButton);
+      });
+
+      await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
+
+      const dismissButton = h.getByTestId('dismiss-button');
+      act(() => {
+        dismissButton.focus();
+      });
+      expect(dismissButton).toHaveFocus();
+
+      await userEvent.tab();
+      expect(openButton).toHaveFocus();
+    }),
+  );
+
+  describe('check restoreFocus prop', () => {
+    const Fixture: React.FC<Pick<ModalCardProps, 'restoreFocus'>> = ({ restoreFocus = true }) => {
+      const [open, setOpen] = React.useState(false);
+      return (
+        <>
+          <ConfigProvider platform="vkcom">
+            <ModalCard
+              key="host"
+              id="host"
+              open={open}
+              modalDismissButtonTestId="dismiss-button"
+              data-testid="host"
+              restoreFocus={restoreFocus}
+            />
+            <Button onClick={() => setOpen((v) => !v)} data-testid="open-modal">
+              Открыть
+            </Button>
+          </ConfigProvider>
+        </>
+      );
+    };
+
+    it.each([true, false])(
+      'check restoreFocus=%s',
+      withFakeTimers<[boolean]>(async (restoreFocus) => {
+        const h = render(<Fixture restoreFocus={restoreFocus} />);
+        expect(h.queryByTestId('host')).toBeFalsy();
+
+        const openButton = h.getByTestId('open-modal');
+        await act(async () => {
+          openButton.focus();
+        });
+        act(() => {
+          fireEvent.click(openButton);
+        });
+        expect(openButton).toHaveFocus();
+
+        await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
+        expect(h.queryByTestId('host')).toBeTruthy();
+        await act(vi.runAllTimers);
+        expect(h.getByTestId('dismiss-button')).toHaveFocus();
+
+        act(() => {
+          fireEvent.click(openButton);
+        });
+        await waitModalCardCSSTransitionEnd(h.getByTestId('host'));
+        expect(h.queryByTestId('host')).toBeFalsy();
+        await act(vi.runAllTimers);
+
+        if (restoreFocus) {
+          expect(openButton).toHaveFocus();
+        } else {
+          expect(openButton).not.toHaveFocus();
+        }
+      }),
+    );
   });
 });

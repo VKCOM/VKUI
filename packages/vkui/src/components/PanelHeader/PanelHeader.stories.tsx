@@ -12,6 +12,7 @@ import { noop } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
+import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import { Avatar } from '../Avatar/Avatar';
 import { Counter } from '../Counter/Counter';
@@ -28,17 +29,18 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { PanelHeader, type PanelHeaderProps } from './PanelHeader';
 
 const story: Meta<PanelHeaderProps> = {
-  title: 'Layout/PanelHeader',
+  title: 'Navigation/PanelHeader',
   component: PanelHeader,
-  parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
+  parameters: createStoryParameters('PanelHeader', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
+  tags: ['Навигация'],
 };
 
 export default story;
 
 type Story = StoryObj<PanelHeaderProps>;
 
-export const SimplePanelHeader: Story = {
+export const Playground: Story = {
   render: () => (
     <View id="main" activePanel="panel1">
       <Panel id="panel1">
@@ -64,7 +66,7 @@ export const PanelHeaderWithCounter: Story = {
             after={
               <PanelHeaderButton
                 label={
-                  <Counter size="s" mode="prominent">
+                  <Counter size="s" mode="primary" appearance="accent-red">
                     <VisuallyHidden>Новых: </VisuallyHidden>
                     21
                   </Counter>
@@ -98,7 +100,7 @@ export const PanelHeaderWithMultipleIcons: Story = {
             <React.Fragment>
               <PanelHeaderButton
                 label={
-                  <Counter size="s" mode="prominent">
+                  <Counter size="s" mode="primary" appearance="accent-red">
                     <VisuallyHidden>Новых: </VisuallyHidden>3
                   </Counter>
                 }
@@ -112,7 +114,7 @@ export const PanelHeaderWithMultipleIcons: Story = {
               </PanelHeaderButton>
               <PanelHeaderButton
                 label={
-                  <Counter size="s" mode="prominent">
+                  <Counter size="s" mode="primary" appearance="accent-red">
                     2
                   </Counter>
                 }

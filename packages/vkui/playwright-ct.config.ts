@@ -1,37 +1,23 @@
-/* eslint no-console: 0 */
-import path from 'path';
-import {
-  ColorScheme,
-  defineConfig,
-  type DeviceKey,
-  devices,
-  Platform,
-  type ReporterDescription,
-  type TestProject,
-  type VKUITestOptions,
-} from '@vkui-e2e/test';
+import * as path from 'node:path';
+import * as process from 'node:process';
+import { defineConfig, devices } from '@playwright/experimental-ct-react';
+import { type ReporterDescription } from '@playwright/test';
 import dotenv from 'dotenv';
-import { makePostcssPlugins } from './scripts/postcss';
-import * as tsconfig from './tsconfig.json';
+import viteConfig from './vite.config.ts';
+
+const env = process.env as unknown as Record<string, string>;
 
 // см. `.env`
-dotenv.config();
+dotenv.config({ quiet: true });
 
-const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).reduce<
-  Record<string, string>
->((aliases, [name, paths]) => {
-  aliases[name] = path.join(__dirname, paths[0]);
-  return aliases;
-}, {});
-
-const DEFAULT_REPORTERS: ReporterDescription[] = [['json', { outputFile: 'e2e-results.json' }]];
+const DEFAULT_REPORTER: ReporterDescription = ['json', { outputFile: 'e2e-results.json' }];
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-// eslint-disable-next-line import/no-default-export
-export default defineConfig<VKUITestOptions>({
-  testDir: path.join(__dirname, './src'),
+// eslint-disable-next-line import/no-default-export -- требование playwright
+export default defineConfig({
+  testDir: path.join(import.meta.dirname, './src'),
   testMatch: generateTestMatch(),
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
@@ -52,21 +38,21 @@ export default defineConfig<VKUITestOptions>({
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: !!env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 1 : 0,
+  retries: env.CI ? 1 : 0,
   /* Limit the number of failures on CI to save resources. */
-  maxFailures: process.env.CI ? 10 : undefined,
+  maxFailures: env.CI ? 10 : undefined,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI
+  workers: env.CI
     ? 1
-    : typeof process.env.PLAYWRIGHT_WORKERS === 'string'
-      ? Number(process.env.PLAYWRIGHT_WORKERS)
+    : typeof env.PLAYWRIGHT_WORKERS === 'string'
+      ? Number(env.PLAYWRIGHT_WORKERS)
       : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI
-    ? [['github'], ['dot'], ['blob'], ...DEFAULT_REPORTERS]
-    : [['list'], ['html', { open: 'never' }], ...DEFAULT_REPORTERS],
+  reporter: env.CI
+    ? [['github'], ['dot'], ['blob'], [...DEFAULT_REPORTER]]
+    : [['list'], ['html', { open: 'never' }], [...DEFAULT_REPORTER]],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -78,19 +64,7 @@ export default defineConfig<VKUITestOptions>({
 
     deviceScaleFactor: 1,
 
-    ctViteConfig: {
-      build: { commonjsOptions: { include: [/node_modules/, /\.js/] } },
-
-      css: {
-        postcss: {
-          plugins: makePostcssPlugins(),
-        },
-      },
-
-      resolve: {
-        alias: TS_CONFIG_ALIASES,
-      },
-    },
+    ctViteConfig: viteConfig,
   },
 
   /* Configure projects for major browsers */
@@ -98,14 +72,15 @@ export default defineConfig<VKUITestOptions>({
 });
 
 function generateTestMatch() {
-  if (typeof process.env.PLAYWRIGHT_TEST_MATCH === 'string') {
+  if (typeof env.PLAYWRIGHT_TEST_MATCH === 'string') {
     try {
-      const testMatch = JSON.parse(process.env.PLAYWRIGHT_TEST_MATCH);
+      const testMatch = JSON.parse(env.PLAYWRIGHT_TEST_MATCH);
       if (!Array.isArray(testMatch)) {
         throw new Error('should be array');
       }
       return testMatch;
     } catch (error) {
+      // eslint-disable-next-line no-console -- необходимо для дебага
       console.error('PLAYWRIGHT_TEST_MATCH', error);
       process.exit(1);
     }
@@ -114,17 +89,17 @@ function generateTestMatch() {
   return ['**/*.e2e.{ts,tsx}'];
 }
 
-function generateProjects(): TestProject {
+function generateProjects() {
   /**
    * Иначе перебивает `deviceScaleFactor` из общего конфига.
    * Можно решить через `page.screenshot({ scale: 'css' })`, но через функцию ниже получается прозрачнее.
    */
-  const getDeviceDescriptorWithoutScaleFactor = <T extends DeviceKey>(deviceName: T) => {
+  const getDeviceDescriptorWithoutScaleFactor = (deviceName: string) => {
     const { deviceScaleFactor, ...restProps } = devices[deviceName];
     return restProps;
   };
 
-  const colorSchemes = [ColorScheme.LIGHT, ColorScheme.DARK];
+  const colorSchemes = ['light', 'dark'];
   const projects = colorSchemes
     .map((colorSchemeType) => [
       {
@@ -132,7 +107,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Pixel 5'),
           colorSchemeType,
-          platform: Platform.ANDROID,
+          platform: 'android',
         },
       },
 
@@ -141,7 +116,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('iPhone XR'),
           colorSchemeType,
-          platform: Platform.IOS,
+          platform: 'ios',
         },
       },
 
@@ -150,7 +125,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Chrome'),
           colorSchemeType,
-          platform: Platform.VKCOM,
+          platform: 'vkcom',
         },
       },
 
@@ -159,7 +134,7 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Firefox'),
           colorSchemeType,
-          platform: Platform.VKCOM,
+          platform: 'vkcom',
         },
       },
 
@@ -168,15 +143,15 @@ function generateProjects(): TestProject {
         use: {
           ...getDeviceDescriptorWithoutScaleFactor('Desktop Safari'),
           colorSchemeType,
-          platform: Platform.VKCOM,
+          platform: 'vkcom',
         },
       },
     ])
     .flat();
 
-  if (typeof process.env.PLAYWRIGHT_FORCE_PROJECTS === 'string') {
+  if (typeof env.PLAYWRIGHT_FORCE_PROJECTS === 'string') {
     try {
-      const forceProjects = JSON.parse(process.env.PLAYWRIGHT_FORCE_PROJECTS);
+      const forceProjects = JSON.parse(env.PLAYWRIGHT_FORCE_PROJECTS);
       if (!Array.isArray(forceProjects)) {
         throw new Error('should be array');
       }
@@ -185,13 +160,14 @@ function generateProjects(): TestProject {
       if (!foundProjects.length) {
         const supportedProjects = projects.map((i) => i.name);
         throw new Error(`
-  "${process.env.PLAYWRIGHT_FORCE_PROJECTS}" doesn't exist in projects list.
+  "${env.PLAYWRIGHT_FORCE_PROJECTS}" doesn't exist in projects list.
   Supported projects are ${JSON.stringify(supportedProjects, null, 2)}
   `);
       }
 
       return foundProjects;
     } catch (error) {
+      // eslint-disable-next-line no-console -- нужно для логов
       console.error('PLAYWRIGHT_FORCE_PROJECTS', error);
       process.exit(1);
     }

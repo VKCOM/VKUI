@@ -25,14 +25,14 @@ export interface AccordionContentProps
     HasRef<HTMLDivElement>,
     React.HTMLAttributes<HTMLDivElement> {}
 
-export const AccordionContent: React.FC<AccordionContentProps> = ({
+export const AccordionContent = ({
   getRootRef,
   getRef,
   className,
   children,
   ...restProps
-}) => {
-  const { expanded, labelId, contentId } = React.useContext(AccordionContext);
+}: AccordionContentProps) => {
+  const { expanded, labelId, contentId, unmountOnCollapsed } = React.useContext(AccordionContext);
 
   const inRef = useExternRef(getRef);
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
@@ -61,6 +61,10 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
     }
   }, [animationState, inRef]);
 
+  if (unmountOnCollapsed && animationState === 'exited') {
+    return null;
+  }
+
   return (
     <div
       ref={getRootRef}
@@ -81,5 +85,3 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
     </div>
   );
 };
-
-AccordionContent.displayName = 'AccordionContent';
