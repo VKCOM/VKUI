@@ -66,8 +66,8 @@
 }
 
 .primaryNeutral {
-  color: var(--vkui--color_text_primary);
-  background-color: var(--vkui--color_background_secondary);
+  color: var(--vkui--color_text_contrast);
+  background-color: var(--vkui--color_icon_secondary);
 }
 
 .primaryAccentGreen {
@@ -85,15 +85,30 @@
   background-color: var(--vkui--color_overlay_primary);
 }
 
+.primaryAccent .iconSlot,
+.primaryAccentGreen .iconSlot,
+.primaryAccentRed .iconSlot,
+.primaryOverlay .iconSlot {
+  color: var(--vkui--color_icon_contrast);
+}
+
 /* mode="secondary" */
 .secondaryAccent {
   color: var(--vkui--color_text_accent);
   background-color: var(--vkui--color_background_secondary_alpha);
 }
 
+.secondaryAccent .iconSlot {
+  color: var(--vkui--color_icon_accent);
+}
+
 .secondaryNeutral {
-  color: var(--vkui--color_text_subhead);
-  background-color: var(--vkui--color_background_secondary);
+  color: var(--vkui--color_text_primary);
+  background-color: var(--vkui--color_background_secondary_alpha);
+}
+
+.secondaryNeutral .iconSlot {
+  color: var(--vkui--color_icon_primary);
 }
 
 .secondaryAccentGreen {
@@ -111,6 +126,10 @@
   background-color: var(--vkui--color_overlay_secondary);
 }
 
+.secondaryOverlay .iconSlot {
+  color: var(--vkui--color_icon_contrast);
+}
+
 /* mode="outline" */
 .modeOutline::before {
   position: absolute;
@@ -126,12 +145,20 @@
   color: var(--vkui--color_text_accent);
 }
 
+.outlineAccent .iconSlot {
+  color: var(--vkui--color_icon_accent);
+}
+
 .outlineAccent::before {
   border-color: var(--vkui--color_stroke_accent);
 }
 
 .outlineNeutral {
   color: var(--vkui--color_text_secondary);
+}
+
+.outlineNeutral .iconSlot {
+  color: var(--vkui--color_icon_secondary);
 }
 
 .outlineNeutral::before {
@@ -156,6 +183,10 @@
 
 .outlineOverlay {
   color: var(--vkui--color_text_contrast);
+}
+
+.outlineOverlay .iconSlot {
+  color: var(--vkui--color_icon_contrast);
 }
 
 .outlineOverlay::before {

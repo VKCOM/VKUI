@@ -23,6 +23,11 @@ const captionStyle: React.CSSProperties = {
   fontSize: 10,
 };
 
+const overlayStyle: React.CSSProperties = {
+  backgroundImage: 'linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)',
+  borderRadius: 'var(--vkui--size_border_radius_paper--regular)',
+};
+
 export const ContentBadgePlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
@@ -39,7 +44,13 @@ export const ContentBadgePlayground = (props: ComponentPlaygroundProps) => {
       ]}
     >
       {({ size, capsule, children = 'Text', ...restProps }: ContentBadgeProps) => (
-        <div style={containerStyle}>
+        <div
+          style={
+            restProps.appearance === 'overlay'
+              ? { ...containerStyle, ...overlayStyle }
+              : containerStyle
+          }
+        >
           <ContentBadge {...restProps} size={size} capsule={capsule}>
             {children}
           </ContentBadge>
