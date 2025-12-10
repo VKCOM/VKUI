@@ -201,7 +201,7 @@ describe('useSnackbarManager', () => {
   );
 
   it('check limit with queueStrategy="queue"', async () => {
-    render(<TestComponent apiRef={apiRef} limit={1} />);
+    render(<TestComponent apiRef={apiRef} limit={1} queueStrategy="queue" />);
 
     let snackbar2: string | null = null;
     act(() => {
