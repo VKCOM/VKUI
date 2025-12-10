@@ -20,7 +20,7 @@ export type UseSnackbarConfigReturn = {
 export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnackbarConfigReturn => {
   const {
     limit: limitProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
-    queueStrategy: queueStrategyProp = 'queue',
+    queueStrategy: queueStrategyProp = 'shift',
     verticalOffsetYStart: verticalOffsetYStartProp,
     verticalOffsetYEnd: verticalOffsetYEndProp,
     zIndex: zIndexProp,

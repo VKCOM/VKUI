@@ -39,12 +39,14 @@
 .placementBottomStart {
   inset-inline-start: var(--vkui_internal--safe_area_inset_left);
   inset-inline-end: auto;
+  align-items: flex-start;
 }
 
 .placementTopEnd,
 .placementBottomEnd {
   inset-inline-start: auto;
   inset-inline-end: var(--vkui_internal--safe_area_inset_right);
+  align-items: flex-end;
 }
 
 @media (--desktop) {
