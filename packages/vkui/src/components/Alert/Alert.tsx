@@ -21,6 +21,12 @@ type AlertActionMode = 'cancel' | 'destructive' | 'default';
 
 export type { AlertActionProps };
 
+export type AlertCloseReason =
+  | 'overlay-click'
+  | 'item-click'
+  | 'escape-key'
+  | 'dismiss-button-click';
+
 export interface AlertActionInterface
   extends Pick<ButtonProps, 'Component'>,
     AnchorHTMLAttributesOnly,
@@ -78,7 +84,11 @@ export interface AlertProps
   /**
    * Обработчик закрытия модального окна.
    */
-  onClose: VoidFunction;
+  onClose?: (reason: AlertCloseReason) => void;
+  /**
+   * Обработчик закрытия модального окна, срабатывающий после окончания анимации.
+   */
+  onClosed: VoidFunction;
   /**
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
@@ -118,13 +128,15 @@ export const Alert = ({
   style,
   className,
   getRootRef,
+  onClose,
   ...restProps
 }: AlertProps): React.ReactNode => {
   const [closing, setClosing] = React.useState(false);
 
   const close = React.useCallback(() => {
+    onClose?.('overlay-click');
     setClosing(true);
-  }, []);
+  }, [onClose]);
 
   useScrollLock();
 
@@ -148,7 +160,7 @@ export const Alert = ({
         onClick={close}
         getRootRef={getRootRef}
       >
-        <AlertBase {...restProps} closing={closing} setClosing={setClosing} />
+        <AlertBase {...restProps} onClose={onClose} closing={closing} setClosing={setClosing} />
       </PopoutWrapper>
     </AppRootPortal>
   );
