@@ -28,6 +28,7 @@ const _children = ['first', 'middle', 'last'].map((item) => (
 const ActionSheetTest = ({
   children = _children,
   onClose: onCloseProp,
+  onClosed: onClosedProp,
   ...props
 }: Partial<ActionSheetProps> & Partial<FocusTrapProps>) => {
   const toggleRef = useRef(null);
@@ -38,6 +39,12 @@ const ActionSheetTest = ({
       onCloseProp();
     }
     setVisible(false);
+  };
+
+  const handleClosed = () => {
+    if (onClosedProp) {
+      onClosedProp({ closedBy: 'other' });
+    }
   };
 
   return (
@@ -55,7 +62,13 @@ const ActionSheetTest = ({
           </Panel>
         </View>
         {visible ? (
-          <ActionSheet data-testid="sheet" toggleRef={toggleRef} onClose={handleClose} {...props}>
+          <ActionSheet
+            data-testid="sheet"
+            toggleRef={toggleRef}
+            onClose={handleClose}
+            onClosed={handleClosed}
+            {...props}
+          >
             {children}
           </ActionSheet>
         ) : null}

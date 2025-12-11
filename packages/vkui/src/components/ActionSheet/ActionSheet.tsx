@@ -5,6 +5,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useStableCallback } from '../../hooks/useStableCallback.ts';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
@@ -17,12 +18,12 @@ import { ActionSheetDropdownSheet } from './ActionSheetDropdownSheet';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
-type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
+type CloseReason = 'action-item' | 'cancel-item' | 'other';
 export interface ActionSheetOnCloseOptions {
   /**
    * Причина закрытия всплывающего элемента.
    */
-  closedBy: CloseInitiators;
+  closedBy: CloseReason;
 }
 
 export interface ActionSheetProps
@@ -36,17 +37,21 @@ export interface ActionSheetProps
     >,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**
-   * Заголовок всплыващего окна.
+   * Заголовок всплывающего окна.
    */
   title?: React.ReactNode;
   /**
-   * Описание всплыващего окна, под заголовком.
+   * Описание всплывающего окна, под заголовком.
    */
   description?: React.ReactNode;
   /**
-   * Закрыть всплыващее окно по нажатию снаружи.
+   * Обработчик закрытия всплывающего окна.
    */
-  onClose: (options: ActionSheetOnCloseOptions) => void;
+  onClose?: () => void;
+  /**
+   * Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.
+   */
+  onClosed: (options: ActionSheetOnCloseOptions) => void;
   /**
    * Только мобильный iOS.
    */
@@ -55,7 +60,7 @@ export interface ActionSheetProps
    * Режим отображения компонента:
    *
    * - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
-   * - `menu` –  отображение в виде всплывающего элемента, относительно якорного элемента.
+   * - `menu` – отображение в виде всплывающего элемента, относительно якорного элемента.
    */
   mode?: 'sheet' | 'menu';
   /**
@@ -85,19 +90,31 @@ export const ActionSheet = ({
   popupOffsetDistance,
   placement,
   mode: modeProp,
-  onClose,
+  onClose: onCloseProp,
+  onClosed,
   ...restProps
 }: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
-  const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
-  const onCloseWithOther = React.useCallback(() => setClosingBy('other'), []);
+  const [closingBy, setClosingBy] = React.useState<undefined | CloseReason>(undefined);
+  const onCloseStable = useStableCallback(onCloseProp || noop);
+
+  const onClose = React.useCallback(
+    (reason: CloseReason) => {
+      onCloseStable();
+      setClosingBy(reason);
+    },
+    [onCloseStable],
+  );
+
+  const onCloseWithOther = React.useCallback(() => onClose('other'), [onClose]);
+
   const actionCallbackRef = React.useRef(noop);
 
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     closingBy !== undefined ? 'exit' : 'enter',
     {
       onExited() {
-        onClose({ closedBy: closingBy || 'other' });
+        onClosed({ closedBy: closingBy || 'other' });
         actionCallbackRef.current();
         actionCallbackRef.current = noop;
       },
@@ -118,12 +135,12 @@ export const ActionSheet = ({
           if (action) {
             actionCallbackRef.current = () => action(event);
           }
-          setClosingBy(isCancelItem ? 'cancel-item' : 'action-item');
+          onClose(isCancelItem ? 'cancel-item' : 'action-item');
         } else {
           action && action(event);
         }
       },
-    [],
+    [onClose],
   );
   const contextValue = React.useMemo(
     () => ({ onItemClick, mode, onClose: onCloseWithOther }),

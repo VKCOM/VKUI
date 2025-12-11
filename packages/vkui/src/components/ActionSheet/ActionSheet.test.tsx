@@ -16,7 +16,11 @@ import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 
-const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetDesktop = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -28,6 +32,7 @@ const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionS
           aria-label="menu list"
           toggleRef={toggleRef}
           onClose={onClose}
+          onClosed={onClosed}
           {...restProps}
         />
       </AdaptivityProvider>
@@ -35,19 +40,33 @@ const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionS
   );
 };
 
-const ActionSheetMobile = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetMobile = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
   }, []);
   return (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer={false}>
-      <ActionSheet aria-label="menu list" toggleRef={toggleRef} onClose={onClose} {...restProps} />
+      <ActionSheet
+        aria-label="menu list"
+        toggleRef={toggleRef}
+        onClose={onClose}
+        onClosed={onClosed}
+        {...restProps}
+      />
     </AdaptivityProvider>
   );
 };
 
-const ActionSheetMenu = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetMenu = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -58,12 +77,17 @@ const ActionSheetMenu = ({ onClose = vi.fn(), ...restProps }: Partial<ActionShee
       mode="menu"
       toggleRef={toggleRef}
       onClose={onClose}
+      onClosed={onClosed}
       {...restProps}
     />
   );
 };
 
-const ActionSheetSheet = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetSheet = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -74,6 +98,7 @@ const ActionSheetSheet = ({ onClose = vi.fn(), ...restProps }: Partial<ActionShe
       mode="sheet"
       toggleRef={toggleRef}
       onClose={onClose}
+      onClosed={onClosed}
       {...restProps}
     />
   );
@@ -118,11 +143,11 @@ describe(ActionSheet, () => {
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_, ActionSheet) => {
-      const onCloseHandler = vi.fn();
+      const onClosedHandler = vi.fn();
       const handlers = { onClick: vi.fn(), onChange: vi.fn() };
 
       const result = render(
-        <ActionSheet onClose={onCloseHandler}>
+        <ActionSheet onClosed={onClosedHandler}>
           <ActionSheetItem {...props} {...handlers} {...props} data-testid="item" />
         </ActionSheet>,
       );
@@ -139,7 +164,7 @@ describe(ActionSheet, () => {
       );
       await act(vi.runAllTimers);
 
-      if (onCloseHandler.mock.calls.length > 0) {
+      if (onClosedHandler.mock.calls.length > 0) {
         result.unmount();
       }
 
@@ -148,12 +173,12 @@ describe(ActionSheet, () => {
       props.selectable && expect(handlers.onChange).toHaveBeenCalled();
 
       if (props.autoCloseDisabled) {
-        expect(onCloseHandler).not.toHaveBeenCalled();
+        expect(onClosedHandler).not.toHaveBeenCalled();
       } else if (!props.autoCloseDisabled && props.isCancelItem) {
-        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+        expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
       } else {
         !props.autoCloseDisabled &&
-          expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
+          expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
       }
     });
   });
@@ -169,39 +194,39 @@ describe(ActionSheet, () => {
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_name, ActionSheet) => {
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       render(
-        <ActionSheet data-testid="container" onClose={onClose}>
+        <ActionSheet data-testid="container" onClosed={onClosed}>
           <div data-testid="content" />
         </ActionSheet>,
       );
       await waitForFloatingPosition();
       await act(vi.runAllTimers);
       await userEvent.click(getNode());
-      expect(onClose).not.toHaveBeenCalled();
+      expect(onClosed).not.toHaveBeenCalled();
     });
   });
 
   describe('closes on click outside', () => {
     fakeTimersForScope();
     it('desktop', async () => {
-      const onClose = vi.fn();
-      const result = render(<ActionSheetDesktop onClose={onClose} />);
+      const onClosed = vi.fn();
+      const result = render(<ActionSheetDesktop onClosed={onClosed} />);
       await waitForFloatingPosition();
       await userEvent.click(document.body);
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
 
     it('mobile', async () => {
-      const onClose = vi.fn();
-      const result = render(<ActionSheetMobile onClose={onClose} />);
+      const onClosed = vi.fn();
+      const result = render(<ActionSheetMobile onClosed={onClosed} />);
       await waitForFloatingPosition();
       await userEvent.click(
         result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
       );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
   });
 
@@ -219,7 +244,7 @@ describe(ActionSheet, () => {
     const { rerender } = render(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -231,7 +256,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -243,7 +268,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -255,7 +280,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -271,11 +296,11 @@ describe(ActionSheet, () => {
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_name, ActionSheet) => {
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const onClick = vi.fn();
       const { rerender } = render(
         <div onClick={onClick}>
-          <ActionSheet data-testid="container" onClose={onClose}>
+          <ActionSheet data-testid="container" onClosed={onClosed}>
             <div data-testid="content" />
           </ActionSheet>
         </div>,
@@ -288,7 +313,7 @@ describe(ActionSheet, () => {
 
       rerender(
         <div onClick={onClick}>
-          <ActionSheet data-testid="container" onClose={onClose} allowClickPropagation>
+          <ActionSheet data-testid="container" onClosed={onClosed} allowClickPropagation>
             <div data-testid="content" />
           </ActionSheet>
         </div>,

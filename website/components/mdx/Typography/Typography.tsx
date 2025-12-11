@@ -124,7 +124,7 @@ export function Typography() {
 
   function openWeightPopout() {
     setPopout(
-      <ActionSheet onClose={() => setPopout(null)} toggleRef={weightTargetRef}>
+      <ActionSheet onClosed={() => setPopout(null)} toggleRef={weightTargetRef}>
         {['', '1', '2', '3'].map((item) => (
           <ActionSheetItem
             key={item}
@@ -143,7 +143,7 @@ export function Typography() {
 
   function openAdaptivityPopout() {
     setPopout(
-      <ActionSheet onClose={() => setPopout(null)} toggleRef={adaptivityTargetRef}>
+      <ActionSheet onClosed={() => setPopout(null)} toggleRef={adaptivityTargetRef}>
         {['', 'regular', 'compact'].map((item) => (
           <ActionSheetItem
             key={item}
