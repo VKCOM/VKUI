@@ -21,7 +21,7 @@ type AlertActionMode = 'cancel' | 'destructive' | 'default';
 
 export type { AlertActionProps };
 
-export type AlertCloseReason = 'click-overlay' | 'item-click' | 'escape-key' | 'click-close-button';
+export type AlertCloseReason = 'click-overlay' | 'click-item' | 'escape-key' | 'click-close-button';
 
 export interface AlertActionInterface
   extends Pick<ButtonProps, 'Component'>,

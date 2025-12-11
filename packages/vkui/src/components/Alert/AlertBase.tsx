@@ -86,12 +86,12 @@ export const AlertBase = ({
       const { action: itemAction, autoCloseDisabled = false } = item;
 
       if (autoCloseDisabled) {
-        itemAction && itemAction({ close: () => close('item-click') });
+        itemAction && itemAction({ close: () => close('click-item') });
       } else {
         if (itemAction) {
           itemActionCallbackRef.current = itemAction;
         }
-        close('item-click');
+        close('click-item');
       }
     },
     [close],

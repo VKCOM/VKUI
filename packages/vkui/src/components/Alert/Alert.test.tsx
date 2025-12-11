@@ -89,7 +89,7 @@ describe('Alert', () => {
       expect(onClosed).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onClose with "item-click" when clicking action', async () => {
+    it('calls onClose with "click-item" when clicking action', async () => {
       const onClose = vi.fn();
       const onClosed = vi.fn();
       const result = render(
@@ -110,7 +110,7 @@ describe('Alert', () => {
 
       await userEvent.click(result.getByTestId('__action__'));
       expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith('item-click');
+      expect(onClose).toHaveBeenCalledWith('click-item');
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
@@ -179,7 +179,7 @@ describe('Alert', () => {
       expect(onClosed).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onClose with "item-click" when action with autoCloseDisabled calls close', async () => {
+    it('calls onClose with "click-item" when action with autoCloseDisabled calls close', async () => {
       const onClose = vi.fn();
       const onClosed = vi.fn();
       const action = vi.fn((args) => {
@@ -208,7 +208,7 @@ describe('Alert', () => {
       await userEvent.click(result.getByTestId('__action__'));
       expect(action).toHaveBeenCalledTimes(1);
       expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith('item-click');
+      expect(onClose).toHaveBeenCalledWith('click-item');
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
