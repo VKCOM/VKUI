@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`alert > transforms correctly 1`] = `
+"import { Alert } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      {/* Простой случай - переименовываем onClose в onClosed */}
+      <Alert title="Alert title" onClosed={() => console.log('closed')} />
+      {/* С другими пропами */}
+      <Alert
+        title="Alert title"
+        description="Alert description"
+        onClosed={() => console.log('closed')}
+        actions={[{ title: 'OK', mode: 'default' }]}
+      />
+      {/* С функцией */}
+      <Alert
+        title="Alert title"
+        onClosed={handleClose}
+      />
+      {/* Вложенный случай */}
+      <div>
+        <Alert
+          title="Nested Alert"
+          onClosed={() => setVisible(false)}
+        />
+      </div>
+    </React.Fragment>
+  );
+};
+
+function handleClose() {
+  console.log('closed');
+}"
+`;
