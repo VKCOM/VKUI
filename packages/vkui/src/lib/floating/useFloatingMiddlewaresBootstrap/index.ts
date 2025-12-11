@@ -7,6 +7,7 @@ import {
   hideMiddleware,
   offsetMiddleware,
   shiftMiddleware,
+  type ShiftMiddlewareOptions,
   sizeMiddleware,
 } from '../adapters';
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
@@ -44,6 +45,10 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
    * Отступ по вспомогательной оси.
    */
   offsetByCrossAxis?: number;
+  /**
+   * Отступ для смещения.
+   */
+  overflowPadding?: ShiftMiddlewareOptions['padding'];
   arrowRef?: ArrowOptions['element'];
   /**
    * Отображать ли стрелку, указывающую на якорный элемент.
@@ -85,6 +90,7 @@ export const useFloatingMiddlewaresBootstrap = ({
   disableFlipMiddleware = false,
   disableShiftMiddleware = false,
   flipMiddlewareFallbackAxisSideDirection = 'end',
+  overflowPadding,
 }: UseFloatingMiddlewaresBootstrapOptions): {
   middlewares: UseFloatingMiddleware[];
   strictPlacement: Placement | undefined;
@@ -98,7 +104,7 @@ export const useFloatingMiddlewaresBootstrap = ({
       }),
     ];
 
-    const shift = disableShiftMiddleware ? null : shiftMiddleware();
+    const shift = disableShiftMiddleware ? null : shiftMiddleware({ padding: overflowPadding });
 
     // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#conflict-with-autoplacementjs
     if (isAutoPlacement) {
@@ -173,5 +179,6 @@ export const useFloatingMiddlewaresBootstrap = ({
     hideWhenReferenceHidden,
     arrowRef,
     arrowPadding,
+    overflowPadding,
   ]);
 };

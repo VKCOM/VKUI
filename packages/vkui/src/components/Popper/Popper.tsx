@@ -57,6 +57,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
   | 'disableShiftMiddleware'
   | 'flipMiddlewareFallbackAxisSideDirection'
+  | 'overflowPadding'
 >;
 
 export interface PopperCommonProps
@@ -114,6 +115,7 @@ export const Popper = ({
   disableFlipMiddleware = false,
   disableShiftMiddleware = false,
   flipMiddlewareFallbackAxisSideDirection,
+  overflowPadding,
 
   // UseFloatingProps
   autoUpdateOnTargetResize = false,
@@ -151,6 +153,7 @@ export const Popper = ({
     disableFlipMiddleware,
     disableShiftMiddleware,
     flipMiddlewareFallbackAxisSideDirection,
+    overflowPadding,
   });
 
   const {
