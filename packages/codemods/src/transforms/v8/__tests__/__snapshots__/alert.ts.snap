@@ -17,16 +17,10 @@ const App = () => {
         actions={[{ title: 'OK', mode: 'default' }]}
       />
       {/* С функцией */}
-      <Alert
-        title="Alert title"
-        onClosed={handleClose}
-      />
+      <Alert title="Alert title" onClosed={handleClose} />
       {/* Вложенный случай */}
       <div>
-        <Alert
-          title="Nested Alert"
-          onClosed={() => setVisible(false)}
-        />
+        <Alert title="Nested Alert" onClosed={() => setVisible(false)} />
       </div>
     </React.Fragment>
   );
