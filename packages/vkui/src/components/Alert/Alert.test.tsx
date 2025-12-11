@@ -120,9 +120,7 @@ describe('Alert', () => {
     it('calls onClose with "escape-key" when pressing Escape', async () => {
       const onClose = vi.fn();
       const onClosed = vi.fn();
-      const result = render(
-        <Alert onClose={onClose} onClosed={onClosed} title="Test Alert" />,
-      );
+      const result = render(<Alert onClose={onClose} onClosed={onClosed} title="Test Alert" />);
 
       await userEvent.keyboard('{Escape}');
       expect(onClose).toHaveBeenCalledTimes(1);
