@@ -71,7 +71,7 @@ describe('Alert', () => {
 
   describe('calls onClose with correct reason', () => {
     fakeTimersForScope();
-    it('calls onClose with "overlay-click" when clicking overlay', async () => {
+    it('calls onClose with "click-overlay" when clicking overlay', async () => {
       const onClose = vi.fn();
       const onClosed = vi.fn();
       const result = render(
@@ -82,7 +82,7 @@ describe('Alert', () => {
 
       await userEvent.click(document.querySelector(`.${popoutWrapperStyles.overlay}`)!);
       expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith('overlay-click');
+      expect(onClose).toHaveBeenCalledWith('click-overlay');
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
@@ -131,7 +131,7 @@ describe('Alert', () => {
       expect(onClosed).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onClose with "dismiss-button-click" when clicking dismiss button', async () => {
+    it('calls onClose with "click-close-button" when clicking dismiss button', async () => {
       const onClose = vi.fn();
       const onClosed = vi.fn();
       const result = render(
@@ -148,14 +148,14 @@ describe('Alert', () => {
       await act(vi.runAllTimers);
       await userEvent.click(screen.getByTestId('dismiss-button-test-id'));
       expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith('dismiss-button-click');
+      expect(onClose).toHaveBeenCalledWith('click-close-button');
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
       expect(onClosed).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onClose with "dismiss-button-click" when clicking outside dismiss button', async () => {
+    it('calls onClose with "click-close-button" when clicking outside dismiss button', async () => {
       const onClose = vi.fn();
       const onClosed = vi.fn();
       const result = render(
@@ -172,7 +172,7 @@ describe('Alert', () => {
       await act(vi.runAllTimers);
       await userEvent.click(screen.getByTestId('dismiss-button-test-id'));
       expect(onClose).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledWith('dismiss-button-click');
+      expect(onClose).toHaveBeenCalledWith('click-close-button');
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });

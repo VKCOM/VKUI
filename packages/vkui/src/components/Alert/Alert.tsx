@@ -22,10 +22,10 @@ type AlertActionMode = 'cancel' | 'destructive' | 'default';
 export type { AlertActionProps };
 
 export type AlertCloseReason =
-  | 'overlay-click'
+  | 'click-overlay'
   | 'item-click'
   | 'escape-key'
-  | 'dismiss-button-click';
+  | 'click-close-button';
 
 export interface AlertActionInterface
   extends Pick<ButtonProps, 'Component'>,
@@ -134,7 +134,7 @@ export const Alert = ({
   const [closing, setClosing] = React.useState(false);
 
   const close = React.useCallback(() => {
-    onClose?.('overlay-click');
+    onClose?.('click-overlay');
     setClosing(true);
   }, [onClose]);
 

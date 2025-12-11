@@ -106,7 +106,7 @@ export const AlertBase = ({
 
   const onEscape = React.useCallback(() => close('escape-key'), [close]);
 
-  const onDismissButtonClick = React.useCallback(() => close('dismiss-button-click'), [close]);
+  const onCloseButtonClick = React.useCallback(() => close('click-close-button'), [close]);
 
   return (
     <FocusTrap
@@ -149,7 +149,7 @@ export const AlertBase = ({
           <IconButton
             label={dismissLabel}
             className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
-            onClick={onDismissButtonClick}
+            onClick={onCloseButtonClick}
             hoverMode="opacity"
             activeMode="opacity"
             data-testid={dismissButtonTestId}
@@ -159,7 +159,7 @@ export const AlertBase = ({
         )}
       </div>
       {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-        <ModalDismissButton onClick={onDismissButtonClick} data-testid={dismissButtonTestId}>
+        <ModalDismissButton onClick={onCloseButtonClick} data-testid={dismissButtonTestId}>
           {dismissLabel}
         </ModalDismissButton>
       )}
