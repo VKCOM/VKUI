@@ -1,3 +1,10 @@
+import type { CSSCustomProperties } from '../types';
+
+type CSSPropertiesTypes =
+  | React.CSSProperties
+  | (React.CSSProperties & CSSCustomProperties<any>)
+  | undefined;
+
 /**
  * Мержит стили, пытаясь уменьшить кол-во копирований
  *
@@ -7,9 +14,6 @@
  * const style = mergeStyle(arrowStyles, styleProp)
  * ```
  */
-export function mergeStyle(
-  a: React.CSSProperties | undefined,
-  b: React.CSSProperties | undefined,
-): React.CSSProperties | undefined {
+export function mergeStyle(a: CSSPropertiesTypes, b: CSSPropertiesTypes): CSSPropertiesTypes {
   return a && b ? { ...a, ...b } : a || b;
 }
