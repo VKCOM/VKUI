@@ -128,7 +128,7 @@ describe(ImageBase, () => {
 
   it("should provide `ref` of 'img' tag", () => {
     const refCallback = vi.fn();
-    render(<ImageBaseTest src="#" getRef={refCallback} />);
+    render(<ImageBaseTest src="#" slotProps={{ img: { getRootRef: refCallback } }} />);
     expect(refCallback).toHaveBeenCalled();
   });
 
@@ -171,7 +171,13 @@ describe(ImageBase, () => {
       });
     });
 
-    render(<ImageBaseTest getRef={getRefMock} onLoad={onLoadMock} src="https://loaded.image" />);
+    render(
+      <ImageBaseTest
+        slotProps={{ img: { getRootRef: getRefMock } }}
+        onLoad={onLoadMock}
+        src="https://loaded.image"
+      />,
+    );
 
     // make sure onLoad prop is called as is if img elment has 'complete=true'
     expect(onLoadMock).toHaveBeenCalledTimes(1);
