@@ -144,10 +144,11 @@ describe(ActionSheet, () => {
       ['sheet', ActionSheetSheet],
     ])('%s', async (_, ActionSheet) => {
       const onClosedHandler = vi.fn();
+      const onCloseHandler = vi.fn();
       const handlers = { onClick: vi.fn(), onChange: vi.fn() };
 
       const result = render(
-        <ActionSheet onClosed={onClosedHandler}>
+        <ActionSheet onClosed={onClosedHandler} onClose={onCloseHandler}>
           <ActionSheetItem {...props} {...handlers} {...props} data-testid="item" />
         </ActionSheet>,
       );
@@ -174,11 +175,14 @@ describe(ActionSheet, () => {
 
       if (props.autoCloseDisabled) {
         expect(onClosedHandler).not.toHaveBeenCalled();
+        expect(onCloseHandler).not.toHaveBeenCalled();
       } else if (!props.autoCloseDisabled && props.isCancelItem) {
         expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('cancel-item');
       } else {
         !props.autoCloseDisabled &&
           expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('action-item');
       }
     });
   });

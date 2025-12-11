@@ -47,7 +47,7 @@ export interface ActionSheetProps
   /**
    * Обработчик закрытия всплывающего окна.
    */
-  onClose?: () => void;
+  onClose?: (reason: CloseReason) => void;
   /**
    * Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.
    */
@@ -100,7 +100,7 @@ export const ActionSheet = ({
 
   const onClose = React.useCallback(
     (reason: CloseReason) => {
-      onCloseStable();
+      onCloseStable(reason);
       setClosingBy(reason);
     },
     [onCloseStable],
