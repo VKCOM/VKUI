@@ -31,8 +31,15 @@ export const getCustomMedias = async () => {
   const { outputText: sourceJS } = ts.transpileModule(sourceTS, {
     compilerOptions: { module: ts.ModuleKind.ESNext },
   });
-  const { BREAKPOINTS, MEDIA_QUERIES, widthPlus, widthMinus, heightMinus, heightPlus } =
-    await import(`data:text/javascript;charset=utf-8,${encodeURIComponent(sourceJS)}`);
+  const {
+    BREAKPOINTS,
+    NEW_BREAKPOINTS,
+    MEDIA_QUERIES,
+    widthPlus,
+    widthMinus,
+    heightMinus,
+    heightPlus,
+  } = await import(`data:text/javascript;charset=utf-8,${encodeURIComponent(sourceJS)}`);
 
   return {
     '--sizeX-regular': widthPlus(BREAKPOINTS.SMALL_TABLET),
@@ -66,6 +73,13 @@ export const getCustomMedias = async () => {
     '--viewWidth-mobile': MEDIA_QUERIES.MOBILE,
 
     '--viewWidth-smallMobileMinus': widthMinus(BREAKPOINTS.MOBILE),
+
+    '--init-mq': widthPlus(NEW_BREAKPOINTS.init),
+    '--xs-mq': widthPlus(NEW_BREAKPOINTS.xs),
+    '--s-mq': widthPlus(NEW_BREAKPOINTS.s),
+    '--m-mq': widthPlus(NEW_BREAKPOINTS.m),
+    '--l-mq': widthPlus(NEW_BREAKPOINTS.l),
+    '--xl-mq': widthPlus(NEW_BREAKPOINTS.xl),
   };
 };
 

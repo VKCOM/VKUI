@@ -44,3 +44,15 @@
 @custom-media --viewWidth-mobile (min-width: 320px) and (max-width: 767.9px);
 /* biome-ignore format: для красоты */
 @custom-media --viewWidth-smallMobileMinus (max-width: 319.9px);
+/* biome-ignore format: для красоты */
+@custom-media --init-mq (min-width: 0px);
+/* biome-ignore format: для красоты */
+@custom-media --xs-mq (min-width: 520px);
+/* biome-ignore format: для красоты */
+@custom-media --s-mq (min-width: 768px);
+/* biome-ignore format: для красоты */
+@custom-media --m-mq (min-width: 1024px);
+/* biome-ignore format: для красоты */
+@custom-media --l-mq (min-width: 1280px);
+/* biome-ignore format: для красоты */
+@custom-media --xl-mq (min-width: 1640px);

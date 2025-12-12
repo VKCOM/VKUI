@@ -3,7 +3,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { SimpleGrid, type SimpleGridProps } from './SimpleGrid';
 import styles from './SimpleGrid.module.css';
-import gapsStyles from '../../styles/gaps.module.css';
 
 describe('SimpleGrid', () => {
   baselineComponent(SimpleGrid);
@@ -24,7 +23,7 @@ describe('SimpleGrid', () => {
       props: {
         gap: ['l', 'm'],
       },
-      className: classNames(gapsStyles['-column-gap--m'], gapsStyles['-row-gap--l']),
+      className: classNames('vkui-column_gap-m', 'vkui-row_gap-l'),
     },
     {
       props: {
@@ -36,7 +35,7 @@ describe('SimpleGrid', () => {
       props: {
         align: 'center',
       },
-      className: styles.alignCenter,
+      className: 'vkui-align-center',
     },
     {
       props: {

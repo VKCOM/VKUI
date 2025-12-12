@@ -95,6 +95,10 @@
 
   /** ModalOverlay props */
   --vkui_internal--modal-overlay--opacity: 1;
+
+  /* Grid values */
+  --vkui_internal--grid_columns: 1;
+  --vkui_internal--min_col_width: 0;
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {

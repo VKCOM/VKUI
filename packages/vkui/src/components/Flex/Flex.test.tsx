@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Flex, type FlexProps } from './Flex';
 import styles from './Flex.module.css';
-import gapStyles from '../../styles/gaps.module.css';
 
 describe(Flex, () => {
   baselineComponent(Flex);
@@ -48,7 +47,7 @@ describe(Flex, () => {
         props: {
           noWrap: false,
         },
-        className: styles.wrap,
+        className: 'vkui-flex-wrap',
       },
       {
         props: {
@@ -60,7 +59,7 @@ describe(Flex, () => {
         props: {
           direction: 'column',
         },
-        className: styles.directionColumn,
+        className: 'vkui-direction-column',
       },
       {
         props: {
@@ -72,25 +71,25 @@ describe(Flex, () => {
         props: {
           gap: ['l', 'l'],
         },
-        className: gapStyles['-column-gap--l'],
+        className: 'vkui-column_gap-l',
       },
       {
         props: {
           gap: ['l', 'l'],
         },
-        className: gapStyles['-row-gap--l'],
+        className: 'vkui-row_gap-l',
       },
       {
         props: {
           align: 'center',
         },
-        className: styles.alignCenter,
+        className: 'vkui-align-center',
       },
       {
         props: {
           justify: 'center',
         },
-        className: styles.justifyCenter,
+        className: 'vkui-justify-center',
       },
     ])('should have className $className with props $props', ({ props, className }) => {
       render(

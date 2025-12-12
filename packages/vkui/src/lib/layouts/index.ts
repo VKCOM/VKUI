@@ -1,9 +1,6 @@
 export {
   calculateGap,
   type GapsProp,
-  type GapProp,
-  columnGapClassNames,
-  rowGapClassNames,
 } from './gaps';
 
 export type {
@@ -15,6 +12,7 @@ export type {
   FlexShrinkProp,
   PositionValue,
   LayoutProps,
+  AdaptiveProp,
 } from './types';
 
 export { resolveLayoutProps } from './resolveLayoutProps';

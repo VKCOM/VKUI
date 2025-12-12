@@ -1,22 +1,13 @@
+import { DESIGN_SYSTEM_SIZES } from '../spacings/sizes';
 import type {
   CSSGlobalValue,
   CSSIntrinsicSizingKeywords,
-  DesignSystemSize,
+  LayoutProps,
   OverflowValue,
   PositionValue,
+  PropDescriptor,
 } from './types';
 
-export const DESIGN_SYSTEM_SIZES: DesignSystemSize[] = [
-  '2xs',
-  'xs',
-  's',
-  'm',
-  'l',
-  'xl',
-  '2xl',
-  '3xl',
-  '4xl',
-];
 const CSS_INTRINSIC_KEYWORDS: CSSIntrinsicSizingKeywords[] = [
   'auto',
   'max-content',
@@ -42,7 +33,7 @@ const OVERFLOW_VALUES: OverflowValue[] = [
   ...CSS_GLOBAL_KEYWORDS,
 ];
 
-export const LAYOUT_PROPS = {
+export const LAYOUT_PROPS: Record<keyof LayoutProps, PropDescriptor> = {
   padding: PADDING_VALUES,
   paddingInline: PADDING_VALUES,
   paddingBlock: PADDING_VALUES,
@@ -63,13 +54,25 @@ export const LAYOUT_PROPS = {
   insetInlineEnd: INSET_VALUES,
   insetBlockStart: INSET_VALUES,
   insetBlockEnd: INSET_VALUES,
-  position: POSITION_VALUES,
+  position: {
+    type: 'static',
+    values: POSITION_VALUES,
+  },
   flexGrow: FLEX_VALUES,
   flexShrink: FLEX_VALUES,
   flexBasis: FLEX_BASIS_VALUES,
-  overflow: OVERFLOW_VALUES,
-  overflowBlock: OVERFLOW_VALUES,
-  overflowInline: OVERFLOW_VALUES,
+  overflow: {
+    type: 'static',
+    values: OVERFLOW_VALUES,
+  },
+  overflowBlock: {
+    type: 'static',
+    values: OVERFLOW_VALUES,
+  },
+  overflowInline: {
+    type: 'static',
+    values: OVERFLOW_VALUES,
+  },
 };
 
 export type LayoutPropKeys = keyof typeof LAYOUT_PROPS;

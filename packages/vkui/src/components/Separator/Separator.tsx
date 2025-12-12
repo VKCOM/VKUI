@@ -1,7 +1,6 @@
 import { classNames } from '@vkontakte/vkjs';
-import { resolveLayoutProps } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
-import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
+import { type AdaptiveProp, type LayoutProps, resolveLayoutProps } from '../../lib/layouts';
+import { type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Separator.module.css';
@@ -30,7 +29,7 @@ export interface SeparatorProps
    *
    * Принимает значения дизайн-системы, числовые значения и css-переменные.
    */
-  size?: SpacingSizeProp;
+  size?: AdaptiveProp<SpacingSizeProp>;
   /**
    * Выравнивание разделителя в контейнере.
    */
@@ -61,13 +60,8 @@ export const Separator = ({
   appearance = 'primary',
   direction = 'horizontal',
   align = 'center',
-  size,
   ...restProps
 }: SeparatorProps): React.ReactNode => {
-  const [spacingSizeClassName, spacingSizeStyle] = resolveSpacingSize(
-    CUSTOM_CSS_TOKEN_FOR_USER_SIZE,
-    size,
-  );
   const resolvedProps = resolveLayoutProps(restProps);
 
   return (
@@ -77,11 +71,9 @@ export const Separator = ({
         padding && styles.padded,
         appearanceClassNames[appearance],
         directionClassNames[direction],
-        size !== undefined && styles.sized,
+        restProps.size !== undefined && styles.sized,
         align !== 'center' && alignClassNames[align],
-        spacingSizeClassName,
       )}
-      baseStyle={spacingSizeStyle}
     >
       <hr className={styles.in} />
     </RootComponent>

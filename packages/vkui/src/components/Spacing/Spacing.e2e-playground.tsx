@@ -1,11 +1,10 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { type SpacingSize, spacingSizeClassNames } from '../../lib/spacings/sizes';
+import { DESIGN_SYSTEM_SIZES as sizes } from '../../lib/spacings/sizes';
 import { type CSSCustomProperties } from '../../types';
 import { Div } from '../Div/Div';
 import { Separator } from '../Separator/Separator';
 import { Spacing, type SpacingProps } from './Spacing';
 
-const sizes = Object.keys(spacingSizeClassNames) as SpacingSize[];
 const divStyle: React.CSSProperties & CSSCustomProperties = {
   'width': 100,
   'boxSizing': 'content-box',

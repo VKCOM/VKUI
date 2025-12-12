@@ -1,4 +1,5 @@
 import type { ValuesOfObject } from '../../types';
+import { type NEW_BREAKPOINTS } from './breakpoints';
 import type { SizeType } from './constants';
 
 export type CSSBreakpoints =
@@ -32,6 +33,8 @@ export type MediaQueries = Record<JSBreakpoints, MediaQueryList>;
 
 type SizeTypeValue = ValuesOfObject<typeof SizeType>;
 
+export type NewBreakpoints = keyof typeof NEW_BREAKPOINTS;
+
 /**
  * Используется в `packages/vkui/scripts/generateCSSCustomMedias.mjs`, который отвечает за генерацию
  * `packages/vkui/styles/customMedias.generated.css`.
@@ -40,6 +43,7 @@ export type CSSCustomMedias = Record<
   | `--sizeX-${SizeTypeValue}`
   | `--sizeY-${SizeTypeValue}`
   | `--viewWidth-${CSSBreakpoints}`
+  | `--${NewBreakpoints}-mq`
   | '--hover-has'
   | '--hover-has-not'
   | '--pointer-has'

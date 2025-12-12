@@ -1,13 +1,10 @@
 import { classNames } from '@vkontakte/vkjs';
 import {
-  calculateGap,
-  columnGapClassNames,
+  type AdaptiveProp,
   type GapsProp,
+  type LayoutProps,
   resolveLayoutProps,
-  rowGapClassNames,
 } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
-import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './SimpleGrid.module.css';
@@ -18,32 +15,19 @@ const marginClassNames = {
   'auto-block': styles.marginAutoBlock,
 };
 
-const alignClassNames = {
-  start: styles.alignStart,
-  end: styles.alignEnd,
-  center: styles.alignCenter,
-  stretch: styles.alignStretch,
-  baseline: styles.alignBaseline,
-};
-
-const displayClassNames = {
-  'none': styles.displayNone,
-  'inline-grid': styles.displayInlineGrid,
-};
-
 export interface SimpleGridProps
   extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
     LayoutProps {
   /**
    * Количество колонок.
    */
-  columns?: number;
+  columns?: AdaptiveProp<number>;
   /**
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
    * Через массив можно задать отступ между столбцами и строками [row, column], если они отличаются.
    */
-  gap?: GapsProp;
+  gap?: AdaptiveProp<GapsProp>;
   /**
    * Управляет отступами вокруг контейнера
    * Значение `none` позволяет отключить отступы
@@ -55,15 +39,15 @@ export interface SimpleGridProps
   /**
    * Вместо задания количества колонок, можно указать минимальную ширину элементов.
    */
-  minColWidth?: number;
+  minColWidth?: AdaptiveProp<number>;
   /**
    * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
-  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
+  align?: AdaptiveProp<'start' | 'end' | 'center' | 'stretch' | 'baseline'>;
   /**
    * Возможность задать css-свойство `display`.
    */
-  display?: 'none' | 'grid' | 'inline-grid';
+  display?: AdaptiveProp<'none' | 'grid' | 'inline-grid'>;
 }
 
 /**
@@ -71,40 +55,20 @@ export interface SimpleGridProps
  */
 export const SimpleGrid = ({
   columns = 1,
-  gap,
   margin = 'none',
-  minColWidth,
   align = 'stretch',
   display = 'grid',
   ...restProps
 }: SimpleGridProps) => {
-  const resolvedProps = resolveLayoutProps(restProps);
-  const style: CSSCustomProperties = {};
-  const [rowGap, columnGap] = calculateGap(gap);
-  if (typeof rowGap === 'number') {
-    style['--vkui_internal--row_gap'] = `${rowGap}px`;
-  }
-  if (typeof columnGap === 'number') {
-    style['--vkui_internal--column_gap'] = `${columnGap}px`;
-  }
-  style['--vkui_internal--grid_columns'] = `${columns}`;
-  if (minColWidth) {
-    style['--vkui_internal--min_col_width'] = `${minColWidth}px`;
-  }
-
+  const resolvedProps = resolveLayoutProps({ align, columns, display, ...restProps });
   return (
     <RootComponent
       {...resolvedProps}
       baseClassName={classNames(
         styles.host,
         margin !== 'none' && marginClassNames[margin],
-        alignClassNames[align],
-        minColWidth && styles.withMinWidth,
-        typeof columnGap === 'string' && columnGapClassNames[columnGap],
-        typeof rowGap === 'string' && rowGapClassNames[rowGap],
-        display !== 'grid' && displayClassNames[display],
+        restProps.minColWidth && styles.withMinWidth,
       )}
-      baseStyle={style}
     />
   );
 };

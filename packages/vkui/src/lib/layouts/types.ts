@@ -1,7 +1,23 @@
 import type { LiteralUnion } from '../../types';
+import { type NewBreakpoints } from '../adaptivity/types';
+import type { DesignSystemSize } from '../spacings/sizes';
 
-// Тип для размеров дизайн-системы, переименованный из GapPresets
-export type DesignSystemSize = '2xs' | 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
+// Тип для адаптивных значений
+export type AdaptiveProp<T> =
+  | T
+  | {
+      [key in NewBreakpoints]?: T;
+    };
+
+interface ObjectDescriptor<T> {
+  type: 'static' | 'dynamic';
+  class?: string;
+  propName?: string;
+  values?: readonly T[];
+}
+
+// Тип для описания пропов
+export type PropDescriptor<T = any> = readonly T[] | ObjectDescriptor<T>;
 
 // Глобальные CSS-значения
 export type CSSGlobalValue = 'inherit' | 'initial' | 'unset';
@@ -34,109 +50,109 @@ export interface LayoutProps {
   /**
    * Внутренние отступы со всех сторон.
    */
-  padding?: PaddingProp;
+  padding?: AdaptiveProp<PaddingProp>;
   /**
    * Внутренние отступы по строчной оси.
    */
-  paddingInline?: PaddingProp;
+  paddingInline?: AdaptiveProp<PaddingProp>;
   /**
    * Внутренние отступы по блочной оси.
    */
-  paddingBlock?: PaddingProp;
+  paddingBlock?: AdaptiveProp<PaddingProp>;
   /**
    * Внутренний начальный отступ по строчной оси.
    */
-  paddingInlineStart?: PaddingProp;
+  paddingInlineStart?: AdaptiveProp<PaddingProp>;
   /**
    * Внутренний конечный отступ по строчной оси.
    */
-  paddingInlineEnd?: PaddingProp;
+  paddingInlineEnd?: AdaptiveProp<PaddingProp>;
   /**
    * Внутренний начальный отступ по блочной оси.
    */
-  paddingBlockStart?: PaddingProp;
+  paddingBlockStart?: AdaptiveProp<PaddingProp>;
   /**
    * Внутренний конечный отступ по блочной оси.
    */
-  paddingBlockEnd?: PaddingProp;
+  paddingBlockEnd?: AdaptiveProp<PaddingProp>;
   /**
    * Размер элемента по строчной оси (при горизонтальном направлении письма - ширина элемента).
    */
-  inlineSize?: SizeProp;
+  inlineSize?: AdaptiveProp<SizeProp>;
   /**
    * Минимальный размер элемента по строчной оси (при горизонтальном направлении письма - ширина элемента).
    */
-  minInlineSize?: Exclude<SizeProp, 'auto'>;
+  minInlineSize?: AdaptiveProp<Exclude<SizeProp, 'auto'>>;
   /**
    * Максимальный размер элемента по строчной оси (при горизонтальном направлении письма - ширина элемента).
    */
-  maxInlineSize?: Exclude<SizeProp, 'auto'>;
+  maxInlineSize?: AdaptiveProp<Exclude<SizeProp, 'auto'>>;
   /**
    * Размер элемента по блочной оси (при горизонтальном направлении письма - высота элемента).
    */
-  blockSize?: SizeProp;
+  blockSize?: AdaptiveProp<SizeProp>;
   /**
    * Минимальный размер элемента по блочной оси (при горизонтальном направлении письма - высота элемента).
    */
-  minBlockSize?: SizeProp;
+  minBlockSize?: AdaptiveProp<SizeProp>;
   /**
    * Максимальный размер элемента по блочной оси (при горизонтальном направлении письма - высота элемента).
    */
-  maxBlockSize?: SizeProp;
+  maxBlockSize?: AdaptiveProp<SizeProp>;
   /**
    * Смещение элемента по `top`, `right`, `bottom` и `left` одновременно.
    */
-  inset?: InsetProp;
+  inset?: AdaptiveProp<InsetProp>;
   /**
    * Боковое смещение по строчной оси (при горизонтальном направлении письма - свойства `left`/`right`).
    */
-  insetInline?: InsetProp;
+  insetInline?: AdaptiveProp<InsetProp>;
   /**
    * Боковое смещение по блочной оси (при горизонтальном направлении письма - свойства `top`/`bottom`).
    */
-  insetBlock?: InsetProp;
+  insetBlock?: AdaptiveProp<InsetProp>;
   /**
    * Смещение начального отступа по строчной оси (при горизонтальном направлении письма - свойство `left`).
    */
-  insetInlineStart?: InsetProp;
+  insetInlineStart?: AdaptiveProp<InsetProp>;
   /**
    * Смещение конечного отступа по строчной оси (при горизонтальном направлении письма - свойство `right`).
    */
-  insetInlineEnd?: InsetProp;
+  insetInlineEnd?: AdaptiveProp<InsetProp>;
   /**
    * Смещение начального отступа по блочной оси (при горизонтальном направлении письма - свойство `top`).
    */
-  insetBlockStart?: InsetProp;
+  insetBlockStart?: AdaptiveProp<InsetProp>;
   /**
    * Смещение конечного отступа по блочной оси (при горизонтальном направлении письма - свойство `bottom`).
    */
-  insetBlockEnd?: InsetProp;
+  insetBlockEnd?: AdaptiveProp<InsetProp>;
   /**
    * Позиционирование элемента.
    */
-  position?: PositionValue;
+  position?: AdaptiveProp<PositionValue>;
   /**
    * Управление переполнением содержимого.
    */
-  overflow?: OverflowValue;
+  overflow?: AdaptiveProp<OverflowValue>;
   /**
    * Управление переполнением содержимого по блочной оси (при горизонтальном направлении письма - свойство `overflow-y`).
    */
-  overflowBlock?: OverflowValue;
+  overflowBlock?: AdaptiveProp<OverflowValue>;
   /**
    * Управление переполнением содержимого по строчной оси (при горизонтальном направлении письма - свойство `overflow-x`).
    */
-  overflowInline?: OverflowValue;
+  overflowInline?: AdaptiveProp<OverflowValue>;
   /**
    * Определяет, насколько элемент будет расти относительно остальных flex-элементов.
    */
-  flexGrow?: FlexGrowProp;
+  flexGrow?: AdaptiveProp<FlexGrowProp>;
   /**
    * Определяет, насколько элемент будет сжиматься относительно остальных flex-элементов.
    */
-  flexShrink?: FlexShrinkProp;
+  flexShrink?: AdaptiveProp<FlexShrinkProp>;
   /**
    * Определяет начальный размер flex-элемента.
    */
-  flexBasis?: FlexBasisProp;
+  flexBasis?: AdaptiveProp<FlexBasisProp>;
 }

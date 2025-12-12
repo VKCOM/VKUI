@@ -7,6 +7,15 @@ export const BREAKPOINTS = {
   MEDIUM_HEIGHT: 720,
 } as const;
 
+export const NEW_BREAKPOINTS = {
+  init: 0, // phones (portrait)
+  xs: 520, // phones (landscape)
+  s: 768, // tablet (portrait)
+  m: 1024, // tablet (landscape)
+  l: 1280, // laptop
+  xl: 1640, // desktop
+} as const;
+
 /**
  * Луч [a;+∞)
  */

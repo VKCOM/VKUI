@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
-import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import { type AdaptiveProp, resolveLayoutProps } from '../../lib/layouts';
+import { type SpacingSizeProp } from '../../lib/spacings/sizes';
+import { type HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Spacing.module.css';
 
@@ -13,7 +13,7 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
    *
    * Принимает значения дизайн-системы, числовые значения и css-переменные.
    */
-  size?: SpacingSizeProp;
+  size?: AdaptiveProp<SpacingSizeProp>;
   /**
    * @deprecated 7.0.0.
    *
@@ -25,15 +25,6 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
  * @see https://vkui.io/components/spacing
  */
 export const Spacing = ({ size = 'm', ...restProps }: SpacingProps): React.ReactNode => {
-  const [spacingSizeClassName, spacingSizeStyle] = resolveSpacingSize(
-    CUSTOM_CSS_TOKEN_FOR_USER_GAP,
-    size,
-  );
-  return (
-    <RootComponent
-      {...restProps}
-      baseStyle={spacingSizeStyle}
-      baseClassName={classNames(styles.host, spacingSizeClassName)}
-    />
-  );
+  const resolvedProps = resolveLayoutProps({ size, ...restProps });
+  return <RootComponent {...resolvedProps} baseClassName={styles.host} />;
 };

@@ -1,24 +1,34 @@
 /**
  * Генерируем класс для свойства с константным значением
- * @example .vkui-inline-size-inherit
+ * @example .vkui-inline-size-inherit (без брейкпоинта)
+ * @example .vkui-init-inline-size-inherit (с брейкпоинтом)
  */
-export function generateConstantClassName(prefix: string, value: string): string {
-  return `vkui-${prefix}-${value}`;
+export function generateConstantClassName(
+  prefix: string,
+  value: string,
+  breakpoint?: string,
+): string {
+  const bp = breakpoint ? `${breakpoint}-` : '';
+  return `vkui-${bp}${prefix}-${value}`;
 }
 
 /**
  * Генерируем класс для свойства со значением css-переменной
- * @example .vkui-inline-size
+ * @example .vkui-inline-size (без брейкпоинта)
+ * @example .vkui-init-inline-size (с брейкпоинтом)
  */
-export function generateVariableClassName(prefix: string): string {
-  return `vkui-${prefix}`;
+export function generateVariableClassName(prefix: string, breakpoint?: string): string {
+  const bp = breakpoint ? `${breakpoint}-` : '';
+  return `vkui-${bp}${prefix}`;
 }
 
 /**
  * Генерируем название кастомной css-переменной,
  * в которой будет храниться заданное пользователем значение
- * @example --vkui_internal--inline-size
+ * @example --vkui_internal--inline-size (без брейкпоинта)
+ * @example --vkui_internal--init-inline-size (с брейкпоинтом)
  */
-export function generateVariable(prefix: string): string {
-  return `--vkui_internal--${prefix}`;
+export function generateVariable(prefix: string, breakpoint?: string): string {
+  const bp = breakpoint ? `${breakpoint}-` : '';
+  return `--vkui_internal--${bp}${prefix}`;
 }
