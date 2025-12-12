@@ -6,7 +6,7 @@ import type { SnackbarPlacement, SnackbarsMap, UseSnackbar } from '../types';
 import { SnackbarsContainer } from './SnackbarsContainer';
 
 interface SnackbarHolderProps
-  extends Pick<UseSnackbar.Parameters, 'verticalOffsetYStart' | 'verticalOffsetYEnd' | 'zIndex'> {
+  extends Pick<UseSnackbar.Parameters, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
   store: SnackbarStore;
   limit: number;
 }
@@ -14,8 +14,8 @@ interface SnackbarHolderProps
 export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
   store,
   limit,
-  verticalOffsetYStart,
-  verticalOffsetYEnd,
+  offsetYStart,
+  offsetYEnd,
   zIndex,
 }) => {
   const state = React.useSyncExternalStore(store.subscribe, store.getState, store.getState);
@@ -64,8 +64,8 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
           placement={placement as SnackbarPlacement}
           onSnackbarContainerClosed={store.removeSnackbar}
           onSnackbarOpen={onSnackbarOpen}
-          verticalOffsetYStart={verticalOffsetYStart}
-          verticalOffsetYEnd={verticalOffsetYEnd}
+          offsetYStart={offsetYStart}
+          offsetYEnd={offsetYEnd}
           zIndex={zIndex}
         />
       ))}

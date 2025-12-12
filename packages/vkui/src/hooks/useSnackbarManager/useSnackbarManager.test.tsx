@@ -11,12 +11,12 @@ const TestComponent: React.FC<
   UseSnackbar.Parameters & {
     apiRef: React.RefObject<SnackbarApi.Api | null>;
   }
-> = ({ apiRef, limit, queueStrategy, verticalOffsetYStart, verticalOffsetYEnd, zIndex }) => {
+> = ({ apiRef, limit, queueStrategy, offsetYStart, offsetYEnd, zIndex }) => {
   const [snackbarApi, snackbar] = useSnackbarManager({
     limit,
     queueStrategy,
-    verticalOffsetYStart,
-    verticalOffsetYEnd,
+    offsetYStart,
+    offsetYEnd,
     zIndex,
   });
 
@@ -381,8 +381,8 @@ describe('useSnackbarManager', () => {
     expect(snackbarContainer).toHaveStyle({ zIndex: '500' });
   });
 
-  it('should apply verticalOffsetYStart to snackbar container', async () => {
-    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYStart={50} />);
+  it('should apply offsetYStart to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} offsetYStart={50} />);
 
     act(() => {
       apiRef.current?.open({
@@ -398,8 +398,8 @@ describe('useSnackbarManager', () => {
     });
   });
 
-  it('should apply verticalOffsetYStart as string to snackbar container', async () => {
-    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYStart="3rem" />);
+  it('should apply offsetYStart as string to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} offsetYStart="3rem" />);
 
     act(() => {
       apiRef.current?.open({
@@ -415,8 +415,8 @@ describe('useSnackbarManager', () => {
     });
   });
 
-  it('should dynamically update verticalOffsetYStart using setVerticalOffsetYStart', async () => {
-    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYStart={20} />);
+  it('should dynamically update offsetYStart using setOffsetYStart', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} offsetYStart={20} />);
 
     act(() => {
       apiRef.current?.open({ children: 'Test Snackbar', placement: 'top' });
@@ -428,7 +428,7 @@ describe('useSnackbarManager', () => {
     });
 
     act(() => {
-      apiRef.current?.setVerticalOffsetYStart(80);
+      apiRef.current?.setOffsetYStart(80);
     });
 
     snackbarContainer = container.firstChild?.firstChild as HTMLElement;
@@ -437,8 +437,8 @@ describe('useSnackbarManager', () => {
     });
   });
 
-  it('should apply verticalOffsetYEnd to snackbar container', async () => {
-    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYEnd={60} />);
+  it('should apply offsetYEnd to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} offsetYEnd={60} />);
 
     act(() => {
       apiRef.current?.open({
@@ -454,8 +454,8 @@ describe('useSnackbarManager', () => {
     });
   });
 
-  it('should apply verticalOffsetYEnd as string to snackbar container', async () => {
-    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYEnd="2.5rem" />);
+  it('should apply offsetYEnd as string to snackbar container', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} offsetYEnd="2.5rem" />);
 
     act(() => {
       apiRef.current?.open({
@@ -471,8 +471,8 @@ describe('useSnackbarManager', () => {
     });
   });
 
-  it('should dynamically update verticalOffsetYEnd using setVerticalOffsetYEnd', async () => {
-    const { container } = render(<TestComponent apiRef={apiRef} verticalOffsetYEnd={30} />);
+  it('should dynamically update offsetYEnd using setOffsetYEnd', async () => {
+    const { container } = render(<TestComponent apiRef={apiRef} offsetYEnd={30} />);
 
     act(() => {
       apiRef.current?.open({ children: 'Tst Snackbar', placement: 'bottom' });
@@ -484,7 +484,7 @@ describe('useSnackbarManager', () => {
     });
 
     act(() => {
-      apiRef.current?.setVerticalOffsetYEnd(90);
+      apiRef.current?.setOffsetYEnd(90);
     });
 
     snackbarContainer = container.firstChild?.firstChild as HTMLElement;

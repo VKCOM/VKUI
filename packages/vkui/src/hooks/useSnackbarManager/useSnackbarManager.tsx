@@ -31,8 +31,8 @@ export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnac
       closeAll: actions.closeAll,
       setLimit: config.setLimit,
       setQueueStrategy: config.setQueueStrategy,
-      setVerticalOffsetYStart: config.setVerticalOffsetYStart,
-      setVerticalOffsetYEnd: config.setVerticalOffsetYEnd,
+      setOffsetYStart: config.setOffsetYStart,
+      setOffsetYEnd: config.setOffsetYEnd,
       setZIndex: config.setZIndex,
     };
   }, [
@@ -43,8 +43,8 @@ export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnac
     actions.update,
     config.setLimit,
     config.setQueueStrategy,
-    config.setVerticalOffsetYEnd,
-    config.setVerticalOffsetYStart,
+    config.setOffsetYEnd,
+    config.setOffsetYStart,
     config.setZIndex,
   ]);
 
@@ -53,12 +53,12 @@ export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnac
       <SnackbarHolder
         store={store}
         limit={config.limit}
-        verticalOffsetYStart={config.verticalOffsetYStart}
-        verticalOffsetYEnd={config.verticalOffsetYEnd}
+        offsetYStart={config.offsetYStart}
+        offsetYEnd={config.offsetYEnd}
         zIndex={config.zIndex}
       />
     );
-  }, [store, config.limit, config.verticalOffsetYStart, config.verticalOffsetYEnd, config.zIndex]);
+  }, [store, config.limit, config.offsetYStart, config.offsetYEnd, config.zIndex]);
 
   return [api, holder];
 };

@@ -15,7 +15,7 @@ import styles from './SnackbarsContainer.module.css';
 /* eslint-disable jsdoc/require-jsdoc */
 
 interface SnackbarsContainerProps
-  extends Pick<UseSnackbar.Parameters, 'verticalOffsetYStart' | 'verticalOffsetYEnd' | 'zIndex'> {
+  extends Pick<UseSnackbar.Parameters, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
   snackbars: SnackbarItem[];
   placement: SnackbarPlacement;
   onSnackbarOpen: (id: string) => void;
@@ -43,8 +43,8 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
   placement,
   onSnackbarOpen,
   onSnackbarContainerClosed: onSnackbarContainerClosedProp,
-  verticalOffsetYStart,
-  verticalOffsetYEnd,
+  offsetYStart,
+  offsetYEnd,
   zIndex,
 }) => {
   const [snackbarsWrappersToClose, setSnackbarsWrappersToClose] = React.useState<Set<string>>(
@@ -75,8 +75,8 @@ export const SnackbarsContainer: React.FC<SnackbarsContainerProps> = ({
   );
 
   const containerStyles: CSSCustomProperties = {
-    '--vkui_internal--snackbars_container_offset_y_start': resolveOffset(verticalOffsetYStart),
-    '--vkui_internal--snackbars_container_offset_y_end': resolveOffset(verticalOffsetYEnd),
+    '--vkui_internal--snackbars_container_offset_y_start': resolveOffset(offsetYStart),
+    '--vkui_internal--snackbars_container_offset_y_end': resolveOffset(offsetYEnd),
     ...(zIndex !== undefined && { zIndex }),
   };
 

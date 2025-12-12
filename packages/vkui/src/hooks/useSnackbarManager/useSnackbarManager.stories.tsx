@@ -24,10 +24,10 @@ const story: Meta<UseSnackbar.Parameters> = {
       control: 'radio',
       options: ['queue', 'shift'],
     },
-    verticalOffsetYStart: {
+    offsetYStart: {
       control: 'number',
     },
-    verticalOffsetYEnd: {
+    offsetYEnd: {
       control: 'number',
     },
   },
