@@ -43,18 +43,18 @@ export default story;
 type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
 
 export const Playground: Story = {
-  render: function Render({ onClose, ...args }) {
+  render: function Render({ onClosed, ...args }) {
     const [open, setOpen] = React.useState(true);
 
-    const handleClose = () => {
+    const handleClosed = () => {
       setOpen(false);
-      onClose?.();
+      onClosed?.();
     };
 
     return (
       <>
         <button onClick={() => setOpen(true)}>Открыть</button>
-        {open ? <Snackbar onClose={handleClose} {...args} /> : null}
+        {open ? <Snackbar onClosed={handleClosed} {...args} /> : null}
       </>
     );
   },

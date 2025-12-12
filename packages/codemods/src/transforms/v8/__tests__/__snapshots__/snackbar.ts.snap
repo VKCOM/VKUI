@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snackbar > transforms correctly 1`] = `
+"import { Snackbar } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const handleClose = () => {
+    console.log('handle close');
+  };
+
+  return (
+    <React.Fragment>
+      <Snackbar onClosed={() => {}}>Message</Snackbar>
+      <Snackbar onClosed={(reason) => console.log(reason)}>Message with reason</Snackbar>
+      <Snackbar
+        onClosed={() => {
+          console.log('closed');
+        }}
+      >
+        Message with multiline handler
+      </Snackbar>
+      <Snackbar onClosed={handleClose}>Message with function reference</Snackbar>
+      <Snackbar>Message without onClose</Snackbar>
+      <Snackbar
+        placement="bottom-start"
+        action="Action"
+        onClosed={(reason) => {
+          console.log('Closed with reason:', reason);
+        }}
+      >
+        Message with other props
+      </Snackbar>
+      <Snackbar onClosed={onCloseHandler} duration={5000}>
+        Message with duration
+      </Snackbar>
+    </React.Fragment>
+  );
+};
+
+function onCloseHandler(reason: string) {
+  console.log('handle close', reason);
+}"
+`;
