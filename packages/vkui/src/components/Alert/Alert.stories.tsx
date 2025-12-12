@@ -24,7 +24,7 @@ export const Playground: StoryObj<AlertProps> = {
         <Placeholder stretched>
           <Button onClick={() => setVisible(true)}>Открыть</Button>
         </Placeholder>
-        {visible ? <Alert {...args} onClose={() => setVisible(false)} /> : null}
+        {visible ? <Alert {...args} onClosed={() => setVisible(false)} /> : null}
       </React.Fragment>
     );
   },

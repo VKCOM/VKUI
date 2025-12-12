@@ -81,7 +81,7 @@ export const Playground: Story = {
                   <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
                   <Cell
                     onClick={() =>
-                      setPopout(<Alert title="Alert!" onClose={() => setPopout(null)} />)
+                      setPopout(<Alert title="Alert!" onClosed={() => setPopout(null)} />)
                     }
                   >
                     alert
