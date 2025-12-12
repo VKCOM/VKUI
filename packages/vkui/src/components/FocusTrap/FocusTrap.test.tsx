@@ -27,15 +27,15 @@ const _children = ['first', 'middle', 'last'].map((item) => (
 
 const ActionSheetTest = ({
   children = _children,
-  onClose: onCloseProp,
+  onClosed: onClosedProp,
   ...props
 }: Partial<ActionSheetProps> & Partial<FocusTrapProps>) => {
   const toggleRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
-  const handleClose = () => {
-    if (onCloseProp) {
-      onCloseProp();
+  const handleClosed: ActionSheetProps['onClosed'] = (options) => {
+    if (onClosedProp) {
+      onClosedProp(options);
     }
     setVisible(false);
   };
@@ -55,7 +55,7 @@ const ActionSheetTest = ({
           </Panel>
         </View>
         {visible ? (
-          <ActionSheet data-testid="sheet" toggleRef={toggleRef} onClose={handleClose} {...props}>
+          <ActionSheet data-testid="sheet" toggleRef={toggleRef} onClosed={handleClosed} {...props}>
             {children}
           </ActionSheet>
         ) : null}
@@ -153,12 +153,12 @@ describe(FocusTrap, () => {
   it(
     'always calls passed onClose on ESCAPE press',
     withFakeTimers(async () => {
-      const onClose = vi.fn();
-      render(<ActionSheetTest onClose={onClose} />);
+      const onClosed = vi.fn();
+      render(<ActionSheetTest onClosed={onClosed} />);
       await mountActionSheetViaClick();
       await unmountActionSheet();
       await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
-      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClosed).toHaveBeenCalledTimes(1);
     }),
   );
 
@@ -205,16 +205,16 @@ describe(FocusTrap, () => {
   describe('focus restoration', () => {
     fakeTimersForScope();
     it('restores focus by default', async () => {
-      const onClose = vi.fn();
-      render(<ActionSheetTest onClose={onClose} />);
+      const onClosed = vi.fn();
+      render(<ActionSheetTest onClosed={onClosed} />);
       await mountActionSheetViaClick();
       await unmountActionSheet();
       await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
     });
 
     it('does not restore focus if restoreFocus={false}', async () => {
-      const onClose = vi.fn();
-      render(<ActionSheetTest restoreFocus={false} onClose={onClose} />);
+      const onClosed = vi.fn();
+      render(<ActionSheetTest restoreFocus={false} onClosed={onClosed} />);
       await mountActionSheetViaClick();
       await unmountActionSheet();
       expect(screen.getByTestId('toggle')).not.toHaveFocus();

@@ -39,7 +39,7 @@ const ActionSheetWrapper = (props: ActionSheetProps) => {
               }
         }
         toggleRef={toggleRef}
-        onClose={noop}
+        onClosed={noop}
       />
     </div>
   );

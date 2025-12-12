@@ -50,7 +50,7 @@ export const Playground: Story = {
         </Placeholder>
 
         {visible ? (
-          <ActionSheet {...args} onClose={() => setVisible(false)} toggleRef={baseToggleRef}>
+          <ActionSheet {...args} onClosed={() => setVisible(false)} toggleRef={baseToggleRef}>
             {items.map(({ children, ...rest }, index) => (
               <ActionSheetItem key={index} {...rest}>
                 {children}
