@@ -23,7 +23,11 @@ return (
       open={open}
       onClose={() => setOpen(false)}
       header={
-        <ModalPageHeader before={<PanelHeaderBack label="Назад" onClick={() => setOpen(false)} />}>
+        <ModalPageHeader
+          before={
+            <PanelHeaderBack label="Назад" onClick={() => setOpen(false)} />
+          }
+        >
           Информация о пользователе
         </ModalPageHeader>
       }
@@ -156,6 +160,7 @@ return (
 - `onClose('swipe-down')` вызовется сразу же, если **bottom sheet** достиг высоты `0`, независимо закончил ли пользователь
   взаимодействие с ним или нет;
 - `onClose('swipe-down')` вызовется, если после окончания взаимодействия с **bottom sheet** его высота будет:
+
   - _при `settlingHeight`_: меньше половины переданного значения в `settlingHeight` (пример, если `settlingHeight={50}`, то условием
     закрытие будет
     `height < 50 / 2`);
@@ -174,6 +179,10 @@ return (
 - есть взаимодействие с элементом вызвавшим `event.stopPropagation()` на `onTouchStart` или `onMouseDown`.
 - есть взаимодействие с элементом с **data**-атрибутом `data-vkui-block-sheet-behavior`
   (в частности, используется при `disableContentPanningGesture={true}`);
+
+## Хук `useModalManager`
+
+Для более удобного управления модальными окнами вы можете использовать менеджер в виде хука [`useModalManager`](/components/use-modal-manager)
 
 ## Доступность (a11y)
 
