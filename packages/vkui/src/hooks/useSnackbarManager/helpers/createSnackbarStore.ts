@@ -45,13 +45,20 @@ export const createSnackbarStore = (): SnackbarStore => {
     getState: () => state,
     getSnackbarsByPlacement: (placement, limit) => {
       const result: SnackbarItem[] = [];
+      let openedCount = 0;
+
       for (const snackbar of state.snackbars) {
         if (snackbar.snackbarProps.placement !== placement) {
           continue;
         }
-        const notClosedCount = result.filter((s) => !state.snackbarsToClose.has(s.id)).length;
-        if (notClosedCount < limit) {
-          result.push(snackbar);
+
+        const isClosing = state.snackbarsToClose.has(snackbar.id);
+        if (openedCount >= limit) {
+          break;
+        }
+        result.push(snackbar);
+        if (!isClosing) {
+          openedCount++;
         }
       }
       return result;

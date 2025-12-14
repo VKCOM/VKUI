@@ -27,41 +27,55 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
     [store],
   );
 
-  const snackbarsMap: SnackbarsMap = React.useMemo(() => {
+  const { snackbarsMap, placements } = React.useMemo(() => {
     const map: SnackbarsMap = {};
-    state.snackbars.forEach((snackbar) => {
+    const placementsSet = new Set<SnackbarPlacement>();
+    const openedCounters: Record<string, number> = {};
+
+    for (const snackbar of state.snackbars) {
       const placement = snackbar.snackbarProps.placement;
-      const placementSnackbars = map[placement] || [];
+      const isClosing = state.snackbarsToClose.has(snackbar.id);
 
-      const notCloseSnackbars = placementSnackbars.filter(
-        (snackbar) => !state.snackbarsToClose.has(snackbar.id),
-      );
-
-      if (notCloseSnackbars.length < limit) {
-        placementSnackbars.push({
-          ...snackbar,
-          snackbarProps: {
-            ...snackbar.snackbarProps,
-            open: state.snackbarsToClose.has(snackbar.id) ? false : undefined,
-          },
-        });
+      if (!map[placement]) {
+        map[placement] = [];
+        openedCounters[placement] = 0;
       }
-      map[placement] = placementSnackbars;
-    });
-    return map;
+
+      const openedCount = openedCounters[placement];
+
+      if (openedCount >= limit) {
+        continue;
+      }
+
+      map[placement].push({
+        ...snackbar,
+        snackbarProps: {
+          ...snackbar.snackbarProps,
+          open: isClosing ? false : undefined,
+        },
+      });
+
+      if (!isClosing) {
+        openedCounters[placement] = openedCount + 1;
+      }
+
+      placementsSet.add(placement);
+    }
+
+    return { snackbarsMap: map, placements: Array.from(placementsSet) };
   }, [state.snackbars, state.snackbarsToClose, limit]);
 
-  if (!Object.keys(snackbarsMap).length) {
+  if (placements.length === 0) {
     return null;
   }
 
   return (
     <>
-      {Object.entries(snackbarsMap).map(([placement, snackbars]) => (
+      {placements.map((placement) => (
         <SnackbarsContainer
           key={placement}
-          snackbars={snackbars}
-          placement={placement as SnackbarPlacement}
+          snackbars={snackbarsMap[placement]}
+          placement={placement}
           onSnackbarContainerClosed={store.removeSnackbar}
           onSnackbarOpen={onSnackbarOpen}
           offsetYStart={offsetYStart}
