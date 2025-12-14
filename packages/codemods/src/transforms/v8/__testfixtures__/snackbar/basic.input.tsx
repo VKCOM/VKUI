@@ -19,15 +19,6 @@ const App = () => {
       </Snackbar>
       <Snackbar onClose={handleClose}>Message with function reference</Snackbar>
       <Snackbar>Message without onClose</Snackbar>
-      <Snackbar
-        placement="bottom-start"
-        action="Action"
-        onClose={(reason) => {
-          console.log('Closed with reason:', reason);
-        }}
-      >
-        Message with other props
-      </Snackbar>
       <Snackbar onClose={onCloseHandler} duration={5000}>
         Message with duration
       </Snackbar>
@@ -35,7 +26,6 @@ const App = () => {
   );
 };
 
-function onCloseHandler(reason: string) {
-  console.log('handle close', reason);
+function onCloseHandler() {
+  console.log('handle close');
 }
-
