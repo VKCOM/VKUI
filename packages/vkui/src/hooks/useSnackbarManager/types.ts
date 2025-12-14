@@ -8,7 +8,7 @@ export type SnackbarData = RequiredFields<Omit<SnackbarProps, 'offsetY'>, 'id' |
 
 export namespace CustomSnackbar {
   export type Props<AdditionalProps extends object = object> = AdditionalProps &
-    Pick<SnackbarApi.OpenSnackbarReturn, 'close' | 'update'> & {
+    Pick<SnackbarApi.OpenReturn, 'close' | 'update'> & {
       id: string;
       snackbarProps: SnackbarData;
     };
@@ -25,24 +25,24 @@ export namespace SnackbarApi {
   export type OpenProps = PartialFields<Omit<SnackbarProps, 'open' | 'offsetY'>, 'onClosed'> &
     HasDataAttribute;
 
-  export type UpdateSnackbarProps = Omit<OpenProps, 'id' | 'placement'>;
+  export type UpdateProps = Omit<OpenProps, 'id' | 'placement'>;
 
-  export type OpenSnackbarReturn = {
+  export type OpenReturn = {
     id: string;
     close: () => void;
-    update: (props: UpdateSnackbarProps) => void;
+    update: (props: UpdateProps) => void;
     onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>;
   };
 
   export type QueueStrategy = 'queue' | 'shift';
 
-  export type VerticalOffset = number | string;
+  export type OffsetY = number | string;
 
   export interface Api {
     /**
      * Метод для открытия снекбара. Принимает конфиг
      */
-    open: (config: OpenProps) => OpenSnackbarReturn;
+    open: (config: OpenProps) => OpenReturn;
     /**
      * Метод для открытия кастомного снекбара.
      */
@@ -50,11 +50,11 @@ export namespace SnackbarApi {
       config:
         | CustomSnackbar.Payload<AdditionalProps>
         | React.ComponentType<CustomSnackbar.Props<AdditionalProps>>,
-    ) => OpenSnackbarReturn;
+    ) => OpenReturn;
     /**
      * Метод для обновления свойств снекбара. Можно поменять любое свойство, кроме 'id' и 'placement'.
      */
-    update: (id: string, config: UpdateSnackbarProps) => void;
+    update: (id: string, config: UpdateProps) => void;
     /**
      * Метод для закрытия снекбара по id.
      */
@@ -74,11 +74,11 @@ export namespace SnackbarApi {
     /**
      * Метод для изменения отступа контейнера снекбаров от верха.
      */
-    setOffsetYStart: (offset: VerticalOffset) => void;
+    setOffsetYStart: (offset: OffsetY) => void;
     /**
      * Метод для изменения отступа контейнера снекбаров от низа.
      */
-    setOffsetYEnd: (offset: VerticalOffset) => void;
+    setOffsetYEnd: (offset: OffsetY) => void;
     /**
      * Метод для изменения z-index контейнера снекбаров.
      */
@@ -87,7 +87,7 @@ export namespace SnackbarApi {
 }
 
 export namespace UseSnackbar {
-  export interface Parameters {
+  export interface Props {
     /**
      * Максимальное число открытых на одном `placement` снекбаров
      */
@@ -101,11 +101,11 @@ export namespace UseSnackbar {
     /**
      * Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда на странице используется компонент `FixedLayout`.
      */
-    offsetYStart?: SnackbarApi.VerticalOffset;
+    offsetYStart?: SnackbarApi.OffsetY;
     /**
      * Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда на странице используется компонент `FixedLayout`.
      */
-    offsetYEnd?: SnackbarApi.VerticalOffset;
+    offsetYEnd?: SnackbarApi.OffsetY;
     /**
      * Свойство для установки стиля `z-index` на контейнере снекбаров.
      */
@@ -121,7 +121,7 @@ type SimpleSnackbarItem = {
   snackbarProps: SnackbarData;
 };
 
-type CustomSnackbarItem = Pick<SnackbarApi.OpenSnackbarReturn, 'close' | 'update'> & {
+type CustomSnackbarItem = Pick<SnackbarApi.OpenReturn, 'close' | 'update'> & {
   type: 'custom';
   id: string;
   component: React.ComponentType<any>;
@@ -143,7 +143,7 @@ export type CommonOnOpenPayload =
       component: React.ComponentType<CustomSnackbar.Props<any>>;
       snackbarProps?: SnackbarApi.OpenProps;
       additionalProps?: any;
-    } & Pick<SnackbarApi.OpenSnackbarReturn, 'close' | 'update'>);
+    } & Pick<SnackbarApi.OpenReturn, 'close' | 'update'>);
 
 export { type SnackbarPlacement } from '../../components/Snackbar/types';
 export { SnackbarProps };

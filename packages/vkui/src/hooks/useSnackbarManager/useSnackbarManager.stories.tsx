@@ -12,7 +12,7 @@ import { type UseSnackbar, useSnackbarManager } from '../../hooks/useSnackbarMan
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { type SnackbarPlacement, type SnackbarProps } from './types';
 
-const story: Meta<UseSnackbar.Parameters> = {
+const story: Meta<UseSnackbar.Props> = {
   title: 'Utils/useSnackbarManager',
   component: () => <div />,
   parameters: { ...CanvasFullLayout, ...DisableCartesianParam },
@@ -35,7 +35,7 @@ const story: Meta<UseSnackbar.Parameters> = {
 
 export default story;
 
-type Story = StoryObj<UseSnackbar.Parameters>;
+type Story = StoryObj<UseSnackbar.Props>;
 
 const PLACEMENT: Array<Exclude<SnackbarProps['placement'], undefined>> = [
   'top-start',

@@ -47,7 +47,7 @@ export const useSnackbarActionsWithStore = ({
   }, [isDesktop]);
 
   const onOpenSnackbarImpl = React.useCallback(
-    (item: CommonOnOpenPayload): SnackbarApi.OpenSnackbarReturn => {
+    (item: CommonOnOpenPayload): SnackbarApi.OpenReturn => {
       const placement: SnackbarPlacement = item.snackbarProps?.placement || 'bottom-start';
       const resolvedPlacement = isDesktopRef.current
         ? placement

@@ -47,7 +47,7 @@ const animationStateClassNames = {
   exited: undefined,
 };
 
-export type SnackbarCloseReason = 'swipe' | 'timer-end' | 'action-click' | 'esc' | 'manual';
+export type SnackbarCloseReason = 'swipe' | 'timeout' | 'click-action' | 'escape-key' | 'manual';
 
 export interface SnackbarProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'role'>,
@@ -231,7 +231,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   );
 
   const handleActionClick = (event: React.MouseEvent) => {
-    close('action-click');
+    close('click-action');
     if (action) {
       onActionClick?.(event as React.MouseEvent<HTMLElement>);
     }
@@ -293,7 +293,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
       if (!open || focused || touched || animationState !== 'entered' || !duration) {
         return;
       }
-      const onTimeout = () => close('timer-end');
+      const onTimeout = () => close('timeout');
 
       closeTimeoutIdRef.current = setTimeout(onTimeout, duration);
       return function preventCloseAfterDelayOnUnmount() {
@@ -320,7 +320,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
 
   React.useEffect(() => clearRAF, [clearRAF]);
 
-  const onEscKeyDown = React.useCallback(() => close('esc'), [close]);
+  const onEscKeyDown = React.useCallback(() => close('escape-key'), [close]);
 
   useGlobalEscKeyDown(open, onEscKeyDown);
 

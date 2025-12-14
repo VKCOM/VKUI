@@ -237,7 +237,7 @@ describe(Snackbar, () => {
       );
       // Нажимаем на кнопку Action
       await fireEventPatch(result.getByTestId('action'), 'click');
-      expect(onClose).toHaveBeenCalledWith('action-click');
+      expect(onClose).toHaveBeenCalledWith('click-action');
 
       // Снекбар не закрывается
       await waitCSSKeyframesAnimation(result.getByRole('alert'));
@@ -245,7 +245,7 @@ describe(Snackbar, () => {
 
       // Ждем, когда срабатает таймер
       vi.runOnlyPendingTimers();
-      expect(onClose).toHaveBeenCalledWith('timer-end');
+      expect(onClose).toHaveBeenCalledWith('timeout');
 
       // Снекбар не закрывается
       await waitCSSKeyframesAnimation(result.getByRole('alert'));

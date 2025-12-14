@@ -17,7 +17,7 @@ export type UseSnackbarConfigReturn = {
   setZIndex: (zIndex: number | string | undefined) => void;
 };
 
-export const useSnackbarConfig = (params: UseSnackbar.Parameters = {}): UseSnackbarConfigReturn => {
+export const useSnackbarConfig = (params: UseSnackbar.Props = {}): UseSnackbarConfigReturn => {
   const {
     limit: limitProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
     queueStrategy: queueStrategyProp = 'shift',

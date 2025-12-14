@@ -15,7 +15,7 @@ import styles from './SnackbarsContainer.module.css';
 /* eslint-disable jsdoc/require-jsdoc */
 
 interface SnackbarsContainerProps
-  extends Pick<UseSnackbar.Parameters, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
+  extends Pick<UseSnackbar.Props, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
   snackbars: SnackbarItem[];
   placement: SnackbarPlacement;
   onSnackbarOpen: (id: string) => void;
@@ -31,7 +31,7 @@ const placementClassNames = {
   'bottom': styles.placementBottom,
 };
 
-const resolveOffset = (offset: SnackbarApi.VerticalOffset | undefined): string => {
+const resolveOffset = (offset: SnackbarApi.OffsetY | undefined): string => {
   if (typeof offset === 'undefined') {
     return '';
   }

@@ -6,7 +6,7 @@ import type { SnackbarPlacement, SnackbarsMap, UseSnackbar } from '../types';
 import { SnackbarsContainer } from './SnackbarsContainer';
 
 interface SnackbarHolderProps
-  extends Pick<UseSnackbar.Parameters, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
+  extends Pick<UseSnackbar.Props, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
   store: SnackbarStore;
   limit: number;
 }

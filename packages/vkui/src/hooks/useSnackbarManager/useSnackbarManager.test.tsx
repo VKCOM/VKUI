@@ -8,7 +8,7 @@ import { type CustomSnackbar, type SnackbarApi, type UseSnackbar } from './types
 import { useSnackbarManager } from './useSnackbarManager';
 
 const TestComponent: React.FC<
-  UseSnackbar.Parameters & {
+  UseSnackbar.Props & {
     apiRef: React.RefObject<SnackbarApi.Api | null>;
   }
 > = ({ apiRef, limit, queueStrategy, offsetYStart, offsetYEnd, zIndex }) => {
@@ -169,7 +169,7 @@ describe('useSnackbarManager', () => {
     withFakeTimers(async () => {
       render(<TestComponent apiRef={apiRef} />);
 
-      let snackbarApi: SnackbarApi.OpenSnackbarReturn | null = null;
+      let snackbarApi: SnackbarApi.OpenReturn | null = null;
 
       act(() => {
         snackbarApi = apiRef.current!.open({

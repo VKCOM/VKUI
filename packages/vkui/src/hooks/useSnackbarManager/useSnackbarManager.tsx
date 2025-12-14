@@ -8,7 +8,7 @@ import { useSnackbarActionsWithStore } from './helpers/useSnackbarActionsWithSto
 import { useSnackbarConfig } from './helpers/useSnackbarConfig';
 import { type SnackbarApi, type UseSnackbar } from './types';
 
-export const useSnackbarManager = (params: UseSnackbar.Parameters = {}): UseSnackbar.Return => {
+export const useSnackbarManager = (params: UseSnackbar.Props = {}): UseSnackbar.Return => {
   const config = useSnackbarConfig(params);
 
   const [store] = React.useState(createSnackbarStore);
