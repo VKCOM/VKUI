@@ -53,7 +53,7 @@ export const createSnackbarStore = (): SnackbarStore => {
         }
 
         const isClosing = state.snackbarsToClose.has(snackbar.id);
-        if (openedCount >= limit) {
+        if (openedCount >= limit && !isClosing) {
           break;
         }
         result.push(snackbar);

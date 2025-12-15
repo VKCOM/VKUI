@@ -27,10 +27,10 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
     [store],
   );
 
-  const { snackbarsMap, placements } = React.useMemo(() => {
+  const [snackbarsMap, placements] = React.useMemo(() => {
     const map: SnackbarsMap = {};
-    const placementsSet = new Set<SnackbarPlacement>();
-    const openedCounters: Record<string, number> = {};
+    const placements: SnackbarPlacement[] = [];
+    const openedSnackbarsCountersByPlacement: Record<string, number> = {};
 
     for (const snackbar of state.snackbars) {
       const placement = snackbar.snackbarProps.placement;
@@ -38,12 +38,13 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
 
       if (!map[placement]) {
         map[placement] = [];
-        openedCounters[placement] = 0;
+        openedSnackbarsCountersByPlacement[placement] = 0;
+        placements.push(placement);
       }
 
-      const openedCount = openedCounters[placement];
+      const openedCount = openedSnackbarsCountersByPlacement[placement];
 
-      if (openedCount >= limit) {
+      if (openedCount >= limit && !isClosing) {
         continue;
       }
 
@@ -56,13 +57,11 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
       });
 
       if (!isClosing) {
-        openedCounters[placement] = openedCount + 1;
+        openedSnackbarsCountersByPlacement[placement] = openedCount + 1;
       }
-
-      placementsSet.add(placement);
     }
 
-    return { snackbarsMap: map, placements: Array.from(placementsSet) };
+    return [map, placements];
   }, [state.snackbars, state.snackbarsToClose, limit]);
 
   if (placements.length === 0) {
