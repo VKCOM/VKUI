@@ -148,7 +148,6 @@ export const RichCell: React.FC<RichCellProps> & {
         styles.host,
         !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        alignAfterClassNames[afterAlign],
         (after || afterCaption) && alignAfterClassNames[afterAlign],
         before && alignBeforeClassNames[beforeAlign],
         alignContentClassNames[contentAlign],
