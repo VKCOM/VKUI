@@ -5287,7 +5287,7 @@ __metadata:
     concurrently: "npm:^9.2.1"
     cross-env: "npm:^10.1.0"
     css-loader: "npm:^7.1.2"
-    css-minimizer-webpack-plugin: "npm:^7.0.3"
+    css-minimizer-webpack-plugin: "npm:^7.0.4"
     cssnano: "npm:^7.1.2"
     diff2html-cli: "npm:^5.2.15"
     dotenv: "npm:^17.2.3"
@@ -6234,7 +6234,7 @@ __metadata:
     "@vkontakte/vkui": "workspace:packages/vkui"
     cli-table3: "npm:^0.6.1"
     css-loader: "npm:7.1.2"
-    css-minimizer-webpack-plugin: "npm:^7.0.3"
+    css-minimizer-webpack-plugin: "npm:^7.0.4"
     dotenv: "npm:^17.2.3"
     finalhandler: "npm:2.1.1"
     html-webpack-plugin: "npm:^5.6.5"
@@ -7301,9 +7301,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-minimizer-webpack-plugin@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "css-minimizer-webpack-plugin@npm:7.0.3"
+"css-minimizer-webpack-plugin@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "css-minimizer-webpack-plugin@npm:7.0.4"
   dependencies:
     "@jridgewell/trace-mapping": "npm:^0.3.25"
     cssnano: "npm:^7.0.4"
@@ -7326,7 +7326,7 @@ __metadata:
       optional: true
     lightningcss:
       optional: true
-  checksum: 10/4ef2c9971176d880d5e97eb5ce4b66be4b30c274df8873fecd497f13bc16ceb4ecda44fc8e70e7c674d869b5568b9ae2066a94a62d789d350f0128a4fe610c57
+  checksum: 10/23688887b9b8166555864d7b6571b98390cf81b296b283736fe1aa7598d84face212ad983c02696cba1bf0e51f0a3208944ebd00cd5e1ccab9a6dc0af0914593
   languageName: node
   linkType: hard
 
