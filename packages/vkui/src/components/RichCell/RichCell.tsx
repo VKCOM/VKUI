@@ -3,10 +3,13 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { warnOnce } from '../../lib/warnOnce';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { RichCellIcon } from './RichCellIcon/RichCellIcon';
 import styles from './RichCell.module.css';
+
+const warn = warnOnce('RichCell');
 
 const sizeYClassNames = {
   none: styles.sizeYNone,
@@ -66,13 +69,24 @@ export interface RichCellProps extends TappableOmitProps {
    */
   before?: React.ReactNode;
   /**
-   * Иконка 28 или текст.
+   * Иконка 28 или текст после центрального контента.
    */
   after?: React.ReactNode;
   /**
    * Текст под `after`.
+   *
+   * @deprecated Since 8.0.0 будет удален в `v10`
+   * Используйте вместо этого свойства `submeta`.
    */
   afterCaption?: React.ReactNode;
+  /**
+   * Текст после основного контента.
+   */
+  meta?: React.ReactNode;
+  /**
+   * Текст под `meta`.
+   */
+  submeta?: React.ReactNode;
   /**
    * Выравнивание before компонента по вертикали.
    */
@@ -83,6 +97,8 @@ export interface RichCellProps extends TappableOmitProps {
   contentAlign?: Align;
   /**
    * Выравнивание after компонента по вертикали.
+   *
+   * > Работает только для `after` и `afterCaption`.
    */
   afterAlign?: Align;
   /**
@@ -114,22 +130,16 @@ export const RichCell: React.FC<RichCellProps> & {
   beforeAlign = 'start',
   contentAlign = 'start',
   afterAlign = 'start',
+  meta,
+  submeta,
   ...restProps
 }: RichCellProps) => {
   const { sizeY = 'none' } = useAdaptivity();
-  const withAfter = after || afterCaption;
 
-  const afterRender = () => {
-    if (!withAfter) {
-      return;
-    }
-    return (
-      <div className={styles.contentAfter}>
-        {after && <div className={styles.afterChildren}>{after}</div>}
-        {afterCaption && <div className={styles.afterCaption}>{afterCaption}</div>}
-      </div>
-    );
-  };
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && afterCaption) {
+    warn('Свойство `afterCaption` устаревшее и будет удалено в `v10`, используйте `submeta`');
+  }
 
   return (
     <Tappable
@@ -138,8 +148,8 @@ export const RichCell: React.FC<RichCellProps> & {
         styles.host,
         !multiline && styles.textEllipsis,
         sizeY !== 'regular' && sizeYClassNames[sizeY],
-        withAfter && styles.withAfter,
-        withAfter && alignAfterClassNames[afterAlign],
+        alignAfterClassNames[afterAlign],
+        (after || afterCaption) && alignAfterClassNames[afterAlign],
         before && alignBeforeClassNames[beforeAlign],
         alignContentClassNames[contentAlign],
       )}
@@ -161,12 +171,22 @@ export const RichCell: React.FC<RichCellProps> & {
               </Subhead>
             )}
           </div>
-          {afterAlign === 'start' && afterRender()}
+          {(meta || submeta) && (
+            <div className={styles.contentMeta}>
+              {meta && <div className={styles.afterChildren}>{meta}</div>}
+              {submeta && <div className={styles.afterCaption}>{submeta}</div>}
+            </div>
+          )}
         </div>
         {bottom && <div className={styles.bottom}>{bottom}</div>}
         {actions && <div className={styles.actions}>{actions}</div>}
       </div>
-      {afterAlign !== 'start' && afterRender()}
+      {(after || afterCaption) && (
+        <div className={styles.contentAfter}>
+          {after && <div className={styles.afterChildren}>{after}</div>}
+          {afterCaption && <div className={styles.afterCaption}>{afterCaption}</div>}
+        </div>
+      )}
     </Tappable>
   );
 };

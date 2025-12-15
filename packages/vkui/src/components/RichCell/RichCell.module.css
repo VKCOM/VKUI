@@ -27,18 +27,19 @@
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  justify-content: center;
   min-inline-size: 0;
   max-inline-size: 100%;
 }
 
-.host.withAfter:not(.alignAfterStart).contentAlignStart .in,
-.host:not(.withAfter).contentAlignStart .in {
+.contentAlignCenter .in {
+  justify-content: center;
+}
+
+.contentAlignStart .in {
   justify-content: flex-start;
 }
 
-.host.withAfter:not(.alignAfterStart).contentAlignEnd .in,
-.host:not(.withAfter).contentAlignEnd .in {
+.contentAlignEnd .in {
   justify-content: flex-end;
 }
 
@@ -54,18 +55,7 @@
   min-inline-size: 0;
 }
 
-.alignAfterStart.contentAlignStart .contentBefore {
-  justify-content: flex-start;
-}
-
-.alignAfterStart.contentAlignCenter .contentBefore {
-  justify-content: center;
-}
-
-.alignAfterStart.contentAlignEnd .contentBefore {
-  justify-content: flex-end;
-}
-
+.contentMeta,
 .contentAfter {
   box-sizing: border-box;
   display: flex;
