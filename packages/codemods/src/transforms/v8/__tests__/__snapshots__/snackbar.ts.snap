@@ -12,7 +12,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Snackbar onClosed={() => {}}>Message</Snackbar>
-      <Snackbar onClosed={(reason) => console.log(reason)}>Message with reason</Snackbar>
+      <Snackbar onClosed={() => console.log('onClose')}>Message</Snackbar>
       <Snackbar
         onClosed={() => {
           console.log('closed');
