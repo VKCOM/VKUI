@@ -32,7 +32,7 @@ const MINMAX_SIZE_VALUES = [...CSS_KEYWORDS.filter((opt) => opt !== 'auto')];
 const FLEX_VALUES = CSS_GLOBAL_KEYWORDS;
 const FLEX_BASIS_VALUES = [...CSS_KEYWORDS, 'content'];
 const INSET_VALUES = [...DESIGN_SYSTEM_SIZES, ...CSS_GLOBAL_KEYWORDS, 'auto'];
-const POSITION_VALUES: PositionValue[] = ['static', 'relative', 'absolute', 'fixed'];
+const POSITION_VALUES: PositionValue[] = ['static', 'relative', 'absolute', 'fixed', 'sticky'];
 const OVERFLOW_VALUES: OverflowValue[] = [
   'visible',
   'hidden',

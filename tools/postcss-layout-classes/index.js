@@ -85,12 +85,14 @@ module.exports = () => {
           root.append({
             selector: className,
             raws: { semicolon: true },
+            source: root.source,
             nodes: [
               {
                 prop: cssProperty,
                 value: DESIGN_SYSTEM_SIZES.includes(value)
                   ? `var(--vkui--spacing_size_${value})`
                   : value,
+                source: root.source,
               },
             ],
           });
@@ -100,10 +102,12 @@ module.exports = () => {
           root.append({
             selector: `.${generateVariableClassName(cssProperty)}`,
             raws: { semicolon: true },
+            source: root.source,
             nodes: [
               {
                 prop: cssProperty,
                 value: `var(${generateVariable(cssProperty)})`,
+                source: root.source,
               },
             ],
           });

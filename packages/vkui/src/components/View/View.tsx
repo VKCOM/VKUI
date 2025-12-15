@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { usePrevious } from '../../hooks/usePrevious';
 import { millisecondsInSecond } from '../../lib/date';
 import { blurActiveElement, useDOM } from '../../lib/dom';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
@@ -24,15 +23,7 @@ import {
 } from './utils';
 import styles from './View.module.css';
 
-interface Scrolls {
-  [index: string]: number | undefined;
-}
-
-interface ViewsScrolls {
-  [index: string]: Scrolls;
-}
-
-export let scrollsCache: ViewsScrolls = {};
+export const scrollsCache = new Map<string, Map<string, number | undefined>>();
 
 export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavIdProps {
   /**
@@ -85,12 +76,14 @@ export const View = ({
   ...restProps
 }: ViewProps): React.ReactNode => {
   const id = getNavId({ nav, id: restProps.id });
-  const scrolls = React.useRef(scrollsCache[id as string] || {});
+  const [scrolls] = React.useState(
+    () => scrollsCache.get(id as string) || new Map<string, number | undefined>(),
+  );
   const layoutEffectCall = useLayoutEffectCall();
 
   React.useEffect(() => () => {
     if (id) {
-      scrollsCache[id] = scrolls.current;
+      scrollsCache.set(id, scrolls);
     }
   });
 
@@ -120,13 +113,13 @@ export const View = ({
 
   const [browserSwipe, setBrowserSwipe] = React.useState(false);
 
-  const prevActivePanel = usePrevious(activePanelProp);
-  const prevSwipingBack = usePrevious(swipingBack);
-  const prevBrowserSwipe = usePrevious(browserSwipe);
-  const prevSwipeBackResult = usePrevious(swipeBackResult);
-  const prevSwipeBackShift = usePrevious(swipeBackShift);
-  const prevSwipeBackPrevPanel = usePrevious(swipeBackPrevPanel);
-  const prevOnTransition = usePrevious(onTransition);
+  const prevActivePanel = React.useRef<string>(undefined);
+  const prevSwipingBack = React.useRef<boolean>(undefined);
+  const prevBrowserSwipe = React.useRef<boolean>(undefined);
+  const prevSwipeBackResult = React.useRef<'success' | 'fail' | null>(undefined);
+  const prevSwipeBackShift = React.useRef<number>(undefined);
+  const prevSwipeBackPrevPanel = React.useRef<string | null>(undefined);
+  const prevOnTransition = React.useRef<typeof onTransition>(undefined);
 
   const panels = (React.Children.toArray(children) as Array<React.ReactElement<NavIdProps>>).filter(
     (panel) => {
@@ -148,7 +141,7 @@ export const View = ({
   const flushTransition = React.useCallback(
     (prevPanel: string, isBackTransition: boolean) => {
       if (isBackTransition) {
-        scrolls.current[prevPanel] = 0;
+        scrolls.set(prevPanel, 0);
       }
       setPrevPanel(null);
       setNextPanel(null);
@@ -158,7 +151,7 @@ export const View = ({
       setIsBack(isBackTransition);
 
       layoutEffectCall(() => {
-        scroll?.scrollTo(0, isBackTransition ? scrolls.current[activePanelProp] : 0);
+        scroll?.scrollTo(0, isBackTransition ? scrolls.get(activePanelProp) : 0);
         onTransition &&
           onTransition({
             isBack: isBackTransition,
@@ -167,7 +160,7 @@ export const View = ({
           });
       });
     },
-    [activePanelProp, layoutEffectCall, onTransition, scroll],
+    [activePanelProp, layoutEffectCall, onTransition, scroll, scrolls],
   );
 
   const handleAnimatedTargetAnimationEnd = () => {
@@ -253,7 +246,7 @@ export const View = ({
       if (activePanel !== null) {
         // Note: вызываем закрытие клавиатуры. В iOS это нативное поведение при свайпе.
         blurActiveElement(document);
-        scrolls.current[activePanel] = scroll?.getScroll().y;
+        scrolls.set(activePanel, scroll?.getScroll().y);
       }
 
       setSwipingBack(true);
@@ -332,27 +325,30 @@ export const View = ({
   React.useEffect(() => {
     // Нужен переход
     if (
-      prevActivePanel &&
-      prevActivePanel !== activePanelProp &&
-      !prevSwipingBack &&
-      !prevBrowserSwipe
+      prevActivePanel.current &&
+      prevActivePanel.current !== activePanelProp &&
+      !prevSwipingBack.current &&
+      !prevBrowserSwipe.current
     ) {
       const firstLayerId = (
         React.Children.toArray(children) as Array<React.ReactElement<NavIdProps>>
       )
         .map((panel) => getNavId(panel.props, warn))
-        .find((id) => id === prevActivePanel || id === activePanelProp);
+        .find((id) => id === prevActivePanel.current || id === activePanelProp);
 
       const isBackTransition = firstLayerId === activePanelProp;
-      scrolls.current[prevActivePanel] = scroll?.getScroll({ compensateKeyboardHeight: false }).y;
+      scrolls.set(
+        prevActivePanel.current,
+        scroll?.getScroll({ compensateKeyboardHeight: false }).y,
+      );
 
       if (disableAnimation) {
-        flushTransition(prevActivePanel, isBackTransition);
+        flushTransition(prevActivePanel.current, isBackTransition);
       } else {
         blurActiveElement(document);
 
-        setVisiblePanels([prevActivePanel, activePanelProp]);
-        setPrevPanel(prevActivePanel);
+        setVisiblePanels([prevActivePanel.current, activePanelProp]);
+        setPrevPanel(prevActivePanel.current);
         setNextPanel(activePanelProp);
         setActivePanel(null);
         setAnimated(true);
@@ -361,11 +357,15 @@ export const View = ({
     }
 
     // Закончилась анимация свайпа назад
-    if (prevActivePanel && prevActivePanel !== activePanelProp && prevSwipingBack) {
+    if (
+      prevActivePanel.current &&
+      prevActivePanel.current !== activePanelProp &&
+      prevSwipingBack.current
+    ) {
       const nextPanel = activePanelProp;
-      const prevPanel = prevActivePanel;
-      if (prevSwipeBackPrevPanel) {
-        scrolls.current[prevSwipeBackPrevPanel] = 0;
+      const prevPanel = prevActivePanel.current;
+      if (prevSwipeBackPrevPanel.current) {
+        scrolls.set(prevSwipeBackPrevPanel.current, 0);
       }
 
       setSwipeBackPrevPanel(null);
@@ -380,10 +380,10 @@ export const View = ({
 
       layoutEffectCall(() => {
         if (nextPanel !== null) {
-          scroll?.scrollTo(0, scrolls.current[nextPanel]);
+          scroll?.scrollTo(0, scrolls.get(nextPanel));
         }
-        prevOnTransition &&
-          prevOnTransition({
+        prevOnTransition.current &&
+          prevOnTransition.current({
             isBack: true,
             from: prevPanel,
             to: nextPanel,
@@ -395,7 +395,7 @@ export const View = ({
     // см. `onTransitionEnd()`
 
     // Закончился Safari свайп
-    if (prevActivePanel !== activePanelProp && browserSwipe) {
+    if (prevActivePanel.current !== activePanelProp && browserSwipe) {
       setBrowserSwipe(false);
       setNextPanel(null);
       setPrevPanel(null);
@@ -411,44 +411,44 @@ export const View = ({
     disableAnimation,
     document,
     flushTransition,
-    prevActivePanel,
-    prevBrowserSwipe,
-    prevOnTransition,
-    prevSwipeBackPrevPanel,
-    prevSwipeBackResult,
-    prevSwipingBack,
     scroll,
     swipeBackNextPanel,
     swipeBackResult,
     layoutEffectCall,
+    scrolls,
   ]);
 
   React.useEffect(
     function restoreScrollPositionWhenSwipeBackIsCancelled() {
       // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
       const swipeBackCancelledInTheMiddleOfAction =
-        prevSwipeBackResult === 'fail' && !swipeBackResult;
+        prevSwipeBackResult.current === 'fail' && !swipeBackResult;
       const swipeBackCancelledByMovingPanelBackToInitialPoint =
-        prevSwipingBack && !swipingBack && prevSwipeBackShift === 0;
+        prevSwipingBack.current && !swipingBack && prevSwipeBackShift.current === 0;
 
       if (
         (swipeBackCancelledInTheMiddleOfAction ||
           swipeBackCancelledByMovingPanelBackToInitialPoint) &&
         activePanel !== null
       ) {
-        scroll?.scrollTo(0, scrolls.current[activePanel]);
+        scroll?.scrollTo(0, scrolls.get(activePanel));
       }
     },
-    [
-      prevSwipeBackResult,
-      swipeBackResult,
-      prevSwipingBack,
-      swipingBack,
-      prevSwipeBackShift,
-      activePanel,
-      scroll,
-    ],
+    [swipeBackResult, swipingBack, activePanel, scroll, scrolls],
   );
+
+  /**
+   * @see https://github.com/VKCOM/VKUI/pull/9274
+   */
+  React.useEffect(function updateAfterAll() {
+    prevActivePanel.current = activePanelProp;
+    prevSwipingBack.current = swipingBack;
+    prevBrowserSwipe.current = browserSwipe;
+    prevSwipeBackResult.current = swipeBackResult;
+    prevSwipeBackShift.current = swipeBackShift;
+    prevSwipeBackPrevPanel.current = swipeBackPrevPanel;
+    prevOnTransition.current = onTransition;
+  });
 
   return (
     <NavViewIdContext.Provider value={id}>
@@ -488,7 +488,7 @@ export const View = ({
             let scrollCompensateStyle: React.CSSProperties | undefined = undefined;
 
             if (isPanelPrev || (isPanelNext && isBack) || isSwipeBackPrev || isSwipeBackNext) {
-              const marginTop = scrolls.current[panelId];
+              const marginTop = scrolls.get(panelId);
               if (marginTop !== undefined) {
                 scrollCompensateStyle = { marginTop: -1 * marginTop };
               }

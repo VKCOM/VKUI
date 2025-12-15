@@ -80,7 +80,10 @@ describe(Popover, () => {
       HTMLDivElement,
       React.HTMLAttributes<HTMLDivElement>
     >(function Component(props, ref) {
-      componentRef = ref;
+      React.useEffect(() => {
+        componentRef = ref;
+      });
+
       return (
         <div {...props} ref={ref}>
           Component with ref

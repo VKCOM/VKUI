@@ -50,7 +50,7 @@ export function useDateInput<T extends HTMLElement, D>({
   handleRestoreFocus: () => boolean;
 } {
   const { document } = useDOM();
-  const { value: open, setTrue: openCalendar, setFalse: closeCalendar } = useBooleanState(false);
+  const [open, openCalendar, closeCalendar] = useBooleanState(false);
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const calendarRef = React.useRef<HTMLDivElement | null>(null);
   const [internalValue, setInternalValue] = React.useState<string[]>([]);

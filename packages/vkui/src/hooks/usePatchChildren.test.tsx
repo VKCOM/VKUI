@@ -46,9 +46,7 @@ vi.mock('../lib/warnOnce', () => ({
   warnOnce: () => () => console.error('custom-error'),
 }));
 
-vi.mock('./useEffectDev', () => ({
-  useEffectDev: React.useEffect,
-}));
+vi.stubEnv('NODE_ENV', 'development');
 
 type ConsoleErrorArgs = Parameters<typeof console.error>;
 

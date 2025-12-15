@@ -10,9 +10,9 @@
 2. [Установите](https://nodejs.org/en/download) последнюю LTS версию Node.js. Если у вас есть [nvm](https://github.com/nvm-sh/nvm), запустите `nvm install && nvm use` в корневой папке репозитория.
 3. Включите [corepack](https://nodejs.org/api/corepack.html): `corepack enable`
 4. Установите зависимости: `yarn install`.
-5. Поднимите локально документацию с лайврелоадом: `yarn docs:website`.
+5. Поднимите локально документацию с лайврелоадом: `yarn docs:storybook`.
 
-Документация будет доступна на `http://localhost:6060`. В ней ведётся вся разработка.
+Storybook будет доступен на `http://localhost:6006`. В ней ведётся вся разработка.
 
 ### Дополнительные настройки по желанию
 

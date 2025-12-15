@@ -70,17 +70,8 @@ describe('HorizontalScroll', () => {
   it(
     'disables navigation to arrows by keyboard',
     withFakeTimers(async () => {
-      let scrollContainer: HTMLDivElement | null = null;
-
       const result = render(
-        <HorizontalScroll
-          getRef={(e) => {
-            scrollContainer = e;
-            mockRef(e);
-          }}
-          data-testid="horizontal-scroll"
-          showArrows="always"
-        >
+        <HorizontalScroll data-testid="horizontal-scroll" showArrows="always">
           <button
             type="button"
             data-testid="focusable-element"
@@ -93,9 +84,6 @@ describe('HorizontalScroll', () => {
       );
 
       expect(document.activeElement).toBe(document.body);
-
-      await userEvent.tab();
-      expect(document.activeElement).toBe(scrollContainer);
 
       await userEvent.tab();
       expect(document.activeElement).toBe(result.getByTestId('focusable-element'));

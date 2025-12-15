@@ -10,8 +10,34 @@
   box-sizing: border-box;
   display: block;
   inline-size: 100%;
-  padding: 12px;
+  padding-block: calc(
+    (var(--vkui--size_field_height--regular) - var(--vkui--font_text--line_height--regular)) /
+    2
+  );
+  padding-inline: 12px;
   color: var(--vkui--color_text_primary);
+}
+
+.sizeYCompact .el {
+  padding-block: calc(
+    (
+      var(--vkui--size_field_height--compact) -
+      var(--vkui--font_text--line_height--compact, var(--vkui--font_text--line_height--regular))
+    ) /
+    2
+  );
+}
+
+@media (--sizeY-compact) {
+  .sizeYNone .el {
+    padding-block: calc(
+      (
+        var(--vkui--size_field_height--compact) -
+        var(--vkui--font_text--line_height--compact, var(--vkui--font_text--line_height--regular))
+      ) /
+      2
+    );
+  }
 }
 
 .el[cols] {
