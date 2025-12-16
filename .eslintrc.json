@@ -7,7 +7,7 @@
   },
   "ignorePatterns": ["examples/**"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["import", "unicorn", "eslint-plugin-react-compiler"],
+  "plugins": ["import", "unicorn"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
@@ -92,7 +92,6 @@
     "eqeqeq": "error", // Only type-safe equality operators
     "unicorn/expiring-todo-comments": ["error"],
     "no-console": "error",
-    "react-compiler/react-compiler": 2,
     "no-useless-computed-key": "error",
 
     "spaced-comment": ["error", "always", { "exceptions": ["#__PURE__"] }]

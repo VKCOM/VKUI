@@ -20,6 +20,22 @@ type ExpectedReactElement<T> = React.ReactElement<HasRootRef<T> & React.DOMAttri
 
 type ChildrenElement<T> = ExpectedReactElement<T> | React.ReactNode;
 
+function useWarn<ElementType extends HTMLElement = HTMLElement>(
+  shouldUseRef: boolean,
+  childRef: React.RefObject<ElementType | null>,
+) {
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      if (!childRef.current && !shouldUseRef) {
+        warn(
+          'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
+          'error',
+        );
+      }
+    }
+  }, [shouldUseRef, childRef]);
+}
+
 /**
  * Хук позволяет пропатчить переданный компонент так, чтобы можно было получить ссылку на его
  * DOM-элемент. Также есть возможность прокинуть дополнительные параметры.
@@ -76,16 +92,7 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
 
   const patchedChildren = isValidElementResult ? React.cloneElement(children, props) : children;
 
-  React.useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      if (!childRef.current && !shouldUseRef) {
-        warn(
-          'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
-          'error',
-        );
-      }
-    }
-  }, [shouldUseRef, childRef]);
+  useWarn(shouldUseRef, childRef);
 
   return [childRef, patchedChildren];
 };
