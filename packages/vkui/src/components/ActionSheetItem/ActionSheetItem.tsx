@@ -5,6 +5,8 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Keys, pressedKey } from '../../lib/accessibility';
+import { warnOnce } from '../../lib/warnOnce';
+import { type HasDataAttribute } from '../../types.ts';
 import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
@@ -14,12 +16,18 @@ import { isRealClickEvent } from './helpers';
 import { Radio } from './subcomponents/Radio/Radio';
 import styles from './ActionSheetItem.module.css';
 
+const warn = warnOnce('ActionSheetItem');
+
 export interface ActionSheetItemProps
   extends React.HTMLAttributes<HTMLElement>,
     React.AnchorHTMLAttributes<HTMLElement>,
+    HasDataAttribute,
     Pick<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'> {
   /**
    * Свойство, определяющее внешний вид элемента действия.
+   *
+   * > Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**.
+   * > Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
    */
   mode?: 'default' | 'destructive' | 'cancel';
   /**
@@ -80,6 +88,9 @@ export interface ActionSheetItemProps
   /**
    * Позволяет отделить `ActionItem` от `CancelItem` для определении того,
    * кто вызвал закрытие `ActionSheet`. Используется в `ActionSheet.onClose()`.
+   *
+   * @deprecated Since 8.0.0. Свойство устарело и будет удалено в **VKUI v10**.
+   * Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
    */
   isCancelItem?: boolean;
 }
@@ -116,6 +127,25 @@ export const ActionSheetItem = ({
   } = React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
 
+  if (process.env.NODE_ENV === 'development') {
+    if (mode === 'cancel') {
+      warn(
+        'Свойство `mode="cancel"` устарело и будет удалено в VKUI v10. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.',
+      );
+    }
+    if (isCancelItem) {
+      warn(
+        'Свойство `isCancelItem` устарело и будет удалено в VKUI v10. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.',
+      );
+    }
+  }
+
+  // Определяем isCancelItem через data-атрибут или проп для обратной совместимости
+  const isCancelItemFromData = restProps['data-action-sheet-cancel-item'] !== undefined;
+  const resolvedIsCancelItem = isCancelItemFromData || Boolean(isCancelItem);
+
+  const isModeCancel = mode === 'cancel' || isCancelItemFromData;
+
   const Component: React.ElementType | undefined = selectable ? 'label' : undefined;
 
   const isRich = subtitle || meta || selectable;
@@ -127,10 +157,10 @@ export const ActionSheetItem = ({
         action: onClick,
         immediateAction: onImmediateClick,
         autoClose: !autoCloseDisabled,
-        isCancelItem: Boolean(isCancelItem),
+        isCancelItem: resolvedIsCancelItem,
       })?.(e);
     },
-    [autoCloseDisabled, isCancelItem, onClick, onImmediateClick, onItemClick],
+    [autoCloseDisabled, resolvedIsCancelItem, onClick, onImmediateClick, onItemClick],
   );
 
   const onKeyDown: React.KeyboardEventHandler<HTMLElement> = React.useCallback(
@@ -164,7 +194,7 @@ export const ActionSheetItem = ({
       baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
-        mode === 'cancel' && styles.modeCancel,
+        isModeCancel && styles.modeCancel,
         mode === 'destructive' && styles.modeDestructive,
         sizeY === 'compact' && styles.sizeYCompact,
         isRich && styles.rich,
@@ -179,7 +209,7 @@ export const ActionSheetItem = ({
           {platform === 'ios' ? (
             <Title
               className={styles.children}
-              weight={mode === 'cancel' ? '2' : '3'}
+              weight={isModeCancel ? '2' : '3'}
               level={isCentered ? '2' : '3'}
             >
               {children}

@@ -12,6 +12,105 @@ const item = () => screen.getByTestId('item');
 describe('ActionSheetItem', () => {
   baselineComponent((props) => <ActionSheetItem {...props}>ActionSheetItem</ActionSheetItem>);
 
+  describe('deprecation warnings', () => {
+    let warnSpy: ReturnType<typeof vi.spyOn>;
+
+    beforeEach(() => {
+      vi.stubEnv('NODE_ENV', 'development');
+      warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => void 0);
+    });
+
+    afterEach(() => {
+      warnSpy.mockClear();
+      vi.unstubAllEnvs();
+    });
+
+    afterAll(() => {
+      warnSpy.mockRestore();
+    });
+
+    it('warns when mode="cancel" is used', () => {
+      render(<ActionSheetItemTest mode="cancel">Cancel</ActionSheetItemTest>);
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+      const callArgs = warnSpy.mock.calls[0];
+      expect(callArgs[0]).toContain('mode="cancel"');
+    });
+
+    it('warns when isCancelItem is used', () => {
+      render(<ActionSheetItemTest isCancelItem>Cancel</ActionSheetItemTest>);
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+      const callArgs = warnSpy.mock.calls[0];
+      expect(callArgs[0]).toContain('isCancelItem');
+    });
+
+    it('does not warn when neither mode="cancel" nor isCancelItem is used', () => {
+      render(<ActionSheetItemTest>Item</ActionSheetItemTest>);
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('cancel item detection', () => {
+    const onItemClickCallback = vi.fn();
+
+    beforeEach(() => {
+      onItemClickCallback.mockClear();
+    });
+
+    const renderWithContext = (props: ActionSheetItemProps) => {
+      return render(
+        <ActionSheetContext.Provider
+          value={{
+            onItemClick: onItemClickCallback,
+          }}
+        >
+          <ActionSheetItemTest data-testid="cancel-item" {...props}>
+            Cancel
+          </ActionSheetItemTest>
+        </ActionSheetContext.Provider>,
+      );
+    };
+
+    const clickCancelItem = async () => {
+      await act(async () =>
+        fireEvent(
+          screen.getByTestId('cancel-item'),
+          new MouseEvent('click', {
+            clientX: 1,
+            clientY: 1,
+            bubbles: true,
+          }),
+        ),
+      );
+    };
+
+    const expectCancelItemDetected = () => {
+      expect(onItemClickCallback).toHaveBeenCalledTimes(1);
+      const callArgs = onItemClickCallback.mock.calls[0][0];
+      expect(callArgs.isCancelItem).toBe(true);
+    };
+
+    it('detects cancel item via isCancelItem prop (backward compatibility)', async () => {
+      renderWithContext({ isCancelItem: true });
+      await clickCancelItem();
+      expectCancelItemDetected();
+    });
+
+    it('detects cancel item via data-action-sheet-cancel-item attribute', async () => {
+      renderWithContext({ 'data-action-sheet-cancel-item': '' });
+      await clickCancelItem();
+      expectCancelItemDetected();
+    });
+
+    it('isCancelItem prop takes precedence over data attribute', async () => {
+      renderWithContext({
+        'isCancelItem': true,
+        'data-action-sheet-cancel-item': '',
+      });
+      await clickCancelItem();
+      expectCancelItemDetected();
+    });
+  });
+
   it('Component: ActionSheetItem is a custom button by default', () => {
     render(<ActionSheetItemTest>ActionSheetItem</ActionSheetItemTest>);
     expect(item().tagName.toLowerCase()).toMatch('div');
@@ -45,7 +144,10 @@ describe('ActionSheetItem', () => {
     );
 
     await act(async () =>
-      fireEvent.keyDown(screen.getByTestId('action-item'), { key: 'Enter', code: 'Enter' }),
+      fireEvent.keyDown(screen.getByTestId('action-item'), {
+        key: 'Enter',
+        code: 'Enter',
+      }),
     );
 
     expect(onCloseCallback).toHaveBeenCalledTimes(1);

@@ -6,6 +6,8 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { type HasRootRef } from '../../types';
+import type { ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
@@ -52,6 +54,15 @@ export interface ActionSheetProps
    */
   iosCloseItem?: React.ReactNode;
   /**
+   * Позволяет передать пропсы во внутренние элементы компонента.
+   */
+  slotProps?: {
+    /**
+     * Свойства для компонента `ActionSheetDefaultIosCloseItem`.
+     */
+    iosCloseItem?: Omit<ActionSheetItemProps, 'mode' | 'isCancelItem'> & HasRootRef<HTMLElement>;
+  };
+  /**
    * Режим отображения компонента:
    *
    * - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
@@ -82,6 +93,7 @@ export const ActionSheet = ({
   description,
   style,
   iosCloseItem,
+  slotProps,
   popupOffsetDistance,
   placement,
   mode: modeProp,
@@ -163,7 +175,7 @@ export const ActionSheet = ({
         </div>
         {platform === 'ios' && mode === 'sheet' && (
           <div className={styles.closeItemWrapperIos}>
-            {iosCloseItem ?? <ActionSheetDefaultIosCloseItem />}
+            {iosCloseItem ?? <ActionSheetDefaultIosCloseItem {...slotProps?.iosCloseItem} />}
           </div>
         )}
       </DropdownComponent>

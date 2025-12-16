@@ -14,6 +14,7 @@ import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
+import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 
 const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
@@ -299,6 +300,125 @@ describe(ActionSheet, () => {
 
       await userEvent.click(screen.getByTestId('content'));
       expect(onClick).toHaveBeenCalled();
+    });
+  });
+
+  describe('cancel item detection', () => {
+    fakeTimersForScope();
+
+    const testCancelItemDetection = async (
+      ActionSheet: typeof ActionSheetDesktop,
+      itemProps: { isCancelItem?: boolean; 'data-action-sheet-cancel-item'?: string },
+    ) => {
+      const onCloseHandler = vi.fn();
+      const result = render(
+        <ActionSheet onClose={onCloseHandler}>
+          <ActionSheetItem data-testid="cancel-item" {...itemProps}>
+            Cancel
+          </ActionSheetItem>
+        </ActionSheet>,
+      );
+      await waitForFloatingPosition();
+
+      fireEvent(
+        screen.getByTestId('cancel-item'),
+        new MouseEvent('click', {
+          clientX: 1,
+          clientY: 1,
+          bubbles: true,
+        }),
+      );
+      await act(vi.runAllTimers);
+
+      if (onCloseHandler.mock.calls.length > 0) {
+        result.unmount();
+      }
+
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+      expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+    };
+
+    describe.each([
+      ['desktop', ActionSheetDesktop],
+      ['mobile', ActionSheetMobile],
+      ['menu', ActionSheetMenu],
+      ['sheet', ActionSheetSheet],
+    ])('%s', (_, ActionSheet) => {
+      it('detects cancel item via isCancelItem prop (backward compatibility)', async () => {
+        await testCancelItemDetection(ActionSheet, { isCancelItem: true });
+      });
+
+      it('detects cancel item via data-action-sheet-cancel-item attribute', async () => {
+        await testCancelItemDetection(ActionSheet, { 'data-action-sheet-cancel-item': '' });
+      });
+    });
+  });
+
+  describe('ActionSheetDefaultIosCloseItem', () => {
+    fakeTimersForScope();
+
+    const renderIosActionSheet = (props: Partial<ActionSheetProps> = {}) => {
+      return render(
+        <ConfigProvider platform="ios">
+          <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
+            <ActionSheet toggleRef={targetEl} onClose={vi.fn()} {...props} />
+          </AdaptivityProvider>
+        </ConfigProvider>,
+      );
+    };
+
+    it('renders with default text "Отмена" on mobile iOS', async () => {
+      renderIosActionSheet();
+      await waitForFloatingPosition();
+      expect(screen.queryByText('Отмена')).toBeTruthy();
+    });
+
+    it('can be customized via slotProps.iosCloseItem', async () => {
+      renderIosActionSheet({
+        slotProps: {
+          iosCloseItem: {
+            children: 'Закрыть',
+          },
+        },
+      });
+      await waitForFloatingPosition();
+      expect(screen.queryByText('Закрыть')).toBeTruthy();
+      expect(screen.queryByText('Отмена')).toBeFalsy();
+    });
+
+    it('can be customized via iosCloseItem prop (backward compatibility)', async () => {
+      renderIosActionSheet({
+        iosCloseItem: <ActionSheetDefaultIosCloseItem>Закрыть</ActionSheetDefaultIosCloseItem>,
+      });
+      await waitForFloatingPosition();
+      expect(screen.queryByText('Закрыть')).toBeTruthy();
+    });
+
+    it('detects cancel item when ActionSheetDefaultIosCloseItem is clicked', async () => {
+      const onCloseHandler = vi.fn();
+      const result = renderIosActionSheet({
+        onClose: onCloseHandler,
+        mode: 'sheet',
+      });
+      await waitForFloatingPosition();
+
+      const cancelButton = screen.getByText('Отмена');
+      fireEvent(
+        cancelButton,
+        new MouseEvent('click', {
+          clientX: 1,
+          clientY: 1,
+          bubbles: true,
+        }),
+      );
+      await act(vi.runAllTimers);
+
+      if (onCloseHandler.mock.calls.length > 0) {
+        result.unmount();
+      }
+
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+      expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
     });
   });
 });
