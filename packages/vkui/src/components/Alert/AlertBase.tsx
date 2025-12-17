@@ -5,12 +5,13 @@ import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { stopPropagation } from '../../lib/utils';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { IconButton } from '../IconButton/IconButton';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
-import { type AlertActionInterface, type AlertProps } from './Alert';
+import { type AlertActionInterface, type AlertCloseReason, type AlertProps } from './Alert';
 import { AlertActions } from './AlertActions';
 import { AlertDescription, AlertTitle } from './AlertTypography';
 import styles from './Alert.module.css';
@@ -35,7 +36,8 @@ export const AlertBase = ({
   children,
   title,
   description,
-  onClose,
+  onClose: onCloseProp,
+  onClosed,
   dismissLabel = 'Закрыть предупреждение',
   renderAction,
   actionsAlign,
@@ -53,6 +55,7 @@ export const AlertBase = ({
 
   const titleId = `vkui-alert-${generatedId}-title`;
   const descriptionId = `vkui-alert-${generatedId}-description`;
+  const onClose = useStableCallback(onCloseProp || noop);
 
   const platform = usePlatform();
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
@@ -63,31 +66,35 @@ export const AlertBase = ({
       onExited() {
         itemActionCallbackRef.current();
         itemActionCallbackRef.current = noop;
-        onClose();
+        onClosed();
       },
     },
   );
   const isDismissButtonVisible = isDesktop && platform !== 'ios';
   const elementRef = React.useRef<HTMLDivElement>(null);
 
-  const close = React.useCallback(() => {
-    setClosing?.(true);
-  }, [setClosing]);
+  const close = React.useCallback(
+    (reason: AlertCloseReason) => {
+      onClose?.(reason);
+      setClosing?.(true);
+    },
+    [onClose, setClosing],
+  );
 
   const onItemClick = React.useCallback(
     (item: AlertActionInterface) => {
       const { action: itemAction, autoCloseDisabled = false } = item;
 
       if (autoCloseDisabled) {
-        itemAction && itemAction({ close });
+        itemAction && itemAction({ close: () => close('click-item') });
       } else {
         if (itemAction) {
           itemActionCallbackRef.current = itemAction;
         }
-        setClosing?.(true);
+        close('click-item');
       }
     },
-    [close, setClosing],
+    [close],
   );
 
   const handleClick = allowClickPropagation
@@ -97,12 +104,16 @@ export const AlertBase = ({
         onClick?.(event);
       };
 
+  const onEscape = React.useCallback(() => close('escape-key'), [close]);
+
+  const onCloseButtonClick = React.useCallback(() => close('click-close-button'), [close]);
+
   return (
     <FocusTrap
       {...animationHandlers}
       onClick={handleClick}
       getRootRef={elementRef}
-      onClose={close}
+      onClose={onEscape}
       autoFocus={animationState === 'entered'}
       className={classNames(
         styles.host,
@@ -138,7 +149,7 @@ export const AlertBase = ({
           <IconButton
             label={dismissLabel}
             className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
-            onClick={close}
+            onClick={onCloseButtonClick}
             hoverMode="opacity"
             activeMode="opacity"
             data-testid={dismissButtonTestId}
@@ -148,7 +159,7 @@ export const AlertBase = ({
         )}
       </div>
       {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-        <ModalDismissButton onClick={close} data-testid={dismissButtonTestId}>
+        <ModalDismissButton onClick={onCloseButtonClick} data-testid={dismissButtonTestId}>
           {dismissLabel}
         </ModalDismissButton>
       )}
