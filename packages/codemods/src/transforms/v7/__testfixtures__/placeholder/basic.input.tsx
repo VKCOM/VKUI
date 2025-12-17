@@ -1,4 +1,10 @@
-import { Button,ButtonGroup, Icon56UserAddOutline, Icon56UsersOutline, Placeholder } from '@vkontakte/vkui';
+import {
+  Button,
+  ButtonGroup,
+  Icon56UserAddOutline,
+  Icon56UsersOutline,
+  Placeholder,
+} from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
@@ -23,7 +29,9 @@ const App = () => {
           <Icon56UserAddOutline />
         </Placeholder.Icon>
         <Placeholder.Header>Find friends</Placeholder.Header>
-        <Placeholder.Text>The people you add as your friends will be displayed here</Placeholder.Text>
+        <Placeholder.Text>
+          The people you add as your friends will be displayed here
+        </Placeholder.Text>
         <Placeholder.Actions>
           <ButtonGroup mode="vertical" align="center">
             <Button size="m">Button</Button>

@@ -17,10 +17,7 @@ const App = () => {
         </Card>
       </CardScroll>
       {/* noSpaces="false" -> padding="true" */}
-      <CardScroll
-        size="s"
-        padding
-      >
+      <CardScroll size="s" padding>
         <Card>
           <div style={{ paddingBottom: '66%' }} />
         </Card>

@@ -22,7 +22,7 @@ const App = () => {
         slotProps={{
           root: {
             'data-testid': 'radio-root',
-            'aria-label': 'radio-root-label'
+            'aria-label': 'radio-root-label',
           },
 
           input: {

@@ -7,10 +7,7 @@ const App = () => {
   return (
     <React.Fragment>
       {/* test 1: disableInteractive={true} -> remove disableInteractive and onClick */}
-      <ImageBase
-        src="avatar_url"
-        alt="Приложение шторм онлайн"
-      >
+      <ImageBase src="avatar_url" alt="Приложение шторм онлайн">
         <ImageBase.Overlay
           aria-label="Кнопка для изображения"
           disableInteractive={true}
@@ -21,10 +18,7 @@ const App = () => {
       </ImageBase>
 
       {/* test 2: disableInteractive -> remove disableInteractive and onClick */}
-      <ImageBase
-        src="avatar_url"
-        alt="Приложение шторм онлайн"
-      >
+      <ImageBase src="avatar_url" alt="Приложение шторм онлайн">
         <ImageBase.Overlay
           aria-label="Кнопка для изображения"
           disableInteractive
@@ -35,10 +29,7 @@ const App = () => {
       </ImageBase>
 
       {/* test 3: disableInteractive={false} and onClick with Identifier -> remove disableInteractive, don't remove onClick */}
-      <ImageBase
-        src="avatar_url"
-        alt="Приложение шторм онлайн"
-      >
+      <ImageBase src="avatar_url" alt="Приложение шторм онлайн">
         <ImageBase.Overlay
           aria-label="Кнопка для изображения"
           disableInteractive={false}
@@ -49,10 +40,7 @@ const App = () => {
       </ImageBase>
 
       {/* test 4: disableInteractive={false} and onClick with ArrowFunction -> remove disableInteractive, don't remove onClick */}
-      <ImageBase
-        src="avatar_url"
-        alt="Приложение шторм онлайн"
-      >
+      <ImageBase src="avatar_url" alt="Приложение шторм онлайн">
         <ImageBase.Overlay
           aria-label="Кнопка для изображения"
           disableInteractive={false}

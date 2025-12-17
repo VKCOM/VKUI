@@ -2,20 +2,20 @@ import { AppearanceProvider, type AppearanceProviderProps, Snackbar } from '@vko
 import React from 'react';
 
 type Props = AppearanceProviderProps & {
-  additionalProp: string,
-}
+  additionalProp: string;
+};
 
 const App = () => {
   const props: AppearanceProviderProps = {
     value: 'dark',
-    children: (<Snackbar action="Поделиться">Поделиться</Snackbar>)
+    children: <Snackbar action="Поделиться">Поделиться</Snackbar>,
   };
 
   const getAdditionalProvider = () => (
-    <AppearanceProvider value={"light"}>
+    <AppearanceProvider value={'light'}>
       <Snackbar action="Поделиться">Поделиться</Snackbar>
     </AppearanceProvider>
-  )
+  );
 
   return (
     <React.Fragment>

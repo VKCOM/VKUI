@@ -1,5 +1,5 @@
 import { CustomScrollView, Div, Flex } from '@vkontakte/vkui';
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 
 const App = () => {
   const ref = useRef();
@@ -7,22 +7,20 @@ const App = () => {
     <React.Fragment>
       {/* Проверяем удаление старый пропов */}
       <CustomScrollView
-        className={"className"}
+        className={'className'}
         windowResize
         autoHideScrollbar
         autoHideScrollbarDelay={1000}
         enableHorizontalScroll
       >
         <Flex>
-          <Div/>
+          <Div />
         </Flex>
       </CustomScrollView>
       {/* Заменяем boxRef на getRootRef */}
-      <CustomScrollView
-        boxRef={ref}
-      >
+      <CustomScrollView boxRef={ref}>
         <Flex>
-          <Div/>
+          <Div />
         </Flex>
       </CustomScrollView>
     </React.Fragment>

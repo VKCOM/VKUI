@@ -10,7 +10,9 @@ const App = () => {
       <Spinner size="xl" />
       <Spinner size="l" />
       <Spinner size="m" />
-      <Spinner size="s">Кастомный текст вместо "Загружается...", который озвучит скринридер</Spinner>
+      <Spinner size="s">
+        Кастомный текст вместо "Загружается...", который озвучит скринридер
+      </Spinner>
     </React.Fragment>
   );
 };"

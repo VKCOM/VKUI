@@ -12,10 +12,10 @@ const App = () => {
         headerComponent="h4"
       />
       <ContentCard
-        subtitle={"VKUI"}
-        header={"ContentCard example"}
-        caption={"VKUI Styleguide > Blocks > ContentCard"}
-        text={"Badlands is the story about dreams and cruel reality..."}
+        subtitle={'VKUI'}
+        header={'ContentCard example'}
+        caption={'VKUI Styleguide > Blocks > ContentCard'}
+        text={'Badlands is the story about dreams and cruel reality...'}
         headerComponent="h4"
       />
     </React.Fragment>

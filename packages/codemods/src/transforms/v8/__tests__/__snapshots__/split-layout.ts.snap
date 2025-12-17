@@ -5,7 +5,7 @@ exports[`split-layout > transforms correctly 1`] = `
 import React from 'react';
 
 const App = () => {
-  const rootRef = React.createRef<HTMLDivElement>()
+  const rootRef = React.createRef<HTMLDivElement>();
   const contentRef = React.createRef<HTMLDivElement>();
 
   return (
@@ -20,7 +20,7 @@ const App = () => {
             "data-testid": "content",
             "aria-label": "content",
             id: "content",
-            style: {background: "red"},
+            style: { background: 'red' },
             className: "baseClassName"
           }
         }}>

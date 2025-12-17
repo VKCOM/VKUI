@@ -7,12 +7,12 @@ const App = () => {
     {
       title: 'Лишить права',
       mode: 'destructive',
-      autoClose: false
+      autoClose: false,
     },
     {
       title: 'Отмена',
       autoClose: true,
-      mode: 'cancel'
+      mode: 'cancel',
     },
   ];
 
@@ -23,12 +23,12 @@ const App = () => {
           {
             title: 'Лишить права',
             mode: 'destructive',
-            autoClose: false
+            autoClose: false,
           },
           {
             title: 'Отмена',
             autoClose: true,
-            mode: 'cancel'
+            mode: 'cancel',
           },
         ]}
         header="Подтвердите действие"
