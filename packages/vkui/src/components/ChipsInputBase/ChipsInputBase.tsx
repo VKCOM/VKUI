@@ -354,6 +354,13 @@ export const ChipsInputBase = <O extends ChipOption>({
             <React.Fragment key={`${typeof option.value}-${option.value}`}>
               {renderChip(
                 {
+                  /**
+                   * Компилятор сходит с ума из-за рефа внутри handleChipRemove.
+                   * Обходной путь прокидывать ref в свойства для рендер пропов.
+                   */
+                  ...(false
+                    ? { '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED': inputRef }
+                    : {}),
                   'Component': 'div',
                   'value': option.value,
                   'label': option.label,
