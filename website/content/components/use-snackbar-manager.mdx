@@ -1,12 +1,12 @@
 ---
-description: Хук, который предоставляет API для управления уведомлениями.
+description: Хук для управления уведомлениями (снекбарами) в приложении.
 ---
 
 <Overview type="hook">
 
 # useSnackbarManager
 
-Хук, который предоставляет API для управления уведомлениями.
+Хук для управления уведомлениями (снекбарами) в приложении. Позволяет показывать, обновлять и закрывать уведомления программно из любого места в коде.
 
 Связанные компоненты:
 
@@ -16,63 +16,271 @@ description: Хук, который предоставляет API для упр
 
 import { BlockWrapper } from "@/components/wrappers";
 
+## Быстрый старт
+
+Хук возвращает два значения: API для управления снекбарами и компонент, который нужно добавить в разметку.
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
+// Показать уведомление
+snackbarApi.open({
+  children: "Привет, мир!",
+});
+
+// Не забудьте добавить holder в JSX
+return (
+  <>
+    {/* Ваш контент */}
+    {snackbarHolder}
+  </>
+);
+```
+
 ## Параметры
 
-Принимает объект со свойствами:
+Все параметры опциональны. Хук можно вызвать без аргументов: `useSnackbarManager()`.
 
-- `offsetYStart: string | number` - Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
-- `offsetYEnd: string | number` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть нижнюю границу снекбаров.
-- `limit: number` - Максимальное число открытых на одном `placement` уведомлений.
-- `queueStrategy: "queue" | "shift"` - Поведение переполнения очереди снекбаров.
-  `"queue"` - снекбары не откроются, пока для них не появится место.
-  `"shift"` - снекбары форсируют закрытие более старых снекбаров, чтобы освободить место. Значение по умолчанию.
-- `zIndex: number | string` - Свойство для установки стиля `z-index` на контейнере снекбаров.
+| Параметр        | Тип                  | Описание                                                                                                                                                                     |
+| --------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `limit`         | `number`             | Максимальное количество одновременно открытых снекбаров на одном `placement`. По умолчанию: `4`.                                                                             |
+| `queueStrategy` | `"queue" \| "shift"` | Стратегия поведения при переполнении очереди:<br/>• `"queue"` — новые снекбары ждут, пока освободится место<br/>• `"shift"` — новые снекбары закрывают старые (по умолчанию) |
+| `offsetYStart`  | `string \| number`   | Отступ контейнера со снекбарами от верха страницы. Полезно при использовании `FixedLayout`.                                                                                  |
+| `offsetYEnd`    | `string \| number`   | Отступ контейнера со снекбарами от низа страницы. Полезно при использовании `FixedLayout`.                                                                                   |
+| `zIndex`        | `string \| number`   | Значение `z-index` для контейнера снекбаров.                                                                                                                                 |
 
 ## Возвращаемое значение
 
-1. `SnackbarApi.Api` - API для работы со снекбарами
-2. `React.ReactElement | null` - ReactElement, который необходимо встроить в DOM дерево.
+Хук возвращает массив из двух элементов:
 
-### SnackbarApi
+1. **`snackbarApi`** — объект с методами для управления снекбарами
+2. **`snackbarHolder`** — React-элемент, который нужно добавить в JSX вашего компонента
 
-- `open(config: SnackbarApi.OpenProps): SnackbarApi.OpenReturn` — Метод для открытия уведомления. Принимает конфиг, возвращает объект [OpenReturn](/components/use-snackbar-manager#open-return).
-- `openCustom(payload: CustomSnackbar.Payload | ComponentType<CustomSnackbar.Props>): SnackbarApi.OpenReturn` - Более подробно можно почитать в разделе ["Пользовательские снекбары"](/components/use-snackbar-manager#custom-snackbar).
-- `close(id: string): void` — Метод для закрытия снекбара по `id`.
-- `closeAll(): void` — Метод для закрытия всех снекбаров.
-- `update(id: string, config: SnackbarApi.UpdateProps): void` - Метод для обновления свойств уведомления. Можно поменять любое свойство, кроме 'id' и 'placement'.
-- `setLimit(count: number): void` - Метод для изменения максимального числа открытых снекбаров в один момент.
-- `setQueueStrategy(behavior: SnackbarApi.QueueStrategy): void` - Метод для изменения поведения переполнения очереди снекбаров.
-- `setOffsetYStart(offset: SnackbarApi.OffsetY): void` - Метод для изменения отступа контейнера снекбаров от верха.
-- `setOffsetYEnd(offset: SnackbarApi.OffsetY): void` - Метод для изменения отступа контейнера снекбаров снизу.
-- `setZIndex(zIndex: number | string): void` - Метод для изменения z-index контейнера снекбаров.
+## API методы
 
-#### OpenReturn [#open-return]
+### `open(config)` — открыть снекбар
 
-API возвращаемое методами `open` и `openCustom`, которое добавляет дополнительные возможности для взаимодействия с открытыми снекбарами.
+Показывает новое уведомление. Принимает те же свойства, что и компонент `Snackbar` (кроме `open` и `offsetY`).
 
-- `id: string` - Идентификатор созданного снекбара. Либо переданный при открытии в `props`, либо сгенерированный автоматически `uuidv4`.
-- `close: () => void` - Метод для закрытия созданного снекбара.
-- `update: (props: SnackbarApi.UpdateProps) => void` - Метод для изменения свойств созданного снекбара.
-- `onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>` - Метод, который возвращает `Promise`, который сработает, когда снекбар будет закрыт.
+**Возвращает:** объект с методами для управления этим снекбаром (см. [OpenReturn](#open-return)).
 
-## Пример использования
+```jsx
+const result = snackbarApi.open({
+  children: "Операция выполнена успешно",
+  action: "Закрыть",
+  onActionClick: () => console.log("Кнопка нажата"),
+});
+
+// Можно сразу закрыть
+result.close();
+```
+
+### `openCustom(payload)` — открыть кастомный снекбар
+
+Позволяет создать снекбар с собственной разметкой. Подробнее в разделе [Пользовательские снекбары](#custom-snackbar).
+
+### `close(id)` — закрыть снекбар
+
+Закрывает снекбар по его идентификатору.
+
+```jsx
+const result = snackbarApi.open({ children: "Уведомление" });
+snackbarApi.close(result.id);
+```
+
+### `closeAll()` — закрыть все снекбары
+
+Закрывает все открытые снекбары одновременно.
+
+```jsx
+snackbarApi.closeAll();
+```
+
+### `update(id, config)` — обновить свойства снекбара
+
+Изменяет свойства уже открытого снекбара. Можно изменить любое свойство, кроме `id` и `placement`.
+
+```jsx
+const result = snackbarApi.open({ children: "Старый текст" });
+
+// Позже обновляем содержимое
+snackbarApi.update(result.id, {
+  children: "Новый текст",
+  action: "ОК",
+});
+```
+
+### `setLimit(count)` — изменить лимит снекбаров
+
+Меняет максимальное количество одновременно открытых снекбаров.
+
+```jsx
+snackbarApi.setLimit(6); // Теперь можно показать до 6 снекбаров
+```
+
+### `setQueueStrategy(behavior)` — изменить стратегию очереди
+
+Меняет поведение при переполнении очереди: `"queue"` или `"shift"`.
+
+```jsx
+snackbarApi.setQueueStrategy("queue"); // Новые снекбары будут ждать
+```
+
+### `setOffsetYStart(offset)` и `setOffsetYEnd(offset)` — изменить отступы
+
+Изменяют отступы контейнера со снекбарами от краёв страницы.
+
+```jsx
+snackbarApi.setOffsetYStart(60); // Отступ сверху 60px
+snackbarApi.setOffsetYEnd(20); // Отступ снизу 20px
+```
+
+### `setZIndex(zIndex)` — изменить z-index
+
+Меняет значение `z-index` контейнера снекбаров.
+
+```jsx
+snackbarApi.setZIndex(9999);
+```
+
+## OpenReturn [#open-return]
+
+Объект, который возвращают методы `open` и `openCustom`. Содержит методы для управления конкретным снекбаром.
+
+| Свойство            | Тип                     | Описание                                                                                    |
+| ------------------- | ----------------------- | ------------------------------------------------------------------------------------------- |
+| `id`                | `string`                | Уникальный идентификатор снекбара. Генерируется автоматически, если не указан при открытии. |
+| `close()`           | `() => void`            | Закрывает этот снекбар.                                                                     |
+| `update(props)`     | `(props) => void`       | Обновляет свойства снекбара.                                                                |
+| `onClose(resolve?)` | `(resolve?) => Promise` | Возвращает Promise, который выполнится, когда снекбар закроется.                            |
+
+**Пример использования `onClose`:**
+
+```jsx
+const result = snackbarApi.open({ children: "Сообщение" });
+
+// Выполнить действие после закрытия
+result.onClose().then(() => {
+  console.log("Снекбар закрыт!");
+});
+```
+
+## Примеры использования
+
+### Базовый пример
 
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
 const [snackbarApi, snackbarHolder] = useSnackbarManager();
-const count = useRef(0);
 
-const showSnackbar = () => {
+const showSuccess = () => {
   snackbarApi.open({
-    children: `Уведомление показано! ${count.current}`,
+    children: "Операция выполнена успешно!",
+    action: "ОК",
   });
-  count.current = count.current > 100 ? 0 : count.current + 1;
 };
 
 return (
   <>
-    <Button onClick={showSnackbar}>Показать уведомление</Button>
+    <Button onClick={showSuccess}>Показать уведомление</Button>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Управление конкретным снекбаром
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+const snackbarRef = useRef(null);
+
+const showSnackbar = () => {
+  const result = snackbarApi.open({
+    children: "Это уведомление можно закрыть программно",
+    action: "Закрыть",
+  });
+  snackbarRef.current = result;
+};
+
+const closeProgrammatically = () => {
+  if (snackbarRef.current) {
+    snackbarRef.current.close();
+  }
+};
+
+return (
+  <>
+    <Flex gap="m">
+      <Button onClick={showSnackbar}>Показать</Button>
+      <Button onClick={closeProgrammatically}>Закрыть программно</Button>
+    </Flex>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Обновление снекбара
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+const snackbarRef = useRef(null);
+
+const showSnackbar = () => {
+  snackbarRef.current = snackbarApi.open({
+    children: "Загрузка...",
+  });
+};
+
+const updateSnackbar = () => {
+  if (snackbarRef.current) {
+    snackbarApi.update(snackbarRef.current.id, {
+      children: "Готово!",
+      action: "ОК",
+    });
+  }
+};
+
+return (
+  <>
+    <Flex gap="m">
+      <Button onClick={showSnackbar}>Показать</Button>
+      <Button onClick={updateSnackbar}>Обновить</Button>
+    </Flex>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Настройка лимита и стратегии очереди
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager({
+  limit: 2, // Максимум 2 снекбара одновременно
+  queueStrategy: "queue", // Новые будут ждать
+});
+
+const showMultiple = () => {
+  snackbarApi.open({ children: "Первое уведомление" });
+  snackbarApi.open({ children: "Второе уведомление" });
+  snackbarApi.open({ children: "Третье (будет ждать)" });
+};
+
+return (
+  <>
+    <Button onClick={showMultiple}>Показать несколько</Button>
     {snackbarHolder}
   </>
 );
@@ -82,39 +290,70 @@ return (
 
 ## Пользовательские снекбары [#custom-snackbar]
 
-Иногда нужно, чтобы место вызова снекбара и его верстка были независимы друг от друга.
-Для этого в `useSnackbarManager` есть метод **`openCustom`**, который позволяет отрисовать снекбар произвольного вида на базе `Snackbar`.
+Метод `openCustom` позволяет создать снекбар с собственной разметкой и логикой. Это полезно, когда нужно:
 
-### Параметры `openCustom`
+- Передать дополнительные данные в снекбар
+- Использовать сложную разметку, которую нельзя описать через `open`
+- Разделить логику вызова снекбара и его отображения
 
-- **`payload: CustomSnackbar.Payload | ComponentType<CustomSnackbar.Props>`** – принимает либо настройки снекбара в виде объекта типа [CustomSnackbar.Payload](/components/use-snackbar-manager#open-custom-payload),
-  либо функцию отрисовки компонента, который принимает свойства типа `CustomSnackbar.Props`.
+### Как это работает
 
-### `CustomSnackbar.Payload` [#open-custom-payload]
+Вместо простого объекта конфигурации вы передаёте React-компонент, который будет рендерить содержимое снекбара. В этот компонент автоматически передаются:
 
-`CustomSnackbar.Payload` описывает свойства вашего пользовательского снекбара.
-Это дженерик с параметром **`AdditionalProps extends object`** – любые дополнительные свойства, которые вы хотите передать в свой компонент.
+- `snackbarProps` — все свойства для компонента `Snackbar`
+- `id` — идентификатор снекбара
+- `close()` — функция для закрытия снекбара
+- `update(props)` — функция для обновления свойств снекбара
+- ваши дополнительные свойства (если указаны)
 
-#### Свойства `CustomSnackbar.Payload`:
+### Два способа использования
 
-- **`id?: string`** – идентификатор окна (если не указать, будет сгенерирован автоматически);
-- **`baseProps?: SnackbarApi.OpenProps`** – базовые свойства, которые будут проброшены в компонент снекбара;
-- **`additionalProps?: AdditionalProps`** – дополнительные свойства, которые будут проброшены в компонент снекбара;
-- **`component: ComponentType<CustomSnackbar.Props<AdditionalProps>>`** – React-компонент, который будет рендерить содержимое снекбара.
+**Способ 1:** Передать объект с настройками (когда нужны дополнительные свойства)
 
-В компонент автоматически передаются:
+```jsx
+snackbarApi.openCustom({
+  component: MySnackbarComponent,
+  additionalProps: {
+    userName: "Иван",
+  },
+  baseProps: {
+    // Свойства для Snackbar
+    action: "ОК",
+  },
+});
+```
 
-- все базовые и необходимые свойства снекбара в свойстве `snackbarProps`,
-- `id` снекбара,
-- ваши `AdditionalProps`,
-- а также служебные методы:
-  - **`update(newProps)`** – обновляет свойства снекбара «на лету»;
-  - **`close()`** – закрывает текущий снекбар.
+**Способ 2:** Передать компонент напрямую (когда дополнительные свойства не нужны)
+
+```jsx
+snackbarApi.openCustom(MySnackbarComponent);
+```
+
+### Типы
+
+**`CustomSnackbar.Payload<AdditionalProps>`** — объект с настройками:
+
+- `component` — React-компонент для рендеринга
+- `additionalProps?` — дополнительные свойства для компонента
+- `baseProps?` — базовые свойства для `Snackbar`
+- `id?` — идентификатор (генерируется автоматически, если не указан)
+
+**`CustomSnackbar.Props<AdditionalProps>`** — свойства, которые получает ваш компонент:
+
+- Все ваши `AdditionalProps`
+- `snackbarProps` — свойства для `Snackbar`
+- `id` — идентификатор снекбара
+- `close()` — закрыть снекбар
+- `update(props)` — обновить свойства
 
 > ⚠️ **Важно:**
 >
-> 1. Следите за корректной типизацией компонентов. Все нужные типы экспортируются вместе с хуком.
-> 2. Не используйте в `AdditionalProps` ключи `update` и `close` – они зарезервированы системой.
+> - Не используйте в `AdditionalProps` ключи `update`, `close`, `id`, `snackbarProps` — они зарезервированы
+> - Все типы экспортируются из хука, используйте их для типизации
+
+### Пример с дополнительными свойствами
+
+Когда нужно передать данные в снекбар (например, имя пользователя):
 
 <Playground Wrapper={BlockWrapper}>
 
@@ -153,9 +392,9 @@ return (
 
 </Playground>
 
-### Снекбары без дополнительных свойств
+### Пример без дополнительных свойств
 
-Если вы хотите показать снекбар, не прокидывая ничего в него снаружи, то можете в качестве параметра в `openCustom` прокинуть саму функцию отрисовки компонента.
+Если дополнительные свойства не нужны, можно передать компонент напрямую:
 
 <Playground Wrapper={BlockWrapper}>
 
@@ -167,7 +406,7 @@ const SnackbarComponent = ({
 }: CustomSnackbar.Props) => {
   return (
     <Snackbar action="Хорошо" {...snackbarProps}>
-      Сообщение отправлено Ивану Барышеву
+      Сообщение отправлено
     </Snackbar>
   );
 };
@@ -176,6 +415,46 @@ const [snackbarApi, snackbarHolder] = useSnackbarManager();
 
 const showSnackbar = () => {
   snackbarApi.openCustom(SnackbarComponent);
+};
+
+return (
+  <>
+    <Button onClick={showSnackbar}>Показать уведомление</Button>
+    {snackbarHolder}
+  </>
+);
+```
+
+</Playground>
+
+### Пример с использованием методов внутри компонента
+
+Внутри кастомного компонента можно использовать методы `close()` и `update()`:
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const SnackbarComponent = ({
+  userName,
+  close,
+  snackbarProps,
+}: CustomSnackbar.Props<{ userName: string }>) => {
+  return (
+    <Snackbar action="Закрыть" onActionClick={close} {...snackbarProps}>
+      Привет, {userName}!
+    </Snackbar>
+  );
+};
+
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
+const showSnackbar = () => {
+  snackbarApi.openCustom({
+    component: SnackbarComponent,
+    additionalProps: {
+      userName: "Иван",
+    },
+  });
 };
 
 return (
