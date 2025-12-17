@@ -1,7 +1,7 @@
 'use client';
 
 import { ModalContext } from '../../context/ModalContext';
-import { useModalManager } from '../ModalRoot/useModalManager';
+import { useModalRootManager } from '../ModalRoot/useModalRootManager';
 import { ModalCardInternal } from './ModalCardInternal';
 import type { ModalCardProps } from './types';
 
@@ -29,7 +29,7 @@ export const ModalCard = ({
     shouldPreserveSnapPoint: excludedProp,
     id,
     ...resolvedProps
-  } = useModalManager({
+  } = useModalRootManager({
     id: nav || idProp,
     open,
     keepMounted,

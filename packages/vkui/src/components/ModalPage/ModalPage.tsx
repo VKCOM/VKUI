@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { ModalContext } from '../../context/ModalContext';
 import { inRange } from '../../helpers/range';
 import { SNAP_POINT_DETENTS, SNAP_POINT_SAFE_RANGE, type SnapPoint } from '../../lib/sheet';
-import { useModalManager } from '../ModalRoot/useModalManager';
+import { useModalRootManager } from '../ModalRoot/useModalRootManager';
 import { ModalPageInternal } from './ModalPageInternal';
 import type { ModalPageProps } from './types';
 
@@ -32,7 +32,7 @@ export const ModalPage = ({
   keepMounted = false,
   ...restProps
 }: ModalPageProps) => {
-  const { mounted, shouldPreserveSnapPoint, id, ...resolvedProps } = useModalManager({
+  const { mounted, shouldPreserveSnapPoint, id, ...resolvedProps } = useModalRootManager({
     id: nav || idProp,
     open,
     keepMounted,

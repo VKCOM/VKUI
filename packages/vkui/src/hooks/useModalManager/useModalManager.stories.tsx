@@ -1,6 +1,7 @@
 'use client';
 /* eslint-disable no-console, import/no-default-export */
 
+import { useRef } from 'react';
 import { type Meta, type StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56NotificationOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
@@ -42,11 +43,15 @@ const ModalCardComponent = ({
   update,
   openNextModal,
   modalProps,
-}: CustomModalProps<OpenModalCardProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
+  modalNumber,
+}: CustomModalProps<
+  OpenModalCardProps,
+  { openNextModal: (type: 'card' | 'page') => void; modalNumber: number }
+>) => {
   return (
     <ModalCard
       icon={<Icon56NotificationOutline />}
-      title="Modal Card Title"
+      title={`#${modalNumber} Modal Card Title`}
       actions={
         <ButtonGroup stretched mode="vertical">
           <Button size="l" mode="primary" stretched onClick={() => openNextModal('page')}>
@@ -64,7 +69,7 @@ const ModalCardComponent = ({
     >
       <FormItem top="Заголовок модалки">
         <Input
-          defaultValue="Modal Card Title"
+          defaultValue={`#${modalNumber} Modal Card Title`}
           onChange={(e) => update({ title: e.target.value })}
         />
       </FormItem>
@@ -76,7 +81,11 @@ const ModalPageComponent = ({
   openNextModal,
   close,
   modalProps,
-}: CustomModalProps<OpenModalPageProps, { openNextModal: (type: 'card' | 'page') => void }>) => {
+  modalNumber,
+}: CustomModalProps<
+  OpenModalPageProps,
+  { openNextModal: (type: 'card' | 'page') => void; modalNumber: number }
+>) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivityConditionalRender();
 
@@ -99,7 +108,7 @@ const ModalPageComponent = ({
             )
           }
         >
-          Dynamic modal
+          #{modalNumber} Dynamic modal
         </ModalPageHeader>
       }
       {...modalProps}
@@ -115,13 +124,18 @@ const ModalPageComponent = ({
 export const Playground: Story = {
   render: function Render(props) {
     const [api, contextHolder] = useModalManager(props);
+    const modalCount = useRef(0);
 
     const openCustomModal = (type: 'card' | 'page') => {
+      modalCount.current += 1;
+      const count = modalCount.current;
+
       if (type === 'card') {
         api.openCustomModalCard({
           component: ModalCardComponent,
           additionalProps: {
             openNextModal: openCustomModal,
+            modalNumber: count,
           },
         });
       } else {
@@ -129,6 +143,7 @@ export const Playground: Story = {
           component: ModalPageComponent,
           additionalProps: {
             openNextModal: openCustomModal,
+            modalNumber: count,
           },
         });
       }
