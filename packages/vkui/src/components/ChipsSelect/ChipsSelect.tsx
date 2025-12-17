@@ -329,11 +329,11 @@ export const ChipsSelect = <Option extends ChipOption>({
     }
   };
 
-  const chipsSelectOptions = React.useRef<HTMLElement[]>([]).current;
+  const chipsSelectOptions = React.useRef<HTMLElement[]>([]);
 
   const scrollToElement = (index: number, center = false) => {
     const dropdown = dropdownScrollBoxRef.current;
-    const item = chipsSelectOptions[index];
+    const item = chipsSelectOptions.current[index];
 
     /* istanbul ignore if: невозможный кейс (в SSR вызова этой функции не будет) */
     if (!item || !dropdown) {
@@ -509,6 +509,13 @@ export const ChipsSelect = <Option extends ChipOption>({
         <React.Fragment key={`${typeof option.value}-${option.value}`}>
           {renderOption(
             {
+              /**
+               * Компилятор сходит с ума из-за рефа внутри getRootRef.
+               * Обходной путь прокидывать ref в свойства для рендер пропов.
+               */
+              ...(false
+                ? { '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED': chipsSelectOptions }
+                : {}),
               id: dropdownItemId,
               disabled: option.disabled,
               hovered: focusedOption
@@ -521,7 +528,7 @@ export const ChipsSelect = <Option extends ChipOption>({
               ),
               getRootRef(node) {
                 if (node) {
-                  chipsSelectOptions[index] = node;
+                  chipsSelectOptions.current[index] = node;
                 }
               },
               onMouseDown(event: React.MouseEvent<HTMLDivElement>) {

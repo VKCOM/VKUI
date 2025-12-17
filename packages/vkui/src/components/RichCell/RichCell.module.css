@@ -1,7 +1,7 @@
 .host {
   box-sizing: border-box;
   display: flex;
-  min-block-size: 64px;
+  min-block-size: 48px;
   padding-block: var(--vkui--spacing_size_m);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   font-family: var(--vkui--font_family_base);
@@ -10,12 +10,12 @@
 }
 
 .sizeYCompact {
-  min-block-size: 60px;
+  min-block-size: 44px;
 }
 
 @media (--sizeY-compact) {
   .sizeYNone {
-    min-block-size: 60px;
+    min-block-size: 44px;
   }
 }
 
@@ -164,10 +164,4 @@
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalFormItem) .host {
   margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
-}
-
-@media (--sizeY-compact) {
-  .sizeYNone {
-    min-block-size: 60px;
-  }
 }

@@ -1,6 +1,10 @@
 {
   "$schema": "https://swc.rs/schema.json",
-  "exclude": ["\\.(test|spec|e2e|e2e-playground|stories|d)\\.[jt]sx?$", "testing/", "storybook/"],
+  "exclude": [
+    "\\.(test|spec|e2e|e2e-playground|stories|d)\\.[jt]sx?$",
+    "testing/",
+    "storybook/"
+  ],
 
   "module": {
     "type": "es6",
@@ -18,7 +22,7 @@
         "runtime": "automatic"
       }
     },
-    "target": "es2017",
+    "target": "es2018",
     "baseUrl": "./",
     "paths": {
       "*": ["node_modules", "src/*"]
