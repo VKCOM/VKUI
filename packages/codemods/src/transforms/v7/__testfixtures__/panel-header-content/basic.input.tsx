@@ -1,4 +1,10 @@
-import { Avatar, PanelHeader, PanelHeaderBack, PanelHeaderButton, PanelHeaderContent } from '@vkontakte/vkui';
+import {
+  Avatar,
+  PanelHeader,
+  PanelHeaderBack,
+  PanelHeaderButton,
+  PanelHeaderContent,
+} from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
@@ -6,9 +12,7 @@ const App = () => {
     <React.Fragment>
       <PanelHeader
         before={<PanelHeaderBack label="Назад" onClick={() => {}} />}
-        after={
-          <PanelHeaderButton onClick={() => {}}/>
-        }
+        after={<PanelHeaderButton onClick={() => {}} />}
       >
         <PanelHeaderContent
           status="был в сети сегодня, в 18:46"

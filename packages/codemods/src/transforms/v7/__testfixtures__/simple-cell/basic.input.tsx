@@ -4,29 +4,16 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      <SimpleCell
-        onClick={() => {}}
-        expandable="auto"
-        indicator="При использовании"
-      >
+      <SimpleCell onClick={() => {}} expandable="auto" indicator="При использовании">
         Геолокация
       </SimpleCell>
 
-      <SimpleCell
-        onClick={() => {}}
-        expandable="always"
-        indicator="При использовании"
-      >
+      <SimpleCell onClick={() => {}} expandable="always" indicator="При использовании">
         Геолокация
       </SimpleCell>
-
 
       {/* rename subhead -> overtitle */}
-      <SimpleCell
-        onClick={() => {}}
-        subhead={"Subhead"}
-        indicator="При использовании"
-      >
+      <SimpleCell onClick={() => {}} subhead={'Subhead'} indicator="При использовании">
         Геолокация
       </SimpleCell>
     </React.Fragment>

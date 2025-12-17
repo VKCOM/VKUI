@@ -7,10 +7,10 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      <ScrollArrow direction='down' size="s" />
-      <ScrollArrow direction='left' size="m" />
-      <HorizontalScroll arrowSize="s"  />
-      <HorizontalScroll arrowSize="m"  />
+      <ScrollArrow direction="down" size="s" />
+      <ScrollArrow direction="left" size="m" />
+      <HorizontalScroll arrowSize="s" />
+      <HorizontalScroll arrowSize="m" />
       <Gallery arrowSize="s" />
       <Gallery arrowSize="m" />
     </React.Fragment>

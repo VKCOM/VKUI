@@ -7,7 +7,7 @@ const App = () => {
       <PanelSpinner size="large" />
       <PanelSpinner size="medium" />
       <PanelSpinner size="regular" />
-      <PanelSpinner size={"small"} />
+      <PanelSpinner size={'small'} />
     </React.Fragment>
   );
 };
