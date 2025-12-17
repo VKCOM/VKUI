@@ -54,12 +54,10 @@ export interface ActionSheetProps
    */
   iosCloseItem?: React.ReactNode;
   /**
-   * Позволяет передать пропсы во внутренние элементы компонента.
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS.
    */
   slotProps?: {
-    /**
-     * Свойства для компонента `ActionSheetDefaultIosCloseItem`.
-     */
     iosCloseItem?: Omit<ActionSheetItemProps, 'mode' | 'isCancelItem'> & HasRootRef<HTMLElement>;
   };
   /**
