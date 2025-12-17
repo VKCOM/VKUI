@@ -1,6 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
+import { useBooleanState } from '../../hooks/useBooleanState';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useDOM } from '../../lib/dom';
 import type { TimeoutId } from '../../types';
@@ -11,17 +12,14 @@ export interface AutoPlayConfig {
   onNext: VoidFunction;
 }
 
-export function useAutoPlay({ timeout, slideIndex, onNext }: AutoPlayConfig): {
-  pause: VoidFunction;
-  resume: VoidFunction;
-} {
+type Pause = () => void;
+type Resume = () => void;
+
+export function useAutoPlay({ timeout, slideIndex, onNext }: AutoPlayConfig): [Pause, Resume] {
   const { document } = useDOM();
-  const [paused, setPaused] = React.useState(false);
+  const [paused, pause, resume] = useBooleanState(false);
   const timeoutRef = React.useRef<TimeoutId>(null);
   const callbackFn = useStableCallback(onNext);
-
-  const pause = React.useCallback(() => setPaused(true), []);
-  const resume = React.useCallback(() => setPaused(false), []);
 
   // Выносим функции очистки и старта таймера в отдельные функции
   const clearAutoPlayTimeout = React.useCallback(() => {
@@ -62,8 +60,5 @@ export function useAutoPlay({ timeout, slideIndex, onNext }: AutoPlayConfig): {
     [document, timeout, slideIndex, startAutoPlayTimeout, clearAutoPlayTimeout, paused],
   );
 
-  return {
-    resume,
-    pause,
-  };
+  return [pause, resume];
 }

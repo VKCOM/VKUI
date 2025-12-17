@@ -70,6 +70,7 @@ export const useFloatingElement = <
   hideWhenReferenceHidden,
   disableFlipMiddleware = false,
   disableShiftMiddleware = false,
+  overflowPadding,
 
   // useFloatingWithInteractions
   trigger,
@@ -110,6 +111,7 @@ export const useFloatingElement = <
     arrowHeight,
     disableFlipMiddleware,
     disableShiftMiddleware,
+    overflowPadding,
   });
 
   const {

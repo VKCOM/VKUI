@@ -71,11 +71,7 @@ export const SliderThumb = ({
     middleware: memoizedMiddlewares,
   });
 
-  const {
-    value: isHovered,
-    setTrue: setHoveredTrue,
-    setFalse: setHoveredFalse,
-  } = useBooleanState(false);
+  const [isHovered, setHoveredTrue, setHoveredFalse] = useBooleanState(false);
 
   const handleRootRef = useExternRef<HTMLSpanElement>(getRootRef, refs.setReference);
 

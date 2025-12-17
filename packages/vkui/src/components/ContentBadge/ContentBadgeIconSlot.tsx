@@ -35,6 +35,7 @@ export const ContentBadgeIconSlot = ({
       ref={getRootRef}
       className={classNames(
         className,
+        styles.iconSlot,
         isSingleChild ? singleIconClassNames[size] : iconsClassNames[size],
       )}
       {...restProps}

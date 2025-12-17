@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useEffectDev } from '../../hooks/useEffectDev';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
@@ -39,10 +38,12 @@ export const ActionSheetDropdownMenu = ({
   const { sizeY } = useAdaptivityWithJSMediaQueries();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
-  useEffectDev(() => {
-    const toggleEl = getEl(toggleRef);
-    if (!toggleEl) {
-      warn(`Свойство "toggleRef" не передано`, 'error');
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      const toggleEl = getEl(toggleRef);
+      if (!toggleEl) {
+        warn(`Свойство "toggleRef" не передано`, 'error');
+      }
     }
   }, [toggleRef]);
 

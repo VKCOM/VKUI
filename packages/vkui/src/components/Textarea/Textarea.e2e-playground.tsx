@@ -65,6 +65,10 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
           defaultValue: [longMultilineValueExample],
           afterAlign: ['start', 'end'],
         },
+        {
+          value: ['text'],
+          rows: [1],
+        },
       ]}
     >
       {(props: TextareaProps) => <Textarea {...props} />}

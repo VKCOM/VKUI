@@ -157,7 +157,6 @@ export type {
   ModalRootContextInterface,
   UseModalRootContext,
 } from './components/ModalRoot/types';
-export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
 export { ModalPageContent } from './components/ModalPageContent/ModalPageContent';

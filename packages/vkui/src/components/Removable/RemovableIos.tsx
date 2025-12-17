@@ -33,7 +33,7 @@ const RemovableIosWithRemove = ({
   const { window } = useDOM();
 
   const removeButtonRef = React.useRef<HTMLElement>(null);
-  const disabledRef = React.useRef(true);
+  const [removeButtonDisabled, setRemoveButtonDisabled] = React.useState(true);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
   React.useEffect(() => {
@@ -51,9 +51,10 @@ const RemovableIosWithRemove = ({
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
       removeButtonRef?.current?.focus();
-    } else {
-      disabledRef.current = true;
+      return;
     }
+
+    setRemoveButtonDisabled(true);
   };
 
   const onRemoveActivateClick = (e: React.MouseEvent) => {
@@ -62,7 +63,7 @@ const RemovableIosWithRemove = ({
       return;
     }
     const { offsetWidth } = removeButtonRef.current;
-    disabledRef.current = false;
+    setRemoveButtonDisabled(false);
     updateRemoveOffset(offsetWidth);
   };
 
@@ -97,7 +98,7 @@ const RemovableIosWithRemove = ({
         Component="button"
         hasActive={false}
         hasHover={false}
-        disabled={disabledRef.current}
+        disabled={removeButtonDisabled}
         getRootRef={removeButtonRef}
         className={styles.remove}
         onClick={onRemove}

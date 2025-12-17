@@ -9,7 +9,7 @@ import {
   type UseFloatingElementProps,
 } from '../../hooks/useFloatingElement';
 import { animationFadeClassNames } from '../../lib/animation';
-import { getArrowCoordsByMiddlewareData } from '../../lib/floating';
+import { getArrowCoordsByMiddlewareData, sizeMiddleware } from '../../lib/floating';
 import { type ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { TooltipBase } from '../TooltipBase/TooltipBase';
@@ -46,6 +46,7 @@ export const useTooltip = ({
   disableShiftMiddleware = false,
   disableTriggerOnFocus = false,
   onReferenceHiddenChange,
+  overflowPadding,
 
   // useFloatingWithInteractions
   defaultShown,
@@ -153,6 +154,7 @@ export const useTooltip = ({
     hideWhenReferenceHidden,
     disableFlipMiddleware,
     disableShiftMiddleware,
+    overflowPadding,
 
     defaultShown,
     shown: shownProp,
@@ -169,6 +171,18 @@ export const useTooltip = ({
     renderFloatingComponent,
     externalFloatingElementRef: getRootRef,
     remapReferenceProps,
+
+    customMiddlewares: [
+      sizeMiddleware({
+        apply({ rects, elements, availableWidth }) {
+          const width = Math.min(Math.round(rects.floating.width), Math.floor(availableWidth));
+          Object.assign(elements.floating.style, {
+            width: `${width}px`,
+          });
+        },
+        padding: overflowPadding,
+      }),
+    ],
   });
 
   return {

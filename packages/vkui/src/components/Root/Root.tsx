@@ -55,8 +55,8 @@ export const Root = ({
   const scroll = React.useContext(ScrollContext);
   const platform = usePlatform();
   const { document } = useDOM();
-  const scrolls = React.useRef<Record<string, number>>({}).current;
-  const viewNodes = React.useRef<Record<string, HTMLElement | null>>({}).current;
+  const [scrolls] = React.useState(() => new Map<string, number>());
+  const [viewNodes] = React.useState(() => new Map<string, HTMLElement | null>());
 
   const { transitionMotionEnabled = true } = useConfigProvider();
   const { animate } = React.useContext(SplitColContext);
@@ -72,7 +72,7 @@ export const Root = ({
     if (panel !== activeView) {
       const viewIds = views.map((view) => getNavId(view.props, warn));
       const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
-      scrolls[activeView] = scroll.getScroll().y;
+      scrolls.set(activeView, scroll.getScroll().y);
       _setState({
         activeView: panel,
         prevView: activeView,
@@ -95,7 +95,7 @@ export const Root = ({
   useIsomorphicLayoutEffect(() => {
     if (!transition && prevView) {
       // Закончился переход
-      scroll.scrollTo(0, isBack ? scrolls[activeView] : 0);
+      scroll.scrollTo(0, isBack ? scrolls.get(activeView) : 0);
       onTransition &&
         onTransition({
           isBack: Boolean(isBack),
@@ -139,7 +139,7 @@ export const Root = ({
           <div
             key={viewId}
             ref={(e) => {
-              viewId && (viewNodes[viewId] = e);
+              viewId && viewNodes.set(viewId, e);
             }}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
             className={classNames(
@@ -155,7 +155,7 @@ export const Root = ({
                 <div
                   className={styles.scrollCompensation}
                   style={{
-                    marginTop: compensateScroll ? viewId && -(scrolls[viewId] ?? 0) : undefined,
+                    marginTop: compensateScroll ? viewId && -(scrolls.get(viewId) ?? 0) : undefined,
                   }}
                 >
                   {view}

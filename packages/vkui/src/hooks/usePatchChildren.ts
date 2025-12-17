@@ -7,7 +7,6 @@ import {
 } from '../lib/utils';
 import { warnOnce } from '../lib/warnOnce';
 import type { HasRootRef } from '../types';
-import { useEffectDev } from './useEffectDev';
 import { useExternRef } from './useExternRef';
 
 const warn = warnOnce('usePatchChildren');
@@ -77,14 +76,16 @@ export const usePatchChildren = <ElementType extends HTMLElement = HTMLElement>(
 
   const patchedChildren = isValidElementResult ? React.cloneElement(children, props) : children;
 
-  useEffectDev(() => {
-    if (!childRef.current && !shouldUseRef) {
-      warn(
-        'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
-        'error',
-      );
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      if (!childRef.current && !shouldUseRef) {
+        warn(
+          'Кажется, в children передан компонент, который не поддерживает свойство getRootRef. Мы не можем получить ссылку на корневой dom-элемент этого компонента',
+          'error',
+        );
+      }
     }
-  }, [isValidElementResult ? children.type : null, shouldUseRef, childRef]);
+  }, [shouldUseRef, childRef]);
 
   return [childRef, patchedChildren];
 };
