@@ -10,9 +10,17 @@
 
 .placementTop,
 .placementBottom {
-  inset-inline-start: var(--vkui_internal--safe_area_inset_left);
-  inset-inline-end: var(--vkui_internal--safe_area_inset_right);
+  inset-inline-start: auto;
+  inset-inline-end: auto;
   align-items: center;
+  padding-inline: calc(
+      var(--vkui_internal--snackbars_container_in_padding) +
+      var(--vkui_internal--safe_area_inset_left)
+    )
+    calc(
+      var(--vkui_internal--snackbars_container_in_padding) +
+      var(--vkui_internal--safe_area_inset_right)
+    );
 }
 
 .placementTop,

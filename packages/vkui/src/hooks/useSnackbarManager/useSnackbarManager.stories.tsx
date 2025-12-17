@@ -53,14 +53,14 @@ export const Playground: Story = {
     const [snackbarApi, contextHolder] = useSnackbarManager(props);
     const [snackbars, setSnackbars] = React.useState<Set<string>>(new Set());
     const [autoHide, setAutoHide] = React.useState(true);
+    const count = React.useRef(0);
 
     const _onOpen = (placement: SnackbarPlacement) => {
       const { id } = snackbarApi.open({
         duration: autoHide ? undefined : null,
         before: <Icon24ThumbsUpOutline />,
         placement,
-        action: 'Поделиться',
-        children: 'Этот сервис рекомендует один друг',
+        children: `Уведомление показано! ${count.current}`,
         onClose: () => {
           setSnackbars((oldState) => {
             oldState.delete(id);
@@ -68,6 +68,7 @@ export const Playground: Story = {
           });
         },
       });
+      count.current = count.current > 100 ? 0 : count.current + 1;
       setSnackbars((oldState) => new Set([...oldState, id]));
     };
 

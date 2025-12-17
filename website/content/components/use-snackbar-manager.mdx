@@ -16,8 +16,8 @@ import { BlockWrapper } from '@/components/wrappers';
 
 Принимает объект со свойствами:
 
-- `offsetYStart: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
-- `offsetYEnd: VerticalOffset` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть нижнюю границу снекбаров.
+- `offsetYStart: string | number` - Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда нужно немного сдвинуть верхнюю границу снекбаров.
+- `offsetYEnd: string | number` - Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда нужно немного сдвинуть нижнюю границу снекбаров.
 - `limit: number` - Максимальное число открытых на одном `placement` уведомлений.
 - `queueStrategy: "queue" | "shift"` - Поведение переполнения очереди снекбаров.
   `"queue"` - снекбары не откроются, пока для них не появится место.
@@ -55,11 +55,13 @@ API возвращаемое методами `open` и `openCustom`, котор
 
 ```jsx
 const [snackbarApi, snackbarHolder] = useSnackbarManager();
+const count = useRef(0);
 
 const showSnackbar = () => {
   snackbarApi.open({
-    children: 'Уведомление показано!',
+    children: `Уведомление показано! ${count.current}`,
   });
+  count.current = count.current > 100 ? 0 : count.current + 1;
 };
 
 return (
