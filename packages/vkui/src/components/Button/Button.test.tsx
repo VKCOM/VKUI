@@ -40,6 +40,81 @@ describe('Button', () => {
     expect(handleClick).toHaveBeenCalledTimes(0);
   });
 
+  it('a11y: Button with loading has aria-disabled and aria-busy but not disabled attribute', () => {
+    render(<ButtonTest loading>Button</ButtonTest>);
+
+    const btn = button();
+    expect(btn).not.toHaveAttribute('aria-disabled');
+    expect(btn).toHaveAttribute('aria-busy', 'true');
+    expect(btn).not.toHaveAttribute('disabled');
+  });
+
+  it('a11y: Button with loading and disabled has disabled attribute and aria-disabled', () => {
+    render(
+      <ButtonTest loading disabled>
+        Button
+      </ButtonTest>,
+    );
+
+    const btn = button();
+    expect(btn).toHaveAttribute('disabled');
+    expect(btn).not.toHaveAttribute('aria-disabled');
+    expect(btn).toHaveAttribute('aria-busy', 'true');
+    expect(btn).toBeDisabled();
+  });
+
+  it('a11y: Button with loading does not have disabled attribute (allows focus)', () => {
+    render(<ButtonTest loading>Button</ButtonTest>);
+
+    const btn = button() as HTMLButtonElement;
+    // Кнопка не должна иметь disabled атрибут, чтобы сохранять возможность фокуса
+    expect(btn).not.toHaveAttribute('disabled');
+    expect(btn).toHaveAttribute('aria-busy', 'true');
+    expect(btn).not.toHaveAttribute('aria-disabled');
+  });
+
+  it('a11y: Button with href and loading has aria-disabled and aria-busy (link)', () => {
+    render(
+      <ButtonTest href="#" loading>
+        Link Button
+      </ButtonTest>,
+    );
+
+    const link = button();
+    expect(link.tagName.toLowerCase()).toMatch('a');
+    expect(link).not.toHaveAttribute('href');
+    expect(link).toHaveAttribute('aria-disabled', 'true');
+    expect(link).toHaveAttribute('aria-busy', 'true');
+    expect(link).not.toHaveAttribute('disabled');
+  });
+
+  it('a11y: Button with href and loading prevents onClick handler', () => {
+    const handleClick = vi.fn();
+    render(
+      <ButtonTest href="#test" loading onClick={handleClick}>
+        Link Button
+      </ButtonTest>,
+    );
+
+    fireEvent.click(button());
+    // onClick не должен вызываться при loading
+    expect(handleClick).toHaveBeenCalledTimes(0);
+  });
+
+  it('a11y: Button with href, loading and disabled has aria-disabled', () => {
+    render(
+      <ButtonTest href="#" loading disabled>
+        Link Button
+      </ButtonTest>,
+    );
+
+    const link = button();
+    expect(link).not.toHaveAttribute('href');
+    expect(link).toHaveAttribute('aria-disabled', 'true');
+    expect(link).toHaveAttribute('aria-busy', 'true');
+    expect(link).not.toHaveAttribute('disabled');
+  });
+
   it('should handle zero in props', () => {
     render(
       <ButtonTest before={0} after={0}>

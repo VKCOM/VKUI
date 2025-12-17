@@ -103,21 +103,58 @@ export const Button = ({
   disableSpinnerAnimation,
   rounded,
   disabled,
+  href,
   ...restProps
 }: ButtonProps): React.ReactNode => {
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
+  const isDisabled = disabled || loading;
+  const hasHref = href !== undefined;
+
+  const handleClick = React.useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      if (isDisabled) {
+        e.preventDefault();
+        return;
+      }
+      onClick?.(e);
+    },
+    [isDisabled, onClick],
+  );
+
+  const buttonProps = (() => {
+    if (hasHref) {
+      return isDisabled
+        ? {
+            // Для disabled/loading ссылок нужно удалить href и добавить role="link"
+            // согласно https://w3c.github.io/html-aria/#example-communicate-a-disabled-link-with-aria
+            'role': 'link' as const,
+            'Component': 'a' as const,
+            'aria-disabled': isDisabled,
+          }
+        : {
+            href,
+            'aria-disabled': isDisabled,
+          };
+    } else {
+      return {
+        Component: 'button' as const,
+        disabled,
+      };
+    }
+  })();
+
   return (
     <Tappable
       hoverMode={styles.hover}
       activeMode={styles.active}
-      {...(restProps.href === undefined && { Component: 'button' })}
       focusVisibleMode="outside"
-      disabled={loading || disabled}
+      aria-busy={loading}
+      {...buttonProps}
       {...restProps}
-      onClick={loading ? undefined : onClick}
+      onClick={handleClick}
       baseClassName={classNames(
         styles.host,
         stylesSize[size],
@@ -140,6 +177,7 @@ export const Button = ({
           className={styles.spinner}
           disableAnimation={disableSpinnerAnimation}
           noColor
+          aria-hidden="true"
         />
       )}
       <span className={styles.in}>
