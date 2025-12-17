@@ -10,7 +10,7 @@ const App = () => {
   return (
     <React.Fragment>
       {/* afterAlign не задан - переименовываем after -> meta, afterCaption -> submeta */}
-      <RichCell before={<Avatar size={48} />} after="After text" afterCaption="After caption">
+      <RichCell before={<Avatar size={48} />} meta="After text" submeta="After caption">
         Children
       </RichCell>
       {/* afterAlign="start" - переименовываем after -> meta, afterCaption -> submeta */}
@@ -41,11 +41,11 @@ const App = () => {
         Children
       </RichCell>
       {/* Только after без afterCaption, afterAlign не задан */}
-      <RichCell before={<Avatar size={48} />} after="After text">
+      <RichCell before={<Avatar size={48} />} meta="After text">
         Children
       </RichCell>
       {/* Только afterCaption без after, afterAlign не задан */}
-      <RichCell before={<Avatar size={48} />} afterCaption="After caption">
+      <RichCell before={<Avatar size={48} />} submeta="After caption">
         Children
       </RichCell>
       {/* afterAlign="start" как JSX expression */}
@@ -53,14 +53,14 @@ const App = () => {
         Children
       </RichCell>
       {/* Динамическое значение afterAlign - НЕ переименовываем */}
-      <RichCell before={<Avatar size={48} />} after="After text" afterAlign={someVariable}>
+      <RichCell before={<Avatar size={48} />} meta="After text" afterAlign={someVariable}>
         Children
       </RichCell>
       {/* after как JSX element, afterAlign не задан */}
       <RichCell
         before={<Avatar size={48} />}
-        after={<span>After element</span>}
-        afterCaption={<span>Caption element</span>}
+        meta={<span>After element</span>}
+        submeta={<span>Caption element</span>}
       >
         Children
       </RichCell>

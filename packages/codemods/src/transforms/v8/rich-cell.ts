@@ -38,7 +38,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         }
       });
 
-      if (afterAlignValue !== 'start') {
+      if (afterAlignValue !== null && afterAlignValue !== 'start') {
         return;
       }
 

@@ -89,10 +89,10 @@ export const Playground: Story = {
     overTitle: 'Over Title',
     subtitle: 'Subtitle',
     extraSubtitle: 'Extra Subtitle',
-    after: 'Text',
+    meta: 'Meta',
+    submeta: 'Submeta',
     maxAfterWidth: 100,
     maxMetaWidth: 100,
-    afterCaption: 'After Caption',
     children: 'Example',
   },
   decorators: [
