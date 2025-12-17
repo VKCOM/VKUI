@@ -75,8 +75,8 @@ export interface RichCellProps extends TappableOmitProps {
   /**
    * Текст под `after`.
    *
-   * @deprecated Since 8.0.0 будет удален в `v10`
-   * Используйте вместо этого свойства `submeta`.
+   * @deprecated Since 8.0.0. Будет удален в **VKUI v10**.
+   * Используйте вместо этого свойство `submeta`.
    */
   afterCaption?: React.ReactNode;
   /**
