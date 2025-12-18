@@ -41,6 +41,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'disableFlipMiddleware'
   | 'disableShiftMiddleware'
   | 'disableFocusTrap'
+  | 'overflowPadding'
 >;
 
 type AllowedTooltipBaseProps = Omit<
@@ -106,6 +107,7 @@ export const OnboardingTooltip = ({
   'aria-labelledby': ariaLabelledBy,
   restoreFocus,
   disableFocusTrap,
+  overflowPadding,
   ...restProps
 }: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
@@ -127,6 +129,7 @@ export const OnboardingTooltip = ({
     arrowPadding,
     disableFlipMiddleware,
     disableShiftMiddleware,
+    overflowPadding,
   });
   const {
     x: floatingDataX,

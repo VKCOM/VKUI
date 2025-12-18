@@ -18,7 +18,6 @@ const WrapperUseGlobalOnClickOutside = ({
   const target1Ref = React.createRef<HTMLDivElement>();
   const target2Ref = React.createRef<HTMLDivElement>();
 
-  // eslint-disable-next-line react-compiler/react-compiler
   useGlobalOnClickOutsideImpl(
     globalClickHandler,
     disableAllTarget || disableTarget === 'target-1' ? null : target1Ref,

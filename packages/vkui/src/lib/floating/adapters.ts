@@ -19,7 +19,10 @@ export {
   getOverflowAncestors,
 } from '@vkontakte/vkui-floating-ui/react-dom';
 
-export type { FlipOptions as FlipMiddlewareOptions } from '@vkontakte/vkui-floating-ui/react-dom';
+export type {
+  FlipOptions as FlipMiddlewareOptions,
+  ShiftOptions as ShiftMiddlewareOptions,
+} from '@vkontakte/vkui-floating-ui/react-dom';
 
 const defaultOptions = {
   ancestorScroll: true,

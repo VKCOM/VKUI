@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { generateStaticParamsFor, importPage } from 'nextra/pages';
-import { useMDXComponents } from '../../mdx-components';
+import { useMDXComponents as mdxComponents } from '../../mdx-components';
 
 export const generateStaticParams = generateStaticParamsFor('mdxPath');
 
@@ -9,8 +9,8 @@ type PageProps = Readonly<{
     mdxPath: string[];
   }>;
 }>;
-// eslint-disable-next-line react-hooks/rules-of-hooks
-const Wrapper = useMDXComponents().wrapper!;
+
+const Wrapper = mdxComponents().wrapper!;
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params;
