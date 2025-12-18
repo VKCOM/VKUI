@@ -94,21 +94,6 @@ describe('ActionSheetItem', () => {
       await clickCancelItem();
       expectCancelItemDetected();
     });
-
-    it('detects cancel item via data-action-sheet-cancel-item attribute', async () => {
-      renderWithContext({ 'data-action-sheet-cancel-item': '' });
-      await clickCancelItem();
-      expectCancelItemDetected();
-    });
-
-    it('isCancelItem prop takes precedence over data attribute', async () => {
-      renderWithContext({
-        'isCancelItem': true,
-        'data-action-sheet-cancel-item': '',
-      });
-      await clickCancelItem();
-      expectCancelItemDetected();
-    });
   });
 
   it('Component: ActionSheetItem is a custom button by default', () => {

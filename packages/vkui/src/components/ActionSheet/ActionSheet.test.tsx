@@ -11,6 +11,7 @@ import {
   withFakeTimers,
 } from '../../testing/utils';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
+import { ActionSheetItemContext } from '../ActionSheetItem/context';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ActionSheet, type ActionSheetProps } from './ActionSheet';
@@ -308,14 +309,23 @@ describe(ActionSheet, () => {
 
     const testCancelItemDetection = async (
       ActionSheet: typeof ActionSheetDesktop,
-      itemProps: { isCancelItem?: boolean; 'data-action-sheet-cancel-item'?: string },
+      {
+        isCancelItem,
+        isCancelItemAtContext = false,
+      }: { isCancelItem?: boolean; isCancelItemAtContext?: boolean },
     ) => {
       const onCloseHandler = vi.fn();
       const result = render(
         <ActionSheet onClose={onCloseHandler}>
-          <ActionSheetItem data-testid="cancel-item" {...itemProps}>
-            Cancel
-          </ActionSheetItem>
+          <ActionSheetItemContext.Provider
+            value={{
+              isCancelItem: isCancelItemAtContext,
+            }}
+          >
+            <ActionSheetItem data-testid="cancel-item" isCancelItem={isCancelItem}>
+              Cancel
+            </ActionSheetItem>
+          </ActionSheetItemContext.Provider>
         </ActionSheet>,
       );
       await waitForFloatingPosition();
@@ -348,8 +358,8 @@ describe(ActionSheet, () => {
         await testCancelItemDetection(ActionSheet, { isCancelItem: true });
       });
 
-      it('detects cancel item via data-action-sheet-cancel-item attribute', async () => {
-        await testCancelItemDetection(ActionSheet, { 'data-action-sheet-cancel-item': '' });
+      it('detects cancel item via context', async () => {
+        await testCancelItemDetection(ActionSheet, { isCancelItemAtContext: true });
       });
     });
   });

@@ -12,6 +12,7 @@ import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
+import { ActionSheetItemContext } from './context';
 import { isRealClickEvent } from './helpers';
 import { Radio } from './subcomponents/Radio/Radio';
 import styles from './ActionSheetItem.module.css';
@@ -116,7 +117,7 @@ export const ActionSheetItem = ({
   onImmediateClick,
   multiline = false,
   iconChecked,
-  isCancelItem,
+  isCancelItem: isCancelItemProp,
   ...restProps
 }: ActionSheetItemProps): React.ReactNode => {
   const platform = usePlatform();
@@ -125,6 +126,7 @@ export const ActionSheetItem = ({
     mode: actionSheetMode,
     onClose: onActionSheetClose,
   } = React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
+  const { isCancelItem: isCancelItemFromContext } = React.useContext(ActionSheetItemContext);
   const { sizeY } = useAdaptivityWithJSMediaQueries();
 
   if (process.env.NODE_ENV === 'development') {
@@ -133,18 +135,16 @@ export const ActionSheetItem = ({
         'Свойство `mode="cancel"` устарело и будет удалено в VKUI v10. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.',
       );
     }
-    if (isCancelItem) {
+    if (isCancelItemProp) {
       warn(
         'Свойство `isCancelItem` устарело и будет удалено в VKUI v10. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.',
       );
     }
   }
 
-  // Определяем isCancelItem через data-атрибут или проп для обратной совместимости
-  const isCancelItemFromData = restProps['data-action-sheet-cancel-item'] !== undefined;
-  const resolvedIsCancelItem = isCancelItemFromData || Boolean(isCancelItem);
+  const isCancelItem = isCancelItemFromContext || !!isCancelItemProp;
 
-  const isModeCancel = mode === 'cancel' || isCancelItemFromData;
+  const isModeCancel = mode === 'cancel' || isCancelItemFromContext;
 
   const Component: React.ElementType | undefined = selectable ? 'label' : undefined;
 
@@ -157,10 +157,10 @@ export const ActionSheetItem = ({
         action: onClick,
         immediateAction: onImmediateClick,
         autoClose: !autoCloseDisabled,
-        isCancelItem: resolvedIsCancelItem,
+        isCancelItem,
       })?.(e);
     },
-    [autoCloseDisabled, resolvedIsCancelItem, onClick, onImmediateClick, onItemClick],
+    [autoCloseDisabled, isCancelItem, onClick, onImmediateClick, onItemClick],
   );
 
   const onKeyDown: React.KeyboardEventHandler<HTMLElement> = React.useCallback(
