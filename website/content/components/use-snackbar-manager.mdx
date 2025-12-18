@@ -200,6 +200,10 @@ const [snackbarApi, snackbarHolder] = useSnackbarManager();
 const snackbarRef = useRef(null);
 
 const showSnackbar = () => {
+  if (snackbarRef.current) {
+    snackbarApi.close(snackbarRef.current.id);
+  }
+
   const result = snackbarApi.open({
     children: "Это уведомление можно закрыть программно",
     action: "Закрыть",
@@ -235,6 +239,10 @@ const [snackbarApi, snackbarHolder] = useSnackbarManager();
 const snackbarRef = useRef(null);
 
 const showSnackbar = () => {
+  if (snackbarRef.current) {
+    snackbarApi.close(snackbarRef.current.id);
+  }
+
   snackbarRef.current = snackbarApi.open({
     children: "Загрузка...",
   });
@@ -271,16 +279,26 @@ const [snackbarApi, snackbarHolder] = useSnackbarManager({
   limit: 2, // Максимум 2 снекбара одновременно
   queueStrategy: "queue", // Новые будут ждать
 });
+const [snackbarsShowed, setSnackbarsShowed] = React.useState(false);
 
 const showMultiple = () => {
-  snackbarApi.open({ children: "Первое уведомление" });
-  snackbarApi.open({ children: "Второе уведомление" });
-  snackbarApi.open({ children: "Третье (будет ждать)" });
+  if (snackbarsShowed) {
+    snackbarApi.closeAll();
+    setSnackbarsShowed(false);
+    return;
+  }
+
+  setSnackbarsShowed(true);
+  Promise.all([
+    snackbarApi.open({ children: "Первое уведомление" }).onClose(),
+    snackbarApi.open({ children: "Второе уведомление" }).onClose(),
+    snackbarApi.open({ children: "Третье (будет ждать)" }).onClose(),
+  ]).then(() => setSnackbarsShowed(false));
 };
 
 return (
   <>
-    <Button onClick={showMultiple}>Показать несколько</Button>
+    <Button onClick={showMultiple}>{snackbarsShowed ? 'Закрыть все' : 'Показать несколько'}</Button>
     {snackbarHolder}
   </>
 );
