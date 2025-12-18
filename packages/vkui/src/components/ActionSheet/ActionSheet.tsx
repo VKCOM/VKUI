@@ -59,17 +59,13 @@ export interface ActionSheetProps
    */
   mode?: 'sheet' | 'menu';
   /**
-   * @deprecated Since 7.3.0.
-   *
-   * Свойство не используется и будет удалено в `v8`.
+   * @deprecated Since 7.3.0.  Будет удалeно в **VKUI v9**.
    */
-  mount?: boolean;
+  mount?: boolean; // TODO [>=9]: удалить неиспользуемое свойство
   /**
-   * @deprecated Since 7.3.0.
-   *
-   * Свойство не используется и будет удалено в `v8`.
+   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    */
-  disabled?: boolean;
+  disabled?: boolean; // TODO [>=9]: удалить неиспользуемое свойство
 }
 
 /**
