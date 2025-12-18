@@ -576,6 +576,15 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       return (
         <React.Fragment key={`${typeof option.value}-${option.value}`}>
           {renderOptionProp({
+            /**
+             * Компилятор сходит с ума из-за рефа внутри focusOptionOnMouseMove.
+             * Обходной путь прокидывать ref в свойства для рендер пропов.
+             */
+            ...(false
+              ? {
+                  __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: lastMousePositionRef,
+                }
+              : {}),
             option,
             hovered,
             children: option.label,

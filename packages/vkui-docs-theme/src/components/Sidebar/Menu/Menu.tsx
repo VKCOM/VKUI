@@ -39,7 +39,6 @@ function Folder({ item }: FolderProps) {
   const handleClick = React.useCallback(() => {
     if (isLink) {
       if (active) {
-        // eslint-disable-next-line react-compiler/react-compiler
         TreeState[item.route] = !open;
       } else {
         TreeState[item.route] = true;
