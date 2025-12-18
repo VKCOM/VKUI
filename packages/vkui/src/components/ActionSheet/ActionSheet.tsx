@@ -50,6 +50,9 @@ export interface ActionSheetProps
   onClose?: (reason: CloseReason) => void;
   /**
    * Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.
+   *
+   * > Since 8.0.0 аргумент, переданный в данную функцию, устарел и будет удален в **VKUI v10**.
+   * > Для получения причины закрытия всплывающего окна используйте свойство `onClose`.
    */
   onClosed: (options: ActionSheetOnCloseOptions) => void;
   /**
