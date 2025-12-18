@@ -64,11 +64,9 @@ export interface PanelHeaderProps
    */
   transparent?: boolean;
   /**
-   * @deprecated Since 7.4.0.
-   *
-   * Свойство будет удалено в `v8` (не используется).
+   * @deprecated Since 7.4.0. Будет удалeно в **VKUI v9**.
    */
-  shadow?: boolean;
+  shadow?: boolean; // TODO [>=9]: удалить неиспользуемое свойство свойство
   /**
    * Высота шапки будет игнорироваться контентом панели.
    */
