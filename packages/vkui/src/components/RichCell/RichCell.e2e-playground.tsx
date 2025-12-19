@@ -107,6 +107,19 @@ export const RichCellPlayground = (props: ComponentPlaygroundProps) => {
           after: [<Button key="After">Подписаться</Button>],
           afterAlign: ['start', 'center'],
         },
+        {
+          before: [<Avatar size={48} key="48" />],
+          children: ['Михаил Лихачев'],
+          overTitle: ['Команда ВКонтакте, Санкт-Петербург'],
+          after: [
+            undefined,
+            <RichCell.Icon key="icon">
+              <Icon24UserAddOutline />
+            </RichCell.Icon>,
+          ],
+          meta: ['Meta'],
+          submeta: ['Submeta'],
+        },
         // Проверяем, что при отсутствии after контент в основной части рястягивается на всю доступную ширину
         {
           children: ['Children'],

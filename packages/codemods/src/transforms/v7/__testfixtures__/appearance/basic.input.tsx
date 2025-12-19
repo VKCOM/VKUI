@@ -3,13 +3,9 @@ import React from 'react';
 
 const Component: React.FC<{
   appearance: AppearanceType;
-}> = ({
-  appearance,
-}) => {
-  return (
-    <div></div>
-  )
-}
+}> = ({ appearance }) => {
+  return <div></div>;
+};
 
 const App = () => {
   const appearance: AppearanceType = Appearance.LIGHT;

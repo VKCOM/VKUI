@@ -8,7 +8,7 @@ const App = () => {
         <TabbarItem selected={true} onClick={() => {}} text="Новости">
           <Icon28NewsfeedOutline />
         </TabbarItem>
-        <TabbarItem selected={false} onClick={() => {}} text={"Новости"}>
+        <TabbarItem selected={false} onClick={() => {}} text={'Новости'}>
           <Icon28NewsfeedOutline />
         </TabbarItem>
       </Tabbar>

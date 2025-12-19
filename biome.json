@@ -35,7 +35,6 @@
       "!.github/**/*.md",
       "!**/target/",
       "!**/fixture/",
-      "!**/__testfixtures__",
       "!**/storybook-static/",
       "!**/playwright-report/",
       "!**/blob-report/",

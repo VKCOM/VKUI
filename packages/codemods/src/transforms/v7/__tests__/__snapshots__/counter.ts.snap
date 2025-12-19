@@ -8,29 +8,17 @@ const App = () => {
   return (
     <React.Fragment>
       {/* primary → mode = "primary" appearance = "accent" */}
-      <Counter mode="primary" appearance="accent">
-        2
-      </Counter>
+      <Counter mode="primary" appearance="accent">2</Counter>
       {/* secondary → mode = "primary" appearance = "neutral" */}
-      <Counter mode="primary" appearance="neutral">
-        2
-      </Counter>
+      <Counter mode="primary" appearance="neutral">2</Counter>
       {/* prominent → mode = "primary" appearance = "accent-red" */}
-      <Counter mode="primary" appearance="accent-red">
-        2
-      </Counter>
+      <Counter mode="primary" appearance="accent-red">2</Counter>
       {/* contrast→ mode = "contrast" appearance = "accent" */}
-      <Counter mode="contrast" appearance="accent">
-        2
-      </Counter>
+      <Counter mode="contrast" appearance="accent">2</Counter>
       {/* inherit → оставляем */}
-      <Counter mode="inherit">
-        2
-      </Counter>
+      <Counter mode="inherit">2</Counter>
       {/* mode отсутствует -> ничего не делаем */}
-      <Counter>
-        2
-      </Counter>
+      <Counter>2</Counter>
       {/* Проверяем обработку вложенных Counter */}
       <Cell
         indicator={

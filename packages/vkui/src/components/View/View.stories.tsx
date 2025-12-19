@@ -145,7 +145,7 @@ export const SwipeBlockExample: Story = {
         <Alert
           title="Поле Имя не заполнено"
           description="Пожалуйста, заполните его."
-          onClose={() => setPopoutWithRestriction(null)}
+          onClosed={() => setPopoutWithRestriction(null)}
         />,
       );
 

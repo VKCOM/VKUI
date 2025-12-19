@@ -21,8 +21,6 @@ exports[`action-sheet > transforms correctly 2`] = `
 import React from 'react';
 
 const App = () => {
-  return (
-    <ActionSheet popupDirection="top" />
-  );
+  return <ActionSheet popupDirection="top" />;
 };"
 `;

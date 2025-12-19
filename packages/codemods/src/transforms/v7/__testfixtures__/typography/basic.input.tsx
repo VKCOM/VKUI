@@ -16,21 +16,20 @@ export const App = () => {
   const calculateUseAccentWeight = () => false;
   return (
     <React.Fragment>
-
       {/* должен оставить как есть*/}
       <Typography />
       {/* должен оставить weight */}
       <Typography weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Typography weight='1' />
+      <Typography weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Typography weight='2' useAccentWeight />
+      <Typography weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Typography weight='3' useAccentWeight={true} />
+      <Typography weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Typography weight='1' useAccentWeight={false} />
+      <Typography weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Typography weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Typography weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Typography useAccentWeight />
 
@@ -40,15 +39,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <Caption weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Caption weight='1' />
+      <Caption weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Caption weight='2' useAccentWeight />
+      <Caption weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Caption weight='3' useAccentWeight={true} />
+      <Caption weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Caption weight='1' useAccentWeight={false} />
+      <Caption weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Caption weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Caption weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Caption useAccentWeight />
 
@@ -58,15 +57,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <DisplayTitle weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <DisplayTitle weight='1' />
+      <DisplayTitle weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <DisplayTitle weight='2' useAccentWeight />
+      <DisplayTitle weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <DisplayTitle weight='3' useAccentWeight={true} />
+      <DisplayTitle weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <DisplayTitle weight='1' useAccentWeight={false} />
+      <DisplayTitle weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <DisplayTitle weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <DisplayTitle weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <DisplayTitle useAccentWeight />
 
@@ -76,15 +75,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <Footnote weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Footnote weight='1' />
+      <Footnote weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Footnote weight='2' useAccentWeight />
+      <Footnote weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Footnote weight='3' useAccentWeight={true} />
+      <Footnote weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Footnote weight='1' useAccentWeight={false} />
+      <Footnote weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Footnote weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Footnote weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Footnote useAccentWeight />
 
@@ -94,15 +93,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <Headline weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Headline weight='1' />
+      <Headline weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Headline weight='2' useAccentWeight />
+      <Headline weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Headline weight='3' useAccentWeight={true} />
+      <Headline weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Headline weight='1' useAccentWeight={false} />
+      <Headline weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Headline weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Headline weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Headline useAccentWeight />
 
@@ -112,15 +111,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <Paragraph weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Paragraph weight='1' />
+      <Paragraph weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Paragraph weight='2' useAccentWeight />
+      <Paragraph weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Paragraph weight='3' useAccentWeight={true} />
+      <Paragraph weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Paragraph weight='1' useAccentWeight={false} />
+      <Paragraph weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Paragraph weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Paragraph weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Paragraph useAccentWeight />
 
@@ -130,15 +129,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <Subhead weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Subhead weight='1' />
+      <Subhead weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Subhead weight='2' useAccentWeight />
+      <Subhead weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Subhead weight='3' useAccentWeight={true} />
+      <Subhead weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Subhead weight='1' useAccentWeight={false} />
+      <Subhead weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Subhead weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Subhead weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Subhead useAccentWeight />
 
@@ -148,15 +147,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <Text weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Text weight='1' />
+      <Text weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Text weight='2' useAccentWeight />
+      <Text weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Text weight='3' useAccentWeight={true} />
+      <Text weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Text weight='1' useAccentWeight={false} />
+      <Text weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Text weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Text weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Text useAccentWeight />
 
@@ -166,15 +165,15 @@ export const App = () => {
       {/* должен оставить weight */}
       <Title weight={undefined} />
       {/* должен добавить useAccentWeight */}
-      <Title weight='1' />
+      <Title weight="1" />
       {/* должен оставить weight и useAccentWeight */}
-      <Title weight='2' useAccentWeight />
+      <Title weight="2" useAccentWeight />
       {/* должен убрать ={true} у useAccentWeight */}
-      <Title weight='3' useAccentWeight={true} />
+      <Title weight="3" useAccentWeight={true} />
       {/* должен оставить weight и убрать useAccentWeight так как false по умолчанию */}
-      <Title weight='1' useAccentWeight={false} />
+      <Title weight="1" useAccentWeight={false} />
       {/* должен оставить weight и useAccentWeight */}
-      <Title weight='2' useAccentWeight={flag && calculateUseAccentWeight} />
+      <Title weight="2" useAccentWeight={flag && calculateUseAccentWeight} />
       {/* должен убрать useAccentWeight так как без weight не имеет смысла */}
       <Title useAccentWeight />
     </React.Fragment>

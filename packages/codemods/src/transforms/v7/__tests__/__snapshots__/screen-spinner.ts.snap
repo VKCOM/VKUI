@@ -14,10 +14,7 @@ const App = () => {
         <ScreenSpinner.SwapIcon />
       </ScreenSpinner.Container>
       {/* Проверяем переименование caption на label */}
-      <ScreenSpinner
-        state="loading"
-        label="Caption"
-      />
+      <ScreenSpinner state="loading" label="Caption" />
       <ScreenSpinner.Container label="Caption">
         <ScreenSpinner.Loader />
         <ScreenSpinner.SwapIcon />

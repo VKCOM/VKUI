@@ -7,26 +7,14 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      <Cell
-        onClick={() => {}}
-        chevron="auto"
-        indicator="При использовании"
-      >
+      <Cell onClick={() => {}} chevron="auto" indicator="При использовании">
         Геолокация
       </Cell>
-      <Cell
-        onClick={() => {}}
-        chevron="always"
-        indicator="При использовании"
-      >
+      <Cell onClick={() => {}} chevron="always" indicator="При использовании">
         Геолокация
       </Cell>
       {/* rename subhead -> overtitle */}
-      <Cell
-        overTitle={"Subhead"}
-        onClick={() => {}}
-        indicator="При использовании"
-      >
+      <Cell overTitle={'Subhead'} onClick={() => {}} indicator="При использовании">
         Геолокация
       </Cell>
     </React.Fragment>

@@ -11,8 +11,6 @@ import { filterDirectories } from './helpers';
 import type { FileProps, FolderProps, MenuProps } from './types';
 import styles from './Menu.module.css';
 
-const TreeState: Record<string, boolean> = Object.create(null);
-
 function Folder({ item }: FolderProps) {
   const { searchableNavbarItems = [] } = useThemeConfig();
   const routeOriginal = useFSRoute();
@@ -21,38 +19,32 @@ function Folder({ item }: FolderProps) {
   const activeRouteInside = active || route.startsWith(item.route + '/');
   const { theme } = item as Item;
 
-  const [, rerender] = React.useState({});
-
-  const open =
-    TreeState[item.route] === undefined
-      ? active || activeRouteInside || (!theme ? false : theme.collapsed)
-      : TreeState[item.route];
+  const [open, setOpen] = React.useState<boolean | undefined>(
+    active || activeRouteInside || (!theme ? false : theme.collapsed),
+  );
 
   React.useEffect(() => {
-    if (activeRouteInside) {
-      TreeState[item.route] = true;
+    if (activeRouteInside && open === undefined) {
+      setOpen(true);
     }
-  }, [activeRouteInside, item.route]);
+  }, [activeRouteInside, open]);
 
   const isLink = 'withIndexPage' in item && item.withIndexPage;
 
   const handleClick = React.useCallback(() => {
     if (isLink) {
       if (active) {
-        // eslint-disable-next-line react-compiler/react-compiler
-        TreeState[item.route] = !open;
+        setOpen((value) => !value);
       } else {
-        TreeState[item.route] = true;
+        setOpen(true);
       }
-      rerender({});
       return;
     }
     if (active) {
       return;
     }
-    TreeState[item.route] = !open;
-    rerender({});
-  }, [active, isLink, item.route, open]);
+    setOpen((value) => !value);
+  }, [active, isLink]);
 
   const props: AccordionProps = React.useMemo(
     () => ({
