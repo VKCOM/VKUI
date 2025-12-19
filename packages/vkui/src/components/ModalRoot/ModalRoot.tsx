@@ -7,6 +7,8 @@ import { ModalRootContext, ModalRootOverlayContext } from './ModalRootContext';
 import type { ModalRootProps } from './types';
 
 /**
+ * @deprecated Since 8.0.0. Компонент устарел и будет удален в **VKUI v10**.
+ * Вместо него вы можете использовать хук [useModalManager](/components/use-modal-manager).
  * @see https://vkui.io/components/modal-root
  */
 export const ModalRoot = ({

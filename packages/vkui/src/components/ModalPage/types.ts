@@ -138,8 +138,6 @@ export interface ModalPageProps
   disableFocusTrap?: UseFocusTrapProps['disabled'];
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
-   * > При использовании `ModalPage` внутри `ModalRoot` есть особенность использования этого свойства.
-   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-modal-overlay).
    */
   disableModalOverlay?: boolean;
   /**
