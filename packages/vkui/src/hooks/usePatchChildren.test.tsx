@@ -5,6 +5,7 @@ import { fireEvent, render, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { type Mock } from 'vitest';
 import { setRef } from '../lib/utils';
+import { setNodeEnv } from '../testing/utils';
 import type { HasRootRef } from '../types';
 import { usePatchChildren } from './usePatchChildren';
 
@@ -46,11 +47,12 @@ vi.mock('../lib/warnOnce', () => ({
   warnOnce: () => () => console.error('custom-error'),
 }));
 
-vi.stubEnv('NODE_ENV', 'development');
-
 type ConsoleErrorArgs = Parameters<typeof console.error>;
 
 describe(usePatchChildren, () => {
+  beforeEach(() => setNodeEnv('development'));
+  afterEach(() => vi.unstubAllEnvs());
+
   let consoleErrorMock: Mock<typeof console.log> = vi.fn();
   beforeAll(() => {
     consoleErrorMock.mockRestore();
