@@ -2697,7 +2697,7 @@ __metadata:
     "@types/react-dom": "npm:^19.0.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    storybook: "npm:10.1.8"
+    storybook: "npm:10.1.10"
   languageName: unknown
   linkType: soft
 
@@ -5316,7 +5316,7 @@ __metadata:
     semver: "npm:^7.7.3"
     shx: "npm:^0.4.0"
     size-limit: "npm:^12.0.0"
-    storybook: "npm:10.1.8"
+    storybook: "npm:10.1.10"
     style-loader: "npm:^4.0.0"
     stylelint: "npm:^16.26.1"
     stylelint-config-recess-order: "npm:^7.4.0"
@@ -17436,9 +17436,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook@npm:10.1.8":
-  version: 10.1.8
-  resolution: "storybook@npm:10.1.8"
+"storybook@npm:10.1.10":
+  version: 10.1.10
+  resolution: "storybook@npm:10.1.10"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
     "@storybook/icons": "npm:^2.0.0"
@@ -17459,7 +17459,7 @@ __metadata:
       optional: true
   bin:
     storybook: ./dist/bin/dispatcher.js
-  checksum: 10/a736907b5143e23a40d56bcf10e829e6322d5e8e0421e63e65a4d540dce058f4c43c2c5bd4cc62fd6e04faa434b117660730d15b9259bb51635bd3d4e62d5e18
+  checksum: 10/c1f01c7ab57e80d2f2ef3a5c49baad5904e77c8e079199ad134e98a7ae455d52422390cd704e64142b36668874c055670dbffe0e334e1f4d541ebd4384052dd7
   languageName: node
   linkType: hard
 
