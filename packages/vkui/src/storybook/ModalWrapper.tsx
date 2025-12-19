@@ -2,27 +2,45 @@
 
 import * as React from 'react';
 import { Button } from '../components/Button/Button';
-import { ModalRoot } from '../components/ModalRoot/ModalRoot';
 import { Placeholder } from '../components/Placeholder/Placeholder';
+import {
+  type CustomModalProps,
+  type OpenModalCardProps,
+  type OpenModalPageProps,
+  useModalManager,
+} from '../hooks/useModalManager';
 
-export const ModalWrapper = ({
-  children,
-  modalId,
+export const ModalWrapper = <T extends OpenModalCardProps | OpenModalPageProps>({
+  type,
+  customModal,
 }: {
-  children: React.ReactElement | Iterable<React.ReactElement>;
-  modalId: string | null;
+  type: T extends OpenModalCardProps ? 'card' : 'page';
+  customModal: React.ComponentType<CustomModalProps<T>>;
 }) => {
-  const [activeModal, setActiveModal] = React.useState<string | null>(modalId);
+  const [modalsApi, modalsHolder] = useModalManager();
 
   return (
     <React.Fragment>
       <Placeholder stretched>
-        <Button onClick={() => setActiveModal(modalId)}>Открыть</Button>
+        <Button
+          onClick={() =>
+            type === 'card'
+              ? modalsApi.openCustomModalCard(
+                  customModal as unknown as React.ComponentType<
+                    CustomModalProps<OpenModalCardProps>
+                  >,
+                )
+              : modalsApi.openCustomModalPage(
+                  customModal as unknown as React.ComponentType<
+                    CustomModalProps<OpenModalPageProps>
+                  >,
+                )
+          }
+        >
+          Открыть
+        </Button>
       </Placeholder>
-
-      <ModalRoot activeModal={activeModal} onClose={() => setActiveModal(null)}>
-        {children}
-      </ModalRoot>
+      {modalsHolder}
     </React.Fragment>
   );
 };

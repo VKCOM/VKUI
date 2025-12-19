@@ -142,6 +142,7 @@ import {
   useAdaptivityConditionalRender,
   useAdaptivityWithJSMediaQueries,
   useFocusVisible,
+  useModalManager,
   usePagination,
   usePatchChildren,
   usePlatform,
@@ -317,4 +318,5 @@ export const scope: Record<string, unknown> = {
   usePagination,
   usePopover,
   useSnackbarManager,
+  useModalManager,
 };

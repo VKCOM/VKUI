@@ -7,6 +7,8 @@ import { ModalRootContext, ModalRootOverlayContext } from './ModalRootContext';
 import type { ModalRootProps } from './types';
 
 /**
+ * @deprecated Since 8.0.0. Компонент устарел и будет удален в **VKUI v10**.
+ * Вместо него вы можете использовать хук [useModalManager](/components/use-modal-manager).
  * @see https://vkui.io/components/modal-root
  */
 export const ModalRoot = ({
@@ -20,6 +22,10 @@ export const ModalRoot = ({
   onOpened,
   onClose,
   onClosed,
+  onOverlayClosed,
+  onOverlayShowed,
+  disableCloseAnimation,
+  disableOpenAnimation,
 }: ModalRootProps): React.ReactNode => {
   const contextValue = React.useMemo(
     () => ({
@@ -30,6 +36,8 @@ export const ModalRoot = ({
       modalOverlayTestId,
       noFocusToDialog,
       disableModalOverlay,
+      disableCloseAnimation,
+      disableOpenAnimation,
 
       // callbacks
       onOpen,
@@ -39,7 +47,9 @@ export const ModalRoot = ({
     }),
     [
       activeModal,
+      disableCloseAnimation,
       disableModalOverlay,
+      disableOpenAnimation,
       modalOverlayTestId,
       noFocusToDialog,
       onClose,
@@ -58,6 +68,10 @@ export const ModalRoot = ({
               position="fixed"
               visible={typeof activeModal === 'string'}
               getRootRef={modalOverlayRef}
+              onShowed={onOverlayShowed}
+              onClosed={onOverlayClosed}
+              disableCloseAnimation={disableCloseAnimation}
+              disableOpenAnimation={disableOpenAnimation}
             />
           )}
           {children}

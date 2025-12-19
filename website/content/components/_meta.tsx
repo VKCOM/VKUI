@@ -167,6 +167,7 @@ const meta: MetaRecord = {
   'use-patch-children': 'usePatchChildren',
   'use-scroll': 'useScroll',
   'use-scroll-lock': 'useScrollLock',
+  'use-modal-manager': 'useModalManager',
   'use-today-date': 'useTodayDate',
   'visually-hidden': 'VisuallyHidden',
 };
