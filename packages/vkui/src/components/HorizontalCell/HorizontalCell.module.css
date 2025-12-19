@@ -33,10 +33,7 @@
   margin-block-start: 2px;
 }
 
-.sized {
-  max-inline-size: var(--vkui_internal--cell_width);
-}
-
+.sized .body,
 .customSize .body {
   inline-size: var(--vkui_internal--cell_width);
 }
