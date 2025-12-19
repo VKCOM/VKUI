@@ -1,6 +1,5 @@
 import { classNames } from '@vkontakte/vkjs';
 import { warnOnce } from '../../../lib/warnOnce';
-import type { HasChildren } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import type { RootComponentProps } from '../../RootComponent/RootComponent';
 import styles from './FlexItem.module.css';
@@ -20,9 +19,7 @@ const alignSelfClassNames = {
   stretch: styles.alignSelfStretch,
 };
 
-export interface FlexItemProps
-  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
-    HasChildren {
+export interface FlexItemProps extends RootComponentProps<HTMLElement> {
   /**
    * Для задания выравнивания, отлично от родительского, эквивалентно `align-self`.
    */
@@ -45,11 +42,10 @@ export interface FlexItemProps
 const warn = warnOnce('Flex.Item');
 
 export const FlexItem = ({
-  children,
   alignSelf,
   flex,
   flexBasis,
-  ...rest
+  ...restProps
 }: FlexItemProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development') {
     warn('Компонент Flex.Item устарел, используйте компонент Flex в качестве альтернативы.');
@@ -57,14 +53,12 @@ export const FlexItem = ({
 
   return (
     <RootComponent
-      {...rest}
       baseStyle={{ flexBasis }}
       baseClassName={classNames(
         alignSelf && alignSelfClassNames[alignSelf],
         flex && flexClassNames[flex],
       )}
-    >
-      {children}
-    </RootComponent>
+      {...restProps}
+    />
   );
 };

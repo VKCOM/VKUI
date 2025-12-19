@@ -45,10 +45,15 @@ export interface TappableProps extends ClickableProps, StateProps {
   hoverClassName?: string; // TODO [>=9]: удалить неиспользуемое свойство.
 }
 
-// TODO [>=9]: = React.AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>
-//
-// NOTE: Возможно стоит вообще запретить компонентам расширяться от TappableProps?
-export type TappableOmitProps = Omit<TappableProps, 'DefaultComponent'>;
+/**
+ * @deprecated Не наследуйтесь от этого типа и от TappableProps.
+ *
+ * Компонентам не нужны лишние свойства Tappable компонента.
+ */
+export type TappableOmitProps = Omit<
+  TappableProps,
+  'DefaultComponent' | 'baseClassName' | 'baseStyle'
+>;
 
 export const Tappable = ({
   baseClassName,

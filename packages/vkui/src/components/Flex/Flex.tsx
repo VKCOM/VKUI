@@ -55,9 +55,7 @@ type FlexContentProps =
   | 'space-between'
   | 'space-evenly';
 
-export interface FlexProps
-  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName'>,
-    LayoutProps {
+export interface FlexProps extends RootComponentProps<HTMLElement>, LayoutProps {
   /**
    * Направление осей, эквивалентно `flex-direction`.
    */
@@ -115,7 +113,6 @@ export const Flex: React.FC<FlexProps> & {
   noWrap = false,
   direction = 'row',
   reverse = false,
-  children,
   alignSelf,
   display = 'flex',
   ...restProps
@@ -125,7 +122,6 @@ export const Flex: React.FC<FlexProps> & {
 
   return (
     <RootComponent
-      {...resolvedProps}
       baseClassName={classNames(
         styles.host,
         !noWrap && styles.wrap,
@@ -139,9 +135,8 @@ export const Flex: React.FC<FlexProps> & {
         display !== 'flex' && displayClassNames[display],
       )}
       baseStyle={getGapsByUser(rowGap, columnGap)}
-    >
-      {children}
-    </RootComponent>
+      {...resolvedProps}
+    />
   );
 };
 
