@@ -124,7 +124,7 @@ export const Button = ({
     [isDisabled, onClick],
   );
 
-  const buttonProps = (() => {
+  const buttonProps = React.useMemo(() => {
     if (hasHref) {
       return isDisabled
         ? {
@@ -144,7 +144,7 @@ export const Button = ({
         disabled,
       };
     }
-  })();
+  }, [disabled, hasHref, href, isDisabled]);
 
   return (
     <Tappable
