@@ -5,7 +5,7 @@ import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useStableCallback } from '../../hooks/useStableCallback.ts';
+import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { type HasRootRef } from '../../types';
 import type { ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';

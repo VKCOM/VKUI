@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type ActionSheetOnClosedReason, type ActionSheetOnCloseReason } from './ActionSheet.tsx';
+import { type ActionSheetOnClosedReason, type ActionSheetOnCloseReason } from './ActionSheet';
 
 export type ActionType<T> = (event: React.MouseEvent<T>) => void;
 

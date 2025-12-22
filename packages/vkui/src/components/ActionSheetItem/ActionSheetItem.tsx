@@ -6,7 +6,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { usePlatform } from '../../hooks/usePlatform';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { warnOnce } from '../../lib/warnOnce';
-import { type HasDataAttribute } from '../../types.ts';
+import { type HasDataAttribute } from '../../types';
 import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
