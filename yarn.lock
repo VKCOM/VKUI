@@ -5321,10 +5321,10 @@ __metadata:
     stylelint: "npm:^16.26.1"
     stylelint-config-recess-order: "npm:^7.4.0"
     stylelint-config-standard: "npm:^39.0.1"
-    stylelint-media-use-custom-media: "npm:^4.0.0"
+    stylelint-media-use-custom-media: "npm:^4.1.0"
     stylelint-order: "npm:^7.0.0"
     stylelint-use-logical: "npm:^2.1.2"
-    stylelint-value-no-unknown-custom-properties: "npm:^6.0.1"
+    stylelint-value-no-unknown-custom-properties: "npm:^6.1.0"
     swc-loader: "npm:^0.2.6"
     swc-plugin-css-modules: "npm:6.0.0"
     swc-plugin-transform-remove-imports: "npm:7.0.0"
@@ -17813,12 +17813,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-media-use-custom-media@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "stylelint-media-use-custom-media@npm:4.0.0"
+"stylelint-media-use-custom-media@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "stylelint-media-use-custom-media@npm:4.1.0"
   peerDependencies:
     stylelint: ">=16"
-  checksum: 10/d74fca0a7c80875e25ad7ba5f5439201a12d7184e80ce1981320fc36384b2619ea9e026d33b2fff1fdbf6121dcf8853f75b1b5df5c0653283ce5ce52ea08149e
+  checksum: 10/8d5f44bfecd46203aaa669471a42bd72e2a2682200a95641ee8c1770933c9fc967e0cfe6117024927975a94cbab7c9073d4c8639bdd88d2b36149817afdba53e
   languageName: node
   linkType: hard
 
@@ -17843,15 +17843,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-value-no-unknown-custom-properties@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "stylelint-value-no-unknown-custom-properties@npm:6.0.1"
+"stylelint-value-no-unknown-custom-properties@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "stylelint-value-no-unknown-custom-properties@npm:6.1.0"
   dependencies:
     postcss-value-parser: "npm:^4.2.0"
     resolve: "npm:^1.22.8"
   peerDependencies:
     stylelint: ">=16"
-  checksum: 10/ceb53a731aa2159173f5fefb76f365de0171058f62791cfaa07aac47bb25d8d6ee6a6d1ea4c1919841edc7130cf9ed530a44e6952a72dbdfde27023a305e4739
+  checksum: 10/36bc702f91a7ada88a1fb20850f1d4d79952b14f907d63b5163201671f421fbf72809c87b5e19f65c46bc0cf8f136743ae7acc53304c312c90a70ed5abfddca6
   languageName: node
   linkType: hard
 
