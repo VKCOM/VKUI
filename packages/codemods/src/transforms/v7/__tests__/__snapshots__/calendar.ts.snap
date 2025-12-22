@@ -5,7 +5,7 @@ exports[`calendar > transforms correctly 1`] = `
 import React from 'react';
 
 const App = () => {
-  const callback = () => {}
+  const callback = () => {};
   return (
     <React.Fragment>
       <Calendar

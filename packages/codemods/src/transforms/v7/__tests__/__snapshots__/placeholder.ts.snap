@@ -1,7 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`placeholder > transforms correctly 1`] = `
-"import { Button,ButtonGroup, Icon56UserAddOutline, Icon56UsersOutline, Placeholder } from '@vkontakte/vkui';
+"import {
+  Button,
+  ButtonGroup,
+  Icon56UserAddOutline,
+  Icon56UsersOutline,
+  Placeholder,
+} from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
@@ -24,7 +30,9 @@ const App = () => {
           <Icon56UserAddOutline />
         </Placeholder.Icon>
         <Placeholder.Title>Find friends</Placeholder.Title>
-        <Placeholder.Description>The people you add as your friends will be displayed here</Placeholder.Description>
+        <Placeholder.Description>
+          The people you add as your friends will be displayed here
+        </Placeholder.Description>
         <Placeholder.Actions>
           <ButtonGroup mode="vertical" align="center">
             <Button size="m">Button</Button>

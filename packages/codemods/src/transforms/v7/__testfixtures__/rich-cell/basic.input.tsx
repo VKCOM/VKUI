@@ -2,7 +2,7 @@ import { Avatar, RichCell } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
-  const text = "Text"
+  const text = 'Text';
   return (
     <React.Fragment>
       <RichCell
@@ -18,9 +18,9 @@ const App = () => {
 
       <RichCell
         before={<Avatar size={72} src="" />}
-        subhead={"Subhead"}
+        subhead={'Subhead'}
         text={text}
-        caption={"Caption"}
+        caption={'Caption'}
         after="After"
         afterCaption="After Caption"
       >

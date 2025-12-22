@@ -2,7 +2,7 @@ import { PanelHeader, SplitLayout } from '@vkontakte/vkui';
 import React from 'react';
 
 const App = () => {
-  const rootRef = React.createRef<HTMLDivElement>()
+  const rootRef = React.createRef<HTMLDivElement>();
   const contentRef = React.createRef<HTMLDivElement>();
 
   return (
@@ -10,7 +10,7 @@ const App = () => {
       <SplitLayout
         center
         className="baseClassName"
-        style={{background: "red"}}
+        style={{ background: 'red' }}
         id="content"
         getRootRef={rootRef}
         data-testid="content"

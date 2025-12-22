@@ -12,9 +12,7 @@ const displayClassNames = {
   'contents': styles.displayContents,
 };
 
-export interface BoxProps
-  extends Omit<RootComponentProps<HTMLElement>, 'baseClassName' | 'baseStyle'>,
-    LayoutProps {
+export interface BoxProps extends RootComponentProps<HTMLElement>, LayoutProps {
   /**
    * Возможность задать css-свойство `display`.
    */

@@ -8,7 +8,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Spacing size="2xs">
-        <Separator/>
+        <Separator />
       </Spacing>
       <Spacing size="2xs" />
       <Spacing size={"2xs"} />

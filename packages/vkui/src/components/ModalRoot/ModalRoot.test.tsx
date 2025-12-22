@@ -8,7 +8,7 @@ import { ModalPage } from '../ModalPage/ModalPage';
 import { waitModalPageCSSTransitionEnd } from '../ModalPage/ModalPage.test';
 import { ModalRoot } from './ModalRoot';
 
-const waitCSSTransitionEndConditionally = async (el: HTMLElement, displayName: string) =>
+export const waitCSSTransitionEndConditionally = async (el: HTMLElement, displayName: string) =>
   displayName === 'ModalPage'
     ? await waitModalPageCSSTransitionEnd(el)
     : await waitModalCardCSSTransitionEnd(el);

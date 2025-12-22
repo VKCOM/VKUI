@@ -13,4 +13,3 @@ const App = () => {
     </React.Fragment>
   );
 };
-

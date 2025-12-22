@@ -9,7 +9,9 @@ const App = () => {
       <Popper arrowClassName="arrow">content</Popper>
       <Popper forcePortal>content</Popper>
       <Popper portalRoot={document.getElementById('root')}>content</Popper>
-      <Popper forcePortal portalRoot={document.getElementById('root')}>content</Popper>
+      <Popper forcePortal portalRoot={document.getElementById('root')}>
+        content
+      </Popper>
       <Popper renderContent={() => <div>content</div>} />
     </React.Fragment>
   );

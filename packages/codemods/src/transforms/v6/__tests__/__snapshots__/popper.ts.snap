@@ -14,7 +14,9 @@ const App = () => {
       }}>content</Popper>
       <Popper usePortal>content</Popper>
       <Popper usePortal={document.getElementById('root')}>content</Popper>
-      <Popper usePortal={document.getElementById('root')}>content</Popper>
+      <Popper usePortal={document.getElementById('root')}>
+        content
+      </Popper>
       <Popper children={() => <div>content</div>} />
     </React.Fragment>
   );

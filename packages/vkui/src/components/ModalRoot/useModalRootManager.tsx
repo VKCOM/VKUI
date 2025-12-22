@@ -11,24 +11,28 @@ import { VisuallyHiddenModalOverlay } from './VisuallyHiddenModalOverlay/Visuall
 import type { ModalRootCallbackFunction } from './types';
 
 const warn = warnOnce('useModalManager');
-export interface UseModalManager {
+export interface UseModalRootManager {
   id?: string;
   open: boolean;
   keepMounted: boolean;
   modalOverlayTestId?: string;
   noFocusToDialog?: boolean;
   disableModalOverlay?: boolean;
+  disableCloseAnimation?: boolean;
+  disableOpenAnimation?: boolean;
   onOpen?: AnyFunction;
   onOpened?: AnyFunction;
   onClose?: AnyFunction;
   onClosed?: AnyFunction;
 }
 
-export interface UseModalManagerResolvedProps {
+export interface UseModalRootManagerResolvedProps {
   id: string;
   open: boolean;
   noFocusToDialog?: boolean;
   disableModalOverlay?: boolean;
+  disableCloseAnimation?: boolean;
+  disableOpenAnimation?: boolean;
   modalOverlayTestId?: string;
   ModalOverlay: React.ComponentType<ModalOverlayProps>;
   onOpen?: AnyFunction;
@@ -37,22 +41,24 @@ export interface UseModalManagerResolvedProps {
   onClosed?: AnyFunction;
 }
 
-export type UseModalManagerResult =
-  | { mounted: false; shouldPreserveSnapPoint: boolean; id: UseModalManagerResolvedProps['id'] }
-  | ({ mounted: true; shouldPreserveSnapPoint: boolean } & UseModalManagerResolvedProps);
+export type UseModalRootManagerResult =
+  | { mounted: false; shouldPreserveSnapPoint: boolean; id: UseModalRootManagerResolvedProps['id'] }
+  | ({ mounted: true; shouldPreserveSnapPoint: boolean } & UseModalRootManagerResolvedProps);
 
-export const useModalManager = ({
+export const useModalRootManager = ({
   id: idProp,
   open,
   keepMounted,
   modalOverlayTestId,
   noFocusToDialog,
   disableModalOverlay,
+  disableCloseAnimation,
+  disableOpenAnimation,
   onOpen,
   onOpened,
   onClose,
   onClosed,
-}: UseModalManager): UseModalManagerResult => {
+}: UseModalRootManager): UseModalRootManagerResult => {
   const context = useContext(ModalRootContext);
   const generatingId = useId();
   const id = getNavId({ nav: idProp }, context.isInsideModal ? warn : undefined) || generatingId;
@@ -82,6 +88,8 @@ export const useModalManager = ({
     noFocusToDialog: noFocusToDialog || context.noFocusToDialog,
     modalOverlayTestId: modalOverlayTestId || context.modalOverlayTestId,
     disableModalOverlay: disableModalOverlay || context.disableModalOverlay,
+    disableCloseAnimation: disableCloseAnimation || context.disableCloseAnimation,
+    disableOpenAnimation: disableOpenAnimation || context.disableOpenAnimation,
     ModalOverlay: context.isInsideModal ? VisuallyHiddenModalOverlay : ModalOverlay,
     onOpen: onOpen || getContextCallback(id, context.onOpen),
     onOpened: onOpened || getContextCallback(id, context.onOpened),

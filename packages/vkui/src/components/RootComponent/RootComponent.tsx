@@ -7,20 +7,22 @@ import styles from './RootComponent.module.css';
 export interface RootComponentProps<T>
   extends React.AllHTMLAttributes<T>,
     HasRootRef<T>,
-    HasComponent {
+    HasComponent {}
+
+export interface RootComponentExtendProps {
   /**
-   * @deprecated Since 7.3.0.
-   *
-   * Свойство устарело и будет удалено в `v8`, используйте свойство `className`.
+   * Базовый класс.
    */
-  baseClassName?: string | false; // TODO:  Перенести свойство в RootComponentInternalProps, в непубличное API
+  baseClassName?: string | false;
   /**
-   * @deprecated Since 7.3.0.
-   *
-   * Свойство устарело и будет удалено в `v8`, используйте свойство `style`.
+   * Базовые стили.
    */
-  baseStyle?: React.CSSProperties; // TODO:  Перенести свойство в RootComponentInternalProps, в непубличное API
+  baseStyle?: React.CSSProperties;
 }
+
+export interface RootComponentInternalProps<T>
+  extends RootComponentProps<T>,
+    RootComponentExtendProps {}
 
 /**
  * Базовый корневой компонент.
@@ -33,7 +35,7 @@ export const RootComponent = <T,>({
   style,
   getRootRef,
   ...restProps
-}: RootComponentProps<T>): React.ReactNode => (
+}: RootComponentInternalProps<T>): React.ReactNode => (
   <Component
     ref={getRootRef}
     className={classNames(
