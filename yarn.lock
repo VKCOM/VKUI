@@ -6248,7 +6248,7 @@ __metadata:
     postcss-modules: "npm:^6.0.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    serve-static: "npm:2.2.0"
+    serve-static: "npm:2.2.1"
     swc-loader: "npm:^0.2.6"
     terser-webpack-plugin: "npm:^5.3.16"
     webpack: "npm:^5.103.0"
@@ -16780,15 +16780,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serve-static@npm:2.2.0":
-  version: 2.2.0
-  resolution: "serve-static@npm:2.2.0"
+"serve-static@npm:2.2.1":
+  version: 2.2.1
+  resolution: "serve-static@npm:2.2.1"
   dependencies:
     encodeurl: "npm:^2.0.0"
     escape-html: "npm:^1.0.3"
     parseurl: "npm:^1.3.3"
     send: "npm:^1.2.0"
-  checksum: 10/9f1a900738c5bb02258275ce3bd1273379c4c3072b622e15d44e8f47d89a1ba2d639ec2d63b11c263ca936096b40758acb7a0d989cd6989018a65a12f9433ada
+  checksum: 10/71500fe80cc7163fec04e4297de7591ad1cb682d137fc030e7a53e57040fda5187e8082a9c1b2ef37f1d3f9c27c9a94d4ba61806ebc28938ba4a7c8947c9f71e
   languageName: node
   linkType: hard
 
