@@ -248,13 +248,13 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 запускаются затратные по времени действия.
 
 ⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически устанавливает `aria-label` в значение
-`loadingAriaLabel` (по умолчанию "Загрузка..."), чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это
-значение, передав свойство `loadingAriaLabel`.
+`loadingLabel` (по умолчанию "Загрузка..."), чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это
+значение, передав свойство `loadingLabel`.
 
 <Playground>
   ```jsx
   <Button loading>Button</Button>
-  <Button loading loadingAriaLabel="Сохранение данных...">Button</Button>
+  <Button loading loadingLabel="Сохранение данных...">Button</Button>
   ```
 </Playground>
 

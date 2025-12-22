@@ -73,23 +73,23 @@ export interface VKUIButtonProps extends HasAlign {
    * Включает состояние загрузки (отображает спиннер).
    *
    * ⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически
-   * устанавливает `aria-label` в значение `loadingAriaLabel` (по умолчанию "Загрузка..."),
+   * устанавливает `aria-label` в значение `loadingLabel` (по умолчанию "Загрузка..."),
    * чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это значение,
-   * передав свойство `loadingAriaLabel`.
+   * передав свойство `loadingLabel`.
    *
    * @example
    * <Button loading>Сохранить</Button>
    * // Скринридер объявит: "Загрузка..., кнопка"
    *
    * @example
-   * <Button loading loadingAriaLabel="Сохранение данных...">Сохранить</Button>
+   * <Button loading loadingLabel="Сохранение данных...">Сохранить</Button>
    */
   loading?: boolean;
   /**
    * Текст для `aria-label` при состоянии загрузки.
    * Используется только когда `loading={true}`.
    */
-  loadingAriaLabel?: string;
+  loadingLabel?: string;
   /**
    * Отключает анимацию спиннера загрузки.
    */
@@ -116,7 +116,7 @@ export const Button = ({
   after,
   getRootRef,
   loading,
-  loadingAriaLabel = 'Загрузка...',
+  loadingLabel = 'Загрузка...',
   onClick,
   disableSpinnerAnimation,
   rounded,
@@ -134,10 +134,10 @@ export const Button = ({
 
   const ariaLabel = React.useMemo(() => {
     if (loading) {
-      return `${ariaLabelProp} ${loadingAriaLabel}`;
+      return `${ariaLabelProp} ${loadingLabel}`;
     }
     return ariaLabelProp;
-  }, [loading, loadingAriaLabel, ariaLabelProp]);
+  }, [loading, loadingLabel, ariaLabelProp]);
 
   const handleClick = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
