@@ -133,10 +133,7 @@ export const Button = ({
   const hasHref = href !== undefined;
 
   const ariaLabel = React.useMemo(() => {
-    if (loading) {
-      return `${ariaLabelProp} ${loadingLabel}`;
-    }
-    return ariaLabelProp;
+    return [ariaLabelProp, loading && loadingLabel].filter(Boolean).join(' ');
   }, [loading, loadingLabel, ariaLabelProp]);
 
   const handleClick = React.useCallback(
