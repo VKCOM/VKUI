@@ -7,6 +7,8 @@ import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useStableCallback } from '../../hooks/useStableCallback.ts';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
+import { type HasRootRef } from '../../types';
+import type { ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
@@ -60,6 +62,13 @@ export interface ActionSheetProps
    */
   iosCloseItem?: React.ReactNode;
   /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS.
+   */
+  slotProps?: {
+    iosCloseItem?: Omit<ActionSheetItemProps, 'mode' | 'isCancelItem'> & HasRootRef<HTMLElement>;
+  };
+  /**
    * Режим отображения компонента:
    *
    * - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
@@ -67,17 +76,13 @@ export interface ActionSheetProps
    */
   mode?: 'sheet' | 'menu';
   /**
-   * @deprecated Since 7.3.0.
-   *
-   * Свойство не используется и будет удалено в `v8`.
+   * @deprecated Since 7.3.0.  Будет удалeно в **VKUI v9**.
    */
-  mount?: boolean;
+  mount?: boolean; // TODO [>=9]: удалить неиспользуемое свойство
   /**
-   * @deprecated Since 7.3.0.
-   *
-   * Свойство не используется и будет удалено в `v8`.
+   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    */
-  disabled?: boolean;
+  disabled?: boolean; // TODO [>=9]: удалить неиспользуемое свойство
 }
 
 /**
@@ -90,6 +95,7 @@ export const ActionSheet = ({
   description,
   style,
   iosCloseItem,
+  slotProps,
   popupOffsetDistance,
   placement,
   mode: modeProp,
@@ -183,7 +189,7 @@ export const ActionSheet = ({
         </div>
         {platform === 'ios' && mode === 'sheet' && (
           <div className={styles.closeItemWrapperIos}>
-            {iosCloseItem ?? <ActionSheetDefaultIosCloseItem />}
+            {iosCloseItem ?? <ActionSheetDefaultIosCloseItem {...slotProps?.iosCloseItem} />}
           </div>
         )}
       </DropdownComponent>

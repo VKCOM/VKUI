@@ -142,6 +142,7 @@ import {
   useAdaptivityConditionalRender,
   useAdaptivityWithJSMediaQueries,
   useFocusVisible,
+  useModalManager,
   usePagination,
   usePatchChildren,
   usePlatform,
@@ -149,6 +150,7 @@ import {
   UsersStack,
   useScroll,
   useScrollLock,
+  useSnackbarManager,
   useTodayDate,
   useTooltip,
   View,
@@ -315,4 +317,6 @@ export const scope: Record<string, unknown> = {
   useTooltip,
   usePagination,
   usePopover,
+  useSnackbarManager,
+  useModalManager,
 };

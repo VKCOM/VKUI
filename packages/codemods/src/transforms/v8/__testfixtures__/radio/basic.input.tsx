@@ -21,7 +21,7 @@ const App = () => {
         data-testid="radio"
         labelProps={{
           'data-testid': 'radio-root',
-          'aria-label': 'radio-root-label'
+          'aria-label': 'radio-root-label',
         }}
         getRef={inputRef}
       />

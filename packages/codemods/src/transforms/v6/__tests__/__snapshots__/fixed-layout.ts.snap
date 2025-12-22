@@ -9,7 +9,9 @@ const App = () => {
   return (
     <React.Fragment>
       <FixedLayout getRootRef={ref2}>...</FixedLayout>
-      <FixedLayout getRootRef={ref1} boolValue>...</FixedLayout>
+      <FixedLayout getRootRef={ref1} boolValue>
+        ...
+      </FixedLayout>
     </React.Fragment>
   );
 };"

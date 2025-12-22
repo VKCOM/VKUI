@@ -32,23 +32,28 @@ export interface TappableProps extends ClickableProps, StateProps {
    */
   borderRadiusMode?: 'auto' | 'inherit';
   /**
-   * @deprecated Since 7.3.0.
+   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    *
-   * Свойство устарело и будет удалено в `v8`, используйте свойство `activeMode`.
+   * Используйте свойство `activeMode`.
    */
-  activeClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
+  activeClassName?: string; // TODO [>=9]: удалить неиспользуемое свойство.
   /**
-   * @deprecated Since 7.3.0.
+   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    *
-   * Свойство устарело и будет удалено в `v8`, используйте свойство `hoverMode`.
+   * Используйте свойство `hoverMode`.
    */
-  hoverClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
+  hoverClassName?: string; // TODO [>=9]: удалить неиспользуемое свойство.
 }
 
-// TODO [>=8]: = React.AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>
-//
-// NOTE: Возможно стоит вообще запретить компонентам расширяться от TappableProps?
-export type TappableOmitProps = Omit<TappableProps, 'DefaultComponent'>;
+/**
+ * @deprecated Не наследуйтесь от этого типа и от TappableProps.
+ *
+ * Компонентам не нужны лишние свойства Tappable компонента.
+ */
+export type TappableOmitProps = Omit<
+  TappableProps,
+  'DefaultComponent' | 'baseClassName' | 'baseStyle'
+>;
 
 export const Tappable = ({
   baseClassName,

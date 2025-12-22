@@ -15,11 +15,9 @@ export interface SpacingProps extends HTMLAttributesWithRootRef<HTMLDivElement> 
    */
   size?: SpacingSizeProp;
   /**
-   * @deprecated 7.0.0.
-   *
-   * Свойство устарело и будет удалено в v8.
+   * @deprecated 7.0.0.Будет удалeно в **VKUI v9**.
    */
-  children?: React.ReactNode;
+  children?: React.ReactNode; // TODO [>=9]: удалить неиспользуемое свойство
 }
 /**
  * @see https://vkui.io/components/spacing

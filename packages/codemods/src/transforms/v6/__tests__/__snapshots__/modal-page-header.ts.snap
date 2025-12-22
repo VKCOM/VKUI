@@ -9,7 +9,9 @@ const App = () => {
   return (
     <React.Fragment>
       <ModalPageHeader getRootRef={ref2}>...</ModalPageHeader>
-      <ModalPageHeader getRootRef={ref1} boolValue>...</ModalPageHeader>
+      <ModalPageHeader getRootRef={ref1} boolValue>
+        ...
+      </ModalPageHeader>
       <ModalPageHeader>...</ModalPageHeader>
       <ModalPageHeader noSeparator>...</ModalPageHeader>
     </React.Fragment>

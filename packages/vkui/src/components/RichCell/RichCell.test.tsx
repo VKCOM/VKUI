@@ -6,12 +6,12 @@ import styles from './RichCell.module.css';
 describe('RichCell', () => {
   baselineComponent((props) => <RichCell {...props}>RichCell</RichCell>);
 
-  it.each<[Exclude<RichCellProps['afterAlign'], undefined>, string, string]>([
-    ['start', styles.content, styles.alignAfterStart],
-    ['center', styles.host, styles.alignAfterCenter],
-    ['end', styles.host, styles.alignAfterEnd],
-  ])('should have correct position of after element', (afterAlign, expectedContainerStyle, alignClassName) => {
-    const { container } = render(
+  it.each<[Exclude<RichCellProps['afterAlign'], undefined>, string]>([
+    ['start', styles.alignAfterStart],
+    ['center', styles.alignAfterCenter],
+    ['end', styles.alignAfterEnd],
+  ])('should have correct position of after element', (afterAlign, alignClassName) => {
+    render(
       <RichCell
         data-testid="rich-cell"
         overTitle="Subhead"
@@ -25,14 +25,6 @@ describe('RichCell', () => {
       </RichCell>,
     );
     expect(screen.getByTestId('rich-cell')).toHaveClass(alignClassName);
-    const expectedContainer = container.getElementsByClassName(expectedContainerStyle)[0];
-    const afterElement = Array.prototype.find.call(
-      expectedContainer.children,
-      (element: HTMLElement) => {
-        return element.classList.contains(styles.contentAfter);
-      },
-    );
-    expect(afterElement).toBeTruthy();
   });
 
   it.each<[Exclude<RichCellProps['contentAlign'], undefined>, string]>([

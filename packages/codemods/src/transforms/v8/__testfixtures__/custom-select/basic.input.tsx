@@ -10,7 +10,7 @@ const App = () => {
   return (
     <React.Fragment>
       <CustomSelect
-        value={"value"}
+        value={'value'}
         options={[]}
         onChange={() => {}}
         aria-label="input"

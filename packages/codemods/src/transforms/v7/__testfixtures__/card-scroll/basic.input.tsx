@@ -5,9 +5,7 @@ const App = () => {
   return (
     <React.Fragment>
       {/* noSpaces by default -> padding=true */}
-      <CardScroll
-        size="s"
-      >
+      <CardScroll size="s">
         <Card>
           <div style={{ paddingBottom: '66%' }} />
         </Card>
@@ -17,10 +15,7 @@ const App = () => {
       </CardScroll>
 
       {/* noSpaces="false" -> padding="true" */}
-      <CardScroll
-        size="s"
-        noSpaces={false}
-      >
+      <CardScroll size="s" noSpaces={false}>
         <Card>
           <div style={{ paddingBottom: '66%' }} />
         </Card>
@@ -30,10 +25,7 @@ const App = () => {
       </CardScroll>
 
       {/* noSpaces="true" -> padding="false" */}
-      <CardScroll
-        size="s"
-        noSpaces={true}
-      >
+      <CardScroll size="s" noSpaces={true}>
         <Card>
           <div style={{ paddingBottom: '66%' }} />
         </Card>
@@ -43,10 +35,7 @@ const App = () => {
       </CardScroll>
 
       {/* noSpaces="true" -> padding="false" */}
-      <CardScroll
-        size="s"
-        noSpaces
-      >
+      <CardScroll size="s" noSpaces>
         <Card>
           <div style={{ paddingBottom: '66%' }} />
         </Card>

@@ -13,7 +13,7 @@ const App = () => {
   return (
     <React.Fragment>
       <CustomSelect
-        value={"value"}
+        value={'value'}
         options={[]}
         onChange={() => {}}
         disabled={false}

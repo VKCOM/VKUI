@@ -1,5 +1,6 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import type { CustomModalProps, OpenModalPageProps } from '../../hooks/useModalManager';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { multiplyText } from '../../testing/mock';
@@ -28,9 +29,7 @@ export default story;
 
 type Story = StoryObj<ModalRootProps>;
 
-const MODAL_PAGE_DYNAMIC = 'modal-page-dynamic';
 const MODAL_ROOT_WITH_AUTO_FOCUS = 'modal-root-with-auto-focus';
-const MODAL_PAGE_WITH_AUTO_FOCUS = 'modal-page-with-auto-focus';
 
 const modalsPayload = {
   1: {
@@ -132,29 +131,33 @@ export const Managing: Story = {
 
 export const ModalDynamicHeight: Story = {
   render: function Render() {
-    const [isLoading, setIsLoading] = React.useState(true);
-    const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+    const CustomModal = React.useCallback(function Render({
+      modalProps,
+    }: CustomModalProps<OpenModalPageProps>) {
+      const [isLoading, setIsLoading] = React.useState(true);
+      const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-    React.useEffect(() => {
-      timer.current = setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+      React.useEffect(() => {
+        timer.current = setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
 
-      return () => {
-        clearTimeout(timer.current);
-      };
-    }, []);
+        return () => {
+          clearTimeout(timer.current);
+        };
+      }, []);
 
-    return (
-      <ModalWrapper modalId={MODAL_PAGE_DYNAMIC}>
-        <ModalPage id={MODAL_PAGE_DYNAMIC} dynamicContentHeight>
+      return (
+        <ModalPage dynamicContentHeight {...modalProps}>
           <div className="SelectModal">
             {isLoading && <Spinner />}
             {!isLoading && <Placeholder>Loaded</Placeholder>}
           </div>
         </ModalPage>
-      </ModalWrapper>
-    );
+      );
+    }, []);
+
+    return <ModalWrapper type="page" customModal={CustomModal} />;
   },
 };
 
@@ -202,14 +205,19 @@ export const ModalPageAutoFocus: Story = {
       }
     }, []);
 
-    return (
-      <ModalWrapper modalId={MODAL_PAGE_WITH_AUTO_FOCUS}>
-        <ModalPage id={MODAL_PAGE_WITH_AUTO_FOCUS} onOpened={handleOpen}>
-          <Group>
-            <Input getRef={inputRef} />
-          </Group>
-        </ModalPage>
-      </ModalWrapper>
+    const CustomModal = React.useCallback(
+      ({ modalProps }: CustomModalProps<OpenModalPageProps>) => {
+        return (
+          <ModalPage onOpened={handleOpen} {...modalProps}>
+            <Group>
+              <Input getRef={inputRef} />
+            </Group>
+          </ModalPage>
+        );
+      },
+      [handleOpen],
     );
+
+    return <ModalWrapper type="page" customModal={CustomModal} />;
   },
 };

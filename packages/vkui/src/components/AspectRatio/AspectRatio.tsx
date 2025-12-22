@@ -32,7 +32,7 @@ export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 
 export function AspectRatio({
   ratio,
   mode = 'stretch',
-  ...props
+  ...restProps
 }: AspectRatioProps): React.JSX.Element {
   const style: React.CSSProperties & CSSCustomProperties = {
     '--vkui_internal--aspect_ratio': typeof ratio === 'number' ? String(ratio) : ratio,
@@ -42,7 +42,7 @@ export function AspectRatio({
     <RootComponent
       baseClassName={classNames(styles.host, mode === 'stretch' && styles.modeStretch)}
       baseStyle={style}
-      {...props}
+      {...restProps}
     />
   );
 }

@@ -24,9 +24,9 @@
     "postcss-modules": "^6.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "serve-static": "2.2.0",
+    "serve-static": "2.2.1",
     "swc-loader": "^0.2.6",
     "terser-webpack-plugin": "^5.3.16",
-    "webpack": "^5.103.0"
+    "webpack": "^5.104.1"
   }
 }

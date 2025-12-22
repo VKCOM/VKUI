@@ -5,7 +5,7 @@ exports[`rich-cell > transforms correctly 1`] = `
 import React from 'react';
 
 const App = () => {
-  const text = "Text"
+  const text = 'Text';
   return (
     <React.Fragment>
       <RichCell
@@ -20,9 +20,9 @@ const App = () => {
       </RichCell>
       <RichCell
         before={<Avatar size={72} src="" />}
-        overTitle={"Subhead"}
+        overTitle={'Subhead'}
         subtitle={text}
-        extraSubtitle={"Caption"}
+        extraSubtitle={'Caption'}
         after="After"
         afterCaption="After Caption"
       >

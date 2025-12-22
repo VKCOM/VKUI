@@ -6,6 +6,7 @@ import {
   Icon56UsersOutline,
 } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { useModalManager } from '../../hooks/useModalManager';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
@@ -16,9 +17,7 @@ import { Button } from '../Button/Button';
 import { Cell } from '../Cell/Cell';
 import { CellButton } from '../CellButton/CellButton';
 import { Group } from '../Group/Group';
-import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
-import { ModalRoot } from '../ModalRoot/ModalRoot';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Placeholder } from '../Placeholder/Placeholder';
@@ -45,11 +44,37 @@ export const Playground: Story = {
   render: function Render({ children, ...restProps }: SplitLayoutProps) {
     const platform = usePlatform();
     const { viewWidth } = useAdaptivityConditionalRender();
+    const [modalsApi, modalsHolder] = useModalManager({
+      saveHistory: false,
+    });
     const [panel, setPanel] = React.useState(panels[0]);
-    const [modal, setModal] = React.useState<string | null>(null);
     const [popout, setPopout] = React.useState<React.ReactNode | null>(null);
 
     const isVKCOM = platform === 'vkcom';
+
+    function openModal1() {
+      modalsApi.openModalPage({
+        id: modals[0],
+        header: <ModalPageHeader>Modal 1</ModalPageHeader>,
+        children: (
+          <Group>
+            <CellButton onClick={openModal2}>Modal 2</CellButton>
+          </Group>
+        ),
+      });
+    }
+
+    function openModal2() {
+      modalsApi.openModalPage({
+        id: modals[1],
+        header: <ModalPageHeader>Modal 2</ModalPageHeader>,
+        children: (
+          <Group>
+            <CellButton onClick={openModal1}>Modal 1</CellButton>
+          </Group>
+        ),
+      });
+    }
 
     return (
       <React.Fragment>
@@ -77,8 +102,8 @@ export const Playground: Story = {
                     </Cell>
                   ))}
                   <Separator />
-                  <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
-                  <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
+                  <Cell onClick={openModal1}>modal 1</Cell>
+                  <Cell onClick={openModal2}>modal 2</Cell>
                   <Cell
                     onClick={() =>
                       setPopout(<Alert title="Alert!" onClosed={() => setPopout(null)} />)
@@ -150,26 +175,7 @@ export const Playground: Story = {
           </SplitCol>
         </SplitLayout>
         {popout}
-        <ModalRoot activeModal={modal}>
-          <ModalPage
-            id={modals[0]}
-            onClose={() => setModal(null)}
-            header={<ModalPageHeader>Modal 1</ModalPageHeader>}
-          >
-            <Group>
-              <CellButton onClick={() => setModal(modals[1])}>Modal 2</CellButton>
-            </Group>
-          </ModalPage>
-          <ModalPage
-            id={modals[1]}
-            onClose={() => setModal(null)}
-            header={<ModalPageHeader>Modal 2</ModalPageHeader>}
-          >
-            <Group>
-              <CellButton onClick={() => setModal(modals[0])}>Modal 1</CellButton>
-            </Group>
-          </ModalPage>
-        </ModalRoot>
+        {modalsHolder}
       </React.Fragment>
     );
   },

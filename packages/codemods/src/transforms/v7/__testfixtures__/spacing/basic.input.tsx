@@ -5,12 +5,12 @@ const App = () => {
   return (
     <React.Fragment>
       <Spacing size="3xs">
-        <Separator/>
+        <Separator />
       </Spacing>
 
       <Spacing size="3xs" />
 
-      <Spacing size={"3xs"} />
+      <Spacing size={'3xs'} />
 
       <Spacing size={8} />
     </React.Fragment>

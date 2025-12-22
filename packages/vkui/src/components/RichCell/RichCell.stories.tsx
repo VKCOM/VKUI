@@ -32,6 +32,8 @@ const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
       },
     }),
     afterCaption: StringArg,
+    meta: StringArg,
+    submeta: StringArg,
     before: createFieldWithPresets({
       additionalPresets: {
         Avatar40: <Avatar size={40} src={getAvatarUrl()} />,
@@ -79,7 +81,7 @@ const story: Meta<RichCellProps & { maxAfterWidth: number }> = {
 
 export default story;
 
-type Story = StoryObj<RichCellProps & { maxAfterWidth: number }>;
+type Story = StoryObj<RichCellProps & { maxAfterWidth: number; maxMetaWidth: number }>;
 
 export const Playground: Story = {
   args: {
@@ -87,9 +89,10 @@ export const Playground: Story = {
     overTitle: 'Over Title',
     subtitle: 'Subtitle',
     extraSubtitle: 'Extra Subtitle',
-    after: 'Text',
+    meta: 'Meta',
+    submeta: 'Submeta',
     maxAfterWidth: 100,
-    afterCaption: 'After Caption',
+    maxMetaWidth: 100,
     children: 'Example',
   },
   decorators: [
@@ -101,20 +104,26 @@ export const Playground: Story = {
     withSinglePanel,
     withVKUILayout,
   ],
-  render: ({ maxAfterWidth, afterCaption: afterCaptionProp, after: afterProp, ...args }) => {
-    const after =
-      maxAfterWidth !== undefined && afterProp ? (
-        <div style={{ maxWidth: maxAfterWidth }}>{afterProp}</div>
-      ) : (
-        afterProp
-      );
+  render: ({
+    maxAfterWidth,
+    maxMetaWidth,
+    afterCaption: afterCaptionProp,
+    after: afterProp,
+    meta: metaProp,
+    submeta: submetaProp,
+    ...args
+  }) => {
+    const withMaxWidth = (maxWidth: number, prop: React.ReactNode) => {
+      return maxWidth !== undefined && prop ? <div style={{ maxWidth }}>{prop}</div> : prop;
+    };
 
-    const afterCaption =
-      maxAfterWidth !== undefined && afterCaptionProp ? (
-        <div style={{ maxWidth: maxAfterWidth }}>{afterCaptionProp}</div>
-      ) : (
-        afterCaptionProp
-      );
-    return <RichCell after={after} afterCaption={afterCaption} {...args} />;
+    const after = withMaxWidth(maxAfterWidth, afterProp);
+    const afterCaption = withMaxWidth(maxAfterWidth, afterCaptionProp);
+    const meta = withMaxWidth(maxMetaWidth, metaProp);
+    const submeta = withMaxWidth(maxMetaWidth, submetaProp);
+
+    return (
+      <RichCell after={after} afterCaption={afterCaption} meta={meta} submeta={submeta} {...args} />
+    );
   },
 };
