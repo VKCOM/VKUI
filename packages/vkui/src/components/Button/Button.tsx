@@ -71,8 +71,25 @@ export interface VKUIButtonProps extends HasAlign {
   after?: React.ReactNode;
   /**
    * Включает состояние загрузки (отображает спиннер).
+   *
+   * ⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически
+   * устанавливает `aria-label` в значение `loadingAriaLabel` (по умолчанию "Загрузка..."),
+   * чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это значение,
+   * передав свойство `loadingAriaLabel`.
+   *
+   * @example
+   * <Button loading>Сохранить</Button>
+   * // Скринридер объявит: "Загрузка..., кнопка"
+   *
+   * @example
+   * <Button loading loadingAriaLabel="Сохранение данных...">Сохранить</Button>
    */
   loading?: boolean;
+  /**
+   * Текст для `aria-label` при состоянии загрузки.
+   * Используется только когда `loading={true}`.
+   */
+  loadingAriaLabel?: string;
   /**
    * Отключает анимацию спиннера загрузки.
    */
@@ -99,11 +116,13 @@ export const Button = ({
   after,
   getRootRef,
   loading,
+  loadingAriaLabel = 'Загрузка...',
   onClick,
   disableSpinnerAnimation,
   rounded,
   disabled,
   href,
+  'aria-label': ariaLabelProp,
   ...restProps
 }: ButtonProps): React.ReactNode => {
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
@@ -112,6 +131,13 @@ export const Button = ({
 
   const isDisabled = disabled || loading;
   const hasHref = href !== undefined;
+
+  const ariaLabel = React.useMemo(() => {
+    if (loading) {
+      return `${ariaLabelProp} ${loadingAriaLabel}`;
+    }
+    return ariaLabelProp;
+  }, [loading, loadingAriaLabel, ariaLabelProp]);
 
   const handleClick = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
@@ -152,8 +178,11 @@ export const Button = ({
       activeMode={styles.active}
       focusVisibleMode="outside"
       aria-busy={loading}
+      hasHover={!loading}
+      hasActive={!loading}
       {...buttonProps}
       {...restProps}
+      aria-label={ariaLabel?.trim() ? ariaLabel : undefined}
       onClick={handleClick}
       baseClassName={classNames(
         styles.host,

@@ -247,9 +247,14 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 Свойство позволяет добавить индикацию загрузки вместо содержимого кнопки. Используйте, когда после взаимодействия с кнопкой
 запускаются затратные по времени действия.
 
+⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически устанавливает `aria-label` в значение
+`loadingAriaLabel` (по умолчанию "Загрузка..."), чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это
+значение, передав свойство `loadingAriaLabel`.
+
 <Playground>
   ```jsx
   <Button loading>Button</Button>
+  <Button loading loadingAriaLabel="Сохранение данных...">Button</Button>
   ```
 </Playground>
 

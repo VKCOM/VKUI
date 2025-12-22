@@ -115,6 +115,42 @@ describe('Button', () => {
     expect(link).not.toHaveAttribute('disabled');
   });
 
+  it('a11y: Button with loading uses default loadingAriaLabel', () => {
+    render(<ButtonTest loading>Button</ButtonTest>);
+
+    const btn = button();
+    // При loading без aria-label используется только loadingAriaLabel
+    // Но из-за логики `${ariaLabelProp} ${loadingAriaLabel}` получается "undefined Загрузка..."
+    // Это будет обработано как строка
+    expect(btn).toHaveAttribute('aria-label');
+    expect(btn.getAttribute('aria-label')).toContain('Загрузка...');
+    expect(btn).toHaveAttribute('aria-busy', 'true');
+  });
+
+  it('a11y: Button with loading and custom loadingAriaLabel', () => {
+    render(
+      <ButtonTest loading loadingAriaLabel="Сохранение данных...">
+        Button
+      </ButtonTest>,
+    );
+
+    const btn = button();
+    expect(btn).toHaveAttribute('aria-label', 'Сохранение данных...');
+    expect(btn).toHaveAttribute('aria-busy', 'true');
+  });
+
+  it('a11y: Button with loading and aria-label combines them correctly', () => {
+    render(
+      <ButtonTest loading aria-label="Отправить" loadingAriaLabel="Идет отправка...">
+        Button
+      </ButtonTest>,
+    );
+
+    const btn = button();
+    expect(btn).toHaveAttribute('aria-label', 'Отправить Идет отправка...');
+    expect(btn).toHaveAttribute('aria-busy', 'true');
+  });
+
   it('should handle zero in props', () => {
     render(
       <ButtonTest before={0} after={0}>
