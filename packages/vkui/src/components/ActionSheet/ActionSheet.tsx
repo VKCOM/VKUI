@@ -20,12 +20,28 @@ import { ActionSheetDropdownSheet } from './ActionSheetDropdownSheet';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
-type CloseReason = 'action-item' | 'cancel-item' | 'other';
+export type ActionSheetOnCloseReason =
+  | 'click-action-item'
+  | 'click-cancel-item'
+  | 'click-overlay'
+  | 'click-outside'
+  | 'keydown-item'
+  | 'escape-key';
+
+export type ActionSheetOnClosedReason = 'action-item' | 'cancel-item' | 'other';
+
+/**
+ * @deprecated Since 8.0.0 аргумент, переданный в функцию `onClosed`, устарел и будет удален в **VKUI v10**.
+ * Для получения причины закрытия всплывающего окна используйте свойство `onClose`.
+ */
 export interface ActionSheetOnCloseOptions {
   /**
    * Причина закрытия всплывающего элемента.
+   *
+   * @deprecated Since 8.0.0 аргумент, переданный в функцию `onClosed`, устарел и будет удален в **VKUI v10**.
+   * Для получения причины закрытия всплывающего окна используйте свойство `onClose`.
    */
-  closedBy: CloseReason;
+  closedBy: ActionSheetOnClosedReason;
 }
 
 export interface ActionSheetProps
@@ -49,7 +65,7 @@ export interface ActionSheetProps
   /**
    * Обработчик закрытия всплывающего окна.
    */
-  onClose?: (reason: CloseReason) => void;
+  onClose?: (reason: ActionSheetOnCloseReason) => void;
   /**
    * Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.
    *
@@ -104,26 +120,28 @@ export const ActionSheet = ({
   ...restProps
 }: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
-  const [closingBy, setClosingBy] = React.useState<undefined | CloseReason>(undefined);
+  const [closedReason, setClosedReason] = React.useState<undefined | ActionSheetOnClosedReason>(
+    undefined,
+  );
   const onCloseStable = useStableCallback(onCloseProp || noop);
 
   const onClose = React.useCallback(
-    (reason: CloseReason) => {
-      onCloseStable(reason);
-      setClosingBy(reason);
+    (onCloseReason: ActionSheetOnCloseReason, onClosedReason: ActionSheetOnClosedReason) => {
+      onCloseStable(onCloseReason);
+      setClosedReason(onClosedReason);
     },
     [onCloseStable],
   );
 
-  const onCloseWithOther = React.useCallback(() => onClose('other'), [onClose]);
+  const onOverlayClick = React.useCallback(() => onClose('click-overlay', 'other'), [onClose]);
 
   const actionCallbackRef = React.useRef(noop);
 
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
-    closingBy !== undefined ? 'exit' : 'enter',
+    closedReason !== undefined ? 'exit' : 'enter',
     {
       onExited() {
-        onClosed({ closedBy: closingBy || 'other' });
+        onClosed({ closedBy: closedReason || 'other' });
         actionCallbackRef.current();
         actionCallbackRef.current = noop;
       },
@@ -144,7 +162,10 @@ export const ActionSheet = ({
           if (action) {
             actionCallbackRef.current = () => action(event);
           }
-          onClose(isCancelItem ? 'cancel-item' : 'action-item');
+          onClose(
+            isCancelItem ? 'click-cancel-item' : 'click-action-item',
+            isCancelItem ? 'cancel-item' : 'action-item',
+          );
         } else {
           action && action(event);
         }
@@ -152,8 +173,8 @@ export const ActionSheet = ({
     [onClose],
   );
   const contextValue = React.useMemo(
-    () => ({ onItemClick, mode, onClose: onCloseWithOther }),
-    [mode, onCloseWithOther, onItemClick],
+    () => ({ onItemClick, mode, onClose }),
+    [mode, onClose, onItemClick],
   );
 
   const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
@@ -164,13 +185,12 @@ export const ActionSheet = ({
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
-        closing={Boolean(closingBy)}
+        closing={Boolean(closedReason)}
         role="dialog"
         aria-modal="true"
         autoFocus={animationState === 'entered'}
         {...dropdownProps}
         {...animationHandlers}
-        onClose={onCloseWithOther}
         className={mode === 'menu' ? className : undefined}
         style={mode === 'menu' ? style : undefined}
       >
@@ -200,11 +220,11 @@ export const ActionSheet = ({
     <AppRootPortal>
       <PopoutWrapper
         noBackground={mode === 'menu'}
-        closing={Boolean(closingBy)}
+        closing={Boolean(closedReason)}
         alignY="bottom"
         className={className}
         style={style}
-        onClick={onCloseWithOther}
+        onClick={onOverlayClick}
       >
         {actionSheet}
       </PopoutWrapper>

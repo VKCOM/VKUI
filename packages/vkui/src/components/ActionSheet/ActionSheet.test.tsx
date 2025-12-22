@@ -180,11 +180,11 @@ describe(ActionSheet, () => {
         expect(onCloseHandler).not.toHaveBeenCalled();
       } else if (!props.autoCloseDisabled && props.isCancelItem) {
         expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
-        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('cancel-item');
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
       } else {
         !props.autoCloseDisabled &&
           expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
-        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('action-item');
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('click-action-item');
       }
     });
   });
@@ -216,22 +216,26 @@ describe(ActionSheet, () => {
   describe('closes on click outside', () => {
     fakeTimersForScope();
     it('desktop', async () => {
+      const onClose = vi.fn();
       const onClosed = vi.fn();
-      const result = render(<ActionSheetDesktop onClosed={onClosed} />);
+      const result = render(<ActionSheetDesktop onClose={onClose} onClosed={onClosed} />);
       await waitForFloatingPosition();
       await userEvent.click(document.body);
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-outside');
       expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
 
     it('mobile', async () => {
+      const onClose = vi.fn();
       const onClosed = vi.fn();
-      const result = render(<ActionSheetMobile onClosed={onClosed} />);
+      const result = render(<ActionSheetMobile onClose={onClose} onClosed={onClosed} />);
       await waitForFloatingPosition();
       await userEvent.click(
         result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
       );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
       expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
   });
@@ -343,9 +347,10 @@ describe(ActionSheet, () => {
         isCancelItemAtContext = false,
       }: { isCancelItem?: boolean; isCancelItemAtContext?: boolean },
     ) => {
-      const onCloseHandler = vi.fn();
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const result = render(
-        <ActionSheet onClose={onCloseHandler}>
+        <ActionSheet onClose={onClose} onClosed={onClosed}>
           <ActionSheetItemContext.Provider
             value={{
               isCancelItem: isCancelItemAtContext,
@@ -369,12 +374,14 @@ describe(ActionSheet, () => {
       );
       await act(vi.runAllTimers);
 
-      if (onCloseHandler.mock.calls.length > 0) {
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+      if (onClosed.mock.calls.length > 0) {
         result.unmount();
       }
 
-      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
     };
 
     describe.each([
@@ -400,7 +407,7 @@ describe(ActionSheet, () => {
       return render(
         <ConfigProvider platform="ios">
           <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-            <ActionSheet toggleRef={targetEl} onClose={vi.fn()} {...props} />
+            <ActionSheet toggleRef={targetEl} onClose={vi.fn()} onClosed={vi.fn()} {...props} />
           </AdaptivityProvider>
         </ConfigProvider>,
       );
@@ -434,9 +441,11 @@ describe(ActionSheet, () => {
     });
 
     it('detects cancel item when ActionSheetDefaultIosCloseItem is clicked', async () => {
-      const onCloseHandler = vi.fn();
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const result = renderIosActionSheet({
-        onClose: onCloseHandler,
+        onClose,
+        onClosed,
         mode: 'sheet',
       });
       await waitForFloatingPosition();
@@ -452,12 +461,236 @@ describe(ActionSheet, () => {
       );
       await act(vi.runAllTimers);
 
-      if (onCloseHandler.mock.calls.length > 0) {
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+      if (onClosed.mock.calls.length > 0) {
+        result.unmount();
+      }
+
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+    });
+  });
+
+  describe('onClose and onClosed reasons', () => {
+    fakeTimersForScope();
+
+    describe('click-action-item', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem data-testid="item">Action</ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        fireEvent(
+          screen.getByTestId('item'),
+          new MouseEvent('click', {
+            clientX: 1,
+            clientY: 1,
+            bubbles: true,
+          }),
+        );
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-action-item');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
+      });
+    });
+
+    describe('click-cancel-item', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem data-testid="cancel-item" isCancelItem>
+              Cancel
+            </ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        fireEvent(
+          screen.getByTestId('cancel-item'),
+          new MouseEvent('click', {
+            clientX: 1,
+            clientY: 1,
+            bubbles: true,
+          }),
+        );
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+      });
+    });
+
+    describe('click-overlay', () => {
+      it.each([
+        ['mobile', ActionSheetMobile],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(<ActionSheet onClose={onClose} onClosed={onClosed} />);
+        await waitForFloatingPosition();
+
+        const overlay = result.container.querySelector<HTMLElement>(
+          `.${popoutWrapperStyles.overlay}`,
+        )!;
+        await userEvent.click(overlay);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      });
+    });
+
+    describe('click-outside (menu mode only)', () => {
+      it('menu', async () => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(<ActionSheetMenu onClose={onClose} onClosed={onClosed} />);
+        await waitForFloatingPosition();
+
+        await userEvent.click(document.body);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-outside');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      });
+    });
+
+    describe('keydown-item (Enter key)', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem data-testid="item">Action</ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        const item = screen.getByTestId('item');
+        await act(async () => {
+          item.focus();
+        });
+        expect(item).toHaveFocus();
+
+        await act(async () => {
+          fireEvent.keyDown(item, { key: 'Enter', code: 'Enter' });
+        });
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        // При нажатии Enter также срабатывает клик (браузер автоматически эмулирует клик),
+        // поэтому onClose вызывается дважды: с 'keydown-item' и 'click-action-item'
+        // Проверяем, что onClose был вызван с 'keydown-item' хотя бы один раз
+        expect(onClose).toHaveBeenCalledWith('keydown-item');
+        // onClosed должен быть вызван только один раз (после завершения анимации)
+        expect(onClosed).toHaveBeenCalledTimes(1);
+        expect(onClosed).toHaveBeenCalledWith({ closedBy: 'other' });
+      });
+    });
+
+    describe('escape-key', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem>Action</ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        await act(async () => {
+          await userEvent.keyboard('{Escape}');
+        });
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('escape-key');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      });
+    });
+  });
+
+  describe('backward compatibility', () => {
+    fakeTimersForScope();
+
+    it('onClosed works without onClose', async () => {
+      const onClosed = vi.fn();
+      const result = render(
+        <ActionSheetDesktop onClosed={onClosed}>
+          <ActionSheetItem data-testid="item">Action</ActionSheetItem>
+        </ActionSheetDesktop>,
+      );
+      await waitForFloatingPosition();
+
+      fireEvent(
+        screen.getByTestId('item'),
+        new MouseEvent('click', {
+          clientX: 1,
+          clientY: 1,
+          bubbles: true,
+        }),
+      );
+      await act(vi.runAllTimers);
+
+      if (onClosed.mock.calls.length > 0) {
         result.unmount();
       }
 
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
     });
   });
 });
