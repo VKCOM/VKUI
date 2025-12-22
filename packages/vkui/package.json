@@ -91,7 +91,7 @@
     "@vkontakte/vkjs": "^2.0.2",
     "@vkontakte/vkui-date-fns-tz": "^0.0.6",
     "@vkontakte/vkui-floating-ui": "^0.2.7",
-    "uuid": "^11.1.0"
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
