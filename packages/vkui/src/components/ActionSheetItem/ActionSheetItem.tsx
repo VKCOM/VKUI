@@ -166,7 +166,7 @@ export const ActionSheetItem = ({
   const onKeyDown: React.KeyboardEventHandler<HTMLElement> = React.useCallback(
     (event) => {
       if (pressedKey(event) === Keys.ENTER) {
-        onActionSheetClose?.('keydown-item', 'other');
+        onActionSheetClose?.('keydown-item');
       }
     },
     [onActionSheetClose],

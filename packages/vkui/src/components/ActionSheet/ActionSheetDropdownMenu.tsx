@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { stopPropagation } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
@@ -34,7 +33,6 @@ export const ActionSheetDropdownMenu = ({
   onClick,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
-  const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivityWithJSMediaQueries();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
@@ -51,22 +49,6 @@ export const ActionSheetDropdownMenu = ({
     }
   }, [toggleRef]);
 
-  React.useEffect(() => {
-    const listener = (e: MouseEvent) => {
-      const dropdownElement = elementRef?.current;
-      if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-        onCloseProp?.();
-        onActionSheetClose?.('click-outside', 'other');
-      }
-    };
-
-    setTimeout(() => {
-      document!.body.addEventListener('click', listener);
-    });
-
-    return () => document!.body.removeEventListener('click', listener);
-  }, [document, onActionSheetClose, onCloseProp]);
-
   const targetRef = React.useMemo(() => {
     if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
       return toggleRef;
@@ -77,7 +59,7 @@ export const ActionSheetDropdownMenu = ({
 
   const onClose = React.useCallback(() => {
     onCloseProp?.();
-    onActionSheetClose?.('escape-key', 'other');
+    onActionSheetClose?.('escape-key');
   }, [onActionSheetClose, onCloseProp]);
 
   const handleClick = allowClickPropagation

@@ -13,7 +13,11 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { ActionSheetContext, type ItemClickHandler } from './ActionSheetContext';
+import {
+  ActionSheetContext,
+  type ActionSheetContextType,
+  type ItemClickHandler,
+} from './ActionSheetContext';
 import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 import { ActionSheetDropdownMenu } from './ActionSheetDropdownMenu';
 import { ActionSheetDropdownSheet } from './ActionSheetDropdownSheet';
@@ -24,7 +28,6 @@ export type ActionSheetOnCloseReason =
   | 'click-action-item'
   | 'click-cancel-item'
   | 'click-overlay'
-  | 'click-outside'
   | 'keydown-item'
   | 'escape-key';
 
@@ -172,8 +175,8 @@ export const ActionSheet = ({
       },
     [onClose],
   );
-  const contextValue = React.useMemo(
-    () => ({ onItemClick, mode, onClose }),
+  const contextValue = React.useMemo<ActionSheetContextType>(
+    () => ({ onItemClick, mode, onClose: (reason) => onClose(reason, 'other') }),
     [mode, onClose, onItemClick],
   );
 

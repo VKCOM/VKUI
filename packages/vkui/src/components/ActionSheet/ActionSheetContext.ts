@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type ActionSheetOnClosedReason, type ActionSheetOnCloseReason } from './ActionSheet';
+import { type ActionSheetOnCloseReason } from './ActionSheet';
 
 export type ActionType<T> = (event: React.MouseEvent<T>) => void;
 
@@ -32,10 +32,7 @@ export type ActionSheetContextType<T extends Element = Element> = {
   /**
    * Обработчик закрытия `ActionSheet`.
    */
-  onClose?: (
-    onCloseReason: ActionSheetOnCloseReason,
-    onClosedReason: ActionSheetOnClosedReason,
-  ) => void;
+  onClose?: (onCloseReason: ActionSheetOnCloseReason) => void;
   /**
    * Режим отображения `ActionSheet`.
    */

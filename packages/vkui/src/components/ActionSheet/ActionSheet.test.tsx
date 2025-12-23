@@ -220,9 +220,11 @@ describe(ActionSheet, () => {
       const onClosed = vi.fn();
       const result = render(<ActionSheetDesktop onClose={onClose} onClosed={onClosed} />);
       await waitForFloatingPosition();
-      await userEvent.click(document.body);
+      await userEvent.click(
+        result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
+      );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-outside');
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
       expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
 
@@ -568,21 +570,6 @@ describe(ActionSheet, () => {
 
         await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
         expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
-        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
-      });
-    });
-
-    describe('click-outside (menu mode only)', () => {
-      it('menu', async () => {
-        const onClose = vi.fn();
-        const onClosed = vi.fn();
-        const result = render(<ActionSheetMenu onClose={onClose} onClosed={onClosed} />);
-        await waitForFloatingPosition();
-
-        await userEvent.click(document.body);
-
-        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-outside');
         expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
       });
     });

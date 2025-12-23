@@ -34,7 +34,7 @@ export const ActionSheetDropdownSheet = ({
 
   const onClose = React.useCallback(() => {
     onCloseProp?.();
-    onActionSheetClose?.('escape-key', 'other');
+    onActionSheetClose?.('escape-key');
   }, [onActionSheetClose, onCloseProp]);
 
   const handleClick = allowClickPropagation
