@@ -2,8 +2,11 @@ import type { UIEvent } from 'react';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { type ModalPageCloseReason } from '../../../components/ModalPage/types';
+import { ModalCardWrapper } from '../components/ModalCardWrapper.tsx';
+import { ModalPageWrapper } from '../components/ModalPageWrapper.tsx';
 import {
   type CustomModalCardItem,
+  type CustomModalPageItem,
   type CustomModalPayload,
   type CustomModalProps,
   type ModalManagerApi,
@@ -51,18 +54,7 @@ const createModalData = (
   const { onClose, onClosed } = callbacks;
 
   switch (item.type) {
-    case 'custom-card':
-      return {
-        ...item,
-        id,
-        modalProps: {
-          ...item.modalProps,
-          id,
-          onClose,
-          onClosed,
-        },
-      };
-    case 'custom-page':
+    case 'card':
       return {
         ...item,
         id,
@@ -74,12 +66,15 @@ const createModalData = (
         },
       };
     case 'page':
-    case 'card':
       return {
         ...item,
         id,
-        onClose,
-        onClosed,
+        modalProps: {
+          ...item.modalProps,
+          id,
+          onClose,
+          onClosed,
+        },
       };
   }
 };
@@ -91,12 +86,12 @@ const resolveProps = <
   props:
     | CustomModalPayload<T, AdditionalProps>
     | React.ComponentType<CustomModalProps<T, AdditionalProps>>,
-) => {
+): CustomModalPayload<T, AdditionalProps> => {
   if ('component' in props) {
     return props;
   }
   return {
-    component: props as React.ComponentType,
+    component: props,
   };
 };
 
@@ -113,11 +108,16 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
   }, [saveHistory]);
 
   const open = React.useCallback(
-    <T extends ModalManagerItem>(item: T) => {
-      const modalProps: OpenModalPageProps | OpenModalCardProps =
-        (item.type === 'custom-card' || item.type === 'custom-page' ? item.modalProps : item) || {};
+    <T extends ModalManagerItem>(
+      item: T,
+    ): T extends CustomModalPageItem
+      ? OpenPageReturn
+      : T extends CustomModalCardItem
+        ? OpenCardReturn
+        : never => {
+      const modalProps: OpenModalPageProps | OpenModalCardProps = item.modalProps || {};
 
-      const id = modalProps.id || uuidv4();
+      const id = item.id;
 
       let resolvePromise: () => void;
       const promise = new Promise<void>((resolve) => {
@@ -140,7 +140,8 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
         onClose: <R>(resolve?: () => R) => {
           return promise.then(resolve);
         },
-      };
+        update: item.update,
+      } as any;
     },
     [store],
   );
@@ -155,95 +156,71 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [store],
   );
 
-  const openModalCard: ModalManagerApi['openModalCard'] = React.useCallback(
-    (props) => {
-      const result: Omit<OpenCardReturn, 'update'> = open({
-        ...props,
-        type: 'card',
-      });
-      return {
-        ...result,
-        update: (newProps) => update(result.id, 'card', newProps),
-      };
-    },
-    [open, update],
-  );
-
-  const openModalPage: ModalManagerApi['openModalPage'] = React.useCallback(
-    (props) => {
-      const result = open({
-        ...props,
-        type: 'page',
-      });
-      return {
-        ...result,
-        update: (newProps) => update(result.id, 'page', newProps),
-      };
-    },
-    [open, update],
-  );
-
-  const openCustomModalCard: ModalManagerApi['openCustomModalCard'] = React.useCallback(
-    (props) => {
-      const {
-        id,
-        component,
-        baseProps: modalProps,
-        additionalProps,
-      } = resolveProps(props) as CustomModalPayload<OpenModalCardProps>;
-
-      let result: Omit<OpenCardReturn, 'update'>;
-      result = open<CustomModalCardItem>({
-        type: 'custom-card',
-        id,
-        component,
-        additionalProps,
-        modalProps: modalProps,
-        close: () => result.close(),
-        update: (newProps) => update(result.id, 'card', newProps),
-      });
-
-      return {
-        ...result,
-        update: (newProps) => update(result.id, 'card', newProps),
-      };
-    },
-    [open, update],
-  );
-
-  const openCustomModalPage: ModalManagerApi['openCustomModalPage'] = React.useCallback(
-    (props) => {
-      const {
-        id,
-        component,
-        baseProps: modalProps,
-        additionalProps,
-      } = resolveProps(props) as CustomModalPayload<OpenModalPageProps>;
-
-      let result: Omit<OpenPageReturn, 'update'>;
-      result = open({
-        type: 'custom-page',
-        id,
-        component,
-        additionalProps,
-        modalProps: modalProps,
-        close: () => result.close(),
-        update: (newProps) => update(result.id, 'page', newProps),
-      });
-
-      return {
-        ...result,
-        update: (newProps) => update(result.id, 'page', newProps),
-      };
-    },
-    [open, update],
-  );
-
   const close: ModalManagerApi['close'] = React.useCallback(
     (id) => {
       store.closeModal(id);
     },
     [store],
+  );
+
+  const openCustomModalCard: ModalManagerApi['openCustomModalCard'] = React.useCallback(
+    (props) => {
+      const { id: idProp, component, baseProps: modalProps, additionalProps } = resolveProps(props);
+
+      const id = idProp || uuidv4();
+
+      return open<CustomModalCardItem>({
+        type: 'card',
+        id,
+        component,
+        additionalProps,
+        modalProps: modalProps,
+        close: () => close(id),
+        update: (newProps) => update(id, 'card', newProps),
+      });
+    },
+    [close, open, update],
+  );
+
+  const openCustomModalPage: ModalManagerApi['openCustomModalPage'] = React.useCallback(
+    (props) => {
+      const { id: idProp, component, baseProps: modalProps, additionalProps } = resolveProps(props);
+
+      const id = idProp || uuidv4();
+
+      return open({
+        type: 'page',
+        id,
+        component,
+        additionalProps,
+        modalProps: modalProps,
+        close: () => close(id),
+        update: (newProps) => update(id, 'page', newProps),
+      });
+    },
+    [close, open, update],
+  );
+
+  const openModalPage: ModalManagerApi['openModalPage'] = React.useCallback(
+    (props) => {
+      return openCustomModalPage({
+        id: props.id,
+        component: ModalPageWrapper,
+        baseProps: props,
+      });
+    },
+    [openCustomModalPage],
+  );
+
+  const openModalCard: ModalManagerApi['openModalCard'] = React.useCallback(
+    (props) => {
+      return openCustomModalCard({
+        id: props.id,
+        component: ModalCardWrapper,
+        baseProps: props,
+      });
+    },
+    [openCustomModalCard],
   );
 
   const closeAll: ModalManagerApi['closeAll'] = React.useCallback(() => {

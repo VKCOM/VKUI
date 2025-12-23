@@ -12,35 +12,23 @@ export type OpenModalPageProps = Omit<ModalPageProps, 'open' | 'keepMounted'> & 
 
 export type OpenModalCardProps = Omit<ModalCardProps, 'open' | 'keepMounted'> & HasDataAttribute;
 
-export type ModalPageItem = OpenModalPageProps & {
-  type: 'page';
-};
-
-export type ModalCardItem = OpenModalCardProps & {
-  type: 'card';
-};
-
 export type CustomModalPageItem = Pick<OpenPageReturn, 'update' | 'close'> & {
-  type: 'custom-page';
-  id?: string;
+  type: 'page';
+  id: string;
   component: React.ComponentType<any>;
   additionalProps?: any;
   modalProps?: OpenModalPageProps;
 };
 
 export type CustomModalCardItem = Pick<OpenCardReturn, 'update' | 'close'> & {
-  type: 'custom-card';
-  id?: string;
+  type: 'card';
+  id: string;
   component: React.ComponentType<any>;
   additionalProps?: any;
   modalProps?: OpenModalCardProps;
 };
 
-export type ModalManagerItem =
-  | ModalPageItem
-  | ModalCardItem
-  | CustomModalPageItem
-  | CustomModalCardItem;
+export type ModalManagerItem = CustomModalPageItem | CustomModalCardItem;
 
 export type OpenModalReturn<T> = {
   id: string;
@@ -81,12 +69,12 @@ export type CustomModalPayload<
 export type ModalManagerApi = {
   /**
    * Метод для открытия `ModalCard`, принимает свойства `ModalCard`.
-   * Возращает  объект типа `OpenModalReturn`.
+   * Возвращает объект типа `OpenModalReturn`.
    */
   openModalCard: (props: OpenModalCardProps) => OpenCardReturn;
   /**
    * Метод для открытия `ModalPage`, принимает свойства `ModalPage`.
-   * Возращает  объект типа `OpenModalReturn`.
+   * Возвращает объект типа `OpenModalReturn`.
    */
   openModalPage: (props: OpenModalPageProps) => OpenPageReturn;
   /**
