@@ -1,6 +1,6 @@
 'use client';
 
-import { type ModalManagerItem } from '../types';
+import { type ModalManagerItem, type OpenModalCardProps, type OpenModalPageProps } from '../types';
 import {
   addModalToState,
   closeAllModals,
@@ -18,7 +18,10 @@ export type ModalStore = {
   needCloseModals: Set<string>;
   addModal: (modalData: ModalManagerItem) => void;
   removeModal: (id: string) => void;
-  updateModalProps: (id: string, props: Omit<ModalManagerItem, 'type' | 'id'>) => void;
+  updateModalProps: (
+    id: string,
+    props: Omit<OpenModalPageProps | OpenModalCardProps, 'id'>,
+  ) => void;
   closeModal: (id: string) => void;
   closeAll: () => void;
   setPrevActive: (id: string) => void;

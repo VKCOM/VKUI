@@ -14,21 +14,15 @@ export const useActiveModalProps = (state: ModalManagerState): ActiveModalPropsR
     () => ({
       disableModalOverlay:
         getActiveModalProp(state, (modal) => {
-          return modal.type === 'custom-card' || modal.type === 'custom-page'
-            ? modal.modalProps?.disableModalOverlay
-            : modal.disableModalOverlay;
+          return modal.modalProps?.disableModalOverlay;
         }) ?? false,
       disableOpenAnimation:
         getActiveModalProp(state, (modal) => {
-          return modal.type === 'custom-card' || modal.type === 'custom-page'
-            ? modal.modalProps?.disableOpenAnimation
-            : modal.disableOpenAnimation;
+          return modal.modalProps?.disableOpenAnimation;
         }) ?? false,
       disableCloseAnimation:
         getActiveModalProp(state, (modal) => {
-          return modal.type === 'custom-card' || modal.type === 'custom-page'
-            ? modal.modalProps?.disableCloseAnimation
-            : modal.disableCloseAnimation;
+          return modal.modalProps?.disableCloseAnimation;
         }) ?? false,
     }),
     [state],

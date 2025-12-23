@@ -115,35 +115,19 @@ export namespace UseSnackbar {
   export type Return = [SnackbarApi.Api, React.ReactElement | null];
 }
 
-type SimpleSnackbarItem = {
-  type: 'simple';
-  id: string;
-  snackbarProps: SnackbarData;
-};
-
-type CustomSnackbarItem = Pick<SnackbarApi.OpenReturn, 'close' | 'update'> & {
-  type: 'custom';
+export type SnackbarItem = Pick<SnackbarApi.OpenReturn, 'close' | 'update'> & {
   id: string;
   component: React.ComponentType<any>;
   additionalProps?: any;
   snackbarProps: SnackbarData;
 };
 
-export type SnackbarItem = SimpleSnackbarItem | CustomSnackbarItem;
-
-export type CommonOnOpenPayload =
-  | {
-      type: 'simple';
-      id?: string;
-      snackbarProps: SnackbarApi.OpenProps;
-    }
-  | ({
-      type: 'custom';
-      id?: string;
-      component: React.ComponentType<CustomSnackbar.Props<any>>;
-      snackbarProps?: SnackbarApi.OpenProps;
-      additionalProps?: any;
-    } & Pick<SnackbarApi.OpenReturn, 'close' | 'update'>);
+export type CommonOnOpenPayload = Pick<SnackbarApi.OpenReturn, 'close' | 'update'> & {
+  id: string;
+  component: React.ComponentType<CustomSnackbar.Props<any>>;
+  snackbarProps?: SnackbarApi.OpenProps;
+  additionalProps?: any;
+};
 
 export { type SnackbarPlacement } from '../../components/Snackbar/types';
 export { SnackbarProps };
