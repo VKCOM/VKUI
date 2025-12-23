@@ -6,7 +6,6 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import {
   dateFormatter,
   dateTimeFormatter,
@@ -20,7 +19,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -103,7 +102,6 @@ export interface DateInputProps
       | 'maxDateTime'
       | 'renderDayContent'
     >,
-    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
@@ -176,7 +174,12 @@ export interface DateInputProps
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
-  disableFocusTrap?: UseFocusTrapProps['disabled'];
+  disableFocusTrap?: boolean;
+  /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
 }
 
 const elementsConfig = (index: number) => {
@@ -594,7 +597,7 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <FocusTrap
+          <FocusTrapInternal
             onClose={closeCalendar}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
@@ -634,7 +637,7 @@ export const DateInput = ({
               maxDateTime={maxDateTime}
               {...calendarTestsProps}
             />
-          </FocusTrap>
+          </FocusTrapInternal>
         </Popper>
       )}
     </FormField>

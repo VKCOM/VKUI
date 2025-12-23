@@ -9,11 +9,6 @@ import { FocusTrap } from '../FocusTrap/FocusTrap';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
-export type ActionSheetDropdownProps = Omit<
-  SharedDropdownProps,
-  'popupDirection' | 'popupOffsetDistance' | 'placement'
->;
-
 export const ActionSheetDropdownSheet = ({
   children,
   closing,

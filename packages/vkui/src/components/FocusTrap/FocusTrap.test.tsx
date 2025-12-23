@@ -345,7 +345,7 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('button-out-trap')).toHaveFocus();
     });
 
-    it('should restore focus when mount become true', async () => {
+    it('should restore focus when disabled become false', async () => {
       const Fixture = () => {
         const [showTrap, setShowTrap] = useState(false);
         const [disabled, setDisabled] = useState(false);

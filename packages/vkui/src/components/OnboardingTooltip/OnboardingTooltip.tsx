@@ -4,7 +4,6 @@ import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
 import {
@@ -63,8 +62,12 @@ type AllowedFloatingArrowProps = {
 export interface OnboardingTooltipProps
   extends AllowedFloatingComponentProps,
     AllowedTooltipBaseProps,
-    AllowedFloatingArrowProps,
-    Pick<UseFocusTrapProps, 'restoreFocus'> {
+    AllowedFloatingArrowProps {
+  /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
   /**
    * Скрывает стрелку, указывающую на якорный элемент.
    */

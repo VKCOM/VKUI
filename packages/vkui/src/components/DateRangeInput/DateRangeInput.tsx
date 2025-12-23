@@ -7,7 +7,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import type { HasRootRef } from '../../types';
@@ -18,7 +17,7 @@ import {
   type DateRangeType,
 } from '../CalendarRange/CalendarRange';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -87,7 +86,6 @@ export interface DateRangeInputProps
       | 'nextMonthIcon'
       | 'renderDayContent'
     >,
-    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateRangeInputTestsProps {
@@ -154,7 +152,12 @@ export interface DateRangeInputProps
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
-  disableFocusTrap?: UseFocusTrapProps['disabled'];
+  disableFocusTrap?: boolean;
+  /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
   /**
    * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
    *
@@ -578,7 +581,7 @@ export const DateRangeInput = ({
           placement={calendarPlacement}
           onPlacementChange={setCalendarPlacement}
         >
-          <FocusTrap
+          <FocusTrapInternal
             onClose={closeCalendar}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
@@ -604,7 +607,7 @@ export const DateRangeInput = ({
               renderDayContent={renderDayContent}
               {...calendarTestsProps}
             />
-          </FocusTrap>
+          </FocusTrapInternal>
         </Popper>
       )}
     </FormField>

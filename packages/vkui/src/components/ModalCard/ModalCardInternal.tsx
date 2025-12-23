@@ -146,7 +146,7 @@ export const ModalCardInternal = ({
   );
 
   useScrollLock(!hidden);
-  useFocusTrap(ref, {
+  const { afterGuard, beforeGuard } = useFocusTrap(ref, {
     autoFocus: !noFocusToDialog,
     disabled: !opened || hidden || disableFocusTrap,
     restoreFocus,
@@ -160,6 +160,7 @@ export const ModalCardInternal = ({
       disableModalOverlay={disableModalOverlay}
     >
       {modalOverlay}
+      {beforeGuard}
       <ModalCardBase
         {...restProps}
         tabIndex={-1}
@@ -190,6 +191,7 @@ export const ModalCardInternal = ({
       >
         {children}
       </ModalCardBase>
+      {afterGuard}
     </ModalOutlet>
   );
 };
