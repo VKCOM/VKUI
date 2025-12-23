@@ -5,6 +5,7 @@ import {
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
+import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
 import { fireEventPatch, userEvent } from '../../../testing/utils';
 import type { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
@@ -47,6 +48,8 @@ const TestComponent = ({
     onClose,
   } = hookResult;
 
+  useGlobalEscKeyDown(shown, hookResult.onEscapeKeyDown);
+
   return (
     <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput }}>
       <button ref={reference} {...referenceProps}>
@@ -57,7 +60,6 @@ const TestComponent = ({
           <FocusTrap
             autoFocus
             restoreFocus={restoreFocus ? hookResult.onRestoreFocus : restoreFocus}
-            onClose={hookResult.onEscapeKeyDown}
           >
             <input
               autoFocus={autoFocus}

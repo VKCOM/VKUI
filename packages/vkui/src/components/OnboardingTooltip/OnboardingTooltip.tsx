@@ -4,6 +4,7 @@ import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown.ts';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
 import {
@@ -160,6 +161,8 @@ export const OnboardingTooltip = ({
     );
   }
 
+  useGlobalEscKeyDown(!!shown, onClose);
+
   let tooltip: React.ReactPortal | null = null;
   if (shown) {
     const floatingStyle = convertFloatingDataToReactCSSProperties({
@@ -174,7 +177,6 @@ export const OnboardingTooltip = ({
         aria-modal="true"
         aria-label={ariaLabel}
         aria-labelledby={title ? titleId : ariaLabel ? undefined : ariaLabelledBy}
-        onClose={onClose}
         disabled={disableFocusTrap}
         restoreFocus={restoreFocus}
       >

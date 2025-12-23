@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
@@ -108,12 +109,13 @@ export const AlertBase = ({
 
   const onCloseButtonClick = React.useCallback(() => close('click-close-button'), [close]);
 
+  useGlobalEscKeyDown(true, onEscape);
+
   return (
     <FocusTrap
       {...animationHandlers}
       onClick={handleClick}
       getRootRef={elementRef}
-      onClose={onEscape}
       autoFocus={animationState === 'entered'}
       className={classNames(
         styles.host,

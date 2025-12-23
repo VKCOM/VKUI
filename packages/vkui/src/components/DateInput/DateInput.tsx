@@ -6,6 +6,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import {
   dateFormatter,
   dateTimeFormatter,
@@ -440,6 +441,10 @@ export const DateInput = ({
   const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
   const showClearButton = value && !readOnly;
 
+  useGlobalEscKeyDown(open && !disableCalendar, closeCalendar, {
+    capture: false,
+  });
+
   return (
     <FormField
       style={style}
@@ -598,10 +603,8 @@ export const DateInput = ({
           autoUpdateOnTargetResize
         >
           <FocusTrapInternal
-            onClose={closeCalendar}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
-            captureEscapeKeyboardEvent={false}
             mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <Calendar

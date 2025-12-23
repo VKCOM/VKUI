@@ -2,9 +2,8 @@
 
 import * as React from 'react';
 import { type RefObject, useMemo } from 'react';
-import { FOCUSABLE_ELEMENTS_LIST, Keys, pressedKey } from '../../lib/accessibility';
+import { FOCUSABLE_ELEMENTS_LIST } from '../../lib/accessibility';
 import { getWindow } from '../../lib/dom';
-import { useGlobalEscKeyDown } from '../useGlobalEscKeyDown';
 import { useMutationObserver } from '../useMutationObserver';
 import { useStableCallback } from '../useStableCallback';
 import { useAutoFocus } from './useAutoFocus';
@@ -90,18 +89,6 @@ export type UseFocusTrapProps = {
    */
   timeout?: number;
   /**
-   * Вызывается при нажатии на кнопку `Escape`.
-   */
-  onClose?: VoidFunction;
-  /**
-   * Следует ли обрабатываеть событие нажатия клавиши Escape при "погружении", то есть
-   * до того как это событие будет обработано на EventTarget
-   * Удобно установить в false, если требуется запретить "всплытие" события до FocusTrap
-   *
-   * @default true
-   */
-  captureEscapeKeyboardEvent?: boolean;
-  /**
    * Пользовательские опции для MutationObserver, который отслеживает изменения DOM внутри компонента и пересчитывает ноды для фокуса.
    */
   mutationObserverOptions?: MutationObserverInit;
@@ -115,8 +102,6 @@ export const useFocusTrap = (
     autoFocus = true,
     restoreFocus = true,
     timeout = 0,
-    onClose,
-    captureEscapeKeyboardEvent = true,
     mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
@@ -186,21 +171,6 @@ export const useFocusTrap = (
     () => ref.current && onMutateParentHandler(ref.current),
     mutationObserverOptions,
   );
-
-  const onEscape = useStableCallback((event: KeyboardEvent) => {
-    if (disabled) {
-      return;
-    }
-
-    if (pressedKey(event) === Keys.ESCAPE && onClose) {
-      event.preventDefault();
-      onClose();
-    }
-  });
-
-  useGlobalEscKeyDown(mount, onEscape, {
-    capture: captureEscapeKeyboardEvent,
-  });
 
   const guardTabIndex = !mount || disabled ? -1 : 0;
 

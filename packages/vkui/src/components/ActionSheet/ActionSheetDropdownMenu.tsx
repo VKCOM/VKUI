@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown.ts';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
@@ -77,6 +78,8 @@ export const ActionSheetDropdownMenu = ({
         onClick?.(event);
       };
 
+  useGlobalEscKeyDown(true, onClose);
+
   return (
     <Popper
       targetRef={targetRef}
@@ -96,7 +99,7 @@ export const ActionSheetDropdownMenu = ({
       onAnimationStart={onAnimationStart}
       onAnimationEnd={onAnimationEnd}
     >
-      <FocusTrap onClose={onClose} {...restProps} onClick={handleClick}>
+      <FocusTrap {...restProps} onClick={handleClick}>
         {children}
       </FocusTrap>
     </Popper>

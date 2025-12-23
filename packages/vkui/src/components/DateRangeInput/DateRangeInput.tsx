@@ -7,6 +7,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
 import type { HasRootRef } from '../../types';
@@ -423,6 +424,10 @@ export const DateRangeInput = ({
   const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
   const showClearButton = value && !readOnly;
 
+  useGlobalEscKeyDown(open && !disableCalendar, closeCalendar, {
+    capture: false,
+  });
+
   return (
     <FormField
       style={style}
@@ -582,10 +587,8 @@ export const DateRangeInput = ({
           onPlacementChange={setCalendarPlacement}
         >
           <FocusTrapInternal
-            onClose={closeCalendar}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
-            captureEscapeKeyboardEvent={false}
             mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <CalendarRange

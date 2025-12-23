@@ -9,7 +9,11 @@ import {
   waitForFloatingPosition,
   withFakeTimers,
 } from '../../testing/utils';
-import { ActionSheet, type ActionSheetProps } from '../ActionSheet/ActionSheet';
+import {
+  ActionSheet,
+  type ActionSheetOnCloseOptions,
+  type ActionSheetProps,
+} from '../ActionSheet/ActionSheet';
 import { ActionSheetItem } from '../ActionSheetItem/ActionSheetItem';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../AppRoot/AppRoot';
@@ -33,9 +37,9 @@ const ActionSheetTest = ({
   const toggleRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
-  const handleClose = () => {
+  const handleClose = (options?: ActionSheetOnCloseOptions) => {
     if (onCloseProp) {
-      onCloseProp();
+      onCloseProp(options || { closedBy: 'other' });
     }
     setVisible(false);
   };
@@ -159,46 +163,6 @@ describe(FocusTrap, () => {
       await unmountActionSheet();
       await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
       expect(onClose).toHaveBeenCalledTimes(1);
-    }),
-  );
-
-  it(
-    'captures Esc by default and calls onClose',
-    withFakeTimers(async () => {
-      const onCloseStub = vi.fn();
-      render(
-        <FocusTrap onClose={onCloseStub}>
-          <input onKeyDown={(event) => event.stopPropagation()} defaultValue="Test input" />
-        </FocusTrap>,
-      );
-
-      await userEvent.tab();
-      await userEvent.keyboard(`{Escape}`);
-
-      // event.stopPropagation of input does nothing, onClose of FocusTrap is triggered on Esc
-      expect(onCloseStub).toHaveBeenCalledTimes(1);
-    }),
-  );
-
-  it(
-    'allows to stop Escape keyboard event propagation from inner element with captureEscapeKeyboardEvent flag set to false',
-    withFakeTimers(async () => {
-      const onCloseStub = vi.fn();
-      render(
-        <FocusTrap onClose={onCloseStub} captureEscapeKeyboardEvent={false}>
-          <input
-            data-testid="input"
-            onKeyDown={(event) => event.stopPropagation()}
-            defaultValue="Test button"
-          />
-        </FocusTrap>,
-      );
-
-      await userEvent.tab();
-      await userEvent.keyboard(`{Escape}`);
-
-      // event.stopPropagation of input doesn't trigger onClose of FocusTrap on Esc
-      expect(onCloseStub).toHaveBeenCalledTimes(0);
     }),
   );
 

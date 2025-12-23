@@ -14,12 +14,11 @@ export interface FocusTrapInternalProps<T extends HTMLElement = HTMLElement>
 
 export type FocusTrapProps<T extends HTMLElement = HTMLElement> = Omit<
   FocusTrapInternalProps<T>,
-  'captureEscapeKeyboardEvent' | 'mutationObserverOptions'
+  'mutationObserverOptions'
 >;
 
 export const FocusTrapInternal = <T extends HTMLElement = HTMLElement>({
   Component = 'div',
-  onClose,
   autoFocus = true,
   restoreFocus = true,
   disabled = false,
@@ -27,20 +26,17 @@ export const FocusTrapInternal = <T extends HTMLElement = HTMLElement>({
   timeout = 0,
   getRootRef,
   children,
-  captureEscapeKeyboardEvent = true,
   mutationObserverOptions = DEFAULT_MUTATION_OBSERVER_OPTIONS,
   ...restProps
 }: FocusTrapInternalProps<T>): React.ReactNode => {
   const ref = useExternRef<T>(getRootRef);
 
   const { beforeGuard, afterGuard } = useFocusTrap(ref, {
-    onClose,
     autoFocus,
     restoreFocus,
     disabled,
     mount,
     timeout,
-    captureEscapeKeyboardEvent,
     mutationObserverOptions,
   });
 

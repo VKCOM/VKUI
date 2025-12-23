@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { stopPropagation } from '../../lib/utils';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
@@ -17,6 +18,7 @@ export const ActionSheetDropdownSheet = ({
   className,
   onClick,
   allowClickPropagation = false,
+  onClose,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
   const { sizeY } = useAdaptivityWithJSMediaQueries();
@@ -28,6 +30,8 @@ export const ActionSheetDropdownSheet = ({
         stopPropagation(event);
         onClick?.(event);
       };
+
+  useGlobalEscKeyDown(true, onClose);
 
   return (
     <FocusTrap
