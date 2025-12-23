@@ -130,6 +130,7 @@ export { ActionSheet } from './components/ActionSheet/ActionSheet';
 export type {
   ActionSheetProps,
   ActionSheetOnCloseOptions,
+  ActionSheetOnCloseReason,
 } from './components/ActionSheet/ActionSheet';
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';

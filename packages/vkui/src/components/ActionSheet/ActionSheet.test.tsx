@@ -18,7 +18,11 @@ import { ActionSheet, type ActionSheetProps } from './ActionSheet';
 import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 import popoutWrapperStyles from '../PopoutWrapper/PopoutWrapper.module.css';
 
-const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetDesktop = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -30,6 +34,7 @@ const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionS
           aria-label="menu list"
           toggleRef={toggleRef}
           onClose={onClose}
+          onClosed={onClosed}
           {...restProps}
         />
       </AdaptivityProvider>
@@ -37,19 +42,33 @@ const ActionSheetDesktop = ({ onClose = vi.fn(), ...restProps }: Partial<ActionS
   );
 };
 
-const ActionSheetMobile = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetMobile = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
   }, []);
   return (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer={false}>
-      <ActionSheet aria-label="menu list" toggleRef={toggleRef} onClose={onClose} {...restProps} />
+      <ActionSheet
+        aria-label="menu list"
+        toggleRef={toggleRef}
+        onClose={onClose}
+        onClosed={onClosed}
+        {...restProps}
+      />
     </AdaptivityProvider>
   );
 };
 
-const ActionSheetMenu = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetMenu = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -60,12 +79,17 @@ const ActionSheetMenu = ({ onClose = vi.fn(), ...restProps }: Partial<ActionShee
       mode="menu"
       toggleRef={toggleRef}
       onClose={onClose}
+      onClosed={onClosed}
       {...restProps}
     />
   );
 };
 
-const ActionSheetSheet = ({ onClose = vi.fn(), ...restProps }: Partial<ActionSheetProps>) => {
+const ActionSheetSheet = ({
+  onClose = vi.fn(),
+  onClosed = vi.fn(),
+  ...restProps
+}: Partial<ActionSheetProps>) => {
   const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
   React.useLayoutEffect(() => {
     setToggleRef(screen.getByTestId('target'));
@@ -76,6 +100,7 @@ const ActionSheetSheet = ({ onClose = vi.fn(), ...restProps }: Partial<ActionShe
       mode="sheet"
       toggleRef={toggleRef}
       onClose={onClose}
+      onClosed={onClosed}
       {...restProps}
     />
   );
@@ -120,11 +145,12 @@ describe(ActionSheet, () => {
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_, ActionSheet) => {
+      const onClosedHandler = vi.fn();
       const onCloseHandler = vi.fn();
       const handlers = { onClick: vi.fn(), onChange: vi.fn() };
 
       const result = render(
-        <ActionSheet onClose={onCloseHandler}>
+        <ActionSheet onClosed={onClosedHandler} onClose={onCloseHandler}>
           <ActionSheetItem {...props} {...handlers} {...props} data-testid="item" />
         </ActionSheet>,
       );
@@ -141,7 +167,7 @@ describe(ActionSheet, () => {
       );
       await act(vi.runAllTimers);
 
-      if (onCloseHandler.mock.calls.length > 0) {
+      if (onClosedHandler.mock.calls.length > 0) {
         result.unmount();
       }
 
@@ -150,12 +176,15 @@ describe(ActionSheet, () => {
       props.selectable && expect(handlers.onChange).toHaveBeenCalled();
 
       if (props.autoCloseDisabled) {
+        expect(onClosedHandler).not.toHaveBeenCalled();
         expect(onCloseHandler).not.toHaveBeenCalled();
       } else if (!props.autoCloseDisabled && props.isCancelItem) {
-        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+        expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
       } else {
         !props.autoCloseDisabled &&
-          expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
+          expect(onClosedHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
+        expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith('click-action-item');
       }
     });
   });
@@ -171,16 +200,16 @@ describe(ActionSheet, () => {
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_name, ActionSheet) => {
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       render(
-        <ActionSheet data-testid="container" onClose={onClose}>
+        <ActionSheet data-testid="container" onClosed={onClosed}>
           <div data-testid="content" />
         </ActionSheet>,
       );
       await waitForFloatingPosition();
       await act(vi.runAllTimers);
       await userEvent.click(getNode());
-      expect(onClose).not.toHaveBeenCalled();
+      expect(onClosed).not.toHaveBeenCalled();
     });
   });
 
@@ -188,22 +217,28 @@ describe(ActionSheet, () => {
     fakeTimersForScope();
     it('desktop', async () => {
       const onClose = vi.fn();
-      const result = render(<ActionSheetDesktop onClose={onClose} />);
-      await waitForFloatingPosition();
-      await userEvent.click(document.body);
-      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
-    });
-
-    it('mobile', async () => {
-      const onClose = vi.fn();
-      const result = render(<ActionSheetMobile onClose={onClose} />);
+      const onClosed = vi.fn();
+      const result = render(<ActionSheetDesktop onClose={onClose} onClosed={onClosed} />);
       await waitForFloatingPosition();
       await userEvent.click(
         result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
       );
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+    });
+
+    it('mobile', async () => {
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
+      const result = render(<ActionSheetMobile onClose={onClose} onClosed={onClosed} />);
+      await waitForFloatingPosition();
+      await userEvent.click(
+        result.container.querySelector<HTMLElement>(`.${popoutWrapperStyles.overlay}`)!,
+      );
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
     });
   });
 
@@ -221,7 +256,7 @@ describe(ActionSheet, () => {
     const { rerender } = render(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -233,7 +268,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="ios">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -245,7 +280,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -257,7 +292,7 @@ describe(ActionSheet, () => {
     rerender(
       <ConfigProvider platform="android">
         <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
-          <ActionSheet toggleRef={targetEl} onClose={vi.fn()} />
+          <ActionSheet toggleRef={targetEl} onClosed={vi.fn()} />
         </AdaptivityProvider>
       </ConfigProvider>,
     );
@@ -273,11 +308,11 @@ describe(ActionSheet, () => {
       ['menu', ActionSheetMenu],
       ['sheet', ActionSheetSheet],
     ])('%s', async (_name, ActionSheet) => {
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const onClick = vi.fn();
       const { rerender } = render(
         <div onClick={onClick}>
-          <ActionSheet data-testid="container" onClose={onClose}>
+          <ActionSheet data-testid="container" onClosed={onClosed}>
             <div data-testid="content" />
           </ActionSheet>
         </div>,
@@ -290,7 +325,7 @@ describe(ActionSheet, () => {
 
       rerender(
         <div onClick={onClick}>
-          <ActionSheet data-testid="container" onClose={onClose} allowClickPropagation>
+          <ActionSheet data-testid="container" onClosed={onClosed} allowClickPropagation>
             <div data-testid="content" />
           </ActionSheet>
         </div>,
@@ -314,9 +349,10 @@ describe(ActionSheet, () => {
         isCancelItemAtContext = false,
       }: { isCancelItem?: boolean; isCancelItemAtContext?: boolean },
     ) => {
-      const onCloseHandler = vi.fn();
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const result = render(
-        <ActionSheet onClose={onCloseHandler}>
+        <ActionSheet onClose={onClose} onClosed={onClosed}>
           <ActionSheetItemContext.Provider
             value={{
               isCancelItem: isCancelItemAtContext,
@@ -340,12 +376,14 @@ describe(ActionSheet, () => {
       );
       await act(vi.runAllTimers);
 
-      if (onCloseHandler.mock.calls.length > 0) {
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+      if (onClosed.mock.calls.length > 0) {
         result.unmount();
       }
 
-      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
     };
 
     describe.each([
@@ -371,7 +409,7 @@ describe(ActionSheet, () => {
       return render(
         <ConfigProvider platform="ios">
           <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer>
-            <ActionSheet toggleRef={targetEl} onClose={vi.fn()} {...props} />
+            <ActionSheet toggleRef={targetEl} onClose={vi.fn()} onClosed={vi.fn()} {...props} />
           </AdaptivityProvider>
         </ConfigProvider>,
       );
@@ -405,9 +443,11 @@ describe(ActionSheet, () => {
     });
 
     it('detects cancel item when ActionSheetDefaultIosCloseItem is clicked', async () => {
-      const onCloseHandler = vi.fn();
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const result = renderIosActionSheet({
-        onClose: onCloseHandler,
+        onClose,
+        onClosed,
         mode: 'sheet',
       });
       await waitForFloatingPosition();
@@ -423,12 +463,221 @@ describe(ActionSheet, () => {
       );
       await act(vi.runAllTimers);
 
-      if (onCloseHandler.mock.calls.length > 0) {
+      await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+      if (onClosed.mock.calls.length > 0) {
+        result.unmount();
+      }
+
+      expect(onClose).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+    });
+  });
+
+  describe('onClose and onClosed reasons', () => {
+    fakeTimersForScope();
+
+    describe('click-action-item', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem data-testid="item">Action</ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        fireEvent(
+          screen.getByTestId('item'),
+          new MouseEvent('click', {
+            clientX: 1,
+            clientY: 1,
+            bubbles: true,
+          }),
+        );
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-action-item');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
+      });
+    });
+
+    describe('click-cancel-item', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem data-testid="cancel-item" isCancelItem>
+              Cancel
+            </ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        fireEvent(
+          screen.getByTestId('cancel-item'),
+          new MouseEvent('click', {
+            clientX: 1,
+            clientY: 1,
+            bubbles: true,
+          }),
+        );
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-cancel-item');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+      });
+    });
+
+    describe('click-overlay', () => {
+      it.each([
+        ['mobile', ActionSheetMobile],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(<ActionSheet onClose={onClose} onClosed={onClosed} />);
+        await waitForFloatingPosition();
+
+        const overlay = result.container.querySelector<HTMLElement>(
+          `.${popoutWrapperStyles.overlay}`,
+        )!;
+        await userEvent.click(overlay);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('click-overlay');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      });
+    });
+
+    describe('keydown-item (Enter key)', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem data-testid="item">Action</ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        const item = screen.getByTestId('item');
+        await act(async () => {
+          item.focus();
+        });
+        expect(item).toHaveFocus();
+
+        await act(async () => {
+          fireEvent.keyDown(item, { key: 'Enter', code: 'Enter' });
+        });
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        // При нажатии Enter также срабатывает клик (браузер автоматически эмулирует клик),
+        // поэтому onClose вызывается дважды: с 'keydown-item' и 'click-action-item'
+        // Проверяем, что onClose был вызван с 'keydown-item' хотя бы один раз
+        expect(onClose).toHaveBeenCalledWith('keydown-item');
+        // onClosed должен быть вызван только один раз (после завершения анимации)
+        expect(onClosed).toHaveBeenCalledTimes(1);
+        expect(onClosed).toHaveBeenCalledWith({ closedBy: 'other' });
+      });
+    });
+
+    describe('escape-key', () => {
+      it.each([
+        ['desktop', ActionSheetDesktop],
+        ['mobile', ActionSheetMobile],
+        ['menu', ActionSheetMenu],
+        ['sheet', ActionSheetSheet],
+      ])('%s', async (_, ActionSheet) => {
+        const onClose = vi.fn();
+        const onClosed = vi.fn();
+        const result = render(
+          <ActionSheet onClose={onClose} onClosed={onClosed}>
+            <ActionSheetItem>Action</ActionSheetItem>
+          </ActionSheet>,
+        );
+        await waitForFloatingPosition();
+
+        await act(async () => {
+          await userEvent.keyboard('{Escape}');
+        });
+        await act(vi.runAllTimers);
+
+        await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
+
+        if (onClosed.mock.calls.length > 0) {
+          result.unmount();
+        }
+
+        expect(onClose).toHaveBeenCalledExactlyOnceWith('escape-key');
+        expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'other' });
+      });
+    });
+  });
+
+  describe('backward compatibility', () => {
+    fakeTimersForScope();
+
+    it('onClosed works without onClose', async () => {
+      const onClosed = vi.fn();
+      const result = render(
+        <ActionSheetDesktop onClosed={onClosed}>
+          <ActionSheetItem data-testid="item">Action</ActionSheetItem>
+        </ActionSheetDesktop>,
+      );
+      await waitForFloatingPosition();
+
+      fireEvent(
+        screen.getByTestId('item'),
+        new MouseEvent('click', {
+          clientX: 1,
+          clientY: 1,
+          bubbles: true,
+        }),
+      );
+      await act(vi.runAllTimers);
+
+      if (onClosed.mock.calls.length > 0) {
         result.unmount();
       }
 
       await waitCSSKeyframesAnimation(result.getByRole('dialog'), { runOnlyPendingTimers: true });
-      expect(onCloseHandler).toHaveBeenCalledExactlyOnceWith({ closedBy: 'cancel-item' });
+      expect(onClosed).toHaveBeenCalledExactlyOnceWith({ closedBy: 'action-item' });
     });
   });
 });

@@ -6,6 +6,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { usePlatform } from '../../hooks/usePlatform';
 import { stopPropagation } from '../../lib/utils';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { ActionSheetContext, type ActionSheetContextType } from './ActionSheetContext';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
@@ -22,10 +23,19 @@ export const ActionSheetDropdownSheet = ({
   className,
   onClick,
   allowClickPropagation = false,
+  onClose: onCloseProp,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
   const { sizeY } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
+
+  const { onClose: onActionSheetClose } =
+    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
+
+  const onClose = React.useCallback(() => {
+    onCloseProp?.();
+    onActionSheetClose?.('escape-key');
+  }, [onActionSheetClose, onCloseProp]);
 
   const handleClick = allowClickPropagation
     ? onClick
@@ -37,6 +47,7 @@ export const ActionSheetDropdownSheet = ({
   return (
     <FocusTrap
       {...restProps}
+      onClose={onClose}
       onClick={handleClick}
       className={classNames(
         styles.host,
