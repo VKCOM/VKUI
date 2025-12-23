@@ -147,7 +147,7 @@ describe('Button', () => {
     );
 
     const btn = button();
-    expect(btn).toHaveAttribute('aria-label', 'Отправить Идет отправка...');
+    expect(btn).toHaveAttribute('aria-label', 'Идет отправка...');
     expect(btn).toHaveAttribute('aria-busy', 'true');
   });
 

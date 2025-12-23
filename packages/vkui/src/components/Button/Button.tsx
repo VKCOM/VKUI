@@ -87,7 +87,7 @@ export interface VKUIButtonProps extends HasAlign {
   loading?: boolean;
   /**
    * Текст для `aria-label` при состоянии загрузки.
-   * Используется только когда `loading={true}`.
+   * Подменяет переданный в компонент `aria-label` только когда `loading={true}`.
    */
   loadingLabel?: string;
   /**
@@ -132,9 +132,7 @@ export const Button = ({
   const isDisabled = disabled || loading;
   const hasHref = href !== undefined;
 
-  const ariaLabel = React.useMemo(() => {
-    return [ariaLabelProp, loading && loadingLabel].filter(Boolean).join(' ');
-  }, [loading, loadingLabel, ariaLabelProp]);
+  const ariaLabel = loading ? loadingLabel : ariaLabelProp;
 
   const handleClick = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
@@ -179,7 +177,7 @@ export const Button = ({
       hasActive={!loading}
       {...buttonProps}
       {...restProps}
-      aria-label={ariaLabel?.trim() ? ariaLabel : undefined}
+      aria-label={ariaLabel}
       onClick={handleClick}
       baseClassName={classNames(
         styles.host,
