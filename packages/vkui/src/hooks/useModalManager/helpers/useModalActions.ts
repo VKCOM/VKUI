@@ -2,8 +2,8 @@ import type { UIEvent } from 'react';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { type ModalPageCloseReason } from '../../../components/ModalPage/types';
-import { ModalCardWrapper } from '../components/ModalCardWrapper.tsx';
-import { ModalPageWrapper } from '../components/ModalPageWrapper.tsx';
+import { ModalCardWrapper } from '../components/ModalCardWrapper';
+import { ModalPageWrapper } from '../components/ModalPageWrapper';
 import {
   type CustomModalCardItem,
   type CustomModalPageItem,

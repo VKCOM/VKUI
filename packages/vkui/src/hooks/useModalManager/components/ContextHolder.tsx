@@ -1,10 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { ModalRoot } from '../../../components/ModalRoot/ModalRoot.tsx';
-import { type ModalRootProps } from '../../../components/ModalRoot/types.ts';
-import { type ModalStore } from '../helpers/createModalStore.ts';
-import { useActiveModalProps } from '../helpers/useActiveModalProps.ts';
+import { ModalRoot } from '../../../components/ModalRoot/ModalRoot';
+import { type ModalRootProps } from '../../../components/ModalRoot/types';
+import { type ModalStore } from '../helpers/createModalStore';
+import { useActiveModalProps } from '../helpers/useActiveModalProps';
 
 type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
   store: ModalStore;

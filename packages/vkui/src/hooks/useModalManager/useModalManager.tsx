@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { ContextHolder } from './components/ContextHolder.tsx';
+import { ContextHolder } from './components/ContextHolder';
 import { createModalStore } from './helpers/createModalStore';
 import { useModalActions } from './helpers/useModalActions';
 import {

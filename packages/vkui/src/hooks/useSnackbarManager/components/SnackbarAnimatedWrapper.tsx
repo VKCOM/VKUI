@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { Snackbar } from '../../../components/Snackbar/Snackbar';
 import { useCSSKeyframesAnimationController } from '../../../lib/animation';
 import { usePlatform } from '../../usePlatform';
 import { type SnackbarItem } from '../types';
@@ -62,17 +61,13 @@ export const SnackbarAnimatedWrapper: React.FC<{
       )}
       {...animationHandlers}
     >
-      {snackbarItem.type === 'simple' ? (
-        <Snackbar {...snackbarItem.snackbarProps} />
-      ) : (
-        <snackbarItem.component
-          {...snackbarItem.additionalProps}
-          id={snackbarItem.id}
-          snackbarProps={snackbarItem.snackbarProps}
-          close={snackbarItem.close}
-          update={snackbarItem.update}
-        />
-      )}
+      <snackbarItem.component
+        {...snackbarItem.additionalProps}
+        id={snackbarItem.id}
+        snackbarProps={snackbarItem.snackbarProps}
+        close={snackbarItem.close}
+        update={snackbarItem.update}
+      />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { SnackbarWrapper } from '../components/SnackbarWrapper';
 import {
   type CommonOnOpenPayload,
   type CustomSnackbar,
@@ -15,6 +16,19 @@ const resolveMobilePlacement = (
     return 'top';
   }
   return 'bottom-start';
+};
+
+const resolveProps = <AdditionalProps extends object>(
+  props:
+    | CustomSnackbar.Payload<AdditionalProps>
+    | React.ComponentType<CustomSnackbar.Props<AdditionalProps>>,
+): CustomSnackbar.Payload<AdditionalProps> => {
+  if ('component' in props) {
+    return props;
+  }
+  return {
+    component: props,
+  };
 };
 
 export type UseSnackbarActionsWithStoreProps = {
@@ -46,6 +60,24 @@ export const useSnackbarActionsWithStore = ({
     isDesktopRef.current = isDesktop;
   }, [isDesktop]);
 
+  const update: SnackbarApi.Api['update'] = React.useCallback(
+    (id, config) => {
+      store.updateSnackbar(id, config);
+    },
+    [store],
+  );
+
+  const close: SnackbarApi.Api['close'] = React.useCallback(
+    (id) => {
+      if (store.showedSnackbars.has(id)) {
+        store.closeSnackbar(id);
+      } else {
+        store.removeSnackbar(id);
+      }
+    },
+    [store],
+  );
+
   const onOpenSnackbarImpl = React.useCallback(
     (item: CommonOnOpenPayload): SnackbarApi.OpenReturn => {
       const placement: SnackbarPlacement = item.snackbarProps?.placement || 'bottom-start';
@@ -63,7 +95,7 @@ export const useSnackbarActionsWithStore = ({
         resolvePromise = resolve;
       });
 
-      const id = item.id || uuidv4();
+      const id = item.id;
 
       if (withOverflow) {
         store.closeOverflowedSnackbars(placementSnackbars);
@@ -85,75 +117,43 @@ export const useSnackbarActionsWithStore = ({
 
       return {
         id,
-        close: () => {
-          if (store.showedSnackbars.has(id)) {
-            store.closeSnackbar(id);
-          } else {
-            store.removeSnackbar(id);
-          }
-        },
-        update: (newProps) => store.updateSnackbar(id, newProps),
+        close: () => close(id),
+        update: (newProps) => update(id, newProps),
         onClose: <R>(resolve?: () => R) => {
           return promise.then(resolve);
         },
       };
     },
-    [store],
-  );
-
-  const open: SnackbarApi.Api['open'] = React.useCallback(
-    (config) => {
-      return onOpenSnackbarImpl({
-        type: 'simple',
-        id: config.id,
-        snackbarProps: config,
-      });
-    },
-    [onOpenSnackbarImpl],
+    [close, store, update],
   );
 
   const openCustom: SnackbarApi.Api['openCustom'] = React.useCallback(
     (config) => {
-      if ('component' in config) {
-        const result = onOpenSnackbarImpl({
-          type: 'custom',
-          id: config.id,
-          component: config.component,
-          snackbarProps: config.baseProps,
-          additionalProps: config.additionalProps,
-          close: () => result.close(),
-          update: (newProps) => result.update(newProps),
-        });
-        return result;
-      } else {
-        const result = onOpenSnackbarImpl({
-          type: 'custom',
-          component: config as React.ComponentType<CustomSnackbar.Props<any>>,
-          close: () => result.close(),
-          update: (newProps) => result.update(newProps),
-        });
-        return result;
-      }
+      const resolvedProps = resolveProps(config);
+
+      const id = resolvedProps.id || uuidv4();
+
+      return onOpenSnackbarImpl({
+        id,
+        component: resolvedProps.component,
+        snackbarProps: resolvedProps.baseProps,
+        additionalProps: resolvedProps.additionalProps,
+        close: () => close(id),
+        update: (newProps) => update(id, newProps),
+      });
     },
-    [onOpenSnackbarImpl],
+    [close, onOpenSnackbarImpl, update],
   );
 
-  const update: SnackbarApi.Api['update'] = React.useCallback(
-    (id, config) => {
-      store.updateSnackbar(id, config);
+  const open: SnackbarApi.Api['open'] = React.useCallback(
+    (config) => {
+      return openCustom({
+        id: config.id,
+        component: SnackbarWrapper,
+        baseProps: config,
+      });
     },
-    [store],
-  );
-
-  const close: SnackbarApi.Api['close'] = React.useCallback(
-    (id) => {
-      if (store.showedSnackbars.has(id)) {
-        store.closeSnackbar(id);
-      } else {
-        store.removeSnackbar(id);
-      }
-    },
-    [store],
+    [openCustom],
   );
 
   const closeAllSnackbars: SnackbarApi.Api['closeAll'] = React.useCallback(() => {
