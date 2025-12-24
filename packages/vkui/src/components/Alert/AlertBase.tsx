@@ -116,27 +116,27 @@ export const AlertBase = ({
   useGlobalEscKeyDown(true, onEscape);
 
   return (
-    <RootComponent
-      {...animationHandlers}
-      onClick={handleClick}
-      getRootRef={elementRef}
-      className={classNames(
-        styles.host,
-        platform === 'ios' && styles.ios,
-        platform === 'vkcom' && styles.vkcom,
-        closing ? styles.closing : styles.opening,
-        isDesktop && styles.desktop,
-      )}
-      role="alertdialog"
-      aria-modal
-      aria-labelledby={titleId}
-      aria-describedby={descriptionId}
-      {...restProps}
+    <FocusTrap
+      rootRef={elementRef}
+      autoFocus={autoFocus === undefined ? animationState === 'entered' : autoFocus}
+      restoreFocus={restoreFocus}
     >
-      <FocusTrap
-        rootRef={elementRef}
-        autoFocus={autoFocus === undefined ? animationState === 'entered' : autoFocus}
-        restoreFocus={restoreFocus}
+      <RootComponent
+        {...animationHandlers}
+        onClick={handleClick}
+        getRootRef={elementRef}
+        className={classNames(
+          styles.host,
+          platform === 'ios' && styles.ios,
+          platform === 'vkcom' && styles.vkcom,
+          closing ? styles.closing : styles.opening,
+          isDesktop && styles.desktop,
+        )}
+        role="alertdialog"
+        aria-modal
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
+        {...restProps}
       >
         <div
           className={classNames(
@@ -181,7 +181,7 @@ export const AlertBase = ({
           renderAction={renderAction}
           onItemClick={onItemClick}
         />
-      </FocusTrap>
-    </RootComponent>
+      </RootComponent>
+    </FocusTrap>
   );
 };
