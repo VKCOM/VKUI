@@ -140,6 +140,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
               >
                 <div
                   {...restPopoverProps}
+                  tabIndex={-1}
                   ref={focusTrapRootRef}
                   role={role}
                   className={classNames(
