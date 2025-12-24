@@ -134,17 +134,6 @@ export const Button = ({
 
   const ariaLabel = loading ? loadingLabel : ariaLabelProp;
 
-  const handleClick = React.useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      if (isDisabled) {
-        e.preventDefault();
-        return;
-      }
-      onClick?.(e);
-    },
-    [isDisabled, onClick],
-  );
-
   const buttonProps = React.useMemo(() => {
     if (hasHref) {
       return isDisabled
@@ -178,7 +167,7 @@ export const Button = ({
       {...buttonProps}
       {...restProps}
       aria-label={ariaLabel}
-      onClick={handleClick}
+      onClick={isDisabled ? undefined : onClick}
       baseClassName={classNames(
         styles.host,
         stylesSize[size],
