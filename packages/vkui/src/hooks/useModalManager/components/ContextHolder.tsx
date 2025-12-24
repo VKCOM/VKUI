@@ -1,12 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { ModalCard } from '../../components/ModalCard/ModalCard';
-import { ModalPage } from '../../components/ModalPage/ModalPage';
-import { ModalRoot } from '../../components/ModalRoot/ModalRoot';
-import { type ModalRootProps } from '../../components/ModalRoot/types';
-import { type ModalStore } from './helpers/createModalStore';
-import { useActiveModalProps } from './helpers/useActiveModalProps';
+import { ModalRoot } from '../../../components/ModalRoot/ModalRoot';
+import { type ModalRootProps } from '../../../components/ModalRoot/types';
+import { type ModalStore } from '../helpers/createModalStore';
+import { useActiveModalProps } from '../helpers/useActiveModalProps';
 
 type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
   store: ModalStore;
@@ -57,8 +55,8 @@ export function ContextHolder({
     >
       {state.modals.map((modalData) => {
         switch (modalData.type) {
-          case 'custom-page':
-          case 'custom-card':
+          case 'page':
+          case 'card':
             const Modal = modalData.component;
             return (
               <Modal
@@ -70,10 +68,6 @@ export function ContextHolder({
                 close={modalData.close}
               />
             );
-          case 'card':
-            return <ModalCard key={modalData.id} {...modalData} />;
-          case 'page':
-            return <ModalPage key={modalData.id} {...modalData} />;
         }
       })}
     </ModalRoot>

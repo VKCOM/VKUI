@@ -1,4 +1,4 @@
-import { type ModalManagerItem } from '../types';
+import { type ModalManagerItem, type OpenModalCardProps, type OpenModalPageProps } from '../types';
 
 export type ModalManagerState = {
   modals: ModalManagerItem[];
@@ -57,7 +57,7 @@ export const setPrevActiveModal = (
 export const updateModalPropsInState = (
   state: ModalManagerState,
   id: string,
-  props: Omit<ModalManagerItem, 'type' | 'id'>,
+  props: Omit<OpenModalPageProps | OpenModalCardProps, 'id'>,
 ): ModalManagerState => {
   const { modals } = state;
 
@@ -74,20 +74,14 @@ export const updateModalPropsInState = (
   const currentModal = modals[modalIndex];
   const newModalProps = (() => {
     switch (currentModal.type) {
-      case 'custom-page':
-      case 'custom-card':
+      case 'page':
+      case 'card':
         return {
           ...currentModal,
           modalProps: {
             ...currentModal.modalProps,
             ...cleanProps,
           },
-        };
-      case 'card':
-      case 'page':
-        return {
-          ...currentModal,
-          ...cleanProps,
         };
     }
   })() as ModalManagerItem;

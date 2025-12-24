@@ -5,12 +5,12 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown.ts';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { stopPropagation } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
+import { ActionSheetContext, type ActionSheetContextType } from './ActionSheetContext';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
@@ -23,7 +23,7 @@ export const ActionSheetDropdownMenu = ({
   children,
   toggleRef,
   closing,
-  onClose,
+  onClose: onCloseProp,
   className,
   style,
   popupOffsetDistance = 0,
@@ -34,10 +34,12 @@ export const ActionSheetDropdownMenu = ({
   onClick,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
-  const { document } = useDOM();
   const platform = usePlatform();
   const { sizeY } = useAdaptivityWithJSMediaQueries();
   const elementRef = React.useRef<HTMLDivElement | null>(null);
+
+  const { onClose: onActionSheetClose } =
+    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
@@ -48,21 +50,6 @@ export const ActionSheetDropdownMenu = ({
     }
   }, [toggleRef]);
 
-  React.useEffect(() => {
-    const listener = (e: MouseEvent) => {
-      const dropdownElement = elementRef?.current;
-      if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-        onClose?.();
-      }
-    };
-
-    setTimeout(() => {
-      document!.body.addEventListener('click', listener);
-    });
-
-    return () => document!.body.removeEventListener('click', listener);
-  }, [onClose, document]);
-
   const targetRef = React.useMemo(() => {
     if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
       return toggleRef;
@@ -70,6 +57,11 @@ export const ActionSheetDropdownMenu = ({
 
     return { current: toggleRef as HTMLElement };
   }, [toggleRef]);
+
+  const onClose = React.useCallback(() => {
+    onCloseProp?.();
+    onActionSheetClose?.('escape-key');
+  }, [onActionSheetClose, onCloseProp]);
 
   const handleClick = allowClickPropagation
     ? onClick

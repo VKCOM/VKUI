@@ -4,6 +4,7 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { type HasRootRef } from '../../types';
 import type { ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
@@ -11,19 +12,38 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
-import { ActionSheetContext, type ItemClickHandler } from './ActionSheetContext';
+import {
+  ActionSheetContext,
+  type ActionSheetContextType,
+  type ItemClickHandler,
+} from './ActionSheetContext';
 import { ActionSheetDefaultIosCloseItem } from './ActionSheetDefaultIosCloseItem';
 import { ActionSheetDropdownMenu } from './ActionSheetDropdownMenu';
 import { ActionSheetDropdownSheet } from './ActionSheetDropdownSheet';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
-type CloseInitiators = 'action-item' | 'cancel-item' | 'other';
+export type ActionSheetOnCloseReason =
+  | 'click-action-item'
+  | 'click-cancel-item'
+  | 'click-overlay'
+  | 'keydown-item'
+  | 'escape-key';
+
+export type ActionSheetOnClosedReason = 'action-item' | 'cancel-item' | 'other';
+
+/**
+ * @deprecated Since 8.0.0 аргумент, переданный в функцию `onClosed`, устарел и будет удален в **VKUI v10**.
+ * Для получения причины закрытия всплывающего окна используйте свойство `onClose`.
+ */
 export interface ActionSheetOnCloseOptions {
   /**
    * Причина закрытия всплывающего элемента.
+   *
+   * @deprecated Since 8.0.0 аргумент, переданный в функцию `onClosed`, устарел и будет удален в **VKUI v10**.
+   * Для получения причины закрытия всплывающего окна используйте свойство `onClose`.
    */
-  closedBy: CloseInitiators;
+  closedBy: ActionSheetOnClosedReason;
 }
 
 export interface ActionSheetProps
@@ -39,17 +59,24 @@ export interface ActionSheetProps
     >,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**
-   * Заголовок всплыващего окна.
+   * Заголовок всплывающего окна.
    */
   title?: React.ReactNode;
   /**
-   * Описание всплыващего окна, под заголовком.
+   * Описание всплывающего окна, под заголовком.
    */
   description?: React.ReactNode;
   /**
-   * Закрыть всплыващее окно по нажатию снаружи.
+   * Обработчик закрытия всплывающего окна.
    */
-  onClose: (options: ActionSheetOnCloseOptions) => void;
+  onClose?: (reason: ActionSheetOnCloseReason) => void;
+  /**
+   * Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.
+   *
+   * > Since 8.0.0 аргумент, переданный в данную функцию, устарел и будет удален в **VKUI v10**.
+   * > Для получения причины закрытия всплывающего окна используйте свойство `onClose`.
+   */
+  onClosed: (options: ActionSheetOnCloseOptions) => void;
   /**
    * Только мобильный iOS.
    */
@@ -65,7 +92,7 @@ export interface ActionSheetProps
    * Режим отображения компонента:
    *
    * - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
-   * - `menu` –  отображение в виде всплывающего элемента, относительно якорного элемента.
+   * - `menu` – отображение в виде всплывающего элемента, относительно якорного элемента.
    */
   mode?: 'sheet' | 'menu';
   /**
@@ -92,19 +119,33 @@ export const ActionSheet = ({
   popupOffsetDistance,
   placement,
   mode: modeProp,
-  onClose,
+  onClose: onCloseProp,
+  onClosed,
   ...restProps
 }: ActionSheetProps): React.ReactNode => {
   const platform = usePlatform();
-  const [closingBy, setClosingBy] = React.useState<undefined | CloseInitiators>(undefined);
-  const onCloseWithOther = React.useCallback(() => setClosingBy('other'), []);
+  const [closedReason, setClosedReason] = React.useState<undefined | ActionSheetOnClosedReason>(
+    undefined,
+  );
+  const onCloseStable = useStableCallback(onCloseProp || noop);
+
+  const onClose = React.useCallback(
+    (onCloseReason: ActionSheetOnCloseReason, onClosedReason: ActionSheetOnClosedReason) => {
+      onCloseStable(onCloseReason);
+      setClosedReason(onClosedReason);
+    },
+    [onCloseStable],
+  );
+
+  const onOverlayClick = React.useCallback(() => onClose('click-overlay', 'other'), [onClose]);
+
   const actionCallbackRef = React.useRef(noop);
 
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
-    closingBy !== undefined ? 'exit' : 'enter',
+    closedReason !== undefined ? 'exit' : 'enter',
     {
       onExited() {
-        onClose({ closedBy: closingBy || 'other' });
+        onClosed({ closedBy: closedReason || 'other' });
         actionCallbackRef.current();
         actionCallbackRef.current = noop;
       },
@@ -125,16 +166,19 @@ export const ActionSheet = ({
           if (action) {
             actionCallbackRef.current = () => action(event);
           }
-          setClosingBy(isCancelItem ? 'cancel-item' : 'action-item');
+          onClose(
+            isCancelItem ? 'click-cancel-item' : 'click-action-item',
+            isCancelItem ? 'cancel-item' : 'action-item',
+          );
         } else {
           action && action(event);
         }
       },
-    [],
+    [onClose],
   );
-  const contextValue = React.useMemo(
-    () => ({ onItemClick, mode, onClose: onCloseWithOther }),
-    [mode, onCloseWithOther, onItemClick],
+  const contextValue = React.useMemo<ActionSheetContextType>(
+    () => ({ onItemClick, mode, onClose: (reason) => onClose(reason, 'other') }),
+    [mode, onClose, onItemClick],
   );
 
   const DropdownComponent = mode === 'menu' ? ActionSheetDropdownMenu : ActionSheetDropdownSheet;
@@ -145,13 +189,12 @@ export const ActionSheet = ({
   const actionSheet = (
     <ActionSheetContext.Provider value={contextValue}>
       <DropdownComponent
-        closing={Boolean(closingBy)}
+        closing={Boolean(closedReason)}
         role="dialog"
         aria-modal="true"
         autoFocus={animationState === 'entered'}
         {...dropdownProps}
         {...animationHandlers}
-        onClose={onCloseWithOther}
         className={mode === 'menu' ? className : undefined}
         style={mode === 'menu' ? style : undefined}
       >
@@ -181,11 +224,11 @@ export const ActionSheet = ({
     <AppRootPortal>
       <PopoutWrapper
         noBackground={mode === 'menu'}
-        closing={Boolean(closingBy)}
+        closing={Boolean(closedReason)}
         alignY="bottom"
         className={className}
         style={style}
-        onClick={onCloseWithOther}
+        onClick={onOverlayClick}
       >
         {actionSheet}
       </PopoutWrapper>
