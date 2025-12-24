@@ -71,8 +71,25 @@ export interface VKUIButtonProps extends HasAlign {
   after?: React.ReactNode;
   /**
    * Включает состояние загрузки (отображает спиннер).
+   *
+   * ⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически
+   * устанавливает `aria-label` в значение `loadingLabel` (по умолчанию "Загрузка..."),
+   * чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это значение,
+   * передав свойство `loadingLabel`.
+   *
+   * @example
+   * <Button loading>Сохранить</Button>
+   * // Скринридер объявит: "Загрузка..., кнопка"
+   *
+   * @example
+   * <Button loading loadingLabel="Сохранение данных...">Сохранить</Button>
    */
   loading?: boolean;
+  /**
+   * Текст для `aria-label` при состоянии загрузки.
+   * Подменяет переданный в компонент `aria-label` только когда `loading={true}`.
+   */
+  loadingLabel?: string;
   /**
    * Отключает анимацию спиннера загрузки.
    */
@@ -99,25 +116,58 @@ export const Button = ({
   after,
   getRootRef,
   loading,
+  loadingLabel = 'Загрузка...',
   onClick,
   disableSpinnerAnimation,
   rounded,
   disabled,
+  href,
+  'aria-label': ariaLabelProp,
   ...restProps
 }: ButtonProps): React.ReactNode => {
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
   const { sizeY = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
+  const isDisabled = disabled || loading;
+  const hasHref = href !== undefined;
+
+  const ariaLabel = loading ? loadingLabel : ariaLabelProp;
+
+  const buttonProps = React.useMemo(() => {
+    if (hasHref) {
+      return isDisabled
+        ? {
+            // Для disabled/loading ссылок нужно удалить href и добавить role="link"
+            // согласно https://w3c.github.io/html-aria/#example-communicate-a-disabled-link-with-aria
+            'role': 'link' as const,
+            'Component': 'a' as const,
+            'aria-disabled': isDisabled,
+          }
+        : {
+            href,
+            'aria-disabled': isDisabled,
+          };
+    } else {
+      return {
+        Component: 'button' as const,
+        disabled,
+      };
+    }
+  }, [disabled, hasHref, href, isDisabled]);
+
   return (
     <Tappable
       hoverMode={styles.hover}
       activeMode={styles.active}
-      {...(restProps.href === undefined && { Component: 'button' })}
       focusVisibleMode="outside"
-      disabled={loading || disabled}
+      aria-busy={loading}
+      hasHover={!loading}
+      hasActive={!loading}
+      {...buttonProps}
       {...restProps}
-      onClick={loading ? undefined : onClick}
+      aria-label={ariaLabel}
+      onClick={isDisabled ? undefined : onClick}
       baseClassName={classNames(
         styles.host,
         stylesSize[size],
@@ -140,6 +190,7 @@ export const Button = ({
           className={styles.spinner}
           disableAnimation={disableSpinnerAnimation}
           noColor
+          aria-hidden="true"
         />
       )}
       <span className={styles.in}>
