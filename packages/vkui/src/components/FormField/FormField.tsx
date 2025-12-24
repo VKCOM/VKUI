@@ -107,6 +107,8 @@ export const FormField = ({
   className,
   maxHeight,
   style,
+  onMouseEnter,
+  onMouseLeave,
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
@@ -119,14 +121,16 @@ export const FormField = ({
     mode: styles.focusVisible,
   });
 
-  const handleMouseEnter = (e: MouseEvent) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setHover(true);
+    onMouseEnter?.(e);
   };
 
-  const handleMouseLeave = (e: MouseEvent) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setHover(false);
+    onMouseLeave?.(e);
   };
 
   return (
