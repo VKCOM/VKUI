@@ -1,8 +1,7 @@
-import { act, Fragment, useRef, useState } from 'react';
+import { act, createRef, Fragment, useRef, useState } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
-  baselineComponent,
   fakeTimersForScope,
   userEvent,
   waitCSSKeyframesAnimation,
@@ -71,8 +70,6 @@ const mockElementFocus = (element: HTMLElement | null, focusFn: VoidFunction) =>
 };
 
 describe(FocusTrap, () => {
-  baselineComponent(FocusTrap);
-
   const mountActionSheetViaClick = async () => {
     await userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
     await waitForFloatingPosition();
@@ -121,10 +118,11 @@ describe(FocusTrap, () => {
 
   it('preserve focus when autoFocus=false with dynamic content', async () => {
     const Template = (props: { childIds: string[] }) => {
+      const ref = useRef<HTMLDivElement | null>(null);
       return (
         <>
-          <FocusTrap autoFocus={false}>
-            <div>
+          <FocusTrap autoFocus={false} rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
               {props.childIds.map((childId) => (
                 <Button key={childId} data-testid={childId}>
                   Кнопка {childId}
@@ -220,9 +218,10 @@ describe(FocusTrap, () => {
 
     it('manages navigation inside trap on TAB with remove last child when navigate', async () => {
       const Template = (props: { childIds: string[] }) => {
+        const ref = useRef<HTMLDivElement | null>(null);
         return (
-          <FocusTrap>
-            <div>
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
               {props.childIds.map((childId) => (
                 <Button key={childId} data-testid={childId}>
                   Кнопка {childId}
@@ -254,9 +253,10 @@ describe(FocusTrap, () => {
 
     it('manages navigation inside trap on TAB with remove middle child when focus on middle', async () => {
       const Template = (props: { childIds: string[] }) => {
+        const ref = useRef<HTMLDivElement | null>(null);
         return (
-          <FocusTrap>
-            <div>
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
               {props.childIds.map((childId) => (
                 <Button key={childId} data-testid={childId}>
                   Кнопка {childId}
@@ -287,14 +287,21 @@ describe(FocusTrap, () => {
     });
 
     it('disabled FocusTrap navigation', async () => {
-      const result = render(
-        <>
-          <FocusTrap disabled={true}>
-            <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
-          </FocusTrap>
-          <Button data-testid="button-out-trap">Кнопка не в FocusTrap</Button>
-        </>,
-      );
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <>
+            <FocusTrap disabled={true} rootRef={ref}>
+              <div ref={ref} tabIndex={-1}>
+                <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
+              </div>
+            </FocusTrap>
+            <Button data-testid="button-out-trap">Кнопка не в FocusTrap</Button>
+          </>
+        );
+      };
+
+      const result = render(<Fixture />);
 
       await act(async () => {
         result.getByTestId('button-in-trap')?.focus();
@@ -307,16 +314,19 @@ describe(FocusTrap, () => {
 
     it('should restore focus when disabled become false', async () => {
       const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
         const [showTrap, setShowTrap] = useState(false);
         const [disabled, setDisabled] = useState(false);
         return (
           <>
             {showTrap && (
-              <FocusTrap disabled={disabled} mount={!disabled} restoreFocus={true}>
-                <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
-                <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
-                  Кнопка не в FocusTrap
-                </Button>
+              <FocusTrap disabled={disabled} mount={!disabled} restoreFocus={true} rootRef={ref}>
+                <div ref={ref} tabIndex={-1}>
+                  <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
+                  <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
+                    Кнопка не в FocusTrap
+                  </Button>
+                </div>
               </FocusTrap>
             )}
             <Button data-testid="button-show-trap" onClick={() => setShowTrap(true)}>
@@ -346,21 +356,27 @@ describe(FocusTrap, () => {
     });
 
     it('check autoFocus to root', async () => {
+      const ref = createRef<HTMLDivElement | null>();
       const rootFocus = vi.fn();
       const buttonFocus = vi.fn();
 
       render(
         <>
-          <FocusTrap
-            autoFocus="root"
-            getRootRef={(element) => mockElementFocus(element, rootFocus)}
-          >
-            <Button
-              data-testid="button-in-trap"
-              getRootRef={(element) => mockElementFocus(element, buttonFocus)}
+          <FocusTrap autoFocus="root" rootRef={ref}>
+            <div
+              ref={(element) => {
+                mockElementFocus(element, rootFocus);
+                ref.current = element;
+              }}
+              tabIndex={-1}
             >
-              Кнопка в FocusTrap
-            </Button>
+              <Button
+                data-testid="button-in-trap"
+                getRootRef={(element) => mockElementFocus(element, buttonFocus)}
+              >
+                Кнопка в FocusTrap
+              </Button>
+            </div>
           </FocusTrap>
         </>,
       );
@@ -370,11 +386,20 @@ describe(FocusTrap, () => {
       });
     });
     it('should autofocus to container when dont have another active elements', async () => {
+      const ref = createRef<HTMLDivElement | null>();
       const rootFocus = vi.fn();
       render(
         <>
-          <FocusTrap autoFocus getRootRef={(element) => mockElementFocus(element, rootFocus)}>
-            <div />
+          <FocusTrap rootRef={ref} autoFocus>
+            <div
+              ref={(element) => {
+                mockElementFocus(element, rootFocus);
+                ref.current = element;
+              }}
+              tabIndex={-1}
+            >
+              <div></div>
+            </div>
           </FocusTrap>
         </>,
       );

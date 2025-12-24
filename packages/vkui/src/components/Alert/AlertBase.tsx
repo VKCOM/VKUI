@@ -12,6 +12,7 @@ import { stopPropagation } from '../../lib/utils';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { IconButton } from '../IconButton/IconButton';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { type AlertActionInterface, type AlertCloseReason, type AlertProps } from './Alert';
 import { AlertActions } from './AlertActions';
 import { AlertDescription, AlertTitle } from './AlertTypography';
@@ -50,6 +51,9 @@ export const AlertBase = ({
   descriptionTestId,
   closing,
   setClosing,
+  // FocusTrap props
+  autoFocus,
+  restoreFocus,
   ...restProps
 }: AlertBaseProps) => {
   const generatedId = React.useId();
@@ -112,11 +116,10 @@ export const AlertBase = ({
   useGlobalEscKeyDown(true, onEscape);
 
   return (
-    <FocusTrap
+    <RootComponent
       {...animationHandlers}
       onClick={handleClick}
       getRootRef={elementRef}
-      autoFocus={animationState === 'entered'}
       className={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
@@ -130,48 +133,55 @@ export const AlertBase = ({
       aria-describedby={descriptionId}
       {...restProps}
     >
-      <div
-        className={classNames(
-          styles.content,
-          dismissButtonMode === 'inside' && styles.contentWithButton,
-        )}
+      <FocusTrap
+        rootRef={elementRef}
+        autoFocus={autoFocus === undefined ? animationState === 'entered' : autoFocus}
+        restoreFocus={restoreFocus}
       >
-        {hasReactNode(title) && (
-          <AlertTitle data-testid={titleTestId} id={titleId}>
-            {title}
-          </AlertTitle>
+        <div
+          className={classNames(
+            styles.content,
+            dismissButtonMode === 'inside' && styles.contentWithButton,
+          )}
+          tabIndex={-1}
+        >
+          {hasReactNode(title) && (
+            <AlertTitle data-testid={titleTestId} id={titleId}>
+              {title}
+            </AlertTitle>
+          )}
+          {hasReactNode(description) && (
+            <AlertDescription data-testid={descriptionTestId} id={descriptionId}>
+              {description}
+            </AlertDescription>
+          )}
+          {children}
+          {isDismissButtonVisible && dismissButtonMode === 'inside' && (
+            <IconButton
+              label={dismissLabel}
+              className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
+              onClick={onCloseButtonClick}
+              hoverMode="opacity"
+              activeMode="opacity"
+              data-testid={dismissButtonTestId}
+            >
+              <Icon20Cancel />
+            </IconButton>
+          )}
+        </div>
+        {isDismissButtonVisible && dismissButtonMode === 'outside' && (
+          <ModalDismissButton onClick={onCloseButtonClick} data-testid={dismissButtonTestId}>
+            {dismissLabel}
+          </ModalDismissButton>
         )}
-        {hasReactNode(description) && (
-          <AlertDescription data-testid={descriptionTestId} id={descriptionId}>
-            {description}
-          </AlertDescription>
-        )}
-        {children}
-        {isDismissButtonVisible && dismissButtonMode === 'inside' && (
-          <IconButton
-            label={dismissLabel}
-            className={classNames(styles.dismiss, 'vkuiInternalAlert__dismiss')}
-            onClick={onCloseButtonClick}
-            hoverMode="opacity"
-            activeMode="opacity"
-            data-testid={dismissButtonTestId}
-          >
-            <Icon20Cancel />
-          </IconButton>
-        )}
-      </div>
-      {isDismissButtonVisible && dismissButtonMode === 'outside' && (
-        <ModalDismissButton onClick={onCloseButtonClick} data-testid={dismissButtonTestId}>
-          {dismissLabel}
-        </ModalDismissButton>
-      )}
-      <AlertActions
-        actions={actions}
-        actionsAlign={actionsAlign}
-        actionsLayout={actionsLayout}
-        renderAction={renderAction}
-        onItemClick={onItemClick}
-      />
-    </FocusTrap>
+        <AlertActions
+          actions={actions}
+          actionsAlign={actionsAlign}
+          actionsLayout={actionsLayout}
+          renderAction={renderAction}
+          onItemClick={onItemClick}
+        />
+      </FocusTrap>
+    </RootComponent>
   );
 };

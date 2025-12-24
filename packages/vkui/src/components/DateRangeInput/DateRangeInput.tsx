@@ -278,6 +278,7 @@ export const DateRangeInput = ({
   const daysEndRef = React.useRef<HTMLSpanElement>(null);
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
+  const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
 
@@ -587,29 +588,32 @@ export const DateRangeInput = ({
           onPlacementChange={setCalendarPlacement}
         >
           <FocusTrapInternal
+            rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
             mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
-            <CalendarRange
-              value={value}
-              role="dialog"
-              onChange={onCalendarChange}
-              aria-label={calendarLabel}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              shouldDisableDate={shouldDisableDate}
-              getRootRef={calendarRef}
-              disablePickers={disablePickers}
-              prevMonthLabel={prevMonthLabel}
-              nextMonthLabel={nextMonthLabel}
-              changeMonthLabel={changeMonthLabel}
-              changeYearLabel={changeYearLabel}
-              prevMonthIcon={prevMonthIcon}
-              nextMonthIcon={nextMonthIcon}
-              renderDayContent={renderDayContent}
-              {...calendarTestsProps}
-            />
+            <div ref={focusTrapRootRef}>
+              <CalendarRange
+                value={value}
+                role="dialog"
+                onChange={onCalendarChange}
+                aria-label={calendarLabel}
+                disablePast={disablePast}
+                disableFuture={disableFuture}
+                shouldDisableDate={shouldDisableDate}
+                getRootRef={calendarRef}
+                disablePickers={disablePickers}
+                prevMonthLabel={prevMonthLabel}
+                nextMonthLabel={nextMonthLabel}
+                changeMonthLabel={changeMonthLabel}
+                changeYearLabel={changeYearLabel}
+                prevMonthIcon={prevMonthIcon}
+                nextMonthIcon={nextMonthIcon}
+                renderDayContent={renderDayContent}
+                {...calendarTestsProps}
+              />
+            </div>
           </FocusTrapInternal>
         </Popper>
       )}

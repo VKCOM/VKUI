@@ -1,6 +1,7 @@
 import { type Ref, useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useExternRef } from '../../hooks/useExternRef';
 import { useFloatingElement, type UseFloatingElementProps } from '../../hooks/useFloatingElement';
 import { injectAriaExpandedPropByRole } from '../../lib/accessibility';
 import { animationFadeClassNames, transformOriginClassNames } from '../../lib/animation';
@@ -37,6 +38,7 @@ export type UsePopoverResult<ElementType extends HTMLElement = HTMLElement> = {
 
 export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   // UsePopoverProps
+  getRootRef,
   arrow: withArrow,
   arrowHeight = DEFAULT_ARROW_HEIGHT,
   arrowPadding = DEFAULT_ARROW_PADDING,
@@ -85,6 +87,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
   role = 'dialog',
   ...restPopoverProps
 }: UsePopoverProps): UsePopoverResult<ElementType> => {
+  const focusTrapRootRef = useExternRef(getRootRef);
   const renderFloatingComponent: UseFloatingElementProps<HTMLDivElement>['renderFloatingComponent'] =
     React.useCallback(
       ({
@@ -129,22 +132,27 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
               }}
             >
               <FocusTrap
-                {...restPopoverProps}
-                role={role}
-                className={classNames(
-                  styles.in,
-                  noStyling ? undefined : styles.inWithStyling,
-                  willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
-                  transformOriginClassNames[resolvedPlacement],
-                  className,
-                )}
+                rootRef={focusTrapRootRef}
                 mount={!hidden}
                 disabled={hidden || disableFocusTrap}
                 autoFocus={disableInteractive ? false : autoFocus}
                 restoreFocus={restoreFocus ? () => onRestoreFocus(restoreFocus) : false}
               >
-                {arrow}
-                {typeof content === 'function' ? content({ onClose }) : content}
+                <div
+                  {...restPopoverProps}
+                  ref={focusTrapRootRef}
+                  role={role}
+                  className={classNames(
+                    styles.in,
+                    noStyling ? undefined : styles.inWithStyling,
+                    willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
+                    transformOriginClassNames[resolvedPlacement],
+                    className,
+                  )}
+                >
+                  {arrow}
+                  {typeof content === 'function' ? content({ onClose }) : content}
+                </div>
               </FocusTrap>
             </div>
           </AppRootPortal>
@@ -158,6 +166,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
         content,
         disableFocusTrap,
         disableInteractive,
+        focusTrapRootRef,
         keepMounted,
         noStyling,
         restPopoverProps,

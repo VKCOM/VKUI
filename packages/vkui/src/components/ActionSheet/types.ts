@@ -28,10 +28,6 @@ type UseFocusTrapProps = {
    * @default 0
    */
   timeout?: number;
-  /**
-   * Вызывается при нажатии на кнопку `Escape`.
-   */
-  onClose?: VoidFunction;
 };
 
 export interface SharedDropdownProps
@@ -61,4 +57,8 @@ export interface SharedDropdownProps
    * По умолчанию событие `onClick` не всплывает.
    */
   allowClickPropagation?: boolean;
+  /**
+   * Вызывается при нажатии на кнопку `Escape`.
+   */
+  onClose?: VoidFunction;
 }

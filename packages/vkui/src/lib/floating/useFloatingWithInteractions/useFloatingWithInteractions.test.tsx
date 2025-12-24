@@ -1,4 +1,4 @@
-import { act, type ComponentType, useState } from 'react';
+import { act, type ComponentType, useRef, useState } from 'react';
 import { render, renderHook, waitFor } from '@testing-library/react';
 import {
   AppRootContext,
@@ -40,6 +40,7 @@ const TestComponent = ({
   autoFocus?: boolean;
   Content?: ComponentType<{ onClose: VoidFunction }>;
 }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const {
     shown,
     refs: { reference, floating },
@@ -58,16 +59,19 @@ const TestComponent = ({
       {shown ? (
         <span ref={floating} data-testid="floating" {...floatingProps}>
           <FocusTrap
+            rootRef={ref}
             autoFocus
             restoreFocus={restoreFocus ? hookResult.onRestoreFocus : restoreFocus}
           >
-            <input
-              autoFocus={autoFocus}
-              data-testid="focus-trap"
-              type="text"
-              defaultValue="Reference"
-            />
-            {Content ? <Content onClose={onClose} /> : null}
+            <div ref={ref} tabIndex={-1}>
+              <input
+                autoFocus={autoFocus}
+                data-testid="focus-trap"
+                type="text"
+                defaultValue="Reference"
+              />
+              {Content ? <Content onClose={onClose} /> : null}
+            </div>
           </FocusTrap>
         </span>
       ) : null}

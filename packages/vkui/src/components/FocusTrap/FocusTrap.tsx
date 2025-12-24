@@ -1,37 +1,30 @@
 'use client';
 
 import * as React from 'react';
-import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusTrap, type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { DEFAULT_MUTATION_OBSERVER_OPTIONS } from '../../hooks/useMutationObserver';
-import type { HasComponent, HasRootRef } from '../../types';
+import type { HasChildren } from '../../types';
 
-export interface FocusTrapInternalProps<T extends HTMLElement = HTMLElement>
-  extends UseFocusTrapProps,
-    Omit<React.AllHTMLAttributes<T>, keyof UseFocusTrapProps>,
-    HasRootRef<T>,
-    HasComponent {}
+export interface FocusTrapInternalProps extends UseFocusTrapProps, HasChildren {
+  /**
+   * Ref на корневой элемент.
+   */
+  rootRef: React.RefObject<HTMLElement | null>;
+}
 
-export type FocusTrapProps<T extends HTMLElement = HTMLElement> = Omit<
-  FocusTrapInternalProps<T>,
-  'mutationObserverOptions'
->;
+export type FocusTrapProps = Omit<FocusTrapInternalProps, 'mutationObserverOptions'>;
 
-export const FocusTrapInternal = <T extends HTMLElement = HTMLElement>({
-  Component = 'div',
+export const FocusTrapInternal = ({
   autoFocus = true,
   restoreFocus = true,
   disabled = false,
   mount = true,
   timeout = 0,
-  getRootRef,
+  rootRef,
   children,
   mutationObserverOptions = DEFAULT_MUTATION_OBSERVER_OPTIONS,
-  ...restProps
-}: FocusTrapInternalProps<T>): React.ReactNode => {
-  const ref = useExternRef<T>(getRootRef);
-
-  const { beforeGuard, afterGuard } = useFocusTrap(ref, {
+}: FocusTrapInternalProps): React.ReactNode => {
+  const { beforeGuard, afterGuard } = useFocusTrap(rootRef, {
     autoFocus,
     restoreFocus,
     disabled,
@@ -41,16 +34,14 @@ export const FocusTrapInternal = <T extends HTMLElement = HTMLElement>({
   });
 
   return (
-    <Component tabIndex={-1} ref={ref} {...restProps}>
+    <React.Fragment>
       {beforeGuard}
       {children}
       {afterGuard}
-    </Component>
+    </React.Fragment>
   );
 };
 
-export const FocusTrap = <T extends HTMLElement = HTMLElement>(
-  props: FocusTrapProps<T>,
-): React.ReactNode => {
+export const FocusTrap = (props: FocusTrapProps): React.ReactNode => {
   return <FocusTrapInternal {...props} />;
 };

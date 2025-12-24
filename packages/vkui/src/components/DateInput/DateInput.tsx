@@ -300,6 +300,7 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
+  const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
 
@@ -603,43 +604,46 @@ export const DateInput = ({
           autoUpdateOnTargetResize
         >
           <FocusTrapInternal
+            rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
             mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
-            <Calendar
-              aria-label={calendarLabel}
-              role="dialog"
-              value={value}
-              onChange={onCalendarChange}
-              enableTime={enableTime}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              shouldDisableDate={shouldDisableDate}
-              onDoneButtonClick={onDoneButtonClick}
-              getRootRef={calendarRef}
-              doneButtonText={doneButtonText}
-              DoneButton={DoneButton}
-              disablePickers={disablePickers}
-              changeHoursLabel={changeHoursLabel}
-              changeMinutesLabel={changeMinutesLabel}
-              prevMonthLabel={prevMonthLabel}
-              nextMonthLabel={nextMonthLabel}
-              changeMonthLabel={changeMonthLabel}
-              changeYearLabel={changeYearLabel}
-              showNeighboringMonth={showNeighboringMonth}
-              renderDayContent={renderDayContent}
-              size={size}
-              viewDate={viewDate}
-              onHeaderChange={onHeaderChange}
-              onNextMonth={onNextMonth}
-              onPrevMonth={onPrevMonth}
-              prevMonthIcon={prevMonthIcon}
-              nextMonthIcon={nextMonthIcon}
-              minDateTime={minDateTime}
-              maxDateTime={maxDateTime}
-              {...calendarTestsProps}
-            />
+            <div ref={focusTrapRootRef}>
+              <Calendar
+                aria-label={calendarLabel}
+                role="dialog"
+                value={value}
+                onChange={onCalendarChange}
+                enableTime={enableTime}
+                disablePast={disablePast}
+                disableFuture={disableFuture}
+                shouldDisableDate={shouldDisableDate}
+                onDoneButtonClick={onDoneButtonClick}
+                getRootRef={calendarRef}
+                doneButtonText={doneButtonText}
+                DoneButton={DoneButton}
+                disablePickers={disablePickers}
+                changeHoursLabel={changeHoursLabel}
+                changeMinutesLabel={changeMinutesLabel}
+                prevMonthLabel={prevMonthLabel}
+                nextMonthLabel={nextMonthLabel}
+                changeMonthLabel={changeMonthLabel}
+                changeYearLabel={changeYearLabel}
+                showNeighboringMonth={showNeighboringMonth}
+                renderDayContent={renderDayContent}
+                size={size}
+                viewDate={viewDate}
+                onHeaderChange={onHeaderChange}
+                onNextMonth={onNextMonth}
+                onPrevMonth={onPrevMonth}
+                prevMonthIcon={prevMonthIcon}
+                nextMonthIcon={nextMonthIcon}
+                minDateTime={minDateTime}
+                maxDateTime={maxDateTime}
+                {...calendarTestsProps}
+              />
+            </div>
           </FocusTrapInternal>
         </Popper>
       )}

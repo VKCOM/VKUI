@@ -5,13 +5,13 @@ import { type ComponentType, type KeyboardEvent, type ReactNode, useCallback } f
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
 import { useBottomSheet } from '../../lib/sheet';
 import { useScrollLock } from '../AppRoot/ScrollContext';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { ModalCardBase } from '../ModalCardBase/ModalCardBase';
 import { ModalOutlet } from '../ModalOutlet/ModalOutlet';
 import {
@@ -146,11 +146,6 @@ export const ModalCardInternal = ({
   );
 
   useScrollLock(!hidden);
-  const { afterGuard, beforeGuard } = useFocusTrap(ref, {
-    autoFocus: !noFocusToDialog,
-    disabled: !opened || hidden || disableFocusTrap,
-    restoreFocus,
-  });
 
   return (
     <ModalOutlet
@@ -160,38 +155,43 @@ export const ModalCardInternal = ({
       disableModalOverlay={disableModalOverlay}
     >
       {modalOverlay}
-      {beforeGuard}
-      <ModalCardBase
-        {...restProps}
-        tabIndex={-1}
-        role="dialog"
-        aria-modal="true"
-        getRootRef={handleRef}
-        style={style}
-        className={classNames(
-          styles.host,
-          isDesktop ? styles.hostDesktop : styles.hostMobile,
-          sizeByPlatformClassNames[platform],
-          transitionStateClassNames[transitionState],
-          className,
-        )}
-        onTransitionEnd={onTransitionEnd}
-        {...bottomSheetEventHandlers}
-        icon={icon}
-        title={title}
-        titleComponent={titleComponent}
-        description={description}
-        descriptionComponent={descriptionComponent}
-        actions={actions}
-        onClose={() => onClose('click-close-button')}
-        size={size}
-        modalDismissButtonTestId={modalDismissButtonTestId}
-        dismissButtonMode={dismissButtonMode}
-        dismissLabel={dismissLabel}
+      <FocusTrap
+        rootRef={handleRef}
+        autoFocus={!noFocusToDialog}
+        disabled={!opened || hidden || disableFocusTrap}
+        restoreFocus={restoreFocus}
       >
-        {children}
-      </ModalCardBase>
-      {afterGuard}
+        <ModalCardBase
+          {...restProps}
+          tabIndex={-1}
+          role="dialog"
+          aria-modal="true"
+          getRootRef={handleRef}
+          style={style}
+          className={classNames(
+            styles.host,
+            isDesktop ? styles.hostDesktop : styles.hostMobile,
+            sizeByPlatformClassNames[platform],
+            transitionStateClassNames[transitionState],
+            className,
+          )}
+          onTransitionEnd={onTransitionEnd}
+          {...bottomSheetEventHandlers}
+          icon={icon}
+          title={title}
+          titleComponent={titleComponent}
+          description={description}
+          descriptionComponent={descriptionComponent}
+          actions={actions}
+          onClose={() => onClose('click-close-button')}
+          size={size}
+          modalDismissButtonTestId={modalDismissButtonTestId}
+          dismissButtonMode={dismissButtonMode}
+          dismissLabel={dismissLabel}
+        >
+          {children}
+        </ModalCardBase>
+      </FocusTrap>
     </ModalOutlet>
   );
 };

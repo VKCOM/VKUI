@@ -4,7 +4,7 @@ import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown.ts';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
 import {
@@ -21,6 +21,7 @@ import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/De
 import type { FloatingArrowProps } from '../FloatingArrow/FloatingArrow';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { TOOLTIP_MAX_WIDTH, TooltipBase, type TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { onboardingTooltipContainerAttr } from './OnboardingTooltipContainer';
 import styles from './OnboardingTooltip.module.css';
@@ -148,6 +149,7 @@ export const OnboardingTooltip = ({
     whileElementsMounted: autoUpdateFloatingElement,
   });
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
+  const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
   const [childRef, child] = usePatchChildren(children, {
     'aria-describedby': shown ? tooltipId : undefined,
   });
@@ -172,35 +174,37 @@ export const OnboardingTooltip = ({
     });
 
     tooltip = createPortal(
-      <FocusTrap
-        role="dialog"
-        aria-modal="true"
-        aria-label={ariaLabel}
-        aria-labelledby={title ? titleId : ariaLabel ? undefined : ariaLabelledBy}
-        disabled={disableFocusTrap}
-        restoreFocus={restoreFocus}
-      >
-        <button aria-label={overlayLabel} className={styles.overlay} onClickCapture={onClose} />
-        <TooltipBase
-          {...restProps}
-          id={tooltipId}
-          title={title}
-          titleId={title ? titleId : undefined}
-          getRootRef={tooltipRef}
-          style={mergeStyle(floatingStyle, styleProp)}
-          maxWidth={maxWidth}
-          arrowProps={
-            disableArrow
-              ? undefined
-              : {
-                  offset: arrowOffset,
-                  isStaticOffset: isStaticArrowOffset,
-                  coords: arrowCoords,
-                  placement: resolvedPlacement,
-                  getRootRef: setArrowRef,
-                }
-          }
-        />
+      <FocusTrap rootRef={focusTrapRootRef} disabled={disableFocusTrap} restoreFocus={restoreFocus}>
+        <RootComponent
+          tabIndex={-1}
+          getRootRef={focusTrapRootRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={ariaLabel}
+          aria-labelledby={title ? titleId : ariaLabel ? undefined : ariaLabelledBy}
+        >
+          <button aria-label={overlayLabel} className={styles.overlay} onClickCapture={onClose} />
+          <TooltipBase
+            {...restProps}
+            id={tooltipId}
+            title={title}
+            titleId={title ? titleId : undefined}
+            getRootRef={tooltipRef}
+            style={mergeStyle(floatingStyle, styleProp)}
+            maxWidth={maxWidth}
+            arrowProps={
+              disableArrow
+                ? undefined
+                : {
+                    offset: arrowOffset,
+                    isStaticOffset: isStaticArrowOffset,
+                    coords: arrowCoords,
+                    placement: resolvedPlacement,
+                    getRootRef: setArrowRef,
+                  }
+            }
+          />
+        </RootComponent>
       </FocusTrap>,
       tooltipContainer,
     );
