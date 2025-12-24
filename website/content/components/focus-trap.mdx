@@ -1,0 +1,319 @@
+---
+description: Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы.
+---
+
+<Overview group="utils">
+
+# FocusTrap [tag:component]
+
+Компонент для управления фокусом, который зацикливает навигацию через `Tab` и `Shift` + `Tab`
+внутри определённой области. Используется для обеспечения доступности модальных окон, диалогов,
+всплывающих меню и других интерактивных элементов.
+
+</Overview>
+
+<Playground>
+
+```jsx
+const [open, setOpen] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Открыть область с захватом фокуса</Button>
+    {open && (
+      <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            marginTop: 16,
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <Input placeholder="Первое поле ввода" />
+            <Input placeholder="Второе поле ввода" />
+            <ButtonGroup>
+              <Button>Действие</Button>
+              <Button mode="secondary" onClick={() => setOpen(false)}>
+                Закрыть
+              </Button>
+            </ButtonGroup>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </>
+);
+```
+
+</Playground>
+
+## Концепция
+
+`FocusTrap` — это вспомогательный компонент, который:
+
+- **Зацикливает фокус** — при нажатии `Tab` на последнем интерактивном элементе фокус переходит на первый,
+  а при `Shift` + `Tab` на первом — на последний;
+- **Автоматически устанавливает фокус** — при появлении области может автоматически установить фокус
+  на первый интерактивный элемент или на корневой элемент;
+- **Восстанавливает фокус** — при закрытии области возвращает фокус на элемент, который был в фокусе до открытия.
+
+## Использование
+
+`FocusTrap` широко используется внутри VKUI для компонентов модальных окон и всплывающих элементов:
+
+- [`ModalCard`](/components/modal-card)
+- [`ModalPage`](/components/modal-page)
+- [`Alert`](/components/alert)
+- [`ActionSheet`](/components/action-sheet)
+- [`Popover`](/components/popover)
+- [`OnboardingTooltip`](/components/onboarding-tooltip)
+- [`DateInput`](/components/date-input)
+
+### Базовый пример
+
+Для использования `FocusTrap` необходимо:
+
+1. Создать `ref` для корневого элемента области;
+2. Передать этот `ref` в свойство `rootRef` компонента `FocusTrap`;
+3. Передать этот же `ref` на корневой элемент контента;
+4. Добавить `tabIndex={-1}` на корневой элемент для возможности программной фокусировки.
+
+<Playground>
+
+```jsx
+const focusTrapRef = React.useRef(null);
+
+return (
+  <FocusTrap rootRef={focusTrapRef} autoFocus restoreFocus>
+    <div ref={focusTrapRef} tabIndex={-1} style={{ padding: 16 }}>
+      <Flex direction="column" gap="m">
+        <Input placeholder="Ввод текста" />
+        <Button>Отправить</Button>
+      </Flex>
+    </div>
+  </FocusTrap>
+);
+```
+
+</Playground>
+
+## Автофокус
+
+Свойство `autoFocus` управляет поведением автоматической установки фокуса при появлении области.
+
+### `autoFocus={true}` (по умолчанию)
+
+Фокус автоматически устанавливается на первый интерактивный элемент внутри области.
+
+### `autoFocus="root"`
+
+Фокус устанавливается на корневой элемент области. Это полезно, когда нужно анонсировать
+содержимое области для скринридеров, но не переключать фокус на конкретный элемент.
+
+<Playground>
+
+```jsx
+const [mode, setMode] = React.useState('true');
+const [show, setShow] = React.useState(true);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <Flex direction="column" gap="l">
+    <Flex gap="m" align="center">
+      <SegmentedControl
+        value={mode}
+        onChange={setMode}
+        options={[
+          { label: 'true', value: 'true' },
+          { label: 'root', value: 'root' },
+          { label: 'false', value: 'false' },
+        ]}
+      />
+    </Flex>
+      <Button mode="secondary" onClick={() => setShow((prev) => !prev)}>
+        {show ? 'Скрыть' : 'Показать'}
+      </Button>
+    {show && (
+      <FocusTrap
+        key={mode}
+        rootRef={focusTrapRef}
+        autoFocus={mode === 'true' ? true : mode === 'root' ? 'root' : false}
+      >
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <Input placeholder="Поле ввода" />
+            <Button>Кнопка</Button>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </Flex>
+);
+```
+
+</Playground>
+
+### `autoFocus={false}`
+
+Автофокус отключён. Используйте, когда фокус уже находится внутри области или управляется вручную.
+
+## Восстановление фокуса
+
+Свойство `restoreFocus` управляет возвратом фокуса на предыдущий элемент при закрытии области.
+
+- `true` (по умолчанию) — фокус возвращается на элемент, который был в фокусе до открытия области;
+- `false` — фокус не возвращается;
+- `() => boolean | HTMLElement` — функция, которая возвращает `boolean` или конкретный элемент для фокуса.
+
+<Playground>
+
+```jsx
+const [open, setOpen] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+const alternativeRef = React.useRef(null);
+
+return (
+  <Flex direction="column" gap="m">
+    <Flex gap="m">
+      <Button onClick={() => setOpen(true)}>Открыть</Button>
+      <Button mode="secondary" getRootRef={alternativeRef}>
+        Альтернативный фокус
+      </Button>
+    </Flex>
+    {open && (
+      <FocusTrap rootRef={focusTrapRef} restoreFocus={() => alternativeRef.current}>
+        <div
+          ref={focusTrapRef}
+          tabIndex={-1}
+          style={{
+            padding: 16,
+            border: '2px solid var(--vkui--color_accent_blue)',
+            borderRadius: 8,
+          }}
+        >
+          <Flex direction="column" gap="m">
+            <Text>При закрытии фокус вернётся на кнопку «Альтернативный фокус»</Text>
+            <Button onClick={() => setOpen(false)}>Закрыть</Button>
+          </Flex>
+        </div>
+      </FocusTrap>
+    )}
+  </Flex>
+);
+```
+
+</Playground>
+
+## Отключение захвата фокуса
+
+Свойство `disabled` позволяет временно отключить захват фокуса.
+
+> При открытии модального окна поверх другого модального окна может возникнуть конфликт в управлении фокусом.
+> По умолчанию каждое модальное окно пытается удерживать фокус внутри себя, что может привести
+> к некорректной работе при наличии нескольких открытых модальных окон.
+>
+> Чтобы избежать этой проблемы, для первого (нижнего) модального окна необходимо отключить захват фокуса
+> с помощью свойства `disabled={true}`. Это позволит корректно управлять фокусом во втором (верхнем) модальном окне.
+
+<Playground>
+
+```jsx
+const [disabled, setDisabled] = React.useState(false);
+const focusTrapRef = React.useRef(null);
+
+return (
+  <Flex direction="column" gap="m">
+    <Checkbox checked={disabled} onChange={(e) => setDisabled(e.target.checked)}>
+      Отключить захват фокуса
+    </Checkbox>
+    <FocusTrap rootRef={focusTrapRef} disabled={disabled}>
+      <div
+        ref={focusTrapRef}
+        tabIndex={-1}
+        style={{
+          padding: 16,
+          border: disabled
+            ? '2px solid var(--vkui--color_icon_secondary)'
+            : '2px solid var(--vkui--color_accent_blue)',
+          borderRadius: 8,
+        }}
+      >
+        <Flex direction="column" gap="m">
+          <Input placeholder="Поле ввода" />
+          <Button>Кнопка</Button>
+        </Flex>
+      </div>
+    </FocusTrap>
+    <Button>Кнопка вне FocusTrap</Button>
+  </Flex>
+);
+```
+
+</Playground>
+
+## Задержка автофокуса
+
+Свойство `timeout` позволяет задать задержку в миллисекундах перед автофокусом.
+Это полезно при использовании с анимациями, когда нужно дождаться завершения анимации появления.
+
+```jsx
+<FocusTrap rootRef={focusTrapRef} timeout={300}>
+  {/* ... */}
+</FocusTrap>
+```
+
+## Рекомендации по использованию
+
+### Когда использовать FocusTrap
+
+- **Модальные окна и диалоги** — фокус должен оставаться внутри модального окна,
+  пока оно открыто;
+- **Всплывающие меню** — пользователь должен иметь возможность навигироваться
+  по пунктам меню с помощью клавиатуры;
+- **Формы в выпадающих панелях** — например, календарь в `DateInput`.
+
+### Когда НЕ использовать FocusTrap
+
+- **Для обычных секций страницы** — захват фокуса не нужен для стандартной навигации;
+- **Для тултипов с текстовым содержимым** — если тултип не содержит интерактивных элементов,
+  используйте свойство `disableFocusTrap` в компонентах типа `Tooltip`.
+
+### Доступность (a11y)
+
+При использовании `FocusTrap` для модальных окон не забывайте:
+
+1. Добавлять `role="dialog"` и `aria-modal="true"` на корневой элемент;
+2. Указывать `aria-label` или `aria-labelledby` для описания содержимого;
+3. Обеспечивать закрытие по клавише `Escape` (используйте `useGlobalEscKeyDown` хук).
+
+```jsx
+<FocusTrap rootRef={focusTrapRef}>
+  <div
+    ref={focusTrapRef}
+    tabIndex={-1}
+    role="dialog"
+    aria-modal="true"
+    aria-label="Название диалога"
+  >
+    {/* Содержимое */}
+  </div>
+</FocusTrap>
+```
+
+## Свойства и методы [#api]
+
+<PropsTable name="FocusTrap" />
+
