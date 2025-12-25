@@ -18,7 +18,7 @@
   box-shadow: var(--vkui--elevation4);
 }
 
-.sizeYRegular {
+.densityRegular {
   --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
     -1 *
     (
@@ -29,8 +29,8 @@
   );
 }
 
-@media (--sizeY-regular) {
-  .sizeYNone {
+@media (--density-regular) {
+  .densityNone {
     --vkui_internal--snackbar-body_layout_vertical_action_shift: calc(
       -1 *
       (

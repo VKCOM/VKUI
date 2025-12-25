@@ -41,28 +41,28 @@
 /**
  * SizeY = compact
  */
-.sizeYCompact.sizeS .in {
+.densityCompact.sizeS .in {
   block-size: var(--vkui--size_button_small_height--compact);
 }
 
-.sizeYCompact.sizeM .in {
+.densityCompact.sizeM .in {
   block-size: var(--vkui--size_button_medium_height--compact);
 }
 
-.sizeYCompact.sizeL .in {
+.densityCompact.sizeL .in {
   block-size: var(--vkui--size_button_large_height--compact);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.sizeS .in {
+@media (--density-compact) {
+  .densityNone.sizeS .in {
     block-size: var(--vkui--size_button_small_height--compact);
   }
 
-  .sizeYNone.sizeM .in {
+  .densityNone.sizeM .in {
     block-size: var(--vkui--size_button_medium_height--compact);
   }
 
-  .sizeYNone.sizeL .in {
+  .densityNone.sizeL .in {
     block-size: var(--vkui--size_button_large_height--compact);
   }
 }

@@ -208,19 +208,19 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 
 Задаётся свойством `size`.
 
-Значения, соответствующие каждому размеру, зависят от параметра адаптивности `sizeY`.
-В режиме `sizeY="compact"` значения каждого из размеров будут меньше, чем в режиме `sizeY="regular"`.
+Значения, соответствующие каждому размеру, зависят от параметра адаптивности `density`.
+В режиме `density="compact"` значения каждого из размеров будут меньше, чем в режиме `density="regular"`.
 
 <Playground direction="column">
   ```jsx
-  <AdaptivityProvider sizeY="compact">
+  <AdaptivityProvider density="compact">
     <Flex gap="m" align="center">
       <Button size="s">s</Button>
       <Button size="m">m</Button>
       <Button size="l">l</Button>
     </Flex>
   </AdaptivityProvider>
-  <AdaptivityProvider sizeY="regular">
+  <AdaptivityProvider density="regular">
     <Flex gap="m" align="center">
       <Button size="s">s</Button>
       <Button size="m">m</Button>

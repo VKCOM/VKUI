@@ -9,9 +9,9 @@ import { Text } from '../../Typography/Text/Text';
 import { useSelectionControlContext } from '../SelectionControlContext';
 import styles from './SelectionControlLabel.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 interface SelectionControlLabelProps extends React.ComponentProps<'div'> {
@@ -26,13 +26,13 @@ export function SelectionControlLabel({
   ...restProps
 }: SelectionControlLabelProps) {
   const { noPadding } = useSelectionControlContext();
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <RootComponent
       baseClassName={classNames(
         styles.host,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         !noPadding && styles.withPadding,
       )}
       {...restProps}

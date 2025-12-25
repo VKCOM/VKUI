@@ -73,23 +73,23 @@
 }
 
 /**
- * sizeY COMPACT
+ * density="compact"
  */
 
-.sizeYCompact .top {
+.densityCompact .top {
   padding-block-end: var(--vkui--spacing_size_s);
 }
 
-.sizeYCompact .bottom {
+.densityCompact .bottom {
   padding-block-start: var(--vkui--spacing_size_s);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone .top {
+@media (--density-compact) {
+  .densityNone .top {
     padding-block-end: var(--vkui--spacing_size_s);
   }
 
-  .sizeYNone .bottom {
+  .densityNone .bottom {
     padding-block-start: var(--vkui--spacing_size_s);
   }
 }
@@ -148,8 +148,8 @@
 }
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormLayoutGroup--mode-horizontal) .sizeYCompact.withTop,
-.sizeYCompact.withTop .removable {
+:global(.vkuiInternalFormLayoutGroup--mode-horizontal) .densityCompact.withTop,
+.densityCompact.withTop .removable {
   margin-block-start: calc(
     -1 *
     var(--vkui--spacing_size_2xs) -
@@ -158,10 +158,10 @@
   );
 }
 
-@media (--sizeY-compact) {
+@media (--density-compact) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .sizeYNone.withTop,
-  .sizeYNone.withTop .removable {
+  :global(.vkuiInternalFormLayoutGroup--mode-horizontal) .densityNone.withTop,
+  .densityNone.withTop .removable {
     margin-block-start: calc(
       -1 *
       var(--vkui--spacing_size_2xs) -

@@ -26,9 +26,9 @@ const stylesDirection = {
   column: styles.directionColumn,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  regular: styles.sizeYRegular,
+const densityClassNames = {
+  none: styles.densityNone,
+  regular: styles.densityRegular,
 };
 
 export interface ToolButtonProps extends TappableOmitProps, AdaptiveIconRendererProps {
@@ -69,7 +69,7 @@ export const ToolButton = ({
   rounded,
   ...restProps
 }: ToolButtonProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const hasChildren = hasReactNode(children);
 
   return (
@@ -85,7 +85,7 @@ export const ToolButton = ({
         stylesMode[mode],
         stylesAppearance[appearance],
         stylesDirection[direction],
-        sizeY !== 'compact' && sizeYClassNames[sizeY],
+        density !== 'compact' && densityClassNames[density],
       )}
       {...restProps}
     >

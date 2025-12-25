@@ -22,12 +22,12 @@ https://github.com/VKCOM/VKUI/pull/3641
 /**
  * overrides
  */
-.sizeXCompact {
+.withBorder {
   border-radius: 0;
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone {
+@media (--viewWidth-smallTabletMinus) {
+  .withBorderOnSmallTabletMinus {
     border-radius: 0;
   }
 }

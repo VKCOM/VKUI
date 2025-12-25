@@ -18,9 +18,9 @@ import styles from './Switch.module.css';
 
 const warn = warnOnce('Switch');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface SwitchProps
@@ -118,7 +118,7 @@ export const Switch = ({
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
   const platform = usePlatform();
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const {
     focusVisible,
     onBlur: onFocusVisibleBlur,
@@ -167,7 +167,7 @@ export const Switch = ({
       Component="label"
       baseClassName={classNames(
         styles.host,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         platform === 'ios' ? styles.ios : styles.default,
         inputRest.disabled && styles.disabled,
         isRtl && styles.rtl,

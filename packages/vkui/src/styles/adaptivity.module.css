@@ -3,7 +3,7 @@
 
 Глоссарий по модификаторам:
 
-- `forced` – означает, что мы зашили конкретное представление в `AdaptiveProvider` (ex, `<AdaptiveProvider sizeX="regular">`).
+- `forced` – означает, что мы зашили конкретное представление в `AdaptiveProvider` (ex, `<AdaptiveProvider density="regular">`).
 - `mq` – означает, что для смены представления используется CSS Media Query.
 
 ---
@@ -12,29 +12,16 @@ Note: В начале классов разделить (`-`), чтобы кра
 
 */
 
-@media (--sizeX-regular) {
-  .-sizeX--compact-mq {
-    /* stylelint-disable-next-line declaration-no-important */
-    display: none !important;
-  }
-}
-@media (--sizeX-compact) {
-  .-sizeX--regular-mq {
-    /* stylelint-disable-next-line declaration-no-important */
-    display: none !important;
-  }
-}
-
 /* ================================================================================================================== */
 
-@media (--sizeY-regular) {
-  .-sizeY--compact-mq {
+@media (--density-regular) {
+  .-density--compact-mq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
-@media (--sizeY-compact) {
-  .-sizeY--regular-mq {
+@media (--density-compact) {
+  .-density--regular-mq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
@@ -50,6 +37,21 @@ Note: В начале классов разделить (`-`), чтобы кра
 }
 @media (--viewWidth-tabletMinus) {
   .-viewWidth--tabletPlus-mq {
+    /* stylelint-disable-next-line declaration-no-important */
+    display: none !important;
+  }
+}
+
+/* ================================================================================================================== */
+
+@media (--viewWidth-smallTabletPlus) {
+  .-viewWidth--smallTabletMinus-mq {
+    /* stylelint-disable-next-line declaration-no-important */
+    display: none !important;
+  }
+}
+@media (--viewWidth-smallTabletMinus) {
+  .-viewWidth--smallTabletPlus-mq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }

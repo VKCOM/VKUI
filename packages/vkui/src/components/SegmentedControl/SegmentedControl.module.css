@@ -44,22 +44,22 @@
 }
 
 /**
- * sizeY REGULAR
+ * density="regular"
  */
-.sizeYRegular {
+.densityRegular {
   block-size: 36px;
 }
 
-.sizeYRegular.sizeL {
+.densityRegular.sizeL {
   block-size: 44px;
 }
 
-@media (--sizeY-regular) {
-  .sizeYNone {
+@media (--density-regular) {
+  .densityNone {
     block-size: 36px;
   }
 
-  .sizeYNone.sizeL {
+  .densityNone.sizeL {
     block-size: 44px;
   }
 }

@@ -27,9 +27,9 @@ const sizeStyles = {
   l: styles.sizeL,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface SubnavigationButtonProps extends Omit<TappableOmitProps, 'size'> {
@@ -100,7 +100,7 @@ export const SubnavigationButton = ({
   children,
   ...restProps
 }: SubnavigationButtonProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <Tappable
@@ -113,7 +113,7 @@ export const SubnavigationButton = ({
         modeStyles[mode],
         appearanceStyles[appearance],
         selected && styles.selected,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         restProps.disabled && styles.disabled,
       )}
     >

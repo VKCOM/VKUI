@@ -127,7 +127,7 @@ export const ActionSheetItem = ({
     onClose: onActionSheetClose,
   } = React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
   const { isCancelItem: isCancelItemFromContext } = React.useContext(ActionSheetItemContext);
-  const { sizeY } = useAdaptivityWithJSMediaQueries();
+  const { density } = useAdaptivityWithJSMediaQueries();
 
   if (process.env.NODE_ENV === 'development') {
     if (mode === 'cancel') {
@@ -196,7 +196,7 @@ export const ActionSheetItem = ({
         platform === 'ios' && styles.ios,
         isModeCancel && styles.modeCancel,
         mode === 'destructive' && styles.modeDestructive,
-        sizeY === 'compact' && styles.sizeYCompact,
+        density === 'compact' && styles.densityCompact,
         isRich && styles.rich,
         actionSheetMode === 'menu' && styles.menu,
         restProps.disabled && styles.disabled,

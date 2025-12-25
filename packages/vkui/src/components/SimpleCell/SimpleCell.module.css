@@ -147,23 +147,23 @@
 }
 
 /**
- * sizeY === 'compact'
+ * density="compact"
  */
 
-.sizeYCompact {
+.densityCompact {
   min-block-size: 44px;
 }
 
-.sizeYCompact .before {
+.densityCompact .before {
   padding-block: var(--vkui--spacing_size_xs);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     min-block-size: 44px;
   }
 
-  .sizeYNone .before {
+  .densityNone .before {
     padding-block: var(--vkui--spacing_size_xs);
   }
 }

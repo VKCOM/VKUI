@@ -13,9 +13,9 @@ import type { SelectType } from '../Select/Select';
 import { SelectTypography } from '../SelectTypography/SelectTypography';
 import styles from '../Select/Select.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface SelectMimicryProps
@@ -59,7 +59,7 @@ export const SelectMimicry = ({
 }: SelectMimicryProps): React.ReactNode => {
   const rootRef = useExternRef(getRootRef);
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const title = children || placeholder;
 
   useAutoFocus(rootRef, autoFocus);
@@ -70,7 +70,7 @@ export const SelectMimicry = ({
       tabIndex={disabled ? undefined : tabIndex}
       className={classNames(
         styles.host,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         !children && styles.empty,
         multiline && styles.multiline,
         align === 'center' && styles.alignCenter,

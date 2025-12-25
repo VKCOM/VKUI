@@ -86,7 +86,7 @@ export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProp
       }}
     >
       <ColorSchemeProvider value={colorScheme}>
-        <AdaptivityProvider sizeY="regular">
+        <AdaptivityProvider density="regular">
           <Div style={{ padding: 10 }}>
             <Textarea id="textarea" />
           </Div>

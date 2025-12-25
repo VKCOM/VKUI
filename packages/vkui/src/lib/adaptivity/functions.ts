@@ -73,6 +73,10 @@ export function getViewHeightByMediaQueries(mediaQueries: MediaQueries): ViewHei
   return ViewHeight.EXTRA_SMALL;
 }
 
+/**
+ * @deprecated Since 8.0.0. см. https://github.com/VKCOM/VKUI/issues/9015
+ * TODO [>=10]: #9015 Удалить утилиту.
+ */
 export function getSizeX(viewWidth: ViewWidthType): SizeTypeValues {
   return viewWidth <= ViewWidth.MOBILE ? 'compact' : 'regular';
 }
@@ -88,7 +92,7 @@ export function isCompactByViewHeight(viewHeight: ViewHeightType | undefined): b
   return viewHeight !== undefined && viewHeight <= ViewHeight.EXTRA_SMALL;
 }
 
-export function getSizeY(
+export function getDensity(
   viewWidth: ViewWidthType,
   viewHeight: ViewHeightType,
   hasPointer: boolean,

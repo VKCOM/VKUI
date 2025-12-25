@@ -87,22 +87,28 @@ const ModalPageComponent = ({
   { openNextModal: (type: 'card' | 'page') => void; modalNumber: number }
 >) => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivityConditionalRender();
+  const { viewWidth } = useAdaptivityConditionalRender();
 
   return (
     <ModalPage
       header={
         <ModalPageHeader
           before={
-            sizeX.compact &&
+            viewWidth.smallTabletMinus &&
             platform === 'android' && (
-              <PanelHeaderClose className={sizeX.compact.className} onClick={() => close()} />
+              <PanelHeaderClose
+                className={viewWidth.smallTabletMinus.className}
+                onClick={() => close()}
+              />
             )
           }
           after={
-            sizeX.compact &&
+            viewWidth.smallTabletMinus &&
             platform === 'ios' && (
-              <PanelHeaderButton onClick={() => close()} className={sizeX.compact.className}>
+              <PanelHeaderButton
+                onClick={() => close()}
+                className={viewWidth.smallTabletMinus.className}
+              >
                 <Icon24Dismiss />
               </PanelHeaderButton>
             )

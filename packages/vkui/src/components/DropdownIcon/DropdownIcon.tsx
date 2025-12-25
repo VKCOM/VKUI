@@ -21,17 +21,17 @@ export const DropdownIcon = ({
   className,
   ...restProps
 }: DropdownIconProps): React.ReactNode => {
-  const { sizeY } = useAdaptivityConditionalRender();
+  const { density } = useAdaptivityConditionalRender();
   const IconCompact = opened ? Icon20ChevronUp : Icon20Dropdown;
   const IconRegular = opened ? Icon24ChevronUp : Icon24ChevronDown;
 
   return (
     <React.Fragment>
-      {sizeY.compact && (
-        <IconCompact className={classNames(sizeY.compact.className, className)} {...restProps} />
+      {density.compact && (
+        <IconCompact className={classNames(density.compact.className, className)} {...restProps} />
       )}
-      {sizeY.regular && (
-        <IconRegular className={classNames(sizeY.regular.className, className)} {...restProps} />
+      {density.regular && (
+        <IconRegular className={classNames(density.regular.className, className)} {...restProps} />
       )}
     </React.Fragment>
   );
