@@ -1,11 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { type RefObject, useMemo } from 'react';
+import { type RefObject } from 'react';
 import { FOCUSABLE_ELEMENTS_LIST } from '../../lib/accessibility';
 import { getWindow } from '../../lib/dom';
 import { useMutationObserver } from '../useMutationObserver';
 import { useStableCallback } from '../useStableCallback';
+import { FocusGuard } from './FocusGuard';
 import { useAutoFocus } from './useAutoFocus';
 import { useRestoreFocus } from './useRestoreFocus';
 
@@ -53,18 +54,6 @@ const getLastFocusable = (root: HTMLElement | null): HTMLElement | null => {
   return nodes[nodes.length - 1] || null;
 };
 
-const focusGuardStyle: React.CSSProperties = {
-  position: 'absolute',
-  width: 1,
-  height: 1,
-  padding: 0,
-  margin: -1,
-  overflow: 'hidden',
-  clip: 'rect(0 0 0 0)',
-  whiteSpace: 'nowrap',
-  border: 0,
-};
-
 export type UseFocusTrapProps = {
   /**
    * @default true
@@ -105,23 +94,20 @@ export const useFocusTrap = (
     mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
-  const focusFirst = useStableCallback(() => {
-    const node = getFirstFocusable(ref.current);
-    if (node) {
-      node.focus({ preventScroll: true });
-    } else if (ref.current) {
-      ref.current.focus();
-    }
-  });
+  const createFocusFn = (getFocusElement: (root: HTMLElement | null) => HTMLElement | null) => {
+    return () => {
+      const node = getFocusElement(ref.current);
+      if (node) {
+        node.focus({ preventScroll: true });
+      } else if (ref.current) {
+        ref.current.focus();
+      }
+    };
+  };
 
-  const focusLast = useStableCallback(() => {
-    const node = getLastFocusable(ref.current);
-    if (node) {
-      node.focus({ preventScroll: true });
-    } else if (ref.current) {
-      ref.current.focus();
-    }
-  });
+  const focusFirst = useStableCallback(createFocusFn(getFirstFocusable));
+
+  const focusLast = useStableCallback(createFocusFn(getLastFocusable));
 
   useRestoreFocus({
     restoreFocus,
@@ -172,64 +158,32 @@ export const useFocusTrap = (
     mutationObserverOptions,
   );
 
-  const guardTabIndex = !mount || disabled ? -1 : 0;
-
   const createGuardFocusHandler = (focusFn: () => void, focusFromOutside: () => void) => {
     return (event: React.FocusEvent<HTMLSpanElement>) => {
       if (!mount || disabled || !ref.current) {
         return;
       }
 
-      setTimeout(() => {
-        if (!ref.current) {
-          return;
-        }
+      // Проверяем, был ли предыдущий активный элемент внутри root
+      // Если нет, значит фокус пришёл извне, и нужно использовать focusFromOutside
+      const relatedTarget = event.relatedTarget as HTMLElement | null;
 
-        // Проверяем, был ли предыдущий активный элемент внутри root
-        // Если нет, значит фокус пришёл извне, и нужно использовать focusFromOutside
-        const relatedTarget = event.relatedTarget as HTMLElement | null;
+      if (relatedTarget === null || (relatedTarget && !ref.current.contains(relatedTarget))) {
+        focusFromOutside();
+        return;
+      }
 
-        if (relatedTarget === null || (relatedTarget && !ref.current.contains(relatedTarget))) {
-          focusFromOutside();
-          return;
-        }
-
-        focusFn();
-      }, 0);
+      focusFn();
     };
   };
 
   const onBeforeGuardFocus = useStableCallback(createGuardFocusHandler(focusLast, focusFirst));
   const onAfterGuardFocus = useStableCallback(createGuardFocusHandler(focusFirst, focusLast));
 
-  const beforeGuard = useMemo(
-    () => (
-      <span
-        aria-hidden
-        data-focus-guard="before"
-        tabIndex={guardTabIndex}
-        onFocus={onBeforeGuardFocus}
-        style={focusGuardStyle}
-      />
-    ),
-    [guardTabIndex, onBeforeGuardFocus],
-  );
-
-  const afterGuard = useMemo(
-    () => (
-      <span
-        aria-hidden
-        data-focus-guard="after"
-        tabIndex={guardTabIndex}
-        onFocus={onAfterGuardFocus}
-        style={focusGuardStyle}
-      />
-    ),
-    [guardTabIndex, onAfterGuardFocus],
-  );
+  const shouldRenderGuards = mount && !disabled;
 
   return {
-    beforeGuard,
-    afterGuard,
+    beforeGuard: shouldRenderGuards && <FocusGuard onFocus={onBeforeGuardFocus} />,
+    afterGuard: shouldRenderGuards && <FocusGuard onFocus={onAfterGuardFocus} />,
   };
 };
