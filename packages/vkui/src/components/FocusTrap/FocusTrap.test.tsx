@@ -407,5 +407,119 @@ describe(FocusTrap, () => {
         expect(rootFocus).toHaveBeenCalledTimes(1);
       });
     });
+
+    it('should focus first element when focus comes from outside via Tab', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <>
+            <Button data-testid="button-outside">Кнопка вне FocusTrap</Button>
+            <FocusTrap rootRef={ref} autoFocus={false}>
+              <div ref={ref} tabIndex={-1}>
+                <Button data-testid="first">Первая кнопка</Button>
+                <Button data-testid="middle">Средняя кнопка</Button>
+                <Button data-testid="last">Последняя кнопка</Button>
+              </div>
+            </FocusTrap>
+          </>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на элементе вне FocusTrap
+      await act(async () => {
+        result.getByTestId('button-outside')?.focus();
+      });
+      expect(result.getByTestId('button-outside')).toHaveFocus();
+
+      // Нажимаем Tab - фокус попадает на beforeGuard и должен перенестись на первый элемент
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
+      expect(result.getByTestId('last')).not.toHaveFocus();
+    });
+
+    it('should focus first element when focus comes from outside via Tab (relatedTarget is null)', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <>
+            <input type="text" data-testid="input-outside" />
+            <FocusTrap rootRef={ref} autoFocus={false}>
+              <div ref={ref} tabIndex={-1}>
+                <Button data-testid="first">Первая кнопка</Button>
+                <Button data-testid="last">Последняя кнопка</Button>
+              </div>
+            </FocusTrap>
+          </>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на элементе вне FocusTrap
+      await act(async () => {
+        result.getByTestId('input-outside')?.focus();
+      });
+      expect(result.getByTestId('input-outside')).toHaveFocus();
+
+      // Нажимаем Tab - фокус попадает на beforeGuard и должен перенестись на первый элемент
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
+    });
+
+    it('should focus last element when cycling from first element via Shift+Tab', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
+              <Button data-testid="first">Первая кнопка</Button>
+              <Button data-testid="middle">Средняя кнопка</Button>
+              <Button data-testid="last">Последняя кнопка</Button>
+            </div>
+          </FocusTrap>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на первом элементе внутри FocusTrap
+      await act(async () => {
+        result.getByTestId('first')?.focus();
+      });
+      expect(result.getByTestId('first')).toHaveFocus();
+
+      // Нажимаем Shift+Tab - фокус должен попасть на последний элемент (циклическая навигация)
+      await userEvent.tab({ shift: true });
+      expect(result.getByTestId('last')).toHaveFocus();
+    });
+
+    it('should focus first element when cycling from last element via Tab', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
+              <Button data-testid="first">Первая кнопка</Button>
+              <Button data-testid="middle">Средняя кнопка</Button>
+              <Button data-testid="last">Последняя кнопка</Button>
+            </div>
+          </FocusTrap>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на последнем элементе внутри FocusTrap
+      await act(async () => {
+        result.getByTestId('last')?.focus();
+      });
+      expect(result.getByTestId('last')).toHaveFocus();
+
+      // Нажимаем Tab - фокус должен попасть на первый элемент (циклическая навигация)
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
+    });
   });
 });

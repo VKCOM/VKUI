@@ -174,13 +174,23 @@ export const useFocusTrap = (
 
   const guardTabIndex = !mount || disabled ? -1 : 0;
 
-  const createGuardFocusHandler = (focusFn: () => void) => {
-    return () => {
+  const createGuardFocusHandler = (focusFn: () => void, focusFromOutside: () => void) => {
+    return (event: React.FocusEvent<HTMLSpanElement>) => {
       if (!mount || disabled || !ref.current) {
         return;
       }
+
       setTimeout(() => {
         if (!ref.current) {
+          return;
+        }
+
+        // Проверяем, был ли предыдущий активный элемент внутри root
+        // Если нет, значит фокус пришёл извне, и нужно использовать focusFromOutside
+        const relatedTarget = event.relatedTarget as HTMLElement | null;
+
+        if (relatedTarget === null || (relatedTarget && !ref.current.contains(relatedTarget))) {
+          focusFromOutside();
           return;
         }
 
@@ -189,8 +199,8 @@ export const useFocusTrap = (
     };
   };
 
-  const onBeforeGuardFocus = useStableCallback(createGuardFocusHandler(focusLast));
-  const onAfterGuardFocus = useStableCallback(createGuardFocusHandler(focusFirst));
+  const onBeforeGuardFocus = useStableCallback(createGuardFocusHandler(focusLast, focusFirst));
+  const onAfterGuardFocus = useStableCallback(createGuardFocusHandler(focusFirst, focusLast));
 
   const beforeGuard = useMemo(
     () => (
