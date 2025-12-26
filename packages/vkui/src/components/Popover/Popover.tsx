@@ -9,7 +9,6 @@ import {
 } from '../../lib/floating';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { type FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
-import type { FocusTrapProps } from '../FocusTrap/FocusTrap';
 import { usePopover } from './usePopover';
 
 /**
@@ -115,7 +114,7 @@ export interface PopoverProps
   /**
    * Управление автоматическим фокусом при открытии всплывающего элемента.
    */
-  autoFocus?: FocusTrapProps['autoFocus'];
+  autoFocus?: boolean | 'root';
 }
 
 /**

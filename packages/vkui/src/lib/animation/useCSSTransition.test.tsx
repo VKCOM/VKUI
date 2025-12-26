@@ -1,5 +1,5 @@
 import { act, fireEvent, render, renderHook } from '@testing-library/react';
-import { withFakeTimers } from '../../testing/utils.tsx';
+import { withFakeTimers } from '../../testing/utils';
 import { useCSSTransition } from './useCSSTransition';
 
 describe(useCSSTransition, () => {

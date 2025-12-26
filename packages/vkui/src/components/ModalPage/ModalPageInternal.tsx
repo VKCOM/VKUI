@@ -19,6 +19,7 @@ import {
   ModalOverlay as ModalOverlayDefault,
   type ModalOverlayProps,
 } from '../ModalOverlay/ModalOverlay';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ModalPageBase } from './ModalPageBase';
 import type { ModalPageProps } from './types';
 import styles from './ModalPage.module.css';
@@ -47,6 +48,7 @@ export interface ModalPageInternalProps
  * @private
  */
 export const ModalPageInternal = ({
+  getRootRef,
   open,
   header,
   footer,
@@ -80,6 +82,7 @@ export const ModalPageInternal = ({
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
+  const rootRef = useExternRef(getRootRef);
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
     enableAppear: !disableOpenAnimation,
     enableEnter: !disableOpenAnimation,
@@ -162,49 +165,55 @@ export const ModalPageInternal = ({
     >
       {modalOverlay}
       <FocusTrap
-        {...restProps}
-        autoFocus={!noFocusToDialog}
+        rootRef={rootRef}
         restoreFocus={restoreFocus}
-        role="dialog"
-        aria-modal="true"
         disabled={!opened || hidden || disableFocusTrap}
-        className={classNames(
-          className,
-          styles.host,
-          isDesktop ? styles.hostDesktop : styles.hostMobile,
-          !isDesktop &&
-            (hasCustomPanelHeaderAfter
-              ? styles.hostMobileSafeAreaInsetTopWithCustomOffset
-              : styles.hostMobileSafeAreaInsetTop),
-          desktopMaxWidthClassName,
-          sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
-        )}
-        style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
+        autoFocus={!noFocusToDialog}
       >
-        <ModalPageBase
-          {...bottomSheetEventHandlers}
-          getRootRef={handleSheetRef}
-          getRef={handleSheetScrollRef}
-          style={documentStyle}
+        <RootComponent
+          {...restProps}
+          tabIndex={-1}
+          getRootRef={rootRef}
+          role="dialog"
+          aria-modal="true"
           className={classNames(
-            isDesktop ? styles.documentDesktop : styles.documentMobile,
-            transitionStateClassNames[transitionState],
+            className,
+            styles.host,
+            isDesktop ? styles.hostDesktop : styles.hostMobile,
+            !isDesktop &&
+              (hasCustomPanelHeaderAfter
+                ? styles.hostMobileSafeAreaInsetTopWithCustomOffset
+                : styles.hostMobileSafeAreaInsetTop),
+            desktopMaxWidthClassName,
+            sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
           )}
-          onTransitionEnd={onTransitionEnd}
-          isDesktop={isDesktop}
-          disableContentPanningGesture={disableContentPanningGesture}
-          header={header}
-          footer={footer}
-          outsideButtons={outsideButtons}
-          modalContentTestId={modalContentTestId}
-          modalDismissButtonTestId={modalDismissButtonTestId}
-          modalDismissButtonLabel={modalDismissButtonLabel}
-          hideCloseButton={hideCloseButton}
-          closable={closable}
-          onClose={onClose}
+          style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
         >
-          {children}
-        </ModalPageBase>
+          <ModalPageBase
+            {...bottomSheetEventHandlers}
+            getRootRef={handleSheetRef}
+            getRef={handleSheetScrollRef}
+            style={documentStyle}
+            className={classNames(
+              isDesktop ? styles.documentDesktop : styles.documentMobile,
+              transitionStateClassNames[transitionState],
+            )}
+            onTransitionEnd={onTransitionEnd}
+            isDesktop={isDesktop}
+            disableContentPanningGesture={disableContentPanningGesture}
+            header={header}
+            footer={footer}
+            outsideButtons={outsideButtons}
+            modalContentTestId={modalContentTestId}
+            modalDismissButtonTestId={modalDismissButtonTestId}
+            modalDismissButtonLabel={modalDismissButtonLabel}
+            hideCloseButton={hideCloseButton}
+            closable={closable}
+            onClose={onClose}
+          >
+            {children}
+          </ModalPageBase>
+        </RootComponent>
       </FocusTrap>
     </ModalOutlet>
   );

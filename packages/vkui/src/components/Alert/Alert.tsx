@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { warnOnce } from '../../lib/warnOnce';
 import type {
   AlignType,
@@ -50,7 +49,6 @@ export interface AlertActionInterface
 
 export interface AlertProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title' | 'autoFocus'>,
-    Pick<UseFocusTrapProps, 'restoreFocus' | 'autoFocus'>,
     Pick<AppRootPortalProps, 'usePortal'>,
     HasRootRef<HTMLDivElement> {
   /**
@@ -112,6 +110,18 @@ export interface AlertProps
    * По умолчанию событие onClick не всплывает.
    */
   allowClickPropagation?: boolean;
+  /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  /**
+   * Управление поведением автофокуса при появлении всплывающего окна.
+   * При прокидывании `true` фокус будет установлен на первый элемент.
+   * При прокидывании `root` фокус будет установлен в корень.
+   * @default true
+   */
+  autoFocus?: boolean | 'root';
 }
 
 const warn = warnOnce('Alert');

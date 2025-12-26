@@ -1,10 +1,11 @@
-import { act, type ComponentType, useState } from 'react';
+import { act, type ComponentType, useRef, useState } from 'react';
 import { render, renderHook, waitFor } from '@testing-library/react';
 import {
   AppRootContext,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
+import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
 import { fireEventPatch, userEvent } from '../../../testing/utils';
 import type { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
@@ -39,6 +40,7 @@ const TestComponent = ({
   autoFocus?: boolean;
   Content?: ComponentType<{ onClose: VoidFunction }>;
 }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const {
     shown,
     refs: { reference, floating },
@@ -46,6 +48,8 @@ const TestComponent = ({
     floatingProps,
     onClose,
   } = hookResult;
+
+  useGlobalEscKeyDown(shown, hookResult.onEscapeKeyDown);
 
   return (
     <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput }}>
@@ -55,17 +59,19 @@ const TestComponent = ({
       {shown ? (
         <span ref={floating} data-testid="floating" {...floatingProps}>
           <FocusTrap
+            rootRef={ref}
             autoFocus
             restoreFocus={restoreFocus ? hookResult.onRestoreFocus : restoreFocus}
-            onClose={hookResult.onEscapeKeyDown}
           >
-            <input
-              autoFocus={autoFocus}
-              data-testid="focus-trap"
-              type="text"
-              defaultValue="Reference"
-            />
-            {Content ? <Content onClose={onClose} /> : null}
+            <div ref={ref} tabIndex={-1}>
+              <input
+                autoFocus={autoFocus}
+                data-testid="focus-trap"
+                type="text"
+                defaultValue="Reference"
+              />
+              {Content ? <Content onClose={onClose} /> : null}
+            </div>
           </FocusTrap>
         </span>
       ) : null}
