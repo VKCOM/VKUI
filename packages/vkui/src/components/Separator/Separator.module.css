@@ -66,14 +66,14 @@
  * ModalPage
  */
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalModalPage--sizeX-regular) .padded {
+:global(.vkuiInternalModalPage--viewWidth-smallTabletPlus) .padded {
   padding-inline: 8px;
 }
 
 /* FIXME: Мертвый код */
-@media (--sizeX-regular) {
+@media (--viewWidth-smallTabletPlus) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalModalPage--sizeX-none) .padded {
+  :global(.vkuiInternalModalPage--viewWidth-none) .padded {
     padding-inline: 8px;
   }
 }

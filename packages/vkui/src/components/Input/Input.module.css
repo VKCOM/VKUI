@@ -24,12 +24,12 @@
   border-radius: inherit;
 }
 
-.sizeYCompact .el {
+.densityCompact .el {
   block-size: var(--vkui--size_field_height--compact);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone .el {
+@media (--density-compact) {
+  .densityNone .el {
     block-size: var(--vkui--size_field_height--compact);
   }
 }

@@ -6,7 +6,7 @@ test.describe('ModalCard', () => {
   test.use({
     adaptivityProviderProps: {
       viewWidth: ViewWidth.MOBILE,
-      sizeY: 'regular',
+      density: 'regular',
     },
     onlyForPlatforms: ['ios', 'android'],
   });
@@ -20,7 +20,7 @@ test.describe('ModalCard', () => {
   test.use({
     adaptivityProviderProps: {
       viewWidth: ViewWidth.SMALL_TABLET,
-      sizeY: 'compact',
+      density: 'compact',
     },
     onlyForPlatforms: ['ios', 'android'],
   });
@@ -48,7 +48,7 @@ test.describe('ModalCard', () => {
   test.use({
     adaptivityProviderProps: {
       viewWidth: ViewWidth.SMALL_TABLET,
-      sizeY: 'compact',
+      density: 'compact',
     },
     onlyForPlatforms: ['ios', 'android'],
     onlyForColorSchemes: ['light'],

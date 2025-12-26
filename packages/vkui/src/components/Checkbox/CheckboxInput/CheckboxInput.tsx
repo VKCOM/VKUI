@@ -151,7 +151,7 @@ export function CheckboxInput({
   const inputRef = useExternRef<HTMLInputElement>(getInputRef);
 
   const platform = usePlatform();
-  const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
+  const { density: adaptiveDensity } = useAdaptivityConditionalRender();
 
   React.useEffect(() => {
     const indeterminateValue = indeterminate === undefined ? defaultIndeterminate : indeterminate;
@@ -212,11 +212,15 @@ export function CheckboxInput({
         <IconOnCompact className={styles.iconOn} />
       ) : (
         <React.Fragment>
-          {adaptiveSizeY.compact && (
-            <IconOnCompact className={classNames(styles.iconOn, adaptiveSizeY.compact.className)} />
+          {adaptiveDensity.compact && (
+            <IconOnCompact
+              className={classNames(styles.iconOn, adaptiveDensity.compact.className)}
+            />
           )}
-          {adaptiveSizeY.regular && (
-            <IconOnRegular className={classNames(styles.iconOn, adaptiveSizeY.regular.className)} />
+          {adaptiveDensity.regular && (
+            <IconOnRegular
+              className={classNames(styles.iconOn, adaptiveDensity.regular.className)}
+            />
           )}
         </React.Fragment>
       )}
@@ -224,14 +228,14 @@ export function CheckboxInput({
         <IconOffCompact className={styles.iconOff} />
       ) : (
         <React.Fragment>
-          {adaptiveSizeY.compact && (
+          {adaptiveDensity.compact && (
             <IconOffCompact
-              className={classNames(styles.iconOff, adaptiveSizeY.compact.className)}
+              className={classNames(styles.iconOff, adaptiveDensity.compact.className)}
             />
           )}
-          {adaptiveSizeY.regular && (
+          {adaptiveDensity.regular && (
             <IconOffRegular
-              className={classNames(styles.iconOff, adaptiveSizeY.regular.className)}
+              className={classNames(styles.iconOff, adaptiveDensity.regular.className)}
             />
           )}
         </React.Fragment>
@@ -240,16 +244,16 @@ export function CheckboxInput({
         <IconIndeterminate width={20} height={20} className={styles.iconIndeterminate} />
       ) : (
         <React.Fragment>
-          {adaptiveSizeY.compact && (
+          {adaptiveDensity.compact && (
             <IconIndeterminate
-              className={classNames(styles.iconIndeterminate, adaptiveSizeY.compact.className)}
+              className={classNames(styles.iconIndeterminate, adaptiveDensity.compact.className)}
               width={20}
               height={20}
             />
           )}
-          {adaptiveSizeY.regular && (
+          {adaptiveDensity.regular && (
             <IconIndeterminate
-              className={classNames(styles.iconIndeterminate, adaptiveSizeY.regular.className)}
+              className={classNames(styles.iconIndeterminate, adaptiveDensity.regular.className)}
               width={24}
               height={24}
             />

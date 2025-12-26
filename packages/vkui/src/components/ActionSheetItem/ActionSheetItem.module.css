@@ -204,21 +204,21 @@
  * SizeY = compact
  */
 
-.sizeYCompact {
+.densityCompact {
   min-block-size: 32px;
 }
 
-.sizeYCompact.ios {
+.densityCompact.ios {
   min-block-size: 36px;
   padding-block: 4px;
   padding-inline: 18px 20px;
 }
 
-.sizeYCompact:not(.ios) + .sizeYCompact:not(.ios) {
+.densityCompact:not(.ios) + .densityCompact:not(.ios) {
   margin-block-start: 2px;
 }
 
-.sizeYCompact .container {
+.densityCompact .container {
   padding-block: 5px;
   padding-inline: 0;
 }

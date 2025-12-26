@@ -14,7 +14,7 @@ export function Versions() {
 
   return (
     <>
-      <AdaptivityProvider sizeY="compact">
+      <AdaptivityProvider density="compact">
         <Button
           mode="secondary"
           appearance="neutral"

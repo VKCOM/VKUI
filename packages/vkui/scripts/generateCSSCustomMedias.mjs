@@ -35,11 +35,8 @@ export const getCustomMedias = async () => {
     await import(`data:text/javascript;charset=utf-8,${encodeURIComponent(sourceJS)}`);
 
   return {
-    '--sizeX-regular': widthPlus(BREAKPOINTS.SMALL_TABLET),
-    '--sizeX-compact': widthMinus(BREAKPOINTS.SMALL_TABLET),
-
-    '--sizeY-compact': `(pointer: fine) and ${widthPlus(BREAKPOINTS.SMALL_TABLET)}, ${heightMinus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`,
-    '--sizeY-regular': `(pointer: coarse) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, (pointer: none) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, ${widthMinus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`,
+    '--density-compact': `(pointer: fine) and ${widthPlus(BREAKPOINTS.SMALL_TABLET)}, ${heightMinus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`,
+    '--density-regular': `(pointer: coarse) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, (pointer: none) and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}, ${widthMinus(BREAKPOINTS.SMALL_TABLET)} and ${heightPlus(BREAKPOINTS.MOBILE_LANDSCAPE_HEIGHT)}`,
 
     '--hover-has': '(hover: hover) and (pointer: fine)', // см. https://github.com/VKCOM/VKUI/issues/3469
     '--hover-has-not': '(hover: none)',

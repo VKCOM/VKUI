@@ -6,7 +6,7 @@ test.describe('ActionSheet', () => {
   test.use({
     adaptivityProviderProps: {
       viewWidth: ViewWidth.MOBILE,
-      sizeY: 'regular',
+      density: 'regular',
     },
     onlyForPlatforms: ['ios', 'android'],
   });
@@ -29,7 +29,7 @@ test.describe('ActionSheet', () => {
   test.use({
     adaptivityProviderProps: {
       viewWidth: ViewWidth.DESKTOP,
-      sizeY: 'regular',
+      density: 'regular',
     },
     onlyForPlatforms: ['vkcom'],
     toMatchSnapshot: {

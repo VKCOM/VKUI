@@ -74,14 +74,14 @@
 }
 
 /**
- * sizeY COMPACT
+ * density="compact"
  */
-.sizeYCompact {
+.densityCompact {
   --vkui_internal--chips_input_base_container_gap: 2px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     --vkui_internal--chips_input_base_container_gap: 2px;
   }
 }

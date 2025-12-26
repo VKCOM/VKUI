@@ -4,8 +4,12 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import {
+  getAdaptivityConditionalRenderForSizeXCompact,
+  useAdaptivityConditionalRender,
+} from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type {
   HasComponent,
   HasDataAttribute,
@@ -25,14 +29,26 @@ const platformClassNames = {
   vkcom: classNames(styles.vkcom, 'vkuiInternalPanelHeader--vkcom'),
 };
 
-const sizeXClassNames = {
-  none: styles.sizeXNone,
-  regular: styles.sizeXRegular,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined && legacySizeX === 'regular') {
+    return styles.viewWidthSmallTabletPlus;
+  }
+  if (viewWidth === 'none') {
+    return styles.viewWidthNone;
+  }
+  if (viewWidth >= ViewWidth.SMALL_TABLET) {
+    return styles.viewWidthSmallTabletPlus;
+  }
+  return;
+}
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface PanelHeaderProps
@@ -54,8 +70,8 @@ export interface PanelHeaderProps
    * - `"none"` означает, что разделитель не нужен
    * - `"separator"` включает сепаратор при условии, что это:
    *      - либо платформа `vkcom`
-   *      - либо платформа `android`/`ios` при `<AdaptivityProvider sizeX="compact" />`
-   * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider sizeX="regular" />`
+   *      - либо платформа `android`/`ios` при `<AdaptivityProvider viewWidth={ViewWidth.MOBILE} />`
+   * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} />`
    * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям.
    */
   delimiter?: 'auto' | 'none' | 'separator' | 'spacing';
@@ -144,8 +160,13 @@ export const PanelHeader = ({
   ...restProps
 }: PanelHeaderProps): React.ReactNode => {
   const platform = usePlatform();
-  const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
-  const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
+  const { sizeX: legacySizeX, viewWidth = 'none', density = 'none' } = useAdaptivity();
+  const { sizeX: adaptiveSizeX, viewWidth: adaptiveViewWidth } = useAdaptivityConditionalRender();
+  const adaptivityConditionalRender = getAdaptivityConditionalRenderForSizeXCompact(
+    adaptiveViewWidth,
+    adaptiveSizeX,
+    legacySizeX,
+  );
   const isVKCOM = platform === 'vkcom';
   const isFixed = fixed !== undefined ? fixed : !isVKCOM;
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
@@ -170,8 +191,8 @@ export const PanelHeader = ({
         !before && classNames(styles.noBefore, 'vkuiInternalPanelHeader--no-before'),
         !after && styles.noAfter,
         isFixed && styles.hasFixed,
-        sizeX !== 'compact' && sizeXClassNames[sizeX],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        getViewWidthClassName(viewWidth, legacySizeX),
+        density !== 'regular' && densityClassNames[density],
       )}
     >
       <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
@@ -180,9 +201,9 @@ export const PanelHeader = ({
       {isVKCOM
         ? separatorVisible && <Separator className={styles.separator} />
         : staticSeparatorVisible &&
-          adaptiveSizeX.compact && (
+          adaptivityConditionalRender && (
             <Separator
-              className={classNames(adaptiveSizeX.compact.className, styles.separator)}
+              className={classNames(adaptivityConditionalRender.className, styles.separator)}
               padding
             />
           )}

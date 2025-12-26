@@ -17,9 +17,9 @@ import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import { type ChipOptionValue } from '../types';
 import styles from './Chip.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 } as const;
 
 const modeClassNames = {
@@ -89,7 +89,7 @@ export const Chip = ({
   onBlur: onBlurProp,
   ...restProps
 }: ChipProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const { focusVisible, onFocus, onBlur } = useFocusVisible();
   const focusVisibleClassName = useFocusVisibleClassName({ focusVisible });
 
@@ -120,7 +120,7 @@ export const Chip = ({
       Component={Component}
       className={classNames(
         styles.host,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         modeClassNames[mode],
         focusVisibleClassName,
         className,

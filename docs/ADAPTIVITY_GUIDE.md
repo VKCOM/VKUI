@@ -19,7 +19,7 @@
 **Пример 1.**
 
 ```tsx
-<AdaptivityProvider sizeX="compact">
+<AdaptivityProvider density="compact">
   <Component>lorem ipsum</Component>
 </AdaptivityProvider>
 ```
@@ -31,20 +31,20 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import styles from './Component.module.css';
 
-const sizeXClassNames = {
-  none: styles.hostSizeXNone, // означает, что sizeX не определён в AdaptivityProvider – используем `@media`
-  compact: styles.hostSizeXCompact,
+const densityClassNames = {
+  none: styles.hostdensityNone, // означает, что `density` не определён в `AdaptivityProvider` – используем `@media`
+  compact: styles.hostdensityCompact,
 };
 
 const Component = () => {
-  const { sizeX = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <div
       className={classNames(
         styles.host,
         // компонент слушает только compact
-        sizeX !== 'regular' && sizeXClassNames[sizeX],
+        density !== 'regular' && densityClassNames[density],
       )}
     />
   );
@@ -54,25 +54,25 @@ const Component = () => {
 _Component.module.css_
 
 ```css
-/* Равносильно модификатору `sizeXRegular` */
+/* Равносильно модификатору `densityRegular` */
 .host {
   color: red;
   padding: 20px;
 }
 
-.sizeXCompact {
+.densityCompact {
   padding: 10px;
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone {
+@media (--density-compact) {
+  .densityNone {
     padding: 10px;
   }
 }
 ```
 
-Мы задаём `padding: 10px;` для размера `sizeX-compact` и `padding: 20px;` для размера `sizeX-regular`.
-В `@media (--sizeX-compact)` мы задаём `padding: 10px;` для компонента только если `sizeX` не переопределен.
+Мы задаём `padding: 10px;` для размера `density-compact` и `padding: 20px;` для размера `density-regular`.
+В `@media (--density-compact)` мы задаём `padding: 10px;` для компонента только если `density` не переопределен.
 
 **Пример 2.**
 
@@ -152,15 +152,15 @@ _Component.module.css_
 
   В компоненте [Group](../packages/vkui/src/components/Group/Group.tsx) появился класс `.modeNone`. Он означает, что у `Group`
   не передан `mode` и не удалось вычислить его автоматически. `.modeNone` должен вести себя как
-  `.modeCard` при `sizeX=regular` и как `.modePlain` при `sizeX=compact`. Пример использования:
+  `.modeCard` при `viewWidth={ViewWidth.SMALL_TABLET}` и как `.modePlain` при `viewWidth={ViewWidth.MOBILE}`. Пример использования:
 
   ```css
   .modeCard .сomponent {
     padding-inline: 8px;
   }
 
-  @media (--sizeX-regular) {
-    /* Применяем стили `.modeCard`, если не задан `mode` и `sizeX=regular` */
+  @media (--viewWidth-smallTabletPlus) {
+    /* Применяем стили `.modeCard`, если не задан `mode` и `viewWidth={ViewWidth.SMALL_TABLET}` */
     .modeNone .in {
       padding-inline: 8px;
     }

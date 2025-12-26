@@ -40,12 +40,12 @@
   padding-block: 12px;
 }
 
-.sizeYCompact.multiline .container {
+.densityCompact.multiline .container {
   padding-block: 8px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.multiline .container {
+@media (--density-compact) {
+  .densityNone.multiline .container {
     padding-block: 8px;
   }
 }

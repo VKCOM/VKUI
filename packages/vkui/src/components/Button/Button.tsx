@@ -39,9 +39,9 @@ const stylesAlign = {
   right: styles.alignRight,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  regular: styles.sizeYRegular,
+const densityClassNames = {
+  none: styles.densityNone,
+  regular: styles.densityRegular,
 };
 
 export interface VKUIButtonProps extends HasAlign {
@@ -126,7 +126,7 @@ export const Button = ({
   ...restProps
 }: ButtonProps): React.ReactNode => {
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
   const isDisabled = disabled || loading;
@@ -174,7 +174,7 @@ export const Button = ({
         stylesMode[mode],
         stylesAppearance[appearance],
         align !== 'center' && stylesAlign[align],
-        sizeY !== 'compact' && sizeYClassNames[sizeY],
+        density !== 'compact' && densityClassNames[density],
         platform === 'ios' && styles.ios,
         stretched && styles.stretched,
         hasIconOnly && !stretched && styles.singleIcon,

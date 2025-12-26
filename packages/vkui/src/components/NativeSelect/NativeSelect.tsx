@@ -20,9 +20,9 @@ import styles from '../Select/Select.module.css';
 
 const warn = warnOnce('NativeSelect');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export type SelectValue = Exclude<
@@ -153,7 +153,7 @@ export const NativeSelect = ({
 
   const [title, setTitle] = React.useState('');
   const [empty, setEmpty] = React.useState(false);
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const { className, style, getRootRef, ...rootRest } = useMergeProps(restProps, slotProps?.root);
 
@@ -195,7 +195,7 @@ export const NativeSelect = ({
         multiline && styles.multiline,
         align === 'center' && styles.alignCenter,
         align === 'right' && styles.alignRight,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         className,
       )}
       style={style}

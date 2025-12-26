@@ -18,7 +18,7 @@
   color: var(--vkui--color_text_primary);
 }
 
-.sizeYCompact .el {
+.densityCompact .el {
   padding-block: calc(
     (
       var(--vkui--size_field_height--compact) -
@@ -28,8 +28,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone .el {
+@media (--density-compact) {
+  .densityNone .el {
     padding-block: calc(
       (
         var(--vkui--size_field_height--compact) -
@@ -44,12 +44,12 @@
   inline-size: initial;
 }
 
-.sizeYCompact {
+.densityCompact {
   max-block-size: 196px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     max-block-size: 196px;
   }
 }

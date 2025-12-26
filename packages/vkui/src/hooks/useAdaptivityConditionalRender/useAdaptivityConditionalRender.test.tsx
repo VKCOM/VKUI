@@ -3,12 +3,12 @@ import type { AdaptivityProps } from '../../components/AdaptivityProvider/Adapti
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ViewHeight, ViewWidth } from '../../lib/adaptivity';
 import {
+  densityCompactMediaQueryProps,
+  densityRegularMediaQueryProps,
   deviceTypeMediaQueryMapProps,
   forcedProps,
   sizeXCompactMediaQueryProps,
   sizeXRegularMediaQueryProps,
-  sizeYCompactMediaQueryProps,
-  sizeYRegularMediaQueryProps,
   viewWidthMediaQueryMapProps,
 } from './constants';
 import { useAdaptivityConditionalRender } from './useAdaptivityConditionalRender';
@@ -26,8 +26,16 @@ describe(useAdaptivityConditionalRender, () => {
     it('sizeY', () => {
       const { result } = renderHook(useAdaptivityConditionalRender);
       expect(result.current.sizeY).toMatchObject({
-        compact: sizeYCompactMediaQueryProps,
-        regular: sizeYRegularMediaQueryProps,
+        compact: densityCompactMediaQueryProps,
+        regular: densityRegularMediaQueryProps,
+      });
+    });
+
+    it('density', () => {
+      const { result } = renderHook(useAdaptivityConditionalRender);
+      expect(result.current.density).toMatchObject({
+        compact: densityCompactMediaQueryProps,
+        regular: densityRegularMediaQueryProps,
       });
     });
 
@@ -92,6 +100,28 @@ describe(useAdaptivityConditionalRender, () => {
           sizeY: 'regular',
         });
         expect(result.current.sizeY).toMatchObject({
+          compact: false,
+          regular: forcedProps,
+        });
+      });
+    });
+
+    describe('density', () => {
+      it('compact', () => {
+        const { result } = renderHookWithAdaptivityProvider({
+          density: 'compact',
+        });
+        expect(result.current.density).toMatchObject({
+          compact: forcedProps,
+          regular: false,
+        });
+      });
+
+      it('regular', () => {
+        const { result } = renderHookWithAdaptivityProvider({
+          density: 'regular',
+        });
+        expect(result.current.density).toMatchObject({
           compact: false,
           regular: forcedProps,
         });

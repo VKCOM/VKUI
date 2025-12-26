@@ -11,9 +11,9 @@ import styles from './RichCell.module.css';
 
 const warn = warnOnce('RichCell');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 const alignAfterClassNames = {
@@ -134,7 +134,7 @@ export const RichCell: React.FC<RichCellProps> & {
   submeta,
   ...restProps
 }: RichCellProps) => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development' && afterCaption) {
@@ -147,7 +147,7 @@ export const RichCell: React.FC<RichCellProps> & {
       baseClassName={classNames(
         styles.host,
         !multiline && styles.textEllipsis,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         (after || afterCaption) && alignAfterClassNames[afterAlign],
         before && alignBeforeClassNames[beforeAlign],
         alignContentClassNames[contentAlign],

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AdaptivityProvider, ContentBadge, Tappable } from '@vkontakte/vkui';
+import { AdaptivityProvider, ContentBadge, Tappable, ViewWidth } from '@vkontakte/vkui';
 import { useModifierKey } from './useModifierKey';
 import styles from '../../Search.module.css';
 
@@ -37,7 +37,7 @@ export function SearchField({ searchOpen, setSearchOpen }: SearchFieldProps) {
   const ariaKeyShortcuts = `${modifierKey === 'Ctrl' ? 'Control' : 'Meta'}+k`;
 
   return (
-    <AdaptivityProvider sizeX="regular">
+    <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
       <Tappable
         className={styles.searchField}
         onClick={() => setSearchOpen(true)}

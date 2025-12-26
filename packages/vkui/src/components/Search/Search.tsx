@@ -217,8 +217,8 @@ export const Search = ({
   const checkHasValue: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setHasValue(Boolean(e.currentTarget.value));
 
-  const { sizeY = 'none' } = useAdaptivity();
-  const { sizeY: adaptiveSizeY } = useAdaptivityConditionalRender();
+  const { density = 'none' } = useAdaptivity();
+  const { density: adaptiveDensity } = useAdaptivityConditionalRender();
   const platform = usePlatform();
 
   const hasAfter = platform === 'ios' && hasReactNode(after);
@@ -287,7 +287,7 @@ export const Search = ({
   );
 
   const showControls = Boolean(
-    iconProp || !hideClearButton || (adaptiveSizeY.compact && onFindButtonClick),
+    iconProp || !hideClearButton || (adaptiveDensity.compact && onFindButtonClick),
   );
 
   return (
@@ -295,8 +295,8 @@ export const Search = ({
       baseClassName={classNames(
         'vkuiInternalSearch',
         styles.host,
-        sizeY === 'none' && styles.sizeYNone,
-        sizeY === 'compact' && styles.sizeYCompact,
+        density === 'none' && styles.densityNone,
+        density === 'compact' && styles.densityCompact,
         isFocused && styles.focused,
         hasValue && styles.hasValue,
         hasAfter && styles.hasAfter,
@@ -347,11 +347,11 @@ export const Search = ({
                 {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
               </IconButton>
             )}
-            {adaptiveSizeY.compact && onFindButtonClick && (
+            {adaptiveDensity.compact && onFindButtonClick && (
               <Button
                 mode="primary"
                 size="m"
-                className={classNames(styles.findButton, adaptiveSizeY.compact.className)}
+                className={classNames(styles.findButton, adaptiveDensity.compact.className)}
                 focusVisibleMode="inside"
                 onClick={onFindButtonClick}
                 tabIndex={hasValue ? undefined : -1}

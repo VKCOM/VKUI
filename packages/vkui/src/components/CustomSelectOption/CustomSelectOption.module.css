@@ -20,12 +20,12 @@
   );
 }
 
-.sizeYRegular {
+.densityRegular {
   min-block-size: 44px;
 }
 
-@media (--sizeY-regular) {
-  .sizeYNone {
+@media (--density-regular) {
+  .densityNone {
     min-block-size: 44px;
   }
 }

@@ -11,9 +11,9 @@ const stylesLevel = {
   '3': styles.level3,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface TitleProps extends TypographyProps {
@@ -36,7 +36,7 @@ export const Title = ({
   inline = false,
   ...restProps
 }: TitleProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <Typography
@@ -45,7 +45,7 @@ export const Title = ({
       inline={inline}
       className={classNames(
         className,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         stylesLevel[level],
       )}
       {...restProps}

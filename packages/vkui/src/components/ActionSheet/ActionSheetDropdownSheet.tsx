@@ -26,7 +26,7 @@ export const ActionSheetDropdownSheet = ({
   onClose: onCloseProp,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
-  const { sizeY } = useAdaptivityWithJSMediaQueries();
+  const { density } = useAdaptivityWithJSMediaQueries();
   const platform = usePlatform();
 
   const { onClose: onActionSheetClose } =
@@ -53,7 +53,7 @@ export const ActionSheetDropdownSheet = ({
         styles.host,
         platform === 'ios' && styles.ios,
         closing ? styles.closing : styles.opening,
-        sizeY === 'compact' && styles.sizeYCompact,
+        density === 'compact' && styles.densityCompact,
         className,
       )}
     >

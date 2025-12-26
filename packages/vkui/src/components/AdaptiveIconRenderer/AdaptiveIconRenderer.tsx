@@ -22,12 +22,12 @@ export const AdaptiveIconRenderer = ({
   IconCompact,
   IconRegular,
 }: AdaptiveIconRendererProps): React.ReactNode => {
-  const { sizeY } = useAdaptivityConditionalRender();
+  const { density } = useAdaptivityConditionalRender();
 
   return (
     <React.Fragment>
-      {sizeY.compact && <IconCompact className={sizeY.compact.className} />}
-      {sizeY.regular && <IconRegular className={sizeY.regular.className} />}
+      {density.compact && <IconCompact className={density.compact.className} />}
+      {density.regular && <IconRegular className={density.regular.className} />}
     </React.Fragment>
   );
 };

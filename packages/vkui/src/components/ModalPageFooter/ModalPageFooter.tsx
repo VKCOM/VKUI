@@ -1,7 +1,11 @@
 'use client';
 
 import { classNames } from '@vkontakte/vkjs';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import {
+  isSizeXCompactFallback,
+  useAdaptivityWithJSMediaQueries,
+} from '../../hooks/useAdaptivityWithJSMediaQueries';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
@@ -24,7 +28,8 @@ export const ModalPageFooter = ({
   children,
   ...restProps
 }: ModalPageFooterProps) => {
-  const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
+  const { sizeX: legacySizeXContext } = useAdaptivity();
+  const { isDesktop, sizeX: legacySizeX, viewWidth } = useAdaptivityWithJSMediaQueries();
   return (
     <RootComponent
       baseClassName={classNames(
@@ -34,7 +39,12 @@ export const ModalPageFooter = ({
       )}
       {...restProps}
     >
-      {!noSeparator && <Separator className={styles.Separator} padding={sizeX !== 'regular'} />}
+      {!noSeparator && (
+        <Separator
+          className={styles.Separator}
+          padding={isSizeXCompactFallback(viewWidth, legacySizeX, legacySizeXContext)}
+        />
+      )}
       {children}
     </RootComponent>
   );

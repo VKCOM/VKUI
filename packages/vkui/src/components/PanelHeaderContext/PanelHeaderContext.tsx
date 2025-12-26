@@ -5,17 +5,30 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useGlobalOnClickOutside } from '../../hooks/useGlobalOnClickOutside';
 import { usePlatform } from '../../hooks/usePlatform';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
 import { FixedLayout } from '../FixedLayout/FixedLayout';
 import styles from './PanelHeaderContext.module.css';
 
-const sizeXClassNames = {
-  none: styles.sizeXNone,
-  compact: styles.sizeXCompact,
-  regular: styles.sizeXRegular,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined) {
+    return legacySizeX === 'regular'
+      ? styles.viewWidthSmallTabletPlus
+      : styles.viewWidthSmallTabletMinus;
+  }
+  if (viewWidth === 'none') {
+    return classNames(styles.viewWidthNone, 'vkuiInternalGroup--viewWidth-none');
+  }
+  return viewWidth >= ViewWidth.SMALL_TABLET
+    ? styles.viewWidthSmallTabletPlus
+    : styles.viewWidthSmallTabletMinus;
+}
 
 export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
@@ -41,7 +54,7 @@ export const PanelHeaderContext = ({
   ...restProps
 }: PanelHeaderContextProps): React.ReactNode => {
   const platform = usePlatform();
-  const { sizeX = 'none' } = useAdaptivity();
+  const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
   const elementRef = React.useRef<HTMLDivElement>(null);
   const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
     opened ? 'enter' : 'exit',
@@ -75,7 +88,7 @@ export const PanelHeaderContext = ({
         styles.host,
         platform === 'ios' && styles.ios,
         opened ? styles.opened : styles.closing,
-        sizeXClassNames[sizeX],
+        getViewWidthClassName(viewWidth, legacySizeX),
         className,
       )}
       vertical="top"

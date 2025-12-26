@@ -18,15 +18,15 @@
 }
 
 /*
-  sizeY-compact
+  density-compact
  */
 
-.sizeYCompact {
+.densityCompact {
   --vkui_internal--search_height: var(--vkui--size_search_height--compact);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     --vkui_internal--search_height: var(--vkui--size_search_height--compact);
   }
 }

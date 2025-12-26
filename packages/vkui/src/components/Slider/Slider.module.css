@@ -74,31 +74,31 @@
 }
 
 /**
- * sizeY COMPACT
+ * density="compact"
  */
 
-.sizeYCompact.sizeL {
+.densityCompact.sizeL {
   --vkui_internal--slider_thumb_size: 24px;
 }
 
-.sizeYCompact.sizeM {
+.densityCompact.sizeM {
   --vkui_internal--slider_thumb_size: 16px;
 }
 
-.sizeYCompact.sizeS {
+.densityCompact.sizeS {
   --vkui_internal--slider_thumb_size: 12px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.sizeL {
+@media (--density-compact) {
+  .densityNone.sizeL {
     --vkui_internal--slider_thumb_size: 24px;
   }
 
-  .sizeYNone.sizeM {
+  .densityNone.sizeM {
     --vkui_internal--slider_thumb_size: 16px;
   }
 
-  .sizeYNone.sizeS {
+  .densityNone.sizeS {
     --vkui_internal--slider_thumb_size: 12px;
   }
 }

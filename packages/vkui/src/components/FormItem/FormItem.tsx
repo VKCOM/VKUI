@@ -15,9 +15,9 @@ import { FormItemTopLabel } from './FormItemTop/FormItemTopLabel';
 import { FormItemContext } from './context';
 import styles from './FormItem.module.css';
 
-const sizeYClassNames = {
-  none: classNames(styles.sizeYNone, 'vkuiInternalFormItem--sizeY-none'),
-  compact: classNames(styles.sizeYCompact, 'vkuiInternalFormItem--sizeY-compact'),
+const densityClassNames = {
+  none: classNames(styles.densityNone, 'vkuiInternalFormItem--density-none'),
+  compact: classNames(styles.densityCompact, 'vkuiInternalFormItem--density-compact'),
 };
 
 const stylesStatus = {
@@ -108,7 +108,7 @@ export const FormItem: React.FC<FormItemProps> & {
   ...restProps
 }: FormItemProps) => {
   const rootEl = useExternRef(getRootRef);
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const wrappedChildren = (
     <React.Fragment>
@@ -145,7 +145,7 @@ export const FormItem: React.FC<FormItemProps> & {
         !noPadding && styles.withPadding,
         'vkuiInternalFormItem',
         status !== 'default' && stylesStatus[status],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         hasReactNode(top) && classNames(styles.withTop, 'vkuiInternalFormItem--withTop'),
         removable && classNames(styles.withRemovable, 'vkuiInternalFormItem--removable'),
       )}

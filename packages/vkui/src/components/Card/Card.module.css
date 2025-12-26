@@ -108,7 +108,7 @@
     margin-inline-end: 0;
   }
 }
-@media (--sizeX-regular) {
+@media (--viewWidth-smallTabletPlus) {
   :global(.vkuiInternalGroup--mode-none)
     :global(.vkuiInternalCardScroll--size-l)
     .host:last-of-type {

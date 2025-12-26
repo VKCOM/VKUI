@@ -2,7 +2,7 @@ import { test } from '@vkui-e2e/test';
 import { CustomSelectOptionPlayground } from './CustomSelectOption.e2e-playground';
 
 test.use({
-  adaptivityProviderProps: { sizeY: 'regular' },
+  adaptivityProviderProps: { density: 'regular' },
 });
 
 test('CustomSelectOption', async ({

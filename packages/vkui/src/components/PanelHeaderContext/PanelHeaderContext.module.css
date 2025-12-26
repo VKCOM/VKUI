@@ -6,14 +6,14 @@
   block-size: auto;
 }
 
-.sizeXCompact {
+.viewWidthSmallTabletMinus {
   --vkui_internal--PanelHeaderContext__fade_display: block;
 
   block-size: 100%;
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone {
     --vkui_internal--PanelHeaderContext__fade_display: block;
 
     block-size: 100%;
@@ -81,14 +81,14 @@
  * (platform === 'ios' && isDesktop)
  */
 .host:not(.ios) .content,
-.sizeXRegular.ios .content {
+.viewWidthSmallTabletPlus.ios .content {
   padding-block: 8px;
   padding-inline: 0;
   border-radius: 12px;
 }
 
-@media (--sizeX-regular) {
-  .sizeXNone.ios .content {
+@media (--viewWidth-smallTabletPlus) {
+  .viewWidthNone.ios .content {
     padding-block: 8px;
     padding-inline: 0;
     border-radius: 12px;
@@ -99,32 +99,32 @@
  Desktop
  */
 
-.sizeXRegular .in {
+.viewWidthSmallTabletPlus .in {
   padding-block: 12px;
   padding-inline: 8px;
 }
 
-.sizeXRegular .content {
+.viewWidthSmallTabletPlus .content {
   border-radius: 12px;
 }
 
-.sizeXRegular .content {
+.viewWidthSmallTabletPlus .content {
   box-shadow:
     0 0 4px rgb(0, 0, 0, 0.08),
     0 8px 8px rgb(0, 0, 0, 0.16);
 }
 
-@media (--sizeX-regular) {
-  .sizeXNone .in {
+@media (--viewWidth-smallTabletPlus) {
+  .viewWidthNone .in {
     padding-block: 12px;
     padding-inline: 8px;
   }
 
-  .sizeXNone .content {
+  .viewWidthNone .content {
     border-radius: 12px;
   }
 
-  .sizeXNone .content {
+  .viewWidthNone .content {
     box-shadow:
       0 0 4px rgb(0, 0, 0, 0.08),
       0 8px 8px rgb(0, 0, 0, 0.16);

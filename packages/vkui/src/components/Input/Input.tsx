@@ -12,9 +12,9 @@ import styles from './Input.module.css';
 
 const warn = warnOnce('Input');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface InputProps
@@ -108,7 +108,7 @@ export const Input = ({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const { className, ...rootProps } = useMergeProps(restProps, slotProps?.root);
 
@@ -150,7 +150,7 @@ export const Input = ({
         styles.host,
         align === 'right' && styles.alignRight,
         align === 'center' && styles.alignCenter,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         before && styles.hasBefore,
         after && styles.hasAfter,
         className,

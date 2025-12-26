@@ -156,22 +156,26 @@
 }
 
 /* stylelint-disable selector-pseudo-class-disallowed-list */
-:global(.vkuiInternalFormItem--sizeY-compact):global(.vkuiInternalFormItem--withTop)
+:global(.vkuiInternalFormItem--density-compact):global(.vkuiInternalFormItem--withTop)
   :global(.vkuiInternalFormItem__removable)
   ~ .offset,
-:global(.vkuiInternalFormLayoutGroup--sizeY-compact):global(.vkuiInternalFormLayoutGroup--removable)
+:global(.vkuiInternalFormLayoutGroup--density-compact):global(
+    .vkuiInternalFormLayoutGroup--removable
+  )
   :global(.vkuiInternalFormItem--withTop)
   ~ .offset {
   block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);
 }
 /* stylelint-enable selector-pseudo-class-disallowed-list */
 
-@media (--sizeY-compact) {
+@media (--density-compact) {
   /* stylelint-disable selector-pseudo-class-disallowed-list */
-  :global(.vkuiInternalFormItem--sizeY-none):global(.vkuiInternalFormItem--withTop)
+  :global(.vkuiInternalFormItem--density-none):global(.vkuiInternalFormItem--withTop)
     :global(.vkuiInternalFormItem__removable)
     ~ .offset,
-  :global(.vkuiInternalFormLayoutGroup--sizeY-none):global(.vkuiInternalFormLayoutGroup--removable)
+  :global(.vkuiInternalFormLayoutGroup--density-none):global(
+      .vkuiInternalFormLayoutGroup--removable
+    )
     :global(.vkuiInternalFormItem--withTop)
     ~ .offset {
     block-size: calc(2px + var(--vkui--font_subhead--line_height--compact) + 6px);

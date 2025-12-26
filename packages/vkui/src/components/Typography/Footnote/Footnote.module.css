@@ -5,7 +5,7 @@
   line-height: var(--vkui--font_footnote--line_height--regular);
 }
 
-.sizeYCompact {
+.densityCompact {
   font-family: var(
     --vkui--font_footnote--font_family--compact,
     var(--vkui--font_footnote--font_family--regular)
@@ -24,8 +24,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     font-family: var(
       --vkui--font_footnote--font_family--compact,
       var(--vkui--font_footnote--font_family--regular)
@@ -53,7 +53,7 @@
   text-transform: uppercase;
 }
 
-.sizeYCompact.caps {
+.densityCompact.caps {
   font-family: var(
     --vkui--font_footnote_caps--font_family--compact,
     var(--vkui--font_footnote_caps--font_family--regular)
@@ -72,8 +72,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.caps {
+@media (--density-compact) {
+  .densityNone.caps {
     font-family: var(
       --vkui--font_footnote_caps--font_family--compact,
       var(--vkui--font_footnote_caps--font_family--regular)

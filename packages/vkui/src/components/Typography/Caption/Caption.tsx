@@ -2,7 +2,7 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { type SizeTypeValues } from '../../../lib/adaptivity';
+import type { DensityTypeValues } from '../../../lib/adaptivity';
 import { type HasCaps, Typography, type TypographyProps } from '../Typography';
 import styles from './Caption.module.css';
 
@@ -12,18 +12,18 @@ const stylesLevel = {
   '3': styles.level3,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export function captionClassNames(
-  sizeY: 'none' | SizeTypeValues,
+  density: 'none' | DensityTypeValues,
   level: '1' | '2' | '3' | undefined = '1',
   caps = false,
 ) {
   return classNames(
-    sizeY !== 'regular' && sizeYClassNames[sizeY],
+    density !== 'regular' && densityClassNames[density],
     caps && styles.caps,
     stylesLevel[level],
   );
@@ -50,14 +50,14 @@ export const Caption = ({
   inline = false,
   ...restProps
 }: CaptionProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <Typography
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(className, captionClassNames(sizeY, level, caps))}
+      className={classNames(className, captionClassNames(density, level, caps))}
       {...restProps}
     />
   );

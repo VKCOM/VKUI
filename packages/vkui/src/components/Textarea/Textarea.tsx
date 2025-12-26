@@ -18,9 +18,9 @@ import styles from './Textarea.module.css';
 
 const warn = warnOnce('Textarea');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface TextareaProps
@@ -127,7 +127,7 @@ export const Textarea = ({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ textArea: { getRootRef: ... } }`');
   }
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const platform = usePlatform();
   const { window } = useDOM();
 
@@ -171,14 +171,14 @@ export const Textarea = ({
   const [refResizeTextarea, resize] = useResizeTextarea(onResize, grow);
   const elementRef = useExternRef(getTextAreaRef, refResizeTextarea);
 
-  React.useEffect(resize, [resize, sizeY, platform, value]);
+  React.useEffect(resize, [resize, density, platform, value]);
   useResizeObserver(window, resize);
 
   return (
     <FormField
       className={classNames(
         styles.host,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         align === 'right' && styles.alignRight,
         align === 'center' && styles.alignCenter,
         className,

@@ -47,7 +47,7 @@
   white-space: nowrap;
 }
 
-.sizeYCompact .content {
+.densityCompact .content {
   font-family: var(--vkui--font_footnote--font_family--regular);
   /* Typography/Footnote */
   font-size: var(--vkui--font_footnote--font_size--regular);
@@ -55,8 +55,8 @@
   line-height: var(--vkui--font_footnote--line_height--regular);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone .content {
+@media (--density-compact) {
+  .densityNone .content {
     font-family: var(--vkui--font_footnote--font_family--regular);
     /* Typography/Footnote */
     font-size: var(--vkui--font_footnote--font_size--regular);
@@ -90,12 +90,12 @@
   margin-inline-start: 6px;
 }
 
-.sizeYCompact {
+.densityCompact {
   block-size: 28px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     block-size: 28px;
   }
 }

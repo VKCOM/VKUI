@@ -57,7 +57,7 @@
   --vkui_internal--Switch__handle_shadow: none;
 }
 
-.default.sizeYCompact {
+.default.densityCompact {
   /* Switch__track */
   --vkui_internal--Switch__track_width: 32px;
   --vkui_internal--Switch__track_height: 20px;
@@ -70,8 +70,8 @@
   --vkui_internal--Switch__handle_heightNoUnit: 16.5;
 }
 
-@media (--sizeY-compact) {
-  .default.sizeYNone {
+@media (--density-compact) {
+  .default.densityNone {
     /* Switch__track */
     --vkui_internal--Switch__track_width: 32px;
     --vkui_internal--Switch__track_height: 20px;
@@ -108,7 +108,7 @@
     0 3px 8px rgb(0, 0, 0, 0.15), 0 3px 1px rgb(0, 0, 0, 0.06), inset 0 0 0 0.5px rgb(0, 0, 0, 0.04);
 }
 
-.ios.sizeYCompact {
+.ios.densityCompact {
   /* Switch__track */
   --vkui_internal--Switch__track_width: 47px;
   --vkui_internal--Switch__track_height: 27px;
@@ -121,8 +121,8 @@
   --vkui_internal--Switch__handle_heightNoUnit: 23;
 }
 
-@media (--sizeY-compact) {
-  .ios.sizeYNone {
+@media (--density-compact) {
+  .ios.densityNone {
     /* Switch__track */
     --vkui_internal--Switch__track_width: 47px;
     --vkui_internal--Switch__track_height: 27px;
@@ -241,7 +241,7 @@
   transition-property: opacity, background-color;
 }
 
-@media (--sizeY-compact) {
+@media (--density-compact) {
   .handleWithRipple::before {
     inline-size: 24px;
     block-size: 24px;

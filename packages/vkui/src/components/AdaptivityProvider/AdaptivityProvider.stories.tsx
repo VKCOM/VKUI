@@ -14,14 +14,12 @@ const story: Meta<AdaptivityProviderProps> = {
 export default story;
 
 const DisplayAdaptivityProvider = () => {
-  const { sizeX, sizeY } = useAdaptivityConditionalRender();
+  const { density } = useAdaptivityConditionalRender();
 
   return (
     <>
-      {sizeX.compact && <div style={{ padding: 5 }}>Size X: Compact</div>}
-      {sizeX.regular && <div style={{ padding: 5 }}>Size X: Regular</div>}
-      {sizeY.compact && <div style={{ padding: 5 }}>Size Y: Compact</div>}
-      {sizeY.regular && <div style={{ padding: 5 }}>Size Y: Regular</div>}
+      {density.compact && <div style={{ padding: 5 }}>Density: Compact</div>}
+      {density.regular && <div style={{ padding: 5 }}>Density: Regular</div>}
     </>
   );
 };

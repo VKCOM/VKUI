@@ -3,7 +3,7 @@ import type { AdaptivityProps } from '../../components/AdaptivityProvider/Adapti
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';
 import { DirectionProvider } from '../../components/DirectionProvider/DirectionProvider';
-import { BREAKPOINTS } from '../../lib/adaptivity';
+import { BREAKPOINTS, ViewWidth } from '../../lib/adaptivity';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import { mapObject } from '../../lib/object';
 import type { PlatformType } from '../../lib/platform';
@@ -11,9 +11,10 @@ import { AppDefaultWrapper, type AppDefaultWrapperProps } from './AppDefaultWrap
 import { TEST_CLASS_NAMES } from './constants';
 import { getAdaptivePxWidth, isCustomValueWithLabel, multiCartesian, prettyProps } from './utils';
 
+// TODO [#9015]: Удалить sizeX и sizeY.
 type DefaultProps<T extends React.ElementType> = Omit<
   React.ComponentProps<T>,
-  'sizeX' | 'sizeY' | 'dir' | 'componentStateHeight'
+  'sizeX' | 'sizeY' | 'density' | 'dir' | 'componentStateHeight'
 >;
 
 export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
@@ -39,7 +40,7 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
   isFixedComponent = false,
   colorScheme,
   platform,
-  adaptivityProviderProps: adaptivityProviderPropsProp,
+  adaptivityProviderProps = {},
   propSets = [],
   children: Children,
   AppWrapper = AppDefaultWrapper,
@@ -47,20 +48,40 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
   ...restProps
 }: InternalComponentPlaygroundProps<Props>): React.ReactNode => {
   const isVKCOM = platform === 'vkcom';
-  const adaptivityProviderProps: AdaptivityProps = Object.assign(
-    isVKCOM ? { sizeX: 'regular', sizeY: 'compact' } : {},
-    adaptivityProviderPropsProp,
-  );
+  let {
+    viewWidth: globalViewWidth,
+    viewHeight: globalViewHeight,
+    sizeX: globalSizeX,
+    density: globalDensity,
+    hasPointer: globalHasPointer,
+  } = adaptivityProviderProps;
 
-  const wrapperWidth = adaptivityProviderProps.viewWidth
-    ? getAdaptivePxWidth(adaptivityProviderProps.viewWidth)
+  const wrapperWidth = globalViewWidth
+    ? getAdaptivePxWidth(globalViewWidth)
     : isVKCOM
       ? 'auto'
       : BREAKPOINTS.MOBILE;
 
+  if (isVKCOM) {
+    globalViewWidth = ViewWidth.SMALL_TABLET;
+    if (globalDensity === undefined) {
+      globalDensity = 'compact';
+    }
+  } else {
+    // TODO [#9015]: заменить в `*.e2e.tsx` на `ViewWidth.SMALL_TABLET` вместо `sizeX="regular"` или на ViewWidth.MOBILE вместо `sizeX="compact"`.
+    if (globalSizeX !== undefined) {
+      globalViewWidth = globalSizeX === 'regular' ? ViewWidth.SMALL_TABLET : ViewWidth.MOBILE;
+    }
+  }
+
   return (
     <ConfigProvider colorScheme={colorScheme} platform={platform}>
-      <AdaptivityProvider {...adaptivityProviderProps}>
+      <AdaptivityProvider
+        viewWidth={globalViewWidth}
+        viewHeight={globalViewHeight}
+        density={globalDensity}
+        hasPointer={globalHasPointer}
+      >
         <AppWrapper
           className={TEST_CLASS_NAMES.APP_ROOT}
           mode={isFixedComponent ? 'full' : undefined}
@@ -76,39 +97,51 @@ export const ComponentPlayground = <Props extends DefaultProps<any> = DefaultPro
           }
           {...restProps}
         >
-          {multiCartesian<Props>(propSets, { adaptive: !isVKCOM, platform }).map((props, i) => {
-            const clonedAdaptivityProviderProps = { ...adaptivityProviderProps };
-            const { componentStateHeight, ...showedProps } = props;
-            const { sizeX, sizeY, dir = 'ltr', ...componentProps } = showedProps;
+          {multiCartesian<Props>(propSets, { adaptive: !isVKCOM, platform }).map(
+            ({ componentStateHeight, ...showedProps }, i) => {
+              const {
+                sizeX: localSizeX,
+                sizeY: localSizeY,
+                dir = 'ltr',
+                ...componentProps
+              } = showedProps;
+              const adaptivityProps: AdaptivityProps = {
+                viewWidth: globalViewWidth,
+                viewHeight: globalViewHeight,
+                density: globalDensity,
+                hasPointer: globalHasPointer,
+              };
+              // TODO [#9015]: заменить на `localeViewWidth` после исправления в `./utils.tsx`
+              if (localSizeX) {
+                adaptivityProps.viewWidth =
+                  localSizeX === 'regular' ? ViewWidth.SMALL_TABLET : ViewWidth.MOBILE;
+              }
+              // TODO [#9015]: заменить на `localDensity` после исправления в `./utils.tsx`
+              if (localSizeY) {
+                adaptivityProps.density = localSizeY;
+              }
 
-            if (sizeX) {
-              clonedAdaptivityProviderProps.sizeX = sizeX;
-            }
+              const mappedProps: Props = mapObject(componentProps, (v) =>
+                isCustomValueWithLabel(v) ? v.value : v,
+              );
+              const height = componentStateHeight || globalComponentStateHeight?.[platform];
 
-            if (sizeY) {
-              clonedAdaptivityProviderProps.sizeY = sizeY;
-            }
-
-            const mappedProps: Props = mapObject(componentProps, (v) =>
-              isCustomValueWithLabel(v) ? v.value : v,
-            );
-            const height = componentStateHeight || globalComponentStateHeight?.[platform];
-
-            return (
-              <div key={i} style={{ height }}>
-                {isFixedComponent ? null : (
-                  <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(showedProps)}</div>
-                )}
-                <div dir={dir}>
-                  <DirectionProvider value={dir}>
-                    <AdaptivityProvider {...clonedAdaptivityProviderProps}>
-                      <Children {...mappedProps} />
-                    </AdaptivityProvider>
-                  </DirectionProvider>
+              return (
+                <div key={i} style={{ height }}>
+                  {isFixedComponent ? null : (
+                    <div className={TEST_CLASS_NAMES.CONTENT}>{prettyProps(showedProps)}</div>
+                  )}
+                  <div dir={dir}>
+                    <DirectionProvider value={dir}>
+                      <AdaptivityProvider {...adaptivityProps}>
+                        <Children {...mappedProps} />
+                      </AdaptivityProvider>
+                    </DirectionProvider>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            },
+          )}
         </AppWrapper>
       </AdaptivityProvider>
     </ConfigProvider>

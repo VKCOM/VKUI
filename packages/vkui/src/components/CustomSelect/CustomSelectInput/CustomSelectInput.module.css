@@ -26,12 +26,12 @@
   cursor: pointer;
 }
 
-.sizeYCompact .el {
+.densityCompact .el {
   block-size: var(--vkui--size_field_height--compact);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone .el {
+@media (--density-compact) {
+  .densityNone .el {
     block-size: var(--vkui--size_field_height--compact);
   }
 }
@@ -75,12 +75,12 @@
   padding-block: 12px;
 }
 
-.sizeYCompact.multiline .container {
+.densityCompact.multiline .container {
   padding-block: 8px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.multiline .container {
+@media (--density-compact) {
+  .densityNone.multiline .container {
     padding-block: 8px;
   }
 }

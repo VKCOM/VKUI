@@ -5,7 +5,7 @@
   line-height: var(--vkui--font_headline1--line_height--regular);
 }
 
-.sizeYCompact.level1 {
+.densityCompact.level1 {
   font-size: var(
     --vkui--font_headline1--font_size--compact,
     var(--vkui--font_headline1--font_size--regular)
@@ -20,8 +20,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.level1 {
+@media (--density-compact) {
+  .densityNone.level1 {
     font-size: var(
       --vkui--font_headline1--font_size--compact,
       var(--vkui--font_headline1--font_size--regular)
@@ -44,7 +44,7 @@
   line-height: var(--vkui--font_headline2--line_height--regular);
 }
 
-.sizeYCompact.level2 {
+.densityCompact.level2 {
   font-size: var(
     --vkui--font_headline2--font_size--compact,
     var(--vkui--font_headline2--font_size--regular)
@@ -59,8 +59,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.level2 {
+@media (--density-compact) {
+  .densityNone.level2 {
     font-size: var(
       --vkui--font_headline2--font_size--compact,
       var(--vkui--font_headline2--font_size--regular)

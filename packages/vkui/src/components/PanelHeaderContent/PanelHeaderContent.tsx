@@ -17,9 +17,9 @@ const platformClassNames = {
   vkcom: styles.vkcom,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -75,7 +75,7 @@ export const PanelHeaderContent = ({
   onClick,
   ...restProps
 }: PanelHeaderContentProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;
   const platform = usePlatform();
@@ -97,7 +97,7 @@ export const PanelHeaderContent = ({
         platformClassNames.hasOwnProperty(platform)
           ? platformClassNames[platform]
           : platformClassNames.android,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
       )}
     >
       {hasReactNode(before) && <div className={styles.before}>{before}</div>}

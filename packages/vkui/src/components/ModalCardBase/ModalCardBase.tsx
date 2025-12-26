@@ -164,7 +164,7 @@ export const ModalCardBase = ({
         )}
         {hasTitle && hasDescription && <Spacing size={8} />}
         {hasDescription && (
-          <AdaptivityContext.Provider value={{ sizeY: 'regular' }}>
+          <AdaptivityContext.Provider value={{ density: 'regular' }}>
             <Subhead className={styles.description} Component={descriptionComponent}>
               {description}
             </Subhead>

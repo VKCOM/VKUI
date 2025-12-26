@@ -16,9 +16,9 @@ import {
 } from './SegmentedControlOption/SegmentedControlOption';
 import styles from './SegmentedControl.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  regular: styles.sizeYRegular,
+const densityClassNames = {
+  none: styles.densityNone,
+  regular: styles.densityRegular,
 };
 
 export type SegmentedControlValue = string | number;
@@ -95,7 +95,7 @@ export const SegmentedControl = <T extends SegmentedControlValue = SegmentedCont
     defaultValue,
   });
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const { tabsRef } = useTabsNavigation(role === 'tablist', isRtl);
 
@@ -117,7 +117,7 @@ export const SegmentedControl = <T extends SegmentedControlValue = SegmentedCont
       {...restProps}
       baseClassName={classNames(
         styles.host,
-        sizeY !== 'compact' && sizeYClassNames[sizeY],
+        density !== 'compact' && densityClassNames[density],
         size === 'l' && styles.sizeL,
         isRtl && styles.rtl,
       )}

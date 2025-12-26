@@ -117,18 +117,18 @@
   padding-inline-end: 11px;
 }
 
-@media (--sizeX-regular) {
-  .backIos.backHasLabel:not(.backSizeXCompact) {
+@media (--viewWidth-smallTabletPlus) {
+  .backIos.backHasLabel:not(.backViewWidthSmallTabletMinus) {
     padding-inline-end: 8px;
   }
 }
 
-.backSizeXCompact.backIos .label {
+.backViewWidthSmallTabletMinus.backIos .label {
   display: none;
 }
 
-@media (--sizeX-compact) {
-  .backSizeXNone.backIos .label {
+@media (--viewWidth-smallTabletMinus) {
+  .backViewWidthNone.backIos .label {
     display: none;
   }
 }

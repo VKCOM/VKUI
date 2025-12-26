@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import type { SizeTypeValues } from '../../lib/adaptivity';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type { NavIdProps } from '../../lib/getNavId';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
@@ -13,11 +13,23 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { Touch } from '../Touch/Touch';
 import styles from './Panel.module.css';
 
-const sizeXClassNames = {
-  none: styles.sizeXNone,
-  compact: styles.sizeXCompact,
-  regular: styles.sizeXRegular,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined) {
+    return legacySizeX === 'regular'
+      ? styles.viewWidthSmallTabletPlus
+      : styles.viewWidthSmallTabletMinus;
+  }
+  if (viewWidth === 'none') {
+    return classNames(styles.viewWidthNone, 'vkuiInternalGroup--viewWidth-none');
+  }
+  return viewWidth >= ViewWidth.SMALL_TABLET
+    ? styles.viewWidthSmallTabletPlus
+    : styles.viewWidthSmallTabletMinus;
+}
 
 const stylesMode = {
   none: styles.modeNone,
@@ -59,9 +71,9 @@ export const Panel = ({
   disableBackground,
   ...restProps
 }: PanelProps): React.ReactNode => {
-  const { sizeX = 'none' } = useAdaptivity();
+  const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
 
-  const mode = usePanelMode(modeProp, sizeX);
+  const mode = usePanelMode(modeProp, viewWidth, legacySizeX);
 
   return (
     <NavPanelIdContext.Provider value={restProps.id || nav}>
@@ -69,7 +81,7 @@ export const Panel = ({
         {...restProps}
         baseClassName={classNames(
           styles.host,
-          sizeXClassNames[sizeX],
+          getViewWidthClassName(viewWidth, legacySizeX),
           centered && 'vkuiInternalPanel--centered',
           disableBackground && styles.disableBackground,
           stylesMode[mode],
@@ -90,7 +102,8 @@ export const Panel = ({
 
 function usePanelMode(
   modeProp: PanelProps['mode'],
-  sizeX: SizeTypeValues | 'none',
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
 ): 'plain' | 'card' | 'none' {
   const { layout } = React.useContext(AppRootContext);
 
@@ -102,8 +115,13 @@ function usePanelMode(
     return layout;
   }
 
-  if (sizeX !== 'none') {
-    return sizeX === 'regular' ? 'card' : 'plain';
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined) {
+    return legacySizeX === 'regular' ? 'card' : 'plain';
+  }
+
+  if (viewWidth !== 'none') {
+    return viewWidth >= ViewWidth.SMALL_TABLET ? 'card' : 'plain';
   }
 
   return 'none';

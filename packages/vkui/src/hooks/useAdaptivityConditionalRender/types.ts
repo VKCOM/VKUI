@@ -1,19 +1,22 @@
-import type { CSSBreakpoints, SizeTypeValues } from '../../lib/adaptivity';
+import type { CSSBreakpoints, DensityTypeValues } from '../../lib/adaptivity';
 
-export type ForcedHiddenByAdaptivityProviderType = false; // имеется ввиду, что зашили значение, например, <AdaptivityProvider sizeY="regular" />
+export type ForcedHiddenByAdaptivityProviderType = false; // имеется ввиду, что зашили значение, например, <AdaptivityProvider density="regular" />
 
 export type ElementProps = { className: string };
 
 /* ================================================================================================================== */
 
-export type AdaptiveSizeType = Record<
-  SizeTypeValues,
+export type AdaptiveDensityType = Record<
+  DensityTypeValues,
   ForcedHiddenByAdaptivityProviderType | ElementProps
 >;
 
 /* ================================================================================================================== */
 
-export type ViewWidthCSSBreakpoints = Extract<CSSBreakpoints, 'tabletMinus' | 'tabletPlus'>;
+export type ViewWidthCSSBreakpoints = Extract<
+  CSSBreakpoints,
+  'smallTabletMinus' | 'smallTabletPlus' | 'tabletMinus' | 'tabletPlus'
+>;
 
 export type AdaptiveViewWidth = Record<
   ViewWidthCSSBreakpoints,
@@ -32,8 +35,15 @@ export type AdaptiveDeviceType = Record<
 /* ================================================================================================================== */
 
 export interface UseAdaptivityConditionalRender {
-  sizeX: AdaptiveSizeType;
-  sizeY: AdaptiveSizeType;
+  /**
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (см. Https://github.com/VKCOM/VKUI/issues/9015).
+   */
+  sizeX: AdaptiveDensityType; // TODO [>=10]: #9015 Удалить свойство.
+  /**
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (см. Https://github.com/VKCOM/VKUI/issues/9015).
+   */
+  sizeY: AdaptiveDensityType; // TODO [>=10]: #9015 Удалить свойство.
+  density: AdaptiveDensityType;
   viewWidth: AdaptiveViewWidth;
   deviceType: AdaptiveDeviceType;
 }

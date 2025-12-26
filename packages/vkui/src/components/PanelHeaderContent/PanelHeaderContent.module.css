@@ -99,12 +99,12 @@
 /**
  * Common
  */
-.sizeYCompact:not(.vkcom) .childrenIn {
+.densityCompact:not(.vkcom) .childrenIn {
   font-size: 20px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone:not(.vkcom) .childrenIn {
+@media (--density-compact) {
+  .densityNone:not(.vkcom) .childrenIn {
     font-size: 20px;
   }
 }

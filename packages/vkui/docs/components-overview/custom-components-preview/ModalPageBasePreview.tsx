@@ -22,7 +22,7 @@ const users = getRandomUsers(25);
 
 export const ModalPageBasePreview = () => {
   const platform = usePlatform();
-  const { sizeX } = useAdaptivityConditionalRender();
+  const { viewWidth } = useAdaptivityConditionalRender();
 
   return (
     <div
@@ -37,9 +37,12 @@ export const ModalPageBasePreview = () => {
         header={
           <ModalPageHeader
             before={
-              sizeX.compact &&
+              viewWidth.smallTabletMinus &&
               platform === 'android' && (
-                <PanelHeaderClose className={sizeX.compact.className} onClick={close} />
+                <PanelHeaderClose
+                  className={viewWidth.smallTabletMinus.className}
+                  onClick={close}
+                />
               )
             }
             after={

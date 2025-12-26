@@ -68,7 +68,7 @@ export const CalendarTimePicker = ({
 
   return (
     <div className={styles.picker}>
-      <AdaptivityProvider sizeY="compact">
+      <AdaptivityProvider density="compact">
         <CustomSelect
           value={getNumericValue(value)}
           options={options}

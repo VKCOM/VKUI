@@ -4,7 +4,11 @@
 import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import {
+  isSizeXRegularFallback,
+  useAdaptivityWithJSMediaQueries,
+} from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
@@ -98,7 +102,8 @@ export const ModalPageInternal = ({
   const hidden = transitionState === 'exited';
   const closable = !preventClose && opened;
 
-  const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
+  const { sizeX: legacySizeXContext } = useAdaptivity();
+  const { isDesktop, sizeX: legacySizeX, viewWidth } = useAdaptivityWithJSMediaQueries();
   const bottomSheetEnabled = !isDesktop && !preventClose && transitionState !== 'exited';
   const { opened: keyboardOpened } = useVirtualKeyboardState(bottomSheetEnabled);
 
@@ -177,7 +182,8 @@ export const ModalPageInternal = ({
               ? styles.hostMobileSafeAreaInsetTopWithCustomOffset
               : styles.hostMobileSafeAreaInsetTop),
           desktopMaxWidthClassName,
-          sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
+          isSizeXRegularFallback(viewWidth, legacySizeX, legacySizeXContext) &&
+            'vkuiInternalModalPage--viewWidth-smallTabletPlus',
         )}
         style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
       >

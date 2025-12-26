@@ -1,5 +1,5 @@
 import type { ValuesOfObject } from '../../types';
-import type { SizeType } from './constants';
+import type { DensityType } from './constants';
 
 export type CSSBreakpoints =
   | 'desktopPlus'
@@ -30,15 +30,14 @@ export type JSBreakpoints =
 
 export type MediaQueries = Record<JSBreakpoints, MediaQueryList>;
 
-type SizeTypeValue = ValuesOfObject<typeof SizeType>;
+type DensityTypeValue = ValuesOfObject<typeof DensityType>;
 
 /**
  * Используется в `packages/vkui/scripts/generateCSSCustomMedias.mjs`, который отвечает за генерацию
  * `packages/vkui/styles/customMedias.generated.css`.
  */
 export type CSSCustomMedias = Record<
-  | `--sizeX-${SizeTypeValue}`
-  | `--sizeY-${SizeTypeValue}`
+  | `--density-${DensityTypeValue}`
   | `--viewWidth-${CSSBreakpoints}`
   | '--hover-has'
   | '--hover-has-not'

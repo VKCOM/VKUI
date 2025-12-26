@@ -5,9 +5,9 @@ import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { Typography, type TypographyProps } from '../Typography';
 import styles from './Paragraph.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export type ParagraphProps = TypographyProps;
@@ -24,14 +24,18 @@ export const Paragraph = ({
   inline = false,
   ...restProps
 }: ParagraphProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <Typography
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(className, styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
+      className={classNames(
+        className,
+        styles.host,
+        density !== 'regular' && densityClassNames[density],
+      )}
       {...restProps}
     />
   );

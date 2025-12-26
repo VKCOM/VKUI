@@ -88,6 +88,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'regular',
+      density: 'regular',
       viewWidth: ViewWidth.DESKTOP,
       viewHeight: ViewHeight.MEDIUM,
     },
@@ -101,6 +102,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'compact',
+      density: 'compact',
       viewWidth: ViewWidth.DESKTOP,
       viewHeight: ViewHeight.MEDIUM,
     },
@@ -110,6 +112,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'compact',
       sizeY: 'compact',
+      density: 'compact',
       viewWidth: ViewWidth.MOBILE,
       viewHeight: ViewHeight.EXTRA_SMALL,
     },
@@ -123,6 +126,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'regular',
+      density: 'regular',
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
     },
@@ -136,6 +140,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'compact',
+      density: 'compact',
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
     },
@@ -150,6 +155,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'compact',
       sizeY: 'regular',
+      density: 'regular',
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
     },
@@ -164,6 +170,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'compact',
       sizeY: 'compact',
+      density: 'compact',
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
     },
@@ -171,26 +178,14 @@ const testSuites: TestSuite[] = [
   {
     inProps: {
       sizeY: 'regular' as const,
+      density: 'regular' as const,
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
     },
     outProps: {
       sizeX: 'regular',
       sizeY: 'regular',
-      viewWidth: ViewWidth.SMALL_TABLET,
-      viewHeight: ViewHeight.MEDIUM,
-    },
-  },
-  {
-    inProps: {
-      sizeX: 'regular' as const,
-      sizeY: 'regular' as const,
-      viewWidth: ViewWidth.SMALL_TABLET,
-      viewHeight: ViewHeight.MEDIUM,
-    },
-    outProps: {
-      sizeX: 'regular',
-      sizeY: 'regular',
+      density: 'regular',
       viewWidth: ViewWidth.SMALL_TABLET,
       viewHeight: ViewHeight.MEDIUM,
     },
@@ -199,10 +194,28 @@ const testSuites: TestSuite[] = [
     inProps: {
       sizeX: 'regular' as const,
       sizeY: 'regular' as const,
+      density: 'regular' as const,
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
     },
     outProps: {
       sizeX: 'regular',
       sizeY: 'regular',
+      density: 'regular',
+      viewWidth: ViewWidth.SMALL_TABLET,
+      viewHeight: ViewHeight.MEDIUM,
+    },
+  },
+  {
+    inProps: {
+      sizeX: 'regular' as const,
+      sizeY: 'regular' as const,
+      density: 'regular' as const,
+    },
+    outProps: {
+      sizeX: 'regular',
+      sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -213,6 +226,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'compact',
       sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -223,6 +237,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'compact',
       sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -233,6 +248,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'compact',
       sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -243,6 +259,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'compact',
       sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -253,6 +270,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -263,6 +281,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'compact',
+      density: 'compact',
     },
   },
   {
@@ -273,6 +292,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -283,6 +303,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'compact',
+      density: 'compact',
     },
   },
   {
@@ -293,6 +314,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'regular',
+      density: 'regular',
     },
   },
   {
@@ -303,6 +325,7 @@ const testSuites: TestSuite[] = [
     outProps: {
       sizeX: 'regular',
       sizeY: 'compact',
+      density: 'compact',
     },
   },
 ];
@@ -316,6 +339,7 @@ describe('AdaptivityProvider', () => {
     expect(adaptivityProviderResultsRef.current?.adaptivityProviderResults).toMatchObject({
       sizeX: undefined,
       sizeY: undefined,
+      density: undefined,
       viewWidth: undefined,
       viewHeight: undefined,
     });
@@ -326,7 +350,7 @@ describe('AdaptiveProvider and useAdaptivityWithJSMediaQueries should return sim
   testSuites.map((testOptions) => {
     const { inProps, outProps } = testOptions;
 
-    describe(`should define sizeX and sizeY adaptivity props for input: \n${JSON.stringify(
+    describe(`should define sizeX / sizeY / density adaptivity props for input: \n${JSON.stringify(
       inProps,
       null,
       '\t',

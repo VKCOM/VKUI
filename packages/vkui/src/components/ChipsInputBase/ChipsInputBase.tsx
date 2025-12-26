@@ -29,9 +29,9 @@ import styles from './ChipsInputBase.module.css';
 
 const warn = warnOnce('ChipsInputBase');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 } as const;
 
 export const ChipsInputBase = <O extends ChipOption>({
@@ -74,7 +74,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   slotProps,
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development' && getRef) {
@@ -333,7 +333,7 @@ export const ChipsInputBase = <O extends ChipOption>({
       <div
         className={classNames(
           styles.host,
-          sizeY !== 'regular' && sizeYClassNames[sizeY],
+          density !== 'regular' && densityClassNames[density],
           withPlaceholder && styles.hasPlaceholder,
           inputValue && styles.hasInputValue,
         )}

@@ -1,21 +1,41 @@
 import * as React from 'react';
 import { AdaptivityContext } from '../../components/AdaptivityProvider/AdaptivityContext';
+import type { SizeTypeValues } from '../../lib/adaptivity';
 import { usePlatform } from '../usePlatform';
 import {
+  densityCompactMediaQueryProps,
+  densityRegularMediaQueryProps,
   deviceTypeMediaQueryMapProps,
   sizeXCompactMediaQueryProps,
   sizeXRegularMediaQueryProps,
-  sizeYCompactMediaQueryProps,
-  sizeYRegularMediaQueryProps,
   viewWidthMediaQueryMapProps,
 } from './constants';
-import { getAdaptiveDeviceType, getAdaptiveSizeType, getAdaptiveViewWidth } from './helpers';
-import type { UseAdaptivityConditionalRender } from './types';
+import { getAdaptiveDensityType, getAdaptiveDeviceType, getAdaptiveViewWidth } from './helpers';
+import type {
+  AdaptiveDensityType,
+  AdaptiveViewWidth,
+  UseAdaptivityConditionalRender,
+} from './types';
+
+/**
+ * @private
+ *
+ * @param legacySizeX Значение из хука `useAdaptivityConditionalRender`
+ * @param viewWidth Значение из хука `useAdaptivityConditionalRender`
+ * @param legacySizeXContext Значение из хука `useAdaptivity`
+ *
+ * TODO [>=10]: #9015 удалить функцию и перенести `viewWidth.smallTabletMinus` в рендер React-элемента.
+ */
+export const getAdaptivityConditionalRenderForSizeXCompact = (
+  viewWidth: AdaptiveViewWidth,
+  legacySizeX: AdaptiveDensityType,
+  legacySizeXContext: SizeTypeValues | undefined,
+) => (legacySizeXContext === undefined ? viewWidth.smallTabletMinus : legacySizeX.compact);
 
 export const useAdaptivityConditionalRender = (): UseAdaptivityConditionalRender => {
   const {
     sizeX: sizeXContext,
-    sizeY: sizeYContext,
+    density: densityContext,
     viewWidth: viewWidthContext,
     viewHeight: viewHeightContext,
     hasPointer: hasPointerContext,
@@ -23,15 +43,15 @@ export const useAdaptivityConditionalRender = (): UseAdaptivityConditionalRender
   const platform = usePlatform();
 
   return React.useMemo(() => {
-    const sizeX = getAdaptiveSizeType(
+    const sizeX = getAdaptiveDensityType(
       sizeXContext,
       sizeXCompactMediaQueryProps,
       sizeXRegularMediaQueryProps,
     );
-    const sizeY = getAdaptiveSizeType(
-      sizeYContext,
-      sizeYCompactMediaQueryProps,
-      sizeYRegularMediaQueryProps,
+    const density = getAdaptiveDensityType(
+      densityContext,
+      densityCompactMediaQueryProps,
+      densityRegularMediaQueryProps,
     );
     const viewWidth = getAdaptiveViewWidth(viewWidthContext, viewWidthMediaQueryMapProps);
     const deviceType = getAdaptiveDeviceType(
@@ -43,13 +63,14 @@ export const useAdaptivityConditionalRender = (): UseAdaptivityConditionalRender
     );
     return {
       sizeX,
-      sizeY,
+      sizeY: density,
+      density,
       viewWidth,
       deviceType,
     };
   }, [
     sizeXContext,
-    sizeYContext,
+    densityContext,
     viewWidthContext,
     viewHeightContext,
     hasPointerContext,

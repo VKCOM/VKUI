@@ -44,7 +44,7 @@ export function Navbar({ logo, fakeNavbarItem }: NavbarProps): React.ReactElemen
   } = useConfig();
 
   return (
-    <AdaptivityProvider sizeY="compact">
+    <AdaptivityProvider density="compact">
       <div className={styles.root}>
         <nav className={styles.navbar}>
           <Flex align="center">

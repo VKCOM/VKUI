@@ -56,9 +56,9 @@ import type {
 } from './types';
 import styles from './CustomSelect.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 function defaultRenderOptionFn<T extends CustomSelectOptionInterface>({
@@ -332,7 +332,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     checkDeprecatedProps(props);
   }
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const {
     onClick: onRootClick,
@@ -750,7 +750,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
   return (
     <RootComponent
-      baseClassName={classNames(styles.host, sizeY !== 'regular' && sizeYClassNames[sizeY])}
+      baseClassName={classNames(styles.host, density !== 'regular' && densityClassNames[density])}
       getRootRef={handleRootRef}
       onClick={onClick}
       onMouseDown={onMouseDown}

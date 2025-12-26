@@ -5,7 +5,7 @@
   line-height: var(--vkui--font_display_title1--line_height--regular);
 }
 
-.sizeYCompact.level1 {
+.densityCompact.level1 {
   font-family: var(
     --vkui--font_display_title1--font_family--compact,
     var(--vkui--font_display_title1--font_family--regular)
@@ -24,8 +24,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.level1 {
+@media (--density-compact) {
+  .densityNone.level1 {
     font-family: var(
       --vkui--font_display_title1--font_family--compact,
       var(--vkui--font_display_title1--font_family--regular)
@@ -52,7 +52,7 @@
   line-height: var(--vkui--font_display_title2--line_height--regular);
 }
 
-.sizeYCompact.level2 {
+.densityCompact.level2 {
   font-family: var(
     --vkui--font_display_title2--font_family--compact,
     var(--vkui--font_display_title2--font_family--regular)
@@ -71,8 +71,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.level2 {
+@media (--density-compact) {
+  .densityNone.level2 {
     font-family: var(
       --vkui--font_display_title2--font_family--compact,
       var(--vkui--font_display_title2--font_family--regular)
@@ -99,7 +99,7 @@
   line-height: var(--vkui--font_display_title3--line_height--regular);
 }
 
-.sizeYCompact.level3 {
+.densityCompact.level3 {
   font-family: var(
     --vkui--font_display_title3--font_family--compact,
     var(--vkui--font_display_title3--font_family--regular)
@@ -118,8 +118,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.level3 {
+@media (--density-compact) {
+  .densityNone.level3 {
     font-family: var(
       --vkui--font_display_title3--font_family--compact,
       var(--vkui--font_display_title3--font_family--regular)
@@ -146,7 +146,7 @@
   line-height: var(--vkui--font_display_title4--line_height--regular);
 }
 
-.sizeYCompact.level4 {
+.densityCompact.level4 {
   font-family: var(
     --vkui--font_display_title4--font_family--compact,
     var(--vkui--font_display_title4--font_family--regular)
@@ -165,8 +165,8 @@
   );
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.level4 {
+@media (--density-compact) {
+  .densityNone.level4 {
     font-family: var(
       --vkui--font_display_title4--font_family--compact,
       var(--vkui--font_display_title4--font_family--regular)

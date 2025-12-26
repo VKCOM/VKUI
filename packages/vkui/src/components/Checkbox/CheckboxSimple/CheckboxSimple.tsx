@@ -9,9 +9,9 @@ import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
 import styles from './CheckboxSimple.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export function CheckboxSimple({
@@ -76,7 +76,7 @@ export function CheckboxSimple({
     slotProps?.input,
   );
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const hoverMode = hoverModeProp || (noPadding ? 'opacity' : 'background');
   const activeMode = activeModeProp || (noPadding ? 'opacity' : 'background');
@@ -86,7 +86,7 @@ export function CheckboxSimple({
       baseClassName={classNames(
         styles.host,
         !noPadding && styles.withPadding,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
       )}
       disabled={inputRest.disabled}
       hoverMode={hoverMode}

@@ -3,8 +3,8 @@
 /*
  * Автоопределение mode:
  *
- * - sizeX="compact" (mobile)  -> mode="plain"
- * - sizeX="regular" (desktop) -> mode="card"
+ * - smallTabletMinus (mobile)  -> mode="plain"
+ * - smallTabletPlus (desktop) -> mode="card"
  */
 .host {
   --vkui_internal--Group_padding_inline: 0;
@@ -26,7 +26,7 @@
 
 /* разделитель при mode="card" */
 .modeCard,
-.sizeXRegular.modeNone {
+.viewWidthSmallTabletPlus.modeNone {
   --vkui_internal--Group_padding_inline: var(--vkui_internal--Group_card_mode_padding_size);
   --vkui_internal--Group_padding_block: var(--vkui_internal--Group_card_mode_padding_size);
 
@@ -35,8 +35,8 @@
   border-radius: var(--vkui--size_border_radius_paper--regular);
 }
 
-@media (--sizeX-regular) {
-  .sizeXNone.modeNone {
+@media (--viewWidth-smallTabletPlus) {
+  .viewWidthNone.modeNone {
     --vkui_internal--Group_padding_inline: var(--vkui_internal--Group_card_mode_padding_size);
     --vkui_internal--Group_padding_block: var(--vkui_internal--Group_card_mode_padding_size);
 
@@ -46,29 +46,29 @@
   }
 }
 
-.sizeXCompact.modeCard {
+.viewWidthSmallTabletMinus.modeCard {
   --vkui_internal--Group_padding_inline: 0;
 
   border-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone.modeCard {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone.modeCard {
     --vkui_internal--Group_padding_inline: 0;
 
     border-radius: var(--vkui--size_border_radius_promo--regular);
   }
 }
 
-.sizeXCompact.modeCard:first-of-type {
+.viewWidthSmallTabletMinus.modeCard:first-of-type {
   border-start-start-radius: 0;
   border-start-end-radius: 0;
   border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
   border-end-end-radius: var(--vkui--size_border_radius_promo--regular);
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone.modeCard:first-of-type {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone.modeCard:first-of-type {
     border-start-start-radius: 0;
     border-start-end-radius: 0;
     border-end-start-radius: var(--vkui--size_border_radius_promo--regular);
@@ -84,7 +84,7 @@
  * См. пример: Slider c пропом withTooltip
  */
 .modeCard::before,
-.sizeXRegular.modeNone::before {
+.viewWidthSmallTabletPlus.modeNone::before {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
@@ -96,8 +96,8 @@
   box-shadow: inset 0 0 0 var(--vkui--size_border--regular) var(--vkui--color_separator_primary);
 }
 
-@media (--sizeX-regular) {
-  .sizeXNone.modeNone::before {
+@media (--viewWidth-smallTabletPlus) {
+  .viewWidthNone.modeNone::before {
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
@@ -110,12 +110,12 @@
   }
 }
 
-.sizeXCompact.modeCard::before {
+.viewWidthSmallTabletMinus.modeCard::before {
   box-shadow: none;
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone.modeCard::before {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone.modeCard::before {
     box-shadow: none;
   }
 }
@@ -128,23 +128,23 @@
 }
 
 .modePlain:not(:first-of-type) > .header,
-.sizeXCompact.modeNone:not(:first-of-type) > .header {
+.viewWidthSmallTabletMinus.modeNone:not(:first-of-type) > .header {
   margin-block-start: calc(-1 * var(--vkui--spacing_size_m));
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone.modeNone:not(:first-of-type) > .header {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone.modeNone:not(:first-of-type) > .header {
     margin-block-start: calc(-1 * var(--vkui--spacing_size_m));
   }
 }
 
 .modeCard > .header,
-.sizeXRegular.modeNone > .header {
+.viewWidthSmallTabletPlus.modeNone > .header {
   margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
 }
 
-@media (--sizeX-regular) {
-  .sizeXNone.modeNone > .header {
+@media (--viewWidth-smallTabletPlus) {
+  .viewWidthNone.modeNone > .header {
     margin-block-start: calc(-1 * var(--vkui--spacing_size_xs));
   }
 }
@@ -181,15 +181,15 @@
 
 /* разделитель при mode="plain" */
 .modePlain + .separatorSibling,
-.sizeXCompact.modeNone + .separatorSibling {
+.viewWidthSmallTabletMinus.modeNone + .separatorSibling {
   --vkui_internal--Group__separator_hr: block;
 
   padding-block: var(--vkui--spacing_size_m);
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone.modeNone + .separatorSibling {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone.modeNone + .separatorSibling {
     --vkui_internal--Group__separator_hr: block;
 
     padding-block: var(--vkui--spacing_size_m);
@@ -201,33 +201,33 @@
   display: none;
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone.modeNone:last-of-type + .separatorSibling:not(.separatorSiblingForced) {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone.modeNone:last-of-type + .separatorSibling:not(.separatorSiblingForced) {
     display: none;
   }
 }
 
 /* разделитель при mode="card" */
 .modeCard + .separatorSibling,
-.sizeXRegular.modeNone + .separatorSibling {
+.viewWidthSmallTabletPlus.modeNone + .separatorSibling {
   block-size: var(--vkui--spacing_size_2xl);
   padding-block: calc(var(--vkui--spacing_size_2xl) / 2);
 }
 
-@media (--sizeX-regular) {
-  .sizeXNone.modeNone + .separatorSibling {
+@media (--viewWidth-smallTabletPlus) {
+  .viewWidthNone.modeNone + .separatorSibling {
     block-size: var(--vkui--spacing_size_2xl);
     padding-block: calc(var(--vkui--spacing_size_2xl) / 2);
   }
 }
 
-.sizeXCompact.modeCard + .separatorSibling {
+.viewWidthSmallTabletMinus.modeCard + .separatorSibling {
   block-size: var(--vkui--spacing_size_m);
   padding-block: calc(var(--vkui--spacing_size_m) / 2);
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone.modeCard + .separatorSibling {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone.modeCard + .separatorSibling {
     block-size: var(--vkui--spacing_size_m);
     padding-block: calc(var(--vkui--spacing_size_m) / 2);
   }
@@ -238,7 +238,7 @@
  *
  * note: ModalPage форсирует mode="plain" для Group
  */
-@media (--sizeX-regular) {
+@media (--viewWidth-smallTabletPlus) {
   .modePlainInsideModal {
     --vkui_internal--Group_padding_inline: var(--vkui--spacing_size_m);
     --vkui_internal--Group_padding_block: var(--vkui--spacing_size_m);
