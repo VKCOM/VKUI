@@ -111,7 +111,12 @@ export const ActionSheetDropdownMenu = ({
         disabled={disabled}
         rootRef={focusTrapRootRef}
       >
-        <RootComponent {...restProps} onClick={handleClick} getRootRef={focusTrapRootRef}>
+        <RootComponent
+          {...restProps}
+          tabIndex={-1}
+          onClick={handleClick}
+          getRootRef={focusTrapRootRef}
+        >
           {children}
         </RootComponent>
       </FocusTrap>

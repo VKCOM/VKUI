@@ -127,6 +127,7 @@ export const AlertBase = ({
     >
       <RootComponent
         {...animationHandlers}
+        tabIndex={-1}
         onClick={handleClick}
         getRootRef={elementRef}
         className={classNames(

@@ -65,6 +65,7 @@ export const ActionSheetDropdownSheet = ({
     >
       <RootComponent
         {...restProps}
+        tabIndex={-1}
         getRootRef={focusTrapRootRef}
         onClick={handleClick}
         className={classNames(
