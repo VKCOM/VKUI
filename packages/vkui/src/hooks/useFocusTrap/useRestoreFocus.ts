@@ -12,10 +12,14 @@ function isFocusableElement(el: Element): boolean {
 
 export const useRestoreFocus = ({
   restoreFocus,
-  timeout,
+  autoFocusDelay,
+  getRestoreFocusTarget,
   mount,
   ref,
-}: Pick<UseFocusTrapProps, 'restoreFocus' | 'timeout' | 'mount'> & {
+}: Pick<
+  UseFocusTrapProps,
+  'restoreFocus' | 'getRestoreFocusTarget' | 'autoFocusDelay' | 'mount'
+> & {
   ref: RefObject<HTMLElement | null>;
 }) => {
   const restoreFocusRef = useRef(restoreFocus);
@@ -46,7 +50,7 @@ export const useRestoreFocus = ({
 
     setTimeout(() => {
       const restoreFocusElement =
-        (isHTMLElement(shouldRestoreFocus) && shouldRestoreFocus) ||
+        (getRestoreFocusTarget && getRestoreFocusTarget()) ||
         (isHTMLElement(restoreFocusTo) && restoreFocusTo) ||
         null;
 
@@ -54,7 +58,7 @@ export const useRestoreFocus = ({
         restoreFocusElement.focus();
         setRestoreFocusTo(null);
       }
-    }, timeout);
+    }, autoFocusDelay);
   });
 
   useIsomorphicLayoutEffect(

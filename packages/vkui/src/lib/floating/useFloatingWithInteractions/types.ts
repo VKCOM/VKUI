@@ -98,6 +98,10 @@ export interface UseFloatingWithInteractionsProps {
    * Вызывается при каждом изменении видимости всплывающего элемента, но после завершении анимации.
    */
   onShownChanged?: OnShownChange;
+  /**
+   * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
+   */
+  restoreFocus?: RestoreFocusType;
 }
 
 export type ReferenceProps<T = HTMLElement> = Omit<
@@ -124,5 +128,6 @@ export interface UseFloatingWithInteractionsReturn<T extends HTMLElement = HTMLE
   middlewareData: UseFloatingData['middlewareData'];
   onClose: (this: void) => void;
   onEscapeKeyDown?: (this: void) => void;
-  onRestoreFocus: (restoreFocus?: RestoreFocusType) => boolean | HTMLElement;
+  restoreFocus?: boolean | (() => boolean);
+  getRestoreFocusTarget: () => HTMLElement | null;
 }

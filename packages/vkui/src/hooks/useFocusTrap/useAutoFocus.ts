@@ -10,9 +10,9 @@ export const useAutoFocus = (
     autoFocus,
     disabled,
     mount,
-    timeout,
+    autoFocusDelay,
     focusFirst,
-  }: RequiredFields<UseFocusTrapProps, 'autoFocus' | 'disabled' | 'mount' | 'timeout'> & {
+  }: RequiredFields<UseFocusTrapProps, 'autoFocus' | 'disabled' | 'mount' | 'autoFocusDelay'> & {
     focusFirst: () => void;
   },
 ) => {
@@ -35,10 +35,10 @@ export const useAutoFocus = (
             focusFirst();
           }
         }
-      }, timeout);
+      }, autoFocusDelay);
 
       return () => clearTimeout(timeoutId);
     },
-    [autoFocus, timeout, disabled, mount, focusFirst],
+    [autoFocus, autoFocusDelay, disabled, mount, focusFirst],
   );
 };

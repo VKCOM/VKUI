@@ -7,6 +7,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useRestoreFocusWrapper } from '../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
@@ -241,7 +242,7 @@ export const DateRangeInput = ({
   autoFocus,
   disabled,
   disableFocusTrap,
-  restoreFocus,
+  restoreFocus: restoreFocusProp,
   calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
@@ -429,6 +430,10 @@ export const DateRangeInput = ({
     capture: false,
   });
 
+  const { restoreFocus, getRestoreFocusTarget } = useRestoreFocusWrapper(
+    restoreFocusProp ?? Boolean(accessible),
+  );
+
   return (
     <FormField
       style={style}
@@ -590,7 +595,8 @@ export const DateRangeInput = ({
           <FocusTrapInternal
             rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
-            restoreFocus={restoreFocus ?? Boolean(accessible)}
+            restoreFocus={restoreFocus}
+            getRestoreFocusTarget={getRestoreFocusTarget}
             mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <div ref={focusTrapRootRef}>

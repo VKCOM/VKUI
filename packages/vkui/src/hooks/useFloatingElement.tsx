@@ -2,6 +2,7 @@ import * as React from 'react';
 import { type Ref, useMemo } from 'react';
 import {
   type OnPlacementChange,
+  type RestoreFocusType,
   useFloatingMiddlewaresBootstrap,
   type UseFloatingMiddlewaresBootstrapOptions,
   useFloatingWithInteractions,
@@ -21,7 +22,8 @@ export type FloatingComponentProps<FloatingElement extends HTMLElement = HTMLEle
   | 'floatingProps'
   | 'middlewareData'
   | 'onClose'
-  | 'onRestoreFocus'
+  | 'restoreFocus'
+  | 'getRestoreFocusTarget'
   | 'placement'
 > & {
   floatingRef: React.Ref<FloatingElement>;
@@ -41,6 +43,7 @@ export type UseFloatingElementProps<
   ReferenceElement extends HTMLElement = HTMLElement,
 > = Omit<UseFloatingMiddlewaresBootstrapOptions, 'arrowRef'> &
   Omit<UseFloatingWithInteractionsProps, 'placement'> & {
+    restoreFocus?: RestoreFocusType;
     onPlacementChange?: OnPlacementChange;
     onReferenceHiddenChange?: (hidden: boolean) => void;
     renderFloatingComponent: RenderFloatingComponentFn<FloatingElement>;
@@ -73,6 +76,7 @@ export const useFloatingElement = <
   overflowPadding,
 
   // useFloatingWithInteractions
+  restoreFocus: restoreFocusProp,
   trigger,
   hoverDelay,
   closeAfterClick,
@@ -123,11 +127,13 @@ export const useFloatingElement = <
     floatingProps,
     middlewareData,
     onClose,
-    onRestoreFocus,
+    restoreFocus,
+    getRestoreFocusTarget,
     onEscapeKeyDown,
   } = useFloatingWithInteractions({
     middlewares,
     strategy,
+    restoreFocus: restoreFocusProp,
     placement: strictPlacement,
     trigger,
     hoverDelay,
@@ -156,7 +162,8 @@ export const useFloatingElement = <
     middlewareData,
     placement: resolvedPlacement,
     onClose,
-    onRestoreFocus,
+    restoreFocus,
+    getRestoreFocusTarget,
     setArrowRef,
   });
 

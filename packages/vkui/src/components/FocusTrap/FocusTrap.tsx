@@ -12,14 +12,15 @@ export interface FocusTrapInternalProps extends UseFocusTrapProps, HasChildren {
   rootRef: React.RefObject<HTMLElement | null>;
 }
 
-export type FocusTrapProps = Omit<FocusTrapInternalProps, 'mutationObserverOptions'>;
+export type FocusTrapProps = Omit<FocusTrapInternalProps, 'mutationObserverOptions' | 'mount'>;
 
 export const FocusTrapInternal = ({
   autoFocus = true,
   restoreFocus = true,
   disabled = false,
   mount = true,
-  timeout = 0,
+  autoFocusDelay = 0,
+  getRestoreFocusTarget,
   rootRef,
   children,
   mutationObserverOptions = DEFAULT_MUTATION_OBSERVER_OPTIONS,
@@ -27,9 +28,10 @@ export const FocusTrapInternal = ({
   const { beforeGuard, afterGuard } = useFocusTrap(rootRef, {
     autoFocus,
     restoreFocus,
+    getRestoreFocusTarget,
     disabled,
     mount,
-    timeout,
+    autoFocusDelay,
     mutationObserverOptions,
   });
 

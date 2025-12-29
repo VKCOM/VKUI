@@ -16,7 +16,7 @@ import { Button } from '../Button/Button';
 import { CellButton } from '../CellButton/CellButton';
 import { Panel } from '../Panel/Panel';
 import { View } from '../View/View';
-import { FocusTrap, type FocusTrapProps } from './FocusTrap';
+import { FocusTrap, FocusTrapInternal, type FocusTrapProps } from './FocusTrap';
 
 const _children = ['first', 'middle', 'last'].map((item) => (
   <ActionSheetItem key={item} data-testid={item}>
@@ -320,14 +320,19 @@ describe(FocusTrap, () => {
         return (
           <>
             {showTrap && (
-              <FocusTrap disabled={disabled} mount={!disabled} restoreFocus={true} rootRef={ref}>
+              <FocusTrapInternal
+                disabled={disabled}
+                mount={!disabled}
+                restoreFocus={true}
+                rootRef={ref}
+              >
                 <div ref={ref} tabIndex={-1}>
                   <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
                   <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
                     Кнопка не в FocusTrap
                   </Button>
                 </div>
-              </FocusTrap>
+              </FocusTrapInternal>
             )}
             <Button data-testid="button-show-trap" onClick={() => setShowTrap(true)}>
               Кнопка не в FocusTrap

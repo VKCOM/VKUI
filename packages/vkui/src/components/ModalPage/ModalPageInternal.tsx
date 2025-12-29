@@ -6,6 +6,7 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useRestoreFocusWrapper } from '../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
@@ -70,7 +71,7 @@ export const ModalPageInternal = ({
   hideCloseButton,
   preventClose,
   disableContentPanningGesture,
-  restoreFocus,
+  restoreFocus: restoreFocusProp,
   onOpen,
   onOpened,
   onClose = noop,
@@ -156,6 +157,8 @@ export const ModalPageInternal = ({
 
   useScrollLock(!hidden);
 
+  const { restoreFocus, getRestoreFocusTarget } = useRestoreFocusWrapper(restoreFocusProp);
+
   return (
     <ModalOutlet
       hidden={hidden}
@@ -167,6 +170,7 @@ export const ModalPageInternal = ({
       <FocusTrap
         rootRef={rootRef}
         restoreFocus={restoreFocus}
+        getRestoreFocusTarget={getRestoreFocusTarget}
         disabled={!opened || hidden || disableFocusTrap}
         autoFocus={!noFocusToDialog}
       >

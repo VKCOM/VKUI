@@ -56,31 +56,41 @@ const getLastFocusable = (root: HTMLElement | null): HTMLElement | null => {
 
 export type UseFocusTrapProps = {
   /**
-   * @default true
-   */
-  mount?: boolean;
-  /**
    * Форсированное отключение захвата фокуса
    *
    * @default false
    */
   disabled?: boolean;
   /**
+   * Управление поведением автофокуса при появлении всплывающего окна.
+   * При прокидывании `true` фокус будет установлен на первый элемент.
+   * При прокидывании `root` фокус будет установлен в корень.
    * @default true
    */
   autoFocus?: boolean | 'root';
   /**
+   * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
+   * Для управления тем, на какой элемент будет возвращен фокус, вы можете использовать `getRestoreFocusTarget`.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean);
   /**
+   * Свойство для управления тем, на какой элемент будет возвращен фокус.
+   */
+  getRestoreFocusTarget?: () => HTMLElement | null;
+  /**
+   * Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна.
    * @default 0
    */
-  timeout?: number;
+  autoFocusDelay?: number;
   /**
    * Пользовательские опции для MutationObserver, который отслеживает изменения DOM внутри компонента и пересчитывает ноды для фокуса.
    */
   mutationObserverOptions?: MutationObserverInit;
+  /**
+   * @default true
+   */
+  mount?: boolean;
 };
 
 export const useFocusTrap = (
@@ -90,7 +100,8 @@ export const useFocusTrap = (
     disabled = false,
     autoFocus = true,
     restoreFocus = true,
-    timeout = 0,
+    getRestoreFocusTarget,
+    autoFocusDelay = 0,
     mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
@@ -111,7 +122,8 @@ export const useFocusTrap = (
 
   useRestoreFocus({
     restoreFocus,
-    timeout,
+    getRestoreFocusTarget,
+    autoFocusDelay,
     mount,
     ref,
   });
@@ -120,7 +132,7 @@ export const useFocusTrap = (
     autoFocus,
     disabled,
     mount,
-    timeout,
+    autoFocusDelay,
     focusFirst,
   });
 

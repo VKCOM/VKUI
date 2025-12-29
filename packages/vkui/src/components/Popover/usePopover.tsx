@@ -13,7 +13,7 @@ import {
   DefaultIcon,
 } from '../FloatingArrow/DefaultIcon';
 import { FloatingArrow } from '../FloatingArrow/FloatingArrow';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
 import { type PopoverProps } from './Popover';
 import styles from './Popover.module.css';
 
@@ -78,7 +78,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
 
   // FocusTrapProps
   autoFocus = true,
-  restoreFocus = true,
+  restoreFocus: restoreFocusProp = true,
   className,
   noStyling = false,
   zIndex = 'var(--vkui--z_index_popout)',
@@ -98,7 +98,8 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
         floatingRef,
         floatingProps,
         willBeHide,
-        onRestoreFocus,
+        restoreFocus,
+        getRestoreFocusTarget,
         onClose,
       }) => {
         if (!shown && !keepMounted) {
@@ -131,12 +132,13 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
                 ...floatingProps.style,
               }}
             >
-              <FocusTrap
+              <FocusTrapInternal
                 rootRef={focusTrapRootRef}
                 mount={!hidden}
                 disabled={hidden || disableFocusTrap}
                 autoFocus={disableInteractive ? false : autoFocus}
-                restoreFocus={restoreFocus ? () => onRestoreFocus(restoreFocus) : false}
+                getRestoreFocusTarget={getRestoreFocusTarget}
+                restoreFocus={restoreFocus}
               >
                 <div
                   {...restPopoverProps}
@@ -154,7 +156,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
                   {arrow}
                   {typeof content === 'function' ? content({ onClose }) : content}
                 </div>
-              </FocusTrap>
+              </FocusTrapInternal>
             </div>
           </AppRootPortal>
         );
@@ -171,7 +173,6 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
         keepMounted,
         noStyling,
         restPopoverProps,
-        restoreFocus,
         role,
         usePortal,
         withArrow,
@@ -197,6 +198,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
     disableFlipMiddleware,
     disableShiftMiddleware,
     customMiddlewares,
+    restoreFocus: restoreFocusProp,
 
     trigger,
     strategy,

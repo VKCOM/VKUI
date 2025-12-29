@@ -1,6 +1,7 @@
 ---
 description: Компонент для управления фокусом внутри области, не позволяющий фокусу выходить за её пределы.
 ---
+import { BlockWrapper } from '@/components/wrappers';
 
 <Overview group="utils">
 
@@ -115,16 +116,15 @@ return (
 Фокус устанавливается на корневой элемент области. Это полезно, когда нужно анонсировать
 содержимое области для скринридеров, но не переключать фокус на конкретный элемент.
 
-<Playground>
+<Playground Wrapper={BlockWrapper}>
 
 ```jsx
 const [mode, setMode] = React.useState('true');
-const [show, setShow] = React.useState(true);
+const [show, setShow] = React.useState(false);
 const focusTrapRef = React.useRef(null);
 
 return (
   <Flex direction="column" gap="l">
-    <Flex gap="m" align="center">
       <SegmentedControl
         value={mode}
         onChange={setMode}
@@ -134,7 +134,6 @@ return (
           { label: 'false', value: 'false' },
         ]}
       />
-    </Flex>
       <Button mode="secondary" onClick={() => setShow((prev) => !prev)}>
         {show ? 'Скрыть' : 'Показать'}
       </Button>
@@ -176,7 +175,11 @@ return (
 
 - `true` (по умолчанию) — фокус возвращается на элемент, который был в фокусе до открытия области;
 - `false` — фокус не возвращается;
-- `() => boolean | HTMLElement` — функция, которая возвращает `boolean` или конкретный элемент для фокуса.
+- `() => boolean` — функция, которая возвращает `boolean`.
+
+### `getRestoreFocusTarget`
+
+Свойство для управления тем, на какой элемент будет возвращен фокус.
 
 <Playground>
 
@@ -194,7 +197,7 @@ return (
       </Button>
     </Flex>
     {open && (
-      <FocusTrap rootRef={focusTrapRef} restoreFocus={() => alternativeRef.current}>
+      <FocusTrap rootRef={focusTrapRef} restoreFocus={true} getRestoreFocusTarget={() => alternativeRef.current}>
         <div
           ref={focusTrapRef}
           tabIndex={-1}
@@ -297,7 +300,7 @@ return (
 
 1. Добавлять `role="dialog"` и `aria-modal="true"` на корневой элемент;
 2. Указывать `aria-label` или `aria-labelledby` для описания содержимого;
-3. Обеспечивать закрытие по клавише `Escape` (используйте `useGlobalEscKeyDown` хук).
+3. Обеспечивать закрытие по клавише `Escape`.
 
 ```jsx
 <FocusTrap rootRef={focusTrapRef}>
