@@ -4921,9 +4921,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/eslint-plugin@npm:^1.5.4":
-  version: 1.5.4
-  resolution: "@vitest/eslint-plugin@npm:1.5.4"
+"@vitest/eslint-plugin@npm:^1.6.4":
+  version: 1.6.4
+  resolution: "@vitest/eslint-plugin@npm:1.6.4"
   dependencies:
     "@typescript-eslint/scope-manager": "npm:^8.46.1"
     "@typescript-eslint/utils": "npm:^8.46.1"
@@ -4936,7 +4936,7 @@ __metadata:
       optional: true
     vitest:
       optional: true
-  checksum: 10/3a6512b45915832715e0c375f12daee5400240540c291defc72695c3fc7852a6ab4d706cc834e1529a4233eb01349dd4578b67f894ceb254b0552256b3380005
+  checksum: 10/e8744254c79e5861ee7437f30fa23ab18250e25810a786e747da9737fb14b8dded4c2235bc4b7c9d058695152a76613607ec9069e0e250d13f538dd0607b9580
   languageName: node
   linkType: hard
 
@@ -5273,7 +5273,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.5.0"
     "@typescript-eslint/parser": "npm:^7.5.0"
     "@vitest/coverage-v8": "npm:^4.0.16"
-    "@vitest/eslint-plugin": "npm:^1.5.4"
+    "@vitest/eslint-plugin": "npm:^1.6.4"
     "@vkontakte/eslint-plugin": "npm:^2.0.0"
     "@vkontakte/stylelint-config": "npm:^4.1.0"
     "@vkontakte/vkui-tokens": "npm:4.71.0"
