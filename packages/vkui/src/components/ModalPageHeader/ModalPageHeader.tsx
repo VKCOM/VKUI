@@ -3,7 +3,11 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useModalContext } from '../../context/ModalContext';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import {
+  isSizeXCompactFallback,
+  useAdaptivityWithJSMediaQueries,
+} from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasRef, HasRootRef } from '../../types';
 import { PanelHeader, type PanelHeaderProps } from '../PanelHeader/PanelHeader';
@@ -33,7 +37,8 @@ export const ModalPageHeader = ({
   ...restProps
 }: ModalPageHeaderProps): React.ReactNode => {
   const platform = usePlatform();
-  const { isDesktop, sizeX } = useAdaptivityWithJSMediaQueries();
+  const { sizeX: legacySizeXContext } = useAdaptivity();
+  const { isDesktop, sizeX: legacySizeX, viewWidth } = useAdaptivityWithJSMediaQueries();
   const modalContext = useModalContext();
 
   return (
@@ -61,7 +66,9 @@ export const ModalPageHeader = ({
           {children}
         </PanelHeader>
       </div>
-      {!noSeparator && <Separator padding={sizeX !== 'regular'} />}
+      {!noSeparator && (
+        <Separator padding={isSizeXCompactFallback(viewWidth, legacySizeX, legacySizeXContext)} />
+      )}
     </>
   );
 };

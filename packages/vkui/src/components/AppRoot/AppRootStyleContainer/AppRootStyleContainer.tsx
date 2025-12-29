@@ -10,14 +10,14 @@ import { AppRootContext } from '../AppRootContext';
 import { getSafeAreaInsetsAsCssVariables, getUserSelectModeClassName } from '../helpers';
 import styles from './AppRootStyleContainer.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export function useAppRootStyles() {
   const { safeAreaInsets, mode, userSelectMode } = React.useContext(AppRootContext);
-  const { hasPointer, sizeY = 'none' } = useAdaptivity();
+  const { density = 'none', hasPointer } = useAdaptivity();
   const { isWebView } = useConfigProvider();
   const userSelectModeClassName = getUserSelectModeClassName({
     userSelectMode,
@@ -31,7 +31,7 @@ export function useAppRootStyles() {
     className: classNames(
       styles.host,
       mode === 'embedded' && styles.embedded,
-      sizeY !== 'regular' && sizeYClassNames[sizeY],
+      density !== 'regular' && densityClassNames[density],
       userSelectModeClassName,
       tokensClassName,
     ),

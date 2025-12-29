@@ -11,9 +11,9 @@ import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectOption.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  regular: styles.sizeYRegular,
+const densityClassNames = {
+  none: styles.densityNone,
+  regular: styles.densityRegular,
 };
 
 export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
@@ -74,7 +74,7 @@ export const CustomSelectOption = ({
   onClick,
   ...restProps
 }: CustomSelectOptionProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const style: (React.CSSProperties & CSSCustomProperties<number>) | undefined = React.useMemo(
     () =>
       hierarchy > 0
@@ -97,7 +97,7 @@ export const CustomSelectOption = ({
       data-hovered={hovered}
       className={classNames(
         styles.host,
-        sizeY !== 'compact' && sizeYClassNames[sizeY],
+        density !== 'compact' && densityClassNames[density],
         hovered && styles.hover,
         disabled && styles.disabled,
         hierarchy > 0 && styles.hierarchy,

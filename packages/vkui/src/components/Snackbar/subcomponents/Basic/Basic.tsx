@@ -15,9 +15,9 @@ const stylesLayout = {
   horizontal: styles.layoutHorizontal,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  regular: styles.sizeYRegular,
+const densityClassNames = {
+  none: styles.densityNone,
+  regular: styles.densityRegular,
 };
 
 export interface BasicProps {
@@ -71,7 +71,7 @@ export function Basic({
   children,
   ...restProps
 }: SnackbarBasicProps): React.ReactNode {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const layout = after || subtitle ? 'vertical' : 'none';
 
   return (
@@ -80,7 +80,7 @@ export function Basic({
       baseClassName={classNames(
         styles.body,
         stylesLayout[layoutProps || layout],
-        sizeY !== 'compact' && sizeYClassNames[sizeY],
+        density !== 'compact' && densityClassNames[density],
         mode === 'dark' && styles.modeDark,
       )}
     >

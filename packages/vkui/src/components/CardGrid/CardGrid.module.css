@@ -13,12 +13,12 @@
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-.sizeXCompact {
+.viewWidthSmallTabletMinus {
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-@media (--sizeX-compact) {
-  .sizeXNone {
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthNone {
     padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   }
 }
@@ -37,7 +37,7 @@
   padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-@media (--sizeX-regular) {
+@media (--viewWidth-smallTabletPlus) {
   /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
   :global(.vkuiInternalGroup--mode-none) .host {
     padding-inline: 8px;

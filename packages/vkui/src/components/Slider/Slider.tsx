@@ -23,9 +23,9 @@ import {
 import type { InternalDraggingType, InternalGestureRef, InternalValueState } from './types';
 import styles from './Slider.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 const sizeClassNames = {
@@ -145,7 +145,7 @@ export const Slider = ({
   style: styleProp,
   ...restProps
 }: SliderProps | SliderMultipleProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
 
@@ -290,7 +290,7 @@ export const Slider = ({
       className={classNames(
         styles.host,
         disabled && styles.disabled,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         sizeClassNames[size],
         multiple && styles.multiple,
         isRtl && styles.rtl,

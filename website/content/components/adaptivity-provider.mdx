@@ -13,7 +13,7 @@ description: Переопределяет базовую адаптивност�
 
 ## Когда использовать? [#when-to-use]
 
-- Если вам нужно зафиксировать размер компонента на `compact` или `regular` (см. [Адаптивность | Размеры элементов интерфейса](/overview/adaptivity#sizes)).
+- Если вам нужно зафиксировать размер компонента на `compact` или `regular` (см. [Адаптивность | Размеры элементов интерфейса](/overview/adaptivity#density)).
 - Если вам нужно зафиксировать конкретный брейкпоинт на мобильный, планшетный, настольный и т.п. (см. [Адаптивность | Размеры экрана](/overview/adaptivity#breakpoints)).
 - Если вам нужно зафиксировать поведение компонента (см. [Адаптивность | Наличие точного указателя](/overview/adaptivity#pointer)).
 
@@ -21,11 +21,8 @@ description: Переопределяет базовую адаптивност�
 
 `AdaptivityProvider` всегда перебивает свой вышестоящий экземпляр – это значит, что свойства не наследуются из контекста.
 
-Говоря о свойствах, по умолчанию они определяются как `undefined`. Автоматически определение есть только у свойств `sizeX` и `sizeY`
-при следующих условиях:
-
-- если `sizeX` не задан, но задан `viewWidth`;
-- если `sizeY` не задан, но заданы `viewWidth` и `viewHeight` или `viewWidth` и `hasPointer` или только `viewHeight`.
+Говоря о свойствах, по умолчанию они определяются как `undefined`. Автоматически определение есть только у свойства `density` при
+условии, что заданы `viewWidth` и `viewHeight` или `viewWidth` и `hasPointer` или только `viewHeight`.
 
 ## Глобальное переопределение [#override-global]
 
@@ -60,7 +57,7 @@ import { AdaptivityProvider, Button } from '@vkontakte/vkui';
  */
 export function ReallyBigButton() {
   return (
-    <AdaptivityProvider sizeY="regular">
+    <AdaptivityProvider density="regular">
       <Button size="l">Я действительно большая кнопка</Button>
     </AdaptivityProvider>
   );
@@ -76,8 +73,7 @@ import { AdaptivityProvider, useAdaptivity } from '@vkontakte/vkui';
 
 function AdaptivityPropsByContext() {
   const {
-    sizeX = 'undefined',
-    sizeY = 'undefined',
+    density = 'undefined',
     viewWidth = 'undefined',
     viewHeight = 'undefined',
     hasPointer = 'undefined',
@@ -85,7 +81,7 @@ function AdaptivityPropsByContext() {
 
   return (
     <pre>
-      sizeX: {sizeX}, sizeY: {sizeY}, viewWidth: {viewWidth}, viewHeight: {viewHeight}, hasPointer:{' '}
+      density: {density}, viewWidth: {viewWidth}, viewHeight: {viewHeight}, hasPointer:{' '}
       {hasPointer}
     </pre>
   );
@@ -93,10 +89,10 @@ function AdaptivityPropsByContext() {
 
 // На странице увидим такой вывод
 //
-// sizeX: compact, sizeY: undefined, viewWidth: undefined, viewHeight: undefined, hasPointer: undefined
+// density: compact, viewWidth: undefined, viewHeight: undefined, hasPointer: undefined
 export function App() {
   return (
-    <AdaptivityProvider sizeX="compact">
+    <AdaptivityProvider density="compact">
       <AdaptivityPropsByContext />
     </AdaptivityProvider>
   );

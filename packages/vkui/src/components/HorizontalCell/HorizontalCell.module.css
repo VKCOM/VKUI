@@ -13,7 +13,7 @@
   text-decoration: none;
 }
 
-/* Перебиваем селектор в Tappable--sizeX-(compact|none) */
+/* Перебиваем селектор в `Tappable` с `withBorder` */
 .host .body {
   border-radius: var(--vkui--size_border_radius--regular);
 }

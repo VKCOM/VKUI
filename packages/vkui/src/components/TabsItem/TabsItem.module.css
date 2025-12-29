@@ -21,13 +21,13 @@
   margin-inline-start: 6px;
 }
 
-.sizeYCompact {
+.densityCompact {
   min-block-size: 28px;
   padding-block: 2px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     min-block-size: 28px;
     padding-block: 2px;
   }
@@ -49,13 +49,13 @@
   padding-inline: 16px;
 }
 
-.sizeYCompact.modeDefault {
+.densityCompact.modeDefault {
   min-block-size: 44px;
   padding-block: 10px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone.modeDefault {
+@media (--density-compact) {
+  .densityNone.modeDefault {
     min-block-size: 44px;
     padding-block: 10px;
   }
@@ -172,12 +172,12 @@
   transition: opacity 150ms ease-out;
 }
 
-.sizeYCompact .underline {
+.densityCompact .underline {
   inset-block-end: 3px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone .underline {
+@media (--density-compact) {
+  .densityNone .underline {
     inset-block-end: 3px;
   }
 }

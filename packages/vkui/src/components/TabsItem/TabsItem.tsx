@@ -15,9 +15,9 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './TabsItem.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 const stylesMode = {
@@ -98,7 +98,7 @@ export const TabsItem = ({
   onClick,
   ...restProps
 }: TabsItemProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const { mode, withGaps, layoutFillMode, scrollBehaviorToSelectedTab, withScrollToSelectedTab } =
     React.useContext(TabsModeContext);
   const controller = React.useContext(TabsControllerContext);
@@ -213,7 +213,7 @@ export const TabsItem = ({
         styles.host,
         mode && stylesMode[mode],
         selected && styles.selected,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
       )}
