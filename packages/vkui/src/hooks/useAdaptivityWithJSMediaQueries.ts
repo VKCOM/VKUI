@@ -6,15 +6,52 @@ import {
 } from '../components/AdaptivityProvider/AdaptivityContext';
 import { getOrDefault } from '../helpers/getOrDefault';
 import {
+  getDensity,
   getSizeX,
-  getSizeY,
   getViewHeightByMediaQueries,
   getViewWidthByMediaQueries,
+  type SizeTypeValues,
   tryToCheckIsDesktop,
+  ViewWidth,
+  type ViewWidthType,
 } from '../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 import { useMediaQueries } from './useMediaQueries';
 import { usePlatform } from './usePlatform';
+
+/**
+ * @private
+ *
+ * @param legacySizeX Значение из хука `useAdaptivityWithJSMediaQueries`
+ * @param viewWidth Значение из хука `useAdaptivityWithJSMediaQueries`
+ * @param legacySizeXContext Значение из хука `useAdaptivity`
+ *
+ * TODO [>=10]: #9015 удалить функцию и перенести проверку `viewWidth` на место вызова данной функции.
+ */
+export const isSizeXCompactFallback = (
+  viewWidth: ViewWidthType,
+  legacySizeX: SizeTypeValues,
+  legacySizeXContext: SizeTypeValues | undefined,
+) =>
+  legacySizeXContext === undefined ? viewWidth < ViewWidth.SMALL_TABLET : legacySizeX !== 'regular';
+
+/**
+ * @private
+ *
+ * @param legacySizeX Значение из хука `useAdaptivityWithJSMediaQueries`
+ * @param viewWidth Значение из хука `useAdaptivityWithJSMediaQueries`
+ * @param legacySizeXContext Значение из хука `useAdaptivity`
+ *
+ * TODO [>=10]: #9015 удалить функцию и перенести проверку `viewWidth` на место вызова данной функции.
+ */
+export const isSizeXRegularFallback = (
+  viewWidth: ViewWidthType,
+  legacySizeX: SizeTypeValues,
+  legacySizeXContext: SizeTypeValues | undefined,
+) =>
+  legacySizeXContext === undefined
+    ? viewWidth >= ViewWidth.SMALL_TABLET
+    : legacySizeX === 'regular';
 
 export interface UseAdaptivityWithJSMediaQueries extends Required<BaseAdaptivityProps> {
   isDesktop: boolean;
@@ -47,7 +84,7 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
     viewWidth: viewWidthContext,
     viewHeight: viewHeightContext,
     sizeX: sizeXContext,
-    sizeY: sizeYContext,
+    density: densityContext,
     hasPointer: hasPointerContext,
     hasHover: hasHoverContext,
   } = React.useContext(AdaptivityContext);
@@ -66,14 +103,15 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
     const viewWidth = getOrDefault(viewWidthContext, viewWidthLocal);
     const viewHeight = getOrDefault(viewHeightContext, viewHeightLocal);
     const sizeX = getOrDefault(sizeXContext, getSizeX(viewWidth));
-    const sizeY = getOrDefault(sizeYContext, getSizeY(viewWidth, viewHeight, hasPointer));
+    const density = getOrDefault(densityContext, getDensity(viewWidth, viewHeight, hasPointer));
     const isDesktop = tryToCheckIsDesktop(viewWidth, viewHeight, hasPointer, platform);
 
     return {
       viewWidth,
       viewHeight,
       sizeX,
-      sizeY,
+      sizeY: density,
+      density,
       hasPointer,
       hasHover,
       isDesktop,
@@ -84,7 +122,7 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
     viewWidthContext,
     viewHeightContext,
     sizeXContext,
-    sizeYContext,
+    densityContext,
     hasPointerContext,
     hasHoverContext,
     platform,

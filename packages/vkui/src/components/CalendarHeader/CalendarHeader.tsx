@@ -8,6 +8,7 @@ import {
   Icon20ChevronRightOutline,
 } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
+import { ViewWidth } from '../../lib/adaptivity';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
 import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -215,7 +216,7 @@ export const CalendarHeader = ({
   return (
     <RootComponent baseClassName={styles.host} {...restProps}>
       {!prevMonthHidden && (
-        <AdaptivityProvider sizeX="regular">
+        <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
           <Tappable
             baseClassName={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
             onClick={onPrevMonth}
@@ -245,7 +246,7 @@ export const CalendarHeader = ({
           }).format(viewDate)}
         </Paragraph>
       ) : (
-        <AdaptivityProvider sizeY="compact">
+        <AdaptivityProvider density="compact">
           <div className={classNames(styles.pickers, 'vkuiInternalCalendarHeader__pickers')}>
             <CustomSelect
               className={classNames(styles.picker, 'vkuiInternalCalendarHeader__picker')}
@@ -293,7 +294,7 @@ export const CalendarHeader = ({
         </AdaptivityProvider>
       )}
       {!nextMonthHidden && (
-        <AdaptivityProvider sizeX="regular">
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Tappable
             baseClassName={classNames(styles.navIcon, styles.navIconNext, nextMonthClassName)}
             onClick={onNextMonth}

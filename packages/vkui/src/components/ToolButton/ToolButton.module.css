@@ -24,14 +24,14 @@
   border-radius: var(--vkui--size_border_radius_rounded--regular);
 }
 
-.sizeYRegular {
+.densityRegular {
   font-family: var(--vkui--font_subhead--font_family--regular);
   font-size: var(--vkui--font_subhead--font_size--regular);
   line-height: var(--vkui--font_subhead--line_height--regular);
 }
 
-@media (--sizeY-regular) {
-  .sizeYNone {
+@media (--density-regular) {
+  .densityNone {
     font-family: var(--vkui--font_subhead--font_family--regular);
     font-size: var(--vkui--font_subhead--font_size--regular);
     line-height: var(--vkui--font_subhead--line_height--regular);

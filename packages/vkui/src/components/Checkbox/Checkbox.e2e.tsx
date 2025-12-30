@@ -23,7 +23,7 @@ test.describe('Checkbox', () => {
 
 test.describe(() => {
   const testOptions = {
-    adaptivityProviderProps: { sizeY: 'regular' },
+    adaptivityProviderProps: { density: 'regular' },
   } as const;
   test.use(testOptions);
   test('Checkbox', async ({

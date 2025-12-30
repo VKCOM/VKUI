@@ -25,12 +25,12 @@
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
-.withPadding.sizeYCompact {
+.withPadding.densityCompact {
   min-block-size: var(--vkui--size_field_height--compact);
 }
 
-@media (--sizeY-compact) {
-  .withPadding.sizeYNone {
+@media (--density-compact) {
+  .withPadding.densityNone {
     min-block-size: var(--vkui--size_field_height--compact);
   }
 }

@@ -1,20 +1,31 @@
 'use client';
 
 import * as React from 'react';
-import type { SizeTypeValues, ViewHeightType, ViewWidthType } from '../../lib/adaptivity';
+import type {
+  DensityTypeValues,
+  SizeTypeValues,
+  ViewHeightType,
+  ViewWidthType,
+} from '../../lib/adaptivity';
 
-export interface SizeProps {
+export interface DensityProps {
   /**
    * Тип размера экрана по горизонтали.
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `sizeX="compact"` → `viewWidth={ViewWidth.MOBILE}` или `sizeX="compact"` → `viewWidth={ViewWidth.SMALL_TABLET}` (см. Https://github.com/VKCOM/VKUI/issues/9015).
    */
-  sizeX?: SizeTypeValues;
+  sizeX?: SizeTypeValues; // TODO [>=10]: #9015 удалить свойство
   /**
    * Тип размера экрана по вертикали.
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (см. Https://github.com/VKCOM/VKUI/issues/9015).
    */
-  sizeY?: SizeTypeValues;
+  sizeY?: SizeTypeValues; // TODO [>=10]: #9015 удалить свойство
+  /**
+   * Тип размера экрана.
+   */
+  density?: DensityTypeValues;
 }
 
-export interface AdaptivityProps extends SizeProps {
+export interface AdaptivityProps extends DensityProps {
   /**
    * Тип ширины экрана для адаптивного отображения.
    */
@@ -28,7 +39,7 @@ export interface AdaptivityProps extends SizeProps {
    */
   hasPointer?: boolean;
   /**
-   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.3.0. Будет удалено в **VKUI v9** (см. Https://github.com/VKCOM/VKUI/pull/8490).
    */
   hasHover?: boolean; // TODO [>=9]: удалить неиспользуемое свойство
 }

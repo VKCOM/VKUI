@@ -9,9 +9,9 @@ import { useFocusWithin } from '../../hooks/useFocusWithin';
 import type { HasComponent, HasRootRef } from '../../types';
 import styles from './FormField.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 const stylesStatus = {
@@ -112,7 +112,7 @@ export const FormField = ({
   ...restProps
 }: FormFieldOwnProps): React.ReactNode => {
   const elRef = useExternRef(getRootRef);
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const [hover, setHover] = React.useState(false);
 
   const focusWithin = useFocusWithin(elRef);
@@ -147,7 +147,7 @@ export const FormField = ({
         styles.host,
         mode === 'default' && styles.modeDefault,
         status !== 'default' && stylesStatus[status],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         disabled && styles.disabled,
         !disabled && hover && styles.hover,
         focusVisibleClassNames,

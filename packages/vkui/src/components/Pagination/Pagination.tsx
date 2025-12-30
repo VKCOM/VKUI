@@ -181,7 +181,7 @@ export const Pagination = ({
     [nextPage, onChange],
   );
 
-  const { sizeY } = useAdaptivity();
+  const { density } = useAdaptivity();
 
   const renderPages = React.useCallback(
     (page: PaginationPageType) => {
@@ -204,7 +204,7 @@ export const Pagination = ({
                 isCurrent={isCurrent}
                 onClick={handleClick}
                 disabled={disabled}
-                sizeY={sizeY}
+                density={density}
                 renderPageButton={renderPageButton}
                 data-testid={dataTestId}
               >
@@ -215,7 +215,7 @@ export const Pagination = ({
         }
       }
     },
-    [currentPage, disabled, getPageLabel, handleClick, renderPageButton, sizeY, pageButtonTestId],
+    [currentPage, disabled, getPageLabel, handleClick, renderPageButton, density, pageButtonTestId],
   );
 
   const navigationLabelId = React.useId();

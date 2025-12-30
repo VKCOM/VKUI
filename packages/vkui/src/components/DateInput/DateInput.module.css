@@ -57,12 +57,12 @@
   letter-spacing: 6px !important;
 }
 
-.sizeYCompact:not(.hasAfter) .wrapper {
+.densityCompact:not(.hasAfter) .wrapper {
   --vkui_internal--DateInput_input_margin_inline_end: 22px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone:not(.hasAfter) .wrapper {
+@media (--density-compact) {
+  .densityNone:not(.hasAfter) .wrapper {
     --vkui_internal--DateInput_input_margin_inline_end: 22px;
   }
 }

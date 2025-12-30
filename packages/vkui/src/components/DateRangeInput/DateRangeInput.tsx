@@ -28,9 +28,9 @@ import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import dateInputStyles from '../DateInput/DateInput.module.css';
 
-const sizeYClassNames = {
-  none: dateInputStyles.sizeYNone,
-  compact: dateInputStyles.sizeYCompact,
+const densityClassNames = {
+  none: dateInputStyles.densityNone,
+  compact: dateInputStyles.densityCompact,
 };
 
 type DateTestsProps = {
@@ -361,7 +361,7 @@ export const DateRangeInput = ({
     accessible,
   });
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
@@ -424,7 +424,7 @@ export const DateRangeInput = ({
     <FormField
       style={style}
       className={classNames(
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         !!before && dateInputStyles.hasBefore,
         (showCalendarButton || showClearButton) && dateInputStyles.hasAfter,
         className,

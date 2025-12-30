@@ -200,7 +200,7 @@ export const CalendarTime = ({
       />
       {doneButtonShow && (
         <div className={styles.button}>
-          <AdaptivityProvider sizeY="compact">{renderDoneButton()}</AdaptivityProvider>
+          <AdaptivityProvider density="compact">{renderDoneButton()}</AdaptivityProvider>
         </div>
       )}
     </div>
