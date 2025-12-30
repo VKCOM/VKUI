@@ -50,7 +50,7 @@ description: Инструкция миграции VKUI на версию v8.
 - Свойство `onClose` переименовано в `onClosed`.
 - Добавлена поддержка `slotProps.iosCloseItem` для упрощения локализации кнопки "Отмена" на iOS.
 
-Кнопка отмены на iOS рендерится отдельно от списка действий (вне `ActionSheetItem`). Теперь можно передавать пропсы напрямую в `ActionSheetDefaultIosCloseItem` через `slotProps.iosCloseItem` без необходимости создавать обёртку.
+Кнопка отмены на iOS рендерится отдельно от списка действий (вне `ActionSheetItem`). Теперь можно передавать свойства напрямую в `ActionSheetDefaultIosCloseItem` через `slotProps.iosCloseItem` без необходимости создавать обёртку.
 
 <details>
 <summary>Миграция</summary>
