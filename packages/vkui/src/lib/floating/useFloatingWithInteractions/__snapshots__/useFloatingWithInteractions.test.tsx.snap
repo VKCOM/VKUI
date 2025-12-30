@@ -7,10 +7,10 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be hidden st
     "onMouseOver": [Function],
     "style": {},
   },
-  "getRestoreFocusTarget": [Function],
   "middlewareData": {},
   "onClose": [Function],
   "onEscapeKeyDown": undefined,
+  "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
     "onBlur": [Function],
@@ -29,7 +29,6 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be hidden st
     "setFloating": [Function],
     "setReference": [Function],
   },
-  "restoreFocus": [Function],
   "shown": false,
   "willBeHide": false,
 }
@@ -51,10 +50,10 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be shown sta
       "width": "max-content",
     },
   },
-  "getRestoreFocusTarget": [Function],
   "middlewareData": {},
   "onClose": [Function],
   "onEscapeKeyDown": [Function],
+  "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
     "onBlur": [Function],
@@ -73,7 +72,6 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be shown sta
     "setFloating": [Function],
     "setReference": [Function],
   },
-  "restoreFocus": [Function],
   "shown": true,
   "willBeHide": false,
 }
@@ -95,10 +93,10 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be shown sta
       "width": "max-content",
     },
   },
-  "getRestoreFocusTarget": [Function],
   "middlewareData": {},
   "onClose": [Function],
   "onEscapeKeyDown": undefined,
+  "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
     "onBlur": [Function],
@@ -117,7 +115,6 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be shown sta
     "setFloating": [Function],
     "setReference": [Function],
   },
-  "restoreFocus": [Function],
   "shown": true,
   "willBeHide": false,
 }
@@ -138,10 +135,10 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be shown sta
       "width": "max-content",
     },
   },
-  "getRestoreFocusTarget": [Function],
   "middlewareData": {},
   "onClose": [Function],
   "onEscapeKeyDown": [Function],
+  "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
     "onBlur": [Function],
@@ -160,7 +157,6 @@ exports[`useFloatingWithInteractions > tests with snapshot > should be shown sta
     "setFloating": [Function],
     "setReference": [Function],
   },
-  "restoreFocus": [Function],
   "shown": true,
   "willBeHide": false,
 }
@@ -171,10 +167,10 @@ exports[`useFloatingWithInteractions > tests with snapshot > should return defau
   "floatingProps": {
     "style": {},
   },
-  "getRestoreFocusTarget": [Function],
   "middlewareData": {},
   "onClose": [Function],
   "onEscapeKeyDown": undefined,
+  "onRestoreFocus": [Function],
   "placement": "bottom",
   "referenceProps": {
     "onClick": [Function],
@@ -189,7 +185,6 @@ exports[`useFloatingWithInteractions > tests with snapshot > should return defau
     "setFloating": [Function],
     "setReference": [Function],
   },
-  "restoreFocus": [Function],
   "shown": false,
   "willBeHide": false,
 }

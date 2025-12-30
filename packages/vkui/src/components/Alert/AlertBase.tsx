@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useRestoreFocusWrapper } from '../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useStableCallback } from '../../hooks/useStableCallback';
@@ -54,7 +53,7 @@ export const AlertBase = ({
   setClosing,
   // FocusTrap props
   autoFocus,
-  restoreFocus: restoreFocusProp,
+  restoreFocus,
   ...restProps
 }: AlertBaseProps) => {
   const generatedId = React.useId();
@@ -116,13 +115,10 @@ export const AlertBase = ({
 
   useGlobalEscKeyDown(true, onEscape);
 
-  const { restoreFocus, getRestoreFocusTarget } = useRestoreFocusWrapper(restoreFocusProp);
-
   return (
     <FocusTrap
       rootRef={elementRef}
       autoFocus={autoFocus === undefined ? animationState === 'entered' : autoFocus}
-      getRestoreFocusTarget={getRestoreFocusTarget}
       restoreFocus={restoreFocus}
     >
       <RootComponent

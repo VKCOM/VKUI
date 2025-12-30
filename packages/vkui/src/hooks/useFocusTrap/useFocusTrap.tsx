@@ -69,15 +69,10 @@ export type UseFocusTrapProps = {
    */
   autoFocus?: boolean | 'root';
   /**
-   * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
-   * Для управления тем, на какой элемент будет возвращен фокус, вы можете использовать `getRestoreFocusTarget`.
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean);
-  /**
-   * Свойство для управления тем, на какой элемент будет возвращен фокус.
-   */
-  getRestoreFocusTarget?: () => HTMLElement | null;
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
   /**
    * Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна.
    * @default 0
@@ -100,7 +95,6 @@ export const useFocusTrap = (
     disabled = false,
     autoFocus = true,
     restoreFocus = true,
-    getRestoreFocusTarget,
     autoFocusDelay = 0,
     mutationObserverOptions,
   }: UseFocusTrapProps,
@@ -122,7 +116,6 @@ export const useFocusTrap = (
 
   useRestoreFocus({
     restoreFocus,
-    getRestoreFocusTarget,
     autoFocusDelay,
     mount,
     ref,

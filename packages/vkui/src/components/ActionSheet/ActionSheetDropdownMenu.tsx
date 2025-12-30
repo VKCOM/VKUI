@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useRestoreFocusWrapper } from '../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { isRefObject } from '../../lib/isRefObject';
@@ -38,7 +37,7 @@ export const ActionSheetDropdownMenu = ({
   getRootRef,
   // FocusTrap props
   autoFocus,
-  restoreFocus: restoreFocusProp,
+  restoreFocus,
   disabled,
   timeout,
   ...restProps
@@ -82,8 +81,6 @@ export const ActionSheetDropdownMenu = ({
 
   useGlobalEscKeyDown(true, onClose);
 
-  const { restoreFocus, getRestoreFocusTarget } = useRestoreFocusWrapper(restoreFocusProp);
-
   return (
     <Popper
       targetRef={targetRef}
@@ -107,7 +104,6 @@ export const ActionSheetDropdownMenu = ({
         autoFocus={autoFocus}
         autoFocusDelay={timeout}
         restoreFocus={restoreFocus}
-        getRestoreFocusTarget={getRestoreFocusTarget}
         disabled={disabled}
         rootRef={focusTrapRootRef}
       >

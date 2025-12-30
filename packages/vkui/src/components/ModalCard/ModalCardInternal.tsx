@@ -5,7 +5,6 @@ import { type ComponentType, type KeyboardEvent, type ReactNode, useCallback } f
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useRestoreFocusWrapper } from '../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
@@ -68,7 +67,7 @@ export const ModalCardInternal = ({
   dismissButtonMode,
   dismissLabel,
   noFocusToDialog,
-  restoreFocus: restoreFocusProp,
+  restoreFocus,
   onOpen,
   onOpened,
   onClose = noop,
@@ -148,8 +147,6 @@ export const ModalCardInternal = ({
 
   useScrollLock(!hidden);
 
-  const { restoreFocus, getRestoreFocusTarget } = useRestoreFocusWrapper(restoreFocusProp);
-
   return (
     <ModalOutlet
       hidden={hidden}
@@ -163,7 +160,6 @@ export const ModalCardInternal = ({
         autoFocus={!noFocusToDialog}
         disabled={!opened || hidden || disableFocusTrap}
         restoreFocus={restoreFocus}
-        getRestoreFocusTarget={getRestoreFocusTarget}
       >
         <ModalCardBase
           {...restProps}

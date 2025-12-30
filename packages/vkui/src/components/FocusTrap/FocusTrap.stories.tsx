@@ -175,8 +175,7 @@ export const RestoreFocusExample: Story = {
           <FocusTrap
             rootRef={focusTrapRef}
             autoFocus
-            restoreFocus
-            getRestoreFocusTarget={() => alternativeRef.current}
+            restoreFocus={() => alternativeRef.current || true}
           >
             <div ref={focusTrapRef} tabIndex={-1} style={containerStyle}>
               <Flex direction="column" gap="m">

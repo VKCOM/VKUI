@@ -2,7 +2,6 @@ import * as React from 'react';
 import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
-import { useRestoreFocusWrapper } from '../../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
 import { useStableCallback } from '../../../hooks/useStableCallback';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
@@ -33,7 +32,6 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   trigger = DEFAULT_TRIGGER,
 
   // UseFloating
-  restoreFocus,
   placement: placementProp = 'bottom',
   strategy: strategyProp = 'fixed',
   middlewares,
@@ -232,11 +230,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     commitShownLocalState(false, 'callback');
   }, [commitShownLocalState]);
 
-  const handleRestoreFocus: () => boolean | HTMLElement | null | undefined =
-    React.useCallback(() => {
-      if (restoreFocus === undefined) {
-        return undefined;
-      }
+  const handleRestoreFocus: UseFloatingWithInteractionsReturn['onRestoreFocus'] = React.useCallback(
+    (restoreFocus = true) => {
       if (!restoreFocus) {
         return false;
       }
@@ -248,10 +243,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
         return restoreFocus;
       }
       return false;
-    }, [refs.reference, restoreFocus, triggerOnFocus]);
-
-  const { restoreFocus: restoreFocusResolved, getRestoreFocusTarget } =
-    useRestoreFocusWrapper(handleRestoreFocus);
+    },
+    [refs.reference, triggerOnFocus],
+  );
 
   const handleEscapeKeyDown = React.useCallback(() => {
     blockFocusRef.current = true;
@@ -395,7 +389,6 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     // целевого и всплывающего элемента, то появляется моргание из-за того, что FocusTrap
     // восстанавливает фокус, из-за чего всплывающий элемент снова показывается за счёт
     // `handleFocusOnReference`, а потом скрывается за счёт `handleBlurOnReference`.
-    getRestoreFocusTarget,
-    restoreFocus: restoreFocusResolved,
+    onRestoreFocus: handleRestoreFocus,
   };
 };

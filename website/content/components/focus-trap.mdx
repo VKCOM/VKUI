@@ -175,11 +175,7 @@ return (
 
 - `true` (по умолчанию) — фокус возвращается на элемент, который был в фокусе до открытия области;
 - `false` — фокус не возвращается;
-- `() => boolean` — функция, которая возвращает `boolean`.
-
-### `getRestoreFocusTarget`
-
-Свойство для управления тем, на какой элемент будет возвращен фокус.
+- `() => boolean | HTMLElement` — функция, которая возвращает `boolean` или конкретный элемент для фокуса.
 
 <Playground>
 
@@ -197,7 +193,7 @@ return (
       </Button>
     </Flex>
     {open && (
-      <FocusTrap rootRef={focusTrapRef} restoreFocus={true} getRestoreFocusTarget={() => alternativeRef.current}>
+      <FocusTrap rootRef={focusTrapRef} restoreFocus={() => alternativeRef.current}>
         <div
           ref={focusTrapRef}
           tabIndex={-1}
@@ -269,11 +265,11 @@ return (
 
 ## Задержка автофокуса
 
-Свойство `timeout` позволяет задать задержку в миллисекундах перед автофокусом.
+Свойство `autoFocusDelay` позволяет задать задержку в миллисекундах перед автофокусом.
 Это полезно при использовании с анимациями, когда нужно дождаться завершения анимации появления.
 
 ```jsx
-<FocusTrap rootRef={focusTrapRef} timeout={300}>
+<FocusTrap rootRef={focusTrapRef} autoFocusDelay={300}>
   {/* ... */}
 </FocusTrap>
 ```

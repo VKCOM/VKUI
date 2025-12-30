@@ -78,7 +78,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
 
   // FocusTrapProps
   autoFocus = true,
-  restoreFocus: restoreFocusProp = true,
+  restoreFocus = true,
   className,
   noStyling = false,
   zIndex = 'var(--vkui--z_index_popout)',
@@ -98,8 +98,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
         floatingRef,
         floatingProps,
         willBeHide,
-        restoreFocus,
-        getRestoreFocusTarget,
+        onRestoreFocus,
         onClose,
       }) => {
         if (!shown && !keepMounted) {
@@ -137,8 +136,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
                 mount={!hidden}
                 disabled={hidden || disableFocusTrap}
                 autoFocus={disableInteractive ? false : autoFocus}
-                getRestoreFocusTarget={getRestoreFocusTarget}
-                restoreFocus={restoreFocus}
+                restoreFocus={restoreFocus ? () => onRestoreFocus(restoreFocus) : false}
               >
                 <div
                   {...restPopoverProps}
@@ -173,6 +171,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
         keepMounted,
         noStyling,
         restPopoverProps,
+        restoreFocus,
         role,
         usePortal,
         withArrow,
@@ -198,7 +197,6 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
     disableFlipMiddleware,
     disableShiftMiddleware,
     customMiddlewares,
-    restoreFocus: restoreFocusProp,
 
     trigger,
     strategy,

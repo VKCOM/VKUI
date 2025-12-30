@@ -13,13 +13,9 @@ function isFocusableElement(el: Element): boolean {
 export const useRestoreFocus = ({
   restoreFocus,
   autoFocusDelay,
-  getRestoreFocusTarget,
   mount,
   ref,
-}: Pick<
-  UseFocusTrapProps,
-  'restoreFocus' | 'getRestoreFocusTarget' | 'autoFocusDelay' | 'mount'
-> & {
+}: Pick<UseFocusTrapProps, 'restoreFocus' | 'autoFocusDelay' | 'mount'> & {
   ref: RefObject<HTMLElement | null>;
 }) => {
   const restoreFocusRef = useRef(restoreFocus);
@@ -50,7 +46,7 @@ export const useRestoreFocus = ({
 
     setTimeout(() => {
       const restoreFocusElement =
-        (getRestoreFocusTarget && getRestoreFocusTarget()) ||
+        (isHTMLElement(shouldRestoreFocus) && shouldRestoreFocus) ||
         (isHTMLElement(restoreFocusTo) && restoreFocusTo) ||
         null;
 

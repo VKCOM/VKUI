@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useRestoreFocusWrapper } from '../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { stopPropagation } from '../../lib/utils';
@@ -26,7 +25,7 @@ export const ActionSheetDropdownSheet = ({
   onClose: onCloseProp,
   // FocusTrap props
   autoFocus,
-  restoreFocus: restoreFocusProp,
+  restoreFocus,
   disabled,
   timeout,
   ...restProps
@@ -52,14 +51,11 @@ export const ActionSheetDropdownSheet = ({
 
   useGlobalEscKeyDown(true, onClose);
 
-  const { restoreFocus, getRestoreFocusTarget } = useRestoreFocusWrapper(restoreFocusProp);
-
   return (
     <FocusTrap
       autoFocus={autoFocus}
       autoFocusDelay={timeout}
       restoreFocus={restoreFocus}
-      getRestoreFocusTarget={getRestoreFocusTarget}
       disabled={disabled}
       rootRef={focusTrapRootRef}
     >

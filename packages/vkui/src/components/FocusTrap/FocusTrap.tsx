@@ -20,7 +20,6 @@ export const FocusTrapInternal = ({
   disabled = false,
   mount = true,
   autoFocusDelay = 0,
-  getRestoreFocusTarget,
   rootRef,
   children,
   mutationObserverOptions = DEFAULT_MUTATION_OBSERVER_OPTIONS,
@@ -28,7 +27,6 @@ export const FocusTrapInternal = ({
   const { beforeGuard, afterGuard } = useFocusTrap(rootRef, {
     autoFocus,
     restoreFocus,
-    getRestoreFocusTarget,
     disabled,
     mount,
     autoFocusDelay,

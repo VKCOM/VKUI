@@ -28,11 +28,13 @@ const DynamicContent = ({ onClose }: { onClose: VoidFunction }) => {
 };
 
 const TestComponent = ({
+  restoreFocus,
   hookResult,
   keyboardInput = false,
   autoFocus = false, // for multiple trigger [click, focus]
   Content,
 }: {
+  restoreFocus?: boolean;
   hookResult: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
   keyboardInput?: boolean;
   autoFocus?: boolean;
@@ -59,8 +61,7 @@ const TestComponent = ({
           <FocusTrap
             rootRef={ref}
             autoFocus
-            restoreFocus={hookResult.restoreFocus}
-            getRestoreFocusTarget={hookResult.getRestoreFocusTarget}
+            restoreFocus={restoreFocus ? hookResult.onRestoreFocus : restoreFocus}
           >
             <div ref={ref} tabIndex={-1}>
               <input
@@ -339,16 +340,17 @@ describe(useFloatingWithInteractions, () => {
         useFloatingWithInteractions<HTMLButtonElement>({
           defaultShown: false,
           trigger: 'focus',
-          restoreFocus: restoreFocus,
         }),
       );
       const testComponentRender = render(
-        <TestComponent hookResult={result.current} keyboardInput />,
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
       );
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'focus');
-      testComponentRender.rerender(<TestComponent hookResult={result.current} keyboardInput />);
+      testComponentRender.rerender(
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
+      );
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       vi.useFakeTimers();
@@ -365,7 +367,9 @@ describe(useFloatingWithInteractions, () => {
         vi.runOnlyPendingTimers();
         vi.useRealTimers();
       });
-      testComponentRender.rerender(<TestComponent hookResult={result.current} keyboardInput />);
+      testComponentRender.rerender(
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
+      );
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
         if (restoreFocus) {

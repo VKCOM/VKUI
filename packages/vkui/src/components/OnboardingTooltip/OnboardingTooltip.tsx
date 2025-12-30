@@ -4,7 +4,6 @@ import * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useRestoreFocusWrapper } from '../../hooks/useFocusTrap/useRestoreFocusWrapper';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePatchChildren } from '../../hooks/usePatchChildren';
 import { createPortal } from '../../lib/createPortal';
@@ -111,7 +110,7 @@ export const OnboardingTooltip = ({
   title,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
-  restoreFocus: restoreFocusProp,
+  restoreFocus,
   disableFocusTrap,
   overflowPadding,
   ...restProps
@@ -156,7 +155,6 @@ export const OnboardingTooltip = ({
   });
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
-  const { restoreFocus, getRestoreFocusTarget } = useRestoreFocusWrapper(restoreFocusProp);
 
   const titleId = React.useId();
   if (process.env.NODE_ENV === 'development' && !title && !ariaLabel && !ariaLabelledBy) {
@@ -176,12 +174,7 @@ export const OnboardingTooltip = ({
     });
 
     tooltip = createPortal(
-      <FocusTrap
-        rootRef={focusTrapRootRef}
-        disabled={disableFocusTrap}
-        restoreFocus={restoreFocus}
-        getRestoreFocusTarget={getRestoreFocusTarget}
-      >
+      <FocusTrap rootRef={focusTrapRootRef} disabled={disableFocusTrap} restoreFocus={restoreFocus}>
         <RootComponent
           tabIndex={-1}
           getRootRef={focusTrapRootRef}
