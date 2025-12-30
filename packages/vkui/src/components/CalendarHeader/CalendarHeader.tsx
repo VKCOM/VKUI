@@ -11,6 +11,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
 import { DEFAULT_MAX_YEAR, DEFAULT_MIN_YEAR, getMonths, getYears } from '../../lib/calendar';
 import { addMonths, setMonth, setYear, subMonths } from '../../lib/date';
+import { cacheDateTimeFormat } from '../../lib/intlCache';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
@@ -20,6 +21,25 @@ import { Tappable } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarHeader.module.css';
+
+const formatterDateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+} as const;
+
+const formatterDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
+
+const monthDateTimeFormatOptions = {
+  month: 'long',
+} as const;
+
+const monthDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
+
+const yearDateTimeFormatOptions = {
+  year: 'numeric',
+} as const;
+
+const yearDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
 
 type ArrowMonthProps = Omit<React.AllHTMLAttributes<HTMLElement>, 'onClick' | 'aria-label'>;
 
@@ -178,10 +198,7 @@ export const CalendarHeader = ({
     [currentYear, isYearDisabled],
   );
 
-  const formatter = new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'long',
-  });
+  const formatter = formatterDateTimeFormat(locale, formatterDateTimeFormatOptions);
 
   const { className: prevMonthClassName, ...restPrevMonthProps } = prevMonthProps;
   const { className: nextMonthClassName, ...restNextMonthProps } = nextMonthProps;
@@ -236,14 +253,10 @@ export const CalendarHeader = ({
           weight="2"
         >
           <span className={styles.month}>
-            {new Intl.DateTimeFormat(locale, {
-              month: 'long',
-            }).format(viewDate)}
+            {monthDateTimeFormat(locale, monthDateTimeFormatOptions).format(viewDate)}
           </span>
           &nbsp;
-          {new Intl.DateTimeFormat(locale, {
-            year: 'numeric',
-          }).format(viewDate)}
+          {yearDateTimeFormat(locale, yearDateTimeFormatOptions).format(viewDate)}
         </Paragraph>
       ) : (
         <AdaptivityProvider density="compact">
