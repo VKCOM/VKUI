@@ -1306,6 +1306,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@exodus/bytes@npm:^1.6.0":
+  version: 1.7.0
+  resolution: "@exodus/bytes@npm:1.7.0"
+  peerDependencies:
+    "@exodus/crypto": ^1.0.0-rc.4
+  peerDependenciesMeta:
+    "@exodus/crypto":
+      optional: true
+  checksum: 10/66081ee7f46511019ac40f7524abaefd252158ac53c1e43fcfc4ad73ba32f9eb8cc659348488206b972cb1d1d974f6449557de86f097b5e247fca6cfeb57bd1e
+  languageName: node
+  linkType: hard
+
 "@figspec/components@npm:^2.0.1":
   version: 2.0.5
   resolution: "@figspec/components@npm:2.0.5"
@@ -4462,16 +4474,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 24.10.1
-  resolution: "@types/node@npm:24.10.1"
-  dependencies:
-    undici-types: "npm:~7.16.0"
-  checksum: 10/ddac8c97be5f7401e31ea0e9316c6e864993c6cd06689b7f9874ecfb576ef8349f2d14298248a08b94a6dd029570a46a285cddc4d50e524817f1a3730b29a86e
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^25.0.3":
+"@types/node@npm:*, @types/node@npm:^25.0.3":
   version: 25.0.3
   resolution: "@types/node@npm:25.0.3"
   dependencies:
@@ -4921,9 +4924,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/eslint-plugin@npm:^1.5.4":
-  version: 1.5.4
-  resolution: "@vitest/eslint-plugin@npm:1.5.4"
+"@vitest/eslint-plugin@npm:^1.6.4":
+  version: 1.6.4
+  resolution: "@vitest/eslint-plugin@npm:1.6.4"
   dependencies:
     "@typescript-eslint/scope-manager": "npm:^8.46.1"
     "@typescript-eslint/utils": "npm:^8.46.1"
@@ -4936,7 +4939,7 @@ __metadata:
       optional: true
     vitest:
       optional: true
-  checksum: 10/3a6512b45915832715e0c375f12daee5400240540c291defc72695c3fc7852a6ab4d706cc834e1529a4233eb01349dd4578b67f894ceb254b0552256b3380005
+  checksum: 10/e8744254c79e5861ee7437f30fa23ab18250e25810a786e747da9737fb14b8dded4c2235bc4b7c9d058695152a76613607ec9069e0e250d13f538dd0607b9580
   languageName: node
   linkType: hard
 
@@ -5273,7 +5276,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.5.0"
     "@typescript-eslint/parser": "npm:^7.5.0"
     "@vitest/coverage-v8": "npm:^4.0.16"
-    "@vitest/eslint-plugin": "npm:^1.5.4"
+    "@vitest/eslint-plugin": "npm:^1.6.4"
     "@vkontakte/eslint-plugin": "npm:^2.0.0"
     "@vkontakte/stylelint-config": "npm:^4.1.0"
     "@vkontakte/vkui-tokens": "npm:4.71.0"
@@ -5298,7 +5301,7 @@ __metadata:
     eslint-plugin-unicorn: "npm:^55.0.0"
     happy-css-modules: "npm:^4.0.0"
     husky: "npm:^9.1.6"
-    jsdom: "npm:^27.3.0"
+    jsdom: "npm:^27.4.0"
     lint-staged: "npm:^16.2.7"
     mini-css-extract-plugin: "npm:^2.9.4"
     postcss: "npm:^8.5.6"
@@ -5322,7 +5325,7 @@ __metadata:
     stylelint-config-recess-order: "npm:^7.4.0"
     stylelint-config-standard: "npm:^39.0.1"
     stylelint-media-use-custom-media: "npm:^4.1.0"
-    stylelint-order: "npm:^7.0.0"
+    stylelint-order: "npm:^7.0.1"
     stylelint-use-logical: "npm:^2.1.2"
     stylelint-value-no-unknown-custom-properties: "npm:^6.1.0"
     swc-loader: "npm:^0.2.6"
@@ -10783,12 +10786,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-encoding-sniffer@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "html-encoding-sniffer@npm:4.0.0"
+"html-encoding-sniffer@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "html-encoding-sniffer@npm:6.0.0"
   dependencies:
-    whatwg-encoding: "npm:^3.1.1"
-  checksum: 10/e86efd493293a5671b8239bd099d42128433bb3c7b0fdc7819282ef8e118a21f5dead0ad6f358e024a4e5c84f17ebb7a9b36075220fac0a6222b207248bede6f
+    "@exodus/bytes": "npm:^1.6.0"
+  checksum: 10/97392e45d8aff57f180f62a1b12e62201c8451af68424b8bc3196f78e273891f2df285e5be43a3f28c7ba4badf9524ef305db65c4e4935a9e796afc86d9654b8
   languageName: node
   linkType: hard
 
@@ -11014,7 +11017,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:0.6, iconv-lite@npm:0.6.3, iconv-lite@npm:^0.6.2":
+"iconv-lite@npm:0.6, iconv-lite@npm:^0.6.2":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
@@ -11903,16 +11906,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^27.3.0":
-  version: 27.3.0
-  resolution: "jsdom@npm:27.3.0"
+"jsdom@npm:^27.4.0":
+  version: 27.4.0
+  resolution: "jsdom@npm:27.4.0"
   dependencies:
     "@acemir/cssom": "npm:^0.9.28"
     "@asamuzakjp/dom-selector": "npm:^6.7.6"
+    "@exodus/bytes": "npm:^1.6.0"
     cssstyle: "npm:^5.3.4"
     data-urls: "npm:^6.0.0"
     decimal.js: "npm:^10.6.0"
-    html-encoding-sniffer: "npm:^4.0.0"
+    html-encoding-sniffer: "npm:^6.0.0"
     http-proxy-agent: "npm:^7.0.2"
     https-proxy-agent: "npm:^7.0.6"
     is-potential-custom-element-name: "npm:^1.0.1"
@@ -11922,7 +11926,6 @@ __metadata:
     tough-cookie: "npm:^6.0.0"
     w3c-xmlserializer: "npm:^5.0.0"
     webidl-conversions: "npm:^8.0.0"
-    whatwg-encoding: "npm:^3.1.1"
     whatwg-mimetype: "npm:^4.0.0"
     whatwg-url: "npm:^15.1.0"
     ws: "npm:^8.18.3"
@@ -11932,7 +11935,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 10/c650e954df04a80e7309984450ce764ae2a840810b9575b20204194dee3c5cff42e65526519cb58b946ffe66a058b7b763bad4814b3903a9c86a2c1651b8b74b
+  checksum: 10/7c6db85ab91183b95204648e086cfc09ecee36d9e8fee0bb5d68e27543eca632de0af6d43de461176a7823820543d5c53561778af5f712b1a1cd28bfac084d51
   languageName: node
   linkType: hard
 
@@ -17839,15 +17842,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-order@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "stylelint-order@npm:7.0.0"
+"stylelint-order@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "stylelint-order@npm:7.0.1"
   dependencies:
-    postcss: "npm:^8.5.3"
+    postcss: "npm:^8.5.6"
     postcss-sorting: "npm:^9.1.0"
   peerDependencies:
-    stylelint: ^16.18.0
-  checksum: 10/dade0dd297aa6c61c0fcf0805939c3f80fcd10eefd7519341c78c9481b3481f626d368577517806c27c829f02c84456776871f00292fa8a727035170dd05a7ae
+    stylelint: ^16.18.0 || ^17.0.0
+  checksum: 10/c50735249c3966c9481fbbf50e4a64ced3e6d37883c44006e65befc185498f912c46e40f5ced89696c9059a42b5e4c51202df16767d1bb3c2316269607ecccb8
   languageName: node
   linkType: hard
 
@@ -19594,15 +19597,6 @@ __metadata:
   version: 0.1.4
   resolution: "websocket-extensions@npm:0.1.4"
   checksum: 10/b5399b487d277c78cdd2aef63764b67764aa9899431e3a2fa272c6ad7236a0fb4549b411d89afa76d5afd664c39d62fc19118582dc937e5bb17deb694f42a0d1
-  languageName: node
-  linkType: hard
-
-"whatwg-encoding@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "whatwg-encoding@npm:3.1.1"
-  dependencies:
-    iconv-lite: "npm:0.6.3"
-  checksum: 10/bbef815eb67f91487c7f2ef96329743f5fd8357d7d62b1119237d25d41c7e452dff8197235b2d3c031365a17f61d3bb73ca49d0ed1582475aa4a670815e79534
   languageName: node
   linkType: hard
 

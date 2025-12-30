@@ -8,19 +8,19 @@ import {
 import type { PlatformType } from '../../lib/platform';
 import { forcedProps } from './constants';
 import type {
+  AdaptiveDensityType,
   AdaptiveDeviceType,
-  AdaptiveSizeType,
   AdaptiveViewWidth,
   DeviceTypeCSSBreakpoints,
   ElementProps,
   ViewWidthCSSBreakpoints,
 } from './types';
 
-export const getAdaptiveSizeType = (
+export const getAdaptiveDensityType = (
   type: undefined | SizeTypeValues,
   compactMediaQueryProps: ElementProps,
   regularMediaQueryProps: ElementProps,
-): AdaptiveSizeType => {
+): AdaptiveDensityType => {
   return {
     compact: type === undefined ? compactMediaQueryProps : type === 'compact' ? forcedProps : false,
     regular: type === undefined ? regularMediaQueryProps : type === 'regular' ? forcedProps : false,
@@ -32,6 +32,18 @@ export const getAdaptiveViewWidth = (
   viewWidthMapProps: Record<ViewWidthCSSBreakpoints, ElementProps>,
 ): AdaptiveViewWidth => {
   return {
+    smallTabletMinus:
+      viewWidth === undefined
+        ? viewWidthMapProps.smallTabletMinus
+        : viewWidth < ViewWidth.SMALL_TABLET
+          ? forcedProps
+          : false,
+    smallTabletPlus:
+      viewWidth === undefined
+        ? viewWidthMapProps.smallTabletPlus
+        : viewWidth >= ViewWidth.SMALL_TABLET
+          ? forcedProps
+          : false,
     tabletMinus:
       viewWidth === undefined
         ? viewWidthMapProps.tabletMinus

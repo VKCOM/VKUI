@@ -33,9 +33,9 @@ import { useDateInputValue } from './hooks';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export type DateInputPropsTestsProps = {
@@ -373,7 +373,7 @@ export const DateInput = ({
     accessible,
   });
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
@@ -455,7 +455,7 @@ export const DateInput = ({
     <FormField
       style={style}
       className={classNames(
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         !!before && styles.hasBefore,
         (showCalendarButton || showClearButton) && styles.hasAfter,
         className,

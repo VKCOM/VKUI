@@ -2,19 +2,19 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
-import { type SizeTypeValues } from '../../../lib/adaptivity';
+import type { DensityTypeValues } from '../../../lib/adaptivity';
 import { type HasCaps, Typography, type TypographyProps } from '../Typography';
 import styles from './Footnote.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
-export function footnoteClassNames(sizeY: 'none' | SizeTypeValues, caps = false) {
+export function footnoteClassNames(density: 'none' | DensityTypeValues, caps = false) {
   return classNames(
     styles.host,
-    sizeY !== 'regular' && sizeYClassNames[sizeY],
+    density !== 'regular' && densityClassNames[density],
     caps && styles.caps,
   );
 }
@@ -34,14 +34,14 @@ export const Footnote = ({
   inline = false,
   ...restProps
 }: FootnoteProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <Typography
       Component={Component}
       normalize={normalize}
       inline={inline}
-      className={classNames(className, footnoteClassNames(sizeY, caps))}
+      className={classNames(className, footnoteClassNames(density, caps))}
       {...restProps}
     />
   );

@@ -13,7 +13,7 @@
   text-decoration: none;
 }
 
-/* Перебиваем селектор в Tappable--sizeX-(compact|none) */
+/* Перебиваем селектор в `Tappable` с `withBorder` */
 .host .body {
   border-radius: var(--vkui--size_border_radius--regular);
 }
@@ -33,10 +33,7 @@
   margin-block-start: 2px;
 }
 
-.sized {
-  max-inline-size: var(--vkui_internal--cell_width);
-}
-
+.sized .body,
 .customSize .body {
   inline-size: var(--vkui_internal--cell_width);
 }

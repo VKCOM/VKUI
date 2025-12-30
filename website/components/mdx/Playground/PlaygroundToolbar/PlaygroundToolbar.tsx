@@ -17,10 +17,10 @@ export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToo
 
   return (
     <Flex align="center" gap="s" className={styles.root}>
-      <AdaptivityProvider sizeY="compact">
+      <AdaptivityProvider density="compact">
         <PlatformPicker className={styles.platformPicker} />
       </AdaptivityProvider>
-      <AdaptivityProvider sizeY="regular">
+      <AdaptivityProvider density="regular">
         <ThemePicker className={styles.themePicker} />
         <ColorSchemePicker />
         <Button

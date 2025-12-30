@@ -529,6 +529,7 @@ export {
   ViewWidth,
   ViewHeight,
   SizeType,
+  DensityType,
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';
