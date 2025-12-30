@@ -553,6 +553,41 @@ description: Инструкция миграции VKUI на версию v8.
 
 Следующие API помечены как устаревшие и будут удалены в будущих версиях.
 
+### AdaptivityProvider
+
+Свойства `sizeX` и `sizeY` теперь `@deprecated`, используйте `density` вместо `sizeY`, `viewWidth={ViewWidth.MOBILE}`
+вместо `sizeX="compact"` и `viewWidth={ViewWidth.SMALL_TABLET}` вместо `sizeX="regular"`
+
+<details>
+<summary>Пример миграции</summary>
+
+```diff
+- <AdaptivityProvider sizeX="compact">
++ <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
+
+- <AdaptivityProvider sizeX="regular">
++ <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+
+- <AdaptivityProvider sizeY="compact">
++ <AdaptivityProvider density="compact">
+
+- <AdaptivityProvider sizeY="regular">
++ <AdaptivityProvider density="regular">
+
+- <AdaptivityProvider sizeX="compact" sizeY="compact">
++ <AdaptivityProvider viewWidth={ViewWidth.MOBILE} density="compact">
+
+- <AdaptivityProvider sizeX="regular" sizeY="regular">
++ <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} density="regular">
+
+- <AppRootProvider sizeX="regular" sizeY="compact">
++ <AppRootProvider viewWidth={ViewWidth.SMALL_TABLET} density="compact">
+
+- <AppRootProvider sizeX="compact" sizeY="regular">
++ <AppRootProvider viewWidth={ViewWidth.MOBILE} density="regular">
+```
+</details>
+
 ### ModalRoot
 
 Компонент `ModalRoot` помечен как `@deprecated`. Используйте хук [useModalManager](/components/use-modal-manager)
