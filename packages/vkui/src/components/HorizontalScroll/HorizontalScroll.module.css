@@ -40,10 +40,12 @@
   position: absolute;
   inset-block-start: 0;
   z-index: var(--vkui_internal--z_index_horizontal_scroll_arrow);
+  pointer-events: none;
   opacity: 0;
 }
 
 .showArrows .arrow {
+  pointer-events: auto;
   opacity: var(--vkui--opacity_disable_accessibility);
 }
 
