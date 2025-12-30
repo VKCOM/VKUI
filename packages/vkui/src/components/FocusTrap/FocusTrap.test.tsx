@@ -1,8 +1,7 @@
-import { act, Fragment, useRef, useState } from 'react';
+import { act, createRef, Fragment, useRef, useState } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
-  baselineComponent,
   fakeTimersForScope,
   userEvent,
   waitCSSKeyframesAnimation,
@@ -17,7 +16,7 @@ import { Button } from '../Button/Button';
 import { CellButton } from '../CellButton/CellButton';
 import { Panel } from '../Panel/Panel';
 import { View } from '../View/View';
-import { FocusTrap, type FocusTrapProps } from './FocusTrap';
+import { FocusTrap, FocusTrapInternal, type FocusTrapProps } from './FocusTrap';
 
 const _children = ['first', 'middle', 'last'].map((item) => (
   <ActionSheetItem key={item} data-testid={item}>
@@ -71,8 +70,6 @@ const mockElementFocus = (element: HTMLElement | null, focusFn: VoidFunction) =>
 };
 
 describe(FocusTrap, () => {
-  baselineComponent(FocusTrap);
-
   const mountActionSheetViaClick = async () => {
     await userEvent.click(screen.getByTestId('toggle')); // mount ActionSheet
     await waitForFloatingPosition();
@@ -121,10 +118,11 @@ describe(FocusTrap, () => {
 
   it('preserve focus when autoFocus=false with dynamic content', async () => {
     const Template = (props: { childIds: string[] }) => {
+      const ref = useRef<HTMLDivElement | null>(null);
       return (
         <>
-          <FocusTrap autoFocus={false}>
-            <div>
+          <FocusTrap autoFocus={false} rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
               {props.childIds.map((childId) => (
                 <Button key={childId} data-testid={childId}>
                   Кнопка {childId}
@@ -159,46 +157,6 @@ describe(FocusTrap, () => {
       await unmountActionSheet();
       await waitFor(() => expect(screen.getByTestId('toggle')).toHaveFocus());
       expect(onClosed).toHaveBeenCalledTimes(1);
-    }),
-  );
-
-  it(
-    'captures Esc by default and calls onClose',
-    withFakeTimers(async () => {
-      const onCloseStub = vi.fn();
-      render(
-        <FocusTrap onClose={onCloseStub}>
-          <input onKeyDown={(event) => event.stopPropagation()} defaultValue="Test input" />
-        </FocusTrap>,
-      );
-
-      await userEvent.tab();
-      await userEvent.keyboard(`{Escape}`);
-
-      // event.stopPropagation of input does nothing, onClose of FocusTrap is triggered on Esc
-      expect(onCloseStub).toHaveBeenCalledTimes(1);
-    }),
-  );
-
-  it(
-    'allows to stop Escape keyboard event propagation from inner element with captureEscapeKeyboardEvent flag set to false',
-    withFakeTimers(async () => {
-      const onCloseStub = vi.fn();
-      render(
-        <FocusTrap onClose={onCloseStub} captureEscapeKeyboardEvent={false}>
-          <input
-            data-testid="input"
-            onKeyDown={(event) => event.stopPropagation()}
-            defaultValue="Test button"
-          />
-        </FocusTrap>,
-      );
-
-      await userEvent.tab();
-      await userEvent.keyboard(`{Escape}`);
-
-      // event.stopPropagation of input doesn't trigger onClose of FocusTrap on Esc
-      expect(onCloseStub).toHaveBeenCalledTimes(0);
     }),
   );
 
@@ -260,9 +218,10 @@ describe(FocusTrap, () => {
 
     it('manages navigation inside trap on TAB with remove last child when navigate', async () => {
       const Template = (props: { childIds: string[] }) => {
+        const ref = useRef<HTMLDivElement | null>(null);
         return (
-          <FocusTrap>
-            <div>
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
               {props.childIds.map((childId) => (
                 <Button key={childId} data-testid={childId}>
                   Кнопка {childId}
@@ -294,9 +253,10 @@ describe(FocusTrap, () => {
 
     it('manages navigation inside trap on TAB with remove middle child when focus on middle', async () => {
       const Template = (props: { childIds: string[] }) => {
+        const ref = useRef<HTMLDivElement | null>(null);
         return (
-          <FocusTrap>
-            <div>
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
               {props.childIds.map((childId) => (
                 <Button key={childId} data-testid={childId}>
                   Кнопка {childId}
@@ -327,14 +287,21 @@ describe(FocusTrap, () => {
     });
 
     it('disabled FocusTrap navigation', async () => {
-      const result = render(
-        <>
-          <FocusTrap disabled={true}>
-            <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
-          </FocusTrap>
-          <Button data-testid="button-out-trap">Кнопка не в FocusTrap</Button>
-        </>,
-      );
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <>
+            <FocusTrap disabled={true} rootRef={ref}>
+              <div ref={ref} tabIndex={-1}>
+                <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
+              </div>
+            </FocusTrap>
+            <Button data-testid="button-out-trap">Кнопка не в FocusTrap</Button>
+          </>
+        );
+      };
+
+      const result = render(<Fixture />);
 
       await act(async () => {
         result.getByTestId('button-in-trap')?.focus();
@@ -345,19 +312,27 @@ describe(FocusTrap, () => {
       expect(result.getByTestId('button-out-trap')).toHaveFocus();
     });
 
-    it('should restore focus when mount become true', async () => {
+    it('should restore focus when disabled become false', async () => {
       const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
         const [showTrap, setShowTrap] = useState(false);
         const [disabled, setDisabled] = useState(false);
         return (
           <>
             {showTrap && (
-              <FocusTrap disabled={disabled} mount={!disabled} restoreFocus={true}>
-                <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
-                <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
-                  Кнопка не в FocusTrap
-                </Button>
-              </FocusTrap>
+              <FocusTrapInternal
+                disabled={disabled}
+                mount={!disabled}
+                restoreFocus={true}
+                rootRef={ref}
+              >
+                <div ref={ref} tabIndex={-1}>
+                  <Button data-testid="button-in-trap">Кнопка в FocusTrap</Button>
+                  <Button data-testid="button-set-disabled" onClick={() => setDisabled(true)}>
+                    Кнопка не в FocusTrap
+                  </Button>
+                </div>
+              </FocusTrapInternal>
             )}
             <Button data-testid="button-show-trap" onClick={() => setShowTrap(true)}>
               Кнопка не в FocusTrap
@@ -386,21 +361,27 @@ describe(FocusTrap, () => {
     });
 
     it('check autoFocus to root', async () => {
+      const ref = createRef<HTMLDivElement | null>();
       const rootFocus = vi.fn();
       const buttonFocus = vi.fn();
 
       render(
         <>
-          <FocusTrap
-            autoFocus="root"
-            getRootRef={(element) => mockElementFocus(element, rootFocus)}
-          >
-            <Button
-              data-testid="button-in-trap"
-              getRootRef={(element) => mockElementFocus(element, buttonFocus)}
+          <FocusTrap autoFocus="root" rootRef={ref}>
+            <div
+              ref={(element) => {
+                mockElementFocus(element, rootFocus);
+                ref.current = element;
+              }}
+              tabIndex={-1}
             >
-              Кнопка в FocusTrap
-            </Button>
+              <Button
+                data-testid="button-in-trap"
+                getRootRef={(element) => mockElementFocus(element, buttonFocus)}
+              >
+                Кнопка в FocusTrap
+              </Button>
+            </div>
           </FocusTrap>
         </>,
       );
@@ -410,17 +391,140 @@ describe(FocusTrap, () => {
       });
     });
     it('should autofocus to container when dont have another active elements', async () => {
+      const ref = createRef<HTMLDivElement | null>();
       const rootFocus = vi.fn();
       render(
         <>
-          <FocusTrap autoFocus getRootRef={(element) => mockElementFocus(element, rootFocus)}>
-            <div />
+          <FocusTrap rootRef={ref} autoFocus>
+            <div
+              ref={(element) => {
+                mockElementFocus(element, rootFocus);
+                ref.current = element;
+              }}
+              tabIndex={-1}
+            >
+              <div></div>
+            </div>
           </FocusTrap>
         </>,
       );
       await waitFor(() => {
         expect(rootFocus).toHaveBeenCalledTimes(1);
       });
+    });
+
+    it('should focus first element when focus comes from outside via Tab', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <>
+            <Button data-testid="button-outside">Кнопка вне FocusTrap</Button>
+            <FocusTrap rootRef={ref} autoFocus={false}>
+              <div ref={ref} tabIndex={-1}>
+                <Button data-testid="first">Первая кнопка</Button>
+                <Button data-testid="middle">Средняя кнопка</Button>
+                <Button data-testid="last">Последняя кнопка</Button>
+              </div>
+            </FocusTrap>
+          </>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на элементе вне FocusTrap
+      await act(async () => {
+        result.getByTestId('button-outside')?.focus();
+      });
+      expect(result.getByTestId('button-outside')).toHaveFocus();
+
+      // Нажимаем Tab - фокус попадает на beforeGuard и должен перенестись на первый элемент
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
+      expect(result.getByTestId('last')).not.toHaveFocus();
+    });
+
+    it('should focus first element when focus comes from outside via Tab (relatedTarget is null)', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <>
+            <input type="text" data-testid="input-outside" />
+            <FocusTrap rootRef={ref} autoFocus={false}>
+              <div ref={ref} tabIndex={-1}>
+                <Button data-testid="first">Первая кнопка</Button>
+                <Button data-testid="last">Последняя кнопка</Button>
+              </div>
+            </FocusTrap>
+          </>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на элементе вне FocusTrap
+      await act(async () => {
+        result.getByTestId('input-outside')?.focus();
+      });
+      expect(result.getByTestId('input-outside')).toHaveFocus();
+
+      // Нажимаем Tab - фокус попадает на beforeGuard и должен перенестись на первый элемент
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
+    });
+
+    it('should focus last element when cycling from first element via Shift+Tab', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
+              <Button data-testid="first">Первая кнопка</Button>
+              <Button data-testid="middle">Средняя кнопка</Button>
+              <Button data-testid="last">Последняя кнопка</Button>
+            </div>
+          </FocusTrap>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на первом элементе внутри FocusTrap
+      await act(async () => {
+        result.getByTestId('first')?.focus();
+      });
+      expect(result.getByTestId('first')).toHaveFocus();
+
+      // Нажимаем Shift+Tab - фокус должен попасть на последний элемент (циклическая навигация)
+      await userEvent.tab({ shift: true });
+      expect(result.getByTestId('last')).toHaveFocus();
+    });
+
+    it('should focus first element when cycling from last element via Tab', async () => {
+      const Fixture = () => {
+        const ref = useRef<HTMLDivElement | null>(null);
+        return (
+          <FocusTrap rootRef={ref}>
+            <div ref={ref} tabIndex={-1}>
+              <Button data-testid="first">Первая кнопка</Button>
+              <Button data-testid="middle">Средняя кнопка</Button>
+              <Button data-testid="last">Последняя кнопка</Button>
+            </div>
+          </FocusTrap>
+        );
+      };
+
+      const result = render(<Fixture />);
+
+      // Фокус на последнем элементе внутри FocusTrap
+      await act(async () => {
+        result.getByTestId('last')?.focus();
+      });
+      expect(result.getByTestId('last')).toHaveFocus();
+
+      // Нажимаем Tab - фокус должен попасть на первый элемент (циклическая навигация)
+      await userEvent.tab();
+      expect(result.getByTestId('first')).toHaveFocus();
     });
   });
 });

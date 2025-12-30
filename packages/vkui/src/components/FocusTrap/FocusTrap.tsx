@@ -1,47 +1,47 @@
 'use client';
 
-import { type AllHTMLAttributes } from 'react';
-import { useExternRef } from '../../hooks/useExternRef';
+import * as React from 'react';
 import { useFocusTrap, type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { DEFAULT_MUTATION_OBSERVER_OPTIONS } from '../../hooks/useMutationObserver';
-import type { HasComponent, HasRootRef } from '../../types';
+import type { HasChildren } from '../../types';
 
-export interface FocusTrapProps<T extends HTMLElement = HTMLElement>
-  extends UseFocusTrapProps,
-    Omit<AllHTMLAttributes<T>, keyof UseFocusTrapProps>,
-    HasRootRef<T>,
-    HasComponent {}
+export interface FocusTrapInternalProps extends UseFocusTrapProps, HasChildren {
+  /**
+   * Ref на корневой элемент.
+   */
+  rootRef: React.RefObject<HTMLElement | null>;
+}
 
-export const FocusTrap = <T extends HTMLElement = HTMLElement>({
-  Component = 'div',
-  onClose,
+export type FocusTrapProps = Omit<FocusTrapInternalProps, 'mutationObserverOptions' | 'mount'>;
+
+export const FocusTrapInternal = ({
   autoFocus = true,
   restoreFocus = true,
   disabled = false,
   mount = true,
-  timeout = 0,
-  getRootRef,
+  autoFocusDelay = 0,
+  rootRef,
   children,
-  captureEscapeKeyboardEvent = true,
   mutationObserverOptions = DEFAULT_MUTATION_OBSERVER_OPTIONS,
-  ...restProps
-}: FocusTrapProps<T>): React.ReactNode => {
-  const ref = useExternRef<T>(getRootRef);
-
-  useFocusTrap(ref, {
+}: FocusTrapInternalProps): React.ReactNode => {
+  const { beforeGuard, afterGuard } = useFocusTrap(rootRef, {
     autoFocus,
     restoreFocus,
     disabled,
     mount,
-    timeout,
-    onClose,
-    captureEscapeKeyboardEvent,
+    autoFocusDelay,
     mutationObserverOptions,
   });
 
   return (
-    <Component tabIndex={-1} ref={ref} {...restProps}>
+    <React.Fragment>
+      {beforeGuard}
       {children}
-    </Component>
+      {afterGuard}
+    </React.Fragment>
   );
+};
+
+export const FocusTrap = (props: FocusTrapProps): React.ReactNode => {
+  return <FocusTrapInternal {...props} />;
 };

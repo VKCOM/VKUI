@@ -3,12 +3,15 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { isRefObject } from '../../lib/isRefObject';
 import { stopPropagation } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ActionSheetContext, type ActionSheetContextType } from './ActionSheetContext';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
@@ -31,10 +34,17 @@ export const ActionSheetDropdownMenu = ({
   onAnimationEnd,
   allowClickPropagation = false,
   onClick,
+  getRootRef,
+  // FocusTrap props
+  autoFocus,
+  restoreFocus,
+  disabled,
+  timeout,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
   const platform = usePlatform();
   const { density } = useAdaptivityWithJSMediaQueries();
+  const focusTrapRootRef = useExternRef(getRootRef);
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
   const { onClose: onActionSheetClose } =
@@ -69,6 +79,8 @@ export const ActionSheetDropdownMenu = ({
         onClick?.(event);
       };
 
+  useGlobalEscKeyDown(true, onClose);
+
   return (
     <Popper
       targetRef={targetRef}
@@ -88,8 +100,21 @@ export const ActionSheetDropdownMenu = ({
       onAnimationStart={onAnimationStart}
       onAnimationEnd={onAnimationEnd}
     >
-      <FocusTrap onClose={onClose} {...restProps} onClick={handleClick}>
-        {children}
+      <FocusTrap
+        autoFocus={autoFocus}
+        autoFocusDelay={timeout}
+        restoreFocus={restoreFocus}
+        disabled={disabled}
+        rootRef={focusTrapRootRef}
+      >
+        <RootComponent
+          {...restProps}
+          tabIndex={-1}
+          onClick={handleClick}
+          getRootRef={focusTrapRootRef}
+        >
+          {children}
+        </RootComponent>
       </FocusTrap>
     </Popper>
   );

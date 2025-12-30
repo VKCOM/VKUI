@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
@@ -50,11 +49,13 @@ export interface ActionSheetOnCloseOptions {
 export interface ActionSheetProps
   extends Pick<
       SharedDropdownProps,
-      'toggleRef' | 'popupOffsetDistance' | 'placement' | 'allowClickPropagation'
-    >,
-    Omit<
-      UseFocusTrapProps,
-      'onClose' | 'mount' | 'disabled' | 'captureEscapeKeyboardEvent' | 'mutationObserverOptions'
+      | 'toggleRef'
+      | 'popupOffsetDistance'
+      | 'placement'
+      | 'allowClickPropagation'
+      | 'timeout'
+      | 'restoreFocus'
+      | 'autoFocus'
     >,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'autoFocus' | 'title'> {
   /**

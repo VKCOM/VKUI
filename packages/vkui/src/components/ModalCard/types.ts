@@ -1,5 +1,4 @@
 import type { UIEvent } from 'react';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
 import type { UseBottomSheetHandlers } from '../../lib/sheet';
 import type { ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
@@ -12,8 +11,7 @@ export type ModalCardCloseReason =
 
 export interface ModalCardProps
   extends NavIdProps,
-    Omit<ModalCardBaseProps, 'id' | 'onClose' | 'onTransitionEnd' | keyof UseBottomSheetHandlers>,
-    Pick<UseFocusTrapProps, 'restoreFocus'> {
+    Omit<ModalCardBaseProps, 'id' | 'onClose' | 'onTransitionEnd' | keyof UseBottomSheetHandlers> {
   /**
    * Состояние видимости.
    *
@@ -57,7 +55,7 @@ export interface ModalCardProps
    *
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
-  disableFocusTrap?: UseFocusTrapProps['disabled'];
+  disableFocusTrap?: boolean;
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
    */
@@ -70,4 +68,9 @@ export interface ModalCardProps
    * Отключает анимацию закрытия модалки.
    */
   disableCloseAnimation?: boolean;
+  /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
 }

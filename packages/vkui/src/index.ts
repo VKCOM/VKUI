@@ -135,6 +135,7 @@ export type {
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { ActionSheetDefaultIosCloseItem } from './components/ActionSheet/ActionSheetDefaultIosCloseItem';
+export { FocusTrap, type FocusTrapProps } from './components/FocusTrap/FocusTrap';
 export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export { ScreenSpinnerContext } from './components/ScreenSpinner/context';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
