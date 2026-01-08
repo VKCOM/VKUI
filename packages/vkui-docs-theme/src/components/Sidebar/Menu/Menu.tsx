@@ -101,7 +101,11 @@ function File({ item, itemIdPrefix, hovered = false }: FileProps): React.ReactEl
   }, [active, hovered]);
 
   return (
-    <li className={styles.listItem} ref={ref} id={`${itemIdPrefix}_${item.name}`}>
+    <li
+      className={styles.listItem}
+      ref={ref}
+      id={itemIdPrefix ? `${itemIdPrefix}_${item.name}` : undefined}
+    >
       <Tappable
         href={href}
         className={classNames(styles.menuItem, active && styles.activeMenuItem)}
@@ -155,7 +159,7 @@ function SearchableMenu(props: MenuProps): React.ReactElement {
           input: {
             'onKeyDown': handleKeyDown,
             'role': 'combobox',
-            'aria-expanded': search.length > 0,
+            'aria-expanded': !!search,
             'aria-haspopup': 'listbox',
             'aria-controls': listboxId,
             'aria-activedescendant': activeDescendantId,
@@ -169,7 +173,7 @@ function SearchableMenu(props: MenuProps): React.ReactElement {
         directories={filteredDirectories}
         selectedName={selectedName}
         id={listboxId}
-        label="Результаты поиска"
+        label={!!search ? 'Результаты поиска' : undefined}
       />
     </>
   );
