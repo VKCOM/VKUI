@@ -5281,7 +5281,7 @@ __metadata:
     "@vkontakte/stylelint-config": "npm:^4.1.0"
     "@vkontakte/vkui-tokens": "npm:4.71.0"
     autoprefixer: "npm:^10.4.23"
-    canvas: "npm:^3.2.0"
+    canvas: "npm:^3.2.1"
     clean-webpack-plugin: "npm:^4.0.0"
     concurrently: "npm:^9.2.1"
     cross-env: "npm:^10.1.0"
@@ -6603,14 +6603,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"canvas@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "canvas@npm:3.2.0"
+"canvas@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "canvas@npm:3.2.1"
   dependencies:
     node-addon-api: "npm:^7.0.0"
     node-gyp: "npm:latest"
     prebuild-install: "npm:^7.1.3"
-  checksum: 10/d1506b28dce31cb2292c92e827acb41eb6360ebf382d41dffffd056543aa49f083cae44886586a5ce9c5dc3f107f1938750a23381556dd3b6eeffdc0dfd7cdd8
+  checksum: 10/6b7fdd0a68fd1476b9ca8ba501bd9742a11c6e615188ef4c405437d5db1f84b45a5e7c335bb9ac83b8cb0bf066da2b637eb5596038badfd8feb63f25c7998df8
   languageName: node
   linkType: hard
 
