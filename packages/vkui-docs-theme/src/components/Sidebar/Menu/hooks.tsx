@@ -1,13 +1,6 @@
 import * as React from 'react';
 import type { Item, PageItem } from 'nextra/normalize-pages';
 
-interface NavigationNode {
-  name: string;
-  item: PageItem | Item;
-  next: NavigationNode | null;
-  prev: NavigationNode | null;
-}
-
 interface UseMenuNavigationProps {
   navigableItems: Array<PageItem | Item>;
   search: string;
@@ -19,115 +12,38 @@ interface UseMenuNavigationReturn {
   resetSelection: () => void;
 }
 
-function buildDoublyLinkedList(items: Array<PageItem | Item>): {
-  getNext: (name: string | null) => string | null;
-  getPrev: (name: string | null) => string | null;
-  getItem: (name: string | null) => (PageItem | Item) | null;
-  getFirst: () => string | null;
-  hasItem: (name: string) => boolean;
-  isEmpty: () => boolean;
-} {
-  if (items.length === 0) {
-    return {
-      getNext: () => null,
-      getPrev: () => null,
-      getItem: () => null,
-      getFirst: () => null,
-      hasItem: () => false,
-      isEmpty: () => true,
-    };
-  }
-
-  const nodesMap = new Map<string, NavigationNode>();
-  const nodes: NavigationNode[] = items.map((item) => {
-    const node: NavigationNode = {
-      name: item.name,
-      item,
-      next: null,
-      prev: null,
-    };
-    nodesMap.set(item.name, node);
-    return node;
-  });
-
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].next = nodes[i + 1] || nodes[0]; // Последний указывает на первый
-    nodes[i].prev = nodes[i - 1] || nodes[nodes.length - 1]; // Первый указывает на последний)
-  }
-
-  const head = nodes[0];
-
-  const getNext = (name: string | null): string | null => {
-    if (!name) {
-      return head.name;
-    }
-    const currentNode = nodesMap.get(name);
-    return currentNode?.next?.name || head.name;
-  };
-
-  const getPrev = (name: string | null): string | null => {
-    if (!name) {
-      return head.prev!.name;
-    }
-    const currentNode = nodesMap.get(name);
-    return currentNode?.prev?.name || head.prev!.name;
-  };
-
-  const getItem = (name: string | null): (PageItem | Item) | null => {
-    if (!name) {
-      return null;
-    }
-    const currentNode = nodesMap.get(name);
-    return currentNode?.item || null;
-  };
-
-  const getFirst = (): string | null => {
-    return head.name;
-  };
-
-  const hasItem = (name: string): boolean => {
-    return nodesMap.has(name);
-  };
-
-  const isEmpty = (): boolean => {
-    return nodesMap.size === 0;
-  };
-
-  return { getNext, getPrev, getItem, getFirst, hasItem, isEmpty };
-}
-
 export function useMenuNavigation({
   navigableItems,
   search,
 }: UseMenuNavigationProps): UseMenuNavigationReturn {
-  const [selectedName, setSelectedName] = React.useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(-1);
 
-  const { getNext, getPrev, getItem, getFirst, hasItem, isEmpty } = React.useMemo(
-    () => buildDoublyLinkedList(navigableItems),
-    [navigableItems],
-  );
+  const itemsCount = navigableItems.length;
+  const isEmpty = itemsCount === 0;
+
+  const selectedName = selectedIndex >= 0 ? (navigableItems[selectedIndex]?.name ?? null) : null;
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (isEmpty()) {
+      if (isEmpty) {
         return;
       }
 
       switch (event.key) {
         case 'ArrowDown': {
           event.preventDefault();
-          setSelectedName((prevName) => getNext(prevName));
+          setSelectedIndex((prevIndex) => (prevIndex + 1) % itemsCount);
           break;
         }
         case 'ArrowUp': {
           event.preventDefault();
-          setSelectedName((prevName) => getPrev(prevName));
+          setSelectedIndex((prevIndex) => (prevIndex <= 0 ? itemsCount - 1 : prevIndex - 1));
           break;
         }
         case 'Enter': {
-          if (selectedName) {
+          if (selectedIndex >= 0) {
             event.preventDefault();
-            const item = getItem(selectedName);
+            const item = navigableItems[selectedIndex];
             if (item) {
               const href = (item as PageItem).href || item.route;
               if (href) {
@@ -139,23 +55,23 @@ export function useMenuNavigation({
         }
       }
     },
-    [isEmpty, getNext, getPrev, getItem, selectedName],
+    [isEmpty, itemsCount, navigableItems, selectedIndex],
   );
 
-  const resetSelection = React.useCallback(() => setSelectedName(null), []);
+  const resetSelection = React.useCallback(() => setSelectedIndex(-1), []);
 
   React.useEffect(() => {
-    if (search && !isEmpty()) {
-      setSelectedName((prevName) => {
-        if (!prevName || !hasItem(prevName)) {
-          return getFirst();
+    if (search && !isEmpty) {
+      setSelectedIndex((prevIndex) => {
+        if (prevIndex < 0 || prevIndex >= itemsCount) {
+          return 0;
         }
-        return prevName;
+        return prevIndex;
       });
     } else {
-      setSelectedName(null);
+      setSelectedIndex(-1);
     }
-  }, [search, isEmpty, hasItem, getFirst]);
+  }, [search, isEmpty, itemsCount]);
 
   return {
     selectedName,
