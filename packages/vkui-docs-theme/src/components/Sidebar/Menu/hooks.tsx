@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import type { Item, PageItem } from 'nextra/normalize-pages';
 
 interface UseMenuNavigationProps {
@@ -16,6 +17,7 @@ export function useMenuNavigation({
   navigableItems,
   search,
 }: UseMenuNavigationProps): UseMenuNavigationReturn {
+  const router = useRouter();
   const [selectedIndex, setSelectedIndex] = React.useState<number>(-1);
 
   const itemsCount = navigableItems.length;
@@ -44,12 +46,11 @@ export function useMenuNavigation({
           if (selectedIndex >= 0) {
             event.preventDefault();
             const item = navigableItems[selectedIndex];
-            if (item) {
-              const href = (item as PageItem).href || item.route;
-              if (href) {
-                window.location.href = href;
-              }
+            if (!item) {
+              break;
             }
+            const href = (item as PageItem).href || item.route;
+            href && router.push(href);
           }
           break;
         }
@@ -61,16 +62,15 @@ export function useMenuNavigation({
   const resetSelection = React.useCallback(() => setSelectedIndex(-1), []);
 
   React.useEffect(() => {
-    if (search && !isEmpty) {
-      setSelectedIndex((prevIndex) => {
-        if (prevIndex < 0 || prevIndex >= itemsCount) {
-          return 0;
-        }
-        return prevIndex;
-      });
-    } else {
-      setSelectedIndex(-1);
-    }
+    setSelectedIndex((prevIndex) => {
+      if (!search || isEmpty) {
+        return -1;
+      }
+      if (prevIndex < 0 || prevIndex >= itemsCount) {
+        return 0;
+      }
+      return prevIndex;
+    });
   }, [search, isEmpty, itemsCount]);
 
   return {
