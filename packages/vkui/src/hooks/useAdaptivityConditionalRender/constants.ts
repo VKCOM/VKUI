@@ -8,7 +8,7 @@ export const forcedProps = { className: '' };
  * TODO [>=10]: #9015 Удалить константу.
  */
 export const sizeXCompactMediaQueryProps: ElementProps = {
-  className: styles['-viewWidth--smallTabletMinus-mq'],
+  className: styles.viewWidthSmallTabletMinusMq,
 };
 
 /**
@@ -16,25 +16,25 @@ export const sizeXCompactMediaQueryProps: ElementProps = {
  * TODO [>=10]: #9015 Удалить константу.
  */
 export const sizeXRegularMediaQueryProps: ElementProps = {
-  className: styles['-viewWidth--smallTabletPlus-mq'],
+  className: styles.viewWidthSmallTabletPlusMq,
 };
 
 export const densityCompactMediaQueryProps: ElementProps = {
-  className: styles['-density--compact-mq'],
+  className: styles.densityCompactMq,
 };
 
 export const densityRegularMediaQueryProps: ElementProps = {
-  className: styles['-density--regular-mq'],
+  className: styles.densityRegularMq,
 };
 
 export const viewWidthMediaQueryMapProps: Record<ViewWidthCSSBreakpoints, ElementProps> = {
-  smallTabletMinus: { className: styles['-viewWidth--smallTabletMinus-mq'] },
-  smallTabletPlus: { className: styles['-viewWidth--smallTabletPlus-mq'] },
-  tabletMinus: { className: styles['-viewWidth--tabletMinus-mq'] },
-  tabletPlus: { className: styles['-viewWidth--tabletPlus-mq'] },
+  smallTabletMinus: { className: styles.viewWidthSmallTabletMinusMq },
+  smallTabletPlus: { className: styles.viewWidthSmallTabletPlusMq },
+  tabletMinus: { className: styles.viewWidthTabletMinusMq },
+  tabletPlus: { className: styles.viewWidthTabletPlusMq },
 };
 
 export const deviceTypeMediaQueryMapProps: Record<DeviceTypeCSSBreakpoints, ElementProps> = {
-  mobile: { className: styles['-deviceType--mobile-mq'] },
-  desktop: { className: styles['-deviceType--desktop-mq'] },
+  mobile: { className: styles.deviceTypeMobileMq },
+  desktop: { className: styles.deviceTypeDesktopMq },
 };

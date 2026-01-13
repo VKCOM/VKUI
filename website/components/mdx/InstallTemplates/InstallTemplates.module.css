@@ -40,10 +40,10 @@
 }
 
 .hover .externalLink {
-  animation: link-shift 0.35s ease-out;
+  animation: animationLinkShift 0.35s ease-out;
 }
 
-@keyframes link-shift {
+@keyframes animationLinkShift {
   100% {
     transform: translateX(2px) translateY(-2px);
   }

@@ -22,20 +22,20 @@ import type { ModalCardProps } from './types';
 import styles from './ModalCard.module.css';
 
 const sizeByPlatformClassNames = {
-  vkcom: styles['hostMaxWidthS'],
-  ios: styles['hostMaxWidthM'],
-  android: styles['hostMaxWidthL'],
+  vkcom: styles.hostMaxWidthS,
+  ios: styles.hostMaxWidthM,
+  android: styles.hostMaxWidthL,
 };
 
 const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> = {
-  appear: styles['hostStateEnter'],
-  appearing: styles['hostStateEntering'],
+  appear: styles.hostStateEnter,
+  appearing: styles.hostStateEntering,
 
-  enter: styles['hostStateEnter'],
-  entering: styles['hostStateEntering'],
+  enter: styles.hostStateEnter,
+  entering: styles.hostStateEntering,
 
-  exiting: styles['hostStateExiting'],
-  exited: styles['hostStateExited'],
+  exiting: styles.hostStateExiting,
+  exited: styles.hostStateExited,
 };
 
 export interface ModalCardInternalProps extends Omit<ModalCardProps, 'nav' | 'keepMounted'> {

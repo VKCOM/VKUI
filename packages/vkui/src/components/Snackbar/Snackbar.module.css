@@ -159,13 +159,13 @@
 
 .stateEnter .in,
 .stateEntering .in {
-  animation-name: animation-snackbar-slide-in;
+  animation-name: animationSnackbarSlideIn;
 }
 
 @media (--reduce-motion) {
   .stateEnter .in,
   .stateEntering .in {
-    animation-name: animation-snackbar-fade-in;
+    animation-name: animationSnackbarFadeIn;
   }
 }
 
@@ -181,13 +181,13 @@
 
 .stateExit .in,
 .stateExiting .in {
-  animation-name: animation-snackbar-slide-out;
+  animation-name: animationSnackbarSlideOut;
 }
 
 @media (--reduce-motion) {
   .stateExit .in,
   .stateExiting .in {
-    animation-name: animation-snackbar-fade-out;
+    animation-name: animationSnackbarFadeOut;
   }
 } /* stylelint-disable-next-line at-rule-empty-line-before */
 
@@ -199,7 +199,7 @@
   );
 }
 
-@keyframes animation-snackbar-slide-in {
+@keyframes animationSnackbarSlideIn {
   from {
     opacity: 0;
     transform: var(--vkui_internal--snackbar_animation_from);
@@ -210,7 +210,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-@keyframes animation-snackbar-slide-out {
+@keyframes animationSnackbarSlideOut {
   from {
     opacity: 1;
     transform: var(--vkui_internal--snackbar_animation_to);
@@ -223,7 +223,7 @@
 }
 
 /* Анимации при (prefers-reduced-motion: reduce) */
-@keyframes animation-snackbar-fade-in {
+@keyframes animationSnackbarFadeIn {
   from {
     opacity: 0;
   }
@@ -232,7 +232,7 @@
     opacity: 1;
   }
 }
-@keyframes animation-snackbar-fade-out {
+@keyframes animationSnackbarFadeOut {
   from {
     opacity: 1;
   }

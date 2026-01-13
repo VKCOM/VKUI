@@ -25,12 +25,12 @@
 }
 
 .viewShowForward {
-  animation: root-animation-show-forward var(--vkui_internal--root_animation_duration)
+  animation: animationRootAnimationShowForward var(--vkui_internal--root_animation_duration)
     var(--vkui--animation_easing_platform);
 }
 
 .viewHideBack {
-  animation: root-animation-hide-back var(--vkui_internal--root_animation_duration)
+  animation: animationRootAnimationHideBack var(--vkui_internal--root_animation_duration)
     var(--vkui--animation_easing_platform) forwards;
 }
 
@@ -63,13 +63,13 @@
 }
 
 .ios .viewShowBack::after {
-  animation: root-ios-overlay-animation-show-back var(--vkui_internal--root_animation_duration)
+  animation: animationRootIosOverlayAnimationShowBack var(--vkui_internal--root_animation_duration)
     var(--vkui--animation_easing_platform) forwards;
 }
 
 .ios .viewHideForward::after {
-  animation: root-ios-overlay-animation-hide-forward var(--vkui_internal--root_animation_duration)
-    var(--vkui--animation_easing_platform);
+  animation: animationRootIosOverlayAnimationHideForward
+    var(--vkui_internal--root_animation_duration) var(--vkui--animation_easing_platform);
 }
 
 @media (--reduce-motion) {
@@ -83,7 +83,7 @@
   }
 }
 
-@keyframes root-animation-hide-back {
+@keyframes animationRootAnimationHideBack {
   from {
     opacity: 1;
     transform: none;
@@ -94,7 +94,7 @@
     transform: var(--vkui_internal--root_animation_transform_initial);
   }
 }
-@keyframes root-animation-show-forward {
+@keyframes animationRootAnimationShowForward {
   from {
     opacity: var(--vkui_internal--root_animation_opacity_initial);
     transform: var(--vkui_internal--root_animation_transform_initial);
@@ -105,7 +105,7 @@
     transform: none;
   }
 }
-@keyframes root-ios-overlay-animation-show-back {
+@keyframes animationRootIosOverlayAnimationShowBack {
   from {
     opacity: 0.3;
   }
@@ -114,7 +114,7 @@
     opacity: 0;
   }
 }
-@keyframes root-ios-overlay-animation-hide-forward {
+@keyframes animationRootIosOverlayAnimationHideForward {
   from {
     opacity: 0;
   }

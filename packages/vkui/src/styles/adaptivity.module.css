@@ -15,13 +15,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 /* ================================================================================================================== */
 
 @media (--density-regular) {
-  .-density--compact-mq {
+  .densityCompactMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--density-compact) {
-  .-density--regular-mq {
+  .densityRegularMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
@@ -30,13 +30,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 /* ================================================================================================================== */
 
 @media (--viewWidth-tabletPlus) {
-  .-viewWidth--tabletMinus-mq {
+  .viewWidthTabletMinusMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--viewWidth-tabletMinus) {
-  .-viewWidth--tabletPlus-mq {
+  .viewWidthTabletPlusMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
@@ -45,13 +45,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 /* ================================================================================================================== */
 
 @media (--viewWidth-smallTabletPlus) {
-  .-viewWidth--smallTabletMinus-mq {
+  .viewWidthSmallTabletMinusMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--viewWidth-smallTabletMinus) {
-  .-viewWidth--smallTabletPlus-mq {
+  .viewWidthSmallTabletPlusMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
@@ -60,13 +60,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 /* ================================================================================================================== */
 
 @media (--desktop) {
-  .-deviceType--mobile-mq {
+  .deviceTypeMobileMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--mobile) {
-  .-deviceType--desktop-mq {
+  .deviceTypeDesktopMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }

@@ -31,28 +31,28 @@
 }
 
 .backdropShow {
-  animation: animation-sidebar-fade-in var(--vkui--animation_duration_l) ease both;
+  animation: animationSidebarFadeIn var(--vkui--animation_duration_l) ease both;
 }
 
 .backdropHide {
-  animation: animation-sidebar-fade-out var(--vkui--animation_duration_l) ease both;
+  animation: animationSidebarFadeOut var(--vkui--animation_duration_l) ease both;
 }
 
 .rootShow {
-  animation: animation-sidebar-translate-in var(--vkui--animation_duration_l) ease both;
+  animation: animationSidebarTranslateIn var(--vkui--animation_duration_l) ease both;
 }
 
 .rootHide {
-  animation: animation-sidebar-translate-out var(--vkui--animation_duration_l) ease both;
+  animation: animationSidebarTranslateOut var(--vkui--animation_duration_l) ease both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .rootShow {
-    animation-name: animation-sidebar-fade-in;
+    animation-name: animationSidebarFadeIn;
   }
 
   .rootHide {
-    animation-name: animation-sidebar-fade-out;
+    animation-name: animationSidebarFadeOut;
   }
 }
 @media (--viewWidth-smallTabletPlus) {
@@ -76,7 +76,7 @@
   Animations
  */
 
-@keyframes animation-sidebar-translate-in {
+@keyframes animationSidebarTranslateIn {
   from {
     transform: translateX(-100%);
   }
@@ -85,7 +85,7 @@
     transform: translateX(0);
   }
 }
-@keyframes animation-sidebar-translate-out {
+@keyframes animationSidebarTranslateOut {
   from {
     transform: translateX(0);
   }
@@ -94,7 +94,7 @@
     transform: translateX(-100%);
   }
 }
-@keyframes animation-sidebar-fade-in {
+@keyframes animationSidebarFadeIn {
   from {
     opacity: 0;
   }
@@ -103,7 +103,7 @@
     opacity: 1;
   }
 }
-@keyframes animation-sidebar-fade-out {
+@keyframes animationSidebarFadeOut {
   from {
     opacity: 1;
   }

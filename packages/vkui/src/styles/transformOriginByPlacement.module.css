@@ -1,47 +1,47 @@
-.-anim-transform-origin-top {
+.animTransformOriginTop {
   transform-origin: bottom center;
 }
 
-.-anim-transform-origin-top-start {
+.animTransformOriginTopStart {
   transform-origin: bottom left;
 }
 
-.-anim-transform-origin-top-end {
+.animTransformOriginTopEnd {
   transform-origin: bottom right;
 }
 
-.-anim-transform-origin-right {
+.animTransformOriginRight {
   transform-origin: left center;
 }
 
-.-anim-transform-origin-right-start {
+.animTransformOriginRightStart {
   transform-origin: left top;
 }
 
-.-anim-transform-origin-right-end {
+.animTransformOriginRightEnd {
   transform-origin: left bottom;
 }
 
-.-anim-transform-origin-bottom {
+.animTransformOriginBottom {
   transform-origin: top center;
 }
 
-.-anim-transform-origin-bottom-start {
+.animTransformOriginBottomStart {
   transform-origin: top left;
 }
 
-.-anim-transform-origin-bottom-end {
+.animTransformOriginBottomEnd {
   transform-origin: top right;
 }
 
-.-anim-transform-origin-left {
+.animTransformOriginLeft {
   transform-origin: right center;
 }
 
-.-anim-transform-origin-left-start {
+.animTransformOriginLeftStart {
   transform-origin: right top;
 }
 
-.-anim-transform-origin-left-end {
+.animTransformOriginLeftEnd {
   transform-origin: right bottom;
 }

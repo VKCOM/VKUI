@@ -29,14 +29,14 @@ import type { ModalPageProps } from './types';
 import styles from './ModalPage.module.css';
 
 const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> = {
-  appear: styles['documentStateEnter'],
-  appearing: styles['documentStateEntering'],
+  appear: styles.documentStateEnter,
+  appearing: styles.documentStateEntering,
 
-  enter: styles['documentStateEnter'],
-  entering: styles['documentStateEntering'],
+  enter: styles.documentStateEnter,
+  entering: styles.documentStateEntering,
 
-  exiting: styles['documentStateExiting'],
-  exited: styles['documentStateExited'],
+  exiting: styles.documentStateExiting,
+  exited: styles.documentStateExited,
 };
 
 export interface ModalPageInternalProps
@@ -226,9 +226,9 @@ export const ModalPageInternal = ({
 };
 
 const desktopMaxWidthClassNames = {
-  s: styles['hostDesktopMaxWidthS'],
-  m: styles['hostDesktopMaxWidthM'],
-  l: styles['hostDesktopMaxWidthL'],
+  s: styles.hostDesktopMaxWidthS,
+  m: styles.hostDesktopMaxWidthM,
+  l: styles.hostDesktopMaxWidthL,
 };
 
 function resolveDesktopMaxWidth(

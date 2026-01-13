@@ -6,7 +6,7 @@
   padding-block: var(--vkui--spacing_size_2xl);
   padding-inline: var(--vkui--spacing_size_2xl);
   border-radius: var(--vkui--size_border_radius--regular);
-  animation: screen-spinner-intro 0.3s ease;
+  animation: animationScreenSpinnerIntro 0.3s ease;
 }
 
 .hasLabel {
@@ -79,17 +79,18 @@
 
 /* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
 .icon :global(.vkuiIcon) {
-  animation: screen-spinner-intro 0.2s ease;
+  animation: animationScreenSpinnerIntro 0.2s ease;
 }
 
 /* stylelint-disable-next-line selector-max-type, selector-pseudo-class-disallowed-list */
 .stateDone :global(.vkuiIcon) path {
   stroke-dasharray: 50;
   stroke-dashoffset: 50;
-  animation: screen-spinner-icon-done 0.6s 0.3s var(--vkui--animation_easing_platform) forwards;
+  animation: animationScreenSpinnerIconDone 0.6s 0.3s var(--vkui--animation_easing_platform)
+    forwards;
 }
 
-@keyframes screen-spinner-icon-done {
+@keyframes animationScreenSpinnerIconDone {
   from {
     stroke-dashoffset: 50;
   }
@@ -98,7 +99,7 @@
     stroke-dashoffset: 0;
   }
 }
-@keyframes screen-spinner-intro {
+@keyframes animationScreenSpinnerIntro {
   from {
     opacity: 0;
   }

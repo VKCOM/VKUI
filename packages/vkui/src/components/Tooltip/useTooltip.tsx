@@ -114,7 +114,7 @@ export const useTooltip = ({
                   }
             }
             className={classNames(
-              willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
+              willBeHide ? animationFadeClassNames.fadeOut : animationFadeClassNames.fadeIn,
               className,
             )}
             onCloseIconClick={closable ? onClose : undefined}
