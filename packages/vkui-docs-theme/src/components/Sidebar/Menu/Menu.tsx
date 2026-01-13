@@ -8,6 +8,7 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { useThemeConfig } from '../../../contexts';
 import { Accordion, type AccordionProps } from './Accordion/Accordion';
 import { filterDirectories } from './helpers';
+import { useMenuNavigation } from './hooks';
 import type { FileProps, FolderProps, MenuProps } from './types';
 import styles from './Menu.module.css';
 
@@ -77,7 +78,7 @@ function Folder({ item }: FolderProps) {
   );
 }
 
-function File({ item }: FileProps): React.ReactElement {
+function File({ item, itemIdPrefix, hovered = false }: FileProps): React.ReactElement {
   const route = useFSRoute();
   const active = Boolean(item.route && route === item.route);
   const href = (item as PageItem).href || item.route;
@@ -90,17 +91,21 @@ function File({ item }: FileProps): React.ReactElement {
       return;
     }
 
-    if (ref.current && active) {
+    if (ref.current && (active || hovered)) {
       scrollIntoView(ref.current, {
         block: 'center',
         scrollMode: 'if-needed',
         boundary: (parent) => Boolean(container.contains(parent)),
       });
     }
-  }, [active]);
+  }, [active, hovered]);
 
   return (
-    <li className={styles.listItem} ref={ref}>
+    <li
+      className={styles.listItem}
+      ref={ref}
+      id={itemIdPrefix ? `${itemIdPrefix}_${item.name}` : undefined}
+    >
       <Tappable
         href={href}
         className={classNames(styles.menuItem, active && styles.activeMenuItem)}
@@ -109,6 +114,8 @@ function File({ item }: FileProps): React.ReactElement {
         Component={NextLink}
         focusVisibleMode="inside"
         borderRadiusMode="inherit"
+        hovered={hovered}
+        aria-selected={hovered}
       >
         <Subhead>{item.title}</Subhead>
       </Tappable>
@@ -118,19 +125,56 @@ function File({ item }: FileProps): React.ReactElement {
 
 function SearchableMenu(props: MenuProps): React.ReactElement {
   const [search, setSearch] = React.useState<string>('');
+  const listboxId = React.useId();
 
   const filteredDirectories = search
     ? filterDirectories(props.directories, search)
     : props.directories;
 
+  const navigableItems = React.useMemo(() => {
+    return filteredDirectories.filter(
+      (item) => item.type !== 'separator' && !item.children?.length,
+    );
+  }, [filteredDirectories]);
+
+  const { selectedName, handleKeyDown, resetSelection } = useMenuNavigation({
+    navigableItems,
+    search,
+  });
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.currentTarget.value.trim());
+    resetSelection();
   };
+
+  const activeDescendantId = selectedName ? `${listboxId}_${selectedName}` : undefined;
 
   return (
     <>
-      <Search className={styles.search} value={search} onChange={handleSearch} noPadding />
-      <Menu {...props} directories={filteredDirectories} />
+      <Search
+        className={styles.search}
+        value={search}
+        onChange={handleSearch}
+        slotProps={{
+          input: {
+            'onKeyDown': handleKeyDown,
+            'role': 'combobox',
+            'aria-expanded': !!search,
+            'aria-haspopup': 'listbox',
+            'aria-controls': listboxId,
+            'aria-activedescendant': activeDescendantId,
+            'aria-autocomplete': 'list',
+          },
+        }}
+        noPadding
+      />
+      <Menu
+        {...props}
+        directories={filteredDirectories}
+        selectedName={selectedName}
+        id={listboxId}
+        label={!!search ? 'Результаты поиска' : undefined}
+      />
     </>
   );
 }
@@ -149,15 +193,31 @@ export function Menu({
   directories,
   className,
   mobileView = false,
+  selectedName = null,
+  id,
+  label,
 }: MenuProps): React.ReactElement {
   return (
-    <ul className={classNames(styles.root, !mobileView && styles.currentMenu, className)}>
+    <ul
+      id={id}
+      className={classNames(styles.root, !mobileView && styles.currentMenu, className)}
+      aria-label={label}
+    >
       {directories.map((item) => {
         if (item.type === 'separator') {
           return <Separator key={item.name} title={item.title} />;
         }
-        const Component = item.children?.length ? Folder : File;
-        return <Component key={item.name} item={item} />;
+        const isFile = !item.children?.length;
+        const Component = isFile ? File : Folder;
+        const hovered = isFile && item.name === selectedName;
+
+        return (
+          <Component
+            key={item.name}
+            item={item}
+            {...(isFile ? { hovered, itemIdPrefix: id } : {})}
+          />
+        );
       })}
     </ul>
   );
