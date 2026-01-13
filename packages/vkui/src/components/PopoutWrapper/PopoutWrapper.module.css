@@ -33,12 +33,12 @@
 }
 
 .opened .overlay {
-  animation: animation-full-fade-in var(--vkui--animation_duration_m) ease both;
+  animation: animationPopoutWrapperFullFadeIn var(--vkui--animation_duration_m) ease both;
 }
 
 .closing .overlay {
   opacity: 0;
-  animation: animation-full-fade-out var(--vkui--animation_duration_m)
+  animation: animationPopoutWrapperFullFadeOut var(--vkui--animation_duration_m)
     var(--vkui--animation_easing_default) both;
 }
 
@@ -96,7 +96,7 @@
   justify-content: flex-end;
 }
 
-@keyframes animation-full-fade-in {
+@keyframes animationPopoutWrapperFullFadeIn {
   from {
     opacity: 0;
   }
@@ -105,7 +105,7 @@
     opacity: 1;
   }
 }
-@keyframes animation-full-fade-out {
+@keyframes animationPopoutWrapperFullFadeOut {
   from {
     opacity: 1;
   }

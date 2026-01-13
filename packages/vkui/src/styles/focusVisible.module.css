@@ -2,44 +2,43 @@
  * Утилитарные классы на замену отдельному компоненту для имитации
  * :focus-visible состояния.
  */
-.-focus-visible {
+.focusVisible {
   --vkui_internal--outline_width: 2px;
 }
 
 /* stylelint-disable selector-max-universal */
-.-focus-visible:focus,
-.-focus-visible:focus-visible,
-.-focus-visible *:focus,
-.-focus-visible *:focus-visible {
+.focusVisible:focus,
+.focusVisible:focus-visible,
+.focusVisible *:focus,
+.focusVisible *:focus-visible {
   outline: none;
 }
 /* stylelint-enable selector-max-universal */
-
-.-focus-visible.-focus-visible--mode-outside {
+.focusVisible.focusVisibleModeOutside {
   --vkui_internal--outline_offset_from: 0;
   --vkui_internal--outline_offset_to: var(--vkui_internal--outline_width);
 }
 
-.-focus-visible.-focus-visible--mode-inside {
+.focusVisible.focusVisibleModeInside {
   --vkui_internal--outline_offset_from: calc(-2 * var(--vkui_internal--outline_width));
   --vkui_internal--outline_offset_to: calc(-1 * var(--vkui_internal--outline_width));
 }
 
-.-focus-visible.-focus-visible--focused.-focus-visible--mode-inside,
-.-focus-visible.-focus-visible--focused.-focus-visible--mode-outside {
+.focusVisible.focusVisibleFocused.focusVisibleModeInside,
+.focusVisible.focusVisibleFocused.focusVisibleModeOutside {
   outline: var(--vkui_internal--outline);
   outline-offset: var(--vkui_internal--outline_offset_to);
-  animation: animation-outline-offset 0.1s ease-in-out 0.01s forwards;
+  animation: animationOutlineOffset 0.1s ease-in-out 0.01s forwards;
 }
 
 @media (--reduce-motion) {
-  .-focus-visible.-focus-visible--focused.-focus-visible--mode-inside,
-  .-focus-visible.-focus-visible--focused.-focus-visible--mode-outside {
+  .focusVisible.focusVisibleFocused.focusVisibleModeInside,
+  .focusVisible.focusVisibleFocused.focusVisibleModeOutside {
     animation: none;
   }
 }
 
-@keyframes animation-outline-offset {
+@keyframes animationOutlineOffset {
   0% {
     outline-offset: var(--vkui_internal--outline_offset_from);
   }

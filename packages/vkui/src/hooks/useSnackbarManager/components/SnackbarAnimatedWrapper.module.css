@@ -19,14 +19,14 @@
 }
 
 .stateEnter {
-  animation-name: animation-snackbar-grow-in;
+  animation-name: animationSnackbarGrowIn;
 }
 
 .stateExit {
-  animation-name: animation-snackbar-grow-out;
+  animation-name: animationSnackbarGrowOut;
 }
 
-@keyframes animation-snackbar-grow-in {
+@keyframes animationSnackbarGrowIn {
   from {
     max-block-size: 0;
     margin-block-start: 0;
@@ -37,7 +37,7 @@
     margin-block-start: var(--vkui_internal--SnackbarAnimatedWrapper_margin_top);
   }
 }
-@keyframes animation-snackbar-grow-out {
+@keyframes animationSnackbarGrowOut {
   from {
     block-size: var(--vkui_internal--SnackbarAnimatedWrapper_height);
     margin-block-start: var(--vkui_internal--SnackbarAnimatedWrapper_margin_top);

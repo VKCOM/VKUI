@@ -41,28 +41,28 @@
 }
 
 .opened .fade {
-  animation: animation-panelheadercontext-fade-in var(--vkui--animation_duration_m) ease both;
+  animation: animationPanelHeaderContextFadeIn var(--vkui--animation_duration_m) ease both;
 }
 
 .closing .fade {
-  animation: animation-panelheadercontext-fade-out var(--vkui--animation_duration_m) ease both;
+  animation: animationPanelHeaderContextFadeOut var(--vkui--animation_duration_m) ease both;
 }
 
 .opened .in {
-  animation: animation-panelheadercontext-translate-in var(--vkui--animation_duration_m) ease both;
+  animation: animationPanelHeaderContextTranslateIn var(--vkui--animation_duration_m) ease both;
 }
 
 .closing .in {
-  animation: animation-panelheadercontext-translate-out var(--vkui--animation_duration_m) ease both;
+  animation: animationPanelHeaderContextTranslateOut var(--vkui--animation_duration_m) ease both;
 }
 
 @media (--reduce-motion) {
   .opened .in {
-    animation-name: animation-panelheadercontext-fade-in;
+    animation-name: animationPanelHeaderContextFadeIn;
   }
 
   .closing .in {
-    animation-name: animation-panelheadercontext-fade-out;
+    animation-name: animationPanelHeaderContextFadeOut;
   }
 }
 
@@ -135,7 +135,7 @@
   Animations
  */
 
-@keyframes animation-panelheadercontext-translate-in {
+@keyframes animationPanelHeaderContextTranslateIn {
   from {
     transform: translateY(-100%);
   }
@@ -144,7 +144,7 @@
     transform: translateY(0);
   }
 }
-@keyframes animation-panelheadercontext-translate-out {
+@keyframes animationPanelHeaderContextTranslateOut {
   from {
     transform: translateY(0);
   }
@@ -153,7 +153,7 @@
     transform: translateY(-100%);
   }
 }
-@keyframes animation-panelheadercontext-fade-in {
+@keyframes animationPanelHeaderContextFadeIn {
   from {
     opacity: 0;
   }
@@ -162,7 +162,7 @@
     opacity: 1;
   }
 }
-@keyframes animation-panelheadercontext-fade-out {
+@keyframes animationPanelHeaderContextFadeOut {
   from {
     opacity: 1;
   }

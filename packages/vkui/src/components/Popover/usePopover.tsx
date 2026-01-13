@@ -146,7 +146,7 @@ export const usePopover = <ElementType extends HTMLElement = HTMLElement>({
                   className={classNames(
                     styles.in,
                     noStyling ? undefined : styles.inWithStyling,
-                    willBeHide ? animationFadeClassNames.out : animationFadeClassNames.in,
+                    willBeHide ? animationFadeClassNames.fadeOut : animationFadeClassNames.fadeIn,
                     transformOriginClassNames[resolvedPlacement],
                     className,
                   )}

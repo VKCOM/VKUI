@@ -24,7 +24,7 @@ describe('SimpleGrid', () => {
       props: {
         gap: ['l', 'm'],
       },
-      className: classNames(gapsStyles['-column-gap--m'], gapsStyles['-row-gap--l']),
+      className: classNames(gapsStyles.columnGapM, gapsStyles.rowGapL),
     },
     {
       props: {

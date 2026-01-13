@@ -3,10 +3,10 @@
 
   visibility: hidden;
   animation: 0ms linear var(--vkui_internal--animation_delay_visibility) forwards
-    animation-styles-delay-visibility;
+    animationStylesDelayVisibility;
 }
 
-@keyframes animation-styles-delay-visibility {
+@keyframes animationStylesDelayVisibility {
   to {
     visibility: visible;
   }

@@ -67,13 +67,11 @@ describe('CalendarDay', () => {
         </AppRootContext.Provider>,
       );
 
-      expect(screen.getByTestId('day')).not.toHaveClass(
-        stylesFocusVisible['-focus-visible--focused'],
-      );
+      expect(screen.getByTestId('day')).not.toHaveClass(stylesFocusVisible.focusVisibleFocused);
 
       await userEvent.tab();
 
-      expect(screen.getByTestId('day')).toHaveClass(stylesFocusVisible['-focus-visible--focused']);
+      expect(screen.getByTestId('day')).toHaveClass(stylesFocusVisible.focusVisibleFocused);
     }),
   );
 });

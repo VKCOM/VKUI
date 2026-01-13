@@ -1,35 +1,35 @@
-.-spacing--2xs {
+.spacing2xs {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_2xs);
 }
 
-.-spacing--xs {
+.spacingXs {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_xs);
 }
 
-.-spacing--s {
+.spacingS {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_s);
 }
 
-.-spacing--m {
+.spacingM {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_m);
 }
 
-.-spacing--l {
+.spacingL {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_l);
 }
 
-.-spacing--xl {
+.spacingXl {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_xl);
 }
 
-.-spacing--2xl {
+.spacing2xl {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_2xl);
 }
 
-.-spacing--3xl {
+.spacing3xl {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_3xl);
 }
 
-.-spacing--4xl {
+.spacing4xl {
   --vkui_internal--spacing_size: var(--vkui--spacing_size_4xl);
 }
