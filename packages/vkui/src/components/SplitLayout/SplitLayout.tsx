@@ -1,9 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { usePlatform } from '../../hooks/usePlatform';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -13,7 +12,8 @@ const warn = warnOnce('SplitLayout');
 
 export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`.
+   * @deprecated Since 7.9.0. Будет удалeно в **VKUI v9**.
+   * Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLDivElement>;
   /**
@@ -28,7 +28,7 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
   /**
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
    *
-   * @deprecated Будет удалeно в **VKUI v8**.
+   * @deprecated Since 7.0.0. Будет удалeно в **VKUI v9**.
    * Начиная с **VKUI v7** компоненты можно располагать в любом
    * месте приложения в пределах `AppRoot`.
    */
@@ -36,7 +36,7 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
   /**
    * Свойство для отрисовки `ModalRoot`.
    *
-   * @deprecated Будет удалeно в **VKUI v8**.
+   * @deprecated Since 7.0.0. Будет удалeно в **VKUI v9**.
    * Начиная с **VKUI v7**  `ModalRoot` можно располагать в любом
    * месте приложения в пределах `AppRoot`.
    */
@@ -55,45 +55,45 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
  * @see https://vkui.io/components/split-layout
  */
 export const SplitLayout = ({
-  header,
-  children,
-  getRootRef,
-  getRef,
-  className,
-  center,
-  modal,
   popout,
+  modal,
+  header,
+  center,
+  getRef,
+  children,
 
   slotProps,
   ...restProps
 }: SplitLayoutProps): React.ReactNode => {
   /* istanbul ignore if: не проверяем в тестах */
-  if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotProps={ content: { getRootRef: ... } }`');
+  if (process.env.NODE_ENV === 'development') {
+    if (getRef) {
+      warn(
+        'Свойство `getRef` устаревшее, используйте `slotProps={ content: { getRootRef: ... } }`',
+      );
+    }
+    if (popout) {
+      warn(
+        'Свойство `popout` устаревшее. Передаваемый элемент можно рендерить в любом месте приложения.',
+      );
+    }
+    if (modal) {
+      warn(
+        'Свойство `modal` устаревшее. Передаваемый элемент можно рендерить в любом месте приложения.',
+      );
+    }
   }
 
-  const rootRest = useMergeProps({ getRootRef }, slotProps?.root);
-  const contentRest = useMergeProps(
-    {
-      getRootRef: getRef,
-      className,
-      ...restProps,
-    },
-    slotProps?.content,
-  );
-
-  const platform = usePlatform();
+  const rootRest = useMergeProps(restProps, slotProps?.root);
+  const contentRest = useMergeProps({ getRootRef: getRef }, slotProps?.content);
 
   return (
-    <RootComponent
-      baseClassName={classNames(styles.host, platform === 'ios' && styles.ios)}
-      {...rootRest}
-    >
+    <RootComponent baseClassName={styles.host} {...rootRest}>
       {header}
       <RootComponent
         baseClassName={classNames(
           styles.inner,
-          !!header && styles.innerHeader,
+          hasReactNode(header) && styles.interruptFakeHeader,
           center && styles.innerCenter,
         )}
         {...contentRest}

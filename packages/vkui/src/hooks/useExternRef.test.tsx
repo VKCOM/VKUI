@@ -1,5 +1,3 @@
-'use no memo';
-
 import * as React from 'react';
 import { render } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
@@ -22,9 +20,11 @@ describe(useExternRef, () => {
       let counter = 0;
       const RefForwarder = (props: HasRef<any>) => {
         const ref = useExternRef(props.getRef);
-        firstRef = firstRef || ref;
-        counter += 1;
-        ref.current = counter;
+        React.useEffect(() => {
+          firstRef = firstRef || ref;
+          counter += 1;
+          ref.current = counter;
+        });
         return null;
       };
       render(

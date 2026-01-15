@@ -6,6 +6,9 @@ description: Менеджер модальных окон.
 
 # ModalRoot [tag:component]
 
+> Для управления модальными окнами используйте менеджер в виде хука [`useModalManager`](/components/use-modal-manager).
+> Данный менеджер остался для обратной совместимости с **v7**. В будущем планируется сделать его приватным.
+
 Менеджер модальных окон.
 
 </Overview>
@@ -23,7 +26,9 @@ const modalRoot = (
       <Placeholder
         action={
           <ButtonGroup mode="vertical" align="center">
-            <Button onClick={() => setActiveModal('modal2')}>Открыть карточку</Button>
+            <Button onClick={() => setActiveModal("modal2")}>
+              Открыть карточку
+            </Button>
             <Button onClick={close}>Закрыть</Button>
           </ButtonGroup>
         }
@@ -33,7 +38,9 @@ const modalRoot = (
       <Placeholder
         action={
           <ButtonGroup mode="vertical" align="center">
-            <Button onClick={() => setActiveModal('modal1')}>Вернуться назад</Button>
+            <Button onClick={() => setActiveModal("modal1")}>
+              Вернуться назад
+            </Button>
             <Button onClick={close}>Закрыть</Button>
           </ButtonGroup>
         }
@@ -45,7 +52,7 @@ const modalRoot = (
 return (
   <>
     {modalRoot}
-    <Button onClick={() => setActiveModal('modal1')}>Открыть окно</Button>
+    <Button onClick={() => setActiveModal("modal1")}>Открыть окно</Button>
   </>
 );
 ```
@@ -79,6 +86,10 @@ return (
 > При этом в **Safari >= 16** такой проблему нет, т.к. в нём блокирование **pull-to-refresh** решается в одно свойство [`overscroll-behavior-y: none;`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y).
 > Это свойство автоматически выставляется на `html` при открытии модального окна и удаляется при закрытии.
 
+## Хук `useModalManager`
+
+Для более удобного управления модальными окнами вы можете использовать менеджер в виде хука [`useModalManager`](/components/use-modal-manager)
+
 ## FAQ
 
 ### Создание обёрток для `ModalPage` / `ModalCard`
@@ -93,7 +104,7 @@ const SomeAsyncEffect = () => {
   const [data, setData] = useState({});
   useEffect(function fetchData() {
     // Здесь логика, которая должна вызываться при показе окна
-    fetch('...')
+    fetch("...")
       .then((r) => r.json())
       .then(setData);
   }, []);
@@ -109,7 +120,7 @@ const ModalPageWrapper = ({ id, ...restProps }) => {
         // Здесь логика, которая должна вызываться при показе окна
       }
     },
-    [id, activeModal],
+    [id, activeModal]
   );
 
   return (
@@ -140,7 +151,10 @@ const App = () => {
 Если вам необходимо отключить отображение фона для конкретной модалки в `ModalRoot` вы можете сделать так:
 
 ```jsx
-<ModalRoot activeModal={activeModal} disableModalOverlay={activeModal === 'modal-1'}>
+<ModalRoot
+  activeModal={activeModal}
+  disableModalOverlay={activeModal === "modal-1"}
+>
   <ModalPage id="modal-1" />
   <ModalPage id="modal-2" />
 </ModalRoot>

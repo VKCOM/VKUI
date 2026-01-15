@@ -65,7 +65,7 @@ export const Gallery = ({
     [isControlled, onChange, slideIndex],
   );
 
-  const autoPlayControls = useAutoPlay({
+  const [pause, resume] = useAutoPlay({
     timeout,
     slideIndex,
     onNext: () => handleChange((slideIndex + 1) % childCount),
@@ -82,10 +82,7 @@ export const Gallery = ({
     setSlideIndex(safeSlideIndex);
   }, [onChange, safeSlideIndex, slideIndex]);
 
-  useIsomorphicLayoutEffect(
-    () => (focusWithin ? autoPlayControls.pause() : autoPlayControls.resume()),
-    [focusWithin, autoPlayControls.pause, autoPlayControls.resume],
-  );
+  useIsomorphicLayoutEffect(() => (focusWithin ? pause() : resume()), [focusWithin, pause, resume]);
 
   if (!isClient) {
     return null;
@@ -96,10 +93,10 @@ export const Gallery = ({
       dragDisabled={isControlled && !onChange}
       getRootRef={rootRef}
       {...props}
-      onDragStart={callMultiple(onDragStart, autoPlayControls.pause)}
-      onDragEnd={callMultiple(onDragEnd, autoPlayControls.resume)}
-      onMouseEnter={callMultiple(onMouseOver, autoPlayControls.pause)}
-      onMouseLeave={callMultiple(onMouseOut, autoPlayControls.resume)}
+      onDragStart={callMultiple(onDragStart, pause)}
+      onDragEnd={callMultiple(onDragEnd, resume)}
+      onMouseEnter={callMultiple(onMouseOver, pause)}
+      onMouseLeave={callMultiple(onMouseOut, resume)}
       bullets={childCount > 0 && bullets}
       slideIndex={safeSlideIndex}
       onChange={handleChange}

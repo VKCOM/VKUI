@@ -9,9 +9,9 @@ import { Removable, type RemovableProps } from '../Removable/Removable';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './FormLayoutGroup.module.css';
 
-const sizeYClassNames = {
-  none: classNames(styles.sizeYNone, 'vkuiInternalFormLayoutGroup--sizeY-none'),
-  compact: classNames(styles.sizeYCompact, 'vkuiInternalFormLayoutGroup--sizeY-compact'),
+const densityClassNames = {
+  none: classNames(styles.densityNone, 'vkuiInternalFormLayoutGroup--density-none'),
+  compact: classNames(styles.densityCompact, 'vkuiInternalFormLayoutGroup--density-compact'),
 };
 
 export interface FormLayoutGroupProps
@@ -48,7 +48,7 @@ export const FormLayoutGroup = ({
   disabled,
   ...restProps
 }: FormLayoutGroupProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const isRemovable = removable && mode === 'horizontal';
   const rootEl = useExternRef(getRootRef);
 
@@ -58,7 +58,7 @@ export const FormLayoutGroup = ({
       Component="fieldset"
       baseClassName={classNames(
         styles.host,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         mode === 'horizontal' &&
           classNames(styles.modeHorizontal, 'vkuiInternalFormLayoutGroup--mode-horizontal'),
         mode === 'vertical' && 'vkuiInternalFormLayoutGroup--mode-vertical',

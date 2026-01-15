@@ -11,9 +11,9 @@ describe('File', () => {
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
     const inputRef2 = createRef<HTMLInputElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onInputClick = vi.fn();
 
     render(
       <File
@@ -21,7 +21,10 @@ describe('File', () => {
         className="rootClassName"
         getRootRef={rootRef1}
         getRef={inputRef1}
-        onClick={onClick1}
+        onClick={onRootClick1}
+        id="file"
+        name="file"
+        accept=".txt"
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -33,13 +36,13 @@ describe('File', () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
-            'onClick': onRootClick,
+            'onClick': onRootClick2,
           },
           input: {
             'className': 'inputClassName',
             'getRootRef': inputRef2,
             'data-testid': 'file-2',
-            'onClick': onClick2,
+            'onClick': onInputClick,
           },
         }}
       />,
@@ -48,6 +51,10 @@ describe('File', () => {
     expect(screen.queryByTestId('file')).not.toBeInTheDocument();
     const input = screen.getByTestId('file-2');
     expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute('name', 'file');
+    expect(input).toHaveAttribute('id', 'file');
+    expect(input).toHaveAttribute('accept', '.txt');
+
     expect(input).toHaveClass('inputClassName');
 
     const root = screen.getByTestId('root');
@@ -64,10 +71,12 @@ describe('File', () => {
     expect(inputRef1.current).toBe(input);
 
     fireEvent.click(input);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onInputClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(3);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 });

@@ -1,5 +1,4 @@
 import type { CSSProperties, ReactNode, Ref, UIEvent } from 'react';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
 import type { NavIdProps } from '../../lib/getNavId';
 import type { HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
 
@@ -19,7 +18,6 @@ type OmittedStyleAttribute = {
 export interface ModalPageProps
   extends NavIdProps,
     Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'id' | 'style'>,
-    Pick<UseFocusTrapProps, 'restoreFocus'>,
     OmittedStyleAttribute {
   /**
    * Состояние видимости.
@@ -131,15 +129,18 @@ export interface ModalPageProps
    */
   outsideButtons?: React.ReactNode;
   /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  /**
    * Позволяет отключить захват фокуса.
    *
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
-  disableFocusTrap?: UseFocusTrapProps['disabled'];
+  disableFocusTrap?: boolean;
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
-   * > При использовании `ModalPage` внутри `ModalRoot` есть особенность использования этого свойства.
-   * > Об этом можно почитать на странице документации [`ModalRoot`](/components/modal-root#disable-modal-overlay).
    */
   disableModalOverlay?: boolean;
   /**

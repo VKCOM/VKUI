@@ -13,14 +13,14 @@
 }
 
 .copied .copyIcon {
-  animation: hide-icon 1.25s forwards;
+  animation: animationHideIcon 1.25s forwards;
 }
 
 .copied .doneIcon {
-  animation: show-icon 1.25s 0.15s forwards;
+  animation: animationShowIcon 1.25s 0.15s forwards;
 }
 
-@keyframes hide-icon {
+@keyframes animationHideIcon {
   0% {
     opacity: 1;
   }
@@ -39,7 +39,7 @@
     opacity: 1;
   }
 }
-@keyframes show-icon {
+@keyframes animationShowIcon {
   0% {
     opacity: 0;
   }

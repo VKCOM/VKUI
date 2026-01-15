@@ -2,17 +2,29 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../lib/adaptivity';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { checkClickable, Clickable, type ClickableProps } from '../Clickable/Clickable';
 import { Ripple, useMaybeNeedRipple, useRipple } from './Ripple';
 import { activeClass, DEFAULT_STATE_MODE, hoverClass, type StateProps } from './state';
 import styles from './Tappable.module.css';
 
-const sizeXClassNames = {
-  none: styles.sizeXNone,
-  compact: styles.sizeXCompact,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined && legacySizeX === 'compact') {
+    return styles.withBorder;
+  }
+  if (viewWidth === 'none') {
+    return styles.withBorderOnSmallTabletMinus;
+  }
+  if (viewWidth < ViewWidth.SMALL_TABLET) {
+    return styles.withBorder;
+  }
+  return;
+}
 
 function hasPointerClassName(hasPointer: boolean | undefined) {
   switch (hasPointer) {
@@ -32,23 +44,28 @@ export interface TappableProps extends ClickableProps, StateProps {
    */
   borderRadiusMode?: 'auto' | 'inherit';
   /**
-   * @deprecated Since 7.3.0.
+   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    *
-   * Свойство устарело и будет удалено в `v8`, используйте свойство `activeMode`.
+   * Используйте свойство `activeMode`.
    */
-  activeClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
+  activeClassName?: string; // TODO [>=9]: удалить неиспользуемое свойство.
   /**
-   * @deprecated Since 7.3.0.
+   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    *
-   * Свойство устарело и будет удалено в `v8`, используйте свойство `hoverMode`.
+   * Используйте свойство `hoverMode`.
    */
-  hoverClassName?: string; // Переделать на Omit<ClickableProps, 'activeClassName' | 'hoverClassName'>
+  hoverClassName?: string; // TODO [>=9]: удалить неиспользуемое свойство.
 }
 
-// TODO [>=8]: = React.AllHTMLAttributes<HTMLElement> & HasRootRef<HTMLElement>
-//
-// NOTE: Возможно стоит вообще запретить компонентам расширяться от TappableProps?
-export type TappableOmitProps = Omit<TappableProps, 'DefaultComponent'>;
+/**
+ * @deprecated Не наследуйтесь от этого типа и от TappableProps.
+ *
+ * Компонентам не нужны лишние свойства Tappable компонента.
+ */
+export type TappableOmitProps = Omit<
+  TappableProps,
+  'DefaultComponent' | 'baseClassName' | 'baseStyle'
+>;
 
 export const Tappable = ({
   baseClassName,
@@ -62,7 +79,7 @@ export const Tappable = ({
 }: TappableProps): React.ReactNode => {
   const isClickable = checkClickable(restProps);
 
-  const { sizeX = 'none', hasPointer } = useAdaptivity();
+  const { sizeX: legacySizeX, viewWidth = 'none', hasPointer } = useAdaptivity();
 
   const needRipple = useMaybeNeedRipple(activeMode, hasPointer);
   const { clicks, ...rippleEvents } = useRipple(needRipple, hasPointer);
@@ -80,7 +97,7 @@ export const Tappable = ({
         'vkuiInternalTappable',
         baseClassName,
         styles.host,
-        sizeX !== SizeType.REGULAR && sizeXClassNames[sizeX],
+        getViewWidthClassName(viewWidth, legacySizeX),
         borderRadiusMode === 'inherit' && styles.borderRadiusInherit,
         hasPointerClassName(hasPointer),
       )}

@@ -48,7 +48,7 @@ describe(useAutoPlay, () => {
 
     // Останавливаем работу хука
     act(() => {
-      res.result.current.pause();
+      res.result.current[0]();
     });
     res.rerender();
     // Срабатывает события visibilityChange
@@ -59,7 +59,7 @@ describe(useAutoPlay, () => {
 
     // Восстанавливаем работу хука
     act(() => {
-      res.result.current.resume();
+      res.result.current[1]();
     });
     res.rerender();
     // Срабатывает события visibilityChange

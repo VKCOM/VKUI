@@ -14,9 +14,13 @@ const App = () => {
 
       <Popover portalRoot={document.getElementById('root')}>content</Popover>
 
-      <Popover forcePortal portalRoot={document.getElementById('root')}>content</Popover>
+      <Popover forcePortal portalRoot={document.getElementById('root')}>
+        content
+      </Popover>
 
-      <Popover shownDelay={5} hideDelay={10}>content</Popover>
+      <Popover shownDelay={5} hideDelay={10}>
+        content
+      </Popover>
 
       <Popover shownDelay={5}>content</Popover>
 

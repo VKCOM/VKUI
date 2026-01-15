@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useDOM } from '../../lib/dom';
 import { type CSSCustomProperties } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
@@ -34,26 +33,28 @@ const RemovableIosWithRemove = ({
   const { window } = useDOM();
 
   const removeButtonRef = React.useRef<HTMLElement>(null);
-  const disabledRef = React.useRef(true);
+  const [removeButtonDisabled, setRemoveButtonDisabled] = React.useState(true);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
-  useGlobalEventListener(
-    window,
-    'click',
-    () => {
+  React.useEffect(() => {
+    const listener = () => {
       if (removeOffset > 0) {
         updateRemoveOffset(0);
       }
-    },
-    { capture: true },
-  );
+    };
+
+    window!.addEventListener('click', listener, { capture: true });
+
+    return () => window!.removeEventListener('click', listener, { capture: true });
+  }, [removeOffset, window]);
 
   const onRemoveTransitionEnd = () => {
     if (removeOffset > 0) {
       removeButtonRef?.current?.focus();
-    } else {
-      disabledRef.current = true;
+      return;
     }
+
+    setRemoveButtonDisabled(true);
   };
 
   const onRemoveActivateClick = (e: React.MouseEvent) => {
@@ -62,7 +63,7 @@ const RemovableIosWithRemove = ({
       return;
     }
     const { offsetWidth } = removeButtonRef.current;
-    disabledRef.current = false;
+    setRemoveButtonDisabled(false);
     updateRemoveOffset(offsetWidth);
   };
 
@@ -97,7 +98,7 @@ const RemovableIosWithRemove = ({
         Component="button"
         hasActive={false}
         hasHover={false}
-        disabled={disabledRef.current}
+        disabled={removeButtonDisabled}
         getRootRef={removeButtonRef}
         className={styles.remove}
         onClick={onRemove}

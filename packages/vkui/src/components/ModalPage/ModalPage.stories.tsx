@@ -88,7 +88,7 @@ export const Playground: Story = {
     const close = () => updateArgs({ open: false });
 
     const platform = usePlatform();
-    const { sizeX } = useAdaptivityConditionalRender();
+    const { viewWidth } = useAdaptivityConditionalRender();
     const [expanded, setExpanded] = useState(false);
     const toggle = useCallback(() => setExpanded(!expanded), [expanded]);
 
@@ -99,15 +99,18 @@ export const Playground: Story = {
         header={
           <ModalPageHeader
             before={
-              sizeX.compact &&
+              viewWidth.smallTabletMinus &&
               platform === 'android' && (
-                <AndroidCloseButton className={sizeX.compact.className} onClick={close} />
+                <AndroidCloseButton
+                  className={viewWidth.smallTabletMinus.className}
+                  onClick={close}
+                />
               )
             }
             after={
-              sizeX.compact &&
+              viewWidth.smallTabletMinus &&
               platform === 'ios' && (
-                <IosCloseButton className={sizeX.compact.className} onClick={close} />
+                <IosCloseButton className={viewWidth.smallTabletMinus.className} onClick={close} />
               )
             }
           >
@@ -132,7 +135,7 @@ export const FullscreenModalPage: Story = {
     const close = () => updateArgs({ open: false });
 
     const platform = usePlatform();
-    const { sizeX } = useAdaptivityConditionalRender();
+    const { viewWidth } = useAdaptivityConditionalRender();
 
     return (
       <ModalPage
@@ -142,9 +145,12 @@ export const FullscreenModalPage: Story = {
         header={
           <ModalPageHeader
             before={
-              sizeX.compact &&
+              viewWidth.smallTabletMinus &&
               platform === 'android' && (
-                <AndroidCloseButton className={sizeX.compact.className} onClick={close} />
+                <AndroidCloseButton
+                  className={viewWidth.smallTabletMinus.className}
+                  onClick={close}
+                />
               )
             }
             after={platform === 'ios' && <IosCloseButton onClick={close} />}
@@ -180,8 +186,8 @@ export const ModalPageWithFilters: Story = {
     const [, updateArgs] = useArgs();
     const close = () => updateArgs({ open: false });
 
-    const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>(new Date(1901, 0, 1));
-    const { sizeX } = useAdaptivityConditionalRender();
+    const [dateOfBirth, setDateOfBirth] = useState<Date | null>(new Date(1901, 0, 1));
+    const { viewWidth } = useAdaptivityConditionalRender();
 
     return (
       <ModalPage
@@ -189,8 +195,11 @@ export const ModalPageWithFilters: Story = {
         header={
           <ModalPageHeader
             before={
-              sizeX.compact && (
-                <AndroidCloseButton className={sizeX.compact.className} onClick={close} />
+              viewWidth.smallTabletMinus && (
+                <AndroidCloseButton
+                  className={viewWidth.smallTabletMinus.className}
+                  onClick={close}
+                />
               )
             }
             after={<DoneButton onClick={close} />}
@@ -262,7 +271,7 @@ export const Sandbox: Story = {
   args: { id: 'modal-page', open: true },
   render: function Render(props) {
     const platform = usePlatform();
-    const { sizeX } = useAdaptivityConditionalRender();
+    const { viewWidth } = useAdaptivityConditionalRender();
     const [, updateArgs] = useArgs();
 
     const handleModalClose = (reason: 'close-custom' | ModalPageCloseReason) => {
@@ -277,19 +286,19 @@ export const Sandbox: Story = {
         header={
           <ModalPageHeader
             before={
-              sizeX.compact &&
+              viewWidth.smallTabletMinus &&
               platform === 'android' && (
                 <AndroidCloseButton
-                  className={sizeX.compact.className}
+                  className={viewWidth.smallTabletMinus.className}
                   onClick={() => handleModalClose('close-custom')}
                 />
               )
             }
             after={
-              sizeX.compact &&
+              viewWidth.smallTabletMinus &&
               platform === 'ios' && (
                 <IosCloseButton
-                  className={sizeX.compact.className}
+                  className={viewWidth.smallTabletMinus.className}
                   onClick={() => handleModalClose('close-custom')}
                 />
               )

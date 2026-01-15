@@ -101,8 +101,9 @@ export const ContentBadge: React.FC<ContentBadgeProps> & {
   children,
   ...restProps
 }: ContentBadgeProps) => {
-  const { sizeY = 'none' } = useAdaptivity();
-  const typographyClassNames = size === 'l' ? footnoteClassNames(sizeY) : captionClassNames(sizeY);
+  const { density = 'none' } = useAdaptivity();
+  const typographyClassNames =
+    size === 'l' ? footnoteClassNames(density) : captionClassNames(density);
 
   return (
     <Tappable

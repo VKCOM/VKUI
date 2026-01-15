@@ -4,7 +4,11 @@
 import { type ComponentType, type KeyboardEvent, useCallback } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
-import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import {
+  isSizeXRegularFallback,
+  useAdaptivityWithJSMediaQueries,
+} from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
 import { Keys, pressedKey } from '../../lib/accessibility';
@@ -19,19 +23,20 @@ import {
   ModalOverlay as ModalOverlayDefault,
   type ModalOverlayProps,
 } from '../ModalOverlay/ModalOverlay';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { ModalPageBase } from './ModalPageBase';
 import type { ModalPageProps } from './types';
 import styles from './ModalPage.module.css';
 
 const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> = {
-  appear: styles['documentStateEnter'],
-  appearing: styles['documentStateEntering'],
+  appear: styles.documentStateEnter,
+  appearing: styles.documentStateEntering,
 
-  enter: styles['documentStateEnter'],
-  entering: styles['documentStateEntering'],
+  enter: styles.documentStateEnter,
+  entering: styles.documentStateEntering,
 
-  exiting: styles['documentStateExiting'],
-  exited: styles['documentStateExited'],
+  exiting: styles.documentStateExiting,
+  exited: styles.documentStateExited,
 };
 
 export interface ModalPageInternalProps
@@ -47,6 +52,7 @@ export interface ModalPageInternalProps
  * @private
  */
 export const ModalPageInternal = ({
+  getRootRef,
   open,
   header,
   footer,
@@ -80,6 +86,7 @@ export const ModalPageInternal = ({
   ...restProps
 }: ModalPageInternalProps) => {
   const { hasCustomPanelHeaderAfter } = useConfigProvider();
+  const rootRef = useExternRef(getRootRef);
   const [transitionState, { ref, onTransitionEnd }] = useCSSTransition<HTMLDivElement>(open, {
     enableAppear: !disableOpenAnimation,
     enableEnter: !disableOpenAnimation,
@@ -98,7 +105,8 @@ export const ModalPageInternal = ({
   const hidden = transitionState === 'exited';
   const closable = !preventClose && opened;
 
-  const { sizeX, isDesktop } = useAdaptivityWithJSMediaQueries();
+  const { sizeX: legacySizeXContext } = useAdaptivity();
+  const { isDesktop, sizeX: legacySizeX, viewWidth } = useAdaptivityWithJSMediaQueries();
   const bottomSheetEnabled = !isDesktop && !preventClose && transitionState !== 'exited';
   const { opened: keyboardOpened } = useVirtualKeyboardState(bottomSheetEnabled);
 
@@ -162,58 +170,65 @@ export const ModalPageInternal = ({
     >
       {modalOverlay}
       <FocusTrap
-        {...restProps}
-        autoFocus={!noFocusToDialog}
+        rootRef={rootRef}
         restoreFocus={restoreFocus}
-        role="dialog"
-        aria-modal="true"
         disabled={!opened || hidden || disableFocusTrap}
-        className={classNames(
-          className,
-          styles.host,
-          isDesktop ? styles.hostDesktop : styles.hostMobile,
-          !isDesktop &&
-            (hasCustomPanelHeaderAfter
-              ? styles.hostMobileSafeAreaInsetTopWithCustomOffset
-              : styles.hostMobileSafeAreaInsetTop),
-          desktopMaxWidthClassName,
-          sizeX === 'regular' && 'vkuiInternalModalPage--sizeX-regular',
-        )}
-        style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
+        autoFocus={!noFocusToDialog}
       >
-        <ModalPageBase
-          {...bottomSheetEventHandlers}
-          getRootRef={handleSheetRef}
-          getRef={handleSheetScrollRef}
-          style={documentStyle}
+        <RootComponent
+          {...restProps}
+          tabIndex={-1}
+          getRootRef={rootRef}
+          role="dialog"
+          aria-modal="true"
           className={classNames(
-            isDesktop ? styles.documentDesktop : styles.documentMobile,
-            transitionStateClassNames[transitionState],
+            className,
+            styles.host,
+            isDesktop ? styles.hostDesktop : styles.hostMobile,
+            !isDesktop &&
+              (hasCustomPanelHeaderAfter
+                ? styles.hostMobileSafeAreaInsetTopWithCustomOffset
+                : styles.hostMobileSafeAreaInsetTop),
+            desktopMaxWidthClassName,
+            isSizeXRegularFallback(viewWidth, legacySizeX, legacySizeXContext) &&
+              'vkuiInternalModalPage--viewWidth-smallTabletPlus',
           )}
-          onTransitionEnd={onTransitionEnd}
-          isDesktop={isDesktop}
-          disableContentPanningGesture={disableContentPanningGesture}
-          header={header}
-          footer={footer}
-          outsideButtons={outsideButtons}
-          modalContentTestId={modalContentTestId}
-          modalDismissButtonTestId={modalDismissButtonTestId}
-          modalDismissButtonLabel={modalDismissButtonLabel}
-          hideCloseButton={hideCloseButton}
-          closable={closable}
-          onClose={onClose}
+          style={mergeStyle(mergeStyle(desktopMaxWidthStyle, getHeightCSSVariable(height)), style)}
         >
-          {children}
-        </ModalPageBase>
+          <ModalPageBase
+            {...bottomSheetEventHandlers}
+            getRootRef={handleSheetRef}
+            getRef={handleSheetScrollRef}
+            style={documentStyle}
+            className={classNames(
+              isDesktop ? styles.documentDesktop : styles.documentMobile,
+              transitionStateClassNames[transitionState],
+            )}
+            onTransitionEnd={onTransitionEnd}
+            isDesktop={isDesktop}
+            disableContentPanningGesture={disableContentPanningGesture}
+            header={header}
+            footer={footer}
+            outsideButtons={outsideButtons}
+            modalContentTestId={modalContentTestId}
+            modalDismissButtonTestId={modalDismissButtonTestId}
+            modalDismissButtonLabel={modalDismissButtonLabel}
+            hideCloseButton={hideCloseButton}
+            closable={closable}
+            onClose={onClose}
+          >
+            {children}
+          </ModalPageBase>
+        </RootComponent>
       </FocusTrap>
     </ModalOutlet>
   );
 };
 
 const desktopMaxWidthClassNames = {
-  s: styles['hostDesktopMaxWidthS'],
-  m: styles['hostDesktopMaxWidthM'],
-  l: styles['hostDesktopMaxWidthL'],
+  s: styles.hostDesktopMaxWidthS,
+  m: styles.hostDesktopMaxWidthM,
+  l: styles.hostDesktopMaxWidthL,
 };
 
 function resolveDesktopMaxWidth(

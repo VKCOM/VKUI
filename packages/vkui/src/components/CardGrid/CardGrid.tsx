@@ -2,14 +2,27 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './CardGrid.module.css';
 
-const sizeXClassNames = {
-  none: styles.sizeXNone,
-  compact: styles.sizeXCompact,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined && legacySizeX === 'compact') {
+    return styles.viewWidthNone;
+  }
+  if (viewWidth === 'none') {
+    return styles.viewWidthSmallTabletMinus;
+  }
+  if (viewWidth < ViewWidth.SMALL_TABLET) {
+    return styles.viewWidthNone;
+  }
+  return;
+}
 
 const stylesSize = {
   s: 'vkuiInternalCardGrid--size-s',
@@ -37,7 +50,7 @@ export const CardGrid = ({
   Component = 'ul',
   ...restProps
 }: CardGridProps): React.ReactNode => {
-  const { sizeX = 'none' } = useAdaptivity();
+  const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
 
   return (
     <RootComponent
@@ -48,7 +61,7 @@ export const CardGrid = ({
         'vkuiInternalCardGrid',
         padding && styles.padding,
         stylesSize[size],
-        sizeX !== 'regular' && sizeXClassNames[sizeX],
+        getViewWidthClassName(viewWidth, legacySizeX),
       )}
     />
   );

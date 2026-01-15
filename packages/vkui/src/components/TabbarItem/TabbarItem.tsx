@@ -70,7 +70,6 @@ export const TabbarItem = ({
   return (
     <RootComponent
       Component={Component}
-      {...restProps}
       disabled={disabled}
       onFocus={callMultiple(handleFocusVisibleOnFocus, onFocusProp)}
       onBlur={callMultiple(handleFocusVisibleOnBlur, onBlurProp)}
@@ -81,6 +80,7 @@ export const TabbarItem = ({
         platform === 'android' && styles.android,
         selected && styles.selected,
       )}
+      {...restProps}
     >
       <Tappable
         role="presentation"

@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, type RefObject } from 'react';
-import { noop } from '@vkontakte/vkjs';
 import type { ModalRootContextInterface } from './types';
 
 /**
@@ -15,7 +14,5 @@ export const ModalRootOverlayContext = createContext<RefObject<HTMLDivElement | 
 });
 
 export const ModalRootContext = createContext<ModalRootContextInterface>({
-  updateModalHeight: noop,
-  registerModal: noop,
   isInsideModal: false,
 });

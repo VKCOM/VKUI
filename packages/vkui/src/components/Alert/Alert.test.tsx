@@ -25,22 +25,22 @@ import titleStyles from '../Typography/Title/Title.module.css';
 import typographyStyles from '../Typography/Typography.module.css';
 
 describe('Alert', () => {
-  baselineComponent((props) => <Alert {...props} title="Alert title" onClose={noop} />, {});
+  baselineComponent((props) => <Alert {...props} title="Alert title" onClosed={noop} />, {});
 
   it('shows warning if title and area attributes are not provided', () => {
     setNodeEnv('development');
     const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
 
-    const component = render(<Alert onClose={noop} title="Alert title" />);
+    const component = render(<Alert onClosed={noop} title="Alert title" />);
     expect(warn).not.toHaveBeenCalled();
 
-    component.rerender(<Alert onClose={noop} aria-label="Alert title" />);
+    component.rerender(<Alert onClosed={noop} aria-label="Alert title" />);
     expect(warn).not.toHaveBeenCalled();
 
-    component.rerender(<Alert onClose={noop} aria-labelledby="labelId" />);
+    component.rerender(<Alert onClosed={noop} aria-labelledby="labelId" />);
     expect(warn).not.toHaveBeenCalled();
 
-    component.rerender(<Alert onClose={noop} />);
+    component.rerender(<Alert onClosed={noop} />);
 
     expect(warn.mock.calls[0][0]).toBe(
       '%c[VKUI/Alert] Если "title" не используется, то необходимо задать либо "aria-label", либо "aria-labelledby" (см. правило axe aria-dialog-name)',
@@ -52,10 +52,10 @@ describe('Alert', () => {
   describe('closes', () => {
     fakeTimersForScope();
     it.each(['overlay', 'close'])('with %s click', async (trigger) => {
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const result = render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
-          <Alert onClose={onClose} />
+          <Alert onClosed={onClosed} />
         </AdaptivityProvider>,
       );
       const className =
@@ -65,7 +65,154 @@ describe('Alert', () => {
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
+      expect(onClosed).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('calls onClose with correct reason', () => {
+    fakeTimersForScope();
+    it('calls onClose with "click-overlay" when clicking overlay', async () => {
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
+      const result = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+          <Alert onClose={onClose} onClosed={onClosed} />
+        </AdaptivityProvider>,
+      );
+
+      await userEvent.click(document.querySelector(`.${popoutWrapperStyles.overlay}`)!);
       expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClose).toHaveBeenCalledWith('click-overlay');
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(onClosed).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onClose with "click-item" when clicking action', async () => {
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
+      const result = render(
+        <ConfigProvider platform={Platform.IOS}>
+          <Alert
+            onClose={onClose}
+            onClosed={onClosed}
+            actions={[
+              {
+                'title': 'OK',
+                'mode': 'default',
+                'data-testid': '__action__',
+              },
+            ]}
+          />
+        </ConfigProvider>,
+      );
+
+      await userEvent.click(result.getByTestId('__action__'));
+      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClose).toHaveBeenCalledWith('click-item');
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(onClosed).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onClose with "escape-key" when pressing Escape', async () => {
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
+      const result = render(<Alert onClose={onClose} onClosed={onClosed} title="Test Alert" />);
+
+      await userEvent.keyboard('{Escape}');
+      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClose).toHaveBeenCalledWith('escape-key');
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(onClosed).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onClose with "click-close-button" when clicking dismiss button', async () => {
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
+      const result = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+          <Alert
+            onClose={onClose}
+            onClosed={onClosed}
+            dismissButtonTestId="dismiss-button-test-id"
+            dismissButtonMode="inside"
+          />
+        </AdaptivityProvider>,
+      );
+
+      await act(vi.runAllTimers);
+      await userEvent.click(screen.getByTestId('dismiss-button-test-id'));
+      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClose).toHaveBeenCalledWith('click-close-button');
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(onClosed).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onClose with "click-close-button" when clicking outside dismiss button', async () => {
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
+      const result = render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+          <Alert
+            onClose={onClose}
+            onClosed={onClosed}
+            dismissButtonTestId="dismiss-button-test-id"
+            dismissButtonMode="outside"
+          />
+        </AdaptivityProvider>,
+      );
+
+      await act(vi.runAllTimers);
+      await userEvent.click(screen.getByTestId('dismiss-button-test-id'));
+      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClose).toHaveBeenCalledWith('click-close-button');
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(onClosed).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onClose with "click-item" when action with autoCloseDisabled calls close', async () => {
+      const onClose = vi.fn();
+      const onClosed = vi.fn();
+      const action = vi.fn((args) => {
+        if (args && args.close) {
+          args.close();
+        }
+      });
+      const result = render(
+        <ConfigProvider platform={Platform.IOS}>
+          <Alert
+            onClose={onClose}
+            onClosed={onClosed}
+            actions={[
+              {
+                action,
+                'title': 'OK',
+                'mode': 'default',
+                'data-testid': '__action__',
+                'autoCloseDisabled': true,
+              },
+            ]}
+          />
+        </ConfigProvider>,
+      );
+
+      await userEvent.click(result.getByTestId('__action__'));
+      expect(action).toHaveBeenCalledTimes(1);
+      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClose).toHaveBeenCalledWith('click-item');
+      await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
+        runOnlyPendingTimers: true,
+      });
+      expect(onClosed).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -81,11 +228,11 @@ describe('Alert', () => {
           }
         });
 
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const result = render(
         <ConfigProvider platform={platform}>
           <Alert
-            onClose={onClose}
+            onClosed={onClosed}
             actions={[
               {
                 action,
@@ -103,7 +250,7 @@ describe('Alert', () => {
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
-      expect(onClose).not.toHaveBeenCalled();
+      expect(onClosed).not.toHaveBeenCalled();
 
       // второй клик закроет Alert, так как в action был вызван метод close()
       await userEvent.click(result.getByTestId('__action__'));
@@ -111,16 +258,18 @@ describe('Alert', () => {
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
-      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClosed).toHaveBeenCalledTimes(1);
     });
 
-    it('should call onClose last', async () => {
+    it('should call onClose first, then action after animation', async () => {
       const callOrder: Array<'action' | 'onClose'> = [];
       const action = vi.fn().mockImplementation(() => callOrder.push('action'));
       const onClose = vi.fn().mockImplementation(() => callOrder.push('onClose'));
+      const onClosed = vi.fn();
       const result = render(
         <Alert
           onClose={onClose}
+          onClosed={onClosed}
           actions={[
             {
               action,
@@ -135,7 +284,8 @@ describe('Alert', () => {
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
-      expect(callOrder).toEqual(['action', 'onClose']);
+      expect(callOrder).toEqual(['onClose', 'action']);
+      expect(onClosed).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -143,11 +293,11 @@ describe('Alert', () => {
     fakeTimersForScope();
     it.each([Platform.ANDROID, Platform.IOS])('%s', async (platform) => {
       const action = vi.fn();
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const result = render(
         <ConfigProvider platform={platform}>
           <Alert
-            onClose={onClose}
+            onClosed={onClosed}
             actions={[
               {
                 action,
@@ -164,7 +314,7 @@ describe('Alert', () => {
         runOnlyPendingTimers: true,
       });
       expect(action).toHaveBeenCalledTimes(1);
-      expect(onClose).toHaveBeenCalledTimes(1);
+      expect(onClosed).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -173,7 +323,7 @@ describe('Alert', () => {
     withFakeTimers(async () => {
       const result = render(
         <Alert
-          onClose={vi.fn()}
+          onClosed={vi.fn()}
           actions={[
             { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id' },
             { 'title': 'Deny', 'mode': 'default', 'data-testid': 'deny-test-id' },
@@ -202,7 +352,7 @@ describe('Alert', () => {
       const result = render(
         <ConfigProvider platform={Platform.IOS}>
           <Alert
-            onClose={vi.fn()}
+            onClosed={vi.fn()}
             actions={[
               { 'title': 'Allow', 'mode': 'default', 'data-testid': 'allow-test-id', href },
             ]}
@@ -231,7 +381,7 @@ describe('Alert', () => {
       const result = render(
         <ConfigProvider platform={Platform.IOS}>
           <Alert
-            onClose={vi.fn()}
+            onClosed={vi.fn()}
             actions={[{ 'title': 'Allow', mode, 'data-testid': 'allow-test-id' }]}
           />
         </ConfigProvider>,
@@ -260,7 +410,7 @@ describe('Alert', () => {
       const result = render(
         <ConfigProvider platform={Platform.VKCOM}>
           <Alert
-            onClose={vi.fn()}
+            onClosed={vi.fn()}
             actions={[{ 'title': 'Allow', mode, 'data-testid': 'allow-test-id' }]}
           />
         </ConfigProvider>,
@@ -275,31 +425,31 @@ describe('Alert', () => {
 
   describe('handles dismissButtonMode', () => {
     fakeTimersForScope();
-    it.each<AlertProps['dismissButtonMode']>(['outside', 'inside'])(
-      'passes data-testid to dismiss button in %s dismissButtonMode',
-      async (dismissButtonMode) => {
-        render(
-          <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
-            <Alert
-              onClose={vi.fn()}
-              dismissLabel="Закрыть предупреждение"
-              dismissButtonTestId="dismiss-button-test-id"
-              dismissButtonMode={dismissButtonMode}
-            />
-          </AdaptivityProvider>,
-        );
-        await act(vi.runAllTimers);
-        expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
-          'Закрыть предупреждение',
-        );
-      },
-    );
+    it.each<AlertProps['dismissButtonMode']>([
+      'outside',
+      'inside',
+    ])('passes data-testid to dismiss button in %s dismissButtonMode', async (dismissButtonMode) => {
+      render(
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
+          <Alert
+            onClosed={vi.fn()}
+            dismissLabel="Закрыть предупреждение"
+            dismissButtonTestId="dismiss-button-test-id"
+            dismissButtonMode={dismissButtonMode}
+          />
+        </AdaptivityProvider>,
+      );
+      await act(vi.runAllTimers);
+      expect(screen.getByTestId('dismiss-button-test-id')).toHaveTextContent(
+        'Закрыть предупреждение',
+      );
+    });
 
     it('should hide button in dismissButtonMode="none"', async () => {
       const result = render(
         <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Alert
-            onClose={vi.fn()}
+            onClosed={vi.fn()}
             dismissButtonTestId="dismiss-button-test-id"
             dismissButtonMode="none"
           />
@@ -326,7 +476,7 @@ describe('Alert', () => {
   ])(
     'actions wrapper should have className "$className" when use align "$align"',
     withFakeTimers(async ({ align, className }) => {
-      const result = render(<Alert onClose={vi.fn()} actionsAlign={align} />);
+      const result = render(<Alert onClosed={vi.fn()} actionsAlign={align} />);
       await waitCSSKeyframesAnimation(result.getByRole('alertdialog'), {
         runOnlyPendingTimers: true,
       });
@@ -364,7 +514,7 @@ describe('Alert', () => {
         const result = render(
           <ConfigProvider platform={platform}>
             <Alert
-              onClose={vi.fn()}
+              onClosed={vi.fn()}
               titleTestId="titleTestId"
               descriptionTestId="descriptionTestId"
               title={title}
@@ -387,7 +537,7 @@ describe('Alert', () => {
   it(
     'handle allowClickPropagation correctly',
     withFakeTimers(async () => {
-      const onClose = vi.fn();
+      const onClosed = vi.fn();
       const onClick = vi.fn();
       const action = {
         'title': 'Item',
@@ -397,7 +547,7 @@ describe('Alert', () => {
       };
       const result = render(
         <div onClick={onClick}>
-          <Alert onClose={onClose} actions={[action]} />
+          <Alert onClosed={onClosed} actions={[action]} />
         </div>,
       );
 
@@ -406,7 +556,7 @@ describe('Alert', () => {
 
       result.rerender(
         <div onClick={onClick}>
-          <Alert onClose={onClose} actions={[action]} allowClickPropagation />
+          <Alert onClosed={onClosed} actions={[action]} allowClickPropagation />
         </div>,
       );
 

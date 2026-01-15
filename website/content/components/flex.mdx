@@ -117,7 +117,9 @@ VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/
   ```
 </Playground>
 
-## Flex.Item [tag:component]
+## ~Flex.Item~ [tag:component]
+
+> Подкомпонент устарел. Используйте `Flex`, который теперь принимает все свойства `Flex.Item`.
 
 Подкомпонент `Flex.Item` используется как обёртка для дочерних элементов компонента `Flex` в случае, когда нужно
 переопределить `flex`-свойства этих элементов, например, `flex-basis`:
@@ -129,10 +131,19 @@ VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/
     <Flex.Item flexBasis={100}>
       <Card Component="div">Ширина 100px</Card>
     </Flex.Item>
+    <Flex flexBasis={100}>
+      <Card Component="div">Я лучше Ширина 100px</Card>
+    </Flex>
     <Card Component="div">Колонка</Card>
   </Flex>
   ```
 </Playground>
+
+## Свойства компонентов раскладки
+
+> Компонент `Flex` обладает общими свойствами, которые позволяют управлять отступами, размерами, позиционированием,
+> переполнением и flex-свойствами.
+> Подробнее про эти свойства можно почитать на соответствующей странице [`Box`](/components/box/#layout-props).
 
 ## Свойства и методы [#api]
 

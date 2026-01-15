@@ -9,16 +9,16 @@ import styles from './SimpleCell.module.css';
 describe('SimpleCell', () => {
   baselineComponent((props) => <SimpleCell {...props}>SimpleCell</SimpleCell>);
 
-  it('[typography] indicator is a span regardless of sizeY', () => {
+  it('[typography] indicator is a span regardless of density', () => {
     const { rerender } = render(
-      <AdaptivityProvider sizeY="regular">
+      <AdaptivityProvider density="regular">
         <SimpleCell indicator="Русский">Язык</SimpleCell>
       </AdaptivityProvider>,
     );
     expect(screen.getByText('Русский').tagName.toLowerCase()).toMatch('span');
 
     rerender(
-      <AdaptivityProvider sizeY="compact">
+      <AdaptivityProvider density="compact">
         <SimpleCell indicator="English">Language</SimpleCell>
       </AdaptivityProvider>,
     );

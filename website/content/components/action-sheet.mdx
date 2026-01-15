@@ -25,7 +25,7 @@ function handleClose() {
 
 function handleOpen() {
   setActionSheet(
-    <ActionSheet toggleRef={targetRef} onClose={handleClose}>
+    <ActionSheet toggleRef={targetRef} onClosed={handleClose}>
       <ActionSheetItem>Слушать далее</ActionSheetItem>
       <ActionSheetItem>Поделиться</ActionSheetItem>
       <ActionSheetItem>Скопировать ссылку</ActionSheetItem>
@@ -56,16 +56,16 @@ return (
 
 ## Обязательные свойства
 
-### `onClose`
+### `onClosed`
 
-Свойство `onClose` принимает функцию, которая вызовется после завершения анимации закрытия компонента.
-Обязательно удаляйте из `DOM`-дерева компонент `ActionSheet` в обработчике `onClose`, иначе в верстке останется
+Свойство `onClosed` принимает функцию, которая вызовется после завершения анимации закрытия компонента.
+Обязательно удаляйте из `DOM`-дерева компонент `ActionSheet` в обработчике `onClosed`, иначе в верстке останется
 прозрачный элемент, который будет мешать дальнейшему взаимодействию с элементами и повторному открытию компонента.
 
 Функция принимает объект с информацией о причине закрытия:
 
 ```jsx
-function handleClose({ closedBy }) {
+function handleClosed({ closedBy }) {
   if (closedBy === 'action-item') {
     // закрытие произошло по выбору действия из списка
   } else if (closedBy === 'cancel-item') {
@@ -175,6 +175,34 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
 </ActionSheet>;
 ```
 
+Также можно использовать свойство `slotProps.iosCloseItem` для передачи пропсов в `ActionSheetDefaultIosCloseItem`:
+
+```jsx
+<ActionSheet
+  slotProps={{
+    iosCloseItem: {
+      children: cancelLabel,
+    },
+  }}
+>
+  {/* ActionSheetItem */}
+  {/* ActionSheetItem */}
+  {/* ActionSheetItem */}
+</ActionSheet>;
+```
+
+## ActionSheetDefaultIosCloseItem [#action-sheet-default-ios-close-item]
+
+Компонент для отображения кнопки "Отмена" в `ActionSheet` на платформе iOS.
+
+Рекомендуется использовать этот компонент вместо устаревших `mode="cancel"` и `isCancelItem` в `ActionSheetItem`.
+
+<Playground>
+  ```jsx
+  <ActionSheetDefaultIosCloseItem>Отмена</ActionSheetDefaultIosCloseItem>
+  ```
+</Playground>
+
 ## ActionSheetItem [#action-sheet-item]
 
 Подкомпонент для отображения элемента всплывающего меню. Каждому компоненту можно задать различные режимы отображения,
@@ -211,7 +239,10 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
   ```
 </Playground>
 
-#### `"cancel"`
+#### ~`"cancel"`~
+
+> **@deprecated** Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**.
+> Используйте компонент [`ActionSheetDefaultIosCloseItem`](#action-sheet-default-ios-close-item) или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
 
 Цвет действия отмены.
 
@@ -221,7 +252,10 @@ import { ActionSheet, ActionSheetDefaultIosCloseItem } from '@vkontakte/vkui';
   ```
 </Playground>
 
-### Кнопка "Отмена"
+### ~Кнопка "Отмена"~
+
+> **@deprecated** Since 8.0.0. Свойство `isCancelItem` устарело и будет удалено в **VKUI v10**.
+> Используйте компонент [`ActionSheetDefaultIosCloseItem`](#action-sheet-default-ios-close-item) или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
 
 Свойство `isCancelItem` позволяет пометить пункт действия как "Отмена".
 
@@ -369,11 +403,11 @@ return ['0.25x', '0.5x', '0.75x', 'Нормальная', '1.25x', '1.5x', '2x',
 
 Нажатие на пункт меню можно обработать с помощью свойств `onClick` и `onImmediateClick`.
 
-По умолчанию `onClick` будет вызван после завершения анимации скрытия всплывающего меню и после вызова `onClose`.
+По умолчанию `onClick` будет вызван после завершения анимации скрытия всплывающего меню и после вызова `onClosed`.
 Из этого следует, что в объекте события значение поля `currentTarget` будет не определено.
 Если вам нужен объект события именно на момент нажатия, воспользуйтесь `onImmediateClick`.
 
-> По умолчанию клик на пункт меню автоматически вызывает закрытие всплывающего меню (функцию, переданную в `onClose` у `ActionSheet`).
+> По умолчанию клик на пункт меню автоматически вызывает закрытие всплывающего меню (функцию, переданную в `onClosed` у `ActionSheet`).
 >
 > Если такое поведение нежелательно, то используйте свойство `autoCloseDisabled`. В таком случае закрытие всплывающего окна
 > следует вызывать самостоятельно.

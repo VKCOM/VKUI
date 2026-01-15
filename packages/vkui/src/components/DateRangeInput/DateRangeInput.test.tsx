@@ -122,6 +122,7 @@ describe('DateRangeInput', () => {
           changeEndDayLabel=""
           changeEndMonthLabel=""
           changeEndYearLabel=""
+          accessible={false}
           {...testsProps}
         />,
       );
@@ -157,6 +158,7 @@ describe('DateRangeInput', () => {
           changeEndDayLabel=""
           changeEndMonthLabel=""
           changeEndYearLabel=""
+          accessible={false}
           {...testsProps}
           calendarTestsProps={{
             dayTestId,
@@ -217,6 +219,7 @@ describe('DateRangeInput', () => {
         <DateRangeInput
           value={[startDate, null]}
           onCalendarOpenChanged={onCalendarOpenChanged}
+          accessible={false}
           {...testsProps}
           calendarTestsProps={{
             dayTestId,
@@ -246,7 +249,7 @@ describe('DateRangeInput', () => {
 
     fireEvent.click(screen.getByTestId(testsProps.clearButtonTestId));
 
-    expect(onChange).toHaveBeenCalledExactlyOnceWith(undefined);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(null);
   });
 
   it(
@@ -284,7 +287,7 @@ describe('DateRangeInput', () => {
       render(
         <div>
           <button type="button">Предыдущая кнопка</button>
-          <DateRangeInput {...testsProps} />
+          <DateRangeInput accessible={false} {...testsProps} />
         </div>,
       );
 
@@ -362,6 +365,7 @@ describe('DateRangeInput', () => {
           changeEndYearLabel=""
           value={[startDate, endDate]}
           onChange={vi.fn()}
+          accessible={false}
           {...testsProps}
         />,
       );
@@ -392,6 +396,7 @@ describe('DateRangeInput', () => {
           changeEndYearLabel=""
           value={[startDate, endDate]}
           onChange={vi.fn()}
+          accessible={false}
           {...testsProps}
         />,
       );

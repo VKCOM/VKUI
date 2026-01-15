@@ -9,7 +9,7 @@ export type CSSGlobalValue = 'inherit' | 'initial' | 'unset';
 // Ключевые слова для внутренних размеров
 export type CSSIntrinsicSizingKeywords = 'auto' | 'max-content' | 'min-content' | 'fit-content';
 
-export type PositionValue = 'static' | 'relative' | 'absolute' | 'fixed';
+export type PositionValue = 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
 
 export type OverflowValue = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | CSSGlobalValue;
 

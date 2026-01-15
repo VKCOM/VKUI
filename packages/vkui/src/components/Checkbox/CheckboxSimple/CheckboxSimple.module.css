@@ -17,16 +17,16 @@
 }
 
 /**
- * sizeY COMPACT
+ * density="compact"
  */
 
-.withPadding.sizeYCompact {
+.withPadding.densityCompact {
   inline-size: var(--vkui--size_field_height--compact);
   block-size: var(--vkui--size_field_height--compact);
 }
 
-@media (--sizeY-compact) {
-  .withPadding.sizeYNone {
+@media (--density-compact) {
+  .withPadding.densityNone {
     inline-size: var(--vkui--size_field_height--compact);
     block-size: var(--vkui--size_field_height--compact);
   }

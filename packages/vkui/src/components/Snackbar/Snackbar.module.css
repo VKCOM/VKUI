@@ -9,11 +9,14 @@
   --vkui_internal--snackbar_animation_duration: 340ms;
   --vkui_internal--snackbar_animation_text_direction: 1;
 
-  position: fixed;
   inset-inline: var(--vkui_internal--safe_area_inset_left)
     var(--vkui_internal--safe_area_inset_right);
   z-index: var(--vkui--z_index_popout);
   user-select: none;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .ios {
@@ -116,10 +119,13 @@
 }
 
 .in {
-  padding: var(--vkui_internal--snackbar_in_padding);
   animation-duration: var(--vkui_internal--snackbar_animation_duration);
   animation-timing-function: var(--vkui--animation_easing_platform);
   animation-fill-mode: both;
+}
+
+.fixed .in {
+  padding: var(--vkui_internal--snackbar_in_padding);
 }
 
 .placementTopStart .in,
@@ -153,13 +159,13 @@
 
 .stateEnter .in,
 .stateEntering .in {
-  animation-name: animation-snackbar-slide-in;
+  animation-name: animationSnackbarSlideIn;
 }
 
 @media (--reduce-motion) {
   .stateEnter .in,
   .stateEntering .in {
-    animation-name: animation-snackbar-fade-in;
+    animation-name: animationSnackbarFadeIn;
   }
 }
 
@@ -175,17 +181,25 @@
 
 .stateExit .in,
 .stateExiting .in {
-  animation-name: animation-snackbar-slide-out;
+  animation-name: animationSnackbarSlideOut;
 }
 
 @media (--reduce-motion) {
   .stateExit .in,
   .stateExiting .in {
-    animation-name: animation-snackbar-fade-out;
+    animation-name: animationSnackbarFadeOut;
   }
 } /* stylelint-disable-next-line at-rule-empty-line-before */
 
-@keyframes animation-snackbar-slide-in {
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalEpic--hasTabbar) .host {
+  --vkui_internal--snackbar_safe_area_inset_bottom: calc(
+    var(--vkui_internal--tabbar_height) +
+    var(--vkui_internal--safe_area_inset_bottom)
+  );
+}
+
+@keyframes animationSnackbarSlideIn {
   from {
     opacity: 0;
     transform: var(--vkui_internal--snackbar_animation_from);
@@ -196,7 +210,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
-@keyframes animation-snackbar-slide-out {
+@keyframes animationSnackbarSlideOut {
   from {
     opacity: 1;
     transform: var(--vkui_internal--snackbar_animation_to);
@@ -209,7 +223,7 @@
 }
 
 /* Анимации при (prefers-reduced-motion: reduce) */
-@keyframes animation-snackbar-fade-in {
+@keyframes animationSnackbarFadeIn {
   from {
     opacity: 0;
   }
@@ -218,7 +232,7 @@
     opacity: 1;
   }
 }
-@keyframes animation-snackbar-fade-out {
+@keyframes animationSnackbarFadeOut {
   from {
     opacity: 1;
   }

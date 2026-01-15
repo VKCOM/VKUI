@@ -56,9 +56,9 @@ describe('ChipsSelect', () => {
       const rootRef2 = createRef<HTMLDivElement>();
       const inputRef1 = createRef<HTMLInputElement>();
       const inputRef2 = createRef<HTMLInputElement>();
-      const onClick1 = vi.fn();
-      const onClick2 = vi.fn();
-      const onRootClick = vi.fn();
+      const onInputClick = vi.fn();
+      const onRootClick1 = vi.fn();
+      const onRootClick2 = vi.fn();
       const onInputChange1 = vi.fn();
       const onInputChange2 = vi.fn();
 
@@ -69,9 +69,10 @@ describe('ChipsSelect', () => {
           onInputChange={onInputChange1}
           data-testid="input"
           className="rootClassName"
+          id="input"
           getRootRef={rootRef1}
           getRef={inputRef1}
-          onClick={onClick1}
+          onClick={onRootClick1}
           style={{
             backgroundColor: 'rgb(255, 0, 0)',
           }}
@@ -83,13 +84,13 @@ describe('ChipsSelect', () => {
                 color: 'rgb(255, 0, 0)',
               },
               'getRootRef': rootRef2,
-              'onClick': onRootClick,
+              'onClick': onRootClick2,
             },
             input: {
               'className': 'inputClassName',
               'getRootRef': inputRef2,
               'data-testid': 'input-2',
-              'onClick': onClick2,
+              'onClick': onInputClick,
               'value': 'input-value-2',
               'onChange': onInputChange2,
             },
@@ -102,6 +103,7 @@ describe('ChipsSelect', () => {
       expect(input).toBeInTheDocument();
       expect(input).toHaveClass('inputClassName');
       expect(input).toHaveValue('input-value-2');
+      expect(input).toHaveAttribute('id', 'input');
 
       const root = screen.getByTestId('root');
       expect(root).toBeInTheDocument();
@@ -117,11 +119,13 @@ describe('ChipsSelect', () => {
       expect(inputRef1.current).toBe(input);
 
       fireEvent.click(input);
-      expect(onClick1).toHaveBeenCalledTimes(1);
-      expect(onClick2).toHaveBeenCalledTimes(1);
+      expect(onInputClick).toHaveBeenCalledTimes(1);
+      expect(onRootClick1).toHaveBeenCalledTimes(1);
+      expect(onRootClick2).toHaveBeenCalledTimes(1);
 
       fireEvent.click(root);
-      expect(onRootClick).toHaveBeenCalledTimes(2);
+      expect(onRootClick1).toHaveBeenCalledTimes(2);
+      expect(onRootClick2).toHaveBeenCalledTimes(2);
 
       await userEvent.type(input, 'v');
       expect(onInputChange1).toHaveBeenCalledTimes(1);
@@ -593,31 +597,30 @@ describe('ChipsSelect', () => {
     it.each([
       { creatable: true, description: 'adds custom chip' },
       { creatable: false, description: 'does not add custom chip' },
-    ])(
-      '$description when `addOnBlur` provided and `creatable` is $creatable',
-      async ({ creatable }) => {
-        const onChange = vi.fn();
-        const result = render(
-          <ChipsSelect
-            creatable={creatable}
-            addOnBlur
-            options={colors}
-            defaultValue={[]}
-            onChange={onChange}
-          />,
-        );
+    ])('$description when `addOnBlur` provided and `creatable` is $creatable', async ({
+      creatable,
+    }) => {
+      const onChange = vi.fn();
+      const result = render(
+        <ChipsSelect
+          creatable={creatable}
+          addOnBlur
+          options={colors}
+          defaultValue={[]}
+          onChange={onChange}
+        />,
+      );
 
-        await userEvent.type(result.getByRole('combobox'), customChip.label);
-        await waitForFloatingPosition();
-        await userEvent.click(document.body);
+      await userEvent.type(result.getByRole('combobox'), customChip.label);
+      await waitForFloatingPosition();
+      await userEvent.click(document.body);
 
-        if (creatable) {
-          expect(onChange).toHaveBeenCalledExactlyOnceWith([customChip]);
-        } else {
-          expect(onChange).not.toHaveBeenCalledWith([]);
-        }
-      },
-    );
+      if (creatable) {
+        expect(onChange).toHaveBeenCalledExactlyOnceWith([customChip]);
+      } else {
+        expect(onChange).not.toHaveBeenCalledWith([]);
+      }
+    });
   });
 
   it.each([{ readOnly: false }, { readOnly: true }])(
@@ -629,12 +632,16 @@ describe('ChipsSelect', () => {
       const result = render(
         <ChipsSelect
           readOnly={readOnly}
-          data-testid="input"
           options={colors}
           defaultValue={[]}
           onFocus={onFocus}
           onBlur={onBlur}
           onKeyDown={onKeyDown}
+          slotProps={{
+            input: {
+              'data-testid': 'input',
+            },
+          }}
         />,
       );
 
@@ -808,60 +815,70 @@ describe.each<{
     str: 'Зеленый,Фиолетовый.Красный',
     expectedInputValue: 'Зеленый,Фиолетовый.Красный',
   },
-])(
-  'should correct use delimiter $delimiter',
-  ({ delimiter, str, expectedValues, expectedInputValue }) => {
-    fakeTimersForScope();
-    it('should add some options by splitting by delimiter when creatable', async () => {
-      const onChange = vi.fn();
-      render(
-        <ChipsSelect
-          options={[]}
-          defaultValue={[]}
-          data-testid="input"
-          onChange={onChange}
-          delimiter={delimiter}
-          creatable
-        />,
-      );
-      await act(async () => {
-        fireEvent.input(screen.getByTestId('input'), {
-          target: { value: str },
-        });
-        vi.runOnlyPendingTimers();
+])('should correct use delimiter $delimiter', ({
+  delimiter,
+  str,
+  expectedValues,
+  expectedInputValue,
+}) => {
+  fakeTimersForScope();
+  it('should add some options by splitting by delimiter when creatable', async () => {
+    const onChange = vi.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        onChange={onChange}
+        delimiter={delimiter}
+        creatable
+        slotProps={{
+          input: {
+            'data-testid': 'input',
+          },
+        }}
+      />,
+    );
+    await act(async () => {
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
       });
-      if (expectedValues) {
-        expect(onChange).toHaveBeenCalledExactlyOnceWith(
-          expectedValues.map((value) => ({
-            value,
-            label: value,
-          })),
-        );
-      } else {
-        expect(onChange).not.toHaveBeenCalled();
-      }
-      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+      vi.runOnlyPendingTimers();
     });
-
-    it('should not add some options by splitting by delimiter when not creatable', async () => {
-      const onChange = vi.fn();
-      render(
-        <ChipsSelect
-          options={[]}
-          defaultValue={[]}
-          data-testid="input"
-          onChange={onChange}
-          delimiter={delimiter}
-        />,
+    if (expectedValues) {
+      expect(onChange).toHaveBeenCalledExactlyOnceWith(
+        expectedValues.map((value) => ({
+          value,
+          label: value,
+        })),
       );
-      await act(async () => {
-        fireEvent.input(screen.getByTestId('input'), {
-          target: { value: str },
-        });
-        vi.runOnlyPendingTimers();
-      });
+    } else {
       expect(onChange).not.toHaveBeenCalled();
-      expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
+    }
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
+  });
+
+  it('should not add some options by splitting by delimiter when not creatable', async () => {
+    const onChange = vi.fn();
+    render(
+      <ChipsSelect
+        options={[]}
+        defaultValue={[]}
+        onChange={onChange}
+        delimiter={delimiter}
+        slotProps={{
+          input: {
+            'data-testid': 'input',
+          },
+        }}
+      />,
+    );
+    await act(async () => {
+      fireEvent.input(screen.getByTestId('input'), {
+        target: { value: str },
+      });
+      vi.runOnlyPendingTimers();
     });
-  },
-);
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(str);
+  });
+});

@@ -149,7 +149,7 @@ interface UseActiveProps extends Pick<StateProps, 'activated' | 'activeEffectDel
   /**
    * Блокирование активации состояний.
    */
-  lockStateRef: React.RefObject<boolean>;
+  lockState: boolean;
   setParentStateLock: (v: boolean) => void;
 }
 
@@ -160,7 +160,7 @@ function useActive({
   activated,
   activeEffectDelay,
   hasActive = true,
-  lockStateRef,
+  lockState,
   setParentStateLock,
 }: UseActiveProps) {
   // передаём setParentStateLock, чтобы функция вызывалась вместе с установкой стейта,
@@ -168,24 +168,27 @@ function useActive({
   const [activatedState, setActivated] = useStateWithDelay<boolean>(false, 0, setParentStateLock);
 
   // Список нажатий которые не требуется отменять
-  const pointersUp = React.useMemo(() => new Set<number>(), []);
+  const pointersUpRef = React.useRef<Set<number>>(null);
+  if (pointersUpRef.current === null) {
+    pointersUpRef.current = new Set<number>();
+  }
 
   const onPointerDown = () => {
-    if (lockStateRef.current) {
+    if (lockState) {
       return;
     }
 
     setActivated(true, ACTIVE_DELAY);
     // намеренно выставляем lock, так как setActivated вызов отложен
-    // а у отложенного setActivated setParentStateLock тоже вызовится отложенно
+    // а у отложенного setActivated setParentStateLock тоже вызовется отложено
     // родитель сейчас тоже обработает это же событие PointerDown
     // если мы не залочим activatedState у родителя сейчас, то родитель выставит active состояние
     setParentStateLock(true);
   };
 
   const onPointerCancel: React.PointerEventHandler = (e) => {
-    if (pointersUp.has(e.pointerId)) {
-      pointersUp.delete(e.pointerId);
+    if (pointersUpRef.current!.has(e.pointerId)) {
+      pointersUpRef.current!.delete(e.pointerId);
       return;
     }
 
@@ -193,9 +196,9 @@ function useActive({
   };
 
   const onPointerUp: React.PointerEventHandler = (e) => {
-    pointersUp.add(e.pointerId);
+    pointersUpRef.current!.add(e.pointerId);
 
-    if (lockStateRef.current) {
+    if (lockState) {
       return;
     }
 
@@ -207,7 +210,7 @@ function useActive({
     activated ??
     calculateStateValue({
       hasState: hasActive,
-      isLocked: lockStateRef.current,
+      isLocked: lockState,
       stateValueLocal: activatedState,
     });
 
@@ -252,18 +255,18 @@ function useLockState(
 
 function useLockRef(
   setParentStateLockBubbling: (v: boolean) => void,
-): readonly [React.RefObject<boolean>, (v: boolean) => void, (...args: any[]) => void] {
-  const lockStateRef = React.useRef(false);
+): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
+  const [lockState, setLockState] = React.useState(false);
 
   const setStateLockBubblingImmediate = React.useCallback(
     (isLock: boolean) => {
-      lockStateRef.current = isLock;
+      setLockState(isLock);
       setParentStateLockBubbling(isLock);
     },
     [setParentStateLockBubbling],
   );
 
-  return [lockStateRef, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
+  return [lockState, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
 }
 
 /**
@@ -288,7 +291,7 @@ export function useState({
 
   const [lockHoverState, setParentStateLockHoverBubbling, setLockHoverBubblingImmediate] =
     useLockState(unlockParentHover ? noop : lockHoverStateBubbling);
-  const [lockActiveStateRef, setParentStateLockActiveBubbling, setLockActiveBubblingImmediate] =
+  const [lockActiveState, setParentStateLockActiveBubbling, setLockActiveBubblingImmediate] =
     useLockRef(lockActiveStateBubbling);
 
   const { isHovered, ...hoverEvent } = useHover({
@@ -302,7 +305,7 @@ export function useState({
     activated,
     hasActive,
     activeEffectDelay,
-    lockStateRef: lockActiveStateRef,
+    lockState: lockActiveState,
     setParentStateLock: setParentStateLockActiveBubbling,
   });
 

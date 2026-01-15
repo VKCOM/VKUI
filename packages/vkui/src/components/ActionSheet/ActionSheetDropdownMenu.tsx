@@ -3,15 +3,16 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
-import { useEffectDev } from '../../hooks/useEffectDev';
-import { useEventListener } from '../../hooks/useEventListener';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useDOM } from '../../lib/dom';
 import { isRefObject } from '../../lib/isRefObject';
 import { stopPropagation } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { Popper } from '../Popper/Popper';
+import { RootComponent } from '../RootComponent/RootComponent';
+import { ActionSheetContext, type ActionSheetContextType } from './ActionSheetContext';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
@@ -24,7 +25,7 @@ export const ActionSheetDropdownMenu = ({
   children,
   toggleRef,
   closing,
-  onClose,
+  onClose: onCloseProp,
   className,
   style,
   popupOffsetDistance = 0,
@@ -33,32 +34,30 @@ export const ActionSheetDropdownMenu = ({
   onAnimationEnd,
   allowClickPropagation = false,
   onClick,
+  getRootRef,
+  // FocusTrap props
+  autoFocus,
+  restoreFocus,
+  disabled,
+  timeout,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
-  const { document } = useDOM();
   const platform = usePlatform();
-  const { sizeY } = useAdaptivityWithJSMediaQueries();
+  const { density } = useAdaptivityWithJSMediaQueries();
+  const focusTrapRootRef = useExternRef(getRootRef);
   const elementRef = React.useRef<HTMLDivElement | null>(null);
 
-  useEffectDev(() => {
-    const toggleEl = getEl(toggleRef);
-    if (!toggleEl) {
-      warn(`Свойство "toggleRef" не передано`, 'error');
-    }
-  }, [toggleRef]);
-
-  const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
-    const dropdownElement = elementRef?.current;
-    if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
-      onClose?.();
-    }
-  });
+  const { onClose: onActionSheetClose } =
+    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      bodyClickListener.add(document!.body);
-    });
-  }, [bodyClickListener, document]);
+    if (process.env.NODE_ENV === 'development') {
+      const toggleEl = getEl(toggleRef);
+      if (!toggleEl) {
+        warn(`Свойство "toggleRef" не передано`, 'error');
+      }
+    }
+  }, [toggleRef]);
 
   const targetRef = React.useMemo(() => {
     if (isRefObject<SharedDropdownProps['toggleRef'], HTMLElement>(toggleRef)) {
@@ -68,12 +67,19 @@ export const ActionSheetDropdownMenu = ({
     return { current: toggleRef as HTMLElement };
   }, [toggleRef]);
 
+  const onClose = React.useCallback(() => {
+    onCloseProp?.();
+    onActionSheetClose?.('escape-key');
+  }, [onActionSheetClose, onCloseProp]);
+
   const handleClick = allowClickPropagation
     ? onClick
     : (event: React.MouseEvent<HTMLElement>) => {
         stopPropagation(event);
         onClick?.(event);
       };
+
+  useGlobalEscKeyDown(true, onClose);
 
   return (
     <Popper
@@ -85,7 +91,7 @@ export const ActionSheetDropdownMenu = ({
         platform === 'ios' && styles.ios,
         styles.menu,
         closing ? styles.closing : styles.opening,
-        sizeY === 'compact' && styles.sizeYCompact,
+        density === 'compact' && styles.densityCompact,
         className,
       )}
       style={style}
@@ -94,8 +100,21 @@ export const ActionSheetDropdownMenu = ({
       onAnimationStart={onAnimationStart}
       onAnimationEnd={onAnimationEnd}
     >
-      <FocusTrap onClose={onClose} {...restProps} onClick={handleClick}>
-        {children}
+      <FocusTrap
+        autoFocus={autoFocus}
+        autoFocusDelay={timeout}
+        restoreFocus={restoreFocus}
+        disabled={disabled}
+        rootRef={focusTrapRootRef}
+      >
+        <RootComponent
+          {...restProps}
+          tabIndex={-1}
+          onClick={handleClick}
+          getRootRef={focusTrapRootRef}
+        >
+          {children}
+        </RootComponent>
       </FocusTrap>
     </Popper>
   );

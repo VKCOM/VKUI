@@ -13,12 +13,12 @@
   color-scheme: var(--vkui--colors_scheme);
 }
 
-.sizeYCompact {
+.densityCompact {
   --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone {
+@media (--density-compact) {
+  .densityNone {
     --vkui_internal--panel_header_height: var(--vkui--size_panel_header_height--compact);
   }
 }

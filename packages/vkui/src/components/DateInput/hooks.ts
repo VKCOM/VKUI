@@ -6,15 +6,15 @@ import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 interface UseDateInputValueOptions {
   value?: Date | null;
   defaultValue?: Date | null;
-  onChange?: (value?: Date) => void;
+  onChange?: (value: Date | null) => void;
   timezone?: string;
 }
 
 export interface UseDateInputValueReturn {
-  value?: Date | null;
+  value: Date | null;
   updateValue: (v: Date) => Date;
-  setInternalValue: (v?: Date | null) => void;
-  getLastUpdatedValue: () => Date | null | undefined;
+  setInternalValue: (v: Date | null) => void;
+  getLastUpdatedValue: () => Date | null;
   clearValue: () => void;
 }
 
@@ -47,10 +47,10 @@ export const useDateInputValue = ({
   onChange,
   timezone,
 }: UseDateInputValueOptions): UseDateInputValueReturn => {
-  const [internalValue, setInternalValue] = React.useState<Date | null | undefined>(
+  const [internalValue, setInternalValue] = React.useState<Date | null>(
     getStateValue(null, value, defaultValue, timezone),
   );
-  const lastUpdatedValueRef = React.useRef<Date | null | undefined>(
+  const lastUpdatedValueRef = React.useRef<Date | null>(
     getStateValue(null, value, defaultValue, timezone),
   );
 
@@ -82,7 +82,7 @@ export const useDateInputValue = ({
   const clearValue = () => {
     setInternalValue(null);
     lastUpdatedValueRef.current = null;
-    onChange?.(undefined);
+    onChange?.(null);
   };
 
   return {

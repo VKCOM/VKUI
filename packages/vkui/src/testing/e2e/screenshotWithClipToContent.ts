@@ -7,7 +7,7 @@ export async function screenshotWithClipToContent(
   options: ScreenshotWithClipToContentOptions = {},
   browserName: PlaywrightWorkerOptions['browserName'] | undefined = undefined,
 ) {
-  const { cropToContentSelector = DEFAULT_CROP_TO_CONTENT_SELECTOR } = options;
+  const { fullPage = true, cropToContentSelector = DEFAULT_CROP_TO_CONTENT_SELECTOR } = options;
 
   await page.evaluate(() => document.fonts.ready);
 
@@ -39,17 +39,19 @@ export async function screenshotWithClipToContent(
     };
   }, cropToContentSelector);
 
-  const viewportSize = page.viewportSize() ?? { width: 0, height: 0 };
+  if (fullPage) {
+    const viewportSize = page.viewportSize() ?? { width: 0, height: 0 };
 
-  // см. https://github.com/VKCOM/VKUI/pull/3272
-  await page.setViewportSize({
-    width: Math.max(clip.width, viewportSize.width),
-    height: Math.max(clip.height, viewportSize.height),
-  });
+    // см. https://github.com/VKCOM/VKUI/pull/3272
+    await page.setViewportSize({
+      width: Math.max(clip.width, viewportSize.width),
+      height: Math.max(clip.height, viewportSize.height),
+    });
+  }
 
   return page.screenshot({
     clip,
-    fullPage: true,
+    fullPage,
     animations: 'disabled',
   });
 }

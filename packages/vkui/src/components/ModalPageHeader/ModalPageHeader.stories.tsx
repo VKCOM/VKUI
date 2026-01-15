@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Cancel, Icon24Done } from '@vkontakte/icons';
+import type { CustomModalProps, OpenModalPageProps } from '../../hooks/useModalManager';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ModalWrapper } from '../../storybook/ModalWrapper';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
@@ -34,40 +35,46 @@ export const Playground: Story = {
   render: function Render(args) {
     const platform = usePlatform();
 
-    return (
-      <ModalWrapper modalId={MODAL_ID}>
-        <ModalPage
-          id={MODAL_ID}
-          header={
-            <ModalPageHeader
-              before={
-                <React.Fragment>
-                  {(platform === 'android' || platform === 'vkcom') && (
-                    <HeaderButton>
-                      <Icon24Cancel />
-                    </HeaderButton>
-                  )}
-                </React.Fragment>
-              }
-              after={
-                <React.Fragment>
-                  {(platform === 'android' || platform === 'vkcom') && (
-                    <HeaderButton>
-                      <Icon24Done />
-                    </HeaderButton>
-                  )}
-                  {platform === 'ios' && <HeaderButton>Готово</HeaderButton>}
-                </React.Fragment>
-              }
-              {...args}
-            >
-              Заголовок модальной страницы
-            </ModalPageHeader>
-          }
-        >
-          <Div style={{ height: 1000 }}>Example</Div>
-        </ModalPage>
-      </ModalWrapper>
+    const CustomModal = React.useCallback(
+      ({ modalProps }: CustomModalProps<OpenModalPageProps>) => {
+        return (
+          <ModalPage
+            id={MODAL_ID}
+            header={
+              <ModalPageHeader
+                before={
+                  <React.Fragment>
+                    {(platform === 'android' || platform === 'vkcom') && (
+                      <HeaderButton>
+                        <Icon24Cancel />
+                      </HeaderButton>
+                    )}
+                  </React.Fragment>
+                }
+                after={
+                  <React.Fragment>
+                    {(platform === 'android' || platform === 'vkcom') && (
+                      <HeaderButton>
+                        <Icon24Done />
+                      </HeaderButton>
+                    )}
+                    {platform === 'ios' && <HeaderButton>Готово</HeaderButton>}
+                  </React.Fragment>
+                }
+                {...args}
+              >
+                Заголовок модальной страницы
+              </ModalPageHeader>
+            }
+            {...modalProps}
+          >
+            <Div style={{ height: 1000 }}>Example</Div>
+          </ModalPage>
+        );
+      },
+      [args, platform],
     );
+
+    return <ModalWrapper type="page" customModal={CustomModal} />;
   },
 };

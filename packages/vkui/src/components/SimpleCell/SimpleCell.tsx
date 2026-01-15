@@ -13,9 +13,9 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { Chevron } from './Chevron/Chevron';
 import styles from './SimpleCell.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface SimpleCellOwnProps extends HasComponent {
@@ -107,7 +107,7 @@ export const SimpleCell = ({
   const hasChevron = chevron === 'always' || (chevron === 'auto' && platform === 'ios');
 
   const hasAfter = hasReactNode(after) || hasChevron;
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <Tappable
@@ -115,7 +115,7 @@ export const SimpleCell = ({
       baseClassName={classNames(
         styles.host,
         restProps.disabled && styles.disabled,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         multiline && styles.mult,
       )}
     >

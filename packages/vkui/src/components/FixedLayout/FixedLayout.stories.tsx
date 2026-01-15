@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { withVKUILayout } from '../../storybook/VKUIDecorators';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { Div } from '../Div/Div';
+import { Box, type BoxProps } from '../Box/Box';
 import { Group } from '../Group/Group';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
@@ -14,7 +14,8 @@ import { View } from '../View/View';
 import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
 
 const story: Meta<FixedLayoutProps> = {
-  title: 'Layout/FixedLayout',
+  id: 'Layout/FixedLayout',
+  title: 'Layout/FixedLayout (deprecated)',
   component: FixedLayout,
   parameters: createStoryParameters('FixedLayout', CanvasFullLayout, DisableCartesianParam),
   decorators: [withVKUILayout],
@@ -23,9 +24,18 @@ const story: Meta<FixedLayoutProps> = {
 
 export default story;
 
+const hideFixedLayoutPropsControls = {
+  parameters: {
+    controls: {
+      exclude: ['filled', 'vertical', 'useParentWidth', 'getRootRef', 'Component', 'getRef'],
+    },
+  },
+};
+
 type Story = StoryObj<FixedLayoutProps>;
 
 export const Playground: Story = {
+  name: 'Playground (deprecated)',
   render: (args) => (
     <View activePanel="fixedLayout">
       <Panel id="fixedLayout">
@@ -47,16 +57,43 @@ export const Playground: Story = {
   },
 };
 
+export const MigrationGuide: StoryObj<BoxProps> = {
+  name: 'Playground (миграция на Box)',
+  render: (args) => (
+    <View activePanel="fixedLayout">
+      <Panel id="fixedLayout">
+        <PanelHeader>Box</PanelHeader>
+        <Guide />
+        <StubContent />
+        <Box {...args}>
+          <Separator />
+          <Tabs>
+            <TabsItem selected>176 сообществ</TabsItem>
+            <TabsItem>9 событий</TabsItem>
+          </Tabs>
+        </Box>
+      </Panel>
+    </View>
+  ),
+  args: {
+    position: 'sticky',
+    insetBlockEnd: 0,
+    style: { backgroundColor: 'var(--vkui--color_background_content)' },
+  },
+  ...hideFixedLayoutPropsControls,
+};
+
 export const WithSearchAndContent: Story = {
+  name: 'WithSearchAndContent (deprecated)',
   render: (args) => (
     <View activePanel="fixedLayout">
       <Panel id="fixedLayout">
         <PanelHeader>Fixed layout</PanelHeader>
+        <StubContent />
         <FixedLayout {...args}>
           <Search />
           <Separator />
         </FixedLayout>
-        <StubContent />
       </Panel>
     </View>
   ),
@@ -66,15 +103,64 @@ export const WithSearchAndContent: Story = {
   },
 };
 
-const contentStyles = {
-  paddingTop: 60,
-  paddingBottom: 60,
+export const WithSearchAndContentMigrationGuide: StoryObj<BoxProps> = {
+  name: 'WithSearchAndContent (миграция на Box)',
+  render: (args) => (
+    <View activePanel="fixedLayout">
+      <Panel id="fixedLayout">
+        <PanelHeader>Box</PanelHeader>
+        <Guide />
+        <StubContent />
+        <Box {...args}>
+          <Search />
+          <Separator />
+        </Box>
+      </Panel>
+    </View>
+  ),
+  args: {
+    position: 'sticky',
+    insetBlockEnd: 0,
+    style: { backgroundColor: 'var(--vkui--color_background_content)' },
+  },
+  ...hideFixedLayoutPropsControls,
 };
+
+function Guide() {
+  return (
+    <Group>
+      <Box padding="l">
+        Используйте <a href="/?path=/story/layout-box--playground">Box</a> со следующими свойствами:
+        <ul>
+          <li>
+            <code>position=&quot;sticky&quot;</code>
+          </li>
+          <li>
+            <code>
+              insetBlockEnd={'{'}0{'}'}
+            </code>
+          </li>
+          <li>
+            <code>style={"{{ backgroundColor: 'var(--vkui--color_background_content)' }}"}</code>
+          </li>
+        </ul>
+        <p>
+          Так как элемент с <code>position=&quot;sticky&quot;</code> находится в основном потоке
+          документа, при миграции с <code>{'<FixedLayout vertical="bottom" />'}</code> важно также
+          соблюсти порядок элемента в документе.
+        </p>
+        <p>
+          Пример вёрстки см. на вкладке <b>Source</b> в панели аддонов.
+        </p>
+      </Box>
+    </Group>
+  );
+}
 
 function StubContent() {
   return (
     <Group>
-      <Div style={contentStyles}>
+      <Box padding="l">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a
         commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam
         bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit
@@ -122,7 +208,7 @@ function StubContent() {
         in quam eget quam lacinia pharetra. Phasellus ipsum magna, aliquet id elit eget, cursus
         tincidunt ex. In rhoncus turpis turpis, et viverra ex malesuada vel. Donec nisi tellus,
         mollis et posuere vel, dictum eget neque.
-      </Div>
+      </Box>
     </Group>
   );
 }

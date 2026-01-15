@@ -1,12 +1,12 @@
-.-anim-fade-in {
-  animation: anim-fade-in 0.1s ease-in forwards;
+.animFadeIn {
+  animation: animationFadeIn 0.1s ease-in forwards;
 }
 
-.-anim-fade-out {
-  animation: anim-fade-out 0.1s ease-out forwards;
+.animFadeOut {
+  animation: animationFadeOut 0.1s ease-out forwards;
 }
 
-@keyframes anim-fade-in {
+@keyframes animationFadeIn {
   from {
     opacity: 0;
     transform: scale(0.8);
@@ -17,7 +17,7 @@
     transform: scale(1);
   }
 }
-@keyframes anim-fade-out {
+@keyframes animationFadeOut {
   from {
     opacity: 1;
   }

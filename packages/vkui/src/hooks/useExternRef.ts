@@ -46,12 +46,8 @@ class ExternalRef<T> implements React.RefObject<T | null> {
 export function useExternRef<T>(
   ...externRefs: Array<React.Ref<T> | undefined | false>
 ): React.RefObject<T | null> {
-  const ref = React.useRef<ExternalRef<T> | null>(null);
-  if (ref.current === null) {
-    ref.current = new ExternalRef(externRefs);
-  } else {
-    ref.current.updateExternRefs(externRefs);
-  }
+  const [externalRefs] = React.useState(() => new ExternalRef(externRefs));
+  externalRefs.updateExternRefs(externRefs);
 
-  return ref.current;
+  return externalRefs;
 }

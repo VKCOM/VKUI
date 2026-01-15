@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
+import { useBooleanState } from '../../hooks/useBooleanState';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
@@ -31,24 +32,25 @@ const CUSTOM_PROPERTY_GRADIENT_LEFT = '--vkui_internal--skeleton_gradient_left';
  * @param duration Длительность анимации в секундах.
  */
 function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
-  const [isAnimationStarted, setIsAnimationStarted] = React.useState<boolean>(false);
+  const [isAnimationStarted, setIsAnimationStartedTrue, setIsAnimationStartedFalse] =
+    useBooleanState();
   const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const syncAnimation = React.useCallback(() => {
     clearTimeout(timer.current);
-    setIsAnimationStarted(false);
+    setIsAnimationStartedFalse();
 
     const durationInMilliseconds = duration * millisecondsInSecond;
     const delay = durationInMilliseconds - (performance.now() % durationInMilliseconds);
 
-    timer.current = setTimeout(() => setIsAnimationStarted(true), delay);
+    timer.current = setTimeout(setIsAnimationStartedTrue, delay);
 
     return () => clearTimeout(timer.current);
-  }, [duration]);
+  }, [duration, setIsAnimationStartedFalse, setIsAnimationStartedTrue]);
 
   React.useEffect(() => {
     if (disableAnimation) {
-      setIsAnimationStarted(false);
+      setIsAnimationStartedFalse();
       return;
     }
 
@@ -57,7 +59,7 @@ function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
     }
 
     return syncAnimation();
-  }, [disableAnimation, isAnimationStarted, syncAnimation]);
+  }, [disableAnimation, isAnimationStarted, setIsAnimationStartedFalse, syncAnimation]);
 
   return isAnimationStarted;
 }

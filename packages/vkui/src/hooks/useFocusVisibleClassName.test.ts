@@ -8,7 +8,7 @@ import {
 } from './useFocusVisibleClassName';
 import styles from '../styles/focusVisible.module.css';
 
-const focusedClasses = classNames(styles['-focus-visible'], styles['-focus-visible--focused']);
+const focusedClasses = classNames(styles.focusVisible, styles.focusVisibleFocused);
 
 const test = (hookConfig: UseFocusVisibleClassNameProps, resultClassNameString: string) => {
   const { result } = renderHook(() => useFocusVisibleClassName(hookConfig));
@@ -20,7 +20,7 @@ const test = (hookConfig: UseFocusVisibleClassNameProps, resultClassNameString: 
 
 describe('useFocusVisibleClassName()', () => {
   it('focusVisible: false returns proper class', () => {
-    test({ focusVisible: false }, styles['-focus-visible']);
+    test({ focusVisible: false }, styles.focusVisible);
   });
 
   it('focusVisible: true (default mode) returns proper classes', () => {

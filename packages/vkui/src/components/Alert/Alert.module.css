@@ -17,13 +17,13 @@
 }
 
 .opening {
-  animation: animation-alert-scale-up var(--vkui--animation_duration_m)
+  animation: animationAlertScaleUp var(--vkui--animation_duration_m)
     var(--vkui--animation_easing_platform);
 }
 
 .closing {
   opacity: 0;
-  animation: animation-alert-scale-down var(--vkui--animation_duration_m)
+  animation: animationAlertScaleDown var(--vkui--animation_duration_m)
     var(--vkui--animation_easing_platform);
 }
 
@@ -293,7 +293,7 @@
   }
 }
 
-@keyframes animation-alert-scale-up {
+@keyframes animationAlertScaleUp {
   from {
     opacity: 0;
     transform: scale(var(--vkui_internal--alert_animation_scale_initial));
@@ -304,7 +304,7 @@
     transform: scale(1);
   }
 }
-@keyframes animation-alert-scale-down {
+@keyframes animationAlertScaleDown {
   from {
     opacity: 1;
     transform: scale(1);

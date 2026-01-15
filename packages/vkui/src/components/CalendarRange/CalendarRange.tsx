@@ -80,13 +80,13 @@ export interface CalendarRangeProps
   /**
    * `aria-label` для изменения дня.
    *
-   * @deprecated Since 7.4.0.
+   * @deprecated Since 7.4.0. Будет удалeно в **VKUI v9**.
    *
-   * Будет удалeно в **VKUI v8**. Использовалось для задания aria-label для контейнера дней в календаре.
+   * Использовалось для задания aria-label для контейнера дней в календаре.
    * Теперь этот контейнер является таблицей (с помощью role="grid") и
    * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
-  changeDayLabel?: string;
+  changeDayLabel?: string; // TODO [>=9]: удалить неиспользуемое свойство
   /**
    * День недели, с которого начинается неделя.
    */
@@ -94,15 +94,15 @@ export interface CalendarRangeProps
   /**
    * Обработчик изменения выбранного промежутка.
    */
-  onChange?: (value: DateRangeType | undefined) => void; // TODO [>=8]: поменять тип на `(value?: DateRangeType | null) => void`
+  onChange?: (value: DateRangeType) => void;
   /**
    * Функция для проверки запрета выбора даты.
    */
   shouldDisableDate?: (value: Date) => boolean;
   /**
-   * @deprecated Свойство не используется.
+   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    */
-  onClose?: () => void;
+  onClose?: () => void; // TODO [>=9]: удалить неиспользуемое свойство
 }
 
 const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {
@@ -140,14 +140,15 @@ export const CalendarRange = ({
   getRootRef,
   ...props
 }: CalendarRangeProps): React.ReactNode => {
-  const _onChange = React.useCallback(
-    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
-    [onChange],
-  );
+  const _onChange = (newRange: DateRangeType | null) => {
+    if (newRange && onChange) {
+      onChange(newRange);
+    }
+  };
 
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null>({
     value: valueProp,
-    defaultValue,
+    defaultValue: defaultValue as DateRangeType | null,
     onChange: _onChange,
   });
 

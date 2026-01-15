@@ -7,22 +7,12 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      <SimpleGrid
-        columns={2}
-        gap={[10, 20]}
-        align="center"
-      >
-        <div/>
-        <div/>
+      <SimpleGrid columns={2} gap={[10, 20]} align="center">
+        <div />
+        <div />
       </SimpleGrid>
-      <SimpleGrid
-        gap={[20, 15]}
-        align="center"
-      />
-      <SimpleGrid
-        gap={20}
-        align="center"
-      />
+      <SimpleGrid gap={[20, 15]} align="center" />
+      <SimpleGrid gap={20} align="center" />
     </React.Fragment>
   );
 };"

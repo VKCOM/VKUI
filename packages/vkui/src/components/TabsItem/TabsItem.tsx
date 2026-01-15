@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
-import { usePrevious } from '../../hooks/usePrevious';
 import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { AnchorHTMLAttributesOnly, HTMLAttributesWithRootRef } from '../../types';
@@ -16,9 +15,9 @@ import { Subhead } from '../Typography/Subhead/Subhead';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './TabsItem.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 const stylesMode = {
@@ -99,7 +98,7 @@ export const TabsItem = ({
   onClick,
   ...restProps
 }: TabsItemProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const { mode, withGaps, layoutFillMode, scrollBehaviorToSelectedTab, withScrollToSelectedTab } =
     React.useContext(TabsModeContext);
   const controller = React.useContext(TabsControllerContext);
@@ -146,14 +145,20 @@ export const TabsItem = ({
 
   const rootRef = useExternRef(getRootRef);
 
-  const prevSelected = usePrevious(selected);
-  const isInitialRender = prevSelected === undefined;
-  const shouldScrollToSelected =
-    withScrollToSelectedTab && !isInitialRender && prevSelected !== selected && selected;
+  const prevSelectedRef = React.useRef<boolean | undefined>(undefined);
 
   const { document } = useDOM();
   React.useEffect(
     function scrollToSelectedItem() {
+      const isInitialRender = prevSelectedRef.current === undefined;
+      const shouldScrollToSelected =
+        withScrollToSelectedTab &&
+        !isInitialRender &&
+        prevSelectedRef.current !== selected &&
+        selected;
+
+      prevSelectedRef.current = selected;
+
       if (!shouldScrollToSelected || !rootRef.current || !document) {
         return;
       }
@@ -181,7 +186,7 @@ export const TabsItem = ({
          **/
       }
     },
-    [rootRef, document, shouldScrollToSelected, scrollBehaviorToSelectedTab],
+    [rootRef, document, scrollBehaviorToSelectedTab, withScrollToSelectedTab, selected],
   );
 
   const _onClick: React.MouseEventHandler<HTMLElement> = React.useCallback(
@@ -208,7 +213,7 @@ export const TabsItem = ({
         styles.host,
         mode && stylesMode[mode],
         selected && styles.selected,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         withGaps && styles.withGaps,
         layoutFillMode !== 'auto' && fillModeClassNames[layoutFillMode],
       )}

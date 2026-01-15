@@ -17,9 +17,9 @@ import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
 import styles from './CustomSelectInput.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface CustomSelectInputProps
@@ -58,7 +58,7 @@ export const CustomSelectInput = ({
   after,
   status,
   children,
-  placeholder,
+  placeholder: placeholderProp,
   selectType = 'default',
   multiline,
   fetching,
@@ -69,7 +69,7 @@ export const CustomSelectInput = ({
   slotProps,
   ...restProps
 }: CustomSelectInputProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const { style, className, getRootRef, ...rootRest } = useMergeProps(
     {
@@ -85,10 +85,12 @@ export const CustomSelectInput = ({
     value,
     readOnly,
     disabled,
+    placeholder,
     ...inputProps
   } = useMergeProps(
     {
       getRootRef: getRef,
+      placeholder: placeholderProp,
       ...restProps,
     },
     slotProps?.input,
@@ -144,7 +146,7 @@ export const CustomSelectInput = ({
         align === 'center' && styles.alignCenter,
         !children && styles.empty,
         multiline && styles.multiline,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         before && styles.hasBefore,
         after && styles.hasAfter,
         inputHidden && styles.inputHidden,

@@ -9,9 +9,9 @@ import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './IconButton.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 } as const;
 
 export interface IconButtonProps extends TappableOmitProps {
@@ -28,7 +28,7 @@ const warn = warnOnce('IconButton');
  */
 export const IconButton = ({ label, children, ...restProps }: IconButtonProps): React.ReactNode => {
   const platform = usePlatform();
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   if (process.env.NODE_ENV === 'development') {
     /* istanbul ignore next: проверка в dev mode, тест на hasAccessibleName() есть в lib/accessibility.test.tsx */
@@ -50,7 +50,7 @@ export const IconButton = ({ label, children, ...restProps }: IconButtonProps): 
       {...restProps}
       baseClassName={classNames(
         styles.host,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         platform === 'ios' && styles.ios,
       )}
     >

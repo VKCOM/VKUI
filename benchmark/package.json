@@ -9,24 +9,24 @@
     "runtime:start:ci": "yarn run -T playwright test --config runtime/playwright.config.ts"
   },
   "dependencies": {
-    "@playwright/test": "1.56.1",
-    "@swc/core": "^1.13.5",
+    "@playwright/test": "1.57.0",
+    "@swc/core": "^1.15.8",
     "@vkontakte/vkui": "workspace:packages/vkui",
     "cli-table3": "^0.6.1",
     "css-loader": "7.1.2",
-    "css-minimizer-webpack-plugin": "^7.0.2",
+    "css-minimizer-webpack-plugin": "^7.0.4",
     "dotenv": "^17.2.3",
-    "finalhandler": "2.1.0",
-    "html-webpack-plugin": "^5.6.4",
+    "finalhandler": "2.1.1",
+    "html-webpack-plugin": "^5.6.5",
     "mini-css-extract-plugin": "^2.9.4",
-    "playwright": "1.56.1",
+    "playwright": "1.57.0",
     "postcss": "^8.5.6",
     "postcss-modules": "^6.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "serve-static": "2.2.0",
+    "serve-static": "2.2.1",
     "swc-loader": "^0.2.6",
-    "terser-webpack-plugin": "^5.3.14",
-    "webpack": "^5.102.1"
+    "terser-webpack-plugin": "^5.3.16",
+    "webpack": "^5.104.1"
   }
 }

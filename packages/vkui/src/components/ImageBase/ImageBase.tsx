@@ -1,17 +1,17 @@
 'use client';
 
-import { useRef } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { minOr } from '../../lib/comparing';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { getFetchPriorityProp } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 import type {
   AnchorHTMLAttributesOnly,
-  CSSCustomProperties,
-  HasRef,
+  HasDataAttribute,
   HasRootRef,
   LiteralUnion,
 } from '../../types';
@@ -48,6 +48,8 @@ export {
 
 export { ImageBaseContext };
 
+const warn = warnOnce('ImageBase');
+
 /**
  * Размер по умолчанию.
  */
@@ -56,8 +58,7 @@ const defaultSize = 24;
 export interface ImageBaseProps
   extends React.ImgHTMLAttributes<HTMLElement>,
     AnchorHTMLAttributesOnly,
-    HasRootRef<HTMLDivElement>,
-    HasRef<HTMLImageElement> {
+    HasRootRef<HTMLDivElement> {
   /**
    * Задаёт размер картинки.
    *
@@ -121,6 +122,17 @@ export interface ImageBaseProps
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).
    */
   filter?: React.CSSProperties['filter'];
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `img`: свойства для прокидывания в тег `<img>`;.
+   */
+  slotProps?: {
+    img?: React.ComponentProps<'img'> & HasRootRef<HTMLImageElement> & HasDataAttribute;
+  };
+  /**
+   * @deprecated Since 7.9.0. Будет удалено в v9. Используйте `slotProps={ img: { getRootRef: ... } }`.
+   */
+  getRef?: React.Ref<HTMLImageElement>; // TODO [>=9] Удалить свойство
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -168,7 +180,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   src,
   srcSet,
   useMap,
-  fetchPriority,
+  fetchPriority: fetchPriorityProp,
   getRef,
   size: sizeProp,
   width: widthImg,
@@ -187,8 +199,18 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   keepAspectRatio = false,
   getRootRef,
   elementTiming,
+  slotProps,
   ...restProps
 }: ImageBaseProps) => {
+  if (process.env.NODE_ENV === 'development') {
+    /* istanbul ignore if: не проверяем в тестах */
+    if (getRef) {
+      warn(
+        'Свойство `getRef` устаревшее и будет удалено в VKUI v9. Используйте `slotProps={ img: { getRootRef: ... } }`',
+      );
+    }
+  }
+
   const size = sizeProp ?? minOr([sizeToNumber(widthSize), sizeToNumber(heightSize)], defaultSize);
   const wrapperRef = useExternRef(getRootRef);
 
@@ -198,8 +220,8 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
-  const mouseOverHandlersRef = useRef<VoidFunction[]>([]);
-  const mouseOutHandlersRef = useRef<VoidFunction[]>([]);
+  const [mouseOverHandlers] = React.useState<VoidFunction[]>([]);
+  const [mouseOutHandlers] = React.useState<VoidFunction[]>([]);
 
   const hasSrc = src || srcSet;
   const fallbackIcon = failed || !hasSrc ? fallbackIconProp : null;
@@ -227,7 +249,58 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     onError?.(event);
   };
 
-  const imgRef = useExternRef(getRef);
+  const {
+    getRootRef: getImgRef,
+    fetchPriority,
+    ...imgRest
+  } = useMergeProps<React.ComponentProps<'img'> & HasRootRef<HTMLImageElement> & HasDataAttribute>(
+    hasSrc
+      ? {
+          getRootRef: getRef,
+          alt,
+          className: classNames(
+            styles.img,
+            getObjectFitClassName(objectFit),
+            objectPosition && styles.withObjectPosition,
+            filter && styles.withFilter,
+            keepAspectRatio && styles.imgKeepRatio,
+            failed && styles.imgHiddenAlt,
+          ),
+          crossOrigin,
+          decoding,
+          loading,
+          referrerPolicy,
+          style: mergeStyle(
+            keepAspectRatio
+              ? {
+                  width: widthImg || width,
+                  height: heightImg || height,
+                }
+              : undefined,
+            objectPosition || filter
+              ? {
+                  '--vkui_internal--ImageBase_object_position': objectPosition,
+                  '--vkui_internal--ImageBase_object_filter': filter,
+                }
+              : undefined,
+          ),
+          sizes,
+          src,
+          srcSet,
+          useMap,
+          width,
+          height,
+          onLoad: handleImageLoad,
+          onError: handleImageError,
+          fetchPriority: fetchPriorityProp,
+          // @ts-expect-error: TS2322 отсутствует в @types/react
+          elementtiming: elementTiming, // eslint-disable-line react/no-unknown-property
+        }
+      : {},
+    hasSrc ? slotProps?.img : undefined,
+  );
+
+  const imgRef = useExternRef(getImgRef);
   const isOnLoadStatusCheckedRef = React.useRef(false);
   React.useEffect(
     function dispatchLoadEventForAlreadyLoadedResourceIfReactInitializedLater() {
@@ -245,38 +318,21 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   );
 
   const onMouseOver = () => {
-    mouseOverHandlersRef.current.forEach((fn) => fn());
+    mouseOverHandlers.forEach((fn) => fn());
   };
 
   const onMouseOut = () => {
-    mouseOutHandlersRef.current.forEach((fn) => fn());
+    mouseOutHandlers.forEach((fn) => fn());
   };
 
   const contextValue = React.useMemo(
     () => ({
       size,
-      onMouseOverHandlers: mouseOverHandlersRef.current,
-      onMouseOutHandlers: mouseOutHandlersRef.current,
+      onMouseOverHandlers: mouseOverHandlers,
+      onMouseOutHandlers: mouseOutHandlers,
     }),
-    [size],
+    [mouseOutHandlers, mouseOverHandlers, size],
   );
-
-  const imgStyles:
-    | CSSCustomProperties<React.CSSProperties['objectPosition'] | React.CSSProperties['filter']>
-    | undefined =
-    objectPosition || filter
-      ? {
-          '--vkui_internal--ImageBase_object_position': objectPosition,
-          '--vkui_internal--ImageBase_object_filter': filter,
-        }
-      : undefined;
-
-  const keepAspectRationStyles = keepAspectRatio
-    ? {
-        width: widthImg || width,
-        height: heightImg || height,
-      }
-    : undefined;
 
   return (
     <ImageBaseContext.Provider value={contextValue}>
@@ -292,36 +348,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
         onMouseOut={onMouseOut}
         {...restProps}
       >
-        {hasSrc && (
-          <img
-            ref={imgRef}
-            alt={alt}
-            className={classNames(
-              styles.img,
-              getObjectFitClassName(objectFit),
-              objectPosition && styles.withObjectPosition,
-              filter && styles.withFilter,
-              keepAspectRatio && styles.imgKeepRatio,
-              failed && styles.imgHiddenAlt,
-            )}
-            crossOrigin={crossOrigin}
-            decoding={decoding}
-            loading={loading}
-            referrerPolicy={referrerPolicy}
-            style={mergeStyle(keepAspectRationStyles, imgStyles)}
-            sizes={sizes}
-            src={src}
-            srcSet={srcSet}
-            useMap={useMap}
-            width={widthImg}
-            height={heightImg}
-            onLoad={handleImageLoad}
-            onError={handleImageError}
-            // @ts-expect-error: TS2322 отсутствует в @types/react
-            elementtiming={elementTiming} // eslint-disable-line react/no-unknown-property
-            {...getFetchPriorityProp(fetchPriority)}
-          />
-        )}
+        {hasSrc && <img ref={imgRef} {...imgRest} {...getFetchPriorityProp(fetchPriority)} />}
         {fallbackIcon && <div className={styles.fallback}>{fallbackIcon}</div>}
         {children && <div className={styles.children}>{children}</div>}
         {!noBorder && <div aria-hidden className={styles.border} />}

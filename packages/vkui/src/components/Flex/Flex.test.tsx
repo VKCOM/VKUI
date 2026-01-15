@@ -72,13 +72,13 @@ describe(Flex, () => {
         props: {
           gap: ['l', 'l'],
         },
-        className: gapStyles['-column-gap--l'],
+        className: gapStyles.columnGapL,
       },
       {
         props: {
           gap: ['l', 'l'],
         },
-        className: gapStyles['-row-gap--l'],
+        className: gapStyles.rowGapL,
       },
       {
         props: {

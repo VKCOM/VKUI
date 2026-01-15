@@ -65,6 +65,10 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
           defaultValue: [longMultilineValueExample],
           afterAlign: ['start', 'end'],
         },
+        {
+          value: ['text'],
+          rows: [1],
+        },
       ]}
     >
       {(props: TextareaProps) => <Textarea {...props} />}
@@ -82,7 +86,7 @@ export const TextareaStatePlayground = ({ colorScheme }: ComponentPlaygroundProp
       }}
     >
       <ColorSchemeProvider value={colorScheme}>
-        <AdaptivityProvider sizeY="regular">
+        <AdaptivityProvider density="regular">
           <Div style={{ padding: 10 }}>
             <Textarea id="textarea" />
           </Div>

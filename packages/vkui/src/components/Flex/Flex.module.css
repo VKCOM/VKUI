@@ -5,6 +5,14 @@
   display: flex;
 }
 
+.displayNone {
+  display: none;
+}
+
+.displayInlineFlex {
+  display: inline-flex;
+}
+
 .marginAuto {
   --vkui_internal--flex_original_margin_inline: var(--vkui--size_base_padding_horizontal--regular);
   --vkui_internal--flex_original_margin_block: var(--vkui--size_base_padding_vertical--regular);
@@ -13,7 +21,7 @@
   margin-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
-/*TODO [>=8]: Проверить браузерную поддержку gap*/
+/*TODO [>=9]: Проверить браузерную поддержку gap*/
 /*Данная проверка позволяет максимально близко определить поддерживается ли gap + flex*/
 /*см. https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996*/
 /*Поддержка inset https://developer.mozilla.org/en-US/docs/Web/CSS/inset#browser_compatibility*/

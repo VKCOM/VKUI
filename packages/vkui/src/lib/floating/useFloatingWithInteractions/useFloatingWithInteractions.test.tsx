@@ -1,10 +1,11 @@
-import { act, type ComponentType, useState } from 'react';
+import { act, type ComponentType, useRef, useState } from 'react';
 import { render, renderHook, waitFor } from '@testing-library/react';
 import {
   AppRootContext,
   DEFAULT_APP_ROOT_CONTEXT_VALUE,
 } from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
+import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
 import { fireEventPatch, userEvent } from '../../../testing/utils';
 import type { ShownChangeReason } from './types';
 import { useFloatingWithInteractions } from './useFloatingWithInteractions';
@@ -28,40 +29,49 @@ const DynamicContent = ({ onClose }: { onClose: VoidFunction }) => {
 
 const TestComponent = ({
   restoreFocus,
-  hookResultRef,
+  hookResult,
   keyboardInput = false,
   autoFocus = false, // for multiple trigger [click, focus]
   Content,
 }: {
   restoreFocus?: boolean;
-  hookResultRef: {
-    current: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
-  };
+  hookResult: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
   keyboardInput?: boolean;
   autoFocus?: boolean;
   Content?: ComponentType<{ onClose: VoidFunction }>;
 }) => {
-  const { shown, refs, referenceProps, floatingProps, onClose } = hookResultRef.current;
+  const ref = useRef<HTMLDivElement | null>(null);
+  const {
+    shown,
+    refs: { reference, floating },
+    referenceProps,
+    floatingProps,
+    onClose,
+  } = hookResult;
+
+  useGlobalEscKeyDown(shown, hookResult.onEscapeKeyDown);
 
   return (
     <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput }}>
-      <button ref={refs.reference} {...referenceProps}>
+      <button ref={reference} {...referenceProps}>
         Reference
       </button>
       {shown ? (
-        <span ref={refs.floating} data-testid="floating" {...floatingProps}>
+        <span ref={floating} data-testid="floating" {...floatingProps}>
           <FocusTrap
+            rootRef={ref}
             autoFocus
-            restoreFocus={restoreFocus ? hookResultRef.current.onRestoreFocus : restoreFocus}
-            onClose={hookResultRef.current.onEscapeKeyDown}
+            restoreFocus={restoreFocus ? hookResult.onRestoreFocus : restoreFocus}
           >
-            <input
-              autoFocus={autoFocus}
-              data-testid="focus-trap"
-              type="text"
-              defaultValue="Reference"
-            />
-            {Content ? <Content onClose={onClose} /> : null}
+            <div ref={ref} tabIndex={-1}>
+              <input
+                autoFocus={autoFocus}
+                data-testid="focus-trap"
+                type="text"
+                defaultValue="Reference"
+              />
+              {Content ? <Content onClose={onClose} /> : null}
+            </div>
           </FocusTrap>
         </span>
       ) : null}
@@ -87,172 +97,174 @@ describe(useFloatingWithInteractions, () => {
         openBy: 'mouseOver' as const,
         closeBy: 'click-outside' as const,
       },
-    ])(
-      'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
-      async ({ trigger, openBy, closeBy }) => {
-        const onShownChange = vi.fn();
-        const onShownChanged = vi.fn();
-        const { result } = renderHook(() =>
-          useFloatingWithInteractions<HTMLButtonElement>({
-            defaultShown: false,
-            trigger: trigger,
-            onShownChange,
-            onShownChanged,
-          }),
-        );
-        const { rerender } = render(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeFalsy();
-          expect(onShownChange).not.toHaveBeenCalled();
-          expect(onShownChanged).not.toHaveBeenCalled();
-        });
+    ])('should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)', async ({
+      trigger,
+      openBy,
+      closeBy,
+    }) => {
+      const onShownChange = vi.fn();
+      const onShownChanged = vi.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: trigger,
+          onShownChange,
+          onShownChanged,
+        }),
+      );
+      const { rerender } = render(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).not.toHaveBeenCalled();
+        expect(onShownChanged).not.toHaveBeenCalled();
+      });
 
-        await fireEventPatch(result.current.refs.reference.current, openBy);
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeTruthy();
-          expect(onShownChange).toHaveBeenCalledTimes(1);
-          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
-          expect(onShownChanged).toHaveBeenCalledTimes(1);
-          expect(onShownChanged).toHaveBeenLastCalledWith(true, trigger);
-        });
+      await fireEventPatch(result.current.refs.reference.current, openBy);
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeTruthy();
+        expect(onShownChange).toHaveBeenCalledTimes(1);
+        expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+        expect(onShownChanged).toHaveBeenCalledTimes(1);
+        expect(onShownChanged).toHaveBeenLastCalledWith(true, trigger);
+      });
 
-        let closeReason: ShownChangeReason = trigger;
-        switch (closeBy) {
-          case 'escape-key':
-            closeReason = closeBy;
-            vi.useFakeTimers();
-            await userEvent.keyboard('{Escape}');
-            act(() => {
-              vi.runOnlyPendingTimers();
-              vi.useRealTimers();
-            });
-            break;
-          case 'click-outside':
-            closeReason = closeBy;
-            vi.useFakeTimers();
-            await userEvent.click(document.body);
-            act(() => {
-              vi.runOnlyPendingTimers();
-              vi.useRealTimers();
-            });
-            break;
-          case 'blur':
-            await fireEventPatch(result.current.refs.reference.current, closeBy, {
-              // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
-              // а в этом случае floating элемент не закрывается, так как считается что blur
-              // вызван кликом на самого себя.
-              relatedTarget: undefined,
-            });
-            break;
+      let closeReason: ShownChangeReason = trigger;
+      switch (closeBy) {
+        case 'escape-key':
+          closeReason = closeBy;
+          vi.useFakeTimers();
+          await userEvent.keyboard('{Escape}');
+          act(() => {
+            vi.runOnlyPendingTimers();
+            vi.useRealTimers();
+          });
+          break;
+        case 'click-outside':
+          closeReason = closeBy;
+          vi.useFakeTimers();
+          await userEvent.click(document.body);
+          act(() => {
+            vi.runOnlyPendingTimers();
+            vi.useRealTimers();
+          });
+          break;
+        case 'blur':
+          await fireEventPatch(result.current.refs.reference.current, closeBy, {
+            // сбрасываем relatedTarget, потому что по умолчанию el.blur() имеет el в relatedTarget,
+            // а в этом случае floating элемент не закрывается, так как считается что blur
+            // вызван кликом на самого себя.
+            relatedTarget: undefined,
+          });
+          break;
 
-          default:
-            await fireEventPatch(result.current.refs.reference.current, closeBy);
-        }
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeFalsy();
-          expect(onShownChange).toHaveBeenCalledTimes(2);
-          expect(onShownChange).toHaveBeenLastCalledWith(false, closeReason);
-        });
+        default:
+          await fireEventPatch(result.current.refs.reference.current, closeBy);
+      }
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenCalledTimes(2);
+        expect(onShownChange).toHaveBeenLastCalledWith(false, closeReason);
+      });
 
-        await fireEventPatch(result.current.refs.reference.current, openBy);
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeTruthy();
-          expect(onShownChange).toHaveBeenCalledTimes(3);
-          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
-        });
-      },
-    );
+      await fireEventPatch(result.current.refs.reference.current, openBy);
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeTruthy();
+        expect(onShownChange).toHaveBeenCalledTimes(3);
+        expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+      });
+    });
 
     it.each([
       { trigger: 'focus' as const, openBy: 'focus' as const, closeBy: 'escape-key' as const },
       { trigger: 'focus' as const, openBy: 'focus' as const, closeBy: 'click-outside' as const },
-    ])(
-      'should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)',
-      async ({ trigger, openBy, closeBy }) => {
-        const shouldClosedByClickOutside = closeBy === 'click-outside';
-        const onShownChange = vi.fn();
-        const { result } = renderHook(() =>
-          useFloatingWithInteractions<HTMLButtonElement>({
-            defaultShown: false,
-            trigger: 'focus',
-            onShownChange,
-          }),
-        );
-        const { rerender } = render(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeFalsy();
-          expect(onShownChange).toHaveBeenCalledTimes(0);
-          expect(onShownChange).not.toHaveBeenCalled();
-        });
+    ])('should shown by $openBy event and hidden by $closeBy event (trigger: $trigger)', async ({
+      trigger,
+      openBy,
+      closeBy,
+    }) => {
+      const shouldClosedByClickOutside = closeBy === 'click-outside';
+      const onShownChange = vi.fn();
+      const { result } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          defaultShown: false,
+          trigger: 'focus',
+          onShownChange,
+        }),
+      );
+      const { rerender } = render(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenCalledTimes(0);
+        expect(onShownChange).not.toHaveBeenCalled();
+      });
 
-        await fireEventPatch(result.current.refs.reference.current, openBy);
+      await fireEventPatch(result.current.refs.reference.current, openBy);
 
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeTruthy();
-          expect(onShownChange).toHaveBeenCalledTimes(1);
-          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
-        });
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeTruthy();
+        expect(onShownChange).toHaveBeenCalledTimes(1);
+        expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+      });
 
-        vi.useFakeTimers();
-        if (shouldClosedByClickOutside) {
-          await userEvent.click(document.body);
-        } else {
-          await userEvent.keyboard('{Escape}');
-        }
-        act(() => {
-          vi.runOnlyPendingTimers();
-          vi.useRealTimers();
-        });
+      vi.useFakeTimers();
+      if (shouldClosedByClickOutside) {
+        await userEvent.click(document.body);
+      } else {
+        await userEvent.keyboard('{Escape}');
+      }
+      act(() => {
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
+      });
 
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          if (shouldClosedByClickOutside) {
-            expect(document.activeElement).toBe(result.current.refs.reference.current);
-          }
-          expect(result.current.shown).toBeFalsy();
-          expect(onShownChange).toHaveBeenCalledTimes(2);
-          expect(onShownChange).toHaveBeenLastCalledWith(false, closeBy);
-        });
-
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
         if (shouldClosedByClickOutside) {
           expect(document.activeElement).toBe(result.current.refs.reference.current);
         }
-        // Если всплывающее окно закрылось из-за 'escape-key' или 'click-outside', то при
-        // возвращении фокуса оно не должно открыться повторно.
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenCalledTimes(2);
+        expect(onShownChange).toHaveBeenLastCalledWith(false, closeBy);
+      });
+
+      if (shouldClosedByClickOutside) {
+        expect(document.activeElement).toBe(result.current.refs.reference.current);
+      }
+      // Если всплывающее окно закрылось из-за 'escape-key' или 'click-outside', то при
+      // возвращении фокуса оно не должно открыться повторно.
+      expect(onShownChange).toHaveBeenCalledTimes(2);
+      expect(result.current.shown).toBeFalsy();
+
+      await fireEventPatch(result.current.refs.reference.current, 'focus');
+
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
         expect(onShownChange).toHaveBeenCalledTimes(2);
         expect(result.current.shown).toBeFalsy();
+      });
 
-        await fireEventPatch(result.current.refs.reference.current, 'focus');
+      await fireEventPatch(result.current.refs.reference.current, 'blur'); // Сбрасываем блокировку фокуса
 
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(onShownChange).toHaveBeenCalledTimes(2);
-          expect(result.current.shown).toBeFalsy();
-        });
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeFalsy();
+        expect(onShownChange).toHaveBeenCalledTimes(2);
+        expect(onShownChange).toHaveBeenLastCalledWith(false, closeBy);
+      });
 
-        await fireEventPatch(result.current.refs.reference.current, 'blur'); // Сбрасываем блокировку фокуса
+      await fireEventPatch(result.current.refs.reference.current, openBy);
 
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeFalsy();
-          expect(onShownChange).toHaveBeenCalledTimes(2);
-          expect(onShownChange).toHaveBeenLastCalledWith(false, closeBy);
-        });
-
-        await fireEventPatch(result.current.refs.reference.current, openBy);
-
-        rerender(<TestComponent hookResultRef={result} />);
-        await waitFor(() => {
-          expect(result.current.shown).toBeTruthy();
-          expect(onShownChange).toHaveBeenCalledTimes(3);
-          expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
-        });
-      },
-    );
+      rerender(<TestComponent hookResult={result.current} />);
+      await waitFor(() => {
+        expect(result.current.shown).toBeTruthy();
+        expect(onShownChange).toHaveBeenCalledTimes(3);
+        expect(onShownChange).toHaveBeenLastCalledWith(true, trigger);
+      });
+    });
 
     it('should work correctly with trigger=[click, focus]', async () => {
       const onShownChange = vi.fn();
@@ -263,7 +275,7 @@ describe(useFloatingWithInteractions, () => {
           onShownChange,
         }),
       );
-      const { rerender } = render(<TestComponent hookResultRef={result} autoFocus />);
+      const { rerender } = render(<TestComponent hookResult={result.current} autoFocus />);
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
         expect(onShownChange).toHaveBeenCalledTimes(0);
@@ -272,7 +284,7 @@ describe(useFloatingWithInteractions, () => {
 
       await fireEventPatch(result.current.refs.reference.current, 'focus');
 
-      rerender(<TestComponent hookResultRef={result} autoFocus />);
+      rerender(<TestComponent hookResult={result.current} autoFocus />);
       await waitFor(() => {
         expect(result.current.shown).toBeTruthy();
         expect(onShownChange).toHaveBeenCalledTimes(1); // focus
@@ -286,7 +298,7 @@ describe(useFloatingWithInteractions, () => {
         vi.useRealTimers();
       });
 
-      rerender(<TestComponent hookResultRef={result} autoFocus />);
+      rerender(<TestComponent hookResult={result.current} autoFocus />);
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
         expect(onShownChange).toHaveBeenCalledTimes(3); // focus and click
@@ -302,11 +314,11 @@ describe(useFloatingWithInteractions, () => {
           trigger: 'hover',
         }),
       );
-      const { rerender } = render(<TestComponent hookResultRef={result} />);
+      const { rerender } = render(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'mouseOver');
-      rerender(<TestComponent hookResultRef={result} />);
+      rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
@@ -319,7 +331,7 @@ describe(useFloatingWithInteractions, () => {
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
-      rerender(<TestComponent hookResultRef={result} />);
+      rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
     });
 
@@ -331,13 +343,13 @@ describe(useFloatingWithInteractions, () => {
         }),
       );
       const testComponentRender = render(
-        <TestComponent hookResultRef={result} restoreFocus={restoreFocus} keyboardInput />,
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
       );
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'focus');
       testComponentRender.rerender(
-        <TestComponent hookResultRef={result} restoreFocus={restoreFocus} keyboardInput />,
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
       );
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
@@ -356,7 +368,7 @@ describe(useFloatingWithInteractions, () => {
         vi.useRealTimers();
       });
       testComponentRender.rerender(
-        <TestComponent hookResultRef={result} restoreFocus={restoreFocus} keyboardInput />,
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
       );
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
@@ -375,7 +387,7 @@ describe(useFloatingWithInteractions, () => {
           trigger: 'focus',
         }),
       );
-      const testComponentRender = render(<TestComponent hookResultRef={result} />);
+      const testComponentRender = render(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       vi.useFakeTimers();
@@ -384,7 +396,7 @@ describe(useFloatingWithInteractions, () => {
         vi.runOnlyPendingTimers();
         vi.useRealTimers();
       });
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => {
         expect(result.current.shown).toBeTruthy();
         expect(document.activeElement).toBe(result.current.refs.reference.current);
@@ -396,7 +408,7 @@ describe(useFloatingWithInteractions, () => {
         vi.runOnlyPendingTimers();
         vi.useRealTimers();
       });
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => {
         expect(document.activeElement).toBe(document.body);
         expect(result.current.shown).toBeFalsy();
@@ -410,35 +422,35 @@ describe(useFloatingWithInteractions, () => {
           trigger: ['focus', 'click', 'hover'],
         }),
       );
-      const testComponentRender = render(<TestComponent hookResultRef={result} />);
+      const testComponentRender = render(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'focus');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'click');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.floating.current, 'mouseOver');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.floating.current, 'mouseLeave');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'click');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       await fireEventPatch(result.current.refs.reference.current, 'mouseLeave');
-      testComponentRender.rerender(<TestComponent hookResultRef={result} />);
+      testComponentRender.rerender(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
     });
 
@@ -449,7 +461,7 @@ describe(useFloatingWithInteractions, () => {
           initialProps: { shown: false, trigger: 'manual' as const },
         },
       );
-      render(<TestComponent hookResultRef={result} />);
+      render(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       rerender({ shown: true, trigger: 'manual' });
@@ -463,7 +475,7 @@ describe(useFloatingWithInteractions, () => {
           trigger: 'click',
         }),
       );
-      render(<TestComponent hookResultRef={result} />);
+      render(<TestComponent hookResult={result.current} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       // show
@@ -474,7 +486,7 @@ describe(useFloatingWithInteractions, () => {
       });
 
       const onAnimationStart = vi.spyOn(result.current.floatingProps, 'onAnimationStart');
-      render(<TestComponent hookResultRef={result} />);
+      render(<TestComponent hookResult={result.current} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationStart');
       await waitFor(() => expect(onAnimationStart).toHaveBeenCalledTimes(1));
@@ -487,7 +499,7 @@ describe(useFloatingWithInteractions, () => {
       });
 
       const onAnimationEnd = vi.spyOn(result.current.floatingProps, 'onAnimationEnd');
-      render(<TestComponent hookResultRef={result} />);
+      render(<TestComponent hookResult={result.current} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationEnd');
       await waitFor(() => {
@@ -512,39 +524,39 @@ describe(useFloatingWithInteractions, () => {
       });
     });
 
-    it.each(['mouseOver', 'mouseLeave'] as const)(
-      'should prevent %s events on floating ref',
-      async (mouseEvent) => {
-        const { result: hookResultRef } = renderHook(() =>
-          useFloatingWithInteractions<HTMLButtonElement>({
-            trigger: 'hover',
-            hoverDelay: 0,
-            defaultShown: false,
-          }),
-        );
-        const renderResult = render(
-          <TestComponent hookResultRef={hookResultRef} Content={DynamicContent} />,
-        );
+    it.each([
+      'mouseOver',
+      'mouseLeave',
+    ] as const)('should prevent %s events on floating ref', async (mouseEvent) => {
+      const { result: hookResultRef } = renderHook(() =>
+        useFloatingWithInteractions<HTMLButtonElement>({
+          trigger: 'hover',
+          hoverDelay: 0,
+          defaultShown: false,
+        }),
+      );
+      const renderResult = render(
+        <TestComponent hookResult={hookResultRef.current} Content={DynamicContent} />,
+      );
 
-        await fireEventPatch(hookResultRef.current.refs.reference.current, 'mouseOver');
-        renderResult.rerender(
-          <TestComponent hookResultRef={hookResultRef} Content={DynamicContent} />,
-        );
-        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationStart');
-        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationEnd');
-        await waitFor(() => expect(hookResultRef.current.shown).toBeTruthy());
+      await fireEventPatch(hookResultRef.current.refs.reference.current, 'mouseOver');
+      renderResult.rerender(
+        <TestComponent hookResult={hookResultRef.current} Content={DynamicContent} />,
+      );
+      await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationStart');
+      await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationEnd');
+      await waitFor(() => expect(hookResultRef.current.shown).toBeTruthy());
 
-        await fireEventPatch(hookResultRef.current.refs.floating.current, 'mouseOver');
-        await fireEventPatch(renderResult.getByTestId('dynamic-content-item'), 'click');
-        renderResult.rerender(
-          <TestComponent hookResultRef={hookResultRef} Content={DynamicContent} />,
-        );
-        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationStart');
-        await fireEventPatch(hookResultRef.current.refs.floating.current, mouseEvent);
-        await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationEnd');
-        await waitFor(() => expect(hookResultRef.current.shown).toBeFalsy());
-      },
-    );
+      await fireEventPatch(hookResultRef.current.refs.floating.current, 'mouseOver');
+      await fireEventPatch(renderResult.getByTestId('dynamic-content-item'), 'click');
+      renderResult.rerender(
+        <TestComponent hookResult={hookResultRef.current} Content={DynamicContent} />,
+      );
+      await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationStart');
+      await fireEventPatch(hookResultRef.current.refs.floating.current, mouseEvent);
+      await fireEventPatch(hookResultRef.current.refs.floating.current, 'animationEnd');
+      await waitFor(() => expect(hookResultRef.current.shown).toBeFalsy());
+    });
   });
 
   describe('tests with snapshot', () => {

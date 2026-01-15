@@ -1,5 +1,3 @@
-'use no memo';
-
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent, waitForFloatingPosition } from '../../testing/utils';
@@ -80,7 +78,10 @@ describe(Popover, () => {
       HTMLDivElement,
       React.HTMLAttributes<HTMLDivElement>
     >(function Component(props, ref) {
-      componentRef = ref;
+      React.useEffect(() => {
+        componentRef = ref;
+      });
+
       return (
         <div {...props} ref={ref}>
           Component with ref

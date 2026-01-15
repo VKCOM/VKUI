@@ -93,6 +93,40 @@ const [gender, setGender] = React.useState('f');
   ```
 </Playground>
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  const selectRef = React.useRef();
+
+  return (
+    <NativeSelect
+      className="my-root-class"
+      data-testid="native-select-root"
+      id="native-select-id"
+      slotProps={{
+        root: {
+          id: 'select-root-id',
+        },
+        select: {
+          className: 'my-select-class',
+          'data-test-id': 'select',
+          getRootRef: selectRef,
+          'aria-label': 'Пример slotProps'
+        }
+      }}
+    >
+      <option value="1">Опция 1</option>
+      <option value="2">Опция 2</option>
+      <option value="3">Опция 3</option>
+    </NativeSelect>
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент построен на основе нативного HTML-элемента `select`, что обеспечивает базовую доступность. Для улучшения доступности рекомендуется:

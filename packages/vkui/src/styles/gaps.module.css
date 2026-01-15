@@ -1,75 +1,75 @@
 /* Row Gap */
 
-.-row-gap--2xs {
+.rowGap2xs {
   --vkui_internal--row_gap: var(--vkui--spacing_size_2xs);
 }
 
-.-row-gap--xs {
+.rowGapXs {
   --vkui_internal--row_gap: var(--vkui--spacing_size_xs);
 }
 
-.-row-gap--s {
+.rowGapS {
   --vkui_internal--row_gap: var(--vkui--spacing_size_s);
 }
 
-.-row-gap--m {
+.rowGapM {
   --vkui_internal--row_gap: var(--vkui--spacing_size_m);
 }
 
-.-row-gap--l {
+.rowGapL {
   --vkui_internal--row_gap: var(--vkui--spacing_size_l);
 }
 
-.-row-gap--xl {
+.rowGapXl {
   --vkui_internal--row_gap: var(--vkui--spacing_size_xl);
 }
 
-.-row-gap--2xl {
+.rowGap2xl {
   --vkui_internal--row_gap: var(--vkui--spacing_size_2xl);
 }
 
-.-row-gap--3xl {
+.rowGap3xl {
   --vkui_internal--row_gap: var(--vkui--spacing_size_3xl);
 }
 
-.-row-gap--4xl {
+.rowGap4xl {
   --vkui_internal--row_gap: var(--vkui--spacing_size_4xl);
 }
 
 /* Column Gap */
 
-.-column-gap--2xs {
+.columnGap2xs {
   --vkui_internal--column_gap: var(--vkui--spacing_size_2xs);
 }
 
-.-column-gap--xs {
+.columnGapXs {
   --vkui_internal--column_gap: var(--vkui--spacing_size_xs);
 }
 
-.-column-gap--s {
+.columnGapS {
   --vkui_internal--column_gap: var(--vkui--spacing_size_s);
 }
 
-.-column-gap--m {
+.columnGapM {
   --vkui_internal--column_gap: var(--vkui--spacing_size_m);
 }
 
-.-column-gap--l {
+.columnGapL {
   --vkui_internal--column_gap: var(--vkui--spacing_size_l);
 }
 
-.-column-gap--xl {
+.columnGapXl {
   --vkui_internal--column_gap: var(--vkui--spacing_size_xl);
 }
 
-.-column-gap--2xl {
+.columnGap2xl {
   --vkui_internal--column_gap: var(--vkui--spacing_size_2xl);
 }
 
-.-column-gap--3xl {
+.columnGap3xl {
   --vkui_internal--column_gap: var(--vkui--spacing_size_3xl);
 }
 
-.-column-gap--4xl {
+.columnGap4xl {
   --vkui_internal--column_gap: var(--vkui--spacing_size_4xl);
 }

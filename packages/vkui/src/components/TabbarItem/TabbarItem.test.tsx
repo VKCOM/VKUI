@@ -71,10 +71,10 @@ describe('TabbarItem', () => {
       const component = renderTabbarItemForFocus({ withKeyboardInput: true });
 
       await userEvent.tab();
-      expect(screen.getByRole('presentation')).toHaveClass(styles['-focus-visible--focused']);
+      expect(screen.getByRole('presentation')).toHaveClass(styles.focusVisibleFocused);
 
       await userEvent.tab();
-      expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
+      expect(screen.getByRole('presentation')).not.toHaveClass(styles.focusVisibleFocused);
 
       expect(component.onFocusStub).toHaveBeenCalledTimes(1);
       expect(component.onBlurStub).toHaveBeenCalledTimes(1);
@@ -87,10 +87,10 @@ describe('TabbarItem', () => {
       const component = renderTabbarItemForFocus({ withKeyboardInput: false });
 
       await userEvent.click(screen.getByTestId('test'));
-      expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
+      expect(screen.getByRole('presentation')).not.toHaveClass(styles.focusVisibleFocused);
 
       await userEvent.tab();
-      expect(screen.getByRole('presentation')).not.toHaveClass(styles['-focus-visible--focused']);
+      expect(screen.getByRole('presentation')).not.toHaveClass(styles.focusVisibleFocused);
 
       expect(component.onFocusStub).toHaveBeenCalledTimes(1);
       expect(component.onBlurStub).toHaveBeenCalledTimes(1);

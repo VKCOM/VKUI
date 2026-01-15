@@ -14,6 +14,7 @@ const config = {
   ],
   rules: {
     'property-no-deprecated': [true, { ignoreProperties: ['/^-.*-box-orient$/'] }],
+    'keyframes-name-pattern': '^animation[A-Z][a-zA-Z0-9]*$',
     'block-no-empty': null,
     'declaration-block-no-redundant-longhand-properties': null,
     'comment-empty-line-before': null,

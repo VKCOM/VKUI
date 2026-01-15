@@ -3,18 +3,18 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { stopPropagation } from '../../lib/utils';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { RootComponent } from '../RootComponent/RootComponent';
+import { ActionSheetContext, type ActionSheetContextType } from './ActionSheetContext';
 import type { SharedDropdownProps } from './types';
 import styles from './ActionSheet.module.css';
 
-export type ActionSheetDropdownProps = Omit<
-  SharedDropdownProps,
-  'popupDirection' | 'popupOffsetDistance' | 'placement'
->;
-
 export const ActionSheetDropdownSheet = ({
+  getRootRef,
   children,
   closing,
   // these 2 props are only omitted - ActionSheetDesktop compat
@@ -22,10 +22,25 @@ export const ActionSheetDropdownSheet = ({
   className,
   onClick,
   allowClickPropagation = false,
+  onClose: onCloseProp,
+  // FocusTrap props
+  autoFocus,
+  restoreFocus,
+  disabled,
+  timeout,
   ...restProps
 }: SharedDropdownProps): React.ReactNode => {
-  const { sizeY } = useAdaptivityWithJSMediaQueries();
+  const { density } = useAdaptivityWithJSMediaQueries();
+  const focusTrapRootRef = useExternRef(getRootRef);
   const platform = usePlatform();
+
+  const { onClose: onActionSheetClose } =
+    React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
+
+  const onClose = React.useCallback(() => {
+    onCloseProp?.();
+    onActionSheetClose?.('escape-key');
+  }, [onActionSheetClose, onCloseProp]);
 
   const handleClick = allowClickPropagation
     ? onClick
@@ -34,19 +49,31 @@ export const ActionSheetDropdownSheet = ({
         onClick?.(event);
       };
 
+  useGlobalEscKeyDown(true, onClose);
+
   return (
     <FocusTrap
-      {...restProps}
-      onClick={handleClick}
-      className={classNames(
-        styles.host,
-        platform === 'ios' && styles.ios,
-        closing ? styles.closing : styles.opening,
-        sizeY === 'compact' && styles.sizeYCompact,
-        className,
-      )}
+      autoFocus={autoFocus}
+      autoFocusDelay={timeout}
+      restoreFocus={restoreFocus}
+      disabled={disabled}
+      rootRef={focusTrapRootRef}
     >
-      {children}
+      <RootComponent
+        {...restProps}
+        tabIndex={-1}
+        getRootRef={focusTrapRootRef}
+        onClick={handleClick}
+        className={classNames(
+          styles.host,
+          platform === 'ios' && styles.ios,
+          closing ? styles.closing : styles.opening,
+          density === 'compact' && styles.densityCompact,
+          className,
+        )}
+      >
+        {children}
+      </RootComponent>
     </FocusTrap>
   );
 };

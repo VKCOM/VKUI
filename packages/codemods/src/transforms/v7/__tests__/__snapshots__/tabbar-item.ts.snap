@@ -11,7 +11,7 @@ const App = () => {
         <TabbarItem selected={true} onClick={() => {}} label="Новости">
           <Icon28NewsfeedOutline />
         </TabbarItem>
-        <TabbarItem selected={false} onClick={() => {}} label={"Новости"}>
+        <TabbarItem selected={false} onClick={() => {}} label={'Новости'}>
           <Icon28NewsfeedOutline />
         </TabbarItem>
       </Tabbar>

@@ -9,13 +9,13 @@ import {
   Button,
   Caption,
   Card,
+  type DensityType,
   DisplayTitle,
   Flex,
   Footnote,
   Headline,
   Paragraph,
   SimpleGrid,
-  type SizeType,
   Subhead,
   Text,
   Title,
@@ -24,7 +24,7 @@ import {
 import { HeadingLink } from '@vkontakte/vkui-docs-theme';
 import styles from './Typography.module.css';
 
-type SizeYType = (typeof SizeType)[keyof typeof SizeType] | '';
+type DensityTypeValue = (typeof DensityType)[keyof typeof DensityType] | '';
 
 const TypographyArray = [
   {
@@ -93,12 +93,12 @@ function TypographyCard({
   title,
   description,
   children,
-  sizeY,
+  density,
 }: {
   title: string;
   description: string;
   children: React.ReactNode;
-  sizeY: SizeYType;
+  density: DensityTypeValue;
 }) {
   return (
     <Card className={styles.card} mode="shadow">
@@ -108,7 +108,7 @@ function TypographyCard({
       <Headline level="2" weight="3">
         {description}
       </Headline>
-      <AdaptivityProvider sizeY={sizeY || undefined}>
+      <AdaptivityProvider density={density || undefined}>
         <div className={styles.example}>{children}</div>
       </AdaptivityProvider>
     </Card>
@@ -117,14 +117,14 @@ function TypographyCard({
 
 export function Typography() {
   const [weight, setWeight] = React.useState<TypographyProps['weight'] | undefined>(undefined);
-  const [sizeY, setSizeY] = React.useState<SizeYType>('');
+  const [density, setDensity] = React.useState<DensityTypeValue>('');
   const [popout, setPopout] = React.useState<React.ReactNode>(undefined);
   const weightTargetRef = React.useRef(null);
   const adaptivityTargetRef = React.useRef(null);
 
   function openWeightPopout() {
     setPopout(
-      <ActionSheet onClose={() => setPopout(null)} toggleRef={weightTargetRef}>
+      <ActionSheet onClosed={() => setPopout(null)} toggleRef={weightTargetRef}>
         {['', '1', '2', '3'].map((item) => (
           <ActionSheetItem
             key={item}
@@ -143,15 +143,15 @@ export function Typography() {
 
   function openAdaptivityPopout() {
     setPopout(
-      <ActionSheet onClose={() => setPopout(null)} toggleRef={adaptivityTargetRef}>
+      <ActionSheet onClosed={() => setPopout(null)} toggleRef={adaptivityTargetRef}>
         {['', 'regular', 'compact'].map((item) => (
           <ActionSheetItem
             key={item}
-            checked={sizeY === item}
+            checked={density === item}
             selectable
             value={item}
             // @ts-expect-error: TS234 Lol
-            onChange={(e) => setSizeY(e.target.value)}
+            onChange={(e) => setDensity(e.target.value)}
           >
             {item || 'Не выбрано'}
           </ActionSheetItem>
@@ -179,13 +179,13 @@ export function Typography() {
           getRootRef={adaptivityTargetRef}
           onClick={openAdaptivityPopout}
         >
-          {`adaptivity${sizeY ? ': ' + sizeY : ''}`}
+          {`adaptivity${density ? ': ' + density : ''}`}
         </Button>
         {popout}
       </Flex>
       <SimpleGrid minColWidth={300} className={styles.root} gap="2xl">
         {TypographyArray.map(({ description, Component, title, level, caps }) => (
-          <TypographyCard title={title} description={description} key={title} sizeY={sizeY}>
+          <TypographyCard title={title} description={description} key={title} density={density}>
             {level ? (
               level.map((level) => (
                 <React.Fragment key={level}>

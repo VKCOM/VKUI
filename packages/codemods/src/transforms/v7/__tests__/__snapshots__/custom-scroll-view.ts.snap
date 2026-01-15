@@ -2,24 +2,22 @@
 
 exports[`custom-scroll-view > transforms correctly 1`] = `
 "import { CustomScrollView, Div, Flex } from '@vkontakte/vkui';
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 
 const App = () => {
   const ref = useRef();
   return (
     <React.Fragment>
       {/* Проверяем удаление старый пропов */}
-      <CustomScrollView className={"className"} enableHorizontalScroll>
+      <CustomScrollView className={'className'} enableHorizontalScroll>
         <Flex>
-          <Div/>
+          <Div />
         </Flex>
       </CustomScrollView>
       {/* Заменяем boxRef на getRootRef */}
-      <CustomScrollView
-        getRootRef={ref}
-      >
+      <CustomScrollView getRootRef={ref}>
         <Flex>
-          <Div/>
+          <Div />
         </Flex>
       </CustomScrollView>
     </React.Fragment>

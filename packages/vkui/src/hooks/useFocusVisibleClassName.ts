@@ -3,8 +3,8 @@ import type { LiteralUnion } from '../types';
 import styles from '../styles/focusVisible.module.css';
 
 export const focusVisiblePresetModeClassNames: Record<'inside' | 'outside', string> = {
-  inside: styles['-focus-visible--mode-inside'],
-  outside: styles['-focus-visible--mode-outside'],
+  inside: styles.focusVisibleModeInside,
+  outside: styles.focusVisibleModeOutside,
 };
 
 type FocusVisiblePresetMode = keyof typeof focusVisiblePresetModeClassNames;
@@ -39,8 +39,8 @@ export function useFocusVisibleClassName({
   const modeClassName = isPresetMode(mode) ? focusVisiblePresetModeClassNames[mode] : mode;
 
   const focusVisibleClassNames = classNames(
-    styles['-focus-visible'],
-    focusVisible && styles['-focus-visible--focused'],
+    styles.focusVisible,
+    focusVisible && styles.focusVisibleFocused,
     focusVisible && modeClassName,
   );
 

@@ -55,17 +55,17 @@ const GESTURES_VITEST_EACH_TABLE = [
 ] as const;
 
 describe(Snackbar, () => {
-  const onClose = vi.fn();
+  const onClosed = vi.fn();
 
   beforeAll(() => {
     matchMediaMock(MEDIA_QUERIES.SMALL_TABLET_PLUS);
   });
 
   afterEach(() => {
-    onClose.mockClear();
+    onClosed.mockClear();
   });
 
-  baselineComponent((props) => <Snackbar onClose={vi.fn()} {...props} />);
+  baselineComponent((props) => <Snackbar onClosed={vi.fn()} {...props} />);
 
   it('should work correctly with slotProps', () => {
     const rootRef1 = React.createRef<HTMLDivElement>();
@@ -78,7 +78,7 @@ describe(Snackbar, () => {
 
     render(
       <Snackbar
-        onClose={vi.fn()}
+        onClosed={vi.fn()}
         getRootRef={rootRef1}
         action="Action"
         onActionClick={onActionClick1}
@@ -120,43 +120,42 @@ describe(Snackbar, () => {
     expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 
-  it.each(PLACEMENT_VITEST_EACH_TABLE)(
-    'should set offsetY relative placement="%s"',
-    (placement) => {
-      const result = render(<Snackbar placement={placement} offsetY={8} onClose={vi.fn()} />);
-      const el = result.getByRole('presentation');
-      switch (placement) {
-        case 'top-start':
-        case 'top':
-        case 'top-end':
-          expect(el.style.top).toBe('8px');
-          expect(el.style.bottom).toBe('');
-          break;
-        case 'bottom-start':
-        case 'bottom':
-        case 'bottom-end':
-          expect(el.style.top).toBe('');
-          expect(el.style.bottom).toBe('8px');
-          break;
-      }
-    },
-  );
+  it.each(
+    PLACEMENT_VITEST_EACH_TABLE,
+  )('should set offsetY relative placement="%s"', (placement) => {
+    const result = render(<Snackbar placement={placement} offsetY={8} onClosed={vi.fn()} />);
+    const el = result.getByRole('presentation');
+    switch (placement) {
+      case 'top-start':
+      case 'top':
+      case 'top-end':
+        expect(el.style.top).toBe('8px');
+        expect(el.style.bottom).toBe('');
+        break;
+      case 'bottom-start':
+      case 'bottom':
+      case 'bottom-end':
+        expect(el.style.top).toBe('');
+        expect(el.style.bottom).toBe('8px');
+        break;
+    }
+  });
 
   it('should set iOS CSS selector', () => {
     const result = render(
       <PlatformProvider value="ios">
-        <Snackbar onClose={vi.fn()}>Text message</Snackbar>
+        <Snackbar onClosed={vi.fn()}>Text message</Snackbar>
       </PlatformProvider>,
     );
     expect(result.getByRole('presentation')).toHaveClass(styles.ios);
-    result.rerender(<Snackbar onClose={vi.fn()}>Text message</Snackbar>);
+    result.rerender(<Snackbar onClosed={vi.fn()}>Text message</Snackbar>);
     expect(result.getByRole('presentation')).not.toHaveClass(styles.ios);
   });
 
   it('renders in horizontal layout on desktop if layout prop is set', () => {
     const { container, rerender } = render(
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP}>
-        <Snackbar action="Close me" onClose={vi.fn()}>
+        <Snackbar action="Close me" onClosed={vi.fn()}>
           Text message
         </Snackbar>
       </AdaptivityProvider>,
@@ -166,7 +165,7 @@ describe(Snackbar, () => {
     expect(container.querySelector(`.${basicStyles.layoutNone}`)).not.toBeNull();
 
     rerender(
-      <Snackbar layout="horizontal" action="Close me" onClose={vi.fn()}>
+      <Snackbar layout="horizontal" action="Close me" onClosed={vi.fn()}>
         Text message
       </Snackbar>,
     );
@@ -178,24 +177,24 @@ describe(Snackbar, () => {
   it(
     'should be closed after timeout',
     withFakeTimers(async () => {
-      const result = render(<Snackbar onClose={onClose} />);
+      const result = render(<Snackbar onClosed={onClosed} />);
       await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalled();
+      expect(onClosed).toHaveBeenCalled();
     }),
   );
 
   it(
     'should use focused state for start or end timeout for close',
     withFakeTimers(async () => {
-      const result = render(<Snackbar action="Action" onClose={onClose} />);
+      const result = render(<Snackbar action="Action" onClosed={onClosed} />);
 
       await userEvent.keyboard('{Tab}');
       await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
-      expect(onClose).not.toHaveBeenCalled();
+      expect(onClosed).not.toHaveBeenCalled();
 
       await userEvent.keyboard('{Tab}');
       await waitCSSKeyframesAnimation(result.getByRole('alert'), { runOnlyPendingTimers: true });
-      expect(onClose).toHaveBeenCalled();
+      expect(onClosed).toHaveBeenCalled();
     }),
   );
 
@@ -204,7 +203,7 @@ describe(Snackbar, () => {
     const result = render(
       <Snackbar
         action={<span data-testid="action">action</span>}
-        onClose={onClose}
+        onClosed={onClosed}
         slotProps={{
           action: { onClick: onActionClick },
         }}
@@ -213,23 +212,61 @@ describe(Snackbar, () => {
     await fireEventPatch(result.getByTestId('action'), 'click');
     expect(onActionClick).toHaveBeenCalled();
     await waitCSSKeyframesAnimation(result.getByRole('alert'));
-    expect(onClose).toHaveBeenCalled();
+    expect(onClosed).toHaveBeenCalled();
   });
 
   it(
     'should be closed after press to ESC',
     withFakeTimers(async () => {
-      const result = render(<Snackbar onClose={onClose} />);
+      const result = render(<Snackbar onClosed={onClosed} />);
       await userEvent.keyboard('{Escape}');
       await waitCSSKeyframesAnimation(result.getByRole('alert'));
-      expect(onClose).toHaveBeenCalled();
+      expect(onClosed).toHaveBeenCalled();
+    }),
+  );
+
+  it(
+    'should work with open prop',
+    withFakeTimers(async () => {
+      const onClose = vi.fn();
+
+      const action = <span data-testid="action">action</span>;
+
+      const result = render(
+        <Snackbar action={action} onClose={onClose} onClosed={onClosed} open={true} />,
+      );
+      // Нажимаем на кнопку Action
+      await fireEventPatch(result.getByTestId('action'), 'click');
+      expect(onClose).toHaveBeenCalledWith('click-action');
+
+      // Снекбар не закрывается
+      await waitCSSKeyframesAnimation(result.getByRole('alert'));
+      expect(onClosed).not.toHaveBeenCalled();
+
+      // Ждем, когда срабатает таймер
+      vi.runOnlyPendingTimers();
+      expect(onClose).toHaveBeenCalledWith('timeout');
+
+      // Снекбар не закрывается
+      await waitCSSKeyframesAnimation(result.getByRole('alert'));
+      expect(onClosed).not.toHaveBeenCalled();
+
+      // Прокидываем open={false}
+      result.rerender(
+        <Snackbar action={action} onClose={onClose} onClosed={onClosed} open={false} />,
+      );
+
+      // onClosed вызывается
+      await waitCSSKeyframesAnimation(result.getByRole('alert'));
+      expect(onClosed).toHaveBeenCalled();
+      expect(onClose).toHaveBeenCalledWith('manual');
     }),
   );
 
   it(
     'should force unmount',
     withFakeTimers(async () => {
-      const result = render(<Snackbar placement="top" onClose={onClose} />);
+      const result = render(<Snackbar placement="top" onClosed={onClosed} />);
 
       const rootEl = result.getByRole('presentation');
       const contentEl = result.getByRole('alert');
@@ -263,84 +300,90 @@ describe(Snackbar, () => {
     }),
   );
 
-  describe.each(GESTURES_VITEST_EACH_TABLE)(
-    'should use touched state for start or end timeout for close (user $name manipulation)',
-    ({ start, move, end, fireEventOptions }) => {
-      fakeTimersForScope(false);
-      it.each([
-        ...PLACEMENT_VITEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
-        { placement: 'top' as const, shifted: false },
-      ])('placement="$placement" (shifted: $shifted)', async ({ placement, shifted }) => {
-        const result = render(<Snackbar placement={placement} onClose={onClose} />);
+  describe.each(
+    GESTURES_VITEST_EACH_TABLE,
+  )('should use touched state for start or end timeout for close (user $name manipulation)', ({
+    start,
+    move,
+    end,
+    fireEventOptions,
+  }) => {
+    fakeTimersForScope(false);
+    it.each([
+      ...PLACEMENT_VITEST_EACH_TABLE.map((placement) => ({ placement, shifted: true })),
+      { placement: 'top' as const, shifted: false },
+    ])('placement="$placement" (shifted: $shifted)', async ({ placement, shifted }) => {
+      const result = render(<Snackbar placement={placement} onClosed={onClosed} />);
 
-        const rootEl = result.getByRole('presentation');
-        const contentEl = result.getByRole('alert');
+      const rootEl = result.getByRole('presentation');
+      const contentEl = result.getByRole('alert');
 
-        const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-        const movedRect = getMovedContentRectByPlacement(placement, {
-          shouldTriggerClosing: false,
-        });
-
-        // start
-        mockRect(rootEl, initialRect);
-        mockRect(contentEl, initialRect);
-        await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect));
-        await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
-        expect(onClose).not.toHaveBeenCalled();
-
-        if (shifted) {
-          // move
-          mockRect(contentEl, movedRect);
-          requestAnimationFrameMock.init();
-          await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect));
-          requestAnimationFrameMock.triggerNextAnimationFrame();
-          expect(onClose).not.toHaveBeenCalled();
-        }
-
-        // end
-        requestAnimationFrameMock.init();
-        await fireEventPatch(contentEl, end, fireEventOptions);
-        await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        expect(onClose).toHaveBeenCalled();
+      const initialRect = { x: 0, y: 0, width: 320, height: 100 };
+      const movedRect = getMovedContentRectByPlacement(placement, {
+        shouldTriggerClosing: false,
       });
-    },
-  );
 
-  describe.each(GESTURES_VITEST_EACH_TABLE)(
-    'should closing with user $name manipulation',
-    ({ start, move, end, fireEventOptions }) => {
-      fakeTimersForScope(false);
-      it.each(PLACEMENT_VITEST_EACH_TABLE)('placement="%s"', async (placement) => {
-        const result = render(<Snackbar placement={placement} onClose={onClose} />);
+      // start
+      mockRect(rootEl, initialRect);
+      mockRect(contentEl, initialRect);
+      await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect));
+      await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+      expect(onClosed).not.toHaveBeenCalled();
 
-        const rootEl = result.getByRole('presentation');
-        const contentEl = result.getByRole('alert');
-
-        const initialRect = { x: 0, y: 0, width: 320, height: 100 };
-        const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: true });
-
-        // start
-        mockRect(rootEl, initialRect);
-        mockRect(contentEl, initialRect);
-        await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect));
-        await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
-
+      if (shifted) {
         // move
         mockRect(contentEl, movedRect);
         requestAnimationFrameMock.init();
         await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect));
         requestAnimationFrameMock.triggerNextAnimationFrame();
+        expect(onClosed).not.toHaveBeenCalled();
+      }
 
-        // end
-        requestAnimationFrameMock.init();
-        await fireEventPatch(contentEl, end, fireEventOptions);
-        await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: false });
-        requestAnimationFrameMock.triggerNextAnimationFrame();
-        expect(onClose).toHaveBeenCalled();
-      });
-    },
-  );
+      // end
+      requestAnimationFrameMock.init();
+      await fireEventPatch(contentEl, end, fireEventOptions);
+      await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      expect(onClosed).toHaveBeenCalled();
+    });
+  });
+
+  describe.each(GESTURES_VITEST_EACH_TABLE)('should closing with user $name manipulation', ({
+    start,
+    move,
+    end,
+    fireEventOptions,
+  }) => {
+    fakeTimersForScope(false);
+    it.each(PLACEMENT_VITEST_EACH_TABLE)('placement="%s"', async (placement) => {
+      const result = render(<Snackbar placement={placement} onClosed={onClosed} />);
+
+      const rootEl = result.getByRole('presentation');
+      const contentEl = result.getByRole('alert');
+
+      const initialRect = { x: 0, y: 0, width: 320, height: 100 };
+      const movedRect = getMovedContentRectByPlacement(placement, { shouldTriggerClosing: true });
+
+      // start
+      mockRect(rootEl, initialRect);
+      mockRect(contentEl, initialRect);
+      await fireEventPatch(contentEl, start, transformDomRectToEventData(start, initialRect));
+      await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: true });
+
+      // move
+      mockRect(contentEl, movedRect);
+      requestAnimationFrameMock.init();
+      await fireEventPatch(contentEl, move, transformDomRectToEventData(move, movedRect));
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+
+      // end
+      requestAnimationFrameMock.init();
+      await fireEventPatch(contentEl, end, fireEventOptions);
+      await waitCSSKeyframesAnimation(contentEl, { runOnlyPendingTimers: false });
+      requestAnimationFrameMock.triggerNextAnimationFrame();
+      expect(onClosed).toHaveBeenCalled();
+    });
+  });
 });
 
 function transformDomRectToEventData(
