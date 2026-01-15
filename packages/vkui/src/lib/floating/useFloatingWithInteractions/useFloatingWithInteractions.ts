@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
+import { useBooleanRef } from '../../../hooks/useBooleanRef';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
+import { useLongPress } from '../../../hooks/useLongPress';
 import { useStableCallback } from '../../../hooks/useStableCallback';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
@@ -30,6 +32,7 @@ const whileElementsMounted: UseFloatingOptions['whileElementsMounted'] = (...arg
  */
 export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>({
   trigger = DEFAULT_TRIGGER,
+  longPressDelay,
 
   // UseFloating
   placement: placementProp = 'bottom',
@@ -70,10 +73,11 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const [shownFinalState, setShownFinalState] = React.useState(() => shownLocalState.shown);
   const [willBeHide, setWillBeHide] = React.useState(false);
 
-  const hasCSSAnimation = React.useRef(false);
+  const skipNextClick = useBooleanRef(false);
+  const hasCSSAnimation = useBooleanRef(false);
 
-  const blockMouseEnterRef = React.useRef(false);
-  const blockFocusRef = React.useRef(false);
+  const blockMouseEnter = useBooleanRef(false);
+  const blockFocus = useBooleanRef(false);
   const blurTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleCloseOnReferenceClickOutsideDisabled =
@@ -81,7 +85,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const handleCloseOnFloatingClickOutsideDisabled =
     disableInteractive || handleCloseOnReferenceClickOutsideDisabled;
 
-  const { triggerOnFocus, triggerOnClick, triggerOnHover } = useResolveTriggerType(trigger);
+  const { triggerOnFocus, triggerOnClick, triggerOnHover, triggerOnLongPress } =
+    useResolveTriggerType(trigger);
 
   // Библиотека `floating-ui`
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
@@ -93,6 +98,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const commitShownLocalState = React.useCallback(
     (nextShown: boolean, reason: ShownChangeReason) => {
+      if (!nextShown) {
+        skipNextClick.setFalse();
+      }
       setShownLocalState((prevState) => {
         if (prevState.shown !== nextShown || prevState.reason !== reason) {
           return {
@@ -104,7 +112,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
         return prevState;
       });
     },
-    [setShownLocalState],
+    [setShownLocalState, skipNextClick],
   );
 
   const [mouseEnterDelay, mouseLeaveDelay] =
@@ -129,9 +137,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       commitShownLocalState(false, 'focus');
       return;
     }
-    if (blockFocusRef.current) {
+    if (blockFocus.value) {
       /* istanbul ignore next: в Vitest не воспроизводится баг на вебе (cм. onRestoreFocus) */
-      blockFocusRef.current = false;
+      blockFocus.setFalse();
       return;
     }
 
@@ -139,8 +147,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   });
 
   const handleBlurOnReference = useStableCallback((event: React.FocusEvent) => {
-    blockFocusRef.current = false;
-    blockMouseEnterRef.current = false;
+    blockFocus.setFalse();
+    blockMouseEnter.setFalse();
 
     if (!shownLocalState.shown) {
       clearTimeout(blurTimeoutRef.current);
@@ -168,7 +176,22 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     });
   });
 
+  const handleClickOnReferenceWhenLongpress = useStableCallback(() => {
+    if (skipNextClick.value) {
+      skipNextClick.setFalse();
+      return;
+    }
+    if (shownLocalState.shown && shownLocalState.reason === 'long-press') {
+      commitShownLocalState(false, 'click');
+      return;
+    }
+  });
+
   const handleClickOnReference = useStableCallback(() => {
+    if (skipNextClick.value) {
+      skipNextClick.setFalse();
+      return;
+    }
     // Предыдущий триггер (фокус) уже вызвал открытие/закрытие всплывающего окна, игнорируем вызов
     if (shownLocalState.reason === 'focus') {
       commitShownLocalState(shownLocalState.shown, 'click');
@@ -177,8 +200,15 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     commitShownLocalState(!shownLocalState.shown, 'click');
   });
 
+  const handleLongPressOnReference = useStableCallback(() => {
+    if (!shownLocalState.shown) {
+      commitShownLocalState(true, 'long-press');
+      skipNextClick.setTrue();
+    }
+  });
+
   const handleClickOnReferenceForOnlyClose = useStableCallback(() => {
-    blockMouseEnterRef.current = true;
+    blockMouseEnter.setTrue();
     commitShownLocalState(false, 'click');
   });
 
@@ -190,7 +220,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     showWithDelay.cancel();
     hideWithDelay.cancel();
 
-    if (!blockMouseEnterRef.current && !shownLocalState.shown) {
+    if (!blockMouseEnter.value && !shownLocalState.shown) {
       showWithDelay();
     }
   });
@@ -201,8 +231,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
         return;
       }
 
-      blockFocusRef.current = false;
-      blockMouseEnterRef.current = false;
+      blockFocus.setFalse();
+      blockMouseEnter.setFalse();
 
       if (triggerOnHover) {
         showWithDelay.cancel();
@@ -214,7 +244,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   );
 
   const handleFloatingAnimationStart = () => {
-    hasCSSAnimation.current = true;
+    hasCSSAnimation.setTrue();
   };
 
   const handleFloatingAnimationEnd = () => {
@@ -226,9 +256,9 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   };
 
   const handleOnClose = React.useCallback(() => {
-    blockFocusRef.current = true;
+    blockFocus.setTrue();
     commitShownLocalState(false, 'callback');
-  }, [commitShownLocalState]);
+  }, [blockFocus, commitShownLocalState]);
 
   const handleRestoreFocus: UseFloatingWithInteractionsReturn['onRestoreFocus'] = React.useCallback(
     (restoreFocus = true) => {
@@ -236,7 +266,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
         return false;
       }
       if (restoreFocus === true) {
-        return triggerOnFocus ? blockFocusRef.current : true;
+        return triggerOnFocus ? blockFocus.value : true;
       } else if (restoreFocus === 'anchor-element') {
         return refs.reference.current as HTMLElement;
       } else if (restoreFocus instanceof HTMLElement) {
@@ -244,18 +274,18 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       }
       return false;
     },
-    [refs.reference, triggerOnFocus],
+    [blockFocus.value, refs.reference, triggerOnFocus],
   );
 
   const handleEscapeKeyDown = React.useCallback(() => {
-    blockFocusRef.current = true;
+    blockFocus.setTrue();
     commitShownLocalState(false, 'escape-key');
-  }, [commitShownLocalState]);
+  }, [blockFocus, commitShownLocalState]);
 
   const handleClickOutside = React.useCallback(() => {
-    blockFocusRef.current = true;
+    blockFocus.setTrue();
     commitShownLocalState(false, 'click-outside');
-  }, [commitShownLocalState]);
+  }, [blockFocus, commitShownLocalState]);
 
   useGlobalOnClickOutside(
     handleClickOutside,
@@ -286,7 +316,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
           reference === getActiveElementByAnotherElement(reference)
         ) {
           /* istanbul ignore next */
-          blockFocusRef.current = true;
+          blockFocus.setTrue();
         }
       };
 
@@ -308,7 +338,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
       if (shownLocalState.shown) {
         setShownFinalState(true);
         onShownChanged(true, shownLocalState.reason);
-      } else if (hasCSSAnimation.current && !willBeHide) {
+      } else if (hasCSSAnimation.value && !willBeHide) {
         setWillBeHide(true);
       } else {
         setShownFinalState(false);
@@ -324,6 +354,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const referenceProps: ReferenceProps = {};
   const floatingProps: FloatingProps = { style: {} };
 
+  const longPressHandlers = useLongPress(handleLongPressOnReference, { delay: longPressDelay });
+
   if (shownFinalState) {
     floatingProps.style = convertFloatingDataToReactCSSProperties({
       strategy,
@@ -335,6 +367,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     if (disableInteractive) {
       floatingProps.style.pointerEvents = 'none';
     }
+  }
+
+  if (triggerOnLongPress && !triggerOnClick) {
+    referenceProps.onClick = handleClickOnReferenceWhenLongpress;
   }
 
   if (triggerOnFocus) {
@@ -364,6 +400,10 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     if (!disableInteractive) {
       floatingProps.onMouseLeave = handleMouseLeaveOnBothForHoverAndFocusStates;
     }
+  }
+
+  if (triggerOnLongPress) {
+    Object.assign(referenceProps, longPressHandlers);
   }
 
   if (shownFinalState) {
