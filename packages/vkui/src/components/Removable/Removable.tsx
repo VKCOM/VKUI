@@ -5,7 +5,7 @@ import { Icon24Cancel } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTextFromChildren } from '../../lib/children';
-import type { HTMLAttributesWithRootRef } from '../../types';
+import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { RemovableIos } from './RemovableIos';
@@ -95,6 +95,7 @@ export interface RemovableIosRenderProps {
 
 interface RemovableOwnProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'children'>,
+    HasComponent,
     RemovableProps {
   /**
    * Расположение кнопки удаления.

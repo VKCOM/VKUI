@@ -1,0 +1,5 @@
+.host {
+  touch-action: manipulation;
+  cursor: ns-resize;
+  user-select: none;
+}

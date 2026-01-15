@@ -159,6 +159,7 @@ const meta: MetaRecord = {
   'selection-control': 'SelectionControl',
   'tappable': 'Tappable',
   'touch': 'Touch',
+  'reorder': 'Reorder',
   'focus-trap': 'FocusTrap',
   'unstyled-text-field': 'UnstyledTextField',
   'use-snackbar-manager': 'useSnackbarManager',
