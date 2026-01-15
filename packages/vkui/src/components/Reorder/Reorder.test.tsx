@@ -187,16 +187,16 @@ const dragItem = ({
   const dragger = screen.getByTestId(testId);
   mouseDown(dragger);
 
-  act(vi.runOnlyPendingTimers);
+  void act(vi.runOnlyPendingTimers);
 
   breakPoints.forEach((breakPoint, index) => {
     mouseMove(dragger, {
       clientY: breakPoint,
     });
-    act(vi.runOnlyPendingTimers);
+    void act(vi.runOnlyPendingTimers);
     afterMove[index]?.();
   });
-  act(vi.runOnlyPendingTimers);
+  void act(vi.runOnlyPendingTimers);
   afterDragging && afterDragging();
 
   mouseUp(dragger);
@@ -208,120 +208,121 @@ describe('Reorder', () => {
   describe.each<{ handlers: Array<typeof fireEvent.mouseDown> }>([
     { handlers: MOUSE_EVENTS_HANDLERS },
     { handlers: ADOPTED_TOUCH_EVENTS_HANDLERS },
-  ])(
-    'check dnd is working',
-    ({ handlers: mouseEvents }: { handlers: Array<typeof fireEvent.mouseDown> }) => {
-      it(
-        'dnd working',
-        withFakeTimers(() => {
-          const setupData = setup({});
-          const { getItemSetup } = setupData;
+  ])('check dnd is working', ({
+    handlers: mouseEvents,
+  }: {
+    handlers: Array<typeof fireEvent.mouseDown>;
+  }) => {
+    it(
+      'dnd working',
+      withFakeTimers(() => {
+        const setupData = setup({});
+        const { getItemSetup } = setupData;
 
-          dragItem({
-            testId: 'dragger-0',
-            breakPoints: [5, 140, 140, 124],
-            afterDragging: () => {
+        dragItem({
+          testId: 'dragger-0',
+          breakPoints: [5, 140, 140, 124],
+          afterDragging: () => {
+            const item1Data = getItemSetup('item-1');
+            expect(item1Data.transform).toBe('');
+            const item2Data = getItemSetup('item-2');
+            expect(item2Data.transform).toBe('translateY(50px)');
+          },
+          afterMove: {
+            0: () => {
               const item1Data = getItemSetup('item-1');
-              expect(item1Data.transform).toBe('');
+              expect(item1Data.transform).toBe('translateY(50px)');
               const item2Data = getItemSetup('item-2');
               expect(item2Data.transform).toBe('translateY(50px)');
             },
-            afterMove: {
-              0: () => {
-                const item1Data = getItemSetup('item-1');
-                expect(item1Data.transform).toBe('translateY(50px)');
-                const item2Data = getItemSetup('item-2');
-                expect(item2Data.transform).toBe('translateY(50px)');
-              },
-            },
-            mouseEvents,
-          });
+          },
+          mouseEvents,
+        });
 
-          expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+        expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
 
-          dragItem({
-            testId: 'dragger-2',
-            breakPoints: [140, 140, 75, 140, 75],
-            afterDragging: () => {
+        dragItem({
+          testId: 'dragger-2',
+          breakPoints: [140, 140, 75, 140, 75],
+          afterDragging: () => {
+            const item1Data = getItemSetup('item-0');
+            expect(item1Data.transform).toBe('');
+            const item2Data = getItemSetup('item-1');
+            expect(item2Data.transform).toBe('translateY(50px)');
+          },
+          afterMove: {
+            0: () => {
               const item1Data = getItemSetup('item-0');
               expect(item1Data.transform).toBe('');
               const item2Data = getItemSetup('item-1');
-              expect(item2Data.transform).toBe('translateY(50px)');
+              expect(item2Data.transform).toBe('');
             },
-            afterMove: {
-              0: () => {
-                const item1Data = getItemSetup('item-0');
-                expect(item1Data.transform).toBe('');
-                const item2Data = getItemSetup('item-1');
-                expect(item2Data.transform).toBe('');
-              },
-            },
-            mouseEvents,
-          });
+          },
+          mouseEvents,
+        });
 
-          expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
-        }),
-      );
+        expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
+      }),
+    );
 
-      it(
-        'use list element like a trigger',
-        withFakeTimers(() => {
-          const setupData = setup({
-            renderItemContent: (index) => (
-              <Reorder.Trigger data-testid={`dragger-${index}`}>
-                <div>Пункт {index + 1}</div>
-              </Reorder.Trigger>
-            ),
-          });
-          const { getItemSetup } = setupData;
+    it(
+      'use list element like a trigger',
+      withFakeTimers(() => {
+        const setupData = setup({
+          renderItemContent: (index) => (
+            <Reorder.Trigger data-testid={`dragger-${index}`}>
+              <div>Пункт {index + 1}</div>
+            </Reorder.Trigger>
+          ),
+        });
+        const { getItemSetup } = setupData;
 
-          dragItem({
-            testId: 'dragger-0',
-            breakPoints: [5, 140, 140, 124],
-            afterDragging: () => {
+        dragItem({
+          testId: 'dragger-0',
+          breakPoints: [5, 140, 140, 124],
+          afterDragging: () => {
+            const item1Data = getItemSetup('item-1');
+            expect(item1Data.transform).toBe('');
+            const item2Data = getItemSetup('item-2');
+            expect(item2Data.transform).toBe('translateY(50px)');
+          },
+          afterMove: {
+            0: () => {
               const item1Data = getItemSetup('item-1');
-              expect(item1Data.transform).toBe('');
+              expect(item1Data.transform).toBe('translateY(50px)');
               const item2Data = getItemSetup('item-2');
               expect(item2Data.transform).toBe('translateY(50px)');
             },
-            afterMove: {
-              0: () => {
-                const item1Data = getItemSetup('item-1');
-                expect(item1Data.transform).toBe('translateY(50px)');
-                const item2Data = getItemSetup('item-2');
-                expect(item2Data.transform).toBe('translateY(50px)');
-              },
-            },
-            mouseEvents,
-          });
+          },
+          mouseEvents,
+        });
 
-          expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
+        expect(setupData.swappedItems).toEqual({ from: 0, to: 1 });
 
-          dragItem({
-            testId: 'dragger-2',
-            breakPoints: [140, 140, 75, 140, 75],
-            afterDragging: () => {
+        dragItem({
+          testId: 'dragger-2',
+          breakPoints: [140, 140, 75, 140, 75],
+          afterDragging: () => {
+            const item1Data = getItemSetup('item-0');
+            expect(item1Data.transform).toBe('');
+            const item2Data = getItemSetup('item-1');
+            expect(item2Data.transform).toBe('translateY(50px)');
+          },
+          afterMove: {
+            0: () => {
               const item1Data = getItemSetup('item-0');
               expect(item1Data.transform).toBe('');
               const item2Data = getItemSetup('item-1');
-              expect(item2Data.transform).toBe('translateY(50px)');
+              expect(item2Data.transform).toBe('');
             },
-            afterMove: {
-              0: () => {
-                const item1Data = getItemSetup('item-0');
-                expect(item1Data.transform).toBe('');
-                const item2Data = getItemSetup('item-1');
-                expect(item2Data.transform).toBe('');
-              },
-            },
-            mouseEvents,
-          });
+          },
+          mouseEvents,
+        });
 
-          expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
-        }),
-      );
-    },
-  );
+        expect(setupData.swappedItems).toEqual({ from: 2, to: 1 });
+      }),
+    );
+  });
 
   it(
     'dnd without subcomponents working',
