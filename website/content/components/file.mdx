@@ -19,6 +19,38 @@ description: Компонент для загрузки файлов.
   ```
 </Playground>
 
+
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <File
+      className="my-root-class"
+      data-testid="file-root"
+      id="file-input-id"
+      slotProps={{
+        root: {
+          id: 'file-root-id',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'file',
+          getRootRef: inputRef,
+        },
+      }}
+    >
+      Выберите файл
+    </File>
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент обеспечивает базовую доступность благодаря использованию нативного элемента `<input type="file" />`.

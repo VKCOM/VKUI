@@ -1,30 +1,40 @@
-import { type ElementProps } from './types';
+import type { DeviceTypeCSSBreakpoints, ElementProps, ViewWidthCSSBreakpoints } from './types';
 import styles from '../../styles/adaptivity.module.css';
 
 export const forcedProps = { className: '' };
 
+/**
+ * @deprecated Since 8.0.0. см. https://github.com/VKCOM/VKUI/issues/9015
+ * TODO [>=10]: #9015 Удалить константу.
+ */
 export const sizeXCompactMediaQueryProps: ElementProps = {
-  className: styles['-sizeX--compact-mq'],
+  className: styles.viewWidthSmallTabletMinusMq,
 };
 
+/**
+ * @deprecated Since 8.0.0. см. https://github.com/VKCOM/VKUI/issues/9015
+ * TODO [>=10]: #9015 Удалить константу.
+ */
 export const sizeXRegularMediaQueryProps: ElementProps = {
-  className: styles['-sizeX--regular-mq'],
+  className: styles.viewWidthSmallTabletPlusMq,
 };
 
-export const sizeYCompactMediaQueryProps: ElementProps = {
-  className: styles['-sizeY--compact-mq'],
+export const densityCompactMediaQueryProps: ElementProps = {
+  className: styles.densityCompactMq,
 };
 
-export const sizeYRegularMediaQueryProps: ElementProps = {
-  className: styles['-sizeY--regular-mq'],
+export const densityRegularMediaQueryProps: ElementProps = {
+  className: styles.densityRegularMq,
 };
 
-export const viewWidthMediaQueryMapProps: Record<'tabletMinus' | 'tabletPlus', ElementProps> = {
-  tabletMinus: { className: styles['-viewWidth--tabletMinus-mq'] },
-  tabletPlus: { className: styles['-viewWidth--tabletPlus-mq'] },
+export const viewWidthMediaQueryMapProps: Record<ViewWidthCSSBreakpoints, ElementProps> = {
+  smallTabletMinus: { className: styles.viewWidthSmallTabletMinusMq },
+  smallTabletPlus: { className: styles.viewWidthSmallTabletPlusMq },
+  tabletMinus: { className: styles.viewWidthTabletMinusMq },
+  tabletPlus: { className: styles.viewWidthTabletPlusMq },
 };
 
-export const deviceTypeMediaQueryMapProps: Record<'mobile' | 'desktop', ElementProps> = {
-  mobile: { className: styles['-deviceType--mobile-mq'] },
-  desktop: { className: styles['-deviceType--desktop-mq'] },
+export const deviceTypeMediaQueryMapProps: Record<DeviceTypeCSSBreakpoints, ElementProps> = {
+  mobile: { className: styles.deviceTypeMobileMq },
+  desktop: { className: styles.deviceTypeDesktopMq },
 };

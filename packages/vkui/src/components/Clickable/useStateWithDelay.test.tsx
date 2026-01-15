@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { fakeTimersForScope } from '../../testing/utils.tsx';
+import { fakeTimersForScope } from '../../testing/utils';
 import { useStateWithDelay } from './useStateWithDelay';
 
 describe(useStateWithDelay, () => {

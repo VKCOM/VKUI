@@ -4,11 +4,7 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      <SubnavigationButton
-        expandable={true}
-        selected={true}
-        onClick={() => {}}
-      >
+      <SubnavigationButton expandable={true} selected={true} onClick={() => {}}>
         Button
       </SubnavigationButton>
     </React.Fragment>

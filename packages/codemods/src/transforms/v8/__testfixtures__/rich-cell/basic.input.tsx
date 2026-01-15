@@ -1,0 +1,79 @@
+import { Avatar, RichCell } from '@vkontakte/vkui';
+import React from 'react';
+
+const someVariable = 'start';
+
+const App = () => {
+  return (
+    <React.Fragment>
+      {/* afterAlign не задан - переименовываем after -> meta, afterCaption -> submeta */}
+      <RichCell before={<Avatar size={48} />} after="After text" afterCaption="After caption">
+        Children
+      </RichCell>
+
+      {/* afterAlign="start" - переименовываем after -> meta, afterCaption -> submeta */}
+      <RichCell
+        before={<Avatar size={48} />}
+        after="After text"
+        afterCaption="After caption"
+        afterAlign="start"
+      >
+        Children
+      </RichCell>
+
+      {/* afterAlign="center" - НЕ переименовываем */}
+      <RichCell
+        before={<Avatar size={48} />}
+        after="After text"
+        afterCaption="After caption"
+        afterAlign="center"
+      >
+        Children
+      </RichCell>
+
+      {/* afterAlign="end" - НЕ переименовываем */}
+      <RichCell
+        before={<Avatar size={48} />}
+        after="After text"
+        afterCaption="After caption"
+        afterAlign="end"
+      >
+        Children
+      </RichCell>
+
+      {/* Только after без afterCaption, afterAlign не задан */}
+      <RichCell before={<Avatar size={48} />} after="After text">
+        Children
+      </RichCell>
+
+      {/* Только afterCaption без after, afterAlign не задан */}
+      <RichCell before={<Avatar size={48} />} afterCaption="After caption">
+        Children
+      </RichCell>
+
+      {/* afterAlign="start" как JSX expression */}
+      <RichCell before={<Avatar size={48} />} after="After text" afterAlign={'start'}>
+        Children
+      </RichCell>
+
+      {/* Динамическое значение afterAlign - НЕ переименовываем */}
+      <RichCell before={<Avatar size={48} />} after="After text" afterAlign={someVariable}>
+        Children
+      </RichCell>
+
+      {/* after как JSX element, afterAlign не задан */}
+      <RichCell
+        before={<Avatar size={48} />}
+        after={<span>After element</span>}
+        afterCaption={<span>Caption element</span>}
+      >
+        Children
+      </RichCell>
+
+      {/* Без after и afterCaption - ничего не меняем */}
+      <RichCell before={<Avatar size={48} />} subtitle="Subtitle">
+        Children
+      </RichCell>
+    </React.Fragment>
+  );
+};

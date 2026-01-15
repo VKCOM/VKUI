@@ -6,7 +6,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import {
   dateFormatter,
   dateTimeFormatter,
@@ -16,11 +16,12 @@ import {
   startOfMinute,
 } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
+import { cacheDateTimeFormat } from '../../lib/intlCache';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -32,9 +33,18 @@ import { useDateInputValue } from './hooks';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const labelDateTimeFormatOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+} as const;
+
+const labelDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
+
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export type DateInputPropsTestsProps = {
@@ -79,7 +89,6 @@ export interface DateInputProps
       | 'disableFuture'
       | 'enableTime'
       | 'shouldDisableDate'
-      | 'onChange'
       | 'value'
       | 'defaultValue'
       | 'doneButtonText'
@@ -104,10 +113,13 @@ export interface DateInputProps
       | 'maxDateTime'
       | 'renderDayContent'
     >,
-    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateInputPropsTestsProps {
+  /**
+   * Обработчик изменения выбранной даты.
+   */
+  onChange?: (value: Date | null) => void;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
@@ -158,6 +170,8 @@ export interface DateInputProps
    */
   timezone?: string;
   /**
+   * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
+   *
    * Включает режим в котором DateInput доступен
    * для ассистивных технологий.
    * В этом режиме:
@@ -167,11 +181,16 @@ export interface DateInputProps
    * - календарь при открытии получает фокус, клавиатурный
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean /* TODO [>=v8] включить по умолчанию */;
+  accessible?: boolean /* TODO [>=v9] удалить свойство */;
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
-  disableFocusTrap?: UseFocusTrapProps['disabled'];
+  disableFocusTrap?: boolean;
+  /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
 }
 
 const elementsConfig = (index: number) => {
@@ -245,7 +264,7 @@ export const DateInput = ({
   name,
   autoFocus,
   disabled,
-  accessible,
+  accessible = true,
   calendarLabel = 'Календарь',
   prevMonthLabel = 'Предыдущий месяц',
   nextMonthLabel = 'Следующий месяц',
@@ -291,6 +310,7 @@ export const DateInput = ({
   const yearsRef = React.useRef<HTMLSpanElement>(null);
   const hoursRef = React.useRef<HTMLSpanElement>(null);
   const minutesRef = React.useRef<HTMLSpanElement>(null);
+  const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
 
@@ -362,7 +382,7 @@ export const DateInput = ({
     accessible,
   });
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
@@ -376,10 +396,7 @@ export const DateInput = ({
   );
 
   const onCalendarChange = React.useCallback(
-    (value?: Date | undefined) => {
-      if (!value) {
-        return;
-      }
+    (value: Date) => {
       if (enableTime) {
         setInternalValue(value);
         return;
@@ -415,12 +432,7 @@ export const DateInput = ({
 
   const { locale } = useConfigProvider();
   const currentDateLabel = value
-    ? new Intl.DateTimeFormat(locale, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(value)
+    ? labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(value)
     : null;
   const currentDateLabelId = React.useId();
   const ariaLabelId = React.useId();
@@ -435,11 +447,15 @@ export const DateInput = ({
   const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
   const showClearButton = value && !readOnly;
 
+  useGlobalEscKeyDown(open && !disableCalendar, closeCalendar, {
+    capture: false,
+  });
+
   return (
     <FormField
       style={style}
       className={classNames(
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         !!before && styles.hasBefore,
         (showCalendarButton || showClearButton) && styles.hasAfter,
         className,
@@ -592,47 +608,48 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <FocusTrap
-            onClose={closeCalendar}
+          <FocusTrapInternal
+            rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
-            captureEscapeKeyboardEvent={false}
             mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
-            <Calendar
-              aria-label={calendarLabel}
-              role="dialog"
-              value={value}
-              onChange={onCalendarChange}
-              enableTime={enableTime}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              shouldDisableDate={shouldDisableDate}
-              onDoneButtonClick={onDoneButtonClick}
-              getRootRef={calendarRef}
-              doneButtonText={doneButtonText}
-              DoneButton={DoneButton}
-              disablePickers={disablePickers}
-              changeHoursLabel={changeHoursLabel}
-              changeMinutesLabel={changeMinutesLabel}
-              prevMonthLabel={prevMonthLabel}
-              nextMonthLabel={nextMonthLabel}
-              changeMonthLabel={changeMonthLabel}
-              changeYearLabel={changeYearLabel}
-              showNeighboringMonth={showNeighboringMonth}
-              renderDayContent={renderDayContent}
-              size={size}
-              viewDate={viewDate}
-              onHeaderChange={onHeaderChange}
-              onNextMonth={onNextMonth}
-              onPrevMonth={onPrevMonth}
-              prevMonthIcon={prevMonthIcon}
-              nextMonthIcon={nextMonthIcon}
-              minDateTime={minDateTime}
-              maxDateTime={maxDateTime}
-              {...calendarTestsProps}
-            />
-          </FocusTrap>
+            <div ref={focusTrapRootRef}>
+              <Calendar
+                aria-label={calendarLabel}
+                role="dialog"
+                value={value}
+                onChange={onCalendarChange}
+                enableTime={enableTime}
+                disablePast={disablePast}
+                disableFuture={disableFuture}
+                shouldDisableDate={shouldDisableDate}
+                onDoneButtonClick={onDoneButtonClick}
+                getRootRef={calendarRef}
+                doneButtonText={doneButtonText}
+                DoneButton={DoneButton}
+                disablePickers={disablePickers}
+                changeHoursLabel={changeHoursLabel}
+                changeMinutesLabel={changeMinutesLabel}
+                prevMonthLabel={prevMonthLabel}
+                nextMonthLabel={nextMonthLabel}
+                changeMonthLabel={changeMonthLabel}
+                changeYearLabel={changeYearLabel}
+                showNeighboringMonth={showNeighboringMonth}
+                renderDayContent={renderDayContent}
+                size={size}
+                viewDate={viewDate}
+                onHeaderChange={onHeaderChange}
+                onNextMonth={onNextMonth}
+                onPrevMonth={onPrevMonth}
+                prevMonthIcon={prevMonthIcon}
+                nextMonthIcon={nextMonthIcon}
+                minDateTime={minDateTime}
+                maxDateTime={maxDateTime}
+                {...calendarTestsProps}
+              />
+            </div>
+          </FocusTrapInternal>
         </Popper>
       )}
     </FormField>

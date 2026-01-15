@@ -14,15 +14,15 @@ const positionClassNames = {
 };
 
 const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> = {
-  appear: styles['hostStateEnter'],
-  appearing: styles['hostStateEntering'],
-  appeared: styles['hostStateEntered'],
-  enter: styles['hostStateEnter'],
-  entering: styles['hostStateEntering'],
-  entered: styles['hostStateEntered'],
-  exit: styles['hostStateExit'],
-  exiting: styles['hostStateExiting'],
-  exited: styles['hostStateExited'],
+  appear: styles.hostStateEnter,
+  appearing: styles.hostStateEntering,
+  appeared: styles.hostStateEntered,
+  enter: styles.hostStateEnter,
+  entering: styles.hostStateEntering,
+  entered: styles.hostStateEntered,
+  exit: styles.hostStateExit,
+  exiting: styles.hostStateExiting,
+  exited: styles.hostStateExited,
 };
 
 export interface ModalOverlayProps
@@ -31,6 +31,8 @@ export interface ModalOverlayProps
   visible?: boolean;
   position?: 'absolute' | 'fixed';
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onClosed?: () => void;
+  onShowed?: () => void;
   disableOpenAnimation?: boolean;
   disableCloseAnimation?: boolean;
 }
@@ -43,6 +45,8 @@ export const ModalOverlay = ({
   position = 'absolute',
   getRootRef,
   onClick,
+  onClosed,
+  onShowed,
   disableOpenAnimation,
   disableCloseAnimation,
   ...restProps
@@ -51,6 +55,8 @@ export const ModalOverlay = ({
     enableAppear: !disableOpenAnimation,
     enableEnter: !disableOpenAnimation,
     enableExit: !disableCloseAnimation,
+    onExited: onClosed,
+    onEntered: onShowed,
   });
   const handleRef = useExternRef(getRootRef, ref);
 

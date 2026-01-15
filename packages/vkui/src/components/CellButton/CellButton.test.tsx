@@ -6,19 +6,21 @@ import styles from './CellButton.module.css';
 describe(CellButton, () => {
   baselineComponent((props) => <CellButton {...props}>CellButton</CellButton>);
 
-  it.each(['accent', 'neutral', 'negative', undefined] as const)(
-    'should have expected className for appearance="%s"',
-    (appearance) => {
-      render(
-        <CellButton appearance={appearance} data-testid="cell">
-          Check
-        </CellButton>,
-      );
-      expect(screen.getByTestId('cell')).toHaveClass(
-        appearance ? appearanceClassNames[appearance] : appearanceClassNames.accent,
-      );
-    },
-  );
+  it.each([
+    'accent',
+    'neutral',
+    'negative',
+    undefined,
+  ] as const)('should have expected className for appearance="%s"', (appearance) => {
+    render(
+      <CellButton appearance={appearance} data-testid="cell">
+        Check
+      </CellButton>,
+    );
+    expect(screen.getByTestId('cell')).toHaveClass(
+      appearance ? appearanceClassNames[appearance] : appearanceClassNames.accent,
+    );
+  });
   it('should have appearance="accent" by default if centered', () => {
     render(
       <CellButton centered data-testid="cell">

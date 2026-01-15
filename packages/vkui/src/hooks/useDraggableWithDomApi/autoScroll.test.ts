@@ -51,14 +51,13 @@ describe('getAutoScrollingData', () => {
       expect(shouldScrolling).toBeTruthy();
     });
 
-    test.each([[EDGE_SIZE + 1, 1]])(
-      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`,
-      (clientY, scrollTop) => {
-        initScrollElData(scrollEl, scrollTop);
-        const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
-        expect(shouldScrolling).toBeFalsy();
-      },
-    );
+    test.each([
+      [EDGE_SIZE + 1, 1],
+    ])(`should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`, (clientY, scrollTop) => {
+      initScrollElData(scrollEl, scrollTop);
+      const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
+      expect(shouldScrolling).toBeFalsy();
+    });
   });
 
   describe('bottom edge', () => {
@@ -72,14 +71,13 @@ describe('getAutoScrollingData', () => {
       expect(shouldScrolling).toBeFalsy();
     });
 
-    test.each([[VIEWPORT_HEIGHT - EDGE_SIZE - 1, 0]])(
-      `should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`,
-      (clientY, scrollTop) => {
-        initScrollElData(scrollEl, scrollTop);
-        const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
-        expect(shouldScrolling).toBeFalsy();
-      },
-    );
+    test.each([
+      [VIEWPORT_HEIGHT - EDGE_SIZE - 1, 0],
+    ])(`should be falsy for clientY (%i) is not equal edge size (${EDGE_SIZE})`, (clientY, scrollTop) => {
+      initScrollElData(scrollEl, scrollTop);
+      const { shouldScrolling } = getAutoScrollingData(clientY, scrollEl);
+      expect(shouldScrolling).toBeFalsy();
+    });
   });
 });
 

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { type SizeTypeValues } from '../../../lib/adaptivity';
+import type { DensityTypeValues } from '../../../lib/adaptivity';
 import { Tappable, type TappableOmitProps } from '../../Tappable/Tappable';
 import { Text } from '../../Typography/Text/Text';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
@@ -14,7 +14,7 @@ export interface PaginationPageButtonOpts
   extends Pick<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'disabled' | 'className'>,
     Pick<PaginationProps, 'getPageLabel'> {
   isCurrent?: boolean;
-  sizeY?: SizeTypeValues;
+  density?: DensityTypeValues;
   children: number;
 }
 
@@ -31,14 +31,14 @@ const getTappablePropsFromPaginationPage = (
     children,
     className,
     disabled,
-    sizeY,
+    density,
     ...restProps
   } = opts;
 
   const pageClassNames = getPaginationPageClassNames({
     isCurrent,
     disabled,
-    sizeY,
+    density,
   });
 
   const pageLabel = getPageLabel?.(isCurrent);

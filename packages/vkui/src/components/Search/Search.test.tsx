@@ -31,9 +31,9 @@ describe(Search, () => {
     const rootRef2 = createRef<HTMLDivElement>();
     const inputRef1 = createRef<HTMLInputElement>();
     const inputRef2 = createRef<HTMLInputElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onInputClick = vi.fn();
 
     render(
       <Search
@@ -43,7 +43,10 @@ describe(Search, () => {
         getRef={inputRef1}
         value="value"
         onChange={noop}
-        onClick={onClick1}
+        required
+        id="search"
+        autoComplete="off"
+        onClick={onRootClick1}
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -55,14 +58,13 @@ describe(Search, () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
-            'onClick': onRootClick,
+            'onClick': onRootClick2,
           },
           input: {
             'className': 'inputClassName',
             'getRootRef': inputRef2,
             'data-testid': 'input-2',
-            'value': 'value-2',
-            'onClick': onClick2,
+            'onClick': onInputClick,
           },
         }}
       />,
@@ -72,7 +74,10 @@ describe(Search, () => {
     const input = screen.getByTestId('input-2');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
-    expect(input).toHaveValue('value-2');
+    expect(input).toHaveValue('value');
+    expect(input).toHaveAttribute('id', 'search');
+    expect(input).toHaveAttribute('required');
+    expect(input).toHaveAttribute('autoComplete', 'off');
 
     const root = screen.getByTestId('root');
     expect(root).toBeInTheDocument();
@@ -88,11 +93,13 @@ describe(Search, () => {
     expect(inputRef1.current).toBe(input);
 
     fireEvent.click(input);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onInputClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(2);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 
   describe('works uncontrolled', () => {

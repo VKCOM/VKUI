@@ -5,21 +5,30 @@ import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Keys, pressedKey } from '../../lib/accessibility';
+import { warnOnce } from '../../lib/warnOnce';
+import { type HasDataAttribute } from '../../types';
 import { ActionSheetContext, type ActionSheetContextType } from '../ActionSheet/ActionSheetContext';
 import { Tappable } from '../Tappable/Tappable';
 import { Subhead } from '../Typography/Subhead/Subhead';
 import { Text } from '../Typography/Text/Text';
 import { Title } from '../Typography/Title/Title';
+import { ActionSheetItemContext } from './context';
 import { isRealClickEvent } from './helpers';
 import { Radio } from './subcomponents/Radio/Radio';
 import styles from './ActionSheetItem.module.css';
 
+const warn = warnOnce('ActionSheetItem');
+
 export interface ActionSheetItemProps
   extends React.HTMLAttributes<HTMLElement>,
     React.AnchorHTMLAttributes<HTMLElement>,
+    HasDataAttribute,
     Pick<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'> {
   /**
    * Свойство, определяющее внешний вид элемента действия.
+   *
+   * > Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**.
+   * > Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
    */
   mode?: 'default' | 'destructive' | 'cancel';
   /**
@@ -80,6 +89,9 @@ export interface ActionSheetItemProps
   /**
    * Позволяет отделить `ActionItem` от `CancelItem` для определении того,
    * кто вызвал закрытие `ActionSheet`. Используется в `ActionSheet.onClose()`.
+   *
+   * @deprecated Since 8.0.0. Свойство устарело и будет удалено в **VKUI v10**.
+   * Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
    */
   isCancelItem?: boolean;
 }
@@ -105,7 +117,7 @@ export const ActionSheetItem = ({
   onImmediateClick,
   multiline = false,
   iconChecked,
-  isCancelItem,
+  isCancelItem: isCancelItemProp,
   ...restProps
 }: ActionSheetItemProps): React.ReactNode => {
   const platform = usePlatform();
@@ -114,7 +126,25 @@ export const ActionSheetItem = ({
     mode: actionSheetMode,
     onClose: onActionSheetClose,
   } = React.useContext<ActionSheetContextType<HTMLElement>>(ActionSheetContext);
-  const { sizeY } = useAdaptivityWithJSMediaQueries();
+  const { isCancelItem: isCancelItemFromContext } = React.useContext(ActionSheetItemContext);
+  const { density } = useAdaptivityWithJSMediaQueries();
+
+  if (process.env.NODE_ENV === 'development') {
+    if (mode === 'cancel') {
+      warn(
+        'Свойство `mode="cancel"` устарело и будет удалено в VKUI v10. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.',
+      );
+    }
+    if (isCancelItemProp) {
+      warn(
+        'Свойство `isCancelItem` устарело и будет удалено в VKUI v10. Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.',
+      );
+    }
+  }
+
+  const isCancelItem = isCancelItemFromContext || !!isCancelItemProp;
+
+  const isModeCancel = mode === 'cancel' || isCancelItemFromContext;
 
   const Component: React.ElementType | undefined = selectable ? 'label' : undefined;
 
@@ -127,7 +157,7 @@ export const ActionSheetItem = ({
         action: onClick,
         immediateAction: onImmediateClick,
         autoClose: !autoCloseDisabled,
-        isCancelItem: Boolean(isCancelItem),
+        isCancelItem,
       })?.(e);
     },
     [autoCloseDisabled, isCancelItem, onClick, onImmediateClick, onItemClick],
@@ -136,7 +166,7 @@ export const ActionSheetItem = ({
   const onKeyDown: React.KeyboardEventHandler<HTMLElement> = React.useCallback(
     (event) => {
       if (pressedKey(event) === Keys.ENTER) {
-        onActionSheetClose?.();
+        onActionSheetClose?.('keydown-item');
       }
     },
     [onActionSheetClose],
@@ -164,9 +194,9 @@ export const ActionSheetItem = ({
       baseClassName={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
-        mode === 'cancel' && styles.modeCancel,
+        isModeCancel && styles.modeCancel,
         mode === 'destructive' && styles.modeDestructive,
-        sizeY === 'compact' && styles.sizeYCompact,
+        density === 'compact' && styles.densityCompact,
         isRich && styles.rich,
         actionSheetMode === 'menu' && styles.menu,
         restProps.disabled && styles.disabled,
@@ -179,7 +209,7 @@ export const ActionSheetItem = ({
           {platform === 'ios' ? (
             <Title
               className={styles.children}
-              weight={mode === 'cancel' ? '2' : '3'}
+              weight={isModeCancel ? '2' : '3'}
               level={isCentered ? '2' : '3'}
             >
               {children}

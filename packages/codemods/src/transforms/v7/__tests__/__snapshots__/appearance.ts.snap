@@ -6,13 +6,9 @@ import React from 'react';
 
 const Component: React.FC<{
   appearance: ColorSchemeType;
-}> = ({
-  appearance,
-}) => {
-  return (
-    <div></div>
-  )
-}
+}> = ({ appearance }) => {
+  return <div></div>;
+};
 
 const App = () => {
   const appearance: ColorSchemeType = ColorScheme.LIGHT;
@@ -28,16 +24,17 @@ const App = () => {
 `;
 
 exports[`appearance > transforms correctly 2`] = `
-"import { ColorScheme as AppearanceAlias, type ColorSchemeType as AppearanceTypeAlias } from '@vkontakte/vkui';
+"import {
+  ColorScheme as AppearanceAlias,
+  type ColorSchemeType as AppearanceTypeAlias,
+} from '@vkontakte/vkui';
 import React from 'react';
 
 const Component: React.FC<{
   appearance: AppearanceTypeAlias;
 }> = () => {
-  return (
-    <div></div>
-  )
-}
+  return <div></div>;
+};
 
 const App = () => {
   const appearance: AppearanceTypeAlias = AppearanceAlias.LIGHT;

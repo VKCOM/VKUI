@@ -94,12 +94,12 @@ export interface CalendarProps
   /**
    * `aria-label` для изменения дня.
    *
-   * @deprecated Будет удалeно в **VKUI v8**.
+   * @deprecated Будет удалeно в **VKUI v9**.
    * Использовалось для задания aria-label для контейнера дней в календаре.
    * Теперь этот контейнер является таблицей (с помощью role="grid") и
    * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
-  changeDayLabel?: string;
+  changeDayLabel?: string; // TODO [>=9]: удалить неиспользуемое свойство
   /**
    * День недели, с которого начинается неделя.
    */
@@ -115,7 +115,7 @@ export interface CalendarProps
   /**
    * Обработчик изменения выбранной даты.
    */
-  onChange?: (value?: Date) => void; // TODO [>=8]: поменять тип на `(value?: Date | null) => void`
+  onChange?: (value: Date) => void;
   /**
    * Функция для проверки запрета выбора даты.
    */
@@ -200,15 +200,18 @@ export const Calendar = ({
   ...props
 }: CalendarProps): React.ReactNode => {
   const _onChange = React.useCallback(
-    (date: Date | null | undefined) => {
-      onChange?.(convertDateFromTimeZone(date, timezone) || undefined);
+    (date: Date | null) => {
+      const newDate = convertDateFromTimeZone(date, timezone);
+      if (newDate && onChange) {
+        onChange(newDate);
+      }
     },
     [onChange, timezone],
   );
 
-  const [value, updateValue] = useCustomEnsuredControl<Date | null | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<Date | null>({
     value: valueProp,
-    defaultValue,
+    defaultValue: defaultValue as Date | null,
     onChange: _onChange,
   });
 

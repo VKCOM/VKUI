@@ -12,13 +12,34 @@ import styles from './Input.module.css';
 
 const warn = warnOnce('Input');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Pick<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      | 'autoComplete'
+      | 'disabled'
+      | 'list'
+      | 'maxLength'
+      | 'minLength'
+      | 'multiple'
+      | 'name'
+      | 'pattern'
+      | 'placeholder'
+      | 'readOnly'
+      | 'required'
+      | 'size'
+      | 'step'
+      | 'type'
+      | 'value'
+      | 'onChange'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'maxHeight'> {
@@ -43,16 +64,41 @@ export interface InputProps
  * @see https://vkui.io/components/input
  */
 export const Input = ({
-  type = 'text',
+  // InputProps
   align = 'left',
   getRef,
-  className: rootClassName,
-  getRootRef,
-  style,
+
+  // FormFieldProps
   before,
   after,
   status,
   mode,
+
+  // input props
+  autoComplete,
+  disabled,
+  list,
+  maxLength,
+  minLength,
+  multiple,
+  name,
+  pattern,
+  placeholder,
+  readOnly,
+  required,
+  size,
+  step,
+  type = 'text',
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  id,
+  inputMode,
+  defaultValue,
+  autoFocus,
+  tabIndex,
+  spellCheck,
 
   slotProps,
   ...restProps
@@ -62,22 +108,38 @@ export const Input = ({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
-  const { className, ...rootProps } = useMergeProps(
-    {
-      className: rootClassName,
-      getRootRef,
-      style,
-    },
-    slotProps?.root,
-  );
+  const { className, ...rootProps } = useMergeProps(restProps, slotProps?.root);
 
   const inputRest = useMergeProps(
     {
       className: styles.el,
       getRootRef: getRef,
-      ...restProps,
+      autoComplete,
+      disabled,
+      list,
+      maxLength,
+      minLength,
+      multiple,
+      name,
+      pattern,
+      placeholder,
+      readOnly,
+      required,
+      size,
+      step,
+      type,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+      id,
+      inputMode,
+      defaultValue,
+      autoFocus,
+      tabIndex,
+      spellCheck,
     },
     slotProps?.input,
   );
@@ -88,7 +150,7 @@ export const Input = ({
         styles.host,
         align === 'right' && styles.alignRight,
         align === 'center' && styles.alignCenter,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         before && styles.hasBefore,
         after && styles.hasAfter,
         className,
@@ -100,7 +162,7 @@ export const Input = ({
       status={status}
       {...rootProps}
     >
-      <UnstyledTextField as="input" type={type} {...inputRest} />
+      <UnstyledTextField as="input" {...inputRest} />
     </FormField>
   );
 };

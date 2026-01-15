@@ -12,6 +12,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { usePlatform } from '../../hooks/usePlatform';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type { PlatformType } from '../../lib/platform';
 import { AdaptiveIconRenderer } from '../AdaptiveIconRenderer/AdaptiveIconRenderer';
 import {
@@ -21,10 +22,22 @@ import {
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from '../PanelHeaderButton/PanelHeaderButton.module.css';
 
-const sizeXClassNames = {
-  none: styles.backSizeXNone,
-  compact: styles.backSizeXCompact,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined && legacySizeX === 'compact') {
+    return styles.backViewWidthNone;
+  }
+  if (viewWidth === 'none') {
+    return styles.backViewWidthSmallTabletMinus;
+  }
+  if (viewWidth < ViewWidth.SMALL_TABLET) {
+    return styles.backViewWidthNone;
+  }
+  return;
+}
 
 export type PanelHeaderBackProps = Omit<PanelHeaderButtonProps, 'children'> & {
   /**
@@ -70,8 +83,8 @@ export const PanelHeaderBack = ({
 }: PanelHeaderBackProps): React.ReactNode => {
   const platform = usePlatform();
   const direction = useConfigDirection();
-  const { sizeX = 'none' } = useAdaptivity();
-  // также label нужно скрывать при platform === 'ios' && sizeX === regular
+  const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
+  // также label нужно скрывать при platform === 'ios' && viewWidth < ViewWidth.SMALL_TABLET
   // https://github.com/VKCOM/VKUI/blob/master/src/components/PanelHeaderButton/PanelHeaderButton.css#L104
   const showLabel =
     (platform === 'vkcom' && !hideLabelOnVKCom) || (platform === 'ios' && !hideLabelOnIOS);
@@ -80,7 +93,7 @@ export const PanelHeaderBack = ({
     <PanelHeaderButton
       {...restProps}
       className={classNames(
-        sizeX !== 'regular' && sizeXClassNames[sizeX],
+        getViewWidthClassName(viewWidth, legacySizeX),
         platform === 'ios' && styles.backIos,
         platform === 'vkcom' && styles.backVkcom,
         showLabel && !!label && styles.backHasLabel,

@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
 import { a11yTest, baselineComponent, waitCSSKeyframesAnimation } from '../../testing/utils';
 import { Accordion } from './Accordion';
 import { useAccordionContext } from './AccordionContext';
@@ -74,27 +74,15 @@ describe(Accordion, () => {
   });
 
   it('useAccordionContext', () => {
-    let accordionContextRef: React.RefObject<null | ReturnType<typeof useAccordionContext>> = {
-      current: null,
-    };
+    const h = renderHook(useAccordionContext, {
+      wrapper: ({ children }) => (
+        <Accordion defaultExpanded>
+          <Accordion.Summary data-testid="summary">Title</Accordion.Summary>
+          <Accordion.Content data-testid="content">{children}</Accordion.Content>
+        </Accordion>
+      ),
+    });
 
-    const Content = () => {
-      const context = useAccordionContext();
-      // eslint-disable-next-line react-compiler/react-compiler
-      accordionContextRef.current = context;
-
-      return <div>Content</div>;
-    };
-
-    render(
-      <Accordion defaultExpanded>
-        <Accordion.Summary data-testid="summary">Title</Accordion.Summary>
-        <Accordion.Content data-testid="content">
-          <Content />
-        </Accordion.Content>
-      </Accordion>,
-    );
-
-    expect(accordionContextRef.current?.expanded).toBeTruthy();
+    expect(h.result.current.expanded).toBeTruthy();
   });
 });

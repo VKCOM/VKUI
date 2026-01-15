@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { pressedKey } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
-import { useGlobalEventListener } from './useGlobalEventListener';
 
 export function useTabsNavigation(enabled = true, isRtl = false) {
   const { document } = useDOM();
@@ -19,86 +18,95 @@ export function useTabsNavigation(enabled = true, isRtl = false) {
     );
   };
 
-  const handleDocumentKeydown = (event: KeyboardEvent) => {
-    if (!document || !tabsRef.current || !enabled) {
-      return;
-    }
-
-    const key = pressedKey(event);
-
-    switch (key) {
-      case 'ArrowLeft':
-      case 'ArrowRight':
-      case 'End':
-      case 'Home': {
-        const tabEls = getTabEls();
-        const currentFocusedElIndex = tabEls.findIndex((el) => document.activeElement === el);
-        if (currentFocusedElIndex === -1) {
-          return;
-        }
-
-        let nextIndex = 0;
-        if (key === 'Home') {
-          nextIndex = 0;
-        } else if (key === 'End') {
-          nextIndex = tabEls.length - 1;
-        } else {
-          const offset = (key === 'ArrowRight' ? 1 : -1) * (isRtl ? -1 : 1);
-          nextIndex = currentFocusedElIndex + offset;
-        }
-
-        const nextTabEl = tabEls[nextIndex];
-
-        if (nextTabEl) {
-          event.preventDefault();
-          nextTabEl.focus();
-        }
-
-        break;
+  const handleDocumentKeydown = React.useCallback(
+    (event: KeyboardEvent) => {
+      if (!document || !tabsRef.current || !enabled) {
+        return;
       }
-      /*
+
+      const key = pressedKey(event);
+
+      switch (key) {
+        case 'ArrowLeft':
+        case 'ArrowRight':
+        case 'End':
+        case 'Home': {
+          const tabEls = getTabEls();
+          const currentFocusedElIndex = tabEls.findIndex((el) => document.activeElement === el);
+          if (currentFocusedElIndex === -1) {
+            return;
+          }
+
+          let nextIndex = 0;
+          if (key === 'Home') {
+            nextIndex = 0;
+          } else if (key === 'End') {
+            nextIndex = tabEls.length - 1;
+          } else {
+            const offset = (key === 'ArrowRight' ? 1 : -1) * (isRtl ? -1 : 1);
+            nextIndex = currentFocusedElIndex + offset;
+          }
+
+          const nextTabEl = tabEls[nextIndex];
+
+          if (nextTabEl) {
+            event.preventDefault();
+            nextTabEl.focus();
+          }
+
+          break;
+        }
+        /*
        В JAWS и NVDA стрелка вниз активирует контент.
        Это не прописано в стандартах, но по ссылке ниже это рекомендуется делать.
        https://inclusive-components.design/tabbed-interfaces/
       */
-      case 'ArrowDown': {
-        const tabEls = getTabEls();
-        const currentFocusedEl = tabEls.find((el) => document.activeElement === el);
+        case 'ArrowDown': {
+          const tabEls = getTabEls();
+          const currentFocusedEl = tabEls.find((el) => document.activeElement === el);
 
-        if (!currentFocusedEl || currentFocusedEl.getAttribute('aria-selected') !== 'true') {
-          return;
+          if (!currentFocusedEl || currentFocusedEl.getAttribute('aria-selected') !== 'true') {
+            return;
+          }
+
+          const relatedContentElId = currentFocusedEl.getAttribute('aria-controls');
+          if (!relatedContentElId) {
+            return;
+          }
+
+          // eslint-disable-next-line no-restricted-properties
+          const relatedContentEl = document.getElementById(relatedContentElId);
+          if (!relatedContentEl) {
+            return;
+          }
+
+          event.preventDefault();
+          relatedContentEl.focus();
+
+          break;
         }
-
-        const relatedContentElId = currentFocusedEl.getAttribute('aria-controls');
-        if (!relatedContentElId) {
-          return;
+        case 'Space':
+        case 'Enter': {
+          const tabEls = getTabEls();
+          const currentFocusedEl = tabEls.find((el) => document.activeElement === el);
+          if (currentFocusedEl) {
+            currentFocusedEl.click();
+          }
         }
-
-        // eslint-disable-next-line no-restricted-properties
-        const relatedContentEl = document.getElementById(relatedContentElId);
-        if (!relatedContentEl) {
-          return;
-        }
-
-        event.preventDefault();
-        relatedContentEl.focus();
-
-        break;
       }
-      case 'Space':
-      case 'Enter': {
-        const tabEls = getTabEls();
-        const currentFocusedEl = tabEls.find((el) => document.activeElement === el);
-        if (currentFocusedEl) {
-          currentFocusedEl.click();
-        }
-      }
-    }
-  };
+    },
+    [document, enabled, isRtl],
+  );
 
-  useGlobalEventListener(document, 'keydown', handleDocumentKeydown, {
-    capture: true,
-  });
+  React.useEffect(() => {
+    document!.addEventListener('keydown', handleDocumentKeydown, {
+      capture: true,
+    });
+    return () =>
+      document!.removeEventListener('keydown', handleDocumentKeydown, {
+        capture: true,
+      });
+  }, [document, handleDocumentKeydown]);
 
   return {
     tabsRef,

@@ -5,11 +5,13 @@
   border-radius: 8px;
 }
 
-.code {
-  padding-block: var(--vkui--spacing_size_m);
-  padding-inline: var(--vkui--spacing_size_xs);
-  font-size: 14px;
+.codeBlock {
   background-color: rgb(126, 142, 160, 0.08);
+}
+
+.code {
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .skeleton {

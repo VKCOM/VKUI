@@ -40,20 +40,20 @@
   margin-inline-end: -6px;
 }
 
-.sizeYCompact .dropdownIcon {
+.densityCompact .dropdownIcon {
   margin-inline-end: 8px;
 }
 
-.sizeYCompact .clearIcon {
+.densityCompact .clearIcon {
   margin-inline-end: -2px;
 }
 
-@media (--sizeY-compact) {
-  .sizeYNone .dropdownIcon {
+@media (--density-compact) {
+  .densityNone .dropdownIcon {
     margin-inline-end: 8px;
   }
 
-  .sizeYNone .clearIcon {
+  .densityNone .clearIcon {
     margin-inline-end: -2px;
   }
 }

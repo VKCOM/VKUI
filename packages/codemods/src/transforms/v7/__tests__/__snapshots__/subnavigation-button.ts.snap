@@ -7,11 +7,7 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      <SubnavigationButton
-        chevron={true}
-        selected={true}
-        onClick={() => {}}
-      >
+      <SubnavigationButton chevron={true} selected={true} onClick={() => {}}>
         Button
       </SubnavigationButton>
     </React.Fragment>

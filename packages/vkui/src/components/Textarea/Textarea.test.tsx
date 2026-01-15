@@ -17,7 +17,7 @@ describe(Textarea, () => {
       <VisuallyHidden Component="label" id="textarea">
         Textarea
       </VisuallyHidden>
-      <Textarea aria-labelledby="textarea" {...props} />
+      <Textarea slotProps={{ textArea: { 'aria-labelledby': 'textarea' } }} {...props} />
     </>
   ));
 
@@ -26,9 +26,9 @@ describe(Textarea, () => {
     const rootRef2 = createRef<HTMLElement>();
     const textAreaRef1 = createRef<HTMLTextAreaElement>();
     const textAreaRef2 = createRef<HTMLTextAreaElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onTextareaClick = vi.fn();
 
     render(
       <Textarea
@@ -37,8 +37,11 @@ describe(Textarea, () => {
         getRootRef={rootRef1}
         getRef={textAreaRef1}
         value="value"
+        id="textarea"
+        name="textarea"
+        rows={2}
         onChange={noop}
-        onClick={onClick1}
+        onClick={onRootClick1}
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -50,14 +53,14 @@ describe(Textarea, () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
-            'onClick': onRootClick,
+            'onClick': onRootClick2,
           },
           textArea: {
             'className': 'textAreaClassName',
             'getRootRef': textAreaRef2,
             'data-testid': 'textArea-2',
             'value': 'value-2',
-            'onClick': onClick2,
+            'onClick': onTextareaClick,
           },
         }}
       />,
@@ -68,6 +71,9 @@ describe(Textarea, () => {
     expect(textArea).toBeInTheDocument();
     expect(textArea).toHaveClass('textAreaClassName');
     expect(textArea).toHaveValue('value-2');
+    expect(textArea).toHaveAttribute('id', 'textarea');
+    expect(textArea).toHaveAttribute('name', 'textarea');
+    expect(textArea).toHaveAttribute('rows', '2');
 
     const root = screen.getByTestId('root');
     expect(root).toBeInTheDocument();
@@ -83,11 +89,13 @@ describe(Textarea, () => {
     expect(textAreaRef1.current).toBe(textArea);
 
     fireEvent.click(textArea);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onTextareaClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(2);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 
   it.each<[AlignType, string]>([

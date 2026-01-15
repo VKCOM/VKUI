@@ -36,7 +36,7 @@ export const Epic = ({
   children,
   ...restProps
 }: EpicProps): React.ReactNode => {
-  const scroll = React.useRef<{ [key: string]: number }>({}).current;
+  const [scroll] = React.useState(() => new Map<string, number>());
 
   const story =
     (React.Children.toArray(children).find(
@@ -52,8 +52,10 @@ export const Epic = ({
     >
       <ScrollSaver
         key={activeStory}
-        initialScroll={scroll[activeStory] || 0}
-        saveScroll={(value) => (scroll[activeStory] = value)}
+        initialScroll={scroll.get(activeStory) || 0}
+        saveScroll={(value) => {
+          scroll.set(activeStory, value);
+        }}
       >
         {story}
       </ScrollSaver>

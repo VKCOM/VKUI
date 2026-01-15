@@ -11,9 +11,9 @@ import { SelectionControlContext } from './SelectionControlContext';
 import { SelectionControlLabel } from './SelectionControlLabel/SelectionControlLabel';
 import styles from './SelectionControl.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface SelectionControlProps
@@ -39,7 +39,7 @@ export const SelectionControl = ({
   activeMode: activeModeProp,
   ...restProps
 }: SelectionControlProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
   const platform = usePlatform();
 
   const hoverMode = hoverModeProp || (noPadding ? 'opacity' : 'background');
@@ -51,7 +51,7 @@ export const SelectionControl = ({
         Component="label"
         baseClassName={classNames(
           styles.host,
-          sizeY !== 'regular' && sizeYClassNames[sizeY],
+          density !== 'regular' && densityClassNames[density],
           !noPadding && styles.withPadding,
         )}
         activeEffectDelay={platform === 'ios' ? 100 : DEFAULT_ACTIVE_EFFECT_DELAY}

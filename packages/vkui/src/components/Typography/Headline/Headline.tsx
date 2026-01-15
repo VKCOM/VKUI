@@ -10,9 +10,9 @@ const stylesLevel = {
   '2': styles.level2,
 };
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface HeadlineProps extends TypographyProps {
@@ -35,7 +35,7 @@ export const Headline = ({
   inline = false,
   ...restProps
 }: HeadlineProps): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   return (
     <Typography
@@ -44,7 +44,7 @@ export const Headline = ({
       inline={inline}
       className={classNames(
         className,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         stylesLevel[level],
       )}
       {...restProps}

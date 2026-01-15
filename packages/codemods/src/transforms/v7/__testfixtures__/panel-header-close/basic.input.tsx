@@ -4,9 +4,7 @@ import React from 'react';
 const App = () => {
   return (
     <React.Fragment>
-      <PanelHeaderClose onClick={noop}>
-        Закрыть
-      </PanelHeaderClose>
+      <PanelHeaderClose onClick={noop}>Закрыть</PanelHeaderClose>
 
       <PanelHeaderClose onClick={noop}>
         <span>Закрыть</span>

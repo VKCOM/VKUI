@@ -3,13 +3,9 @@
 
 /* stylelint-disable */
 /* biome-ignore format: для красоты */
-@custom-media --sizeX-regular (min-width: 768px);
+@custom-media --density-compact (pointer: fine) and (min-width: 768px), (max-height: 414.9px);
 /* biome-ignore format: для красоты */
-@custom-media --sizeX-compact (max-width: 767.9px);
-/* biome-ignore format: для красоты */
-@custom-media --sizeY-compact (pointer: fine) and (min-width: 768px), (max-height: 414.9px);
-/* biome-ignore format: для красоты */
-@custom-media --sizeY-regular (pointer: coarse) and (min-height: 415px), (pointer: none) and (min-height: 415px), (max-width: 767.9px) and (min-height: 415px);
+@custom-media --density-regular (pointer: coarse) and (min-height: 415px), (pointer: none) and (min-height: 415px), (max-width: 767.9px) and (min-height: 415px);
 /* biome-ignore format: для красоты */
 @custom-media --hover-has (hover: hover) and (pointer: fine);
 /* biome-ignore format: для красоты */

@@ -208,19 +208,19 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 
 Задаётся свойством `size`.
 
-Значения, соответствующие каждому размеру, зависят от параметра адаптивности `sizeY`.
-В режиме `sizeY="compact"` значения каждого из размеров будут меньше, чем в режиме `sizeY="regular"`.
+Значения, соответствующие каждому размеру, зависят от параметра адаптивности `density`.
+В режиме `density="compact"` значения каждого из размеров будут меньше, чем в режиме `density="regular"`.
 
 <Playground direction="column">
   ```jsx
-  <AdaptivityProvider sizeY="compact">
+  <AdaptivityProvider density="compact">
     <Flex gap="m" align="center">
       <Button size="s">s</Button>
       <Button size="m">m</Button>
       <Button size="l">l</Button>
     </Flex>
   </AdaptivityProvider>
-  <AdaptivityProvider sizeY="regular">
+  <AdaptivityProvider density="regular">
     <Flex gap="m" align="center">
       <Button size="s">s</Button>
       <Button size="m">m</Button>
@@ -247,9 +247,14 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 Свойство позволяет добавить индикацию загрузки вместо содержимого кнопки. Используйте, когда после взаимодействия с кнопкой
 запускаются затратные по времени действия.
 
+⚠️ **Важно для доступности**: При использовании `loading={true}` компонент автоматически устанавливает `aria-label` в значение
+`loadingLabel` (по умолчанию "Загрузка..."), чтобы скринридер мог объявить контекст загрузки. Вы можете переопределить это
+значение, передав свойство `loadingLabel`.
+
 <Playground>
   ```jsx
-  <Button loading>Button</Button>
+<Button loading>Сохранить</Button>
+<Button loading loadingLabel="Сохранение данных...">Сохранить</Button>
   ```
 </Playground>
 

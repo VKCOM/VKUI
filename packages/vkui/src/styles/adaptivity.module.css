@@ -3,7 +3,7 @@
 
 Глоссарий по модификаторам:
 
-- `forced` – означает, что мы зашили конкретное представление в `AdaptiveProvider` (ex, `<AdaptiveProvider sizeX="regular">`).
+- `forced` – означает, что мы зашили конкретное представление в `AdaptiveProvider` (ex, `<AdaptiveProvider density="regular">`).
 - `mq` – означает, что для смены представления используется CSS Media Query.
 
 ---
@@ -12,29 +12,16 @@ Note: В начале классов разделить (`-`), чтобы кра
 
 */
 
-@media (--sizeX-regular) {
-  .-sizeX--compact-mq {
-    /* stylelint-disable-next-line declaration-no-important */
-    display: none !important;
-  }
-}
-@media (--sizeX-compact) {
-  .-sizeX--regular-mq {
-    /* stylelint-disable-next-line declaration-no-important */
-    display: none !important;
-  }
-}
-
 /* ================================================================================================================== */
 
-@media (--sizeY-regular) {
-  .-sizeY--compact-mq {
+@media (--density-regular) {
+  .densityCompactMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
-@media (--sizeY-compact) {
-  .-sizeY--regular-mq {
+@media (--density-compact) {
+  .densityRegularMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
@@ -43,13 +30,28 @@ Note: В начале классов разделить (`-`), чтобы кра
 /* ================================================================================================================== */
 
 @media (--viewWidth-tabletPlus) {
-  .-viewWidth--tabletMinus-mq {
+  .viewWidthTabletMinusMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--viewWidth-tabletMinus) {
-  .-viewWidth--tabletPlus-mq {
+  .viewWidthTabletPlusMq {
+    /* stylelint-disable-next-line declaration-no-important */
+    display: none !important;
+  }
+}
+
+/* ================================================================================================================== */
+
+@media (--viewWidth-smallTabletPlus) {
+  .viewWidthSmallTabletMinusMq {
+    /* stylelint-disable-next-line declaration-no-important */
+    display: none !important;
+  }
+}
+@media (--viewWidth-smallTabletMinus) {
+  .viewWidthSmallTabletPlusMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
@@ -58,13 +60,13 @@ Note: В начале классов разделить (`-`), чтобы кра
 /* ================================================================================================================== */
 
 @media (--desktop) {
-  .-deviceType--mobile-mq {
+  .deviceTypeMobileMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }
 }
 @media (--mobile) {
-  .-deviceType--desktop-mq {
+  .deviceTypeDesktopMq {
     /* stylelint-disable-next-line declaration-no-important */
     display: none !important;
   }

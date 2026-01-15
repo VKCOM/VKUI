@@ -15,9 +15,9 @@ describe('Checkbox', () => {
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
     const inputRef2 = createRef<HTMLInputElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onInputClick = vi.fn();
 
     render(
       <Checkbox
@@ -26,8 +26,10 @@ describe('Checkbox', () => {
         getRootRef={rootRef1}
         getRef={inputRef1}
         checked
+        name="input"
+        id="checkbox"
         onChange={noop}
-        onClick={onClick1}
+        onClick={onRootClick1}
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -39,14 +41,14 @@ describe('Checkbox', () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
-            'onClick': onRootClick,
+            'onClick': onRootClick2,
           },
           input: {
             'className': 'inputClassName',
             'getRootRef': inputRef2,
             'data-testid': 'checkbox-2',
             'checked': false,
-            'onClick': onClick2,
+            'onClick': onInputClick,
           },
         }}
       />,
@@ -56,6 +58,8 @@ describe('Checkbox', () => {
     const input = screen.getByTestId('checkbox-2');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
+    expect(input).toHaveAttribute('name', 'input');
+    expect(input).toHaveAttribute('id', 'checkbox');
     expect(input).not.toBeChecked();
 
     const root = screen.getByTestId('root');
@@ -72,11 +76,13 @@ describe('Checkbox', () => {
     expect(inputRef1.current).toBe(input);
 
     fireEvent.click(input);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onInputClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(3);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 
   it('should work with slotProps with CheckboxComponent', () => {
@@ -84,9 +90,9 @@ describe('Checkbox', () => {
     const rootRef2 = createRef<HTMLLabelElement>();
     const inputRef1 = createRef<HTMLInputElement>();
     const inputRef2 = createRef<HTMLInputElement>();
-    const onClick1 = vi.fn();
-    const onClick2 = vi.fn();
-    const onRootClick = vi.fn();
+    const onRootClick1 = vi.fn();
+    const onRootClick2 = vi.fn();
+    const onInputClick = vi.fn();
 
     render(
       <Checkbox
@@ -95,8 +101,10 @@ describe('Checkbox', () => {
         getRootRef={rootRef1}
         getRef={inputRef1}
         checked
+        name="input"
+        id="checkbox"
         onChange={noop}
-        onClick={onClick1}
+        onClick={onRootClick1}
         style={{
           backgroundColor: 'rgb(255, 0, 0)',
         }}
@@ -108,14 +116,14 @@ describe('Checkbox', () => {
               color: 'rgb(255, 0, 0)',
             },
             'getRootRef': rootRef2,
-            'onClick': onRootClick,
+            'onClick': onRootClick2,
           },
           input: {
             'className': 'inputClassName',
             'getRootRef': inputRef2,
             'data-testid': 'checkbox-2',
             'checked': false,
-            'onClick': onClick2,
+            'onClick': onInputClick,
           },
         }}
       >
@@ -127,6 +135,8 @@ describe('Checkbox', () => {
     const input = screen.getByTestId('checkbox-2');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('inputClassName');
+    expect(input).toHaveAttribute('name', 'input');
+    expect(input).toHaveAttribute('id', 'checkbox');
     expect(input).not.toBeChecked();
 
     const root = screen.getByTestId('root');
@@ -143,11 +153,13 @@ describe('Checkbox', () => {
     expect(inputRef1.current).toBe(input);
 
     fireEvent.click(input);
-    expect(onClick1).toHaveBeenCalledTimes(1);
-    expect(onClick2).toHaveBeenCalledTimes(1);
+    expect(onInputClick).toHaveBeenCalledTimes(1);
+    expect(onRootClick1).toHaveBeenCalledTimes(1);
+    expect(onRootClick2).toHaveBeenCalledTimes(1);
 
     fireEvent.click(root);
-    expect(onRootClick).toHaveBeenCalledTimes(3);
+    expect(onRootClick1).toHaveBeenCalledTimes(2);
+    expect(onRootClick2).toHaveBeenCalledTimes(2);
   });
 
   it(

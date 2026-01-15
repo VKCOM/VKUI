@@ -16,10 +16,11 @@ import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalPage } from './ModalPage';
 import styles from './ModalPage.module.css';
 
-export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) =>
-  await waitCSSTransitionEnd(
-    el && el.firstElementChild instanceof HTMLElement ? el.firstElementChild : null,
-  );
+export const waitModalPageCSSTransitionEnd = async (el: HTMLElement) => {
+  const childs = Array.from(el.children);
+  const content = childs.find((el) => !el.getAttribute('data-focus-guard'));
+  await waitCSSTransitionEnd((content ? content.firstElementChild : null) as HTMLElement);
+};
 
 /**
  * Большинство логики покрыто в `ModalRoot.test.tsx`.

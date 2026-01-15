@@ -16,6 +16,7 @@ import {
   subMonths,
   subWeeks,
 } from './date';
+import { cacheDateTimeFormat } from './intlCache';
 
 export const DEFAULT_MAX_YEAR = 9999;
 // 100 - из-за ограничений dayjs https://github.com/iamkun/dayjs/issues/2591
@@ -43,6 +44,12 @@ export const getYears = (
   return years;
 };
 
+const monthLongFormatterOptions = {
+  month: 'long',
+} as const;
+
+const monthLongDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
+
 export const getMonths = (
   locale?: string,
 ): Array<{
@@ -53,9 +60,7 @@ export const getMonths = (
     value: number;
     label: string;
   }> = [];
-  const formatter = new Intl.DateTimeFormat(locale, {
-    month: 'long',
-  });
+  const formatter = monthLongDateTimeFormat(locale, monthLongFormatterOptions);
 
   for (let i = 0; i < 12; i++) {
     months.push({
@@ -67,17 +72,25 @@ export const getMonths = (
   return months;
 };
 
+const dayShortFormatterOptions = {
+  weekday: 'short',
+} as const;
+
+const dayShortDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
+
+const dayLongFormatterOptions = {
+  weekday: 'long',
+} as const;
+
+const dayLongDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
+
 export const getDaysNames = (
   now: Date,
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6,
   locale?: string,
 ): Array<{ short: string; long: string }> => {
-  const shortFormatter = new Intl.DateTimeFormat(locale, {
-    weekday: 'short',
-  });
-  const longFormatter = new Intl.DateTimeFormat(locale, {
-    weekday: 'long',
-  });
+  const shortFormatter = dayShortDateTimeFormat(locale, dayShortFormatterOptions);
+  const longFormatter = dayLongDateTimeFormat(locale, dayLongFormatterOptions);
   return eachDayOfInterval(
     startOfWeek(now, { weekStartsOn }),
     endOfWeek(now, { weekStartsOn }),

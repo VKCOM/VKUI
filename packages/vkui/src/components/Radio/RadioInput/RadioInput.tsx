@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../../hooks/useMergeProps';
 import { warnOnce } from '../../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../../types';
@@ -38,7 +39,21 @@ function RadioIcon() {
 }
 
 export interface RadioInputProps
-  extends Omit<React.ComponentProps<'input'>, 'type'>,
+  extends Pick<
+      React.ComponentProps<'input'>,
+      | 'checked'
+      | 'defaultChecked'
+      | 'disabled'
+      | 'readOnly'
+      | 'required'
+      | 'autoFocus'
+      | 'onChange'
+      | 'name'
+      | 'value'
+      | 'onFocus'
+      | 'onBlur'
+    >,
+    Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange' | 'onFocus' | 'onBlur'>,
     HasRootRef<HTMLLabelElement> {
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
@@ -60,10 +75,22 @@ export interface RadioInputProps
 }
 
 export function RadioInput({
-  className,
-  style,
-  getRootRef,
   getRef,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
   slotProps,
   ...restProps
 }: RadioInputProps) {
@@ -71,13 +98,35 @@ export function RadioInput({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
   }
 
-  const rootRest = useMergeProps({ className, style, getRootRef }, slotProps?.root);
+  const rootRest = useMergeProps(restProps, slotProps?.root);
 
-  const inputProps = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
+  const { className: inputClassName, ...inputProps } = useMergeProps(
+    {
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
+    },
+    slotProps?.input,
+  );
 
   return (
     <RootComponent {...rootRest}>
-      <VisuallyHidden Component="input" type="radio" baseClassName={styles.input} {...inputProps} />
+      <VisuallyHidden
+        Component="input"
+        type="radio"
+        className={classNames(inputClassName, styles.input)}
+        {...inputProps}
+      />
       <RadioIcon />
     </RootComponent>
   );

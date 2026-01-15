@@ -64,6 +64,36 @@ const [text, setText] = React.useState('Текст');
   ```
 </Playground>
 
+## Кастомизация
+
+Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
+Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
+
+<Playground style={{ maxWidth: 280 }}>
+  ```jsx
+  const inputRef = React.useRef();
+
+  return (
+    <Input
+      defaultValue="Пример со slotProps"
+      className="my-root-class"
+      data-testid="input-root"
+      id="input-id"
+      slotProps={{
+        root: {
+          id: 'input-root-id',
+        },
+        input: {
+          className: 'my-input-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: inputRef,
+        },
+      }}
+    />
+  )
+  ```
+</Playground>
+
 ## Доступность (a11y) [#a11y]
 
 Компонент обеспечивает базовую доступность, поддерживая все стандартные `HTML`-атрибуты для полей ввода.

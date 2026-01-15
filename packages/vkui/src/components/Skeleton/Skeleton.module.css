@@ -39,14 +39,14 @@
     var(--vkui_internal--skeleton_color_from)
   );
   transform: translateX(-100vw);
-  animation-name: animation-skeleton;
+  animation-name: animationSkeleton;
   animation-duration: 1.5s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: normal /*rtl:reverse*/;
 }
 
-@keyframes animation-skeleton {
+@keyframes animationSkeleton {
   100% {
     transform: translateX(100vw);
   }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type {
   AdaptivityProps,
-  SizeProps,
+  DensityProps,
 } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { getValueByKey } from '../../helpers/getValueByKey';
 import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
@@ -47,11 +47,13 @@ type PropDesc<Props> = { [K in keyof Props]?: Array<DecoratedPropValue<Props[K]>
 };
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
-  const extra: PropDesc<SizeProps> = {};
+  const extra: PropDesc<AdaptivityProps> = {};
   if (adaptivity && adaptivity !== 'y') {
+    // TODO [#9015]: заменить на `extra.viewWidth = [ViewWidth.MOBILE, ViewWidth.SMALL_TABLET];`
     extra.sizeX = ['compact', 'regular'];
   }
   if (adaptivity && adaptivity !== 'x') {
+    // TODO [#9015]: заменить на `extra.density = ['compact', 'regular'];`
     extra.sizeY = ['compact', 'regular'];
   }
   return extra;
@@ -84,7 +86,7 @@ function getComponentStateHeight(
   return undefined;
 }
 
-type TestProps<Props> = Array<Props & SizeProps & ComponentStateHeightState>;
+type TestProps<Props> = Array<Props & DensityProps & ComponentStateHeightState>;
 type CartesianOptions = { adaptive: boolean; platform: PlatformType };
 
 function cartesian<Props>(
@@ -134,6 +136,8 @@ function defaultFormatFunction(key: string, valueString: string): string {
   return `${key}=${valueString}`;
 }
 
+const dateTimeFormat = /*#__PURE__*/ new Intl.DateTimeFormat('ru');
+
 function stringify(prop: string, value: any): string {
   if (value === true) {
     return prop;
@@ -150,7 +154,7 @@ function stringify(prop: string, value: any): string {
           return `[${value.label}]`;
         }
         if (value instanceof Date) {
-          return new Intl.DateTimeFormat('ru').format(value);
+          return dateTimeFormat.format(value);
         }
         if (value === null) {
           return 'null';

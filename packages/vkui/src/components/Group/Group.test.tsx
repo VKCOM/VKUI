@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { ModalContext } from '../../context/ModalContext';
-import type { SizeTypeValues } from '../../lib/adaptivity';
+import { ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { baselineComponent, setNodeEnv } from '../../testing/utils';
 import { AdaptivityContext } from '../AdaptivityProvider/AdaptivityContext';
 import {
@@ -18,28 +18,28 @@ describe('Group', () => {
   it.each<{
     mode: GroupProps['mode'];
     isInsideModal: boolean;
-    sizeX?: SizeTypeValues;
+    viewWidth?: ViewWidthType;
     layout?: AppRootContextInterface['layout'];
     className: string;
   }>([
     {
       mode: 'plain',
       isInsideModal: true,
-      sizeX: undefined,
+      viewWidth: undefined,
       layout: undefined,
       className: styles.modePlain,
     },
     {
       mode: undefined,
       isInsideModal: true,
-      sizeX: undefined,
+      viewWidth: undefined,
       layout: undefined,
       className: classNames(styles.modePlain, styles.modePlainInsideModal),
     },
     {
       mode: undefined,
       isInsideModal: false,
-      sizeX: undefined,
+      viewWidth: undefined,
       layout: 'card',
       className: styles.modeCard,
     },
@@ -47,46 +47,49 @@ describe('Group', () => {
       mode: undefined,
       isInsideModal: false,
       layout: undefined,
-      sizeX: 'compact',
+      viewWidth: ViewWidth.MOBILE,
       className: styles.modePlain,
     },
     {
       mode: undefined,
       isInsideModal: false,
       layout: undefined,
-      sizeX: 'regular',
+      viewWidth: ViewWidth.SMALL_TABLET,
       className: styles.modeCard,
     },
     {
       mode: undefined,
       isInsideModal: false,
       layout: undefined,
-      sizeX: undefined,
+      viewWidth: undefined,
       className: styles.modeNone,
     },
-  ])(
-    'should have className $className with mode $mode isInsideModal $isInsideModal sizeX $sizeX',
-    ({ mode, isInsideModal, sizeX, layout, className }) => {
-      render(
-        <AppRootContext.Provider
-          value={{
-            ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
-            layout,
-          }}
-        >
-          <AdaptivityContext.Provider value={{ sizeX }}>
-            <ModalContext.Provider value={isInsideModal ? 'test' : null}>
-              <Group mode={mode} data-testid="group">
-                <div />
-              </Group>
-            </ModalContext.Provider>
-          </AdaptivityContext.Provider>
-        </AppRootContext.Provider>,
-      );
+  ])('should have className $className with mode $mode isInsideModal $isInsideModal viewWidth $viewWidth', ({
+    mode,
+    isInsideModal,
+    viewWidth,
+    layout,
+    className,
+  }) => {
+    render(
+      <AppRootContext.Provider
+        value={{
+          ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
+          layout,
+        }}
+      >
+        <AdaptivityContext.Provider value={{ viewWidth }}>
+          <ModalContext.Provider value={isInsideModal ? 'test' : null}>
+            <Group mode={mode} data-testid="group">
+              <div />
+            </Group>
+          </ModalContext.Provider>
+        </AdaptivityContext.Provider>
+      </AppRootContext.Provider>,
+    );
 
-      expect(screen.getByTestId('group')).toHaveClass(className);
-    },
-  );
+    expect(screen.getByTestId('group')).toHaveClass(className);
+  });
 
   it.each(['show', 'hide', 'auto'] as const)('should force show separator', (separator) => {
     const getSeparatorEl = (container: HTMLElement) =>

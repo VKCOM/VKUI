@@ -4,18 +4,30 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import type { SizeTypeValues } from '../../lib/adaptivity';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { AppRootContext } from '../AppRoot/AppRootContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Group.module.css';
 
-const sizeXClassNames = {
-  none: classNames(styles.sizeXNone, 'vkuiInternalGroup--sizeX-none'),
-  regular: styles.sizeXRegular,
-  compact: styles.sizeXCompact,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined) {
+    return legacySizeX === 'regular'
+      ? styles.viewWidthSmallTabletPlus
+      : styles.viewWidthSmallTabletMinus;
+  }
+  if (viewWidth === 'none') {
+    return classNames(styles.viewWidthNone, 'vkuiInternalGroup--viewWidth-none');
+  }
+  return viewWidth >= ViewWidth.SMALL_TABLET
+    ? styles.viewWidthSmallTabletPlus
+    : styles.viewWidthSmallTabletMinus;
+}
 
 const stylesMode = {
   none: classNames(styles.modeNone, 'vkuiInternalGroup--mode-none'),
@@ -35,7 +47,8 @@ type GroupMode = 'plain' | 'card' | 'none';
  */
 function useGroupMode(
   forcedMode: GroupContainerProps['mode'],
-  sizeX: SizeTypeValues | 'none',
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
   isInsideModal: boolean,
 ): GroupMode {
   const { layout } = React.useContext(AppRootContext);
@@ -52,8 +65,13 @@ function useGroupMode(
     return layout;
   }
 
-  if (sizeX !== 'none') {
-    return sizeX === 'regular' ? 'card' : 'plain';
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined) {
+    return legacySizeX === 'regular' ? 'card' : 'plain';
+  }
+
+  if (viewWidth !== 'none') {
+    return viewWidth >= ViewWidth.SMALL_TABLET ? 'card' : 'plain';
   }
 
   return 'none';
@@ -70,7 +88,7 @@ export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
     /**
      * Режим отображения. Если установлен `card`, выглядит как карточка c
      * обводкой и внешними отступами. Если `plain` — без отступов и обводки.
-     * По умолчанию режим отображения зависит от `sizeX` (`mode=card` при `sizeX=REGULAR` и `mode=plain` при `sizeX=COMPACT`)
+     * По умолчанию режим отображения зависит от `viewWidth` (`card` при `SMALL_TABLET` и `plain` при `MOBILE`)
      * В модальных окнах по умолчанию `plain`.
      */
     mode?: 'plain' | 'card';
@@ -91,9 +109,9 @@ export const GroupContainer = ({
   ...restProps
 }: GroupContainerProps) => {
   const isInsideModal = useModalContext().id !== null;
-  const { sizeX = 'none' } = useAdaptivity();
+  const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
 
-  const mode = useGroupMode(modeProps, sizeX, isInsideModal);
+  const mode = useGroupMode(modeProps, viewWidth, legacySizeX, isInsideModal);
 
   const isTabPanel = restProps.role === 'tabpanel';
 
@@ -136,7 +154,7 @@ export const GroupContainer = ({
         baseClassName={classNames(
           'vkuiInternalGroup',
           styles.host,
-          sizeXClassNames[sizeX],
+          getViewWidthClassName(viewWidth, legacySizeX),
           mode === 'plain' && isInsideModal && styles.modePlainInsideModal,
           stylesMode[mode],
           stylesPadding[padding],

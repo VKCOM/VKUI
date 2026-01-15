@@ -126,10 +126,9 @@ export const convertDateToTimeZone = (
   return date ? TZDateMini.tz(timezone, date) : undefined;
 };
 
-export const convertDateFromTimeZone = (
-  date?: Date | null,
-  timezone?: string,
-): Date | undefined | null => {
+const formatter = /*#__PURE__*/ new Intl.DateTimeFormat();
+
+export const convertDateFromTimeZone = (date: Date | null, timezone?: string): Date | null => {
   if (!timezone) {
     return date;
   }
@@ -137,8 +136,8 @@ export const convertDateFromTimeZone = (
     return null;
   }
   // eslint-disable-next-line new-cap
-  const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return date ? TZDateMini.tz(systemTimezone, date) : undefined;
+  const systemTimezone = formatter.resolvedOptions().timeZone;
+  return TZDateMini.tz(systemTimezone, date);
 };
 
 const dateOptions: Intl.DateTimeFormatOptions = {

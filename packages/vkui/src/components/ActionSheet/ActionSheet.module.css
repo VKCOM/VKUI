@@ -31,13 +31,13 @@
 }
 
 .opening {
-  animation: animation-actionsheet-slide-up var(--vkui--animation_duration_m)
+  animation: animationActionSheetSlideUp var(--vkui--animation_duration_m)
     var(--vkui--animation_easing_platform);
 }
 
 .closing {
   opacity: 0;
-  animation: animation-actionsheet-slide-down var(--vkui--animation_duration_m)
+  animation: animationActionSheetSlideDown var(--vkui--animation_duration_m)
     var(--vkui--animation_easing_platform);
 }
 
@@ -97,7 +97,7 @@
  * Compact
  */
 
-.sizeYCompact .header {
+.densityCompact .header {
   padding-block: 12px;
 }
 
@@ -126,7 +126,7 @@
   }
 }
 
-@keyframes animation-actionsheet-slide-up {
+@keyframes animationActionSheetSlideUp {
   from {
     opacity: var(--vkui_internal--actionsheet_animation_opacity_initial);
     transform: translateY(var(--vkui_internal--actionsheet_animation_translateY_initial));
@@ -137,7 +137,7 @@
     transform: translateY(0);
   }
 }
-@keyframes animation-actionsheet-slide-down {
+@keyframes animationActionSheetSlideDown {
   from {
     opacity: 1;
     transform: translateY(0);

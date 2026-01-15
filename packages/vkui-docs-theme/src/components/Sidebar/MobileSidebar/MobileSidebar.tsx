@@ -61,7 +61,7 @@ export function MobileSidebar() {
         className={classNames(styles.root, menu ? styles.rootShow : styles.rootHide)}
         {...animationHandlers}
       >
-        <AdaptivityProvider sizeY={SizeType.COMPACT}>
+        <AdaptivityProvider density={SizeType.COMPACT}>
           <div className={classNames(styles.extra)}>
             {themeConfig.versions}
             <Button

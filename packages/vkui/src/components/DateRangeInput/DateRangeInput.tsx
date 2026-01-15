@@ -7,9 +7,10 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDateInput } from '../../hooks/useDateInput';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
-import { type UseFocusTrapProps } from '../../hooks/useFocusTrap';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
+import { cacheDateTimeFormat } from '../../lib/intlCache';
 import type { HasRootRef } from '../../types';
 import {
   CalendarRange,
@@ -18,7 +19,7 @@ import {
   type DateRangeType,
 } from '../CalendarRange/CalendarRange';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -28,9 +29,18 @@ import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import dateInputStyles from '../DateInput/DateInput.module.css';
 
-const sizeYClassNames = {
-  none: dateInputStyles.sizeYNone,
-  compact: dateInputStyles.sizeYCompact,
+const labelDateTimeFormatOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+} as const;
+
+const labelDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
+
+const densityClassNames = {
+  none: dateInputStyles.densityNone,
+  compact: dateInputStyles.densityCompact,
 };
 
 type DateTestsProps = {
@@ -74,7 +84,6 @@ export interface DateRangeInputProps
       | 'disablePast'
       | 'disableFuture'
       | 'shouldDisableDate'
-      | 'onChange'
       | 'value'
       | 'defaultValue'
       | 'weekStartsOn'
@@ -88,10 +97,13 @@ export interface DateRangeInputProps
       | 'nextMonthIcon'
       | 'renderDayContent'
     >,
-    Pick<UseFocusTrapProps, 'restoreFocus'>,
     HasRootRef<HTMLDivElement>,
     Omit<FormFieldProps, 'maxHeight'>,
     DateRangeInputTestsProps {
+  /**
+   * Обработчик изменения выбранного промежутка.
+   */
+  onChange?: (value: DateRangeType | null) => void;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
@@ -151,8 +163,15 @@ export interface DateRangeInputProps
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
-  disableFocusTrap?: UseFocusTrapProps['disabled'];
+  disableFocusTrap?: boolean;
   /**
+   * Управление поведением возврата фокуса при закрытии всплывающего окна.
+   * @default true
+   */
+  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  /**
+   * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
+   *
    * Включает режим в котором DateRangeInput доступен
    * для ассистивных технологий.
    * В этом режиме:
@@ -162,7 +181,7 @@ export interface DateRangeInputProps
    * - календарь при открытии получает фокус, клавиатурный
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean; // TODO [>=8]: включить по умолчанию.
+  accessible?: boolean /* TODO [>=v9] удалить свойство */;
 }
 
 const elementsConfig = (index: number) => {
@@ -257,7 +276,7 @@ export const DateRangeInput = ({
   clearButtonTestId,
   showCalendarButtonTestId,
   id,
-  accessible,
+  accessible = true,
   readOnly,
   'disableCalendar': disableCalendarProp = false,
   before,
@@ -269,18 +288,14 @@ export const DateRangeInput = ({
   const daysEndRef = React.useRef<HTMLSpanElement>(null);
   const monthsEndRef = React.useRef<HTMLSpanElement>(null);
   const yearsEndRef = React.useRef<HTMLSpanElement>(null);
+  const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
 
   const disableCalendar = readOnly ? true : disableCalendarProp;
 
-  const _onChange = React.useCallback(
-    (newValue: DateRangeType | null | undefined) => onChange?.(newValue || undefined),
-    [onChange],
-  );
-
-  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null | undefined>({
+  const [value, updateValue] = useCustomEnsuredControl<DateRangeType | null>({
     value: valueProp,
-    defaultValue,
-    onChange: _onChange,
+    defaultValue: defaultValue as DateRangeType | null,
+    onChange,
   });
 
   const onInternalValueChange = React.useCallback(
@@ -332,7 +347,7 @@ export const DateRangeInput = ({
     [daysStartRef, monthsStartRef, yearsStartRef, daysEndRef, monthsEndRef, yearsEndRef],
   );
 
-  const onClear = React.useCallback(() => updateValue(undefined), [updateValue]);
+  const onClear = React.useCallback(() => updateValue(null), [updateValue]);
 
   const {
     rootRef,
@@ -361,12 +376,12 @@ export const DateRangeInput = ({
     accessible,
   });
 
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const handleRootRef = useExternRef(rootRef, getRootRef);
 
   const onCalendarChange = React.useCallback(
-    (newValue: DateRangeType | undefined) => {
+    (newValue: DateRangeType) => {
       updateValue(newValue);
       if (closeOnChange && newValue?.[1] && newValue[1] !== value?.[1]) {
         removeFocusFromField();
@@ -392,18 +407,8 @@ export const DateRangeInput = ({
       return null;
     }
     return [
-      new Intl.DateTimeFormat(locale, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(startDate),
-      new Intl.DateTimeFormat(locale, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(endDate),
+      labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(startDate),
+      labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(endDate),
     ].join(' - ');
   }, [locale, value]);
 
@@ -420,11 +425,15 @@ export const DateRangeInput = ({
   const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
   const showClearButton = value && !readOnly;
 
+  useGlobalEscKeyDown(open && !disableCalendar, closeCalendar, {
+    capture: false,
+  });
+
   return (
     <FormField
       style={style}
       className={classNames(
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
         !!before && dateInputStyles.hasBefore,
         (showCalendarButton || showClearButton) && dateInputStyles.hasAfter,
         className,
@@ -578,33 +587,34 @@ export const DateRangeInput = ({
           placement={calendarPlacement}
           onPlacementChange={setCalendarPlacement}
         >
-          <FocusTrap
-            onClose={closeCalendar}
+          <FocusTrapInternal
+            rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
-            captureEscapeKeyboardEvent={false}
             mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
-            <CalendarRange
-              value={value}
-              role="dialog"
-              onChange={onCalendarChange}
-              aria-label={calendarLabel}
-              disablePast={disablePast}
-              disableFuture={disableFuture}
-              shouldDisableDate={shouldDisableDate}
-              getRootRef={calendarRef}
-              disablePickers={disablePickers}
-              prevMonthLabel={prevMonthLabel}
-              nextMonthLabel={nextMonthLabel}
-              changeMonthLabel={changeMonthLabel}
-              changeYearLabel={changeYearLabel}
-              prevMonthIcon={prevMonthIcon}
-              nextMonthIcon={nextMonthIcon}
-              renderDayContent={renderDayContent}
-              {...calendarTestsProps}
-            />
-          </FocusTrap>
+            <div ref={focusTrapRootRef}>
+              <CalendarRange
+                value={value}
+                role="dialog"
+                onChange={onCalendarChange}
+                aria-label={calendarLabel}
+                disablePast={disablePast}
+                disableFuture={disableFuture}
+                shouldDisableDate={shouldDisableDate}
+                getRootRef={calendarRef}
+                disablePickers={disablePickers}
+                prevMonthLabel={prevMonthLabel}
+                nextMonthLabel={nextMonthLabel}
+                changeMonthLabel={changeMonthLabel}
+                changeYearLabel={changeYearLabel}
+                prevMonthIcon={prevMonthIcon}
+                nextMonthIcon={nextMonthIcon}
+                renderDayContent={renderDayContent}
+                {...calendarTestsProps}
+              />
+            </div>
+          </FocusTrapInternal>
         </Popper>
       )}
     </FormField>

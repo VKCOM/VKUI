@@ -4,6 +4,8 @@ description:
   Основана на одноименной дизайн-системе ВКонтакте.
 ---
 
+import { Icon16CheckCircleFillGreen, Icon12ErrorCircleFillYellow, Icon12ErrorCircleFill } from '@vkontakte/icons';
+
 <Overview type="doc">
 # Обзор
 
@@ -30,9 +32,19 @@ VKUI — это библиотека адаптивных React-компонен
 Для возможности использования нативной функциональности, каждый год увеличиваются версии
 поддерживаемых браузеров на основе статистики команды Вконтакте. На данный момент версии следующие:
 
-- **Chromium based 63+** (Chrome, Edge, Chrome for Android и др.);
-- **Firefox 55+**;
-- **Safari 12+** (Safari, iOS).
+- **Chromium based 68+** (Chrome, Edge, Chrome for Android и др.);
+- **Firefox 69+**;
+- **Safari 13+** (Safari, iOS).
+
+## Используемые браузерные фичи
+
+Компоненты библиотеки используют или могут использовать следующие фичи:
+
+- <Icon16CheckCircleFillGreen width={12} height={12} display="inline" /> [PointerEvent](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#browser_compatibility)
+- <Icon16CheckCircleFillGreen width={12} height={12} display="inline" /> [position: sticky](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position#browser_compatibility)
+- <Icon12ErrorCircleFillYellow display="inline" /> [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver#browser_compatibility) – с полифилом на `<iframe>` со стороны библиотеки
+- <Icon12ErrorCircleFillYellow display="inline" /> [gap | Supported in Flex Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/gap#browser_compatibility) – с полифилом на `margin` со стороны библиотеки
+- <Icon12ErrorCircleFill display="inline" /> [CSS logical properties and values](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Logical_properties_and_values) –  в CSS-бандле `@vkontakte/vkui/dist/vkui.css` при [базовой установке](/overview/install/#base-install), трансформируются в обычные свойства; при [установке ESNext версии](/overview/install/#esnext-install) решение о полифиле можно принять самому
 
 ## Релизный цикл
 

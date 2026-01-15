@@ -49,17 +49,19 @@ describe(useCalculatedDefaultVisibility, () => {
       hasPointerLib: true,
       expectedVisibility: 'on-hover',
     },
-  ])(
-    'returns $expectedVisibility visibility (isClient as $isClient, hasPointerContext as $hasPointerContext, hasPointerLib as $hasPointerLib)',
-    ({ expectedVisibility, isClient, hasPointerContext, hasPointerLib }) => {
-      vi.spyOn(UseIsClientService, 'useIsClient').mockReturnValue(isClient);
-      vi.spyOn(UseAdaptivityService, 'useAdaptivity').mockReturnValue({
-        hasPointer: hasPointerContext,
-      });
-      hasPointerLibStub = hasPointerLib;
+  ])('returns $expectedVisibility visibility (isClient as $isClient, hasPointerContext as $hasPointerContext, hasPointerLib as $hasPointerLib)', ({
+    expectedVisibility,
+    isClient,
+    hasPointerContext,
+    hasPointerLib,
+  }) => {
+    vi.spyOn(UseIsClientService, 'useIsClient').mockReturnValue(isClient);
+    vi.spyOn(UseAdaptivityService, 'useAdaptivity').mockReturnValue({
+      hasPointer: hasPointerContext,
+    });
+    hasPointerLibStub = hasPointerLib;
 
-      const hookResult = renderHook(() => useCalculatedDefaultVisibility());
-      expect(hookResult.result.current).toBe(expectedVisibility);
-    },
-  );
+    const hookResult = renderHook(() => useCalculatedDefaultVisibility());
+    expect(hookResult.result.current).toBe(expectedVisibility);
+  });
 });

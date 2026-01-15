@@ -6,18 +6,18 @@ import {
   Icon56UsersOutline,
 } from '@vkontakte/icons';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import { useModalManager } from '../../hooks/useModalManager';
 import { usePlatform } from '../../hooks/usePlatform';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
+import { Accordion } from '../Accordion/Accordion';
 import { Alert } from '../Alert/Alert';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
 import { Cell } from '../Cell/Cell';
 import { CellButton } from '../CellButton/CellButton';
 import { Group } from '../Group/Group';
-import { ModalPage } from '../ModalPage/ModalPage';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
-import { ModalRoot } from '../ModalRoot/ModalRoot';
 import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { Placeholder } from '../Placeholder/Placeholder';
@@ -41,18 +41,44 @@ const panels = ['panel 1', 'panel 2', 'panel 3'];
 const modals = ['modal 1', 'modal 2'];
 
 export const Playground: Story = {
-  render: function Render() {
+  render: function Render({ children, ...restProps }: SplitLayoutProps) {
     const platform = usePlatform();
     const { viewWidth } = useAdaptivityConditionalRender();
+    const [modalsApi, modalsHolder] = useModalManager({
+      saveHistory: false,
+    });
     const [panel, setPanel] = React.useState(panels[0]);
-    const [modal, setModal] = React.useState<string | null>(null);
     const [popout, setPopout] = React.useState<React.ReactNode | null>(null);
 
     const isVKCOM = platform === 'vkcom';
 
+    function openModal1() {
+      modalsApi.openModalPage({
+        id: modals[0],
+        header: <ModalPageHeader>Modal 1</ModalPageHeader>,
+        children: (
+          <Group>
+            <CellButton onClick={openModal2}>Modal 2</CellButton>
+          </Group>
+        ),
+      });
+    }
+
+    function openModal2() {
+      modalsApi.openModalPage({
+        id: modals[1],
+        header: <ModalPageHeader>Modal 2</ModalPageHeader>,
+        children: (
+          <Group>
+            <CellButton onClick={openModal1}>Modal 1</CellButton>
+          </Group>
+        ),
+      });
+    }
+
     return (
       <React.Fragment>
-        <SplitLayout center header={!isVKCOM && <PanelHeader delimiter="none" />}>
+        <SplitLayout center header={!isVKCOM && <PanelHeader delimiter="none" />} {...restProps}>
           {viewWidth.tabletPlus && (
             <SplitCol className={viewWidth.tabletPlus.className} fixed width={280} maxWidth={280}>
               <Panel>
@@ -76,15 +102,18 @@ export const Playground: Story = {
                     </Cell>
                   ))}
                   <Separator />
-                  <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
-                  <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
+                  <Cell onClick={openModal1}>modal 1</Cell>
+                  <Cell onClick={openModal2}>modal 2</Cell>
                   <Cell
                     onClick={() =>
-                      setPopout(<Alert title="Alert!" onClose={() => setPopout(null)} />)
+                      setPopout(<Alert title="Alert!" onClosed={() => setPopout(null)} />)
                     }
                   >
                     alert
                   </Cell>
+                </Group>
+                <Group>
+                  <AdditionalContent />
                 </Group>
               </Panel>
             </SplitCol>
@@ -106,6 +135,8 @@ export const Playground: Story = {
                   <Placeholder icon={<Icon56MentionOutline />}>
                     Введите адрес страницы в поле поиска
                   </Placeholder>
+                  {children}
+                  <AdditionalContent />
                 </Group>
               </Panel>
 
@@ -144,27 +175,99 @@ export const Playground: Story = {
           </SplitCol>
         </SplitLayout>
         {popout}
-        <ModalRoot activeModal={modal}>
-          <ModalPage
-            id={modals[0]}
-            onClose={() => setModal(null)}
-            header={<ModalPageHeader>Modal 1</ModalPageHeader>}
-          >
-            <Group>
-              <CellButton onClick={() => setModal(modals[1])}>Modal 2</CellButton>
-            </Group>
-          </ModalPage>
-          <ModalPage
-            id={modals[1]}
-            onClose={() => setModal(null)}
-            header={<ModalPageHeader>Modal 2</ModalPageHeader>}
-          >
-            <Group>
-              <CellButton onClick={() => setModal(modals[0])}>Modal 1</CellButton>
-            </Group>
-          </ModalPage>
-        </ModalRoot>
+        {modalsHolder}
       </React.Fragment>
     );
   },
 };
+
+export const Empty: Story = {
+  render: function Render() {
+    const { viewWidth } = useAdaptivityConditionalRender();
+    return (
+      <SplitLayout>
+        {viewWidth.tabletPlus && (
+          <SplitCol fixed width={280} maxWidth={280} className={viewWidth.tabletPlus.className}>
+            <div
+              style={{
+                padding: 12,
+                height: '100%',
+                boxSizing: 'border-box',
+                color: 'white',
+                backgroundColor: 'tomato',
+              }}
+            >
+              Фиксированная колонка слева
+            </div>
+          </SplitCol>
+        )}
+        <SplitCol>
+          <div
+            style={{
+              padding: 12,
+              height: '1000px',
+              boxSizing: 'border-box',
+              color: 'white',
+              backgroundColor: 'steelblue',
+            }}
+          >
+            Колонка справа
+            {viewWidth.tabletMinus && (
+              <p className={viewWidth.tabletMinus.className}>
+                ⚠️ колонка слева спрятана по условию адаптивности
+              </p>
+            )}
+          </div>
+        </SplitCol>
+      </SplitLayout>
+    );
+  },
+};
+
+function AdditionalContent() {
+  return (
+    <Accordion>
+      <Accordion.Summary>Lorem ipsum dolor?</Accordion.Summary>
+      <Accordion.Content>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate
+        voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa
+        fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora
+        commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem
+        corrupti cumque id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat
+        explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Blanditiis aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi
+        ad esse nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit
+        amet consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque
+        id sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum
+        adipisci aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
+        aliquid voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse
+        nemo facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis aliquid
+        voluptate voluptatem corrupti cumque id sint officiis rem tempora commodi ad esse nemo
+        facilis, ipsa fugiat explicabo illum adipisci aperiam? Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Blanditiis aliquid voluptate voluptatem corrupti cumque id
+        sint officiis rem tempora commodi ad esse nemo facilis, ipsa fugiat explicabo illum adipisci
+        aperiam?
+      </Accordion.Content>
+    </Accordion>
+  );
+}

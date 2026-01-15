@@ -1,0 +1,19 @@
+.displayNone {
+  display: none;
+}
+
+.displayInline {
+  display: inline;
+}
+
+.displayInlineBlock {
+  display: inline-block;
+}
+
+.displayBlock {
+  display: block;
+}
+
+.displayContents {
+  display: contents;
+}

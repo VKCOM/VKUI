@@ -7,10 +7,13 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 import styles from './FixedLayout.module.css';
+
+const warn = warnOnce('FixedLayout');
 
 const stylesVertical = {
   top: styles.verticalTop,
@@ -36,6 +39,9 @@ export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
 
 /**
  * @see https://vkui.io/components/fixed-layout
+ *
+ * @deprecated Since 8.0.0. Будет удалён в **VKUI v10**.
+ * Используйте компонент `Box` с `position="sticky"` и `insetBlockStart`/`insetBlockEnd`..
  */
 export const FixedLayout = ({
   children,
@@ -47,6 +53,12 @@ export const FixedLayout = ({
   useParentWidth,
   ...restProps
 }: FixedLayoutProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development') {
+    warn(
+      'Компонент устарел начиная с v8.0.0 и будет удалён в v10.0.0. Используйте вместо него `Box` с `position="sticky"` и `insetBlockStart`/`insetBlockEnd`.',
+    );
+  }
   const platform = usePlatform();
   const ref = React.useRef<HTMLElement | null>(null);
   const [width, setWidth] = React.useState<string | undefined>(undefined);

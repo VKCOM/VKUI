@@ -123,20 +123,28 @@ export type { SimpleGridProps } from './components/SimpleGrid/SimpleGrid';
 export { PopoutWrapper } from './components/PopoutWrapper/PopoutWrapper';
 export type { PopoutWrapperProps } from './components/PopoutWrapper/PopoutWrapper';
 export { Alert } from './components/Alert/Alert';
-export type { AlertProps, AlertActionProps, AlertActionInterface } from './components/Alert/Alert';
+export type {
+  AlertProps,
+  AlertActionProps,
+  AlertActionInterface,
+} from './components/Alert/Alert';
 export { ActionSheet } from './components/ActionSheet/ActionSheet';
 export type {
   ActionSheetProps,
   ActionSheetOnCloseOptions,
+  ActionSheetOnCloseReason,
 } from './components/ActionSheet/ActionSheet';
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { ActionSheetDefaultIosCloseItem } from './components/ActionSheet/ActionSheetDefaultIosCloseItem';
+export { FocusTrap, type FocusTrapProps } from './components/FocusTrap/FocusTrap';
 export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export { ScreenSpinnerContext } from './components/ScreenSpinner/context';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
 export type { ScreenSpinnerContextProps } from './components/ScreenSpinner/context';
 export { Snackbar } from './components/Snackbar/Snackbar';
+export { useSnackbarManager } from './hooks/useSnackbarManager';
+export type { SnackbarApi, CustomSnackbar, UseSnackbar } from './hooks/useSnackbarManager';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export { useTooltip } from './components/Tooltip/useTooltip';
@@ -155,16 +163,21 @@ export type {
   ModalRootContextInterface,
   UseModalRootContext,
 } from './components/ModalRoot/types';
-export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { useModalRootContext } from './components/ModalRoot/useModalRootContext';
 export { ModalPageContent } from './components/ModalPageContent/ModalPageContent';
 export { ModalPage } from './components/ModalPage/ModalPage';
-export type { ModalPageProps, ModalPageCloseReason } from './components/ModalPage/types';
+export type {
+  ModalPageProps,
+  ModalPageCloseReason,
+} from './components/ModalPage/types';
 export { ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export type { ModalPageHeaderProps } from './components/ModalPageHeader/ModalPageHeader';
 export { ModalCard } from './components/ModalCard/ModalCard';
-export type { ModalCardProps, ModalCardCloseReason } from './components/ModalCard/types';
+export type {
+  ModalCardProps,
+  ModalCardCloseReason,
+} from './components/ModalCard/types';
 export { ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
 export { ModalOutsideButton } from './components/ModalOutsideButton/ModalOutsideButton';
@@ -225,13 +238,23 @@ export type {
   AvatarOverlayProps,
 } from './components/Avatar/Avatar';
 export { GridAvatar } from './components/GridAvatar/GridAvatar';
-export type { GridAvatarProps, GridAvatarBadgeProps } from './components/GridAvatar/GridAvatar';
+export type {
+  GridAvatarProps,
+  GridAvatarBadgeProps,
+} from './components/GridAvatar/GridAvatar';
 export { Image } from './components/Image/Image';
-export type { ImageProps, ImageBadgeProps, ImageOverlayProps } from './components/Image/Image';
+export type {
+  ImageProps,
+  ImageBadgeProps,
+  ImageOverlayProps,
+} from './components/Image/Image';
 export { Progress } from './components/Progress/Progress';
 export type { ProgressProps } from './components/Progress/Progress';
 export { Search } from './components/Search/Search';
-export type { SearchProps, RenderIconButtonFn } from './components/Search/Search';
+export type {
+  SearchProps,
+  RenderIconButtonFn,
+} from './components/Search/Search';
 export { Tabs } from './components/Tabs/Tabs';
 export type { TabsProps } from './components/Tabs/Tabs';
 export { TabsItem } from './components/TabsItem/TabsItem';
@@ -288,7 +311,10 @@ export type { CustomPaginationPageButtonProps } from './components/Pagination/Pa
 export type { CustomPaginationNavigationButton } from './components/Pagination/PaginationNavigationButton/PaginationNavigationButton';
 export { Accordion } from './components/Accordion/Accordion';
 export type { AccordionProps } from './components/Accordion/Accordion';
-export { AccordionContext, useAccordionContext } from './components/Accordion/AccordionContext';
+export {
+  AccordionContext,
+  useAccordionContext,
+} from './components/Accordion/AccordionContext';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
 export type { AccordionContentProps } from './components/Accordion/AccordionContent';
 
@@ -301,7 +327,10 @@ export type { FormItemTopLabelProps } from './components/FormItem/FormItemTop/Fo
 export type { FormItemTopAsideProps } from './components/FormItem/FormItemTop/FormItemTopAside';
 export type { FormItemProps } from './components/FormItem/FormItem';
 export { FormField } from './components/FormField/FormField';
-export type { FormFieldProps, FieldIconsAlign } from './components/FormField/FormField';
+export type {
+  FormFieldProps,
+  FieldIconsAlign,
+} from './components/FormField/FormField';
 export { FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
 export type { FormLayoutGroupProps } from './components/FormLayoutGroup/FormLayoutGroup';
 export { FormStatus } from './components/FormStatus/FormStatus';
@@ -328,7 +357,11 @@ export { ChipsSelect } from './components/ChipsSelect/ChipsSelect';
 export type { ChipsSelectProps } from './components/ChipsSelect/ChipsSelect';
 export type { FormFieldClearButtonProps } from './components/FormFieldClearButton/FormFieldClearButton';
 export { Slider } from './components/Slider/Slider';
-export type { SliderBaseProps, SliderProps, SliderMultipleProps } from './components/Slider/Slider';
+export type {
+  SliderBaseProps,
+  SliderProps,
+  SliderMultipleProps,
+} from './components/Slider/Slider';
 export { Textarea } from './components/Textarea/Textarea';
 export type { TextareaProps } from './components/Textarea/Textarea';
 export { SelectionControl } from './components/SelectionControl/SelectionControl';
@@ -458,10 +491,24 @@ export {
 } from './hooks/useAdaptivityWithJSMediaQueries';
 export { useColorScheme } from './hooks/useColorScheme';
 export { usePagination } from './hooks/usePagination';
-export { type Orientation, useOrientationChange } from './hooks/useOrientationChange';
+export {
+  type Orientation,
+  useOrientationChange,
+} from './hooks/useOrientationChange';
 export { usePatchChildren } from './hooks/usePatchChildren';
 export { useTodayDate } from './hooks/useTodayDate';
-export { useScrollLock, useManualScroll as useScroll } from './components/AppRoot/ScrollContext';
+export {
+  useModalManager,
+  type ModalManagerApi,
+  type CustomModalProps,
+  type OpenModalCardProps,
+  type OpenModalPageProps,
+  type CustomModalPayload,
+} from './hooks/useModalManager';
+export {
+  useScrollLock,
+  useManualScroll as useScroll,
+} from './components/AppRoot/ScrollContext';
 export { useNavTransition } from './components/NavTransitionContext/NavTransitionContext';
 export { useNavDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useNavId } from './components/NavIdContext/useNavId';
@@ -484,6 +531,7 @@ export {
   ViewWidth,
   ViewHeight,
   SizeType,
+  DensityType,
   getViewWidthByViewportWidth,
   getViewHeightByViewportHeight,
 } from './lib/adaptivity';

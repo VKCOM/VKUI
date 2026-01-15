@@ -52,7 +52,7 @@
 }
 
 .ios.refreshing .spinnerSelf {
-  animation: pull-to-refresh-to-refreshing 380ms ease-out;
+  animation: animationPullToRefreshToRefreshing 380ms ease-out;
 }
 
 .spinnerPath {
@@ -67,7 +67,7 @@
 }
 
 .spinnerOn .spinnerPath {
-  animation: ptr-rotator var(--vkui_internal--duration) linear infinite;
+  animation: animationPullToRefreshRotator var(--vkui_internal--duration) linear infinite;
 }
 
 .content {
@@ -82,7 +82,7 @@
   transition: none;
 }
 
-@keyframes pull-to-refresh-to-refreshing {
+@keyframes animationPullToRefreshToRefreshing {
   0% {
     transform: scale(1);
   }
@@ -99,7 +99,7 @@
     transform: scale(1);
   }
 }
-@keyframes ptr-rotator {
+@keyframes animationPullToRefreshRotator {
   0% {
     transform: rotate(0deg);
   }

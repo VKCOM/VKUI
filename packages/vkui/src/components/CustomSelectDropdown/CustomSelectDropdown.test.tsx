@@ -1,7 +1,7 @@
 import { act, createRef, useRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import type { Placement, useFloating } from '../../lib/floating';
-import { withFakeTimers } from '../../testing/utils.tsx';
+import { withFakeTimers } from '../../testing/utils';
 import { Button } from '../Button/Button';
 import { CustomSelectDropdown } from './CustomSelectDropdown';
 import styles from './CustomSelectDropdown.module.css';

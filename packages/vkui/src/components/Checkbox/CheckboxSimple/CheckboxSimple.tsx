@@ -3,31 +3,26 @@
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useMergeProps } from '../../../hooks/useMergeProps';
+import { withLabelClickWrapper } from '../../../lib/withLabelClickWrapper';
 import { Tappable } from '../../Tappable/Tappable';
 import type { CheckboxProps } from '../Checkbox';
 import { CheckboxInput } from '../CheckboxInput/CheckboxInput';
 import styles from './CheckboxSimple.module.css';
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export function CheckboxSimple({
-  children,
-  className,
-  style,
-  getRootRef,
+  // CheckboxProps
   getRef,
   description,
-  hoverMode: hoverModeProp,
-  activeMode: activeModeProp,
-  hasHover,
-  hasActive,
-  focusVisibleMode,
   titleAfter,
   noPadding,
+  children,
 
+  // CheckboxInputProps
   indeterminate,
   defaultIndeterminate,
   IconOnCompact,
@@ -36,21 +31,52 @@ export function CheckboxSimple({
   IconOffRegular,
   IconIndeterminate,
 
+  // Tappable props
+  hoverMode: hoverModeProp,
+  activeMode: activeModeProp,
+  hasHover,
+  hasActive,
+  focusVisibleMode,
+
+  // Input props
+  checked,
+  defaultChecked,
+  disabled,
+  readOnly,
+  required,
+  autoFocus,
+  id,
+  name,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+
   slotProps,
   ...restProps
 }: CheckboxProps) {
-  const rootRest = useMergeProps(
+  const { onClick, ...rootRest } = useMergeProps(restProps, slotProps?.root);
+
+  const inputRest = useMergeProps(
     {
-      className,
-      style,
-      getRootRef,
+      getRootRef: getRef,
+      checked,
+      defaultChecked,
+      disabled,
+      readOnly,
+      required,
+      autoFocus,
+      id,
+      name,
+      value,
+      onChange,
+      onFocus,
+      onBlur,
     },
-    slotProps?.root,
+    slotProps?.input,
   );
 
-  const inputRest = useMergeProps({ getRootRef: getRef, ...restProps }, slotProps?.input);
-
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   const hoverMode = hoverModeProp || (noPadding ? 'opacity' : 'background');
   const activeMode = activeModeProp || (noPadding ? 'opacity' : 'background');
@@ -60,7 +86,7 @@ export function CheckboxSimple({
       baseClassName={classNames(
         styles.host,
         !noPadding && styles.withPadding,
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        density !== 'regular' && densityClassNames[density],
       )}
       disabled={inputRest.disabled}
       hoverMode={hoverMode}
@@ -69,6 +95,7 @@ export function CheckboxSimple({
       hasActive={hasActive}
       focusVisibleMode={focusVisibleMode}
       Component="label"
+      onClick={withLabelClickWrapper(onClick)}
       {...rootRest}
     >
       <CheckboxInput

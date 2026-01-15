@@ -7,7 +7,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { getHorizontalFocusGoTo, Keys } from '../../lib/accessibility';
-import { callMultiple } from '../../lib/callMultiple';
 import {
   contains as checkTargetIsInputEl,
   contains,
@@ -30,16 +29,14 @@ import styles from './ChipsInputBase.module.css';
 
 const warn = warnOnce('ChipsInputBase');
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 } as const;
 
 export const ChipsInputBase = <O extends ChipOption>({
   // FormFieldProps
-  'getRootRef': rootGetRootRef,
-  'style': rootStyle,
-  'className': rootClassName,
+  getRef,
   before,
   after,
   status,
@@ -53,10 +50,16 @@ export const ChipsInputBase = <O extends ChipOption>({
   renderChip = renderChipDefault,
 
   // input
-  getRef,
   'inputValue': inputValueProp = DEFAULT_INPUT_VALUE,
   addOnBlur,
   onInputChange,
+  autoFocus,
+  'disabled': disabledProp,
+  'readOnly': readOnlyProp,
+  'onFocus': onFocusProp,
+  'onBlur': onBlurProp,
+  'id': idProp,
+  'placeholder': placeholderProp,
 
   // clear
   ClearButton = FormFieldClearButton,
@@ -71,7 +74,7 @@ export const ChipsInputBase = <O extends ChipOption>({
   slotProps,
   ...restProps
 }: ChipsInputBasePrivateProps<O>): React.ReactNode => {
-  const { sizeY = 'none' } = useAdaptivity();
+  const { density = 'none' } = useAdaptivity();
 
   /* istanbul ignore if: не проверяем в тестах */
   if (process.env.NODE_ENV === 'development' && getRef) {
@@ -79,20 +82,10 @@ export const ChipsInputBase = <O extends ChipOption>({
   }
 
   const {
-    className,
-    style,
-    getRootRef,
     onClick: onRootClick,
     onMouseDown: onRootMouseDown,
     ...rootRest
-  } = useMergeProps(
-    {
-      getRootRef: rootGetRootRef,
-      style: rootStyle,
-      className: rootClassName,
-    },
-    slotProps?.root,
-  );
+  } = useMergeProps(restProps, slotProps?.root);
 
   const {
     getRootRef: getInputRef,
@@ -109,7 +102,13 @@ export const ChipsInputBase = <O extends ChipOption>({
       className: styles.el,
       value: inputValueProp,
       onChange: onInputChange,
-      ...restProps,
+      disabled: disabledProp,
+      readOnly: readOnlyProp,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      id: idProp,
+      placeholder: placeholderProp,
+      autoFocus,
     },
     slotProps?.input,
   );
@@ -301,30 +300,40 @@ export const ChipsInputBase = <O extends ChipOption>({
     e.preventDefault();
   };
 
+  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!disabled) {
+      handleRootClick(event);
+    }
+
+    onRootClick?.(event);
+  };
+
+  const onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    handleRootMouseDown(event);
+    onRootMouseDown?.(event);
+  };
+
   return (
     <FormField
       Component="div"
-      getRootRef={getRootRef}
       // role="group" добавлена, чтобы этот блок можно было найти с помощью стрелочек при использовании NVDA
       // Если убрать, то aria-label не будет читаться
       role="group"
       aria-label={ariaLabel}
-      style={style}
       disabled={disabled}
       before={before}
       after={afterItems}
       status={status}
       mode={mode}
-      className={className}
       maxHeight={maxHeight}
-      onClick={disabled ? onRootClick : callMultiple(handleRootClick, onRootClick)}
-      onMouseDown={callMultiple(handleRootMouseDown, onRootMouseDown)}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
       {...rootRest}
     >
       <div
         className={classNames(
           styles.host,
-          sizeY !== 'regular' && sizeYClassNames[sizeY],
+          density !== 'regular' && densityClassNames[density],
           withPlaceholder && styles.hasPlaceholder,
           inputValue && styles.hasInputValue,
         )}
@@ -345,6 +354,13 @@ export const ChipsInputBase = <O extends ChipOption>({
             <React.Fragment key={`${typeof option.value}-${option.value}`}>
               {renderChip(
                 {
+                  /**
+                   * Компилятор сходит с ума из-за рефа внутри handleChipRemove.
+                   * Обходной путь прокидывать ref в свойства для рендер пропов.
+                   */
+                  ...(false
+                    ? { '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED': inputRef }
+                    : {}),
                   'Component': 'div',
                   'value': option.value,
                   'label': option.label,
