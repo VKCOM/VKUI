@@ -136,6 +136,8 @@ function defaultFormatFunction(key: string, valueString: string): string {
   return `${key}=${valueString}`;
 }
 
+const dateTimeFormat = /*#__PURE__*/ new Intl.DateTimeFormat('ru');
+
 function stringify(prop: string, value: any): string {
   if (value === true) {
     return prop;
@@ -152,7 +154,7 @@ function stringify(prop: string, value: any): string {
           return `[${value.label}]`;
         }
         if (value instanceof Date) {
-          return new Intl.DateTimeFormat('ru').format(value);
+          return dateTimeFormat.format(value);
         }
         if (value === null) {
           return 'null';

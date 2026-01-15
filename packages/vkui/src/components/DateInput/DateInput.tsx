@@ -16,6 +16,7 @@ import {
   startOfMinute,
 } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
+import { cacheDateTimeFormat } from '../../lib/intlCache';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
@@ -31,6 +32,15 @@ import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import { useDateInputValue } from './hooks';
 import '../InputLike/InputLike.module.css'; // Reorder css
 import styles from './DateInput.module.css';
+
+const labelDateTimeFormatOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+} as const;
+
+const labelDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
 
 const densityClassNames = {
   none: styles.densityNone,
@@ -422,12 +432,7 @@ export const DateInput = ({
 
   const { locale } = useConfigProvider();
   const currentDateLabel = value
-    ? new Intl.DateTimeFormat(locale, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(value)
+    ? labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(value)
     : null;
   const currentDateLabelId = React.useId();
   const ariaLabelId = React.useId();

@@ -4,12 +4,21 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { cacheDateTimeFormat } from '../../lib/intlCache';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarDay.module.css';
+
+const labelDateTimeFormatOptions = {
+  weekday: 'long',
+  month: 'long',
+  day: 'numeric',
+} as const;
+
+const labelDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
 
 export type CalendarDayElementProps = Omit<
   React.AllHTMLAttributes<HTMLElement>,
@@ -146,11 +155,7 @@ export const CalendarDay = React.memo(
     });
     const focusHandlers = mergeCalls(focusEvents, { onFocus: handleFocus, onBlur });
 
-    const label = new Intl.DateTimeFormat(locale, {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-    }).format(day);
+    const label = labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(day);
 
     React.useEffect(() => {
       if (focused && ref.current) {

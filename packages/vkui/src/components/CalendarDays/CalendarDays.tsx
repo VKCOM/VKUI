@@ -5,6 +5,7 @@ import { classNames, isSameDate } from '@vkontakte/vkjs';
 import { useTodayDate } from '../../hooks/useTodayDate';
 import { getDaysNames, getWeeks } from '../../lib/calendar';
 import { isSameMonth } from '../../lib/date';
+import { cacheDateTimeFormat } from '../../lib/intlCache';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import {
   CalendarDay,
@@ -17,6 +18,13 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarDays.module.css';
+
+const labelDateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+} as const;
+
+const labelDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
 
 export type CalendarDaysTestsProps = {
   /**
@@ -161,10 +169,7 @@ export const CalendarDays = ({
 
   const viewDateLabelId = React.useId();
   const currentMonthLabel = value
-    ? new Intl.DateTimeFormat(locale, {
-        year: 'numeric',
-        month: 'long',
-      }).format(viewDate)
+    ? labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(viewDate)
     : null;
 
   return (

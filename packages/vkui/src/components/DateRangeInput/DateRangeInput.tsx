@@ -10,6 +10,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { dateFormatter, isMatch, parse } from '../../lib/date';
 import type { PlacementWithAuto } from '../../lib/floating';
+import { cacheDateTimeFormat } from '../../lib/intlCache';
 import type { HasRootRef } from '../../types';
 import {
   CalendarRange,
@@ -27,6 +28,15 @@ import { Popper } from '../Popper/Popper';
 import { Text } from '../Typography/Text/Text';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import dateInputStyles from '../DateInput/DateInput.module.css';
+
+const labelDateTimeFormatOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+} as const;
+
+const labelDateTimeFormat = /*#__PURE__*/ cacheDateTimeFormat();
 
 const densityClassNames = {
   none: dateInputStyles.densityNone,
@@ -397,18 +407,8 @@ export const DateRangeInput = ({
       return null;
     }
     return [
-      new Intl.DateTimeFormat(locale, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(startDate),
-      new Intl.DateTimeFormat(locale, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(endDate),
+      labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(startDate),
+      labelDateTimeFormat(locale, labelDateTimeFormatOptions).format(endDate),
     ].join(' - ');
   }, [locale, value]);
 
