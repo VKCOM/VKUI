@@ -40,7 +40,6 @@ type Story = StoryObj<CustomScrollViewTintProps>;
 
 export const Playground: Story = {
   args: {
-    tintColor: 'var(--vkui--color_background)',
     children: (props) => (
       <CustomScrollView {...props}>
         <Box

@@ -2,7 +2,6 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { baselineComponent } from '../../../testing/utils';
 import { CustomScrollViewTint } from './CustomScrollViewTint';
-import styles from './CustomScrollViewTint.module.css';
 
 const TintWithChildren = (props: React.ComponentProps<typeof CustomScrollViewTint>) => (
   <CustomScrollViewTint {...props}>
@@ -48,7 +47,11 @@ describe(CustomScrollViewTint, () => {
       </div>
     );
 
-    render(<CustomScrollViewTint>{ScrollableDiv}</CustomScrollViewTint>);
+    render(
+      <CustomScrollViewTint data-testid="custom-scroll-view-tint">
+        {ScrollableDiv}
+      </CustomScrollViewTint>,
+    );
 
     const scrollable = screen.getByTestId('scrollable');
 
@@ -56,8 +59,8 @@ describe(CustomScrollViewTint, () => {
 
     await act(() => vi.advanceTimersByTime(50));
 
-    const tintTop = document.querySelector(`.${styles.tintTop}`);
-    expect(tintTop).toBeInTheDocument();
+    const host = screen.getByTestId('custom-scroll-view-tint');
+    expect(host).toHaveStyle('mask-image: linear-gradient(180deg, transparent, black 40px)');
   });
 
   it('shows tint bottom when content overflows', async () => {
@@ -72,7 +75,11 @@ describe(CustomScrollViewTint, () => {
       </div>
     );
 
-    render(<CustomScrollViewTint>{ScrollableDiv}</CustomScrollViewTint>);
+    render(
+      <CustomScrollViewTint data-testid="custom-scroll-view-tint">
+        {ScrollableDiv}
+      </CustomScrollViewTint>,
+    );
 
     const scrollable = screen.getByTestId('scrollable');
 
@@ -86,8 +93,8 @@ describe(CustomScrollViewTint, () => {
 
     await act(() => vi.advanceTimersByTime(50));
 
-    const tintBottom = document.querySelector(`.${styles.tintBottom}`);
-    expect(tintBottom).toBeInTheDocument();
+    const host = screen.getByTestId('custom-scroll-view-tint');
+    expect(host).toHaveStyle('mask-image: linear-gradient(0deg, transparent, black 40px)');
   });
 
   it('shows tint left when scrolled right', async () => {
@@ -102,7 +109,11 @@ describe(CustomScrollViewTint, () => {
       </div>
     );
 
-    render(<CustomScrollViewTint>{ScrollableDiv}</CustomScrollViewTint>);
+    render(
+      <CustomScrollViewTint data-testid="custom-scroll-view-tint">
+        {ScrollableDiv}
+      </CustomScrollViewTint>,
+    );
 
     const scrollable = screen.getByTestId('scrollable');
 
@@ -110,8 +121,8 @@ describe(CustomScrollViewTint, () => {
 
     await act(() => vi.advanceTimersByTime(50));
 
-    const tintLeft = document.querySelector(`.${styles.tintLeft}`);
-    expect(tintLeft).toBeInTheDocument();
+    const host = screen.getByTestId('custom-scroll-view-tint');
+    expect(host).toHaveStyle('mask-image: linear-gradient(90deg, transparent, black 40px)');
   });
 
   it('shows tint right when content overflows horizontally', async () => {
@@ -126,7 +137,11 @@ describe(CustomScrollViewTint, () => {
       </div>
     );
 
-    render(<CustomScrollViewTint>{ScrollableDiv}</CustomScrollViewTint>);
+    render(
+      <CustomScrollViewTint data-testid="custom-scroll-view-tint">
+        {ScrollableDiv}
+      </CustomScrollViewTint>,
+    );
 
     const scrollable = screen.getByTestId('scrollable');
 
@@ -140,22 +155,8 @@ describe(CustomScrollViewTint, () => {
 
     await act(() => vi.advanceTimersByTime(50));
 
-    const tintRight = document.querySelector(`.${styles.tintRight}`);
-    expect(tintRight).toBeInTheDocument();
-  });
-
-  it('applies tintColor as CSS variable', () => {
-    render(
-      <CustomScrollViewTint tintColor="red">
-        {({ getRootRef, onScroll }) => (
-          <div ref={getRootRef} onScroll={onScroll}>
-            content
-          </div>
-        )}
-      </CustomScrollViewTint>,
-    );
-    const host = document.querySelector(`.${styles.host}`);
-    expect(host).toHaveStyle('--vkui_internal--CustomScrollView_tint_color: red');
+    const host = screen.getByTestId('custom-scroll-view-tint');
+    expect(host).toHaveStyle('mask-image: linear-gradient(270deg, transparent, black 40px)');
   });
 
   it('does not show tints when no scroll', async () => {
@@ -170,7 +171,11 @@ describe(CustomScrollViewTint, () => {
       </div>
     );
 
-    render(<CustomScrollViewTint>{ScrollableDiv}</CustomScrollViewTint>);
+    render(
+      <CustomScrollViewTint data-testid="custom-scroll-view-tint">
+        {ScrollableDiv}
+      </CustomScrollViewTint>,
+    );
 
     const scrollable = screen.getByTestId('scrollable');
 
@@ -184,14 +189,7 @@ describe(CustomScrollViewTint, () => {
 
     await act(() => vi.advanceTimersByTime(50));
 
-    const tintTop = document.querySelector(`.${styles.tintTop}`);
-    const tintBottom = document.querySelector(`.${styles.tintBottom}`);
-    const tintLeft = document.querySelector(`.${styles.tintLeft}`);
-    const tintRight = document.querySelector(`.${styles.tintRight}`);
-
-    expect(tintTop).not.toBeInTheDocument();
-    expect(tintBottom).not.toBeInTheDocument();
-    expect(tintLeft).not.toBeInTheDocument();
-    expect(tintRight).not.toBeInTheDocument();
+    const host = screen.getByTestId('custom-scroll-view-tint');
+    expect(host).toHaveStyle('mask-image: none');
   });
 });

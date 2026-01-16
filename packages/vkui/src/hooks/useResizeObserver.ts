@@ -9,16 +9,8 @@ import { useStableCallback } from './useStableCallback';
  * Хук вызывает переданный коллбэк при изменении размеров элемента.
  */
 export function useResizeObserver(
-  ref: React.RefObject<HTMLElement | null> | null | undefined,
-  callback: (element: HTMLElement) => void,
-): void;
-export function useResizeObserver(
-  ref: Window | null | undefined,
-  callback: (element: Window) => void,
-): void;
-export function useResizeObserver(
   ref: React.RefObject<HTMLElement | null> | Window | null | undefined,
-  callback: (element: any) => void,
+  callback: (element: HTMLElement | Window) => void,
 ): void {
   const stableCallback = useStableCallback(callback);
   const { window } = useDOM();

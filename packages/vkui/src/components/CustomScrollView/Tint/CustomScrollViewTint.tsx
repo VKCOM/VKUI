@@ -1,19 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { classNames, throttle } from '@vkontakte/vkjs';
+import { throttle } from '@vkontakte/vkjs';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
-import { type CSSCustomProperties, type HasRootRef } from '../../../types';
+import { type HasRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './CustomScrollViewTint.module.css';
 
 export interface CustomScrollViewTintProps
   extends Omit<React.ComponentProps<'div'>, 'children'>,
     HasRootRef<HTMLDivElement> {
-  /**
-   * Цвет тени.
-   */
-  tintColor?: string;
   /**
    * Компонент-обертка для реализации прокрутки с тенями.
    */
@@ -22,13 +18,16 @@ export interface CustomScrollViewTintProps
   ) => React.ReactNode;
 }
 
+function linearGradient(direction: 0 | 90 | 180 | 270): string {
+  return `linear-gradient(${direction}deg, transparent, black 40px)`;
+}
+
 /**
  * @see https://vkui.io/components/custom-scroll-view
  * @since 8.1.0
  */
 export function CustomScrollViewTint({
   children,
-  tintColor,
   ...restProps
 }: CustomScrollViewTintProps): React.ReactElement {
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -37,6 +36,13 @@ export function CustomScrollViewTint({
   const [hasTintBottom, setHasTintBottom] = React.useState(false);
   const [hasTintLeft, setHasTintLeft] = React.useState(false);
   const [hasTintRight, setHasTintRight] = React.useState(false);
+
+  const tint = [
+    hasTintTop && linearGradient(180),
+    hasTintBottom && linearGradient(0),
+    hasTintLeft && linearGradient(90),
+    hasTintRight && linearGradient(270),
+  ].filter(Boolean) as string[];
 
   const updateTint = React.useCallback((scrollElement: HTMLElement) => {
     setHasTintTop(scrollElement.scrollTop > 0);
@@ -64,19 +70,15 @@ export function CustomScrollViewTint({
     updateTintThrottle(target);
   };
 
-  const baseStyle: CSSCustomProperties | undefined = tintColor
-    ? { '--vkui_internal--CustomScrollView_tint_color': tintColor }
-    : undefined;
-
-  useResizeObserver(scrollRef, updateTintThrottle);
+  useResizeObserver(scrollRef, updateTintThrottle as (element: HTMLElement | Window) => void);
 
   return (
-    <RootComponent baseClassName={styles.host} baseStyle={baseStyle} {...restProps}>
+    <RootComponent
+      baseClassName={styles.host}
+      baseStyle={{ maskImage: tint.join(', ') || 'none' }}
+      {...restProps}
+    >
       {children({ getRootRef: scrollRef, onScroll })}
-      {hasTintTop && <div className={classNames(styles.tint, styles.tintTop)} />}
-      {hasTintBottom && <div className={classNames(styles.tint, styles.tintBottom)} />}
-      {hasTintLeft && <div className={classNames(styles.tint, styles.tintLeft)} />}
-      {hasTintRight && <div className={classNames(styles.tint, styles.tintRight)} />}
     </RootComponent>
   );
 }
