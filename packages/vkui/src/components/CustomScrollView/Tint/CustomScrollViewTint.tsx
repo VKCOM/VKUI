@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { classNames, throttle } from '@vkontakte/vkjs';
-import { RootComponent } from 'src/components/RootComponent/RootComponent';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { type CSSCustomProperties, type HasRootRef } from '../../../types';
+import { RootComponent } from '../../RootComponent/RootComponent';
 import styles from './CustomScrollViewTint.module.css';
 
 export interface CustomScrollViewTintProps
@@ -38,20 +38,18 @@ export function CustomScrollViewTint({
   const [hasTintLeft, setHasTintLeft] = React.useState(false);
   const [hasTintRight, setHasTintRight] = React.useState(false);
 
-  const updateTint = React.useMemo(
-    () =>
-      throttle((scrollElement: HTMLElement) => {
-        setHasTintTop(scrollElement.scrollTop > 0);
-        setHasTintBottom(
-          scrollElement.scrollHeight - scrollElement.clientHeight - scrollElement.scrollTop > 0,
-        );
-        setHasTintLeft(scrollElement.scrollLeft > 0);
-        setHasTintRight(
-          scrollElement.scrollWidth - scrollElement.clientWidth - scrollElement.scrollLeft > 0,
-        );
-      }, 50),
-    [],
-  );
+  const updateTint = React.useCallback((scrollElement: HTMLElement) => {
+    setHasTintTop(scrollElement.scrollTop > 0);
+    setHasTintBottom(
+      scrollElement.scrollHeight - scrollElement.clientHeight - scrollElement.scrollTop > 0,
+    );
+    setHasTintLeft(scrollElement.scrollLeft > 0);
+    setHasTintRight(
+      scrollElement.scrollWidth - scrollElement.clientWidth - scrollElement.scrollLeft > 0,
+    );
+  }, []);
+
+  const updateTintThrottle = React.useMemo(() => throttle(updateTint, 50), [updateTint]);
 
   React.useEffect(() => {
     if (!scrollRef.current) {
@@ -63,14 +61,14 @@ export function CustomScrollViewTint({
 
   const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
-    updateTint(target);
+    updateTintThrottle(target);
   };
 
   const baseStyle: CSSCustomProperties | undefined = tintColor
     ? { '--vkui_internal--CustomScrollView_tint_color': tintColor }
     : undefined;
 
-  useResizeObserver(scrollRef, updateTint);
+  useResizeObserver(scrollRef, updateTintThrottle);
 
   return (
     <RootComponent baseClassName={styles.host} baseStyle={baseStyle} {...restProps}>
