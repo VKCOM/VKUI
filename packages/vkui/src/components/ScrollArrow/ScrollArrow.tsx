@@ -53,6 +53,12 @@ export interface ScrollArrowProps
    */
   offsetY?: number | string;
   /**
+   * Смещает иконку кнопки навигации по горизонтали.
+   * Для `direction="left"` применяется к `left` (в LTR) или `right` (в RTL).
+   * Для `direction="right"` применяется к `right` (в LTR) или `left` (в RTL).
+   */
+  offsetX?: number | string;
+  /**
    * [a11y]: Используется для ассистивных технологий.
    */
   label?: string;
@@ -67,6 +73,7 @@ export interface ScrollArrowProps
 export const ScrollArrow = ({
   size = 'm',
   offsetY,
+  offsetX,
   direction,
   label: labelProp,
   children = <ArrowIcon size={size} />,
@@ -74,6 +81,19 @@ export const ScrollArrow = ({
 }: ScrollArrowProps): React.ReactNode => {
   const textDirection = useConfigDirection();
   const label = labelProp ?? labelDirection[direction];
+
+  const iconStyle: React.CSSProperties = {};
+  if (offsetY) {
+    iconStyle.top = offsetY;
+  }
+  if (offsetX) {
+    const isRtl = textDirection === 'rtl';
+    if (direction === 'left') {
+      iconStyle[isRtl ? 'right' : 'left'] = offsetX;
+    } else if (direction === 'right') {
+      iconStyle[isRtl ? 'left' : 'right'] = offsetX;
+    }
+  }
 
   return (
     <RootComponent
@@ -88,7 +108,10 @@ export const ScrollArrow = ({
       {...restProps}
     >
       {label && <VisuallyHidden>{label}</VisuallyHidden>}
-      <span className={styles.icon} style={offsetY ? { top: offsetY } : undefined}>
+      <span
+        className={styles.icon}
+        style={Object.keys(iconStyle).length > 0 ? iconStyle : undefined}
+      >
         {children}
       </span>
     </RootComponent>
