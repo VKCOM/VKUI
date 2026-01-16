@@ -2,6 +2,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
 import { CustomScrollViewTint } from './Tint/CustomScrollViewTint';
 import styles from './CustomScrollView.module.css';
 
@@ -43,30 +44,23 @@ export interface CustomScrollViewProps
  * @see https://vkui.io/components/custom-scroll-view
  */
 export const CustomScrollView = ({
-  className,
-  children,
   enableHorizontalScroll = false,
-  getRootRef,
   overscrollBehavior = 'auto',
   scrollBehavior = 'auto',
   scrollbarHidden = false,
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
   return (
-    <div
-      className={classNames(
-        className,
+    <RootComponent
+      baseClassName={classNames(
         styles.host,
         enableHorizontalScroll && styles.horizontalScrollEnabled,
         overscrollBehaviorClassNames[overscrollBehavior],
         scrollBehaviorClassNames[scrollBehavior],
         scrollbarHidden && styles.scrollbarHidden,
       )}
-      ref={getRootRef}
       {...restProps}
-    >
-      {children}
-    </div>
+    />
   );
 };
 

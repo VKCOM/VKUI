@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 import { classNames, throttle } from '@vkontakte/vkjs';
-import { mergeStyle } from '../../../helpers/mergeStyle';
-import { type HasRootRef } from '../../../types';
+import { RootComponent } from 'src/components/RootComponent/RootComponent';
+import { useResizeObserver } from '../../../hooks/useResizeObserver';
+import { type CSSCustomProperties, type HasRootRef } from '../../../types';
 import styles from './CustomScrollViewTint.module.css';
 
 export interface CustomScrollViewTintProps
@@ -26,9 +27,6 @@ export interface CustomScrollViewTintProps
  * @since 8.1.0
  */
 export function CustomScrollViewTint({
-  getRootRef,
-  className,
-  style,
   children,
   tintColor,
   ...restProps
@@ -42,7 +40,7 @@ export function CustomScrollViewTint({
 
   const updateTint = React.useMemo(
     () =>
-      throttle((scrollElement: HTMLDivElement) => {
+      throttle((scrollElement: HTMLElement) => {
         setHasTintTop(scrollElement.scrollTop > 0);
         setHasTintBottom(
           scrollElement.scrollHeight - scrollElement.clientHeight - scrollElement.scrollTop > 0,
@@ -68,21 +66,19 @@ export function CustomScrollViewTint({
     updateTint(target);
   };
 
+  const baseStyle: CSSCustomProperties | undefined = tintColor
+    ? { '--vkui_internal--CustomScrollView_tint_color': tintColor }
+    : undefined;
+
+  useResizeObserver(scrollRef, updateTint);
+
   return (
-    <div
-      ref={getRootRef}
-      className={classNames(className, styles.host)}
-      style={mergeStyle(
-        style,
-        tintColor ? { '--vkui_internal--CustomScrollView_tint_color': tintColor } : undefined,
-      )}
-      {...restProps}
-    >
+    <RootComponent baseClassName={styles.host} baseStyle={baseStyle} {...restProps}>
       {children({ getRootRef: scrollRef, onScroll })}
       {hasTintTop && <div className={classNames(styles.tint, styles.tintTop)} />}
       {hasTintBottom && <div className={classNames(styles.tint, styles.tintBottom)} />}
       {hasTintLeft && <div className={classNames(styles.tint, styles.tintLeft)} />}
       {hasTintRight && <div className={classNames(styles.tint, styles.tintRight)} />}
-    </div>
+    </RootComponent>
   );
 }
