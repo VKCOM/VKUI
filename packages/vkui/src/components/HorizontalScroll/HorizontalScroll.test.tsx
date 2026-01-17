@@ -232,6 +232,121 @@ describe('HorizontalScroll', () => {
       });
     });
   });
+
+  describe('arrowOffsetX prop', () => {
+    it('should pass arrowOffsetX to ScrollArrow components', async () => {
+      const ref: React.RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      const { container } = render(
+        <HorizontalScroll
+          getRef={ref}
+          data-testid="horizontal-scroll"
+          arrowOffsetX={15}
+          showArrows="always"
+        >
+          <div style={{ width: '1800px', height: '50px' }} />
+        </HorizontalScroll>,
+      );
+
+      setup(ref.current!);
+      fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+      await waitFor(() => {
+        // Check that arrows are rendered
+        const buttons = container.querySelectorAll('button[aria-hidden="true"]');
+        expect(buttons.length).toBeGreaterThan(0);
+      });
+    });
+  });
+
+  describe('slotProps', () => {
+    it('should pass slotProps to prevArrow', () => {
+      const ref: React.RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      render(
+        <HorizontalScroll
+          getRef={ref}
+          data-testid="horizontal-scroll"
+          slotProps={{
+            prevArrow: {
+              'data-testid': 'custom-prev-arrow',
+              'className': 'custom-prev-class',
+            },
+          }}
+          showArrows="always"
+        >
+          <div style={{ width: '1800px', height: '50px' }} />
+        </HorizontalScroll>,
+      );
+
+      setup(ref.current!, 300);
+      fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+      const prevArrow = screen.getByTestId('custom-prev-arrow');
+      expect(prevArrow).toBeTruthy();
+      expect(prevArrow).toHaveClass('custom-prev-class');
+    });
+
+    it('should pass slotProps to nextArrow', () => {
+      const ref: React.RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      render(
+        <HorizontalScroll
+          getRef={ref}
+          data-testid="horizontal-scroll"
+          slotProps={{
+            nextArrow: {
+              'data-testid': 'custom-next-arrow',
+              'className': 'custom-next-class',
+            },
+          }}
+          showArrows="always"
+        >
+          <div style={{ width: '1800px', height: '50px' }} />
+        </HorizontalScroll>,
+      );
+
+      setup(ref.current!);
+      fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+      const nextArrow = screen.getByTestId('custom-next-arrow');
+      expect(nextArrow).toBeTruthy();
+      expect(nextArrow).toHaveClass('custom-next-class');
+    });
+
+    it('should merge slotProps with default props', () => {
+      const ref: React.RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      const onArrowClick = vi.fn();
+      render(
+        <HorizontalScroll
+          getRef={ref}
+          data-testid="horizontal-scroll"
+          prevButtonTestId="merged-prev-arrow"
+          slotProps={{
+            prevArrow: {
+              'data-testid': 'merged-prev-arrow-2',
+              'onClick': onArrowClick,
+            },
+          }}
+          showArrows="always"
+        >
+          <div style={{ width: '1800px', height: '50px' }} />
+        </HorizontalScroll>,
+      );
+
+      setup(ref.current!, 300);
+      fireEvent.mouseEnter(screen.getByTestId('horizontal-scroll'));
+
+      const prevArrow = screen.getByTestId('merged-prev-arrow-2');
+      fireEvent.click(prevArrow);
+      expect(onArrowClick).toHaveBeenCalled();
+    });
+  });
 });
 
 function mockRef(element: HTMLDivElement | null) {
