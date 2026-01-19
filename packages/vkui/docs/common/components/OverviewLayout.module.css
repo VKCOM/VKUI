@@ -1,4 +1,4 @@
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+/* stylelint-disable-next-line selector-max-id, selector-pseudo-class-disallowed-list  */
 :global(#storybook-docs) > :global(.sbdocs) {
   background: inherit;
 }
