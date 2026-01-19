@@ -1,8 +1,8 @@
-ChromeAndroid >= 68
+ChromeAndroid >= 69
 iOS >= 13
-Chrome >= 68
+Chrome >= 69
 Firefox >= 69
 Edge >= 79
 Opera >= 68
 Safari >= 13
-Samsung >= 9
+Samsung >= 10.1
