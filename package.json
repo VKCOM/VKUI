@@ -90,7 +90,7 @@
     "stylelint-order": "^7.0.1",
     "stylelint-use-logical": "^2.1.2",
     "stylelint-value-no-unknown-custom-properties": "^6.1.0",
-    "swc-loader": "^0.2.6",
+    "swc-loader": "^0.2.7",
     "swc-plugin-css-modules": "8.0.0",
     "swc-plugin-transform-remove-imports": "8.3.0",
     "typescript": "^5.9.3",
