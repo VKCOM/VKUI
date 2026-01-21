@@ -4,6 +4,13 @@ const meta: MetaRecord = {
   index: {
     type: 'doc',
     display: 'hidden',
+    theme: {
+      breadcrumb: false,
+      toc: false,
+      sidebar: false,
+      pagination: false,
+      copyPage: false,
+    },
   },
   overview: {
     type: 'doc',

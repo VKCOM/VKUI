@@ -44,15 +44,17 @@ export function SearchField({ searchOpen, setSearchOpen }: SearchFieldProps) {
         aria-keyshortcuts={ariaKeyShortcuts}
       >
         Поиск...
-        <ContentBadge
-          className={styles.kbd}
-          appearance="neutral"
-          mode="primary"
-          aria-hidden
-          size="l"
-        >
-          {modifierKey}+K
-        </ContentBadge>
+        {modifierKey && (
+          <ContentBadge
+            className={styles.kbd}
+            appearance="neutral"
+            mode="primary"
+            aria-hidden
+            size="l"
+          >
+            {modifierKey}+K
+          </ContentBadge>
+        )}
       </Tappable>
     </AdaptivityProvider>
   );
