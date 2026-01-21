@@ -233,7 +233,7 @@ export const CalendarHeader = ({
   return (
     <RootComponent baseClassName={styles.host} {...restProps}>
       {!prevMonthHidden && (
-        <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
+        <AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET}>
           <Tappable
             baseClassName={classNames(styles.navIcon, styles.navIconPrev, prevMonthClassName)}
             onClick={onPrevMonth}
