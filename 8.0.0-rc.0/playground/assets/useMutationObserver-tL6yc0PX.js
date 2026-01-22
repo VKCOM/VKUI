@@ -1,1 +1,0 @@
-import{m as u,q as a}from"./iframe-DP0c1f9Y.js";const c={subtree:!0,childList:!0},b=(t,r,o=c)=>{const e=u(r);a(()=>{if(!t||!t.current)return;const s=new MutationObserver(e);return s.observe(t.current,o),()=>s.disconnect()},[t,e])};export{c as D,b as u};

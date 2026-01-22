@@ -1,3 +1,0 @@
-import{j as e}from"./iframe-DP0c1f9Y.js";import{w as s}from"./withCartesian-Bm9Pi-tV.js";import{C as t}from"./constants-DdkjnEgz.js";import{c as p}from"./createStoryParameters-CcwS40kl.js";import{P as a}from"./Paragraph-o90iONah.js";import"./preload-helper-PPVm8Dsz.js";const h={title:"Typography/Typography/Paragraph",component:a,parameters:p("Paragraph",t),decorators:[s],tags:["Типографика"]},r={render:o=>e.jsx(a,{...o,children:"Paragraph"})};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
-  render: args => <Paragraph {...args}>Paragraph</Paragraph>
-}`,...r.parameters?.docs?.source}}};const P=["Playground"];export{r as Playground,P as __namedExportsOrder,h as default};

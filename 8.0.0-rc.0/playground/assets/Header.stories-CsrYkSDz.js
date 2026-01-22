@@ -1,0 +1,45 @@
+import{j as s,w as c,b as l}from"./iframe-CWLi0Dwx.js";import{D as u,C as d}from"./constants-DdkjnEgz.js";import{c as g}from"./createStoryParameters-CcwS40kl.js";import{C as f}from"./Counter-BkXMSURw.js";import{G as S}from"./Group-vgwGhKNH.js";import{L as b}from"./Link-BeHB2L_W.js";import{H as I}from"./Header-bGYlkA7K.js";import{c as o}from"./createFieldWithPresets-B7wMChDK.js";import"./preload-helper-PPVm8Dsz.js";import"./Caption-7-fMsdYi.js";import"./Headline-BBfhp0Vp.js";import"./Footnote-uuGEAWzo.js";import"./Tappable-BfbUNvge.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./Clickable-qvNFYhPA.js";import"./useState-B6GpLt4z.js";import"./type_checkers-CVMjkZjG.js";import"./useFocusVisibleClassName-C_mTcJQY.js";import"./InputUtils-y46vV6Lq.js";import"./Paragraph-BILZ1ORB.js";import"./Subhead-BNTLgiWX.js";import"./Title-B966ALEh.js";import"./index-Dy_HpQxN.js";import"./SvgIconRootV2-BTF9teUl.js";import"./_object_spread_props-DRD4qu7p.js";import"./online_mobile_12-zVNMIc5b.js";import"./dropdown_20-zJLYpS_C.js";import"./education_12-BLnZyIdf.js";import"./services_filled_20-CAwkS3RG.js";import"./add_16-ReKMTguf.js";import"./cancel_16-YXtTtkow.js";import"./external_link_outline_24-DHHgKe3E.js";import"./chevron_16-SZNMdhZS.js";import"./clear_16-DeivK5kH.js";import"./delete_16-DJf3NQZa.js";import"./dropdown_16-aPeO9u78.js";import"./more_horizontal_16-CIkArls5.js";import"./search_outline_16-BE8F4Afj.js";import"./add_20-DOr0J-H9.js";import"./calendar_outline_20-C6Fpt6DG.js";import"./cancel_20-COCIG5IB.js";import"./check_box_indetermanate_20-D4wR-huF.js";import"./check_box_on_24-UkSxJzoK.js";import"./reorder_ios_24-hj8b2gpk.js";import"./check_circle_on_24-CeocUogp.js";import"./chevron_left_outline_20-C0ihW9l8.js";import"./add_outline_24-CDuOzYLG.js";import"./money_transfer_outline_56-DsLY37t0.js";import"./add_24-CUmU5lKJ.js";import"./chevron_left_outline_28-BWjXhAwp.js";import"./writebar_send_48-zor1q4Rk.js";import"./cancel_24-k8gLLgTE.js";import"./cancel_outline_28-Cx7ES1tK.js";import"./chevron_24-BcYixQIX.js";import"./chevron_compact_left_24-DRMlxSWo.js";import"./chevron_compact_right_24-Dab3JeUv.js";import"./chevron_up_24-DZPWqokN.js";import"./dismiss_24-B2pEy1CR.js";import"./dismiss_dark_24-BiGhvmxU.js";import"./done_24-Dq-XOX4V.js";import"./done_outline_28-DY-b1tMb.js";import"./picture_outline_28-B50VOX7n.js";import"./pen_outline_24-C2ZbHnTM.js";import"./play_24-DcRrvbbf.js";import"./smile_outline_24-BxMHdn8-.js";import"./thumbs_up_outline_24-BU4d10qt.js";import"./add_outline_28-rFkK6lvC.js";import"./block_outline_28-6IbVwS8P.js";import"./chevron_right_circle_28-tOpuK622.js";import"./user_circle_outline_28-DfHqiqgA.js";import"./subtitles_outline_28-DRr0uDqw.js";import"./delete_outline_28-CbMYicUc.js";import"./edit_outline_28-CrsSMnt0.js";import"./error_circle_outline_28-C9nE1DGK.js";import"./music_outline_28-EhGeFymS.js";import"./notifications_28-B026jVtC.js";import"./privacy_outline_28-CeIzePjK.js";import"./settings_outline_28-CSczw9OG.js";import"./sliders_outline_28-ChDtHd80.js";import"./smile_outline_28-AxwmHGIG.js";import"./user_outline_28-BPlt0ykA.js";import"./users_outline_28-D_TNTN8u.js";import"./camera_outline_56-D--Q9Ydp.js";import"./mention_outline_56-BaK4Icfq.js";import"./message_read_outline_56-dmcyI9jP.js";import"./newsfeed_outline_56-ZAhG-X9e.js";import"./notification_outline_56-BJ_sY3eO.js";import"./users_outline_56-BlIjZn58.js";const ro={title:"Layout/Group/Header",component:I,parameters:g("Header",d,u),argTypes:{before:o({iconSizes:["28"],requiredIcons:["Icon28UserCircleFillBlue"]}),beforeTitle:o({iconSizes:["16"],requiredIcons:["Icon16LockOutline"]}),afterTitle:o({iconSizes:["16"],requiredIcons:["Icon16UnlockOutline"]}),beforeSubtitle:o({iconSizes:["12"],requiredIcons:["Icon12Tag"]}),afterSubtitle:o({iconSizes:["12"],requiredIcons:["Icon12Fire"]}),after:o({iconSizes:["16","24"],additionalPresets:{Link:s.jsx(b,{children:"Показать все"})}}),indicator:o({iconSizes:[],additionalPresets:{Text:"12",Counter:s.jsx(f,{size:"s",mode:"primary",appearance:"accent-red",children:"3"})}})},tags:["Раскладка"]},r={args:{children:"Плейлисты"}},t={...r,args:{...r.args,subtitle:"SOHN — Conrad",subtitleComponent:"h3"}},e={...r,args:{...r.args,after:"Link"}},i={...r,args:{...r.args,indicator:"Text"}},a={...r,args:{...r.args,indicator:"Counter"},decorators:[(m,p)=>s.jsx(S,{children:s.jsx(m,{...p.args})}),c,l]},n={...r,args:{...r.args,before:"Icon28UserCircleFillBlue",beforeTitle:"Icon16LockOutline",afterTitle:"Icon16UnlockOutline",beforeSubtitle:"Icon12Tag",afterSubtitle:"Icon12Fire",subtitle:"SOHN — Conrad",after:"Link"}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  args: {
+    children: 'Плейлисты'
+  }
+}`,...r.parameters?.docs?.source}}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    ...Playground.args,
+    subtitle: 'SOHN — Conrad',
+    subtitleComponent: 'h3'
+  }
+}`,...t.parameters?.docs?.source}}};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    ...Playground.args,
+    after: 'Link'
+  }
+}`,...e.parameters?.docs?.source}}};i.parameters={...i.parameters,docs:{...i.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    ...Playground.args,
+    indicator: 'Text'
+  }
+}`,...i.parameters?.docs?.source}}};a.parameters={...a.parameters,docs:{...a.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    ...Playground.args,
+    indicator: 'Counter'
+  },
+  decorators: [(Component, context) => <Group>
+        <Component {...context.args} />
+      </Group>, withSinglePanel, withVKUILayout]
+}`,...a.parameters?.docs?.source}}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    ...Playground.args,
+    before: 'Icon28UserCircleFillBlue',
+    beforeTitle: 'Icon16LockOutline',
+    afterTitle: 'Icon16UnlockOutline',
+    beforeSubtitle: 'Icon12Tag',
+    afterSubtitle: 'Icon12Fire',
+    subtitle: 'SOHN — Conrad',
+    after: 'Link'
+  }
+}`,...n.parameters?.docs?.source}}};const oo=["Playground","WithSubtitle","WithAside","WithIndicator","WithCounter","WithAllFeatures"];export{r as Playground,n as WithAllFeatures,e as WithAside,a as WithCounter,i as WithIndicator,t as WithSubtitle,oo as __namedExportsOrder,ro as default};
