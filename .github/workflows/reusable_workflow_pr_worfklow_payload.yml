@@ -20,7 +20,7 @@ on:
 jobs:
   download:
     if: ${{ inputs.action == 'download' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Download PR workflow payload artifact
     outputs:
       status: ${{ steps.payload.outputs.status || steps.payload_fallback.outputs.status }}
@@ -47,7 +47,7 @@ jobs:
 
   upload:
     if: ${{ inputs.action == 'upload' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Upload PR workflow payload artifact
     steps:
       - name: Prepare data
