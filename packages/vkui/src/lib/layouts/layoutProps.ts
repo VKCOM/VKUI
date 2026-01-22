@@ -26,7 +26,7 @@ const CSS_INTRINSIC_KEYWORDS: CSSIntrinsicSizingKeywords[] = [
 const CSS_GLOBAL_KEYWORDS: CSSGlobalValue[] = ['inherit', 'initial', 'unset'];
 
 const CSS_KEYWORDS = [...CSS_INTRINSIC_KEYWORDS, ...CSS_GLOBAL_KEYWORDS];
-const PADDING_VALUES = [...DESIGN_SYSTEM_SIZES, ...CSS_GLOBAL_KEYWORDS];
+const PADDING_VALUES = [...DESIGN_SYSTEM_SIZES, ...CSS_GLOBAL_KEYWORDS, 'system'];
 const SIZE_VALUES = CSS_KEYWORDS;
 const MINMAX_SIZE_VALUES = [...CSS_KEYWORDS.filter((opt) => opt !== 'auto')];
 const FLEX_VALUES = CSS_GLOBAL_KEYWORDS;

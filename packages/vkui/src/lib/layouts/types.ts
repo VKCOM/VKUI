@@ -14,7 +14,10 @@ export type PositionValue = 'static' | 'relative' | 'absolute' | 'fixed' | 'stic
 export type OverflowValue = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | CSSGlobalValue;
 
 // Тип для отступов
-export type PaddingProp = LiteralUnion<DesignSystemSize | CSSGlobalValue, number | string>;
+export type PaddingProp = LiteralUnion<
+  DesignSystemSize | CSSGlobalValue | 'system',
+  number | string
+>;
 
 // Типы для параметров позиционирования
 export type InsetProp = LiteralUnion<DesignSystemSize | CSSGlobalValue | 'auto', number | string>;

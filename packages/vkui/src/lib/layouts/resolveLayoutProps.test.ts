@@ -160,4 +160,108 @@ describe('resolveLayoutProps', () => {
       'data-testid': 'test',
     });
   });
+
+  it('should handle padding="system"', () => {
+    const props = { padding: 'system' };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-block vkui-padding-inline',
+      style: {
+        '--vkui_internal--padding-block': 'var(--vkui--size_base_padding_vertical--regular)',
+        '--vkui_internal--padding-inline': 'var(--vkui--size_base_padding_horizontal--regular)',
+      },
+    });
+  });
+
+  it('should handle paddingBlock="system"', () => {
+    const props = { paddingBlock: 'system' };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-block',
+      style: {
+        '--vkui_internal--padding-block': 'var(--vkui--size_base_padding_vertical--regular)',
+      },
+    });
+  });
+
+  it('should handle paddingInline="system"', () => {
+    const props = { paddingInline: 'system' };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-inline',
+      style: {
+        '--vkui_internal--padding-inline': 'var(--vkui--size_base_padding_horizontal--regular)',
+      },
+    });
+  });
+
+  it('should handle paddingBlockStart="system"', () => {
+    const props = { paddingBlockStart: 'system' };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-block-start',
+      style: {
+        '--vkui_internal--padding-block-start': 'var(--vkui--size_base_padding_vertical--regular)',
+      },
+    });
+  });
+
+  it('should handle paddingBlockEnd="system"', () => {
+    const props = { paddingBlockEnd: 'system' };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-block-end',
+      style: {
+        '--vkui_internal--padding-block-end': 'var(--vkui--size_base_padding_vertical--regular)',
+      },
+    });
+  });
+
+  it('should handle paddingInlineStart="system"', () => {
+    const props = { paddingInlineStart: 'system' };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-inline-start',
+      style: {
+        '--vkui_internal--padding-inline-start':
+          'var(--vkui--size_base_padding_horizontal--regular)',
+      },
+    });
+  });
+
+  it('should handle paddingInlineEnd="system"', () => {
+    const props = { paddingInlineEnd: 'system' };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-inline-end',
+      style: {
+        '--vkui_internal--padding-inline-end': 'var(--vkui--size_base_padding_horizontal--regular)',
+      },
+    });
+  });
+
+  it('should handle multiple system padding props', () => {
+    const props = {
+      paddingBlock: 'system',
+      paddingInline: 'system',
+      paddingBlockStart: 'system',
+    };
+    const result = resolveLayoutProps(props);
+
+    expect(result).toEqual({
+      className: 'vkui-padding-block vkui-padding-inline vkui-padding-block-start',
+      style: {
+        '--vkui_internal--padding-block': 'var(--vkui--size_base_padding_vertical--regular)',
+        '--vkui_internal--padding-inline': 'var(--vkui--size_base_padding_horizontal--regular)',
+        '--vkui_internal--padding-block-start': 'var(--vkui--size_base_padding_vertical--regular)',
+      },
+    });
+  });
 });
