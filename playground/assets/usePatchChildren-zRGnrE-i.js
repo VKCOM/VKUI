@@ -1,1 +1,0 @@
-import{z as u,B as l,C as c,h as d,E as g,r}from"./iframe-CGSrC79H.js";function i(e,t){r.useEffect(()=>{},[e,t])}const y=(e,t,f)=>{const s=u(e),E=s&&l(e),R=s&&c(e),a=E||R,o=d(a?e.ref:s?e.props.getRootRef:void 0,f),n=g(t||{},s?e.props:{}),m=a?{ref:o,...t,...n}:s?{getRootRef:o,...t,...n}:void 0,p=s?r.cloneElement(e,m):e;return i(a,o),[o,p]};export{y as u};
