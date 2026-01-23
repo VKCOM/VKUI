@@ -1,1 +1,0 @@
-import{r as e}from"./iframe-BKqRoeRO.js";const n=(t=!1)=>{const[a,s]=e.useState(t),l=e.useCallback(()=>{s(!0)},[]),o=e.useCallback(()=>{s(!1)},[]),u=e.useCallback(()=>{s(r=>!r)},[]);return[a,l,o,u]};export{n as u};

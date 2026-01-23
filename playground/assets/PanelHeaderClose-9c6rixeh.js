@@ -1,0 +1,20 @@
+import{c as r,j as e}from"./iframe-BJ9555aC.js";import{A as o}from"./AdaptiveIconRenderer-DUioVxFm.js";import{P as t}from"./PanelHeaderButton-BUzE02Lo.js";import{V as i}from"./VisuallyHidden-BpRJPd7L.js";import{I as E,a as d}from"./cancel_outline_28-Dfbvja4j.js";const n=({label:u="Отмена",...l})=>{const a=r();return e.jsx(t,{...l,label:a==="ios"?u:u&&e.jsx(i,{children:u}),children:a!=="ios"&&e.jsx(o,{IconCompact:d,IconRegular:E})})};try{n.displayName="PanelHeaderClose",n.__docgenInfo={description:"",displayName:"PanelHeaderClose",props:{label:{defaultValue:{value:"Отмена"},description:"Текст или содержимое кнопки.",name:"label",required:!1,type:{name:"ReactNode"}},Component:{defaultValue:null,description:"",name:"Component",required:!1,type:{name:"ElementType<any, keyof IntrinsicElements>"}},getRootRef:{defaultValue:null,description:"",name:"getRootRef",required:!1,type:{name:"Ref<HTMLElement>"}},borderRadiusMode:{defaultValue:null,description:"Задает border-radius элементу\nВ режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`.",name:"borderRadiusMode",required:!1,type:{name:"enum",value:[{value:'"inherit"'},{value:'"auto"'}]}},activeClassName:{defaultValue:null,description:"Стиль подсветки `active`-состояния.\n@deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.\n\nИспользуйте свойство `activeMode`.",name:"activeClassName",required:!1,type:{name:"string"}},hoverClassName:{defaultValue:null,description:"Стиль подсветки `hover`-состояния.\n@deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.\n\nИспользуйте свойство `hoverMode`.",name:"hoverClassName",required:!1,type:{name:"string"}},focusVisibleMode:{defaultValue:null,description:"Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible",name:"focusVisibleMode",required:!1,type:{name:"FocusVisibleMode"}},hasHover:{defaultValue:null,description:"Указывает, должен ли компонент реагировать на `hover`-состояние.",name:"hasHover",required:!1,type:{name:"boolean"}},hovered:{defaultValue:null,description:"Позволяет управлять `hovered`-состоянием извне.",name:"hovered",required:!1,type:{name:"boolean"}},activated:{defaultValue:null,description:"Позволяет управлять `activated`-состоянием извне.",name:"activated",required:!1,type:{name:"boolean"}},hasActive:{defaultValue:null,description:"Указывает, должен ли компонент реагировать на `active`-состояние.",name:"hasActive",required:!1,type:{name:"boolean"}},hasHoverWithChildren:{defaultValue:null,description:`Позволяет родительскому компоненту
+иметь \`hovered\`-cостояние при наведении
+на любой дочерний элемент.
+По умолчанию состояние hovered у родителя сбрасывается.
+
+Присваивается родителькому компоненту.
+@example <Tappable hasHoverWithChildren>
+  <IconButton />
+  <IconButton />
+  <IconButton />
+</Tappable>`,name:"hasHoverWithChildren",required:!1,type:{name:"boolean"}},unlockParentHover:{defaultValue:null,description:`Позволяет родительскому компоненту показывать hovered-состояние при наведении
+на текущий дочерний компонент.
+
+Присваивается дочернему компоненту.
+@example <Tappable>
+  <IconButton unlockParentHover />
+  <IconButton unlockParentHover />
+  <IconButton />
+</Tappable>`,name:"unlockParentHover",required:!1,type:{name:"boolean"}},activeEffectDelay:{defaultValue:null,description:"Длительность показа `active`-состояния.",name:"activeEffectDelay",required:!1,type:{name:"number"}},activeMode:{defaultValue:null,description:"Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active.",name:"activeMode",required:!1,type:{name:"StateModeLiteral"}},hoverMode:{defaultValue:null,description:"Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover.",name:"hoverMode",required:!1,type:{name:"StateModeLiteral"}},primary:{defaultValue:null,description:`Флаг для обозначения первичной кнопки
+Влияет на стилизацию кнопки.`,name:"primary",required:!1,type:{name:"boolean"}}}}}catch{}export{n as P};
