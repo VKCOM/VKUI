@@ -66,6 +66,7 @@ type AllowedFloatingComponentProps = Pick<
   | 'customMiddlewares'
   | 'strategy'
   | 'disableFocusTrap'
+  | 'longPressDelay'
 >;
 
 /**
