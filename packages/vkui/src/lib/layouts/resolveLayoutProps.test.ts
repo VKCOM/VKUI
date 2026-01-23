@@ -43,7 +43,7 @@ describe('resolveLayoutProps', () => {
   });
 
   it('should handle string values from predefined list (position)', () => {
-    const props = { position: 'absolute' };
+    const props = { position: 'absolute' as const };
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
@@ -166,7 +166,7 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-padding-block vkui-padding-inline',
+      className: 'vkui-padding-inline vkui-padding-block',
       style: {
         '--vkui_internal--padding-block': 'var(--vkui--size_base_padding_vertical--regular)',
         '--vkui_internal--padding-inline': 'var(--vkui--size_base_padding_horizontal--regular)',
@@ -256,7 +256,7 @@ describe('resolveLayoutProps', () => {
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({
-      className: 'vkui-padding-block vkui-padding-inline vkui-padding-block-start',
+      className: 'vkui-padding-inline vkui-padding-block vkui-padding-block-start',
       style: {
         '--vkui_internal--padding-block': 'var(--vkui--size_base_padding_vertical--regular)',
         '--vkui_internal--padding-inline': 'var(--vkui--size_base_padding_horizontal--regular)',
