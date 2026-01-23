@@ -175,7 +175,7 @@ export const useTooltip = ({
     customMiddlewares: [
       sizeMiddleware({
         apply({ rects, elements, availableWidth }) {
-          const width = Math.min(Math.round(rects.floating.width), Math.floor(availableWidth));
+          const width = Math.min(Math.ceil(rects.floating.width), Math.floor(availableWidth));
           Object.assign(elements.floating.style, {
             width: `${width}px`,
           });
