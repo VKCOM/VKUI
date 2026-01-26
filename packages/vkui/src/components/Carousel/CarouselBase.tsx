@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
+import { callMultiple } from '../../lib/callMultiple';
 import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useHover } from '../Clickable/useState';
@@ -11,10 +12,13 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { CarouselViewPort } from './CarouselViewPort';
 import { Bullets } from './components/Bullets';
 import { ScrollArrows } from './components/ScrollArrows';
+import { calculateRealSlides } from './helpers/calculateRealSlides';
+import { calculateSlideChangeDirection } from './helpers/calculateSlideChangeDirection';
 import { useActiveSlide } from './helpers/useActiveSlide';
 import { useCarouselDrag } from './helpers/useCarouselDrag';
 import { useControlsState } from './helpers/useControlsState';
 import { useScrollToSlide } from './helpers/useScrollToSlide';
+import { useSlideChangeDirection } from './helpers/useSlideChangeDirection';
 import { useSlideNavigation } from './helpers/useSlideNavigation';
 import type { BaseCarouselProps } from './types';
 import styles from './Carousel.module.css';
@@ -40,7 +44,7 @@ export const CarouselBase = ({
   slideLabel,
   slideRoleDescription,
   getRef,
-  looped = false,
+  looped: loopedProp = false,
   dragDisabled = false,
   onDragStart,
   onDragEnd,
@@ -54,6 +58,16 @@ export const CarouselBase = ({
   const slidesContainerRef = React.useRef<HTMLDivElement | null>(null);
   const slidesCount = React.Children.count(children);
   const [localSlideIndex, setLocalSlideIndex] = React.useState(slideIndex);
+
+  const looped = loopedProp && slidesCount > 1;
+
+  const {
+    slideChangeDirection,
+    setSlideChangeDirection,
+    setBackwardDirection,
+    setForwardDirection,
+    resetSlideChangeDirection,
+  } = useSlideChangeDirection();
 
   const slidesContainerId = React.useId();
 
@@ -74,6 +88,7 @@ export const CarouselBase = ({
   const { onStart, onMoveX, onEnd, isDraggingRef } = useCarouselDrag({
     dragDisabled: !canDrag,
     slidesContainerRef,
+    setSlideChangeDirection,
     slideIndex: localSlideIndex,
     isAnimatingRef,
     scrollToSlide,
@@ -121,23 +136,29 @@ export const CarouselBase = ({
     function performSlideChange() {
       if (slideIndex !== localSlideIndex) {
         if (looped) {
-          let direction: 'forward' | 'backward' | 'auto' = 'auto';
-          if (localSlideIndex === 0 && slideIndex === slidesCount - 1) {
-            // С первого на последний
-            direction = 'backward';
-          } else if (localSlideIndex === slidesCount - 1 && slideIndex === 0) {
-            // С последнего на первый
-            direction = 'forward';
-          }
+          const direction = calculateSlideChangeDirection(
+            localSlideIndex,
+            slideIndex,
+            slidesCount,
+            slideChangeDirection.current,
+          );
           scrollToSlide(slideIndex, localSlideIndex, direction);
         } else {
           scrollToSlide(slideIndex, localSlideIndex);
         }
-
+        resetSlideChangeDirection();
         setLocalSlideIndex(slideIndex);
       }
     },
-    [localSlideIndex, looped, scrollToSlide, slideIndex, slidesCount],
+    [
+      localSlideIndex,
+      looped,
+      resetSlideChangeDirection,
+      scrollToSlide,
+      slideChangeDirection,
+      slideIndex,
+      slidesCount,
+    ],
   );
 
   useIsomorphicLayoutEffect(
@@ -150,8 +171,7 @@ export const CarouselBase = ({
         return;
       }
       const slides = Array.from(container.children) as HTMLElement[];
-      const notFakeSlides = slides.filter((slide) => slide.dataset['fake'] === undefined);
-      const realSlide = notFakeSlides[localSlideIndex];
+      const realSlide = calculateRealSlides(slides)[localSlideIndex];
       container.scrollLeft = realSlide.offsetLeft;
     },
     [looped],
@@ -175,8 +195,8 @@ export const CarouselBase = ({
       <ScrollArrows
         canSlideLeft={canSlideLeft}
         canSlideRight={canSlideRight}
-        onSlideRight={slideRight}
-        onSlideLeft={slideLeft}
+        onSlideRight={callMultiple(setForwardDirection, slideRight)}
+        onSlideLeft={callMultiple(setBackwardDirection, slideLeft)}
         showArrows={showArrows}
         arrowSize={arrowSize}
         arrowAreaHeight={arrowAreaHeight}

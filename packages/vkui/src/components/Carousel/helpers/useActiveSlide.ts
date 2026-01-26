@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { calculateActiveSlide } from './calculateActiveSlide';
+import { calculateRealSlides } from './calculateRealSlides';
 
 /* eslint-disable jsdoc/require-jsdoc */
 type UseActiveSlideParams = {
@@ -33,7 +34,6 @@ export function useActiveSlide(params: UseActiveSlideParams) {
 
     const container = slidesContainerRef.current;
     const slides = Array.from(container.children) as HTMLElement[];
-    const notFakeSlides = slides.filter((slide) => slide.dataset['fake'] === undefined);
 
     const { activeIndex } = calculateActiveSlide({
       container,
@@ -41,7 +41,7 @@ export function useActiveSlide(params: UseActiveSlideParams) {
       looped,
     });
 
-    const realSlide = notFakeSlides[activeIndex];
+    const realSlide = calculateRealSlides(slides)[activeIndex];
     container.scrollLeft = realSlide.offsetLeft;
 
     if (activeIndex !== slideIndex && activeIndex !== lastSlideIndexRef.current) {

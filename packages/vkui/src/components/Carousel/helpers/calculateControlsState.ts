@@ -4,6 +4,7 @@ type CalculateArrowsStateParams = {
   looped: boolean;
   showArrows: boolean;
   dragDisabled: boolean;
+  isFullyVisible: boolean;
 };
 
 type CalculateControlsStateResult = {
@@ -16,10 +17,8 @@ type CalculateControlsStateResult = {
 export function calculateControlsState(
   params: CalculateArrowsStateParams,
 ): CalculateControlsStateResult {
-  const { container, looped, showArrows, dragDisabled } = params;
+  const { container, looped, showArrows, dragDisabled, isFullyVisible } = params;
   const { scrollLeft, scrollWidth, clientWidth } = container;
-
-  const isFullyVisible = scrollWidth <= clientWidth;
 
   if (looped) {
     return {

@@ -363,7 +363,7 @@ export const WithImages: Story = {
 
 const ControlledStateExample = (args: CarouselProps) => {
   const [slideIndex, setSlideIndex] = React.useState(0);
-  const slidesCount = 5;
+  const slidesCount = 2;
 
   const onChange = React.useCallback((i: number) => {
     setSlideIndex(i);

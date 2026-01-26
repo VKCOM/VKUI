@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { type CustomTouchEvent, type CustomTouchEventHandler } from '../../Touch/Touch';
+import { calculateRealSlides } from './calculateRealSlides';
+import { type SlideChangeDirection } from './useSlideChangeDirection';
 
 const SLIDE_THRESHOLD = 0.05;
 
@@ -31,6 +33,7 @@ type UseCarouselDragParams = {
   isAnimatingRef: React.RefObject<boolean>;
   onDragStart?: CustomTouchEventHandler;
   onDragEnd?: (e: CustomTouchEvent, targetIndex: number) => void;
+  setSlideChangeDirection: (direction: SlideChangeDirection) => void;
 };
 
 type UseCarouselDragResult = {
@@ -105,6 +108,7 @@ export function useCarouselDrag(params: UseCarouselDragParams): UseCarouselDragR
     dragDisabled,
     onDragStart,
     onDragEnd,
+    setSlideChangeDirection,
   } = params;
   const startScrollLeftRef = React.useRef<number>(0);
   const isDraggingRef = React.useRef<boolean>(false);
@@ -177,10 +181,10 @@ export function useCarouselDrag(params: UseCarouselDragParams): UseCarouselDragR
         return;
       }
       const slides = Array.from(container.children) as HTMLElement[];
-      const notFakeSlides = slides.filter((slide) => slide.dataset['fake'] === undefined);
+      const realSlides = calculateRealSlides(slides);
 
       const { targetIndex: activeIndex } = getTargetSlideIndex({
-        slides: notFakeSlides,
+        slides: realSlides,
         currentSlideIndex: slideIndex,
         startScrollLeft: startScrollLeftRef.current,
         shiftX: e.shiftX,
@@ -190,6 +194,7 @@ export function useCarouselDrag(params: UseCarouselDragParams): UseCarouselDragR
       onDragEnd?.(e, activeIndex);
 
       if (slideIndex !== activeIndex) {
+        setSlideChangeDirection(e.shiftX > 0 ? 'backward' : 'forward');
         onChange?.(activeIndex);
       } else {
         scrollToSlide(activeIndex, activeIndex);
@@ -202,6 +207,7 @@ export function useCarouselDrag(params: UseCarouselDragParams): UseCarouselDragR
       slideIndex,
       looped,
       onDragEnd,
+      setSlideChangeDirection,
       onChange,
       scrollToSlide,
     ],

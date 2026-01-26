@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { type CubicBezierEasingType, type PredefinedEasingType } from '../types';
+import { calculateRealSlides } from './calculateRealSlides';
 import { scrollToSlide } from './scrollToSlide';
 
 /* eslint-disable jsdoc/require-jsdoc */
@@ -54,7 +55,7 @@ export function useScrollToSlide(params: UseScrollToSlideParams): UseScrollToSli
 
       const container = slidesContainerRef.current;
       const slides = Array.from(container.children) as HTMLElement[];
-      const notFakeSlides = slides.filter((slide) => slide.dataset['fake'] === undefined);
+      const realSlides = calculateRealSlides(slides);
 
       const handleStart = () => {
         isAnimatingRef.current = true;
@@ -66,7 +67,7 @@ export function useScrollToSlide(params: UseScrollToSlideParams): UseScrollToSli
       };
 
       if (task.direction === 'auto') {
-        const targetSlide = notFakeSlides[task.index];
+        const targetSlide = realSlides[task.index];
         if (targetSlide) {
           scrollToSlide({
             container,
@@ -83,12 +84,12 @@ export function useScrollToSlide(params: UseScrollToSlideParams): UseScrollToSli
         return;
       }
 
-      const lastSlide = notFakeSlides[task.lastIndex];
+      const lastSlide = realSlides[task.lastIndex];
       const lastSlideIndex = slides.indexOf(lastSlide);
 
       const complete = (targetSlide: HTMLElement) => {
         const realIndex = Number(targetSlide.dataset.index);
-        const realSlide = notFakeSlides[realIndex];
+        const realSlide = realSlides[realIndex];
         container.scrollLeft = realSlide.offsetLeft;
         handleComplete();
       };
