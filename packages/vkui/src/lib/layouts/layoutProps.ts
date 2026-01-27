@@ -42,6 +42,9 @@ const OVERFLOW_VALUES: OverflowValue[] = [
   ...CSS_GLOBAL_KEYWORDS,
 ];
 
+export const SYSTEM_PADDING_VERTICAL = 'var(--vkui--size_base_padding_vertical--regular)';
+export const SYSTEM_PADDING_HORIZONTAL = 'var(--vkui--size_base_padding_horizontal--regular)';
+
 export const LAYOUT_PROPS = {
   padding: PADDING_VALUES,
   paddingInline: PADDING_VALUES,

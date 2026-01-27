@@ -60,6 +60,8 @@ module.exports = () => {
       const {
         LAYOUT_PROPS,
         DESIGN_SYSTEM_SIZES,
+        SYSTEM_PADDING_VERTICAL,
+        SYSTEM_PADDING_HORIZONTAL,
         generateConstantClassName,
         generateVariableClassName,
         generateVariable,
@@ -82,6 +84,20 @@ module.exports = () => {
         values.forEach((value) => {
           const className = `.${generateConstantClassName(cssProperty, value)}`;
 
+          const getValue = () => {
+            if (cssProperty.startsWith('padding') && value === 'system') {
+              if (cssProperty.startsWith('padding-block')) {
+                return SYSTEM_PADDING_VERTICAL;
+              } else if (cssProperty.startsWith('padding-inline')) {
+                return SYSTEM_PADDING_HORIZONTAL;
+              }
+              return `${SYSTEM_PADDING_VERTICAL} ${SYSTEM_PADDING_HORIZONTAL}`;
+            }
+            return DESIGN_SYSTEM_SIZES.includes(value)
+              ? `var(--vkui--spacing_size_${value})`
+              : value;
+          };
+
           root.append({
             selector: className,
             raws: { semicolon: true },
@@ -89,9 +105,7 @@ module.exports = () => {
             nodes: [
               {
                 prop: cssProperty,
-                value: DESIGN_SYSTEM_SIZES.includes(value)
-                  ? `var(--vkui--spacing_size_${value})`
-                  : value,
+                value: getValue(),
                 source: root.source,
               },
             ],
