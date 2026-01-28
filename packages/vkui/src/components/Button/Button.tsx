@@ -4,12 +4,19 @@ import * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import type { HasAlign } from '../../types';
+import type { Elevation, HasAlign } from '../../types';
 import { Spinner } from '../Spinner/Spinner';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import '../Tappable/Tappable.module.css';
 import '../Spinner/Spinner.module.css';
 import styles from './Button.module.css';
+
+const stylesElevation = {
+  '1': styles.elevation1,
+  '2': styles.elevation2,
+  '3': styles.elevation3,
+  '4': styles.elevation4,
+};
 
 const stylesSize = {
   s: styles.sizeS,
@@ -98,6 +105,10 @@ export interface VKUIButtonProps extends HasAlign {
    * Добавляет скругленные углы кнопке.
    */
   rounded?: boolean;
+  /**
+   * Добавляет тень кнопке.
+   */
+  elevation?: Elevation;
 }
 
 export interface ButtonProps extends Omit<TappableOmitProps, 'size'>, VKUIButtonProps {}
@@ -123,6 +134,7 @@ export const Button = ({
   disabled,
   href,
   'aria-label': ariaLabelProp,
+  elevation,
   ...restProps
 }: ButtonProps): React.ReactNode => {
   const hasIconOnly = !children && Boolean(after) !== Boolean(before);
@@ -181,6 +193,7 @@ export const Button = ({
         loading && styles.loading,
         rounded && styles.rounded,
         disabled && styles.disabled,
+        elevation && stylesElevation[elevation],
       )}
       getRootRef={getRootRef}
     >
