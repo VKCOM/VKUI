@@ -2,10 +2,12 @@ import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { generateConstantClassName, generateVariable, generateVariableClassName } from './helpers';
 import { LAYOUT_PROPS, type LayoutPropKeys } from './layoutProps';
+import type { LayoutProps } from './types';
 
-export type ComponentProps = {
+export type ComponentProps = Partial<LayoutProps> & {
   className?: string;
   style?: React.CSSProperties;
+} & {
   [key: string]: unknown;
 };
 
