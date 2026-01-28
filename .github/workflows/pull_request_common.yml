@@ -13,7 +13,7 @@ jobs:
     if: ${{ !github.event.pull_request.head.repo.fork && github.event.action == 'opened' }}
     permissions:
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Add labels
     steps:
       - name: Checkout code
@@ -34,7 +34,7 @@ jobs:
           label: 'vkui-tokens'
 
   check-dependabot-pr:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       issues: write
       pull-requests: write
@@ -110,7 +110,7 @@ jobs:
           pull_request_number: ${{ github.event.pull_request.number }}
 
   lint_codes_format:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Check code formatting
     steps:
       - name: Checkout

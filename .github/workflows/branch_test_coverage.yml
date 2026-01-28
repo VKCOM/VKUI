@@ -23,7 +23,7 @@ jobs:
   # Создаем кэш для LFS в мастере, чтобы другие ветки могли его получить.
   # Кэш требуется для того, чтобы не превышать лимиты GitHub
   lfs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Create LFS cache
     steps:
       - name: Checkout
@@ -41,7 +41,7 @@ jobs:
   deploy_test_coverage:
     if: ${{ !cancelled() && (success() || failure()) }}
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Deploy test coverage
     permissions:
       id-token: write
