@@ -30,7 +30,7 @@ concurrency:
 jobs:
   cleanup:
     if: ${{ !cancelled() }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Cleanup
     steps:
       - name: Checkout

@@ -24,7 +24,7 @@ jobs:
   v7:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:v7')
     concurrency: ci-stable
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: v7 Patch
     steps:
       - name: Checkout (for forked PR)
@@ -62,7 +62,7 @@ jobs:
   patch:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:patch')
     concurrency: ci-stable
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Stable Patch
     steps:
       - name: Checkout (for forked PR)
@@ -96,7 +96,7 @@ jobs:
           directory: packages/vkui/
 
   is-updated-vkui-floating-ui:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: ${{ github.event.pull_request.merged == true
       && github.event.pull_request.user.login == 'dependabot[bot]'
       && github.event.pull_request.base.ref == 'master' }}
@@ -141,7 +141,7 @@ jobs:
           fi
 
   autopublish-vkui-floating-ui:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     needs: is-updated-vkui-floating-ui
     if: ${{ needs.is-updated-vkui-floating-ui.outputs.result == 'true' }}
     permissions:
@@ -208,7 +208,7 @@ jobs:
   update-release-notes:
     if: ${{ github.event.pull_request.merged == true
       && github.event.pull_request.base.ref == 'master'}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Update release notes
     permissions:
       contents: write

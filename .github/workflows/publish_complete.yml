@@ -31,7 +31,7 @@ on:
 jobs:
   payload:
     name: Prepare payload data
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
       npm_tag: ${{ steps.publish_workflow_payload.outputs.npm_tag || inputs.npm_tag }}
@@ -60,7 +60,7 @@ jobs:
   package_vkui_complete:
     needs: ['payload']
     if: ${{ success() && fromJson(needs.payload.outputs.close_milestone) == true && needs.payload.outputs.package_name == '@vkontakte/vkui' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Complete @vkontakte/vkui
     steps:
       - name: Close milestone, comment on issues and release notes
@@ -73,7 +73,7 @@ jobs:
   package_vkui_floating_ui_complete:
     needs: ['payload']
     if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui-floating-ui' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Complete @vkontakte/vkui-floating-ui
     steps:
       - name: get vkui-floating-ui version from git release tag

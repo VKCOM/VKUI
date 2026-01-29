@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   changed_files:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Detect what files changed
     outputs:
       package_vkui: ${{ steps.changes.outputs.package_vkui }}
@@ -71,7 +71,7 @@ jobs:
   test_report:
     if: ${{ !cancelled() && (success() || failure()) }}
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Report unit test results
     steps:
       - name: Download artifact
@@ -297,7 +297,7 @@ jobs:
   check_dependencies:
     if: ${{ needs.changed_files.outputs.dependencies == 'true' }}
     needs: changed_files
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Check dependencies
     steps:
       - name: Checkout
