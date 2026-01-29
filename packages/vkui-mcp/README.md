@@ -43,6 +43,8 @@ npx @vkontakte/vkui-mcp@latest
 - `get_component_metadata` — карточка компонента (описание, props, примеры)
 - `list_examples` — список примеров (опционально по компоненту)
 - `get_example` — код конкретного примера
+- `list_migration_targets` — список компонентов и хуков для миграции на v8
+- `get_migration_target` — рекомендации по миграции конкретного компонента или хука
 
 ## Для разработчиков пакета
 

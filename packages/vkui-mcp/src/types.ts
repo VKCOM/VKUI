@@ -22,6 +22,17 @@ export interface ExampleItem {
   sourcePath: string;
 }
 
+export interface MigrationComponentExample {
+  before: string;
+  after: string;
+}
+
+export type MigrationComponentMap = Record<string, MigrationComponentExample>;
+
+export interface MigrationTarget {
+  name: string;
+}
+
 export interface DataProvider {
   listComponents: () => Promise<ComponentListItem[]>;
   getComponentMetadata: (params: {
@@ -30,4 +41,6 @@ export interface DataProvider {
   }) => Promise<ComponentMetadata | null>;
   listExamples: (params?: { component?: string }) => Promise<ExampleItem[]>;
   getExample: (params: { id: string }) => Promise<ExampleItem>;
+  listMigrationTargets: () => Promise<MigrationTarget[]>;
+  getMigrationTarget: (params: { name: string }) => Promise<MigrationComponentExample | null>;
 }
