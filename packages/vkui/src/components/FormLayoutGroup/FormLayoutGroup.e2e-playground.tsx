@@ -215,6 +215,21 @@ export const FormLayoutGroupPlayground = (props: ComponentPlaygroundProps) => {
             </React.Fragment>,
           ],
         },
+        {
+          noPadding: [true],
+          removable: [undefined, true],
+          mode: ['horizontal'],
+          children: [
+            <React.Fragment key="">
+              <FormItem htmlFor="inputOne">
+                <Input id="inputOne" />
+              </FormItem>
+              <FormItem htmlFor="inputTwo">
+                <Input id="inputTwo" />
+              </FormItem>
+            </React.Fragment>,
+          ],
+        },
       ]}
     >
       {(props: FormLayoutGroupProps) => <FormLayoutGroup {...props} />}
