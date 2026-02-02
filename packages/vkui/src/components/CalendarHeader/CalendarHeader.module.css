@@ -24,6 +24,10 @@
   padding: 3px;
 }
 
+.navIcon.navIcon {
+  border-radius: var(--vkui--size_border_radius--regular);
+}
+
 .navIconAccent {
   color: var(--vkui--color_icon_accent);
 }
