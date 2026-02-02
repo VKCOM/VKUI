@@ -15,7 +15,7 @@ import styles from './Playground.module.css';
 
 // eslint-disable-next-line new-cap
 const jetBrainsMono = JetBrains_Mono({
-  subsets: ['cyrillic'],
+  subsets: ['latin', 'cyrillic'],
 });
 
 export interface PlaygroundProps extends PlaygroundPreviewProps {
