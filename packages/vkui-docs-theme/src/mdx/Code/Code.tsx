@@ -5,7 +5,7 @@ import styles from './Code.module.css';
 
 // eslint-disable-next-line new-cap
 const jetBrainsMono = JetBrains_Mono({
-  subsets: ['cyrillic'],
+  subsets: ['latin', 'cyrillic'],
 });
 
 export function Code({
