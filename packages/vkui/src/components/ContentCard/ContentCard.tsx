@@ -102,6 +102,10 @@ export const ContentCard = ({
       >
         {(src || srcSet) && (
           <img
+            // safari и firefox нужно чтобы атрибут `loading` был до `src`
+            //
+            // https://mihaly4.ru/image-loading-lazy-bug
+            loading={loading}
             ref={getRef}
             className={styles.img}
             src={src}
@@ -109,7 +113,6 @@ export const ContentCard = ({
             alt={alt}
             crossOrigin={crossOrigin}
             decoding={decoding}
-            loading={loading}
             referrerPolicy={referrerPolicy}
             sizes={sizes}
             useMap={useMap}
