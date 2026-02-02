@@ -13,6 +13,7 @@ import {
   tryToCheckIsDesktop,
 } from '../lib/adaptivity';
 import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
+import { warnOnce } from '../lib/warnOnce';
 import { useMediaQueries } from './useMediaQueries';
 import { usePlatform } from './usePlatform';
 
@@ -33,14 +34,18 @@ export interface UseAdaptivityWithJSMediaQueries extends Required<BaseAdaptivity
  * > Лучше всего использовать для всплывающих окон, т.к. они вызываются только после загрузки
  * > страницы либо пользователем, либо программно.
  */
+const warn = warnOnce('useAdaptivityWithJSMediaQueries');
+
 export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueries => {
   if (!canUseDOM) {
-    // eslint-disable-next-line no-console
-    console.error(`[useAdaptivityWithJSMediaQueries] Похоже, вы пытаетесь использовать хук вне браузера.
+    warn(
+      `Похоже, вы пытаетесь использовать хук вне браузера.
 
 Постарайтесь этого избегать, чтобы не было ошибок при гидратации: при SSR нет информации о размерах экрана.
 
-Используйте CSS Media Query или библиотеку по типу https://github.com/artsy/fresnel.`);
+Используйте CSS Media Query или библиотеку по типу https://github.com/artsy/fresnel.`,
+      'error',
+    );
   }
 
   const {
