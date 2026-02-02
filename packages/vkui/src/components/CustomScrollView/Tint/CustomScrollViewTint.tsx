@@ -45,13 +45,13 @@ export function CustomScrollViewTint({
   ].filter(Boolean) as string[];
 
   const updateTint = React.useCallback((scrollElement: HTMLElement) => {
-    setHasTintTop(scrollElement.scrollTop > 0);
+    setHasTintTop(scrollElement.scrollTop > 1);
     setHasTintBottom(
-      scrollElement.scrollHeight - scrollElement.clientHeight - scrollElement.scrollTop > 0,
+      scrollElement.scrollHeight - scrollElement.clientHeight - scrollElement.scrollTop > 1,
     );
-    setHasTintLeft(scrollElement.scrollLeft > 0);
+    setHasTintLeft(scrollElement.scrollLeft > 1);
     setHasTintRight(
-      scrollElement.scrollWidth - scrollElement.clientWidth - scrollElement.scrollLeft > 0,
+      scrollElement.scrollWidth - scrollElement.clientWidth - scrollElement.scrollLeft > 1,
     );
   }, []);
 
