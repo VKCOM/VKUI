@@ -135,14 +135,21 @@ export type {
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { ActionSheetDefaultIosCloseItem } from './components/ActionSheet/ActionSheetDefaultIosCloseItem';
-export { FocusTrap, type FocusTrapProps } from './components/FocusTrap/FocusTrap';
+export {
+  FocusTrap,
+  type FocusTrapProps,
+} from './components/FocusTrap/FocusTrap';
 export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export { ScreenSpinnerContext } from './components/ScreenSpinner/context';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
 export type { ScreenSpinnerContextProps } from './components/ScreenSpinner/context';
 export { Snackbar } from './components/Snackbar/Snackbar';
 export { useSnackbarManager } from './hooks/useSnackbarManager';
-export type { SnackbarApi, CustomSnackbar, UseSnackbar } from './hooks/useSnackbarManager';
+export type {
+  SnackbarApi,
+  CustomSnackbar,
+  UseSnackbar,
+} from './hooks/useSnackbarManager';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export { useTooltip } from './components/Tooltip/useTooltip';
@@ -315,6 +322,7 @@ export {
 } from './components/Accordion/AccordionContext';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
 export type { AccordionContentProps } from './components/Accordion/AccordionContent';
+export type { AccordionIconProps } from './components/Accordion/AccordionIcon';
 
 /**
  * Forms
