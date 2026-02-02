@@ -318,7 +318,7 @@ export {
 } from './components/Accordion/AccordionContext';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
 export type { AccordionContentProps } from './components/Accordion/AccordionContent';
-export type { AccordionIconProps } from './components/Accordion/AccordionIcon';
+export type { AccordionIndicatorProps } from './components/Accordion/AccordionIndicator';
 
 /**
  * Forms
