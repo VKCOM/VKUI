@@ -6,7 +6,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { AccordionContext } from './AccordionContext';
 import styles from './Accordion.module.css';
 
-export interface AccordionIconProps extends React.ComponentProps<typeof Icon24ChevronUp> {
+export interface AccordionIndicatorProps extends React.ComponentProps<typeof Icon24ChevronUp> {
   /**
    * Иконка для раскрытия контента.
    */
@@ -17,12 +17,12 @@ export interface AccordionIconProps extends React.ComponentProps<typeof Icon24Ch
   CollapseIcon?: React.ElementType;
 }
 
-export const AccordionIcon = ({
+export const AccordionIndicator = ({
   ExpandIcon = Icon24ChevronDown,
   CollapseIcon = Icon24ChevronUp,
   className,
   ...restProps
-}: AccordionIconProps) => {
+}: AccordionIndicatorProps) => {
   const { expanded } = React.useContext(AccordionContext);
 
   const Icon = expanded ? CollapseIcon : ExpandIcon;
