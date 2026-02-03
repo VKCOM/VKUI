@@ -2611,7 +2611,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^16.1.5":
+"next@npm:^16.1.6":
   version: 16.1.6
   resolution: "next@npm:16.1.6"
   dependencies:
@@ -3687,7 +3687,7 @@ __metadata:
     "@vkontakte/vkui": "npm:latest"
     eslint: "npm:^8.56.0"
     eslint-config-next: "npm:^15.0.0"
-    next: "npm:^16.1.5"
+    next: "npm:^16.1.6"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     typescript: "npm:latest"
