@@ -10,7 +10,7 @@
   "dependencies": {
     "@vkontakte/icons": "latest",
     "@vkontakte/vkui": "latest",
-    "next": "^16.1.5",
+    "next": "^16.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
