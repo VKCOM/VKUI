@@ -1,0 +1,1 @@
+import{e as E,r as d,f as c,p as f,K as p}from"./iframe-CDzsgUJ6.js";const a={passive:!0,capture:!0},i=(t,r,n)=>{const{document:e}=E(),s=d.useRef(n||a);c(()=>{s.current=n||a},[s]),c(()=>{if(!e||!t||!r)return;const o=u=>{f(u)===p.ESCAPE&&r(u)};return e.addEventListener("keydown",o,s.current),()=>{e.removeEventListener("keydown",o,s.current)}},[t,e,r])};export{i as u};
