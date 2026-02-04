@@ -17,7 +17,16 @@ const App = () => {
         placeholder="value"
         onChange={() => {}}
         onFocus={() => {}}
+        onInput={() => {}}
+        onInputCapture={() => {}}
         onClick={() => {}}
+        onClickCapture={() => {}}
+        onPaste={() => {}}
+        onPasteCapture={() => {}}
+        onKeyDown={() => {}}
+        onKeyDownCapture={() => {}}
+        onKeyUp={() => {}}
+        onKeyUpCapture={() => {}}
       />
     </React.Fragment>
   );

@@ -17,12 +17,21 @@ const App = () => {
         placeholder="value"
         onChange={() => {}}
         onFocus={() => {}}
-        onClick={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
-            "aria-label": "input"
+            "aria-label": "input",
+            onKeyUpCapture: () => {},
+            onKeyUp: () => {},
+            onKeyDownCapture: () => {},
+            onKeyDown: () => {},
+            onPasteCapture: () => {},
+            onPaste: () => {},
+            onClickCapture: () => {},
+            onClick: () => {},
+            onInputCapture: () => {},
+            onInput: () => {}
           }
         }} />
     </React.Fragment>

@@ -19,7 +19,6 @@ const App = () => {
         description="description"
         indeterminate
         hasHover={false}
-        onClick={() => {}}
         onChange={() => {}}
         onFocus={() => {}}
         slotProps={{
@@ -27,6 +26,7 @@ const App = () => {
             getRootRef: inputRef,
             "data-testid": "checkbox",
             "aria-label": "checkbox",
+            onClick: () => {},
             placeholder: "checkbox"
           }
         }} />
@@ -41,13 +41,13 @@ const App = () => {
         indeterminate
         hasHover={false}
         onChange={() => {}}
-        onClick={() => {}}
         onFocus={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
             "data-testid": "checkbox",
             "aria-label": "checkbox",
+            onClick: () => {},
             placeholder: "checkbox"
           }
         }}>
@@ -60,7 +60,6 @@ const App = () => {
         autoFocus
         checked
         required
-        onClick={() => {}}
         onChange={() => {}}
         onFocus={() => {}}
         slotProps={{
@@ -68,6 +67,7 @@ const App = () => {
             getRootRef: inputRef,
             "data-testid": "checkbox",
             "aria-label": "checkbox",
+            onClick: () => {},
             placeholder: "checkbox"
           }
         }} />
