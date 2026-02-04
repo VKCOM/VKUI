@@ -17,7 +17,7 @@ jobs:
   undeploy_s3:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Undeploy S3
     steps:
       - name: Delete from S3

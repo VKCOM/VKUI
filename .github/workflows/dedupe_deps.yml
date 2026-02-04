@@ -12,7 +12,7 @@ run-name: Deduplicate dependencies on ${{ github.ref_name }}
 
 jobs:
   dedupe_deps:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Checkout
         uses: actions/checkout@v6

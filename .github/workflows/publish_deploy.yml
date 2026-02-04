@@ -33,7 +33,7 @@ env:
 jobs:
   payload:
     name: Prepare payload data
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       package_name: ${{ steps.publish_workflow_payload.outputs.package_name || inputs.package_name }}
       next_version: ${{ steps.publish_workflow_payload.outputs.next_version || inputs.next_version }}
