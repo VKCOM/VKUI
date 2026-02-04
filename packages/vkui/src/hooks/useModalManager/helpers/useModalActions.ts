@@ -1,7 +1,7 @@
 import type { UIEvent } from 'react';
 import * as React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { type ModalPageCloseReason } from '../../../components/ModalPage/types';
+import { randomUUID } from '../../../lib/randomUUID';
 import { ModalCardWrapper } from '../components/ModalCardWrapper';
 import { ModalPageWrapper } from '../components/ModalPageWrapper';
 import {
@@ -167,7 +167,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     (props) => {
       const { id: idProp, component, baseProps: modalProps, additionalProps } = resolveProps(props);
 
-      const id = idProp || uuidv4();
+      const id = idProp || randomUUID();
 
       return open<CustomModalCardItem>({
         type: 'card',
@@ -186,7 +186,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     (props) => {
       const { id: idProp, component, baseProps: modalProps, additionalProps } = resolveProps(props);
 
-      const id = idProp || uuidv4();
+      const id = idProp || randomUUID();
 
       return open({
         type: 'page',
