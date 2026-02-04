@@ -42,14 +42,10 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       componentName: localName,
       slotName: 'input',
       excludedProps: [
-        'alt',
         'autoComplete',
-        'capture',
         'disabled',
         'list',
-        'max',
         'maxLength',
-        'min',
         'minLength',
         'name',
         'pattern',
@@ -57,6 +53,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         'readOnly',
         'required',
         'value',
+        'form',
       ],
     });
   }

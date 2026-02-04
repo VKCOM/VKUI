@@ -1,6 +1,7 @@
 import { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { JSCodeShiftOptions } from '../../types';
+import { moveInputPropsIntoSlotProps } from './common/moveInputPropsIntoSlotProps';
 import {
   moveAriaAttrsIntoSlotProps,
   moveDataAttrsIntoSlotProps,
@@ -34,6 +35,30 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
       root: source,
       componentName: localName,
       slotName: 'input',
+    });
+
+    moveInputPropsIntoSlotProps(j, {
+      root: source,
+      componentName: localName,
+      excludedProps: [
+        'autoComplete',
+        'disabled',
+        'list',
+        'max',
+        'maxLength',
+        'min',
+        'minLength',
+        'multiple',
+        'name',
+        'pattern',
+        'placeholder',
+        'readOnly',
+        'required',
+        'step',
+        'type',
+        'value',
+        'form',
+      ],
     });
   }
 

@@ -56,7 +56,19 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     moveInputPropsIntoSlotProps(j, {
       root: source,
       componentName: localName,
-      excludedProps: ['disabled', 'readOnly', 'required', 'name', 'value', 'placeholder'],
+      excludedProps: [
+        'disabled',
+        'readOnly',
+        'required',
+        'name',
+        'value',
+        'placeholder',
+        'minLength',
+        'maxLength',
+        'pattern',
+        'form',
+        'onClick',
+      ],
     });
   }
 

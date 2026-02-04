@@ -40,7 +40,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
     moveInputPropsIntoSlotProps(j, {
       root: source,
       componentName: localName,
-      excludedProps: ['checked', 'disabled', 'readOnly', 'required', 'name', 'value'],
+      excludedProps: ['checked', 'disabled', 'readOnly', 'required', 'name', 'value', 'form'],
     });
   }
 

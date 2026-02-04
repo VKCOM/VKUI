@@ -32,6 +32,16 @@ const INPUT_SPECIFIC_PROPS = [
   'type',
   'value',
   'width',
+  'onInput',
+  'onInputCapture',
+  'onClick',
+  'onClickCapture',
+  'onPaste',
+  'onPasteCapture',
+  'onKeyDown',
+  'onKeyDownCapture',
+  'onKeyUp',
+  'onKeyUpCapture',
 ] as const;
 
 type InputSpecificProp = (typeof INPUT_SPECIFIC_PROPS)[number];
