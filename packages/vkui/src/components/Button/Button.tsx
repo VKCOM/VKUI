@@ -199,7 +199,7 @@ export const Button = ({
     >
       {loading && (
         <Spinner
-          size="s"
+          size={size === 's' ? 's' : 'm'}
           className={styles.spinner}
           disableAnimation={disableSpinnerAnimation}
           noColor
