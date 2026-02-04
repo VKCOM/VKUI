@@ -21,9 +21,13 @@ export interface InputProps
   extends Pick<
       React.InputHTMLAttributes<HTMLInputElement>,
       | 'autoComplete'
+      | 'autoCapitalize'
+      | 'autoCorrect'
       | 'disabled'
       | 'list'
+      | 'max'
       | 'maxLength'
+      | 'min'
       | 'minLength'
       | 'multiple'
       | 'name'
@@ -31,10 +35,10 @@ export interface InputProps
       | 'placeholder'
       | 'readOnly'
       | 'required'
-      | 'size'
       | 'step'
       | 'type'
       | 'value'
+      | 'form'
       | 'onChange'
       | 'onFocus'
       | 'onBlur'
@@ -76,9 +80,13 @@ export const Input = ({
 
   // input props
   autoComplete,
+  autoCapitalize,
+  autoCorrect,
   disabled,
   list,
+  max,
   maxLength,
+  min,
   minLength,
   multiple,
   name,
@@ -86,13 +94,13 @@ export const Input = ({
   placeholder,
   readOnly,
   required,
-  size,
   step,
   type = 'text',
   value,
   onChange,
   onFocus,
   onBlur,
+  form,
   id,
   inputMode,
   defaultValue,
@@ -117,9 +125,13 @@ export const Input = ({
       className: styles.el,
       getRootRef: getRef,
       autoComplete,
+      autoCapitalize,
+      autoCorrect,
       disabled,
       list,
+      max,
       maxLength,
+      min,
       minLength,
       multiple,
       name,
@@ -127,13 +139,13 @@ export const Input = ({
       placeholder,
       readOnly,
       required,
-      size,
       step,
       type,
       value,
       onChange,
       onFocus,
       onBlur,
+      form,
       id,
       inputMode,
       defaultValue,

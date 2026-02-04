@@ -54,7 +54,7 @@ export type NativeHTMLSelectProps = Omit<
 export interface NativeSelectProps
   extends Pick<
       React.SelectHTMLAttributes<HTMLSelectElement>,
-      'disabled' | 'required' | 'autoFocus' | 'name' | 'onFocus' | 'onBlur' | 'onClick'
+      'disabled' | 'required' | 'autoFocus' | 'name' | 'form' | 'onFocus' | 'onBlur' | 'onClick'
     >,
     Omit<
       React.HTMLAttributes<HTMLDivElement>,
@@ -139,6 +139,7 @@ export const NativeSelect = ({
   autoFocus,
   id,
   name,
+  form,
   onClick,
   onFocus,
   onBlur,
@@ -158,7 +159,7 @@ export const NativeSelect = ({
   const { className, style, getRootRef, ...rootRest } = useMergeProps(restProps, slotProps?.root);
 
   const { getRootRef: getSelectRef, ...selectRest } = useMergeProps(
-    { getRootRef: getRef, disabled, required, autoFocus, id, name, onClick, onFocus, onBlur },
+    { getRootRef: getRef, disabled, required, autoFocus, id, name, form, onClick, onFocus, onBlur },
     slotProps?.select,
   );
 

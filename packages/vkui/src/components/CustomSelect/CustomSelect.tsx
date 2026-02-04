@@ -120,7 +120,7 @@ export interface SelectProps<
 > extends Omit<NativeSelectProps, 'slotProps'>,
     Omit<FormFieldProps, 'maxHeight'>,
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
-    Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'readOnly'> {
+    Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'form' | 'readOnly'> {
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
@@ -306,8 +306,12 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     'icon': iconProp,
     selectType = 'default',
     align,
+    form,
 
     // Input props
+    minLength,
+    maxLength,
+    pattern,
     autoFocus,
     disabled,
     id,
@@ -351,6 +355,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       getRootRef: getRef,
       required,
       name,
+      form,
       onClick: onSelectClick,
       onFocus: onSelectFocus,
       onBlur: onSelectBlur,
@@ -371,6 +376,9 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     {
       getRootRef: getSelectInputRef,
       onChange: onInputChangeProp,
+      minLength,
+      maxLength,
+      pattern,
       autoFocus,
       disabled,
       id,
