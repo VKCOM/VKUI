@@ -27,6 +27,8 @@ export interface TextareaProps
   extends Pick<
       React.TextareaHTMLAttributes<HTMLTextAreaElement>,
       | 'autoComplete'
+      | 'autoCapitalize'
+      | 'autoCorrect'
       | 'cols'
       | 'dirName'
       | 'disabled'
@@ -39,6 +41,7 @@ export interface TextareaProps
       | 'rows'
       | 'value'
       | 'wrap'
+      | 'form'
       | 'onChange'
       | 'onFocus'
       | 'onBlur'
@@ -97,6 +100,8 @@ export const Textarea = ({
 
   // textarea props
   autoComplete,
+  autoCapitalize,
+  autoCorrect,
   cols,
   dirName,
   disabled,
@@ -109,6 +114,7 @@ export const Textarea = ({
   value: valueProp,
   wrap,
   rows = 2,
+  form,
   onChange: onChangeProp,
   onFocus,
   onBlur,
@@ -143,6 +149,8 @@ export const Textarea = ({
       className: styles.el,
       getRootRef: getRef,
       autoComplete,
+      autoCapitalize,
+      autoCorrect,
       cols,
       dirName,
       disabled,
@@ -155,6 +163,7 @@ export const Textarea = ({
       value: valueProp,
       wrap,
       rows,
+      form,
       onChange: onChangeProp,
       onFocus,
       onBlur,

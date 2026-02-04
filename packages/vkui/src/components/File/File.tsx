@@ -23,6 +23,7 @@ export interface FileProps
       | 'accept'
       | 'capture'
       | 'multiple'
+      | 'form'
       | 'onChange'
       | 'onFocus'
       | 'onBlur'
@@ -78,6 +79,7 @@ export const File = ({
   accept,
   capture,
   multiple,
+  form,
   onChange,
   onFocus,
   onBlur,
@@ -110,6 +112,7 @@ export const File = ({
       accept,
       capture,
       multiple,
+      form,
       onChange,
       onFocus,
       onBlur,

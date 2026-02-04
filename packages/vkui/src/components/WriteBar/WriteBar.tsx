@@ -21,6 +21,8 @@ export interface WriteBarProps
   extends Pick<
       React.TextareaHTMLAttributes<HTMLTextAreaElement>,
       | 'autoComplete'
+      | 'autoCapitalize'
+      | 'autoCorrect'
       | 'cols'
       | 'dirName'
       | 'disabled'
@@ -33,6 +35,7 @@ export interface WriteBarProps
       | 'rows'
       | 'value'
       | 'wrap'
+      | 'form'
       | 'onChange'
       | 'onFocus'
       | 'onBlur'
@@ -106,6 +109,8 @@ export const WriteBar = ({
 
   // textarea props
   autoComplete,
+  autoCapitalize,
+  autoCorrect,
   cols,
   dirName,
   disabled,
@@ -118,6 +123,7 @@ export const WriteBar = ({
   value: valueProp,
   wrap,
   rows,
+  form,
   onChange: onChangeProp,
   onFocus,
   onBlur,
@@ -149,6 +155,8 @@ export const WriteBar = ({
       className: styles.textarea,
       getRootRef: getRef,
       autoComplete,
+      autoCapitalize,
+      autoCorrect,
       cols,
       dirName,
       disabled,
@@ -161,6 +169,7 @@ export const WriteBar = ({
       value: valueProp,
       wrap,
       rows,
+      form,
       onChange: onChangeProp,
       onFocus,
       onBlur,
