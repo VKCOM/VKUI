@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-mcp",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "MCP server for VKUI documentation",
   "repository": {
     "type": "git",
@@ -25,8 +25,8 @@
   "scripts": {
     "build": "tsc",
     "prepack": "yarn run build",
-    "test": "echo no test",
-    "test:ci": "echo no test:ci"
+    "test": "yarn build && yarn run -T vitest run",
+    "test:ci": "yarn run -T vitest run"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.3",

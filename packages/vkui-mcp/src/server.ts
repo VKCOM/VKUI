@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { createDataProvider } from './data.js';
+import { registerAllResources } from './resources/registerAllResources.js';
 import { registerAllTools } from './tools/registerAllTools.js';
 
 const SERVER_INFO = {
@@ -12,6 +13,7 @@ export function createServer(): McpServer {
   const dataProvider = createDataProvider();
   const server = new McpServer(SERVER_INFO);
   registerAllTools(server, dataProvider);
+  registerAllResources(server, dataProvider);
   return server;
 }
 

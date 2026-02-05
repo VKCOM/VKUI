@@ -7,9 +7,13 @@ import type {
   MigrationTarget,
 } from './types.js';
 
-const DOCUMENTATION_BASE_URL = 'https://vkui.io';
+const DEFAULT_DOCUMENTATION_BASE_URL = 'https://vkui.io';
 
 export function createDataProvider(): DataProvider {
+  const baseUrl =
+    (typeof process !== 'undefined' ? process.env?.VKUI_DOCS_BASE_URL : undefined) ??
+    DEFAULT_DOCUMENTATION_BASE_URL;
+
   const cache = new Map<string, unknown>();
 
   async function readJson<T>(relativePath: string): Promise<T> {
@@ -21,7 +25,7 @@ export function createDataProvider(): DataProvider {
 
     let data: T | null;
 
-    const url = new URL(relativePath.replace(/\\/g, '/'), DOCUMENTATION_BASE_URL).toString();
+    const url = new URL(relativePath.replace(/\\/g, '/'), baseUrl).toString();
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Не удалось загрузить ${url}: ${response.status}`);
