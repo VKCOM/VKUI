@@ -13,6 +13,21 @@ export interface ComponentMetadata {
   examples: ExampleItem[];
 }
 
+export interface HookListItem {
+  name: string;
+  slug: string;
+  description: string;
+  examplesCount: number;
+}
+
+export interface HookMetadata {
+  name: string;
+  slug: string;
+  description: string;
+  props: unknown[];
+  examples: ExampleItem[];
+}
+
 export interface ExampleItem {
   id: string;
   component: string;
@@ -39,6 +54,8 @@ export interface DataProvider {
     name?: string;
     slug?: string;
   }) => Promise<ComponentMetadata | null>;
+  listHooks: () => Promise<HookListItem[]>;
+  getHookMetadata: (params: { name?: string; slug?: string }) => Promise<HookMetadata | null>;
   listExamples: (params?: { component?: string }) => Promise<ExampleItem[]>;
   getExample: (params: { id: string }) => Promise<ExampleItem>;
   listMigrationTargets: () => Promise<MigrationTarget[]>;

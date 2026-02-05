@@ -9,7 +9,13 @@ const COMPONENTS_DIR = path.join(ROOT_DIR, 'content', 'components');
 const DOCGEN_PATH = path.join(ROOT_DIR, '.docgen', 'docgen.json');
 const OUT_DIR = path.join(ROOT_DIR, 'public', 'mcp');
 const OUT_COMPONENTS_DIR = path.join(OUT_DIR, 'components');
+const OUT_HOOKS_DIR = path.join(OUT_DIR, 'hooks');
 const OUT_EXAMPLES_DIR = path.join(OUT_DIR, 'examples');
+
+function isHook(slug) {
+  const base = slug.split('/').pop() || slug;
+  return base.startsWith('use-');
+}
 
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
@@ -106,12 +112,14 @@ export function generateMcpData() {
   // eslint-disable-next-line no-console
   console.log('🔄 Генерация MCP данных...');
   ensureDir(OUT_COMPONENTS_DIR);
+  ensureDir(OUT_HOOKS_DIR);
   ensureDir(OUT_EXAMPLES_DIR);
 
   const docgen = readDocgen();
   const mdxFiles = collectMdxFiles(COMPONENTS_DIR);
 
   const components = [];
+  const hooks = [];
   const examplesIndex = [];
 
   for (const filePath of mdxFiles) {
@@ -119,18 +127,18 @@ export function generateMcpData() {
     const { data, body } = parseFrontmatter(raw);
     const slug = slugFromPath(filePath);
     const headingName = extractHeading(body);
-    const componentName = headingName || componentNameFromSlug(slug);
+    const itemName = headingName || componentNameFromSlug(slug);
     const description = data.description || '';
-    const props = docgen[componentName] || [];
+    const props = docgen[itemName] || [];
     const playgroundExamples = extractPlaygroundExamples(body);
 
-    const componentExamples = playgroundExamples.map((example) => {
+    const itemExamples = playgroundExamples.map((example) => {
       const id = toExampleId(slug, example.index);
       const title = `Example ${example.index}`;
       const sourcePath = path.relative(ROOT_DIR, filePath).replace(/\\/g, '/');
       return {
         id,
-        component: componentName,
+        component: itemName,
         componentSlug: slug,
         title,
         code: example.code,
@@ -138,31 +146,33 @@ export function generateMcpData() {
       };
     });
 
-    components.push({
-      name: componentName,
+    const listItem = {
+      name: itemName,
       slug,
       description,
-      examplesCount: componentExamples.length,
-    });
+      examplesCount: itemExamples.length,
+    };
+    const detailPayload = {
+      name: itemName,
+      slug,
+      description,
+      props,
+      exampleIds: itemExamples.map((e) => e.id),
+    };
 
-    const componentOutPath = path.join(OUT_COMPONENTS_DIR, `${slug}.json`);
-    ensureDir(path.dirname(componentOutPath));
-    fs.writeFileSync(
-      componentOutPath,
-      JSON.stringify(
-        {
-          name: componentName,
-          slug,
-          description,
-          props,
-          examples: componentExamples,
-        },
-        null,
-        2,
-      ),
-    );
+    if (isHook(slug)) {
+      hooks.push(listItem);
+      const hookOutPath = path.join(OUT_HOOKS_DIR, `${slug}.json`);
+      ensureDir(path.dirname(hookOutPath));
+      fs.writeFileSync(hookOutPath, JSON.stringify(detailPayload, null, 2));
+    } else {
+      components.push(listItem);
+      const componentOutPath = path.join(OUT_COMPONENTS_DIR, `${slug}.json`);
+      ensureDir(path.dirname(componentOutPath));
+      fs.writeFileSync(componentOutPath, JSON.stringify(detailPayload, null, 2));
+    }
 
-    for (const example of componentExamples) {
+    for (const example of itemExamples) {
       const exampleOutPath = path.join(OUT_EXAMPLES_DIR, `${example.id}.json`);
       fs.writeFileSync(exampleOutPath, JSON.stringify(example, null, 2));
       examplesIndex.push(example);
@@ -170,6 +180,7 @@ export function generateMcpData() {
   }
 
   fs.writeFileSync(path.join(OUT_DIR, 'components.json'), JSON.stringify(components, null, 2));
+  fs.writeFileSync(path.join(OUT_DIR, 'hooks.json'), JSON.stringify(hooks, null, 2));
   fs.writeFileSync(path.join(OUT_DIR, 'examples.json'), JSON.stringify(examplesIndex, null, 2));
 
   // eslint-disable-next-line no-console

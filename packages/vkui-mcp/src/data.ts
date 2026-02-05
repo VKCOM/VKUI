@@ -4,6 +4,8 @@ import type {
   ComponentMetadata,
   DataProvider,
   ExampleItem,
+  HookListItem,
+  HookMetadata,
   MigrationTarget,
 } from './types.js';
 
@@ -50,7 +52,38 @@ export function createDataProvider(): DataProvider {
       if (!component) {
         return null;
       }
-      return readJson<ComponentMetadata>(`mcp/components/${component.slug}.json`);
+      const raw = await readJson<ComponentMetadata & { exampleIds?: string[] }>(
+        `mcp/components/${component.slug}.json`,
+      );
+      if (raw.exampleIds?.length) {
+        const examples = await Promise.all(
+          raw.exampleIds.map((id) => readJson<ExampleItem>(`mcp/examples/${id}.json`)),
+        );
+        const { exampleIds: _ids, ...rest } = raw;
+        return { ...rest, examples } as ComponentMetadata;
+      }
+      return raw as ComponentMetadata;
+    },
+    async listHooks() {
+      return readJson<HookListItem[]>('mcp/hooks.json');
+    },
+    async getHookMetadata({ name, slug }) {
+      const hooks = await readJson<HookListItem[]>('mcp/hooks.json');
+      const hook = hooks.find((item) => item.name === name || item.slug === slug);
+      if (!hook) {
+        return null;
+      }
+      const raw = await readJson<HookMetadata & { exampleIds?: string[] }>(
+        `mcp/hooks/${hook.slug}.json`,
+      );
+      if (raw.exampleIds?.length) {
+        const examples = await Promise.all(
+          raw.exampleIds.map((id) => readJson<ExampleItem>(`mcp/examples/${id}.json`)),
+        );
+        const { exampleIds: _ids, ...rest } = raw;
+        return { ...rest, examples } as HookMetadata;
+      }
+      return raw as HookMetadata;
     },
     async listExamples({ component } = {}) {
       const examples = await readJson<ExampleItem[]>('mcp/examples.json');

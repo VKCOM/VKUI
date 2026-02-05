@@ -44,13 +44,32 @@ const MOCK_ALERT_METADATA = {
   examples: MOCK_EXAMPLES,
 };
 
+/** Мок списка хуков и метаданных хука (для list_hooks и get_hook_metadata) */
+const MOCK_HOOKS = [
+  {
+    name: 'useModalManager',
+    slug: 'use-modal-manager',
+    description: 'Хук для управления модальными окнами',
+    examplesCount: 1,
+  },
+];
+const MOCK_USE_MODAL_MANAGER_METADATA = {
+  name: 'useModalManager',
+  slug: 'use-modal-manager',
+  description: 'Хук для управления модальными окнами',
+  props: [{ name: 'saveHistory', type: 'boolean', description: 'Сохранять историю' }],
+  examples: [],
+};
+
 /** Запускает HTTP-сервер с мок-данными, возвращает base URL и функцию остановки */
 function startMockDocsServer(): Promise<{ baseUrl: string; close: () => void }> {
   const routes: Record<string, string> = {
     '/mcp/components.json': JSON.stringify(MOCK_COMPONENTS),
+    '/mcp/hooks.json': JSON.stringify(MOCK_HOOKS),
     '/mcp/examples.json': JSON.stringify(MOCK_EXAMPLES),
     '/mcp/examples/alert-basic.json': JSON.stringify(MOCK_EXAMPLES[0]),
     '/mcp/components/alert.json': JSON.stringify(MOCK_ALERT_METADATA),
+    '/mcp/hooks/use-modal-manager.json': JSON.stringify(MOCK_USE_MODAL_MANAGER_METADATA),
   };
 
   return new Promise((resolve, reject) => {
@@ -260,6 +279,32 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     child.kill('SIGTERM');
   });
 
+  it('list_hooks через stdio возвращает хуки из мока', async () => {
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
+
+    const callResponse = await sendRequest(child, {
+      jsonrpc: '2.0',
+      id: 2,
+      method: 'tools/call',
+      params: {
+        name: 'list_hooks',
+        arguments: {},
+      },
+    });
+
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as Array<{ name: string; slug: string; description: string }>;
+    expect(parsed).toHaveLength(1);
+    expect(parsed[0].name).toBe('useModalManager');
+    expect(parsed[0].slug).toBe('use-modal-manager');
+    expect(parsed[0].description).toContain('модальными окнами');
+
+    child.kill('SIGTERM');
+  });
+
   it('get_example через stdio возвращает пример по id', async () => {
     const child = spawnMcpProcess(mockBaseUrl);
     await initMcpSession(child);
@@ -308,6 +353,32 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     expect(parsed.description).toContain('Модальное окно');
     expect(Array.isArray(parsed.props)).toBe(true);
     expect(parsed.props.length).toBeGreaterThan(0);
+
+    child.kill('SIGTERM');
+  });
+
+  it('get_hook_metadata через stdio возвращает карточку хука', async () => {
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
+
+    const callResponse = await sendRequest(child, {
+      jsonrpc: '2.0',
+      id: 2,
+      method: 'tools/call',
+      params: {
+        name: 'get_hook_metadata',
+        arguments: { slug: 'use-modal-manager' },
+      },
+    });
+
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as { name: string; slug: string; description: string; props: unknown[] };
+    expect(parsed.name).toBe('useModalManager');
+    expect(parsed.slug).toBe('use-modal-manager');
+    expect(parsed.description).toContain('модальными окнами');
+    expect(Array.isArray(parsed.props)).toBe(true);
 
     child.kill('SIGTERM');
   });

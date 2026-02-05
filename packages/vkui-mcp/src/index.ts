@@ -5,6 +5,8 @@ export type {
   ComponentListItem,
   ComponentMetadata,
   ExampleItem,
+  HookListItem,
+  HookMetadata,
   MigrationComponentMap,
   MigrationComponentExample,
   MigrationTarget,
