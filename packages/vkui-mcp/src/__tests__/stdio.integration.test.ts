@@ -78,6 +78,24 @@ function startMockDocsServer(): Promise<{ baseUrl: string; close: () => void }> 
   });
 }
 
+const INIT_MESSAGE = {
+  jsonrpc: '2.0',
+  id: 1,
+  method: 'initialize',
+  params: {
+    protocolVersion: '2024-11-05',
+    capabilities: {},
+    clientInfo: { name: 'test', version: '0.0.0' },
+  },
+} as const;
+
+const INITIALIZED_NOTIFICATION =
+  JSON.stringify({
+    jsonrpc: '2.0',
+    method: 'notifications/initialized',
+    params: {},
+  }) + '\n';
+
 /** Отправляет JSON-RPC сообщение в процесс и возвращает промис с ответом по id */
 function sendRequest(
   child: ReturnType<typeof spawn>,
@@ -112,6 +130,46 @@ function sendRequest(
   });
 }
 
+/** Запускает процесс MCP-сервера с заданным baseUrl для документации */
+function spawnMcpProcess(baseUrl: string): ReturnType<typeof spawn> {
+  return spawn('node', [CLI_PATH], {
+    cwd: PACKAGE_ROOT,
+    env: { ...process.env, VKUI_DOCS_BASE_URL: baseUrl },
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+}
+
+/**
+ * Выполняет инициализацию MCP-сессии: initialize → notifications/initialized → пауза.
+ * Возвращает ответ на initialize (для проверки serverInfo при необходимости).
+ */
+async function initMcpSession(child: ReturnType<typeof spawn>): Promise<Record<string, unknown>> {
+  const initResponse = await sendRequest(child, { ...INIT_MESSAGE });
+  child.stdin!.write(INITIALIZED_NOTIFICATION);
+  await new Promise((r) => setTimeout(r, 50));
+  return initResponse;
+}
+
+/** Бросает ошибку, если в ответе MCP есть поле error */
+function assertNoMcpError(response: Record<string, unknown>): void {
+  if ('error' in response && response.error) {
+    const msg = (response.error as { message?: string }).message ?? JSON.stringify(response.error);
+    throw new Error(`MCP error: ${msg}`);
+  }
+}
+
+/** Извлекает текстовый content из результата tools/call (content) или resources/read (contents) */
+function getResultTextContent(result: Record<string, unknown> | undefined): string {
+  const list =
+    (result?.content as Array<{ type: string; text?: string }> | undefined) ??
+    (result?.contents as Array<{ type: string; text?: string }> | undefined);
+  const block = list?.find((c) => c.type === 'text');
+  if (block?.text === undefined) {
+    throw new Error('Ожидался text content в ответе');
+  }
+  return block.text;
+}
+
 describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
   let mockBaseUrl: string;
   let closeMock: (() => void) | undefined;
@@ -127,34 +185,10 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
   });
 
   it('инициализация и вызов get_migration_target через stdio', async () => {
-    const child = spawn('node', [CLI_PATH], {
-      cwd: PACKAGE_ROOT,
-      env: { ...process.env, VKUI_DOCS_BASE_URL: mockBaseUrl },
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-
-    const initResponse = await sendRequest(child, {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'initialize',
-      params: {
-        protocolVersion: '2024-11-05',
-        capabilities: {},
-        clientInfo: { name: 'test', version: '0.0.0' },
-      },
-    });
-
+    const child = spawnMcpProcess(mockBaseUrl);
+    const initResponse = await initMcpSession(child);
     expect(initResponse.result).toBeDefined();
     expect((initResponse.result as Record<string, unknown>).serverInfo).toBeDefined();
-
-    // Уведомление о завершении инициализации (без id)
-    child.stdin.write(
-      JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'notifications/initialized',
-        params: {},
-      }) + '\n',
-    );
 
     const callResponse = await sendRequest(child, {
       jsonrpc: '2.0',
@@ -167,42 +201,16 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     });
 
     expect(callResponse.result).toBeDefined();
-    const result = callResponse.result as { content?: Array<{ type: string; text?: string }> };
-    expect(result.content).toBeDefined();
-    const textContent = result.content?.find((c) => c.type === 'text');
-    expect(textContent?.text).toBeDefined();
-    expect(textContent!.text).toContain('onClosed');
+    expect(getResultTextContent(callResponse.result as Record<string, unknown>)).toContain(
+      'onClosed',
+    );
 
     child.kill('SIGTERM');
   });
 
   it('list_migration_targets через stdio возвращает отсортированный список', async () => {
-    const child = spawn('node', [CLI_PATH], {
-      cwd: PACKAGE_ROOT,
-      env: { ...process.env, VKUI_DOCS_BASE_URL: mockBaseUrl },
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-
-    await sendRequest(child, {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'initialize',
-      params: {
-        protocolVersion: '2024-11-05',
-        capabilities: {},
-        clientInfo: { name: 'test', version: '0.0.0' },
-      },
-    });
-
-    child.stdin.write(
-      JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'notifications/initialized',
-        params: {},
-      }) + '\n',
-    );
-
-    await new Promise((r) => setTimeout(r, 50));
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
 
     const callResponse = await sendRequest(child, {
       jsonrpc: '2.0',
@@ -214,51 +222,21 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
       },
     });
 
-    if ('error' in callResponse && callResponse.error) {
-      throw new Error(
-        `MCP error: ${(callResponse.error as { message?: string }).message ?? JSON.stringify(callResponse.error)}`,
-      );
-    }
-    expect(callResponse.result).toBeDefined();
-    const result = callResponse.result as { content?: Array<{ type: string; text?: string }> };
-    const textContent = result.content?.find((c) => c.type === 'text');
-    expect(textContent?.text).toBeDefined();
-    const parsed = JSON.parse(textContent!.text!) as Array<{ name: string }>;
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as Array<{ name: string }>;
     expect(parsed.length).toBeGreaterThan(0);
     expect(parsed.map((p) => p.name)).toContain('ActionSheet');
     const names = parsed.map((p) => p.name);
-    const sorted = [...names].sort((a, b) => a.localeCompare(b));
-    expect(names).toEqual(sorted);
+    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
 
     child.kill('SIGTERM');
   });
 
   it('list_components через stdio возвращает компоненты из мока', async () => {
-    const child = spawn('node', [CLI_PATH], {
-      cwd: PACKAGE_ROOT,
-      env: { ...process.env, VKUI_DOCS_BASE_URL: mockBaseUrl },
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-
-    await sendRequest(child, {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'initialize',
-      params: {
-        protocolVersion: '2024-11-05',
-        capabilities: {},
-        clientInfo: { name: 'test', version: '0.0.0' },
-      },
-    });
-
-    child.stdin.write(
-      JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'notifications/initialized',
-        params: {},
-      }) + '\n',
-    );
-    await new Promise((r) => setTimeout(r, 50));
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
 
     const callResponse = await sendRequest(child, {
       jsonrpc: '2.0',
@@ -270,21 +248,11 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
       },
     });
 
-    if ('error' in callResponse && callResponse.error) {
-      throw new Error(
-        `MCP error: ${(callResponse.error as { message?: string }).message ?? JSON.stringify(callResponse.error)}`,
-      );
-    }
-    expect(callResponse.result).toBeDefined();
-    const result = callResponse.result as { content?: Array<{ type: string; text?: string }> };
-    const textContent = result.content?.find((c) => c.type === 'text');
-    expect(textContent?.text).toBeDefined();
-    const parsed = JSON.parse(textContent!.text!) as Array<{
-      name: string;
-      slug: string;
-      description: string;
-    }>;
-    expect(parsed.length).toBe(1);
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as Array<{ name: string; slug: string; description: string }>;
+    expect(parsed).toHaveLength(1);
     expect(parsed[0].name).toBe('Alert');
     expect(parsed[0].slug).toBe('alert');
     expect(parsed[0].description).toContain('Модальное окно');
@@ -293,31 +261,8 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
   });
 
   it('get_example через stdio возвращает пример по id', async () => {
-    const child = spawn('node', [CLI_PATH], {
-      cwd: PACKAGE_ROOT,
-      env: { ...process.env, VKUI_DOCS_BASE_URL: mockBaseUrl },
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-
-    await sendRequest(child, {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'initialize',
-      params: {
-        protocolVersion: '2024-11-05',
-        capabilities: {},
-        clientInfo: { name: 'test', version: '0.0.0' },
-      },
-    });
-
-    child.stdin.write(
-      JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'notifications/initialized',
-        params: {},
-      }) + '\n',
-    );
-    await new Promise((r) => setTimeout(r, 50));
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
 
     const callResponse = await sendRequest(child, {
       jsonrpc: '2.0',
@@ -329,16 +274,10 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
       },
     });
 
-    if ('error' in callResponse && callResponse.error) {
-      throw new Error(
-        `MCP error: ${(callResponse.error as { message?: string }).message ?? JSON.stringify(callResponse.error)}`,
-      );
-    }
-    expect(callResponse.result).toBeDefined();
-    const result = callResponse.result as { content?: Array<{ type: string; text?: string }> };
-    const textContent = result.content?.find((c) => c.type === 'text');
-    expect(textContent?.text).toBeDefined();
-    const parsed = JSON.parse(textContent!.text!) as { id: string; title: string; code: string };
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as { id: string; title: string; code: string };
     expect(parsed.id).toBe('alert-basic');
     expect(parsed.title).toBe('Базовый пример');
     expect(parsed.code).toContain('<Alert');
@@ -347,31 +286,8 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
   });
 
   it('get_component_metadata через stdio возвращает карточку компонента', async () => {
-    const child = spawn('node', [CLI_PATH], {
-      cwd: PACKAGE_ROOT,
-      env: { ...process.env, VKUI_DOCS_BASE_URL: mockBaseUrl },
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-
-    await sendRequest(child, {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'initialize',
-      params: {
-        protocolVersion: '2024-11-05',
-        capabilities: {},
-        clientInfo: { name: 'test', version: '0.0.0' },
-      },
-    });
-
-    child.stdin.write(
-      JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'notifications/initialized',
-        params: {},
-      }) + '\n',
-    );
-    await new Promise((r) => setTimeout(r, 50));
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
 
     const callResponse = await sendRequest(child, {
       jsonrpc: '2.0',
@@ -383,21 +299,10 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
       },
     });
 
-    if ('error' in callResponse && callResponse.error) {
-      throw new Error(
-        `MCP error: ${(callResponse.error as { message?: string }).message ?? JSON.stringify(callResponse.error)}`,
-      );
-    }
-    expect(callResponse.result).toBeDefined();
-    const result = callResponse.result as { content?: Array<{ type: string; text?: string }> };
-    const textContent = result.content?.find((c) => c.type === 'text');
-    expect(textContent?.text).toBeDefined();
-    const parsed = JSON.parse(textContent!.text!) as {
-      name: string;
-      slug: string;
-      description: string;
-      props: unknown[];
-    };
+    assertNoMcpError(callResponse);
+    const parsed = JSON.parse(
+      getResultTextContent(callResponse.result as Record<string, unknown>),
+    ) as { name: string; slug: string; description: string; props: unknown[] };
     expect(parsed.name).toBe('Alert');
     expect(parsed.slug).toBe('alert');
     expect(parsed.description).toContain('Модальное окно');
@@ -408,31 +313,8 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
   });
 
   it('resources/list и resources/read для vkui://migration/v8', async () => {
-    const child = spawn('node', [CLI_PATH], {
-      cwd: PACKAGE_ROOT,
-      env: { ...process.env, VKUI_DOCS_BASE_URL: mockBaseUrl },
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-
-    await sendRequest(child, {
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'initialize',
-      params: {
-        protocolVersion: '2024-11-05',
-        capabilities: {},
-        clientInfo: { name: 'test', version: '0.0.0' },
-      },
-    });
-
-    child.stdin.write(
-      JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'notifications/initialized',
-        params: {},
-      }) + '\n',
-    );
-    await new Promise((r) => setTimeout(r, 50));
+    const child = spawnMcpProcess(mockBaseUrl);
+    await initMcpSession(child);
 
     const listResponse = await sendRequest(child, {
       jsonrpc: '2.0',
@@ -441,12 +323,7 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
       params: {},
     });
 
-    if ('error' in listResponse && listResponse.error) {
-      throw new Error(
-        `MCP error: ${(listResponse.error as { message?: string }).message ?? JSON.stringify(listResponse.error)}`,
-      );
-    }
-    expect(listResponse.result).toBeDefined();
+    assertNoMcpError(listResponse);
     const listResult = listResponse.result as { resources?: Array<{ uri: string }> };
     expect(listResult.resources).toBeDefined();
     const uris = listResult.resources!.map((r) => r.uri);
@@ -459,19 +336,9 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
       params: { uri: 'vkui://migration/v8' },
     });
 
-    if ('error' in readResponse && readResponse.error) {
-      throw new Error(
-        `MCP error: ${(readResponse.error as { message?: string }).message ?? JSON.stringify(readResponse.error)}`,
-      );
-    }
-    expect(readResponse.result).toBeDefined();
-    const readResult = readResponse.result as {
-      contents?: Array<{ type: string; text?: string; uri?: string }>;
-    };
-    expect(readResult.contents).toBeDefined();
-    const textBlock = readResult.contents!.find((c) => c.type === 'text');
-    expect(textBlock?.text).toBeDefined();
-    const parsed = JSON.parse(textBlock!.text!) as Array<{ name: string }>;
+    assertNoMcpError(readResponse);
+    const readResult = readResponse.result as Record<string, unknown>;
+    const parsed = JSON.parse(getResultTextContent(readResult)) as Array<{ name: string }>;
     expect(parsed.length).toBeGreaterThan(0);
     expect(parsed.map((p) => p.name)).toContain('ActionSheet');
 

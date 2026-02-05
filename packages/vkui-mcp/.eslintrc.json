@@ -8,7 +8,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "ignorePatterns": ["vitest.config.ts", "dist"],
+  "ignorePatterns": ["dist"],
   "plugins": ["import"],
   "rules": {
     "import/order": [
