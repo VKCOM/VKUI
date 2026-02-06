@@ -16,8 +16,9 @@ function Folder({ item }: FolderProps) {
   const { searchableNavbarItems = [] } = useThemeConfig();
   const routeOriginal = useFSRoute();
   const [route] = routeOriginal.split('#');
-  const active = route === item.route;
-  const activeRouteInside = active || route.startsWith(item.route + '/');
+  const itemRoute = item.route;
+  const active = route === itemRoute;
+  const activeRouteInside = active || route.startsWith(itemRoute + '/');
   const { theme } = item as Item;
 
   const [open, setOpen] = React.useState<boolean | undefined>(
@@ -25,10 +26,10 @@ function Folder({ item }: FolderProps) {
   );
 
   React.useEffect(() => {
-    if (activeRouteInside && open === undefined) {
+    if (route === itemRoute || route.startsWith(itemRoute + '/')) {
       setOpen(true);
     }
-  }, [activeRouteInside, open]);
+  }, [route, itemRoute]);
 
   const isLink = 'withIndexPage' in item && item.withIndexPage;
 
