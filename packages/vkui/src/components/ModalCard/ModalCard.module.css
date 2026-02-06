@@ -22,16 +22,17 @@
 .hostMobile {
   --vkui_internal_ModalCard--translateY: 100%;
   --vkui_internal_ModalCard--safeAreaInsetBottom: var(--vkui_internal--safe_area_inset_bottom);
+  --vkui_internal_ModalCard--insetBlockEnd: calc(
+    var(--vkui--spacing_size_m) +
+    var(--vkui_internal_ModalCard--safeAreaInsetBottom)
+  );
 
   position: absolute;
   /*
    * Используем inset вместо padding, чтобы срабатывала логика с закрытие с Click Outside.
    * Для этого также нужны `inline-size: auto` и `margin-inline: auto`.
    */
-  inset-block-end: calc(
-    var(--vkui--spacing_size_m) +
-    var(--vkui_internal_ModalCard--safeAreaInsetBottom)
-  );
+  inset-block-end: var(--vkui_internal_ModalCard--insetBlockEnd);
   inset-inline: var(--vkui--spacing_size_m);
   box-sizing: border-box;
   inline-size: auto;
@@ -40,7 +41,7 @@
 }
 
 .hostMobile.hostStateEnter {
-  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--safeAreaInsetBottom)), 0);
+  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--insetBlockEnd)), 0);
   transition: none;
 }
 
@@ -49,12 +50,12 @@
 }
 
 .hostMobile.hostStateExiting {
-  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--safeAreaInsetBottom)), 0);
+  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--insetBlockEnd)), 0);
   transition: transform 0.2s ease;
 }
 
 .hostMobile.hostStateExited {
-  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--safeAreaInsetBottom)), 0);
+  transform: translate3d(0, calc(100% + var(--vkui_internal_ModalCard--insetBlockEnd)), 0);
   transition: none;
 }
 
