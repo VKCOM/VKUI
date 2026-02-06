@@ -465,6 +465,11 @@ export const Touch = ({
       // handlePointerDown(onTouchStart устанавливается отдельно через initializeNativeTouchEventStartWithPassiveFalse)
       onMouseDownCapture={useCapture ? handlePointerDown : undefined}
       onMouseDown={!useCapture ? handlePointerDown : undefined}
+      onPointerDown={(event: PointerEvent) => {
+        if (event.pointerType === 'touch' || event.pointerType === 'pen') {
+          event.preventDefault();
+        }
+      }}
     />
   );
 };
