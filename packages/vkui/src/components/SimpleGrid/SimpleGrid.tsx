@@ -69,7 +69,7 @@ export interface SimpleGridProps extends RootComponentProps<HTMLElement>, Layout
  */
 export const SimpleGrid = ({
   columns = 1,
-  gap,
+  gap = 0,
   margin = 'none',
   minColWidth,
   align = 'stretch',
