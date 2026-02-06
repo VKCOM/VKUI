@@ -140,14 +140,14 @@ export const Flex: React.FC<FlexProps> & {
   );
 };
 
-function getGapsPresets(rowGap?: GapProp, columnGap?: GapProp) {
+function getGapsPresets(rowGap: GapProp, columnGap: GapProp) {
   return classNames(
     typeof rowGap === 'string' && rowGapClassNames[rowGap],
     typeof columnGap === 'string' && columnGapClassNames[columnGap],
   );
 }
 
-function getGapsByUser(rowGap?: GapProp, columnGap?: GapProp) {
+function getGapsByUser(rowGap: GapProp, columnGap: GapProp) {
   const style: CSSCustomProperties = {};
 
   if (typeof rowGap === 'number') {
