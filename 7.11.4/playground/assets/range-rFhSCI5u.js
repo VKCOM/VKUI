@@ -1,0 +1,1 @@
+function u(n,r,t=1){const c=n<r?1:-1,i=Math.abs(n-r)+1,s=Math.ceil(i/t),a=Array(s);for(let e=0;e<a.length;e++)a[e]=n+e*t*c;return a}function g(n,r,t=1){return n>r?[]:u(n,r,t)}function o(n,r,t){return n>=r&&n<=t}export{o as i,g as r};
