@@ -5408,12 +5408,12 @@ __metadata:
     size-limit: "npm:^12.0.0"
     storybook: "npm:10.2.3"
     style-loader: "npm:^4.0.0"
-    stylelint: "npm:^17.1.0"
-    stylelint-config-recess-order: "npm:^7.6.0"
+    stylelint: "npm:^17.1.1"
+    stylelint-config-recess-order: "npm:^7.6.1"
     stylelint-config-standard: "npm:^40.0.0"
     stylelint-media-use-custom-media: "npm:^4.1.0"
     stylelint-order: "npm:^7.0.1"
-    stylelint-use-logical: "npm:^2.1.2"
+    stylelint-use-logical: "npm:^2.1.3"
     stylelint-value-no-unknown-custom-properties: "npm:^6.1.1"
     swc-loader: "npm:^0.2.7"
     swc-plugin-css-modules: "npm:8.0.0"
@@ -17703,13 +17703,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-recess-order@npm:^7.6.0":
-  version: 7.6.0
-  resolution: "stylelint-config-recess-order@npm:7.6.0"
+"stylelint-config-recess-order@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "stylelint-config-recess-order@npm:7.6.1"
   peerDependencies:
     stylelint: ^16.18.0 || ^17.0.0
     stylelint-order: ^7.0.0
-  checksum: 10/29053eb9972eefeb5b7902d7a7e7497c8e7a03c9c96092ddd36b34e3762e7e9482ac21ba24301e3527cc02eb8ff3e27ece6efe95c8e945971fc067e394f8a750
+  checksum: 10/e202e43bbe4ae155391eebb3791e06efee4f8bad376a7d464f5bbc808a38316610c0e338ced8f418d56311e8f9d79185a9b4670446f21d10d7532379c581e215
   languageName: node
   linkType: hard
 
@@ -17754,12 +17754,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-use-logical@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "stylelint-use-logical@npm:2.1.2"
+"stylelint-use-logical@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "stylelint-use-logical@npm:2.1.3"
   peerDependencies:
-    stylelint: ">= 11 < 17"
-  checksum: 10/8e96ffa0858d4863de9bf20164c7d7177793a35cad604ff762948ceccfef26227cccb59263237fb08e069bfcdc3f4eab7b726c3e9557bac810e37490b3ea2bf5
+    stylelint: ">= 11 < 18"
+  checksum: 10/b45187c3d850f74626d5295d5b89786ebfb4f337e763c447be810a6ba6112873f3cff29af825f98fa2b129eec85c5af6ad47f50e901076ae586c11b0982d589f
   languageName: node
   linkType: hard
 
@@ -17775,9 +17775,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^17.1.0":
-  version: 17.1.0
-  resolution: "stylelint@npm:17.1.0"
+"stylelint@npm:^17.1.1":
+  version: 17.1.1
+  resolution: "stylelint@npm:17.1.1"
   dependencies:
     "@csstools/css-parser-algorithms": "npm:^4.0.0"
     "@csstools/css-syntax-patches-for-csstree": "npm:^1.0.25"
@@ -17819,7 +17819,7 @@ __metadata:
     write-file-atomic: "npm:^7.0.0"
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 10/004f04546ec4a0defd05f977d74ff346b34d1af18f0507ae7015c72926f4f10e3a83a4246b5369e579f2557a1cd6e8708ea647210f02730f36d4b8e982a9d359
+  checksum: 10/f253a5af2c294b30043b7c17903cecdd596227d28d684bfc0b7f54634ffdee246b5743c7e61c9048c17e9ce0ae3bb7368876109f932073a343428fc86b0cba9a
   languageName: node
   linkType: hard
 
