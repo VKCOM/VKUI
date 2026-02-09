@@ -27,6 +27,6 @@
     "serve-static": "2.2.1",
     "swc-loader": "^0.2.7",
     "terser-webpack-plugin": "^5.3.16",
-    "webpack": "^5.104.1"
+    "webpack": "^5.105.0"
   }
 }
