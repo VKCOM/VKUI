@@ -5345,7 +5345,7 @@ __metadata:
     css-minimizer-webpack-plugin: "npm:^7.0.4"
     cssnano: "npm:^7.1.2"
     diff2html-cli: "npm:^5.2.15"
-    dotenv: "npm:^17.2.3"
+    dotenv: "npm:^17.2.4"
     eslint: "npm:^8.56.0"
     eslint-import-resolver-alias: "npm:^1.1.2"
     eslint-plugin-compat: "npm:^6.1.0"
@@ -6305,7 +6305,7 @@ __metadata:
     cli-table3: "npm:^0.6.1"
     css-loader: "npm:7.1.2"
     css-minimizer-webpack-plugin: "npm:^7.0.4"
-    dotenv: "npm:^17.2.3"
+    dotenv: "npm:^17.2.4"
     finalhandler: "npm:2.1.1"
     html-webpack-plugin: "npm:^5.6.6"
     mini-css-extract-plugin: "npm:^2.10.0"
@@ -8362,10 +8362,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^17.2.3":
-  version: 17.2.3
-  resolution: "dotenv@npm:17.2.3"
-  checksum: 10/f8b78626ebfff6e44420f634773375c9651808b3e1a33df6d4cc19120968eea53e100f59f04ec35f2a20b2beb334b6aba4f24040b2f8ad61773f158ac042a636
+"dotenv@npm:^17.2.4":
+  version: 17.2.4
+  resolution: "dotenv@npm:17.2.4"
+  checksum: 10/3b0fdfb40aebfec3a3b4421990b5874cb93c5a259d20ef637ead237a360cbaf753879d3a66e5c044147658824d86ffead6a4090e8ebb727782e5717fcdb636dd
   languageName: node
   linkType: hard
 
