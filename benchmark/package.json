@@ -9,7 +9,7 @@
     "runtime:start:ci": "yarn run -T playwright test --config runtime/playwright.config.ts"
   },
   "dependencies": {
-    "@playwright/test": "1.58.1",
+    "@playwright/test": "1.58.2",
     "@swc/core": "^1.15.11",
     "@vkontakte/vkui": "workspace:packages/vkui",
     "cli-table3": "^0.6.1",
@@ -19,7 +19,7 @@
     "finalhandler": "2.1.1",
     "html-webpack-plugin": "^5.6.6",
     "mini-css-extract-plugin": "^2.10.0",
-    "playwright": "1.58.1",
+    "playwright": "1.58.2",
     "postcss": "^8.5.6",
     "postcss-modules": "^6.0.1",
     "react": "^18.3.1",
