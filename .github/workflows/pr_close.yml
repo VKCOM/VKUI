@@ -188,6 +188,8 @@ jobs:
           branch: ${{ env.RELEASE_BRANCH_NAME }}
 
       # Запускаем форкфлоу скрипта публикации
+      # В `publish.yml` поле `version_type` помечено как `required` и, чтобы избежать ошибок, стоит проставить.
+      # Значение этого поля не важно, так как оно будет проигнорировано из-за поля `custom_version`
       - name: Publish new version
         uses: actions/github-script@v8
         with:
