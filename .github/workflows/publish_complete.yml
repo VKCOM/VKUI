@@ -89,6 +89,12 @@ jobs:
           VERSION="${TAG##*@}"
           echo "value=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Define branch name
+        id: define_branch_name
+        run: |
+          # Используем единый формат ветки, совпадающий с тем, что создаётся в pr_close.yml (release/vkui-floating-ui-{version})
+          echo "branch_name=release/vkui-floating-ui-${{ steps.vkui_floating_ui_version.outputs.value }}" >> $GITHUB_OUTPUT
+
       # Обновляем версию vkui-floating-ui в vkui
       - name: update vkui-floating-ui version in vkui
         run: |
@@ -101,7 +107,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: master
-          branch: ${{ env.RELEASE_BRANCH_NAME }}
+          branch: ${{ steps.define_branch_name.outputs.branch_name }}
           commit-message: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.vkui_floating_ui_version.outputs.value }}'
           delete-branch: true
           title: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.vkui_floating_ui_version.outputs.value }}'
