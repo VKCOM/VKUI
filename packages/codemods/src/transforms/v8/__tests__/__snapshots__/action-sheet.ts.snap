@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`action-sheet > transforms correctly 1`] = `
+"import { ActionSheet } from '@vkontakte/vkui';
+import React from 'react';
+
+const App = () => {
+  const handleClose = () => {
+    console.log('handle close');
+  };
+
+  return (
+    <React.Fragment>
+      <ActionSheet onClosed={() => {}}>Content</ActionSheet>
+      <ActionSheet onClosed={() => console.log('onClose')}>Content</ActionSheet>
+      <ActionSheet
+        onClosed={() => {
+          console.log('closed');
+        }}
+      >
+        Content with multiline handler
+      </ActionSheet>
+      <ActionSheet onClosed={handleClose}>Content with function reference</ActionSheet>
+      <ActionSheet>Content without onClose</ActionSheet>
+      <ActionSheet onClosed={onCloseHandler} mode="sheet">
+        Content with extra props
+      </ActionSheet>
+    </React.Fragment>
+  );
+};
+
+function onCloseHandler() {
+  console.log('handle close');
+}"
+`;
