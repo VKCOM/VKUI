@@ -76,6 +76,12 @@ jobs:
     runs-on: ubuntu-slim
     name: Complete @vkontakte/vkui-floating-ui
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
       - name: get vkui-floating-ui version from git release tag
         id: vkui_floating_ui_version
         run: |
