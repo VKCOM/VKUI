@@ -200,7 +200,6 @@ jobs:
               inputs: {
                 package_name: '@vkontakte/vkui-floating-ui',
                 custom_version: "${{ steps.calc_new_version_vkui_floating_ui.outputs.new_version }}",
-                latest: true,
                 close_milestone: false
               }
             })
