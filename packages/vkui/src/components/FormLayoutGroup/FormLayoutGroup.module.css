@@ -5,12 +5,15 @@
   border: 0;
 }
 
+.withPadding {
+  padding-block: var(--vkui--size_form_item_padding_vertical--regular);
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
+}
+
 .modeHorizontal {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  padding-block: var(--vkui--size_form_item_padding_vertical--regular);
-  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 
 .removable {
