@@ -8,8 +8,51 @@ import { coordX, coordY, touchEnabled, type VKUITouchEvent } from '../../lib/tou
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasComponent, HasRootRef } from '../../types';
 
-function isTouchEvent(event: MouseEvent | TouchEvent | React.TouchEvent | React.MouseEvent) {
+interface EventWithType {
+  /**
+   * Тип события.
+   */
+  readonly type: string;
+}
+
+function isTouchEvent(event: EventWithType) {
   return event.type.startsWith('touch');
+}
+
+type CheckEvent = (event: EventWithType) => void;
+
+type IsEventLock = (event: EventWithType) => boolean;
+
+/**
+ * Телефоны после touch событий могут отправлять события мыши,
+ * Это может происходить при обычном нажатии.
+ *
+ * Нельзя использовать хук во время рендеринга.
+ */
+function useMouseEventLock(): [IsEventLock, CheckEvent] {
+  const isMouseEventLockRef = React.useRef<boolean>(false);
+  const timerRef = React.useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const isEventLock: IsEventLock = React.useCallback((event: EventWithType) => {
+    return !isTouchEvent(event) && isMouseEventLockRef.current === true;
+  }, []);
+
+  const checkEvent: CheckEvent = React.useCallback((event: EventWithType) => {
+    if (!isTouchEvent(event)) {
+      return;
+    }
+
+    isMouseEventLockRef.current = true;
+
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      isMouseEventLockRef.current = false;
+    }, 1000);
+  }, []);
+
+  React.useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  return [isEventLock, checkEvent];
 }
 
 /**
@@ -237,9 +280,10 @@ export const Touch = ({
   const hostRef = useExternRef(getRootRef);
   const [isTouchEnabled] = React.useState(touchEnabled);
   const gestureRef = React.useRef<Gesture | null>(null);
-  const isTouchEventRef = React.useRef<boolean>(false);
   const didSlide = React.useRef(false);
   const disposeTargetNativeGestureEvents = React.useRef<VoidFunction | null>(null);
+
+  const [isEventLock, checkEventForLock] = useMouseEventLock();
 
   const cleanupTargetNativeGestureEvents = () => {
     gestureRef.current = null;
@@ -340,17 +384,12 @@ export const Touch = ({
   const handlePointerDown = useStableCallback(
     (event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement> | TouchEvent) => {
       // Если touchstart сэмулировало mousedown, то заканчиваем обработку
-      if (!isTouchEvent(event) && isTouchEventRef.current === true) {
+      if (isEventLock(event)) {
         return;
       }
 
-      // Помечаем что произошел touch событие
-      if (isTouchEvent(event)) {
-        isTouchEventRef.current = true;
-        setTimeout(() => {
-          isTouchEventRef.current = false;
-        }, 1000);
-      }
+      // Помечаем что произошло touch событие
+      checkEventForLock(event);
 
       if (gestureRef.current !== null) {
         return;
