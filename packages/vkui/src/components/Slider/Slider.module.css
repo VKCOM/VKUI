@@ -9,7 +9,7 @@
 
 .disabled {
   cursor: not-allowed;
-  opacity: var(--vkui--opacity_disable_accessibility);
+  opacity: var(--vkui--opacity_disable);
 }
 
 .track,
