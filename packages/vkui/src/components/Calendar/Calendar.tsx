@@ -5,17 +5,11 @@ import { classNames, isSameDate } from '@vkontakte/vkjs';
 import { useCalendar } from '../../hooks/useCalendar';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { Keys, pressedKey } from '../../lib/accessibility';
-import {
-  clamp,
-  isFirstDay,
-  isLastDay,
-  navigateDate,
-  NAVIGATION_KEYS,
-  setTimeEqual,
-} from '../../lib/calendar';
+import { clamp, isFirstDay, isLastDay, navigateDate, NAVIGATION_KEYS } from '../../lib/calendar';
 import {
   convertDateFromTimeZone,
   convertDateToTimeZone,
+  createDateInTimeZone,
   isSameMonth,
   startOfMonth,
 } from '../../lib/date';
@@ -293,13 +287,18 @@ export const Calendar = ({
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      let actualDate = setTimeEqual(date, timeZonedValue);
+      let actualDate = createDateInTimeZone(timezone, timeZonedValue ?? date, {
+        year: date.getFullYear(),
+        month: date.getMonth(),
+        date: date.getDate(),
+      });
+
       if (minDateTime || maxDateTime) {
         actualDate = clamp(actualDate, { min: minDateTime, max: maxDateTime });
       }
       updateValue(actualDate);
     },
-    [timeZonedValue, updateValue, maxDateTime, minDateTime],
+    [timezone, timeZonedValue, updateValue, maxDateTime, minDateTime],
   );
 
   const onDayFocus = React.useCallback(
@@ -320,6 +319,16 @@ export const Calendar = ({
   const isDayActive = React.useCallback(
     (day: Date) => Boolean(timeZonedValue && isSameDate(day, timeZonedValue)),
     [timeZonedValue],
+  );
+
+  const timeZoneSetHours = React.useCallback(
+    (date: Date, hours: number) => createDateInTimeZone(timezone, date, { hours }),
+    [timezone],
+  );
+
+  const timeZoneSetMinutes = React.useCallback(
+    (date: Date, minutes: number) => createDateInTimeZone(timezone, date, { minutes }),
+    [timezone],
   );
 
   const isFocusableDayInViewDateMonth = focusableDay && isSameMonth(focusableDay, viewDate);
@@ -410,6 +419,8 @@ export const Calendar = ({
           <CalendarTime
             value={timeZonedValue}
             onChange={updateValue}
+            setHours={timeZoneSetHours}
+            setMinutes={timeZoneSetMinutes}
             onDoneButtonClick={onDoneButtonClick}
             doneButtonText={doneButtonText}
             doneButtonDisabled={doneButtonDisabled}

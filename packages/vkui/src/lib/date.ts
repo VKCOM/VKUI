@@ -140,6 +140,35 @@ export const convertDateFromTimeZone = (date: Date | null, timezone?: string): D
   return TZDateMini.tz(systemTimezone, date);
 };
 
+export type CreateDateInTimeZoneOverrides = {
+  year?: number;
+  month?: number;
+  date?: number;
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+  milliseconds?: number;
+};
+
+export function createDateInTimeZone(
+  timezone: string | undefined,
+  baseDate: Date,
+  overrides?: CreateDateInTimeZoneOverrides,
+): Date {
+  const year = overrides?.year ?? baseDate.getFullYear();
+  const month = overrides?.month ?? baseDate.getMonth();
+  const date = overrides?.date ?? baseDate.getDate();
+  const hours = overrides?.hours ?? baseDate.getHours();
+  const minutes = overrides?.minutes ?? baseDate.getMinutes();
+  const seconds = overrides?.seconds ?? baseDate.getSeconds();
+  const milliseconds = overrides?.milliseconds ?? baseDate.getMilliseconds();
+
+  if (!timezone) {
+    return new Date(year, month, date, hours, minutes, seconds, milliseconds);
+  }
+  return TZDateMini.tz(timezone, year, month, date, hours, minutes, seconds, milliseconds);
+}
+
 const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
   month: '2-digit',
