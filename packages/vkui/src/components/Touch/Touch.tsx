@@ -349,7 +349,7 @@ export const Touch = ({
         isTouchEventRef.current = true;
         setTimeout(() => {
           isTouchEventRef.current = false;
-        }, 50);
+        }, 1000);
       }
 
       if (gestureRef.current !== null) {
