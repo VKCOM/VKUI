@@ -8,6 +8,10 @@ import { coordX, coordY, touchEnabled, type VKUITouchEvent } from '../../lib/tou
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasComponent, HasRootRef } from '../../types';
 
+function isTouchEvent(event: MouseEvent | TouchEvent | React.TouchEvent | React.MouseEvent) {
+  return event.type.startsWith('touch');
+}
+
 /**
  * Костыль для правильной работы тайпскрипта.
  */
@@ -233,6 +237,7 @@ export const Touch = ({
   const hostRef = useExternRef(getRootRef);
   const [isTouchEnabled] = React.useState(touchEnabled);
   const gestureRef = React.useRef<Gesture | null>(null);
+  const isTouchEventRef = React.useRef<boolean>(false);
   const didSlide = React.useRef(false);
   const disposeTargetNativeGestureEvents = React.useRef<VoidFunction | null>(null);
 
@@ -245,10 +250,6 @@ export const Touch = ({
   };
 
   React.useEffect(() => cleanupTargetNativeGestureEvents, []);
-
-  const isTouchEvent = (event: MouseEvent | TouchEvent) => {
-    return event.type.startsWith('touch');
-  };
 
   /**
    * Note: используем `useStableCallback()`, чтобы не терялась область видимости `onEnd`/`onEndX`/`onEndY`.
@@ -339,6 +340,18 @@ export const Touch = ({
   const handlePointerDown = useStableCallback(
     (event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement> | TouchEvent) => {
       // Если touchstart сэмулировало mousedown, то заканчиваем обработку
+      if (!isTouchEvent(event) && isTouchEventRef.current === true) {
+        return;
+      }
+
+      // Помечаем что произошел touch событие
+      if (isTouchEvent(event)) {
+        isTouchEventRef.current = true;
+        setTimeout(() => {
+          isTouchEventRef.current = false;
+        }, 50);
+      }
+
       if (gestureRef.current !== null) {
         return;
       }
@@ -465,11 +478,6 @@ export const Touch = ({
       // handlePointerDown(onTouchStart устанавливается отдельно через initializeNativeTouchEventStartWithPassiveFalse)
       onMouseDownCapture={useCapture ? handlePointerDown : undefined}
       onMouseDown={!useCapture ? handlePointerDown : undefined}
-      onPointerDown={(event: PointerEvent) => {
-        if (event.pointerType === 'touch' || event.pointerType === 'pen') {
-          event.preventDefault();
-        }
-      }}
     />
   );
 };
