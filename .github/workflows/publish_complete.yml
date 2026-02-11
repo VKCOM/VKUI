@@ -37,6 +37,7 @@ jobs:
       npm_tag: ${{ steps.publish_workflow_payload.outputs.npm_tag || inputs.npm_tag }}
       git_release_tag: ${{ steps.publish_workflow_payload.outputs.git_release_tag || inputs.git_release_tag }}
       close_milestone: ${{ steps.publish_workflow_payload.outputs.close_milestone || github.event_name == 'workflow_dispatch' }}
+      branch: ${{ steps.publish_workflow_payload.outputs.branch || github.ref }}
     steps:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
@@ -56,6 +57,7 @@ jobs:
           echo "npm_tag=$(cat publish_workflow_payload/npm_tag.txt)" >> $GITHUB_OUTPUT
           echo "git_release_tag=$(cat publish_workflow_payload/git_release_tag.txt)" >> $GITHUB_OUTPUT
           echo "close_milestone=$(cat publish_workflow_payload/close_milestone.txt)" >> $GITHUB_OUTPUT
+          echo "branch=$(cat publish_workflow_payload/branch.txt)" >> $GITHUB_OUTPUT
 
   package_vkui_complete:
     needs: ['payload']
@@ -101,7 +103,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: master
-          branch: ${{ env.RELEASE_BRANCH_NAME }}
+          branch: ${{ needs.payload.outputs.branch }}
           commit-message: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.vkui_floating_ui_version.outputs.value }}'
           delete-branch: true
           title: 'build(deps): Bump @vkontakte/vkui-floating-ui to ${{ steps.vkui_floating_ui_version.outputs.value }}'

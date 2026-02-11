@@ -80,6 +80,7 @@ runs:
         echo ${{ inputs.npm_tag }} > publish_workflow_payload/npm_tag.txt
         echo ${{ steps.git_release_tag.outputs.value }} > publish_workflow_payload/git_release_tag.txt
         echo ${{ inputs.close_milestone }} > publish_workflow_payload/close_milestone.txt
+        echo ${{ inputs.branch }} > publish_workflow_payload/branch.txt
       shell: bash
 
     - name: Upload payload data to artifact for deploy workflow
