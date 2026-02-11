@@ -5,7 +5,7 @@
 }
 
 .disabled {
-  opacity: var(--vkui--opacity_disable_accessibility);
+  opacity: var(--vkui--opacity_disable);
 }
 
 .in {
