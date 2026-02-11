@@ -96,6 +96,14 @@ export function useHover({
 
   const prevIsHoveredRef = React.useRef<boolean | undefined>(undefined);
 
+  React.useEffect(() => {
+    if (!hasHover) {
+      setHoveredStateLocal(false);
+      prevIsHoveredRef.current = false;
+      setParentStateLock(false);
+    }
+  }, [hasHover, setParentStateLock]);
+
   const handleHover = React.useCallback(
     (isHover: boolean) => {
       setHoveredStateLocal(isHover);
