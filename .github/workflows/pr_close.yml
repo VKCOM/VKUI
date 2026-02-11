@@ -95,6 +95,54 @@ jobs:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           directory: packages/vkui/
 
+  v7-patch:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'ci:cherry-pick:v7-patch')
+    concurrency: ci-stable
+    runs-on: ubuntu-slim
+    name: v7 Stable Patch
+    steps:
+      - name: Checkout (for forked PR)
+        if: github.event.pull_request.base.repo.id != github.event.pull_request.head.repo.id
+        uses: actions/checkout@v6
+
+      - name: Checkout (for maintainer's PR)
+        if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - name: Fetch v7 branch
+        run: git fetch origin v7
+
+      - name: Get minor version from v7
+        id: get_minor_version
+        run: |
+          MINOR_VERSION=$(git show origin/v7:packages/vkui/package.json | jq -r '.version|split(".")[1]'")
+          echo "minor=${MINOR_VERSION}" >> $GITHUB_OUTPUT
+          echo "target_branch=7.${MINOR_VERSION}-stable" >> $GITHUB_OUTPUT
+
+      - name: Enable Corepack
+        run: corepack enable
+        shell: bash
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Set Git credentials
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Make patch
+        uses: VKCOM/gh-actions/VKUI/patch@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          directory: packages/vkui/
+          targetBranch: ${{ steps.get_minor_version.outputs.target_branch }}
+          needScreenshots: true
+
   is-updated-vkui-floating-ui:
     runs-on: ubuntu-slim
     if: ${{ github.event.pull_request.merged == true
