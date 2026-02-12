@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
 import { Clickable } from './Clickable';
@@ -68,5 +68,40 @@ describe('Clickable', () => {
     expect(disabledElement.ariaDisabled).toBeTruthy();
     expect(disabledElement).toBe(enabledElement);
     expect(result.getByTestId('inner-element')).toBe(innerElementFirstRender);
+  });
+
+  it('resets hover state when hasHover becomes false (e.g. loading), so hover is not shown after hasHover is true again', () => {
+    const hoverClass = 'test-hover-class';
+
+    const TestWrapper = () => {
+      const [loading, setLoading] = React.useState(false);
+      return (
+        <>
+          <Clickable
+            onClick={() => setLoading(true)}
+            hasHover={!loading}
+            hoverClassName={hoverClass}
+            data-testid="clickable"
+          >
+            Load
+          </Clickable>
+          <button data-testid="done-button" onClick={() => setLoading(false)}>
+            Done
+          </button>
+        </>
+      );
+    };
+    render(<TestWrapper />);
+    const clickable = screen.getByTestId('clickable');
+    const doneButton = screen.getByTestId('done-button');
+
+    fireEvent.pointerEnter(clickable, { pointerType: 'mouse', pointerId: 1 });
+    expect(clickable).toHaveClass(hoverClass);
+
+    fireEvent.click(clickable);
+    expect(clickable).not.toHaveClass(hoverClass);
+
+    fireEvent.click(doneButton);
+    expect(clickable).not.toHaveClass(hoverClass);
   });
 });
