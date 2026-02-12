@@ -35,6 +35,9 @@ exports[`generate layout classes 1`] = `
 .vkui-padding-unset {
     padding: unset;
 }
+.vkui-padding-system {
+    padding: var(--vkui--size_base_padding_vertical--regular) var(--vkui--size_base_padding_horizontal--regular);
+}
 .vkui-padding {
     padding: var(--vkui_internal--padding);
 }
@@ -73,6 +76,9 @@ exports[`generate layout classes 1`] = `
 }
 .vkui-padding-inline-unset {
     padding-inline: unset;
+}
+.vkui-padding-inline-system {
+    padding-inline: var(--vkui--size_base_padding_horizontal--regular);
 }
 .vkui-padding-inline {
     padding-inline: var(--vkui_internal--padding-inline);
@@ -113,6 +119,9 @@ exports[`generate layout classes 1`] = `
 .vkui-padding-block-unset {
     padding-block: unset;
 }
+.vkui-padding-block-system {
+    padding-block: var(--vkui--size_base_padding_vertical--regular);
+}
 .vkui-padding-block {
     padding-block: var(--vkui_internal--padding-block);
 }
@@ -151,6 +160,9 @@ exports[`generate layout classes 1`] = `
 }
 .vkui-padding-inline-start-unset {
     padding-inline-start: unset;
+}
+.vkui-padding-inline-start-system {
+    padding-inline-start: var(--vkui--size_base_padding_horizontal--regular);
 }
 .vkui-padding-inline-start {
     padding-inline-start: var(--vkui_internal--padding-inline-start);
@@ -191,6 +203,9 @@ exports[`generate layout classes 1`] = `
 .vkui-padding-inline-end-unset {
     padding-inline-end: unset;
 }
+.vkui-padding-inline-end-system {
+    padding-inline-end: var(--vkui--size_base_padding_horizontal--regular);
+}
 .vkui-padding-inline-end {
     padding-inline-end: var(--vkui_internal--padding-inline-end);
 }
@@ -230,6 +245,9 @@ exports[`generate layout classes 1`] = `
 .vkui-padding-block-start-unset {
     padding-block-start: unset;
 }
+.vkui-padding-block-start-system {
+    padding-block-start: var(--vkui--size_base_padding_vertical--regular);
+}
 .vkui-padding-block-start {
     padding-block-start: var(--vkui_internal--padding-block-start);
 }
@@ -268,6 +286,9 @@ exports[`generate layout classes 1`] = `
 }
 .vkui-padding-block-end-unset {
     padding-block-end: unset;
+}
+.vkui-padding-block-end-system {
+    padding-block-end: var(--vkui--size_base_padding_vertical--regular);
 }
 .vkui-padding-block-end {
     padding-block-end: var(--vkui_internal--padding-block-end);

@@ -19,7 +19,7 @@ type Story = StoryObj<BoxProps>;
 export const Playground: Story = {
   args: {},
   render: (args) => (
-    <Box padding="4xl" {...args} style={{ background: 'grey' }}>
+    <Box padding="system" {...args} style={{ background: 'grey' }}>
       {Array.from({ length: 5 }, (_, index) => {
         return <Avatar key={index} />;
       })}
