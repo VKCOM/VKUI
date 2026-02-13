@@ -25,10 +25,12 @@ return (
     <Button onClick={() => setIsOpen(true)}>Открыть окно</Button>
     {isOpen && (
       <PopoutWrapper onClick={() => setIsOpen(false)}>
-        <Div>
-          <Title>Всплывающее окно</Title>
-          <Text>Содержимое всплывающего окна</Text>
-        </Div>
+        <Card>
+          <Box padding="system">
+            <Title>Всплывающее окно</Title>
+            <Text>Содержимое всплывающего окна</Text>
+          </Box>
+        </Card>
       </PopoutWrapper>
     )}
   </>
