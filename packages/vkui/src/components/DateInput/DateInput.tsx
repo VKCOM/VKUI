@@ -345,7 +345,7 @@ export const DateInput = ({
         const now = new Date();
         const referenceDate = value ?? (enableTime ? startOfMinute(now) : startOfDay(now));
         const parsed = parse(formattedValue, mask, referenceDate);
-        const toUpdate = timezone ? createDateInTimeZone(timezone, parsed) : parsed;
+        const toUpdate = timezone ? createDateInTimeZone(parsed, timezone) : parsed;
         updateValue(toUpdate);
       }
     },

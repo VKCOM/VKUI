@@ -20,3 +20,7 @@
 .button {
   margin-inline-start: auto;
 }
+
+.optionLabel {
+  white-space: nowrap;
+}

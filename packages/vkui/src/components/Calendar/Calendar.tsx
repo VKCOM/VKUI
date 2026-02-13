@@ -287,7 +287,7 @@ export const Calendar = ({
 
   const onDayChange = React.useCallback(
     (date: Date) => {
-      let actualDate = createDateInTimeZone(timezone, timeZonedValue ?? date, {
+      let actualDate = createDateInTimeZone(timeZonedValue ?? date, timezone, {
         year: date.getFullYear(),
         month: date.getMonth(),
         date: date.getDate(),
@@ -322,12 +322,12 @@ export const Calendar = ({
   );
 
   const timeZoneSetHours = React.useCallback(
-    (date: Date, hours: number) => createDateInTimeZone(timezone, date, { hours }),
+    (date: Date, hours: number) => createDateInTimeZone(date, timezone, { hours }),
     [timezone],
   );
 
   const timeZoneSetMinutes = React.useCallback(
-    (date: Date, minutes: number) => createDateInTimeZone(timezone, date, { minutes }),
+    (date: Date, minutes: number) => createDateInTimeZone(date, timezone, { minutes }),
     [timezone],
   );
 
