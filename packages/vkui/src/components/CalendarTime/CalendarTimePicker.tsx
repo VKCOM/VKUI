@@ -4,6 +4,7 @@ import { type ChangeEvent, useState } from 'react';
 import * as React from 'react';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
+import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import styles from './CalendarTime.module.css';
 
 const selectFilterFn = () => true;
@@ -78,6 +79,11 @@ export const CalendarTimePicker = ({
           filterFn={selectFilterFn}
           onInputChange={onPickerValueChange}
           onInputKeyDown={onInputKeyDown}
+          renderOption={({ children: optionChildren, ...optionProps }) => (
+            <CustomSelectOption {...optionProps} textNoWrap>
+              {optionChildren}
+            </CustomSelectOption>
+          )}
           slotProps={{
             input: {
               'aria-label': inputLabel,

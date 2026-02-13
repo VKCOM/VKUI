@@ -55,6 +55,10 @@
   word-break: break-word;
 }
 
+.textNoWrap {
+  white-space: nowrap;
+}
+
 .after {
   display: flex;
   flex-shrink: 0;
