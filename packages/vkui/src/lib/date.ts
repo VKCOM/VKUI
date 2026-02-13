@@ -152,7 +152,7 @@ export type CreateDateInTimeZoneOverrides = {
 
 export function createDateInTimeZone(
   baseDate: Date,
-  timezone: string | undefined,
+  timezone?: string,
   overrides?: CreateDateInTimeZoneOverrides,
 ): Date {
   const year = overrides?.year ?? baseDate.getFullYear();
