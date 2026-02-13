@@ -69,6 +69,9 @@ export const TextareaPlayground = (props: ComponentPlaygroundProps) => {
           value: ['text'],
           rows: [1],
         },
+        {
+          placeholder: ['Очень длинный placeholder\n на webkit\n может не иметь\n отступа снизу'],
+        },
       ]}
     >
       {(props: TextareaProps) => <Textarea {...props} />}
