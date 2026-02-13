@@ -78,12 +78,12 @@ export const CalendarTimePicker = ({
           filterFn={selectFilterFn}
           onInputChange={onPickerValueChange}
           onInputKeyDown={onInputKeyDown}
-          getSelectInputRef={inputRef}
           slotProps={{
             input: {
               'aria-label': inputLabel,
               'data-testid': inputTestId,
               'value': inputValue,
+              'getRootRef': inputRef,
               onBlur,
             },
           }}

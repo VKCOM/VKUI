@@ -68,9 +68,10 @@ export const useDateInputValue = ({
 
   const updateValue = React.useCallback(
     (newValue: Date) => {
+      const valueForDisplay = _convertDateToTimeZone(newValue, timezone) as Date;
       if (!isControlled) {
-        setInternalValue(newValue);
-        lastUpdatedValueRef.current = newValue;
+        setInternalValue(valueForDisplay);
+        lastUpdatedValueRef.current = valueForDisplay;
       }
       const originalTimezoneValue = _convertDateFromTimeZone(newValue, timezone);
       onChange?.(originalTimezoneValue);

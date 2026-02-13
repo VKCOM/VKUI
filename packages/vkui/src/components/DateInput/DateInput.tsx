@@ -8,6 +8,8 @@ import { useDateInput } from '../../hooks/useDateInput';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import {
+  convertDateToTimeZone,
+  createDateInTimeZone,
   dateFormatter,
   dateTimeFormatter,
   isMatch,
@@ -341,12 +343,13 @@ export const DateInput = ({
 
       if (isMatch(formattedValue, mask)) {
         const now = new Date();
-        updateValue(
-          parse(formattedValue, mask, value ?? (enableTime ? startOfMinute(now) : startOfDay(now))),
-        );
+        const referenceDate = value ?? (enableTime ? startOfMinute(now) : startOfDay(now));
+        const parsed = parse(formattedValue, mask, referenceDate);
+        const toUpdate = createDateInTimeZone(parsed, timezone);
+        updateValue(toUpdate);
       }
     },
-    [enableTime, maxElement, updateValue, value],
+    [enableTime, maxElement, timezone, updateValue, value],
   );
 
   const refs = React.useMemo(
@@ -398,7 +401,8 @@ export const DateInput = ({
   const onCalendarChange = React.useCallback(
     (value: Date) => {
       if (enableTime) {
-        setInternalValue(value);
+        const valueForDisplay = convertDateToTimeZone(value, timezone) as Date;
+        setInternalValue(valueForDisplay);
         return;
       }
       updateValue(value);
@@ -406,7 +410,7 @@ export const DateInput = ({
         removeFocusFromField();
       }
     },
-    [enableTime, updateValue, closeOnChange, setInternalValue, removeFocusFromField],
+    [enableTime, timezone, updateValue, closeOnChange, setInternalValue, removeFocusFromField],
   );
 
   const onDoneButtonClick = React.useCallback(() => {
@@ -646,6 +650,7 @@ export const DateInput = ({
                 nextMonthIcon={nextMonthIcon}
                 minDateTime={minDateTime}
                 maxDateTime={maxDateTime}
+                timezone={timezone}
                 {...calendarTestsProps}
               />
             </div>
