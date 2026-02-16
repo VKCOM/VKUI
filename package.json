@@ -71,7 +71,7 @@
     "postcss-custom-media": "^12.0.0",
     "postcss-gap-properties": "^7.0.0",
     "postcss-import": "^16.1.1",
-    "postcss-loader": "^8.2.0",
+    "postcss-loader": "^8.2.1",
     "postcss-logical": "^9.0.0",
     "postcss-modules": "^6.0.1",
     "postcss-value-parser": "^4.2.0",
@@ -97,7 +97,7 @@
     "vitest": "^4.0.18",
     "vitest-axe": "^0.1.0",
     "vitest-fail-on-console": "^0.10.1",
-    "webpack": "^5.105.0",
+    "webpack": "^5.105.2",
     "webpack-cli": "^6.0.1",
     "webpack-merge": "^6.0.1",
     "yargs": "^18.0.0"
