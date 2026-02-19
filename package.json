@@ -63,7 +63,7 @@
     "eslint-plugin-unicorn": "^55.0.0",
     "happy-css-modules": "^4.0.0",
     "husky": "^9.1.6",
-    "jsdom": "^28.1.0",
+    "jsdom": "^28.0.0",
     "lint-staged": "^16.2.7",
     "mini-css-extract-plugin": "^2.10.0",
     "postcss": "^8.5.6",
