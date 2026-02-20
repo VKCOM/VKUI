@@ -145,6 +145,64 @@ return (
   ```
 </Playground>
 
+Чтобы расположить иконку в любом месте, используйте компонент `<Accordion.Indicator />`
+
+<Playground Wrapper={BlockWrapper} style={{ height: 200 }}>
+  ```jsx
+const users = [
+  {
+    id: 1771114,
+    first_name: 'Ином',
+    last_name: 'Мирджамолов',
+    screen_name: 'inomdzhon',
+    photo_50: 'https://avatars.githubusercontent.com/u/5850354?s=50',
+  },
+  {
+    id: 58690866,
+    first_name: 'Эльдар',
+    last_name: 'Мухаметханов',
+    screen_name: 'e.muhamethanov',
+    photo_50: 'https://avatars.githubusercontent.com/u/61377022?s=50',
+  },
+  {
+    id: 117253521,
+    first_name: 'Даниил',
+    last_name: 'Суворов',
+    screen_name: 'SevereCloud',
+    photo_50: 'https://avatars.githubusercontent.com/u/14944123?s=50',
+  },
+];
+
+return(
+  <Accordion>
+    <Accordion.Summary
+      iconPosition="none"
+      after={
+        <UsersStack
+          photos={users.map(user=>user.photo_50)}
+        />
+      }
+      badgeAfterTitle={<Accordion.Indicator />}
+    >
+      Разработчики
+    </Accordion.Summary>
+    <Accordion.Content>
+      {users.map(user => (
+        <SimpleCell
+          key={user.id}
+          href={`https://vk.ru/id${user.id}`}
+          target="_blank"
+          before={<Avatar size={28} src={user.photo_50} alt="Фотография" />}
+        >
+          {user.first_name} {user.last_name}
+        </SimpleCell>
+      ))}
+    </Accordion.Content>
+  </Accordion>
+);
+  ```
+</Playground>
+
 ## Анимация
 
 Компонент поддерживает следующие анимационные эффекты:
@@ -175,6 +233,8 @@ return (
 ### Accordion [#accordion-api]
 
 ### Accordion.Summary [#accordion-summary-api]
+
+### Accordion.Indicator [#accordion-icon-api]
 
 ### Accordion.Content [#accordion-content-api]
 

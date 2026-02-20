@@ -6,6 +6,7 @@ import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisp
 import { type HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
 import { AccordionContext, type AccordionContextProps } from './AccordionContext';
+import { AccordionIndicator } from './AccordionIndicator';
 import { AccordionSummary } from './AccordionSummary';
 
 function useAccordionId(id: AccordionProps['id']) {
@@ -49,6 +50,7 @@ export interface AccordionProps extends HasChildren {
 export const Accordion: React.FC<AccordionProps> & {
   Summary: typeof AccordionSummary;
   Content: typeof AccordionContent;
+  Indicator: typeof AccordionIndicator;
 } = ({
   id,
   expanded: expandedProp,
@@ -83,8 +85,10 @@ export const Accordion: React.FC<AccordionProps> & {
 
 Accordion.Summary = AccordionSummary;
 Accordion.Content = AccordionContent;
+Accordion.Indicator = AccordionIndicator;
 
 if (process.env.NODE_ENV !== 'production') {
   defineComponentDisplayNames(Accordion.Summary, 'Accordion.Summary');
   defineComponentDisplayNames(Accordion.Content, 'Accordion.Content');
+  defineComponentDisplayNames(Accordion.Indicator, 'Accordion.Indicator');
 }
