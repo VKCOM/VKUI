@@ -1,8 +1,9 @@
-'use client';
-
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasRootRef } from '../../types';
+import { RootComponent } from '../RootComponent/RootComponent';
+import { CustomScrollViewTint } from './Tint/CustomScrollViewTint';
 import styles from './CustomScrollView.module.css';
 
 const overscrollBehaviorClassNames = {
@@ -19,18 +20,6 @@ const scrollBehaviorClassNames = {
 export interface CustomScrollViewProps
   extends React.AllHTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
-  /**
-   * `className` для компонента.
-   */
-  className?: HTMLDivElement['className'];
-  /**
-   * Обработчик события `scroll`.
-   */
-  onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
-  /**
-   * Содержимое.
-   */
-  children: React.ReactNode;
   /**
    * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior).
    */
@@ -55,31 +44,28 @@ export interface CustomScrollViewProps
  * @see https://vkui.io/components/custom-scroll-view
  */
 export const CustomScrollView = ({
-  className,
-  children,
   enableHorizontalScroll = false,
-  onScroll,
-  getRootRef,
   overscrollBehavior = 'auto',
   scrollBehavior = 'auto',
   scrollbarHidden = false,
   ...restProps
 }: CustomScrollViewProps): React.ReactNode => {
   return (
-    <div
-      className={classNames(
-        className,
+    <RootComponent
+      baseClassName={classNames(
         styles.host,
         enableHorizontalScroll && styles.horizontalScrollEnabled,
         overscrollBehaviorClassNames[overscrollBehavior],
         scrollBehaviorClassNames[scrollBehavior],
         scrollbarHidden && styles.scrollbarHidden,
       )}
-      ref={getRootRef}
-      onScroll={onScroll}
       {...restProps}
-    >
-      {children}
-    </div>
+    />
   );
 };
+
+CustomScrollView.Tint = CustomScrollViewTint;
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(CustomScrollView.Tint, 'CustomScrollView.Tint');
+}
