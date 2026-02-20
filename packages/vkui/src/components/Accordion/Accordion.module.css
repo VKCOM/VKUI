@@ -46,6 +46,7 @@
 }
 
 .inExited {
+  visibility: hidden;
   block-size: 0;
 }
 
