@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "@floating-ui/react-dom": "^2.1.7",
-    "@swc/helpers": "^0.5.18"
+    "@swc/helpers": "^0.5.19"
   },
   "devDependencies": {
     "@swc/core": "^1.15.11",
