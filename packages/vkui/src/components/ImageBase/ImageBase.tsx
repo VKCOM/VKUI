@@ -256,6 +256,10 @@ export const ImageBase: React.FC<ImageBaseProps> & {
   } = useMergeProps<React.ComponentProps<'img'> & HasRootRef<HTMLImageElement> & HasDataAttribute>(
     hasSrc
       ? {
+          // safari и firefox нужно чтобы атрибут `loading` был до `src`
+          //
+          // https://mihaly4.ru/image-loading-lazy-bug
+          loading,
           getRootRef: getRef,
           alt,
           className: classNames(
@@ -268,7 +272,6 @@ export const ImageBase: React.FC<ImageBaseProps> & {
           ),
           crossOrigin,
           decoding,
-          loading,
           referrerPolicy,
           style: mergeStyle(
             keepAspectRatio

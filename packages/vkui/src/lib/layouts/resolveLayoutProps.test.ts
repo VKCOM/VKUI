@@ -43,7 +43,7 @@ describe('resolveLayoutProps', () => {
   });
 
   it('should handle string values from predefined list (position)', () => {
-    const props = { position: 'absolute' };
+    const props = { position: 'absolute' as const };
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({

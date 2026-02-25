@@ -34,15 +34,19 @@ export interface SearchProps
   extends Pick<
       React.InputHTMLAttributes<HTMLInputElement>,
       | 'autoComplete'
+      | 'autoCapitalize'
+      | 'autoCorrect'
       | 'disabled'
       | 'list'
       | 'maxLength'
       | 'minLength'
       | 'name'
+      | 'pattern'
       | 'placeholder'
       | 'readOnly'
       | 'required'
       | 'value'
+      | 'form'
       | 'onChange'
       | 'onFocus'
       | 'onBlur'
@@ -140,14 +144,18 @@ export const Search = ({
   // input props
   placeholder: placeholderProp = 'Поиск',
   autoComplete = 'off',
+  autoCapitalize,
+  autoCorrect,
   disabled,
   list,
   maxLength,
   minLength,
   name,
+  pattern,
   readOnly,
   required,
   value,
+  form,
   id: idProp,
   inputMode,
   defaultValue,
@@ -185,14 +193,18 @@ export const Search = ({
       className: styles.nativeInput,
       placeholder: placeholderProp,
       autoComplete,
+      autoCapitalize,
+      autoCorrect,
       disabled,
       list,
       maxLength,
       minLength,
       name,
+      pattern,
       readOnly,
       required,
       value,
+      form,
       id: idProp,
       inputMode,
       defaultValue,

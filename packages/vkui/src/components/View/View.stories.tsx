@@ -19,6 +19,7 @@ import { Panel } from '../Panel/Panel';
 import { PanelHeader } from '../PanelHeader/PanelHeader';
 import { PanelHeaderBack } from '../PanelHeaderBack/PanelHeaderBack';
 import { Placeholder } from '../Placeholder/Placeholder';
+import { WriteBar } from '../WriteBar/WriteBar';
 import { View, type ViewProps } from './View';
 
 const story: Meta<ViewProps> = {
@@ -83,6 +84,12 @@ const ProfilePanelContent = ({
             </HorizontalCell>
           ))}
         </HorizontalScroll>
+      </Group>
+      <Group
+        header={<Header>WriteBar</Header>}
+        description="Свайпбэк не мешает фокусироваться на элементах форм"
+      >
+        <WriteBar />
       </Group>
     </React.Fragment>
   );

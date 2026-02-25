@@ -16,6 +16,18 @@ const platformClassNames = {
   vkcom: styles.vkcom,
 };
 
+const defaultHoverMode = {
+  ios: 'background',
+  android: 'background',
+  vkcom: styles.hover,
+};
+
+const defaultActiveMode = {
+  ios: 'opacity',
+  android: 'background',
+  vkcom: styles.active,
+};
+
 export interface PanelHeaderButtonProps extends Omit<TappableOmitProps, 'label'> {
   /**
    * Флаг для обозначения первичной кнопки
@@ -59,28 +71,14 @@ export const PanelHeaderButton = ({
   children,
   primary = false,
   label,
+  activeEffectDelay = 200,
+  hoverMode,
+  activeMode,
   ...restProps
 }: PanelHeaderButtonProps): React.ReactNode => {
   const isPrimitive = isPrimitiveReactNode(children);
   const isPrimitiveLabel = isPrimitiveReactNode(label);
   const platform = usePlatform();
-
-  let hoverMode;
-  let activeMode;
-
-  switch (platform) {
-    case 'ios':
-      hoverMode = 'background';
-      activeMode = 'opacity';
-      break;
-    case 'vkcom':
-      hoverMode = styles.hover;
-      activeMode = styles.active;
-      break;
-    default:
-      hoverMode = 'background';
-      activeMode = 'background';
-  }
 
   if (process.env.NODE_ENV === 'development') {
     /* istanbul ignore next: проверка в dev mode, тест на hasAccessibleName() есть в lib/accessibility.test.tsx */
@@ -100,9 +98,9 @@ export const PanelHeaderButton = ({
   return (
     <Tappable
       Component={restProps.href ? 'a' : 'button'}
-      hoverMode={hoverMode}
-      activeEffectDelay={200}
-      activeMode={activeMode}
+      activeEffectDelay={activeEffectDelay}
+      hoverMode={hoverMode ? hoverMode : defaultHoverMode[platform]}
+      activeMode={activeMode ? activeMode : defaultActiveMode[platform]}
       {...restProps}
       baseClassName={classNames(
         styles.host,

@@ -16,7 +16,6 @@ const App = () => {
         autoFocus
         checked
         onChange={() => {}}
-        onClick={() => {}}
         slotProps={{
           input: {
             getRootRef: inputRef,
@@ -24,6 +23,7 @@ const App = () => {
             "data-testid": "switch",
             "aria-checked": "checked",
             "aria-label": "switch",
+            onClick: () => {},
             placeholder: "switch"
           }
         }} />

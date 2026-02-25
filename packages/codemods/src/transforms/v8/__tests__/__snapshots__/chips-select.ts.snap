@@ -22,9 +22,7 @@ const App = () => {
         readOnly={true}
         onFocus={() => {}}
         onBlur={() => {}}
-        onKeyDown={() => {}}
         onChange={() => {}}
-        onClick={() => {}}
         onMouseDown={() => {}}
         onChangeStart={() => {}}
         onClose={() => {}}
@@ -33,6 +31,8 @@ const App = () => {
           input: {
             getRootRef: inputRef,
             "data-testid": "input",
+            onClick: () => {},
+            onKeyDown: () => {},
             required: true
           }
         }} />

@@ -55,6 +55,10 @@ export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLD
    * опции.
    */
   disabled?: boolean;
+  /**
+   * Предотвращает перенос текста внутри опции.
+   */
+  textNoWrap?: boolean;
 }
 
 /**
@@ -69,6 +73,7 @@ export const CustomSelectOption = ({
   after,
   description,
   disabled,
+  textNoWrap,
   style: styleProp,
   className,
   onClick,
@@ -107,7 +112,9 @@ export const CustomSelectOption = ({
     >
       {hasReactNode(before) && <div className={styles.before}>{before}</div>}
       <div className={styles.main}>
-        <div className={styles.children}>{children}</div>
+        <div className={classNames(styles.children, textNoWrap && styles.textNoWrap)}>
+          {children}
+        </div>
         {hasReactNode(description) && (
           <Footnote className={styles.description}>
             <VisuallyHidden>&nbsp;</VisuallyHidden>

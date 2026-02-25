@@ -66,6 +66,14 @@ export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneB
    */
   onChange?: (value: Date) => void;
   /**
+   * Функция установки часа (для таймзонно-зависимого календаря).
+   */
+  setHours?: (date: Date, hours: number) => Date;
+  /**
+   * Функция установки минут (для таймзонно-зависимого календаря).
+   */
+  setMinutes?: (date: Date, minutes: number) => Date;
+  /**
    * Функция для проверки блокировки выбора даты и времени.
    */
   isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
@@ -93,6 +101,8 @@ export const CalendarTime = ({
   onDoneButtonClick,
   changeHoursLabel,
   changeMinutesLabel,
+  setHours: setHoursFn = setHours,
+  setMinutes: setMinutesFn = setMinutes,
   isDayDisabled,
   doneButtonText = 'Готово',
   doneButtonDisabled = false,
@@ -108,13 +118,13 @@ export const CalendarTime = ({
 
   const localHours = isDayDisabled
     ? hours.map((hour) => {
-        return { ...hour, disabled: isDayDisabled(setHours(value, hour.value), true) };
+        return { ...hour, disabled: isDayDisabled(setHoursFn(value, hour.value), true) };
       })
     : hours;
 
   const localMinutes = isDayDisabled
     ? minutes.map((minute) => {
-        return { ...minute, disabled: isDayDisabled(setMinutes(value, minute.value), true) };
+        return { ...minute, disabled: isDayDisabled(setMinutesFn(value, minute.value), true) };
       })
     : minutes;
 
@@ -180,7 +190,7 @@ export const CalendarTime = ({
         getNumericValue={(v) => v.getHours()}
         onChange={onChange}
         options={localHours}
-        setTime={setHours}
+        setTime={setHoursFn}
         onInputKeyDown={onSelectInputKeyDown}
         inputRef={hoursInputRef}
         inputLabel={changeHoursLabel}
@@ -192,7 +202,7 @@ export const CalendarTime = ({
         getNumericValue={(v) => v.getMinutes()}
         onChange={onChange}
         options={localMinutes}
-        setTime={setMinutes}
+        setTime={setMinutesFn}
         onInputKeyDown={onSelectInputKeyDown}
         inputRef={minutesInputRef}
         inputLabel={changeMinutesLabel}

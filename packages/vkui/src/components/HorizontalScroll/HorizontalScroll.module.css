@@ -46,7 +46,7 @@
 
 .showArrows .arrow {
   pointer-events: auto;
-  opacity: var(--vkui--opacity_disable_accessibility);
+  opacity: var(--vkui--opacity_disable);
 }
 
 .host .arrow:hover {

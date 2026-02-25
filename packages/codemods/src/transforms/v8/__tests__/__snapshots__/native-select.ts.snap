@@ -16,7 +16,6 @@ const App = () => {
         onChange={() => {}}
         disabled={false}
         required
-        onClick={() => {}}
         onBlur={() => {}}
         onFocus={() => {}}
         onMouseDown={() => {}}
@@ -25,6 +24,7 @@ const App = () => {
             getRootRef: selectRef,
             "data-testid": "select",
             "aria-label": "select",
+            onClick: () => {},
             size: 100
           }
         }}>

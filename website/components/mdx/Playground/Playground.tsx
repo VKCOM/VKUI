@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames, useColorScheme } from '@vkontakte/vkui';
 import { JetBrains_Mono } from 'next/font/google';
 import { LiveEditor, LiveProvider } from 'react-live';
+import { Activity } from '../../Activity/Activity';
 import {
   PlaygroundPreview,
   type PlaygroundPreviewProps,
@@ -15,7 +16,7 @@ import styles from './Playground.module.css';
 
 // eslint-disable-next-line new-cap
 const jetBrainsMono = JetBrains_Mono({
-  subsets: ['cyrillic'],
+  subsets: ['latin', 'cyrillic'],
 });
 
 export interface PlaygroundProps extends PlaygroundPreviewProps {
@@ -41,11 +42,11 @@ export function Playground({
       >
         <PlaygroundPreview {...restProps} />
         <PlaygroundToolbar setCodeVisible={setCodeVisible} codeVisible={codeVisible} />
-        {codeVisible && (
+        <Activity mode={codeVisible ? 'visible' : 'hidden'}>
           <div className={styles.codeBlock}>
             <LiveEditor className={styles.code} />
           </div>
-        )}
+        </Activity>
       </LiveProvider>
     </div>
   );

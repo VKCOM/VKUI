@@ -24,7 +24,7 @@ jobs:
   deploy_test_coverage:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Deploy test coverage
     permissions:
       id-token: write
@@ -58,7 +58,7 @@ jobs:
   deploy_playwright_report:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Deploy Playwright Report and create comment
     steps:
       - name: Download artifact
@@ -92,7 +92,7 @@ jobs:
   deploy_docs_website:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Deploy docs
     outputs:
       url: ${{ steps.url.outputs.value }}
@@ -125,7 +125,7 @@ jobs:
   deploy_storybook:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Deploy docs (storybook)
     outputs:
       url: ${{ steps.url.outputs.value }}
@@ -158,7 +158,7 @@ jobs:
   deploy_package:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Deploy package
     outputs:
       url: ${{ steps.url.outputs.value }}
@@ -191,7 +191,7 @@ jobs:
   deploy_diff:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Deploy diff
     outputs:
       has_diff: ${{ steps.artifact.outputs.found_artifact }}
@@ -226,7 +226,7 @@ jobs:
     needs:
       - deploy_diff
       - pr_workflow_payload
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Diff comment
     steps:
       - name: Find diff URL comment
@@ -270,7 +270,7 @@ jobs:
       - deploy_package
       - pr_workflow_payload
     if: ${{ needs.deploy_storybook.outputs.url != '' || needs.deploy_docs_website.outputs.url != '' || needs.deploy_package.outputs.url != '' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     name: Docs comment
     steps:
       - name: Find docs URLs comment

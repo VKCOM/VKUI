@@ -138,3 +138,5 @@ export type PartialFields<TYPE, FIELDS extends keyof TYPE> = Omit<TYPE, FIELDS> 
 
 export type RequiredFields<TYPE, FIELDS extends keyof TYPE> = Omit<TYPE, FIELDS> &
   Required<Pick<TYPE, FIELDS>>;
+
+export type Elevation = '1' | '2' | '3' | '4';

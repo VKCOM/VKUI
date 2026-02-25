@@ -16,9 +16,7 @@
       "import": "./dist/index.js"
     }
   },
-  "bin": {
-    "vkui-mcp": "./dist/cli.js"
-  },
+  "bin": "./dist/cli.js",
   "files": [
     "dist"
   ],

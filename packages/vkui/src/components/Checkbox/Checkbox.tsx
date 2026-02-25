@@ -34,9 +34,10 @@ export interface CheckboxProps
       | 'readOnly'
       | 'required'
       | 'autoFocus'
-      | 'onChange'
       | 'name'
       | 'value'
+      | 'form'
+      | 'onChange'
       | 'onFocus'
       | 'onBlur'
     >,
@@ -108,6 +109,7 @@ const CheckboxComponent = ({
   id,
   name,
   value,
+  form,
   onChange,
   onFocus,
   onBlur,
@@ -129,6 +131,7 @@ const CheckboxComponent = ({
       id,
       name,
       value,
+      form,
       onChange,
       onFocus,
       onBlur,

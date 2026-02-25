@@ -2,7 +2,6 @@ export const darkTheme = {
   plain: {
     color: '#e1e4e8',
     backgroundColor: 'transparent',
-    whiteSpace: 'nowrap',
     overflow: 'auto',
   },
   styles: [

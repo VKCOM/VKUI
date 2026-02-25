@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from '../../../lib/randomUUID';
 import { SnackbarWrapper } from '../components/SnackbarWrapper';
 import {
   type CommonOnOpenPayload,
@@ -131,7 +131,7 @@ export const useSnackbarActionsWithStore = ({
     (config) => {
       const resolvedProps = resolveProps(config);
 
-      const id = resolvedProps.id || uuidv4();
+      const id = resolvedProps.id || randomUUID();
 
       return onOpenSnackbarImpl({
         id,

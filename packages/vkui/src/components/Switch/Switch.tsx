@@ -32,9 +32,10 @@ export interface SwitchProps
       | 'readOnly'
       | 'required'
       | 'autoFocus'
-      | 'onChange'
       | 'name'
       | 'value'
+      | 'form'
+      | 'onChange'
       | 'onFocus'
       | 'onBlur'
     >,
@@ -75,6 +76,7 @@ export const Switch = ({
   id,
   name,
   value,
+  form,
   onChange,
   onFocus,
   onBlur,
@@ -108,6 +110,7 @@ export const Switch = ({
       id,
       name,
       value,
+      form,
       onChange,
       onFocus,
       onBlur,

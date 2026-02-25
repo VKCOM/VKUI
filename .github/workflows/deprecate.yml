@@ -22,7 +22,7 @@ run-name: Deprecate version ${{ inputs.version }}
 
 jobs:
   deprecate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Enable Corepack
         run: corepack enable

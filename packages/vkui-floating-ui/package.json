@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui-floating-ui",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "license": "MIT",
   "bugs": "https://github.com/VKCOM/VKUI",
   "repository": {
@@ -79,11 +79,11 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.1.6",
-    "@swc/helpers": "^0.5.18"
+    "@floating-ui/react-dom": "^2.1.7",
+    "@swc/helpers": "^0.5.19"
   },
   "devDependencies": {
-    "@swc/core": "^1.15.10",
+    "@swc/core": "^1.15.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

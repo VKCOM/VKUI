@@ -32,6 +32,11 @@ export interface FormLayoutGroupProps
    * Дает возможность склеить несколько `FormItem`.
    */
   segmented?: boolean;
+  /**
+   * Удаляет внешние отступы вокруг компонента.
+   * @since 8.0.0
+   */
+  noPadding?: boolean;
 }
 
 /**
@@ -42,6 +47,7 @@ export const FormLayoutGroup = ({
   mode = 'vertical',
   removable,
   segmented,
+  noPadding,
   removePlaceholder = 'Удалить',
   onRemove,
   getRootRef,
@@ -58,6 +64,7 @@ export const FormLayoutGroup = ({
       Component="fieldset"
       baseClassName={classNames(
         styles.host,
+        mode === 'horizontal' && !noPadding && styles.withPadding,
         density !== 'regular' && densityClassNames[density],
         mode === 'horizontal' &&
           classNames(styles.modeHorizontal, 'vkuiInternalFormLayoutGroup--mode-horizontal'),
@@ -80,6 +87,7 @@ export const FormLayoutGroup = ({
           }}
           disabled={disabled}
           indent={removable === 'indent'}
+          noPadding={noPadding}
         >
           {children}
         </Removable>

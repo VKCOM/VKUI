@@ -68,6 +68,9 @@ export const ButtonPlayground = (props: ComponentPlaygroundProps) => {
           size: ['s', 'm', 'l'],
           rounded: [true],
         },
+        {
+          elevation: ['1', '2', '3', '4'],
+        },
       ]}
     >
       {(props: ButtonProps) => <Button {...props}>Кнопка</Button>}

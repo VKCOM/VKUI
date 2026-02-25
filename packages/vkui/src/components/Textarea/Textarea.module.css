@@ -60,6 +60,13 @@
   opacity: 1;
 }
 
+/* Для Safari */
+@supports (hanging-punctuation: first) {
+  .el::placeholder {
+    padding-block-end: inherit;
+  }
+}
+
 .el:disabled::placeholder {
   color: var(--vkui--color_text_secondary);
 }

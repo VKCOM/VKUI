@@ -19,7 +19,6 @@ const App = () => {
         disabled={false}
         required
         onInputChange={() => {}}
-        onClick={() => {}}
         onBlur={() => {}}
         onFocus={() => {}}
         onClose={() => {}}
@@ -36,6 +35,7 @@ const App = () => {
             getRootRef: inputRef,
             "data-testid": "input",
             "aria-label": "input",
+            onClick: () => {},
             size: 100
           }
         }} />

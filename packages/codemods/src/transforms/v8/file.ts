@@ -50,6 +50,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         'capture',
         'multiple',
         'size',
+        'form',
       ],
     });
   }
