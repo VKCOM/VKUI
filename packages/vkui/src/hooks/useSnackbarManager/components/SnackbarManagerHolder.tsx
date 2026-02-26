@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { useIsDesktop } from '../helpers/useIsDesktop';
 import {
   getSnackbarManagerInternals,
   snackbarManager,
@@ -27,12 +26,6 @@ export const SnackbarManagerHolder: React.FC<SnackbarManagerNS.HolderProps> = ({
       internals.unregisterHolder();
     };
   }, [internals]);
-
-  const isDesktop = useIsDesktop();
-
-  useIsomorphicLayoutEffect(() => {
-    internals.setIsDesktop(isDesktop);
-  }, [internals, isDesktop]);
 
   useIsomorphicLayoutEffect(() => {
     if (limit !== undefined) {
@@ -64,7 +57,7 @@ export const SnackbarManagerHolder: React.FC<SnackbarManagerNS.HolderProps> = ({
     }
   }, [manager, zIndex]);
 
-  const config = React.useSyncExternalStore<SnackbarManagerConfig>(
+  const configStore = React.useSyncExternalStore<SnackbarManagerConfig>(
     internals.subscribeConfig,
     internals.getConfig,
     internals.getConfig,
@@ -73,10 +66,10 @@ export const SnackbarManagerHolder: React.FC<SnackbarManagerNS.HolderProps> = ({
   return (
     <SnackbarHolder
       store={internals.store}
-      limit={config.limit}
-      offsetYStart={config.offsetYStart}
-      offsetYEnd={config.offsetYEnd}
-      zIndex={config.zIndex}
+      limit={configStore.limit}
+      offsetYStart={configStore.offsetYStart}
+      offsetYEnd={configStore.offsetYEnd}
+      zIndex={configStore.zIndex}
     />
   );
 };

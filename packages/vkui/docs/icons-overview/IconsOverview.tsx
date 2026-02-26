@@ -13,8 +13,8 @@ import {
   ConfigProvider,
   Flex,
   Mark,
+  snackbarManager,
   Tooltip,
-  useSnackbarManager,
 } from '../../src';
 import { Keys, pressedKey } from '../../src/lib/accessibility';
 import { OverviewLayout } from '../common/components/OverviewLayout';
@@ -27,6 +27,8 @@ const SIZES_OPTIONS: ChipOption[] = ICON_SIZES.map((size) => ({
   value: size,
   label: size,
 }));
+
+snackbarManager.setLimit(1);
 
 const filterConfig = (config: ConfigData[], query: string, sizes: string[]) => {
   if (!query && sizes.length === SIZES_OPTIONS.length) {
@@ -52,9 +54,6 @@ const filterConfig = (config: ConfigData[], query: string, sizes: string[]) => {
 };
 
 const IconsOverview = () => {
-  const [snackbarApi, contextHolder] = useSnackbarManager({
-    limit: 1,
-  });
   const [selectedSizes, setSelectedSizes] = useState<ChipOption[]>(SIZES_OPTIONS);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
@@ -68,32 +67,29 @@ const IconsOverview = () => {
     [selectedSizes],
   );
 
-  const onIconClick = useCallback(
-    (iconName: string) => {
-      const iconCode = `<${iconName} />`;
+  const onIconClick = useCallback((iconName: string) => {
+    const iconCode = `<${iconName} />`;
 
-      navigator.clipboard
-        .writeText(iconCode)
-        .then(() => {
-          snackbarApi.open({
-            before: (
-              <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
-                <Icon16Done fill="#fff" width={14} height={14} />
-              </Avatar>
-            ),
-            children: (
-              <>
-                <Mark>{iconCode}</Mark> скопировано!
-              </>
-            ),
-            style: { maxInlineSize: 'unset', inlineSize: 'fit-content' },
-            placement: 'top-end',
-          });
-        })
-        .catch(noop);
-    },
-    [snackbarApi],
-  );
+    navigator.clipboard
+      .writeText(iconCode)
+      .then(() => {
+        snackbarManager.open({
+          before: (
+            <Avatar size={24} style={{ background: 'var(--vkui--color_background_accent)' }}>
+              <Icon16Done fill="#fff" width={14} height={14} />
+            </Avatar>
+          ),
+          children: (
+            <>
+              <Mark>{iconCode}</Mark> скопировано!
+            </>
+          ),
+          style: { maxInlineSize: 'unset', inlineSize: 'fit-content' },
+          placement: 'top-end',
+        });
+      })
+      .catch(noop);
+  }, []);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent<HTMLElement>, iconName: string) => {
@@ -157,7 +153,6 @@ const IconsOverview = () => {
           </Flex>
         }
       />
-      {contextHolder}
       <ColorPickerControl containerRef={rootRef} />
     </div>
   );

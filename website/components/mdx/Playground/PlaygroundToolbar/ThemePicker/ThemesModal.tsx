@@ -9,7 +9,7 @@ import {
   ModalPageHeader,
   PanelSpinner,
   SimpleCell,
-  Snackbar,
+  snackbarManager,
   VisuallyHidden,
 } from '@vkontakte/vkui';
 import { Callout, Code } from '@vkontakte/vkui-docs-theme';
@@ -40,7 +40,6 @@ export function ThemesModal({ open, setOpen }: ThemesModalProps) {
 function ThemesModalInner({ setOpen }: Pick<ThemesModalProps, 'setOpen'>) {
   const store = React.useContext(PlaygroundStoreContext);
   const { themeNames, isLoading, error } = useLoadThemeNames();
-  const [snackbar, setSnackbar] = React.useState<React.ReactElement | null>(null);
 
   const handleThemeSelect = async (
     themeName: ThemeDefinitionProps['themeName'],
@@ -71,14 +70,10 @@ function ThemesModalInner({ setOpen }: Pick<ThemesModalProps, 'setOpen'>) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn(error);
-        setSnackbar(
-          <Snackbar
-            onClosed={() => setSnackbar(null)}
-            before={<Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />}
-          >
-            {`Не удалось загрузить токены для темы ${themeName}`}
-          </Snackbar>,
-        );
+        snackbarManager.open({
+          before: <Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />,
+          children: `Не удалось загрузить токены для темы ${themeName}`,
+        });
       } finally {
         updatePlaygroundLoading(false);
       }
@@ -87,7 +82,6 @@ function ThemesModalInner({ setOpen }: Pick<ThemesModalProps, 'setOpen'>) {
 
   return (
     <>
-      {snackbar}
       <Div>
         Ниже представлены все темы из{' '}
         <Link href="https://github.com/VKCOM/vkui-tokens" target="_blank" rel="noreferrer">

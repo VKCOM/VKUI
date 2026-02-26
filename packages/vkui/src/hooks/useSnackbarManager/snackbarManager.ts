@@ -4,7 +4,10 @@ import { getDOM } from '../../lib/dom';
 import { DEFAULT_LIMIT, DEFAULT_QUEUE_STRATEGY } from './constants';
 import { createSnackbarActions } from './helpers/createSnackbarActions';
 import { createSnackbarStore, type SnackbarStore } from './helpers/createSnackbarStore';
+import { getIsDesktop } from './helpers/useIsDesktop';
 import type { SnackbarApi, SnackbarManagerNS } from './types';
+
+export const AUTO_MOUNT_HOLDER_ATTR = 'data-vkui-snackbar-manager-holder';
 
 export type SnackbarManagerConfig = {
   limit: number;
@@ -18,7 +21,6 @@ type SnackbarManagerInternals = {
   store: SnackbarStore;
   getConfig: () => SnackbarManagerConfig;
   subscribeConfig: (listener: () => void) => () => void;
-  setIsDesktop: (isDesktop: boolean) => void;
   registerHolder: () => void;
   unregisterHolder: () => void;
   setMountCallback: (callback: (() => void) | null) => void;
@@ -44,7 +46,7 @@ export function createSnackbarManager(
 ): SnackbarManagerNS.Instance {
   const store = createSnackbarStore();
 
-  const { document } = getDOM();
+  const { document, window } = getDOM();
 
   let config: SnackbarManagerConfig = {
     limit: options.limit ?? DEFAULT_LIMIT,
@@ -53,8 +55,6 @@ export function createSnackbarManager(
     offsetYEnd: options.offsetYEnd,
     zIndex: options.zIndex,
   };
-
-  let isDesktop = false;
 
   const configListeners = new Set<() => void>();
 
@@ -65,7 +65,7 @@ export function createSnackbarManager(
   const actions = createSnackbarActions(store, {
     getLimit: () => config.limit,
     getQueueStrategy: () => config.queueStrategy,
-    getIsDesktop: () => isDesktop,
+    getIsDesktop: () => getIsDesktop(window),
   });
 
   let holderCount = 0;
@@ -85,6 +85,11 @@ export function createSnackbarManager(
     }
   };
 
+  const updateConfig = (newConfig: SnackbarManagerConfig) => {
+    config = newConfig;
+    notifyConfig();
+  };
+
   const instance: SnackbarManagerNS.Instance = {
     open: (config) => {
       ensureHolderMounted();
@@ -97,26 +102,11 @@ export function createSnackbarManager(
     update: actions.update,
     close: actions.close,
     closeAll: actions.closeAll,
-    setLimit: (count) => {
-      config = { ...config, limit: count };
-      notifyConfig();
-    },
-    setQueueStrategy: (strategy) => {
-      config = { ...config, queueStrategy: strategy };
-      notifyConfig();
-    },
-    setOffsetYStart: (offset) => {
-      config = { ...config, offsetYStart: offset };
-      notifyConfig();
-    },
-    setOffsetYEnd: (offset) => {
-      config = { ...config, offsetYEnd: offset };
-      notifyConfig();
-    },
-    setZIndex: (z) => {
-      config = { ...config, zIndex: z };
-      notifyConfig();
-    },
+    setLimit: (count) => updateConfig({ ...config, limit: count }),
+    setQueueStrategy: (strategy) => updateConfig({ ...config, queueStrategy: strategy }),
+    setOffsetYStart: (offset) => updateConfig({ ...config, offsetYStart: offset }),
+    setOffsetYEnd: (offset) => updateConfig({ ...config, offsetYEnd: offset }),
+    setZIndex: (z) => updateConfig({ ...config, zIndex: z }),
   };
 
   internalsMap.set(instance, {
@@ -125,9 +115,6 @@ export function createSnackbarManager(
     subscribeConfig: (listener) => {
       configListeners.add(listener);
       return () => configListeners.delete(listener);
-    },
-    setIsDesktop: (value) => {
-      isDesktop = value;
     },
     registerHolder: () => {
       holderCount += 1;
@@ -152,7 +139,7 @@ function getDefaultMountCallback(): () => void {
     // Динамический импорт нужен, чтобы предотвратить циклическую зависимость
     void import('./components/SnackbarManagerHolder').then(({ SnackbarManagerHolder }) => {
       const container = document.createElement('div');
-      container.setAttribute('data-vkui-snackbar-manager-holder', '');
+      container.setAttribute(AUTO_MOUNT_HOLDER_ATTR, '');
       document.body.appendChild(container);
       const root = createRoot(container);
       root.render(React.createElement(SnackbarManagerHolder));
