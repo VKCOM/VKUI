@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
+import { DEFAULT_LIMIT, DEFAULT_QUEUE_STRATEGY } from '../constants';
 import { type UseSnackbar } from '../types';
-
-const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 
 export type UseSnackbarConfigReturn = {
   limit: number;
@@ -19,8 +18,8 @@ export type UseSnackbarConfigReturn = {
 
 export const useSnackbarConfig = (params: UseSnackbar.Props = {}): UseSnackbarConfigReturn => {
   const {
-    limit: limitProp = DEFAULT_MAX_VISIBLE_SNACKBARS,
-    queueStrategy: queueStrategyProp = 'shift',
+    limit: limitProp = DEFAULT_LIMIT,
+    queueStrategy: queueStrategyProp = DEFAULT_QUEUE_STRATEGY,
     offsetYStart: offsetYStartProp,
     offsetYEnd: offsetYEndProp,
     zIndex: zIndexProp,

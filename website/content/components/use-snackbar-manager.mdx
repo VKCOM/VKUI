@@ -1,12 +1,12 @@
 ---
-description: Хук для управления уведомлениями (снекбарами) в приложении.
+description: Хук и императивный API для управления уведомлениями (снекбарами) в приложении.
 ---
 
 <Overview type="hook" forcedPath="hooks/useSnackbarManager/useSnackbarManager.tsx">
 
 # useSnackbarManager
 
-Хук для управления уведомлениями (снекбарами) в приложении. Позволяет показывать, обновлять и закрывать уведомления программно из любого места в коде.
+Управление уведомлениями (снекбарами) в приложении: показ, обновление и закрытие программно из любого места в коде. Доступны два подхода: **хук** `useSnackbarManager` внутри компонента и **императивный API** через глобальный `snackbarManager` без хука.
 
 Связанные компоненты:
 
@@ -16,19 +16,70 @@ description: Хук для управления уведомлениями (сн
 
 import { BlockWrapper } from "@/components/wrappers";
 
-## Быстрый старт
+## Два способа использования
 
-Хук возвращает два значения: API для управления снекбарами и компонент, который нужно добавить в разметку.
+### 1. Императивный API (без хука) — из коробки
+
+Импортируйте `snackbarManager` и вызывайте методы в любом месте (компоненты, утилиты, обработчики). **Добавлять что-либо в разметку не нужно** — контейнер для снекбаров монтируется автоматически при первом вызове `open()` или `openCustom()`.
+
+```jsx
+import { snackbarManager } from "@vkontakte/vkui";
+
+// В компоненте, в колбэке, в сервисе — где угодно
+snackbarManager.open({
+  children: "Операция выполнена!",
+  action: "ОК",
+});
+
+snackbarManager.closeAll();
+```
+
+Если нужна своя конфигурация (лимит, отступы, z-index), добавьте в корень приложения компонент `<SnackbarManagerHolder />` с нужными пропсами — тогда авто-монтирование не создаст второй контейнер.
+
+**Когда использовать:** тосты из любого места (сервисы, колбэки, не только из React-компонентов), быстрый старт без разметки.
+
+### 2. Хук useSnackbarManager
+
+Хук возвращает API и элемент для разметки. Удобно, когда снекбары нужны только в части приложения с собственной конфигурацией.
 
 ```jsx
 const [snackbarApi, snackbarHolder] = useSnackbarManager();
 
-// Показать уведомление
+snackbarApi.open({ children: "Привет!" });
+
+return <>{snackbarHolder}</>;
+```
+
+**Когда использовать:** снекбары только в части приложения, изолированная конфигурация для конкретного экрана или блока.
+
+## Быстрый старт (императивный API)
+
+Минимальный сценарий: импорт и вызов. Holder в DOM создаётся сам.
+
+```jsx
+import { snackbarManager } from "@vkontakte/vkui";
+
+function MyComponent() {
+  const handleSave = () => {
+    saveData();
+    snackbarManager.open({ children: "Сохранено!" });
+  };
+
+  return <Button onClick={handleSave}>Сохранить</Button>;
+}
+```
+
+## Быстрый старт (хук)
+
+Хук возвращает API и элемент, который нужно добавить в JSX.
+
+```jsx
+const [snackbarApi, snackbarHolder] = useSnackbarManager();
+
 snackbarApi.open({
   children: "Привет, мир!",
 });
 
-// Не забудьте добавить holder в JSX
 return (
   <>
     {/* Ваш контент */}
@@ -49,14 +100,37 @@ return (
 | `offsetYEnd`    | `string \| number`   | Отступ контейнера со снекбарами от низа страницы. Полезно при использовании `FixedLayout`.                                                                                   |
 | `zIndex`        | `string \| number`   | Значение `z-index` для контейнера снекбаров.                                                                                                                                 |
 
-## Возвращаемое значение
+## Возвращаемое значение (хук)
 
 Хук возвращает массив из двух элементов:
 
 1. **`snackbarApi`** — объект с методами для управления снекбарами
 2. **`snackbarHolder`** — React-элемент, который нужно добавить в JSX вашего компонента
 
+## SnackbarManagerHolder и createSnackbarManager
+
+Для императивного API из пакета экспортируются:
+
+| Экспорт | Описание |
+| -------- | -------- |
+| `snackbarManager` | Глобальный экземпляр. Вызов `snackbarManager.open()` и т.д. из любого места. Контейнер монтируется автоматически при первом вызове. |
+| `SnackbarManagerHolder` | Опциональный React-компонент. Добавьте в корень приложения, если нужны свои настройки (лимит, отступы, z-index). Если компонент уже смонтирован, авто-монтирование не создаёт второй контейнер. |
+| `createSnackbarManager(options?)` | Создаёт отдельный экземпляр менеджера. Передайте его в `<SnackbarManagerHolder manager={myManager} />` и вызывайте `myManager.open()` там, где нужен этот экземпляр. |
+
+**Параметры SnackbarManagerHolder** (все опциональны):
+
+| Параметр        | Тип                  | Описание |
+| --------------- | -------------------- | -------- |
+| `manager`       | `SnackbarApi.Api`    | Экземпляр менеджера. По умолчанию — глобальный `snackbarManager`. |
+| `limit`         | `number`             | Максимум одновременно открытых снекбаров. |
+| `queueStrategy` | `"queue" \| "shift"` | Стратегия при переполнении. |
+| `offsetYStart`  | `string \| number`   | Отступ контейнера от верха. |
+| `offsetYEnd`    | `string \| number`   | Отступ контейнера от низа. |
+| `zIndex`        | `string \| number`   | `z-index` контейнера. |
+
 ## API методы
+
+Все методы ниже доступны и у объекта из хука `useSnackbarManager()`, и у `snackbarManager` / экземпляра из `createSnackbarManager()`.
 
 ### `open(config)` — открыть снекбар
 
@@ -167,7 +241,52 @@ result.onClose().then(() => {
 
 ## Примеры использования
 
-### Базовый пример
+### Императивный API — без хука и без holder
+
+Импортируйте `snackbarManager` и вызывайте методы. Контейнер появится в DOM сам при первом показе снекбара.
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const showSuccess = () => {
+  snackbarManager.open({
+    children: "Операция выполнена успешно!",
+    action: "ОК",
+  });
+};
+
+return <Button onClick={showSuccess}>Показать уведомление</Button>;
+```
+
+</Playground>
+
+### Свой экземпляр менеджера (createSnackbarManager)
+
+Отдельный менеджер для своей зоны: создаёте экземпляр, рендерите под него holder и вызываете методы этого экземпляра.
+
+<Playground Wrapper={BlockWrapper}>
+
+```jsx
+const sidePanelSnackbar = createSnackbarManager({ limit: 2 });
+
+const showInPanel = () => {
+  sidePanelSnackbar.open({
+    children: "Снекбар только для этой панели",
+    action: "Закрыть",
+  });
+};
+
+return (
+  <>
+    <Button onClick={showInPanel}>Показать в панели</Button>
+    <SnackbarManagerHolder manager={sidePanelSnackbar} />
+  </>
+);
+```
+
+</Playground>
+
+### Базовый пример (хук)
 
 <Playground Wrapper={BlockWrapper}>
 

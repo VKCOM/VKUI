@@ -129,5 +129,22 @@ export type CommonOnOpenPayload = Pick<SnackbarApi.OpenReturn, 'close' | 'update
   additionalProps?: any;
 };
 
+export namespace SnackbarManagerNS {
+  export type Options = UseSnackbar.Props;
+
+  /**
+   * Императивный менеджер снекбаров, позволяющий вызывать снекбары без хука.
+   * Создаётся через `createSnackbarManager()`.
+   */
+  export type Instance = SnackbarApi.Api;
+
+  export interface HolderProps extends UseSnackbar.Props {
+    /**
+     * Экземпляр менеджера. По умолчанию используется глобальный `snackbarManager`.
+     */
+    manager?: Instance;
+  }
+}
+
 export { type SnackbarPlacement } from '../../components/Snackbar/types';
 export { SnackbarProps };
