@@ -11,7 +11,7 @@
   backface-visibility: hidden;
 }
 
-.host:not(.static):not(.hasFixed) {
+.host:not(.static) {
   block-size: 0;
 }
 
