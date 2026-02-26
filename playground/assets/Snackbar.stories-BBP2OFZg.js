@@ -1,0 +1,40 @@
+import{j as r,r as f}from"./iframe-C4bTyPBQ.js";import{S as m,D as g,C as b}from"./constants-DdkjnEgz.js";import{g as e}from"./mock-KFM_xxXO.js";import{c as h}from"./createStoryParameters-CcwS40kl.js";import{A as p}from"./Avatar-Bsyc_Tpa.js";import{I as x}from"./Image-DSb-Miue.js";import{S as a}from"./Snackbar-D7YB56DP.js";import{c as s}from"./createFieldWithPresets-DRz9rZ8Y.js";import{I as S}from"./error_circle_outline_28-C_V-E1yA.js";import{I as C}from"./thumbs_up_outline_24-C18v4s9r.js";import"./preload-helper-PPVm8Dsz.js";import"./ImageBase-DM5ndQnB.js";import"./Clickable-BhDfuptR.js";import"./useState-CmJkrVlf.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./type_checkers-B4iEhslY.js";import"./useFocusVisibleClassName-D8pFgTbd.js";import"./ImageBaseBadge-oFfOfujq.js";import"./useColorScheme-B5qdSLTx.js";import"./InputUtils-Ns7QNyDT.js";import"./useFocusWithin-CWJCpHmP.js";import"./useIsClient-B8qKshG4.js";import"./useConfigDirection-OBrCdmzr.js";import"./online_mobile_12-CQS8ULfi.js";import"./SvgIconRootV2-DbftVVP5.js";import"./helpers-QklJbEbU.js";import"./useGlobalEscKeyDown-CvS_H8_H.js";import"./Button-D-zltIHu.js";import"./Spinner-CnNDPfa2.js";import"./animationVisibilityDelay.module-D0fTgH-m.js";import"./VisuallyHidden-BEfP1Q2n.js";import"./Tappable-BZW__-HP.js";import"./Paragraph-DjR0IJ5A.js";import"./Subhead-CGMBr7DJ.js";import"./rubberbandIfOutOfBounds-Ds51Way3.js";import"./useCSSKeyframesAnimationController-nG-tROJv.js";import"./index-6h_E1jGj.js";import"./dropdown_20-BAdDJnDY.js";import"./education_12-63IQx91m.js";import"./services_filled_20-C7NR-37f.js";import"./add_16-BU0jnG8a.js";import"./cancel_16-CoNztr4w.js";import"./external_link_outline_24-BdgiNkyc.js";import"./chevron_16-D1zTg27u.js";import"./clear_16-BwcQWqpd.js";import"./delete_16-CzfdXYH0.js";import"./dropdown_16-JttlzX2f.js";import"./more_horizontal_16-B9Vqh3fJ.js";import"./search_outline_16-CP5ErGpy.js";import"./add_20-BoeC6Cri.js";import"./calendar_outline_20-BJRRtset.js";import"./cancel_20-EIRIx7Ta.js";import"./check_box_indetermanate_20-CDLMjpub.js";import"./check_box_on_24-C22hmiDf.js";import"./reorder_ios_24-Cx33pzZY.js";import"./check_circle_on_24-BRHOjbxr.js";import"./chevron_left_outline_20-DN1jhhy8.js";import"./add_outline_24-DRzuCX-g.js";import"./money_transfer_outline_56-C8dRn1Og.js";import"./add_24-CZyMCNnJ.js";import"./chevron_left_outline_28-BV6EmSCB.js";import"./writebar_send_48-NSeETdJo.js";import"./cancel_24-BKCyLyjW.js";import"./cancel_outline_28-BEQUnLE_.js";import"./chevron_24-DAtZ7tdt.js";import"./chevron_compact_left_24-B7_NtR9_.js";import"./chevron_compact_right_24-9Y_UhAEg.js";import"./chevron_up_24-vYRkVu4w.js";import"./dismiss_24-Cd9gXJpm.js";import"./dismiss_dark_24-DbMhVZmn.js";import"./done_24-BtACfm-T.js";import"./done_outline_28-ABSGNnx2.js";import"./picture_outline_28-Bs7zmUft.js";import"./pen_outline_24-Bhw_QyUv.js";import"./play_24-D4DAxfj2.js";import"./smile_outline_24-B0YBnlk8.js";import"./add_outline_28-DgaPFag8.js";import"./block_outline_28-Dj6b1V6n.js";import"./chevron_right_circle_28-BXZI5srO.js";import"./user_circle_outline_28-B3E45tbw.js";import"./subtitles_outline_28-B7gixzzN.js";import"./delete_outline_28-Dh7WhrTg.js";import"./edit_outline_28-CXDlp9CD.js";import"./music_outline_28-CFdJJc8T.js";import"./notifications_28-BmCY6set.js";import"./privacy_outline_28-PWhkjBvT.js";import"./settings_outline_28-DwjkmSNJ.js";import"./sliders_outline_28-Bgzo5teL.js";import"./smile_outline_28-CWpdm5J7.js";import"./user_outline_28-D-g9bq5I.js";import"./users_outline_28-DvfqGnGm.js";import"./camera_outline_56-DEBPgBKT.js";import"./mention_outline_56-Cm2lsHqm.js";import"./message_read_outline_56-3IW9UFxM.js";import"./newsfeed_outline_56-BRitedIv.js";import"./notification_outline_56-DdvHch8g.js";import"./users_outline_56-DyiOZM0A.js";const ut={title:"Feedback/Snackbar",component:a,parameters:h("Snackbar",b,g),argTypes:{before:s({iconSizes:["24","28"],additionalPresets:{Icon24ThumbsUpOutline:r.jsx(C,{fill:"var(--vkui--color_icon_accent)"}),Icon28ErrorCircleOutline:r.jsx(S,{fill:"var(--vkui--color_icon_negative)"}),Avatar:r.jsx(p,{size:32,src:e()}),Image:r.jsx(x,{size:40,src:e("app_shorm_online")})}}),after:s({iconSizes:["24"],sizeIconsCount:10,additionalPresets:{Avatar:r.jsx(p,{size:32,src:e()})}}),subtitle:m,offsetY:m},tags:["Обратная связь"]},t={render:function({onClosed:c,...l}){const[u,n]=f.useState(!0),d=()=>{n(!1),c?.()};return r.jsxs(r.Fragment,{children:[r.jsx("button",{onClick:()=>n(!0),children:"Открыть"}),u?r.jsx(a,{onClosed:d,...l}):null]})},args:{before:"Icon24ThumbsUpOutline",action:"Поделиться",children:"Этот сервис рекомендует один друг"},argTypes:{action:{control:"text"}}},o={...t,args:{...t.args,action:void 0,subtitle:"Вы можете порекомендовать сервис в дополнительном меню"}},i={...t,args:{...t.args,action:void 0,offsetY:"48px"}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
+  render: function Render({
+    onClosed,
+    ...args
+  }) {
+    const [open, setOpen] = React.useState(true);
+    const handleClosed = () => {
+      setOpen(false);
+      onClosed?.();
+    };
+    return <>
+        <button onClick={() => setOpen(true)}>Открыть</button>
+        {open ? <Snackbar onClosed={handleClosed} {...args} /> : null}
+      </>;
+  },
+  args: {
+    before: 'Icon24ThumbsUpOutline',
+    action: 'Поделиться',
+    children: 'Этот сервис рекомендует один друг'
+  },
+  argTypes: {
+    action: {
+      control: 'text'
+    }
+  }
+}`,...t.parameters?.docs?.source}}};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    ...Playground.args,
+    action: undefined,
+    subtitle: 'Вы можете порекомендовать сервис в дополнительном меню'
+  }
+}`,...o.parameters?.docs?.source}}};i.parameters={...i.parameters,docs:{...i.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    ...Playground.args,
+    action: undefined,
+    offsetY: '48px'
+  }
+}`,...i.parameters?.docs?.source}}};const dt=["Playground","WithSubtitle","WithBottomOffset"];export{t as Playground,i as WithBottomOffset,o as WithSubtitle,dt as __namedExportsOrder,ut as default};

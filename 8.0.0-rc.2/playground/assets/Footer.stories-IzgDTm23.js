@@ -1,0 +1,24 @@
+import{j as r,b as m,w as n,a as p,n as e}from"./iframe-C4bTyPBQ.js";import{D as l,C as c}from"./constants-DdkjnEgz.js";import{c as d}from"./createStoryParameters-CcwS40kl.js";import{A as i}from"./Avatar-Bsyc_Tpa.js";import{C as a}from"./Cell-DxOvdLcw.js";import{G as u}from"./Group-B0qSQvWx.js";import{L as C}from"./List-C9nNKkDx.js";import{F as b}from"./Footer-DtnI7NBL.js";import"./preload-helper-PPVm8Dsz.js";import"./ImageBase-DM5ndQnB.js";import"./Clickable-BhDfuptR.js";import"./useState-CmJkrVlf.js";import"./mergeCalls-Bc-HqyI0.js";import"./callMultiple-ChqatQlo.js";import"./type_checkers-B4iEhslY.js";import"./useFocusVisibleClassName-D8pFgTbd.js";import"./ImageBaseBadge-oFfOfujq.js";import"./useColorScheme-B5qdSLTx.js";import"./InputUtils-Ns7QNyDT.js";import"./useFocusWithin-CWJCpHmP.js";import"./useIsClient-B8qKshG4.js";import"./useConfigDirection-OBrCdmzr.js";import"./online_mobile_12-CQS8ULfi.js";import"./SvgIconRootV2-DbftVVP5.js";import"./helpers-QklJbEbU.js";import"./Removable-CbiJXY2P.js";import"./children-DNxvoAyX.js";import"./IconButton-BXe704ZF.js";import"./Tappable-BZW__-HP.js";import"./VisuallyHidden-BEfP1Q2n.js";import"./cancel_24-BKCyLyjW.js";import"./SimpleCell-3wWwuzOF.js";import"./Footnote-wW_hecXF.js";import"./Headline-B4T2ew9V.js";import"./Subhead-CGMBr7DJ.js";import"./chevron_compact_right_24-9Y_UhAEg.js";import"./chevron_16-D1zTg27u.js";import"./AdaptiveIconRenderer-COrX8BE5.js";import"./reorder_ios_24-Cx33pzZY.js";import"./check_box_on_24-C22hmiDf.js";import"./check_circle_on_24-BRHOjbxr.js";import"./constants-CtEIZ0Vq.js";const ir={title:"Layout/Group/Footer",component:b,parameters:d("Footer",c,l),tags:["Раскладка"]},o={args:{children:"3 сообщества"}},t={...o,decorators:[s=>r.jsxs(r.Fragment,{children:[r.jsx(p,{children:"Footer"}),r.jsx(u,{children:r.jsxs(C,{children:[r.jsx(a,{before:r.jsx(i,{}),subtitle:"Веб-сайт",onClick:e,children:"Команда ВКонтакте"}),r.jsx(a,{before:r.jsx(i,{}),subtitle:"Музыкант",onClick:e,children:"Robbie Williams"}),r.jsx(a,{before:r.jsx(i,{}),subtitle:"Издательский дом",onClick:e,children:"ПостНаука"})]})}),r.jsx(s,{})]}),m,n]};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`{
+  args: {
+    children: '3 сообщества'
+  }
+}`,...o.parameters?.docs?.source}}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  decorators: [Component => <>
+        <PanelHeader>Footer</PanelHeader>
+        <Group>
+          <List>
+            <Cell before={<Avatar />} subtitle="Веб-сайт" onClick={noop}>
+              Команда ВКонтакте
+            </Cell>
+            <Cell before={<Avatar />} subtitle="Музыкант" onClick={noop}>
+              Robbie Williams
+            </Cell>
+            <Cell before={<Avatar />} subtitle="Издательский дом" onClick={noop}>
+              ПостНаука
+            </Cell>
+          </List>
+        </Group>
+        <Component />
+      </>, withSinglePanel, withVKUILayout]
+}`,...t.parameters?.docs?.source}}};const ar=["Playground","Example"];export{t as Example,o as Playground,ar as __namedExportsOrder,ir as default};
