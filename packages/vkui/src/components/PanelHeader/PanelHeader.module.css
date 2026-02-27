@@ -1,17 +1,17 @@
 .host {
   position: relative;
-  z-index: var(
-    --vkui_internal--z_index_panel_header
-  ); /* см. https://github.com/VKCOM/VKUI/issues/5571 */
 }
 
 .hasFixed {
   position: sticky;
   inset-block-start: 0;
+  z-index: var(--vkui_internal--z_index_panel_header);
   backface-visibility: hidden;
 }
 
 .host:not(.static) {
+  /* см. https://github.com/VKCOM/VKUI/issues/5571 */
+  z-index: var(--vkui_internal--z_index_panel_header);
   block-size: 0;
 }
 
