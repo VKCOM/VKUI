@@ -18,11 +18,13 @@ export const CellButtonPlayground = (props: ComponentPlaygroundProps) => {
           centered: [undefined, true],
           children: ['Создать что-нибудь'],
           before: [<Icon24Add key="add" />],
+          chevron: ['always'],
         },
         {
           appearance: ['neutral', 'negative'],
           before: [<Icon28AddOutline key="icon" />],
           children: ['Создать что-нибудь'],
+          chevron: ['always'],
         },
         {
           before: [
@@ -38,6 +40,7 @@ export const CellButtonPlayground = (props: ComponentPlaygroundProps) => {
             </Image>,
           ],
           children: ['Создать что-нибудь'],
+          chevron: ['always'],
         },
       ]}
     >
