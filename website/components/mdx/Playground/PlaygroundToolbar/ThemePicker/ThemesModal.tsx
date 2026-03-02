@@ -109,7 +109,7 @@ function ThemesModalInner({ setOpen }: Pick<ThemesModalProps, 'setOpen'>) {
           <FormStatus mode="error">Произошла ошибка</FormStatus>
         </Div>
       )}
-      {isLoading && <PanelSpinner />}
+      {isLoading && <PanelSpinner visibilityDelay={500} />}
       {themeNames.map(([themeName, { colorSchemeOptions, baseForPlatform }]) => (
         <SimpleCell
           key={themeName}

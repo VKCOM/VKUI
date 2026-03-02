@@ -54,21 +54,22 @@ export function SearchModal({
   React.useLayoutEffect(() => {
     let stale = false;
     async function handleSearch(query: string) {
-      if (!query) {
+      if (query.length < 3) {
         dispatch({ type: 'reset' });
         return;
       }
-      if (query.length < 3) {
-        return;
-      }
-      dispatch({ type: 'loading' });
+
+      const loadingDelayTimeoutId = setTimeout(() => dispatch({ type: 'loading' }), 500);
+
       try {
         const data = await SearchEngine.search(query, activeFilters);
         if (stale) {
           return;
         }
+        clearTimeout(loadingDelayTimeoutId);
         dispatch({ type: 'success', payload: prepareData(data) });
       } catch (error) {
+        clearTimeout(loadingDelayTimeoutId);
         !stale && dispatch({ type: 'error', payload: getErrorMessage(error) });
       }
     }
@@ -127,12 +128,12 @@ export function SearchModal({
         <SearchError message={error} />
       ) : loading ? (
         <PanelSpinner />
-      ) : data.length ? (
+      ) : data?.length ? (
         <SearchResults flat={activeFilters.length > 0} results={data} onClick={handleResultClick} />
       ) : deferredSearch && deferredSearch.length < 3 ? (
         <SearchPlaceholder>Введите не менее трёх символов.</SearchPlaceholder>
       ) : (
-        deferredSearch && <SearchPlaceholder>Не найдено.</SearchPlaceholder>
+        deferredSearch && data && <SearchPlaceholder>Не найдено.</SearchPlaceholder>
       )}
     </ModalPage>
   );

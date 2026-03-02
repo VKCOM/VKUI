@@ -9,7 +9,7 @@ const PlaygroundDynamic = dynamic(() => import('./Playground').then((mod) => mod
   ssr: false,
   loading: () => (
     <Placeholder className={styles.skeleton}>
-      <PanelSpinner />
+      <PanelSpinner visibilityDelay={250} />
     </Placeholder>
   ),
 });
