@@ -321,9 +321,19 @@ export class BottomSheetController {
       sheetScrollEl.contains(targetEl) &&
       sheetScrollEl.scrollHeight > sheetScrollEl.clientHeight
     ) {
-      sheetScrollEl.style.setProperty('overflow-y', 'hidden');
+      const scrollbarWidth = sheetScrollEl.offsetWidth - sheetScrollEl.clientWidth;
+
+      Object.assign(sheetScrollEl.style, {
+        paddingInlineEnd: `${scrollbarWidth}px`,
+        overflowY: 'hidden',
+        boxSizing: 'border-box',
+      });
       return function dispose() {
-        sheetScrollEl.style.removeProperty('overflow-y');
+        Object.assign(sheetScrollEl.style, {
+          paddingInlineEnd: '',
+          overflowY: '',
+          boxSizing: '',
+        });
       };
     }
     return noop;
