@@ -117,7 +117,7 @@ jobs:
       - name: Get minor version from v7
         id: get_minor_version
         run: |
-          MINOR_VERSION=$(git show origin/v7:packages/vkui/package.json | jq -r '.version|split(".")[1]'")
+          MINOR_VERSION=$(git show origin/v7:packages/vkui/package.json | jq -r '.version|split(".")[1]')
           echo "minor=${MINOR_VERSION}" >> $GITHUB_OUTPUT
           echo "target_branch=7.${MINOR_VERSION}-stable" >> $GITHUB_OUTPUT
 
