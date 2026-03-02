@@ -5405,7 +5405,7 @@ __metadata:
     "@vkontakte/eslint-plugin": "npm:^2.0.0"
     "@vkontakte/stylelint-config": "npm:^4.1.0"
     "@vkontakte/vkui-tokens": "npm:4.74.0"
-    autoprefixer: "npm:^10.4.24"
+    autoprefixer: "npm:^10.4.27"
     canvas: "npm:^3.2.1"
     clean-webpack-plugin: "npm:^4.0.0"
     concurrently: "npm:^9.2.1"
@@ -6263,12 +6263,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.24":
-  version: 10.4.24
-  resolution: "autoprefixer@npm:10.4.24"
+"autoprefixer@npm:^10.4.27":
+  version: 10.4.27
+  resolution: "autoprefixer@npm:10.4.27"
   dependencies:
     browserslist: "npm:^4.28.1"
-    caniuse-lite: "npm:^1.0.30001766"
+    caniuse-lite: "npm:^1.0.30001774"
     fraction.js: "npm:^5.3.4"
     picocolors: "npm:^1.1.1"
     postcss-value-parser: "npm:^4.2.0"
@@ -6276,7 +6276,7 @@ __metadata:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: 10/d09c4259a96001256e3150c2734aa0c5f7a53d98cc69ec42ef5fa167aadd804e857040dc3c732f62d80602212ebfd7d8783c9d27f1766a413f637eeac4fefa53
+  checksum: 10/5dd9ec57cc1c2af556e10d6c76d082f66d23275671b8b125f6c1d33ba7d9a984d80d3fb4fab7b5e092ac1a34f3aa5a131a392f131f5924029c3cb82faea15b0c
   languageName: node
   linkType: hard
 
@@ -6728,10 +6728,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001766":
-  version: 1.0.30001766
-  resolution: "caniuse-lite@npm:1.0.30001766"
-  checksum: 10/0edeb69bdb741c98deda609b75e35e5c31e944537e9873ea89a4cf9e9baa3e158675b224951a6f3a212d1f0c328a8494ace323c551ca1fa58ce4915562c4e4d3
+"caniuse-lite@npm:^1.0.30001774":
+  version: 1.0.30001775
+  resolution: "caniuse-lite@npm:1.0.30001775"
+  checksum: 10/422bb35abdb5aa57c9e70bee594e51c504a264d62d4ac263d288952ece14dcc7876d86ca957cd099c5043cef2f503b5779fdf58c00ea37471e725c8d59fd67bf
   languageName: node
   linkType: hard
 
