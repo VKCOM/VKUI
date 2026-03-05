@@ -15,11 +15,13 @@ export function createDataProvider(): DataProvider {
   const baseUrl =
     (typeof process !== 'undefined' ? process.env?.VKUI_DOCS_BASE_URL : undefined) ??
     DEFAULT_DOCUMENTATION_BASE_URL;
+  const version = typeof process !== 'undefined' ? process.env?.VKUI_VERSION : undefined;
+  const docsBaseUrl = version ? `${baseUrl.replace(/\/$/, '')}/${version}` : baseUrl;
 
   const cache = new Map<string, unknown>();
 
   async function readJson<T>(relativePath: string): Promise<T> {
-    const cacheKey = relativePath;
+    const cacheKey = version ? `${version}/${relativePath}` : relativePath;
     const cached = cache.get(cacheKey);
     if (cached !== undefined) {
       return cached as T;
@@ -27,7 +29,7 @@ export function createDataProvider(): DataProvider {
 
     let data: T | null;
 
-    const url = new URL(relativePath.replace(/\\/g, '/'), baseUrl).toString();
+    const url = new URL(relativePath.replace(/\\/g, '/'), docsBaseUrl).toString();
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Не удалось загрузить ${url}: ${response.status}`);
