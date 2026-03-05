@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { getPaths } from './get-paths.mjs';
 import { getProps } from './get-props.mjs';
+import { generateMcpData } from '../generate-mcp-data.mjs';
 
 function generate() {
   // eslint-disable-next-line no-console
@@ -14,6 +15,8 @@ function generate() {
   fs.writeFileSync('.docgen/docgen.json', JSON.stringify(props));
   // eslint-disable-next-line no-console
   console.log(`✅ Свойства сгенерированы.`);
+
+  generateMcpData();
 }
 
 generate();
