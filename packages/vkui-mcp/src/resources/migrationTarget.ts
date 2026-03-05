@@ -40,13 +40,21 @@ export function registerMigrationTargetResource(
       mimeType: 'application/json',
     },
     async (uri, variables) => {
-      const name = templateVar(variables.name);
+      const rawName = variables.name;
+      const name = templateVar(rawName);
       if (!name) {
-        throw new McpError(ErrorCode.InvalidParams, 'Параметр name обязателен');
+        throw new McpError(
+          ErrorCode.InvalidParams,
+          `Параметр name обязателен. Переданный input: ${JSON.stringify({ name: rawName })}`,
+        );
       }
-      const target = await dataProvider.getMigrationTarget({ name: decodeURIComponent(name) });
+      const decodedName = decodeURIComponent(name);
+      const target = await dataProvider.getMigrationTarget({ name: decodedName });
       if (!target) {
-        throw new McpError(ErrorCode.InvalidParams, `Цель миграции "${name}" не найдена`);
+        throw new McpError(
+          ErrorCode.InvalidParams,
+          `Цель миграции не найдена. Переданный name: ${JSON.stringify(decodedName)}. Вызовите list_migration_targets для списка доступных целей.`,
+        );
       }
       return textContent(uri.toString(), JSON.stringify(target, null, 2));
     },
