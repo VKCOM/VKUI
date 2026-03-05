@@ -1,0 +1,19 @@
+.host {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.ios {
+  box-sizing: border-box;
+  margin-block: 8px;
+  margin-inline: 0;
+  background-color: var(--vkui--color_write_bar_input_background);
+  border: var(--vkui--size_border--regular) solid var(--vkui--color_write_bar_input_border);
+  border-radius: 18px;
+}
+
+.ios:first-child {
+  margin-inline-start: 12px;
+}

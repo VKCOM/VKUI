@@ -1,0 +1,17 @@
+.host {
+  display: flex;
+  align-items: flex-end;
+  min-block-size: 52px;
+  background: var(--vkui--color_background_contrast_themed);
+}
+
+.shadow {
+  box-shadow: var(--vkui--elevation3);
+}
+
+/**
+ * iOS
+ */
+.ios {
+  background: var(--vkui--color_background_content);
+}

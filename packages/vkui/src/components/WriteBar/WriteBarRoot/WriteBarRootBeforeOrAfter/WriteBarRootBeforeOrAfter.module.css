@@ -1,0 +1,17 @@
+.host {
+  display: flex;
+  align-items: flex-end;
+}
+
+.host:first-of-type {
+  padding-inline-start: 4px;
+}
+
+.host:last-of-type {
+  padding-inline-end: 4px;
+}
+
+.ios {
+  padding-block: 0;
+  padding-inline: 4px;
+}
