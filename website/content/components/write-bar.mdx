@@ -13,10 +13,7 @@ description: Компонент для создания поля ввода со
 
 <Playground>
   ```jsx
-  <WriteBar
-    before={<WriteBarIcon mode="attach" />}
-    placeholder="Введите сообщение..."
-  />
+  <WriteBar before={<WriteBarIcon mode="attach" />} placeholder="Введите сообщение..." />
   ```
 </Playground>
 
@@ -34,7 +31,7 @@ React-компонентов, прочитать про это можно в [д
 <WriteBar defaultValue="Текст" />;
 
 // Контролируемое состояние
-const [text, setText] = React.useState("Текст");
+const [text, setText] = React.useState('Текст');
 
 <WriteBar value={text} onChange={(event) => setText(event.target.value)} />;
 ```
@@ -75,28 +72,26 @@ const [text, setText] = React.useState("Текст");
 <Playground style={{ width: 290 }}>
 
 ```jsx
-const [text, setText] = React.useState("");
+const [text, setText] = React.useState('');
 const platform = usePlatform();
 
 const SmileOutlineIcon = (
   <AdaptiveIconRenderer
-    IconCompact={platform === "ios" ? Icon28SmileOutline : Icon24SmileOutline}
+    IconCompact={platform === 'ios' ? Icon28SmileOutline : Icon24SmileOutline}
     IconRegular={Icon28SmileOutline}
   />
 );
 
 const VoiceOutlineIcon = (
   <AdaptiveIconRenderer
-    IconCompact={platform === "ios" ? Icon28VoiceOutline : Icon24VoiceOutline}
+    IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
     IconRegular={Icon28VoiceOutline}
   />
 );
 
 const KeyboardBotsOutlineIcon = (
   <AdaptiveIconRenderer
-    IconCompact={
-      platform === "ios" ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline
-    }
+    IconCompact={platform === 'ios' ? Icon28KeyboardBotsOutline : Icon24KeyboardBotsOutline}
     IconRegular={Icon28KeyboardBotsOutline}
   />
 );
@@ -109,28 +104,20 @@ return (
     inlineAfter={
       <>
         {text.length === 0 && (
-          <WriteBarIcon label="Открыть меню бота">
-            {KeyboardBotsOutlineIcon}
-          </WriteBarIcon>
+          <WriteBarIcon label="Открыть меню бота">{KeyboardBotsOutlineIcon}</WriteBarIcon>
         )}
         {text.length > 0 && (
-          <WriteBarIcon label="Эмоджи и стикеры">
-            {SmileOutlineIcon}
-          </WriteBarIcon>
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
         )}
       </>
     }
     after={
       <>
         {text.length === 0 && (
-          <WriteBarIcon label="Эмоджи и стикеры">
-            {SmileOutlineIcon}
-          </WriteBarIcon>
+          <WriteBarIcon label="Эмоджи и стикеры">{SmileOutlineIcon}</WriteBarIcon>
         )}
         {text.length === 0 && (
-          <WriteBarIcon label="Записать голосовое сообщение">
-            {VoiceOutlineIcon}
-          </WriteBarIcon>
+          <WriteBarIcon label="Записать голосовое сообщение">{VoiceOutlineIcon}</WriteBarIcon>
         )}
         {text.length > 0 && <WriteBarIcon mode="send" />}
       </>
@@ -180,7 +167,7 @@ const platform = usePlatform();
 return (
   <WriteBarIcon label="Голосовое сообщение">
     <AdaptiveIconRenderer
-      IconCompact={platform === "ios" ? Icon28VoiceOutline : Icon24VoiceOutline}
+      IconCompact={platform === 'ios' ? Icon28VoiceOutline : Icon24VoiceOutline}
       IconRegular={Icon28VoiceOutline}
     />
   </WriteBarIcon>
@@ -208,28 +195,26 @@ return (
   ```jsx
   const textareaRef = React.useRef();
 
-return (
-
-<WriteBar
-  before={<WriteBarIcon mode="attach" />}
-  placeholder="Введите сообщение..."
-  className="my-root-class"
-  data-testid="write-bar-root"
-  id="write-bar-textarea-id"
-  slotProps={{
-    root: {
-      id: "write-bar-root-id",
-    },
-    input: {
-      className: "my-textarea-class",
-      "aria-label": "Пример slotProps",
-      getRootRef: textareaRef,
-    },
-  }}
-/>
-)
-
-````
+  return (
+    <WriteBar
+      before={<WriteBarIcon mode="attach" />}
+      placeholder="Введите сообщение..."
+      className="my-root-class"
+      data-testid="write-bar-root"
+      id="write-bar-textarea-id"
+      slotProps={{
+        root: {
+          id: 'write-bar-root-id',
+        },
+        input: {
+          className: 'my-textarea-class',
+          'aria-label': 'Пример slotProps',
+          getRootRef: textareaRef,
+        },
+      }}
+    />
+  )
+  ```
 </Playground>
 
 ### Доступность (a11y) [#a11y]
@@ -238,11 +223,11 @@ return (
 
 - Через свойство `label`:
 
-```jsx
-<WriteBarIcon label="Прикрепить файл">
-  <Icon24Attachment />
-</WriteBarIcon>
-````
+  ```jsx
+  <WriteBarIcon label="Прикрепить файл">
+    <Icon24Attachment />
+  </WriteBarIcon>
+  ```
 
 - Через ARIA-атрибуты:
 
