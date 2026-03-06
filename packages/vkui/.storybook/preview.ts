@@ -106,8 +106,8 @@ const preview: Preview = {
       description: "Attribute indicating the directionality of the element's text",
       toolbar: {
         items: [
-          { value: 'ltr', icon: 'menu', title: 'ltr' },
-          { value: 'rtl', icon: 'menualt', title: 'rtl' },
+          { value: 'ltr', icon: 'arrowrightalt', title: 'ltr' },
+          { value: 'rtl', icon: 'arrowleftalt', title: 'rtl' },
         ],
       },
     },
