@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   transpilePackages: ['@vkontakte/vkui'],
 
   modularizeImports: {
@@ -8,6 +9,7 @@ const nextConfig = {
       skipDefaultConversion: true,
     },
   },
+  reactCompiler: true,
 };
 
 export default nextConfig;
