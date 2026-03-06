@@ -15,7 +15,7 @@ export default defineConfig([
   {
     ...pluginReact.configs.flat.recommended,
     settings: {
-      react: { version: '19' }, // https://github.com/vercel/next.js/issues/89764
+      react: { version: '19' }, // https://github.com/jsx-eslint/eslint-plugin-react/issues/3970
     },
   },
   pluginReact.configs.flat['jsx-runtime'],
