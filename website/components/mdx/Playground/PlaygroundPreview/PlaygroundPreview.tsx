@@ -61,7 +61,7 @@ export function PlaygroundPreview({
       )}
     >
       {error && <LiveError />}
-      {playgroundLoading && <PanelSpinner />}
+      {playgroundLoading && <PanelSpinner visibilityDelay={250} />}
       {mounted && !playgroundLoading && (
         <AppRoot style={{ height: '100%', width: '100%' }} mode="partial" scroll="contain">
           <ConfigProvider

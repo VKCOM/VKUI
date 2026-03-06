@@ -2,6 +2,7 @@
 
 import { PanelSpinner, Placeholder } from '@vkontakte/vkui';
 import dynamic from 'next/dynamic';
+import { useMounted } from 'nextra/hooks';
 import { type PlaygroundProps } from './Playground';
 import styles from './Playground.module.css';
 
@@ -9,11 +10,13 @@ const PlaygroundDynamic = dynamic(() => import('./Playground').then((mod) => mod
   ssr: false,
   loading: () => (
     <Placeholder className={styles.skeleton}>
-      <PanelSpinner />
+      <PanelSpinner visibilityDelay={250} />
     </Placeholder>
   ),
 });
 
 export function PlaygroundLazy(props: PlaygroundProps) {
-  return <PlaygroundDynamic {...props} />;
+  const mounted = useMounted();
+
+  return mounted ? <PlaygroundDynamic {...props} /> : <Placeholder className={styles.skeleton} />;
 }
