@@ -2739,7 +2739,7 @@ __metadata:
   resolution: "@project-docs/website@workspace:website"
   dependencies:
     "@next/bundle-analyzer": "npm:^15.5.11"
-    "@shikijs/transformers": "npm:^4.0.0"
+    "@shikijs/transformers": "npm:^4.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
     next: "npm:^15.5.11"
@@ -3265,16 +3265,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/core@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@shikijs/core@npm:4.0.0"
+"@shikijs/core@npm:4.0.2":
+  version: 4.0.2
+  resolution: "@shikijs/core@npm:4.0.2"
   dependencies:
-    "@shikijs/primitive": "npm:4.0.0"
-    "@shikijs/types": "npm:4.0.0"
+    "@shikijs/primitive": "npm:4.0.2"
+    "@shikijs/types": "npm:4.0.2"
     "@shikijs/vscode-textmate": "npm:^10.0.2"
     "@types/hast": "npm:^3.0.4"
     hast-util-to-html: "npm:^9.0.5"
-  checksum: 10/ad7b4b7a493b491cfe7964570605551599854985f8a0dd9bca154fd27b63c2c89753866235021aab74878bdc0c012c83198413d0f0bb1c645f15b8297334b16a
+  checksum: 10/e51a5fe3e7a9c229d1405e37a8004a25869fe3ed84322fe445d822279e84decf435f8e71601e1346aea39f072169f00fd3aeb7ca2db8b77efe083e623ad0c8e4
   languageName: node
   linkType: hard
 
@@ -3308,14 +3308,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/primitive@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@shikijs/primitive@npm:4.0.0"
+"@shikijs/primitive@npm:4.0.2":
+  version: 4.0.2
+  resolution: "@shikijs/primitive@npm:4.0.2"
   dependencies:
-    "@shikijs/types": "npm:4.0.0"
+    "@shikijs/types": "npm:4.0.2"
     "@shikijs/vscode-textmate": "npm:^10.0.2"
     "@types/hast": "npm:^3.0.4"
-  checksum: 10/5dd3a0a4cc0b2ec76a9d738366318d68946e052d0700cb4de1f9485e59bc907fc4e773cfb6f27b3d4cefb13aabbb8ce00b9bec0e7b56f96f2650b00ecca8a98e
+  checksum: 10/c364d2bfe210829d4aeca6267393eb77a814d8a39dfad2555aee45eed5837788cdf098bd103387b067af1c7638f27c822158f373cd4086f13f88ed43c030e45d
   languageName: node
   linkType: hard
 
@@ -3328,13 +3328,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/transformers@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@shikijs/transformers@npm:4.0.0"
+"@shikijs/transformers@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@shikijs/transformers@npm:4.0.2"
   dependencies:
-    "@shikijs/core": "npm:4.0.0"
-    "@shikijs/types": "npm:4.0.0"
-  checksum: 10/3efac7a83d7b4e3401cb0a9342b697c199d2132c1a3ce5ee3f954de79d1b23990df4a82a6886d4a98704e44870eb53b1d532ee42a12ec7439a68a9d570e8c9ed
+    "@shikijs/core": "npm:4.0.2"
+    "@shikijs/types": "npm:4.0.2"
+  checksum: 10/f086aafb8fb9536ecd23203c8d22f692149d669f7641a6c8a0f4d2de97363dd9b83faa24277d9c097c0ff1bca6a71f5d881850905f044dd1e9916208bf5ff3d1
   languageName: node
   linkType: hard
 
@@ -3361,13 +3361,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/types@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@shikijs/types@npm:4.0.0"
+"@shikijs/types@npm:4.0.2":
+  version: 4.0.2
+  resolution: "@shikijs/types@npm:4.0.2"
   dependencies:
     "@shikijs/vscode-textmate": "npm:^10.0.2"
     "@types/hast": "npm:^3.0.4"
-  checksum: 10/21411c92df425332fff8b4fb4238b829d9e93fbf6809c7ace85d15a046862bc1da8b24648c5a530bae267bccc0034d5e146982cbc8e0d7af949aa5dc9a7dda62
+  checksum: 10/d4f016b61a0bbc6a50522ed6b5c1d6e0edf7fabbb981e9373813f872306a777b352b241c10b337a658e642c332acd01d86686bb2b69cd6795abe2d732ff25d1b
   languageName: node
   linkType: hard
 
