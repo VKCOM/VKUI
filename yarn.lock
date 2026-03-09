@@ -5339,9 +5339,9 @@ __metadata:
     dotenv: "npm:^17.3.1"
     eslint: "npm:^8.56.0"
     eslint-import-resolver-alias: "npm:^1.1.2"
-    eslint-plugin-compat: "npm:^6.2.0"
+    eslint-plugin-compat: "npm:^7.0.1"
     eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-jsdoc: "npm:^62.7.0"
+    eslint-plugin-jsdoc: "npm:^62.7.1"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^7.0.1"
     eslint-plugin-react-server-components: "npm:^1.2.0"
@@ -6636,7 +6636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001579, caniuse-lite@npm:^1.0.30001687, caniuse-lite@npm:^1.0.30001759, caniuse-lite@npm:^1.0.30001774":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001579, caniuse-lite@npm:^1.0.30001759, caniuse-lite@npm:^1.0.30001774":
   version: 1.0.30001775
   resolution: "caniuse-lite@npm:1.0.30001775"
   checksum: 10/422bb35abdb5aa57c9e70bee594e51c504a264d62d4ac263d288952ece14dcc7876d86ca957cd099c5043cef2f503b5779fdf58c00ea37471e725c8d59fd67bf
@@ -8974,21 +8974,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-compat@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "eslint-plugin-compat@npm:6.2.0"
+"eslint-plugin-compat@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "eslint-plugin-compat@npm:7.0.1"
   dependencies:
     "@mdn/browser-compat-data": "npm:^6.1.1"
     ast-metadata-inferer: "npm:^0.8.1"
     browserslist: "npm:^4.25.2"
-    caniuse-lite: "npm:^1.0.30001687"
     find-up: "npm:^5.0.0"
     globals: "npm:^15.7.0"
     lodash.memoize: "npm:^4.1.2"
     semver: "npm:^7.6.2"
   peerDependencies:
-    eslint: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 10/919a16f0305b2480f85f08c5b1cdd3830636dee182cb2d8c4b881f777d1bb96526b2203cf659f5086d07190996409eba57b05330113a5b34177b36ad6c3dfb93
+    eslint: ^9.0.0 || ^10.0.0
+  checksum: 10/532884449b01c1b0f98bfd920d23a6e50cbfb17f99ccfb6edd1dccf77eaf1a22a8ae7fd35ac55b6246c179dbea86e3c420907d312d826d25730b9e8ca56f1021
   languageName: node
   linkType: hard
 
@@ -9021,9 +9020,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^62.7.0":
-  version: 62.7.0
-  resolution: "eslint-plugin-jsdoc@npm:62.7.0"
+"eslint-plugin-jsdoc@npm:^62.7.1":
+  version: 62.7.1
+  resolution: "eslint-plugin-jsdoc@npm:62.7.1"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.84.0"
     "@es-joy/resolve.exports": "npm:1.2.0"
@@ -9041,7 +9040,7 @@ __metadata:
     to-valid-identifier: "npm:^1.0.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 10/5e634d6b6ab62b83b60f2244d87c5732c4c4c9e476c26e59263af0c94479edab5be2663b0490d0fd70f5a67860ba5a2a9dc6fd9966204420fc3c23d6a71ebdaf
+  checksum: 10/cd4e6b0fa84747456f84ae1a5266de61b4e2171121ad57b6a27b58b09c9130dd4088d4e876b57fa7f0c88dc8c2029d6ee0e2d982fcfb164a75076e25ddc8949e
   languageName: node
   linkType: hard
 
