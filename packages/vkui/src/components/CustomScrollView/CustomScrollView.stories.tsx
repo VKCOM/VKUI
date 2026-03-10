@@ -2,7 +2,7 @@ import type { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import type { PartialStoryFn } from 'storybook/internal/types';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { Div } from '../Div/Div';
+import { Box } from '../Box/Box';
 import { CustomScrollView, type CustomScrollViewProps } from './CustomScrollView';
 
 const Wrapper = (Story: PartialStoryFn<ReactRenderer>) => (
@@ -36,7 +36,9 @@ export const Playground: Story = {
   args: {
     enableHorizontalScroll: true,
     children: (
-      <Div
+      <Box
+        paddingInline="var(--vkui--size_base_padding_horizontal--regular)"
+        paddingBlock="var(--vkui--size_base_padding_vertical--regular)"
         style={{
           width: 1440,
           boxSizing: 'content-box',
@@ -89,7 +91,7 @@ export const Playground: Story = {
         in quam eget quam lacinia pharetra. Phasellus ipsum magna, aliquet id elit eget, cursus
         tincidunt ex. In rhoncus turpis turpis, et viverra ex malesuada vel. Donec nisi tellus,
         mollis et posuere vel, dictum eget neque.
-      </Div>
+      </Box>
     ),
   },
   decorators: [Wrapper],
