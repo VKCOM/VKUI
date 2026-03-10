@@ -53,7 +53,7 @@ description: Компонент для отображения индикатор
 
 <Playground>
   ```jsx
-  <div style={{ color: '#FF0000' }}>
+  <div style={{ color: "#FF0000" }}>
     <Spinner noColor />
   </div>
   ```
@@ -96,6 +96,21 @@ description: Компонент для отображения индикатор
   <VisuallyHidden>Идёт загрузка профиля...</VisuallyHidden>
 </Spinner>
 ```
+
+## unstable_ExpressiveSpinner
+
+Нестабильный компонент индикации загрузки в стиле
+[M3 Expressive](https://m3.material.io/components/loading-indicator/overview).
+Принимает все свойства, которые принимает компонент `Spinner`.
+Для платформы `ios` используется обычный `Spinner`.
+
+<Playground>
+  ```jsx
+  import { unstable_ExpressiveSpinner as ExpressiveSpinner} from "@vkontakte/vkui";
+
+  <ExpressiveSpinner size="xl" />
+  ```
+</Playground>
 
 ## Свойства и методы [#api]
 
