@@ -1,6 +1,7 @@
 import { IconButton } from 'storybook/internal/components';
 import { useGlobals, useStorybookState } from 'storybook/manager-api';
 import { GithubIcon } from '@storybook/icons';
+import * as React from 'react';
 
 const getComponentUrl = (repositoryUrl: string, importPath: string): string => {
   const pathWithoutFile = importPath.replace(/\/[^/]+\.stories\.tsx$/, '');
