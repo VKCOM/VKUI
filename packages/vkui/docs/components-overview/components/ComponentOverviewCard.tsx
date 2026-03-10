@@ -5,9 +5,9 @@ import { classNames } from '@vkontakte/vkjs';
 import { Card, Mark, Title, useDirection } from '../../../src';
 import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
 import { useDOM } from '../../../src/lib/dom';
-import { type CSSCustomProperties } from '../../../src/types';
+import type { CSSCustomProperties } from '../../../src/types';
 import { useOverviewLayoutContext } from '../../common/components/OverviewLayoutContext';
-import { type ComponentConfigData } from '../config';
+import type { ComponentConfigData } from '../config';
 import styles from './ComponentOverviewCard.module.css';
 
 const CONTENT_PADDING = 10;

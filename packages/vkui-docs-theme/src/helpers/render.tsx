@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 export function renderComponent<T>(ComponentOrNode: React.FC<T> | React.ReactNode, props?: T) {
   if (!ComponentOrNode) {

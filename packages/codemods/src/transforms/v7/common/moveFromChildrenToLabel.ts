@@ -1,4 +1,4 @@
-import { API, ASTPath, Collection, JSXAttribute, JSXElement } from 'jscodeshift';
+import type { API, ASTPath, Collection, JSXAttribute, JSXElement } from 'jscodeshift';
 import { removeAttribute } from '../../../codemod-helpers';
 import { report } from '../../../report';
 

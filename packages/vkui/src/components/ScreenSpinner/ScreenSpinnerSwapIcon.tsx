@@ -10,7 +10,7 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import { Icon48CancelCircle } from './Icon48CancelCircle';
 import { Icon48DoneOutline } from './Icon48DoneOutline';
 import { ScreenSpinnerContext } from './context';
-import { type ScreenSpinnerProps } from './types';
+import type { ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
 
 type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> & {

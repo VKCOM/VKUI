@@ -1,6 +1,6 @@
 import { Button } from '@vkontakte/vkui';
 import { GithubIcon } from '../icons';
-import { type DocsThemeConfig } from '../types';
+import type { DocsThemeConfig } from '../types';
 
 export function ProjectButton({ projectLink }: Pick<DocsThemeConfig, 'projectLink'>) {
   return (

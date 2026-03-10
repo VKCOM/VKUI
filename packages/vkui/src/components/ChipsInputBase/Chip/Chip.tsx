@@ -6,15 +6,11 @@ import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../../hooks/useAdaptivity';
 import { useFocusVisible } from '../../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../../hooks/useFocusVisibleClassName';
-import {
-  type HasComponent,
-  type HasDataAttribute,
-  type HTMLAttributesWithRootRef,
-} from '../../../types';
+import type { HasComponent, HasDataAttribute, HTMLAttributesWithRootRef } from '../../../types';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import { Footnote } from '../../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden';
-import { type ChipOptionValue } from '../types';
+import type { ChipOptionValue } from '../types';
 import styles from './Chip.module.css';
 
 const densityClassNames = {

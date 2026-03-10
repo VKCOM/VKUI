@@ -12,7 +12,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { useHover } from '../Clickable/useState';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { type CustomTouchEvent } from '../Touch/Touch';
+import type { CustomTouchEvent } from '../Touch/Touch';
 import { Bullets } from './Bullets';
 import { CarouselViewPort } from './CarouselViewPort';
 import { ScrollArrows } from './ScrollArrows';
@@ -35,11 +35,11 @@ import {
   validateIndent,
 } from './helpers';
 import { useSlideAnimation } from './hooks';
-import {
-  type BaseGalleryProps,
-  type ControlElementsState,
-  type GallerySlidesState,
-  type SlidesManagerState,
+import type {
+  BaseGalleryProps,
+  ControlElementsState,
+  GallerySlidesState,
+  SlidesManagerState,
 } from './types';
 import styles from './CarouselBase.module.css';
 

@@ -6,7 +6,7 @@ import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJS
 import { usePlatform } from '../../hooks/usePlatform';
 import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
-import { type HasRootRef } from '../../types';
+import type { HasRootRef } from '../../types';
 import type { ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';

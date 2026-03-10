@@ -1,6 +1,6 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import { type HTMLAttributesWithRootRef } from '../../types';
+import type { HTMLAttributesWithRootRef } from '../../types';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import { CellButtonGroupSeparator } from './CellButtonGroupSeparator/CellButtonGroupSeparator';
 

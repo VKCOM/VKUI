@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import type { CSSCustomProperties, HasRef, HasRootRef, LiteralUnion } from '../../types';

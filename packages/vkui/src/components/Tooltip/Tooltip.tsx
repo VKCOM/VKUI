@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { useReferenceElement } from '../../hooks/useReferenceElement';
-import { type FloatingComponentProps, type OnShownChange } from '../../lib/floating';
-import { type FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
-import { type TooltipBaseProps } from '../TooltipBase/TooltipBase';
+import type { FloatingComponentProps, OnShownChange } from '../../lib/floating';
+import type { FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
+import type { TooltipBaseProps } from '../TooltipBase/TooltipBase';
 import { useTooltip } from './useTooltip';
 
 type AllowedFloatingComponentProps = Pick<

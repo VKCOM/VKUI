@@ -1,7 +1,7 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { type CSSCustomProperties, type HTMLAttributesWithRootRef } from '../../types';
+import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Progress.module.css';
 

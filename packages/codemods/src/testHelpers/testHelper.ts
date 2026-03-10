@@ -7,7 +7,7 @@ import {
   defineSnapshotTestFromFixture as defineSnapshotTestFromFixtureOrig,
   // @ts-expect-error: TS7016 no types for package
 } from 'jscodeshift/dist/testUtils';
-import { JSCodeShiftOptions } from '../types';
+import type { JSCodeShiftOptions } from '../types';
 
 export { applyTransform };
 

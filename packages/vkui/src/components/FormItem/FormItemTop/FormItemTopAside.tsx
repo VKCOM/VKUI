@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { HasComponent, HasRootRef } from '../../../types';
 import { Subhead } from '../../Typography/Subhead/Subhead';
 import styles from '../FormItem.module.css';

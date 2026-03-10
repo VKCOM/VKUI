@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { AdaptivityProps } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { ConfigProvider } from '../../components/ConfigProvider/ConfigProvider';

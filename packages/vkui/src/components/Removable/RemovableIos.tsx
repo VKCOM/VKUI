@@ -4,11 +4,11 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useDOM } from '../../lib/dom';
-import { type CSSCustomProperties } from '../../types';
+import type { CSSCustomProperties } from '../../types';
 import { IconButton } from '../IconButton/IconButton';
 import { Tappable } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { type RemovableIosRenderProps, type RemovableProps } from './Removable';
+import type { RemovableIosRenderProps, RemovableProps } from './Removable';
 import styles from './Removable.module.css';
 
 /* eslint-disable jsdoc/require-jsdoc */

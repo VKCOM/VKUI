@@ -11,11 +11,11 @@ import {
   sizeMiddleware,
 } from '../adapters';
 import { checkIsNotAutoPlacement, getAutoPlacementAlign } from '../functions';
-import {
-  type ArrowOptions,
-  type Placement,
-  type PlacementWithAuto,
-  type UseFloatingMiddleware,
+import type {
+  ArrowOptions,
+  Placement,
+  PlacementWithAuto,
+  UseFloatingMiddleware,
 } from '../types/common';
 
 export interface UseFloatingMiddlewaresBootstrapOptions {

@@ -1,4 +1,4 @@
-import { type CSSCustomProperties } from '../types';
+import type { CSSCustomProperties } from '../types';
 
 export function animationVisibilityDelayStyles(
   delay: number | undefined,

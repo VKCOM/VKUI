@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Keys, pressedKey } from '../../../lib/accessibility';
-import { type SelectProps } from '../CustomSelect';
-import { type UseFocusedOptionControllerReturn } from './useFocusedOptionController';
+import type { SelectProps } from '../CustomSelect';
+import type { UseFocusedOptionControllerReturn } from './useFocusedOptionController';
 
 const KEYS_TO_PREVENT_DEFAULT: string[] = [Keys.ARROW_UP, Keys.ARROW_DOWN, Keys.ESCAPE, Keys.ENTER];
 

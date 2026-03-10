@@ -6,7 +6,7 @@ import { createSnackbarStore } from './helpers/createSnackbarStore';
 import { useIsDesktop } from './helpers/useIsDesktop';
 import { useSnackbarActionsWithStore } from './helpers/useSnackbarActionsWithStore';
 import { useSnackbarConfig } from './helpers/useSnackbarConfig';
-import { type SnackbarApi, type UseSnackbar } from './types';
+import type { SnackbarApi, UseSnackbar } from './types';
 
 export const useSnackbarManager = (params: UseSnackbar.Props = {}): UseSnackbar.Return => {
   const config = useSnackbarConfig(params);

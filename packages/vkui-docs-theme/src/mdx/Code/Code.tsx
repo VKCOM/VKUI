@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { JetBrains_Mono } from 'next/font/google';
 import styles from './Code.module.css';

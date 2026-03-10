@@ -1,4 +1,4 @@
-import {
+import type {
   API,
   Collection,
   FileInfo,
@@ -9,7 +9,7 @@ import {
 } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 import { report } from '../../report';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 

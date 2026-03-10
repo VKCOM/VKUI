@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable jsdoc/require-jsdoc */
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HasRootRef } from '../../../types';
 import { Text } from '../../Typography/Text/Text';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type TabsProps } from './Tabs';
+import type { TabsProps } from './Tabs';
 
 /* eslint-disable jsdoc/require-jsdoc */
 export interface TabsContextProps {

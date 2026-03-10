@@ -5,12 +5,12 @@ import { ModalCard } from '../../components/ModalCard/ModalCard';
 import { ModalPage } from '../../components/ModalPage/ModalPage';
 import { waitCSSTransitionEndConditionally } from '../../components/ModalRoot/ModalRoot.test';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import {
-  type CustomModalProps,
-  type ModalManagerApi,
-  type OpenModalCardProps,
-  type OpenModalPageProps,
-  type UseModalManagerProps,
+import type {
+  CustomModalProps,
+  ModalManagerApi,
+  OpenModalCardProps,
+  OpenModalPageProps,
+  UseModalManagerProps,
 } from './types';
 import { useModalManager } from './useModalManager';
 

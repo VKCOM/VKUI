@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { CSSCustomProperties } from '../../types';
 import { RootComponent, type RootComponentProps } from '../RootComponent/RootComponent';

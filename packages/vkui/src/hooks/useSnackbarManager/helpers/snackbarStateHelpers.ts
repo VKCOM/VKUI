@@ -1,4 +1,4 @@
-import { type SnackbarItem } from '../types';
+import type { SnackbarItem } from '../types';
 
 export type SnackbarState = {
   snackbars: SnackbarItem[];
