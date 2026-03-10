@@ -1,0 +1,1 @@
+import{b as i}from"./type_checkers-CVMjkZjG.js";function s(n,r){if(n===r)return!0;if(n==null||r==null||!i(n)&&!i(r))return n!==n&&r!==r;if(i(n)&&i(r)){if(Object.keys(n).length!==Object.keys(r).length)return!1;for(var f in n)if(n.hasOwnProperty(f)&&r.hasOwnProperty(f)){if(!s(n[f],r[f]))return!1}else return!1;return!0}return!1}export{s as i};
