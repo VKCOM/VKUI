@@ -1,7 +1,7 @@
 /**
  * Файл для упрощенной работы с дефолтными функциями запуска `jscodeshift`
  */
-import path from 'path';
+import path from 'node:path';
 import {
   applyTransform,
   defineSnapshotTestFromFixture as defineSnapshotTestFromFixtureOrig,
