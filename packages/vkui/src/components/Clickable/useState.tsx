@@ -181,6 +181,13 @@ function useActive({
     pointersUpRef.current = new Set<number>();
   }
 
+  React.useEffect(() => {
+    if (lockState) {
+      // Сбрасываем setActivated если обнаруживаем lockState
+      setActivated(false);
+    }
+  }, [lockState, setActivated]);
+
   const onPointerDown = () => {
     if (lockState) {
       return;
@@ -261,22 +268,6 @@ function useLockState(
   return [lockState, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
 }
 
-function useLockRef(
-  setParentStateLockBubbling: (v: boolean) => void,
-): readonly [boolean, (v: boolean) => void, (...args: any[]) => void] {
-  const [lockState, setLockState] = React.useState(false);
-
-  const setStateLockBubblingImmediate = React.useCallback(
-    (isLock: boolean) => {
-      setLockState(isLock);
-      setParentStateLockBubbling(isLock);
-    },
-    [setParentStateLockBubbling],
-  );
-
-  return [lockState, setParentStateLockBubbling, setStateLockBubblingImmediate] as const;
-}
-
 /**
  * Управляет состоянием компонента.
  */
@@ -300,7 +291,7 @@ export function useState({
   const [lockHoverState, setParentStateLockHoverBubbling, setLockHoverBubblingImmediate] =
     useLockState(unlockParentHover ? noop : lockHoverStateBubbling);
   const [lockActiveState, setParentStateLockActiveBubbling, setLockActiveBubblingImmediate] =
-    useLockRef(lockActiveStateBubbling);
+    useLockState(lockActiveStateBubbling);
 
   const { isHovered, ...hoverEvent } = useHover({
     hasHover,
