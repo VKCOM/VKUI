@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import fs, { WriteStream } from 'fs';
 import { once } from 'node:events';
+import fs, { WriteStream } from 'node:fs';
 import chalk from 'chalk';
 import { sync as spawnSync } from 'cross-spawn';
 import prompts from 'prompts';
