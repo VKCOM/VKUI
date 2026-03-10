@@ -1,7 +1,6 @@
 import { IconButton } from 'storybook/internal/components';
 import { useStorybookState, useGlobals } from 'storybook/manager-api';
 import { DocumentIcon } from '@storybook/icons';
-import * as React from 'react';
 
 const COMPONENTS_DOCS_PARENT_MAP: Record<string, string> = {
   Header: 'Group',
