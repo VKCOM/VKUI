@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames, Flex } from '@vkontakte/vkui';
 import styles from './OverlayButtonWrapper.module.css';
 

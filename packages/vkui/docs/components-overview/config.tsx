@@ -1,6 +1,6 @@
 'use client';
 
-import { type ComponentType, type ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import {
   Icon12Fire,
   Icon12Tag,

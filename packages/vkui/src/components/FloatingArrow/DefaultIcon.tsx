@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 export const DEFAULT_ARROW_WIDTH = 20;
 export const DEFAULT_ARROW_HEIGHT = 8;

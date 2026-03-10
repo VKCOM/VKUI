@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type PlatformType } from '@vkontakte/vkui';
+import type { PlatformType } from '@vkontakte/vkui';
 import useSWR, { preload } from 'swr';
 import pkg from '../../../../../package.json';
 import {

@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 import { useReferenceElement } from '../../hooks/useReferenceElement';
-import {
-  type FloatingComponentProps,
-  type FloatingContentRenderProp,
-  type OnShownChange,
+import type {
+  FloatingComponentProps,
+  FloatingContentRenderProp,
+  OnShownChange,
 } from '../../lib/floating';
 import type { HTMLAttributesWithRootRef } from '../../types';
-import { type FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
+import type { FloatingArrowProps as FloatingArrowPropsPrivate } from '../FloatingArrow/FloatingArrow';
 import { usePopover } from './usePopover';
 
 /**

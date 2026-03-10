@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { ModalRoot } from '../../../components/ModalRoot/ModalRoot';
-import { type ModalRootProps } from '../../../components/ModalRoot/types';
-import { type ModalStore } from '../helpers/createModalStore';
+import type { ModalRootProps } from '../../../components/ModalRoot/types';
+import type { ModalStore } from '../helpers/createModalStore';
 import { useActiveModalProps } from '../helpers/useActiveModalProps';
 
 type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {

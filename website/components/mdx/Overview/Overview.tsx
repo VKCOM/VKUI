@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { OverviewHeaderLinks } from './OverviewHeaderLinks/OverviewHeaderLinks';
 import type { OverviewHeaderLinksProps } from './OverviewHeaderLinks/types';
 import styles from './Overview.module.css';

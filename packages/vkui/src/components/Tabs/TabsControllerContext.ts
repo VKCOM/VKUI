@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type TabsControllerProps } from './TabsController';
+import type { TabsControllerProps } from './TabsController';
 
 export type TabsControllerContextProps = TabsControllerProps | null;
 

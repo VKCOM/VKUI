@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 import { once } from 'node:events';
-import fs, { WriteStream } from 'node:fs';
+import fs, { type WriteStream } from 'node:fs';
 import chalk from 'chalk';
 import { sync as spawnSync } from 'cross-spawn';
 import prompts from 'prompts';
-import { CliOptions, runCli } from './cli.js';
+import { type CliOptions, runCli } from './cli.js';
 import { TRANSFORM_DIR } from './getAvailableCodemods.js';
 import logger from './helpers/logger.js';
 

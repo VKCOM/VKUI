@@ -1,8 +1,8 @@
 import { getTextFromChildren } from '../../lib/children';
 import { warnOnce } from '../../lib/warnOnce';
 import { NOT_SELECTED, type SelectValue } from '../NativeSelect/NativeSelect';
-import { type SelectProps } from './CustomSelect';
-import { type CustomSelectOptionInterface } from './types';
+import type { SelectProps } from './CustomSelect';
+import type { CustomSelectOptionInterface } from './types';
 
 export const findIndexAfter = (options: CustomSelectOptionInterface[] = [], startIndex = -1) => {
   if (startIndex >= options.length - 1) {

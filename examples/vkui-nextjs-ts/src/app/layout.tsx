@@ -1,4 +1,4 @@
-import { Metadata, Viewport } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { headers } from 'next/headers';
 import { detectIOS } from '@vkontakte/vkjs';
 import '@vkontakte/vkui/dist/cssm/styles/themes.css';

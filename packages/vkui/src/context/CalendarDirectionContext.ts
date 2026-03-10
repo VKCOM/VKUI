@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { type Direction } from '../lib/direction';
+import type { Direction } from '../lib/direction';
 
 export interface CalendarDirectionContextProps {
   direction: Direction;

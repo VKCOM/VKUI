@@ -3,7 +3,7 @@ import { FOCUSABLE_ELEMENTS_LIST } from '../../lib/accessibility';
 import { getActiveElementByAnotherElement, isHTMLElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useStableCallback } from '../useStableCallback';
-import { type UseFocusTrapProps } from './useFocusTrap';
+import type { UseFocusTrapProps } from './useFocusTrap';
 
 function isFocusableElement(el: Element): boolean {
   // eslint-disable-next-line no-restricted-properties

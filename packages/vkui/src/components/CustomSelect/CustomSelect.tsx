@@ -12,7 +12,7 @@ import type { Placement } from '../../lib/floating';
 import { defaultFilterFn, type FilterFn } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { preventDefault } from '../../lib/utils';
-import { type HasDataAttribute, type HasRootRef } from '../../types';
+import type { HasDataAttribute, HasRootRef } from '../../types';
 import {
   CustomSelectDropdown,
   type CustomSelectDropdownProps,
@@ -28,7 +28,7 @@ import {
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
-import { type CustomSelectClearButtonProps } from './CustomSelectClearButton';
+import type { CustomSelectClearButtonProps } from './CustomSelectClearButton';
 import {
   CustomSelectInput,
   type CustomSelectInputProps,

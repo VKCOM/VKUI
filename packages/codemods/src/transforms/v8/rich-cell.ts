@@ -1,6 +1,6 @@
-import { API, FileInfo } from 'jscodeshift';
+import type { API, FileInfo } from 'jscodeshift';
 import { getImportInfo, getStringValueFromAttribute } from '../../codemod-helpers';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 

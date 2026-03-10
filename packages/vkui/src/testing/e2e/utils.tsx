@@ -5,8 +5,8 @@ import type {
 } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { getValueByKey } from '../../helpers/getValueByKey';
 import { BREAKPOINTS, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
-import { type Direction } from '../../lib/direction';
-import { type PlatformType } from '../../lib/platform';
+import type { Direction } from '../../lib/direction';
+import type { PlatformType } from '../../lib/platform';
 
 export function getAdaptivePxWidth(viewWidth: ViewWidthType) {
   switch (viewWidth) {

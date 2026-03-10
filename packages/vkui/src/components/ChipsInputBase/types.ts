@@ -1,8 +1,8 @@
 import type * as React from 'react';
 import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
-import { type FormFieldProps } from '../FormField/FormField';
-import { type FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
-import { type ChipProps } from './Chip/Chip';
+import type { FormFieldProps } from '../FormField/FormField';
+import type { FormFieldClearButtonProps } from '../FormFieldClearButton/FormFieldClearButton';
+import type { ChipProps } from './Chip/Chip';
 
 export type NavigateTo = 'prev' | 'next' | 'last' | 'first';
 

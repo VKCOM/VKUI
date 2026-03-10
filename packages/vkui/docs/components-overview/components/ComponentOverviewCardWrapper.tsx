@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { COMPONENTS_DATA } from '../config';
 import { ComponentOverviewCard, type ComponentOverviewCardProps } from './ComponentOverviewCard';
 

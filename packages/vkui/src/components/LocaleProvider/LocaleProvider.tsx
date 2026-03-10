@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { type ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+import type * as React from 'react';
+import type { ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { ConfigProviderOverride } from '../ConfigProvider/ConfigProviderOverride';
 
 export interface LocaleProviderProps {

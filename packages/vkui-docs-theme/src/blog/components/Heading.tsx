@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { Title } from '@vkontakte/vkui';
 
 export interface HeadingProps extends React.ComponentProps<'h2'> {

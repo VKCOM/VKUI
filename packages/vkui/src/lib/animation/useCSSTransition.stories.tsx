@@ -1,7 +1,7 @@
 /* eslint-disable no-console, import/no-default-export */
 'use client';
 
-import { type Meta, type StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { classNames } from '@vkontakte/vkjs';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import type { CSSCustomProperties } from '../../types';

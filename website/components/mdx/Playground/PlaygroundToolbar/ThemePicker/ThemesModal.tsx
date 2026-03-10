@@ -15,7 +15,7 @@ import {
 import { Callout, Code } from '@vkontakte/vkui-docs-theme';
 import { PlaygroundStoreContext } from '@/providers/playgroundStoreProvider';
 import { loadTheme } from '../../vkuiThemes/helpers';
-import { type ThemeDefinitionProps } from '../../vkuiThemes/types';
+import type { ThemeDefinitionProps } from '../../vkuiThemes/types';
 import { useLoadThemeNames } from '../../vkuiThemes/useLoadThemeNames';
 
 interface ThemesModalProps {

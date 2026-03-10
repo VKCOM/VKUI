@@ -1,4 +1,4 @@
-import { API, Collection, JSCodeshift } from 'jscodeshift';
+import type { API, Collection, JSCodeshift } from 'jscodeshift';
 import { report } from '../../../report';
 
 export const remapSizePropValue = ({

@@ -8,7 +8,7 @@ import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
 import { convertFloatingDataToReactCSSProperties } from '../functions';
-import { type UseFloatingOptions } from '../types/common';
+import type { UseFloatingOptions } from '../types/common';
 import { DEFAULT_TRIGGER } from './constants';
 import type {
   FloatingProps,

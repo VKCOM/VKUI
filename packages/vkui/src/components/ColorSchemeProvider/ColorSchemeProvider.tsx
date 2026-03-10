@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import type { ColorSchemeType } from '../../lib/colorScheme';
 import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';

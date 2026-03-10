@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { Icon16LinkOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { LogoIcon, LogoIconUwu } from '@vkontakte/vkui-docs-theme';

@@ -1,6 +1,6 @@
 import { addBasePath } from 'next/dist/client/add-base-path';
 import { getErrorMessage } from './helpers';
-import { type PagefindModuleProps, type SearchResultProps } from './types';
+import type { PagefindModuleProps, SearchResultProps } from './types';
 
 const MAX_RESULT_COUNT = 20;
 

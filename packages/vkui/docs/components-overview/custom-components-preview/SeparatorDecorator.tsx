@@ -1,4 +1,4 @@
-import { type ComponentConfigData } from '../config';
+import type { ComponentConfigData } from '../config';
 
 export const SeparatorDecorator: ComponentConfigData['decorator'] = ({ children }) => {
   return (

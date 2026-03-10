@@ -1,5 +1,5 @@
 import { spyOn } from 'storybook/test';
-import { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 // Выносим отдельно, чтобы файл обрабатывался postcss плагином

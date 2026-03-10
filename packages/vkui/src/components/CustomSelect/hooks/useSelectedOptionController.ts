@@ -1,4 +1,4 @@
-import { type ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 import * as React from 'react';
 import { useStateWithPrev } from '../../../hooks/useStateWithPrev';
 import {
@@ -8,7 +8,7 @@ import {
   remapFromSelectValueToNativeValue,
   type SelectValue,
 } from '../../NativeSelect/NativeSelect';
-import { type SelectProps } from '../CustomSelect';
+import type { SelectProps } from '../CustomSelect';
 
 /* eslint-disable jsdoc/require-jsdoc */
 type UseSelectedOptionControllerProps = Pick<SelectProps, 'value' | 'defaultValue'> & {

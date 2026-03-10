@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import { classNames } from '@vkontakte/vkjs';
-import { type BaseGalleryProps } from './types';
+import type { BaseGalleryProps } from './types';
 import styles from './CarouselBase.module.css';
 
 export interface BulletsTestIds {

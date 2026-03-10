@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon16Chevron } from '@vkontakte/icons';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { type RootComponentProps } from '../RootComponent/RootComponent';
+import type { RootComponentProps } from '../RootComponent/RootComponent';
 import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
 import { Paragraph } from '../Typography/Paragraph/Paragraph';
 import styles from './MiniInfoCell.module.css';

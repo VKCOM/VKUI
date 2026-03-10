@@ -1,6 +1,6 @@
 import type { FrontMatter } from 'nextra';
 import { VKUI_CONFIG } from './constants';
-import { type OverviewHeaderLinksProps } from './types';
+import type { OverviewHeaderLinksProps } from './types';
 
 export function createSourceUrl(
   componentName: string,

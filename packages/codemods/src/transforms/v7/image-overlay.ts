@@ -1,8 +1,8 @@
 import chalk from 'chalk';
-import { API, FileInfo, JSXAttribute, JSXSpreadAttribute } from 'jscodeshift';
+import type { API, FileInfo, JSXAttribute, JSXSpreadAttribute } from 'jscodeshift';
 import { getImportInfo, removeAttribute } from '../../codemod-helpers';
 import { report } from '../../report';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 

@@ -1,9 +1,9 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { ConfigProviderOverride } from '../components/ConfigProvider/ConfigProviderOverride';
 import { type BrowserInfo, computeBrowserInfo } from './browser';
-import { type Direction } from './direction';
+import type { Direction } from './direction';
 import { platform as getPlatform } from './platform';
 
 export interface SSRWrapperProps {
