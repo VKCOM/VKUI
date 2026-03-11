@@ -6,7 +6,7 @@ import { Icon16ArticleBoxOutline } from '@vkontakte/icons';
 import { AdaptivityProvider, Button, VisuallyHidden } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import vkuiPgk from '../../../../packages/vkui/package.json';
-import { VersionsModal } from './VersionsModal';
+import { preloadVersionsModal, VersionsModal } from './VersionsModal';
 
 export function Versions() {
   const [open, setOpen] = React.useState(false);
@@ -21,6 +21,7 @@ export function Versions() {
           size="l"
           after={<Icon16ArticleBoxOutline />}
           onClick={() => setOpen((isOpen) => !isOpen)}
+          onMouseEnter={preloadVersionsModal}
         >
           <VisuallyHidden>Версия</VisuallyHidden>v{vkuiPgk.version}
         </Button>

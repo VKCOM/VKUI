@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { DensityTypeValues } from '../../../lib/adaptivity';
 import { Tappable, type TappableOmitProps } from '../../Tappable/Tappable';

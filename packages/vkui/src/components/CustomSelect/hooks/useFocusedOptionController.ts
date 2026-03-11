@@ -1,9 +1,9 @@
-import { type Dispatch, type SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import * as React from 'react';
-import { type SelectValue } from '../../NativeSelect/NativeSelect';
-import { type SelectProps } from '../CustomSelect';
+import type { SelectValue } from '../../NativeSelect/NativeSelect';
+import type { SelectProps } from '../CustomSelect';
 import { findIndexAfter, findIndexBefore, findSelectedIndex } from '../helpers';
-import { type CustomSelectOptionInterface } from '../types';
+import type { CustomSelectOptionInterface } from '../types';
 
 /* eslint-disable jsdoc/require-jsdoc */
 interface UseFocusedOptionControllerProps<OptionInterfaceT extends CustomSelectOptionInterface> {

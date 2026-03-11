@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import {
   Footer,
   Head,
@@ -10,7 +10,7 @@ import {
   type SearchProps,
 } from '@vkontakte/vkui-docs-theme';
 import type { Metadata } from 'next';
-import { type PageMapItem } from 'nextra';
+import type { PageMapItem } from 'nextra';
 import { getPageMap } from 'nextra/page-map';
 import { PlaygroundStoreProvider } from '@/providers/playgroundStoreProvider';
 import uwuCode from '../uwu.js?raw';

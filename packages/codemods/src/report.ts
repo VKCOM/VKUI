@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { API } from 'jscodeshift';
+import type { API } from 'jscodeshift';
 import pkg from '../package.json';
 
 export function report(api: API, message: string) {

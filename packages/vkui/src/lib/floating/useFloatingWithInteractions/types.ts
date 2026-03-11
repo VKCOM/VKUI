@@ -1,9 +1,9 @@
-import {
-  type FloatingPositionStrategy,
-  type Placement,
-  type UseFloatingData,
-  type UseFloatingMiddleware,
-  type UseFloatingRefs,
+import type {
+  FloatingPositionStrategy,
+  Placement,
+  UseFloatingData,
+  UseFloatingMiddleware,
+  UseFloatingRefs,
 } from '../types/common';
 
 export type InteractiveTriggerType = 'click' | 'hover' | 'focus';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { Icon16Linked } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import styles from './HeadingLink.module.css';

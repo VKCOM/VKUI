@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { type PlatformType } from '@vkontakte/vkui';
-import { useFetch } from '@vkontakte/vkui-docs-theme';
+import type { PlatformType } from '@vkontakte/vkui';
+import useSWR, { preload } from 'swr';
 import pkg from '../../../../../package.json';
 import {
   DEFAULT_THEME_FOR_PLATFORM,
@@ -14,11 +14,16 @@ import type { ColorSchemeOptionProps, ThemeValues, TokensInfoProps } from './typ
 
 const vkuiTokensVersion = pkg.devDependencies['@vkontakte/vkui-tokens'];
 
+const url = `${VKUI_TOKENS_THEMES_META_URL}@${vkuiTokensVersion}`;
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export function preloadThemeNames() {
+  void preload(url, fetcher);
+}
+
 export const useLoadThemeNames = () => {
-  const { data, error } = useFetch(`${VKUI_TOKENS_THEMES_META_URL}@${vkuiTokensVersion}`) as {
-    data?: TokensInfoProps;
-    error: Error;
-  };
+  const { data, error } = useSWR<TokensInfoProps, Error>(url, fetcher);
 
   return React.useMemo(() => {
     if (!data) {

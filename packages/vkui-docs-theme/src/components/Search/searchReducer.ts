@@ -1,7 +1,7 @@
 import type { SearchResultProps } from './types';
 
 interface SearchState {
-  data: SearchResultProps[];
+  data: SearchResultProps[] | null;
   loading: boolean;
   error: string | null;
 }
@@ -15,7 +15,7 @@ type SearchAction =
 export const initialState: SearchState = {
   loading: false,
   error: null,
-  data: [],
+  data: null,
 };
 
 export const searchReducer = (state: SearchState, action: SearchAction): SearchState => {

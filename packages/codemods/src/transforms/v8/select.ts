@@ -1,6 +1,6 @@
-import { API, FileInfo } from 'jscodeshift';
+import type { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 import { moveInputPropsIntoSlotProps } from './common/moveInputPropsIntoSlotProps';
 import {
   moveAriaAttrsIntoSlotProps,

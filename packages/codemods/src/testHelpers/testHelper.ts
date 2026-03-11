@@ -1,13 +1,13 @@
 /**
  * Файл для упрощенной работы с дефолтными функциями запуска `jscodeshift`
  */
-import path from 'path';
+import path from 'node:path';
 import {
   applyTransform,
   defineSnapshotTestFromFixture as defineSnapshotTestFromFixtureOrig,
   // @ts-expect-error: TS7016 no types for package
 } from 'jscodeshift/dist/testUtils';
-import { JSCodeShiftOptions } from '../types';
+import type { JSCodeShiftOptions } from '../types';
 
 export { applyTransform };
 

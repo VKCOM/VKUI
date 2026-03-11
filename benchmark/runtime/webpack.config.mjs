@@ -5,7 +5,6 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import dotenv from 'dotenv';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import cssModules from 'postcss-modules';
 import TerserPlugin from 'terser-webpack-plugin';
 
 dotenv.config({

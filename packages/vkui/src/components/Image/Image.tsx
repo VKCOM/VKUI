@@ -4,7 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { mergeStyle } from '../../helpers/mergeStyle';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import { type CSSCustomProperties } from '../../types';
+import type { CSSCustomProperties } from '../../types';
 import { ImageBase, type ImageBaseOverlayProps, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { ImageBadge, type ImageBadgeProps } from './ImageBadge/ImageBadge';
 import styles from './Image.module.css';

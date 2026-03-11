@@ -6,7 +6,7 @@ import autoprefixer from 'autoprefixer';
 import postcssCustomMedia from 'postcss-custom-media';
 import postcssGapProperties from 'postcss-gap-properties';
 import cssImport from 'postcss-import';
-import { type InlineConfig } from 'vite';
+import type { InlineConfig } from 'vite';
 import tsconfig from './tsconfig.json' with { type: 'json' };
 
 const rootDirectory = path.join(import.meta.dirname, '../..');

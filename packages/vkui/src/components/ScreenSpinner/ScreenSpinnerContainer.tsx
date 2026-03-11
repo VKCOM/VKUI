@@ -3,7 +3,7 @@ import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import { ScreenSpinnerContext } from './context';
-import { type ScreenSpinnerProps } from './types';
+import type { ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
 import stylesDelay from '../../styles/animationVisibilityDelay.module.css';
 

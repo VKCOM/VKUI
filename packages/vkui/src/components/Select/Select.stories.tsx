@@ -3,7 +3,7 @@ import { fn } from 'storybook/test';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { getFormFieldIconsPresets } from '../../testing/presets/getFormFieldIconsPresets';
 import { createStoryParameters } from '../../testing/storybook/createStoryParameters';
-import { type SelectProps } from '../CustomSelect/CustomSelect';
+import type { SelectProps } from '../CustomSelect/CustomSelect';
 import { Select } from './Select';
 
 const iconsPresets = getFormFieldIconsPresets();

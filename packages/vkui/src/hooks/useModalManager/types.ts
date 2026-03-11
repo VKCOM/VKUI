@@ -1,8 +1,8 @@
 import type * as React from 'react';
-import { type ModalCardProps } from '../../components/ModalCard/types';
-import { type ModalPageProps } from '../../components/ModalPage/types';
-import { type ModalRootProps } from '../../components/ModalRoot/types';
-import { type HasDataAttribute } from '../../types';
+import type { ModalCardProps } from '../../components/ModalCard/types';
+import type { ModalPageProps } from '../../components/ModalPage/types';
+import type { ModalRootProps } from '../../components/ModalRoot/types';
+import type { HasDataAttribute } from '../../types';
 
 export type UseModalManagerProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
   saveHistory?: boolean;

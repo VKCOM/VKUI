@@ -4,11 +4,7 @@ import * as React from 'react';
 import { ContextHolder } from './components/ContextHolder';
 import { createModalStore } from './helpers/createModalStore';
 import { useModalActions } from './helpers/useModalActions';
-import {
-  type ModalManagerApi,
-  type UseModalManagerProps,
-  type UseModalManagerReturn,
-} from './types';
+import type { ModalManagerApi, UseModalManagerProps, UseModalManagerReturn } from './types';
 
 export const useModalManager = ({
   saveHistory: saveHistoryProp = true,

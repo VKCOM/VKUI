@@ -9,7 +9,7 @@ import {
   type UseFloatingWithInteractionsReturn,
   usePlacementChangeCallback,
 } from '../lib/floating';
-import { type ReferenceProps } from '../lib/floating/useFloatingWithInteractions/types';
+import type { ReferenceProps } from '../lib/floating/useFloatingWithInteractions/types';
 import { useReferenceHiddenChangeCallback } from '../lib/floating/useReferenceHiddenChangeCallback';
 import { useExternRef } from './useExternRef';
 import { useGlobalEscKeyDown } from './useGlobalEscKeyDown';

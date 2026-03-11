@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import * as icons from '@vkontakte/icons';
 
 type IconName = Exclude<keyof typeof icons, 'IconSettingsProvider' | 'IconAppearanceProvider'>;

@@ -1,6 +1,6 @@
 import type * as React from 'react';
-import { type SnackbarProps } from '../../components/Snackbar/Snackbar';
-import { type HasDataAttribute, type PartialFields, type RequiredFields } from '../../types';
+import type { SnackbarProps } from '../../components/Snackbar/Snackbar';
+import type { HasDataAttribute, PartialFields, RequiredFields } from '../../types';
 
 export type SnackbarsMap = Record<string, SnackbarItem[]>;
 

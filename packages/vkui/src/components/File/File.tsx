@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { warnOnce } from '../../lib/warnOnce';
 import { withLabelClickWrapper } from '../../lib/withLabelClickWrapper';

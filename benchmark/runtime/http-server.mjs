@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
-import util from 'node:util';
 import dotenv from 'dotenv';
 import finalHandler from 'finalhandler';
 import serveStatic from 'serve-static';

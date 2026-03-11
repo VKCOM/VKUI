@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
 import { DEFAULT_LIMIT, DEFAULT_QUEUE_STRATEGY } from '../constants';
-import { type UseSnackbar } from '../types';
+import type { UseSnackbar } from '../types';
 
 export type UseSnackbarConfigReturn = {
   limit: number;

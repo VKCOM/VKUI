@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import { getFetchPriorityProp } from '../../lib/utils';
 import type { HasComponent, HasRef, HasRootRef } from '../../types';

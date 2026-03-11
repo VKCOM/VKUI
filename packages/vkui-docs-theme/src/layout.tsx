@@ -1,7 +1,7 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { PageMapItem } from 'nextra';
 import { ColorSchemeProvider, ConfigProvider, MenuProvider, ThemeConfigProvider } from './contexts';
-import { type DocsThemeConfig } from './types';
+import type { DocsThemeConfig } from './types';
 import { ContentWrapper, VKUIWrapper } from './wrappers';
 
 interface LayoutProps extends Partial<DocsThemeConfig> {

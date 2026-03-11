@@ -11,7 +11,7 @@ import {
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
-import { type ModalCardProps } from '../ModalCard/types';
+import type { ModalCardProps } from '../ModalCard/types';
 import { ModalPageHeader } from '../ModalPageHeader/ModalPageHeader';
 import { ModalPage } from './ModalPage';
 import styles from './ModalPage.module.css';

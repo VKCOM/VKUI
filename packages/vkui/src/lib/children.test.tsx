@@ -1,7 +1,7 @@
 // partially copied from react-children-utilities
 // @see https://github.com/fernandopasik/react-children-utilities/tree/main
 
-import * as React from 'react';
+import type * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { childToString, getTextFromChildren } from './children';
 

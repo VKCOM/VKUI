@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable jsdoc/require-jsdoc */
 
-import * as React from 'react';
+import type * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import type { HasChildren } from '../../types';
 import { Caption } from '../Typography/Caption/Caption';

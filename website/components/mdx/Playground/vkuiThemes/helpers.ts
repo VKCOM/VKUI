@@ -1,6 +1,6 @@
-import { type ColorSchemeType } from '@vkontakte/vkui';
+import type { ColorSchemeType } from '@vkontakte/vkui';
 import { VKUI_TOKENS_THEMES_BASE_URL } from './constants';
-import { type ColorSchemeOptionProps, type ThemeDefinitionProps } from './types';
+import type { ColorSchemeOptionProps, ThemeDefinitionProps } from './types';
 
 export function getThemeCSSUrl(themeName: string) {
   return `${VKUI_TOKENS_THEMES_BASE_URL}/${themeName}/cssVars/declarations/onlyVariablesLocal.css`;

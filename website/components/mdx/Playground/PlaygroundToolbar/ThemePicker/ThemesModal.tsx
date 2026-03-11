@@ -15,7 +15,7 @@ import {
 import { Callout, Code } from '@vkontakte/vkui-docs-theme';
 import { PlaygroundStoreContext } from '@/providers/playgroundStoreProvider';
 import { loadTheme } from '../../vkuiThemes/helpers';
-import { type ThemeDefinitionProps } from '../../vkuiThemes/types';
+import type { ThemeDefinitionProps } from '../../vkuiThemes/types';
 import { useLoadThemeNames } from '../../vkuiThemes/useLoadThemeNames';
 
 interface ThemesModalProps {
@@ -103,7 +103,7 @@ function ThemesModalInner({ setOpen }: Pick<ThemesModalProps, 'setOpen'>) {
           <FormStatus mode="error">Произошла ошибка</FormStatus>
         </Div>
       )}
-      {isLoading && <PanelSpinner />}
+      {isLoading && <PanelSpinner visibilityDelay={500} />}
       {themeNames.map(([themeName, { colorSchemeOptions, baseForPlatform }]) => (
         <SimpleCell
           key={themeName}

@@ -1,4 +1,4 @@
-import { Collection, JSCodeshift } from 'jscodeshift';
+import type { Collection, JSCodeshift } from 'jscodeshift';
 import { movePropIntoSlotProps } from './movePropIntoSlotProps';
 
 const INPUT_SPECIFIC_PROPS = [

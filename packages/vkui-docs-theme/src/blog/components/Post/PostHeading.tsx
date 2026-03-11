@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Heading, type HeadingProps } from '../Heading';
 import styles from './Post.module.css';

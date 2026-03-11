@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { withLabel } from '@vkui-e2e/utils';
 import { Cell } from '../Cell/Cell';

@@ -1,7 +1,6 @@
 'use client';
 
-import * as React from 'react';
-import { type RefObject } from 'react';
+import type * as React from 'react';
 import { FOCUSABLE_ELEMENTS_LIST } from '../../lib/accessibility';
 import { getWindow } from '../../lib/dom';
 import { useMutationObserver } from '../useMutationObserver';
@@ -89,7 +88,7 @@ export type UseFocusTrapProps = {
 };
 
 export const useFocusTrap = (
-  ref: RefObject<HTMLElement | null>,
+  ref: React.RefObject<HTMLElement | null>,
   {
     mount = true,
     disabled = false,

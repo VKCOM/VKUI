@@ -2,7 +2,7 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useBooleanState } from '../../../hooks/useBooleanState';
 import { useStableCallback } from '../../../hooks/useStableCallback';
-import { type SelectProps } from '../CustomSelect';
+import type { SelectProps } from '../CustomSelect';
 /* eslint-disable jsdoc/require-jsdoc */
 type UseDropdownOpenedControllerProps = Pick<SelectProps, 'onOpen' | 'onClose'> & {
   onOpened?: () => void;
