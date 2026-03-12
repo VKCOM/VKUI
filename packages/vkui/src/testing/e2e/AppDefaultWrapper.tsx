@@ -1,56 +1,32 @@
-import type { HTMLAttributes } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { AppRoot, type AppRootProps } from '../../components/AppRoot/AppRoot';
 import { TEST_CLASS_NAMES } from './constants';
 
 export type AppDefaultWrapperProps = AppRootProps & {
-  /* Убираем фон под скриншоты */
-  disableBackground?: boolean;
   /* Убираем декоративные элементы вокруг children: border */
   disableDecorations?: boolean;
-  /* Для кастомизации внутренней обертки */
-  slotProps?: {
-    inner?: HTMLAttributes<HTMLDivElement>;
-  };
 };
 
 export const AppDefaultWrapper = ({
   mode = 'embedded',
   className,
   children,
-  disableBackground,
   disableDecorations,
-  slotProps,
   ...restProps
-}: AppDefaultWrapperProps) => {
-  const { style, ...innerRest } = slotProps?.inner ?? {};
+}: AppDefaultWrapperProps) => (
+  <AppRoot mode={mode} className={classNames(TEST_CLASS_NAMES.APP_ROOT, className)} {...restProps}>
+    <div
+      style={{
+        ...(disableDecorations
+          ? undefined
+          : {
+              border: '8px solid var(--playwright-border)',
+            }),
 
-  return (
-    <AppRoot
-      mode={mode}
-      className={classNames(TEST_CLASS_NAMES.APP_ROOT, className)}
-      {...restProps}
+        background: 'var(--playwright-background)',
+      }}
     >
-      <div
-        style={{
-          ...style,
-
-          ...(disableDecorations
-            ? undefined
-            : {
-                border: '8px solid var(--playwright-border)',
-              }),
-
-          ...(disableBackground
-            ? undefined
-            : {
-                backgroundColor: 'var(--playwright-background)',
-              }),
-        }}
-        {...innerRest}
-      >
-        {children}
-      </div>
-    </AppRoot>
-  );
-};
+      {children}
+    </div>
+  </AppRoot>
+);

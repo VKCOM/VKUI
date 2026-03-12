@@ -50,7 +50,7 @@
  */
 /* stylelint-disable selector-max-universal, selector-pseudo-class-disallowed-list */
 :global(.vkuiInternalPanelHeader) ~ .verticalTop,
-:global(.vkuiInternalPanelHeader) ~ * .verticalTop {
+:global(.vkuiInternalPanelHeader) ~ * .verticalTop:not(:global(.vkuiInternalPanelHeader__fixed)) {
   inset-block-start: calc(
     var(--vkui_internal--panel_header_height) +
     var(--vkui_internal--safe_area_inset_top)
