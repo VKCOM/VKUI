@@ -1,11 +1,15 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
+import {
+  getAdaptivityConditionalRenderForSizeXCompact,
+  useAdaptivityConditionalRender,
+} from '../../hooks/useAdaptivityConditionalRender';
 import { usePlatform } from '../../hooks/usePlatform';
+import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
 import type {
   HasComponent,
   HasDataAttribute,
@@ -17,7 +21,6 @@ import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
-import { Spacing } from '../Spacing/Spacing';
 import { Text } from '../Typography/Text/Text';
 import styles from './PanelHeader.module.css';
 
@@ -27,14 +30,26 @@ const platformClassNames = {
   vkcom: classNames(styles.vkcom, 'vkuiInternalPanelHeader--vkcom'),
 };
 
-const sizeXClassNames = {
-  none: styles.sizeXNone,
-  regular: styles.sizeXRegular,
-};
+function getViewWidthClassName(
+  viewWidth: ViewWidthType | 'none',
+  legacySizeX: SizeTypeValues | undefined,
+) {
+  // TODO [>=10]: #9015 Удалить это условие
+  if (legacySizeX !== undefined && legacySizeX === 'regular') {
+    return styles.viewWidthSmallTabletPlus;
+  }
+  if (viewWidth === 'none') {
+    return styles.viewWidthNone;
+  }
+  if (viewWidth >= ViewWidth.SMALL_TABLET) {
+    return styles.viewWidthSmallTabletPlus;
+  }
+  return;
+}
 
-const sizeYClassNames = {
-  none: styles.sizeYNone,
-  compact: styles.sizeYCompact,
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
 };
 
 export interface PanelHeaderProps
@@ -56,8 +71,8 @@ export interface PanelHeaderProps
    * - `"none"` означает, что разделитель не нужен
    * - `"separator"` включает сепаратор при условии, что это:
    *      - либо платформа `vkcom`
-   *      - либо платформа `android`/`ios` при `<AdaptivityProvider sizeX="compact" />`
-   * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider sizeX="regular" />`
+   *      - либо платформа `android`/`ios` при `<AdaptivityProvider viewWidth={ViewWidth.MOBILE} />`
+   * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} />`
    * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям.
    */
   delimiter?: 'auto' | 'none' | 'separator' | 'spacing';
@@ -147,13 +162,19 @@ export const PanelHeader = ({
   ...restProps
 }: PanelHeaderProps): React.ReactNode => {
   const platform = usePlatform();
-  const { sizeX = 'none', sizeY = 'none' } = useAdaptivity();
-  const { sizeX: adaptiveSizeX } = useAdaptivityConditionalRender();
+  const { sizeX: legacySizeX, viewWidth = 'none', density = 'none' } = useAdaptivity();
+  const { sizeX: adaptiveSizeX, viewWidth: adaptiveViewWidth } = useAdaptivityConditionalRender();
+  const adaptivityConditionalRender = getAdaptivityConditionalRenderForSizeXCompact(
+    adaptiveViewWidth,
+    adaptiveSizeX,
+    legacySizeX,
+  );
   const isVKCOM = platform === 'vkcom';
   const isFixed = fixed !== undefined ? fixed : !isVKCOM;
   const separatorVisible = delimiter === 'auto' || delimiter === 'separator';
   const staticSeparatorVisible = !float && separatorVisible;
-  const staticSpacingVisible = !float && (delimiter === 'auto' || delimiter === 'spacing');
+  const staticSpacingVisible =
+    !isVKCOM && !float && (delimiter === 'auto' || delimiter === 'spacing');
 
   return (
     <RootComponent
@@ -168,11 +189,12 @@ export const PanelHeader = ({
         shadow && styles.shadow,
         !float && classNames(styles.static, 'vkuiInternalPanelHeader--static'),
         staticSeparatorVisible && classNames(styles.sep, 'vkuiInternalPanelHeader--sep'),
+        staticSpacingVisible && styles.hasSpacingDelimiter,
         !before && classNames(styles.noBefore, 'vkuiInternalPanelHeader--no-before'),
         !after && styles.noAfter,
         isFixed && styles.hasFixed,
-        sizeX !== 'compact' && sizeXClassNames[sizeX],
-        sizeY !== 'regular' && sizeYClassNames[sizeY],
+        getViewWidthClassName(viewWidth, legacySizeX),
+        density !== 'regular' && densityClassNames[density],
       )}
       getRootRef={isFixed ? getRootRef : getRef}
     >
@@ -191,17 +213,15 @@ export const PanelHeader = ({
           {children}
         </PanelHeaderIn>
       )}
-      {!isVKCOM && (
-        <>
-          {staticSeparatorVisible && adaptiveSizeX.compact && (
-            <Separator className={adaptiveSizeX.compact.className} padding />
+      {isVKCOM
+        ? separatorVisible && <Separator className={styles.separator} />
+        : staticSeparatorVisible &&
+          adaptivityConditionalRender && (
+            <Separator
+              className={classNames(adaptivityConditionalRender.className, styles.separator)}
+              padding
+            />
           )}
-          {staticSpacingVisible && adaptiveSizeX.regular && (
-            <Spacing className={adaptiveSizeX.regular.className} size={16} />
-          )}
-        </>
-      )}
-      {separatorVisible && isVKCOM && <Separator className={styles.separator} />}
     </RootComponent>
   );
 };
