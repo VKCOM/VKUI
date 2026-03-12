@@ -29,7 +29,3 @@ interface Object {
   // eslint-disable-next-line @typescript-eslint/method-signature-style
   hasOwnProperty<T>(this: T, v: PropertyKey): v is keyof T;
 }
-
-interface Window {
-  __isVkuiTesting: boolean;
-}
