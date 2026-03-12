@@ -13,19 +13,15 @@ describe(useCSSTransition, () => {
   };
 
   beforeEach(() => {
-    for (const key in callbacks) {
-      if (callbacks.hasOwnProperty(key)) {
-        callbacks[key].mockClear();
-      }
-    }
+    Object.values(callbacks).forEach((value) => {
+      value.mockClear();
+    });
   });
 
   const expectEveryCallbacksHaveNotBeenCalled = () => {
-    for (const key in callbacks) {
-      if (callbacks.hasOwnProperty(key)) {
-        expect(callbacks[key]).toHaveBeenCalledTimes(0);
-      }
-    }
+    Object.values(callbacks).forEach((value) => {
+      expect(value).toHaveBeenCalledTimes(0);
+    });
   };
 
   describe('first mount', () => {
