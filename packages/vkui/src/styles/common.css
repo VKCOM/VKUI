@@ -29,12 +29,7 @@
 }
 
 .vkui {
-  /*
-   * TODO [>=9]: Убрать background с html элемента, но для этого надо
-   * чтобы height у всех родителей Panel вплоть до html имели
-   * min-height: 100% вместо height: 100% иначе фон html выглядывает в
-   * многоколоночном режиме если чуть ниже проскролить контент.
-   */
+  /* см. https://github.com/VKCOM/VKUI/pull/7739 */
   background: var(--vkui--color_background);
 }
 
