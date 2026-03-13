@@ -79,7 +79,8 @@ const config = {
     minimizer: [
       new rspack.LightningCssMinimizerRspackPlugin({
         minimizerOptions: {
-          targets: browser.defaults,
+          // https://github.com/parcel-bundler/lightningcss/issues/1180
+          targets: browser.defaults.filter((v) => !v.startsWith('Android ')),
         },
       }),
     ],
