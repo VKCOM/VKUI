@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames, isPrimitiveReactNode } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasAccessibleName } from '../../lib/accessibility';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { HasChildren } from '../types';
 
 export const createWrapper = <P,>(Wrapper: React.ComponentType<HasChildren & P>, props: P) => {

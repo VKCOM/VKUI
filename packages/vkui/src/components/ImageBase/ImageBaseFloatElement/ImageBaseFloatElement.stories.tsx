@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon16MoreHorizontal, Icon28AddOutline, Icon28DeleteOutline } from '@vkontakte/icons';
 import { CanvasFullLayout, DisableCartesianParam } from '../../../storybook/constants';
 import { getAvatarUrl } from '../../../testing/mock';

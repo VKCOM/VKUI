@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import { type HasChildren } from '../../types';
+import type { HasChildren } from '../../types';
 import { AccordionContent } from './AccordionContent';
 import { AccordionContext, type AccordionContextProps } from './AccordionContext';
 import { AccordionSummary } from './AccordionSummary';

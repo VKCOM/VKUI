@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
-import { type AppRootUserSelectMode, type SafeAreaInsets } from './types';
+import type { AppRootUserSelectMode, SafeAreaInsets } from './types';
 
 export interface AppRootContextInterface {
   appRoot: React.RefObject<HTMLElement | null>;

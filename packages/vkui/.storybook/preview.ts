@@ -1,5 +1,5 @@
 import { spyOn } from 'storybook/test';
-import { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react';
 import { BREAKPOINTS } from '../src/lib/adaptivity';
 import { withVKUIWrapper } from '../src/storybook/VKUIDecorators';
 // Выносим отдельно, чтобы файл обрабатывался postcss плагином
@@ -106,8 +106,8 @@ const preview: Preview = {
       description: "Attribute indicating the directionality of the element's text",
       toolbar: {
         items: [
-          { value: 'ltr', icon: 'menu', title: 'ltr' },
-          { value: 'rtl', icon: 'menualt', title: 'rtl' },
+          { value: 'ltr', icon: 'arrowrightalt', title: 'ltr' },
+          { value: 'rtl', icon: 'arrowleftalt', title: 'rtl' },
         ],
       },
     },

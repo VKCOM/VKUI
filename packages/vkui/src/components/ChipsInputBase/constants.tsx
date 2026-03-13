@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { Chip } from './Chip/Chip';
 import type { ChipOption, ChipOptionLabel, ChipOptionValue, RenderChipProps } from './types';
 

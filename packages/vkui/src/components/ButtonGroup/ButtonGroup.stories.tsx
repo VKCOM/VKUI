@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { withCartesian } from '@project-tools/storybook-addon-cartesian';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon16Add, Icon24Add } from '@vkontakte/icons';

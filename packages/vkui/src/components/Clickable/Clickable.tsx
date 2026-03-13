@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
-import { type FocusVisibleModeProps } from '../../hooks/useFocusVisibleClassName';
+import type { FocusVisibleModeProps } from '../../hooks/useFocusVisibleClassName';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { clickByKeyboardHandler } from '../../lib/utils';
@@ -12,7 +12,7 @@ import {
   type RootComponentExtendProps,
   type RootComponentProps,
 } from '../RootComponent/RootComponent';
-import { type StateProps } from './useState';
+import type { StateProps } from './useState';
 import { ClickableLockStateContext, DEFAULT_ACTIVE_EFFECT_DELAY, useState } from './useState';
 import styles from './Clickable.module.css';
 

@@ -1,6 +1,6 @@
 import { noop } from '@vkontakte/vkjs';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
-import { type FocusVisibleMode } from '../../hooks/useFocusVisibleClassName';
+import type { FocusVisibleMode } from '../../hooks/useFocusVisibleClassName';
 import { Tappable, type TappableProps } from './Tappable';
 
 export const TappablePlayground = (props: ComponentPlaygroundProps) => {

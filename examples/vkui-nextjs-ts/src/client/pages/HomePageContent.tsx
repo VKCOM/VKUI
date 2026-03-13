@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import { Flex, Link, Title } from '@vkontakte/vkui';
 import NextLink from 'next/link';
 import Copyright from '@/client/common/Copyright';

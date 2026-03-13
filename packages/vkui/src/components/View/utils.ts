@@ -1,5 +1,5 @@
 import { getOverflowAncestors } from '../../lib/floating';
-import { type CustomTouchEvent } from '../Touch/Touch';
+import type { CustomTouchEvent } from '../Touch/Touch';
 
 const swipeBackExcludedSelector = 'input, textarea, [data-vkui-swipe-back=false]';
 

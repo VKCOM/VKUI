@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames, hasReactNode } from '@vkontakte/vkjs';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';

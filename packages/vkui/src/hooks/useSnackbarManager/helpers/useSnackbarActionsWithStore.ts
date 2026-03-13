@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { randomUUID } from '../../../lib/randomUUID';
 import { SnackbarWrapper } from '../components/SnackbarWrapper';
-import {
-  type CommonOnOpenPayload,
-  type CustomSnackbar,
-  type SnackbarApi,
-  type SnackbarPlacement,
-} from '../types';
+import type { CommonOnOpenPayload, CustomSnackbar, SnackbarApi, SnackbarPlacement } from '../types';
 import type { SnackbarStore } from './createSnackbarStore';
 
 const resolveMobilePlacement = (

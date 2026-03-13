@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import type { Decorator } from '@storybook/react';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { AppRoot } from '../components/AppRoot/AppRoot';

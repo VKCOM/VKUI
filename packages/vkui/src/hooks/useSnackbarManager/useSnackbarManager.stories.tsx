@@ -10,7 +10,7 @@ import { Checkbox } from '../../components/Checkbox/Checkbox';
 import { Flex } from '../../components/Flex/Flex';
 import { type UseSnackbar, useSnackbarManager } from '../../hooks/useSnackbarManager';
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
-import { type SnackbarPlacement, type SnackbarProps } from './types';
+import type { SnackbarPlacement, SnackbarProps } from './types';
 
 const story: Meta<UseSnackbar.Props> = {
   title: 'Utils/useSnackbarManager',

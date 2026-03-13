@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { type Direction } from '../lib/direction';
+import type { Direction } from '../lib/direction';
 import { useDOM } from '../lib/dom';
 
 export const useAutoDetectDirection = (directionProp: Direction | undefined): Direction => {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { Icon20CheckCircleOn, Icon24CheckCircleOn } from '@vkontakte/icons';
 import type { HasRef, HasRootRef } from '../../../../types';
 import { AdaptiveIconRenderer } from '../../../AdaptiveIconRenderer/AdaptiveIconRenderer';

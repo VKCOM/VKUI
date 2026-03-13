@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 import fs from 'node:fs';
-import path from 'path';
+import path from 'node:path';
 import ts from 'typescript';
 
 const inputSourceFilePath = path.resolve(

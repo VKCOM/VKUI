@@ -10,10 +10,10 @@ import {
 } from '../../hooks/useFloatingElement';
 import { animationFadeClassNames } from '../../lib/animation';
 import { getArrowCoordsByMiddlewareData } from '../../lib/floating';
-import { type ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
+import type { ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { TooltipBase } from '../TooltipBase/TooltipBase';
-import { type TooltipProps } from './Tooltip';
+import type { TooltipProps } from './Tooltip';
 
 export type UseTooltipProps = Omit<TooltipProps, 'children'> & {
   [key: `data-${string}`]: string | number | boolean;

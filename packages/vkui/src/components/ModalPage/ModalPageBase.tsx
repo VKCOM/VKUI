@@ -4,12 +4,12 @@
 import { Icon20Cancel } from '@vkontakte/icons';
 import { classNames, hasReactNode, noop } from '@vkontakte/vkjs';
 import { BLOCK_SHEET_BEHAVIOR_DATA_ATTRIBUTE } from '../../lib/sheet';
-import { type HasRef, type HTMLAttributesWithRootRef } from '../../types';
+import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { ModalOutsideButton } from '../ModalOutsideButton/ModalOutsideButton';
 import { ModalOutsideButtons } from '../ModalOutsideButtons/ModalOutsideButtons';
 import { ModalPageContent } from '../ModalPageContent/ModalPageContent';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { type ModalPageInternalProps } from './ModalPageInternal';
+import type { ModalPageInternalProps } from './ModalPageInternal';
 import styles from './ModalPage.module.css';
 
 export interface ModalPageBaseProps

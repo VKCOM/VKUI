@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 
 function iconClassName(size: number) {
   return `vkuiIcon vkuiIcon--${size} vkuiIcon--w-${size} vkuiIcon--h-${size}`;

@@ -1,4 +1,4 @@
-import { JSXSpreadAttribute } from 'jscodeshift';
+import type { JSXSpreadAttribute } from 'jscodeshift';
 import type {
   API,
   Collection,

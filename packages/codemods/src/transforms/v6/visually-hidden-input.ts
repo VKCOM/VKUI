@@ -1,5 +1,5 @@
-import { API, FileInfo } from 'jscodeshift';
-import { JSCodeShiftOptions } from '../../types';
+import type { API, FileInfo } from 'jscodeshift';
+import type { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 

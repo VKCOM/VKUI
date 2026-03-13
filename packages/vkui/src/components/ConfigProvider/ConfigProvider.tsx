@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { IconAppearanceProvider } from '@vkontakte/icons';
 import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
 import { useAutoDetectDirection } from '../../hooks/useAutoDetectDirection';

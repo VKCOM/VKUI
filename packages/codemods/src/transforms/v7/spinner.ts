@@ -1,7 +1,7 @@
-import { API, FileInfo } from 'jscodeshift';
+import type { API, FileInfo } from 'jscodeshift';
 import { remapSizePropValue } from './common/remapSizePropValue';
 import { getImportInfo } from '../../codemod-helpers';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 

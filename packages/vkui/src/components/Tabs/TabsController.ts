@@ -1,6 +1,6 @@
 import { useCustomEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useStableCallback } from '../../hooks/useStableCallback';
-import { type TabsProps } from './Tabs';
+import type { TabsProps } from './Tabs';
 
 /* eslint-disable jsdoc/require-jsdoc */
 export type TabsControllerProps = {

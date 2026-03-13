@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { act, createRef, useState } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
@@ -13,7 +13,7 @@ import {
 import { Avatar } from '../Avatar/Avatar';
 import { CustomSelectOption } from '../CustomSelectOption/CustomSelectOption';
 import { CustomSelect, type SelectProps } from './CustomSelect';
-import { type CustomSelectRenderOption } from './types';
+import type { CustomSelectRenderOption } from './types';
 import styles from './CustomSelect.module.css';
 
 let placementStub: Placement | undefined = undefined;

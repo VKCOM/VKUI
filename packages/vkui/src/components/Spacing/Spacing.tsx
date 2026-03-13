@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { resolveSpacingSize, type SpacingSizeProp } from '../../lib/spacings/sizes';
 import type { HTMLAttributesWithRootRef } from '../../types';

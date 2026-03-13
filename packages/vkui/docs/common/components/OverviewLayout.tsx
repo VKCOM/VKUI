@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import {
   createRef,
   type CSSProperties,
@@ -14,7 +14,7 @@ import {
 import { Counter, Flex, Footer, Group, Search, Spinner, Title } from '../../../src';
 import { useStableCallback } from '../../../src/hooks/useStableCallback';
 import { filterObject } from '../../../src/lib/object';
-import { type HasChildren } from '../../../src/types';
+import type { HasChildren } from '../../../src/types';
 import { useGetConfigByQuery } from '../hooks/useGetConfigByQuery';
 import { useInfiniteList } from '../hooks/useInfiniteList';
 import { GoToUpButton } from './GoToUpButton';

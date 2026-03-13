@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import type { Decorator, ReactRenderer } from '@storybook/react';
 import type { StoryContext, StrictArgs, StrictArgTypes } from 'storybook/internal/types';
 

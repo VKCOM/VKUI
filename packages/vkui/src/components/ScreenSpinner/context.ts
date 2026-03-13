@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { type ScreenSpinnerProps } from './types';
+import type { ScreenSpinnerProps } from './types';
 
 export interface ScreenSpinnerContextProps {
   /**

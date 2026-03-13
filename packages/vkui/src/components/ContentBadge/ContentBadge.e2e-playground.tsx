@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { Icon12Services, Icon16Services, Icon20ServicesFilled } from '@vkontakte/icons';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { ContentBadge, type ContentBadgeProps } from './ContentBadge';

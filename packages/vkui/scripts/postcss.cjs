@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 const postcssGlobalData = require('@csstools/postcss-global-data');
 const layoutClasses = require('@project-tools/postcss-layout-classes');
 const restructureVariable = require('@project-tools/postcss-restructure-variable');

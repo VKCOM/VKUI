@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useScrollLock } from '../AppRoot/ScrollContext';

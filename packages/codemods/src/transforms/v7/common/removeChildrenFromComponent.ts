@@ -1,4 +1,4 @@
-import { API, ASTPath, Collection, JSXElement } from 'jscodeshift';
+import type { API, ASTPath, Collection, JSXElement } from 'jscodeshift';
 
 export const removeChildrenFromComponent = (api: API, source: Collection, localName: string) => {
   const j = api.jscodeshift;

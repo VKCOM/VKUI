@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 import {

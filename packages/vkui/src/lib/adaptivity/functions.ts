@@ -1,5 +1,5 @@
 import type { Exact } from '../../types';
-import { type PlatformType } from '../platform';
+import type { PlatformType } from '../platform';
 import { BREAKPOINTS } from './breakpoints';
 import {
   type SizeTypeValues,

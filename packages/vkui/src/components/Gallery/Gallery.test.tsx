@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
@@ -11,7 +11,7 @@ import {
 } from '../../testing/utils';
 import type { AlignType } from '../../types';
 import { revertRtlValue } from '../CarouselBase/helpers';
-import { type BaseGalleryProps } from '../CarouselBase/types';
+import type { BaseGalleryProps } from '../CarouselBase/types';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
 import { Gallery, type GalleryProps } from './Gallery';
 

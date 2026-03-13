@@ -1,4 +1,4 @@
-import { type ModalManagerItem, type OpenModalCardProps, type OpenModalPageProps } from '../types';
+import type { ModalManagerItem, OpenModalCardProps, OpenModalPageProps } from '../types';
 
 export type ModalManagerState = {
   modals: ModalManagerItem[];

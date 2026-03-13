@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent, type ChangeEventHandler } from 'react';
+import type { ChangeEvent, ChangeEventHandler } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';

@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Div, ModalPage, ModalPageHeader, PanelSpinner, SimpleCell } from '@vkontakte/vkui';
-import { useFetch } from '@vkontakte/vkui-docs-theme';
 import semverGte from 'semver/functions/gte';
 import semverRcompare from 'semver/functions/rcompare';
+import useSWR, { preload } from 'swr';
 
 interface VersionsProps {
   error?: boolean;
@@ -50,13 +50,22 @@ export function VersionsModal({ open, setOpen }: VersionsModalProps) {
   );
 }
 
-function VersionsModalInner() {
-  const { data: dataRaw, error } = useFetch('https://registry.npmjs.org/@vkontakte/vkui', {
+const url = 'https://registry.npmjs.org/@vkontakte/vkui';
+
+const fetcher = (url: string) =>
+  fetch(url, {
     method: 'GET',
     headers: {
       Accept: 'application/vnd.npm.install-v1+json',
     },
-  }) as { data?: PackageInfoProps; error: Error };
+  }).then((res) => res.json());
+
+export function preloadVersionsModal() {
+  void preload(url, fetcher);
+}
+
+function VersionsModalInner() {
+  const { data: dataRaw, error } = useSWR<PackageInfoProps, Error>(url, fetcher);
 
   const data = React.useMemo(() => processData(dataRaw), [dataRaw]);
 
@@ -65,7 +74,7 @@ function VersionsModalInner() {
   }
 
   if (!data) {
-    return <PanelSpinner />;
+    return <PanelSpinner visibilityDelay={500} />;
   }
 
   return data.map((version) => (

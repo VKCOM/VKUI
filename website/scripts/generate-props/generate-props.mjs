@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { getPaths } from './get-paths.mjs';
 import { getProps } from './get-props.mjs';
 

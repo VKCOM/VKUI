@@ -1,7 +1,7 @@
 import type * as React from 'react';
-import { type Alignment, type Side } from '../../lib/floating';
-import { type CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import { type SelectValue } from '../NativeSelect/NativeSelect';
+import type { Alignment, Side } from '../../lib/floating';
+import type { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
+import type { SelectValue } from '../NativeSelect/NativeSelect';
 
 /* eslint-disable jsdoc/require-jsdoc */
 export type MousePosition = {

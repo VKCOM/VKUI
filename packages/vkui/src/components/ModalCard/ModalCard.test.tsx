@@ -12,7 +12,7 @@ import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button } from '../Button/Button';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { ModalCard } from './ModalCard';
-import { type ModalCardProps } from './types';
+import type { ModalCardProps } from './types';
 
 export const waitModalCardCSSTransitionEnd = async (el: HTMLElement) =>
   await waitCSSTransitionEnd(el);

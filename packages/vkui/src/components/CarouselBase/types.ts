@@ -3,8 +3,8 @@ import type * as React from 'react';
 import type { HasAlign, HasRef, HTMLAttributesWithRootRef, LiteralUnion } from '../../types';
 import type { ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
 import type { CustomTouchEvent, CustomTouchEventHandler } from '../Touch/Touch';
-import { type BulletsTestIds } from './Bullets';
-import { type ScrollArrowsTestIds } from './ScrollArrows';
+import type { BulletsTestIds } from './Bullets';
+import type { ScrollArrowsTestIds } from './ScrollArrows';
 
 export interface GallerySlidesState {
   coordX: number;
