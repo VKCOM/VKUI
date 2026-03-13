@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "moduleResolution": "node",
+    "module": "NodeNext",
     "esModuleInterop": true,
     "resolveJsonModule": false,
     "isolatedModules": false,

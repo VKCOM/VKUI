@@ -1,8 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ES6",
+    "target": "ES2018",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
@@ -17,10 +16,10 @@
       }
     ],
     "paths": {
-      "@/docgen.json": [".docgen/docgen.json"],
-      "@/components/*": ["components/*"],
-      "@/stores/*": ["stores/*"],
-      "@/providers/*": ["providers/*"]
+      "@/docgen.json": ["./.docgen/docgen.json"],
+      "@/components/*": ["./components/*"],
+      "@/stores/*": ["./stores/*"],
+      "@/providers/*": ["./providers/*"]
     }
   },
   "include": [
