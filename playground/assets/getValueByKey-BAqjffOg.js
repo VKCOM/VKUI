@@ -1,0 +1,1 @@
+const n=(e,r)=>{if(!r.hasOwnProperty(e))throw new Error(`getRequiredValueByKey(${String(e)})`);return r[e]},u=(e,r,t)=>{if(!r.hasOwnProperty(e))throw new Error(`getValueByKey(${String(e)})`);return r[e]};export{n as a,u as g};
