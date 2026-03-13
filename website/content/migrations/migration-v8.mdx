@@ -34,19 +34,22 @@ description: Инструкция миграции VKUI на версию v8.
 ```diff
 // .browserslistrc
 - ChromeAndroid >= 63
-+ ChromeAndroid >= 69
++ ChromeAndroid >= 84
 - iOS >= 12
-+ iOS >= 13
++ iOS >= 15
+- Edge >= 79
++ Edge >= 109
 - Chrome >= 63
-+ Chrome >= 69
++ Chrome >= 84
 - Firefox >= 55
-+ Firefox >= 69
++ Firefox >= 115
 - Opera >= 50
-+ Opera >= 68
++ Opera >= 90
 - Safari >= 12
-+ Safari >= 13
++ Safari >= 15
 - Samsung >= 8.2
-+ Samsung >= 10.1
++ Samsung >= 14
++ FirefoxAndroid >= 115
 ```
 
 ---
@@ -167,39 +170,6 @@ description: Инструкция миграции VKUI на версию v8.
 + strategy="none"
 />
 ```
-
-</details>
-
----
-
-### PanelHeader и SplitCol
-
-Изменена реализация `fixed` — вместо `position: fixed` используется `position: sticky`. Это потребовало изменения
-раскладки всей страницы — `height: 100%` на `<html>` и `<body>` удалён в пользу `display: flex`, и теперь
-высота страницы зависит от содержимого.
-
-<details>
-<summary>Что может сломаться</summary>
-
-- Получение области видимости через `document.body.clientHeight` или его потомков с `height: 100%`.
-  Необходимо заменить либо на `document.documentElement.clientHeight`, либо на `window.innerHeight`.
-
-  ```diff
-  - document.body.clientHeight
-  + document.documentElement.clientHeight
-  // или
-  + window.innerHeight
-  ```
-
-- Чтобы какой-то из элементов растягивался на высоту области видимости,
-  используйте единицы измерения `vh` или `dvh` вместо `%`.
-
-  ```diff
-  - height: 100%
-  + height: 100dvh
-  ```
-
-- Для `SplitCol` с `fixed`: чтобы растянуть потомок на всю колонку, используйте `flex-grow: 1` на этом потомке.
 
 </details>
 
