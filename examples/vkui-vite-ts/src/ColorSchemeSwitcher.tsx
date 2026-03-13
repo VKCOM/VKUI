@@ -1,8 +1,8 @@
 import { Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
 import * as React from 'react';
-import { ColorScheme, type ColorSchemeType, IconButton, useColorScheme } from '@vkontakte/vkui';
+import { ColorScheme, type ColorSchemeType, IconButton } from '@vkontakte/vkui';
 
-const ColorSchemeSwitcher: React.FC<{
+export const ColorSchemeSwitcher: React.FC<{
   colorScheme: ColorSchemeType;
   setColorScheme: (colorScheme: ColorSchemeType) => void;
 }> = ({ colorScheme, setColorScheme }) => {
@@ -16,20 +16,4 @@ const ColorSchemeSwitcher: React.FC<{
       {colorScheme === ColorScheme.LIGHT ? <Icon28SunOutline /> : <Icon28MoonOutline />}
     </IconButton>
   );
-};
-
-export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactNode] => {
-  const defaultColorScheme = useColorScheme();
-  const [colorScheme, setColorScheme] = React.useState(defaultColorScheme);
-
-  React.useLayoutEffect(() => setColorScheme(defaultColorScheme), [defaultColorScheme]);
-
-  return [
-    colorScheme,
-    <ColorSchemeSwitcher
-      key="color-scheme-switcher"
-      colorScheme={colorScheme}
-      setColorScheme={setColorScheme}
-    />,
-  ];
 };
