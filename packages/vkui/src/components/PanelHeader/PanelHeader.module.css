@@ -316,13 +316,7 @@
 }
 
 .separator {
-  position: absolute;
-  inset-block-start: calc(
-    var(--vkui_internal--panel_header_height) +
-    var(--vkui_internal--safe_area_inset_top) -
-    var(--vkui--size_border--regular)
-  );
-  inline-size: 100%;
+  margin-block-start: calc(-1 * var(--vkui--size_border--regular));
 }
 
 /* stylelint-disable-next-line selector-max-universal */

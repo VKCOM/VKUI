@@ -217,10 +217,7 @@ export const PanelHeader = ({
         ? separatorVisible && <Separator className={styles.separator} />
         : staticSeparatorVisible &&
           adaptivityConditionalRender && (
-            <Separator
-              className={classNames(adaptivityConditionalRender.className, styles.separator)}
-              padding
-            />
+            <Separator className={adaptivityConditionalRender.className} padding />
           )}
     </RootComponent>
   );
