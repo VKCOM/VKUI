@@ -31,16 +31,18 @@ export function getSafeAreaInsetsAsCssVariables(
     return {};
   }
 
-  const cssVariables: Record<string, string> = {};
+  const cssVariables = Object.entries(safeAreaInsets).reduce<Record<string, string>>(
+    (result, [key, value]) => {
+      if (value === undefined) {
+        return result;
+      }
 
-  for (const key in safeAreaInsets) {
-    if (safeAreaInsets.hasOwnProperty(key) && typeof safeAreaInsets[key] === 'number') {
-      const propertyKey = `${CUSTOM_PROPERTY_INSET_PREFIX}${key}`;
-      const propertyValue = safeAreaInsets[key];
+      result[`${CUSTOM_PROPERTY_INSET_PREFIX}${key}`] = `${value}px`;
 
-      cssVariables[propertyKey] = `${propertyValue}px`;
-    }
-  }
+      return result;
+    },
+    {},
+  );
 
   return cssVariables;
 }

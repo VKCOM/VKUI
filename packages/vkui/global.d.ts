@@ -23,9 +23,3 @@ interface MediaQueryList {
       options?: boolean | EventListenerOptions,
     ) => void);
 }
-
-// см. https://github.com/microsoft/TypeScript/issues/18282
-interface Object {
-  // eslint-disable-next-line @typescript-eslint/method-signature-style
-  hasOwnProperty<T>(this: T, v: PropertyKey): v is keyof T;
-}
