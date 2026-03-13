@@ -10,5 +10,5 @@
     }
   },
   "include": ["*.ts*", "**/*.ts*", "*.js", "**/*.js", "*.mjs", "**/*.mjs", "*.cjs", "**/*.cjs"],
-  "files": ["./global.d.ts", "types/env.d.ts"]
+  "files": ["types/env.d.ts"]
 }
