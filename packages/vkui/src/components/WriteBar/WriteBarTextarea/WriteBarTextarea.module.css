@@ -1,0 +1,42 @@
+.host {
+  box-sizing: border-box;
+  flex: 1;
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-block-size: 120px;
+  margin: 0;
+  color: var(--vkui--color_text_primary);
+  appearance: none;
+  resize: none;
+  background: transparent;
+  border: 0;
+}
+
+.host:placeholder-shown {
+  text-overflow: ellipsis;
+}
+
+.host::placeholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--vkui--color_text_subhead);
+  white-space: nowrap;
+  /* Для Firefox */
+  opacity: 1;
+}
+
+.host:focus {
+  outline: var(--vkui_internal--outline-reset);
+}
+
+.host {
+  block-size: 52px;
+  padding-block: 16px;
+  padding-inline: 12px;
+}
+
+.ios {
+  block-size: 36px;
+  padding-block: 6px;
+  padding-inline: 12px 0;
+}
