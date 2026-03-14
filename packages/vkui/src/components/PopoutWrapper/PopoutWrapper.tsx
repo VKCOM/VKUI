@@ -3,6 +3,7 @@
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import type { HTMLAttributesWithRootRef } from '../../types';
+import { useScrollLock } from '../AppRoot/ScrollContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './PopoutWrapper.module.css';
 
@@ -55,6 +56,10 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
    * Позволяет задать z-index через токен или числом.
    */
   zIndex?: number | string;
+  /**
+   * Позволяет отключить скролл страницы при появлении компонента.
+   */
+  scrollLock?: boolean;
 }
 
 /**
@@ -69,23 +74,28 @@ export const PopoutWrapper = ({
   children,
   onClick,
   zIndex = 'var(--vkui--z_index_popout)',
+  scrollLock = false,
   ...restProps
-}: PopoutWrapperProps): React.ReactNode => (
-  <RootComponent
-    {...restProps}
-    baseClassName={classNames(
-      styles.host,
-      stylesAlignY[alignY],
-      stylesAlignX[alignX],
-      closing ? styles.closing : styles.opened,
-      strategy && stylesStrategy[strategy],
-      !noBackground && styles.masked,
-    )}
-    baseStyle={{ zIndex }}
-  >
-    <div className={styles.container}>
-      <div className={styles.overlay} onClick={onClick} />
-      <div className={styles.content}>{children}</div>
-    </div>
-  </RootComponent>
-);
+}: PopoutWrapperProps): React.ReactNode => {
+  useScrollLock(scrollLock);
+
+  return (
+    <RootComponent
+      {...restProps}
+      baseClassName={classNames(
+        styles.host,
+        stylesAlignY[alignY],
+        stylesAlignX[alignX],
+        closing ? styles.closing : styles.opened,
+        strategy && stylesStrategy[strategy],
+        !noBackground && styles.masked,
+      )}
+      baseStyle={{ zIndex }}
+    >
+      <div className={styles.container}>
+        <div className={styles.overlay} onClick={onClick} />
+        <div className={styles.content}>{children}</div>
+      </div>
+    </RootComponent>
+  );
+};

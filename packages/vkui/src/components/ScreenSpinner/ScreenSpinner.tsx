@@ -3,7 +3,6 @@
 import type * as React from 'react';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { ScreenSpinnerContainer } from './ScreenSpinnerContainer';
 import { ScreenSpinnerLoader } from './ScreenSpinnerLoader';
@@ -31,26 +30,22 @@ export const ScreenSpinner: React.FC<ScreenSpinnerProps> & {
   usePortal,
   visibilityDelay,
   ...restProps
-}: ScreenSpinnerProps): React.ReactNode => {
-  useScrollLock();
-
-  return (
-    <AppRootPortal usePortal={usePortal}>
-      <PopoutWrapper className={className} style={style} noBackground>
-        <ScreenSpinnerContainer
-          state={state}
-          mode={mode}
-          label={label}
-          customIcon={customIcon}
-          visibilityDelay={visibilityDelay}
-        >
-          <ScreenSpinnerLoader {...restProps} />
-          <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
-        </ScreenSpinnerContainer>
-      </PopoutWrapper>
-    </AppRootPortal>
-  );
-};
+}: ScreenSpinnerProps): React.ReactNode => (
+  <AppRootPortal usePortal={usePortal}>
+    <PopoutWrapper className={className} style={style} noBackground scrollLock>
+      <ScreenSpinnerContainer
+        state={state}
+        mode={mode}
+        label={label}
+        customIcon={customIcon}
+        visibilityDelay={visibilityDelay}
+      >
+        <ScreenSpinnerLoader {...restProps} />
+        <ScreenSpinnerSwapIcon onClick={onClick} cancelLabel={cancelLabel} />
+      </ScreenSpinnerContainer>
+    </PopoutWrapper>
+  </AppRootPortal>
+);
 
 ScreenSpinner.Container = ScreenSpinnerContainer;
 ScreenSpinner.Loader = ScreenSpinnerLoader;

@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
+import { noop } from '@vkontakte/vkjs';
 import { baselineComponent } from '../../testing/utils';
+import { ScrollContext } from '../AppRoot/ScrollContext';
 import { PopoutWrapper, type PopoutWrapperProps } from './PopoutWrapper';
 import styles from './PopoutWrapper.module.css';
 
@@ -47,6 +49,26 @@ describe(PopoutWrapper, () => {
       className && expect(locator).toHaveClass(className);
       const filteredClassNames = strategyClassNames.filter((cn) => cn !== className).join(' ');
       expect(locator).not.toHaveClass(filteredClassNames);
+    });
+  });
+
+  describe('scroll lock', () => {
+    it('should disable scroll', () => {
+      const incrementScrollLockCounter = vi.fn();
+      render(
+        <ScrollContext.Provider
+          value={{
+            getScroll: () => ({ x: 0, y: 0 }),
+            scrollTo: noop,
+            incrementScrollLockCounter,
+            decrementScrollLockCounter: noop,
+          }}
+        >
+          <PopoutWrapper data-testid="popout-wrapper" scrollLock />
+        </ScrollContext.Provider>,
+      );
+
+      expect(incrementScrollLockCounter).toHaveBeenCalledTimes(1);
     });
   });
 });

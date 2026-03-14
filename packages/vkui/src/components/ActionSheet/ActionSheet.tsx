@@ -9,7 +9,6 @@ import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import type { HasRootRef } from '../../types';
 import type { ActionSheetItemProps } from '../ActionSheetItem/ActionSheetItem';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { useScrollLock } from '../AppRoot/ScrollContext';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { Footnote } from '../Typography/Footnote/Footnote';
 import {
@@ -155,8 +154,6 @@ export const ActionSheet = ({
   const { isDesktop } = useAdaptivityWithJSMediaQueries();
   const mode = modeProp ?? (isDesktop ? 'menu' : 'sheet');
 
-  useScrollLock(mode === 'sheet');
-
   const onItemClick = React.useCallback<ItemClickHandler>(
     ({ action, immediateAction, autoClose, isCancelItem }) =>
       (event) => {
@@ -229,6 +226,7 @@ export const ActionSheet = ({
         className={className}
         style={style}
         onClick={onOverlayClick}
+        scrollLock={mode === 'sheet'}
       >
         {actionSheet}
       </PopoutWrapper>

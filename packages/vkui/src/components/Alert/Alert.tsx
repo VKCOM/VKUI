@@ -10,7 +10,6 @@ import type {
 } from '../../types';
 import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { useScrollLock } from '../AppRoot/ScrollContext';
 import type { ButtonProps } from '../Button/Button';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import type { AlertActionProps } from './AlertAction';
@@ -144,8 +143,6 @@ export const Alert = ({
     setClosing(true);
   }, [onClose]);
 
-  useScrollLock();
-
   if (
     process.env.NODE_ENV === 'development' &&
     !restProps.title &&
@@ -165,6 +162,7 @@ export const Alert = ({
         style={style}
         onClick={close}
         getRootRef={getRootRef}
+        scrollLock
       >
         <AlertBase {...restProps} onClose={onClose} closing={closing} setClosing={setClosing} />
       </PopoutWrapper>
