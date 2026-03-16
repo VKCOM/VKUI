@@ -5557,7 +5557,7 @@ __metadata:
     stylelint-config-recess-order: "npm:^7.6.1"
     stylelint-config-standard: "npm:^40.0.0"
     stylelint-media-use-custom-media: "npm:^4.1.0"
-    stylelint-order: "npm:^7.0.1"
+    stylelint-order: "npm:^8.1.1"
     stylelint-use-logical: "npm:^2.1.3"
     stylelint-value-no-unknown-custom-properties: "npm:^6.1.1"
     swc-loader: "npm:^0.2.7"
@@ -15203,12 +15203,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-sorting@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "postcss-sorting@npm:9.1.0"
+"postcss-sorting@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "postcss-sorting@npm:10.0.0"
   peerDependencies:
     postcss: ^8.4.20
-  checksum: 10/3da06525f62880f9b62c4c2e9a4e5ce27ac776272c59235a2554c87da9ba9c693a167358a67b16918ec0473c5f5cb544be654c1165ddc0346996b2d02a541c5d
+  checksum: 10/0d1c9fe60cb7c091ff7411d123303b2f874d435d191d759a78b377543da67a3316c27caa4c2ee0d6a1972e46317c12a3a604b5456e174fa35e1ca11966248010
   languageName: node
   linkType: hard
 
@@ -17661,15 +17661,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-order@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "stylelint-order@npm:7.0.1"
+"stylelint-order@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "stylelint-order@npm:8.1.1"
   dependencies:
-    postcss: "npm:^8.5.6"
-    postcss-sorting: "npm:^9.1.0"
+    postcss: "npm:^8.5.8"
+    postcss-sorting: "npm:^10.0.0"
   peerDependencies:
     stylelint: ^16.18.0 || ^17.0.0
-  checksum: 10/c50735249c3966c9481fbbf50e4a64ced3e6d37883c44006e65befc185498f912c46e40f5ced89696c9059a42b5e4c51202df16767d1bb3c2316269607ecccb8
+  checksum: 10/abe08a7037e68253a524a718f78a11e9ae181093e5c2578743352e22c3873f9177f4cbadccec8d6208adc0a648b27c63ca769d80e6c3758a99a4c494182cb2dc
   languageName: node
   linkType: hard
 
