@@ -2695,7 +2695,7 @@ __metadata:
     slug: "npm:^11.0.1"
     swr: "npm:^2.4.1"
     typescript: "npm:*"
-    zustand: "npm:^5.0.11"
+    zustand: "npm:^5.0.12"
   languageName: unknown
   linkType: soft
 
@@ -19360,9 +19360,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zustand@npm:^5.0.11":
-  version: 5.0.11
-  resolution: "zustand@npm:5.0.11"
+"zustand@npm:^5.0.12":
+  version: 5.0.12
+  resolution: "zustand@npm:5.0.12"
   peerDependencies:
     "@types/react": ">=18.0.0"
     immer: ">=9.0.6"
@@ -19377,7 +19377,7 @@ __metadata:
       optional: true
     use-sync-external-store:
       optional: true
-  checksum: 10/424fd22458576534ee450ff63bcd1053443ec1beac60ef4225c1e548e9504924b7dc81ad8419d0e2df9bf9675eccdda6578edc4706b80ab59af05358108df362
+  checksum: 10/b84c85fc4133ec5ee05c11d0f2f3dff0f7537d9d0f1d3475a8e5a92f42ee1ba6d38039e09baf510075eb738e3d55018a635b3fa7db07c94e8d5717104abab9e5
   languageName: node
   linkType: hard
 
