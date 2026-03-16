@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { escapeRegExp } from '@vkontakte/vkjs';
+import {escapeRegExp, noop} from '@vkontakte/vkjs';
 import { useCustomEnsuredControl, useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useNativeFormResetListener } from '../../hooks/useNativeFormResetListener';
 import { simulateReactInput, type SimulateReactInputTargetState } from '../../lib/react';
@@ -56,11 +56,6 @@ function getRegexFromDelimiter(delimiter: string | RegExp | string[]): RegExp | 
   return getRegExpFromArray(delimiter);
 }
 
-interface ToggleOption<O extends ChipOption> {
-  (optionsForAdd: Array<O | string>, isNewValue: true): void;
-  (optionsForRemove: Array<O | ChipOptionValue>, isNewValue: false): void;
-}
-
 export interface UseChipsInputProps<O extends ChipOption = ChipOption>
   extends UseChipsInputBaseProps<O> {
   /**
@@ -75,6 +70,17 @@ export interface UseChipsInputProps<O extends ChipOption = ChipOption>
    * Функция для создания новой опции.
    */
   getNewOptionData?: GetNewOptionData<O>;
+  /**
+   * Событие, срабатывающее при добавлении опций.
+   * Может быть добавлено несколько опций одновременно.
+   *
+   * > Важно: срабатывает
+   */
+  onAddOptions?: (options: O[]) => void;
+  /**
+   * Событие, срабатывающее при удалении одной опции.
+   */
+  onRemoveOption?: (option: O) => void;
 }
 
 export const useChipsInput = <O extends ChipOption>({
@@ -85,6 +91,8 @@ export const useChipsInput = <O extends ChipOption>({
   getOptionLabel = getOptionLabelDefault,
   getOptionValue = getOptionValueDefault,
   getNewOptionData = getNewOptionDataDefault,
+  onAddOptions,
+  onRemoveOption,
 
   // input
   inputValue: inputValueProp,
@@ -114,7 +122,7 @@ export const useChipsInput = <O extends ChipOption>({
     disabled,
     value: valueProp ? transformValue(valueProp, getOptionValue, getOptionLabel) : undefined,
     defaultValue: transformValue(defaultValue, getOptionValue, getOptionLabel),
-    onChange,
+    onChange: !onChange && (onAddOptions || onRemoveOption) ? noop : onChange,
   });
 
   const inputRef = React.useRef<(HTMLInputElement & SimulateReactInputTargetState) | null>(null);
@@ -125,31 +133,73 @@ export const useChipsInput = <O extends ChipOption>({
     onChange: onInputChangeProp,
   });
 
-  const toggleOption: ToggleOption<O> = React.useCallback(
-    (nextValuesProp: Array<O | ChipOptionValue>, isNewValue: boolean) => {
+  const addOptionsInternal = React.useCallback(
+    (nextValuesProp: Array<O | string>) => {
       setValue((prevValue) => {
+        const prevValuesSet = new Set<ChipOptionValue>(
+          prevValue.map((option) => option.value),
+        );
         const resolvedNextOptionsSet = new Set<ChipOptionValue>();
-        const resolvedNextOptions = nextValuesProp.map((option) => {
+        const resolvedNextOptions: typeof prevValue = [];
+        const newOptions: typeof prevValue = [];
+
+        nextValuesProp.forEach((option) => {
           const isLikeObjectOption = isValueLikeChipOptionObject(option);
           const resolvedOption = isLikeObjectOption
             ? getNewOptionData(option.value, option.label)
             : getNewOptionData(option, typeof option === 'string' ? option : '');
           resolvedNextOptionsSet.add(resolvedOption.value);
-          return isLikeObjectOption ? { ...option, ...resolvedOption } : resolvedOption;
+          const finalOption = (isLikeObjectOption
+            ? { ...option, ...resolvedOption }
+            : resolvedOption) as (typeof prevValue)[number];
+
+          resolvedNextOptions.push(finalOption);
+
+          if (!prevValuesSet.has(finalOption.value)) {
+            newOptions.push(finalOption);
+          }
         });
 
         const nextValue = prevValue.filter(
           (option: O) => !resolvedNextOptionsSet.has(option.value),
         );
 
-        if (isNewValue) {
-          nextValue.push(...resolvedNextOptions);
+        nextValue.push(...resolvedNextOptions);
+
+        if (onAddOptions && newOptions.length > 0) {
+          onAddOptions(newOptions as O[]);
         }
 
         return nextValue;
       });
     },
-    [setValue, getNewOptionData],
+    [setValue, getNewOptionData, onAddOptions],
+  );
+
+  const removeOptionInternal = React.useCallback(
+    (nextValueProp: O | ChipOptionValue) => {
+      setValue((prevValue) => {
+        const valueForRemove = isValueLikeChipOptionObject(nextValueProp)
+          ? nextValueProp.value
+          : nextValueProp;
+
+        let removedOption: O | undefined;
+        const nextValue = prevValue.filter((option) => {
+          if (option.value === valueForRemove) {
+            removedOption = option;
+            return false;
+          }
+          return true;
+        });
+
+        if (onRemoveOption && removedOption) {
+          onRemoveOption(removedOption);
+        }
+
+        return nextValue;
+      });
+    },
+    [setValue, onRemoveOption],
   );
 
   const clearInput = React.useCallback(() => {
@@ -161,18 +211,18 @@ export const useChipsInput = <O extends ChipOption>({
   }, [inputRef]);
 
   const addOption = React.useCallback(
-    (newValue: O | string) => toggleOption([newValue], true),
-    [toggleOption],
+    (newValue: O | string) => addOptionsInternal([newValue]),
+    [addOptionsInternal],
   );
 
   const addOptions = React.useCallback(
-    (newValues: Array<O | string>) => toggleOption(newValues, true),
-    [toggleOption],
+    (newValues: Array<O | string>) => addOptionsInternal(newValues),
+    [addOptionsInternal],
   );
 
   const removeOption = React.useCallback(
-    (newValue: O | ChipOptionValue) => toggleOption([newValue], false),
-    [toggleOption],
+    (newValue: O | ChipOptionValue) => removeOptionInternal(newValue),
+    [removeOptionInternal],
   );
 
   const addOptionFromInput = React.useCallback(

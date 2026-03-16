@@ -71,6 +71,8 @@ export const useChipsSelect = <O extends ChipOption>({
   getOptionLabel = getOptionLabelDefault,
   getOptionValue = getOptionValueDefault,
   getNewOptionData = getNewOptionDataDefault,
+  onAddOptions,
+  onRemoveOption,
 
   // input
   inputValue: inputValueProp,
@@ -120,6 +122,8 @@ export const useChipsSelect = <O extends ChipOption>({
     getOptionValue,
     getOptionLabel,
     getNewOptionData,
+    onAddOptions,
+    onRemoveOption,
 
     // input
     inputValue: inputValueProp,

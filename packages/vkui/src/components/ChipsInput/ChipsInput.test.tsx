@@ -315,4 +315,124 @@ describe(ChipsInput, () => {
     }
     expect(screen.getByTestId<HTMLInputElement>('input').value).toBe(expectedInputValue || '');
   });
+
+  it('calls onAddOptions when options are added by delimiter', () => {
+    const onAddOptions = vi.fn();
+    render(
+      <ChipsInput
+        value={[
+          {
+            value: 'navarin',
+            label: 'Наваринского пламени с дымом',
+          },
+          {
+            value: 'red',
+            label: 'Красный',
+          },
+        ]}
+        onAddOptions={onAddOptions}
+        delimiter=","
+        slotProps={{
+          input: {
+            'data-testid': 'input',
+          },
+        }}
+      />,
+    );
+
+    fireEvent.input(screen.getByTestId('input'), {
+      target: { value: 'Зеленый,Фиолетовый' },
+    });
+
+    expect(onAddOptions).toHaveBeenCalledTimes(1);
+    expect(onAddOptions).toHaveBeenCalledWith([
+      {
+        value: 'Зеленый',
+        label: 'Зеленый',
+      },
+      {
+        value: 'Фиолетовый',
+        label: 'Фиолетовый',
+      },
+    ]);
+  });
+
+  it('calls onAddOptions only for new options when adding by delimiter', () => {
+    const onAddOptions = vi.fn();
+    render(
+      <ChipsInput
+        value={[
+          {
+            value: 'navarin',
+            label: 'Наваринского пламени с дымом',
+          },
+          {
+            value: 'red',
+            label: 'Красный',
+          },
+        ]}
+        onAddOptions={onAddOptions}
+        delimiter=","
+        slotProps={{
+          input: {
+            'data-testid': 'input',
+          },
+        }}
+      />,
+    );
+
+    fireEvent.input(screen.getByTestId('input'), {
+      target: { value: 'red,Синий,navarin' },
+    });
+
+    expect(onAddOptions).toHaveBeenCalledTimes(1);
+    expect(onAddOptions).toHaveBeenCalledWith([
+      {
+        value: 'Синий',
+        label: 'Синий',
+      },
+    ]);
+  });
+
+  it(
+    'calls onRemoveOption when option is removed',
+    withFakeTimers(async () => {
+      const onRemoveOption = vi.fn();
+      const initialOptions = [
+        {
+          value: 'navarin',
+          label: 'Наваринского пламени с дымом',
+        },
+        {
+          value: 'red',
+          label: 'Красный',
+        },
+        {
+          value: 'blue',
+          label: 'Синий',
+        },
+      ];
+      const { container } = render(
+        <ChipsInput
+          id="color"
+          placeholder="Введите цвета"
+          value={initialOptions}
+          onRemoveOption={onRemoveOption}
+        />,
+      );
+      const chip = container.querySelector('div[data-value="blue"]') as HTMLElement;
+
+      act(() => {
+        chip.focus();
+      });
+
+      await userEvent.keyboard('{Delete}');
+
+      expect(onRemoveOption).toHaveBeenCalledTimes(1);
+      expect(onRemoveOption).toHaveBeenCalledWith({
+        value: 'blue',
+        label: 'Синий',
+      });
+    }),
+  );
 });

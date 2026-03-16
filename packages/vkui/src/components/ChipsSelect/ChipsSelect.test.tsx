@@ -534,6 +534,71 @@ describe('ChipsSelect', () => {
   );
 
   it(
+    'calls onAddOptions when option is added from dropdown',
+    withFakeTimers(async () => {
+      const onAddOptions = vi.fn();
+      const result = render(
+        <ChipsSelect
+          value={[]}
+          options={colors}
+          onAddOptions={onAddOptions}
+          dropdownTestId="dropdown"
+        />,
+      );
+
+      const inputLocator = result.getByRole('combobox');
+      await userEvent.click(inputLocator);
+      await waitForFloatingPosition();
+
+      const dropdownOption = within(result.getByTestId('dropdown')).getByRole('option', {
+        name: withRegExp(FIRST_OPTION.label),
+      });
+      await userEvent.hover(dropdownOption);
+      await userEvent.hover(inputLocator);
+      await userEvent.click(dropdownOption);
+
+      expect(onAddOptions).toHaveBeenCalledTimes(1);
+      expect(onAddOptions).toHaveBeenCalledWith([FIRST_OPTION]);
+    }),
+  );
+
+  it(
+    'calls onAddOptions only for new options when adding by delimiter',
+    withFakeTimers(async () => {
+      const onAddOptions = vi.fn();
+      render(
+        <ChipsSelect
+          value={[FIRST_OPTION, SECOND_OPTION]}
+          options={[]}
+          onAddOptions={onAddOptions}
+          delimiter=","
+          creatable
+          slotProps={{
+            input: {
+              'data-testid': 'input',
+            },
+          }}
+        />,
+      );
+
+      await act(async () => {
+        fireEvent.input(screen.getByTestId('input'), {
+          target: { value: `${FIRST_OPTION.value},Зеленый,${SECOND_OPTION.value}` },
+        });
+        vi.runOnlyPendingTimers();
+      });
+
+      expect(onAddOptions).toHaveBeenCalledTimes(1);
+      expect(onAddOptions).toHaveBeenCalledWith([
+        {
+          value: 'Зеленый',
+          label: 'Зеленый',
+        },
+      ]);
+    }),
+  );
+
+  it(
     'does not focus input field on chip click',
     withFakeTimers(async () => {
       const result = render(
@@ -542,6 +607,29 @@ describe('ChipsSelect', () => {
       const chipEl = result.getByRole('option', { name: withRegExp(FIRST_OPTION.label) });
       await userEvent.click(chipEl);
       expect(result.getByRole('combobox')).not.toHaveFocus();
+    }),
+  );
+
+  it(
+    'calls onRemoveOption when option is removed',
+    withFakeTimers(async () => {
+      const onRemoveOption = vi.fn();
+      const result = render(
+        <ChipsSelect
+          value={colors}
+          options={colors}
+          onRemoveOption={onRemoveOption}
+          dropdownTestId="dropdown"
+        />,
+      );
+
+      const chipEl = result.getByRole('option', { name: withRegExp(SECOND_OPTION.label) });
+
+      await userEvent.click(chipEl);
+      await userEvent.keyboard('{Delete}');
+
+      expect(onRemoveOption).toHaveBeenCalledTimes(1);
+      expect(onRemoveOption).toHaveBeenCalledWith(SECOND_OPTION);
     }),
   );
 

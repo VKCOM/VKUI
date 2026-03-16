@@ -25,6 +25,8 @@ export const ChipsInput = <Option extends ChipOption>({
   value: valueProp,
   defaultValue,
   onChange,
+  onAddOptions,
+  onRemoveOption,
 
   // input
   getRef,
@@ -91,6 +93,8 @@ export const ChipsInput = <Option extends ChipOption>({
     value: valueProp,
     defaultValue,
     onChange,
+    onAddOptions,
+    onRemoveOption,
     getOptionLabel,
     getOptionValue,
     getNewOptionData,
