@@ -38,6 +38,75 @@ snackbarManager.closeAll();
 
 **Когда использовать:** тосты из любого места (сервисы, колбэки, не только из React-компонентов), быстрый старт без разметки.
 
+> ⚠️ **Особый случай: приложение монтируется в `document.body`**
+>
+> По умолчанию при первом вызове `open()` контейнер для снекбаров автоматически добавляется в `document.body`. Если ваше приложение тоже монтируется непосредственно в `body` (например, `createRoot(document.body)`), это может привести к конфликтам — React-root приложения затрёт автоматически созданный контейнер.
+>
+> **Решение:** добавьте `<SnackbarManagerHolder />` в дерево вашего приложения. Когда holder уже смонтирован, авто-монтирование не создаст второй контейнер.
+>
+> ```tsx
+> import { createRoot } from "react-dom/client";
+> import { SnackbarManagerHolder } from "@vkontakte/vkui";
+>
+> function App() {
+>   return (
+>     <>
+>       {/* ваше приложение */}
+>       <SnackbarManagerHolder />
+>     </>
+>   );
+> }
+>
+> createRoot(document.body).render(<App />);
+> ```
+>
+> Также рекомендуется использовать отдельный контейнер вместо `body`:
+>
+> ```tsx
+> createRoot(document.getElementById("root")!).render(<App />);
+> ```
+
+#### Продвинутый вариант: полный контроль mount/unmount
+
+Если вам нужно полностью управлять жизненным циклом контейнера снекбаров (например, монтировать в конкретный элемент или корректно очищать ресурсы), используйте `setMountCallback` и `setUnmountCallback`:
+
+```tsx
+import { createRoot } from "react-dom/client";
+import {
+  snackbarManager,
+  SnackbarManagerHolder,
+} from "@vkontakte/vkui";
+
+let holderRoot: ReturnType<typeof createRoot> | null = null;
+let holderContainer: HTMLElement | null = null;
+
+snackbarManager.setMountCallback(() => {
+  const target = document.getElementById("snackbar-portal");
+  if (!target) {
+    return;
+  }
+
+  holderContainer = document.createElement("div");
+  target.appendChild(holderContainer);
+  holderRoot = createRoot(holderContainer);
+  holderRoot.render(<SnackbarManagerHolder />);
+});
+
+snackbarManager.setUnmountCallback(() => {
+  if (holderRoot) {
+    holderRoot.unmount();
+    holderRoot = null;
+  }
+
+  if (holderContainer && holderContainer.parentNode) {
+    holderContainer.parentNode.removeChild(holderContainer);
+    holderContainer = null;
+  }
+});
+```
+
+Методы `setMountCallback` и `setUnmountCallback` доступны на любом экземпляре менеджера — как на глобальном `snackbarManager`, так и на созданном через `createSnackbarManager()`. В этом случае `<SnackbarManagerHolder />` в дереве App не нужен — контейнер создаётся и удаляется через ваши колбэки.
+
 ### 2. Хук useSnackbarManager
 
 Хук возвращает API и элемент для разметки. Удобно, когда снекбары нужны только в части приложения с собственной конфигурацией.

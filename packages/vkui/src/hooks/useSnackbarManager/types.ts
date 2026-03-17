@@ -136,7 +136,23 @@ export namespace SnackbarManagerNS {
    * Императивный менеджер снекбаров, позволяющий вызывать снекбары без хука.
    * Создаётся через `createSnackbarManager()`.
    */
-  export type Instance = SnackbarApi.Api;
+  export type Instance = SnackbarApi.Api & {
+    /**
+     * Устанавливает колбэк, который будет вызван для монтирования контейнера снекбаров.
+     * Переопределяет дефолтное поведение авто-монтирования в `document.body`.
+     * Передайте `null`, чтобы вернуть поведение по умолчанию.
+     */
+    setMountCallback: (callback: (() => void) | null) => void;
+    /**
+     * Устанавливает колбэк, который будет вызван для демонтирования контейнера снекбаров.
+     * Передайте `null`, чтобы вернуть поведение по умолчанию.
+     */
+    setUnmountCallback: (callback: (() => void) | null) => void;
+    /**
+     * Принудительно размонтирует контейнер снекбаров.
+     */
+    unmount: () => void;
+  };
 
   export interface HolderProps extends UseSnackbar.Props {
     /**
