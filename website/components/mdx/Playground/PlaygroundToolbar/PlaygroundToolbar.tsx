@@ -1,4 +1,8 @@
-import { Icon20ArrowRightLeftCornersOutline, Icon20BracketsSlashOutline } from '@vkontakte/icons';
+import {
+  Icon20ArrowRightLeftCornersOutline,
+  Icon20BracketsSlashOutline,
+  Icon20HistoryBackwardOutline,
+} from '@vkontakte/icons';
 import { AdaptivityProvider, Button, Flex } from '@vkontakte/vkui';
 import { ColorSchemePicker } from './ColorSchemePicker';
 import { PlatformPicker } from './PlatformPicker/PlatformPicker';
@@ -8,9 +12,16 @@ import styles from './PlaygroundToolbar.module.css';
 interface PlaygroundToolbarProps {
   codeVisible: boolean;
   setCodeVisible: (codeVisible: boolean) => void;
+  isModified: boolean;
+  onReset: () => void;
 }
 
-export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToolbarProps) {
+export function PlaygroundToolbar({
+  codeVisible,
+  setCodeVisible,
+  isModified,
+  onReset,
+}: PlaygroundToolbarProps) {
   const CodeExpandedIcon = codeVisible
     ? Icon20ArrowRightLeftCornersOutline
     : Icon20BracketsSlashOutline;
@@ -23,6 +34,16 @@ export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToo
       <AdaptivityProvider density="regular">
         <ThemePicker className={styles.themePicker} />
         <ColorSchemePicker />
+        {isModified && (
+          <Button
+            size="s"
+            mode="secondary"
+            appearance="neutral"
+            onClick={onReset}
+            before={<Icon20HistoryBackwardOutline />}
+            aria-label="Сбросить код к исходному"
+          />
+        )}
         <Button
           size="s"
           mode="secondary"
