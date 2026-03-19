@@ -119,13 +119,13 @@ VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/
 
 ## ~Flex.Item~ [tag:component]
 
-> Подкомпонент устарел. Используйте `Flex`, который теперь принимает все свойства `Flex.Item`.
+> Подкомпонент устарел. Используйте [`Box`](/components/box), который теперь принимает все свойства `Flex.Item`.
 
 Подкомпонент `Flex.Item` используется как обёртка для дочерних элементов компонента `Flex` в случае, когда нужно
 переопределить `flex`-свойства этих элементов, например, `flex-basis`:
 
 <Playground>
-  ```jsx
+  ```jsxs
   <Flex gap="m" justify="center" margin="auto">
     <Card Component="div">Колонка</Card>
     <Flex.Item flexBasis={100}>
