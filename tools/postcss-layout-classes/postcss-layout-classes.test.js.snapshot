@@ -785,6 +785,42 @@ exports[`generate layout classes 1`] = `
 .vkui-flex-basis {
     flex-basis: var(--vkui_internal--flex-basis);
 }
+.vkui-align-self-start {
+    align-self: start;
+}
+.vkui-align-self-center {
+    align-self: center;
+}
+.vkui-align-self-end {
+    align-self: end;
+}
+.vkui-align-self-baseline {
+    align-self: baseline;
+}
+.vkui-align-self-stretch {
+    align-self: stretch;
+}
+.vkui-align-self {
+    align-self: var(--vkui_internal--align-self);
+}
+.vkui-justify-self-start {
+    justify-self: start;
+}
+.vkui-justify-self-center {
+    justify-self: center;
+}
+.vkui-justify-self-end {
+    justify-self: end;
+}
+.vkui-justify-self-baseline {
+    justify-self: baseline;
+}
+.vkui-justify-self-stretch {
+    justify-self: stretch;
+}
+.vkui-justify-self {
+    justify-self: var(--vkui_internal--justify-self);
+}
 .vkui-overflow-visible {
     overflow: visible;
 }

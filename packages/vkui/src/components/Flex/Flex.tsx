@@ -13,7 +13,6 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
 import { FlexItem, type FlexItemProps } from './FlexItem/FlexItem';
 import styles from './Flex.module.css';
-import flexItemStyles from './FlexItem/FlexItem.module.css';
 
 export type { FlexItemProps };
 
@@ -32,14 +31,6 @@ const alignClassNames = {
   center: styles.alignCenter,
   stretch: styles.alignStretch,
   baseline: styles.alignBaseline,
-};
-
-const alignSelfClassNames = {
-  start: flexItemStyles.alignSelfStart,
-  end: flexItemStyles.alignSelfEnd,
-  center: flexItemStyles.alignSelfCenter,
-  baseline: flexItemStyles.alignSelfBaseline,
-  stretch: flexItemStyles.alignSelfStretch,
 };
 
 const displayClassNames = {
@@ -87,10 +78,6 @@ export interface FlexProps extends RootComponentProps<HTMLElement>, LayoutProps 
    */
   reverse?: boolean;
   /**
-   * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `align-self`.
-   */
-  alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
-  /**
    * Возможность задать css-свойство `display`.
    */
   display?: 'none' | 'flex' | 'inline-flex';
@@ -113,7 +100,6 @@ export const Flex: React.FC<FlexProps> & {
   noWrap = false,
   direction = 'row',
   reverse = false,
-  alignSelf,
   display = 'flex',
   ...restProps
 }: FlexProps) => {
@@ -129,7 +115,6 @@ export const Flex: React.FC<FlexProps> & {
         direction !== 'row' && styles.directionColumn,
         margin !== 'none' && styles.marginAuto,
         align && alignClassNames[align],
-        alignSelf && alignSelfClassNames[alignSelf],
         justify && justifyClassNames[justify],
         getGapsPresets(rowGap, columnGap),
         display !== 'flex' && displayClassNames[display],

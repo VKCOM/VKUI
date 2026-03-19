@@ -33,6 +33,11 @@ export type FlexBasisProp = LiteralUnion<
   number | string
 >;
 
+type SelfPositionProp = 'start' | 'center' | 'end';
+
+type AlignSelfProp = SelfPositionProp | 'baseline' | 'stretch';
+type JustifySelfProp = SelfPositionProp | 'baseline' | 'stretch';
+
 export interface LayoutProps {
   /**
    * Внутренние отступы со всех сторон.
@@ -142,4 +147,12 @@ export interface LayoutProps {
    * Определяет начальный размер flex-элемента.
    */
   flexBasis?: FlexBasisProp;
+  /**
+   * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `align-self`.
+   */
+  alignSelf?: AlignSelfProp;
+  /**
+   * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `justify-self`.
+   */
+  justifySelf?: JustifySelfProp;
 }
