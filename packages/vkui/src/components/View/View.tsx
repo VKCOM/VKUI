@@ -170,7 +170,11 @@ export const View = ({
     [activePanelProp, layoutEffectCall, onTransition, scroll],
   );
 
-  const handleAnimatedTargetAnimationEnd = () => {
+  const handleAnimatedTargetAnimationEnd: React.AnimationEventHandler<HTMLDivElement> = (e) => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
     if (prevPanel !== null) {
       flushTransition(prevPanel, Boolean(isBack));
     }
