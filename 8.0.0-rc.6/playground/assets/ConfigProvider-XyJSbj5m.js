@@ -1,0 +1,23 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-CX9URrKL.js";import{t as r}from"./jsx-runtime-CRMqfscQ.js";import{s as i,t as a}from"./lib-B1PKsac9.js";import{_ as o,p as s}from"./dom-CN4tQsWY.js";import{n as c,t as l}from"./useIsomorphicLayoutEffect-CW8TJUqQ.js";import{i as u,n as d,r as f,t as p}from"./ConfigProviderContext-2CWmpgrJ.js";import{r as m,t as h}from"./colorScheme-CrZGCsFM.js";import{En as g,n as _}from"./dist-BOHPH9lW.js";import{n as v,r as y,t as b}from"./matchMedia-Dqi_a23i.js";import{n as x,t as S}from"./TokensClassProvider-Bm85onKF.js";import{i as C,n as w}from"./utils-DoVB_q2p.js";var T,E,D=t((()=>{T=e(n(),1),a(),m(),s(),b(),l(),E=e=>{let{window:t}=o(),[n,r]=T.useState(e||h.LIGHT);return c(()=>{if(e)return r(e),i;let n=t?t.matchMedia(`(prefers-color-scheme: dark)`):void 0;if(!n)return i;let a=e=>{r(e.matches?h.DARK:h.LIGHT)};return a(n),v(n,a),()=>y(n,a)},[t,e]),n}})),O,k,A=t((()=>{O=e(n(),1),s(),k=e=>{let{window:t,document:n}=o();return O.useMemo(()=>e||(!t||!n?`ltr`:t.getComputedStyle(n.body).direction||`ltr`),[e,n,t])}})),j,M,N=t((()=>{_(),D(),A(),x(),C(),d(),j=r(),M=e=>{let t=w(e),n={...f(),...t},r=E(n.colorScheme),i=k(n.direction),a=u({...n,colorScheme:r,direction:i});return(0,j.jsx)(p.Provider,{value:a,children:(0,j.jsx)(g,{value:r,children:(0,j.jsx)(S,{children:n.children})})})};try{M.displayName=`ConfigProvider`,M.__docgenInfo={description:``,displayName:`ConfigProvider`,props:{children:{defaultValue:null,description:`Содержимое.`,name:`children`,required:!0,type:{name:`ReactNode`}},isWebView:{defaultValue:null,description:`Подсказывает приложению, обёрнутому в \`ConfigProvider\`, где открыто приложение: внутри webview или в мобильном браузере.
+
+В условиях когда:
+- \`isWebView={true}\`
+- platform="ios".
+
+Для компонента \`View\` включается возможность навигации через смахивание.`,name:`isWebView`,required:!1,type:{name:`boolean`}},hasCustomPanelHeaderAfter:{defaultValue:null,description:'При `true` слот `after` у `PanelHeader` игнорируется под размещение пользовательского\n"плавающего" элемента (например, панель управления webview).\n\n> Note: Правило не распространяется на `PanelHeader` внутри модальных окон, предоставляемых\n> библиотекой.',name:`hasCustomPanelHeaderAfter`,required:!1,type:{name:`boolean`}},customPanelHeaderAfterMinWidth:{defaultValue:{value:`90`},description:'Задаёт необходимый минимальную ширину слота `after` в `PanelHeader` под пользовательский\n"плавающий" элемент (например, ширина панели управления webview).\n\nУчитывается только при `hasCustomPanelHeaderAfter={true}` (см документацию `hasCustomPanelHeaderAfter`).',name:`customPanelHeaderAfterMinWidth`,required:!1,type:{name:`string | number`}},colorScheme:{defaultValue:null,description:"Тип цветовой схемы – `light` или `dark`.",name:`colorScheme`,required:!1,type:{name:`enum`,value:[{value:`"light"`},{value:`"dark"`}]}},transitionMotionEnabled:{defaultValue:null,description:"Включена ли анимация переходов между экранами в `Root` и `View`.",name:`transitionMotionEnabled`,required:!1,type:{name:`boolean`}},platform:{defaultValue:null,description:`Платформа.`,name:`platform`,required:!1,type:{name:`enum`,value:[{value:`"android"`},{value:`"ios"`},{value:`"vkcom"`}]}},tokensClassNames:{defaultValue:{value:`{
+  android: {
+    light: 'vkui--vkBase--light',
+    dark: 'vkui--vkBase--dark',
+  },
+  ios: {
+    light: 'vkui--vkIOS--light',
+    dark: 'vkui--vkIOS--dark',
+  },
+  vkcom: {
+    light: 'vkui--vkCom--light',
+    dark: 'vkui--vkCom--dark',
+  }
+}`},description:"CSS классы, определяющие набор токенов.\n\n- Используйте `{ light?: '<css_class>', dark?: '<css_class>' }`, чтобы задать для всех платформ одинаковый набор токенов для светлой и/или тёмной тем.\n- Используйте `{ [key in 'android' | 'ios' | 'vkcom']?: '<css_class>' }`, чтобы задать для одной или нескольких платформ свой набор токенов.",name:`tokensClassNames`,required:!1,type:{name:`TokensClassNames`}},locale:{defaultValue:null,description:`Строка с языковой меткой BCP 47.`,name:`locale`,required:!1,type:{name:`string`}},direction:{defaultValue:{value:"Определяется автоматически в зависимости от значения атрибута `dir` установленного на `body` страницы"},description:`Направление контента.
+
+При использовании определенного значения, важно установить атрибут \`dir\` с таким же значением либо на дочерний элемент,
+либо на все страницу в целом.`,name:`direction`,required:!1,type:{name:`enum`,value:[{value:`"ltr"`},{value:`"rtl"`}]}}}}}catch{}}));export{N as n,M as t};

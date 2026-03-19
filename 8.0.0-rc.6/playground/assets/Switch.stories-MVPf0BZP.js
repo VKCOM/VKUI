@@ -1,0 +1,11 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-CRMqfscQ.js";import{n,t as r}from"./SimpleCell-BcnZZwLB.js";import{n as i,t as a}from"./Switch-CVjDqNM2.js";import{i as o,n as s,t as c}from"./constants-BYo4AJCv.js";import{n as l,t as u}from"./createStoryParameters-Dbf8epgV.js";var d,f,p,m,h,g=e((()=>{n(),o(),l(),i(),d=t(),f={title:`Forms/Switch`,component:a,parameters:u(`Switch`,c,s),args:{name:`switch`},argTypes:{disabled:{control:`boolean`}},tags:[`Формы и поля ввода`]},p={args:{"aria-label":`Комментарии к записям`}},m={render:function(e){return(0,d.jsx)(r,{Component:`label`,after:(0,d.jsx)(a,{...e}),children:`Комментарии к записям`})}},p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
+  args: {
+    'aria-label': 'Комментарии к записям'
+  }
+}`,...p.parameters?.docs?.source}}},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+  render: function Render(args) {
+    return <SimpleCell Component="label" after={<Switch {...args} />}>
+        Комментарии к записям
+      </SimpleCell>;
+  }
+}`,...m.parameters?.docs?.source}}},h=[`Playground`,`WithSimpleCellLabel`]}));export{f as a,g as i,m as n,h as r,p as t};

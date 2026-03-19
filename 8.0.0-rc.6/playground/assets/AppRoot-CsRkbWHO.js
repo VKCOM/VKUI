@@ -1,0 +1,3 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-CRMqfscQ.js";import{n,t as r}from"./AppRoot-CYr0pA7z.js";import{c as i,l as a,n as o,u as s}from"./blocks-C4-0QFn9.js";import{r as c}from"./react-D_BzPBQ9.js";import{t as l}from"./mdx-react-shim-CthGLr0u.js";function u(e){return(0,f.jsxs)(f.Fragment,{children:[(0,f.jsx)(i,{title:`Configuration/AppRoot`,tags:[`Конфигурация`]}),`
+`,(0,f.jsx)(a,{children:`AppRoot`}),`
+`,(0,f.jsx)(o,{of:r})]})}function d(e={}){let{wrapper:t}={...c(),...e.components};return t?(0,f.jsx)(t,{...e,children:(0,f.jsx)(u,{...e})}):u(e)}var f;e((()=>{f=t(),l(),s(),n()}))();export{d as default};

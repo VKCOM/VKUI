@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-CX9URrKL.js";var r,i,a=t((()=>{r=e(n(),1),i=r.createContext({});try{i.displayName=`AdaptivityContext`,i.__docgenInfo={description:``,displayName:`AdaptivityContext`,props:{}}}catch{}}));export{a as n,i as t};

@@ -1,0 +1,1 @@
+import{i as e,n as t,r as n,t as r}from"./EllipsisText.stories-DrA1nvi-.js";n();export{r as Playground,t as __namedExportsOrder,e as default};

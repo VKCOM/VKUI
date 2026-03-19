@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";var t,n=e((()=>{t=e=>typeof e==`object`&&!!e&&e.hasOwnProperty(`current`)}));export{t as n,n as t};

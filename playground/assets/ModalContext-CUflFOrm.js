@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-CX9URrKL.js";var r,i,a,o=t((()=>{r=e(n(),1),i=(0,r.createContext)(null),a=()=>{let e=(0,r.useContext)(i);return e===null?{id:e}:{id:e,labelId:`${e}-label`}};try{i.displayName=`ModalContext`,i.__docgenInfo={description:``,displayName:`ModalContext`,props:{}}}catch{}}));export{o as n,a as r,i as t};

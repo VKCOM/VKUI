@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";function t(e,t){e.addEventListener?e.addEventListener(`change`,t):e.addListener(t)}function n(e,t){e.removeEventListener?e.removeEventListener(`change`,t):e.removeListener(t)}var r=e((()=>{}));export{t as n,n as r,r as t};

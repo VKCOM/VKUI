@@ -1,0 +1,6 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{n as t,t as n}from"./Image-oBJzjfhP.js";import{i as r,n as i,t as a}from"./constants-BYo4AJCv.js";import{n as o,t as s}from"./createStoryParameters-Dbf8epgV.js";import{n as c,o as l}from"./mock-Da5716d-.js";var u,d,f,p=e((()=>{r(),l(),o(),t(),u={title:`Data Display/Image`,component:n,parameters:s(`Image`,a,i),argTypes:{filter:{control:{type:`select`},options:[`blur`,`contrast`,`grayscale`,`hue-rotate`,`drop-shadow`],mapping:{blur:`blur(5px)`,contrast:`contrast(200%)`,grayscale:`grayscale(80%)`,"hue-rotate":`hue-rotate(90deg)`,"drop-shadow":`drop-shadow(16px 16px 20px red) invert(75%)`}}},tags:[`Отображение данных`]},d={args:{src:c(`app_shorm_online`),alt:`Приложение шторм онлайн`}},d.parameters={...d.parameters,docs:{...d.parameters?.docs,source:{originalSource:`{
+  args: {
+    src: getAvatarUrl('app_shorm_online'),
+    alt: 'Приложение шторм онлайн'
+  }
+}`,...d.parameters?.docs?.source}}},f=[`Playground`]}));export{u as i,f as n,p as r,d as t};

@@ -1,0 +1,1 @@
+import{a as e,i as t,n,r,t as i}from"./Footnote.stories-BSmejHC2.js";t();export{i as Playground,n as WithCaps,r as __namedExportsOrder,e as default};
