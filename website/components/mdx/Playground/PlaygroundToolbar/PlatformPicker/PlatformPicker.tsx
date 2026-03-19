@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon28ErrorCircleOutline } from '@vkontakte/icons';
-import { type PlatformType, SegmentedControl, Snackbar } from '@vkontakte/vkui';
+import { type PlatformType, SegmentedControl, snackbarManager } from '@vkontakte/vkui';
 import { PlaygroundStoreContext, usePlaygroundStore } from '@/providers/playgroundStoreProvider';
 import { DEFAULT_THEME_FOR_PLATFORM, DEFAULT_THEME_NAMES } from '../../vkuiThemes/constants';
 import { getDefaultByThemesPresets, loadTheme } from '../../vkuiThemes/helpers';
@@ -10,7 +10,6 @@ export function PlatformPicker({ className }: { className?: string }) {
   const playgroundLoading = usePlaygroundStore((store) => store.playgroundLoading);
   const platform = usePlaygroundStore((store) => store.platform);
   const store = React.useContext(PlaygroundStoreContext);
-  const [snackbar, setSnackbar] = React.useState<React.ReactElement | null>(null);
 
   const handlePlatformChange = async (newPlatform: PlatformType) => {
     if (store) {
@@ -32,14 +31,10 @@ export function PlatformPicker({ className }: { className?: string }) {
         } catch (error) {
           // eslint-disable-next-line no-console
           console.warn(error);
-          setSnackbar(
-            <Snackbar
-              onClosed={() => setSnackbar(null)}
-              before={<Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />}
-            >
-              {`Не удалось загрузить токены для темы ${newThemeName}`}
-            </Snackbar>,
-          );
+          snackbarManager.open({
+            before: <Icon28ErrorCircleOutline fill="var(--vkui--color_icon_negative)" />,
+            children: `Не удалось загрузить токены для темы ${newThemeName}`,
+          });
         } finally {
           updatePlaygroundLoading(false);
         }
@@ -51,7 +46,6 @@ export function PlatformPicker({ className }: { className?: string }) {
 
   return (
     <>
-      {snackbar}
       <SegmentedControl
         size="m"
         value={platform}
