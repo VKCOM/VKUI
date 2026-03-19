@@ -359,7 +359,11 @@ class ViewInfiniteComponent extends React.Component<
     );
   }
 
-  transitionEndHandler = (): void => {
+  transitionEndHandler: React.AnimationEventHandler<HTMLDivElement> = (e): void => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
     if (this.state.prevPanel !== null) {
       this.flushTransition(this.state.prevPanel, Boolean(this.state.isBack));
     }

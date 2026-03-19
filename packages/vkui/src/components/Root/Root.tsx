@@ -114,7 +114,11 @@ export const Root = ({
     [transition, disableAnimation, finishTransition],
   );
 
-  const onAnimationEnd = () => {
+  const onAnimationEnd: React.AnimationEventHandler<HTMLElement> = (e) => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
     finishTransition();
   };
 
