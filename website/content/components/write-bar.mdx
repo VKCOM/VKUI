@@ -255,6 +255,29 @@ return (
   </WriteBarIcon>
   ```
 
+## Подкомпоненты
+
+<Playground>
+  ```jsx
+  <WriteBar.Root>
+    <WriteBar.Root.Before>
+      <WriteBarIcon mode="attach" />
+    </WriteBar.Root.Before>
+    <WriteBar.FormField>
+      <WriteBar.Textarea placeholder="Введите сообщение..." />
+      <WriteBar.FormField.InlineAfter>
+        <WriteBarIcon label="Смайлы и стикеры">
+          <Icon24SmileOutline />
+        </WriteBarIcon>
+      </WriteBar.FormField.InlineAfter>
+    </WriteBar.FormField>
+    <WriteBar.Root.After>
+      <WriteBarIcon mode="attach" />
+    </WriteBar.Root.After>
+  </WriteBar.Root>
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name={["WriteBar", "WriteBarIcon"]}>

@@ -15,7 +15,9 @@ import * as matchers from 'vitest-axe/matchers';
 import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProvider } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
+import { ConfigProviderOverride } from '../components/ConfigProvider/ConfigProviderOverride';
 import { isHTMLElement } from '../lib/dom';
+import { type PlatformType } from '../lib/platform';
 import type { ImgOnlyAttributes } from '../lib/utils';
 import type { HasChildren } from '../types';
 
@@ -85,6 +87,7 @@ export type ComponentTestOptions = {
   a11y?: boolean;
   a11yConfig?: AxeConfigureOptions;
   getRootRef?: boolean;
+  platform?: PlatformType;
 };
 
 export function mountTest(Component: React.ComponentType<any>) {
@@ -162,16 +165,35 @@ export function baselineComponent<Props extends object>(
     a11yConfig,
     getRootRef = true,
     adaptivity,
+    platform,
   }: ComponentTestOptions = {},
   testName = 'baseline',
 ) {
-  const Component: React.ComponentType<any> = adaptivity
-    ? (p: Props) => (
-        <AdaptivityProvider {...adaptivity}>
-          <RawComponent {...p} />
-        </AdaptivityProvider>
-      )
-    : RawComponent;
+  let Wrapper = (props: React.PropsWithChildren) => <React.Fragment {...props} />;
+
+  if (adaptivity) {
+    const PreWrapper = Wrapper;
+    Wrapper = (props: React.PropsWithChildren) => (
+      <AdaptivityProvider {...adaptivity}>
+        <PreWrapper {...props} />
+      </AdaptivityProvider>
+    );
+  }
+
+  if (platform) {
+    const PreWrapper = Wrapper;
+    Wrapper = (props: React.PropsWithChildren) => (
+      <ConfigProviderOverride platform={platform}>
+        <PreWrapper {...props} />
+      </ConfigProviderOverride>
+    );
+  }
+
+  const Component: React.ComponentType<any> = (p: Props) => (
+    <Wrapper>
+      <RawComponent {...p} />
+    </Wrapper>
+  );
 
   describe(testName, () => {
     fakeTimersForScope(false);
