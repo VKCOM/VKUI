@@ -2759,6 +2759,7 @@ __metadata:
     "@shikijs/transformers": "npm:^4.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
+    browserslist-vscode: "github:browserslist/browserslist-vscode"
     next: "npm:^15.5.11"
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.6.1"
@@ -6568,6 +6569,13 @@ __metadata:
   dependencies:
     fill-range: "npm:^7.1.1"
   checksum: 10/fad11a0d4697a27162840b02b1fad249c1683cbc510cd5bf1a471f2f8085c046d41094308c577a50a03a579dd99d5a6b3724c4b5e8b14df2c4443844cfcda2c6
+  languageName: node
+  linkType: hard
+
+"browserslist-vscode@github:browserslist/browserslist-vscode":
+  version: 1.1.0
+  resolution: "browserslist-vscode@https://github.com/browserslist/browserslist-vscode.git#commit=e40e7efcb19ae08622510959cfb8a9bfc8378c91"
+  checksum: 10/a024eae605311bc8ed6c26301969fde990b82aef6d66beb4eeb3a27fb63260229016f02128cc604c01b11f9d3cb9d92b51effd66cc57418e913e701a2534a868
   languageName: node
   linkType: hard
 
