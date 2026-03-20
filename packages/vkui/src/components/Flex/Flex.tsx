@@ -102,7 +102,7 @@ export interface FlexProps extends RootComponentProps<HTMLElement>, LayoutProps 
 export const Flex: React.FC<FlexProps> & {
   /**
    * @deprecated Since 7.11.0. Будет удалено в **VKUI v9**.
-   * Используйте компонент `Flex`.
+   * Используйте компонент `Box`.
    */
   Item: typeof FlexItem;
 } = ({
