@@ -129,6 +129,14 @@ vi.stubGlobal(
 vi.stubGlobal('scrollTo', vi.fn());
 Element.prototype.scrollTo = vi.fn();
 
+// Mock ResizeObserver for JSDOM
+class MockResizeObserver {
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
+}
+vi.stubGlobal('ResizeObserver', MockResizeObserver);
+
 class FakeTransitionEvent extends Event {
   propertyName: string;
   elapsedTime: number;
