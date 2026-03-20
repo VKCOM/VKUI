@@ -15,6 +15,7 @@ import {
   useFloatingMiddlewaresBootstrap,
   usePlacementChangeCallback,
 } from '../../lib/floating';
+import { LockFloatingPositionContext } from '../../lib/floating/LockFloatingPosition/LockFloatingPosition';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/DefaultIcon';
@@ -136,6 +137,9 @@ export const OnboardingTooltip = ({
     disableShiftMiddleware,
     overflowPadding,
   });
+
+  const isLock = React.useContext(LockFloatingPositionContext);
+
   const {
     x: floatingDataX,
     y: floatingDataY,
@@ -146,8 +150,9 @@ export const OnboardingTooltip = ({
     strategy: positionStrategy,
     placement: strictPlacement,
     middleware: middlewares,
-    whileElementsMounted: autoUpdateFloatingElement,
+    whileElementsMounted: isLock ? undefined : autoUpdateFloatingElement,
   });
+
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
   const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
   const [childRef, child] = usePatchChildren(children, {
