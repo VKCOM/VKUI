@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-properties */
 import * as React from 'react';
 import { useDOM } from '../dom';
-import { matchMediaListAddListener, matchMediaListRemoveListener } from '../matchMedia';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
 export const REDUCE_MOTION_MEDIA_QUERY = 'screen and (prefers-reduced-motion: reduce)';
@@ -29,8 +28,8 @@ export const useReducedMotion = (): boolean | undefined => {
       /* istanbul ignore next */
       setReducedMotion(event.matches);
     };
-    matchMediaListAddListener(match, handleMediaQueryChange);
-    return () => matchMediaListRemoveListener(match, handleMediaQueryChange);
+    match.addEventListener('change', handleMediaQueryChange);
+    return () => match.removeEventListener('change', handleMediaQueryChange);
   }, [window]);
 
   return reducedMotion;
