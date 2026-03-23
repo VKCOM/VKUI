@@ -6,9 +6,8 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
+import { useWindowResizeObserver } from '../../hooks/useResizeObserver/useWindowResizeObserver';
 import { callMultiple } from '../../lib/callMultiple';
-import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasAlign, HasDataAttribute, HasRootRef } from '../../types';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
@@ -135,7 +134,6 @@ export const Textarea = ({
 
   const { density = 'none' } = useAdaptivity();
   const platform = usePlatform();
-  const { window } = useDOM();
 
   const { className, ...rootProps } = useMergeProps(restProps, slotProps?.root);
 
@@ -181,7 +179,10 @@ export const Textarea = ({
   const elementRef = useExternRef(getTextAreaRef, refResizeTextarea);
 
   React.useEffect(resize, [resize, density, platform, value]);
-  useResizeObserver(window, resize);
+  useWindowResizeObserver({
+    initialEmit: false,
+    onResize: resize,
+  });
 
   return (
     <FormField

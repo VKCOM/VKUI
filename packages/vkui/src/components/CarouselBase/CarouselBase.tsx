@@ -5,8 +5,8 @@ import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
-import { useDOM } from '../../lib/dom';
+import { useResizeObserver } from '../../hooks/useResizeObserver/useResizeObserver';
+import { useWindowResizeObserver } from '../../hooks/useResizeObserver/useWindowResizeObserver';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -347,8 +347,15 @@ export const CarouselBase = ({
       initializeSlides();
     }
   };
-  const { window } = useDOM();
-  useResizeObserver(resizeSource === 'element' ? rootRef : window, onResize);
+  useWindowResizeObserver({
+    enabled: resizeSource === 'window',
+    onResize,
+  });
+  useResizeObserver({
+    ref: rootRef,
+    enabled: resizeSource === 'element',
+    onResize,
+  });
 
   const loopedSlideChangePerform = () => {
     const { snaps, slides } = slidesManager.current;

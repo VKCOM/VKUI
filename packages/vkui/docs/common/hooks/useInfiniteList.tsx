@@ -1,7 +1,7 @@
 import { type ReactNode, type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { Spinner } from '../../../src';
-import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
 import { useDOM } from '../../../src/lib/dom';
+import { useResizeObserver } from '../../../src/hooks/useResizeObserver/useResizeObserver.ts';
 
 const SPINNER_HEIGHT = 24;
 const WINDOW_PADDING_BOTTOM = 64;
@@ -138,7 +138,10 @@ export const useInfiniteList = <Section extends { id: string }>(
 
   useEffect(recalculateSectionsBounds, [sectionsRefs]);
 
-  useResizeObserver(containerRef, () => requestAnimationFrame(showMoreVisible));
+  useResizeObserver({
+    ref: containerRef,
+    onResize: showMoreVisible,
+  });
 
   useEffect(() => {
     window!.addEventListener('scroll', recalculateVisibleSections);

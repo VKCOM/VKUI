@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
-import { useDOM } from '../../lib/dom';
+import { useResizeObserver } from '../../hooks/useResizeObserver/useResizeObserver.ts';
+import { useWindowResizeObserver } from '../../hooks/useResizeObserver/useWindowResizeObserver';
 import { setRef } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
@@ -62,7 +62,6 @@ export const FixedLayout = ({
   const platform = usePlatform();
   const ref = React.useRef<HTMLElement | null>(null);
   const [width, setWidth] = React.useState<string | undefined>(undefined);
-  const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);
   const parentRef = React.useRef<HTMLElement | null>(null);
 
@@ -99,8 +98,14 @@ export const FixedLayout = ({
   };
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
 
-  useResizeObserver(window, doResize);
-  useResizeObserver(useParentWidth ? parentRef : colRef, doResize);
+  useWindowResizeObserver({
+    initialEmit: false,
+    onResize: doResize,
+  });
+  useResizeObserver({
+    ref: useParentWidth ? parentRef : colRef,
+    onResize: doResize,
+  });
 
   return (
     <OnboardingTooltipContainer
