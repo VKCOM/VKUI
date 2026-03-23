@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useExternRef } from '../useExternRef';
 import { useStableCallback } from '../useStableCallback';
 
 export type ResizePayload<T extends HTMLElement> = {
@@ -10,7 +9,7 @@ export type ResizePayload<T extends HTMLElement> = {
 };
 
 type ElementResizeOptions<T extends HTMLElement = HTMLElement> = {
-  ref?: React.Ref<T>;
+  ref?: React.RefObject<T | null>;
   enabled?: boolean;
   box?: ResizeObserverBoxOptions;
   rafBatch?: boolean;
@@ -29,7 +28,9 @@ const resizePools = new Map<string, ResizePool>();
 function getResizePool(box: ResizeObserverBoxOptions = 'content-box'): ResizePool {
   const key = `box:${box}`;
   const existing = resizePools.get(key);
-  if (existing) { return existing; }
+  if (existing) {
+    return existing;
+  }
 
   const handlers = new WeakMap<Element, ResizeHandler>();
 
@@ -81,14 +82,22 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
   } = options;
 
   const [node, setNode] = React.useState<T | null>(null);
-  const mergedRef = useExternRef<T>(externalRef);
 
   const onResize = useStableCallback<[ResizePayload<T>], void>(onResizeProp);
   const rafIdRef = React.useRef<number | null>(null);
   const latestEntryRef = React.useRef<ResizeObserverEntry | null>(null);
 
   React.useEffect(() => {
-    if (!node || !enabled) { return; }
+    const nextNode = externalRef?.current;
+    if (nextNode && nextNode !== node) {
+      setNode(nextNode);
+    }
+  }, [externalRef, node]);
+
+  React.useEffect(() => {
+    if (!node || !enabled) {
+      return;
+    }
 
     const pool = getResizePool(box);
 
@@ -110,12 +119,16 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
 
       latestEntryRef.current = entry;
 
-      if (rafIdRef.current !== null) { return; }
+      if (rafIdRef.current !== null) {
+        return;
+      }
 
       rafIdRef.current = requestAnimationFrame(() => {
         rafIdRef.current = null;
         const latest = latestEntryRef.current;
-        if (latest) { emit(latest); }
+        if (latest) {
+          emit(latest);
+        }
       });
     };
 
@@ -134,11 +147,7 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
     };
   }, [node, enabled, box, rafBatch, onResize]);
 
-  return React.useCallback<React.RefCallback<T>>(
-    (el: T | null) => {
-      mergedRef.current = el;
-      setNode(el);
-    },
-    [mergedRef],
-  );
+  return React.useCallback<React.RefCallback<T>>((el: T | null) => {
+    setNode(el);
+  }, []);
 }

@@ -65,12 +65,16 @@ function notifySubscribers(subscriberPredicate: (subscriber: WindowSubscriber) =
 
     sub.pendingRef.current = size;
 
-    if (sub.rafIdRef.current !== null) { continue; }
+    if (sub.rafIdRef.current !== null) {
+      continue;
+    }
 
     sub.rafIdRef.current = requestAnimationFrame(() => {
       sub.rafIdRef.current = null;
       const pending = sub.pendingRef.current;
-      if (!pending) { return; }
+      if (!pending) {
+        return;
+      }
 
       sub.pendingRef.current = null;
       sub.onResize({
@@ -91,16 +95,24 @@ function notifyVisualViewportSubscribers() {
 }
 
 function ensureWindowListener() {
-  if (windowListenerAttached) { return; }
-  if (![...windowSubscribers].some((sub) => !sub.useVisualViewport)) { return; }
+  if (windowListenerAttached) {
+    return;
+  }
+  if (![...windowSubscribers].some((sub) => !sub.useVisualViewport)) {
+    return;
+  }
 
   globalThis.window.addEventListener('resize', notifyWindowSubscribers, { passive: true });
   windowListenerAttached = true;
 }
 
 function ensureVisualViewportListener() {
-  if (visualViewportListenerAttached) { return; }
-  if (![...windowSubscribers].some((sub) => sub.useVisualViewport)) { return; }
+  if (visualViewportListenerAttached) {
+    return;
+  }
+  if (![...windowSubscribers].some((sub) => sub.useVisualViewport)) {
+    return;
+  }
 
   globalThis.window.visualViewport?.addEventListener('resize', notifyVisualViewportSubscribers, {
     passive: true,
@@ -109,21 +121,26 @@ function ensureVisualViewportListener() {
 }
 
 function maybeDetachWindowListener() {
-  if (!windowListenerAttached) { return; }
-  if ([...windowSubscribers].some((sub) => !sub.useVisualViewport)) { return; }
+  if (!windowListenerAttached) {
+    return;
+  }
+  if ([...windowSubscribers].some((sub) => !sub.useVisualViewport)) {
+    return;
+  }
 
   globalThis.window.removeEventListener('resize', notifyWindowSubscribers);
   windowListenerAttached = false;
 }
 
 function maybeDetachVisualViewportListener() {
-  if (!visualViewportListenerAttached) { return; }
-  if ([...windowSubscribers].some((sub) => sub.useVisualViewport)) { return; }
+  if (!visualViewportListenerAttached) {
+    return;
+  }
+  if ([...windowSubscribers].some((sub) => sub.useVisualViewport)) {
+    return;
+  }
 
-  globalThis.window.visualViewport?.removeEventListener(
-    'resize',
-    notifyVisualViewportSubscribers,
-  );
+  globalThis.window.visualViewport?.removeEventListener('resize', notifyVisualViewportSubscribers);
   visualViewportListenerAttached = false;
 }
 
@@ -141,7 +158,9 @@ export function useWindowResizeObserver(options: WindowResizeOptions) {
   const pendingRef = React.useRef<{ width: number; height: number } | null>(null);
 
   React.useEffect(() => {
-    if (!enabled) { return; }
+    if (!enabled) {
+      return;
+    }
 
     const sub: WindowSubscriber = {
       onResize,
