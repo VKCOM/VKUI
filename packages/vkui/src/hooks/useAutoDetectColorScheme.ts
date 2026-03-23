@@ -2,7 +2,6 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { ColorScheme, type ColorSchemeType } from '../lib/colorScheme';
 import { useDOM } from '../lib/dom';
-import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 /**
@@ -32,8 +31,8 @@ export const useAutoDetectColorScheme = (colorSchemeProp?: ColorSchemeType): Col
       setColorScheme(event.matches ? ColorScheme.DARK : ColorScheme.LIGHT);
     };
     check(mediaQuery);
-    matchMediaListAddListener(mediaQuery, check);
-    return () => matchMediaListRemoveListener(mediaQuery, check);
+    mediaQuery.addEventListener('change', check);
+    return () => mediaQuery.removeEventListener('change', check);
   }, [window, colorSchemeProp]);
 
   return colorScheme;

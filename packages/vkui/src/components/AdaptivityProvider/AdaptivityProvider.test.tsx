@@ -16,21 +16,6 @@ vi.mock('@vkontakte/vkjs', async () => {
     detectIOS: () => false,
   };
 });
-vi.mock('../../hooks/useMediaQueries', () => ({
-  useMediaQueries: () => ({
-    desktopPlus: () => vi.fn(),
-    smallTabletPlus: () => vi.fn(),
-    tablet: () => vi.fn(),
-    smallTablet: () => vi.fn(),
-    mobile: () => vi.fn(),
-    mediumHeight: () => vi.fn(),
-    mobileLandscapeHeight: () => vi.fn(),
-  }),
-}));
-vi.mock('../../lib/matchMedia', () => ({
-  matchMediaListAddListener: () => vi.fn(),
-  matchMediaListRemoveListener: () => vi.fn(),
-}));
 
 const getViewWidthByMediaQueriesStub = vi.fn().mockReturnValue(ViewWidth.SMALL_MOBILE);
 const getViewHeightByMediaQueriesStub = vi.fn().mockReturnValue(ViewHeight.SMALL);
