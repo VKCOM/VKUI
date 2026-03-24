@@ -125,7 +125,7 @@ describe(Search, () => {
       render(
         <Search
           defaultValue="def"
-          slotProps={{ clearButton: { 'data-testid': 'clear-button', onClick: onClearClick } }}
+          slotProps={{ clearButton: { 'data-testid': 'clear-button', 'onClick': onClearClick } }}
         />,
       );
       expect(getInput()).toHaveValue('def');
