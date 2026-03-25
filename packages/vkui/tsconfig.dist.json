@@ -1,10 +1,5 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "dist",
-    "declarationMap": true
-  },
+  "extends": "./tsconfig.web.json",
   "include": ["src/**/*.ts*"],
   "exclude": [
     "node_modules",
@@ -15,5 +10,12 @@
     "src/**/*.stories.ts*",
     "src/testing/",
     "src/storybook"
-  ]
+  ],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "dist",
+    "declarationMap": true,
+    "declaration": true,
+    "noEmit": false
+  }
 }

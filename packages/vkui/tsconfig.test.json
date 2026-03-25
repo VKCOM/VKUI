@@ -1,18 +1,11 @@
 {
+  "files": ["types/css.d.ts", "global.vitest.ts", "vitest.setup.ts", "vitest.global-setup.ts"],
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "*.ts",
-    "*.mjs",
-    ".next/types/**/*.ts",
-    "content/_app.tsx",
-    "next-env.d.ts",
-    "postcss.config.js",
-    "raw.d.ts",
-    "generated.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "out/types/**/*.ts"
+    "src/testing",
+    "src/storybook",
+    "src/**/*.test.ts*",
+    "src/**/*.e2e*.ts*",
+    "src/**/*.stories.ts*"
   ],
   "exclude": [
     "**/node_modules",
@@ -21,16 +14,17 @@
     "**/storybook-static",
     "**/__testfixtures__",
     "**/__tests__",
-    "**/vkui-date-fns-tz",
-    "examples/**"
+    "**/vkui-date-fns-tz"
   ],
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
     "target": "esnext",
-    "module": "ESNext",
+    "module": "esnext",
     "lib": ["es2020", "dom", "dom.Iterable"],
+    "types": ["node"],
     "moduleResolution": "bundler",
-    "jsx": "preserve",
-    "allowJs": true,
+    "jsx": "react-jsx",
+    "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
@@ -44,19 +38,11 @@
     "strict": true,
     "skipLibCheck": true,
     "erasableSyntaxOnly": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "outDir": ".cache/ts",
     "paths": {
-      "@/docgen.json": ["./.docgen/docgen.json"],
-      "@/components/*": ["./components/*"],
-      "@/stores/*": ["./stores/*"],
-      "@/providers/*": ["./providers/*"]
+      "@vkui-e2e/test": ["./src/testing/e2e/index.playwright"],
+      "@vkui-e2e/playground-helpers": ["./src/testing/e2e/index.playground"],
+      "@vkui-e2e/utils": ["./src/testing/e2e/utils"]
     }
   }
 }

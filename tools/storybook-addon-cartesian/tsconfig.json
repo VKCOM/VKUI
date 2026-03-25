@@ -1,4 +1,33 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src/**/*.ts*", "src/**/*.js", "preset.js", ".eslintrc.js"]
+  "include": ["src/**/*.ts*", "src/**/*.js", "preset.js", ".eslintrc.js"],
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/coverage/**",
+    "**/storybook-static",
+    "**/__testfixtures__",
+    "**/__tests__",
+    "**/vkui-date-fns-tz",
+    "examples/**"
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["es2020", "dom", "dom.Iterable"],
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "erasableSyntaxOnly": true
+  }
 }
