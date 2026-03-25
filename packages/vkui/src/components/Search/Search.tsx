@@ -189,16 +189,24 @@ export const Search = ({
       warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
     }
     if (onFindButtonClickProp) {
-      warn('Свойство `onFindButtonClick` устаревшее, используйте `slotProps={ findButton: { onClick: ... } }`');
+      warn(
+        'Свойство `onFindButtonClick` устаревшее, используйте `slotProps={ findButton: { onClick: ... } }`',
+      );
     }
     if (findButtonText) {
-      warn('Свойство `findButtonText` устаревшее, используйте `slotProps={ findButton: { children: ... } }`');
+      warn(
+        'Свойство `findButtonText` устаревшее, используйте `slotProps={ findButton: { children: ... } }`',
+      );
     }
     if (clearButtonTestId) {
-      warn('Свойство `clearButtonTestId` устаревшее, используйте `slotProps={ clearButton: { \'data-testid\': ... } }`');
+      warn(
+        "Свойство `clearButtonTestId` устаревшее, используйте `slotProps={ clearButton: { 'data-testid': ... } }`",
+      );
     }
     if (findButtonTestId) {
-      warn('Свойство `findButtonTestId` устаревшее, используйте `slotProps={ findButton: { \'data-testid\': ... } }`');
+      warn(
+        "Свойство `findButtonTestId` устаревшее, используйте `slotProps={ findButton: { 'data-testid': ... } }`",
+      );
     }
   }
 
