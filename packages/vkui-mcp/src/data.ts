@@ -15,7 +15,7 @@ export function createDataProvider(): DataProvider {
     (typeof process !== 'undefined' ? process.env?.VKUI_MCP_BASE_URL : undefined) ??
     DEFAULT_MCP_BASE_URL;
   const version = typeof process !== 'undefined' ? process.env?.VKUI_VERSION : undefined;
-  const mcpBaseUrl = version ? `${baseUrl.replace(/\/$/, '')}/${version}` : baseUrl;
+  const mcpBaseUrl = `${baseUrl.replace(/\/$/, '')}/${version || 'latest'}`;
 
   const cache = new Map<string, unknown>();
 
