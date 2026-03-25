@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { Icon20GiftCircleFillRed } from '@vkontakte/icons';
-import {
-  ComponentPlayground,
-  type ComponentPlaygroundProps,
-  testImage,
-} from '@vkui-e2e/playground-helpers';
+import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { withLabel } from '@vkui-e2e/utils';
 import {
   IconExampleForBadgeBasedOnImageBaseSize,
@@ -13,13 +9,20 @@ import {
 } from '../../testing/icons';
 import { Avatar, type AvatarProps } from './Avatar';
 
+const base64Image =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAC4jAAAuIwF4pT92AAAA+' +
+  '0lEQVR4nO3cwQmAMBQFQSP2Ze1WFltwURFhpoBHWP45Y865cM369QP+RKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxge2' +
+  'xpHI9NvWHu9zdcViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFY' +
+  'gViBWIFYgViBWIFYgViBWIFYgViBWIFYgVjB8RH2dywrECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxArECsQKxApOni4IwwZ+iSIAAAAA' +
+  'SUVORK5CYII=';
+
 export const AvatarPlayground = (props: ComponentPlaygroundProps) => {
   return (
     <ComponentPlayground
       {...props}
       propSets={[
         {
-          src: [undefined, withLabel(testImage, 'image')],
+          src: [undefined, withLabel(base64Image, 'image')],
           initials: [undefined, 'AB'],
           fallbackIcon: [
             <IconExampleForFallbackBasedOnImageBaseSize key="icon-fallback" />,

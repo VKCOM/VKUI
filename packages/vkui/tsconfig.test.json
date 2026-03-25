@@ -1,5 +1,12 @@
 {
-  "include": ["src/**/*.ts*", "src/**/*.js", "preset.js", ".eslintrc.js"],
+  "files": ["types/css.d.ts", "global.vitest.ts", "vitest.setup.ts", "vitest.global-setup.ts"],
+  "include": [
+    "src/testing",
+    "src/storybook",
+    "src/**/*.test.ts*",
+    "src/**/*.e2e*.ts*",
+    "src/**/*.stories.ts*"
+  ],
   "exclude": [
     "**/node_modules",
     "**/dist",
@@ -7,15 +14,17 @@
     "**/storybook-static",
     "**/__testfixtures__",
     "**/__tests__",
-    "**/vkui-date-fns-tz",
-    "examples/**"
+    "**/vkui-date-fns-tz"
   ],
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
     "target": "esnext",
     "module": "esnext",
     "lib": ["es2020", "dom", "dom.Iterable"],
+    "types": ["node"],
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
+    "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
@@ -28,6 +37,12 @@
     "isolatedModules": true,
     "strict": true,
     "skipLibCheck": true,
-    "erasableSyntaxOnly": true
+    "erasableSyntaxOnly": true,
+    "outDir": ".cache/ts",
+    "paths": {
+      "@vkui-e2e/test": ["./src/testing/e2e/index.playwright"],
+      "@vkui-e2e/playground-helpers": ["./src/testing/e2e/index.playground"],
+      "@vkui-e2e/utils": ["./src/testing/e2e/utils"]
+    }
   }
 }

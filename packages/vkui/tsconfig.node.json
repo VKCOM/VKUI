@@ -1,15 +1,24 @@
 {
-  "files": ["css.d.ts"],
-  "include": ["src/**/*.ts*", "*.ts*"],
+  "include": ["vitest.config.ts", "playwright-ct.config.ts", "vite.config.ts", "scripts/**/*.ts"],
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/coverage/**",
+    "**/storybook-static",
+    "**/__testfixtures__",
+    "**/__tests__",
+    "**/vkui-date-fns-tz"
+  ],
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
-    "target": "ES2020",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "ESNext",
+    "lib": ["ESNext"],
     "module": "ESNext",
-    "lib": ["esnext", "dom", "dom.Iterable"],
     "moduleResolution": "bundler",
-    "jsx": "react-jsx",
+    "types": ["node"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "noEmit": true,
     "allowImportingTsExtensions": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -20,12 +29,6 @@
     "isolatedModules": true,
     "strict": true,
     "skipLibCheck": true,
-    "erasableSyntaxOnly": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "paths": {
-      "@vkontakte/vkui": ["../vkui/src"]
-    }
+    "erasableSyntaxOnly": true
   }
 }
