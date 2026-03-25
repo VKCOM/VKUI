@@ -62,6 +62,8 @@ export interface SearchProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода.
    * - `clearButton`: свойства для прокидывания в кнопку очистки.
+   * - `findButton`: свойства для прокидывания в кнопку поиска.
+   * - `findButton`: свойства для прокидывания в кнопку поиска.
    */
   slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
@@ -69,6 +71,7 @@ export interface SearchProps
       HasRootRef<HTMLInputElement> &
       HasDataAttribute;
     clearButton?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
+    findButton?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
   };
   /**
    * Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
@@ -99,7 +102,7 @@ export interface SearchProps
    */
   clearLabel?: string;
   /**
-   * @deprecated Since 8.1.0. Вместо этого используйте `slotProps={ clearButton: { 'data-testid': ... } }`.
+   * @deprecated Since 8.1.0. Будет удалено в **VKUI v10**. Вместо этого используйте `slotProps={ clearButton: { 'data-testid': ... } }`.
    *
    * Передает атрибут `data-testid` для кнопки очистки.
    */
@@ -109,14 +112,21 @@ export interface SearchProps
    */
   noPadding?: boolean;
   /**
+   * @deprecated Since 8.1.0. Будет удалено в **VKUI v10**. Вместо этого используйте `slotProps={ findButton: { children: ... } }`.
+   *
    * Текст для кнопки Найти.
    */
   findButtonText?: string;
   /**
+   * @deprecated Since 8.1.0. Будет удалено в **VKUI v10**. Вместо этого используйте `slotProps={ findButton: { onClick: ... } }`.
+   *
    * Обработчик, при нажатии на кнопку "Найти".
    */
   onFindButtonClick?: React.MouseEventHandler<HTMLElement>;
   /**
+   *
+   * @deprecated Since 8.1.0. Будет удалено в **VKUI v10**. Вместо этого используйте `slotProps={ findButton: { 'data-testid': ... } }`.
+   *
    * Передает атрибут `data-testid` для кнопки поиска.
    */
   findButtonTestId?: string;
@@ -140,7 +150,7 @@ export const Search = ({
   clearButtonTestId,
   noPadding,
   findButtonText = 'Найти',
-  onFindButtonClick,
+  onFindButtonClick: onFindButtonClickProp,
   findButtonTestId,
   hideClearButton,
   getRef,
@@ -174,12 +184,28 @@ export const Search = ({
   ...restProps
 }: SearchProps): React.ReactNode => {
   /* istanbul ignore if: не проверяем в тестах */
-  if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+  if (process.env.NODE_ENV === 'development') {
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+    }
+    if (onFindButtonClickProp) {
+      warn('Свойство `onFindButtonClick` устаревшее, используйте `slotProps={ findButton: { onClick: ... } }`');
+    }
+    if (findButtonText) {
+      warn('Свойство `findButtonText` устаревшее, используйте `slotProps={ findButton: { children: ... } }`');
+    }
+    if (clearButtonTestId) {
+      warn('Свойство `clearButtonTestId` устаревшее, используйте `slotProps={ clearButton: { \'data-testid\': ... } }`');
+    }
+    if (findButtonTestId) {
+      warn('Свойство `findButtonTestId` устаревшее, используйте `slotProps={ findButton: { \'data-testid\': ... } }`');
+    }
   }
 
   const direction = useConfigDirection();
   const isRtl = direction === 'rtl';
+
+  const { density: adaptiveDensity } = useAdaptivityConditionalRender();
 
   const rootRest = useMergeProps(restProps, slotProps?.root);
 
@@ -228,6 +254,17 @@ export const Search = ({
     ...clearButtonRest
   } = useMergeProps({ className: styles.icon }, slotProps?.clearButton);
 
+  const { onClick: onFindButtonClick, ...findButtonRest } = useMergeProps(
+    {
+      className: classNames(
+        styles.findButton,
+        adaptiveDensity.compact ? adaptiveDensity.compact.className : undefined,
+      ),
+      onClick: onFindButtonClickProp,
+    },
+    slotProps?.findButton,
+  );
+
   const inputRef = useExternRef(getInputRef);
   const [isFocused, setFocusedTrue, setFocusedFalse] = useBooleanState(false);
   const generatedId = React.useId();
@@ -240,7 +277,6 @@ export const Search = ({
     setHasValue(Boolean(e.currentTarget.value));
 
   const { density = 'none' } = useAdaptivity();
-  const { density: adaptiveDensity } = useAdaptivityConditionalRender();
   const platform = usePlatform();
 
   const hasAfter = platform === 'ios' && hasReactNode(after);
@@ -373,11 +409,11 @@ export const Search = ({
               <Button
                 mode="primary"
                 size="m"
-                className={classNames(styles.findButton, adaptiveDensity.compact.className)}
                 focusVisibleMode="inside"
                 onClick={onFindButtonClick}
                 tabIndex={hasValue ? undefined : -1}
                 data-testid={findButtonTestId}
+                {...findButtonRest}
               >
                 {findButtonText}
               </Button>
