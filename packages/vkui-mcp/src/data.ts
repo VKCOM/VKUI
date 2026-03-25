@@ -10,12 +10,16 @@ import type {
 
 const DEFAULT_MCP_BASE_URL = 'https://mcp.s3.prodcloud.vk.team/';
 
+const DEFAULT_VKUI_VERSION = 'latest';
+
 export function createDataProvider(): DataProvider {
   const baseUrl =
     (typeof process !== 'undefined' ? process.env?.VKUI_MCP_BASE_URL : undefined) ??
     DEFAULT_MCP_BASE_URL;
-  const version = typeof process !== 'undefined' ? process.env?.VKUI_VERSION : undefined;
-  const mcpBaseUrl = `${baseUrl.replace(/\/$/, '')}/${version || 'latest'}`;
+  const version =
+    (typeof process !== 'undefined' ? process.env?.VKUI_VERSION : undefined) ??
+    DEFAULT_VKUI_VERSION;
+  const mcpBaseUrl = `${baseUrl.replace(/\/$/, '')}/${version}`;
 
   const cache = new Map<string, unknown>();
 
