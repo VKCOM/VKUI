@@ -1,9 +1,9 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { resolveSlug } from '../helpers/index.js';
+import { toNameFromSlug } from '../helpers/toNameFromSlug.js';
 import type { DataProvider } from '../types.js';
 import { toToolResult } from './utils.js';
-import {resolveSlug} from "../helpers/index.js";
-import {toNameFromSlug} from "../helpers/toNameFromSlug.js";
 
 const INPUT_SCHEMA = z.object({
   name: z.string().describe('Имя компонента (например, Button)').optional(),

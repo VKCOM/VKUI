@@ -19,7 +19,10 @@ export function createDataProvider(): DataProvider {
 
   const cache = new Map<string, unknown>();
 
-  async function readDataImpl<T extends object | string>(relativePath: string, type: 'text' | 'json'): Promise<T> {
+  async function readDataImpl<T extends object | string>(
+    relativePath: string,
+    type: 'text' | 'json',
+  ): Promise<T> {
     const cacheKey = version ? `${version}/${relativePath}` : relativePath;
     const cached = cache.get(cacheKey);
     if (cached !== undefined) {
@@ -31,9 +34,7 @@ export function createDataProvider(): DataProvider {
     if (!response.ok) {
       throw new Error(`Не удалось загрузить ${url}: ${response.status}`);
     }
-    const data = type === 'json'
-      ? (await response.json()) as T
-      : (await response.text()) as T;
+    const data = type === 'json' ? ((await response.json()) as T) : ((await response.text()) as T);
 
     if (!data) {
       throw new Error('Не удалось найти MCP данные. Укажите VKUI_MCP_BASE_URL.');

@@ -100,8 +100,7 @@ function extractPlaygroundExamples(body) {
 
   const playgroundOpenTagPattern = '<Playground[^>]*>';
 
-  const jsxCodeBlockPattern =
-    '```jsx[^\\n]*\\r?\\n([\\s\\S]*?)\\r?\\n\\s*```';
+  const jsxCodeBlockPattern = '```jsx[^\\n]*\\r?\\n([\\s\\S]*?)\\r?\\n\\s*```';
 
   const playgroundCloseTagPattern = '<\\/Playground>';
 

@@ -314,7 +314,6 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     const parsed = JSON.parse(
       getResultTextContent(callResponse.result as Record<string, unknown>),
     ) as { name: string; slug: string; content: string };
-    console.log('parsed', parsed)
     expect(parsed.name).toBe('Alert');
     expect(parsed.slug).toBe('alert');
     expect(parsed.content).toContain('<Alert');
