@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import type * as React from 'react';
 import { useDOM } from '../lib/dom';
-import { CustomResizeObserver } from '../lib/floating/customResizeObserver';
 import { isRefObject } from '../lib/isRefObject';
 import { useStableCallback } from './useStableCallback';
 
@@ -32,20 +31,12 @@ export function useResizeObserver(
         return;
       }
       const element = ref.current;
-      const canUseResizeObserver =
-        'ResizeObserver' in window && window.ResizeObserver !== undefined;
 
       const observeFn = () => stableCallback(element);
 
-      const observer: ResizeObserver | CustomResizeObserver = canUseResizeObserver
-        ? // eslint-disable-next-line compat/compat
-          new ResizeObserver(observeFn)
-        : new CustomResizeObserver(observeFn);
+      // eslint-disable-next-line compat/compat
+      const observer: ResizeObserver = new ResizeObserver(observeFn);
       observer.observe(element);
-
-      if (observer instanceof CustomResizeObserver) {
-        observer.appendToTheDOM();
-      }
 
       return () => observer.disconnect();
     },

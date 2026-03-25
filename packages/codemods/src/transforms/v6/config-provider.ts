@@ -1,6 +1,6 @@
-import { API, FileInfo } from 'jscodeshift';
+import type { API, FileInfo } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 
 const ALLOWED_PLATFORM_LIST = ['android', 'ios', 'vkcom'];
 

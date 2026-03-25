@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { Image } from '../Image/Image';
 import { HorizontalCell, type HorizontalCellProps } from './HorizontalCell';

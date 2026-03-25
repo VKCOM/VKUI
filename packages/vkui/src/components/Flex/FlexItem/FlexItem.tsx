@@ -48,7 +48,7 @@ export const FlexItem = ({
   ...restProps
 }: FlexItemProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development') {
-    warn('Компонент Flex.Item устарел, используйте компонент Flex в качестве альтернативы.');
+    warn('Компонент Flex.Item устарел, используйте компонент Box в качестве альтернативы.');
   }
 
   return (

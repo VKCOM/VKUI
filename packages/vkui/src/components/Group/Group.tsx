@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { hasReactNode } from '@vkontakte/vkjs';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { GroupContainer, type GroupContainerProps } from './GroupContainer';

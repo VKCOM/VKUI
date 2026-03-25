@@ -1,6 +1,6 @@
 import { ComponentPlayground, type ComponentPlaygroundProps } from '@vkui-e2e/playground-helpers';
 import { type SpacingSize, spacingSizeClassNames } from '../../lib/spacings/sizes';
-import { type CSSCustomProperties } from '../../types';
+import type { CSSCustomProperties } from '../../types';
 import { Separator, type SeparatorProps } from './Separator';
 
 const sizes = Object.keys(spacingSizeClassNames) as SpacingSize[];

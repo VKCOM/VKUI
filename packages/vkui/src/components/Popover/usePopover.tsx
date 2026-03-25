@@ -5,7 +5,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useFloatingElement, type UseFloatingElementProps } from '../../hooks/useFloatingElement';
 import { injectAriaExpandedPropByRole } from '../../lib/accessibility';
 import { animationFadeClassNames, transformOriginClassNames } from '../../lib/animation';
-import { type ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
+import type { ReferenceProps } from '../../lib/floating/useFloatingWithInteractions/types';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import {
   DEFAULT_ARROW_HEIGHT,
@@ -14,7 +14,7 @@ import {
 } from '../FloatingArrow/DefaultIcon';
 import { FloatingArrow } from '../FloatingArrow/FloatingArrow';
 import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
-import { type PopoverProps } from './Popover';
+import type { PopoverProps } from './Popover';
 import styles from './Popover.module.css';
 
 export type UsePopoverProps = Omit<PopoverProps, 'children'> & {

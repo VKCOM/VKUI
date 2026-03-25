@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { addons, types } from 'storybook/manager-api';
 import { SourceTab } from './SourceTab';
 import { ADDON_ID, PANEL_ID } from './constants';

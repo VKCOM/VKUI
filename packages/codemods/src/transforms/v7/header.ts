@@ -1,4 +1,4 @@
-import {
+import type {
   API,
   Collection,
   FileInfo,
@@ -14,7 +14,7 @@ import {
   removeAttribute,
   renameProp,
 } from '../../codemod-helpers';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 
 export const parser = 'tsx';
 

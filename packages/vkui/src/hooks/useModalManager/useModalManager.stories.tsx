@@ -2,7 +2,7 @@
 /* eslint-disable no-console, import/no-default-export */
 
 import { useRef } from 'react';
-import { type Meta, type StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56NotificationOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
 import { ButtonGroup } from '../../components/ButtonGroup/ButtonGroup';
@@ -20,11 +20,11 @@ import { PanelHeaderClose } from '../../components/PanelHeaderClose/PanelHeaderC
 import { CanvasFullLayout, DisableCartesianParam } from '../../storybook/constants';
 import { useAdaptivityConditionalRender } from '../useAdaptivityConditionalRender';
 import { usePlatform } from '../usePlatform';
-import {
-  type CustomModalProps,
-  type OpenModalCardProps,
-  type OpenModalPageProps,
-  type UseModalManagerProps,
+import type {
+  CustomModalProps,
+  OpenModalCardProps,
+  OpenModalPageProps,
+  UseModalManagerProps,
 } from './types';
 import { useModalManager } from './useModalManager';
 

@@ -6,6 +6,7 @@ import { Icon20BrushOutline } from '@vkontakte/icons';
 import { Button } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import { usePlaygroundStore } from '@/providers/playgroundStoreProvider';
+import { preloadThemeNames } from '../../vkuiThemes/useLoadThemeNames';
 import { ThemesModal } from './ThemesModal';
 
 export function ThemePicker({ className }: { className?: string }) {
@@ -22,6 +23,7 @@ export function ThemePicker({ className }: { className?: string }) {
         onClick={() => setOpen((isOpen) => !isOpen)}
         before={<Icon20BrushOutline />}
         className={className}
+        onMouseEnter={preloadThemeNames}
       >
         {themeName}
       </Button>

@@ -1,20 +1,20 @@
 import type { UIEvent } from 'react';
 import * as React from 'react';
-import { type ModalPageCloseReason } from '../../../components/ModalPage/types';
+import type { ModalPageCloseReason } from '../../../components/ModalPage/types';
 import { randomUUID } from '../../../lib/randomUUID';
 import { ModalCardWrapper } from '../components/ModalCardWrapper';
 import { ModalPageWrapper } from '../components/ModalPageWrapper';
-import {
-  type CustomModalCardItem,
-  type CustomModalPageItem,
-  type CustomModalPayload,
-  type CustomModalProps,
-  type ModalManagerApi,
-  type ModalManagerItem,
-  type OpenCardReturn,
-  type OpenModalCardProps,
-  type OpenModalPageProps,
-  type OpenPageReturn,
+import type {
+  CustomModalCardItem,
+  CustomModalPageItem,
+  CustomModalPayload,
+  CustomModalProps,
+  ModalManagerApi,
+  ModalManagerItem,
+  OpenCardReturn,
+  OpenModalCardProps,
+  OpenModalPageProps,
+  OpenPageReturn,
 } from '../types';
 import type { ModalStore } from './createModalStore';
 

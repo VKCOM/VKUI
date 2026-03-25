@@ -1,7 +1,7 @@
 'use client';
 
 import { SimpleGrid } from '@vkontakte/vkui';
-import { type MdxFile } from 'nextra';
+import type { MdxFile } from 'nextra';
 import { Post } from './components/Post';
 import { getTags } from './tags';
 

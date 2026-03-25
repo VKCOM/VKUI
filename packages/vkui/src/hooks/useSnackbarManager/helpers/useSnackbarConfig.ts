@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { type UseSnackbar } from '../types';
+import type { UseSnackbar } from '../types';
 
 const DEFAULT_MAX_VISIBLE_SNACKBARS = 4;
 

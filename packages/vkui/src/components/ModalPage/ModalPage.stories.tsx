@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import * as React from 'react';
+import type * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon20More, Icon24Dismiss, Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { useArgs, useCallback, useState } from 'storybook/preview-api';

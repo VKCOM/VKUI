@@ -225,7 +225,7 @@ export const ModalPageInternal = ({
   );
 };
 
-const desktopMaxWidthClassNames = {
+const desktopMaxWidthClassNames: Record<string, string | undefined> = {
   s: styles.hostDesktopMaxWidthS,
   m: styles.hostDesktopMaxWidthM,
   l: styles.hostDesktopMaxWidthL,
@@ -238,9 +238,12 @@ function resolveDesktopMaxWidth(
     return [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': `${desktopMaxWidth}px` }];
   }
 
-  return desktopMaxWidthClassNames.hasOwnProperty(desktopMaxWidth)
-    ? [desktopMaxWidthClassNames[desktopMaxWidth], undefined]
-    : [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': desktopMaxWidth }];
+  const className = desktopMaxWidthClassNames[desktopMaxWidth];
+  const style = className
+    ? undefined
+    : { '--vkui_internal_ModalPage--desktopMaxWidth': desktopMaxWidth };
+
+  return [className, style];
 }
 
 function getHeightCSSVariable(height?: number | string): CSSCustomProperties | undefined {

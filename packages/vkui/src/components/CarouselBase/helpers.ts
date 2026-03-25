@@ -1,13 +1,8 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { getRequiredValueByKey } from '../../helpers/getValueByKey';
-import { type AlignType } from '../../types';
+import type { AlignType } from '../../types';
 import { SLIDE_THRESHOLD } from './constants';
-import {
-  type GallerySlidesState,
-  type LayoutState,
-  type LoopPoint,
-  type SlidesManagerState,
-} from './types';
+import type { GallerySlidesState, LayoutState, LoopPoint, SlidesManagerState } from './types';
 
 export const revertRtlValue = (n: number, isRtl: boolean) => {
   return isRtl ? -n : n;

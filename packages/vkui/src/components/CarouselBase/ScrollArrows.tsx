@@ -1,11 +1,11 @@
 'use client';
 /* eslint-disable jsdoc/require-jsdoc */
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { ScrollArrow } from '../ScrollArrow/ScrollArrow';
-import { type BaseGalleryProps } from './types';
+import type { BaseGalleryProps } from './types';
 import styles from './CarouselBase.module.css';
 
 const stylesArrowAreaHeight = {

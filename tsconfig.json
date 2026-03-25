@@ -16,7 +16,6 @@
     "isolatedModules": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./",
     "outDir": ".cache/ts",
     "erasableSyntaxOnly": true,
     "paths": {

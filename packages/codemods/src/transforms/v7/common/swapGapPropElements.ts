@@ -1,4 +1,4 @@
-import { Collection, JSCodeshift, JSXAttribute } from 'jscodeshift';
+import type { Collection, JSCodeshift, JSXAttribute } from 'jscodeshift';
 
 export const swapGapPropElements = (j: JSCodeshift, source: Collection, componentName: string) => {
   source

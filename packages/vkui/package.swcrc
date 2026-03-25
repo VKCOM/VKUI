@@ -22,7 +22,7 @@
         "runtime": "automatic"
       }
     },
-    "target": "es2018",
+    "target": "es2020",
     "baseUrl": "./",
     "paths": {
       "*": ["node_modules", "src/*"]

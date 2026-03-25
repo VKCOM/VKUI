@@ -1,4 +1,4 @@
-import { type FloatElementIndentation } from './ImageBaseFloatElement';
+import type { FloatElementIndentation } from './ImageBaseFloatElement';
 
 function isIndentSizeConstant(indent: FloatElementIndentation) {
   return (

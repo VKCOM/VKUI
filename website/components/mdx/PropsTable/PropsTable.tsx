@@ -3,7 +3,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { Code, getMdxComponents, Table, Td, Th, Tr } from '@vkontakte/vkui-docs-theme';
 import { compileMdx } from 'nextra/compile';
 import { MDXRemote } from 'nextra/mdx-remote';
-import { type PropItem } from 'react-docgen-typescript';
+import type { PropItem } from 'react-docgen-typescript';
 import docgen from '@/docgen.json';
 import styles from './PropsTable.module.css';
 

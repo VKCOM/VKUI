@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { stopPropagation } from '../../lib/utils';
 import type { HasDataAttribute } from '../../types';

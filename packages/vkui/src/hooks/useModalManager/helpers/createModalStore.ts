@@ -1,6 +1,6 @@
 'use client';
 
-import { type ModalManagerItem, type OpenModalCardProps, type OpenModalPageProps } from '../types';
+import type { ModalManagerItem, OpenModalCardProps, OpenModalPageProps } from '../types';
 import {
   addModalToState,
   closeAllModals,

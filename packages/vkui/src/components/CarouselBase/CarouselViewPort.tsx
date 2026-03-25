@@ -2,9 +2,9 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import * as React from 'react';
-import { type HasChildren, type HasRootRef } from '../../types';
+import type { HasChildren, HasRootRef } from '../../types';
 import { type CustomTouchEvent, Touch } from '../Touch/Touch';
-import { type BaseGalleryProps } from './types';
+import type { BaseGalleryProps } from './types';
 import styles from './CarouselBase.module.css';
 
 type GalleryViewPortProps = Pick<

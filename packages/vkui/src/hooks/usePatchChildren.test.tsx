@@ -3,7 +3,7 @@ import * as React from 'react';
 import { act } from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
-import { type Mock } from 'vitest';
+import type { Mock } from 'vitest';
 import { setRef } from '../lib/utils';
 import { setNodeEnv } from '../testing/utils';
 import type { HasRootRef } from '../types';

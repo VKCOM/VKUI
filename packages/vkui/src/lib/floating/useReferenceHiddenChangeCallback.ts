@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
-import { type UseFloatingData } from './types/common';
-import { type FloatingComponentProps } from './types/component';
+import type { UseFloatingData } from './types/common';
+import type { FloatingComponentProps } from './types/component';
 
 export function useReferenceHiddenChangeCallback(
   hideMiddleware: UseFloatingData['middlewareData']['hide'],

@@ -1,6 +1,6 @@
-import { API, FileInfo } from 'jscodeshift';
+import type { API, FileInfo } from 'jscodeshift';
 import { getImportInfo, removeProps } from '../../codemod-helpers';
-import { JSCodeShiftOptions } from '../../types';
+import type { JSCodeShiftOptions } from '../../types';
 import { removeChildrenFromComponent } from './common/removeChildrenFromComponent';
 
 export const parser = 'tsx';

@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useMounted } from 'nextra/hooks';
 import { useConfig } from '../../contexts/config';

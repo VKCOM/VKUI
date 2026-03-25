@@ -2,7 +2,7 @@ import type { RefObject } from 'react';
 import { contains, getActiveElementByAnotherElement } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { RequiredFields } from '../../types';
-import { type UseFocusTrapProps } from './useFocusTrap.tsx';
+import type { UseFocusTrapProps } from './useFocusTrap.tsx';
 
 export const useAutoFocus = (
   ref: RefObject<HTMLElement | null>,

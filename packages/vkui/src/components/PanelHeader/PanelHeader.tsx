@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useModalContext } from '../../context/ModalContext';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -17,6 +17,7 @@ import type {
   HTMLAttributesWithRootRef,
 } from '../../types';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
+import { FixedLayout } from '../FixedLayout/FixedLayout';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
@@ -155,6 +156,7 @@ export const PanelHeader = ({
   delimiter = 'auto',
   shadow,
   getRef,
+  getRootRef,
   fixed,
   typographyProps,
   ...restProps
@@ -194,18 +196,28 @@ export const PanelHeader = ({
         getViewWidthClassName(viewWidth, legacySizeX),
         density !== 'regular' && densityClassNames[density],
       )}
+      getRootRef={isFixed ? getRootRef : getRef}
     >
-      <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
-        {children}
-      </PanelHeaderIn>
+      {isFixed ? (
+        <FixedLayout
+          className={classNames(styles.fixed, 'vkuiInternalPanelHeader__fixed')}
+          vertical="top"
+          getRootRef={getRef}
+        >
+          <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
+            {children}
+          </PanelHeaderIn>
+        </FixedLayout>
+      ) : (
+        <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
+          {children}
+        </PanelHeaderIn>
+      )}
       {isVKCOM
         ? separatorVisible && <Separator className={styles.separator} />
         : staticSeparatorVisible &&
           adaptivityConditionalRender && (
-            <Separator
-              className={classNames(adaptivityConditionalRender.className, styles.separator)}
-              padding
-            />
+            <Separator className={adaptivityConditionalRender.className} padding />
           )}
     </RootComponent>
   );

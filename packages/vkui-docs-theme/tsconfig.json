@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ES6",
+    "target": "ES2018",
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,

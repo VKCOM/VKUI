@@ -1,4 +1,4 @@
-import { API, ASTPath, FileInfo, JSCodeshift } from 'jscodeshift';
+import type { API, ASTPath, FileInfo, JSCodeshift } from 'jscodeshift';
 import { getImportInfo } from '../../codemod-helpers';
 
 export const parser = 'tsx';

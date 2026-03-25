@@ -5,7 +5,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditionalRender';
 import type { HasDataAttribute, HasOnlyExpectedProps, HasRootRef } from '../../types';
 import { CustomSelect, type SelectProps } from '../CustomSelect/CustomSelect';
-import { type CustomSelectOptionInterface } from '../CustomSelect/types';
+import type { CustomSelectOptionInterface } from '../CustomSelect/types';
 import {
   type NativeHTMLSelectProps,
   NativeSelect,

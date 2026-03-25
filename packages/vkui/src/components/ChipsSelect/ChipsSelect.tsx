@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { type MouseEventHandler } from 'react';
+import type { MouseEventHandler } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalOnEventOutside } from '../../hooks/useGlobalOnClickOutside';

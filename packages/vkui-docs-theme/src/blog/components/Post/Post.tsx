@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { Card, Link, Text } from '@vkontakte/vkui';
 import NextLink from 'next/link';
 import { PostHeading } from './PostHeading';

@@ -1,5 +1,5 @@
-import { type ReactNode } from 'react';
-import * as React from 'react';
+import type { ReactNode } from 'react';
+import type * as React from 'react';
 import * as icons from '@vkontakte/icons';
 
 type IconName = Exclude<keyof typeof icons, 'IconSettingsProvider' | 'IconAppearanceProvider'>;

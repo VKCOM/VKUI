@@ -4,7 +4,7 @@ import { Button } from '../../components/Button/Button';
 import { Flex } from '../../components/Flex/Flex';
 import { Snackbar } from '../../components/Snackbar/Snackbar';
 import { waitCSSKeyframesAnimation, withFakeTimers } from '../../testing/utils';
-import { type CustomSnackbar, type SnackbarApi, type UseSnackbar } from './types';
+import type { CustomSnackbar, SnackbarApi, UseSnackbar } from './types';
 import { useSnackbarManager } from './useSnackbarManager';
 
 const TestComponent: React.FC<

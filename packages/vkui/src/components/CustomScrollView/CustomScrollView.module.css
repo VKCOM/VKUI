@@ -20,33 +20,39 @@
   }
 }
 @supports not (scrollbar-color: auto) {
-  .scrollbarHidden::-webkit-scrollbar {
-    display: none;
-  }
+  /**
+   * Android WebView не поддерживает scrollbar-color, поэтому отрисовываем
+   * полосы прокрутки только если основное указательное устройство мышь
+   */
+  @media (--pointer-has) {
+    .scrollbarHidden::-webkit-scrollbar {
+      display: none;
+    }
 
-  .host::-webkit-scrollbar {
-    inline-size: 12px;
-    block-size: 12px;
-    background: 0 0;
-  }
+    .host::-webkit-scrollbar {
+      inline-size: 12px;
+      block-size: 12px;
+      background: 0 0;
+    }
 
-  .host::-webkit-scrollbar-track,
-  .host::-webkit-scrollbar-corner {
-    background: transparent;
-  }
+    .host::-webkit-scrollbar-track,
+    .host::-webkit-scrollbar-corner {
+      background: transparent;
+    }
 
-  .host::-webkit-scrollbar-thumb,
-  .host::-webkit-scrollbar-thumb {
-    background-color: var(--vkui--color_icon_tertiary_alpha);
-    background-clip: padding-box, content-box;
-    border: 3px solid transparent;
-    border-radius: 6px;
-  }
+    .host::-webkit-scrollbar-thumb,
+    .host::-webkit-scrollbar-thumb {
+      background-color: var(--vkui--color_icon_tertiary_alpha);
+      background-clip: padding-box, content-box;
+      border: 3px solid transparent;
+      border-radius: 6px;
+    }
 
-  .host::-webkit-scrollbar-thumb:hover,
-  .host::-webkit-scrollbar-thumb:active {
-    background-color: var(--vkui--color_icon_tertiary_alpha--hover);
-    border: 2px solid transparent;
+    .host::-webkit-scrollbar-thumb:hover,
+    .host::-webkit-scrollbar-thumb:active {
+      background-color: var(--vkui--color_icon_tertiary_alpha--hover);
+      border: 2px solid transparent;
+    }
   }
 }
 

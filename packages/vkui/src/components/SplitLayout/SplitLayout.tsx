@@ -1,8 +1,9 @@
 'use client';
 
-import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import type * as React from 'react';
+import { classNames } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
+import { usePlatform } from '../../hooks/usePlatform';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -87,13 +88,18 @@ export const SplitLayout = ({
   const rootRest = useMergeProps(restProps, slotProps?.root);
   const contentRest = useMergeProps({ getRootRef: getRef }, slotProps?.content);
 
+  const platform = usePlatform();
+
   return (
-    <RootComponent baseClassName={styles.host} {...rootRest}>
+    <RootComponent
+      baseClassName={classNames(styles.host, platform === 'ios' && styles.ios)}
+      {...rootRest}
+    >
       {header}
       <RootComponent
         baseClassName={classNames(
           styles.inner,
-          hasReactNode(header) && styles.interruptFakeHeader,
+          !!header && styles.innerHeader,
           center && styles.innerCenter,
         )}
         {...contentRest}

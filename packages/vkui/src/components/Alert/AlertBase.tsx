@@ -13,7 +13,7 @@ import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { IconButton } from '../IconButton/IconButton';
 import { ModalDismissButton } from '../ModalDismissButton/ModalDismissButton';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { type AlertActionInterface, type AlertCloseReason, type AlertProps } from './Alert';
+import type { AlertActionInterface, AlertCloseReason, AlertProps } from './Alert';
 import { AlertActions } from './AlertActions';
 import { AlertDescription, AlertTitle } from './AlertTypography';
 import styles from './Alert.module.css';

@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import * as React from 'react';
+import type * as React from 'react';
 import {
   Icon12Circle as Icon12CircleLib,
   Icon12OnlineMobile as Icon12OnlineMobileLib,

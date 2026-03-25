@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../../../lib/useIsomorphicLayoutEffect';
-import { type SelectValue } from '../../NativeSelect/NativeSelect';
-import { type SelectProps } from '../CustomSelect';
+import type { SelectValue } from '../../NativeSelect/NativeSelect';
+import type { SelectProps } from '../CustomSelect';
 import { calculateInputValueFromOptions } from '../helpers';
-import { type CustomSelectOptionInterface } from '../types';
+import type { CustomSelectOptionInterface } from '../types';
 
 /* eslint-disable jsdoc/require-jsdoc */
 type UseInputValueControllerProps<OptionInterfaceT extends CustomSelectOptionInterface> = Pick<

@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { Icon16ChevronLeft, Icon16ChevronOutline } from '@vkontakte/icons';
 import { classNames } from '@vkontakte/vkjs';
 import { Footnote, Headline, Tappable } from '@vkontakte/vkui';

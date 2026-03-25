@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import type * as React from 'react';
 import { NavLinks } from '../../components';
 import { useConfig } from '../../contexts';
 import styles from './Main.module.css';
