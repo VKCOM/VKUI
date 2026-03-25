@@ -10,7 +10,6 @@ export interface ComponentMetadata {
   slug: string;
   description: string;
   props: unknown[];
-  examples: ExampleItem[];
 }
 
 export interface HookListItem {
@@ -25,7 +24,6 @@ export interface HookMetadata {
   slug: string;
   description: string;
   props: unknown[];
-  examples: ExampleItem[];
 }
 
 export interface ExampleItem {
@@ -50,14 +48,10 @@ export interface MigrationTarget {
 
 export interface DataProvider {
   listComponents: () => Promise<ComponentListItem[]>;
-  getComponentMetadata: (params: {
-    name?: string;
-    slug?: string;
-  }) => Promise<ComponentMetadata | null>;
+  getComponentMetadata: (slug: string) => Promise<ComponentMetadata | null>;
   listHooks: () => Promise<HookListItem[]>;
-  getHookMetadata: (params: { name?: string; slug?: string }) => Promise<HookMetadata | null>;
-  listExamples: (params?: { component?: string }) => Promise<ExampleItem[]>;
-  getExample: (params: { id: string }) => Promise<ExampleItem>;
+  getHookMetadata: (slug: string) => Promise<HookMetadata | null>;
+  getExamples: (slug: string) => Promise<string | null>;
   listMigrationTargets: () => Promise<MigrationTarget[]>;
-  getMigrationTarget: (params: { name: string }) => Promise<MigrationComponentExample | null>;
+  getMigrationTarget: (component: string) => Promise<MigrationComponentExample | null>;
 }

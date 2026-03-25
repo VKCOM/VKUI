@@ -41,7 +41,7 @@ export function registerComponentResource(server: McpServer, dataProvider: DataP
       if (!slug) {
         throw new McpError(ErrorCode.InvalidParams, 'Параметр slug обязателен');
       }
-      const meta = await dataProvider.getComponentMetadata({ slug });
+      const meta = await dataProvider.getComponentMetadata(slug);
       if (!meta) {
         throw new McpError(ErrorCode.InvalidParams, `Компонент с slug "${slug}" не найден`);
       }

@@ -49,7 +49,7 @@ export function registerMigrationTargetResource(
         );
       }
       const decodedName = decodeURIComponent(name);
-      const target = await dataProvider.getMigrationTarget({ name: decodedName });
+      const target = await dataProvider.getMigrationTarget(decodedName);
       if (!target) {
         throw new McpError(
           ErrorCode.InvalidParams,

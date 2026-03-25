@@ -12,6 +12,7 @@ description: Компонент для создания раскрывающих
 
 import { BlockWrapper } from '@/components/wrappers';
 
+{/* @example-description: Базовый пример использования Accordion с заголовком и текстовым контентом. */}
 <Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
   ```jsx
   <Accordion>
@@ -71,6 +72,7 @@ return (
 
 Компонент `Group` позволяет отображать несколько `Accordion`.
 
+{/* @example-description: Группа аккордеонов с контролируемым состоянием — только один элемент может быть раскрыт одновременно. */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
@@ -124,6 +126,7 @@ return (
 
 Используйте свойства `ExpandIcon` и `CollapseIcon` для кастомизации иконок раскрытия/сворачивания.
 
+{/* @example-description: Кастомные иконки раскрытия/сворачивания с позиционированием перед текстом. */}
 <Playground Wrapper={BlockWrapper} style={{ height: 180 }}>
   ```jsx
   <Accordion>

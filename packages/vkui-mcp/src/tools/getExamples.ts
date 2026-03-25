@@ -3,23 +3,28 @@ import { z } from 'zod';
 import type { DataProvider } from '../types.js';
 import { toToolResult } from './utils.js';
 import {resolveSlug} from "../helpers/index.js";
+import {toNameFromSlug} from "../helpers/toNameFromSlug.js";
 
 const INPUT_SCHEMA = z.object({
   name: z.string().describe('Имя компонента (например, Button)').optional(),
   slug: z.string().describe('Slug компонента (например, button)').optional(),
 });
 
-export function registerGetComponentMetadata(server: McpServer, dataProvider: DataProvider): void {
+export function registerGetExamples(server: McpServer, dataProvider: DataProvider): void {
   server.registerTool(
-    'get_component_metadata',
+    'get_examples',
     {
-      description: 'Детальная карточка компонента с описанием и свойствами',
+      description: 'Примеры использования компонента. Принимает имя или slug компонента.',
       inputSchema: INPUT_SCHEMA,
     },
     async (args) => {
       const slug = resolveSlug(args);
-      const result = await dataProvider.getComponentMetadata(slug);
-      return toToolResult(result);
+      const content = await dataProvider.getExamples(slug);
+      return toToolResult({
+        name: toNameFromSlug(slug),
+        slug,
+        content,
+      });
     },
   );
 }

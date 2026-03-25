@@ -89,23 +89,56 @@ function componentNameFromSlug(slug) {
 }
 
 function extractPlaygroundExamples(body) {
-  const playgroundRegex = /(?:^|\n)[ \t]*```jsx[^\n]*\r?\n([\s\S]*?)\r?\n[ \t]*```/g;
+  // Ищем блоки вида:
+  // 1) (опционально) `{/* @example-description: ... */}`
+  // 2) `<Playground ...>`
+  // 3) код с ```jsx ... ```
+  // 4) закрывающий `</Playground>`
+  const exampleDescriptionPattern =
+    '(?:\\{\\/\\*\\s*@example-description:\\s*([\\s\\S]*?)\\s*\\*\\/\\}\\s*)?';
+
+  const playgroundOpenTagPattern = '<Playground[^>]*>';
+
+  const jsxCodeBlockPattern =
+    '```jsx[^\\n]*\\r?\\n([\\s\\S]*?)\\r?\\n\\s*```';
+
+  const playgroundCloseTagPattern = '<\\/Playground>';
+
+  const playgroundRegex = new RegExp(
+    `${exampleDescriptionPattern}${playgroundOpenTagPattern}\\s*${jsxCodeBlockPattern}\\s*${playgroundCloseTagPattern}`,
+    'g',
+  );
   const examples = [];
   const matches = body.matchAll(playgroundRegex);
+  const normalizeDescription = (value) => value.replace(/\s+/g, ' ').trim();
   let index = 0;
+
   for (const match of matches) {
-    const code = match[1].trim();
+    const description = normalizeDescription(match[1] || '');
+    const code = match[2].trim();
     if (!code) {
       continue;
     }
+
     index += 1;
-    examples.push({ code, index });
+    examples.push({ code, description, index });
   }
+
   return examples;
 }
 
-function toExampleId(slug, index) {
-  return `${slug.replace(/\//g, '-')}-example-${index}`;
+function formatExamplesText(examples) {
+  const SEPARATOR = '\n\n---------------------------------\n\n';
+  return examples
+    .map((example) => {
+      const parts = [];
+      if (example.description) {
+        parts.push(example.description);
+      }
+      parts.push(example.code);
+      return parts.join('\n\n');
+    })
+    .join(SEPARATOR);
 }
 
 export function generateMcpData() {
@@ -120,7 +153,6 @@ export function generateMcpData() {
 
   const components = [];
   const hooks = [];
-  const examplesIndex = [];
 
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, 'utf8');
@@ -132,32 +164,17 @@ export function generateMcpData() {
     const props = docgen[itemName] || [];
     const playgroundExamples = extractPlaygroundExamples(body);
 
-    const itemExamples = playgroundExamples.map((example) => {
-      const id = toExampleId(slug, example.index);
-      const title = `Example ${example.index}`;
-      const sourcePath = path.relative(ROOT_DIR, filePath).replace(/\\/g, '/');
-      return {
-        id,
-        component: itemName,
-        componentSlug: slug,
-        title,
-        code: example.code,
-        sourcePath,
-      };
-    });
-
     const listItem = {
       name: itemName,
       slug,
       description,
-      examplesCount: itemExamples.length,
+      examplesCount: playgroundExamples.length,
     };
     const detailPayload = {
       name: itemName,
       slug,
       description,
       props,
-      exampleIds: itemExamples.map((e) => e.id),
     };
 
     if (isHook(slug)) {
@@ -172,16 +189,16 @@ export function generateMcpData() {
       fs.writeFileSync(componentOutPath, JSON.stringify(detailPayload, null, 2));
     }
 
-    for (const example of itemExamples) {
-      const exampleOutPath = path.join(OUT_EXAMPLES_DIR, `${example.id}.json`);
-      fs.writeFileSync(exampleOutPath, JSON.stringify(example, null, 2));
-      examplesIndex.push(example);
+    if (playgroundExamples.length > 0) {
+      const examplesText = formatExamplesText(playgroundExamples);
+      const examplesOutPath = path.join(OUT_EXAMPLES_DIR, `${slug}.txt`);
+      ensureDir(path.dirname(examplesOutPath));
+      fs.writeFileSync(examplesOutPath, examplesText);
     }
   }
 
   fs.writeFileSync(path.join(OUT_DIR, 'components.json'), JSON.stringify(components, null, 2));
   fs.writeFileSync(path.join(OUT_DIR, 'hooks.json'), JSON.stringify(hooks, null, 2));
-  fs.writeFileSync(path.join(OUT_DIR, 'examples.json'), JSON.stringify(examplesIndex, null, 2));
 
   // eslint-disable-next-line no-console
   console.log('✅ MCP данные сгенерированы.');

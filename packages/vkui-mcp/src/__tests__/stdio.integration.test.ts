@@ -24,16 +24,9 @@ const MOCK_COMPONENTS = [
     examplesCount: 2,
   },
 ];
-const MOCK_EXAMPLES = [
-  {
-    id: 'alert-basic',
-    component: 'Alert',
-    componentSlug: 'alert',
-    title: 'Базовый пример',
-    code: '<Alert title="Пример" />',
-    sourcePath: 'content/components/alert.mdx',
-  },
-];
+
+const MOCK_ALERT_EXAMPLES_TEXT =
+  'Базовый пример\n\n<Alert title="Пример" />\n\n---------------------------------\n\n<Alert title="Второй" />';
 
 /** Мок метаданных компонента Alert (для get_component_metadata) */
 const MOCK_ALERT_METADATA = {
@@ -41,7 +34,6 @@ const MOCK_ALERT_METADATA = {
   slug: 'alert',
   description: 'Модальное окно с кнопками',
   props: [{ name: 'title', type: 'string', description: 'Заголовок' }],
-  examples: MOCK_EXAMPLES,
 };
 
 /** Мок списка хуков и метаданных хука (для list_hooks и get_hook_metadata) */
@@ -58,7 +50,6 @@ const MOCK_USE_MODAL_MANAGER_METADATA = {
   slug: 'use-modal-manager',
   description: 'Хук для управления модальными окнами',
   props: [{ name: 'saveHistory', type: 'boolean', description: 'Сохранять историю' }],
-  examples: [],
 };
 
 /** Запускает HTTP-сервер с мок-данными, возвращает base URL и функцию остановки */
@@ -66,8 +57,7 @@ function startMockDocsServer(): Promise<{ baseUrl: string; close: () => void }> 
   const routes: Record<string, string> = {
     '/mcp/components.json': JSON.stringify(MOCK_COMPONENTS),
     '/mcp/hooks.json': JSON.stringify(MOCK_HOOKS),
-    '/mcp/examples.json': JSON.stringify(MOCK_EXAMPLES),
-    '/mcp/examples/alert-basic.json': JSON.stringify(MOCK_EXAMPLES[0]),
+    '/mcp/examples/alert.txt': MOCK_ALERT_EXAMPLES_TEXT,
     '/mcp/components/alert.json': JSON.stringify(MOCK_ALERT_METADATA),
     '/mcp/hooks/use-modal-manager.json': JSON.stringify(MOCK_USE_MODAL_MANAGER_METADATA),
   };
@@ -77,7 +67,8 @@ function startMockDocsServer(): Promise<{ baseUrl: string; close: () => void }> 
       const url = req.url?.split('?')[0] ?? '';
       const body = routes[url];
       if (body !== undefined) {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        const contentType = url.endsWith('.txt') ? 'text/plain' : 'application/json';
+        res.writeHead(200, { 'Content-Type': contentType });
         res.end(body);
       } else {
         res.writeHead(404);
@@ -305,7 +296,7 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
     child.kill('SIGTERM');
   });
 
-  it('get_example через stdio возвращает пример по id', async () => {
+  it('get_examples через stdio возвращает примеры компонента', async () => {
     const child = spawnMcpProcess(mockBaseUrl);
     await initMcpSession(child);
 
@@ -314,18 +305,20 @@ describe.skipIf(!hasBuiltCli())('MCP server over stdio (integration)', () => {
       id: 2,
       method: 'tools/call',
       params: {
-        name: 'get_example',
-        arguments: { id: 'alert-basic' },
+        name: 'get_examples',
+        arguments: { name: 'Alert' },
       },
     });
 
     assertNoMcpError(callResponse);
     const parsed = JSON.parse(
       getResultTextContent(callResponse.result as Record<string, unknown>),
-    ) as { id: string; title: string; code: string };
-    expect(parsed.id).toBe('alert-basic');
-    expect(parsed.title).toBe('Базовый пример');
-    expect(parsed.code).toContain('<Alert');
+    ) as { name: string; slug: string; content: string };
+    console.log('parsed', parsed)
+    expect(parsed.name).toBe('Alert');
+    expect(parsed.slug).toBe('alert');
+    expect(parsed.content).toContain('<Alert');
+    expect(parsed.content).toContain('Базовый пример');
 
     child.kill('SIGTERM');
   });

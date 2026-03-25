@@ -21,7 +21,7 @@ export function registerGetMigrationTarget(server: McpServer, dataProvider: Data
       inputSchema: INPUT_SCHEMA,
     },
     async ({ name }) => {
-      const result = await dataProvider.getMigrationTarget({ name });
+      const result = await dataProvider.getMigrationTarget(name);
       if (result === null) {
         return toToolResult({
           error: 'Цель миграции не найдена',
