@@ -8,14 +8,14 @@ import type {
   MigrationTarget,
 } from './types.js';
 
-const DEFAULT_DOCUMENTATION_BASE_URL = 'https://vkui.io';
+const DEFAULT_MCP_BASE_URL = 'https://mcp.s3.prodcloud.vk.team/';
 
 export function createDataProvider(): DataProvider {
   const baseUrl =
-    (typeof process !== 'undefined' ? process.env?.VKUI_DOCS_BASE_URL : undefined) ??
-    DEFAULT_DOCUMENTATION_BASE_URL;
+    (typeof process !== 'undefined' ? process.env?.VKUI_MCP_BASE_URL : undefined) ??
+    DEFAULT_MCP_BASE_URL;
   const version = typeof process !== 'undefined' ? process.env?.VKUI_VERSION : undefined;
-  const docsBaseUrl = version ? `${baseUrl.replace(/\/$/, '')}/${version}` : baseUrl;
+  const mcpBaseUrl = version ? `${baseUrl.replace(/\/$/, '')}/${version}` : baseUrl;
 
   const cache = new Map<string, unknown>();
 
@@ -26,7 +26,7 @@ export function createDataProvider(): DataProvider {
       return cached as T;
     }
 
-    const url = new URL(relativePath.replace(/\\/g, '/'), docsBaseUrl).toString();
+    const url = new URL(relativePath.replace(/\\/g, '/'), mcpBaseUrl).toString();
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Не удалось загрузить ${url}: ${response.status}`);
@@ -36,7 +36,7 @@ export function createDataProvider(): DataProvider {
       : (await response.text()) as T;
 
     if (!data) {
-      throw new Error('Не удалось найти MCP данные. Укажите VKUI_DOCS_BASE_URL.');
+      throw new Error('Не удалось найти MCP данные. Укажите VKUI_MCP_BASE_URL.');
     }
 
     cache.set(cacheKey, data);
@@ -54,19 +54,19 @@ export function createDataProvider(): DataProvider {
 
   return {
     async listComponents() {
-      return readJson<ComponentListItem[]>('mcp/components.json');
+      return readJson<ComponentListItem[]>('components.json');
     },
     async getComponentMetadata(slug) {
-      return readJson<ComponentMetadata>(`mcp/components/${slug}.json`);
+      return readJson<ComponentMetadata>(`components/${slug}.json`);
     },
     async listHooks() {
-      return readJson<HookListItem[]>('mcp/hooks.json');
+      return readJson<HookListItem[]>('hooks.json');
     },
     async getHookMetadata(slug) {
-      return readJson<HookMetadata>(`mcp/hooks/${slug}.json`);
+      return readJson<HookMetadata>(`hooks/${slug}.json`);
     },
     async getExamples(slug) {
-      return await readText(`mcp/examples/${slug}.txt`);
+      return await readText(`examples/${slug}.txt`);
     },
     async listMigrationTargets() {
       return Object.keys(migrationV8)

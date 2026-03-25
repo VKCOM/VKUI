@@ -35,7 +35,7 @@ npx @vkontakte/vkui-mcp@latest
 
 ## Переменные окружения
 
-- **`VKUI_DOCS_BASE_URL`** — базовый URL документации (по умолчанию `https://vkcom.github.io/VKUI/`). От него подгружаются JSON с компонентами и примерами.
+- **`VKUI_MCP_BASE_URL`** — базовый URL MCP-данных (по умолчанию `https://mcp.s3.prodcloud.vk.team/`). От него подгружаются JSON с компонентами и примерами.
 
 ## Ресурсы (resources)
 

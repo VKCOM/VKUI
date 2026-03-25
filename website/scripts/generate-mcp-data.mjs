@@ -4,10 +4,11 @@ import { fileURLToPath } from 'url';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
-const ROOT_DIR = path.resolve(SCRIPT_DIR, '..');
-const COMPONENTS_DIR = path.join(ROOT_DIR, 'content', 'components');
-const DOCGEN_PATH = path.join(ROOT_DIR, '.docgen', 'docgen.json');
-const OUT_DIR = path.join(ROOT_DIR, 'public', 'mcp');
+const WEBSITE_DIR = path.resolve(SCRIPT_DIR, '..');
+const REPO_ROOT = path.resolve(WEBSITE_DIR, '..');
+const COMPONENTS_DIR = path.join(WEBSITE_DIR, 'content', 'components');
+const DOCGEN_PATH = path.join(WEBSITE_DIR, '.docgen', 'docgen.json');
+const OUT_DIR = path.join(REPO_ROOT, 'mcp-data');
 const OUT_COMPONENTS_DIR = path.join(OUT_DIR, 'components');
 const OUT_HOOKS_DIR = path.join(OUT_DIR, 'hooks');
 const OUT_EXAMPLES_DIR = path.join(OUT_DIR, 'examples');
