@@ -1,7 +1,22 @@
-import { classNames } from '@vkontakte/vkjs';
-import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
-import '../SimpleCell/SimpleCell.module.css';
+'use client';
+
+import * as React from 'react';
+import { classNames, hasReactNode } from '@vkontakte/vkjs';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import type { HasComponent } from '../../types';
+import { Chevron } from '../SimpleCell/Chevron/Chevron';
+import { Tappable, type TappableOmitProps } from '../Tappable/Tappable';
+import { Footnote } from '../Typography/Footnote/Footnote';
+import { Headline } from '../Typography/Headline/Headline';
+import { Subhead } from '../Typography/Subhead/Subhead';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CellButton.module.css';
+
+const densityClassNames = {
+  none: styles.densityNone,
+  compact: styles.densityCompact,
+};
 
 export const appearanceClassNames = {
   accent: styles.appearanceAccent,
@@ -9,7 +24,66 @@ export const appearanceClassNames = {
   negative: styles.appearanceNegative,
 };
 
-export interface CellButtonProps extends SimpleCellProps {
+interface CellButtonOwnProps extends HasComponent {
+  /**
+   * Иконка 28 или `<Avatar size={28|32|40|48|72} />`.
+   */
+  before?: React.ReactNode;
+  /**
+   * Иконка 12 или `<Badge />`. Добавится слева от текста `children`.
+   */
+  badgeBeforeTitle?: React.ReactNode;
+  /**
+   * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
+   */
+  badgeAfterTitle?: React.ReactNode;
+  /**
+   * Иконка 12. Добавится слева от текста `subtitle`.
+   */
+  badgeBeforeSubtitle?: React.ReactNode;
+  /**
+   * Иконка 12. Добавится справа от текста `subtitle`.
+   */
+  badgeAfterSubtitle?: React.ReactNode;
+  /**
+   * Контейнер для текста справа от `children`.
+   */
+  indicator?: React.ReactNode;
+  /**
+   * Дополнительная строка текста над `children`.
+   */
+  overTitle?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children`.
+   */
+  subtitle?: React.ReactNode;
+  /**
+   * Дополнительная строка текста под `children` и `subtitle`.
+   */
+  extraSubtitle?: React.ReactNode;
+  /**
+   * Иконка 24|28 или `<Switch />`. Располагается справа от `indicator`.
+   */
+  after?: React.ReactNode;
+  /**
+   * Блокировка взаимодействия с компонентом.
+   */
+  disabled?: boolean;
+  /**
+   * Управляет видимостью иконки шеврона `›`.
+   *
+   * - `auto` - добавляет шеврон справа только для платформы `ios`;
+   * - `always` - всегда показывает шеврон.
+   */
+  chevron?: 'auto' | 'always';
+  /**
+   * Размер chevron.
+   */
+  chevronSize?: 's' | 'm';
+  /**
+   * Включает многострочный режим для отображения текста.
+   */
+  multiline?: boolean;
   /**
    * > Режим `centered` переопределяет токен для темы `"accent"`.
    */
@@ -20,24 +94,93 @@ export interface CellButtonProps extends SimpleCellProps {
   centered?: boolean;
 }
 
+export interface CellButtonProps extends CellButtonOwnProps, TappableOmitProps {}
+
 /**
  * @see https://vkui.io/components/cell-button
  */
 export const CellButton = ({
+  badgeBeforeTitle,
+  badgeAfterTitle,
+  badgeBeforeSubtitle,
+  badgeAfterSubtitle,
+  before,
+  indicator,
+  children,
+  after,
+  chevron,
+  multiline,
+  overTitle,
+  subtitle,
+  extraSubtitle,
+  chevronSize = 'm',
   centered = false,
   appearance = 'accent',
-  className,
   ...restProps
 }: CellButtonProps): React.ReactNode => {
+  const platform = usePlatform();
+
+  const hasChevron = chevron === 'always' || (chevron === 'auto' && platform === 'ios');
+
+  const hasAfter = hasReactNode(after) || hasChevron;
+  const { density = 'none' } = useAdaptivity();
+
   return (
-    <SimpleCell
+    <Tappable
       {...restProps}
-      className={classNames(
+      baseClassName={classNames(
         styles.host,
+        restProps.disabled && styles.disabled,
+        density !== 'regular' && densityClassNames[density],
+        multiline && styles.mult,
         appearanceClassNames[appearance],
         centered && styles.centered,
-        className,
       )}
-    />
+    >
+      <div className={styles.before}>{before}</div>
+      <div className={styles.middle}>
+        {overTitle && (
+          <Subhead Component="span" className={classNames(styles.text, styles.overTitle)}>
+            {overTitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
+          </Subhead>
+        )}
+        <div className={styles.content}>
+          {badgeBeforeTitle && <span className={styles.badge}>{badgeBeforeTitle}</span>}
+          <Headline Component="span" className={styles.children} weight="3">
+            {children}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
+          </Headline>
+          {hasReactNode(badgeAfterTitle) && <span className={styles.badge}>{badgeAfterTitle}</span>}
+        </div>
+        {subtitle && (
+          <div className={styles.content}>
+            {badgeBeforeSubtitle && <span className={styles.badge}>{badgeBeforeSubtitle}</span>}
+            <Footnote normalize={false} className={classNames(styles.text, styles.subtitle)}>
+              {subtitle}
+              <VisuallyHidden>&nbsp;</VisuallyHidden>
+            </Footnote>
+            {badgeAfterSubtitle && <span className={styles.badge}>{badgeAfterSubtitle}</span>}
+          </div>
+        )}
+        {extraSubtitle && (
+          <Footnote className={classNames(styles.text, styles.extraSubtitle)}>
+            {extraSubtitle}
+            <VisuallyHidden>&nbsp;</VisuallyHidden>
+          </Footnote>
+        )}
+      </div>
+      {hasReactNode(indicator) && (
+        <Headline Component="span" weight="3" className={styles.indicator}>
+          {indicator}
+        </Headline>
+      )}
+      {hasAfter && (
+        <div className={styles.after}>
+          {after}
+          {hasChevron && <Chevron size={chevronSize} />}
+        </div>
+      )}
+    </Tappable>
   );
 };
