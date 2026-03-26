@@ -60,8 +60,8 @@ export interface SearchProps
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
-   * - `input`: свойства для прокидывания в поле ввода.
-   * - `clearButton`: свойства для прокидывания в кнопку очистки.
+   * - `input`: свойства для прокидывания в поле ввода;
+   * - `clearButton`: свойства для прокидывания в кнопку очистки;
    * - `findButton`: свойства для прокидывания в кнопку поиска.
    */
   slotProps?: {
@@ -148,7 +148,7 @@ export const Search = ({
   clearLabel = 'Очистить',
   clearButtonTestId,
   noPadding,
-  findButtonText = 'Найти',
+  findButtonText: findButtonTextProp,
   onFindButtonClick: onFindButtonClickProp,
   findButtonTestId,
   hideClearButton,
@@ -192,7 +192,7 @@ export const Search = ({
         'Свойство `onFindButtonClick` устаревшее, используйте `slotProps={ findButton: { onClick: ... } }`',
       );
     }
-    if (findButtonText) {
+    if (findButtonTextProp) {
       warn(
         'Свойство `findButtonText` устаревшее, используйте `slotProps={ findButton: { children: ... } }`',
       );
@@ -261,12 +261,17 @@ export const Search = ({
     ...clearButtonRest
   } = useMergeProps({ className: styles.icon }, slotProps?.clearButton);
 
-  const { onClick: onFindButtonClick, ...findButtonRest } = useMergeProps(
+  const {
+    onClick: onFindButtonClick,
+    children: findButtonText = 'Найти',
+    ...findButtonRest
+  } = useMergeProps(
     {
       className: classNames(
         styles.findButton,
         adaptiveDensity.compact ? adaptiveDensity.compact.className : undefined,
       ),
+      children: findButtonTextProp,
       onClick: onFindButtonClickProp,
     },
     slotProps?.findButton,
