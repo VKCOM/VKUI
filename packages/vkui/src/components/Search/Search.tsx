@@ -63,7 +63,6 @@ export interface SearchProps
    * - `input`: свойства для прокидывания в поле ввода.
    * - `clearButton`: свойства для прокидывания в кнопку очистки.
    * - `findButton`: свойства для прокидывания в кнопку поиска.
-   * - `findButton`: свойства для прокидывания в кнопку поиска.
    */
   slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
