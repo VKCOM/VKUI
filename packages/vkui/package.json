@@ -73,8 +73,9 @@
     "test:e2e:ui": "../../scripts/generate_env_docker.sh -r test:e2e:ci:ui && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e-update:ci": "yarn run test:e2e:ci --update-snapshots",
     "lint:generated-files": "yarn run -T concurrently 'yarn:lint:generated-files:*'",
-    "lint:generated-files:css-custom-medias": "yarn run -T tsc scripts/generateCSSCustomMedias.mjs --checkJs --module ESNext --moduleResolution node --resolveJsonModule --allowSyntheticDefaultImports --jsx react-jsx --noEmit && yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
+    "lint:generated-files:css-custom-medias": "yarn run generate:css-custom-medias && git diff --exit-code src/styles/customMedias.generated.css",
     "lint:generated-files:css-modules": "yarn run generate:css-modules",
+    "lint:types": "tsc -b",
     "storybook": "bash -c 'source .env && yarn run -T storybook dev -p ${STORYBOOK_DEV_PORT:=6006}'",
     "storybook:build": "yarn run -T storybook build",
     "generate": "yarn run -T concurrently 'yarn:generate:*'",
@@ -97,7 +98,8 @@
     "@types/node": "*",
     "@types/postcss-import": "^14.0.3",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "typescript": "^6.0.2"
   },
   "size-limit": [
     {

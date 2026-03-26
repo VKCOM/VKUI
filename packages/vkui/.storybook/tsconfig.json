@@ -1,11 +1,14 @@
 {
-  "include": ["src/**/*.ts*", "*.ts*"],
+  "files": ["env.d.ts"],
+  "include": ["*.ts*", "**/*.ts*"],
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "lib": ["esnext", "dom", "dom.Iterable"],
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["ESNext", "dom", "dom.Iterable"],
     "moduleResolution": "bundler",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
@@ -18,12 +21,6 @@
     "isolatedModules": true,
     "strict": true,
     "skipLibCheck": true,
-    "erasableSyntaxOnly": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "paths": {
-      "@vkontakte/vkui": ["../vkui/src"]
-    }
+    "erasableSyntaxOnly": true
   }
 }

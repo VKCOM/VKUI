@@ -1,14 +1,8 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "isolatedModules": true,
-    "declaration": true,
-    "paths": {
-      "@vkui-e2e/test": ["./src/testing/e2e/index.playwright"],
-      "@vkui-e2e/playground-helpers": ["./src/testing/e2e/index.playground"],
-      "@vkui-e2e/utils": ["./src/testing/e2e/utils"]
-    }
-  },
-  "include": ["*.ts*", "**/*.ts*", "*.js", "**/*.js", "*.mjs", "**/*.mjs", "*.cjs", "**/*.cjs"],
-  "files": ["types/env.d.ts"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.web.json" },
+    { "path": "./tsconfig.test.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
