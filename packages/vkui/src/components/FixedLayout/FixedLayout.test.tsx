@@ -7,19 +7,19 @@ import styles from './FixedLayout.module.css';
 
 let updateFunction: () => void;
 
-vi.mock('../../lib/floating/customResizeObserver', () => ({
-  CustomResizeObserver: vi.fn(
-    class MockCustomResizeObserver {
-      constructor(updateFunctionFn: () => void) {
-        updateFunction = updateFunctionFn;
-      }
+const mockResizeObserver = vi.fn(
+  class MockResizeObserver {
+    constructor(updateFunctionFn: () => void) {
+      updateFunction = updateFunctionFn;
+    }
 
-      observe = vi.fn();
-      appendToTheDOM = vi.fn();
-      disconnect = vi.fn();
-    },
-  ),
-}));
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+  },
+);
+
+vi.stubGlobal('ResizeObserver', mockResizeObserver);
 
 describe('FixedLayout', () => {
   baselineComponent(FixedLayout);
