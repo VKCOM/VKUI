@@ -96,11 +96,6 @@
   transition: opacity 0.3s var(--vkui--animation_easing_platform);
 }
 
-.ios .before .host + .primitive {
-  padding-inline-start: 0;
-  margin-inline-start: -6px;
-}
-
 .ios .content {
   text-align: center;
   opacity: 1;
