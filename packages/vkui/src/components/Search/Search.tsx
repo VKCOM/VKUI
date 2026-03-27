@@ -61,7 +61,7 @@ export interface SearchProps
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода;
-   * - `clearButton`: свойства для прокидывания в кнопку очистки;
+   * - `clearButton`: свойства для прокидывания в кнопку очистки.
    */
   slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
