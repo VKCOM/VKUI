@@ -55,7 +55,7 @@ jobs:
           name: test-output
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           use_oidc: true
           flags: unittests
