@@ -414,6 +414,19 @@ export const fireEventPatch = async <E extends EventType>(
         await act(async () => await waitRAF());
       }
       break;
+    case 'animationStart':
+    case 'animationEnd': {
+      const nativeEventTypes =
+        eventType === 'animationStart'
+          ? ['animationstart', 'webkitAnimationStart']
+          : ['animationend', 'webkitAnimationEnd'];
+      const animationEventInit: EventInit = { bubbles: true, cancelable: true };
+      for (const nativeEventType of nativeEventTypes) {
+        const animationEvent = new Event(nativeEventType, animationEventInit);
+        fireEvent(el, animationEvent);
+      }
+      break;
+    }
     default:
       fireEvent[eventType](el, options);
   }

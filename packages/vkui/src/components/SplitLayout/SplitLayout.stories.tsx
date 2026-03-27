@@ -112,9 +112,6 @@ export const Playground: Story = {
                     alert
                   </Cell>
                 </Group>
-                <Group>
-                  <AdditionalContent />
-                </Group>
               </Panel>
             </SplitCol>
           )}

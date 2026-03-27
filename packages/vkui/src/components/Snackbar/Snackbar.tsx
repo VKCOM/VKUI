@@ -29,6 +29,8 @@ import {
 } from './utils';
 import styles from './Snackbar.module.css';
 
+export type { BasicProps as SnackbarBasicProps };
+
 const placementClassNames = {
   'top-start': styles.placementTopStart,
   'top': styles.placementTop,

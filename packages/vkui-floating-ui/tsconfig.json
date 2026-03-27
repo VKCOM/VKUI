@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "target": "ES2018",
+    "module": "NodeNext",
     "skipLibCheck": true
   },
   "include": ["*.ts", "*.mjs", "*.cjs"],
