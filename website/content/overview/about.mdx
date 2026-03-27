@@ -39,14 +39,10 @@ VKUI — это библиотека адаптивных React-компонен
 ```Browserslist filename=".browserslistrc" file=<rootDir>/.browserslistrc
 ```
 
-## Используемые браузерные фичи
+## Используемые полифилы
 
-Компоненты библиотеки используют или могут использовать следующие фичи:
+Компоненты библиотеки используют или могут использовать следующие полифилы:
 
-- <Icon16CheckCircleFillGreen width={12} height={12} display="inline" /> [PointerEvent](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#browser_compatibility)
-- <Icon16CheckCircleFillGreen width={12} height={12} display="inline" /> [position: sticky](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position#browser_compatibility)
-- <Icon12ErrorCircleFillYellow display="inline" /> [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver#browser_compatibility) – с полифилом на `<iframe>` со стороны библиотеки
-- <Icon12ErrorCircleFillYellow display="inline" /> [gap | Supported in Flex Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/gap#browser_compatibility) – с полифилом на `margin` со стороны библиотеки
 - <Icon12ErrorCircleFill display="inline" /> [CSS logical properties and values](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Logical_properties_and_values) –  в CSS-бандле `@vkontakte/vkui/dist/vkui.css` при [базовой установке](/overview/install/#base-install), трансформируются в обычные свойства; при [установке ESNext версии](/overview/install/#esnext-install) решение о полифиле можно принять самому
 
 ## Релизный цикл
