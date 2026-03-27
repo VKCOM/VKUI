@@ -17,7 +17,7 @@ export function registerGetMigrationTarget(server: McpServer, dataProvider: Data
     'get_migration_target',
     {
       description:
-        'Рекомендации по миграции конкретного компонента или хука на v8. Сначала вызови list_migration_targets, чтобы получить список доступных имён. Вернёт before/after — примени замену в коде пользователя.',
+        'Рекомендации по миграции конкретного компонента или хука на v8. Сначала вызови list_migration_targets, чтобы получить список доступных имён. Может вернуть описание и примеры before/after.',
       inputSchema: INPUT_SCHEMA,
     },
     async ({ name }) => {

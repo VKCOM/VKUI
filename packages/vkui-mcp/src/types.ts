@@ -36,8 +36,9 @@ export interface ExampleItem {
 }
 
 export interface MigrationComponentExample {
-  before: string;
-  after: string;
+  description?: string;
+  before?: string;
+  after?: string;
 }
 
 export type MigrationComponentMap = Record<string, MigrationComponentExample>;
