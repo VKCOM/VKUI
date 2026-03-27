@@ -295,12 +295,7 @@ describe(Search, () => {
     'calls onFindButtonClick',
     withFakeTimers(async () => {
       const cb = vi.fn();
-      render(
-        <Search
-          value="test"
-          slotProps={{ findButton: { 'data-testid': 'find-button', 'onClick': cb } }}
-        />,
-      );
+      render(<Search value="test" findButtonTestId="find-button" onFindButtonClick={cb} />);
       await userEvent.click(getFindButton());
       await act(vi.runAllTimers);
       expect(cb).toHaveBeenCalled();
