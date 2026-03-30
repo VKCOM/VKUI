@@ -8,7 +8,7 @@ import type {
   MigrationTarget,
 } from './types.js';
 
-const DEFAULT_MCP_BASE_URL = 'https://mcp.s3.prodcloud.vk.team/';
+const DEFAULT_MCP_BASE_URL = 'https://vkui-mcp.cdn-vk.ru';
 
 const DEFAULT_VKUI_VERSION = 'latest';
 
