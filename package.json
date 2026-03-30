@@ -41,7 +41,7 @@
     "@vitest/eslint-plugin": "^1.6.13",
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/stylelint-config": "^4.1.0",
-    "@vkontakte/vkui-tokens": "4.75.0",
+    "@vkontakte/vkui-tokens": "4.75.2",
     "autoprefixer": "^10.4.27",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
