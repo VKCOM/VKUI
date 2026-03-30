@@ -1,4 +1,10 @@
-import type { ModalManagerItem, OpenModalCardProps, OpenModalPageProps } from '../types';
+import {
+  type CustomModalCardItem,
+  type CustomModalPageItem,
+  type ModalManagerItem,
+  type OpenModalCardProps,
+  type OpenModalPageProps,
+} from '../types';
 
 export type ModalManagerState = {
   modals: ModalManagerItem[];
@@ -71,7 +77,7 @@ export const updateModalPropsInState = (
     return state;
   }
 
-  const currentModal = modals[modalIndex];
+  const currentModal = modals[modalIndex] as CustomModalPageItem | CustomModalCardItem;
   const newModalProps = (() => {
     switch (currentModal.type) {
       case 'page':
@@ -84,7 +90,7 @@ export const updateModalPropsInState = (
           },
         };
     }
-  })() as ModalManagerItem;
+  })() as CustomModalPageItem | CustomModalCardItem;
 
   return {
     ...state,

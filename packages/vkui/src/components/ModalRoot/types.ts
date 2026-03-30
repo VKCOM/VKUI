@@ -1,6 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
+import { ModalOverlayProps } from '../ModalOverlay/ModalOverlay.tsx';
 
 export type ModalRootActiveModal = string | null;
 
@@ -64,6 +65,17 @@ export interface ModalRootProps extends ModalRootBaseProps {
   children: React.ReactElement | Iterable<React.ReactElement>;
   onOverlayClosed?: () => void;
   onOverlayShowed?: () => void;
+  ModalOverlay?: React.ComponentType<
+    Pick<
+      ModalOverlayProps,
+      | 'visible'
+      | 'getRootRef'
+      | 'onShowed'
+      | 'onClosed'
+      | 'disableOpenAnimation'
+      | 'disableCloseAnimation'
+    >
+  >;
 }
 
 type ModalRootContextBaseInterface = {

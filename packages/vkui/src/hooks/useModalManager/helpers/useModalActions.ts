@@ -1,26 +1,29 @@
-import type { UIEvent } from 'react';
 import * as React from 'react';
-import type { ModalPageCloseReason } from '../../../components/ModalPage/types';
+import { type AnyFunction } from '@vkontakte/vkjs';
 import { randomUUID } from '../../../lib/randomUUID';
 import { ModalCardWrapper } from '../components/ModalCardWrapper';
 import { ModalPageWrapper } from '../components/ModalPageWrapper';
-import type {
-  CustomModalCardItem,
-  CustomModalPageItem,
-  CustomModalPayload,
-  CustomModalProps,
-  ModalManagerApi,
-  ModalManagerItem,
-  OpenCardReturn,
-  OpenModalCardProps,
-  OpenModalPageProps,
-  OpenPageReturn,
+import {
+  type CustomModalCardItem,
+  type CustomModalItem,
+  type CustomModalPageItem,
+  type CustomModalPayload,
+  type CustomModalProps,
+  type CustomPayload,
+  type CustomProps,
+  type ModalManagerApi,
+  type ModalManagerItem,
+  type OpenCardReturn,
+  type OpenCustomModalProps,
+  type OpenModalCardProps,
+  type OpenModalPageProps,
+  type OpenPageReturn,
 } from '../types';
 import type { ModalStore } from './createModalStore';
 
 type CreateModalCallbacks = {
-  onClose: (reason: ModalPageCloseReason, event?: UIEvent<HTMLElement>) => void;
-  onClosed: () => void;
+  onClose: AnyFunction;
+  onClosed: AnyFunction;
 };
 
 const createModalCallbacks = (
@@ -30,7 +33,7 @@ const createModalCallbacks = (
   resolvePromise: () => void,
 ): CreateModalCallbacks => {
   const onClose: OpenModalPageProps['onClose'] = (reason, event) => {
-    store.setPrevActive(id);
+    store.closeModal(id);
     modalProps.onClose?.(reason, event);
   };
 
@@ -46,8 +49,31 @@ const createModalCallbacks = (
   return { onClose, onClosed };
 };
 
+const createCustomModalCallbacks = (
+  id: string,
+  baseProps: OpenCustomModalProps,
+  store: ModalStore,
+  resolvePromise: () => void,
+): CreateModalCallbacks => {
+  const onClose = () => {
+    store.closeModal(id);
+    baseProps.onClose?.();
+  };
+
+  const onClosed = () => {
+    if (store.needCloseModals.has(id)) {
+      store.removeModal(id);
+      store.needCloseModals.delete(id);
+      resolvePromise();
+    }
+    baseProps.onClosed?.();
+  };
+
+  return { onClose, onClosed };
+};
+
 const createModalData = (
-  item: ModalManagerItem,
+  item: CustomModalPageItem | CustomModalCardItem,
   id: string,
   callbacks: CreateModalCallbacks,
 ): ModalManagerItem => {
@@ -95,6 +121,17 @@ const resolveProps = <
   };
 };
 
+const resolveCustomProps = <AdditionalProps extends object>(
+  props: CustomPayload<AdditionalProps> | React.ComponentType<CustomProps<AdditionalProps>>,
+): CustomPayload<AdditionalProps> => {
+  if ('component' in props) {
+    return props;
+  }
+  return {
+    component: props,
+  };
+};
+
 export type UseModalActionsProps = {
   store: ModalStore;
   saveHistory: boolean;
@@ -108,7 +145,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
   }, [saveHistory]);
 
   const open = React.useCallback(
-    <T extends ModalManagerItem>(
+    <T extends CustomModalPageItem | CustomModalCardItem>(
       item: T,
     ): T extends CustomModalPageItem
       ? OpenPageReturn
@@ -223,6 +260,51 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     [openCustomModalCard],
   );
 
+  const openCustomModal: ModalManagerApi['openCustomModal'] = React.useCallback(
+    (props) => {
+      const { id: idProp, component, baseProps, additionalProps } = resolveCustomProps(props);
+
+      const id = idProp || randomUUID();
+
+      const modalProps = baseProps || {};
+
+      let resolvePromise: () => void;
+      const promise = new Promise<void>((resolve) => {
+        resolvePromise = resolve;
+      });
+
+      const callbacks = createCustomModalCallbacks(id, modalProps, store, resolvePromise!);
+
+      const newModalData: CustomModalItem = {
+        type: 'custom',
+        id,
+        component,
+        additionalProps,
+        modalProps: {
+          ...modalProps,
+          ...callbacks,
+          id,
+        },
+        close: () => store.closeModal(id),
+      };
+
+      if (!saveHistoryRef.current) {
+        store.closePrevActiveIfNoHistory();
+      }
+
+      store.addModal(newModalData);
+
+      return {
+        id,
+        close: () => store.closeModal(id),
+        onClose: <R>(resolve?: () => R) => {
+          return promise.then(resolve);
+        },
+      };
+    },
+    [store],
+  );
+
   const closeAll: ModalManagerApi['closeAll'] = React.useCallback(() => {
     store.closeAll();
   }, [store]);
@@ -232,6 +314,7 @@ export const useModalActions = ({ store, saveHistory }: UseModalActionsProps) =>
     openModalCard,
     openCustomModalCard,
     openCustomModalPage,
+    openCustomModal,
     close,
     update,
     closeAll,

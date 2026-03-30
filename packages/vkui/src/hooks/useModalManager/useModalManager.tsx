@@ -22,6 +22,7 @@ export const useModalManager = ({
     openModalCard,
     openCustomModalCard,
     openCustomModalPage,
+    openCustomModal,
     close,
     update,
     closeAll,
@@ -36,6 +37,7 @@ export const useModalManager = ({
       openModalCard,
       openCustomModalCard,
       openCustomModalPage,
+      openCustomModal,
       close,
       update,
       closeAll,
@@ -44,6 +46,7 @@ export const useModalManager = ({
     [
       close,
       closeAll,
+      openCustomModal,
       openCustomModalCard,
       openCustomModalPage,
       openModalCard,

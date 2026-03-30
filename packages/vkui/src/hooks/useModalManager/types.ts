@@ -2,15 +2,29 @@ import type * as React from 'react';
 import type { ModalCardProps } from '../../components/ModalCard/types';
 import type { ModalPageProps } from '../../components/ModalPage/types';
 import type { ModalRootProps } from '../../components/ModalRoot/types';
-import type { HasDataAttribute } from '../../types';
+import type { HasDataAttribute, RequiredFields } from '../../types';
 
 export type UseModalManagerProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
   saveHistory?: boolean;
 };
 
+type BaseCustomModalProps = {
+  disableModalOverlay?: boolean;
+  disableOpenAnimation?: boolean;
+  disableCloseAnimation?: boolean;
+};
+
 export type OpenModalPageProps = Omit<ModalPageProps, 'open' | 'keepMounted'> & HasDataAttribute;
 
 export type OpenModalCardProps = Omit<ModalCardProps, 'open' | 'keepMounted'> & HasDataAttribute;
+
+export type OpenCustomModalProps = BaseCustomModalProps & {
+  id?: string;
+  onOpen?: () => void;
+  onOpened?: () => void;
+  onClose?: () => void;
+  onClosed?: () => void;
+};
 
 export type CustomModalPageItem = Pick<OpenPageReturn, 'update' | 'close'> & {
   type: 'page';
@@ -28,12 +42,27 @@ export type CustomModalCardItem = Pick<OpenCardReturn, 'update' | 'close'> & {
   modalProps?: OpenModalCardProps;
 };
 
-export type ModalManagerItem = CustomModalPageItem | CustomModalCardItem;
+export type CustomModalItem = {
+  type: 'custom';
+  id: string;
+  component: React.ComponentType<CustomProps<any>>;
+  additionalProps?: any;
+  modalProps: RequiredFields<OpenCustomModalProps, 'onClose' | 'onClosed' | 'id'>;
+  close: () => void;
+};
+
+export type ModalManagerItem = CustomModalPageItem | CustomModalCardItem | CustomModalItem;
 
 export type OpenModalReturn<T> = {
   id: string;
   close: () => void;
   update: (props: T) => void;
+  onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>;
+};
+
+export type OpenCustomModalReturn = {
+  id: string;
+  close: () => void;
   onClose: <R>(resolve?: () => R, reject?: VoidFunction) => Promise<R>;
 };
 
@@ -53,6 +82,12 @@ export type CustomModalProps<
     modalProps: BaseProps;
   };
 
+export type CustomProps<AdditionalProps extends object = object> = AdditionalProps & {
+  opened: boolean;
+  modalProps: Required<OpenCustomModalProps>;
+  close: () => void;
+};
+
 export type CustomModalPayload<
   BaseProps extends OpenModalCardProps | OpenModalPageProps,
   AdditionalProps extends object = object,
@@ -60,6 +95,13 @@ export type CustomModalPayload<
   id?: string;
   component: React.ComponentType<CustomModalProps<BaseProps, AdditionalProps>>;
   baseProps?: BaseProps;
+  additionalProps?: AdditionalProps;
+};
+
+export type CustomPayload<AdditionalProps extends object = object> = {
+  id?: string;
+  component: React.ComponentType<CustomProps<AdditionalProps>>;
+  baseProps?: OpenCustomModalProps;
   additionalProps?: AdditionalProps;
 };
 
@@ -93,6 +135,12 @@ export type ModalManagerApi = {
       | CustomModalPayload<OpenModalPageProps, AdditionalProps>
       | React.ComponentType<CustomModalProps<OpenModalPageProps, AdditionalProps>>,
   ) => OpenPageReturn;
+  /**
+   * Метод для открытия кастомного модального окна
+   */
+  openCustomModal: <AdditionalProps extends object>(
+    props: CustomPayload<AdditionalProps> | React.ComponentType<CustomProps<AdditionalProps>>,
+  ) => OpenCustomModalReturn;
   /**
    * Метод для изменения свойств уже созданных модалок. Принимает `id` и новые свойства, которые нужно переопределить.
    */

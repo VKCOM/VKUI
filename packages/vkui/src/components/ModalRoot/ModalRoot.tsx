@@ -26,6 +26,7 @@ export const ModalRoot = ({
   onOverlayShowed,
   disableCloseAnimation,
   disableOpenAnimation,
+  ModalOverlay: CustomModalOverlay,
 }: ModalRootProps): React.ReactNode => {
   const contextValue = React.useMemo(
     () => ({
@@ -59,21 +60,26 @@ export const ModalRoot = ({
     ],
   );
   const modalOverlayRef = React.useRef<HTMLDivElement>(null);
+
+  const overlayProps = {
+    visible: typeof activeModal === 'string',
+    getRootRef: modalOverlayRef,
+    onShowed: onOverlayShowed,
+    onClosed: onOverlayClosed,
+    disableCloseAnimation,
+    disableOpenAnimation,
+  };
+
   return (
     <AppRootPortal usePortal={usePortal}>
       <ModalRootContext.Provider value={contextValue}>
         <ModalRootOverlayContext.Provider value={modalOverlayRef}>
-          {!disableModalOverlay && (
-            <ModalOverlay
-              position="fixed"
-              visible={typeof activeModal === 'string'}
-              getRootRef={modalOverlayRef}
-              onShowed={onOverlayShowed}
-              onClosed={onOverlayClosed}
-              disableCloseAnimation={disableCloseAnimation}
-              disableOpenAnimation={disableOpenAnimation}
-            />
-          )}
+          {!disableModalOverlay &&
+            (CustomModalOverlay ? (
+              <CustomModalOverlay {...overlayProps} />
+            ) : (
+              <ModalOverlay position="fixed" {...overlayProps} />
+            ))}
           {children}
         </ModalRootOverlayContext.Provider>
       </ModalRootContext.Provider>

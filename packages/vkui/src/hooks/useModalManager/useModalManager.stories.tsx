@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable no-console, import/no-default-export */
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon24Dismiss, Icon56NotificationOutline } from '@vkontakte/icons';
 import { Button } from '../../components/Button/Button';
@@ -22,6 +22,7 @@ import { useAdaptivityConditionalRender } from '../useAdaptivityConditionalRende
 import { usePlatform } from '../usePlatform';
 import type {
   CustomModalProps,
+  CustomProps,
   OpenModalCardProps,
   OpenModalPageProps,
   UseModalManagerProps,
@@ -46,7 +47,7 @@ const ModalCardComponent = ({
   modalNumber,
 }: CustomModalProps<
   OpenModalCardProps,
-  { openNextModal: (type: 'card' | 'page') => void; modalNumber: number }
+  { openNextModal: (type: 'card' | 'page' | 'custom') => void; modalNumber: number }
 >) => {
   return (
     <ModalCard
@@ -59,6 +60,9 @@ const ModalCardComponent = ({
           </Button>
           <Button size="l" mode="primary" stretched onClick={() => openNextModal('card')}>
             Открыть ModalCard
+          </Button>
+          <Button size="l" mode="primary" stretched onClick={() => openNextModal('custom')}>
+            Открыть CustomModal
           </Button>
           <Button size="l" mode="secondary" stretched onClick={() => close()}>
             Закрыть
@@ -84,7 +88,7 @@ const ModalPageComponent = ({
   modalNumber,
 }: CustomModalProps<
   OpenModalPageProps,
-  { openNextModal: (type: 'card' | 'page') => void; modalNumber: number }
+  { openNextModal: (type: 'card' | 'page' | 'custom') => void; modalNumber: number }
 >) => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivityConditionalRender();
@@ -122,8 +126,73 @@ const ModalPageComponent = ({
       <Group>
         <CellButton onClick={() => openNextModal('page')}>Open ModalPage</CellButton>
         <CellButton onClick={() => openNextModal('card')}>Open ModalCard</CellButton>
+        <CellButton onClick={() => openNextModal('custom')}>Open CustomModal</CellButton>
       </Group>
     </ModalPage>
+  );
+};
+
+const CustomModal = ({
+  openNextModal,
+  modalNumber,
+  opened,
+  modalProps,
+  close,
+}: CustomProps<{
+  openNextModal: (type: 'card' | 'page' | 'custom') => void;
+  modalNumber: number;
+}>) => {
+  useEffect(() => {
+    if (!opened) {
+      modalProps.onClosed();
+    }
+  }, [opened, modalProps]);
+
+  return (
+    <div
+      id={modalProps.id}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`${modalProps.id}-title`}
+      style={{
+        position: 'fixed',
+        left: '50%',
+        top: '50%',
+        zIndex: 'var(--vkui--z_index_modal)',
+        transform: 'translate(-50%, -50%)',
+        boxSizing: 'border-box',
+        minWidth: 280,
+        maxWidth: 'calc(100% - 32px)',
+        padding: 16,
+        borderRadius: 12,
+        background: 'var(--vkui--color_background_modal)',
+        boxShadow: 'var(--vkui--elevation3)',
+      }}
+    >
+      <Flex direction="column" gap="m">
+        <Flex justify="space-between" align="center">
+          <span id={`${modalProps.id}-title`} style={{ fontWeight: 600 }}>
+            Кастомное модальное окно #{modalNumber}
+          </span>
+          <PanelHeaderButton aria-label="Закрыть" onClick={close}>
+            <Icon24Dismiss />
+          </PanelHeaderButton>
+        </Flex>
+        <p style={{ margin: 0 }}>Фиксированное окно с любой вёрсткой.</p>
+        <Button size="m" mode="primary" stretched onClick={() => openNextModal('page')}>
+          Открыть ModalPage
+        </Button>
+        <Button size="m" mode="primary" stretched onClick={() => openNextModal('card')}>
+          Открыть ModalCard
+        </Button>
+        <Button size="m" mode="primary" stretched onClick={() => openNextModal('custom')}>
+          Открыть CustomModal
+        </Button>
+        <Button size="m" mode="primary" stretched onClick={close}>
+          Закрыть
+        </Button>
+      </Flex>
+    </div>
   );
 };
 
@@ -132,7 +201,7 @@ export const Playground: Story = {
     const [api, contextHolder] = useModalManager(props);
     const modalCount = useRef(0);
 
-    const openCustomModal = (type: 'card' | 'page') => {
+    const openCustomModal = (type: 'card' | 'page' | 'custom') => {
       modalCount.current += 1;
       const count = modalCount.current;
 
@@ -144,9 +213,17 @@ export const Playground: Story = {
             modalNumber: count,
           },
         });
-      } else {
+      } else if (type === 'page') {
         api.openCustomModalPage({
           component: ModalPageComponent,
+          additionalProps: {
+            openNextModal: openCustomModal,
+            modalNumber: count,
+          },
+        });
+      } else {
+        api.openCustomModal({
+          component: CustomModal,
           additionalProps: {
             openNextModal: openCustomModal,
             modalNumber: count,
@@ -166,6 +243,9 @@ export const Playground: Story = {
           </Button>
           <Button appearance="overlay" onClick={() => openCustomModal('card')}>
             Открыть ModalCard
+          </Button>
+          <Button appearance="overlay" onClick={() => openCustomModal('custom')}>
+            Открыть CustomModal
           </Button>
         </Flex>
         {contextHolder}

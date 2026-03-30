@@ -5,6 +5,7 @@ import { ModalRoot } from '../../../components/ModalRoot/ModalRoot';
 import type { ModalRootProps } from '../../../components/ModalRoot/types';
 import type { ModalStore } from '../helpers/createModalStore';
 import { useActiveModalProps } from '../helpers/useActiveModalProps';
+import { CustomModalWrapper } from './CustomModalWrapper';
 
 type ContextHolderProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
   store: ModalStore;
@@ -56,7 +57,7 @@ export function ContextHolder({
       {state.modals.map((modalData) => {
         switch (modalData.type) {
           case 'page':
-          case 'card':
+          case 'card': {
             const Modal = modalData.component;
             return (
               <Modal
@@ -65,6 +66,18 @@ export function ContextHolder({
                 modalProps={modalData.modalProps}
                 {...modalData.additionalProps}
                 update={modalData.update}
+                close={modalData.close}
+              />
+            );
+          }
+          case 'custom':
+            return (
+              <CustomModalWrapper
+                key={modalData.id}
+                id={modalData.id}
+                modalProps={modalData.modalProps}
+                component={modalData.component}
+                additionalProps={modalData.additionalProps}
                 close={modalData.close}
               />
             );

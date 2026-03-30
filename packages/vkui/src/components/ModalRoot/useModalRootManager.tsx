@@ -1,6 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import { useContext, useId, useState } from 'react';
+import { callMultiple } from '../../lib/callMultiple';
 import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -91,19 +92,15 @@ export const useModalRootManager = ({
     disableCloseAnimation: disableCloseAnimation || context.disableCloseAnimation,
     disableOpenAnimation: disableOpenAnimation || context.disableOpenAnimation,
     ModalOverlay: context.isInsideModal ? VisuallyHiddenModalOverlay : ModalOverlay,
-    onOpen: onOpen || getContextCallback(id, context.onOpen),
-    onOpened: onOpened || getContextCallback(id, context.onOpened),
-    onClose: onClose || getContextCallback(id, context.onClose),
+    onOpen: callMultiple(onOpen, getContextCallback(id, context.onOpen)),
+    onOpened: callMultiple(onOpened, getContextCallback(id, context.onOpened)),
+    onClose: callMultiple(onClose, getContextCallback(id, context.onClose)),
     onClosed: function handleClosed(...args: any[]) {
       if (!keepMounted) {
         setUnmounted(true);
       }
 
-      if (onClosed) {
-        onClosed(...args);
-      } else {
-        context.onClosed?.(id);
-      }
+      callMultiple(onClosed && (() => onClosed(...args)), context.onClosed?.bind(this, id))();
     },
   };
 };
