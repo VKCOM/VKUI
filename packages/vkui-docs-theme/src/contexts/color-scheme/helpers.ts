@@ -1,6 +1,14 @@
 import type { ColorSchemeExtendedType } from './types';
 
-export function getColorScheme(key: string, defaultColorScheme?: ColorSchemeExtendedType) {
+export function getColorScheme(
+  key: string,
+  defaultColorScheme: ColorSchemeExtendedType,
+): ColorSchemeExtendedType;
+export function getColorScheme(key: string): ColorSchemeExtendedType | undefined;
+export function getColorScheme(
+  key: string,
+  defaultColorScheme?: ColorSchemeExtendedType,
+): ColorSchemeExtendedType | undefined {
   if (typeof window === 'undefined') {
     return undefined;
   }
@@ -10,7 +18,12 @@ export function getColorScheme(key: string, defaultColorScheme?: ColorSchemeExte
   } catch (e) {
     // Unsupported
   }
-  return colorScheme || defaultColorScheme;
+
+  if (colorScheme === 'system' || colorScheme === 'light' || colorScheme === 'dark') {
+    return colorScheme;
+  }
+
+  return defaultColorScheme;
 }
 
 export function getSystemColorScheme(e?: MediaQueryList | MediaQueryListEvent) {

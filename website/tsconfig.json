@@ -1,30 +1,8 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "target": "ES2018",
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "jsx": "preserve",
-    "allowJs": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/docgen.json": ["./.docgen/docgen.json"],
-      "@/components/*": ["./components/*"],
-      "@/stores/*": ["./stores/*"],
-      "@/providers/*": ["./providers/*"]
-    }
-  },
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "*.ts",
     "*.mjs",
     ".next/types/**/*.ts",
     "content/_app.tsx",
@@ -35,5 +13,52 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "out/types/**/*.ts"
-  ]
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/coverage/**",
+    "**/storybook-static",
+    "**/__testfixtures__",
+    "**/__tests__",
+    "**/vkui-date-fns-tz",
+    "examples/**"
+  ],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "target": "esnext",
+    "module": "ESNext",
+    "lib": ["es2020", "dom", "dom.Iterable"],
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "erasableSyntaxOnly": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/docgen.json": ["./.docgen/docgen.json"],
+      "@/components/*": ["./components/*"],
+      "@/stores/*": ["./stores/*"],
+      "@/providers/*": ["./providers/*"],
+      "@vkontakte/vkui": ["../packages/vkui/src"]
+    }
+  }
 }
