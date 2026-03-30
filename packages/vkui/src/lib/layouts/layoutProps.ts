@@ -41,6 +41,9 @@ const OVERFLOW_VALUES: OverflowValue[] = [
   'auto',
   ...CSS_GLOBAL_KEYWORDS,
 ];
+const SELF_POSITION = ['start', 'center', 'end'];
+const ALIGN_SELF_VALUES = [...SELF_POSITION, 'baseline', 'stretch'];
+const JUSTIFY_SELF_VALUES = [...SELF_POSITION, 'baseline', 'stretch'];
 
 export const SYSTEM_PADDING_VERTICAL = 'var(--vkui--size_base_padding_vertical--regular)';
 export const SYSTEM_PADDING_HORIZONTAL = 'var(--vkui--size_base_padding_horizontal--regular)';
@@ -70,6 +73,8 @@ export const LAYOUT_PROPS = {
   flexGrow: FLEX_VALUES,
   flexShrink: FLEX_VALUES,
   flexBasis: FLEX_BASIS_VALUES,
+  alignSelf: ALIGN_SELF_VALUES,
+  justifySelf: JUSTIFY_SELF_VALUES,
   overflow: OVERFLOW_VALUES,
   overflowBlock: OVERFLOW_VALUES,
   overflowInline: OVERFLOW_VALUES,
