@@ -3,16 +3,14 @@ export const getRequiredValueByKey = <VALUE, KEY extends PropertyKey = PropertyK
   map: Record<KEY, VALUE>,
 ): VALUE => {
   if (!map.hasOwnProperty(key)) {
-    throw new Error(`getRequiredValueByKey(${key})`);
+    throw new Error(`getRequiredValueByKey(${String(key)})`);
   }
   return map[key];
 };
 
 export const getValueByKey = <VALUE, KEY extends PropertyKey = PropertyKey>(
   key: KEY,
-  map: {
-    [key: string]: VALUE;
-  },
+  map: Record<any, VALUE>,
   defaultValue: VALUE,
 ): VALUE => {
   if (!map.hasOwnProperty(key)) {

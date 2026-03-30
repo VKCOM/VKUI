@@ -153,7 +153,7 @@ export type {
   UseSnackbar,
   SnackbarManagerNS,
 } from './hooks/useSnackbarManager';
-export type { SnackbarProps } from './components/Snackbar/Snackbar';
+export type { SnackbarProps, SnackbarBasicProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export { useTooltip } from './components/Tooltip/useTooltip';
 export type {
