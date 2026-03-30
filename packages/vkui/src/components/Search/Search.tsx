@@ -60,13 +60,15 @@ export interface SearchProps
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
-   * - `input`: свойства для прокидывания в поле ввода.
+   * - `input`: свойства для прокидывания в поле ввода;
+   * - `clearButton`: свойства для прокидывания в кнопку очистки.
    */
   slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
     input?: React.InputHTMLAttributes<HTMLInputElement> &
       HasRootRef<HTMLInputElement> &
       HasDataAttribute;
+    clearButton?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
   };
   /**
    * Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
@@ -97,6 +99,8 @@ export interface SearchProps
    */
   clearLabel?: string;
   /**
+   * @deprecated Since 8.1.0. Будет удалено в **VKUI v10**. Вместо этого используйте `slotProps={ clearButton: { 'data-testid': ... } }`.
+   *
    * Передает атрибут `data-testid` для кнопки очистки.
    */
   clearButtonTestId?: string;
@@ -170,8 +174,15 @@ export const Search = ({
   ...restProps
 }: SearchProps): React.ReactNode => {
   /* istanbul ignore if: не проверяем в тестах */
-  if (process.env.NODE_ENV === 'development' && getRef) {
-    warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+  if (process.env.NODE_ENV === 'development') {
+    if (getRef) {
+      warn('Свойство `getRef` устаревшее, используйте `slotProps={ input: { getRootRef: ... } }`');
+    }
+    if (clearButtonTestId) {
+      warn(
+        "Свойство `clearButtonTestId` устаревшее, используйте `slotProps={ clearButton: { 'data-testid': ... } }`",
+      );
+    }
   }
 
   const direction = useConfigDirection();
@@ -217,6 +228,12 @@ export const Search = ({
     },
     slotProps?.input,
   );
+
+  const {
+    onClick: onClearButtonClick,
+    onPointerDown: onClearButtonPointerDown,
+    ...clearButtonRest
+  } = useMergeProps({ className: styles.icon }, slotProps?.clearButton);
 
   const inputRef = useExternRef(getInputRef);
   const [isFocused, setFocusedTrue, setFocusedFalse] = useBooleanState(false);
@@ -348,12 +365,12 @@ export const Search = ({
             {!hideClearButton && (
               <IconButton
                 hoverMode="opacity"
-                onPointerDown={onIconCancelClickStart}
-                onClick={onCancel}
-                className={styles.icon}
+                onPointerDown={callMultiple(onIconCancelClickStart, onClearButtonPointerDown)}
+                onClick={callMultiple(onCancel, onClearButtonClick)}
                 tabIndex={hasValue ? undefined : -1}
                 disabled={inputRest.disabled}
                 data-testid={clearButtonTestId}
+                {...clearButtonRest}
               >
                 <VisuallyHidden>{clearLabel}</VisuallyHidden>
                 {platform === 'ios' ? <Icon16Clear /> : <Icon24Cancel />}
