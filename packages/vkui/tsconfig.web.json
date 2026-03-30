@@ -1,9 +1,22 @@
 {
+  "files": ["types/env.d.ts", "types/css.d.ts", "src/index.ts"],
+  "include": ["src/"],
+  "exclude": [
+    "src/testing",
+    "src/storybook",
+    "src/**/*.test.ts*",
+    "src/**/*.e2e*.ts*",
+    "src/**/*.stories.ts*"
+  ],
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.web.tsbuildinfo",
     "target": "esnext",
     "module": "esnext",
     "lib": ["es2020", "dom", "dom.Iterable"],
+    "types": [],
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
@@ -12,22 +25,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "strict": true,
     "skipLibCheck": true,
-    "erasableSyntaxOnly": true,
-    "noEmit": true
-  },
-  "exclude": [
-    "**/node_modules",
-    "**/dist",
-    "**/coverage/**",
-    "**/storybook-static",
-    "**/__testfixtures__",
-    "**/__tests__",
-    "**/vkui-date-fns-tz",
-    "examples/**"
-  ]
+    "erasableSyntaxOnly": true
+  }
 }

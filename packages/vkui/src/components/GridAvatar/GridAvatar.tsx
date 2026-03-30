@@ -4,7 +4,7 @@ import { ImageBase, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { GridAvatarBadge, type GridAvatarBadgeProps } from './GridAvatarBadge/GridAvatarBadge';
 import styles from './GridAvatar.module.css';
 
-export { GridAvatarBadgeProps };
+export type { GridAvatarBadgeProps };
 
 const GRID_AVATAR_DEFAULT_SIZE = 48;
 

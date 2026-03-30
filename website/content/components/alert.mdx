@@ -21,7 +21,7 @@ const showAlert = () => {
   if (alert) return;
   setAlert(
     <Alert
-      onClose={() => setAlert(null)}
+      onClosed={() => setAlert(null)}
       dismissLabel="Отмена"
       actions={[
         { title: 'Отмена', mode: 'cancel' },
@@ -45,10 +45,10 @@ return (
 
 ## Обязательные свойства
 
-### `onClose`
+### `onClosed`
 
-Свойство `onClose` принимает функцию, которая вызовется после завершения анимации закрытия компонента.
-Обязательно удаляйте из `DOM`-дерева компонент `Alert` в обработчике `onClose`, иначе это будет мешать
+Свойство `onClosed` принимает функцию, которая вызовется после завершения анимации закрытия компонента.
+Обязательно удаляйте из `DOM`-дерева компонент `Alert` в обработчике `onClosed`, иначе это будет мешать
 дальнейшему взаимодействию с элементами и повторному открытию компонента.
 
 ## Шапка
@@ -76,7 +76,7 @@ const actions = [
 <Alert
   actions={actions}
   dismissLabel="Отмена"
-  onClose={closePopout}
+  onClosed={closePopout}
   title="Удаление документа"
   description="Вы уверены, что хотите удалить этот документ?"
 />;
@@ -118,7 +118,7 @@ const actions = [
 <Alert
   actions={actions}
   dismissLabel="Не сейчас"
-  onClose={closePopout}
+  onClosed={closePopout}
   title="Отмена подписки"
   description="Вы уверены, что хотите отменить подписку?"
 />;
@@ -127,7 +127,7 @@ const actions = [
 Свойство `action` принимает обработчик нажатия на кнопку. Если свойство `autoCloseDisabled` включено,
 то в аргументы `action` передаётся объект с функцией `close`, вызвав которую можно закрыть `Alert` вручную.
 
-По умолчанию нажатие на опцию вызывает переданную в `Alert` функцию `onClose`, свойство `autoCloseDisabled` позволяет отключить такое поведение.
+По умолчанию нажатие на опцию вызывает переданную в `Alert` функцию `onClosed`, свойство `autoCloseDisabled` позволяет отключить такое поведение.
 
 Свойство `actionsAlign` позволяет поменять тип выравнивания кнопок:
 
