@@ -1,0 +1,6 @@
+import{n as e,r as t}from"./chunk-BneVvdWh.js";import{n,t as r}from"./Image-Anb3V6hT.js";import{i,n as a,t as o}from"./constants-CXYaXe_q.js";import{n as s,t as c}from"./createStoryParameters-CbXzS3a6.js";import{n as l,o as u}from"./mock-CFHZcj-X.js";var d=t({Playground:()=>p,__namedExportsOrder:()=>m,default:()=>f}),f,p,m,h=e((()=>{i(),u(),s(),n(),f={title:`Data Display/Image`,component:r,parameters:c(`Image`,o,a),argTypes:{filter:{control:{type:`select`},options:[`blur`,`contrast`,`grayscale`,`hue-rotate`,`drop-shadow`],mapping:{blur:`blur(5px)`,contrast:`contrast(200%)`,grayscale:`grayscale(80%)`,"hue-rotate":`hue-rotate(90deg)`,"drop-shadow":`drop-shadow(16px 16px 20px red) invert(75%)`}}},tags:[`Отображение данных`]},p={args:{src:l(`app_shorm_online`),alt:`Приложение шторм онлайн`}},p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
+  args: {
+    src: getAvatarUrl('app_shorm_online'),
+    alt: 'Приложение шторм онлайн'
+  }
+}`,...p.parameters?.docs?.source}}},m=[`Playground`]}));export{p as n,h as r,d as t};

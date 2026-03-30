@@ -1,0 +1,5 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{_o as t,gt as n,ht as r,vo as i,yo as a}from"./iframe-DYsbkMbM.js";import{i as o,n as s,t as c}from"./constants-CXYaXe_q.js";import{n as l,t as u}from"./createStoryParameters-CbXzS3a6.js";var d,f,p,m,h;e((()=>{r(),o(),l(),i(),d=a(),f={title:`Configuration/AdaptivityProvider`,component:t,parameters:u(`AdaptivityProvider`,c,s),tags:[`Конфигурация`]},p=()=>{let{density:e}=n();return(0,d.jsxs)(d.Fragment,{children:[e.compact&&(0,d.jsx)(`div`,{style:{padding:5},children:`Density: Compact`}),e.regular&&(0,d.jsx)(`div`,{style:{padding:5},children:`Density: Regular`})]})},m={render:e=>(0,d.jsx)(t,{...e,children:(0,d.jsx)(p,{})})},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+  render: args => <AdaptivityProvider {...args}>
+      <DisplayAdaptivityProvider />
+    </AdaptivityProvider>
+}`,...m.parameters?.docs?.source}}},h=[`Playground`]}))();export{m as Playground,h as __namedExportsOrder,f as default};

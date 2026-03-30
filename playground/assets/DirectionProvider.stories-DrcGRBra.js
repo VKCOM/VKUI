@@ -1,0 +1,5 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{yo as t}from"./iframe-DYsbkMbM.js";import{n,t as r}from"./useConfigDirection-D18ekb9m.js";import{n as i,t as a}from"./Flex-CNw6TAYz.js";import{n as o,t as s}from"./Div-DVktvkLx.js";import{n as c,t as l}from"./DirectionProvider-BgqeII3-.js";import{i as u,n as d,t as f}from"./constants-CXYaXe_q.js";var p,m,h,g,_;e((()=>{r(),u(),o(),i(),c(),p=t(),m={title:`Configuration/DirectionProvider`,component:l,parameters:{...f,...d},tags:[`Конфигурация`]},h=()=>(0,p.jsxs)(a,{dir:n(),children:[(0,p.jsx)(s,{children:`1`}),(0,p.jsx)(s,{children:`2`}),(0,p.jsx)(s,{children:`3`})]}),g={render:e=>(0,p.jsx)(l,{...e,children:(0,p.jsx)(h,{})})},g.parameters={...g.parameters,docs:{...g.parameters?.docs,source:{originalSource:`{
+  render: args => <DirectionProvider {...args}>
+      <Fixture />
+    </DirectionProvider>
+}`,...g.parameters?.docs?.source}}},_=[`Playground`]}))();export{g as Playground,_ as __namedExportsOrder,m as default};

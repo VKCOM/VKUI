@@ -1,0 +1,26 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{On as t,hr as n,lo as r,no as i,yo as a}from"./iframe-DYsbkMbM.js";import{n as o,t as s}from"./Subhead-C_edvMWb.js";import{n as c,t as l}from"./Tappable-D01Veq08.js";var u,d,f,p,m,h,g,_,v=e((()=>{u=`_host_2uaow_1`,d=`_centered_2uaow_5`,f=`_body_2uaow_14`,p=`_sizeS_2uaow_24`,m=`_sizeM_2uaow_29`,h=`_icon_2uaow_39`,g=`_text_2uaow_43`,_={host:u,centered:d,body:f,sizeS:p,sizeM:m,icon:h,text:g}})),y,b,x,S=e((()=>{t(),i(),c(),o(),v(),y=a(),b={s:_.sizeS,m:_.sizeM},x=({className:e,style:t,getRef:i,getRootRef:a,height:o,size:c=`s`,children:u=c===`s`?`Все`:`Показать все`,centered:d=!1,...f})=>(0,y.jsx)(`div`,{style:t,className:r(_.host,d&&_.centered,b[c],e),ref:a,children:(0,y.jsxs)(l,{style:c===`s`?void 0:{height:o},className:_.body,getRootRef:i,activeMode:`opacity`,hoverMode:`opacity`,...f,children:[(0,y.jsx)(n,{className:_.icon}),(0,y.jsx)(s,{className:_.text,weight:`2`,children:u})]})});try{x.displayName=`HorizontalCellShowMore`,x.__docgenInfo={description:``,displayName:`HorizontalCellShowMore`,props:{height:{defaultValue:null,description:`Задаёт высоту компонента. Должeн соответствовать размеру картинок
+внутри соседних \`HorizontalCell\` компонентов.
+
+Используйте размеры, заданные дизайн-системой (смотри типы).
+
+> ⚠️ Использование кастомного размера – это пограничный кейс.
+
+Игнорируется, если \`size='s'\`.`,name:`height`,required:!1,type:{name:`LiteralUnion<16 | 32 | 20 | 24 | 28 | 36 | 40 | 44 | 48 | 56 | 64 | 72 | 80 | 88 | 96, number>`}},size:{defaultValue:{value:`s`},description:'Задаёт размер компонента.\n\nЗначение `s` применяется для `<HorizontalCell size="s"`, в остальных случаях рекомендуется `m`.',name:`size`,required:!1,type:{name:`enum`,value:[{value:`"s"`},{value:`"m"`}]}},children:{defaultValue:{value:`size === 's' ? 'Все' : 'Показать все'`},description:"Предназначен для отрисовки текста.\nПо умолчанию для `size='s'` содержит текст `Все`, для `size='m'` - `Показать все`.",name:`children`,required:!1,type:{name:`ReactNode`}},centered:{defaultValue:{value:`false`},description:`Выравнивание по центру относительно родителя.`,name:`centered`,required:!1,type:{name:`boolean`}},hasHover:{defaultValue:null,description:"Указывает, должен ли компонент реагировать на `hover`-состояние.",name:`hasHover`,required:!1,type:{name:`boolean`}},Component:{defaultValue:null,description:``,name:`Component`,required:!1,type:{name:`ElementType<any, keyof IntrinsicElements>`}},activeClassName:{defaultValue:null,description:"Стиль подсветки `active`-состояния.\n@deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.\n\nИспользуйте свойство `activeMode`.",name:`activeClassName`,required:!1,type:{name:`string`}},hoverClassName:{defaultValue:null,description:"Стиль подсветки `hover`-состояния.\n@deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.\n\nИспользуйте свойство `hoverMode`.",name:`hoverClassName`,required:!1,type:{name:`string`}},focusVisibleMode:{defaultValue:null,description:`Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible`,name:`focusVisibleMode`,required:!1,type:{name:`FocusVisibleMode`}},hovered:{defaultValue:null,description:"Позволяет управлять `hovered`-состоянием извне.",name:`hovered`,required:!1,type:{name:`boolean`}},activated:{defaultValue:null,description:"Позволяет управлять `activated`-состоянием извне.",name:`activated`,required:!1,type:{name:`boolean`}},hasActive:{defaultValue:null,description:"Указывает, должен ли компонент реагировать на `active`-состояние.",name:`hasActive`,required:!1,type:{name:`boolean`}},hasHoverWithChildren:{defaultValue:null,description:`Позволяет родительскому компоненту
+иметь \`hovered\`-cостояние при наведении
+на любой дочерний элемент.
+По умолчанию состояние hovered у родителя сбрасывается.
+
+Присваивается родителькому компоненту.
+@example <Tappable hasHoverWithChildren>
+  <IconButton />
+  <IconButton />
+  <IconButton />
+</Tappable>`,name:`hasHoverWithChildren`,required:!1,type:{name:`boolean`}},unlockParentHover:{defaultValue:null,description:`Позволяет родительскому компоненту показывать hovered-состояние при наведении
+на текущий дочерний компонент.
+
+Присваивается дочернему компоненту.
+@example <Tappable>
+  <IconButton unlockParentHover />
+  <IconButton unlockParentHover />
+  <IconButton />
+</Tappable>`,name:`unlockParentHover`,required:!1,type:{name:`boolean`}},activeEffectDelay:{defaultValue:null,description:"Длительность показа `active`-состояния.",name:`activeEffectDelay`,required:!1,type:{name:`number`}},activeMode:{defaultValue:null,description:`Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active.`,name:`activeMode`,required:!1,type:{name:`StateModeLiteral`}},hoverMode:{defaultValue:null,description:`Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover.`,name:`hoverMode`,required:!1,type:{name:`StateModeLiteral`}},getRef:{defaultValue:null,description:``,name:`getRef`,required:!1,type:{name:`Ref<HTMLElement>`}},getRootRef:{defaultValue:null,description:``,name:`getRootRef`,required:!1,type:{name:`Ref<HTMLDivElement>`}}}}}catch{}}));export{S as n,x as t};

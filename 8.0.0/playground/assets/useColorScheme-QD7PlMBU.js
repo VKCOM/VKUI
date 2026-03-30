@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{Ca as t,Ea as n,Ta as r}from"./iframe-DYsbkMbM.js";function i(){let{colorScheme:e}=n();return e??`light`}var a=e((()=>{r(),t()}));export{i as n,a as t};

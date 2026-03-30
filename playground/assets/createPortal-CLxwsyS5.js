@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{Ba as n,C as r,Na as i}from"./iframe-DYsbkMbM.js";var a,o,s=t((()=>{a=e(r(),1),n(),o=(e,t,n)=>{let r=t||i();return r&&a.createPortal(e,r,n)}}));export{s as n,o as t};

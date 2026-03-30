@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{ps as n}from"./iframe-DYsbkMbM.js";function r(e){return e instanceof Function?e():e}function i(e){return[r(e),void 0]}function a(e,t){return t instanceof Function?t(e):t}function o([e],t){return[a(e,t),e]}function s(e){return c.useReducer(o,void 0,()=>i(e))}var c,l=t((()=>{c=e(n(),1)}));export{s as n,l as t};

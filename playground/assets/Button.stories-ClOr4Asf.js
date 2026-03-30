@@ -1,0 +1,6 @@
+import{n as e,r as t}from"./chunk-BneVvdWh.js";import{yo as n}from"./iframe-DYsbkMbM.js";import{n as r,t as i}from"./Button-Bn0gUV0z.js";import{n as a,t as o}from"./Counter-CFuxKgu3.js";import{i as s,t as c}from"./constants-CXYaXe_q.js";import{n as l,t as u}from"./createStoryParameters-CbXzS3a6.js";import{r as d}from"./getFormFieldIconsPresets-CZ22RewF.js";import{t as f}from"./presets-BahE6g_I.js";import{n as p,t as m}from"./src-CV9cafAP.js";var h=t({Playground:()=>y,__namedExportsOrder:()=>b,default:()=>v}),g,_,v,y,b,x=e((()=>{m(),s(),f(),l(),a(),r(),g=n(),_=d({requiredIcons:[`Icon12Add`,`Icon16Add`,`Icon24Add`,`Icon12Tag`,`Icon24ChevronCompactRight`],additionalPresets:{Counter:(0,g.jsx)(o,{children:`16`})}}),v={title:`Buttons/Button`,component:i,parameters:u(`Button`,c),argTypes:{before:_,after:_},decorators:[p],tags:[`Кнопки`]},y={args:{children:`Button`,size:`s`}},y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
+  args: {
+    children: 'Button',
+    size: 's'
+  }
+}`,...y.parameters?.docs?.source}}},b=[`Playground`]}));export{y as n,x as r,h as t};

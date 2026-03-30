@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{Oa as n,ka as r,ps as i}from"./iframe-DYsbkMbM.js";function a(e=!1){let[t,n]=o.useState(e);return r(()=>{n(!0)},[]),t}var o,s=t((()=>{o=e(i(),1),n()}));export{a as n,s as t};

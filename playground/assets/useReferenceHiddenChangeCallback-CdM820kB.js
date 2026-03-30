@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{Oa as n,ka as r,ps as i}from"./iframe-DYsbkMbM.js";function a(e,t){let n=o.useRef(e?.referenceHidden);o.useEffect(()=>{n.current=e?.referenceHidden}),r(function(){t&&e?.referenceHidden!==n.current&&t(e?.referenceHidden||!1)},[e?.referenceHidden,t])}var o,s=t((()=>{o=e(i(),1),n()}));export{a as n,s as t};

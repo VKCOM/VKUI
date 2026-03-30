@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{Oa as t,cn as n,ka as r,sn as i}from"./iframe-DYsbkMbM.js";var a,o,s=e((()=>{t(),i(),a={subtree:!0,childList:!0},o=(e,t,i=a)=>{let o=n(t);r(()=>{if(!e||!e.current)return;let t=new MutationObserver(o);return t.observe(e.current,i),()=>t.disconnect()},[e,o])}}));export{s as n,o as r,a as t};
