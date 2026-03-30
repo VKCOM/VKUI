@@ -57,7 +57,8 @@ export const migrationV8: MigrationComponentMap = {
     'after': '// v8: отступы синхронизированы, компонент компактнее\n<Textarea />',
   },
   'RichCell': {
-    'description': 'Свойства `after`/`afterCaption` для текстовой мета-информации заменены на `meta`/`submeta`.',
+    'description':
+      'Свойства `after`/`afterCaption` для текстовой мета-информации заменены на `meta`/`submeta`.',
     'before':
       '<RichCell\n before={<Avatar size={48} />}\n overTitle="онлайн"\n subtitle="Санкт-Петербург"\n after="Текст"\n afterCaption="Подтекст"\n afterAlign="start"\n>\n Имя пользователя\n</RichCell>\n\n<RichCell\n before={<Avatar size={48} />}\n subtitle="Санкт-Петербург"\n after={<Icon28Like />}\n afterAlign="center"\n>\n Имя пользователя\n</RichCell>',
     'after':
@@ -71,26 +72,30 @@ export const migrationV8: MigrationComponentMap = {
       '<Banner\n mode="image"\n imageTheme="dark"\n background={<div style={{ backgroundImage: \'url(...)\' }} />}\n>\n Контент\n</Banner>',
   },
   'ContentBadge': {
-    'description': 'Обновлены токены цветов для `appearance="neutral"` в режимах `primary/secondary`.',
+    'description':
+      'Обновлены токены цветов для `appearance="neutral"` в режимах `primary/secondary`.',
     'before':
       '// appearance="neutral", mode="primary"\ncolor: var(--color_text_primary);\nbackground: var(--color_background_secondary);\n\n// appearance="neutral", mode="secondary"\ncolor: var(--color_text_subhead);\nbackground: var(--color_background_secondary);',
     'after':
       '// appearance="neutral", mode="primary"\ncolor: var(--color_text_contrast);\nbackground: var(--color_icon_secondary);\n\n// appearance="neutral", mode="secondary"\ncolor: var(--color_text_primary);\nbackground: var(--color_background_secondary_alpha);',
   },
   'DateInput': {
-    'description': 'Если нужно сохранить старое поведение доступности из v7, явно задайте `accessible={false}`.',
+    'description':
+      'Если нужно сохранить старое поведение доступности из v7, явно задайте `accessible={false}`.',
     'before': '<DateInput />\n<DateRangeInput />\n<CustomSelect />',
     'after':
       '// чтобы сохранить поведение v7, явно отключите accessible\n<DateInput accessible={false} />\n<DateRangeInput accessible={false} />\n<CustomSelect accessible={false} />',
   },
   'DateRangeInput': {
-    'description': 'Если нужно сохранить старое поведение доступности из v7, явно задайте `accessible={false}`.',
+    'description':
+      'Если нужно сохранить старое поведение доступности из v7, явно задайте `accessible={false}`.',
     'before': '<DateInput />\n<DateRangeInput />\n<CustomSelect />',
     'after':
       '// чтобы сохранить поведение v7, явно отключите accessible\n<DateInput accessible={false} />\n<DateRangeInput accessible={false} />\n<CustomSelect accessible={false} />',
   },
   'CustomSelect': {
-    'description': 'Если нужно сохранить старое поведение доступности из v7, явно задайте `accessible={false}`.',
+    'description':
+      'Если нужно сохранить старое поведение доступности из v7, явно задайте `accessible={false}`.',
     'before': '<DateInput />\n<DateRangeInput />\n<CustomSelect />',
     'after':
       '// чтобы сохранить поведение v7, явно отключите accessible\n<DateInput accessible={false} />\n<DateRangeInput accessible={false} />\n<CustomSelect accessible={false} />',
@@ -138,8 +143,7 @@ export const migrationV8: MigrationComponentMap = {
       rootProps: ['className', 'style', 'data-*', 'aria-*'],
       slotPropsProps: ['getRef -> getRootRef', 'input-атрибуты'],
     }),
-    'before':
-      '<Search\n getRef={inputRef}\n data-testid="my-search"\n aria-label="Поиск"\n/>',
+    'before': '<Search\n getRef={inputRef}\n data-testid="my-search"\n aria-label="Поиск"\n/>',
     'after':
       '<Search\n data-testid="my-search"\n aria-label="Поиск"\n slotProps={{\n   input: {\n     getRootRef: inputRef\n   }\n }}\n/>',
   },
@@ -149,7 +153,8 @@ export const migrationV8: MigrationComponentMap = {
       rootProps: ['className', 'style', 'data-*', 'aria-*'],
       slotPropsProps: ['getRef -> getRootRef', 'textarea-атрибуты'],
     }),
-    'before': '<Textarea\n getRef={textareaRef}\n data-testid="my-textarea"\n aria-label="Комментарий"\n/>',
+    'before':
+      '<Textarea\n getRef={textareaRef}\n data-testid="my-textarea"\n aria-label="Комментарий"\n/>',
     'after':
       '<Textarea\n data-testid="my-textarea"\n aria-label="Комментарий"\n slotProps={{\n   textArea: {\n     getRootRef: textareaRef\n   }\n }}\n/>',
   },
@@ -322,19 +327,22 @@ export const migrationV8: MigrationComponentMap = {
       '<ActionSheet\n onClosed={() => setPopout(null)}\n title="Выберите действие"\n slotProps={{\n    iosCloseItem: {\n      children: "Отмена",\n      onClick: () => setPopout(null)\n    }\n  }}\n>\n  <ActionSheetItem onClick={handleAction}>Действие</ActionSheetItem>\n</ActionSheet>\n\n<ActionSheet\n onClosed={() => setPopout(null)}\n title="Выберите действие"\n iosCloseItem={\n   <ActionSheetDefaultIosCloseItem onClick={() => setPopout(null)}>\n     Отмена\n   </ActionSheetDefaultIosCloseItem>\n }\n>\n <ActionSheetItem onClick={handleAction}>Действие</ActionSheetItem>\n</ActionSheet>',
   },
   'DateInput: accessible': {
-    'description': 'В v8 `accessible` по умолчанию включён. Удалите `accessible={false}`, если поведение v8 подходит.',
+    'description':
+      'В v8 `accessible` по умолчанию включён. Удалите `accessible={false}`, если поведение v8 подходит.',
     'before':
       '<DateInput accessible={false} />\n<DateRangeInput accessible={false} />\n<CustomSelect accessible={false} />',
     'after': '<DateInput />\n<DateRangeInput />\n<CustomSelect />',
   },
   'DateRangeInput: accessible': {
-    'description': 'В v8 `accessible` по умолчанию включён. Удалите `accessible={false}`, если поведение v8 подходит.',
+    'description':
+      'В v8 `accessible` по умолчанию включён. Удалите `accessible={false}`, если поведение v8 подходит.',
     'before':
       '<DateInput accessible={false} />\n<DateRangeInput accessible={false} />\n<CustomSelect accessible={false} />',
     'after': '<DateInput />\n<DateRangeInput />\n<CustomSelect />',
   },
   'CustomSelect: accessible': {
-    'description': 'В v8 `accessible` по умолчанию включён. Удалите `accessible={false}`, если поведение v8 подходит.',
+    'description':
+      'В v8 `accessible` по умолчанию включён. Удалите `accessible={false}`, если поведение v8 подходит.',
     'before':
       '<DateInput accessible={false} />\n<DateRangeInput accessible={false} />\n<CustomSelect accessible={false} />',
     'after': '<DateInput />\n<DateRangeInput />\n<CustomSelect />',
