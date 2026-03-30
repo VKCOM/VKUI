@@ -3927,6 +3927,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/helpers@npm:^0.5.20":
+  version: 0.5.20
+  resolution: "@swc/helpers@npm:0.5.20"
+  dependencies:
+    tslib: "npm:^2.8.0"
+  checksum: 10/a46030291484f8fd57505c4ae13cb179aa1f0cef201b14a065d857cfe3c3f41aab46d410a9cec7785f4768ac5b78dc4d07c344086c0ea2cacf67ba034fbed7a2
+  languageName: node
+  linkType: hard
+
 "@swc/types@npm:^0.1.25":
   version: 0.1.25
   resolution: "@swc/types@npm:0.1.25"
@@ -5466,7 +5475,7 @@ __metadata:
   dependencies:
     "@floating-ui/react-dom": "npm:^2.1.8"
     "@swc/core": "npm:^1.15.21"
-    "@swc/helpers": "npm:^0.5.19"
+    "@swc/helpers": "npm:^0.5.20"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
   peerDependencies:
@@ -5591,7 +5600,7 @@ __metadata:
   resolution: "@vkontakte/vkui@workspace:packages/vkui"
   dependencies:
     "@biomejs/biome": "npm:^2.4.9"
-    "@swc/helpers": "npm:^0.5.19"
+    "@swc/helpers": "npm:^0.5.20"
     "@types/node": "npm:*"
     "@types/postcss-import": "npm:^14.0.3"
     "@vkontakte/icons": "npm:^3.0.0"
