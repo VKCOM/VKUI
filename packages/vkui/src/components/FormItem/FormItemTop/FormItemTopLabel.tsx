@@ -23,6 +23,7 @@ export const FormItemTopLabel = ({
   children,
   Component: componentProp,
   htmlFor,
+  className,
   ...restProps
 }: FormItemTopLabelProps) => {
   const component = componentProp || (htmlFor && 'label') || 'span';
@@ -30,7 +31,7 @@ export const FormItemTopLabel = ({
 
   return (
     <Subhead
-      className={classNames(styles.label, topMultiline && styles.labelMultiline)}
+      className={classNames(className, styles.label, topMultiline && styles.labelMultiline)}
       Component={component}
       htmlFor={htmlFor}
       {...restProps}
