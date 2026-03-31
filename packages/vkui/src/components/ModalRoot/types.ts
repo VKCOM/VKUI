@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 import type { AppRootPortalProps } from '../AppRoot/AppRootPortal';
-import { ModalOverlayProps } from '../ModalOverlay/ModalOverlay.tsx';
+import { type ModalOverlayProps } from '../ModalOverlay/ModalOverlay.tsx';
 
 export type ModalRootActiveModal = string | null;
 

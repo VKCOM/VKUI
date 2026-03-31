@@ -15,7 +15,7 @@ export type UseModalRootManager = RequiredFields<
 >;
 
 export type UseModalRootManagerResolvedProps = Required<Omit<OpenCustomModalProps, 'id'>> & {
-  open: boolean;
+  opened: boolean;
   mounted: boolean;
 };
 
@@ -49,7 +49,7 @@ export const useCustomModalManager = ({
 
   return {
     mounted: !unmounted,
-    open: opened,
+    opened,
     disableModalOverlay: (disableModalOverlay || context.disableModalOverlay) ?? false,
     disableCloseAnimation: (disableCloseAnimation || context.disableCloseAnimation) ?? false,
     disableOpenAnimation: (disableOpenAnimation || context.disableOpenAnimation) ?? false,
@@ -73,7 +73,7 @@ export const CustomModalWrapper = ({
   modalProps,
   close,
 }: Omit<CustomModalItem, 'type'>) => {
-  const { mounted, open, ...restModalProps } = useCustomModalManager(modalProps);
+  const { mounted, opened, ...restModalProps } = useCustomModalManager(modalProps);
 
   if (!mounted) {
     return null;
@@ -85,13 +85,13 @@ export const CustomModalWrapper = ({
     <>
       {!restModalProps.disableModalOverlay && (
         <VisuallyHiddenModalOverlay
-          visible={open}
-          onClick={close}
+          visible={opened}
+          onClick={restModalProps.onClose}
           disableCloseAnimation={restModalProps.disableCloseAnimation}
           disableOpenAnimation={restModalProps.disableOpenAnimation}
         />
       )}
-      <Modal {...additionalProps} opened={open} modalProps={restModalProps} close={close} />
+      <Modal {...additionalProps} modalProps={restModalProps} opened={opened} close={close} />
     </>
   );
 };
