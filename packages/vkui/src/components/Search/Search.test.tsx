@@ -121,13 +121,20 @@ describe(Search, () => {
       expect(value).toBe('user');
     });
     it('clears value', async () => {
-      render(<Search defaultValue="def" clearButtonTestId="clear-button" />);
+      const onClearClick = vi.fn();
+      render(
+        <Search
+          defaultValue="def"
+          slotProps={{ clearButton: { 'data-testid': 'clear-button', 'onClick': onClearClick } }}
+        />,
+      );
       expect(getInput()).toHaveValue('def');
       await userEvent.click(getClearIcon());
       act(() => {
         vi.runOnlyPendingTimers();
       });
       expect(getInput()).toHaveValue('');
+      expect(onClearClick).toHaveBeenCalledTimes(1);
     });
     it('form reset form', async () => {
       render(
@@ -145,7 +152,7 @@ describe(Search, () => {
     it('handles clear button visibility correctly', async () => {
       render(
         <form data-testid="form">
-          <Search clearButtonTestId="clear-button" />
+          <Search slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />
           <input data-testid="reset" type="reset" />
         </form>,
       );
@@ -158,7 +165,10 @@ describe(Search, () => {
     it('handles clear button visibility with default value correctly', async () => {
       render(
         <form data-testid="form">
-          <Search defaultValue="val" clearButtonTestId="clear-button" />
+          <Search
+            defaultValue="val"
+            slotProps={{ clearButton: { 'data-testid': 'clear-button' } }}
+          />
           <input data-testid="reset" type="reset" />
         </form>,
       );
@@ -205,13 +215,21 @@ describe(Search, () => {
       expect(value).toBe('initX');
     });
     it('handles clear button visibility correctly', () => {
-      const { rerender } = render(<Search value="init" clearButtonTestId="clear-button" />);
+      const { rerender } = render(
+        <Search value="init" slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />,
+      );
       expect(getClearIcon()).not.toHaveAttribute('tabindex');
-      rerender(<Search value="" clearButtonTestId="clear-button" />);
+      rerender(<Search value="" slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />);
       expect(getClearIcon()).toHaveAttribute('tabindex', '-1');
     });
     it('hides clear button with hideClearButton prop', () => {
-      const h = render(<Search value="init" clearButtonTestId="clear-button" hideClearButton />);
+      const h = render(
+        <Search
+          value="init"
+          slotProps={{ clearButton: { 'data-testid': 'clear-button' } }}
+          hideClearButton
+        />,
+      );
       expect(h.queryByTestId('clear-button')).toBeFalsy();
     });
     it('clears value', async () => {
@@ -220,7 +238,7 @@ describe(Search, () => {
         <Search
           value={value}
           onChange={(e) => (value = e.target.value)}
-          clearButtonTestId="clear-button"
+          slotProps={{ clearButton: { 'data-testid': 'clear-button' } }}
         />,
       );
       await userEvent.click(getClearIcon());
@@ -236,7 +254,9 @@ describe(Search, () => {
     });
     it('does not clear value without onChange', async () => {
       let value = 'init';
-      render(<Search value={value} clearButtonTestId="clear-button" />);
+      render(
+        <Search value={value} slotProps={{ clearButton: { 'data-testid': 'clear-button' } }} />,
+      );
       await userEvent.click(getClearIcon());
       act(() => {
         vi.runOnlyPendingTimers();
@@ -275,7 +295,7 @@ describe(Search, () => {
     'calls onFindButtonClick',
     withFakeTimers(async () => {
       const cb = vi.fn();
-      render(<Search value="test" onFindButtonClick={cb} findButtonTestId="find-button" />);
+      render(<Search value="test" findButtonTestId="find-button" onFindButtonClick={cb} />);
       await userEvent.click(getFindButton());
       await act(vi.runAllTimers);
       expect(cb).toHaveBeenCalled();

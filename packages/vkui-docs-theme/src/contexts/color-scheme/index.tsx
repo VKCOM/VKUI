@@ -24,11 +24,11 @@ export const ColorSchemeProvider = ({
   storageKey = 'vkui-docs-theme',
   children,
 }: ColorSchemeProviderProps) => {
-  const [colorScheme, setColorScheme] = React.useState(
-    () => getColorScheme(storageKey, defaultColorScheme) as ColorSchemeExtendedType,
+  const [colorScheme, setColorScheme] = React.useState(() =>
+    getColorScheme(storageKey, defaultColorScheme),
   );
-  const [systemColorScheme, setSystemColorScheme] = React.useState(
-    () => getColorScheme(storageKey) as ColorSchemeType | undefined,
+  const [systemColorScheme, setSystemColorScheme] = React.useState<ColorSchemeType | undefined>(
+    undefined,
   );
 
   const handleColorScheme = React.useCallback(

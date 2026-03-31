@@ -8,7 +8,8 @@
     "start": "next start",
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
-    "generate": "node ./scripts/generate-props/generate-props.mjs"
+    "generate": "node ./scripts/generate-props/generate-props.mjs",
+    "lint:types": "tsc"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^15.5.11",

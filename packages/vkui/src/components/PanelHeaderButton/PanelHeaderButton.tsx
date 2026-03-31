@@ -37,7 +37,7 @@ export interface PanelHeaderButtonProps extends Omit<TappableOmitProps, 'label'>
   /**
    * Текст или содержимое кнопки.
    */
-  label?: React.ReactNode; // TODO [>=8]: добавить св-во indicator, чтобы разграничить кейсы.
+  label?: React.ReactNode; // TODO [>=9]: добавить св-во indicator, чтобы разграничить кейсы.
 }
 
 interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {

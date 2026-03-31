@@ -1,4 +1,4 @@
-const tsconfig = require('./tsconfig.json');
+const tsconfig = require('./tsconfig.test.json');
 
 const TS_CONFIG_ALIASES = Object.entries(tsconfig.compilerOptions.paths).map(([name, paths]) => [
   name,
