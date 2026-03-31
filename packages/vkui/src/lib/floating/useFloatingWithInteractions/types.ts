@@ -25,7 +25,7 @@ export type ShownChangeReason =
 export type OnShownChange = (shown: boolean, reason?: ShownChangeReason) => void;
 
 export interface UseFloatingWithInteractionsProps {
-  placement?: Placement;
+  placement?: Placement | undefined;
   /**
    * Стратегия позиционирования всплывающего элемента.
    *
@@ -34,8 +34,8 @@ export interface UseFloatingWithInteractionsProps {
    *
    * > `strategy="absolute"` Рекомендуется использовать с `usePortal={false}`. И нужно не забыть обернуть в элемент с `position: relative`
    */
-  strategy?: FloatingPositionStrategy;
-  middlewares?: UseFloatingMiddleware[];
+  strategy?: FloatingPositionStrategy | undefined;
+  middlewares?: UseFloatingMiddleware[] | undefined;
   /**
    * Механика вызова всплывающего элемента.
    *
@@ -52,7 +52,7 @@ export interface UseFloatingWithInteractionsProps {
    *
    * **Избегайте использования `trigger="hover"` как единственного механизма активации, так как пользователи клавиатуры или скринридеров не смогут использовать компонент**
    */
-  trigger?: TriggerType;
+  trigger?: TriggerType | undefined;
   /**
    * Количество миллисекунд, после которых произойдёт показ/скрытие всплывающего элемента
    * при наведении.
@@ -61,43 +61,43 @@ export interface UseFloatingWithInteractionsProps {
    *
    * > Используется только для `trigger="hover"`.
    */
-  hoverDelay?: number | [number, number];
+  hoverDelay?: number | [number, number] | undefined;
   /**
    * При `trigger="hover"` закрывает всплывающий элемент при нажатии на целевой элемент.
    */
-  closeAfterClick?: boolean;
+  closeAfterClick?: boolean | undefined;
   /**
    * Блокирует изменение состояния.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Отключает взаимодействие со всплывающим элементом.
    */
-  disableInteractive?: boolean;
+  disableInteractive?: boolean | undefined;
   /**
    * Отключает закрытие нажатием на область вне целевого и всплывающего элемента.
    */
-  disableCloseOnClickOutside?: boolean;
+  disableCloseOnClickOutside?: boolean | undefined;
   /**
    * Отключает закрытие нажатием на кнопку ESC.
    */
-  disableCloseOnEscKey?: boolean;
+  disableCloseOnEscKey?: boolean | undefined;
   /**
    * Начальное состояние всплывающего элемента.
    */
-  defaultShown?: boolean;
+  defaultShown?: boolean | undefined;
   /**
    * Если передан, то всплывающий элемент будет показано/скрыто в зависимости от значения свойства.
    */
-  shown?: boolean;
+  shown?: boolean | undefined;
   /**
    * Вызывается при каждом изменении видимости всплывающего элемента.
    */
-  onShownChange?: OnShownChange;
+  onShownChange?: OnShownChange | undefined;
   /**
    * Вызывается при каждом изменении видимости всплывающего элемента, но после завершении анимации.
    */
-  onShownChanged?: OnShownChange;
+  onShownChanged?: OnShownChange | undefined;
 }
 
 export type ReferenceProps<T = HTMLElement> = Omit<
@@ -123,6 +123,6 @@ export interface UseFloatingWithInteractionsReturn<T extends HTMLElement = HTMLE
   floatingProps: FloatingProps<T>;
   middlewareData: UseFloatingData['middlewareData'];
   onClose: (this: void) => void;
-  onEscapeKeyDown?: (this: void) => void;
+  onEscapeKeyDown?: ((this: void) => void) | undefined;
   onRestoreFocus: (restoreFocus?: RestoreFocusType) => boolean | HTMLElement;
 }

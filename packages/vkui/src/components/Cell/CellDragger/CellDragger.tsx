@@ -18,8 +18,8 @@ import styles from './CellDragger.module.css';
 interface CellDraggerProps
   extends UseDraggableProps,
     Omit<HTMLAttributesWithRootRef<HTMLElement>, keyof DraggableProps> {
-  disabled?: boolean;
-  onDragStateChange?: (dragging: boolean) => void;
+  disabled?: boolean | undefined;
+  onDragStateChange?: ((dragging: boolean) => void) | undefined;
 }
 
 export const CellDragger = ({

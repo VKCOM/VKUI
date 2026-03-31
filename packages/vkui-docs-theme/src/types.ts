@@ -6,31 +6,31 @@ export interface DocsThemeConfig {
   /**
    * Баннер сверху
    */
-  banner?: React.ReactElement;
+  banner?: React.ReactElement | undefined;
   /**
    * Направление письма сайта
    */
-  direction?: 'ltr' | 'rtl';
+  direction?: 'ltr' | 'rtl' | undefined;
   /**
    * Навигационное меню
    */
-  navbar?: React.ReactElement<NavbarProps>;
+  navbar?: React.ReactElement<NavbarProps> | undefined;
   /**
    * Доступные для фильтрации разделы навигационного меню
    */
-  searchableNavbarItems?: string[];
+  searchableNavbarItems?: string[] | undefined;
   /**
    * Компонент внизу страницы
    */
-  footer?: React.ReactElement;
+  footer?: React.ReactElement | undefined;
   /**
    * Компонент для дополнительных кнопок
    */
-  extraButtons?: React.ReactElement;
+  extraButtons?: React.ReactElement | undefined;
   /**
    * Компонент версионирования
    */
-  versions?: React.ReactElement;
+  versions?: React.ReactElement | undefined;
   /**
    * Показывать ссылки на следующую/предыдущую страницы
    */
@@ -38,11 +38,11 @@ export interface DocsThemeConfig {
   /**
    * Управление цветовой схемой сайта
    */
-  colorScheme?: ColorSchemeProviderProps;
+  colorScheme?: ColorSchemeProviderProps | undefined;
   /**
    * Поиск сайта
    */
-  search?: React.ReactElement;
+  search?: React.ReactElement | undefined;
   /**
    * Описание репозитория сайта
    */

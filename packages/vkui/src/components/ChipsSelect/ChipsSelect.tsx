@@ -81,43 +81,43 @@ export interface ChipsSelectProps<O extends ChipOption>
   /**
    * Расположение выпадающего списка.
    */
-  placement?: 'top' | 'bottom';
+  placement?: 'top' | 'bottom' | undefined;
   /**
    * Отрисовка Spinner вместо списка опций в выпадающем списке.
    */
-  fetching?: boolean;
+  fetching?: boolean | undefined;
   /**
    * Закрытие выпадающего списка после выбора элемента.
    */
-  closeAfterSelect?: boolean;
+  closeAfterSelect?: boolean | undefined;
   /**
    * Ширина раскрывающегося списка зависит от контента.
    */
-  dropdownAutoWidth?: boolean;
+  dropdownAutoWidth?: boolean | undefined;
   /**
    * Принудительно использовать портал.
    */
-  forceDropdownPortal?: boolean;
+  forceDropdownPortal?: boolean | undefined;
   /**
    * Передает атрибут `data-testid` для дропдауна.
    */
-  dropdownTestId?: string;
+  dropdownTestId?: string | undefined;
   /**
    * Иконка раскрывающегося списка.
    */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | undefined;
   /**
    * Добавляет значение в список на событие `onBlur` (использовать вместе с `creatable`).
    */
-  addOnBlur?: boolean;
+  addOnBlur?: boolean | undefined;
   /**
    * Отключает максимальную высоту по умолчанию.
    */
-  noMaxHeight?: boolean;
+  noMaxHeight?: boolean | undefined;
   /**
    * Функция для отрисовки кастомной опции в выпадающем списке.
    */
-  renderOption?: (props: CustomSelectOptionProps, option: O) => React.ReactNode;
+  renderOption?: ((props: CustomSelectOptionProps, option: O) => React.ReactNode) | undefined;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
    * В `defaultDropdownContent` содержится список опций.
@@ -130,17 +130,17 @@ export interface ChipsSelectProps<O extends ChipOption>
   /**
    * Событие срабатывающее перед `onChange`.
    */
-  onChangeStart?: (event: React.MouseEvent | React.KeyboardEvent, option: O) => void;
+  onChangeStart?: ((event: React.MouseEvent | React.KeyboardEvent, option: O) => void) | undefined;
 
   /**
    * Отступ от выпадающего списка.
    */
-  dropdownOffsetDistance?: number;
+  dropdownOffsetDistance?: number | undefined;
 
   /**
    * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
-  allowClearButton?: boolean;
+  allowClearButton?: boolean | undefined;
 }
 
 /**

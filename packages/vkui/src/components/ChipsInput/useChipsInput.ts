@@ -66,15 +66,15 @@ export interface UseChipsInputProps<O extends ChipOption = ChipOption>
   /**
    * Селектор значения.
    */
-  getOptionValue?: GetOptionValue<O>;
+  getOptionValue?: GetOptionValue<O> | undefined;
   /**
    * Селектор пользовательского представления.
    */
-  getOptionLabel?: GetOptionLabel<O>;
+  getOptionLabel?: GetOptionLabel<O> | undefined;
   /**
    * Функция для создания новой опции.
    */
-  getNewOptionData?: GetNewOptionData<O>;
+  getNewOptionData?: GetNewOptionData<O> | undefined;
 }
 
 export const useChipsInput = <O extends ChipOption>({

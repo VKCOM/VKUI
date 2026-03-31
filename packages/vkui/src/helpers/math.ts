@@ -40,7 +40,7 @@ export function rescale(
   value: number,
   from: [number, number],
   to: [number, number],
-  options: { step?: number } = {},
+  options: { step?: number | undefined } = {},
 ): number {
   const scaled = ((value - from[0]) / (from[1] - from[0])) * (to[1] - to[0]) + to[0];
   return decimatedClamp(scaled, to[0], to[1], options.step);

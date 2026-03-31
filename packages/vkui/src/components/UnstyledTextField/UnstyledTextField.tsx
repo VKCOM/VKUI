@@ -12,7 +12,7 @@ export interface UnstyledTextFieldBaseProps {
   /**
    * По умолчанию отключено во избежание проблем из-за очередности загрузки стилей.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
 }
 
 export interface UnstyledTextFieldAsInputProps

@@ -46,13 +46,13 @@ export const createFieldWithPresets = <CustomPresetName extends string>({
   additionalPresets = {},
 }: {
   // Список размеров используемых иконок
-  iconSizes?: IconSize[];
+  iconSizes?: IconSize[] | undefined;
   // Количество иконок каждого заданного размера
-  sizeIconsCount?: number;
+  sizeIconsCount?: number | undefined;
   // Обязательные иконки, которые должны быть
-  requiredIcons?: IconName[];
+  requiredIcons?: IconName[] | undefined;
   // Дополнительные пресеты. Например Avatar, IconButton, Badge и т.д
-  additionalPresets?: { [K in CustomPresetName]?: React.ReactNode };
+  additionalPresets?: { [K in CustomPresetName]?: React.ReactNode } | undefined;
 }) => {
   const options: Array<IconName | CustomPresetName | 'None'> = ['None'];
   const mapping: { [K in IconName | CustomPresetName | 'None']?: React.ReactNode } = {

@@ -10,7 +10,7 @@ export interface FormFieldClearButtonProps extends HasDataAttribute {
   /**
    * `className` для компонента.
    */
-  className?: string;
+  className?: string | undefined;
   /**
    * Обработчик нажатия на кнопку.
    */
@@ -18,7 +18,7 @@ export interface FormFieldClearButtonProps extends HasDataAttribute {
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export const FormFieldClearButton = ({

@@ -58,13 +58,13 @@ export interface PanelHeaderProps
   /**
    * Добавляет элемент слева.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Добавляет элемент справа.
    *
    * При передаче нескольких элементов, расставляет отступы между ними.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Тип разделителя под шапкой.
    *
@@ -75,35 +75,37 @@ export interface PanelHeaderProps
    * - `"spacing"` включает отступ, если это платформа `android`/`ios` при `<AdaptivityProvider viewWidth={ViewWidth.SMALL_TABLET} />`
    * - `"auto"` автоматически подбирает либо `"separator"`, либо `"spacing"` по их условиям.
    */
-  delimiter?: 'auto' | 'none' | 'separator' | 'spacing';
+  delimiter?: 'auto' | 'none' | 'separator' | 'spacing' | undefined;
   /**
    * Прозрачный фон компонента.
    */
-  transparent?: boolean;
+  transparent?: boolean | undefined;
   /**
    * @deprecated Since 7.4.0. Будет удалeно в **VKUI v9**.
    */
-  shadow?: boolean; // TODO [>=9]: удалить неиспользуемое свойство свойство
+  shadow?: boolean | undefined; // TODO [>=9]: удалить неиспользуемое свойство свойство
   /**
    * Высота шапки будет игнорироваться контентом панели.
    */
-  float?: boolean;
+  float?: boolean | undefined;
   /**
    * Если `false`, то шапка будет в потоке. По умолчанию `true`, но если платформа vkcom, то по умолчанию `false`.
    */
-  fixed?: boolean;
+  fixed?: boolean | undefined;
   /**
    * По умолчанию как `Component` используется `span`.
    */
-  typographyProps?: HasComponent & React.HTMLAttributes<HTMLElement> & HasDataAttribute;
+  typographyProps?:
+    | (HasComponent & React.HTMLAttributes<HTMLElement> & HasDataAttribute)
+    | undefined;
 }
 
 /* eslint-disable jsdoc/require-jsdoc */
 interface PanelHeaderInProps {
-  before?: PanelHeaderProps['before'];
-  after?: PanelHeaderProps['after'];
-  children?: PanelHeaderProps['children'];
-  typographyProps?: PanelHeaderProps['typographyProps'];
+  before?: PanelHeaderProps['before'] | undefined;
+  after?: PanelHeaderProps['after'] | undefined;
+  children?: PanelHeaderProps['children'] | undefined;
+  typographyProps?: PanelHeaderProps['typographyProps'] | undefined;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 

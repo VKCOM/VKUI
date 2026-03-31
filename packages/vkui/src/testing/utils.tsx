@@ -76,15 +76,15 @@ export const imgOnlyAttributes: ImgOnlyAttributes = {
 };
 
 export type ComponentTestOptions = {
-  defaultProps?: any;
-  forward?: boolean;
-  domAttr?: boolean;
-  className?: boolean;
-  style?: boolean;
-  adaptivity?: AdaptivityProps;
-  a11y?: boolean;
-  a11yConfig?: AxeConfigureOptions;
-  getRootRef?: boolean;
+  defaultProps?: any | undefined;
+  forward?: boolean | undefined;
+  domAttr?: boolean | undefined;
+  className?: boolean | undefined;
+  style?: boolean | undefined;
+  adaptivity?: AdaptivityProps | undefined;
+  a11y?: boolean | undefined;
+  a11yConfig?: AxeConfigureOptions | undefined;
+  getRootRef?: boolean | undefined;
 };
 
 export function mountTest(Component: React.ComponentType<any>) {
@@ -531,10 +531,14 @@ const adoptedTouchEvent = (fn: typeof fireEvent.touchStart): typeof fireEvent.mo
   return (element, options) => {
     const typedOptions = options as { clientX: number; clientY: number } | undefined;
     const handler = TOUCH_TO_MOUSE_HANDLER.get(fn);
-    return handler!(
-      element,
-      touchEventMock({ clientX: typedOptions?.clientX, clientY: typedOptions?.clientY }),
-    );
+    const touchOptions: { clientX?: number; clientY?: number } = {};
+    if (typedOptions?.clientX !== undefined) {
+      touchOptions.clientX = typedOptions.clientX;
+    }
+    if (typedOptions?.clientY !== undefined) {
+      touchOptions.clientY = typedOptions.clientY;
+    }
+    return handler!(element, touchEventMock(touchOptions));
   };
 };
 

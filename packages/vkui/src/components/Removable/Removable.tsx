@@ -15,23 +15,23 @@ export interface RemovableProps {
   /**
    * Текст кнопки удаления ячейки. Визуально скрыт везде, кроме iOS. На iOS появляется в выезжающей кнопке для удаления ячейки.
    */
-  removePlaceholder?: React.ReactNode;
+  removePlaceholder?: React.ReactNode | undefined;
   /**
    * Обработчик, срабатывающий при нажатии на контрол удаления.
    */
-  onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement | null) => void;
+  onRemove?: ((e: React.MouseEvent, rootEl?: HTMLElement | null) => void) | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки, которая активирует кнопку удаления (iOS only).
    */
-  toggleButtonTestId?: string;
+  toggleButtonTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки удаления.
    */
-  removeButtonTestId?: string;
+  removeButtonTestId?: string | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 /* eslint-disable jsdoc/require-jsdoc */
 interface RemovableCommonOwnProps
@@ -39,7 +39,7 @@ interface RemovableCommonOwnProps
     RemovableOwnProps,
     'noPadding' | 'children' | 'removeButtonTestId' | 'disabled' | 'indent'
   > {
-  removePlaceholderString?: string;
+  removePlaceholderString?: string | undefined;
   onRemoveClick: (e: React.MouseEvent) => void;
 }
 /* eslint-enable jsdoc/require-jsdoc */
@@ -99,20 +99,23 @@ interface RemovableOwnProps
   /**
    * Расположение кнопки удаления.
    */
-  align?: 'start' | 'center';
+  align?: 'start' | 'center' | undefined;
   /**
    * Скрывает кнопку, но оставляет отступ.
    * @since 5.4.0
    */
-  indent?: boolean;
+  indent?: boolean | undefined;
   /**
    * Убирает базовые отступы для базовой платформы.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
   /**
    * Содержимое. Можно передать функцию для отрисовки.
    */
-  children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
+  children?:
+    | React.ReactNode
+    | ((renderProps: RemovableIosRenderProps) => React.ReactNode)
+    | undefined;
 }
 
 export const Removable = ({

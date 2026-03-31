@@ -11,8 +11,8 @@ import {
 } from './ScrollContext';
 
 type ChildWithContextProps = {
-  contextRef?: RefObject<ScrollContextInterface | null>;
-  beforeScrollLockFn?: VoidFunction;
+  contextRef?: RefObject<ScrollContextInterface | null> | undefined;
+  beforeScrollLockFn?: VoidFunction | undefined;
 };
 const ChildWithContext = ({ contextRef, beforeScrollLockFn }: ChildWithContextProps) => {
   const context = useContext(ScrollContext);

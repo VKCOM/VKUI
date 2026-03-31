@@ -37,34 +37,34 @@ export interface HorizontalCellProps
    * Значение `auto` позволяет задать динамическую ширину, определяемую контентом.
    * Пользовательскую ширину можно задать через числовое значение.
    */
-  size?: LiteralUnion<HorizontalCellSizes, number>;
+  size?: LiteralUnion<HorizontalCellSizes | undefined, number> | undefined;
   /**
    * Заголовок.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    * Дополнительная строка текста под `children`.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
   /**
    * Дополнительная строка текста под `children` и `subtitle`.
    */
-  extraSubtitle?: React.ReactNode;
+  extraSubtitle?: React.ReactNode | undefined;
   /**
    * Задает выравнивание типографики. По умолчанию `center` для `size=s`, иначе `start`.
    */
-  textAlign?: 'start' | 'center' | 'end';
+  textAlign?: 'start' | 'center' | 'end' | undefined;
   /**
    * Отключает формирование отступов у крайних элементов.
    *
    * Актуально для использования в многострочных списках.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
   /**
    * Позволяет передать типографический компонент, используемый для `title`.
    * По умолчанию `Caption` для `size=s`, иначе `Subhead`.
    */
-  TitleComponent?: React.ElementType;
+  TitleComponent?: React.ElementType | undefined;
 }
 
 /**

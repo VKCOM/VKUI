@@ -777,8 +777,8 @@ describe('ChipsSelect', () => {
 describe.each<{
   delimiter: string | RegExp | string[];
   str: string;
-  expectedValues?: string[];
-  expectedInputValue?: string;
+  expectedValues?: string[] | undefined;
+  expectedInputValue?: string | undefined;
 }>([
   {
     delimiter: ',',

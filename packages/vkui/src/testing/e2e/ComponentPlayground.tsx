@@ -18,14 +18,14 @@ type DefaultProps<T extends React.ElementType> = Omit<
 >;
 
 export interface InternalComponentPlaygroundProps<Props = DefaultProps<'div'>> {
-  isFixedComponent?: boolean;
+  isFixedComponent?: boolean | undefined;
   platform: PlatformType;
   colorScheme: ColorSchemeType;
-  adaptivityProviderProps?: Partial<AdaptivityProps>;
-  propSets?: Parameters<typeof multiCartesian<Props>>[0];
+  adaptivityProviderProps?: Partial<AdaptivityProps> | undefined;
+  propSets?: Parameters<typeof multiCartesian<Props>>[0] | undefined;
   children: React.FC<Props>;
-  AppWrapper?: React.ComponentType<AppDefaultWrapperProps>;
-  componentStateHeight?: Partial<Record<PlatformType, number>>;
+  AppWrapper?: React.ComponentType<AppDefaultWrapperProps> | undefined;
+  componentStateHeight?: Partial<Record<PlatformType, number>> | undefined;
 }
 
 export type ComponentPlaygroundProps = Pick<

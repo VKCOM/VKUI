@@ -45,19 +45,19 @@ export interface HorizontalScrollProps
   /**
    * Функция для расчета величины прокрутки при нажатии на левую стрелку.
    */
-  getScrollToLeft?: ScrollPositionHandler;
+  getScrollToLeft?: ScrollPositionHandler | undefined;
   /**
    * Функция для расчета величины прокрутки при нажатии на правую стрелку.
    */
-  getScrollToRight?: ScrollPositionHandler;
+  getScrollToRight?: ScrollPositionHandler | undefined;
   /**
    * Размер стрелок.
    */
-  arrowSize?: ScrollArrowProps['size'];
+  arrowSize?: ScrollArrowProps['size'] | undefined;
   /**
    * Смещает иконки кнопок навигации по вертикали.
    */
-  arrowOffsetY?: number | string;
+  arrowOffsetY?: number | string | undefined;
   /**
    * Смещает иконки кнопок навигации по горизонтали.
    */
@@ -65,7 +65,7 @@ export interface HorizontalScrollProps
   /**
    * Показывать ли стрелки.
    */
-  showArrows?: boolean | 'always';
+  showArrows?: boolean | 'always' | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `prevArrow`: свойства для прокидывания в стрелку "назад";
@@ -78,38 +78,38 @@ export interface HorizontalScrollProps
   /**
    * Длительность анимации скролла.
    */
-  scrollAnimationDuration?: number;
+  scrollAnimationDuration?: number | undefined;
   /**
    * Добавляет возможность прокручивать контент на любое колесо мыши.
    * По умолчанию прокручивается как любой горизонтальный контент через shift.
    */
-  scrollOnAnyWheel?: boolean;
+  scrollOnAnyWheel?: boolean | undefined;
   /**
    * @deprecated Since 8.0.0. Вместо этого используйте `slotProps={ prevArrow: { 'data-testid': ... } }`.
    * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента.
    */
-  prevButtonTestId?: string;
+  prevButtonTestId?: string | undefined;
   /**
    * @deprecated Since 8.0.0. Вместо этого используйте `slotProps={ nextArrow: { 'data-testid': ... } }`.
    * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента.
    */
-  nextButtonTestId?: string;
+  nextButtonTestId?: string | undefined;
   /**
    * Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`.
    */
-  ContentWrapperComponent?: React.ElementType;
+  ContentWrapperComponent?: React.ElementType | undefined;
   /**
    * `ref` для обертки над контентом, прокинутым в `children`.
    */
-  contentWrapperRef?: React.Ref<HTMLElement>;
+  contentWrapperRef?: React.Ref<HTMLElement> | undefined;
   /**
    * Специфичный `className` для обертки над контентом, прокинутым в `children`.
    */
-  contentWrapperClassName?: string;
+  contentWrapperClassName?: string | undefined;
   /**
    * Добавляет отступы для контента внутри.
    */
-  withPadding?: boolean;
+  withPadding?: boolean | undefined;
 }
 
 /**

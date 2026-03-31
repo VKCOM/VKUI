@@ -1,10 +1,10 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
 export type SafeAreaInsets = {
-  top?: number;
-  right?: number;
-  bottom?: number;
-  left?: number;
+  top?: number | undefined;
+  right?: number | undefined;
+  bottom?: number | undefined;
+  left?: number | undefined;
 };
 
 export type AppRootMode = 'partial' | 'embedded' | 'full';

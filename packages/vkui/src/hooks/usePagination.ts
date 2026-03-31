@@ -6,19 +6,19 @@ interface UsePaginationProps {
   /**
    * Текущая страница.
    */
-  currentPage?: number;
+  currentPage?: number | undefined;
   /**
    * Кол-во всегда видимых страниц по краям текущей страницы.
    */
-  siblingCount?: number;
+  siblingCount?: number | undefined;
   /**
    * Кол-во всегда видимых страниц в начале и в конце.
    */
-  boundaryCount?: number;
+  boundaryCount?: number | undefined;
   /**
    * Общее кол-во страниц.
    */
-  totalPages?: number;
+  totalPages?: number | undefined;
 }
 
 export type PaginationPageType = 'start-ellipsis' | 'end-ellipsis' | number;

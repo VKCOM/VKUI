@@ -230,8 +230,8 @@ type MovePropsOptions = {
   componentName: string;
   propName: string | RegExp | string[];
   slotName: string;
-  excludedProps?: string[];
-  slotPropName?: string;
+  excludedProps?: string[] | undefined;
+  slotPropName?: string | undefined;
 };
 
 export function movePropIntoSlotProps(j: JSCodeshift, options: MovePropsOptions) {

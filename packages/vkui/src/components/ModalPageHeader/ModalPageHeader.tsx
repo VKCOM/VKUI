@@ -22,7 +22,7 @@ export interface ModalPageHeaderProps
   /**
    * Отключение разделителя.
    */
-  noSeparator?: boolean;
+  noSeparator?: boolean | undefined;
 }
 
 /**

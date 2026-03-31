@@ -20,7 +20,10 @@ export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEle
   /**
    * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
    */
-  children?: React.ReactNode | ((renderProps: DropZonePropsChildrenProps) => React.ReactNode);
+  children?:
+    | React.ReactNode
+    | ((renderProps: DropZonePropsChildrenProps) => React.ReactNode)
+    | undefined;
 }
 
 /**

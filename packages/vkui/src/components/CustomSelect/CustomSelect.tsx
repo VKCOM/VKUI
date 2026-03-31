@@ -127,30 +127,34 @@ export interface SelectProps<
    * - `select`: свойства для прокидывания в нативный `select`;
    * - `input`: свойства для прокидывания в нативный `input`.
    */
-  slotProps?: NativeSelectProps['slotProps'] & {
-    input?: React.InputHTMLAttributes<HTMLInputElement> &
-      HasDataAttribute &
-      HasRootRef<HTMLInputElement>;
-  };
+  slotProps?:
+    | (NativeSelectProps['slotProps'] & {
+        input?:
+          | (React.InputHTMLAttributes<HTMLInputElement> &
+              HasDataAttribute &
+              HasRootRef<HTMLInputElement>)
+          | undefined;
+      })
+    | undefined;
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    *
    * Ref на внутрений компонент input.
    */
-  getSelectInputRef?: React.Ref<HTMLInputElement>;
+  getSelectInputRef?: React.Ref<HTMLInputElement> | undefined;
   /**
    * Если `true`, то при нажатии на `CustomSelect` в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
    */
-  searchable?: boolean;
+  searchable?: boolean | undefined;
   /**
    * Текст, который будет отображен, если приходит пустой `options`.
    */
-  emptyText?: string;
+  emptyText?: string | undefined;
   /**
    * Событие изменения текстового поля.
    */
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputChange?: ((e: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
   /**
    * Список опций в списке.
    */
@@ -158,11 +162,11 @@ export interface SelectProps<
   /**
    * Функция для кастомной фильтрации. По умолчанию поиск производится по `option.label`.
    */
-  filterFn?: false | FilterFn<OptionInterfaceT>;
+  filterFn?: false | FilterFn<OptionInterfaceT> | undefined;
   /**
    * Направление раскрытия выпадающего списка.
    */
-  popupDirection?: PopupDirection;
+  popupDirection?: PopupDirection | undefined;
   /**
    * Рендер-проп для кастомного рендера опции.
    * В объекте аргумента приходят [свойства опции](https://vkui.io/components/custom-select#custom-select-option-api).
@@ -171,7 +175,7 @@ export interface SelectProps<
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе `CustomSelect` не будет знать об актуальном состоянии
    * опции.
    */
-  renderOption?: (props: CustomSelectRenderOption<OptionInterfaceT>) => React.ReactNode;
+  renderOption?: (props: CustomSelectRenderOption<OptionInterfaceT>) => React.ReactNode | undefined;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
    * В `defaultDropdownContent` содержится список опций в виде скроллящегося блока.
@@ -185,73 +189,73 @@ export interface SelectProps<
    * Если `true`, то в дропдауне вместо списка опций рисуется спиннер. При переданных `renderDropdown` и `fetching: true`
    * "победит" `renderDropdown`.
    */
-  fetching?: boolean;
+  fetching?: boolean | undefined;
   /**
    * Обработчик закрытия выпадающего списка.
    */
-  onClose?: VoidFunction;
+  onClose?: VoidFunction | undefined;
   /**
    * Обработчик открытия выпадающего списка.
    */
-  onOpen?: VoidFunction;
+  onOpen?: VoidFunction | undefined;
   /**
    * Кастомная кнопка для очистки значения.
    * Должна принимать обязательное свойство `onClick`.
    */
-  ClearButton?: React.ComponentType<CustomSelectClearButtonProps>;
+  ClearButton?: React.ComponentType<CustomSelectClearButtonProps> | undefined;
   /**
    * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
-  allowClearButton?: boolean;
+  allowClearButton?: boolean | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки очистки.
    */
-  clearButtonTestId?: string;
+  clearButtonTestId?: string | undefined;
   /**
    * Отступ от выпадающего списка.
    */
-  dropdownOffsetDistance?: number;
+  dropdownOffsetDistance?: number | undefined;
   /**
    * Ширина раскрывающегося списка зависит от контента.
    */
-  dropdownAutoWidth?: boolean;
+  dropdownAutoWidth?: boolean | undefined;
   /**
    * Использовать Portal для рендеринга выпадающего списка.
    */
-  forceDropdownPortal?: boolean;
+  forceDropdownPortal?: boolean | undefined;
   /**
    * Отключает максимальную высоту по умолчанию.
    */
-  noMaxHeight?: boolean;
+  noMaxHeight?: boolean | undefined;
   /**
    * Передает атрибут `data-testid` для элемента, внутри которого отображается текст выбранной опции `CustomSelect` или плейсхолдер.
    */
-  labelTextTestId?: string;
+  labelTextTestId?: string | undefined;
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ select: { 'data-testid': ... } }`.
    *
    * Передает атрибут `data-testid` для нативного элемента `select`.
    */
-  nativeSelectTestId?: string;
+  nativeSelectTestId?: string | undefined;
   /**
    * Обработчик события `keyDown` в поле ввода.
    */
-  onInputKeyDown?: (e: React.KeyboardEvent, isOpen: boolean) => void;
+  onInputKeyDown?: ((e: React.KeyboardEvent, isOpen: boolean) => void) | undefined;
   /**
    * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
    *
    * Включает режим в котором выбранное значение `CustomSelect` читается скринридерами корректно.
    * В данном режиме введенное в поле ввода значение не сбрасывается при потере фокуса.
    */
-  accessible?: boolean /* TODO [>=v9] удалить свойство */;
+  accessible?: boolean | undefined /* TODO [>=v9] удалить свойство */;
   /**
    * Текстовая метка для индикации процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Список опций загружается..."`.
    */
-  fetchingInProgressLabel?: string;
+  fetchingInProgressLabel?: string | undefined;
   /**
    * Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Загружено опций: ${options.length}"`.
    */
-  fetchingCompletedLabel?: string | ((optionsCount: number) => string);
+  fetchingCompletedLabel?: string | ((optionsCount: number) => string) | undefined;
 }
 
 /**

@@ -7,19 +7,19 @@ export interface LinkProps extends TappableOmitProps {
   /**
    * Иконка слева.
    */
-  before?: ReactElement;
+  before?: ReactElement | undefined;
   /**
    * Иконка справа.
    */
-  after?: ReactElement;
+  after?: ReactElement | undefined;
   /**
    * Выключает появления нижнего подчеркивания при наведении.
    */
-  noUnderline?: boolean;
+  noUnderline?: boolean | undefined;
   /**
    * Включает состояние `visited`, которое позволяет пользователю понять посещал ли он ссылку или нет.
    */
-  hasVisited?: boolean;
+  hasVisited?: boolean | undefined;
 }
 
 /**
