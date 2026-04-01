@@ -10,6 +10,7 @@ description: Компонент для выбора даты и времени, 
 
 </Overview>
 
+{/* @example-description: Базовый календарь для выбора одной даты. */}
 <Playground>
   ```jsx
   <Calendar />
@@ -51,6 +52,7 @@ const [date, setDate] = React.useState(new Date());
 
 > Обратите внимание, что выбор времени недоступен при `size="s"`.
 
+{/* @example-description: Календарь с включенным выбором времени через `enableTime`. */}
 <Playground>
   ```jsx
   <Calendar defaultValue={new Date()} enableTime />

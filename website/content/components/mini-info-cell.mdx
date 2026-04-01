@@ -11,6 +11,7 @@ description: Компонент для отображения компактно
 
 </Overview>
 
+{/* @example-description: Базовый `MiniInfoCell` с иконкой и многострочным текстом в режиме `textWrap="full"`. */}
 <Playground>
   ```jsx
   <MiniInfoCell before={<Icon20ArticleOutline />} textWrap="full">
@@ -22,6 +23,7 @@ description: Компонент для отображения компактно
 
 ## Основные свойства
 
+{/* @example-description: Пример `MiniInfoCell` с контентом в `before/after`, акцентным режимом и сокращённым переносом текста. */}
 <Playground>
   ```jsx
   <MiniInfoCell
@@ -56,6 +58,7 @@ description: Компонент для отображения компактно
 
 Стандартный стиль для информации:
 
+{/* @example-description: Стандартный режим `MiniInfoCell` для отображения нейтральной информации. */}
 <Playground>
   ```jsx
   <MiniInfoCell before={<Icon20GlobeOutline />}>vk.com/team</MiniInfoCell>
@@ -66,6 +69,7 @@ description: Компонент для отображения компактно
 
 Акцентное выделение:
 
+{/* @example-description: Акцентный режим `MiniInfoCell` для выделения важного значения. */}
 <Playground>
   ```jsx
   <MiniInfoCell mode="accent" before={<Icon20WorkOutline />}>
@@ -78,6 +82,7 @@ description: Компонент для отображения компактно
 
 Призыв к действию:
 
+{/* @example-description: Режим `add` с шевроном для добавления недостающей информации. */}
 <Playground>
   ```jsx
   <MiniInfoCell mode="add" before={<Icon20EducationOutline />} onClick={() => {}} chevron>
@@ -90,6 +95,7 @@ description: Компонент для отображения компактно
 
 Индикатор дополнительной информации:
 
+{/* @example-description: Режим `more` для перехода к подробной информации. */}
 <Playground>
   ```jsx
   <MiniInfoCell mode="more" before={<Icon20InfoCircleOutline />} onClick={() => {}} chevron>
@@ -104,6 +110,7 @@ description: Компонент для отображения компактно
 
 Используйте для интерактивных элементов:
 
+{/* @example-description: Отдельный пример `chevron` для кликабельной строки настроек. */}
 <Playground>
   ```jsx
   <MiniInfoCell chevron onClick={() => {}} before={<Icon20GearOutline />}>

@@ -12,6 +12,7 @@ description: Переключатель, позволяющий пользова
 
 </Overview>
 
+{/* @example-description: Базовый переключатель `Switch`. */}
 <Playground>
   ```jsx
   <Switch />
@@ -43,6 +44,7 @@ const [checked, setChecked] = React.useState(false);
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
+{/* @example-description: Пример неактивного `Switch` в состоянии `disabled`. */}
 <Playground>
   ```jsx
   <Switch defaultChecked disabled />
@@ -55,6 +57,7 @@ const [checked, setChecked] = React.useState(false);
 
 Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
 
+{/* @example-description: Кастомизация `Switch` через `slotProps` для корня и внутреннего `input`. */}
 <Playground>
   ```jsx
   const inputRef = React.useRef();

@@ -11,6 +11,7 @@ description: Компонент для визуальной группировк
 
 </Overview>
 
+{/* @example-description: Базовая группа `Group` с заголовком, основным контентом и подвалом. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Group header={<Header>Заголовок группы</Header>} separator="hide">
@@ -27,6 +28,7 @@ description: Компонент для визуальной группировк
 Компонент `Group` можно вкладывать в другой компонент `Group`. Обратите внимание, что чаще всего вложенные
 компоненты должны иметь свойство `mode="plain"`, это задаёт им прозрачный фон и скрывает рамки.
 
+{/* @example-description: Вложенные группы `Group` в режиме `plain` для сегментации списка настроек. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Group separator="hide">
@@ -61,6 +63,7 @@ description: Компонент для визуальной группировк
 
 Заголовок группы. Передаётся либо в свойство `header`, либо в начале `children`, либо в `Group.Header`.
 
+{/* @example-description: Отдельный `Header` с индикатором и правым управляющим элементом. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Header indicator={<Badge mode="prominent">12</Indicator>} after={<Switch label="Уведомления" />}>Уведомления</Header>
@@ -93,6 +96,7 @@ description: Компонент для визуальной группировк
 
 ### Пример использования
 
+{/* @example-description: Расширенный пример `Header` с иконками, подзаголовком, счетчиком и ссылкой. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Group
@@ -129,6 +133,7 @@ description: Компонент для визуальной группировк
 
 Подвал группы. Передаётся в конце `children`.
 
+{/* @example-description: Базовый подвал `Footer` для мета-информации группы. */}
 <Playground>
   ```jsx
   <Footer>Copyright © vk.com</Footer>
@@ -161,6 +166,7 @@ description: Компонент для визуальной группировк
 В данном примере первый `Footer` "локальный", потому что находится внутри секционного контента (компонент `Group`)
 и содержит мета-информацию, а второй `Footer` - глобальный, потому что относится ко всей странице.
 
+{/* @example-description: Локальный и глобальный `Footer` в одном макете для разных контекстов. */}
 <Playground>
   ```jsx
   <Panel mode="plain">
@@ -212,6 +218,7 @@ description: Компонент для визуальной группировк
 
 Компенсирует внутренние отступы `Group`.
 
+{/* @example-description: `Group.ExpandedContent` для прокрутки `HorizontalScroll` без горизонтальных отступов группы. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Group header={<Header>Удаляем для HorizontalScroll отступы Group по горизонтали</Header>}>
@@ -244,6 +251,7 @@ description: Компонент для визуальной группировк
 
 import { BlockWrapper } from '@/components/wrappers';
 
+{/* @example-description: Сборка `Group` из подкомпонентов `Container`, `Header` и `Description`. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <Group.Container separator="hide">

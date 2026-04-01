@@ -10,6 +10,7 @@ description: Компонент для поля даты и времени.
 
 </Overview>
 
+{/* @example-description: Базовое поле `DateInput` для ввода и выбора даты. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <DateInput />
@@ -52,6 +53,7 @@ const [date, setDate] = React.useState(new Date());
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
+{/* @example-description: `DateInput` в неактивном состоянии с предустановленной датой. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <DateInput defaultValue={new Date()} disabled />
@@ -66,6 +68,7 @@ const [date, setDate] = React.useState(new Date());
 > Если вы используете `DateInput` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
+{/* @example-description: Валидационные состояния `DateInput`: ошибка и успешное заполнение. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <Flex direction="column" gap="m">

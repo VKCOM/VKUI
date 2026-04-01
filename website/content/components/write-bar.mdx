@@ -11,6 +11,7 @@ description: Компонент для создания поля ввода со
 
 </Overview>
 
+{/* @example-description: Базовый `WriteBar` с иконкой вложений в слоте `before`. */}
 <Playground>
   ```jsx
   <WriteBar before={<WriteBarIcon mode="attach" />} placeholder="Введите сообщение..." />
@@ -42,6 +43,7 @@ const [text, setText] = React.useState('Текст');
 - `after` — элементы справа.
 - `inlineAfter` — элементы поверх поля (актуально для iOS).
 
+{/* @example-description: Пример `WriteBar` с элементами в `before`, `after` и `inlineAfter`. */}
 <Playground>
   ```jsx
   <WriteBar
@@ -69,6 +71,7 @@ const [text, setText] = React.useState('Текст');
 По правилам дизайн-системы в `"regular"`-режиме используются кнопки размером `28px`, в `"compact"`-режиме — `24px`.
 Исключение: на платформе `iOS` допускается использование иконок размером `28px` в `"compact"`-режиме.
 
+{/* @example-description: Адаптивные иконки и динамические действия в `WriteBar` в зависимости от введённого текста. */}
 <Playground style={{ width: 290 }}>
 
 ```jsx
@@ -149,6 +152,7 @@ return (
 - `send` — иконка отправки с текстом "Отправить".
 - `done` — иконка подтверждения с текстом "Готово".
 
+{/* @example-description: Предустановленные режимы `WriteBarIcon`: `attach`, `send`, `done`. */}
 <Playground>
   ```jsx
   <WriteBarIcon mode="attach" />
@@ -159,6 +163,7 @@ return (
 
 ### Использование кастомных иконки
 
+{/* @example-description: Пример `WriteBarIcon` с пользовательской иконкой и подписью. */}
 <Playground>
 
 ```jsx
@@ -180,6 +185,7 @@ return (
 
 Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
 
+{/* @example-description: Пример `WriteBarIcon` со счётчиком через свойство `count`. */}
 <Playground>
   ```jsx
   <WriteBarIcon mode="attach" count={3} label="Прикреплённые файлы" />
@@ -191,6 +197,7 @@ return (
 Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
 Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
 
+{/* @example-description: Кастомизация `WriteBar` через `slotProps` для корня и поля ввода. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   const textareaRef = React.useRef();

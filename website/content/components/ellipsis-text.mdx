@@ -11,6 +11,7 @@ description: Компонент ограничивает текстовый ко
 
 </Overview>
 
+{/* @example-description: Ограничение длинного текста с отображением многоточия при переполнении. */}
 <Playground>
   ```jsx
   <EllipsisText maxWidth={200}>
@@ -26,6 +27,7 @@ description: Компонент ограничивает текстовый ко
 в компонент `EllipsisText` для ограничения количества видимого контента. Достаточно передать типографический компонент в
 свойство `Component`:
 
+{/* @example-description: Использование `EllipsisText` с типографическим компонентом через свойство `Component`. */}
 <Playground>
   ```jsx
   <EllipsisText Component={Footnote} maxWidth={100}>
@@ -42,6 +44,7 @@ description: Компонент ограничивает текстовый ко
 Рассмотрим на примере [`HorizontalCell`](/components/horizontal-cell), который при `size="auto"` перестаёт ограничивать ширину.
 В качестве ограничивающей ширины будем брать ширину изображения:
 
+{/* @example-description: Ограничение текста в `HorizontalCell` с явным `maxWidth` для корректного ellipsis. */}
 <Playground>
   ```jsx
   <HorizontalCell

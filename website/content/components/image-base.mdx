@@ -11,6 +11,7 @@ description: Базовый компонент по работе с изобра
 
 </Overview>
 
+{/* @example-description: Базовый `ImageBase` для отображения изображения фиксированного размера. */}
 <Playground>
   ```jsx
   <ImageBase
@@ -43,6 +44,7 @@ description: Базовый компонент по работе с изобра
 Если вам необходимо растянуть изображение на всю ширину или высоту контейнера, то допускается `widthSize` или `heightSize`
 указать `100%`.
 
+{/* @example-description: Сохранение исходных пропорций изображения через `keepAspectRatio`. */}
 <Playground>
   ```jsx
   <ImageBase
@@ -62,6 +64,7 @@ description: Базовый компонент по работе с изобра
 На случай, если картинка не смогла загрузиться, будет отображаться иконка-заглушка.
 Размер иконки-заглушки должен зависеть от размеров изображения.
 
+{/* @example-description: `ImageBase` с кастомной иконкой-заглушкой для отсутствующего изображения. */}
 <Playground>
   ```jsx
   <ImageBase size={96} fallbackIcon={<Icon3218CircleOutline />} />
@@ -74,6 +77,7 @@ description: Базовый компонент по работе с изобра
 
 Индикатор в правом нижнем углу компонента:
 
+{/* @example-description: Добавление бейджа в `ImageBase` через подкомпонент `ImageBase.Badge`. */}
 <Playground>
   ```jsx
   <ImageBase
@@ -93,6 +97,7 @@ description: Базовый компонент по работе с изобра
 
 Перекрывающий картинку элемент задаётся через `Image.Overlay`:
 
+{/* @example-description: Наложение действия поверх изображения через `ImageBase.Overlay`. */}
 <Playground>
   ```jsx
   <ImageBase
@@ -119,6 +124,7 @@ description: Базовый компонент по работе с изобра
 
 Позиционированный компонент расположенный поверх изображения в произвольном месте задаётся `ImageBase.FloatElement`:
 
+{/* @example-description: Произвольный плавающий элемент поверх изображения через `ImageBase.FloatElement`. */}
 <Playground>
   ```jsx
   <ImageBase
