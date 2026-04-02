@@ -60,31 +60,12 @@ describe('useWindowResizeObserver', () => {
     });
   });
 
-  it('emits initial window size by default', async () => {
+  it('does not emit initially when and reacts to window resize', async () => {
     const onResize = vi.fn();
     const { useWindowResizeObserver } = await import('./useWindowResizeObserver');
 
     const Fixture = () => {
-      useWindowResizeObserver({ onResize });
-      return null;
-    };
-
-    render(<Fixture />);
-
-    expect(onResize).toHaveBeenCalledTimes(1);
-    expect(onResize).toHaveBeenCalledWith({
-      target: globalThis.window,
-      width: 1280,
-      height: 720,
-    });
-  });
-
-  it('does not emit initially when initialEmit=false and reacts to window resize', async () => {
-    const onResize = vi.fn();
-    const { useWindowResizeObserver } = await import('./useWindowResizeObserver');
-
-    const Fixture = () => {
-      useWindowResizeObserver({ initialEmit: false, rafBatch: false, onResize });
+      useWindowResizeObserver({ rafBatch: false, onResize });
       return null;
     };
 
@@ -120,7 +101,11 @@ describe('useWindowResizeObserver', () => {
     render(<Fixture />);
 
     expect(onResize).not.toHaveBeenCalled();
-    expect(addEventListenerSpy).not.toHaveBeenCalledWith('resize', expect.any(Function), expect.anything());
+    expect(addEventListenerSpy).not.toHaveBeenCalledWith(
+      'resize',
+      expect.any(Function),
+      expect.anything(),
+    );
   });
 
   it('uses visualViewport sizes and listener when enabled', async () => {
@@ -135,11 +120,7 @@ describe('useWindowResizeObserver', () => {
 
     render(<Fixture />);
 
-    expect(onResize).toHaveBeenCalledWith({
-      target: globalThis.window,
-      width: 400,
-      height: 300,
-    });
+    expect(onResize).not.toHaveBeenCalled();
 
     const resizeHandler = visualViewport.addEventListener.mock.calls[0][1] as EventListener;
     visualViewport.width = 360;
@@ -149,6 +130,7 @@ describe('useWindowResizeObserver', () => {
       resizeHandler(new Event('resize'));
     });
 
+    expect(onResize).toHaveBeenCalledTimes(1);
     expect(onResize).toHaveBeenLastCalledWith({
       target: globalThis.window,
       width: 360,
@@ -170,7 +152,7 @@ describe('useWindowResizeObserver', () => {
     globalThis.cancelAnimationFrame = vi.fn();
 
     const Fixture = () => {
-      useWindowResizeObserver({ initialEmit: false, onResize });
+      useWindowResizeObserver({ onResize });
       return null;
     };
 
@@ -208,7 +190,7 @@ describe('useWindowResizeObserver', () => {
     const removeEventListenerSpy = vi.spyOn(globalThis.window, 'removeEventListener');
 
     const Fixture = () => {
-      useWindowResizeObserver({ initialEmit: false, onResize });
+      useWindowResizeObserver({ onResize });
       return null;
     };
 
@@ -228,7 +210,7 @@ describe('useWindowResizeObserver', () => {
     const { useWindowResizeObserver } = await import('./useWindowResizeObserver');
 
     const Fixture = ({ onResize }: { onResize: (payload: unknown) => void }) => {
-      useWindowResizeObserver({ initialEmit: false, rafBatch: false, onResize });
+      useWindowResizeObserver({ rafBatch: false, onResize });
       return null;
     };
 
@@ -240,7 +222,9 @@ describe('useWindowResizeObserver', () => {
 
     first.unmount();
     expect(
-      removeEventListenerSpy.mock.calls.filter(([event]) => event === 'resize' && removeEventListenerSpy),
+      removeEventListenerSpy.mock.calls.filter(
+        ([event]) => event === 'resize' && removeEventListenerSpy,
+      ),
     ).toHaveLength(0);
 
     second.unmount();

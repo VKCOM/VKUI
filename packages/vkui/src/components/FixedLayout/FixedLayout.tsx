@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useResizeObserver } from '../../hooks/useResizeObserver/useResizeObserver.ts';
+import { useResizeObserver } from '../../hooks/useResizeObserver/useResizeObserver';
 import { useWindowResizeObserver } from '../../hooks/useResizeObserver/useWindowResizeObserver';
 import { setRef } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
@@ -99,11 +99,10 @@ export const FixedLayout = ({
   React.useEffect(doResize, [colRef, platform, ref, useParentWidth]);
 
   useWindowResizeObserver({
-    initialEmit: false,
     onResize: doResize,
   });
   useResizeObserver({
-    ref: useParentWidth ? parentRef : colRef,
+    ref: useParentWidth ? parentRef : (colRef ?? undefined),
     onResize: doResize,
   });
 

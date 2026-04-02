@@ -1,7 +1,7 @@
 import { type ReactNode, type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { Spinner } from '../../../src';
 import { useDOM } from '../../../src/lib/dom';
-import { useResizeObserver } from '../../../src/hooks/useResizeObserver/useResizeObserver.ts';
+import { useResizeObserver } from '../../../src/hooks/useResizeObserver/useResizeObserver';
 
 const SPINNER_HEIGHT = 24;
 const WINDOW_PADDING_BOTTOM = 64;

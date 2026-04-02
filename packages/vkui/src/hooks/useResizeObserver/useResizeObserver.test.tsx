@@ -49,13 +49,13 @@ function createEntry(
   }: {
     width?: number;
     height?: number;
-    borderBoxSize?: { inlineSize: number; blockSize: number }[];
-    contentBoxSize?: { inlineSize: number; blockSize: number }[];
+    borderBoxSize?: Array<{ inlineSize: number; blockSize: number }>;
+    contentBoxSize?: Array<{ inlineSize: number; blockSize: number }>;
   } = {},
 ): MockResizeObserverEntry {
   return {
     target,
-    contentRect: { width, height } as DOMRectReadOnly,
+    contentRect: { width, height } as unknown as DOMRectReadOnly,
     borderBoxSize: borderBoxSize as ResizeObserverSize[],
     contentBoxSize: contentBoxSize as ResizeObserverSize[],
   };
@@ -239,7 +239,13 @@ describe('useResizeObserver', () => {
     const onResizeB = vi.fn();
     const { useResizeObserver } = await import('./useResizeObserver');
 
-    const Fixture = ({ box, onResize }: { box: ResizeObserverBoxOptions; onResize: () => void }) => {
+    const Fixture = ({
+      box,
+      onResize,
+    }: {
+      box: ResizeObserverBoxOptions;
+      onResize: () => void;
+    }) => {
       const ref = useResizeObserver<HTMLDivElement>({ box, rafBatch: false, onResize });
       return <div ref={ref} />;
     };

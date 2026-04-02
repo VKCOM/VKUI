@@ -87,7 +87,6 @@ function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
 
   React.useEffect(updatePosition, [updatePosition]);
   useWindowResizeObserver({
-    initialEmit: false,
     onResize: updatePosition,
   });
 
