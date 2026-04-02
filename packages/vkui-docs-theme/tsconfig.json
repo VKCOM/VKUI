@@ -1,12 +1,31 @@
 {
-  "extends": "../../tsconfig.json",
+  "files": ["css.d.ts"],
+  "include": ["src/**/*.ts*", "*.ts*"],
   "compilerOptions": {
-    "target": "ES2018",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["esnext", "dom", "dom.Iterable"],
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "erasableSyntaxOnly": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler"
-  },
-  "include": ["src/**/*.ts*", "*.ts*"]
+    "paths": {
+      "@vkontakte/vkui": ["../vkui/src"]
+    }
+  }
 }

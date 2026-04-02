@@ -4,8 +4,6 @@ import {
   type FloatingElement,
   type ReferenceType,
 } from '@vkontakte/vkui-floating-ui/react-dom';
-import { isHTMLElement } from '../dom';
-import { CustomResizeObserver } from './customResizeObserver';
 
 export {
   useFloating,
@@ -27,9 +25,6 @@ export type {
 const defaultOptions = {
   ancestorScroll: true,
   ancestorResize: true,
-  // По умолчанию отключаем, т.к. навешивать `CustomResizeObserver` может быть дорого.
-  // В `autoUpdateLib` по умолчанию опция включена. Там используется ResizeObserver, но и он не менее дорогостоящий.
-  // https://github.com/floating-ui/floating-ui/blob/0a34fe9cc2c7483976785a71bd0777cd7c3f2a6a/packages/dom/src/autoUpdate.ts#L6-L33
   elementResize: false,
   animationFrame: false,
 };
@@ -40,35 +35,9 @@ export function autoUpdateFloatingElement(
   update: () => void,
   options: Partial<AutoUpdateOptions> = defaultOptions,
 ): ReturnType<typeof autoUpdateLib> {
-  const { elementResize = false, ...restOptions } = options;
-
-  // eslint-disable-next-line no-restricted-globals, compat/compat
-  const canUseResizeObserver = window.ResizeObserver !== undefined;
-  const autoUpdateLibDisposer = autoUpdateLib(reference, floating, update, {
-    ...restOptions,
-    elementResize: elementResize && canUseResizeObserver,
-  });
-
-  // В случае если `ResizeObserver` будет полифилиться или он будет покрываться нашим `browserlist`, то надо удалить
-  // код с `CustomResizeObserver`.
-  let observer: CustomResizeObserver | null = null;
-  if (elementResize && !canUseResizeObserver) {
-    observer = new CustomResizeObserver(update);
-
-    if (isHTMLElement(reference)) {
-      observer.observe(reference);
-    }
-
-    observer.observe(floating);
-
-    observer.appendToTheDOM();
-  }
+  const autoUpdateLibDisposer = autoUpdateLib(reference, floating, update, options);
 
   return () => {
-    if (observer) {
-      observer.disconnect();
-      observer = null;
-    }
     autoUpdateLibDisposer();
   };
 }

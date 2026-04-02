@@ -1,12 +1,165 @@
 .host {
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
   inline-size: 100%;
+  min-block-size: 48px;
   padding-block: 0;
+  padding-inline: var(--vkui--size_base_padding_horizontal--regular);
   margin: 0;
+  color: var(--vkui--color_text_primary);
   text-align: start;
+  white-space: nowrap;
   text-decoration: none;
   background: transparent;
   border: 0;
+}
+
+.mult {
+  white-space: normal;
+}
+
+.mult .children {
+  text-overflow: initial;
+}
+
+.disabled {
+  opacity: var(--vkui--opacity_disable);
+}
+
+.before {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  padding-block: var(--vkui--spacing_size_s);
+  padding-inline-end: var(--vkui--spacing_size_xl);
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.before > :global(.vkuiIcon) {
+  box-sizing: content-box;
+  padding-inline: var(--vkui--spacing_size_xs);
+}
+
+.before:empty {
+  display: none;
+}
+
+.middle {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  padding-block: var(--vkui--spacing_size_l);
+  overflow: hidden;
+}
+
+/* stylelint-disable-next-line selector-max-universal -- gap: 2px */
+.middle > *:not(:first-child) {
+  margin-block-start: var(--vkui--spacing_size_2xs);
+}
+
+.overTitle {
+  color: var(--vkui--color_text_subhead);
+}
+
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitle,
+.extraSubtitle {
+  color: var(--vkui--color_text_secondary);
+}
+
+.host .content {
+  display: flex;
+  align-content: flex-start;
+  align-items: center;
+  justify-content: flex-start;
+  max-inline-size: 100%;
+}
+
+.children {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+}
+
+.mult .children,
+.mult .subtitle {
+  flex: 0 1 auto;
+}
+
+.badge {
+  display: inline-block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  color: var(--vkui--color_icon_accent);
+}
+
+/* stylelint-disable-next-line selector-max-universal -- gap: 4px */
+.content > *:not(:last-child) {
+  margin-inline-end: var(--vkui--spacing_size_xs);
+}
+
+.indicator {
+  flex-shrink: 0;
+  min-inline-size: 0;
+  padding-inline-start: var(--vkui--spacing_size_xl);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--vkui--color_text_secondary);
+  white-space: nowrap;
+}
+
+.after {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.after > :global(.vkuiIcon) {
+  box-sizing: content-box;
+  padding-inline-start: var(--vkui--spacing_size_s);
+}
+
+/**
+ * density="compact"
+ */
+
+.densityCompact {
+  min-block-size: 44px;
+}
+
+.densityCompact .before {
+  padding-block: var(--vkui--spacing_size_xs);
+}
+
+@media (--density-compact) {
+  .densityNone {
+    min-block-size: 44px;
+  }
+
+  .densityNone .before {
+    padding-block: var(--vkui--spacing_size_xs);
+  }
+}
+
+/**
+ * CMP:
+ * FormItem
+ */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalFormItem) > .host {
+  margin-block: 0;
+  margin-inline: calc(-1 * var(--vkui--size_base_padding_horizontal--regular));
 }
 
 /**
@@ -36,14 +189,13 @@
   max-inline-size: initial;
 }
 
-/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
-.centered :global(.vkuiIcon) {
+.centered .before {
   padding-inline-end: var(--vkui--spacing_size_m);
-  /* компенсируем отступ заданные в SimpleCell__before */
-  margin-inline-end: calc(
-    -1 *
-    var(--vkui_internal--SimpleCell-before-inline-padding-end, var(--vkui--spacing_size_xl))
-  );
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list */
+.centered .before > :global(.vkuiIcon) {
+  padding-inline: 0;
 }
 
 .appearanceAccent {
