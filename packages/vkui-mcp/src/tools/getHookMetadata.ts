@@ -13,7 +13,8 @@ export function registerGetHookMetadata(server: McpServer, dataProvider: DataPro
   server.registerTool(
     'get_hook_metadata',
     {
-      description: 'Детальная карточка хука с описанием и параметрами. Для получения примеров использования хука используйте get_examples, если они есть',
+      description:
+        'Детальная карточка хука с описанием и параметрами. Для получения примеров использования хука используйте get_examples, если они есть',
       inputSchema: INPUT_SCHEMA,
     },
     async (args) => {

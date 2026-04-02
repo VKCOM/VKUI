@@ -14,7 +14,8 @@ export function registerGetExamples(server: McpServer, dataProvider: DataProvide
   server.registerTool(
     'get_examples',
     {
-      description: 'Примеры использования компонента или хука. Принимает имя или slug компонента или хука.',
+      description:
+        'Примеры использования компонента или хука. Принимает имя или slug компонента или хука.',
       inputSchema: INPUT_SCHEMA,
     },
     async (args) => {
