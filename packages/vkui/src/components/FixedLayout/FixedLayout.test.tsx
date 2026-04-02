@@ -1,30 +1,14 @@
 import { act, type RefObject } from 'react';
 import { render } from '@testing-library/react';
-import { baselineComponent } from '../../testing/utils';
+import {baselineComponent, withFakeTimers} from '../../testing/utils';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
 import styles from './FixedLayout.module.css';
 
-let updateFunction: () => void;
-
-const mockResizeObserver = vi.fn(
-  class MockResizeObserver {
-    constructor(updateFunctionFn: () => void) {
-      updateFunction = updateFunctionFn;
-    }
-
-    observe = vi.fn();
-    unobserve = vi.fn();
-    disconnect = vi.fn();
-  },
-);
-
-vi.stubGlobal('ResizeObserver', mockResizeObserver);
-
 describe('FixedLayout', () => {
   baselineComponent(FixedLayout);
 
-  it('check update width by parent width', async () => {
+  it('check update width by parent width', withFakeTimers(async () => {
     const parentRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
@@ -55,12 +39,15 @@ describe('FixedLayout', () => {
     expect(layoutRef.current!).toHaveStyle('width: 500px');
 
     parentWidth = 600;
-    await act(async () => updateFunction());
+    act(() => {
+      globalThis.__resizeObserverMock.triggerAll();
+      vi.runAllTimers();
+    });
 
     expect(layoutRef.current!).toHaveStyle('width: 600px');
-  });
+  }));
 
-  it('check update width by column width', async () => {
+  it('check update width by column width', withFakeTimers(async () => {
     const colRef: RefObject<HTMLDivElement | null> = {
       current: null,
     };
@@ -89,10 +76,13 @@ describe('FixedLayout', () => {
     expect(layoutRef.current!).toHaveStyle('width: 280px');
 
     colWidth = 360;
-    await act(async () => updateFunction());
+    act(() => {
+      globalThis.__resizeObserverMock.triggerAll();
+      vi.runAllTimers();
+    });
 
     expect(layoutRef.current!).toHaveStyle('width: 360px');
-  });
+  }));
 
   describe('check correct classNames', () => {
     it.each<{ props: Partial<FixedLayoutProps>; className: string }>([

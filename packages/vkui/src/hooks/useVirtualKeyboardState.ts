@@ -122,12 +122,14 @@ export function useVirtualKeyboardState(enabled = true): VirtualKeyboardState {
   useWindowResizeObserver({
     enabled: !!focusedEl && !!window?.visualViewport,
     useVisualViewport: true,
+    rafBatch: false,
     onResize: () => handleResizeRef.current(),
   });
 
   useWindowResizeObserver({
     enabled: !!focusedEl && !window?.visualViewport,
     useVisualViewport: false,
+    rafBatch: false,
     onResize: () => handleResizeRef.current(),
   });
 

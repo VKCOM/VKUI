@@ -6,38 +6,8 @@ type MockResizeObserverEntry = Partial<ResizeObserverEntry> & {
   contentRect: DOMRectReadOnly;
 };
 
-class ResizeObserverMock {
-  public static instances: ResizeObserverMock[] = [];
-
-  public observe = vi.fn();
-  public unobserve = vi.fn();
-  public disconnect = vi.fn();
-
-  private readonly callback: ResizeObserverCallback;
-
-  public constructor(callback: ResizeObserverCallback) {
-    this.callback = callback;
-    ResizeObserverMock.instances.push(this);
-  }
-
-  public emit(entries: MockResizeObserverEntry[]) {
-    this.callback(entries as ResizeObserverEntry[], this as unknown as ResizeObserver);
-  }
-
-  public static reset() {
-    ResizeObserverMock.instances = [];
-  }
-}
-
-function getObserverForTarget(target: Element): ResizeObserverMock {
-  const observer = ResizeObserverMock.instances.find((instance) =>
-    instance.observe.mock.calls.some(([observedTarget]) => observedTarget === target),
-  );
-  if (!observer) {
-    throw new Error('ResizeObserver for target was not found');
-  }
-  return observer;
-}
+const getObserverForTarget = (target: Element) =>
+  globalThis.__resizeObserverMock.getObserverForTarget(target);
 
 function createEntry(
   target: Element,
@@ -62,19 +32,16 @@ function createEntry(
 }
 
 describe('useResizeObserver', () => {
-  const originalResizeObserver = globalThis.ResizeObserver;
   const originalRequestAnimationFrame = globalThis.requestAnimationFrame;
   const originalCancelAnimationFrame = globalThis.cancelAnimationFrame;
 
   beforeEach(() => {
     vi.resetModules();
-    ResizeObserverMock.reset();
-    globalThis.ResizeObserver = ResizeObserverMock as unknown as typeof ResizeObserver;
+    globalThis.__resizeObserverMock.reset();
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
-    globalThis.ResizeObserver = originalResizeObserver;
     globalThis.requestAnimationFrame = originalRequestAnimationFrame;
     globalThis.cancelAnimationFrame = originalCancelAnimationFrame;
   });
@@ -181,9 +148,11 @@ describe('useResizeObserver', () => {
 
     const { getByTestId } = render(<Fixture />);
     const target = getByTestId('target');
-    const observeCallsForTarget = ResizeObserverMock.instances.flatMap((instance) =>
-      instance.observe.mock.calls.filter(([observedTarget]) => observedTarget === target),
-    );
+    const observeCallsForTarget = globalThis.__resizeObserverMock
+      .getInstances()
+      .flatMap((instance) =>
+        instance.observe.mock.calls.filter(([observedTarget]) => observedTarget === target),
+      );
 
     expect(observeCallsForTarget).toHaveLength(0);
     expect(onResize).not.toHaveBeenCalled();

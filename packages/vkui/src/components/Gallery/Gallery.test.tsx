@@ -492,8 +492,10 @@ describe('Gallery', () => {
 
       mockedData.containerWidth = 250;
 
-      fireEvent.resize(window);
-      vi.runAllTimers();
+      act(() => {
+        fireEvent.resize(window);
+        vi.runAllTimers();
+      });
 
       if (looped) {
         expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
@@ -764,41 +766,9 @@ describe('Gallery', () => {
     });
   });
 
-  const mockResizeObserver = () => {
-    const callbacks = new Set<ResizeObserverCallback>();
-
-    class MockResizeObserver implements ResizeObserver {
-      constructor(callback: ResizeObserverCallback) {
-        callbacks.add(callback);
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      observe() {}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      unobserve() {}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      disconnect() {}
-    }
-
-    const originalResizeObserver = window.ResizeObserver;
-    window.ResizeObserver = MockResizeObserver;
-
-    return {
-      triggerResize: () => {
-        callbacks.forEach((callback) => {
-          callback([], {} as unknown as ResizeObserver);
-        });
-      },
-      restore: () => {
-        window.ResizeObserver = originalResizeObserver;
-      },
-    };
-  };
-
   it(
     'check recalculate slides positions when resize element with resizeSource="element"',
     withFakeTimers(() => {
-      const { triggerResize, restore } = mockResizeObserver();
       const onChange = vi.fn();
 
       const mockedData = setup({
@@ -818,12 +788,13 @@ describe('Gallery', () => {
 
       mockedData.containerWidth = 250;
 
-      act(triggerResize);
-      vi.runAllTimers();
+      act(() => {
+        globalThis.__resizeObserverMock.triggerAll();
+        vi.runAllTimers();
+      });
 
       expect(mockedData.layerTransform).toBe('translate3d(35px, 0, 0)');
       expect(mockedData.getSlideMockData(0).transform).toBe('translate3d(0px, 0, 0)');
-      restore();
     }),
   );
 
@@ -885,10 +856,11 @@ describe('Gallery', () => {
       mockedData.viewPortWidth = 540;
       onDragStart.mockClear();
       onDragEnd.mockClear();
-      fireEvent.resize(window);
-
-      rerender({ slideIndex: 1 });
-      vi.runAllTimers();
+      act(() => {
+        fireEvent.resize(window);
+        rerender({ slideIndex: 1 });
+        vi.runAllTimers();
+      });
 
       expect(getArrows()).toHaveLength(0);
 
