@@ -11,6 +11,7 @@ import type {
 const DEFAULT_MCP_BASE_URL = 'https://vkui-mcp.cdn-vk.ru';
 
 const DEFAULT_VKUI_VERSION = 'latest';
+const DEFAULT_FETCH_TIMEOUT_MS = 10_000;
 
 const getFromEnv = (key: string, defaultValue: string) => {
   return (typeof process !== 'undefined' ? process.env?.[key] : undefined) ?? defaultValue;
@@ -35,7 +36,7 @@ export function createDataProvider(): DataProvider {
     }
 
     const url = new URL(relativePath, mcpBaseUrl).toString();
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: AbortSignal.timeout(DEFAULT_FETCH_TIMEOUT_MS) });
     if (!response.ok) {
       throw new Error(`Не удалось загрузить ${url}: ${response.status}`);
     }

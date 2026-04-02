@@ -13,7 +13,7 @@ export function registerGetComponentMetadata(server: McpServer, dataProvider: Da
   server.registerTool(
     'get_component_metadata',
     {
-      description: 'Детальная карточка компонента с описанием и свойствами',
+      description: 'Детальная карточка компонента с описанием и свойствами. Для получения примеров использования компонентов используйте get_examples',
       inputSchema: INPUT_SCHEMA,
     },
     async (args) => {

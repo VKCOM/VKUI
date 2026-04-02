@@ -6,15 +6,15 @@ import type { DataProvider } from '../types.js';
 import { toToolResult } from './utils.js';
 
 const INPUT_SCHEMA = z.object({
-  name: z.string().describe('Имя компонента (например, Button)').optional(),
-  slug: z.string().describe('Slug компонента (например, button)').optional(),
+  name: z.string().describe('Имя компонента или хука (например, Button)').optional(),
+  slug: z.string().describe('Slug компонента или хука (например, button)').optional(),
 });
 
 export function registerGetExamples(server: McpServer, dataProvider: DataProvider): void {
   server.registerTool(
     'get_examples',
     {
-      description: 'Примеры использования компонента. Принимает имя или slug компонента.',
+      description: 'Примеры использования компонента или хука. Принимает имя или slug компонента или хука.',
       inputSchema: INPUT_SCHEMA,
     },
     async (args) => {

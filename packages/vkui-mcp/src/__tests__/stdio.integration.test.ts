@@ -54,12 +54,18 @@ const MOCK_USE_MODAL_MANAGER_METADATA = {
 
 /** Запускает HTTP-сервер с мок-данными, возвращает base URL и функцию остановки */
 function startMockDocsServer(): Promise<{ baseUrl: string; close: () => void }> {
-  const routes: Record<string, string> = {
+  const baseRoutes: Record<string, string> = {
     '/components.json': JSON.stringify(MOCK_COMPONENTS),
     '/hooks.json': JSON.stringify(MOCK_HOOKS),
     '/examples/alert.txt': MOCK_ALERT_EXAMPLES_TEXT,
     '/components/alert.json': JSON.stringify(MOCK_ALERT_METADATA),
     '/hooks/use-modal-manager.json': JSON.stringify(MOCK_USE_MODAL_MANAGER_METADATA),
+  };
+  const routes: Record<string, string> = {
+    ...baseRoutes,
+    ...Object.fromEntries(
+      Object.entries(baseRoutes).map(([path, body]) => [`/latest${path}`, body] as const),
+    ),
   };
 
   return new Promise((resolve, reject) => {
