@@ -182,11 +182,11 @@ function useActive({
   }
 
   React.useEffect(() => {
-    if (lockState) {
-      // Сбрасываем setActivated если обнаруживаем lockState
+    if (lockState || !hasActive) {
+      // Сбрасываем setActivated если обнаруживаем lockState или !hasActive
       setActivated(false);
     }
-  }, [lockState, setActivated]);
+  }, [lockState, hasActive, setActivated]);
 
   const onPointerDown = () => {
     if (lockState) {
