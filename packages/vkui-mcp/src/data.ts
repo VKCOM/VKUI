@@ -20,7 +20,7 @@ export function createDataProvider(): DataProvider {
   const baseUrl = getFromEnv('VKUI_MCP_BASE_URL', DEFAULT_MCP_BASE_URL);
   const version = getFromEnv('VKUI_VERSION', DEFAULT_VKUI_VERSION);
 
-  const mcpBaseUrl = `${baseUrl.replace(/\/$/, '')}/${version}`;
+  const mcpBaseUrl = `${baseUrl.replace(/\/$/, '')}/${version}/`;
 
   const cache = new Map<string, unknown>();
 
@@ -34,7 +34,7 @@ export function createDataProvider(): DataProvider {
       return cached as T;
     }
 
-    const url = new URL(relativePath.replace(/\\/g, '/'), mcpBaseUrl).toString();
+    const url = new URL(relativePath, mcpBaseUrl).toString();
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Не удалось загрузить ${url}: ${response.status}`);
