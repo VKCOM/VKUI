@@ -18,18 +18,6 @@ type EscHandlersStore = {
 };
 
 const ESC_HANDLERS_BY_DOCUMENT = new WeakMap<Document, EscHandlersStore>();
-const ESC_KEY_HANDLED_SYMBOL = Symbol('vkui_esc_key_handled');
-
-export function markEscKeyAsHandled(event: KeyboardEvent): void {
-  Object.defineProperty(event, ESC_KEY_HANDLED_SYMBOL, {
-    value: true,
-    configurable: true,
-  });
-}
-
-export function isEscKeyHandled(event: KeyboardEvent): boolean {
-  return Boolean((event as unknown as Record<symbol, unknown>)[ESC_KEY_HANDLED_SYMBOL]);
-}
 
 function getOrCreateEscHandlersStore(document: Document, options: AddEventListenerOptions) {
   const existingStore = ESC_HANDLERS_BY_DOCUMENT.get(document);
@@ -40,16 +28,11 @@ function getOrCreateEscHandlersStore(document: Document, options: AddEventListen
   const store: EscHandlersStore = {
     handlers: [],
     onKeyDown(event) {
-      if (
-        pressedKey(event) !== Keys.ESCAPE ||
-        store.handlers.length === 0 ||
-        isEscKeyHandled(event)
-      ) {
+      if (pressedKey(event) !== Keys.ESCAPE || store.handlers.length === 0) {
         return;
       }
 
       const activeHandler = store.handlers[store.handlers.length - 1];
-      markEscKeyAsHandled(event);
       activeHandler.callback(event);
     },
   };
