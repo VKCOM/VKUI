@@ -1,13 +1,13 @@
 'use client';
 /* eslint-disable jsdoc/require-jsdoc */
 
-import { type ComponentType, type KeyboardEvent, type ReactNode, useCallback } from 'react';
+import { type ComponentType, type ReactNode } from 'react';
 import { classNames, noop } from '@vkontakte/vkjs';
 import { useAdaptivityWithJSMediaQueries } from '../../hooks/useAdaptivityWithJSMediaQueries';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useVirtualKeyboardState } from '../../hooks/useVirtualKeyboardState';
-import { Keys, pressedKey } from '../../lib/accessibility';
 import { useCSSTransition, type UseCSSTransitionState } from '../../lib/animation';
 import { useBottomSheet } from '../../lib/sheet';
 import { useScrollLock } from '../AppRoot/ScrollContext';
@@ -136,24 +136,13 @@ export const ModalCardInternal = ({
       }
     />
   );
-  const handleEscKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLElement>) => {
-      if (closable && pressedKey(event) === Keys.ESCAPE) {
-        onClose('escape-key');
-      }
-    },
-    [closable, onClose],
-  );
+
+  useGlobalEscKeyDown(closable, () => onClose('escape-key'));
 
   useScrollLock(!hidden);
 
   return (
-    <ModalOutlet
-      hidden={hidden}
-      isDesktop={isDesktop}
-      onKeyDown={handleEscKeyDown}
-      disableModalOverlay={disableModalOverlay}
-    >
+    <ModalOutlet hidden={hidden} isDesktop={isDesktop} disableModalOverlay={disableModalOverlay}>
       {modalOverlay}
       <FocusTrap
         rootRef={handleRef}

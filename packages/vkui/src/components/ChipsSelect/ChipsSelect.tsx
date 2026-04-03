@@ -4,6 +4,7 @@ import * as React from 'react';
 import type { MouseEventHandler } from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEscKeyDown } from '../../hooks/useGlobalEscKeyDown';
 import { useGlobalOnEventOutside } from '../../hooks/useGlobalOnClickOutside';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { Keys } from '../../lib/accessibility';
@@ -438,13 +439,13 @@ export const ChipsSelect = <Option extends ChipOption>({
         }
         break;
       }
-      case Keys.ESCAPE:
       case Keys.TAB:
         if (opened) {
           setOpened(false);
         }
     }
   };
+  useGlobalEscKeyDown(opened && !readOnly, () => setOpened(false));
 
   React.useEffect(() => {
     if (focusedOptionIndex === null) {
