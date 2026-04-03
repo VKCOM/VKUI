@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { debounce, throttle } from '@vkontakte/vkjs';
+import { debounce, noop, throttle } from '@vkontakte/vkjs';
 import {
   getVisualViewport,
   isHTMLContentEditableElement,
   useDOM,
   type VisualViewport,
 } from '../lib/dom';
+import { useWindowResizeObserver } from './useResizeObserver/useWindowResizeObserver';
 
 export type VirtualKeyboardState = { opened: boolean };
 
@@ -88,44 +89,49 @@ export function useVirtualKeyboardState(enabled = true): VirtualKeyboardState {
     [enabled, window, document],
   );
 
-  useEffect(
-    function handleVirtualKeyboardOpened() {
-      if (!focusedEl || !window) {
+  const handleResizeRef = useRef<() => void>(noop);
+
+  useEffect(() => {
+    if (!window) {
+      handleResizeRef.current = noop;
+      return;
+    }
+
+    const handleResize = debounce(() => {
+      /* istanbul ignore if: нереалистичный кейс, проверяем в угоду TypeScript */
+      if (prevVisualViewportRef.current === null) {
         return;
       }
 
-      const handleResize = debounce(() => {
-        /* istanbul ignore if: нереалистичный кейс, проверяем в угоду TypeScript */
-        if (prevVisualViewportRef.current === null) {
-          return;
-        }
+      const nextVisualViewport = getVisualViewport(window);
 
-        const nextVisualViewport = getVisualViewport(window);
-
-        const { offsetTop: prevOffsetTop, height: prevHeight } = prevVisualViewportRef.current;
-        const { offsetTop: nextOffsetTop, height: nextHeight } = nextVisualViewport;
-        if (prevOffsetTop !== nextOffsetTop || prevHeight !== nextHeight) {
-          setKeyboardOpened(true);
-          prevVisualViewportRef.current = nextVisualViewport;
-        }
-      }, 100);
-
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', handleResize);
-      } else {
-        window.addEventListener('resize', handleResize);
+      const { offsetTop: prevOffsetTop, height: prevHeight } = prevVisualViewportRef.current;
+      const { offsetTop: nextOffsetTop, height: nextHeight } = nextVisualViewport;
+      if (prevOffsetTop !== nextOffsetTop || prevHeight !== nextHeight) {
+        setKeyboardOpened(true);
+        prevVisualViewportRef.current = nextVisualViewport;
       }
+    }, 100);
 
-      return function dispose() {
-        if (window.visualViewport) {
-          window.visualViewport.removeEventListener('resize', handleResize);
-        } else {
-          window.removeEventListener('resize', handleResize);
-        }
-      };
-    },
-    [focusedEl, window],
-  );
+    handleResizeRef.current = handleResize;
+    return () => {
+      handleResizeRef.current = noop;
+    };
+  }, [window]);
+
+  useWindowResizeObserver({
+    enabled: !!focusedEl && !!window?.visualViewport,
+    useVisualViewport: true,
+    rafBatch: false,
+    onResize: () => handleResizeRef.current(),
+  });
+
+  useWindowResizeObserver({
+    enabled: !!focusedEl && !window?.visualViewport,
+    useVisualViewport: false,
+    rafBatch: false,
+    onResize: () => handleResizeRef.current(),
+  });
 
   useEffect(
     function preventWindowScrollIfKeyboardOpened() {

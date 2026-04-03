@@ -3,12 +3,12 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { Card, Mark, Title, useDirection } from '../../../src';
-import { useResizeObserver } from '../../../src/hooks/useResizeObserver';
 import { useDOM } from '../../../src/lib/dom';
 import type { CSSCustomProperties } from '../../../src/types';
 import { useOverviewLayoutContext } from '../../common/components/OverviewLayoutContext';
 import type { ComponentConfigData } from '../config';
 import styles from './ComponentOverviewCard.module.css';
+import { useResizeObserver } from '../../../src/hooks/useResizeObserver/useResizeObserver';
 
 const CONTENT_PADDING = 10;
 
@@ -74,7 +74,10 @@ export const ComponentOverviewCard: React.FC<ComponentOverviewCardProps> = ({
 
   React.useEffect(() => calculateScale(), [calculateScale]);
 
-  useResizeObserver(containerRef, calculateScale);
+  useResizeObserver({
+    ref: containerRef,
+    onResize: calculateScale,
+  });
 
   const componentUrl = React.useMemo(() => {
     if (!window) {
