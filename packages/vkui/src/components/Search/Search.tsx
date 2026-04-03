@@ -42,6 +42,7 @@ export interface SearchProps
       | 'minLength'
       | 'name'
       | 'pattern'
+      | 'enterKeyHint'
       | 'placeholder'
       | 'readOnly'
       | 'required'
@@ -146,7 +147,6 @@ export const Search = ({
   getRef,
 
   // input props
-  placeholder: placeholderProp = 'Поиск',
   autoComplete = 'off',
   autoCapitalize,
   autoCorrect,
@@ -156,6 +156,8 @@ export const Search = ({
   minLength,
   name,
   pattern,
+  placeholder: placeholderProp = 'Поиск',
+  enterKeyHint,
   readOnly,
   required,
   value,
@@ -212,6 +214,7 @@ export const Search = ({
       minLength,
       name,
       pattern,
+      enterKeyHint,
       readOnly,
       required,
       value,
