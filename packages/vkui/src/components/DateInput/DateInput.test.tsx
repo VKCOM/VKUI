@@ -690,7 +690,7 @@ describe('DateInput', () => {
 
     it('does not close calendar when Escape is pressed to close inner dropdown (month, year, hour, minute)', async () => {
       const onCalendarOpenChangedStub = vi.fn();
-      render(
+      const { container } = render(
         <DateInput
           value={new Date()}
           accessible
@@ -730,7 +730,7 @@ describe('DateInput', () => {
         expect(screen.queryByRole('listbox')).toBeTruthy();
 
         // закрываем дропдаун с помощью Escape
-        await userEvent.keyboard('{Escape}');
+        fireEvent.keyDown(container, { key: 'Escape' });
         expect(screen.queryByRole('listbox')).toBeFalsy();
 
         // календарь всё ещё должен быть открыт
@@ -739,7 +739,7 @@ describe('DateInput', () => {
       }
 
       // закрываем календарь с помощью Escape
-      await userEvent.keyboard('{Escape}');
+      fireEvent.keyDown(container, { key: 'Escape' });
       // календарь закрыт
       expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
       expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(2);
