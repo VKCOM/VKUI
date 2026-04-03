@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{Oa as t,ka as n}from"./iframe-DYi3TMGx.js";var r,i=e((()=>{t(),r=(e,t)=>{n(()=>{if(!e.current)return;let n=e.current.closest(`form`);if(n)return n.addEventListener(`reset`,t),()=>{n.removeEventListener(`reset`,t)}},[e,t])}}));export{r as n,i as t};

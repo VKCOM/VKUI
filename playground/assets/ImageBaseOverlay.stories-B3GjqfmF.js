@@ -1,0 +1,5 @@
+import{n as e,r as t}from"./chunk-BneVvdWh.js";import{yo as n}from"./iframe-DYi3TMGx.js";import{i as r,n as i,r as a,t as o}from"./ImageBase-W-QgL3i3.js";import{i as s,n as c,t as l}from"./constants-DdtDghDm.js";import{n as u,o as d}from"./mock-B_w95Aq1.js";var f=t({Playground:()=>h,__namedExportsOrder:()=>g,default:()=>m}),p,m,h,g,_=e((()=>{s(),d(),i(),r(),p=n(),m={title:`Data Display/ImageBase/ImageBaseOverlay`,component:a,parameters:{...l,...c},decorators:[e=>(0,p.jsx)(o,{size:48,src:u(`app_shorm_online`),alt:`Приложение шторм онлайн`,children:(0,p.jsx)(e,{})})]},h={args:{"aria-label":`Кнопка для изображения`}},h.parameters={...h.parameters,docs:{...h.parameters?.docs,source:{originalSource:`{
+  args: {
+    'aria-label': 'Кнопка для изображения'
+  }
+}`,...h.parameters?.docs?.source}}},g=[`Playground`]}));export{h as n,_ as r,f as t};

@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{co as t,no as n}from"./iframe-DYi3TMGx.js";var r,i,a=e((()=>{n(),{useArgs:r}=__STORYBOOK_MODULE_PREVIEW_API__,i=()=>{try{return r()}catch{return[{},t,t]}}}));export{i as n,a as t};

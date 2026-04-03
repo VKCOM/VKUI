@@ -1,0 +1,3 @@
+import{n as e,r as t}from"./chunk-BneVvdWh.js";import{X as n,Y as r,yo as i}from"./iframe-DYi3TMGx.js";import{i as a,t as o}from"./constants-DdtDghDm.js";import{n as s,t as c}from"./createStoryParameters-cWWuDqBQ.js";import{n as l,t as u}from"./src-CCfyPkEG.js";var d=t({Playground:()=>m,__namedExportsOrder:()=>h,default:()=>p}),f,p,m,h,g=e((()=>{u(),a(),s(),n(),f=i(),p={title:`Typography/Typography/Text`,component:r,parameters:c(`Text`,o),decorators:[l],tags:[`Типографика`]},m={render:e=>(0,f.jsx)(r,{...e,children:`Text`})},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+  render: args => <Text {...args}>Text</Text>
+}`,...m.parameters?.docs?.source}}},h=[`Playground`]}));export{d as n,g as r,m as t};
