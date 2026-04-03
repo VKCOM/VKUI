@@ -23,6 +23,7 @@ const INPUT_SPECIFIC_PROPS = [
   'multiple',
   'name',
   'pattern',
+  'enterKeyHint',
   'placeholder',
   'readOnly',
   'required',
