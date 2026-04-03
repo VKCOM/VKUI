@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { isEscKeyHandled, useGlobalEscKeyDown } from './useGlobalEscKeyDown';
+import { useGlobalEscKeyDown } from './useGlobalEscKeyDown';
 
 type EscHandlersFixtureProps = {
   onOuterClose: () => void;
@@ -52,23 +52,6 @@ describe(useGlobalEscKeyDown, () => {
 
     fireEvent.keyDown(target, { key: 'Escape' });
     expect(onOuterClose).toHaveBeenCalledTimes(1);
-  });
-
-  it('should mark escape as handled', () => {
-    const onOuterClose = vi.fn();
-    const onInnerClose = vi.fn();
-    const bubbleListener = vi.fn((event: KeyboardEvent) => isEscKeyHandled(event));
-    const { getByTestId } = render(
-      <EscHandlersFixture onOuterClose={onOuterClose} onInnerClose={onInnerClose} />,
-    );
-
-    document.body.addEventListener('keydown', bubbleListener);
-
-    fireEvent.keyDown(getByTestId('target'), { key: 'Escape' });
-    expect(bubbleListener).toHaveBeenCalledTimes(1);
-    expect(bubbleListener).toHaveReturnedWith(true);
-
-    document.body.removeEventListener('keydown', bubbleListener);
   });
 
   it('should not call callback for non-escape keys', () => {

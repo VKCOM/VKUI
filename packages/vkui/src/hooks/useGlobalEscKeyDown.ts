@@ -3,11 +3,6 @@ import { Keys, pressedKey } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
-const EVENT_OPTIONS = {
-  passive: true,
-  capture: true,
-};
-
 type EscHandler = {
   callback: (event: KeyboardEvent) => void;
 };
@@ -19,7 +14,7 @@ type EscHandlersStore = {
 
 const ESC_HANDLERS_BY_DOCUMENT = new WeakMap<Document, EscHandlersStore>();
 
-function getOrCreateEscHandlersStore(document: Document, options: AddEventListenerOptions) {
+function getOrCreateEscHandlersStore(document: Document) {
   const existingStore = ESC_HANDLERS_BY_DOCUMENT.get(document);
   if (existingStore) {
     return existingStore;
@@ -37,7 +32,7 @@ function getOrCreateEscHandlersStore(document: Document, options: AddEventListen
     },
   };
 
-  document.addEventListener('keydown', store.onKeyDown, options);
+  document.addEventListener('keydown', store.onKeyDown);
   ESC_HANDLERS_BY_DOCUMENT.set(document, store);
 
   return store;
@@ -51,7 +46,6 @@ function getOrCreateEscHandlersStore(document: Document, options: AddEventListen
 export const useGlobalEscKeyDown = (
   enabled: boolean,
   callback?: (event: KeyboardEvent) => void,
-  optionsProp?: AddEventListenerOptions,
 ): void => {
   const { document } = useDOM();
 
@@ -59,19 +53,16 @@ export const useGlobalEscKeyDown = (
 
   const stableRef = useRef<((event: KeyboardEvent) => void) | null>(null);
 
-  const options = useRef<AddEventListenerOptions>(optionsProp || EVENT_OPTIONS);
-
   useIsomorphicLayoutEffect(() => {
-    options.current = optionsProp || EVENT_OPTIONS;
     stableRef.current = callback ?? null;
-  }, [options, callback]);
+  }, [callback]);
 
   useIsomorphicLayoutEffect(() => {
     if (!document || !init) {
       return;
     }
 
-    const store = getOrCreateEscHandlersStore(document, options.current);
+    const store = getOrCreateEscHandlersStore(document);
     const handler: EscHandler = {
       callback: (event) => {
         stableRef.current?.(event);
@@ -86,7 +77,7 @@ export const useGlobalEscKeyDown = (
       }
 
       if (store.handlers.length === 0) {
-        document.removeEventListener('keydown', store.onKeyDown, options.current);
+        document.removeEventListener('keydown', store.onKeyDown);
         ESC_HANDLERS_BY_DOCUMENT.delete(document);
       }
     };
