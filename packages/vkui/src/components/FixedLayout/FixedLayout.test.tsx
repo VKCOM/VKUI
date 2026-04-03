@@ -1,6 +1,6 @@
 import { act, type RefObject } from 'react';
 import { render } from '@testing-library/react';
-import {baselineComponent, withFakeTimers} from '../../testing/utils';
+import { baselineComponent, withFakeTimers } from '../../testing/utils';
 import { SplitCol } from '../SplitCol/SplitCol';
 import { FixedLayout, type FixedLayoutProps } from './FixedLayout';
 import styles from './FixedLayout.module.css';
@@ -8,81 +8,87 @@ import styles from './FixedLayout.module.css';
 describe('FixedLayout', () => {
   baselineComponent(FixedLayout);
 
-  it('check update width by parent width', withFakeTimers(async () => {
-    const parentRef: RefObject<HTMLDivElement | null> = {
-      current: null,
-    };
-    const layoutRef: RefObject<HTMLDivElement | null> = {
-      current: null,
-    };
-    let parentWidth = 500;
+  it(
+    'check update width by parent width',
+    withFakeTimers(async () => {
+      const parentRef: RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      const layoutRef: RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      let parentWidth = 500;
 
-    const mockParentRef = (element: HTMLDivElement) => {
-      if (!element) {
-        return;
-      }
-      vi.spyOn(element, 'getBoundingClientRect').mockImplementation(
-        () => new DOMRect(0, 0, parentWidth, 800),
+      const mockParentRef = (element: HTMLDivElement) => {
+        if (!element) {
+          return;
+        }
+        vi.spyOn(element, 'getBoundingClientRect').mockImplementation(
+          () => new DOMRect(0, 0, parentWidth, 800),
+        );
+
+        parentRef.current = element;
+      };
+
+      render(
+        <div ref={mockParentRef} style={{ width: 500, height: 800 }}>
+          <FixedLayout getRootRef={layoutRef} useParentWidth>
+            <div style={{ width: 200, height: 400 }} />
+          </FixedLayout>
+        </div>,
       );
 
-      parentRef.current = element;
-    };
+      expect(layoutRef.current!).toHaveStyle('width: 500px');
 
-    render(
-      <div ref={mockParentRef} style={{ width: 500, height: 800 }}>
-        <FixedLayout getRootRef={layoutRef} useParentWidth>
-          <div style={{ width: 200, height: 400 }} />
-        </FixedLayout>
-      </div>,
-    );
+      parentWidth = 600;
+      act(() => {
+        globalThis.__resizeObserverMock.triggerAll();
+        vi.runAllTimers();
+      });
 
-    expect(layoutRef.current!).toHaveStyle('width: 500px');
+      expect(layoutRef.current!).toHaveStyle('width: 600px');
+    }),
+  );
 
-    parentWidth = 600;
-    act(() => {
-      globalThis.__resizeObserverMock.triggerAll();
-      vi.runAllTimers();
-    });
+  it(
+    'check update width by column width',
+    withFakeTimers(async () => {
+      const colRef: RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      const layoutRef: RefObject<HTMLDivElement | null> = {
+        current: null,
+      };
+      let colWidth = 280;
 
-    expect(layoutRef.current!).toHaveStyle('width: 600px');
-  }));
+      const mockColRef = (element: HTMLDivElement) => {
+        if (!element) {
+          return;
+        }
+        vi.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
 
-  it('check update width by column width', withFakeTimers(async () => {
-    const colRef: RefObject<HTMLDivElement | null> = {
-      current: null,
-    };
-    const layoutRef: RefObject<HTMLDivElement | null> = {
-      current: null,
-    };
-    let colWidth = 280;
+        colRef.current = element;
+      };
 
-    const mockColRef = (element: HTMLDivElement) => {
-      if (!element) {
-        return;
-      }
-      vi.spyOn(element, 'clientWidth', 'get').mockImplementation(() => colWidth);
+      render(
+        <SplitCol width={colWidth} maxWidth={colWidth} getRootRef={mockColRef}>
+          <FixedLayout getRootRef={layoutRef}>
+            <div style={{ width: colWidth, height: 400 }} />
+          </FixedLayout>
+        </SplitCol>,
+      );
 
-      colRef.current = element;
-    };
+      expect(layoutRef.current!).toHaveStyle('width: 280px');
 
-    render(
-      <SplitCol width={colWidth} maxWidth={colWidth} getRootRef={mockColRef}>
-        <FixedLayout getRootRef={layoutRef}>
-          <div style={{ width: colWidth, height: 400 }} />
-        </FixedLayout>
-      </SplitCol>,
-    );
+      colWidth = 360;
+      act(() => {
+        globalThis.__resizeObserverMock.triggerAll();
+        vi.runAllTimers();
+      });
 
-    expect(layoutRef.current!).toHaveStyle('width: 280px');
-
-    colWidth = 360;
-    act(() => {
-      globalThis.__resizeObserverMock.triggerAll();
-      vi.runAllTimers();
-    });
-
-    expect(layoutRef.current!).toHaveStyle('width: 360px');
-  }));
+      expect(layoutRef.current!).toHaveStyle('width: 360px');
+    }),
+  );
 
   describe('check correct classNames', () => {
     it.each<{ props: Partial<FixedLayoutProps>; className: string }>([

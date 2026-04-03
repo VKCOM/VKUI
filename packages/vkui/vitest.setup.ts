@@ -137,7 +137,7 @@ type MockResizeObserverEntry = Partial<ResizeObserverEntry> & {
 class MockResizeObserver {
   public static instances: MockResizeObserver[] = [];
 
-  private observedTargets = new Set<Element>();
+  private readonly observedTargets = new Set<Element>();
 
   public observe = vi.fn((target: Element) => {
     this.observedTargets.add(target);
@@ -163,7 +163,7 @@ class MockResizeObserver {
   public emitObserved() {
     const entries = [...this.observedTargets].map((target) => ({
       target,
-      contentRect: { width: 0, height: 0 } as DOMRectReadOnly,
+      contentRect: DOMRect.fromRect({ width: 0, height: 0 }),
     }));
     this.emit(entries);
   }
@@ -211,7 +211,7 @@ vi.stubGlobal('__resizeObserverMock', {
   triggerForTarget: (target: Element, rect: { width?: number; height?: number } = {}) => {
     const { width = 0, height = 0 } = rect;
     getResizeObserverForTarget(target).emit([
-      { target, contentRect: { width, height } as DOMRectReadOnly },
+      { target, contentRect: DOMRect.fromRect({ width, height }) },
     ]);
   },
 });
@@ -238,15 +238,3 @@ vi.stubGlobal('TransitionEvent', FakeTransitionEvent);
 
 // Замена vitest.global-setup.ts
 vi.stubEnv('TZ', 'UTC');
-
-declare global {
-  var __resizeObserverMock: {
-    reset: () => void;
-    getInstances: () => MockResizeObserver[];
-    getObserverForTarget: (target: Element) => MockResizeObserver;
-    emitForTarget: (target: Element, entries?: MockResizeObserverEntry[]) => void;
-    emitAll: (entries?: MockResizeObserverEntry[]) => void;
-    triggerAll: () => void;
-    triggerForTarget: (target: Element, rect?: { width?: number; height?: number }) => void;
-  };
-}
