@@ -51,6 +51,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         'multiple',
         'name',
         'pattern',
+        'enterKeyHint',
         'placeholder',
         'readOnly',
         'required',
