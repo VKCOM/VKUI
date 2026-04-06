@@ -39,7 +39,7 @@ export interface FormFieldProps {
   /**
    * Статус отображения поля в форме.
    */
-  status?: 'default' | 'error' | 'valid';
+  status?: 'default' | 'error' | 'valid' | undefined;
   /**
    * Добавляет иконку слева.
    *
@@ -48,11 +48,11 @@ export interface FormFieldProps {
    * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
    * - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагирующая на нажатие.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Вертикальное выравнивание иконки слева.
    */
-  beforeAlign?: FieldIconsAlign;
+  beforeAlign?: FieldIconsAlign | undefined;
   /**
    * Добавляет иконку справа.
    *
@@ -61,22 +61,22 @@ export interface FormFieldProps {
    * - Используйте следующие размеры иконок `12` | `16` | `20` | `24` | `28`.
    * - Используйте [IconButton](https://vkui.io/components/icon-button), если вам нужна иконка, реагируюущая на нажатие.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Вертикальное выравнивание иконки справа.
    */
-  afterAlign?: FieldIconsAlign;
+  afterAlign?: FieldIconsAlign | undefined;
   /**
    * Режим отображения.
    *
    * - `default` — показывает фон, обводку и, при наличии, текст-подсказку.
    * - `plain` — показывает только текст-подсказку.
    */
-  mode?: 'default' | 'plain';
+  mode?: 'default' | 'plain' | undefined;
   /**
    * Максимальная высота поля.
    */
-  maxHeight?: number;
+  maxHeight?: number | undefined;
 }
 
 export interface FormFieldOwnProps
@@ -87,7 +87,7 @@ export interface FormFieldOwnProps
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 /**

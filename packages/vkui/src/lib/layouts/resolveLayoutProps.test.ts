@@ -1,4 +1,5 @@
 import { resolveLayoutProps } from './resolveLayoutProps';
+import type { PaddingProp } from './types';
 
 describe('resolveLayoutProps', () => {
   it('should work with empty values', () => {
@@ -106,7 +107,8 @@ describe('resolveLayoutProps', () => {
   });
 
   it('should ignore undefined values', () => {
-    const props = { padding: undefined, inlineSize: 100 };
+    // Тестируем что происходит когда свойство не передано (undefined)
+    const props: { padding?: PaddingProp; inlineSize: number } = { inlineSize: 100 };
     const result = resolveLayoutProps(props);
 
     expect(result).toEqual({

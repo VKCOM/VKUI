@@ -26,7 +26,7 @@ export type SwappedItemRange = { from: number; to: number };
 
 export interface UseDraggableProps<T extends HTMLElement = HTMLElement> {
   elRef: React.RefObject<T | null>;
-  onDragFinish?: (value: SwappedItemRange) => void;
+  onDragFinish?: ((value: SwappedItemRange) => void) | undefined;
 }
 
 export interface DraggableProps {

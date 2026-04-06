@@ -28,7 +28,7 @@ export interface HasCaps {
   /**
    * Отображение текста в верхнем регистре.
    */
-  caps?: boolean;
+  caps?: boolean | undefined;
 }
 
 export interface TypographyProps
@@ -38,25 +38,25 @@ export interface TypographyProps
   /**
    * Задаёт начертание шрифта, отличное от стандартного.
    */
-  weight?: '1' | '2' | '3';
+  weight?: '1' | '2' | '3' | undefined;
   /**
    * Включает акцентный тип начертания шрифта.
    * Используются токены fontWeightAccent[1, 2, 3]
    * Используется только вместе с `weight`.
    */
-  useAccentWeight?: boolean;
+  useAccentWeight?: boolean | undefined;
   /**
    * Убирает внешние отступы.
    */
-  normalize?: boolean;
+  normalize?: boolean | undefined;
   /**
    * Делает блок инлайновым.
    */
-  inline?: boolean;
+  inline?: boolean | undefined;
   /**
    * Выравнивание текста. Не имеет эффекта при inline={true}.
    */
-  align?: 'start' | 'center' | 'end';
+  align?: 'start' | 'center' | 'end' | undefined;
 }
 
 export const Typography = ({

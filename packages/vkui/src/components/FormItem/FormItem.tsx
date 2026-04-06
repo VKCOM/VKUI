@@ -33,52 +33,52 @@ export interface FormItemProps
   /**
    * Дополнительный элемент, отображаемый над содержимым.
    */
-  top?: React.ReactNode;
+  top?: React.ReactNode | undefined;
   /**
    * Передаётся при использовании `top`.
    *
    * `id` для `top`.
    */
-  topId?: string;
+  topId?: string | undefined;
   /**
    * Многострочный вывод заголовка. По умолчанию текст не переносится при переполнении.
    */
-  topMultiline?: boolean;
+  topMultiline?: boolean | undefined;
   /**
    * Позволяет поменять тег используемый для top
    * Если оставить пустым, то тег top будет span.
    * Если оставить пустым и использовать htmlFor, то тег top будет label.
    */
-  topComponent?: React.ElementType;
+  topComponent?: React.ElementType | undefined;
   /**
    * Дополнительный элемент, отображаемый под содержимым.
    */
-  bottom?: React.ReactNode;
+  bottom?: React.ReactNode | undefined;
   /**
    * Передаётся при использовании `bottom`.
    *
    * Должен совпадать с `aria-describedby`, который передаётся в компонент, отвечающий за пользовательский ввод.
    */
-  bottomId?: string;
+  bottomId?: string | undefined;
   /**
    * Статус, влияющий на стиль отображения компонента.
    */
-  status?: 'default' | 'error' | 'valid';
+  status?: 'default' | 'error' | 'valid' | undefined;
   /**
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    *
    * Режим `indent` предназначен для визуального отступа.
    */
-  removable?: boolean | 'indent';
+  removable?: boolean | 'indent' | undefined;
   /**
    * Удаляет внешние отступы вокруг компонента.
    * @since 5.8.0
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
   /**
    * Помечает поле обязательным.
    */
-  required?: boolean;
+  required?: boolean | undefined;
 }
 
 /**

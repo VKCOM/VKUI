@@ -36,7 +36,11 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
       const placement = snackbar.snackbarProps.placement;
       const isClosing = state.snackbarsToClose.has(snackbar.id);
 
-      if (!map[placement]) {
+      if (placement === undefined) {
+        continue;
+      }
+
+      if (placement !== undefined && !map[placement]) {
         map[placement] = [];
         openedSnackbarsCountersByPlacement[placement] = 0;
         placements.push(placement);

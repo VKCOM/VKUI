@@ -3,8 +3,8 @@ import type { SelectType } from '../components/Select/Select';
 import { getTextFromChildren } from './children';
 
 export type Option = {
-  value?: unknown;
-  label?: React.ReactNode;
+  value?: unknown | undefined;
+  label?: React.ReactNode | undefined;
   [index: string]: any;
 };
 

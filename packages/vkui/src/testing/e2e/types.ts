@@ -13,10 +13,10 @@ export interface VKUITestOptions {
 }
 
 export interface InternalVKUITestOptions {
-  adaptivityProviderProps?: null | Partial<AdaptivityProps>;
-  onlyForBrowsers?: null | Array<PlaywrightWorkerOptions['browserName']>;
-  onlyForPlatforms?: null | PlatformType[];
-  onlyForColorSchemes?: null | ColorSchemeType[];
+  adaptivityProviderProps?: null | Partial<AdaptivityProps> | undefined;
+  onlyForBrowsers?: null | Array<PlaywrightWorkerOptions['browserName']> | undefined;
+  onlyForPlatforms?: null | PlatformType[] | undefined;
+  onlyForColorSchemes?: null | ColorSchemeType[] | undefined;
 }
 
 export interface ScreenshotWithClipToContentOptions {
@@ -24,12 +24,12 @@ export interface ScreenshotWithClipToContentOptions {
    * @see https://playwright.dev/docs/screenshots#full-page-screenshots
    * @default true
    */
-  fullPage?: boolean;
+  fullPage?: boolean | undefined;
   /**
    * Задаёт область, до которой нужно обрезать скриншот.
    * @default DEFAULT_CROP_TO_CONTENT_SELECTOR
    */
-  cropToContentSelector?: string;
+  cropToContentSelector?: string | undefined;
 }
 
 export interface VKUITestHelpers {

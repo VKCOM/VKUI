@@ -22,7 +22,7 @@ export interface CustomSelectOptionInterface {
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   [index: string]: any;
 }
 

@@ -4,7 +4,7 @@ import { useModifierKey } from './useModifierKey';
 import styles from '../../Search.module.css';
 
 interface SearchFieldProps {
-  searchOpen?: boolean;
+  searchOpen?: boolean | undefined;
   setSearchOpen: (open: boolean) => void;
 }
 

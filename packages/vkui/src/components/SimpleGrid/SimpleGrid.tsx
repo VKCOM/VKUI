@@ -35,13 +35,13 @@ export interface SimpleGridProps extends RootComponentProps<HTMLElement>, Layout
   /**
    * Количество колонок.
    */
-  columns?: number;
+  columns?: number | undefined;
   /**
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
    * Через массив можно задать отступ между столбцами и строками [row, column], если они отличаются.
    */
-  gap?: GapsProp;
+  gap?: GapsProp | undefined;
   /**
    * Управляет отступами вокруг контейнера
    * Значение `none` позволяет отключить отступы
@@ -49,19 +49,19 @@ export interface SimpleGridProps extends RootComponentProps<HTMLElement>, Layout
    * Значение `auto-inline` позволяет задать платформенные inline-отступы
    * Значение `auto-block` позволяет задать платформенные block-отступы.
    */
-  margin?: 'none' | 'auto' | 'auto-inline' | 'auto-block';
+  margin?: 'none' | 'auto' | 'auto-inline' | 'auto-block' | undefined;
   /**
    * Вместо задания количества колонок, можно указать минимальную ширину элементов.
    */
-  minColWidth?: number;
+  minColWidth?: number | undefined;
   /**
    * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
-  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
+  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline' | undefined;
   /**
    * Возможность задать css-свойство `display`.
    */
-  display?: 'none' | 'grid' | 'inline-grid';
+  display?: 'none' | 'grid' | 'inline-grid' | undefined;
 }
 
 /**

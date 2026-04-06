@@ -5,8 +5,8 @@ import { useStableCallback } from '../../../hooks/useStableCallback';
 import type { SelectProps } from '../CustomSelect';
 /* eslint-disable jsdoc/require-jsdoc */
 type UseDropdownOpenedControllerProps = Pick<SelectProps, 'onOpen' | 'onClose'> & {
-  onOpened?: () => void;
-  onClosed?: () => void;
+  onOpened?: (() => void) | undefined;
+  onClosed?: (() => void) | undefined;
 };
 
 type Open = () => void;

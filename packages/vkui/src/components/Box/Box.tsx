@@ -16,7 +16,7 @@ export interface BoxProps extends RootComponentProps<HTMLElement>, LayoutProps {
   /**
    * Возможность задать css-свойство `display`.
    */
-  display?: 'none' | 'inline' | 'inline-block' | 'block' | 'contents';
+  display?: 'none' | 'inline' | 'inline-block' | 'block' | 'contents' | undefined;
 }
 
 /**

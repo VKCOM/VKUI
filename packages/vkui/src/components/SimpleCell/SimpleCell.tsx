@@ -22,62 +22,62 @@ export interface SimpleCellOwnProps extends HasComponent {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Иконка 12 или `<Badge />`. Добавится слева от текста `children`.
    */
-  badgeBeforeTitle?: React.ReactNode;
+  badgeBeforeTitle?: React.ReactNode | undefined;
   /**
    * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
    */
-  badgeAfterTitle?: React.ReactNode;
+  badgeAfterTitle?: React.ReactNode | undefined;
   /**
    * Иконка 12. Добавится слева от текста `subtitle`.
    */
-  badgeBeforeSubtitle?: React.ReactNode;
+  badgeBeforeSubtitle?: React.ReactNode | undefined;
   /**
    * Иконка 12. Добавится справа от текста `subtitle`.
    */
-  badgeAfterSubtitle?: React.ReactNode;
+  badgeAfterSubtitle?: React.ReactNode | undefined;
   /**
    * Контейнер для текста справа от `children`.
    */
-  indicator?: React.ReactNode;
+  indicator?: React.ReactNode | undefined;
   /**
    * Дополнительная строка текста над `children`.
    */
-  overTitle?: React.ReactNode;
+  overTitle?: React.ReactNode | undefined;
   /**
    * Дополнительная строка текста под `children`.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
   /**
    * Дополнительная строка текста под `children` и `subtitle`.
    */
-  extraSubtitle?: React.ReactNode;
+  extraSubtitle?: React.ReactNode | undefined;
   /**
    * Иконка 24|28 или `<Switch />`. Располагается справа от `indicator`.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Управляет видимостью иконки шеврона `›`.
    *
    * - `auto` - добавляет шеврон справа только для платформы `ios`;
    * - `always` - всегда показывает шеврон.
    */
-  chevron?: 'auto' | 'always';
+  chevron?: 'auto' | 'always' | undefined;
   /**
    * Размер chevron.
    */
-  chevronSize?: 's' | 'm';
+  chevronSize?: 's' | 'm' | undefined;
   /**
    * Включает многострочный режим для отображения текста.
    */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
 }
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableOmitProps {}

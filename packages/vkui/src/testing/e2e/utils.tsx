@@ -32,7 +32,7 @@ class CustomValueWithLabel<T> {
   }
 }
 
-type ComponentStateHeightState = { componentStateHeight?: number };
+type ComponentStateHeightState = { componentStateHeight?: number | undefined };
 
 type DecoratedPropValue<T> = T | CustomValueWithLabel<T>;
 
@@ -41,9 +41,9 @@ type DirectionProps = { dir: Direction };
 type AdaptivityFlag = boolean | 'x' | 'y';
 type DirectionFlag = boolean | Direction;
 type PropDesc<Props> = { [K in keyof Props]?: Array<DecoratedPropValue<Props[K]>> } & {
-  $adaptivity?: AdaptivityFlag;
-  $componentStateHeight?: Partial<Record<PlatformType, number>>;
-  $direction?: DirectionFlag;
+  $adaptivity?: AdaptivityFlag | undefined;
+  $componentStateHeight?: Partial<Record<PlatformType, number>> | undefined;
+  $direction?: DirectionFlag | undefined;
 };
 
 function getAdaptivity(adaptivity?: AdaptivityFlag) {
@@ -190,7 +190,7 @@ type GenerateCustomScreenshotNameOptions = {
   platform: string;
   browserName: string;
   colorSchemeType: string;
-  adaptivityProviderProps?: Partial<AdaptivityProps>;
+  adaptivityProviderProps?: Partial<AdaptivityProps> | undefined;
 };
 
 export function generateCustomScreenshotName(

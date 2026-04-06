@@ -35,21 +35,21 @@ export interface ToolButtonProps extends TappableOmitProps, AdaptiveIconRenderer
   /**
    * Режим отображения компонента.
    */
-  mode?: 'primary' | 'secondary' | 'tertiary' | 'outline';
+  mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | undefined;
   /**
    * Внешний вид компонента.
    */
-  appearance?: 'accent' | 'neutral';
+  appearance?: 'accent' | 'neutral' | undefined;
   /**
    * Направление контента.
    */
-  direction?: 'row' | 'column';
+  direction?: 'row' | 'column' | undefined;
   /**
    * Задаёт `50%` закругления для контейнера.
    *
    * > Note: игнорируется при `direction="column"` если передан `children`.
    */
-  rounded?: boolean;
+  rounded?: boolean | undefined;
 }
 
 /**

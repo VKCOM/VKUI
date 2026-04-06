@@ -27,7 +27,7 @@ const warn = warnOnce('Search');
 
 export type RenderIconButtonFn = (
   icon: React.ReactNode,
-  props?: Partial<IconButtonProps> & HasDataAttribute,
+  props?: (Partial<IconButtonProps> & HasDataAttribute) | undefined,
 ) => React.ReactElement;
 
 export interface SearchProps
@@ -57,74 +57,80 @@ export interface SearchProps
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLInputElement>;
+  getRef?: React.Ref<HTMLInputElement> | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода;
    * - `clearButton`: свойства для прокидывания в кнопку очистки.
    */
-  slotProps?: {
-    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
-    input?: React.InputHTMLAttributes<HTMLInputElement> &
-      HasRootRef<HTMLInputElement> &
-      HasDataAttribute;
-    clearButton?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute)
+          | undefined;
+        input?: React.InputHTMLAttributes<HTMLInputElement> &
+          HasRootRef<HTMLInputElement> &
+          HasDataAttribute;
+        clearButton?: React.HTMLAttributes<HTMLElement> &
+          HasRootRef<HTMLElement> &
+          HasDataAttribute;
+      }
+    | undefined;
   /**
    * Only iOS. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Контент, отображаемый перед полем ввода.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Иконка поиска. Может быть React-элементом или функцией, возвращающей элемент.
    */
-  icon?: React.ReactNode | ((renderFn: RenderIconButtonFn) => React.ReactNode);
+  icon?: React.ReactNode | ((renderFn: RenderIconButtonFn) => React.ReactNode) | undefined;
   /**
    * Обработчик нажатия на иконку поиска.
    */
-  onIconClick?: React.PointerEventHandler<HTMLElement>;
+  onIconClick?: React.PointerEventHandler<HTMLElement> | undefined;
   /**
    * Значение поля ввода по умолчанию.
    */
-  defaultValue?: string;
+  defaultValue?: string | undefined;
   /**
    * Текст для скринридеров, описывающий иконку поиска.
    */
-  iconLabel?: string;
+  iconLabel?: string | undefined;
   /**
    * Текст для скринридеров, описывающий кнопку очистки.
    */
-  clearLabel?: string;
+  clearLabel?: string | undefined;
   /**
    * @deprecated Since 8.1.0. Будет удалено в **VKUI v10**. Вместо этого используйте `slotProps={ clearButton: { 'data-testid': ... } }`.
    *
    * Передает атрибут `data-testid` для кнопки очистки.
    */
-  clearButtonTestId?: string;
+  clearButtonTestId?: string | undefined;
   /**
    * Удаляет отступы у компонента.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
   /**
    * Текст для кнопки Найти.
    */
-  findButtonText?: string;
+  findButtonText?: string | undefined;
   /**
    * Обработчик, при нажатии на кнопку "Найти".
    */
-  onFindButtonClick?: React.MouseEventHandler<HTMLElement>;
+  onFindButtonClick?: React.MouseEventHandler<HTMLElement> | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки поиска.
    */
-  findButtonTestId?: string;
+  findButtonTestId?: string | undefined;
   /**
    * Скрывает кнопку очистки.
    */
-  hideClearButton?: boolean;
+  hideClearButton?: boolean | undefined;
 }
 
 /**

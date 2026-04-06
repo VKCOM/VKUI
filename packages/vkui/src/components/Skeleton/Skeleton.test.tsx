@@ -9,9 +9,9 @@ describe('Skeleton', () => {
 
   it.each<{
     props: Partial<SkeletonProps>;
-    cssVariable?: string;
-    expectedValue?: string;
-    className?: string;
+    cssVariable?: string | undefined;
+    expectedValue?: string | undefined;
+    className?: string | undefined;
   }>([
     {
       props: {

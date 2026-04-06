@@ -90,8 +90,8 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
     strategy: strategyProp,
     placement: placementProp,
-    middleware: middlewares,
-    whileElementsMounted: isLock ? undefined : whileElementsMounted,
+    ...(middlewares !== undefined ? { middleware: middlewares } : {}),
+    ...(!isLock && { whileElementsMounted }),
   });
 
   const commitShownLocalState = React.useCallback(

@@ -5373,13 +5373,13 @@ __metadata:
   linkType: hard
 
 "@vkontakte/icons-sprite@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@vkontakte/icons-sprite@npm:3.1.1"
+  version: 3.2.1
+  resolution: "@vkontakte/icons-sprite@npm:3.2.1"
   dependencies:
-    "@swc/helpers": "npm:^0.5.17"
+    "@swc/helpers": "npm:^0.5.19"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10/8f9ff6c8c5c2c9f4724cb26a70c714d3fc9c786704e68092e3ee3f4f47a37ee2c37735c396a30e0f710fe1492e470c579343e76cd4c1a635de5a161e54a04ade
+  checksum: 10/a25a4f134c6a734ff2d7e702adbce1136fce5f72d2bebc22b8f77c1bd891298009640058a063480d35cd592ad45134959ed4bd54c3fc1c6d13bf2c61742e9a03
   languageName: node
   linkType: hard
 

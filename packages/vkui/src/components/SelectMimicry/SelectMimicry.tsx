@@ -26,15 +26,15 @@ export interface SelectMimicryProps
   /**
    * Включает многострочный режим отображения.
    */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Тип селекта, влияющий на внешний вид компонента.
    */
-  selectType?: SelectType;
+  selectType?: SelectType | undefined;
 }
 
 /**

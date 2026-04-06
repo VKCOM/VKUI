@@ -30,39 +30,39 @@ export interface ChipProps
   /**
    * Режим отображения компонента.
    */
-  mode?: 'primary' | 'secondary';
+  mode?: 'primary' | 'secondary' | undefined;
   /**
    * Значение чипа.
    */
-  value?: ChipOptionValue;
+  value?: ChipOptionValue | undefined;
   /**
    * Можно ли удалить чип.
    */
-  removable?: boolean;
+  removable?: boolean | undefined;
   /**
    * Блокировка взаимодействия с чипом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Режим только для чтения.
    */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
   /**
    * Текст для кнопки удаления.
    */
-  removeLabel?: string;
+  removeLabel?: string | undefined;
   /**
    * Контент перед основным содержимым.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Контент после основного содержимого.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Обработчик удаления чипа.
    */
-  onRemove?: (event: React.MouseEvent, value: ChipOptionValue) => void;
+  onRemove?: ((event: React.MouseEvent, value: ChipOptionValue) => void) | undefined;
 }
 
 /**

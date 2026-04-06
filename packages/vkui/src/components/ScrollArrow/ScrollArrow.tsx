@@ -47,21 +47,21 @@ export interface ScrollArrowProps
   /**
    * Размер стрелки.
    */
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
   /**
    * Смещает иконку кнопки навигации по вертикали.
    */
-  offsetY?: number | string;
+  offsetY?: number | string | undefined;
   /**
    * Смещает иконку кнопки навигации по горизонтали.
    * Для `direction="left"` применяется к `left` (в LTR) или `right` (в RTL).
    * Для `direction="right"` применяется к `right` (в LTR) или `left` (в RTL).
    */
-  offsetX?: number | string;
+  offsetX?: number | string | undefined;
   /**
    * [a11y]: Используется для ассистивных технологий.
    */
-  label?: string;
+  label?: string | undefined;
 }
 
 /**

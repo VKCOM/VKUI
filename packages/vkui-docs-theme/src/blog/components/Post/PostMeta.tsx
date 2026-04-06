@@ -3,9 +3,9 @@ import { DateFormatter } from '../../../helpers/date';
 import styles from './Post.module.css';
 
 export interface PostMetaProps {
-  publishDate?: Date | null;
-  tags?: string[];
-  className?: string;
+  publishDate?: Date | null | undefined;
+  tags?: string[] | undefined;
+  className?: string | undefined;
 }
 
 export function PostMeta({ publishDate, tags = [], className }: PostMetaProps) {

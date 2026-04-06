@@ -14,7 +14,7 @@ import type { SelectProps } from '../CustomSelect';
 type UseSelectedOptionControllerProps = Pick<SelectProps, 'value' | 'defaultValue'> & {
   isControlledOutside: boolean;
   allowClearButton: boolean;
-  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
+  onChange?: ((e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void) | undefined;
 };
 /* eslint-enable jsdoc/require-jsdoc */
 

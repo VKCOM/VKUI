@@ -11,11 +11,11 @@ export interface PlaceholderContainerProps
   /**
    * Растягивает плейсхолдер на весь экран, но в таком случае на экране должен быть только плейсхолдер.
    */
-  stretched?: boolean;
+  stretched?: boolean | undefined;
   /**
    * Убирает отступы у компонента.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
 }
 
 const PlaceholderContainer = ({
@@ -64,15 +64,15 @@ export interface PlaceholderProps extends PlaceholderContainerProps {
   /**
    * Иконка.
    */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | undefined;
   /**
    * Заголовок плейсхолдера.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    * Кнопка действия.
    */
-  action?: React.ReactNode;
+  action?: React.ReactNode | undefined;
 }
 
 /**
