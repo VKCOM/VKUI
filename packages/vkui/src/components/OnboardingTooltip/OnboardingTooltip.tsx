@@ -151,7 +151,9 @@ export const OnboardingTooltip = ({
     strategy: positionStrategy,
     placement: strictPlacement,
     middleware: middlewares,
-    whileElementsMounted: isLock ? undefined : (...args) => autoUpdateFloatingElement(...args, { elementResize: true }),
+    whileElementsMounted: isLock
+      ? undefined
+      : (...args) => autoUpdateFloatingElement(...args, { elementResize: true }),
   });
 
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
