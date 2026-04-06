@@ -1,6 +1,6 @@
+import { createRequire } from 'node:module';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { createRequire } from 'node:module';
 import { createDataProvider } from './data.js';
 import { registerAllResources } from './resources/registerAllResources.js';
 import { registerAllTools } from './tools/registerAllTools.js';
