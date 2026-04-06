@@ -1,11 +1,13 @@
 import { act } from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { fakeTimersForScope, waitCSSKeyframesAnimation } from '../../testing/utils';
 import { ConfigProvider } from '../ConfigProvider/ConfigProvider';
 import { Panel } from '../Panel/Panel';
 import { Root } from '../Root/Root';
 import { View } from '../View/View';
 import { useNavDirection } from './NavTransitionDirectionContext';
+import rootStyles from '../Root/Root.module.css';
+import viewStyles from '../View/View.module.css';
 
 function setup({ withAnimationsMode }: { withAnimationsMode: boolean }) {
   const TestContent = () => {
@@ -55,6 +57,32 @@ function setup({ withAnimationsMode }: { withAnimationsMode: boolean }) {
 describe('useNavTransition', () => {
   fakeTimersForScope();
 
+  it('Root bubbling animation events have no effect', async () => {
+    const { TestComponent } = setup({ withAnimationsMode: true });
+    // transition between views
+    const component = render(<TestComponent activeView="v1" />);
+    await act(vi.runOnlyPendingTimers);
+    expect(component.getByTestId('test-content')).toHaveTextContent('Direction: undefined');
+
+    component.rerender(<TestComponent activeView="v3" />);
+    await waitCSSKeyframesAnimation(screen.queryByTestId('v1'));
+    await waitCSSKeyframesAnimation(screen.queryByTestId('v3'), { runOnlyPendingTimers: true });
+    expect(component.getAllByTestId('test-content')[0]).toHaveTextContent('Direction: undefined');
+  });
+
+  it('View bubbling animation events have no effect', async () => {
+    const { TestComponent } = setup({ withAnimationsMode: true });
+    // transition between views
+    const component = render(<TestComponent activeView="v2" activePanel="v2.1" />);
+    await act(vi.runOnlyPendingTimers);
+    expect(component.getByTestId('test-content')).toHaveTextContent('Direction: undefined');
+
+    component.rerender(<TestComponent activeView="v2" activePanel="v2.2" />);
+    await waitCSSKeyframesAnimation(screen.queryByTestId('v2.1'));
+    await waitCSSKeyframesAnimation(screen.queryByTestId('v2.2'), { runOnlyPendingTimers: true });
+    expect(component.getAllByTestId('test-content')[0]).toHaveTextContent('Direction: undefined');
+  });
+
   it.each([
     ['properly detects transition direction without animations', false],
     ['properly detects transition direction with animations', true],
@@ -66,60 +94,70 @@ describe('useNavTransition', () => {
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: undefined');
 
     component.rerender(<TestComponent activeView="v3" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v1'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v3'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getViewById('v1'));
+    await waitCSSKeyframesAnimation(getViewById('v3'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: forwards');
 
     component.rerender(<TestComponent activeView="v2" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v3'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v2'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getViewById('v3'));
+    await waitCSSKeyframesAnimation(getViewById('v2'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: backwards');
 
     component.rerender(<TestComponent activeView="v1" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v2'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v1'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getViewById('v2'));
+    await waitCSSKeyframesAnimation(getViewById('v1'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: backwards');
 
     component.rerender(<TestComponent activeView="v2" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v1'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v2'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getViewById('v1'));
+    await waitCSSKeyframesAnimation(getViewById('v2'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: forwards');
 
     component.rerender(<TestComponent activeView="v3" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v2'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v3'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getViewById('v2'));
+    await waitCSSKeyframesAnimation(getViewById('v3'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: forwards');
 
     // transition between panels
     component.rerender(<TestComponent activeView="v2" activePanel="v2.1" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v3'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v2'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getViewById('v3'));
+    await waitCSSKeyframesAnimation(getViewById('v2'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: backwards');
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.2" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v2.1'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v2.2'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getPanelById('v2.1'));
+    await waitCSSKeyframesAnimation(getPanelById('v2.2'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: forwards');
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.1" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v2.2'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v2.1'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getPanelById('v2.2'));
+    await waitCSSKeyframesAnimation(getPanelById('v2.1'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: backwards');
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.3" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v2.1'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v2.3'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getPanelById('v2.1'));
+    await waitCSSKeyframesAnimation(getPanelById('v2.3'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: forwards');
 
     component.rerender(<TestComponent activeView="v2" activePanel="v2.2" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v2.3'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v2.2'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getPanelById('v2.3'));
+    await waitCSSKeyframesAnimation(getPanelById('v2.2'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: backwards');
 
     // transition to another view
     component.rerender(<TestComponent activeView="v3" />);
-    await waitCSSKeyframesAnimation(component.queryByTestId('v2'));
-    await waitCSSKeyframesAnimation(component.getByTestId('v3'), { runOnlyPendingTimers: true });
+    await waitCSSKeyframesAnimation(getViewById('v2'));
+    await waitCSSKeyframesAnimation(getViewById('v3'), { runOnlyPendingTimers: true });
     expect(component.getByTestId('test-content')).toHaveTextContent('Direction: forwards');
   });
 });
+
+function getViewById(viewId: string) {
+  const element = screen.queryByTestId(viewId);
+  return element?.closest<HTMLElement>(`.${rootStyles.view}`) ?? null;
+}
+
+function getPanelById(panelId: string) {
+  const element = screen.queryByTestId(panelId);
+  return element?.closest<HTMLElement>(`.${viewStyles.panel}`) ?? null;
+}

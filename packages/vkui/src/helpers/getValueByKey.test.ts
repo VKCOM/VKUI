@@ -7,8 +7,7 @@ describe('getRequiredValueByKey', () => {
   });
 
   it('should throw error when key does not exist', () => {
-    const map = { key1: 'value1' };
-    // @ts-expect-error: TS2345 функция, как и задумано, ругается на то, что ключа key2 нет в map
+    const map: Record<string, string> = { key1: 'value1' };
     expect(() => getRequiredValueByKey('key2', map)).toThrow('getRequiredValueByKey(key2)');
   });
 });

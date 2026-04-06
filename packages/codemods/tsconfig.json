@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "outDir": "dist",
-    "moduleResolution": "node",
+    "rootDir": "src",
+    "module": "NodeNext",
     "esModuleInterop": true,
     "resolveJsonModule": false,
     "isolatedModules": false,

@@ -49,6 +49,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
         'minLength',
         'name',
         'pattern',
+        'enterKeyHint',
         'placeholder',
         'readOnly',
         'required',

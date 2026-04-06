@@ -1,5 +1,26 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.web.json",
+  "include": [
+    "src/*.ts*",
+    "src/**/*.ts*",
+    "vitest.config.ts",
+    "vitest.global-setup.ts",
+    "vitest.setup.ts",
+    "playwright-ct.config.ts",
+    "playwright/**/*",
+    "global.vitest.ts",
+    "vite.config.ts",
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/coverage/**",
+    "**/storybook-static",
+    "**/__testfixtures__",
+    "**/__tests__",
+    "**/vkui-date-fns-tz"
+  ],
   "compilerOptions": {
     "allowJs": true
   }

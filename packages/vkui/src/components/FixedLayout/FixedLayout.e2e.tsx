@@ -7,7 +7,7 @@ test('FixedLayout with vertical=top', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<FixedLayoutPlayground {...componentPlaygroundProps} vertical="top" />);
-  await expectScreenshotClippedToContent({ fullPage: false });
+  await expectScreenshotClippedToContent();
 });
 
 test('FixedLayout with vertical=bottom', async ({
@@ -16,7 +16,7 @@ test('FixedLayout with vertical=bottom', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<FixedLayoutPlayground {...componentPlaygroundProps} vertical="bottom" />);
-  await expectScreenshotClippedToContent({ fullPage: false });
+  await expectScreenshotClippedToContent();
 });
 
 test('FixedLayout with vertical=top filled=true', async ({
@@ -25,7 +25,7 @@ test('FixedLayout with vertical=top filled=true', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<FixedLayoutPlayground {...componentPlaygroundProps} vertical="top" filled />);
-  await expectScreenshotClippedToContent({ fullPage: false });
+  await expectScreenshotClippedToContent();
 });
 
 test('FixedLayout with vertical=bottom filled=true', async ({
@@ -34,5 +34,5 @@ test('FixedLayout with vertical=bottom filled=true', async ({
   componentPlaygroundProps,
 }) => {
   await mount(<FixedLayoutPlayground {...componentPlaygroundProps} vertical="bottom" filled />);
-  await expectScreenshotClippedToContent({ fullPage: false });
+  await expectScreenshotClippedToContent();
 });

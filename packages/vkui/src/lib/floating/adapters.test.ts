@@ -10,38 +10,12 @@ vi.mock('@vkontakte/vkui-floating-ui/react-dom', () => {
   };
 });
 
-const customResizeObserverInstanceStub = vi.hoisted(() => ({
-  observe: vi.fn(),
-  disconnect: vi.fn(),
-  appendToTheDOM: vi.fn(),
-}));
-
-const CustomResizeObserverStub = vi.hoisted(() =>
-  vi.fn(
-    class MockCustomResizeObserver {
-      observe = customResizeObserverInstanceStub.observe.bind(customResizeObserverInstanceStub);
-      disconnect = customResizeObserverInstanceStub.disconnect.bind(
-        customResizeObserverInstanceStub,
-      );
-      appendToTheDOM = customResizeObserverInstanceStub.appendToTheDOM.bind(
-        customResizeObserverInstanceStub,
-      );
-    },
-  ),
-);
-
-vi.mock('./customResizeObserver', () => {
-  return {
-    CustomResizeObserver: CustomResizeObserverStub,
-  };
-});
-
 describe(autoUpdateFloatingElement, () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  test('does not use CustomResizeObserver if ResizeObserver is defined', () => {
+  test('use ResizeObserver', () => {
     global.ResizeObserver = noop as never;
     const reference = document.createElement('div');
     const floating = document.createElement('div');
@@ -63,37 +37,5 @@ describe(autoUpdateFloatingElement, () => {
       expect.anything(),
       expect.objectContaining({ elementResize: false }),
     );
-  });
-
-  test('uses CustomResizeObserver if ResizeObserver is undefined', () => {
-    global.ResizeObserver = undefined as never;
-    const reference = document.createElement('div');
-    const floating = document.createElement('div');
-
-    autoUpdateFloatingElement(reference, floating, vi.fn(), { elementResize: true });
-
-    expect(autoUpdateLibStub).toHaveBeenLastCalledWith(
-      expect.anything(),
-      expect.anything(),
-      expect.anything(),
-      expect.objectContaining({ elementResize: false }),
-    );
-
-    expect(CustomResizeObserverStub.mock.instances.length).toBe(1);
-  });
-
-  test('calls disposer in unmount callback', () => {
-    global.ResizeObserver = undefined as never;
-    const reference = document.createElement('div');
-    const floating = document.createElement('div');
-
-    const unmountCallback = autoUpdateFloatingElement(reference, floating, vi.fn(), {
-      elementResize: true,
-    });
-
-    unmountCallback();
-
-    expect(autoUpdateLibDisposerStub).toHaveBeenCalledTimes(1);
-    expect(customResizeObserverInstanceStub.disconnect).toHaveBeenCalled();
   });
 });

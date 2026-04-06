@@ -32,6 +32,7 @@ export interface InputProps
       | 'multiple'
       | 'name'
       | 'pattern'
+      | 'enterKeyHint'
       | 'placeholder'
       | 'readOnly'
       | 'required'
@@ -91,6 +92,7 @@ export const Input = ({
   multiple,
   name,
   pattern,
+  enterKeyHint,
   placeholder,
   readOnly,
   required,
@@ -136,6 +138,7 @@ export const Input = ({
       multiple,
       name,
       pattern,
+      enterKeyHint,
       placeholder,
       readOnly,
       required,

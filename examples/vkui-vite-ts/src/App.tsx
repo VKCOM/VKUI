@@ -9,7 +9,7 @@ import {
   Link,
   Title,
 } from '@vkontakte/vkui';
-import { useColorSchemeSwitcher } from './ColorSchemeSwitcher';
+import { useColorSchemeSwitcher } from './useColorSchemeSwitcher.tsx';
 import styles from './App.module.css';
 
 function Copyright() {
