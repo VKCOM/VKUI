@@ -451,9 +451,7 @@ export const DateInput = ({
   const showCalendarButton = !disableCalendar && (accessible || (!accessible && !value));
   const showClearButton = value && !readOnly;
 
-  useGlobalEscKeyDown(open && !disableCalendar, closeCalendar, {
-    capture: false,
-  });
+  useGlobalEscKeyDown(open && !disableCalendar, closeCalendar);
 
   return (
     <FormField

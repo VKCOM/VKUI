@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
 import { Keys, pressedKey } from '../../../lib/accessibility';
 import type { SelectProps } from '../CustomSelect';
 import type { UseFocusedOptionControllerReturn } from './useFocusedOptionController';
@@ -58,9 +59,6 @@ export function useInputKeyboardController({
             open();
           }
           break;
-        case Keys.ESCAPE:
-          close();
-          break;
         case Keys.BACKSPACE:
         case Keys.DELETE: {
           open();
@@ -77,8 +75,10 @@ export function useInputKeyboardController({
           break;
       }
     },
-    [scrollBoxRef, opened, close, focusOption, open, resetFocusedOption, selectFocused],
+    [scrollBoxRef, opened, focusOption, open, resetFocusedOption, selectFocused],
   );
+
+  useGlobalEscKeyDown(opened, () => close());
 
   const handleInputKeydown = React.useCallback(
     (event: React.KeyboardEvent) => {

@@ -221,15 +221,6 @@ export const CalendarHeader = ({
     );
   }
 
-  const stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
-    (event: React.KeyboardEvent, isOpen: boolean) => {
-      if (isOpen && event.key === 'Escape') {
-        event.stopPropagation();
-      }
-    },
-    [],
-  );
-
   return (
     <RootComponent baseClassName={styles.host} {...restProps}>
       {!prevMonthHidden && (
@@ -271,7 +262,6 @@ export const CalendarHeader = ({
               onChange={onMonthsChange}
               forceDropdownPortal={false}
               selectType="accent"
-              onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
               slotProps={{
                 input: {
                   'aria-label': changeMonthLabel,
@@ -292,7 +282,6 @@ export const CalendarHeader = ({
               onChange={onYearChange}
               forceDropdownPortal={false}
               selectType="accent"
-              onInputKeyDown={stopPropogationOfEscapeKeyboardEventWhenSelectIsOpen}
               slotProps={{
                 input: {
                   'aria-label': changeYearLabel,

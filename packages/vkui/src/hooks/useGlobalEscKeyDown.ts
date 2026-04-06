@@ -3,10 +3,40 @@ import { Keys, pressedKey } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
-const EVENT_OPTIONS = {
-  passive: true,
-  capture: true,
+type EscHandler = {
+  callback: (event: KeyboardEvent) => void;
 };
+
+type EscHandlersStore = {
+  handlers: EscHandler[];
+  onKeyDown: (event: KeyboardEvent) => void;
+};
+
+const ESC_HANDLERS_BY_DOCUMENT = new WeakMap<Document, EscHandlersStore>();
+
+function getOrCreateEscHandlersStore(document: Document) {
+  const existingStore = ESC_HANDLERS_BY_DOCUMENT.get(document);
+  if (existingStore) {
+    return existingStore;
+  }
+
+  const store: EscHandlersStore = {
+    handlers: [],
+    onKeyDown(event) {
+      if (pressedKey(event) !== Keys.ESCAPE || store.handlers.length === 0) {
+        return;
+      }
+
+      const activeHandler = store.handlers[store.handlers.length - 1];
+      activeHandler.callback(event);
+    },
+  };
+
+  document.addEventListener('keydown', store.onKeyDown);
+  ESC_HANDLERS_BY_DOCUMENT.set(document, store);
+
+  return store;
+}
 
 /**
  * Завязывается на document.
@@ -14,30 +44,42 @@ const EVENT_OPTIONS = {
  * @private
  */
 export const useGlobalEscKeyDown = (
-  init: boolean,
+  enabled: boolean,
   callback?: (event: KeyboardEvent) => void,
-  optionsProp?: AddEventListenerOptions,
 ): void => {
   const { document } = useDOM();
 
-  const options = useRef<AddEventListenerOptions>(optionsProp || EVENT_OPTIONS);
+  const init = enabled && !!callback;
+
+  const stableRef = useRef<((event: KeyboardEvent) => void) | null>(null);
 
   useIsomorphicLayoutEffect(() => {
-    options.current = optionsProp || EVENT_OPTIONS;
-  }, [options]);
+    stableRef.current = callback ?? null;
+  }, [callback]);
 
   useIsomorphicLayoutEffect(() => {
-    if (!document || !init || !callback) {
+    if (!document || !init) {
       return;
     }
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (pressedKey(event) === Keys.ESCAPE) {
-        callback(event);
+
+    const store = getOrCreateEscHandlersStore(document);
+    const handler: EscHandler = {
+      callback: (event) => {
+        stableRef.current?.(event);
+      },
+    };
+    store.handlers.push(handler);
+
+    return () => {
+      const index = store.handlers.indexOf(handler);
+      if (index !== -1) {
+        store.handlers.splice(index, 1);
+      }
+
+      if (store.handlers.length === 0) {
+        document.removeEventListener('keydown', store.onKeyDown);
+        ESC_HANDLERS_BY_DOCUMENT.delete(document);
       }
     };
-    document.addEventListener('keydown', handleKeyDown, options.current);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown, options.current);
-    };
-  }, [init, document, callback]);
+  }, [init, document, stableRef]);
 };

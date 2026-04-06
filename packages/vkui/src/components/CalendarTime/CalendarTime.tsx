@@ -152,20 +152,6 @@ export const CalendarTime = ({
     }
   };
 
-  const stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen = React.useCallback(
-    (event: React.KeyboardEvent, isOpen: boolean) => {
-      if (isOpen && event.key === 'Escape') {
-        event.stopPropagation();
-      }
-    },
-    [],
-  );
-
-  const onSelectInputKeyDown = (e: React.KeyboardEvent, isOpen: boolean) => {
-    onPickerKeyDown(e);
-    stopPropagationOfEscapeKeyboardEventWhenSelectIsOpen(e, isOpen);
-  };
-
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
     return (
@@ -191,7 +177,7 @@ export const CalendarTime = ({
         onChange={onChange}
         options={localHours}
         setTime={setHoursFn}
-        onInputKeyDown={onSelectInputKeyDown}
+        onInputKeyDown={onPickerKeyDown}
         inputRef={hoursInputRef}
         inputLabel={changeHoursLabel}
         inputTestId={hoursTestId}
@@ -203,7 +189,7 @@ export const CalendarTime = ({
         onChange={onChange}
         options={localMinutes}
         setTime={setMinutesFn}
-        onInputKeyDown={onSelectInputKeyDown}
+        onInputKeyDown={onPickerKeyDown}
         inputRef={minutesInputRef}
         inputLabel={changeMinutesLabel}
         inputTestId={minutesTestId}
