@@ -143,6 +143,7 @@ export const OnboardingTooltip = ({
   const {
     x: floatingDataX,
     y: floatingDataY,
+    isPositioned,
     refs,
     placement: resolvedPlacement,
     middlewareData: { arrow: arrowCoords },
@@ -150,7 +151,9 @@ export const OnboardingTooltip = ({
     strategy: positionStrategy,
     placement: strictPlacement,
     middleware: middlewares,
-    whileElementsMounted: isLock ? undefined : autoUpdateFloatingElement,
+    whileElementsMounted: isLock
+      ? undefined
+      : (...args) => autoUpdateFloatingElement(...args, { elementResize: true }),
   });
 
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
@@ -177,6 +180,10 @@ export const OnboardingTooltip = ({
       x: floatingDataX,
       y: floatingDataY,
     });
+
+    if (!isPositioned) {
+      floatingStyle.visibility = 'hidden';
+    }
 
     tooltip = createPortal(
       <FocusTrap rootRef={focusTrapRootRef} disabled={disableFocusTrap} restoreFocus={restoreFocus}>
