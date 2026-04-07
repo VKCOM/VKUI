@@ -23,7 +23,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -233,13 +233,6 @@ const getInternalValue = (value: CalendarProps['value']) => {
     newValue[4] = String(value.getMinutes()).padStart(2, '0');
   }
   return newValue;
-};
-
-const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['tabindex'],
 };
 
 /**
@@ -612,11 +605,10 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <FocusTrapInternal
+          <FocusTrap
             rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
-            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <div ref={focusTrapRootRef}>
               <Calendar
@@ -654,7 +646,7 @@ export const DateInput = ({
                 {...calendarTestsProps}
               />
             </div>
-          </FocusTrapInternal>
+          </FocusTrap>
         </Popper>
       )}
     </FormField>

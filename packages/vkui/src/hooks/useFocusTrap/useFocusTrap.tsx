@@ -1,6 +1,8 @@
 'use client';
 
 import type * as React from 'react';
+import { useRef } from 'react';
+import { arraysEquals } from '../../helpers/array';
 import { FOCUSABLE_ELEMENTS_LIST } from '../../lib/accessibility';
 import { getWindow } from '../../lib/dom';
 import { useMutationObserver } from '../useMutationObserver';
@@ -98,6 +100,8 @@ export const useFocusTrap = (
     mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
+  const prevFocusableRef = useRef<HTMLElement[]>([]);
+
   const createFocusFn = (getFocusElement: (root: HTMLElement | null) => HTMLElement | null) => {
     return () => {
       const node = getFocusElement(ref.current);
@@ -141,7 +145,12 @@ export const useFocusTrap = (
     const activeElement = doc.activeElement as HTMLElement;
     const focusableNodes = collectFocusable(parentNode);
 
+    if (arraysEquals(focusableNodes, prevFocusableRef.current)) {
+      return;
+    }
+
     if (focusableNodes.length === 0) {
+      prevFocusableRef.current = [];
       return;
     }
 
@@ -154,6 +163,8 @@ export const useFocusTrap = (
     if (nodeToFocus) {
       nodeToFocus.focus({ preventScroll: true });
     }
+
+    prevFocusableRef.current = focusableNodes;
   });
 
   useMutationObserver(
