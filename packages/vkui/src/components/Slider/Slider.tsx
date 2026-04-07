@@ -39,25 +39,25 @@ export interface SliderBaseProps
   /**
    * Минимальное значение слайдера.
    */
-  min?: number;
+  min?: number | undefined;
   /**
    * Максимальное значение слайдера.
    */
-  max?: number;
+  max?: number | undefined;
   /**
    * Шаг изменения значения слайдера.
    */
-  step?: number;
+  step?: number | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Тоже самое, что и `aria-label`, но на вход можно получать индекс текущего ползунка и в зависимости от этого выдавать разный текст.
    *
    * > Перебивает `aria-label`.
    */
-  getAriaLabel?: (index: number) => string;
+  getAriaLabel?: ((index: number) => string) | undefined;
   /**
    * В отличие от `aria-valuetext`, позволяет более гибко форматировать текст в зависимости от значения ползунка.
    *
@@ -65,42 +65,42 @@ export interface SliderBaseProps
    *
    * > Перебивает `aria-valuetext`.
    */
-  getAriaValueText?: (value: number, index: number) => string;
+  getAriaValueText?: ((value: number, index: number) => string) | undefined;
   /**
    * Включает отображение всплывающей подсказки при взаимодействии с ползунком.
    */
-  withTooltip?: boolean;
+  withTooltip?: boolean | undefined;
   /**
    * Размер ползунка.
    */
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | undefined;
   /**
    * Передает атрибут `data-testid` для первого ползунка.
    */
-  startThumbTestId?: string;
+  startThumbTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для второго ползунка когда `multiple=true`.
    */
-  endThumbTestId?: string;
+  endThumbTestId?: string | undefined;
 }
 
 export interface SliderProps extends SliderBaseProps {
   /**
    * Флаг множественного выбора (должен быть false или не указан).
    */
-  multiple?: false;
+  multiple?: false | undefined;
   /**
    * Текущее значение слайдера.
    */
-  value?: number;
+  value?: number | undefined;
   /**
    * Значение слайдера по умолчанию.
    */
-  defaultValue?: number;
+  defaultValue?: number | undefined;
   /**
    * Обработчик изменения значения слайдера.
    */
-  onChange?: (value: number, event: CustomTouchEvent | React.ChangeEvent) => void;
+  onChange?: ((value: number, event: CustomTouchEvent | React.ChangeEvent) => void) | undefined;
 }
 
 export interface SliderMultipleProps extends SliderBaseProps {
@@ -111,15 +111,17 @@ export interface SliderMultipleProps extends SliderBaseProps {
   /**
    * Текущие значения слайдера в виде массива [начальное, конечное].
    */
-  value?: [number, number];
+  value?: [number, number] | undefined;
   /**
    * Значения слайдера по умолчанию в виде массива [начальное, конечное].
    */
-  defaultValue?: [number, number];
+  defaultValue?: [number, number] | undefined;
   /**
    * Обработчик изменения значений слайдера.
    */
-  onChange?: (value: [number, number], event: CustomTouchEvent | React.ChangeEvent) => void;
+  onChange?:
+    | ((value: [number, number], event: CustomTouchEvent | React.ChangeEvent) => void)
+    | undefined;
 }
 
 /**

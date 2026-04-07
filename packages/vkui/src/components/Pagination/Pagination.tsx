@@ -24,35 +24,35 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
   /**
    * Текущая страница.
    */
-  currentPage?: number;
+  currentPage?: number | undefined;
   /**
    * Кол-во всегда видимых страниц по краям текущей страницы.
    */
-  siblingCount?: number;
+  siblingCount?: number | undefined;
   /**
    * Кол-во всегда видимых страниц в начале и в конце.
    */
-  boundaryCount?: number;
+  boundaryCount?: number | undefined;
   /**
    * Общее кол-во страниц.
    */
-  totalPages?: number;
+  totalPages?: number | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Декоративный текст для кнопки навигации назад.
    *
    * > Note: Экранные дикторы будут использовать `prevButtonLabel`.
    */
-  prevButtonCaption?: string;
+  prevButtonCaption?: string | undefined;
   /**
    * Декоративный текст для кнопки навигации вперёд.
    *
    * > Note: Экранные дикторы будут использовать `nextButtonLabel`.
    */
-  nextButtonCaption?: string;
+  nextButtonCaption?: string | undefined;
   /**
    * Задаёт стиль отображения кнопок навигации.
    *
@@ -60,23 +60,23 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * - `caption` – показывать только подпись;
    * - `both` – показывать и иконку, и подпись.
    */
-  navigationButtonsStyle?: PaginationNavigationButtonProps['style'];
+  navigationButtonsStyle?: PaginationNavigationButtonProps['style'] | undefined;
   /**
    * [a11y] Метка для обозначения блока навигации.
    */
-  navigationLabel?: string;
+  navigationLabel?: string | undefined;
   /**
    * Тип элемента отрисовки блока навигации.
    */
-  navigationLabelComponent?: HasComponent['Component'];
+  navigationLabelComponent?: HasComponent['Component'] | undefined;
   /**
    * [a11y] Метка для кнопки навигации назад.
    */
-  prevButtonLabel?: string;
+  prevButtonLabel?: string | undefined;
   /**
    * [a11y] Метка для кнопки навигации вперёд.
    */
-  nextButtonLabel?: string;
+  nextButtonLabel?: string | undefined;
   /**
    * [a11y] Функция для переопределения и/или локализации метки кнопки страницы.
    *
@@ -86,35 +86,37 @@ export interface PaginationProps extends Omit<HTMLAttributesWithRootRef<HTMLElem
    * Дополнительная информация скорее будет избыточна,
    * так как будет зачитываться для каждой кнопки при перемещении по списку.
    */
-  getPageLabel?: (isCurrent: boolean) => string;
+  getPageLabel?: ((isCurrent: boolean) => string) | undefined;
   /**
    * Обработчик изменения выбранной страницы.
    */
-  onChange?: (page: number, event: React.MouseEvent<HTMLElement>) => void;
+  onChange?: ((page: number, event: React.MouseEvent<HTMLElement>) => void) | undefined;
   /**
    * Функция для кастомного рендера кнопок страниц.
    *
    * > Note: `CustomPaginationPageButtonProps` наследует API [Tappable](https://vkui.io/components/tappable).
    */
-  renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
+  renderPageButton?: ((props: CustomPaginationPageButtonProps) => React.ReactNode) | undefined;
   /**
    Функция для кастомного рендера кнопок навигации `prev` и `next`.
    *
    * > Note: `CustomPaginationNavigationButton` наследует API [Button](https://vkui.io/components/button).
    */
-  renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
+  renderNavigationButton?:
+    | ((props: CustomPaginationNavigationButton) => React.ReactNode)
+    | undefined;
   /**
    * Передает атрибут `data-testid` для кнопок страниц.
    */
-  pageButtonTestId?: (day: PaginationPageType, active: boolean) => string;
+  pageButtonTestId?: ((day: PaginationPageType | undefined, active: boolean) => string) | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки `prev`.
    */
-  prevButtonTestId?: string;
+  prevButtonTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки `next`.
    */
-  nextButtonTestId?: string;
+  nextButtonTestId?: string | undefined;
 }
 
 /**
@@ -238,11 +240,11 @@ export const Pagination = ({
             caption={prevButtonCaption}
             Icon={isRtl ? Icon24ChevronCompactRight : Icon24ChevronCompactLeft}
             a11yLabel={prevButtonLabel}
-            disabled={isFirstPage || disabled}
+            disabled={isFirstPage || disabled === true}
             onClick={handlePrevClick}
             data-page={prevPage}
-            data-testid={prevButtonTestId}
-            renderNavigationButton={renderNavigationButton}
+            {...(prevButtonTestId !== undefined && { 'data-testid': prevButtonTestId })}
+            {...(renderNavigationButton !== undefined && { renderNavigationButton })}
           />
         </li>
         {pages.map(renderPages)}
@@ -253,11 +255,11 @@ export const Pagination = ({
             caption={nextButtonCaption}
             Icon={isRtl ? Icon24ChevronCompactLeft : Icon24ChevronCompactRight}
             a11yLabel={nextButtonLabel}
-            disabled={isLastPage || disabled}
+            disabled={isLastPage || disabled === true}
             onClick={handleNextClick}
             data-page={nextPage}
-            data-testid={nextButtonTestId}
-            renderNavigationButton={renderNavigationButton}
+            {...(nextButtonTestId !== undefined && { 'data-testid': nextButtonTestId })}
+            {...(renderNavigationButton !== undefined && { renderNavigationButton })}
           />
         </li>
       </ul>

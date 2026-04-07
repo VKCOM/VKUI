@@ -34,7 +34,7 @@ describe('useResizeObserver', () => {
   }: {
     mockedBlocksIds: string[];
     resizeCallback: () => void;
-    useWindow?: boolean;
+    useWindow?: boolean | undefined;
   }) => {
     const ref = useRef(null);
     useResizeObserver(useWindow ? window : ref, resizeCallback);

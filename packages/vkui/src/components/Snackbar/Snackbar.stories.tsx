@@ -40,7 +40,7 @@ const story: Meta<SnackbarProps> = {
 
 export default story;
 
-type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean }>;
+type Story = StoryObj<Omit<SnackbarProps, 'after'> & { after?: boolean | undefined }>;
 
 export const Playground: Story = {
   render: function Render({ onClosed, ...args }) {

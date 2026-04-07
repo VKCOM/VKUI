@@ -84,18 +84,18 @@ export type GroupContainerProps = HTMLAttributesWithRootRef<HTMLElement> &
     `hide` - разделитель всегда спрятан,
     `auto` - разделитель рисуется автоматически между соседними группами.
    */
-    separator?: 'show' | 'hide' | 'auto';
+    separator?: 'show' | 'hide' | 'auto' | undefined;
     /**
      * Режим отображения. Если установлен `card`, выглядит как карточка c
      * обводкой и внешними отступами. Если `plain` — без отступов и обводки.
      * По умолчанию режим отображения зависит от `viewWidth` (`card` при `SMALL_TABLET` и `plain` при `MOBILE`)
      * В модальных окнах по умолчанию `plain`.
      */
-    mode?: 'plain' | 'card';
+    mode?: 'plain' | 'card' | undefined;
     /**
      * Отвечает за отступы вокруг контента в режиме `card`.
      */
-    padding?: 's' | 'm';
+    padding?: 's' | 'm' | undefined;
   };
 
 const warn = warnOnce('Group');

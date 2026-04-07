@@ -38,21 +38,21 @@ export interface ViewProps extends HTMLAttributesWithRootRef<HTMLElement>, NavId
   /**
    * Обработчик свайпа назад.
    */
-  onSwipeBack?: () => void;
+  onSwipeBack?: (() => void) | undefined;
   /**
    * Обработчик начала анимации свайпа назад.
    *
    * Чтобы остановить свайп назад, возвращайте `"prevent"`.
    */
-  onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
+  onSwipeBackStart?: ((activePanel: string | null) => void | 'prevent') | undefined;
   /**
    * Обработчик завершения анимации отмененного пользователем свайпа.
    */
-  onSwipeBackCancel?: () => void;
+  onSwipeBackCancel?: (() => void) | undefined;
   /**
    * Массив из id панелей в порядке открытия.
    */
-  history?: string[];
+  history?: string[] | undefined;
   /**
    * Коллекция Panel. У каждой Panel должен быть уникальный `id`.
    */

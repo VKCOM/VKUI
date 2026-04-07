@@ -17,7 +17,7 @@ type GalleryViewPortProps = Pick<
     onMoveX: (e: CustomTouchEvent) => void;
     onEnd: (e: CustomTouchEvent) => void;
     setSlideRef: (slideRef: HTMLDivElement | null, slideIndex: number) => void;
-    layerRef?: React.Ref<HTMLDivElement>;
+    layerRef?: React.Ref<HTMLDivElement> | undefined;
     slidesContainerId: string;
   };
 

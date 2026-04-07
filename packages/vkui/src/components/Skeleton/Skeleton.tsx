@@ -107,27 +107,27 @@ export interface SkeletonProps
   /**
    * Начальный цвет анимации.
    */
-  colorFrom?: string;
+  colorFrom?: string | undefined;
 
   /**
    * Финальный цвет анимации.
    */
-  colorTo?: string;
+  colorTo?: string | undefined;
 
   /**
    * Выключает анимацию, в результате чего показывается только один цвет.
    */
-  noAnimation?: boolean;
+  noAnimation?: boolean | undefined;
 
   /**
    * Длительность анимации в секундах.
    */
-  duration?: number;
+  duration?: number | undefined;
 
   /**
    * Задерживает отрисовку элемента на заданное количество миллисекунд.
    */
-  visibilityDelay?: number;
+  visibilityDelay?: number | undefined;
 }
 
 /**

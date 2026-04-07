@@ -3,8 +3,8 @@ import { fireEvent, render } from '@testing-library/react';
 import { useGlobalOnClickOutside, useGlobalOnEventOutside } from './useGlobalOnClickOutside';
 
 interface WrapperUseGlobalOnClickOutsideProps {
-  disableTarget?: 'target-1' | 'target-2';
-  disableAllTarget?: boolean;
+  disableTarget?: 'target-1' | 'target-2' | undefined;
+  disableAllTarget?: boolean | undefined;
   globalClickHandler: () => void;
   useGlobalOnClickOutsideImpl: typeof useGlobalOnClickOutside;
 }

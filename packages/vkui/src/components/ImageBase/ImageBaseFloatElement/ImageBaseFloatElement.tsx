@@ -77,18 +77,18 @@ export interface ImageBaseFloatElementProps extends HTMLAttributesWithRootRef<HT
   /**
    * Отступ компонента от края контейнера по горизонтали.
    */
-  inlineIndent?: FloatElementIndentation;
+  inlineIndent?: FloatElementIndentation | undefined;
   /**
    * Отступ компонента от края контейнера по вертикали.
    */
-  blockIndent?: FloatElementIndentation;
+  blockIndent?: FloatElementIndentation | undefined;
   /**
    * Режим отображения компонента:
    *
    * - `"always"`: Всегда
    * - `"on-hover"`: При наведении на картинку.
    */
-  visibility?: 'always' | 'on-hover';
+  visibility?: 'always' | 'on-hover' | undefined;
 }
 
 export const ImageBaseFloatElement = ({

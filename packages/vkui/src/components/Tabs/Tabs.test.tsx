@@ -9,7 +9,7 @@ import { TabsItem } from '../TabsItem/TabsItem';
 import { Tabs, type TabsProps } from './Tabs';
 import styles from './Tabs.module.css';
 
-function TestTabs(props: { disabledKeys?: string[]; role?: string }) {
+function TestTabs(props: { disabledKeys?: string[] | undefined; role?: string | undefined }) {
   const [currentTab, setCurrentTab] = useState('first');
 
   return (
@@ -74,7 +74,10 @@ function TestTabs(props: { disabledKeys?: string[]; role?: string }) {
   );
 }
 
-function TestTabsWithGlobalTabsControlling(props: { disabledKeys?: string[]; role?: string }) {
+function TestTabsWithGlobalTabsControlling(props: {
+  disabledKeys?: string[] | undefined;
+  role?: string | undefined;
+}) {
   const [currentTab, setCurrentTab] = useState('tab-first');
 
   return (

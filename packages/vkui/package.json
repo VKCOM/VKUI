@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "name": "@vkontakte/vkui",
   "description": "VKUI library",
   "module": "./dist/index.js",
@@ -87,14 +87,14 @@
     "react-dom": "^18.2.0 || ^19.0.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.20",
+    "@swc/helpers": "^0.5.21",
     "@vkontakte/icons": "^3.0.0",
     "@vkontakte/vkjs": "^2.0.2",
     "@vkontakte/vkui-date-fns-tz": "^0.0.6",
     "@vkontakte/vkui-floating-ui": "^0.2.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.9",
+    "@biomejs/biome": "^2.4.10",
     "@types/node": "*",
     "@types/postcss-import": "^14.0.3",
     "react": "^18.3.1",

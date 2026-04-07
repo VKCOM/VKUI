@@ -4,7 +4,7 @@ import type { SelectType } from '../Select/Select';
 import { Text, type TextProps } from '../Typography/Text/Text';
 
 export interface SelectTypographyProps extends TextProps {
-  selectType?: SelectType;
+  selectType?: SelectType | undefined;
 }
 
 /**

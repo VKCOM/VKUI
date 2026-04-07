@@ -8,7 +8,7 @@ export interface RadioGroupProps extends HTMLAttributesWithRootRef<HTMLDivElemen
   /**
    * Режим расположения элементов.
    */
-  mode?: 'vertical' | 'horizontal';
+  mode?: 'vertical' | 'horizontal' | undefined;
 }
 
 /**
