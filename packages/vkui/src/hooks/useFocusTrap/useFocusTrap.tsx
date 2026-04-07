@@ -80,10 +80,6 @@ export type UseFocusTrapProps = {
    */
   autoFocusDelay?: number;
   /**
-   * Пользовательские опции для MutationObserver, который отслеживает изменения DOM внутри компонента и пересчитывает ноды для фокуса.
-   */
-  mutationObserverOptions?: MutationObserverInit;
-  /**
    * @default true
    */
   mount?: boolean;
@@ -97,7 +93,6 @@ export const useFocusTrap = (
     autoFocus = true,
     restoreFocus = true,
     autoFocusDelay = 0,
-    mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
   const prevFocusableRef = useRef<HTMLElement[]>([]);
@@ -167,11 +162,7 @@ export const useFocusTrap = (
     prevFocusableRef.current = focusableNodes;
   });
 
-  useMutationObserver(
-    ref,
-    () => ref.current && onMutateParentHandler(ref.current),
-    mutationObserverOptions,
-  );
+  useMutationObserver(ref, () => ref.current && onMutateParentHandler(ref.current));
 
   const createGuardFocusHandler = (focusFn: () => void, focusFromOutside: () => void) => {
     return (event: React.FocusEvent<HTMLSpanElement>) => {
