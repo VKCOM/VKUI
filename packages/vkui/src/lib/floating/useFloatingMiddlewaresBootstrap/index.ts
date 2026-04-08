@@ -22,58 +22,60 @@ export interface UseFloatingMiddlewaresBootstrapOptions {
   /**
    * По умолчанию компонент выберет наилучшее расположение сам, но приоритетное можно задать с помощью этого свойства.
    */
-  placement?: PlacementWithAuto;
+  placement?: PlacementWithAuto | undefined;
   /**
    * Указанное значение `placement` форсируется, даже если для выпадающего элемента недостаточно места.
    * Не оказывает влияния при `placement` значениях - `'auto' | 'auto-start' | 'auto-end'`
    */
-  disableFlipMiddleware?: boolean;
+  disableFlipMiddleware?: boolean | undefined;
   /**
    * Позволяет отключить смещение по главной оси,
    * которое не даёт всплывающему элементу выходить за границы видимой области.
    */
-  disableShiftMiddleware?: boolean;
+  disableShiftMiddleware?: boolean | undefined;
   /**
    * Задаёт резервный вариант размещения по перпендикулярной оси.
    */
-  flipMiddlewareFallbackAxisSideDirection?: FlipMiddlewareOptions['fallbackAxisSideDirection'];
+  flipMiddlewareFallbackAxisSideDirection?:
+    | FlipMiddlewareOptions['fallbackAxisSideDirection']
+    | undefined;
   /**
    * Отступ по главной оси.
    */
-  offsetByMainAxis?: number;
+  offsetByMainAxis?: number | undefined;
   /**
    * Отступ по вспомогательной оси.
    */
-  offsetByCrossAxis?: number;
+  offsetByCrossAxis?: number | undefined;
   /**
    * Отступ для смещения.
    */
-  overflowPadding?: ShiftMiddlewareOptions['padding'];
-  arrowRef?: ArrowOptions['element'];
+  overflowPadding?: ShiftMiddlewareOptions['padding'] | undefined;
+  arrowRef?: ArrowOptions['element'] | undefined;
   /**
    * Отображать ли стрелку, указывающую на якорный элемент.
    */
-  arrow?: boolean;
+  arrow?: boolean | undefined;
   /**
    * Высота стрелки. Складывается с `mainAxis`, чтобы стрелка не залезала на якорный элемент.
    */
-  arrowHeight?: number;
+  arrowHeight?: number | undefined;
   /**
    * Безопасная зона вокруг стрелки, чтобы та не выходила за края контента.
    */
-  arrowPadding?: number;
+  arrowPadding?: number | undefined;
   /**
    * Выставлять ширину равной target элементу.
    */
-  sameWidth?: boolean;
+  sameWidth?: boolean | undefined;
   /**
    * Позволяет задать или переопределить модификаторы библиотеки **Floating UI** (подробнее в документации про [middleware](https://floating-ui.com/docs/middleware)).
    */
-  customMiddlewares?: UseFloatingMiddleware[];
+  customMiddlewares?: UseFloatingMiddleware[] | undefined;
   /**
    * Принудительно скрывает компонент если целевой элемент вышел за область видимости.
    */
-  hideWhenReferenceHidden?: boolean;
+  hideWhenReferenceHidden?: boolean | undefined;
 }
 
 export const useFloatingMiddlewaresBootstrap = ({
@@ -104,7 +106,11 @@ export const useFloatingMiddlewaresBootstrap = ({
       }),
     ];
 
-    const shift = disableShiftMiddleware ? null : shiftMiddleware({ padding: overflowPadding });
+    const shift = disableShiftMiddleware
+      ? null
+      : overflowPadding !== undefined
+        ? shiftMiddleware({ padding: overflowPadding })
+        : shiftMiddleware();
 
     // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/flip.mdx#conflict-with-autoplacementjs
     if (isAutoPlacement) {
@@ -153,10 +159,11 @@ export const useFloatingMiddlewaresBootstrap = ({
     // см. https://github.com/floating-ui/floating-ui/blob/%40floating-ui/core%401.7.1/website/pages/docs/arrow.mdx#order
     if (arrow) {
       middlewares.push(
-        arrowMiddleware({
-          element: arrowRef,
-          padding: arrowPadding,
-        }),
+        arrowMiddleware(
+          arrowPadding !== undefined
+            ? { element: arrowRef ?? null, padding: arrowPadding }
+            : { element: arrowRef ?? null },
+        ),
       );
     }
 

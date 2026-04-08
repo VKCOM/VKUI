@@ -32,6 +32,7 @@ export interface InputProps
       | 'multiple'
       | 'name'
       | 'pattern'
+      | 'enterKeyHint'
       | 'placeholder'
       | 'readOnly'
       | 'required'
@@ -50,18 +51,24 @@ export interface InputProps
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLInputElement>;
+  getRef?: React.Ref<HTMLInputElement> | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода.
    */
-  slotProps?: {
-    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
-    input?: React.InputHTMLAttributes<HTMLInputElement> &
-      HasRootRef<HTMLInputElement> &
-      HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute)
+          | undefined;
+        input?:
+          | (React.InputHTMLAttributes<HTMLInputElement> &
+              HasRootRef<HTMLInputElement> &
+              HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
 }
 
 /**
@@ -91,6 +98,7 @@ export const Input = ({
   multiple,
   name,
   pattern,
+  enterKeyHint,
   placeholder,
   readOnly,
   required,
@@ -136,6 +144,7 @@ export const Input = ({
       multiple,
       name,
       pattern,
+      enterKeyHint,
       placeholder,
       readOnly,
       required,

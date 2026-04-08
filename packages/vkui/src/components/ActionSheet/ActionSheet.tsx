@@ -61,15 +61,15 @@ export interface ActionSheetProps
   /**
    * Заголовок всплывающего окна.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    * Описание всплывающего окна, под заголовком.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    * Обработчик закрытия всплывающего окна.
    */
-  onClose?: (reason: ActionSheetOnCloseReason) => void;
+  onClose?: ((reason: ActionSheetOnCloseReason) => void) | undefined;
   /**
    * Обработчик закрытия всплывающего окна срабатывающий после завершения анимации закрытия.
    *
@@ -80,29 +80,33 @@ export interface ActionSheetProps
   /**
    * Только мобильный iOS.
    */
-  iosCloseItem?: React.ReactNode;
+  iosCloseItem?: React.ReactNode | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `iosCloseItem`: свойства для прокидывания в кнопку отмены на iOS.
    */
-  slotProps?: {
-    iosCloseItem?: Omit<ActionSheetItemProps, 'mode' | 'isCancelItem'> & HasRootRef<HTMLElement>;
-  };
+  slotProps?:
+    | {
+        iosCloseItem?:
+          | (Omit<ActionSheetItemProps, 'mode' | 'isCancelItem'> & HasRootRef<HTMLElement>)
+          | undefined;
+      }
+    | undefined;
   /**
    * Режим отображения компонента:
    *
    * - `sheet` – отображение снизу экрана в виде всплывающего окна, подходит для мобильных устройств
    * - `menu` – отображение в виде всплывающего элемента, относительно якорного элемента.
    */
-  mode?: 'sheet' | 'menu';
+  mode?: 'sheet' | 'menu' | undefined;
   /**
    * @deprecated Since 7.3.0.  Будет удалeно в **VKUI v9**.
    */
-  mount?: boolean; // TODO [>=9]: удалить неиспользуемое свойство
+  mount?: boolean | undefined; // TODO [>=9]: удалить неиспользуемое свойство
   /**
    * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    */
-  disabled?: boolean; // TODO [>=9]: удалить неиспользуемое свойство
+  disabled?: boolean | undefined; // TODO [>=9]: удалить неиспользуемое свойство
 }
 
 /**

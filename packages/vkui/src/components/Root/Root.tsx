@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDOM } from '../../lib/dom';
+import { LockFloatingPositionContext } from '../../lib/floating/LockFloatingPosition/LockFloatingPosition';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -24,7 +25,7 @@ export interface RootProps extends HTMLAttributesWithRootRef<HTMLDivElement>, Na
   /**
    * Обработчик, который вызывается при завершении анимации смены активной `View`.
    */
-  onTransition?: (params: { isBack: boolean; from: string; to: string }) => void;
+  onTransition?: ((params: { isBack: boolean; from: string; to: string }) => void) | undefined;
   /**
    * Коллекция `View`. У каждой `View` должен быть `id`.
    */
@@ -35,8 +36,8 @@ export interface RootProps extends HTMLAttributesWithRootRef<HTMLDivElement>, Na
 export interface RootState {
   activeView: string;
   transition: boolean;
-  isBack?: boolean;
-  prevView?: string;
+  isBack?: boolean | undefined;
+  prevView?: string | undefined;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 
@@ -114,57 +115,65 @@ export const Root = ({
     [transition, disableAnimation, finishTransition],
   );
 
-  const onAnimationEnd = () => {
+  const onAnimationEnd: React.AnimationEventHandler<HTMLElement> = (e) => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
     finishTransition();
   };
 
   return (
-    <RootComponent
-      {...restProps}
-      baseClassName={classNames(
-        styles.host,
-        platform === 'ios' && styles.ios,
-        transition && styles.transition,
-      )}
-    >
-      {views.map((view) => {
-        const viewId = getNavId(view.props, warn);
-        if (viewId !== activeView && !(transition && viewId === prevView)) {
-          return null;
-        }
-        const isTransitionTarget = transition && viewId === (isBack ? prevView : activeView);
-        const compensateScroll =
-          transition && (viewId === prevView || (isBack && viewId === activeView));
-        return (
-          <div
-            key={viewId}
-            ref={(e) => {
-              viewId && viewNodes.set(viewId, e);
-            }}
-            onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
-            className={classNames(
-              styles.view,
-              transition && viewId === prevView && isBack && styles.viewHideBack,
-              transition && viewId === prevView && !isBack && styles.viewHideForward,
-              transition && viewId === activeView && isBack && styles.viewShowBack,
-              transition && viewId === activeView && !isBack && styles.viewShowForward,
-            )}
-          >
-            <NavTransitionDirectionProvider isBack={isBack}>
-              <NavTransitionProvider entering={transition && viewId === activeView}>
-                <div
-                  className={styles.scrollCompensation}
-                  style={{
-                    marginTop: compensateScroll ? viewId && -(scrolls.get(viewId) ?? 0) : undefined,
-                  }}
-                >
-                  {view}
-                </div>
-              </NavTransitionProvider>
-            </NavTransitionDirectionProvider>
-          </div>
-        );
-      })}
-    </RootComponent>
+    <LockFloatingPositionContext.Provider value={transition}>
+      <RootComponent
+        {...restProps}
+        baseClassName={classNames(
+          styles.host,
+          platform === 'ios' && styles.ios,
+          transition && styles.transition,
+        )}
+      >
+        {views.map((view) => {
+          const viewId = getNavId(view.props, warn);
+          if (viewId !== activeView && !(transition && viewId === prevView)) {
+            return null;
+          }
+          const isTransitionTarget = transition && viewId === (isBack ? prevView : activeView);
+          const compensateScroll =
+            transition && (viewId === prevView || (isBack && viewId === activeView));
+          return (
+            <div
+              key={viewId}
+              ref={(e) => {
+                viewId && viewNodes.set(viewId, e);
+              }}
+              onAnimationEnd={isTransitionTarget ? onAnimationEnd : undefined}
+              className={classNames(
+                styles.view,
+                transition && viewId === prevView && isBack && styles.viewHideBack,
+                transition && viewId === prevView && !isBack && styles.viewHideForward,
+                transition && viewId === activeView && isBack && styles.viewShowBack,
+                transition && viewId === activeView && !isBack && styles.viewShowForward,
+              )}
+            >
+              <NavTransitionDirectionProvider isBack={isBack}>
+                <NavTransitionProvider entering={transition && viewId === activeView}>
+                  <div
+                    className={styles.scrollCompensation}
+                    style={{
+                      marginTop: compensateScroll
+                        ? viewId && -(scrolls.get(viewId) ?? 0)
+                        : undefined,
+                    }}
+                  >
+                    {view}
+                  </div>
+                </NavTransitionProvider>
+              </NavTransitionDirectionProvider>
+            </div>
+          );
+        })}
+      </RootComponent>
+    </LockFloatingPositionContext.Provider>
   );
 };

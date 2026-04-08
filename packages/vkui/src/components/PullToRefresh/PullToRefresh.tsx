@@ -39,9 +39,9 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
   /**
    * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`.
    */
-  isFetching?: boolean;
+  isFetching?: boolean | undefined;
   /** @ignore */
-  scroll?: ScrollContextInterface;
+  scroll?: ScrollContextInterface | undefined;
 }
 
 /**

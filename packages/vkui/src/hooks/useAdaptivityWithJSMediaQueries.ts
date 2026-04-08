@@ -15,7 +15,6 @@ import {
   ViewWidth,
   type ViewWidthType,
 } from '../lib/adaptivity';
-import { matchMediaListAddListener, matchMediaListRemoveListener } from '../lib/matchMedia';
 import { warnOnce } from '../lib/warnOnce';
 import { useMediaQueries } from './useMediaQueries';
 import { usePlatform } from './usePlatform';
@@ -54,7 +53,9 @@ export const isSizeXRegularFallback = (
     ? viewWidth >= ViewWidth.SMALL_TABLET
     : legacySizeX === 'regular';
 
-export interface UseAdaptivityWithJSMediaQueries extends Required<BaseAdaptivityProps> {
+type RequiredNonNullable<T> = { [P in keyof T]-?: NonNullable<T[P]> };
+
+export interface UseAdaptivityWithJSMediaQueries extends RequiredNonNullable<BaseAdaptivityProps> {
   isDesktop: boolean;
 }
 
@@ -165,13 +166,13 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
         mediaQueries.smallTablet,
         mediaQueries.mobile,
       ].forEach((matchMediaListener) =>
-        matchMediaListAddListener(matchMediaListener, handleMediaQuery),
+        matchMediaListener.addEventListener('change', handleMediaQuery),
       );
     }
 
     if (!viewHeightContext) {
       [mediaQueries.mediumHeight, mediaQueries.mobileLandscapeHeight].forEach(
-        (matchMediaListener) => matchMediaListAddListener(matchMediaListener, handleMediaQuery),
+        (matchMediaListener) => matchMediaListener.addEventListener('change', handleMediaQuery),
       );
     }
 
@@ -184,7 +185,7 @@ export const useAdaptivityWithJSMediaQueries = (): UseAdaptivityWithJSMediaQueri
         mediaQueries.mediumHeight,
         mediaQueries.mobileLandscapeHeight,
       ].forEach((matchMediaListener) =>
-        matchMediaListRemoveListener(matchMediaListener, handleMediaQuery),
+        matchMediaListener.removeEventListener('change', handleMediaQuery),
       );
     };
   }, [mediaQueries, viewWidthContext, viewHeightContext]);

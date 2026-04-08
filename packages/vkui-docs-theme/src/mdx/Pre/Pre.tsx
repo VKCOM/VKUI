@@ -7,10 +7,10 @@ import { CopyToClipboard, type CopyToClipboardProps } from './CopyToClipboard/Co
 import styles from './Pre.module.css';
 
 interface PreProps extends React.ComponentProps<'pre'> {
-  'data-filename'?: string;
-  'data-copy'?: '';
-  'icon'?: React.FC<React.ComponentProps<'svg'>>;
-  'header'?: React.ReactNode;
+  'data-filename'?: string | undefined;
+  'data-copy'?: '' | undefined;
+  'icon'?: React.FC<React.ComponentProps<'svg'>> | undefined;
+  'header'?: React.ReactNode | undefined;
 }
 
 export function Pre({

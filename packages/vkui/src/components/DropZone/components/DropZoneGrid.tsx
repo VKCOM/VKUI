@@ -12,7 +12,7 @@ export interface DropZoneGridProps extends HTMLAttributesWithRootRef<HTMLDivElem
   /**
    * Направление дочерних компонентов.
    */
-  direction?: 'row' | 'column';
+  direction?: 'row' | 'column' | undefined;
 }
 
 export const DropZoneGrid = ({ direction = 'column', ...props }: DropZoneGridProps) => (

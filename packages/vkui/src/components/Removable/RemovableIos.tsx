@@ -13,9 +13,12 @@ import styles from './Removable.module.css';
 
 /* eslint-disable jsdoc/require-jsdoc */
 interface RemovableIosOwnProps extends RemovableProps {
-  indent?: boolean;
-  removePlaceholderString?: string;
-  children?: React.ReactNode | ((renderProps: RemovableIosRenderProps) => React.ReactNode);
+  indent?: boolean | undefined;
+  removePlaceholderString?: string | undefined;
+  children?:
+    | React.ReactNode
+    | ((renderProps: RemovableIosRenderProps) => React.ReactNode)
+    | undefined;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 

@@ -26,24 +26,24 @@ export interface TooltipBaseProps
   /**
    * Стиль отображения подсказки.
    */
-  appearance?: 'accent' | 'neutral' | 'white' | 'black' | 'inversion';
+  appearance?: 'accent' | 'neutral' | 'white' | 'black' | 'inversion' | undefined;
   /**
    * Текст тултипа.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    * Заголовок тултипа.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    * [a11y] Id для заголовка тултипа.
    * Можно использовать для связи элемента с `role="dialog"` и заголовка через `aria-labelledby`.
    */
-  titleId?: string;
+  titleId?: string | undefined;
   /**
    * Для показа указателя, требуется передать хотя бы `coords` и `placement`.
    */
-  arrowProps?: Omit<FloatingArrowProps, 'Icon'>;
+  arrowProps?: Omit<FloatingArrowProps, 'Icon'> | undefined;
   /**
    * Пользовательская SVG иконка.
    *
@@ -57,25 +57,25 @@ export interface TooltipBaseProps
    * 4. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    * 5. Если стрелка наезжает на якорный элемент, то увеличьте смещение между целевым и всплывающим элементами.
    */
-  ArrowIcon?: FloatingArrowProps['Icon'];
+  ArrowIcon?: FloatingArrowProps['Icon'] | undefined;
   /**
    * Пользовательские css-классы, будут добавлены на root-элемент.
    */
-  className?: string;
+  className?: string | undefined;
   /**
    * Перебивает максимальную ширину заданную по умолчанию.
    *
    * Передача `null` полностью сбрасывает установку `max-width` на элемент.
    */
-  maxWidth?: number | string | null;
+  maxWidth?: number | string | null | undefined;
   /**
    * Скрытый текст для кнопки закрытия.
    */
-  closeIconLabel?: string;
+  closeIconLabel?: string | undefined;
   /**
    * Обработчик нажатия на кнопку закрытия. При передаче, показывается иконка.
    */
-  onCloseIconClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onCloseIconClick?: ((event: React.MouseEvent<HTMLButtonElement>) => void) | undefined;
 }
 
 /**

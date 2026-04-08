@@ -6,6 +6,7 @@ import { useAutoDetectColorScheme } from '../../hooks/useAutoDetectColorScheme';
 import { useAutoDetectDirection } from '../../hooks/useAutoDetectDirection';
 import { TokensClassProvider } from '../../lib/tokens/TokensClassProvider';
 import { excludeKeysWithUndefined } from '../../lib/utils';
+import type { PartialWithUndefined } from '../../types';
 import {
   ConfigProviderContext,
   type ConfigProviderContextInterface,
@@ -13,7 +14,7 @@ import {
   useConfigProviderContextMemo,
 } from './ConfigProviderContext';
 
-export interface ConfigProviderProps extends Partial<ConfigProviderContextInterface> {
+export interface ConfigProviderProps extends PartialWithUndefined<ConfigProviderContextInterface> {
   /**
    * Содержимое.
    */

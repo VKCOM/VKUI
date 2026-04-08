@@ -33,11 +33,11 @@ export interface PanelHeaderButtonProps extends Omit<TappableOmitProps, 'label'>
    * Флаг для обозначения первичной кнопки
    * Влияет на стилизацию кнопки.
    */
-  primary?: boolean;
+  primary?: boolean | undefined;
   /**
    * Текст или содержимое кнопки.
    */
-  label?: React.ReactNode; // TODO [>=8]: добавить св-во indicator, чтобы разграничить кейсы.
+  label?: React.ReactNode | undefined; // TODO [>=9]: добавить св-во indicator, чтобы разграничить кейсы.
 }
 
 interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
@@ -45,7 +45,7 @@ interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
    * Флаг для обозначения первичной кнопки
    * Наследуется от PanelHeaderButtonProps['primary'].
    */
-  primary?: PanelHeaderButtonProps['primary'];
+  primary?: PanelHeaderButtonProps['primary'] | undefined;
 }
 
 const ButtonTypography = ({ primary, children }: ButtonTypographyProps) => {

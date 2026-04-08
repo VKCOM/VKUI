@@ -23,7 +23,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HasRootRef } from '../../types';
 import { Calendar, type CalendarProps, type CalendarTestsProps } from '../Calendar/Calendar';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -53,31 +53,31 @@ export type DateInputPropsTestsProps = {
   /**
    * Передает атрибут `data-testid` для поля ввода дня.
    */
-  dayFieldTestId?: string;
+  dayFieldTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для поля ввода месяца.
    */
-  monthFieldTestId?: string;
+  monthFieldTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для поля ввода года.
    */
-  yearFieldTestId?: string;
+  yearFieldTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для поля ввода часа.
    */
-  hourFieldTestId?: string;
+  hourFieldTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для поля ввода минут.
    */
-  minuteFieldTestId?: string;
+  minuteFieldTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки показа календаря.
    */
-  showCalendarButtonTestId?: string;
+  showCalendarButtonTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки очистки даты.
    */
-  clearButtonTestId?: string;
+  clearButtonTestId?: string | undefined;
 };
 
 export interface DateInputProps
@@ -121,56 +121,56 @@ export interface DateInputProps
   /**
    * Обработчик изменения выбранной даты.
    */
-  onChange?: (value: Date | null) => void;
+  onChange?: ((value: Date | null) => void) | undefined;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
-  calendarTestsProps?: CalendarTestsProps;
+  calendarTestsProps?: CalendarTestsProps | undefined;
   /**
    * Расположение календаря относительно поля ввода.
    */
-  calendarPlacement?: PlacementWithAuto;
+  calendarPlacement?: PlacementWithAuto | undefined;
   /**
    * Автоматически закрывать календарь при изменениях.
    */
-  closeOnChange?: boolean;
+  closeOnChange?: boolean | undefined;
   /**
    * `aria-label` для календаря.
    */
-  calendarLabel?: string;
+  calendarLabel?: string | undefined;
   /**
    * Label для кнопки очистки. Делает доступным для ассистивных технологий.
    */
-  clearFieldLabel?: string;
+  clearFieldLabel?: string | undefined;
   /**
    * Label для кнопки открытия календаря. Делает доступным для ассистивных технологий.
    */
-  showCalendarLabel?: string;
+  showCalendarLabel?: string | undefined;
   /**
    * Отключение открытия календаря.
    */
-  disableCalendar?: boolean;
+  disableCalendar?: boolean | undefined;
   /**
    * Обработчик изменения состояния открытия календаря.
    */
-  onCalendarOpenChanged?: (opened: boolean) => void;
+  onCalendarOpenChanged?: ((opened: boolean) => void) | undefined;
   /**
    * `aria-label` для поля изменения дня.
    */
-  changeDayLabel?: string;
+  changeDayLabel?: string | undefined;
   /**
    * Обработчик нажатия на кнопку `"Done"`. Используется совместно с флагом `enableTime`.
    */
-  onApply?: (value?: Date) => void;
+  onApply?: ((value?: Date) => void) | undefined;
   /**
    * Функция для кастомного форматирования отображаемого значения даты.
    * Позволяет переопределить стандартное отображение даты и вернуть собственное представление.
    */
-  renderCustomValue?: (date: Date | undefined) => React.ReactNode;
+  renderCustomValue?: ((date: Date | undefined) => React.ReactNode) | undefined;
   /**
    * Часовой пояс для отображения даты.
    */
-  timezone?: string;
+  timezone?: string | undefined;
   /**
    * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
    *
@@ -183,16 +183,16 @@ export interface DateInputProps
    * - календарь при открытии получает фокус, клавиатурный
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean /* TODO [>=v9] удалить свойство */;
+  accessible?: boolean | undefined /* TODO [>=v9] удалить свойство */;
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
-  disableFocusTrap?: boolean;
+  disableFocusTrap?: boolean | undefined;
   /**
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
 }
 
 const elementsConfig = (index: number) => {
@@ -233,13 +233,6 @@ const getInternalValue = (value: CalendarProps['value']) => {
     newValue[4] = String(value.getMinutes()).padStart(2, '0');
   }
   return newValue;
-};
-
-const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['tabindex'],
 };
 
 /**
@@ -612,11 +605,10 @@ export const DateInput = ({
           onPlacementChange={setCalendarPlacement}
           autoUpdateOnTargetResize
         >
-          <FocusTrapInternal
+          <FocusTrap
             rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? (Boolean(accessible) && handleRestoreFocus)}
-            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <div ref={focusTrapRootRef}>
               <Calendar
@@ -651,10 +643,10 @@ export const DateInput = ({
                 minDateTime={minDateTime}
                 maxDateTime={maxDateTime}
                 timezone={timezone}
-                {...calendarTestsProps}
+                {...(calendarTestsProps ?? {})}
               />
             </div>
-          </FocusTrapInternal>
+          </FocusTrap>
         </Popper>
       )}
     </FormField>

@@ -26,15 +26,15 @@ export interface PanelHeaderContentProps extends HTMLAttributesWithRootRef<HTMLD
   /**
    * Компонент отображаемый после содержимого.
    */
-  aside?: React.ReactNode;
+  aside?: React.ReactNode | undefined;
   /**
    * Компонент отображаемый до содержимого.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Подпись под основным текстом.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
 }
 
 interface PanelHeaderChildrenProps extends HasChildren {

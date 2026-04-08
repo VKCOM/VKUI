@@ -28,13 +28,13 @@ const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> 
 export interface ModalOverlayProps
   extends DataHTMLAttributes<HTMLDivElement>,
     HasRootRef<HTMLDivElement> {
-  visible?: boolean;
-  position?: 'absolute' | 'fixed';
-  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  onClosed?: () => void;
-  onShowed?: () => void;
-  disableOpenAnimation?: boolean;
-  disableCloseAnimation?: boolean;
+  visible?: boolean | undefined;
+  position?: 'absolute' | 'fixed' | undefined;
+  onClick?: ((event: React.MouseEvent<HTMLDivElement>) => void) | undefined;
+  onClosed?: (() => void) | undefined;
+  onShowed?: (() => void) | undefined;
+  disableOpenAnimation?: boolean | undefined;
+  disableCloseAnimation?: boolean | undefined;
 }
 
 /**

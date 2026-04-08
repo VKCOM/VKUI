@@ -21,7 +21,7 @@ const jetBrainsMono = JetBrains_Mono({
 
 export interface PlaygroundProps extends PlaygroundPreviewProps {
   code: string;
-  defaultExpanded?: boolean;
+  defaultExpanded?: boolean | undefined;
 }
 
 function getStorageKey(defaultCode: string): string {

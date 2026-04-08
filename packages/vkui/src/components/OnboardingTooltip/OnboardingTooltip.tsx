@@ -15,6 +15,7 @@ import {
   useFloatingMiddlewaresBootstrap,
   usePlacementChangeCallback,
 } from '../../lib/floating';
+import { LockFloatingPositionContext } from '../../lib/floating/LockFloatingPosition/LockFloatingPosition';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
 import { DEFAULT_ARROW_HEIGHT, DEFAULT_ARROW_PADDING } from '../FloatingArrow/DefaultIcon';
@@ -54,11 +55,11 @@ type AllowedFloatingArrowProps = {
   /**
    * Сдвиг стрелки относительно текущих координат.
    */
-  arrowOffset?: FloatingArrowProps['offset'];
+  arrowOffset?: FloatingArrowProps['offset'] | undefined;
   /**
    * Включает абсолютное смещение по `arrowOffset`.
    */
-  isStaticArrowOffset?: FloatingArrowProps['isStaticOffset'];
+  isStaticArrowOffset?: FloatingArrowProps['isStaticOffset'] | undefined;
 };
 
 export interface OnboardingTooltipProps
@@ -69,19 +70,19 @@ export interface OnboardingTooltipProps
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
   /**
    * Скрывает стрелку, указывающую на якорный элемент.
    */
-  disableArrow?: boolean;
+  disableArrow?: boolean | undefined;
   /**
    * Обработчик, который вызывается при нажатии по любому месту в пределах экрана.
    */
-  onClose?: (this: void) => void;
+  onClose?: ((this: void) => void) | undefined;
   /**
    * [a11y] Метка для подложки-кнопки, для описания того, что произойдёт при нажатии.
    */
-  overlayLabel?: string;
+  overlayLabel?: string | undefined;
 }
 
 /**
@@ -136,18 +137,26 @@ export const OnboardingTooltip = ({
     disableShiftMiddleware,
     overflowPadding,
   });
+
+  const isLock = React.useContext(LockFloatingPositionContext);
+
   const {
     x: floatingDataX,
     y: floatingDataY,
+    isPositioned,
     refs,
     placement: resolvedPlacement,
     middlewareData: { arrow: arrowCoords },
   } = useFloating({
     strategy: positionStrategy,
-    placement: strictPlacement,
+    ...(strictPlacement !== undefined && { placement: strictPlacement }),
     middleware: middlewares,
-    whileElementsMounted: autoUpdateFloatingElement,
+    ...(!isLock && {
+      whileElementsMounted: (...args) =>
+        autoUpdateFloatingElement(...args, { elementResize: true }),
+    }),
   });
+
   const tooltipRef = useExternRef<HTMLDivElement>(getRootRef, refs.setFloating);
   const focusTrapRootRef = React.useRef<HTMLDivElement | null>(null);
   const [childRef, child] = usePatchChildren(children, {
@@ -172,6 +181,10 @@ export const OnboardingTooltip = ({
       x: floatingDataX,
       y: floatingDataY,
     });
+
+    if (!isPositioned) {
+      floatingStyle.visibility = 'hidden';
+    }
 
     tooltip = createPortal(
       <FocusTrap rootRef={focusTrapRootRef} disabled={disableFocusTrap} restoreFocus={restoreFocus}>

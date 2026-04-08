@@ -6,7 +6,6 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { ViewWidth, viewWidthToClassName } from '../../lib/adaptivity';
-import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../lib/matchMedia';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { SplitColContext } from './SplitColContext';
@@ -39,9 +38,9 @@ function useTransitionAnimate(animateProp?: boolean) {
     const listener = () => setAnimate(!mediaQueries.smallTabletPlus.matches);
     listener();
 
-    matchMediaListAddListener(mediaQueries.smallTabletPlus, listener);
+    mediaQueries.smallTabletPlus.addEventListener('change', listener);
     return () => {
-      matchMediaListRemoveListener(mediaQueries.smallTabletPlus, listener);
+      mediaQueries.smallTabletPlus.removeEventListener('change', listener);
     };
   }, [animateProp, viewWidth, mediaQueries]);
 
@@ -52,31 +51,31 @@ export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Ширина колонки.
    */
-  width?: number | string;
+  width?: number | string | undefined;
   /**
    * Максимальная ширина колонки.
    */
-  maxWidth?: number | string;
+  maxWidth?: number | string | undefined;
   /**
    * Минимальная ширина колонки.
    */
-  minWidth?: number | string;
+  minWidth?: number | string | undefined;
   /**
    * Если false, то переходы между Panel происходят без анимации.
    */
-  animate?: boolean;
+  animate?: boolean | undefined;
   /**
    * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`.
    */
-  autoSpaced?: boolean;
+  autoSpaced?: boolean | undefined;
   /**
    * Фиксированное положение колонки.
    */
-  fixed?: boolean;
+  fixed?: boolean | undefined;
   /**
    * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`.
    */
-  stretchedOnMobile?: boolean;
+  stretchedOnMobile?: boolean | undefined;
 }
 
 /**
@@ -120,6 +119,7 @@ export const SplitCol = (props: SplitColProps): React.ReactNode => {
         styles.host,
         viewWidthToClassName(breakpointClassNames, viewWidth),
         autoSpaced && classNames(styles.spacedAuto, 'vkuiInternalSplitCol--spaced-auto'),
+        fixed && styles.fixed,
         stretchedOnMobile && styles.stretchedOnMobile,
       )}
     >

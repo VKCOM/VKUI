@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { useFocusTrap, type UseFocusTrapProps } from '../../hooks/useFocusTrap';
-import { DEFAULT_MUTATION_OBSERVER_OPTIONS } from '../../hooks/useMutationObserver';
 import type { HasChildren } from '../../types';
 
 export interface FocusTrapInternalProps extends UseFocusTrapProps, HasChildren {
@@ -22,7 +21,6 @@ export const FocusTrapInternal = ({
   autoFocusDelay = 0,
   rootRef,
   children,
-  mutationObserverOptions = DEFAULT_MUTATION_OBSERVER_OPTIONS,
 }: FocusTrapInternalProps): React.ReactNode => {
   const { beforeGuard, afterGuard } = useFocusTrap(rootRef, {
     autoFocus,
@@ -30,7 +28,6 @@ export const FocusTrapInternal = ({
     disabled,
     mount,
     autoFocusDelay,
-    mutationObserverOptions,
   });
 
   return (

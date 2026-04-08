@@ -11,15 +11,15 @@ export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'chevron'> 
   /**
    * Иконка для раскрытия контента.
    */
-  ExpandIcon?: React.ElementType;
+  ExpandIcon?: React.ElementType | undefined;
   /**
    * Иконка для сворачивания контента.
    */
-  CollapseIcon?: React.ElementType;
+  CollapseIcon?: React.ElementType | undefined;
   /**
    * Позиция иконки.
    */
-  iconPosition?: 'before' | 'after';
+  iconPosition?: 'before' | 'after' | undefined;
 }
 
 export const AccordionSummary = ({

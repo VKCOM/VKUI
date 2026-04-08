@@ -1,4 +1,4 @@
-import { classNames } from '@vkontakte/vkjs';
+import { type LayoutProps, resolveLayoutProps } from '../../../lib/layouts';
 import { warnOnce } from '../../../lib/warnOnce';
 import { RootComponent } from '../../RootComponent/RootComponent';
 import type { RootComponentProps } from '../../RootComponent/RootComponent';
@@ -11,54 +11,27 @@ const flexClassNames = {
   fixed: styles.flexFixed,
 };
 
-const alignSelfClassNames = {
-  start: styles.alignSelfStart,
-  end: styles.alignSelfEnd,
-  center: styles.alignSelfCenter,
-  baseline: styles.alignSelfBaseline,
-  stretch: styles.alignSelfStretch,
-};
-
-export interface FlexItemProps extends RootComponentProps<HTMLElement> {
-  /**
-   * Для задания выравнивания, отлично от родительского, эквивалентно `align-self`.
-   */
-  alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
-  /**
-   * Позволяет задать предопределенные значения свойства `flex`:
-   *
-   * - `grow` соответствует значению `1 0 auto`
-   * - `shrink` соответствует значению `0 1 auto`
-   * - `content` соответствует значению `1 1 auto`
-   * - `fixed` соответствует значению `0 0 auto`.
-   */
-  flex?: 'grow' | 'shrink' | 'content' | 'fixed';
-  /**
-   * Изначальный размер элемента, эквивалентно `flex-basis`.
-   */
-  flexBasis?: number | string;
-}
+export type FlexItemProps = RootComponentProps<HTMLElement> &
+  Pick<LayoutProps, 'alignSelf' | 'justifySelf' | 'flexBasis'> & {
+    /**
+     * Позволяет задать предопределенные значения свойства `flex`:
+     *
+     * - `grow` соответствует значению `1 0 auto`
+     * - `shrink` соответствует значению `0 1 auto`
+     * - `content` соответствует значению `1 1 auto`
+     * - `fixed` соответствует значению `0 0 auto`.
+     */
+    flex?: 'grow' | 'shrink' | 'content' | 'fixed' | undefined;
+  };
 
 const warn = warnOnce('Flex.Item');
 
-export const FlexItem = ({
-  alignSelf,
-  flex,
-  flexBasis,
-  ...restProps
-}: FlexItemProps): React.ReactNode => {
+export const FlexItem = ({ flex, ...restProps }: FlexItemProps): React.ReactNode => {
   if (process.env.NODE_ENV === 'development') {
-    warn('Компонент Flex.Item устарел, используйте компонент Flex в качестве альтернативы.');
+    warn('Компонент Flex.Item устарел, используйте компонент Box в качестве альтернативы.');
   }
 
-  return (
-    <RootComponent
-      baseStyle={{ flexBasis }}
-      baseClassName={classNames(
-        alignSelf && alignSelfClassNames[alignSelf],
-        flex && flexClassNames[flex],
-      )}
-      {...restProps}
-    />
-  );
+  const resolvedProps = resolveLayoutProps(restProps);
+
+  return <RootComponent baseClassName={flex && flexClassNames[flex]} {...resolvedProps} />;
 };

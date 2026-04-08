@@ -1,11 +1,12 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "skipLibCheck": true
-  },
   "include": ["*.ts", "*.mjs", "*.cjs"],
-  "exclude": ["core/", "dom/", "react-dom/", "utils/"]
+  "exclude": ["core/", "dom/", "react-dom/", "utils/"],
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true
+  }
 }

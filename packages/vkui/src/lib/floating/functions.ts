@@ -20,8 +20,8 @@ export type ConvertFloatingDataArgs = {
   strategy: FloatingPositionStrategy;
   x: UseFloatingData['x'];
   y: UseFloatingData['y'];
-  initialWidth?: React.CSSProperties['width'] | null;
-  middlewareData?: UseFloatingData['middlewareData'];
+  initialWidth?: React.CSSProperties['width'] | null | undefined;
+  middlewareData?: UseFloatingData['middlewareData'] | undefined;
 };
 
 /**

@@ -3,7 +3,7 @@
 import path from 'node:path';
 import rspack from '@rspack/core';
 import browserslist from 'browserslist';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import { CleanOnDoneRspackPlugin } from './scripts/CleanOnDoneRspackPlugin.ts';
 import { makePostcssPlugins } from './scripts/postcss.cjs';
 
 const rootDirectory = path.join(import.meta.dirname, '../../');
@@ -79,7 +79,8 @@ const config = {
     minimizer: [
       new rspack.LightningCssMinimizerRspackPlugin({
         minimizerOptions: {
-          targets: browser.defaults,
+          // https://github.com/parcel-bundler/lightningcss/issues/1180
+          targets: browser.defaults.filter((v) => !v.startsWith('Android ')),
         },
       }),
     ],
@@ -89,12 +90,7 @@ const config = {
   },
   devtool: 'source-map',
   plugins: [
-    new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false,
-      protectWebpackAssets: false,
-      cleanOnceBeforeBuildPatterns: [],
-      cleanAfterEveryBuildPatterns: ['*.tmp', '*.tmp.*'],
-    }),
+    new CleanOnDoneRspackPlugin(['dist/*.tmp', 'dist/*.tmp.*']),
     new rspack.CircularDependencyRspackPlugin({
       failOnError: true,
       allowAsyncCycles: false,

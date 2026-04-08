@@ -4,7 +4,7 @@ import { ImageBase, type ImageBaseProps } from '../ImageBase/ImageBase';
 import { GridAvatarBadge, type GridAvatarBadgeProps } from './GridAvatarBadge/GridAvatarBadge';
 import styles from './GridAvatar.module.css';
 
-export { GridAvatarBadgeProps };
+export type { GridAvatarBadgeProps };
 
 const GRID_AVATAR_DEFAULT_SIZE = 48;
 
@@ -14,7 +14,7 @@ export interface GridAvatarProps extends Omit<ImageBaseProps, 'src' | 'fallbackI
   /**
    * Массив со ссылками. От 1 до 4 элементов.
    */
-  src?: string[];
+  src?: string[] | undefined;
 }
 
 const warn = warnOnce('GridAvatar');

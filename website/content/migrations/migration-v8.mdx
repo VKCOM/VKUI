@@ -27,6 +27,34 @@ description: Инструкция миграции VKUI на версию v8.
 
 ---
 
+## 🌐 Поддерживаемые браузеры
+
+Изменения минимальных версий браузеров:
+
+```diff
+// .browserslistrc
+- Chrome >= 63
++ Chrome >= 84
+- Safari >= 12
++ Safari >= 15
+- Firefox >= 55
++ Firefox >= 115
+- Edge >= 79
++ Edge >= 109
+- Opera >= 50
++ Opera >= 90
+- iOS >= 12
++ iOS >= 15
+- ChromeAndroid >= 63
++ ChromeAndroid >= 84
+- Samsung >= 8.2
++ Samsung >= 14
++ FirefoxAndroid >= 115
++ Android >= 84
+```
+
+---
+
 ## 🗑️ Удалённые типы и функции
 
 ### withModalRootContext
@@ -143,39 +171,6 @@ description: Инструкция миграции VKUI на версию v8.
 + strategy="none"
 />
 ```
-
-</details>
-
----
-
-### PanelHeader и SplitCol
-
-Изменена реализация `fixed` — вместо `position: fixed` используется `position: sticky`. Это потребовало изменения
-раскладки всей страницы — `height: 100%` на `<html>` и `<body>` удалён в пользу `display: flex`, и теперь
-высота страницы зависит от содержимого.
-
-<details>
-<summary>Что может сломаться</summary>
-
-- Получение области видимости через `document.body.clientHeight` или его потомков с `height: 100%`.
-  Необходимо заменить либо на `document.documentElement.clientHeight`, либо на `window.innerHeight`.
-
-  ```diff
-  - document.body.clientHeight
-  + document.documentElement.clientHeight
-  // или
-  + window.innerHeight
-  ```
-
-- Чтобы какой-то из элементов растягивался на высоту области видимости,
-  используйте единицы измерения `vh` или `dvh` вместо `%`.
-
-  ```diff
-  - height: 100%
-  + height: 100dvh
-  ```
-
-- Для `SplitCol` с `fixed`: чтобы растянуть потомок на всю колонку, используйте `flex-grow: 1` на этом потомке.
 
 </details>
 
@@ -336,6 +331,42 @@ description: Инструкция миграции VKUI на версию v8.
 применяются к корневому элементу, а для передачи свойств во внутренние элементы используется `slotProps`.
 
 > ⚠️ Свойство `getRef` в компонентах ниже помечено как `@deprecated`. Используйте `slotProps` с полем `getRootRef` для получения ссылки на внутренний элемент.
+
+### Изменения в обработке событий
+
+Ранее `onClick` и другие события обрабатывались на внутренних элементах — `event.currentTarget` указывал на них.
+В v8 обработчики из `restProps` применяются к корневому элементу. События всплывают от внутренних элементов.
+
+> ⚠️ Если вы использовали `event.currentTarget` как внутренний элемент, теперь он указывает на корневой:
+> `<label>` у `Switch`/`Checkbox`/`Radio` или обёртку у `CustomSelect`.
+
+Это также влияет на **типизацию колбэков** в TypeScript: тип события теперь выводится из того элемента,
+куда реально навешан обработчик. Например, если `onClick` вешается на корневой `<label>`, то его тип будет
+`React.MouseEvent<HTMLLabelElement>`, а не `React.MouseEvent<HTMLInputElement>`, как раньше.
+
+Чтобы сохранить прежнее поведение (и ожидаемые типы событий) и получать события непосредственно с внутреннего
+элемента, перенесите обработчики в соответствующий `slotProps`:
+
+```jsx
+// Обработчик вешается на корневой элемент
+<Switch onClick={(event) => {
+  // event.currentTarget — корневой <label>
+}} />
+
+// Обработчик вешается на скрытый <input>
+<Switch
+  slotProps={{
+    input: {
+      onClick: (event) => {
+        // event.currentTarget — внутренний <input>, как в v7
+      },
+    },
+  }}
+/>
+```
+
+Аналогично для других компонентов: используйте `slotProps.input`, `slotProps.textarea`, `slotProps.content` и другие слоты
+для работы с внутренними элементами.
 
 ### Input, Search
 

@@ -13,7 +13,6 @@ import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
 import { FlexItem, type FlexItemProps } from './FlexItem/FlexItem';
 import styles from './Flex.module.css';
-import flexItemStyles from './FlexItem/FlexItem.module.css';
 
 export type { FlexItemProps };
 
@@ -34,14 +33,6 @@ const alignClassNames = {
   baseline: styles.alignBaseline,
 };
 
-const alignSelfClassNames = {
-  start: flexItemStyles.alignSelfStart,
-  end: flexItemStyles.alignSelfEnd,
-  center: flexItemStyles.alignSelfCenter,
-  baseline: flexItemStyles.alignSelfBaseline,
-  stretch: flexItemStyles.alignSelfStretch,
-};
-
 const displayClassNames = {
   'none': styles.displayNone,
   'inline-flex': styles.displayInlineFlex,
@@ -59,41 +50,37 @@ export interface FlexProps extends RootComponentProps<HTMLElement>, LayoutProps 
   /**
    * Направление осей, эквивалентно `flex-direction`.
    */
-  direction?: 'row' | 'column';
+  direction?: 'row' | 'column' | undefined;
   /**
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
    * Через массив можно задать отступ между столбцами и строками [row, column], если они отличаются.
    */
-  gap?: GapsProp;
+  gap?: GapsProp | undefined;
   /**
    * Отключает перенос контента, эквивалентно `flex-wrap=nowrap`.
    */
-  noWrap?: boolean;
+  noWrap?: boolean | undefined;
   /**
    * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
-  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
+  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline' | undefined;
   /**
    * Выравнивание элементов по главной оси, эквивалентно `justify-content`.
    */
-  justify?: FlexContentProps;
+  justify?: FlexContentProps | undefined;
   /**
    * Значение `auto` позволяет задать платформенные отступы вокруг контейнера.
    */
-  margin?: 'none' | 'auto';
+  margin?: 'none' | 'auto' | undefined;
   /**
    * Для инвертирования направления, эквивалентно `row-reverse` `column-reverse`.
    */
-  reverse?: boolean;
-  /**
-   * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `align-self`.
-   */
-  alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
+  reverse?: boolean | undefined;
   /**
    * Возможность задать css-свойство `display`.
    */
-  display?: 'none' | 'flex' | 'inline-flex';
+  display?: 'none' | 'flex' | 'inline-flex' | undefined;
 }
 
 /**
@@ -102,7 +89,7 @@ export interface FlexProps extends RootComponentProps<HTMLElement>, LayoutProps 
 export const Flex: React.FC<FlexProps> & {
   /**
    * @deprecated Since 7.11.0. Будет удалено в **VKUI v9**.
-   * Используйте компонент `Flex`.
+   * Используйте компонент `Box`.
    */
   Item: typeof FlexItem;
 } = ({
@@ -113,7 +100,6 @@ export const Flex: React.FC<FlexProps> & {
   noWrap = false,
   direction = 'row',
   reverse = false,
-  alignSelf,
   display = 'flex',
   ...restProps
 }: FlexProps) => {
@@ -129,7 +115,6 @@ export const Flex: React.FC<FlexProps> & {
         direction !== 'row' && styles.directionColumn,
         margin !== 'none' && styles.marginAuto,
         align && alignClassNames[align],
-        alignSelf && alignSelfClassNames[alignSelf],
         justify && justifyClassNames[justify],
         getGapsPresets(rowGap, columnGap),
         display !== 'flex' && displayClassNames[display],

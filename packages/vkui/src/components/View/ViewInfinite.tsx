@@ -6,6 +6,7 @@ import { withContext } from '../../hoc/withContext';
 import { withPlatform } from '../../hoc/withPlatform';
 import { millisecondsInSecond } from '../../lib/date';
 import { canUseDOM, type DOMProps, withDOM } from '../../lib/dom';
+import { LockFloatingPositionContext } from '../../lib/floating/LockFloatingPosition/LockFloatingPosition';
 import { getNavId, type NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasPlatform, HTMLAttributesWithRootRef } from '../../types';
@@ -46,39 +47,39 @@ export interface ViewInfiniteProps
   /**
    * Обработчик, который вызывается при завершении анимации смены активной панели.
    */
-  onTransition?: (params: TransitionParams & { isBack: boolean }) => void;
+  onTransition?: ((params: TransitionParams & { isBack: boolean }) => void) | undefined;
   /**
    * Обработчик свайпа назад.
    */
-  onSwipeBack?: () => void;
+  onSwipeBack?: (() => void) | undefined;
   /**
    * Обработчик начала анимации свайпа назад.
    */
-  onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
+  onSwipeBackStart?: ((activePanel: string | null) => void | 'prevent') | undefined;
   /**
    * Обработчик завершения анимации отмененного пользователем свайпа.
    */
-  onSwipeBackCancel?: () => void;
+  onSwipeBackCancel?: (() => void) | undefined;
   /**
    * Массив из id панелей в порядке открытия.
    */
-  history?: string[];
+  history?: string[] | undefined;
   /**
    * Функция проверки перехода назад.
    */
-  isBackCheck?: (params: TransitionParams) => boolean;
+  isBackCheck?: ((params: TransitionParams) => boolean) | undefined;
   /**
    * @ignore
    */
-  splitCol?: SplitColContextProps;
+  splitCol?: SplitColContextProps | undefined;
   /**
    * @ignore
    */
-  configProvider?: ConfigProviderContextInterface;
+  configProvider?: ConfigProviderContextInterface | undefined;
   /**
    * @ignore
    */
-  scroll?: ScrollContextInterface;
+  scroll?: ScrollContextInterface | undefined;
 }
 
 /* eslint-disable jsdoc/require-jsdoc */
@@ -87,11 +88,11 @@ export interface ViewInfiniteState {
 
   visiblePanels: Array<string | null>;
   activePanel: string | null;
-  isBack?: boolean;
+  isBack?: boolean | undefined;
   prevPanel: string | null;
   nextPanel: string | null;
 
-  swipingBack?: boolean;
+  swipingBack?: boolean | undefined;
   swipeBackStartX: number;
   swipeBackShift: number;
   swipeBackNextPanel: string | null;
@@ -359,7 +360,11 @@ class ViewInfiniteComponent extends React.Component<
     );
   }
 
-  transitionEndHandler = (): void => {
+  transitionEndHandler: React.AnimationEventHandler<HTMLDivElement> = (e): void => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
     if (this.state.prevPanel !== null) {
       this.flushTransition(this.state.prevPanel, Boolean(this.state.isBack));
     }
@@ -596,74 +601,78 @@ class ViewInfiniteComponent extends React.Component<
 
     return (
       <NavViewIdContext.Provider value={id || nav}>
-        <Touch
-          Component="section"
-          {...restProps}
-          className={classNames(
-            styles.host,
-            platform === 'ios' && classNames(styles.ios, 'vkuiInternalView--ios'),
-            !disableAnimation && this.state.animated && styles.animated,
-            !disableAnimation && this.state.swipingBack && styles.swipingBack,
-            disableAnimation && styles.noMotion,
-            className,
-          )}
-          onMoveX={
-            iOSSwipeBackSimulationEnabled
-              ? this.handleTouchMoveXForIOSSwipeBackSimulation
-              : platform === 'ios'
-                ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+        <LockFloatingPositionContext.Provider value={swipingBack || animated}>
+          <Touch
+            Component="section"
+            {...restProps}
+            className={classNames(
+              styles.host,
+              platform === 'ios' && classNames(styles.ios, 'vkuiInternalView--ios'),
+              !disableAnimation && this.state.animated && styles.animated,
+              !disableAnimation && this.state.swipingBack && styles.swipingBack,
+              disableAnimation && styles.noMotion,
+              className,
+            )}
+            onMoveX={
+              iOSSwipeBackSimulationEnabled
+                ? this.handleTouchMoveXForIOSSwipeBackSimulation
+                : platform === 'ios'
+                  ? this.handleTouchMoveXForNativeIOSSwipeBackOrSwipeNext
+                  : undefined
+            }
+            onEnd={
+              iOSSwipeBackSimulationEnabled
+                ? this.handleTouchEndForIOSSwipeBackSimulation
                 : undefined
-          }
-          onEnd={
-            iOSSwipeBackSimulationEnabled ? this.handleTouchEndForIOSSwipeBackSimulation : undefined
-          }
-        >
-          <div className={styles.panels}>
-            {panels.map((panel) => {
-              const panelId = getNavId(panel.props, warn);
-              const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
-              const compensateScroll =
-                isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
-              const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
-              const scrollList = (panelId && this.scrolls.get(panelId)) || [];
-              const scroll = scrollList[scrollList.length - 1] || 0;
+            }
+          >
+            <div className={styles.panels}>
+              {panels.map((panel) => {
+                const panelId = getNavId(panel.props, warn);
+                const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
+                const compensateScroll =
+                  isPrev || panelId === swipeBackNextPanel || (panelId === nextPanel && isBack);
+                const isTransitionTarget = animated && panelId === (isBack ? prevPanel : nextPanel);
+                const scrollList = (panelId && this.scrolls.get(panelId)) || [];
+                const scroll = scrollList[scrollList.length - 1] || 0;
 
-              return (
-                <div
-                  className={classNames(
-                    styles.panel,
-                    panelId === activePanel && styles.panelActive,
-                    panelId === prevPanel && styles.panelPrev,
-                    panelId === nextPanel && styles.panelNext,
-                    panelId === swipeBackPrevPanel && styles.panelSwipeBackPrev,
-                    panelId === swipeBackNextPanel && styles.panelSwipeBackNext,
-                    swipeBackResult === 'success' && styles.panelSwipeBackSuccess,
-                    swipeBackResult === 'fail' && styles.panelSwipeBackFailed,
-                  )}
-                  onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : undefined}
-                  ref={(el) => {
-                    panelId !== undefined && (this.panelNodes[panelId] = el);
-                  }}
-                  style={this.calcPanelSwipeStyles(panelId)}
-                  key={panelId}
-                >
+                return (
                   <div
-                    className={styles.panelIn}
-                    style={{ marginTop: compensateScroll ? -scroll : undefined }}
+                    className={classNames(
+                      styles.panel,
+                      panelId === activePanel && styles.panelActive,
+                      panelId === prevPanel && styles.panelPrev,
+                      panelId === nextPanel && styles.panelNext,
+                      panelId === swipeBackPrevPanel && styles.panelSwipeBackPrev,
+                      panelId === swipeBackNextPanel && styles.panelSwipeBackNext,
+                      swipeBackResult === 'success' && styles.panelSwipeBackSuccess,
+                      swipeBackResult === 'fail' && styles.panelSwipeBackFailed,
+                    )}
+                    onAnimationEnd={isTransitionTarget ? this.transitionEndHandler : undefined}
+                    ref={(el) => {
+                      panelId !== undefined && (this.panelNodes[panelId] = el);
+                    }}
+                    style={this.calcPanelSwipeStyles(panelId)}
+                    key={panelId}
                   >
-                    <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
-                      <NavTransitionProvider
-                        entering={panelId === nextPanel || panelId === swipeBackNextPanel}
-                      >
-                        {panel}
-                      </NavTransitionProvider>
-                    </NavTransitionDirectionProvider>
+                    <div
+                      className={styles.panelIn}
+                      style={{ marginTop: compensateScroll ? -scroll : undefined }}
+                    >
+                      <NavTransitionDirectionProvider isBack={swipingBack || isBack}>
+                        <NavTransitionProvider
+                          entering={panelId === nextPanel || panelId === swipeBackNextPanel}
+                        >
+                          {panel}
+                        </NavTransitionProvider>
+                      </NavTransitionDirectionProvider>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </Touch>
+                );
+              })}
+            </div>
+          </Touch>
+        </LockFloatingPositionContext.Provider>
       </NavViewIdContext.Provider>
     );
   }

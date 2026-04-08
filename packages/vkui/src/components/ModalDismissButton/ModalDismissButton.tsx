@@ -12,7 +12,7 @@ export interface ModalDismissButtonProps extends Omit<ModalOutsideButtonProps, '
   /**
    * Содержимое кнопки.
    */
-  children?: React.ReactNode;
+  children?: React.ReactNode | undefined;
 }
 
 /**

@@ -80,8 +80,8 @@ function renderProps(props: PropItem[] = []) {
 
 interface TablePropColumnProps {
   name: string;
-  required?: boolean;
-  deprecated?: string;
+  required?: boolean | undefined;
+  deprecated?: string | undefined;
 }
 
 function TablePropColumn({ name, required, deprecated }: TablePropColumnProps) {
@@ -100,10 +100,10 @@ function TablePropColumn({ name, required, deprecated }: TablePropColumnProps) {
 }
 
 interface TableDescriptionColumnProps {
-  type?: string;
-  description?: string;
-  defaultValue?: string;
-  deprecated?: string;
+  type?: string | undefined;
+  description?: string | undefined;
+  defaultValue?: string | undefined;
+  deprecated?: string | undefined;
 }
 
 async function TableDescriptionColumn({

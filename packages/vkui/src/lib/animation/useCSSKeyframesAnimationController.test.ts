@@ -13,11 +13,9 @@ describe(useCSSKeyframesAnimationController, () => {
   };
 
   beforeEach(() => {
-    for (const key in callbacks) {
-      if (callbacks.hasOwnProperty(key)) {
-        callbacks[key].mockClear();
-      }
-    }
+    Object.values(callbacks).forEach((callback) => {
+      callback.mockClear();
+    });
   });
 
   describe.each([

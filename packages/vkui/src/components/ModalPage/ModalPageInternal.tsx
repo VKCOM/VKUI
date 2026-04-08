@@ -42,8 +42,8 @@ const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> 
 export interface ModalPageInternalProps
   extends Omit<ModalPageProps, 'nav' | 'keepMounted' | 'settlingHeight' | 'dynamicContentHeight'> {
   snapPoint: SnapPoint;
-  ModalOverlay?: ComponentType<ModalOverlayProps>;
-  onSnapPointChange?: SnapPointChange;
+  ModalOverlay?: ComponentType<ModalOverlayProps> | undefined;
+  onSnapPointChange?: SnapPointChange | undefined;
 }
 
 /**
@@ -225,7 +225,7 @@ export const ModalPageInternal = ({
   );
 };
 
-const desktopMaxWidthClassNames = {
+const desktopMaxWidthClassNames: Record<string, string | undefined> = {
   s: styles.hostDesktopMaxWidthS,
   m: styles.hostDesktopMaxWidthM,
   l: styles.hostDesktopMaxWidthL,
@@ -238,9 +238,12 @@ function resolveDesktopMaxWidth(
     return [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': `${desktopMaxWidth}px` }];
   }
 
-  return desktopMaxWidthClassNames.hasOwnProperty(desktopMaxWidth)
-    ? [desktopMaxWidthClassNames[desktopMaxWidth], undefined]
-    : [undefined, { '--vkui_internal_ModalPage--desktopMaxWidth': desktopMaxWidth }];
+  const className = desktopMaxWidthClassNames[desktopMaxWidth];
+  const style = className
+    ? undefined
+    : { '--vkui_internal_ModalPage--desktopMaxWidth': desktopMaxWidth };
+
+  return [className, style];
 }
 
 function getHeightCSSVariable(height?: number | string): CSSCustomProperties | undefined {

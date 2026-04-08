@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useDOM } from '../../../lib/dom';
-import { matchMediaListAddListener, matchMediaListRemoveListener } from '../../../lib/matchMedia';
 import { useMediaQueries } from '../../useMediaQueries';
 
 /**
@@ -41,14 +40,14 @@ export function useIsDesktop(): boolean {
 
     updateIsDesktop();
 
-    matchMediaListAddListener(mediaQueries.smallTabletPlus, updateIsDesktop);
-    matchMediaListAddListener(mediaQueries.mediumHeight, updateIsDesktop);
-    matchMediaListAddListener(pointerFineQuery, updateIsDesktop);
+    mediaQueries.smallTabletPlus.addEventListener('change', updateIsDesktop);
+    mediaQueries.mediumHeight.addEventListener('change', updateIsDesktop);
+    pointerFineQuery.addEventListener('change', updateIsDesktop);
 
     return () => {
-      matchMediaListRemoveListener(mediaQueries.smallTabletPlus, updateIsDesktop);
-      matchMediaListRemoveListener(mediaQueries.mediumHeight, updateIsDesktop);
-      matchMediaListRemoveListener(pointerFineQuery, updateIsDesktop);
+      mediaQueries.smallTabletPlus.removeEventListener('change', updateIsDesktop);
+      mediaQueries.mediumHeight.removeEventListener('change', updateIsDesktop);
+      pointerFineQuery.removeEventListener('change', updateIsDesktop);
     };
   }, [mediaQueries, window]);
 

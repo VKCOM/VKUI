@@ -17,60 +17,60 @@ export interface ModalCardProps
    *
    * @default false
    */
-  open?: boolean;
+  open?: boolean | undefined;
   /**
    * Сохранять ли компонент в DOM при `open={false}`.
    *
    * @default false
    */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
   /**
    * Отключает фокус на интерактивный элемент после открытия модалки.
    *
    * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
-  noFocusToDialog?: boolean;
+  noFocusToDialog?: boolean | undefined;
   /**
    * `data-testid` для оверлея.
    */
-  modalOverlayTestId?: string;
+  modalOverlayTestId?: string | undefined;
   /**
    * Будет вызвано при начале открытия модалки.
    */
-  onOpen?: VoidFunction;
+  onOpen?: VoidFunction | undefined;
   /**
    * Будет вызвано при окончательном открытии модалки.
    */
-  onOpened?: VoidFunction;
+  onOpened?: VoidFunction | undefined;
   /**
    * Будет вызвано при начале закрытия модалки.
    */
-  onClose?: (reason: ModalCardCloseReason, event?: UIEvent<HTMLElement>) => void;
+  onClose?: ((reason: ModalCardCloseReason, event?: UIEvent<HTMLElement>) => void) | undefined;
   /**
    * Будет вызвано при окончательном закрытии модалки.
    */
-  onClosed?: VoidFunction;
+  onClosed?: VoidFunction | undefined;
   /**
    * Позволяет отключить захват фокуса.
    *
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
-  disableFocusTrap?: boolean;
+  disableFocusTrap?: boolean | undefined;
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
    */
-  disableModalOverlay?: boolean;
+  disableModalOverlay?: boolean | undefined;
   /**
    * Отключает анимацию открытия модалки.
    */
-  disableOpenAnimation?: boolean;
+  disableOpenAnimation?: boolean | undefined;
   /**
    * Отключает анимацию закрытия модалки.
    */
-  disableCloseAnimation?: boolean;
+  disableCloseAnimation?: boolean | undefined;
   /**
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
 }

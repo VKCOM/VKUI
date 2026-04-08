@@ -26,9 +26,9 @@ const createSlidesManager = ({
   containerWidth,
   isRtl = false,
 }: Partial<SlidesManagerState> & {
-  slidesCount?: number;
-  slideWidth?: number;
-  isRtl?: boolean;
+  slidesCount?: number | undefined;
+  slideWidth?: number | undefined;
+  isRtl?: boolean | undefined;
 }): SlidesManagerState => {
   return {
     isFullyVisible: isFullyVisible || false,

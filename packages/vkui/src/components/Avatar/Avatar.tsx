@@ -58,7 +58,7 @@ export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightS
    *
    * > ⚠️ Перебивает `fallbackIcon`.
    */
-  initials?: string;
+  initials?: string | undefined;
   /**
    * Задаёт градиент для фона.
    *
@@ -74,7 +74,11 @@ export interface AvatarProps extends Omit<ImageBaseProps, 'widthSize' | 'heightS
    * > Если необходимо задать свой градиент, то используйте значение `"custom"` и определите цвет градиента либо через
    * > свой класс в `className`, либо через `style={{ backgroundImage: "..." }}`.
    */
-  gradientColor?: InitialsAvatarNumberGradients | InitialsAvatarTextGradients | 'custom';
+  gradientColor?:
+    | InitialsAvatarNumberGradients
+    | InitialsAvatarTextGradients
+    | 'custom'
+    | undefined;
 }
 
 /**

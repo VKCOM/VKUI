@@ -13,7 +13,7 @@ import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20, 0, 0);
 
-const testIds: Required<DateInputPropsTestsProps> = {
+const testIds = {
   dayFieldTestId: 'day-picker',
   monthFieldTestId: 'month-picker',
   yearFieldTestId: 'year-picker',
@@ -21,7 +21,7 @@ const testIds: Required<DateInputPropsTestsProps> = {
   minuteFieldTestId: 'minute-picker',
   clearButtonTestId: 'clear-button',
   showCalendarButtonTestId: 'show-calendar-button',
-};
+} as const satisfies DateInputPropsTestsProps;
 
 const getInputsLike = () => {
   return [

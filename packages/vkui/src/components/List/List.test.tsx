@@ -160,9 +160,9 @@ const dragCell = async ({
 }: {
   testId: string;
   breakPoints: number[];
-  afterMove?: Record<number, VoidFunction>;
-  afterDragging?: VoidFunction;
-  mouseEvents?: Array<typeof fireEvent.mouseDown>;
+  afterMove?: Record<number, VoidFunction> | undefined;
+  afterDragging?: VoidFunction | undefined;
+  mouseEvents?: Array<typeof fireEvent.mouseDown> | undefined;
 }) => {
   const [mouseDown, mouseMove, mouseUp] = mouseEvents;
   const dragger = screen.getByTestId(testId);
