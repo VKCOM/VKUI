@@ -12,7 +12,7 @@ export type GroupExpandedContentProps = HTMLAttributesWithRootRef<HTMLElement> &
     /**
      * Направление отображения контента.
      */
-    direction?: 'inline' | 'block';
+    direction?: 'inline' | 'block' | undefined;
   };
 export const GroupExpandedContent = ({
   direction = 'inline',

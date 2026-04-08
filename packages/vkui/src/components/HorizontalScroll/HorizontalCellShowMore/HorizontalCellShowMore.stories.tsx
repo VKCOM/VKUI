@@ -47,7 +47,7 @@ const CELL_ITEMS = [
 function getNotTooBigHeightBySize({
   size,
   height,
-}: Pick<HorizontalCellShowMoreProps, 'size' | 'height'>) {
+}: Pick<HorizontalCellShowMoreProps, 'size' | 'height'>): number {
   if (size === 's') {
     return 56;
   }
@@ -56,7 +56,7 @@ function getNotTooBigHeightBySize({
     return 88;
   }
 
-  return height;
+  return height ?? 96;
 }
 
 export const Playground: Story = {

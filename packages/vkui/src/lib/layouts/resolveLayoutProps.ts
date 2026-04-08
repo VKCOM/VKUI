@@ -5,8 +5,8 @@ import { LAYOUT_PROPS, type LayoutPropKeys } from './layoutProps';
 import type { LayoutProps } from './types';
 
 export type ComponentProps = Partial<LayoutProps> & {
-  className?: string;
-  style?: React.CSSProperties;
+  className?: string | undefined;
+  style?: React.CSSProperties | undefined;
 } & {
   [key: string]: unknown;
 };
@@ -17,7 +17,7 @@ export type ComponentProps = Partial<LayoutProps> & {
  * @returns измененные свойства
  */
 export function resolveLayoutProps<T extends ComponentProps>(
-  props: T & { className?: string; style?: React.CSSProperties },
+  props: T & { className?: string | undefined; style?: React.CSSProperties | undefined },
 ) {
   const outProps = { ...props };
   let resolvedClassName: string | undefined;

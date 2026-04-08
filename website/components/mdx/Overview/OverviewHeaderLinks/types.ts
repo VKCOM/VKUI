@@ -11,9 +11,9 @@ export interface OverviewHeaderLinksProps {
     | 'typography'
     | 'configuration'
     | 'utils';
-  type?: 'component' | 'hook';
-  forcedPath?: string;
-  forcedName?: string;
+  type?: 'component' | 'hook' | undefined;
+  forcedPath?: string | undefined;
+  forcedName?: string | undefined;
 }
 
 export interface OverviewHeaderLinkProps {

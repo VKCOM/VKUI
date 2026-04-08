@@ -4,7 +4,7 @@ import { useTokensClassName } from './useTokenClassName';
 import styles from './TokensClassProvider.module.css';
 
 type ProvidedChildProps = {
-  className?: string;
+  className?: string | undefined;
 };
 
 type InjectTokenClassNameToChildProps = {

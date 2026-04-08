@@ -12,7 +12,7 @@ import styles from './Alert.module.css';
 
 interface AlertTypography extends HasChildren {
   'id': string;
-  'data-testid'?: string;
+  'data-testid'?: string | undefined;
 }
 export const AlertTitle = (props: AlertTypography): React.ReactNode => {
   const platform = usePlatform();

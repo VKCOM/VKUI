@@ -17,7 +17,7 @@ interface ActionSheetItemCheckedProps
   /**
    * Иконка для `checked` режима.
    */
-  children?: React.ReactNode;
+  children?: React.ReactNode | undefined;
 }
 
 export const Radio = ({

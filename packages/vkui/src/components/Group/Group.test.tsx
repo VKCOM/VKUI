@@ -18,8 +18,8 @@ describe('Group', () => {
   it.each<{
     mode: GroupProps['mode'];
     isInsideModal: boolean;
-    viewWidth?: ViewWidthType;
-    layout?: AppRootContextInterface['layout'];
+    viewWidth?: ViewWidthType | undefined;
+    layout?: AppRootContextInterface['layout'] | undefined;
     className: string;
   }>([
     {

@@ -55,24 +55,31 @@ export interface CheckboxProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotProps?: {
-    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
-      HasRootRef<HTMLLabelElement> &
-      HasDataAttribute;
-    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | ((Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+              HasRootRef<HTMLLabelElement> &
+              HasDataAttribute) &
+              HasDataAttribute)
+          | undefined;
+        input?:
+          | (React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * Подпись под основным текстом.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    * Контент, идущий за основным текстом.
    */
-  titleAfter?: React.ReactNode;
+  titleAfter?: React.ReactNode | undefined;
   /**
    * Отключает отступы у чекбокса. При использовании этого свойства, значение по умолчанию для свойств `hoverMode` и `activeMode` становится `"opacity"`.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
 }
 
 const CheckboxComponent = ({

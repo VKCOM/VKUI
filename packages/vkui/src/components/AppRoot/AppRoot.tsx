@@ -27,38 +27,38 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Режим встраивания.
    */
-  mode?: AppRootMode;
+  mode?: AppRootMode | undefined;
   /**
    * - `global` (по умолчанию) — VKUI-приложение скроллится вместе со страницей.
    * - `contain` — VKUI-приложение живет в отдельной зоне и скроллится независимо внутри `AppRoot` (например, в модалке).
    *
    * Полезно при использовании `mode="embedded"`.
    */
-  scroll?: AppRootScroll;
+  scroll?: AppRootScroll | undefined;
   /**
    * См. Документацию [mdn web docs | env#values](https://developer.mozilla.org/en-US/docs/Web/CSS/env#values).
    */
-  safeAreaInsets?: SafeAreaInsets;
+  safeAreaInsets?: SafeAreaInsets | undefined;
   /**
    * Кастомный root-элемент портала.
    */
-  portalRoot?: HTMLElement | React.RefObject<HTMLElement | null> | null;
+  portalRoot?: HTMLElement | React.RefObject<HTMLElement | null> | null | undefined;
   /**
    * Отключает рендер всплывающих компонентов в отдельном контейнере.
    */
-  disablePortal?: boolean;
+  disablePortal?: boolean | undefined;
   /**
    * По умолчанию, mode="embedded" переносит систему координат элементов с `position: fixed` на
    * свой контейнер через `transform: translate3d(0, 0, 0)`.
    *
    * Это поведение можно отключить с помощью этого параметра.
    */
-  disableParentTransformForPositionFixedElements?: boolean;
+  disableParentTransformForPositionFixedElements?: boolean | undefined;
   /**
    * Глобально задаёт тип оформления макета для компонентов
    * [Panel](https://vkui.io/components/panel) и [Group](https://vkui.io/components/group).
    */
-  layout?: AppRootLayout;
+  layout?: AppRootLayout | undefined;
   /**
    * Задаёт режим выбора текста (выделения текста) для всего приложения.
    * По умолчанию, если режим не задан, запрещает выбор текста в приложениях,
@@ -70,7 +70,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    *
    * @since 6.2.0
    */
-  userSelectMode?: AppRootUserSelectMode;
+  userSelectMode?: AppRootUserSelectMode | undefined;
   /**
    * По умолчанию в режиме `mode="full"` VKUI в рантайме выставляет:
    * - класс .vkui на html элемент
@@ -80,7 +80,7 @@ export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * Для корректной работы SSR рекоммендуется выставлять эти классы самостоятельно
    * и отключить это поведение.
    */
-  disableSettingVKUIClassesInRuntime?: boolean;
+  disableSettingVKUIClassesInRuntime?: boolean | undefined;
 }
 
 /**

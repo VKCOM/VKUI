@@ -30,11 +30,11 @@ export interface ScrollArrowsTestIds {
   /**
    * Передает атрибут `data-testid` для кнопки перехода к следующему слайду.
    */
-  nextArrowTestId?: string;
+  nextArrowTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки перехода к предыдущему слайду.
    */
-  prevArrowTestId?: string;
+  prevArrowTestId?: string | undefined;
 }
 
 interface ScrollArrowsProps

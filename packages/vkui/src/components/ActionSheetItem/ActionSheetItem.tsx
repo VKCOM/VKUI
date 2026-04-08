@@ -30,62 +30,62 @@ export interface ActionSheetItemProps
    * > Since 8.0.0. Значение `"cancel"` устарело и будет удалено в **VKUI v10**.
    * > Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
    */
-  mode?: 'default' | 'destructive' | 'cancel';
+  mode?: 'default' | 'destructive' | 'cancel' | undefined;
   /**
    * Если указано, элемент будет использоваться как ссылка.
    */
-  href?: string;
+  href?: string | undefined;
   /**
    * Атрибут `target` для тега `<a>`.
    */
-  target?: string;
+  target?: string | undefined;
   /**
    * Иконка или другой React-элемент для отображения перед основным контентом.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Иконка или другой React-элемент для отображения после основного контента.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Дополнительная информация, отображаемая рядом с основным контентом.
    */
-  meta?: React.ReactNode;
+  meta?: React.ReactNode | undefined;
   /**
    * Слот для подсказки или вспомогательного текста.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
   /**
    * По умолчанию нажатие на опцию вызывает переданную в `ActionSheet` функцию `onClose`, данное свойство
    * позволяет отключить такое поведение.
    */
-  autoCloseDisabled?: boolean;
+  autoCloseDisabled?: boolean | undefined;
   /**
    * Включает возможность выбрать элемент (отображает радиокнопку).
    */
-  selectable?: boolean;
+  selectable?: boolean | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Все текстовые элементы при необходимости занимают несколько строк.
    */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
   /**
    * По умолчанию `onClick` будет вызван после завершения анимации скрытия и после вызова `onClose`.
    * Из этого следует, что в объекте события значения полей типа `currentTarget` будут не определены.
    * Если вам нужен объект события именно на момент нажатия, используйте `onImmediateClick`.
    */
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: React.MouseEventHandler<HTMLElement> | undefined;
   /**
    * Обработчик нажатия, вызывающийся непосредственно в момент нажатия (в отличие от `onClick`).
    */
-  onImmediateClick?: React.MouseEventHandler<HTMLElement>;
+  onImmediateClick?: React.MouseEventHandler<HTMLElement> | undefined;
   /**
    * Иконка для `selectable` режима.
    */
-  iconChecked?: React.ReactNode;
+  iconChecked?: React.ReactNode | undefined;
   /**
    * Позволяет отделить `ActionItem` от `CancelItem` для определении того,
    * кто вызвал закрытие `ActionSheet`. Используется в `ActionSheet.onClose()`.
@@ -93,7 +93,7 @@ export interface ActionSheetItemProps
    * @deprecated Since 8.0.0. Свойство устарело и будет удалено в **VKUI v10**.
    * Используйте компонент `ActionSheetDefaultIosCloseItem` или передайте пропсы через `slotProps.iosCloseItem` в `ActionSheet`.
    */
-  isCancelItem?: boolean;
+  isCancelItem?: boolean | undefined;
 }
 
 /**

@@ -22,11 +22,11 @@ export interface CustomScrollViewProps
   /**
    * `className` для компонента.
    */
-  className?: HTMLDivElement['className'];
+  className?: HTMLDivElement['className'] | undefined;
   /**
    * Обработчик события `scroll`.
    */
-  onScroll?: (event: React.UIEvent<HTMLDivElement>) => void;
+  onScroll?: ((event: React.UIEvent<HTMLDivElement>) => void) | undefined;
   /**
    * Содержимое.
    */
@@ -34,21 +34,21 @@ export interface CustomScrollViewProps
   /**
    * Поведение overscroll, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior).
    */
-  overscrollBehavior?: 'auto' | 'contain' | 'none';
+  overscrollBehavior?: 'auto' | 'contain' | 'none' | undefined;
   /**
    * Поведение scroll-behavior, подробнее можно почитать в [документации](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior).
    */
-  scrollBehavior?: 'auto' | 'smooth';
+  scrollBehavior?: 'auto' | 'smooth' | undefined;
   /**
    * Включение отображения горизонтального скролла.
    */
-  enableHorizontalScroll?: boolean;
+  enableHorizontalScroll?: boolean | undefined;
   /**
    * Скрытие скроллбара.
    *
    * > В версии ниже Firefox 64 будет виден скролл.
    */
-  scrollbarHidden?: boolean;
+  scrollbarHidden?: boolean | undefined;
 }
 
 /**

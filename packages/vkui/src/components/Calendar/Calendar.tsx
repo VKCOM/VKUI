@@ -62,29 +62,29 @@ export interface CalendarProps
   /**
    * Текущая выбранная дата.
    */
-  value?: Date | null;
+  value?: Date | null | undefined;
   /**
    * Начальная дата при монтировании.
    */
-  defaultValue?: Date | null;
+  defaultValue?: Date | null | undefined;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
    */
-  disablePast?: boolean;
+  disablePast?: boolean | undefined;
   /**
    * Запрещает выбор даты в будущем.
    * Применяется, если не задано `shouldDisableDate`.
    */
-  disableFuture?: boolean;
+  disableFuture?: boolean | undefined;
   /**
    * Включает выбор времени.
    */
-  enableTime?: boolean;
+  enableTime?: boolean | undefined;
   /**
    * Отключает селекторы выбора месяца/года.
    */
-  disablePickers?: boolean;
+  disablePickers?: boolean | undefined;
   /**
    * `aria-label` для изменения дня.
    *
@@ -93,50 +93,50 @@ export interface CalendarProps
    * Теперь этот контейнер является таблицей (с помощью role="grid") и
    * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
-  changeDayLabel?: string; // TODO [>=9]: удалить неиспользуемое свойство
+  changeDayLabel?: string | undefined; // TODO [>=9]: удалить неиспользуемое свойство
   /**
    * День недели, с которого начинается неделя.
    */
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
   /**
    * Показывать дни соседних месяцев.
    */
-  showNeighboringMonth?: boolean;
+  showNeighboringMonth?: boolean | undefined;
   /**
    * Размер календаря.
    */
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
   /**
    * Обработчик изменения выбранной даты.
    */
-  onChange?: (value: Date) => void;
+  onChange?: ((value: Date) => void) | undefined;
   /**
    * Функция для проверки запрета выбора даты.
    */
-  shouldDisableDate?: (value: Date) => boolean;
+  shouldDisableDate?: ((value: Date) => boolean) | undefined;
   /**
    * Дата отображаемого месяца.
    * При использовании обновление даты должно происходить вне компонента.
    */
-  viewDate?: Date;
+  viewDate?: Date | undefined;
   /**
    * Обработчик изменения даты в шапке календаря.
    */
-  onHeaderChange?: (value: Date) => void;
+  onHeaderChange?: ((value: Date) => void) | undefined;
   /**
    * Минимальные дата и время, которые можно выбрать.
    * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
-  minDateTime?: Date;
+  minDateTime?: Date | undefined;
   /**
    * Максимальные дата и время, которые можно выбрать.
    * Применяется, если не заданы `shouldDisableDate` и `disablePast`/`disableFuture`.
    */
-  maxDateTime?: Date;
+  maxDateTime?: Date | undefined;
   /**
    * Часовой пояс для отображения даты.
    */
-  timezone?: string;
+  timezone?: string | undefined;
 }
 
 const warn = warnOnce('Calendar');

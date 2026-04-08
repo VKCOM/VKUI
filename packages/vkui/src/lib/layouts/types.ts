@@ -42,117 +42,117 @@ export interface LayoutProps {
   /**
    * Внутренние отступы со всех сторон.
    */
-  padding?: PaddingProp;
+  padding?: PaddingProp | undefined;
   /**
    * Внутренние отступы по строчной оси.
    */
-  paddingInline?: PaddingProp;
+  paddingInline?: PaddingProp | undefined;
   /**
    * Внутренние отступы по блочной оси.
    */
-  paddingBlock?: PaddingProp;
+  paddingBlock?: PaddingProp | undefined;
   /**
    * Внутренний начальный отступ по строчной оси.
    */
-  paddingInlineStart?: PaddingProp;
+  paddingInlineStart?: PaddingProp | undefined;
   /**
    * Внутренний конечный отступ по строчной оси.
    */
-  paddingInlineEnd?: PaddingProp;
+  paddingInlineEnd?: PaddingProp | undefined;
   /**
    * Внутренний начальный отступ по блочной оси.
    */
-  paddingBlockStart?: PaddingProp;
+  paddingBlockStart?: PaddingProp | undefined;
   /**
    * Внутренний конечный отступ по блочной оси.
    */
-  paddingBlockEnd?: PaddingProp;
+  paddingBlockEnd?: PaddingProp | undefined;
   /**
    * Размер элемента по строчной оси (при горизонтальном направлении письма - ширина элемента).
    */
-  inlineSize?: SizeProp;
+  inlineSize?: SizeProp | undefined;
   /**
    * Минимальный размер элемента по строчной оси (при горизонтальном направлении письма - ширина элемента).
    */
-  minInlineSize?: Exclude<SizeProp, 'auto'>;
+  minInlineSize?: Exclude<SizeProp, 'auto'> | undefined;
   /**
    * Максимальный размер элемента по строчной оси (при горизонтальном направлении письма - ширина элемента).
    */
-  maxInlineSize?: Exclude<SizeProp, 'auto'>;
+  maxInlineSize?: Exclude<SizeProp, 'auto'> | undefined;
   /**
    * Размер элемента по блочной оси (при горизонтальном направлении письма - высота элемента).
    */
-  blockSize?: SizeProp;
+  blockSize?: SizeProp | undefined;
   /**
    * Минимальный размер элемента по блочной оси (при горизонтальном направлении письма - высота элемента).
    */
-  minBlockSize?: SizeProp;
+  minBlockSize?: SizeProp | undefined;
   /**
    * Максимальный размер элемента по блочной оси (при горизонтальном направлении письма - высота элемента).
    */
-  maxBlockSize?: SizeProp;
+  maxBlockSize?: SizeProp | undefined;
   /**
    * Смещение элемента по `top`, `right`, `bottom` и `left` одновременно.
    */
-  inset?: InsetProp;
+  inset?: InsetProp | undefined;
   /**
    * Боковое смещение по строчной оси (при горизонтальном направлении письма - свойства `left`/`right`).
    */
-  insetInline?: InsetProp;
+  insetInline?: InsetProp | undefined;
   /**
    * Боковое смещение по блочной оси (при горизонтальном направлении письма - свойства `top`/`bottom`).
    */
-  insetBlock?: InsetProp;
+  insetBlock?: InsetProp | undefined;
   /**
    * Смещение начального отступа по строчной оси (при горизонтальном направлении письма - свойство `left`).
    */
-  insetInlineStart?: InsetProp;
+  insetInlineStart?: InsetProp | undefined;
   /**
    * Смещение конечного отступа по строчной оси (при горизонтальном направлении письма - свойство `right`).
    */
-  insetInlineEnd?: InsetProp;
+  insetInlineEnd?: InsetProp | undefined;
   /**
    * Смещение начального отступа по блочной оси (при горизонтальном направлении письма - свойство `top`).
    */
-  insetBlockStart?: InsetProp;
+  insetBlockStart?: InsetProp | undefined;
   /**
    * Смещение конечного отступа по блочной оси (при горизонтальном направлении письма - свойство `bottom`).
    */
-  insetBlockEnd?: InsetProp;
+  insetBlockEnd?: InsetProp | undefined;
   /**
    * Позиционирование элемента.
    */
-  position?: PositionValue;
+  position?: PositionValue | undefined;
   /**
    * Управление переполнением содержимого.
    */
-  overflow?: OverflowValue;
+  overflow?: OverflowValue | undefined;
   /**
    * Управление переполнением содержимого по блочной оси (при горизонтальном направлении письма - свойство `overflow-y`).
    */
-  overflowBlock?: OverflowValue;
+  overflowBlock?: OverflowValue | undefined;
   /**
    * Управление переполнением содержимого по строчной оси (при горизонтальном направлении письма - свойство `overflow-x`).
    */
-  overflowInline?: OverflowValue;
+  overflowInline?: OverflowValue | undefined;
   /**
    * Определяет, насколько элемент будет расти относительно остальных flex-элементов.
    */
-  flexGrow?: FlexGrowProp;
+  flexGrow?: FlexGrowProp | undefined;
   /**
    * Определяет, насколько элемент будет сжиматься относительно остальных flex-элементов.
    */
-  flexShrink?: FlexShrinkProp;
+  flexShrink?: FlexShrinkProp | undefined;
   /**
    * Определяет начальный размер flex-элемента.
    */
-  flexBasis?: FlexBasisProp;
+  flexBasis?: FlexBasisProp | undefined;
   /**
    * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `align-self`.
    */
-  alignSelf?: AlignSelfProp;
+  alignSelf?: AlignSelfProp | undefined;
   /**
    * Для задания выравнивания, отличного от установленного на родителе, эквивалентно `justify-self`.
    */
-  justifySelf?: JustifySelfProp;
+  justifySelf?: JustifySelfProp | undefined;
 }

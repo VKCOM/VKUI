@@ -8,9 +8,9 @@ import { PostHeading, PostMeta } from './Post';
 
 interface PostHeaderProps {
   frontMatter: {
-    tags?: string;
-    date?: string;
-    title?: string;
+    tags?: string | undefined;
+    date?: string | undefined;
+    title?: string | undefined;
   };
 }
 

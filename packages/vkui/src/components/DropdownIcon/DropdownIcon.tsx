@@ -13,7 +13,7 @@ import { useAdaptivityConditionalRender } from '../../hooks/useAdaptivityConditi
 import type { HTMLAttributesWithRootRef } from '../../types';
 
 export interface DropdownIconProps extends HTMLAttributesWithRootRef<SVGSVGElement> {
-  opened?: boolean;
+  opened?: boolean | undefined;
 }
 
 export const DropdownIcon = ({

@@ -15,8 +15,8 @@ const EVENT_OPTIONS = {
  */
 export const useGlobalEscKeyDown = (
   init: boolean,
-  callback?: (event: KeyboardEvent) => void,
-  optionsProp?: AddEventListenerOptions,
+  callback?: ((event: KeyboardEvent) => void) | undefined,
+  optionsProp?: AddEventListenerOptions | undefined,
 ): void => {
   const { document } = useDOM();
 

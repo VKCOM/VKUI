@@ -53,7 +53,9 @@ export const isSizeXRegularFallback = (
     ? viewWidth >= ViewWidth.SMALL_TABLET
     : legacySizeX === 'regular';
 
-export interface UseAdaptivityWithJSMediaQueries extends Required<BaseAdaptivityProps> {
+type RequiredNonNullable<T> = { [P in keyof T]-?: NonNullable<T[P]> };
+
+export interface UseAdaptivityWithJSMediaQueries extends RequiredNonNullable<BaseAdaptivityProps> {
   isDesktop: boolean;
 }
 

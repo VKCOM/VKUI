@@ -2,7 +2,7 @@ import type * as React from 'react';
 import styles from './Callout.module.css';
 
 interface CalloutProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode | undefined;
 }
 
 export function Callout({ children }: CalloutProps) {

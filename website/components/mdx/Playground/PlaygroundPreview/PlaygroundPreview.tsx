@@ -37,8 +37,8 @@ function DefaultWrapper({
 }
 
 export interface PlaygroundPreviewProps extends Pick<FlexProps, 'direction' | 'align' | 'justify'> {
-  className?: string;
-  Wrapper?: React.ComponentType;
+  className?: string | undefined;
+  Wrapper?: React.ComponentType | undefined;
 }
 
 export function PlaygroundPreview({

@@ -30,7 +30,7 @@ export type CalendarDaysTestsProps = {
   /**
    * Передает атрибут `data-testid` для дня в календаре.
    */
-  dayTestId?: CalendarDayTestsProps['testId'];
+  dayTestId?: CalendarDayTestsProps['testId'] | undefined;
 };
 
 export interface CalendarDaysProps
@@ -40,7 +40,7 @@ export interface CalendarDaysProps
   /**
    * Выбранная дата или диапазон дат.
    */
-  value?: Date | Array<Date | null> | null;
+  value?: Date | Array<Date | null> | null | undefined;
   /**
    * Дата, определяющая отображаемый месяц.
    */
@@ -52,19 +52,19 @@ export interface CalendarDaysProps
   /**
    * Показывать дни соседних месяцев.
    */
-  showNeighboringMonth?: boolean;
+  showNeighboringMonth?: boolean | undefined;
   /**
    * Размер календаря.
    */
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
   /**
    * Дополнительные свойства для элементов дней.
    */
-  dayProps?: CalendarDayElementProps;
+  dayProps?: CalendarDayElementProps | undefined;
   /**
    * Следить за изменениями дней для обновления UI.
    */
-  listenDayChangesForUpdate?: boolean;
+  listenDayChangesForUpdate?: boolean | undefined;
   /**
    * Обработчик изменения выбранного дня.
    */
@@ -84,11 +84,11 @@ export interface CalendarDaysProps
   /**
    * Определяет начало диапазона при наведении (подсветка).
    */
-  isHintedDaySelectionStart?: (value: Date, dayOfWeek: number) => boolean;
+  isHintedDaySelectionStart?: ((value: Date, dayOfWeek: number) => boolean) | undefined;
   /**
    * Определяет конец диапазона при наведении (подсветка).
    */
-  isHintedDaySelectionEnd?: (value: Date, dayOfWeek: number) => boolean;
+  isHintedDaySelectionEnd?: ((value: Date, dayOfWeek: number) => boolean) | undefined;
   /**
    * Проверяет, является ли день активным (текущая дата).
    */
@@ -96,15 +96,15 @@ export interface CalendarDaysProps
   /**
    * Проверяет, подсвечен ли день (при наведении).
    */
-  isDayHinted?: (value: Date) => boolean;
+  isDayHinted?: ((value: Date) => boolean) | undefined;
   /**
    * Проверяет, возможно ли сфокусироваться на дне с клавиатуры.
    */
-  isDayFocusable?: (value: Date) => boolean;
+  isDayFocusable?: ((value: Date) => boolean) | undefined;
   /**
    * Проверяет, выбран ли день.
    */
-  isDaySelected?: (value: Date) => boolean;
+  isDaySelected?: ((value: Date) => boolean) | undefined;
   /**
    * Проверяет, находится ли день в фокусе.
    */
@@ -112,15 +112,15 @@ export interface CalendarDaysProps
   /**
    * Обработчик события 'pointerenter' на элементе дня.
    */
-  onDayEnter?: (value: Date) => void;
+  onDayEnter?: ((value: Date) => void) | undefined;
   /**
    * Обработчик события 'pointerleave' на элементе дня.
    */
-  onDayLeave?: (value: Date) => void;
+  onDayLeave?: ((value: Date) => void) | undefined;
   /**
    * Обработчик события `focus` на элементе дня.
    */
-  onDayFocus?: (value: Date) => void;
+  onDayFocus?: ((value: Date) => void) | undefined;
 }
 
 export const CalendarDays = ({

@@ -2,8 +2,8 @@ import type { WarnOnceHandler } from './warnOnce';
 
 export interface NavIdProps {
   /** Уникальный идентификатор навигационного элемента (вместо id) */
-  nav?: string;
-  id?: string;
+  nav?: string | undefined;
+  id?: string | undefined;
 }
 
 export function getNavId(props: NavIdProps, warn?: WarnOnceHandler): string | undefined {
