@@ -19,7 +19,7 @@ import {
   type DateRangeType,
 } from '../CalendarRange/CalendarRange';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -222,13 +222,6 @@ const getInternalValue = (value: CalendarRangeProps['value']) => {
     newValue[5] = String(value[1].getFullYear()).padStart(4, '0');
   }
   return newValue;
-};
-
-const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['tabindex'],
 };
 
 /**
@@ -587,11 +580,10 @@ export const DateRangeInput = ({
           placement={calendarPlacement}
           onPlacementChange={setCalendarPlacement}
         >
-          <FocusTrapInternal
+          <FocusTrap
             rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
-            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <div ref={focusTrapRootRef}>
               <CalendarRange
@@ -614,7 +606,7 @@ export const DateRangeInput = ({
                 {...calendarTestsProps}
               />
             </div>
-          </FocusTrapInternal>
+          </FocusTrap>
         </Popper>
       )}
     </FormField>

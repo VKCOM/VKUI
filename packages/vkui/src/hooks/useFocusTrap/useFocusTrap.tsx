@@ -1,6 +1,8 @@
 'use client';
 
 import type * as React from 'react';
+import { useRef } from 'react';
+import { arraysEquals } from '../../helpers/array';
 import { FOCUSABLE_ELEMENTS_LIST } from '../../lib/accessibility';
 import { getWindow } from '../../lib/dom';
 import { useMutationObserver } from '../useMutationObserver';
@@ -78,10 +80,6 @@ export type UseFocusTrapProps = {
    */
   autoFocusDelay?: number | undefined;
   /**
-   * Пользовательские опции для MutationObserver, который отслеживает изменения DOM внутри компонента и пересчитывает ноды для фокуса.
-   */
-  mutationObserverOptions?: MutationObserverInit | undefined;
-  /**
    * @default true
    */
   mount?: boolean | undefined;
@@ -95,9 +93,10 @@ export const useFocusTrap = (
     autoFocus = true,
     restoreFocus = true,
     autoFocusDelay = 0,
-    mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
+  const prevFocusableRef = useRef<HTMLElement[]>([]);
+
   const createFocusFn = (getFocusElement: (root: HTMLElement | null) => HTMLElement | null) => {
     return () => {
       const node = getFocusElement(ref.current);
@@ -141,7 +140,12 @@ export const useFocusTrap = (
     const activeElement = doc.activeElement as HTMLElement;
     const focusableNodes = collectFocusable(parentNode);
 
+    if (arraysEquals(focusableNodes, prevFocusableRef.current)) {
+      return;
+    }
+
     if (focusableNodes.length === 0) {
+      prevFocusableRef.current = [];
       return;
     }
 
@@ -154,13 +158,11 @@ export const useFocusTrap = (
     if (nodeToFocus) {
       nodeToFocus.focus({ preventScroll: true });
     }
+
+    prevFocusableRef.current = focusableNodes;
   });
 
-  useMutationObserver(
-    ref,
-    () => ref.current && onMutateParentHandler(ref.current),
-    mutationObserverOptions,
-  );
+  useMutationObserver(ref, () => ref.current && onMutateParentHandler(ref.current));
 
   const createGuardFocusHandler = (focusFn: () => void, focusFromOutside: () => void) => {
     return (event: React.FocusEvent<HTMLSpanElement>) => {
