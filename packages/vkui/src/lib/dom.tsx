@@ -35,7 +35,7 @@ export interface DOMContextInterface {
 export type DOMProps = DOMContextInterface;
 
 /* eslint-disable no-restricted-globals */
-const getDOM = (): DOMContextInterface => ({
+export const getDOM = (): DOMContextInterface => ({
   window: canUseDOM ? window : undefined,
   document: canUseDOM ? document : undefined,
 });

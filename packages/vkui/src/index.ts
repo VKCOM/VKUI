@@ -142,7 +142,17 @@ export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinne
 export type { ScreenSpinnerContextProps } from './components/ScreenSpinner/context';
 export { Snackbar } from './components/Snackbar/Snackbar';
 export { useSnackbarManager } from './hooks/useSnackbarManager';
-export type { SnackbarApi, CustomSnackbar, UseSnackbar } from './hooks/useSnackbarManager';
+export {
+  SnackbarManagerHolder,
+  snackbarManager,
+  createSnackbarManager,
+} from './hooks/useSnackbarManager';
+export type {
+  SnackbarApi,
+  CustomSnackbar,
+  UseSnackbar,
+  SnackbarManagerNS,
+} from './hooks/useSnackbarManager';
 export type { SnackbarProps, SnackbarBasicProps } from './components/Snackbar/Snackbar';
 export { Tooltip } from './components/Tooltip/Tooltip';
 export { useTooltip } from './components/Tooltip/useTooltip';
