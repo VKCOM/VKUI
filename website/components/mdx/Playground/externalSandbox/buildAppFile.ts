@@ -3,8 +3,6 @@ import { vkuiScope } from '../scope';
 
 export const VKUI_VERSION = vkuiPkg.version;
 
-const IMPORT_REGEXP = /^import\s+(?:\{[\s\S]*?\}|\S+)\s+from\s+['"][^'"]+['"];?\s*$/gm;
-
 const REACT_HOOKS = new Set([
   'useState',
   'useEffect',
@@ -57,7 +55,7 @@ function detectImports(code: string) {
 }
 
 export function buildAppFile(playgroundCode: string): string {
-  const codeBody = playgroundCode.replace(IMPORT_REGEXP, '').trim();
+  const codeBody = playgroundCode.trim();
   const { vkui, icons, reactHooks } = detectImports(playgroundCode);
 
   const importLines: string[] = [];

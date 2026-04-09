@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Icon20ArrowRightLeftCornersOutline, Icon20BracketsSlashOutline } from '@vkontakte/icons';
 import { AdaptivityProvider, Button, Flex } from '@vkontakte/vkui';
-import { LiveContext } from 'react-live';
 import { openInCodeSandbox } from '../externalSandbox/codesandbox';
 import { openInStackBlitz } from '../externalSandbox/stackblitz';
 import { ColorSchemePicker } from './ColorSchemePicker';
@@ -10,6 +9,7 @@ import { ThemePicker } from './ThemePicker/ThemePicker';
 import styles from './PlaygroundToolbar.module.css';
 
 interface PlaygroundToolbarProps {
+  code: string;
   codeVisible: boolean;
   setCodeVisible: (codeVisible: boolean) => void;
 }
@@ -48,9 +48,7 @@ function CodeSandboxIcon() {
   );
 }
 
-export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToolbarProps) {
-  const { code } = React.useContext(LiveContext);
-
+export function PlaygroundToolbar({ code, codeVisible, setCodeVisible }: PlaygroundToolbarProps) {
   const CodeExpandedIcon = codeVisible
     ? Icon20ArrowRightLeftCornersOutline
     : Icon20BracketsSlashOutline;
