@@ -2752,9 +2752,11 @@ __metadata:
   dependencies:
     "@next/bundle-analyzer": "npm:^15.5.11"
     "@shikijs/transformers": "npm:^4.0.2"
+    "@stackblitz/sdk": "npm:^1.11.0"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-docs-theme": "workspace:^"
     browserslist-vscode: "github:browserslist/browserslist-vscode"
+    lz-string: "npm:^1.5.0"
     next: "npm:^15.5.11"
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.6.1"
@@ -3571,6 +3573,13 @@ __metadata:
   peerDependencies:
     size-limit: 12.0.1
   checksum: 10/94c7a8d143e373ea965ebc5f8d6296bf848896bd8368ddb227c26d1c76689572b47b23ec9f213bfe32ebe7d51fd2e2531c1e8484817948cea4a6fa6ed92cd690
+  languageName: node
+  linkType: hard
+
+"@stackblitz/sdk@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "@stackblitz/sdk@npm:1.11.0"
+  checksum: 10/351647b818f2e40135ff92d3de61f94a925635acb769862014f4a0eb252011f1c42ede2c6952ab4848ed7512777f3f6d3944914f5750499f35069b54231d6cb2
   languageName: node
   linkType: hard
 
