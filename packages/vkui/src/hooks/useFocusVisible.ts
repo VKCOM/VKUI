@@ -25,13 +25,10 @@ export function useFocusVisible(): {
     [keyboardInputRef],
   );
 
-  const onBlur = useCallback(
-    (event: FocusEvent<HTMLElement>) => {
-      event.stopPropagation();
-      setFocusVisible(false);
-    },
-    [],
-  );
+  const onBlur = useCallback((event: FocusEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setFocusVisible(false);
+  }, []);
 
   return {
     focusVisible,
