@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { Icon28NewsfeedOutline } from '@vkontakte/icons';
-import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
-import { TabbarItem } from './TabbarItem';
-import styles from '../../styles/focusVisible.module.css';
 import {
   DISABLE_KEYBOARD_INPUT_EVENT_NAME,
   ENABLE_KEYBOARD_INPUT_EVENT_NAME,
 } from '../../hooks/useKeyboardInputTracker';
+import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
+import { TabbarItem } from './TabbarItem';
+import styles from '../../styles/focusVisible.module.css';
 
 describe('TabbarItem', () => {
   baselineComponent((props) => (

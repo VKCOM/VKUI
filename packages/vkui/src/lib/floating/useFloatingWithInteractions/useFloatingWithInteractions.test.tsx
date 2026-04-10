@@ -336,11 +336,15 @@ describe(useFloatingWithInteractions, () => {
           trigger: 'focus',
         }),
       );
-      const testComponentRender = render(<TestComponent hookResult={result.current} restoreFocus={restoreFocus} />);
+      const testComponentRender = render(
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} />,
+      );
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'focus');
-      testComponentRender.rerender(<TestComponent hookResult={result.current} restoreFocus={restoreFocus} />);
+      testComponentRender.rerender(
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} />,
+      );
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       vi.useFakeTimers();
@@ -357,7 +361,9 @@ describe(useFloatingWithInteractions, () => {
         vi.runOnlyPendingTimers();
         vi.useRealTimers();
       });
-      testComponentRender.rerender(<TestComponent hookResult={result.current} restoreFocus={restoreFocus} />);
+      testComponentRender.rerender(
+        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} />,
+      );
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
         if (restoreFocus) {

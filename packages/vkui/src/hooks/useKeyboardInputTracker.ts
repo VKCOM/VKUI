@@ -69,15 +69,13 @@ const attachKeyboardInputListeners = (document: Document) => {
 
 export function useKeyboardInputTracker(): React.RefObject<boolean> {
   const { document } = useDOM();
-  const keyboardFocusingStartedRef = React.useMemo(
-    () =>
-      ({
-        get current() {
-          return keyboardInputState;
-        },
-      }) as React.RefObject<boolean>,
-    [],
-  );
+  const keyboardFocusingStartedRef = React.useMemo((): React.RefObject<boolean> => {
+    return {
+      get current() {
+        return keyboardInputState;
+      },
+    };
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     /* istanbul ignore if: невозможный кейс, т.к. в SSR эффекты не вызываются. Проверка на будущее, если вдруг эффект будет вызываться. */

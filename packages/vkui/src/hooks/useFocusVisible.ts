@@ -14,26 +14,24 @@ export function useFocusVisible(): {
   onFocus: (event: FocusEvent<HTMLElement>) => void;
   onBlur: (event: FocusEvent<HTMLElement>) => void;
 } {
-  const [isFocused, setIsFocused] = useState(false);
+  const [focusVisible, setFocusVisible] = useState(false);
   const keyboardInputRef = useKeyboardInputTracker();
 
   const onFocus = useCallback(
     (event: FocusEvent<HTMLElement>) => {
       event.stopPropagation();
-      setIsFocused(true);
+      setFocusVisible(Boolean(keyboardInputRef.current));
     },
-    [setIsFocused],
+    [keyboardInputRef],
   );
 
   const onBlur = useCallback(
     (event: FocusEvent<HTMLElement>) => {
       event.stopPropagation();
-      setIsFocused(false);
+      setFocusVisible(false);
     },
-    [setIsFocused],
+    [],
   );
-
-  const focusVisible = keyboardInputRef.current && isFocused;
 
   return {
     focusVisible,

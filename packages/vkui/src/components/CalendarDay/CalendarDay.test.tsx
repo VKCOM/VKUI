@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { userEvent, withFakeTimers } from '../../testing/utils';
 import { CalendarDay, type CalendarDayProps } from './CalendarDay';
 import styles from './CalendarDay.module.css';
 import stylesFocusVisible from '../../styles/focusVisible.module.css';
-import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 
 const day = new Date('1970-01-01');
 const onChange = vi.fn();

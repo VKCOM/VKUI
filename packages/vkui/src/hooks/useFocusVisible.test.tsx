@@ -1,10 +1,10 @@
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
+import { useFocusVisible } from './useFocusVisible';
 import {
   DISABLE_KEYBOARD_INPUT_EVENT_NAME,
   ENABLE_KEYBOARD_INPUT_EVENT_NAME,
 } from './useKeyboardInputTracker';
-import { useFocusVisible } from './useFocusVisible';
 
 describe('useFocusVisible', () => {
   it('Sets focusVisible: true onFocus', () => {
