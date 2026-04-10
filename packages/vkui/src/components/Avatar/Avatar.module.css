@@ -11,11 +11,6 @@
   background-image: linear-gradient(135deg, #ff7583, #e52e40);
 }
 
-.gradientPink {
-  background-color: #e62e6b;
-  background-image: linear-gradient(135deg, #ff8880, #e62e6b);
-}
-
 .gradientOrange {
   background-color: #e66b2e;
   background-image: linear-gradient(135deg, #ffbf80, #e66b2e);
