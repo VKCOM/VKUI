@@ -3,7 +3,7 @@
 import * as React from 'react';
 import type { SnackbarStore } from '../helpers/createSnackbarStore';
 import type { SnackbarPlacement, SnackbarsMap, UseSnackbar } from '../types';
-import { SnackbarsContainer } from './SnackbarsContainer';
+import { SnackbarsContainer } from './SnackbarsContainer/SnackbarsContainer';
 
 interface SnackbarHolderProps
   extends Pick<UseSnackbar.Props, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
