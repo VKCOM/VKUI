@@ -1,9 +1,5 @@
 import { act, type ComponentType, useRef, useState } from 'react';
 import { render, renderHook, waitFor } from '@testing-library/react';
-import {
-  AppRootContext,
-  DEFAULT_APP_ROOT_CONTEXT_VALUE,
-} from '../../../components/AppRoot/AppRootContext';
 import { FocusTrap } from '../../../components/FocusTrap/FocusTrap';
 import { useGlobalEscKeyDown } from '../../../hooks/useGlobalEscKeyDown';
 import { fireEventPatch, userEvent } from '../../../testing/utils';
@@ -30,13 +26,11 @@ const DynamicContent = ({ onClose }: { onClose: VoidFunction }) => {
 const TestComponent = ({
   restoreFocus,
   hookResult,
-  keyboardInput = false,
   autoFocus = false, // for multiple trigger [click, focus]
   Content,
 }: {
   restoreFocus?: boolean | undefined;
   hookResult: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
-  keyboardInput?: boolean | undefined;
   autoFocus?: boolean | undefined;
   Content?: ComponentType<{ onClose: VoidFunction }> | undefined;
 }) => {
@@ -52,7 +46,7 @@ const TestComponent = ({
   useGlobalEscKeyDown(shown, hookResult.onEscapeKeyDown);
 
   return (
-    <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput }}>
+    <>
       <button ref={reference} {...referenceProps}>
         Reference
       </button>
@@ -75,7 +69,7 @@ const TestComponent = ({
           </FocusTrap>
         </span>
       ) : null}
-    </AppRootContext.Provider>
+    </>
   );
 };
 
@@ -342,15 +336,11 @@ describe(useFloatingWithInteractions, () => {
           trigger: 'focus',
         }),
       );
-      const testComponentRender = render(
-        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
-      );
+      const testComponentRender = render(<TestComponent hookResult={result.current} restoreFocus={restoreFocus} />);
       await waitFor(() => expect(result.current.shown).toBeFalsy());
 
       await fireEventPatch(result.current.refs.reference.current, 'focus');
-      testComponentRender.rerender(
-        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
-      );
+      testComponentRender.rerender(<TestComponent hookResult={result.current} restoreFocus={restoreFocus} />);
       await waitFor(() => expect(result.current.shown).toBeTruthy());
 
       vi.useFakeTimers();
@@ -367,9 +357,7 @@ describe(useFloatingWithInteractions, () => {
         vi.runOnlyPendingTimers();
         vi.useRealTimers();
       });
-      testComponentRender.rerender(
-        <TestComponent hookResult={result.current} restoreFocus={restoreFocus} keyboardInput />,
-      );
+      testComponentRender.rerender(<TestComponent hookResult={result.current} restoreFocus={restoreFocus} />);
       await waitFor(() => {
         expect(result.current.shown).toBeFalsy();
         if (restoreFocus) {

@@ -1,5 +1,5 @@
-import { type FocusEvent, useCallback, useContext, useState } from 'react';
-import { AppRootContext } from '../components/AppRoot/AppRootContext';
+import { type FocusEvent, useCallback, useState } from 'react';
+import { useKeyboardInputTracker } from './useKeyboardInputTracker';
 
 /**
  * Определяет фокус элемента, когда его наличие необходимо обозначить визуально.
@@ -15,10 +15,7 @@ export function useFocusVisible(): {
   onBlur: (event: FocusEvent<HTMLElement>) => void;
 } {
   const [isFocused, setIsFocused] = useState(false);
-
-  // FIXME: Избавиться от чека контекста, так как без AppRoot не работает фокус
-  const withKeyboardInputCheck = true;
-  const { keyboardInput } = useContext(AppRootContext);
+  const keyboardInputRef = useKeyboardInputTracker();
 
   const onFocus = useCallback(
     (event: FocusEvent<HTMLElement>) => {
@@ -36,7 +33,7 @@ export function useFocusVisible(): {
     [setIsFocused],
   );
 
-  const focusVisible = withKeyboardInputCheck ? keyboardInput && isFocused : isFocused;
+  const focusVisible = keyboardInputRef.current && isFocused;
 
   return {
     focusVisible,

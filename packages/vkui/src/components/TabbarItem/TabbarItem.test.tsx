@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { Icon28NewsfeedOutline } from '@vkontakte/icons';
-import {
-  AppRootContext,
-  DEFAULT_APP_ROOT_CONTEXT_VALUE,
-} from '../../components/AppRoot/AppRootContext';
 import { baselineComponent, userEvent, withFakeTimers } from '../../testing/utils';
 import { TabbarItem } from './TabbarItem';
 import styles from '../../styles/focusVisible.module.css';
+import {
+  DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+  ENABLE_KEYBOARD_INPUT_EVENT_NAME,
+} from '../../hooks/useKeyboardInputTracker';
 
 describe('TabbarItem', () => {
   baselineComponent((props) => (
@@ -51,17 +51,16 @@ describe('TabbarItem', () => {
   function renderTabbarItemForFocus({ withKeyboardInput }: { withKeyboardInput: boolean }) {
     const onFocusStub = vi.fn();
     const onBlurStub = vi.fn();
+    document.dispatchEvent(
+      new CustomEvent(
+        withKeyboardInput ? ENABLE_KEYBOARD_INPUT_EVENT_NAME : DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+      ),
+    );
 
     return {
       onFocusStub,
       onBlurStub,
-      ...render(
-        <AppRootContext.Provider
-          value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput: withKeyboardInput }}
-        >
-          <TabbarItem onFocus={onFocusStub} onBlur={onBlurStub} data-testid="test" />,
-        </AppRootContext.Provider>,
-      ),
+      ...render(<TabbarItem onFocus={onFocusStub} onBlur={onBlurStub} data-testid="test" />),
     };
   }
 
