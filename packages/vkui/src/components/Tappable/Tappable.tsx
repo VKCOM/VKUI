@@ -42,19 +42,19 @@ export interface TappableProps extends ClickableProps, StateProps {
    * Задает border-radius элементу
    * В режиме `auto` на маленьких экранах `border-radius: 0`, иначе определяется токеном `--vkui--size_border_radius--regular`.
    */
-  borderRadiusMode?: 'auto' | 'inherit';
+  borderRadiusMode?: 'auto' | 'inherit' | undefined;
   /**
    * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    *
    * Используйте свойство `activeMode`.
    */
-  activeClassName?: string; // TODO [>=9]: удалить неиспользуемое свойство.
+  activeClassName?: string | undefined; // TODO [>=9]: удалить неиспользуемое свойство.
   /**
    * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    *
    * Используйте свойство `hoverMode`.
    */
-  hoverClassName?: string; // TODO [>=9]: удалить неиспользуемое свойство.
+  hoverClassName?: string | undefined; // TODO [>=9]: удалить неиспользуемое свойство.
 }
 
 /**

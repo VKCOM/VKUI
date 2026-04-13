@@ -23,38 +23,38 @@ export interface CellProps
    * - "removable": добавляется кнопка для удаления
    * - "selectable": добавляется чекбокс для выбора.
    */
-  mode?: 'removable' | 'selectable';
+  mode?: 'removable' | 'selectable' | undefined;
   /**
    * В режиме перетаскивания ячейка перестает реагировать на нажатие, то есть при нажатии переданный `onClick` вызываться не будет.
    */
-  draggable?: boolean;
+  draggable?: boolean | undefined;
   /**
    * Имя для `input` в режиме `selectable`.
    */
-  name?: string;
+  name?: string | undefined;
   /**
    * В режиме `selectable` реагирует на входящие значения пропса `cheсked`, как зависящий напрямую от входящего значения.
    */
-  checked?: boolean;
+  checked?: boolean | undefined;
   /**
    * В режиме `selectable` реагирует на входящие значения пропса `defaultChecked` как неконтролируемый компонент.
    */
-  defaultChecked?: boolean;
+  defaultChecked?: boolean | undefined;
   /**
    * Обработчик, срабатывающий при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В обработчике есть объект с полями `from` и `to`.
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
-  onDragFinish?: (swappedItemRange: SwappedItemRange) => void;
+  onDragFinish?: ((swappedItemRange: SwappedItemRange) => void) | undefined;
   /**
    * Текст для кнопки перетаскивания ячейки.
    */
-  draggerLabel?: string;
+  draggerLabel?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки перетаскивания ячейки.
    */
-  draggerTestId?: string;
+  draggerTestId?: string | undefined;
 }
 
 /**

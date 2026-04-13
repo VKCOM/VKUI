@@ -5,7 +5,7 @@ import type { ModalRootProps } from '../../components/ModalRoot/types';
 import type { HasDataAttribute } from '../../types';
 
 export type UseModalManagerProps = Omit<ModalRootProps, 'activeModal' | 'children'> & {
-  saveHistory?: boolean;
+  saveHistory?: boolean | undefined;
 };
 
 export type OpenModalPageProps = Omit<ModalPageProps, 'open' | 'keepMounted'> & HasDataAttribute;
@@ -16,16 +16,16 @@ export type CustomModalPageItem = Pick<OpenPageReturn, 'update' | 'close'> & {
   type: 'page';
   id: string;
   component: React.ComponentType<any>;
-  additionalProps?: any;
-  modalProps?: OpenModalPageProps;
+  additionalProps?: any | undefined;
+  modalProps?: OpenModalPageProps | undefined;
 };
 
 export type CustomModalCardItem = Pick<OpenCardReturn, 'update' | 'close'> & {
   type: 'card';
   id: string;
   component: React.ComponentType<any>;
-  additionalProps?: any;
-  modalProps?: OpenModalCardProps;
+  additionalProps?: any | undefined;
+  modalProps?: OpenModalCardProps | undefined;
 };
 
 export type ModalManagerItem = CustomModalPageItem | CustomModalCardItem;
@@ -57,10 +57,10 @@ export type CustomModalPayload<
   BaseProps extends OpenModalCardProps | OpenModalPageProps,
   AdditionalProps extends object = object,
 > = {
-  id?: string;
+  id?: string | undefined;
   component: React.ComponentType<CustomModalProps<BaseProps, AdditionalProps>>;
-  baseProps?: BaseProps;
-  additionalProps?: AdditionalProps;
+  baseProps?: BaseProps | undefined;
+  additionalProps?: AdditionalProps | undefined;
 };
 
 /**

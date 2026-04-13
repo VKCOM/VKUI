@@ -1,6 +1,8 @@
 'use client';
 
 import type * as React from 'react';
+import { useRef } from 'react';
+import { arraysEquals } from '../../helpers/array';
 import { FOCUSABLE_ELEMENTS_LIST } from '../../lib/accessibility';
 import { getWindow } from '../../lib/dom';
 import { useMutationObserver } from '../useMutationObserver';
@@ -59,32 +61,28 @@ export type UseFocusTrapProps = {
    *
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Управление поведением автофокуса при появлении всплывающего окна.
    * При прокидывании `true` фокус будет установлен на первый элемент.
    * При прокидывании `root` фокус будет установлен в корень.
    * @default true
    */
-  autoFocus?: boolean | 'root';
+  autoFocus?: boolean | 'root' | undefined;
   /**
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
   /**
    * Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна.
    * @default 0
    */
-  autoFocusDelay?: number;
-  /**
-   * Пользовательские опции для MutationObserver, который отслеживает изменения DOM внутри компонента и пересчитывает ноды для фокуса.
-   */
-  mutationObserverOptions?: MutationObserverInit;
+  autoFocusDelay?: number | undefined;
   /**
    * @default true
    */
-  mount?: boolean;
+  mount?: boolean | undefined;
 };
 
 export const useFocusTrap = (
@@ -95,9 +93,10 @@ export const useFocusTrap = (
     autoFocus = true,
     restoreFocus = true,
     autoFocusDelay = 0,
-    mutationObserverOptions,
   }: UseFocusTrapProps,
 ) => {
+  const prevFocusableRef = useRef<HTMLElement[]>([]);
+
   const createFocusFn = (getFocusElement: (root: HTMLElement | null) => HTMLElement | null) => {
     return () => {
       const node = getFocusElement(ref.current);
@@ -141,7 +140,12 @@ export const useFocusTrap = (
     const activeElement = doc.activeElement as HTMLElement;
     const focusableNodes = collectFocusable(parentNode);
 
+    if (arraysEquals(focusableNodes, prevFocusableRef.current)) {
+      return;
+    }
+
     if (focusableNodes.length === 0) {
+      prevFocusableRef.current = [];
       return;
     }
 
@@ -154,13 +158,11 @@ export const useFocusTrap = (
     if (nodeToFocus) {
       nodeToFocus.focus({ preventScroll: true });
     }
+
+    prevFocusableRef.current = focusableNodes;
   });
 
-  useMutationObserver(
-    ref,
-    () => ref.current && onMutateParentHandler(ref.current),
-    mutationObserverOptions,
-  );
+  useMutationObserver(ref, () => ref.current && onMutateParentHandler(ref.current));
 
   const createGuardFocusHandler = (focusFn: () => void, focusFromOutside: () => void) => {
     return (event: React.FocusEvent<HTMLSpanElement>) => {

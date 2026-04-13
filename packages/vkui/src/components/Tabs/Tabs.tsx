@@ -15,18 +15,18 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Режим отображения компонента.
    */
-  mode?: 'default' | 'accent' | 'secondary';
+  mode?: 'default' | 'accent' | 'secondary' | undefined;
   /**
    * Включает прокрутку контейнера до активной (`selected`) вкладки.
    * @since 5.10.0
    */
-  withScrollToSelectedTab?: boolean;
+  withScrollToSelectedTab?: boolean | undefined;
   /**
    * Отвечает за горизонтальное выравнивание при прокрутке до активной вкладки.
    * @see [scrollIntoView](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)
    * @since 5.10.0
    */
-  scrollBehaviorToSelectedTab?: ScrollIntoViewOptions['inline'];
+  scrollBehaviorToSelectedTab?: ScrollIntoViewOptions['inline'] | undefined;
   /**
    * При `auto` ширина вкладок определяется контекстом:
    *  - равномерно занимают всю доступную ширину при вложении в `HorizontalScroll`
@@ -34,19 +34,19 @@ export interface TabsProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
    * При `stretched` и `shrinked` вкладки либо равномерно занимают всю ширину,
    * либо выравниваются по контенту соответственно.
    */
-  layoutFillMode?: 'auto' | 'stretched' | 'shrinked';
+  layoutFillMode?: 'auto' | 'stretched' | 'shrinked' | undefined;
   /**
    * Идентификатор выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
    */
-  selectedId?: string;
+  selectedId?: string | undefined;
   /**
    * Идентификатор выбранной вкладки по умолчанию. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
    */
-  defaultSelectedId?: string;
+  defaultSelectedId?: string | undefined;
   /**
    * Обработчик изменения выбранной вкладки. Чтобы свойство работало корректно, у каждого `TabsItem` должно быть прокинуто свойство `id`.
    */
-  onSelectedIdChange?: (id: string) => void;
+  onSelectedIdChange?: ((id: string) => void) | undefined;
 }
 
 /**

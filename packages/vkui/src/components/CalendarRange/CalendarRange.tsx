@@ -35,11 +35,11 @@ export type CalendarRangeTestsProps = CalendarDaysTestsProps & {
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в левой части.
    */
-  leftPartHeaderTestsData?: CalendarHeaderTestsProps;
+  leftPartHeaderTestsData?: CalendarHeaderTestsProps | undefined;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в заголовке календаря в правой части.
    */
-  rightPartHeaderTestsData?: CalendarHeaderTestsProps;
+  rightPartHeaderTestsData?: CalendarHeaderTestsProps | undefined;
 };
 
 export interface CalendarRangeProps
@@ -58,25 +58,25 @@ export interface CalendarRangeProps
   /**
    * Текущий выбранный промежуток.
    */
-  value?: DateRangeType | null;
+  value?: DateRangeType | null | undefined;
   /**
    * Начальный промежуток при монтировании.
    */
-  defaultValue?: DateRangeType | null;
+  defaultValue?: DateRangeType | null | undefined;
   /**
    * Запрещает выбор даты в прошлом.
    * Применяется, если не заданы `shouldDisableDate` и `disableFuture`.
    */
-  disablePast?: boolean;
+  disablePast?: boolean | undefined;
   /**
    * Запрещает выбор даты в будущем.
    * Применяется, если не задано `shouldDisableDate`.
    */
-  disableFuture?: boolean;
+  disableFuture?: boolean | undefined;
   /**
    * Отключает селекторы выбора месяца/года.
    */
-  disablePickers?: boolean;
+  disablePickers?: boolean | undefined;
   /**
    * `aria-label` для изменения дня.
    *
@@ -86,23 +86,23 @@ export interface CalendarRangeProps
    * Теперь этот контейнер является таблицей (с помощью role="grid") и
    * в aria-label рендерится текущий открытый в календаре месяц и год.
    */
-  changeDayLabel?: string; // TODO [>=9]: удалить неиспользуемое свойство
+  changeDayLabel?: string | undefined; // TODO [>=9]: удалить неиспользуемое свойство
   /**
    * День недели, с которого начинается неделя.
    */
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined;
   /**
    * Обработчик изменения выбранного промежутка.
    */
-  onChange?: (value: DateRangeType) => void;
+  onChange?: ((value: DateRangeType) => void) | undefined;
   /**
    * Функция для проверки запрета выбора даты.
    */
-  shouldDisableDate?: (value: Date) => boolean;
+  shouldDisableDate?: ((value: Date) => boolean) | undefined;
   /**
    * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
    */
-  onClose?: () => void; // TODO [>=9]: удалить неиспользуемое свойство
+  onClose?: (() => void) | undefined; // TODO [>=9]: удалить неиспользуемое свойство
 }
 
 const getIsDaySelected = (day: Date, value?: DateRangeType | null) => {

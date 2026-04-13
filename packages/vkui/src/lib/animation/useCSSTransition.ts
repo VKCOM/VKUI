@@ -19,22 +19,22 @@ export type UseCSSTransitionState =
   | 'exited';
 
 export type UseCSSTransitionOptions = {
-  enableAppear?: boolean;
-  enableEnter?: boolean;
-  enableExit?: boolean;
-  onEnter?: (appear?: boolean) => void;
-  onEntering?: (appear?: boolean) => void;
-  onEntered?: (propertyName?: string, appear?: boolean) => void;
-  onExit?: () => void;
-  onExiting?: () => void;
-  onExited?: (propertyName?: string) => void;
+  enableAppear?: boolean | undefined;
+  enableEnter?: boolean | undefined;
+  enableExit?: boolean | undefined;
+  onEnter?: ((appear?: boolean) => void) | undefined;
+  onEntering?: ((appear?: boolean) => void) | undefined;
+  onEntered?: ((propertyName?: string, appear?: boolean) => void) | undefined;
+  onExit?: (() => void) | undefined;
+  onExiting?: (() => void) | undefined;
+  onExited?: ((propertyName?: string) => void) | undefined;
 };
 
 export type UseCSSTransition<Ref extends Element = Element> = [
   state: UseCSSTransitionState,
   {
     ref: React.RefObject<Ref | null>;
-    onTransitionEnd?: TransitionEventHandler;
+    onTransitionEnd?: TransitionEventHandler | undefined;
   },
 ];
 
@@ -48,7 +48,7 @@ const TRANSITION_FALLBACK_DELAY = 100;
  * @private
  */
 export const useCSSTransition = <Ref extends Element = Element>(
-  inProp?: boolean,
+  inProp?: boolean | undefined,
   {
     enableAppear = false,
     enableEnter = true,

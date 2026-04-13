@@ -25,7 +25,7 @@ export interface RootProps extends HTMLAttributesWithRootRef<HTMLDivElement>, Na
   /**
    * Обработчик, который вызывается при завершении анимации смены активной `View`.
    */
-  onTransition?: (params: { isBack: boolean; from: string; to: string }) => void;
+  onTransition?: ((params: { isBack: boolean; from: string; to: string }) => void) | undefined;
   /**
    * Коллекция `View`. У каждой `View` должен быть `id`.
    */
@@ -36,8 +36,8 @@ export interface RootProps extends HTMLAttributesWithRootRef<HTMLDivElement>, Na
 export interface RootState {
   activeView: string;
   transition: boolean;
-  isBack?: boolean;
-  prevView?: string;
+  isBack?: boolean | undefined;
+  prevView?: string | undefined;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 

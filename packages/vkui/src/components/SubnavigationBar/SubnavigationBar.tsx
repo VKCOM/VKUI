@@ -22,11 +22,11 @@ export interface SubnavigationBarProps
   /**
    * Отключение возможности прокручивания компонента по горизонтали.
    */
-  fixed?: boolean;
+  fixed?: boolean | undefined;
   /**
    * Отключает отступы. Рекомендуется использовать с `mode="outline"` у [`SubnavigationButton`](https://vkui.io/components/subnavigation-button).
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
 }
 
 const defaultScrollToLeft: ScrollPositionHandler = (x) => x - 240;

@@ -8,7 +8,7 @@ const Slide = ({
   backgroundColor,
 }: {
   children: React.ReactNode;
-  width?: string | number;
+  width?: string | number | undefined;
   backgroundColor: string;
 }) => (
   <Flex justify="center" align="center" style={{ fontSize: '72px', width, backgroundColor }}>

@@ -39,7 +39,7 @@ const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> 
 };
 
 export interface ModalCardInternalProps extends Omit<ModalCardProps, 'nav' | 'keepMounted'> {
-  ModalOverlay?: ComponentType<ModalOverlayProps>;
+  ModalOverlay?: ComponentType<ModalOverlayProps> | undefined;
 }
 
 /**

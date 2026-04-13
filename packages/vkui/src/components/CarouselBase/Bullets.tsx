@@ -8,7 +8,7 @@ export interface BulletsTestIds {
   /**
    * Передает атрибут `data-testid` для bullets.
    */
-  bulletTestId?: (index: number, active: boolean) => string;
+  bulletTestId?: ((index: number, active: boolean) => string) | undefined;
 }
 
 interface BulletsProps extends BulletsTestIds {

@@ -10,24 +10,24 @@ type UseFocusTrapProps = {
    *
    * @default false
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Управление поведением автофокуса при появлении всплывающего окна.
    * При прокидывании `true` фокус будет установлен на первый элемент.
    * При прокидывании `root` фокус будет установлен в корень.
    * @default true
    */
-  autoFocus?: boolean | 'root';
+  autoFocus?: boolean | 'root' | undefined;
   /**
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
   /**
    * Время в миллисекундах после которого срабатывает автофокус при появлении всплывающего окна.
    * @default 0
    */
-  timeout?: number;
+  timeout?: number | undefined;
 };
 
 export interface SharedDropdownProps
@@ -48,17 +48,17 @@ export interface SharedDropdownProps
    * Позиционирование всплывающего окна для десктопа.
    * Компонент выберет наилучшее расположение сам, но можно задать приоритетное направление с помощью этого свойства.
    */
-  placement?: PlacementWithAuto;
+  placement?: PlacementWithAuto | undefined;
   /**
    * Отступ, где заданное кол-во единиц равняется пикселям.
    * */
-  popupOffsetDistance?: number;
+  popupOffsetDistance?: number | undefined;
   /**
    * По умолчанию событие `onClick` не всплывает.
    */
-  allowClickPropagation?: boolean;
+  allowClickPropagation?: boolean | undefined;
   /**
    * Вызывается при нажатии на кнопку `Escape`.
    */
-  onClose?: VoidFunction;
+  onClose?: VoidFunction | undefined;
 }

@@ -28,11 +28,11 @@ interface CalendarTimePickerProps extends Pick<SelectProps, 'onInputKeyDown'> {
     value: number;
     label: string;
   }>;
-  onChange?: (value: Date) => void;
+  onChange?: ((value: Date) => void) | undefined;
   setTime: (value: Date, time: number) => Date;
   inputRef: React.Ref<HTMLInputElement>;
-  inputLabel?: string;
-  inputTestId?: string;
+  inputLabel?: string | undefined;
+  inputTestId?: string | undefined;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 

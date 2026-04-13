@@ -54,17 +54,17 @@ export interface ContentBadgeProps
   /**
    * Вид отображения.
    */
-  mode?: ContentBadgeModeType;
+  mode?: ContentBadgeModeType | undefined;
   /**
    * Цвет оформления.
    */
-  appearance?: 'accent' | 'neutral' | 'accent-green' | 'accent-red' | 'overlay';
+  appearance?: 'accent' | 'neutral' | 'accent-green' | 'accent-red' | 'overlay' | undefined;
   /**
    * Включает приближение значения закругления к форме круга.
    *
    * > Note: игнорируется при size="s".
    */
-  capsule?: boolean;
+  capsule?: boolean | undefined;
   /**
    * Определяет отступы и размер текста.
    *
@@ -74,7 +74,7 @@ export interface ContentBadgeProps
    * - size="m" – при **одиночной** иконке `16x16`, в остальных случаях `12x12`;
    * - size="l" – при **одиночной** иконке `20x20`, в остальных случаях `16x16`.
    */
-  size?: ContentBadgeSizeType;
+  size?: ContentBadgeSizeType | undefined;
 }
 
 /**

@@ -9,19 +9,19 @@ export interface StateProps {
   /**
    * Указывает, должен ли компонент реагировать на `hover`-состояние.
    */
-  hasHover?: boolean;
+  hasHover?: boolean | undefined;
   /**
    * Позволяет управлять `hovered`-состоянием извне.
    */
-  hovered?: boolean;
+  hovered?: boolean | undefined;
   /**
    * Позволяет управлять `activated`-состоянием извне.
    */
-  activated?: boolean;
+  activated?: boolean | undefined;
   /**
    * Указывает, должен ли компонент реагировать на `active`-состояние.
    */
-  hasActive?: boolean;
+  hasActive?: boolean | undefined;
 
   /**
    * Позволяет родительскому компоненту
@@ -38,7 +38,7 @@ export interface StateProps {
    *   <IconButton />
    * </Tappable>
    */
-  hasHoverWithChildren?: boolean;
+  hasHoverWithChildren?: boolean | undefined;
 
   /**
    * Позволяет родительскому компоненту показывать hovered-состояние при наведении
@@ -53,22 +53,22 @@ export interface StateProps {
    *   <IconButton />
    * </Tappable>
    */
-  unlockParentHover?: boolean;
+  unlockParentHover?: boolean | undefined;
 
   /**
    * Длительность показа `active`-состояния.
    */
-  activeEffectDelay?: number;
+  activeEffectDelay?: number | undefined;
 
   /**
    * Стиль подсветки `active`-состояния.
    */
-  activeClassName?: string;
+  activeClassName?: string | undefined;
 
   /**
    * Стиль подсветки `hover`-состояния.
    */
-  hoverClassName?: string;
+  hoverClassName?: string | undefined;
 }
 
 export const DEFAULT_ACTIVE_EFFECT_DELAY = 600;
@@ -79,8 +79,8 @@ interface UseHoverProps extends Pick<StateProps, 'hovered' | 'hasHover'> {
   /**
    * Блокирование активации состояний.
    */
-  lockState?: boolean;
-  setParentStateLock?: (v: boolean) => void;
+  lockState?: boolean | undefined;
+  setParentStateLock?: ((v: boolean) => void) | undefined;
 }
 
 /**
@@ -182,11 +182,11 @@ function useActive({
   }
 
   React.useEffect(() => {
-    if (lockState) {
-      // Сбрасываем setActivated если обнаруживаем lockState
+    if (lockState || !hasActive) {
+      // Сбрасываем setActivated если обнаруживаем lockState или !hasActive
       setActivated(false);
     }
-  }, [lockState, setActivated]);
+  }, [lockState, hasActive, setActivated]);
 
   const onPointerDown = () => {
     if (lockState) {
@@ -239,8 +239,8 @@ function useActive({
 }
 
 interface ClickableLockStateContextInterface {
-  lockHoverStateBubbling?: (v: boolean) => void;
-  lockActiveStateBubbling?: (v: boolean) => void;
+  lockHoverStateBubbling?: ((v: boolean) => void) | undefined;
+  lockActiveStateBubbling?: ((v: boolean) => void) | undefined;
 }
 
 export const ClickableLockStateContext: React.Context<ClickableLockStateContextInterface> =

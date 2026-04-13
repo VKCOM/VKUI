@@ -28,8 +28,8 @@ export interface ModalPageBaseProps
       | 'hideCloseButton'
       | 'onClose'
     > {
-  isDesktop?: boolean;
-  closable?: boolean;
+  isDesktop?: boolean | undefined;
+  closable?: boolean | undefined;
 }
 
 export const ModalPageBase = ({

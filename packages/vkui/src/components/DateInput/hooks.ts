@@ -4,10 +4,10 @@ import * as React from 'react';
 import { convertDateFromTimeZone, convertDateToTimeZone } from '../../lib/date';
 
 interface UseDateInputValueOptions {
-  value?: Date | null;
-  defaultValue?: Date | null;
-  onChange?: (value: Date | null) => void;
-  timezone?: string;
+  value?: Date | null | undefined;
+  defaultValue?: Date | null | undefined;
+  onChange?: ((value: Date | null) => void) | undefined;
+  timezone?: string | undefined;
 }
 
 export interface UseDateInputValueReturn {
@@ -28,9 +28,9 @@ const _convertDateFromTimeZone = (date: Date, timezone?: string): Date => {
 
 const getStateValue = (
   defaultStateValue: Date | null,
-  value?: Date | null,
-  defaultValue?: Date | null,
-  timezone?: string,
+  value?: Date | null | undefined,
+  defaultValue?: Date | null | undefined,
+  timezone?: string | undefined,
 ): Date | null => {
   if (value !== undefined) {
     return _convertDateToTimeZone(value, timezone);

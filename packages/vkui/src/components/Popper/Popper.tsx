@@ -67,7 +67,7 @@ export interface PopperCommonProps
   /**
    * Позволяет набросить на стрелку пользовательские атрибуты.
    */
-  arrowProps?: FloatingArrowProps;
+  arrowProps?: FloatingArrowProps | undefined;
   /**
    * Пользовательская SVG иконка.
    *
@@ -81,15 +81,15 @@ export interface PopperCommonProps
    * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    */
-  ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
+  ArrowIcon?: FloatingArrowPropsPrivate['Icon'] | undefined;
   /**
    * Подписывается на изменение геометрии `targetRef`, чтобы пересчитать свою позицию.
    */
-  autoUpdateOnTargetResize?: boolean;
+  autoUpdateOnTargetResize?: boolean | undefined;
   /**
    * Пытаться обновлять позицию всплывающего элемента каждый фрейм.
    */
-  autoUpdateOnAnimationFrame?: boolean;
+  autoUpdateOnAnimationFrame?: boolean | undefined;
 }
 
 export interface PopperProps extends PopperCommonProps {
@@ -167,18 +167,20 @@ export const Popper = ({
     refs,
     middlewareData,
   } = useFloating({
-    placement: strictPlacement,
-    strategy: strategyProp,
+    ...(strictPlacement !== undefined && { placement: strictPlacement }),
+    ...(strategyProp !== undefined && { strategy: strategyProp }),
     middleware: middlewares,
-    whileElementsMounted: isLock
-      ? undefined
-      : (...args) => {
-          /* istanbul ignore next: не знаю как проверить */
-          return autoUpdateFloatingElement(...args, {
-            elementResize: autoUpdateOnTargetResize,
-            animationFrame: autoUpdateOnAnimationFrame,
-          });
-        },
+    ...(isLock
+      ? {}
+      : {
+          whileElementsMounted: (...args) => {
+            /* istanbul ignore next: не знаю как проверить */
+            return autoUpdateFloatingElement(...args, {
+              elementResize: autoUpdateOnTargetResize,
+              animationFrame: autoUpdateOnAnimationFrame,
+            });
+          },
+        }),
   });
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);

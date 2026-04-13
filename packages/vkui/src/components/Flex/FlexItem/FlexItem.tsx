@@ -21,7 +21,7 @@ export type FlexItemProps = RootComponentProps<HTMLElement> &
      * - `content` соответствует значению `1 1 auto`
      * - `fixed` соответствует значению `0 0 auto`.
      */
-    flex?: 'grow' | 'shrink' | 'content' | 'fixed';
+    flex?: 'grow' | 'shrink' | 'content' | 'fixed' | undefined;
   };
 
 const warn = warnOnce('Flex.Item');

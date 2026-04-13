@@ -1,6 +1,6 @@
 export interface CartesianConfigParameter {
-  default?: string;
-  disable?: boolean;
+  default?: string | undefined;
+  disable?: boolean | undefined;
 }
 
 export type OptionsProp = Record<string, unknown>;

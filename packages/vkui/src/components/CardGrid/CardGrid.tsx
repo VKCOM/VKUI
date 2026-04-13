@@ -34,11 +34,11 @@ export interface CardGridProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Размер карточек.
    */
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | undefined;
   /**
    * Если true, то вокруг компонента присутствуют стандартные отсупы сверху/снизу и слева/справа.
    */
-  padding?: boolean;
+  padding?: boolean | undefined;
 }
 
 /**

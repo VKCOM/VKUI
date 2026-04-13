@@ -7,10 +7,10 @@ import type { Direction } from './direction';
 import { platform as getPlatform } from './platform';
 
 export interface SSRWrapperProps {
-  userAgent?: string;
-  browserInfo?: BrowserInfo;
-  direction?: Direction;
-  children?: React.ReactNode;
+  userAgent?: string | undefined;
+  browserInfo?: BrowserInfo | undefined;
+  direction?: Direction | undefined;
+  children?: React.ReactNode | undefined;
 }
 
 /**
