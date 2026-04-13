@@ -10,6 +10,7 @@ description: Компонент для позиционирования элем
 
 </Overview>
 
+{/* @example-description: Базовый `Flex` с горизонтальным выравниванием элементов по центру и отступом между ними. */}
 <Playground>
   ```jsx
   <Flex gap="m" justify="center">
@@ -90,6 +91,7 @@ description: Компонент для позиционирования элем
 VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/components/simple-cell)).
 Поэтому его использование обычно актуально только для верхнеуровневых компонентов `Flex`.
 
+{/* @example-description: Использование `margin="auto"` для выравнивания контента `Flex` внутри `Group`. */}
 <Playground>
   ```jsx
   <Group mode="card" header={<Header size="s">Друзья</Header>}>
@@ -110,6 +112,7 @@ VKUI (например, [`Header`](/components/group#header) и [`SimpleCell`](/
 Подкомпонент `Flex.Item` используется как обёртка для дочерних элементов компонента `Flex` в случае, когда нужно
 переопределить `flex`-свойства этих элементов, например, `flex-basis`:
 
+{/* @example-description: Сравнение устаревшего `Flex.Item` и современного подхода через `Flex`/`Box` c `flexBasis`. */}
 <Playground>
   ```jsx
   <Flex gap="m" justify="center" margin="auto">

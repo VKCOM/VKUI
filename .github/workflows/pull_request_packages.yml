@@ -283,6 +283,33 @@ jobs:
           name: docs-website-dist
           path: website/out
 
+  mcp_data_upload:
+    if: ${{ needs.changed_files.outputs.docs_website == 'true' }}
+    needs: changed_files
+    runs-on: ubuntu-latest
+    name: Upload MCP data artifact
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Build VKUI
+        run: yarn build:vkui
+
+      - name: Generate docgen
+        run: yarn workspace @project-docs/website run generate
+
+      - name: Generate MCP data
+        run: node website/scripts/generate-mcp-data.mjs
+
+      - name: Upload MCP data
+        uses: actions/upload-artifact@v5
+        with:
+          name: mcp-data
+          path: mcp-data
+
   upload_pr_workflow_payload:
     # Дожидаемся выгрузки артефактов, на случай если вокрфлоу будет отменён или перезапушен
     needs: [test, test_e2e_prepare_and_upload_report, docs_storybook_upload]

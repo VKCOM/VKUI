@@ -15,6 +15,7 @@ description: Компонент для отображения статичной
 
 </Overview>
 
+{/* @example-description: Базовая строка `InfoRow` с заголовком и значением. */}
 <Playground>
   ```jsx
   <InfoRow header="Общий бюджет">3000 р.</InfoRow>
@@ -25,6 +26,7 @@ description: Компонент для отображения статичной
 
 Рекомендуется оборачивать связанные InfoRow в [`Group`](/components/group) с заголовком:
 
+{/* @example-description: Группа `InfoRow` внутри `Group` для отображения профиля пользователя. */}
 <Playground>
   ```jsx
   <Group header={<Header mode="secondary">Профиль</Header>}>
@@ -40,6 +42,7 @@ description: Компонент для отображения статичной
 
 ## Многострочный контент
 
+{/* @example-description: Многострочное описание в `InfoRow` внутри `SimpleCell multiline`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <SimpleCell multiline>
