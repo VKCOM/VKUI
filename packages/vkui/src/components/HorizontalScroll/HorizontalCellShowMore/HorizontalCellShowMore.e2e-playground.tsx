@@ -18,7 +18,7 @@ export const HorizontalCellShowMorePlayground = (props: ComponentPlaygroundProps
     >
       {(props: HorizontalCellShowMoreProps) => (
         <HorizontalScroll>
-          <AlbumItems height={props.height} />
+          <AlbumItems height={props.height ?? 124} />
           <HorizontalCellShowMore {...props} />
         </HorizontalScroll>
       )}
@@ -39,7 +39,7 @@ const albumItems = [
   },
 ];
 
-function AlbumItems({ height = 124 }: { height?: number }) {
+function AlbumItems({ height }: { height: number }) {
   return (
     <>
       {albumItems.map(({ id, title, size }) => (

@@ -104,14 +104,12 @@
   }
 }
 @media (--viewWidth-smallTabletPlus) {
-  .layoutNone .content,
-  .layoutVerticalMq .content {
+  .layoutNone .content {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .layoutNone .action,
-  .layoutVerticalMq .action {
+  .layoutNone .action {
     min-block-size: initial;
     margin-block-start: 2px;
     margin-block-end: var(--vkui_internal--snackbar-body_layout_vertical_action_shift);

@@ -12,11 +12,11 @@ export interface GradientProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Тип градиента.
    */
-  mode?: 'tint' | 'default' | 'overlay';
+  mode?: 'tint' | 'default' | 'overlay' | undefined;
   /**
    * Направление градиента.
    */
-  to?: 'top' | 'bottom';
+  to?: 'top' | 'bottom' | undefined;
 }
 
 /**

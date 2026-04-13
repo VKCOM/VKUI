@@ -20,27 +20,27 @@ export interface AccordionProps extends HasChildren {
   /**
    * Используется для генерации id для заголовка и контента(a11y).
    */
-  id?: string;
+  id?: string | undefined;
   /**
    * Управляет раскрытием и скрытием контента.
    */
-  expanded?: boolean;
+  expanded?: boolean | undefined;
   /**
    * Значение по умолчанию.
    */
-  defaultExpanded?: boolean;
+  defaultExpanded?: boolean | undefined;
   /**
    * Возвращает новое значение при изменении раскрытия/сворачивания контента.
    */
-  onChange?: (newValue: boolean) => void;
+  onChange?: ((newValue: boolean) => void) | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Нужно ли удалять из DOM контент при сворачивании.
    */
-  unmountOnCollapsed?: boolean;
+  unmountOnCollapsed?: boolean | undefined;
 }
 
 /**

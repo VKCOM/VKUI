@@ -244,13 +244,13 @@ import { SeparatorDecorator } from './custom-components-preview/SeparatorDecorat
 import { SpacingDecorator } from './custom-components-preview/SpacingDecorator';
 
 export type ComponentConfigData = {
-  customPath?: string;
+  customPath?: string | undefined;
   component: ComponentType<any>;
-  playgroundRender?: (...args: any) => ReactNode;
+  playgroundRender?: ((...args: any) => ReactNode) | undefined;
   args?: any;
-  decorator?: ComponentType<{ children: ReactNode }>;
-  minWidth?: number;
-  maxWidth?: number;
+  decorator?: ComponentType<{ children: ReactNode }> | undefined;
+  minWidth?: number | undefined;
+  maxWidth?: number | undefined;
 };
 
 export const COMPONENTS_DATA: Record<string, ComponentConfigData> = {

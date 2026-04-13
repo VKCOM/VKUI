@@ -49,11 +49,6 @@
   }
 }
 
-.separator.separator {
-  margin-inline-end: var(--vkui--spacing_size_m);
-  color: var(--vkui_docs--color_stroke_separator_secondary);
-}
-
 .logo {
   color: var(--vkui--color_text_primary);
 }
@@ -66,10 +61,6 @@
   .menuButton {
     display: none;
   }
-}
-
-.menuIcon {
-  box-sizing: initial;
 }
 
 .versions {

@@ -114,8 +114,8 @@ export function parse(input: string, format: string, referenceDate: Date = new D
 }
 
 export const convertDateToTimeZone = (
-  date?: Date | null,
-  timezone?: string,
+  date?: Date | null | undefined,
+  timezone?: string | undefined,
 ): Date | undefined | null => {
   if (!timezone) {
     return date;
@@ -141,13 +141,13 @@ export const convertDateFromTimeZone = (date: Date | null, timezone?: string): D
 };
 
 export type CreateDateInTimeZoneOverrides = {
-  year?: number;
-  month?: number;
-  date?: number;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  milliseconds?: number;
+  year?: number | undefined;
+  month?: number | undefined;
+  date?: number | undefined;
+  hours?: number | undefined;
+  minutes?: number | undefined;
+  seconds?: number | undefined;
+  milliseconds?: number | undefined;
 };
 
 export function createDateInTimeZone(
@@ -216,7 +216,7 @@ export function endOfMonth(date: Date): Date {
   return result;
 }
 
-type WeekOptions = { weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6 };
+type WeekOptions = { weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | undefined };
 
 export const MONDAY = 1;
 
@@ -285,7 +285,7 @@ export function startOfMinute(date: Date): Date {
 export function eachDayOfInterval(
   startDate: Date,
   endDate: Date,
-  { step = 1 }: { step?: number } = {},
+  { step = 1 }: { step?: number | undefined } = {},
 ): Date[] {
   let reversed = +startDate > +endDate;
   const endTime = reversed ? +startDate : +endDate;

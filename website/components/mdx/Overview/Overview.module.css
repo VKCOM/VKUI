@@ -49,10 +49,6 @@
   line-height: 24px;
 }
 
-.tags {
-  margin-block-start: 20px;
-}
-
 .header {
   --vkui_internal--link-color: var(--vkui--color_text_secondary);
 

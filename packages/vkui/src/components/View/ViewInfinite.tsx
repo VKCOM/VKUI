@@ -47,39 +47,39 @@ export interface ViewInfiniteProps
   /**
    * Обработчик, который вызывается при завершении анимации смены активной панели.
    */
-  onTransition?: (params: TransitionParams & { isBack: boolean }) => void;
+  onTransition?: ((params: TransitionParams & { isBack: boolean }) => void) | undefined;
   /**
    * Обработчик свайпа назад.
    */
-  onSwipeBack?: () => void;
+  onSwipeBack?: (() => void) | undefined;
   /**
    * Обработчик начала анимации свайпа назад.
    */
-  onSwipeBackStart?: (activePanel: string | null) => void | 'prevent';
+  onSwipeBackStart?: ((activePanel: string | null) => void | 'prevent') | undefined;
   /**
    * Обработчик завершения анимации отмененного пользователем свайпа.
    */
-  onSwipeBackCancel?: () => void;
+  onSwipeBackCancel?: (() => void) | undefined;
   /**
    * Массив из id панелей в порядке открытия.
    */
-  history?: string[];
+  history?: string[] | undefined;
   /**
    * Функция проверки перехода назад.
    */
-  isBackCheck?: (params: TransitionParams) => boolean;
+  isBackCheck?: ((params: TransitionParams) => boolean) | undefined;
   /**
    * @ignore
    */
-  splitCol?: SplitColContextProps;
+  splitCol?: SplitColContextProps | undefined;
   /**
    * @ignore
    */
-  configProvider?: ConfigProviderContextInterface;
+  configProvider?: ConfigProviderContextInterface | undefined;
   /**
    * @ignore
    */
-  scroll?: ScrollContextInterface;
+  scroll?: ScrollContextInterface | undefined;
 }
 
 /* eslint-disable jsdoc/require-jsdoc */
@@ -88,11 +88,11 @@ export interface ViewInfiniteState {
 
   visiblePanels: Array<string | null>;
   activePanel: string | null;
-  isBack?: boolean;
+  isBack?: boolean | undefined;
   prevPanel: string | null;
   nextPanel: string | null;
 
-  swipingBack?: boolean;
+  swipingBack?: boolean | undefined;
   swipeBackStartX: number;
   swipeBackShift: number;
   swipeBackNextPanel: string | null;

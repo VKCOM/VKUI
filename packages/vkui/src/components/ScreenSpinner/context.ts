@@ -11,11 +11,11 @@ export interface ScreenSpinnerContextProps {
   /**
    * Текст под иконкой.
    */
-  label?: ScreenSpinnerProps['label'];
+  label?: ScreenSpinnerProps['label'] | undefined;
   /**
    * Кастомная иконка, работает совместно со `state="custom"`.
    */
-  customIcon?: ScreenSpinnerProps['customIcon'];
+  customIcon?: ScreenSpinnerProps['customIcon'] | undefined;
 }
 
 export const ScreenSpinnerContext: React.Context<ScreenSpinnerContextProps> =

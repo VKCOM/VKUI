@@ -14,7 +14,7 @@ import type { ScreenSpinnerProps } from './types';
 import styles from './ScreenSpinner.module.css';
 
 type ScreenSpinnerSwapIconProps = HTMLAttributesWithRootRef<HTMLElement> & {
-  cancelLabel?: ScreenSpinnerProps['cancelLabel'];
+  cancelLabel?: ScreenSpinnerProps['cancelLabel'] | undefined;
 };
 
 const ScreenSpinnerCancelIcon = ({

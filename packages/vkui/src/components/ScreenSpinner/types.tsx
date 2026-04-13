@@ -7,21 +7,21 @@ export type ScreenSpinnerProps = Omit<SpinnerProps, 'size'> &
     /**
      * Тип отображения спиннера.
      */
-    state?: 'loading' | 'cancelable' | 'done' | 'error' | 'custom';
+    state?: 'loading' | 'cancelable' | 'done' | 'error' | 'custom' | undefined;
     /**
      * Кастомная иконка, работает совместно со `state="custom"`.
      */
-    customIcon?: React.ReactNode;
+    customIcon?: React.ReactNode | undefined;
     /**
      * Внешний вид отображения спиннера.
      */
-    mode?: 'shadow' | 'overlay';
+    mode?: 'shadow' | 'overlay' | undefined;
     /**
      * Текст под иконкой.
      */
-    label?: React.ReactNode;
+    label?: React.ReactNode | undefined;
     /**
      * Используется при `state='cancelable'`. Делает доступным для ассистивных технологий.
      */
-    cancelLabel?: string;
+    cancelLabel?: string | undefined;
   };

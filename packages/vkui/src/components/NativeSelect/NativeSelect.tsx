@@ -68,16 +68,22 @@ export interface NativeSelectProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `select`: свойства для прокидывания в нативный `select`.
    */
-  slotProps?: {
-    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
-      HasDataAttribute &
-      HasRootRef<HTMLDivElement>;
-    select?: NativeHTMLSelectProps & HasRootRef<HTMLSelectElement> & HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+              HasDataAttribute &
+              HasRootRef<HTMLDivElement>)
+          | undefined;
+        select?:
+          | (NativeHTMLSelectProps & HasRootRef<HTMLSelectElement> & HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ select: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLSelectElement>;
+  getRef?: React.Ref<HTMLSelectElement> | undefined;
   /**
    * Выбранное значение.
    *
@@ -85,34 +91,34 @@ export interface NativeSelectProps
    * >
    * > Не используйте `undefined`, чтобы показать невыбранное состояние. Вместо этого используйте `null`.
    */
-  value?: SelectValue;
+  value?: SelectValue | undefined;
   /**
    * См. `value`.
    */
-  defaultValue?: SelectValue;
+  defaultValue?: SelectValue | undefined;
   /**
    * Обработчик, срабатывающий при изменении выбранного значения.
    * Вторым параметром прокидывается новое значение.
    *
    * > ⚠️ Лучше использовать второй параметр при работе с компонентом.
    */
-  onChange?: (e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void;
+  onChange?: ((e: ChangeEvent<HTMLSelectElement>, newValue: SelectValue) => void) | undefined;
   /**
    * Текст-подсказка при отсутствии выбранного значения.
    */
-  placeholder?: string;
+  placeholder?: string | undefined;
   /**
    * Флаг для включения многострочного режима.
    */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
   /**
    * Тип селекта, влияющий на отображение.
    */
-  selectType?: SelectType;
+  selectType?: SelectType | undefined;
   /**
    * Иконка раскрывающегося списка.
    */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | undefined;
 }
 
 /**

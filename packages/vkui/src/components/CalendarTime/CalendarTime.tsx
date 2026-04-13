@@ -14,38 +14,38 @@ export type CalendarTimeTestsProps = {
   /**
    * Передает атрибут `data-testid` для дропдауна выбора часа в календаре.
    */
-  hoursTestId?: string;
+  hoursTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для дропдауна выбора минут в календаре.
    */
-  minutesTestId?: string;
+  minutesTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки "Готово" в календаре.
    */
-  doneButtonTestId?: string;
+  doneButtonTestId?: string | undefined;
 };
 
 export type CalendarDoneButtonProps = {
   /**
    * Кастомное отображение кнопки `"Done"`.
    */
-  DoneButton?: React.ComponentType<ButtonProps>;
+  DoneButton?: React.ComponentType<ButtonProps> | undefined;
   /**
    * Текст отображаемый в кнопке `"Done"`.
    */
-  doneButtonText?: string;
+  doneButtonText?: string | undefined;
   /**
    * Управление отображением кнопки `"Done"`.
    */
-  doneButtonShow?: boolean;
+  doneButtonShow?: boolean | undefined;
   /**
    * Блокировка взаимодействия с кнопкой "Done".
    */
-  doneButtonDisabled?: boolean;
+  doneButtonDisabled?: boolean | undefined;
   /**
    * Обработки нажатия на кнопку `"Done"`.
    */
-  onDoneButtonClick?: () => void;
+  onDoneButtonClick?: (() => void) | undefined;
 };
 
 export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
@@ -56,27 +56,27 @@ export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneB
   /**
    * Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий.
    */
-  changeHoursLabel?: string;
+  changeHoursLabel?: string | undefined;
   /**
    * Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий.
    */
-  changeMinutesLabel?: string;
+  changeMinutesLabel?: string | undefined;
   /**
    * Обработчик изменения времени.
    */
-  onChange?: (value: Date) => void;
+  onChange?: ((value: Date) => void) | undefined;
   /**
    * Функция установки часа (для таймзонно-зависимого календаря).
    */
-  setHours?: (date: Date, hours: number) => Date;
+  setHours?: ((date: Date, hours: number) => Date) | undefined;
   /**
    * Функция установки минут (для таймзонно-зависимого календаря).
    */
-  setMinutes?: (date: Date, minutes: number) => Date;
+  setMinutes?: ((date: Date, minutes: number) => Date) | undefined;
   /**
    * Функция для проверки блокировки выбора даты и времени.
    */
-  isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
+  isDayDisabled?: ((day: Date, withTime?: boolean) => boolean) | undefined;
 }
 
 const hours: Array<{

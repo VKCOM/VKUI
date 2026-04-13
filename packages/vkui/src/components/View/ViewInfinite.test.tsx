@@ -484,10 +484,10 @@ function setupSwipeBack({
   childrenForPanel2 = null,
   initialProps = {},
 }: {
-  Wrapper?: ComponentType<HasChildren>;
-  childrenForPanel1?: any;
-  childrenForPanel2?: any;
-  initialProps?: Partial<ViewInfiniteProps>;
+  Wrapper?: ComponentType<HasChildren> | undefined;
+  childrenForPanel1?: any | undefined;
+  childrenForPanel2?: any | undefined;
+  initialProps?: Partial<ViewInfiniteProps> | undefined;
 } = {}) {
   const events = {
     onSwipeBack: vi.fn(),

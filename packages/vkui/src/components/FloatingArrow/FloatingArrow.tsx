@@ -8,9 +8,9 @@ import styles from './FloatingArrow.module.css';
 
 export type Coords = {
   /** Координата x. */
-  x?: number;
+  x?: number | undefined;
   /** Координата y. */
-  y?: number;
+  y?: number | undefined;
 };
 
 export const placementClassNames = {
@@ -25,31 +25,31 @@ export interface FloatingArrowProps
   /**
    * Сдвиг стрелки относительно текущих координат.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Включает абсолютное смещение по `offset`.
    */
-  isStaticOffset?: boolean;
+  isStaticOffset?: boolean | undefined;
   /**
    * Координаты стрелки.
    */
-  coords?: Coords;
+  coords?: Coords | undefined;
   /**
    * Расположение всплывающего элемента.
    */
-  placement?: Placement;
+  placement?: Placement | undefined;
   /**
    * Стили иконки.
    */
-  iconStyle?: React.CSSProperties;
+  iconStyle?: React.CSSProperties | undefined;
   /**
    * `className` для иконки.
    */
-  iconClassName?: string;
+  iconClassName?: string | undefined;
   /**
    * Иконка для отображения стрелки.
    */
-  Icon?: React.ComponentType<React.SVGAttributes<SVGSVGElement>>;
+  Icon?: React.ComponentType<React.SVGAttributes<SVGSVGElement>> | undefined;
 }
 
 /**

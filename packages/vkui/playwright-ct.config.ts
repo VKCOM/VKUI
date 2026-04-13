@@ -42,13 +42,13 @@ export default defineConfig({
   /* Retry on CI only */
   retries: env.CI ? 1 : 0,
   /* Limit the number of failures on CI to save resources. */
-  maxFailures: env.CI ? 10 : undefined,
+  ...(env.CI ? { maxFailures: 10 } : {}),
   /* Opt out of parallel tests on CI. */
-  workers: env.CI
-    ? 1
+  ...(env.CI
+    ? { workers: 1 }
     : typeof env.PLAYWRIGHT_WORKERS === 'string'
-      ? Number(env.PLAYWRIGHT_WORKERS)
-      : undefined,
+      ? { workers: Number(env.PLAYWRIGHT_WORKERS) }
+      : {}),
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: env.CI
     ? [['github'], ['dot'], ['blob'], [...DEFAULT_REPORTER]]

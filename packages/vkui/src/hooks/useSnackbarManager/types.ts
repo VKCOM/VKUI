@@ -14,10 +14,10 @@ export namespace CustomSnackbar {
     };
 
   export type Payload<AdditionalProps extends object = object> = {
-    id?: string;
+    id?: string | undefined;
     component: React.ComponentType<Props<AdditionalProps>>;
-    baseProps?: SnackbarApi.OpenProps;
-    additionalProps?: AdditionalProps;
+    baseProps?: SnackbarApi.OpenProps | undefined;
+    additionalProps?: AdditionalProps | undefined;
   };
 }
 
@@ -91,25 +91,25 @@ export namespace UseSnackbar {
     /**
      * Максимальное число открытых на одном `placement` снекбаров
      */
-    limit?: number;
+    limit?: number | undefined;
     /**
      * Поведение переполнения очереди снекбаров:
      * - `"queue"` - снекбары не откроются, пока для них не появится место.
      * - `"shift"` - снекбары форсируют закрытие более старых снекбаров, чтобы освободить место. Значение по умолчанию.
      */
-    queueStrategy?: SnackbarApi.QueueStrategy;
+    queueStrategy?: SnackbarApi.QueueStrategy | undefined;
     /**
      * Вертикальный отступ контейнера со снекбарами от верха. Полезно, когда на странице используется компонент `FixedLayout`.
      */
-    offsetYStart?: SnackbarApi.OffsetY;
+    offsetYStart?: SnackbarApi.OffsetY | undefined;
     /**
      * Вертикальный отступ контейнера со снекбарами от низа. Полезно, когда на странице используется компонент `FixedLayout`.
      */
-    offsetYEnd?: SnackbarApi.OffsetY;
+    offsetYEnd?: SnackbarApi.OffsetY | undefined;
     /**
      * Свойство для установки стиля `z-index` на контейнере снекбаров.
      */
-    zIndex?: number | string;
+    zIndex?: number | string | undefined;
   }
 
   export type Return = [SnackbarApi.Api, React.ReactElement | null];
@@ -118,15 +118,15 @@ export namespace UseSnackbar {
 export type SnackbarItem = Pick<SnackbarApi.OpenReturn, 'close' | 'update'> & {
   id: string;
   component: React.ComponentType<any>;
-  additionalProps?: any;
+  additionalProps?: any | undefined;
   snackbarProps: SnackbarData;
 };
 
 export type CommonOnOpenPayload = Pick<SnackbarApi.OpenReturn, 'close' | 'update'> & {
   id: string;
   component: React.ComponentType<CustomSnackbar.Props<any>>;
-  snackbarProps?: SnackbarApi.OpenProps;
-  additionalProps?: any;
+  snackbarProps?: SnackbarApi.OpenProps | undefined;
+  additionalProps?: any | undefined;
 };
 
 export namespace SnackbarManagerNS {

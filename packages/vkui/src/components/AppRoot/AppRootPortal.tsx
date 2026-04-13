@@ -22,11 +22,11 @@ export interface AppRootPortalProps extends HasChildren {
    *
    * @default true (использует `document.body` как портал по умолчанию)
    */
-  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement | null> | null;
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement | null> | null | undefined;
   /**
    * `className` для контейнера портала.
    */
-  className?: string;
+  className?: string | undefined;
 }
 
 export const AppRootPortal = ({

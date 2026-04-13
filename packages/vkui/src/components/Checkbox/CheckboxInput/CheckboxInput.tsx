@@ -49,46 +49,52 @@ export interface CheckboxInputProps
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLInputElement>;
+  getRef?: React.Ref<HTMLInputElement> | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotProps?: {
-    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
-      HasRootRef<HTMLDivElement> &
-      HasDataAttribute;
-    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+              HasRootRef<HTMLDivElement> &
+              HasDataAttribute)
+          | undefined;
+        input?:
+          | (React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * Неопределенное состояние чекбокса.
    */
-  indeterminate?: boolean;
+  indeterminate?: boolean | undefined;
   /**
    * Неопределенное состояние чекбокса по умолчанию.
    */
-  defaultIndeterminate?: boolean;
+  defaultIndeterminate?: boolean | undefined;
   /**
    * Иконка для включенного состояния в компактном режиме.
    */
-  IconOnCompact?: CheckboxInputIconType;
+  IconOnCompact?: CheckboxInputIconType | undefined;
   /**
    * Иконка для включенного состояния в обычном режиме.
    */
-  IconOnRegular?: CheckboxInputIconType;
+  IconOnRegular?: CheckboxInputIconType | undefined;
   /**
    * Иконка для выключенного состояния в компактном режиме.
    */
-  IconOffCompact?: CheckboxInputIconType;
+  IconOffCompact?: CheckboxInputIconType | undefined;
   /**
    * Иконка для выключенного состояния в обычном режиме.
    */
-  IconOffRegular?: CheckboxInputIconType;
+  IconOffRegular?: CheckboxInputIconType | undefined;
   /**
    * Иконка для неопределенного состояния.
    */
-  IconIndeterminate?: CheckboxInputIconType;
+  IconIndeterminate?: CheckboxInputIconType | undefined;
 }
 
 const warn = warnOnce('Checkbox');

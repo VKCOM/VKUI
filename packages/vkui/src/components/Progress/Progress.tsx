@@ -24,19 +24,19 @@ export interface ProgressProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Стиль отображения прогрессбара.
    */
-  appearance?: 'accent' | 'positive' | 'negative' | `var(--${string})` | `#${string}`;
+  appearance?: 'accent' | 'positive' | 'negative' | `var(--${string})` | `#${string}` | undefined;
   /**
    * Значение прогресса.
    */
-  value?: number;
+  value?: number | undefined;
   /**
    * Высота элемента.
    */
-  height?: number;
+  height?: number | undefined;
   /**
    * Сделать прогрессбар прозрачным.
    */
-  trackDisable?: boolean;
+  trackDisable?: boolean | undefined;
 }
 
 const PROGRESS_MIN_VALUE = 0;

@@ -16,25 +16,25 @@ export interface SeparatorProps
   /**
    * Стиль отображения разделителя.
    */
-  appearance?: 'primary' | 'secondary' | 'primary-alpha';
+  appearance?: 'primary' | 'secondary' | 'primary-alpha' | undefined;
   /**
    * Добавляет стандартные отступы у разделителя.
    */
-  padding?: boolean;
+  padding?: boolean | undefined;
   /**
    * Направление отображения разделителя.
    */
-  direction?: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical' | undefined;
   /**
    * Размер контейнера, в который вложен разделитель.
    *
    * Принимает значения дизайн-системы, числовые значения и css-переменные.
    */
-  size?: SpacingSizeProp;
+  size?: SpacingSizeProp | undefined;
   /**
    * Выравнивание разделителя в контейнере.
    */
-  align?: 'start' | 'center' | 'end';
+  align?: 'start' | 'center' | 'end' | undefined;
 }
 
 const appearanceClassNames = {

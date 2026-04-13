@@ -1,7 +1,3 @@
 .root {
   --vkui_docs--code-background: transparent;
 }
-
-.pkg-manager {
-  flex: 0 0 65px;
-}

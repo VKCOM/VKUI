@@ -55,27 +55,34 @@ export interface VKUIButtonProps extends HasAlign {
   /**
    * Режим отображения кнопки.
    */
-  mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'link';
+  mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'link' | undefined;
   /**
    * Цветовая схема кнопки.
    */
-  appearance?: 'accent' | 'positive' | 'negative' | 'neutral' | 'overlay' | 'accent-invariable';
+  appearance?:
+    | 'accent'
+    | 'positive'
+    | 'negative'
+    | 'neutral'
+    | 'overlay'
+    | 'accent-invariable'
+    | undefined;
   /**
    * Размер кнопки.
    */
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | undefined;
   /**
    * Растягивает кнопку на всю ширину контейнера.
    */
-  stretched?: boolean;
+  stretched?: boolean | undefined;
   /**
    * Контент, отображаемый перед основным содержимым кнопки.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Контент, отображаемый после основного содержимого кнопки.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Включает состояние загрузки (отображает спиннер).
    *
@@ -91,24 +98,24 @@ export interface VKUIButtonProps extends HasAlign {
    * @example
    * <Button loading loadingLabel="Сохранение данных...">Сохранить</Button>
    */
-  loading?: boolean;
+  loading?: boolean | undefined;
   /**
    * Текст для `aria-label` при состоянии загрузки.
    * Подменяет переданный в компонент `aria-label` только когда `loading={true}`.
    */
-  loadingLabel?: string;
+  loadingLabel?: string | undefined;
   /**
    * Отключает анимацию спиннера загрузки.
    */
-  disableSpinnerAnimation?: boolean;
+  disableSpinnerAnimation?: boolean | undefined;
   /**
    * Добавляет скругленные углы кнопке.
    */
-  rounded?: boolean;
+  rounded?: boolean | undefined;
   /**
    * Добавляет тень кнопке.
    */
-  elevation?: Elevation;
+  elevation?: Elevation | undefined;
 }
 
 export interface ButtonProps extends Omit<TappableOmitProps, 'size'>, VKUIButtonProps {}

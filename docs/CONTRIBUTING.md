@@ -109,7 +109,7 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
       /**
        * Передает атрибут `data-testid` для кнопки закрытия
        */
-      dismissButtonTestId?: string;
+      dismissButtonTestId?: string | undefined;
     };
     ```
 - Компонент покрыт юнит- и скриншотными тестами. [Гайд по тестированию](TESTING.md)

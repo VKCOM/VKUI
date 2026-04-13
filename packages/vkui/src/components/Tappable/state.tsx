@@ -8,12 +8,12 @@ export interface StateProps {
   /**
    * Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active.
    */
-  activeMode?: StateModeLiteral;
+  activeMode?: StateModeLiteral | undefined;
 
   /**
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover.
    */
-  hoverMode?: StateModeLiteral;
+  hoverMode?: StateModeLiteral | undefined;
 }
 
 /**

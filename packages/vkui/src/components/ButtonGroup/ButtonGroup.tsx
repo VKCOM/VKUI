@@ -24,21 +24,21 @@ export interface ButtonGroupProps extends HTMLAttributesWithRootRef<HTMLDivEleme
   /**
    * Задает расположение элементов внутри группы, вертикальное или горизонтальное.
    */
-  mode?: 'vertical' | 'horizontal';
+  mode?: 'vertical' | 'horizontal' | undefined;
   /**
    * Выставляет в зависимости от `mode` отступ по вертикали или горизонтали.
    */
-  gap?: 'none' | 'space' | 's' | 'm';
+  gap?: 'none' | 'space' | 's' | 'm' | undefined;
   /**
    * Растягивает компонент на всю ширину контейнера.
    *
    * Note: Для потомков соответствующее поведение нужно определять самостоятельно, где это необходимо.
    */
-  stretched?: boolean;
+  stretched?: boolean | undefined;
   /**
    * Горизонтальное выравнивание элементов внутри группы.
    */
-  align?: AlignType;
+  align?: AlignType | undefined;
 }
 
 /**

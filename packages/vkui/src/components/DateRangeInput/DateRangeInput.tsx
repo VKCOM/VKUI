@@ -19,7 +19,7 @@ import {
   type DateRangeType,
 } from '../CalendarRange/CalendarRange';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FocusTrapInternal } from '../FocusTrap/FocusTrap';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import { FormField, type FormFieldProps } from '../FormField/FormField';
 import { IconButton } from '../IconButton/IconButton';
 import { InputLikeDivider } from '../InputLike/InputLikeDivider';
@@ -47,34 +47,34 @@ type DateTestsProps = {
   /**
    * Передает атрибут `data-testid` для поля ввода дня.
    */
-  day?: string;
+  day?: string | undefined;
   /**
    * Передает атрибут `data-testid` для поля ввода месяца.
    */
-  month?: string;
+  month?: string | undefined;
   /**
    * Передает атрибут `data-testid` для поля ввода года.
    */
-  year?: string;
+  year?: string | undefined;
 };
 
 export type DateRangeInputTestsProps = {
   /**
    * Передает атрибуты `data-testid` для полей ввода начальной даты.
    */
-  startDateTestsProps?: DateTestsProps;
+  startDateTestsProps?: DateTestsProps | undefined;
   /**
    * Передает атрибуты `data-testid` для полей ввода конечной даты.
    */
-  endDateTestsProps?: DateTestsProps;
+  endDateTestsProps?: DateTestsProps | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки показа календаря.
    */
-  showCalendarButtonTestId?: string;
+  showCalendarButtonTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки очистки даты.
    */
-  clearButtonTestId?: string;
+  clearButtonTestId?: string | undefined;
 };
 
 export interface DateRangeInputProps
@@ -103,72 +103,72 @@ export interface DateRangeInputProps
   /**
    * Обработчик изменения выбранного промежутка.
    */
-  onChange?: (value: DateRangeType | null) => void;
+  onChange?: ((value: DateRangeType | null) => void) | undefined;
   /**
    * Передает атрибуты `data-testid` для интерактивных элементов в календаре.
    */
-  calendarTestsProps?: CalendarRangeTestsProps;
+  calendarTestsProps?: CalendarRangeTestsProps | undefined;
   /**
    * Расположение календаря относительно поля ввода.
    */
-  calendarPlacement?: PlacementWithAuto;
+  calendarPlacement?: PlacementWithAuto | undefined;
   /**
    * Автоматически закрывать календарь при изменениях.
    */
-  closeOnChange?: boolean;
+  closeOnChange?: boolean | undefined;
   /**
    * Обработчик изменения состояния открытия календаря.
    */
-  onCalendarOpenChanged?: (opened: boolean) => void;
+  onCalendarOpenChanged?: ((opened: boolean) => void) | undefined;
   /**
    * Label для календаря.
    */
-  calendarLabel?: string;
+  calendarLabel?: string | undefined;
   /**
    * Label для кнопки очистки. Делает доступным для ассистивных технологий.
    */
-  clearFieldLabel?: string;
+  clearFieldLabel?: string | undefined;
   /**
    * Label для кнопки открытия календаря. Делает доступным для ассистивных технологий.
    */
-  showCalendarLabel?: string;
+  showCalendarLabel?: string | undefined;
   /**
    * Label для ввода дня начальной даты. Делает доступным для ассистивных технологий.
    */
-  changeStartDayLabel?: string;
+  changeStartDayLabel?: string | undefined;
   /**
    * Label для ввода месяца начальной даты. Делает доступным для ассистивных технологий.
    */
-  changeStartMonthLabel?: string;
+  changeStartMonthLabel?: string | undefined;
   /**
    * Label для ввода года начальной даты. Делает доступным для ассистивных технологий.
    */
-  changeStartYearLabel?: string;
+  changeStartYearLabel?: string | undefined;
   /**
    * Label для ввода дня конечной даты. Делает доступным для ассистивных технологий.
    */
-  changeEndDayLabel?: string;
+  changeEndDayLabel?: string | undefined;
   /**
    * Label для ввода месяца конечной даты. Делает доступным для ассистивных технологий.
    */
-  changeEndMonthLabel?: string;
+  changeEndMonthLabel?: string | undefined;
   /**
    * Label для ввода года конечной даты. Делает доступным для ассистивных технологий.
    */
-  changeEndYearLabel?: string;
+  changeEndYearLabel?: string | undefined;
   /**
    * Отключение открытия календаря.
    */
-  disableCalendar?: boolean;
+  disableCalendar?: boolean | undefined;
   /**
    * Позволяет отключить захват фокуса при появлении календаря.
    */
-  disableFocusTrap?: boolean;
+  disableFocusTrap?: boolean | undefined;
   /**
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
   /**
    * @deprecated Since 8.0.0. Будет удалено в 9.0.0.
    *
@@ -181,7 +181,7 @@ export interface DateRangeInputProps
    * - календарь при открытии получает фокус, клавиатурный
    * фокус зациклен и не выходит за пределы календаря пока календарь не закрыт.
    */
-  accessible?: boolean /* TODO [>=v9] удалить свойство */;
+  accessible?: boolean /* TODO [>=v9] удалить свойство */ | undefined;
 }
 
 const elementsConfig = (index: number) => {
@@ -222,13 +222,6 @@ const getInternalValue = (value: CalendarRangeProps['value']) => {
     newValue[5] = String(value[1].getFullYear()).padStart(4, '0');
   }
   return newValue;
-};
-
-const CALENDAR_MUTATION_OBSERVER_OPTIONS: MutationObserverInit = {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['tabindex'],
 };
 
 /**
@@ -587,11 +580,10 @@ export const DateRangeInput = ({
           placement={calendarPlacement}
           onPlacementChange={setCalendarPlacement}
         >
-          <FocusTrapInternal
+          <FocusTrap
             rootRef={focusTrapRootRef}
             disabled={disableFocusTrap ?? !accessible}
             restoreFocus={restoreFocus ?? Boolean(accessible)}
-            mutationObserverOptions={CALENDAR_MUTATION_OBSERVER_OPTIONS}
           >
             <div ref={focusTrapRootRef}>
               <CalendarRange
@@ -614,7 +606,7 @@ export const DateRangeInput = ({
                 {...calendarTestsProps}
               />
             </div>
-          </FocusTrapInternal>
+          </FocusTrap>
         </Popper>
       )}
     </FormField>

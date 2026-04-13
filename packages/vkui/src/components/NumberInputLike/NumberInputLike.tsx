@@ -4,9 +4,9 @@ import { InputLike, type InputLikeProps } from '../InputLike/InputLike';
 /* eslint-disable jsdoc/require-jsdoc */
 
 export interface NumberInputLikeProps extends Omit<InputLikeProps, 'value'> {
-  value?: number | string;
-  maxValue?: number;
-  minValue?: number;
+  value?: number | string | undefined;
+  maxValue?: number | undefined;
+  minValue?: number | undefined;
 }
 
 const stringifyValue = (

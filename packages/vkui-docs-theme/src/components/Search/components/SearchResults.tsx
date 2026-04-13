@@ -7,7 +7,7 @@ import styles from '../Search.module.css';
 interface SearchResultsProps {
   results: SearchResultProps[];
   onClick: (hasHash: boolean) => void;
-  flat?: boolean;
+  flat?: boolean | undefined;
 }
 
 const ResultComponentBadge = (

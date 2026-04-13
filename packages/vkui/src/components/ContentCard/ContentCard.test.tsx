@@ -42,7 +42,7 @@ describe('ContentCard', () => {
   });
 
   it('[img] passes all img attributes to img', () => {
-    render(<ContentCardTest {...imgOnlyAttributes} />);
+    render(<ContentCardTest {...(imgOnlyAttributes as ContentCardProps)} />);
 
     Object.keys(imgOnlyAttributes).forEach((attr) => {
       expect(img()).toHaveAttribute(attr);

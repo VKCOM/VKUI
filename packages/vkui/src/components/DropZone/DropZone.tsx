@@ -6,7 +6,7 @@ import { callMultiple } from '../../lib/callMultiple';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
-import { DropZoneGrid } from './components/DropZoneGrid';
+import { DropZoneGrid } from './DropZoneGrid/DropZoneGrid';
 import styles from './DropZone.module.css';
 
 interface DropZonePropsChildrenProps {
@@ -20,7 +20,10 @@ export interface DropZoneProps extends Omit<HTMLAttributesWithRootRef<HTMLDivEle
   /**
    * Содержимое компонента. Можно прокинуть функцию для отрисовки содержимого.
    */
-  children?: React.ReactNode | ((renderProps: DropZonePropsChildrenProps) => React.ReactNode);
+  children?:
+    | React.ReactNode
+    | ((renderProps: DropZonePropsChildrenProps) => React.ReactNode)
+    | undefined;
 }
 
 /**

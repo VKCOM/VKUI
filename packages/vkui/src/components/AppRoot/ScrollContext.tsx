@@ -29,12 +29,12 @@ const getPageYOffsetWithoutKeyboardHeight = (window: Window, scrollTop: number) 
 };
 
 export type GetScrollOptions = {
-  compensateKeyboardHeight?: boolean;
+  compensateKeyboardHeight?: boolean | undefined;
 };
 
 export interface ScrollContextInterface {
-  getScroll: (this: void, options?: GetScrollOptions) => { x: number; y: number };
-  scrollTo: (this: void, x?: number, y?: number) => void;
+  getScroll: (this: void, options?: GetScrollOptions) => { x: number | undefined; y: number };
+  scrollTo: (this: void, x?: number | undefined, y?: number) => void;
   /**
    * Увеличивает счетчик блокировки прокрутки.
    */
@@ -43,7 +43,7 @@ export interface ScrollContextInterface {
    * Уменьшает счетчик блокировки прокрутки.
    */
   decrementScrollLockCounter: (this: void) => void;
-  beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>>;
+  beforeScrollLockFnSetRef?: React.RefObject<Set<() => void>> | undefined;
 }
 
 export const ScrollContext: React.Context<ScrollContextInterface> =
@@ -148,7 +148,7 @@ const _getScroll = ({
   yOffset: number;
   element: HTMLElement;
   scrollLockEnabled: boolean;
-  customCalcY?: (scrollTop: number) => number;
+  customCalcY?: ((scrollTop: number) => number) | undefined;
 }) => {
   const elementStyles = element.style;
   const [scrollLeft, scrollTop] = scrollLockEnabled

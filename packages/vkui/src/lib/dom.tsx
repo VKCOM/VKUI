@@ -25,11 +25,11 @@ export interface DOMContextInterface {
   /**
    * @ignore
    */
-  window?: Window;
+  window?: Window | undefined;
   /**
    * @ignore
    */
-  document?: Document;
+  document?: Document | undefined;
 }
 
 export type DOMProps = DOMContextInterface;
