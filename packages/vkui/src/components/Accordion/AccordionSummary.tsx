@@ -5,7 +5,7 @@ import { Icon24ChevronDown, Icon24ChevronUp } from '@vkontakte/icons';
 import { callMultiple } from '../../lib/callMultiple';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { AccordionContext } from './AccordionContext';
-import { AccordionIndicator } from './AccordionIndicator';
+import { AccordionIcon } from './AccordionIcon';
 
 export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'chevron'> {
   /**
@@ -36,7 +36,7 @@ export const AccordionSummary = ({
 
   const icon = (
     // Обертка нужна для правильной работы с отступами в SimpleCell
-    <AccordionIndicator CollapseIcon={CollapseIcon} ExpandIcon={ExpandIcon} />
+    <AccordionIcon CollapseIcon={CollapseIcon} ExpandIcon={ExpandIcon} />
   );
 
   const toggle = () => onChange(!expanded);
