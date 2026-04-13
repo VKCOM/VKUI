@@ -45,6 +45,10 @@ const config: StorybookConfig = {
   },
   typescript: {
     reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      tsconfigPath: fileURLToPath(new URL('../tsconfig.storybook.json', import.meta.url)),
+      shouldRemoveUndefinedFromOptional: true,
+    },
   },
 };
 
