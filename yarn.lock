@@ -2818,7 +2818,7 @@ __metadata:
     "@vkontakte/vkui-docs-theme": "workspace:^"
     browserslist-vscode: "github:browserslist/browserslist-vscode"
     lz-string: "npm:^1.5.0"
-    next: "npm:^15.5.11"
+    next: "npm:^15.5.15"
     next-sitemap: "npm:^4.2.3"
     nextra: "npm:^4.6.1"
     pagefind: "npm:^1.5.2"
@@ -5533,14 +5533,14 @@ __metadata:
     "@vkontakte/vkjs": "npm:^2.0.2"
     "@vkontakte/vkui": "workspace:^"
     "@vkontakte/vkui-tokens": "npm:4.76.0"
-    next: "npm:^15.5.11"
+    next: "npm:^15.5.15"
     nextra: "npm:^4.6.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     scroll-into-view-if-needed: "npm:^3.1.0"
     typescript: "npm:^6.0.2"
   peerDependencies:
-    next: ^15.5.11
+    next: ^15.5.15
     nextra: ^4.6.1
     react: ^18.3.1
     react-dom: ^18.3.1
@@ -5650,7 +5650,7 @@ __metadata:
     jsdom: "npm:^29.0.1"
     lint-staged: "npm:^16.4.0"
     mini-css-extract-plugin: "npm:^2.10.2"
-    postcss: "npm:^8.5.8"
+    postcss: "npm:^8.5.9"
     postcss-cli: "npm:^11.0.1"
     postcss-custom-media: "npm:^12.0.1"
     postcss-gap-properties: "npm:^7.0.0"
@@ -13969,7 +13969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^15.5.11":
+"next@npm:^15.5.15":
   version: 15.5.15
   resolution: "next@npm:15.5.15"
   dependencies:
@@ -15593,7 +15593,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.3, postcss@npm:^8.5.8":
+"postcss@npm:^8.0.0, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.3, postcss@npm:^8.5.8, postcss@npm:^8.5.9":
   version: 8.5.9
   resolution: "postcss@npm:8.5.9"
   dependencies:
