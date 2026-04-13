@@ -1,39 +1,15 @@
-import * as React from 'react';
-import { noop } from '@vkontakte/vkjs';
 import { ColorScheme, type ColorSchemeType } from '../lib/colorScheme';
-import { useDOM } from '../lib/dom';
-import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
+import { useMediaQueryMatches } from './useMediaQueryMatch';
 
 /**
  * @private
  */
 export const useAutoDetectColorScheme = (colorSchemeProp?: ColorSchemeType): ColorSchemeType => {
-  const { window } = useDOM();
+  const isDark = useMediaQueryMatches('(prefers-color-scheme: dark)');
 
-  const [colorScheme, setColorScheme] = React.useState<ColorSchemeType>(
-    colorSchemeProp || ColorScheme.LIGHT,
-  );
+  if (colorSchemeProp) {
+    return colorSchemeProp;
+  }
 
-  useIsomorphicLayoutEffect(() => {
-    if (colorSchemeProp) {
-      setColorScheme(colorSchemeProp);
-      return noop;
-    }
-
-    const mediaQuery = window ? window.matchMedia('(prefers-color-scheme: dark)') : undefined;
-
-    if (!mediaQuery) {
-      return noop;
-    }
-
-    const check = (event: MediaQueryList | MediaQueryListEvent) => {
-      // eslint-disable-next-line no-restricted-properties
-      setColorScheme(event.matches ? ColorScheme.DARK : ColorScheme.LIGHT);
-    };
-    check(mediaQuery);
-    mediaQuery.addEventListener('change', check);
-    return () => mediaQuery.removeEventListener('change', check);
-  }, [window, colorSchemeProp]);
-
-  return colorScheme;
+  return isDark ? ColorScheme.DARK : ColorScheme.LIGHT;
 };
