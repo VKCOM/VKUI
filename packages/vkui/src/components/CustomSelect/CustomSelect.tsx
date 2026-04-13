@@ -118,7 +118,7 @@ export type { CustomSelectClearButtonProps };
 export interface SelectProps<
   OptionInterfaceT extends CustomSelectOptionInterface = CustomSelectOptionInterface,
 > extends Omit<NativeSelectProps, 'slotProps'>,
-    Omit<FormFieldProps, 'maxHeight'>,
+    Omit<FormFieldProps, 'maxHeight' | 'mode'>,
     Pick<CustomSelectDropdownProps, 'overscrollBehavior'>,
     Pick<CustomSelectInputProps, 'minLength' | 'maxLength' | 'pattern' | 'form' | 'readOnly'> {
   /**
@@ -256,6 +256,15 @@ export interface SelectProps<
    * Текстовая метка для индикации завершения процесса загрузки данных для пользователей скринридерами. По умолчанию: `"Загружено опций: ${options.length}"`.
    */
   fetchingCompletedLabel?: string | ((optionsCount: number) => string) | undefined;
+  /**
+   * @deprecated Будет удалено в 10.0.0, используйте selectType.
+   *
+   * Режим отображения.
+   *
+   * - `default` — показывает фон, обводку и, при наличии, текст-подсказку.
+   * - `plain` — показывает только текст-подсказку.
+   */
+  mode?: 'default' | 'plain' | undefined;
 }
 
 /**
