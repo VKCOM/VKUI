@@ -257,7 +257,7 @@ export interface SelectProps<
    */
   fetchingCompletedLabel?: string | ((optionsCount: number) => string) | undefined;
   /**
-   * @deprecated Будет удалено в 10.0.0, используйте selectType.
+   * @deprecated Будет удалено в 10.0.0, используйте `selectType`.
    *
    * Режим отображения.
    *
