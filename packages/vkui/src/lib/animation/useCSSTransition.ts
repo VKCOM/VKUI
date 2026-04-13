@@ -211,8 +211,10 @@ export const useCSSTransition = <Ref extends Element = Element>(
           Math.max(...style.transitionDelay.split(',').map(parseTime));
 
         if (duration <= 0) {
-          completeTransition();
-          return;
+          // Даже для нулевой длительности завершаем переход асинхронно, чтобы
+          // промежуточные состояния были наблюдаемы и не возникали sync-гонки с unmount.
+          timerRef.current = setTimeout(completeTransition, 0);
+          return clearTimer;
         }
 
         // fallback если onTransitionEnd не пришёл

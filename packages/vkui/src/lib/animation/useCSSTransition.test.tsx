@@ -454,7 +454,7 @@ describe(useCSSTransition, () => {
   );
 
   it(
-    'should not stuck in exiting when transitionend not fired (transition duration < 0 )',
+    'should not stuck in exiting when transitionend not fired (transition duration <= 0)',
     withFakeTimers(() => {
       // Мокаем getComputedStyle, чтобы хук поставил fallback-таймер (200ms + 0ms)
       const getComputedStyleMock = vi.spyOn(window, 'getComputedStyle').mockImplementation(
@@ -478,10 +478,18 @@ describe(useCSSTransition, () => {
       // open -> entering
       rerender(true);
       cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('entering');
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
       expect(result.current[0]).toBe('entered');
 
       rerender(false);
       cmp.rerender(<div {...result.current[1]} />);
+      expect(result.current[0]).toBe('exiting');
+      act(() => {
+        vi.runOnlyPendingTimers();
+      });
       expect(result.current[0]).toBe('exited');
 
       // колбэки, которые должны были сработать к этому моменту
