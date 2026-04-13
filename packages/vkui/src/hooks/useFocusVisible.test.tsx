@@ -1,29 +1,17 @@
-import type * as React from 'react';
 import { act } from 'react';
 import { renderHook } from '@testing-library/react';
-import {
-  AppRootContext,
-  DEFAULT_APP_ROOT_CONTEXT_VALUE,
-} from '../components/AppRoot/AppRootContext';
 import { useFocusVisible } from './useFocusVisible';
-
-const wrapper =
-  (keyboardInput: boolean) =>
-  ({ children }: { children?: React.ReactNode }) => (
-    <AppRootContext.Provider
-      value={{
-        ...DEFAULT_APP_ROOT_CONTEXT_VALUE,
-        keyboardInput,
-      }}
-    >
-      {children}
-    </AppRootContext.Provider>
-  );
+import {
+  DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+  ENABLE_KEYBOARD_INPUT_EVENT_NAME,
+} from './useKeyboardInputTracker';
 
 describe('useFocusVisible', () => {
   it('Sets focusVisible: true onFocus', () => {
-    const { result } = renderHook(() => useFocusVisible(), {
-      wrapper: wrapper(true),
+    const { result } = renderHook(() => useFocusVisible());
+
+    act(() => {
+      document.dispatchEvent(new CustomEvent(ENABLE_KEYBOARD_INPUT_EVENT_NAME));
     });
 
     act(() => {
@@ -33,8 +21,10 @@ describe('useFocusVisible', () => {
     expect(result.current.focusVisible).toEqual(true);
   });
   it("Doesn't set focusVisible: true onFocus when not keyboardInput", () => {
-    const { result } = renderHook(() => useFocusVisible(), {
-      wrapper: wrapper(false),
+    const { result } = renderHook(() => useFocusVisible());
+
+    act(() => {
+      document.dispatchEvent(new CustomEvent(DISABLE_KEYBOARD_INPUT_EVENT_NAME));
     });
 
     act(() => {
@@ -44,8 +34,10 @@ describe('useFocusVisible', () => {
     expect(result.current.focusVisible).toEqual(false);
   });
   it('Sets focusVisible: false onBlur', () => {
-    const { result } = renderHook(() => useFocusVisible(), {
-      wrapper: wrapper(true),
+    const { result } = renderHook(() => useFocusVisible());
+
+    act(() => {
+      document.dispatchEvent(new CustomEvent(ENABLE_KEYBOARD_INPUT_EVENT_NAME));
     });
 
     act(() => {

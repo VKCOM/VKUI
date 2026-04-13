@@ -1,8 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import {
-  AppRootContext,
-  DEFAULT_APP_ROOT_CONTEXT_VALUE,
-} from '../../components/AppRoot/AppRootContext';
+import { ENABLE_KEYBOARD_INPUT_EVENT_NAME } from '../../hooks/useKeyboardInputTracker';
 import { userEvent, withFakeTimers } from '../../testing/utils';
 import { CalendarDay, type CalendarDayProps } from './CalendarDay';
 import styles from './CalendarDay.module.css';
@@ -59,12 +56,11 @@ describe('CalendarDay', () => {
       // Так как дни могут быть запрещены произвольным образом,
       // то прыгать через них при навигации выглядит как плохое решение как в плане написания логики для проверки ближайшего незадисейбленного дня,
       // так и для пользователя, для которого может быть неожиданно оказаться на несколько месяцев впереди при переходе по таблице, а значит видеть где фокус даже на disabled дне при навигации с клавиатуры нужно.
+      document.dispatchEvent(new CustomEvent(ENABLE_KEYBOARD_INPUT_EVENT_NAME));
       render(
-        <AppRootContext.Provider value={{ ...DEFAULT_APP_ROOT_CONTEXT_VALUE, keyboardInput: true }}>
-          <CalendarDayTest disabled testId="day" tabIndex={0}>
-            31
-          </CalendarDayTest>
-        </AppRootContext.Provider>,
+        <CalendarDayTest disabled testId="day" tabIndex={0}>
+          31
+        </CalendarDayTest>,
       );
 
       expect(screen.getByTestId('day')).not.toHaveClass(stylesFocusVisible.focusVisibleFocused);

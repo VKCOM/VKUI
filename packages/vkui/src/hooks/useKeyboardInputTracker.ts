@@ -11,27 +11,71 @@ const EVENT_OPTIONS = {
   capture: true,
 };
 
-/**
- * Чтобы оптимизировать рендер, сохраняем в ref.
- *
- * В контекст можно передать через getter, подробнее в примере ниже.
- *
- * ```tsx
- * const keyboardInputTrackerRef = useKeyboardInputTracker();
- * <SomeContext.Provider value={{
- *  get keyboardInput() {
- *    return keyboardInputTrackerRef.current;
- *  }
- * }}>
- *  {children}
- * </SomeContext.Provider>
- * ```
- *
- * @private
- */
+let keyboardInputState = false;
+let mountedTrackers = 0;
+let detachListeners: null | (() => void) = null;
+
+const setKeyboardInputState = (nextValue: boolean) => {
+  if (keyboardInputState !== nextValue) {
+    keyboardInputState = nextValue;
+  }
+};
+
+const attachKeyboardInputListeners = (document: Document) => {
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (isKeyboardFocusingStarted(event)) {
+      setKeyboardInputState(true);
+    }
+  };
+
+  const handleCustomEnableKeyboardEvent = () => {
+    setKeyboardInputState(true);
+  };
+
+  const handleCustomDisableKeyboardEvent = () => {
+    setKeyboardInputState(false);
+  };
+
+  document.addEventListener('keydown', handleKeydown, EVENT_OPTIONS);
+  document.addEventListener(
+    ENABLE_KEYBOARD_INPUT_EVENT_NAME,
+    handleCustomEnableKeyboardEvent,
+    EVENT_OPTIONS,
+  );
+  document.addEventListener(
+    DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+    handleCustomDisableKeyboardEvent,
+    EVENT_OPTIONS,
+  );
+  document.addEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+  document.addEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+
+  return () => {
+    document.removeEventListener('keydown', handleKeydown, EVENT_OPTIONS);
+    document.removeEventListener(
+      ENABLE_KEYBOARD_INPUT_EVENT_NAME,
+      handleCustomEnableKeyboardEvent,
+      EVENT_OPTIONS,
+    );
+    document.removeEventListener(
+      DISABLE_KEYBOARD_INPUT_EVENT_NAME,
+      handleCustomDisableKeyboardEvent,
+      EVENT_OPTIONS,
+    );
+    document.removeEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+    document.removeEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+  };
+};
+
 export function useKeyboardInputTracker(): React.RefObject<boolean> {
   const { document } = useDOM();
-  const keyboardFocusingStartedRef = React.useRef(false);
+  const keyboardFocusingStartedRef = React.useMemo((): React.RefObject<boolean> => {
+    return {
+      get current() {
+        return keyboardInputState;
+      },
+    };
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     /* istanbul ignore if: невозможный кейс, т.к. в SSR эффекты не вызываются. Проверка на будущее, если вдруг эффект будет вызываться. */
@@ -39,48 +83,18 @@ export function useKeyboardInputTracker(): React.RefObject<boolean> {
       return;
     }
 
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (isKeyboardFocusingStarted(event)) {
-        keyboardFocusingStartedRef.current = true;
-      }
-    };
+    mountedTrackers += 1;
 
-    const handleCustomEnableKeyboardEvent = () => {
-      keyboardFocusingStartedRef.current = true;
-    };
-
-    const handleCustomDisableKeyboardEvent = () => {
-      keyboardFocusingStartedRef.current = false;
-    };
-
-    document.addEventListener('keydown', handleKeydown, EVENT_OPTIONS);
-    document.addEventListener(
-      ENABLE_KEYBOARD_INPUT_EVENT_NAME,
-      handleCustomEnableKeyboardEvent,
-      EVENT_OPTIONS,
-    );
-    document.addEventListener(
-      DISABLE_KEYBOARD_INPUT_EVENT_NAME,
-      handleCustomDisableKeyboardEvent,
-      EVENT_OPTIONS,
-    );
-    document.addEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
-    document.addEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+    if (!detachListeners) {
+      detachListeners = attachKeyboardInputListeners(document);
+    }
 
     return () => {
-      document.removeEventListener('keydown', handleKeydown, EVENT_OPTIONS);
-      document.removeEventListener(
-        ENABLE_KEYBOARD_INPUT_EVENT_NAME,
-        handleCustomEnableKeyboardEvent,
-        EVENT_OPTIONS,
-      );
-      document.removeEventListener(
-        DISABLE_KEYBOARD_INPUT_EVENT_NAME,
-        handleCustomDisableKeyboardEvent,
-        EVENT_OPTIONS,
-      );
-      document.removeEventListener('mousedown', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
-      document.removeEventListener('touchstart', handleCustomDisableKeyboardEvent, EVENT_OPTIONS);
+      mountedTrackers -= 1;
+      if (mountedTrackers === 0 && detachListeners) {
+        detachListeners();
+        detachListeners = null;
+      }
     };
   }, [document]);
 
