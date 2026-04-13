@@ -9,7 +9,7 @@ export type ResizePayload<T extends HTMLElement> = {
 };
 
 type ElementResizeOptions<T extends HTMLElement = HTMLElement> = {
-  ref?: React.RefObject<T | null>;
+  ref?: React.RefObject<T | null> | undefined;
   enabled?: boolean;
   box?: ResizeObserverBoxOptions;
   rafBatch?: boolean;
