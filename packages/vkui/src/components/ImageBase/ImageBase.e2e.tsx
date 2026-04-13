@@ -1,6 +1,10 @@
 import { test } from '@vkui-e2e/test';
 import { Platform } from '../../lib/platform';
-import { ImageWithBrokenSrc, ImageWithParentWithBorderRadius } from './ImageBase.e2e-playground';
+import {
+  ImageWithBrokenSrc,
+  ImageWithFilter,
+  ImageWithParentWithBorderRadius,
+} from './ImageBase.e2e-playground';
 
 test.describe('ImageBase', () => {
   test.use({
@@ -27,6 +31,15 @@ test.describe('ImageBase', () => {
     componentPlaygroundProps,
   }) => {
     await mount(<ImageWithBrokenSrc {...componentPlaygroundProps} />);
+    await expectScreenshotClippedToContent();
+  });
+
+  test('Image with filter', async ({
+    mount,
+    expectScreenshotClippedToContent,
+    componentPlaygroundProps,
+  }) => {
+    await mount(<ImageWithFilter {...componentPlaygroundProps} />);
     await expectScreenshotClippedToContent();
   });
 });
