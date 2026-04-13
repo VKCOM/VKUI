@@ -321,15 +321,10 @@ export const vkuiScope: Record<string, unknown> = {
   useSnackbarManager,
   useTodayDate,
   useTooltip,
-  usePagination,
-  usePopover,
-  useSnackbarManager,
   SnackbarManagerHolder,
   snackbarManager,
   createSnackbarManager,
-  useModalManager,
 };
-
 
 export const scope: Record<string, unknown> = {
   React,
