@@ -304,7 +304,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     multiline,
     placeholder,
     'icon': iconProp,
-    selectType = 'default',
+    selectType,
+    mode,
     align,
     form,
 
@@ -771,7 +772,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
         accessible={accessible}
         before={before}
         after={afterItems}
-        selectType={selectType}
+        selectType={selectType || mode || 'default'}
         align={align}
         status={status}
         multiline={multiline}
