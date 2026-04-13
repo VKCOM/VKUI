@@ -8,9 +8,10 @@ describe('Progress', () => {
 
   it('Custom height', () => {
     render(<Progress data-testid="progress" height={10} />);
+    const progress = screen.getByTestId('progress');
 
-    expect(screen.getByTestId('progress')).toHaveStyle('height: 10px');
-    expect(screen.getByTestId('progress')).toHaveStyle('border-radius: 5px');
+    expect(progress).toHaveStyle('height: 10px');
+    expect(progress.style.borderRadius).toBe('5px');
   });
 
   it('Custom color', () => {
