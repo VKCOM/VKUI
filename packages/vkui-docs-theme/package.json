@@ -33,14 +33,14 @@
     "scroll-into-view-if-needed": "^3.1.0"
   },
   "devDependencies": {
-    "next": "^15.5.11",
+    "next": "^16.2.3",
     "nextra": "^4.6.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^6.0.2"
   },
   "peerDependencies": {
-    "next": "^15.5.11",
+    "next": "^16.2.3",
     "nextra": "^4.6.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
