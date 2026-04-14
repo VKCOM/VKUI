@@ -24,7 +24,8 @@
     "build": "tsc",
     "prepack": "yarn run build",
     "test": "yarn build && yarn run -T vitest run",
-    "test:ci": "yarn run -T vitest run"
+    "test:ci": "yarn run -T vitest run",
+    "lint:types": "tsc --noEmit"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.3",

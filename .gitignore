@@ -7,7 +7,7 @@ storybook-static/
 out/
 _pagefind/
 .docgen/
-mcp/
+mcp-data/
 
 # Next
 .next/

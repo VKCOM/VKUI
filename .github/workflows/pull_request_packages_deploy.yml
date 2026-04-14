@@ -155,31 +155,6 @@ jobs:
         id: url
         run: echo "value=${{ env.AWS_S3_URL }}/pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}/playground/index.html" >> $GITHUB_OUTPUT
 
-  deploy_mcp_data:
-    needs: pr_workflow_payload
-    if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}
-    runs-on: ubuntu-slim
-    name: Deploy MCP data
-    steps:
-      - name: Download artifact
-        id: artifact
-        uses: VKCOM/gh-actions/shared/download-workflow-artifact@main
-        with:
-          name: mcp-data
-          path: mcp-data/
-
-      - name: Upload MCP data to S3
-        if: ${{ steps.artifact.outputs.found_artifact == 'true' }}
-        uses: VKCOM/gh-actions/VKUI/s3@main
-        with:
-          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
-          awsBucket: ${{ vars.AWS_BUCKET_MCP }}
-          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
-          command: upload
-          commandUploadSrc: mcp-data/
-          commandUploadDist: pull/${{ needs.pr_workflow_payload.outputs.pr_number }}/${{ env.PR_HEAD_SHA }}
-
   deploy_package:
     needs: pr_workflow_payload
     if: ${{ needs.pr_workflow_payload.outputs.status == 'success' }}

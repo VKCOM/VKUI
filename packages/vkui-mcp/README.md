@@ -35,10 +35,10 @@ npx @vkontakte/vkui-mcp@latest
 
 ## Переменные окружения
 
-- **`VKUI_MCP_BASE_URL`** — базовый URL MCP-данных (по умолчанию `https://vkui-mcp.cdn-vk.ru`).
+- **`DATA_URL`** — базовый URL MCP-данных (по умолчанию `https://vkui-mcp.cdn-vk.ru`).
 - **`VKUI_VERSION`** — версия VKUI в MCP-данных (по умолчанию `latest`).
 
-Итоговый адрес данных формируется как `{VKUI_MCP_BASE_URL}/{VKUI_VERSION}`.
+Итоговый адрес данных формируется как `{DATA_URL}/{VKUI_VERSION}`.
 
 Поддержка `VKUI_VERSION`:
 

@@ -150,7 +150,7 @@ function sendRequest(
 function spawnMcpProcess(baseUrl: string): ReturnType<typeof spawn> {
   return spawn('node', [CLI_PATH], {
     cwd: PACKAGE_ROOT,
-    env: { ...process.env, VKUI_MCP_BASE_URL: baseUrl },
+    env: { ...process.env, DATA_URL: baseUrl },
     stdio: ['pipe', 'pipe', 'pipe'],
   });
 }

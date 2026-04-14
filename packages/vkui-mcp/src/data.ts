@@ -8,7 +8,7 @@ import type {
   MigrationTarget,
 } from './types.js';
 
-const DEFAULT_MCP_BASE_URL = 'https://vkui-mcp.cdn-vk.ru';
+const DEFAULT_DATA_URL = 'https://vkui-mcp.cdn-vk.ru';
 
 const DEFAULT_VKUI_VERSION = 'latest';
 const DEFAULT_FETCH_TIMEOUT_MS = 10_000;
@@ -18,7 +18,7 @@ const getFromEnv = (key: string, defaultValue: string) => {
 };
 
 export function createDataProvider(): DataProvider {
-  const baseUrl = getFromEnv('VKUI_MCP_BASE_URL', DEFAULT_MCP_BASE_URL);
+  const baseUrl = getFromEnv('DATA_URL', DEFAULT_DATA_URL);
   const version = getFromEnv('VKUI_VERSION', DEFAULT_VKUI_VERSION);
 
   const mcpBaseUrl = `${baseUrl.replace(/\/$/, '')}/${version}/`;
@@ -43,7 +43,7 @@ export function createDataProvider(): DataProvider {
     const data = type === 'json' ? ((await response.json()) as T) : ((await response.text()) as T);
 
     if (!data) {
-      throw new Error('Не удалось найти MCP данные. Укажите VKUI_MCP_BASE_URL.');
+      throw new Error('Не удалось найти MCP данные. Укажите DATA_URL.');
     }
 
     cache.set(cacheKey, data);
