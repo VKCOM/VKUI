@@ -2,11 +2,23 @@ import * as React from 'react';
 import { noop } from '@vkontakte/vkjs';
 import { useDOM } from '../lib/dom';
 
-export const useWaitTransitionFinish = (): ((
-  element: HTMLElement | undefined | null,
-  eventHandler: (e?: TransitionEvent) => void,
-  durationFallback: number,
-) => void) => {
+type WaitTransitionFinishOptions = {
+  getDurationFallback?: () => number;
+  isMotionDisabled?: () => boolean;
+};
+
+type WaitTransitionFinishArgs = {
+  element: HTMLElement | undefined | null;
+  eventHandler: (e?: TransitionEvent) => void;
+  durationFallback?: number;
+  isMotionDisabled?: boolean;
+};
+
+type WaitTransitionFinishWithArgs = (args: WaitTransitionFinishArgs) => void;
+
+export const useWaitTransitionFinish = (
+  options?: WaitTransitionFinishOptions,
+): WaitTransitionFinishWithArgs => {
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const { document } = useDOM();
   const detach = React.useRef(noop);
@@ -16,29 +28,43 @@ export const useWaitTransitionFinish = (): ((
     detach.current = noop;
   }, []);
 
+  const clearTimeoutRef = React.useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }, []);
+
+  const dispose = React.useCallback(() => {
+    remove();
+    clearTimeoutRef();
+  }, [clearTimeoutRef, remove]);
+
   const waitTransitionFinish = React.useCallback(
-    (
-      element: HTMLElement | undefined | null,
-      eventHandler: (e?: TransitionEvent) => void,
-      durationFallback: number,
-    ) => {
-      if (element) {
-        if (!document?.hidden) {
-          remove();
-          element.addEventListener('transitionend', eventHandler);
-          detach.current = () => {
-            element.removeEventListener('transitionend', eventHandler);
-          };
-        } else {
-          if (timeoutRef?.current) {
-            clearTimeout(timeoutRef.current);
-          }
-          timeoutRef.current = setTimeout(eventHandler, durationFallback);
-        }
+    (args: WaitTransitionFinishArgs) => {
+      const durationFallback = args.durationFallback ?? options?.getDurationFallback?.() ?? 0;
+      const isMotionDisabled = args.isMotionDisabled ?? options?.isMotionDisabled?.() ?? false;
+
+      dispose();
+
+      if (isMotionDisabled) {
+        timeoutRef.current = setTimeout(args.eventHandler);
+        return;
+      }
+
+      if (args.element && !document?.hidden) {
+        args.element.addEventListener('transitionend', args.eventHandler);
+        detach.current = () => {
+          args.element?.removeEventListener('transitionend', args.eventHandler);
+        };
+      } else {
+        timeoutRef.current = setTimeout(args.eventHandler, durationFallback);
       }
     },
-    [document, remove, timeoutRef],
+    [dispose, document, options],
   );
+
+  React.useEffect(() => dispose, [dispose]);
 
   return waitTransitionFinish;
 };
