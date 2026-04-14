@@ -139,6 +139,7 @@ import {
   ToolButton,
   Tooltip,
   Touch,
+  unstable_useReducedMotion,
   UnstyledTextField,
   useAdaptivityConditionalRender,
   useAdaptivityWithJSMediaQueries,
@@ -318,6 +319,7 @@ export const vkuiScope: Record<string, unknown> = {
   useSnackbarManager,
   useTodayDate,
   useTooltip,
+  unstable_useReducedMotion,
 };
 
 export const scope: Record<string, unknown> = {

@@ -12,25 +12,41 @@ description: Хук для работы с текущей датой с возм
 
 ## Практический пример
 
-```jsx
-const TodayTracker = () => {
-  const today = useTodayDate(true); // Автообновление при смене дня
-  const [counter, setCounter] = useState(0);
+<Playground direction="column" align="stretch">
+  ```jsx
+  const [listenDayChanges, setListenDayChanges] = React.useState(true);
+  const [counter, setCounter] = React.useState(0);
+  const today = useTodayDate(listenDayChanges);
 
-  // Сброс счетчика каждый день
-  useEffect(() => {
+  React.useEffect(() => {
     setCounter(0);
   }, [today]);
 
+  const formattedToday = new Intl.DateTimeFormat("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(today);
+
   return (
-    <div>
-      <p>Сегодня: {format(today, 'dd.MM.yyyy')}</p>
-      <p>Действий сегодня: {counter}</p>
-      <button onClick={() => setCounter((c) => c + 1)}>Выполнить действие</button>
-    </div>
+    <Flex direction="column" align="start" gap="m">
+      <Checkbox
+        checked={listenDayChanges}
+        onChange={(event) => setListenDayChanges(event.target.checked)}
+      >
+        Обновлять дату при смене календарного дня
+      </Checkbox>
+
+      <Caption level="1">Сегодня: {formattedToday}</Caption>
+      <Caption level="1">Действий за день: {counter}</Caption>
+
+      <Button size="m" onClick={() => setCounter((value) => value + 1)}>
+        Выполнить действие
+      </Button>
+    </Flex>
   );
-};
-```
+  ```
+</Playground>
 
 ## Особенности работы
 

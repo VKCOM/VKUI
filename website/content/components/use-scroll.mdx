@@ -6,8 +6,8 @@ description: Хук для ручного управления позицией 
 
 # useScroll
 
-Хук для ручного управления позицией прокрутки, даже при активной блокировке через `useScrollLock`.
-Позволяет реализовывать пользовательскую прокрутку фона под модальными окнами.
+Хук предоставляет единый API для чтения и управления прокруткой из контекста `AppRoot`.
+Корректно работает с режимами `scroll="contain"` и `scroll="global"`, а также с блокировкой через `useScrollLock`.
 
 </Overview>
 
@@ -27,43 +27,61 @@ description: Хук для ручного управления позицией 
 
 ## Практический пример
 
-```jsx
-// Главный компонент приложения
-const App = () => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const { scrollTo, getScroll } = useManualScroll();
+<Playground direction="column" align="stretch" scroll="global">
+  ```jsx
+  const [opened, setOpened] = React.useState(false);
+  const { getScroll, scrollTo } = useScroll();
 
-  // Прокрутка фона на 100px вниз
-  const scrollBackground = () => {
+  // Блокируем прокрутку, пока открыт popout.
+  useScrollLock(opened);
+
+  const scrollDown = () => {
     const currentY = getScroll().y;
-    scrollTo(0, currentY + 100);
+    scrollTo(0, currentY + 120);
+  };
+
+  const scrollUp = () => {
+    const currentY = getScroll().y;
+    scrollTo(0, currentY - 120);
   };
 
   return (
-    <>
-      <button onClick={() => setIsModalOpen(true)}>Открыть модалку</button>
+    <div style={{ position: "relative", width: "100%" }}>
+      <Flex direction="column" align="start" gap="m">
+        <Button onClick={() => setOpened(true)}>Открыть popout</Button>
+      </Flex>
 
-      {isModalOpen && (
-        <PopoutWrapper>
-          <div>
-            <button onClick={scrollBackground}>Скроллить фон ↓</button>
-            <button onClick={() => setIsModalOpen(false)}>Закрыть</button>
+      {opened && (
+        <PopoutWrapper onClick={() => setOpened(false)}>
+          <div
+            onClick={(event) => event.stopPropagation()}
+            style={{
+              width: 400,
+              padding: 16,
+              borderRadius: 12,
+              background: "var(--vkui--color_background_content)",
+            }}
+          >
+            <Title level="3" style={{ marginBottom: 8 }}>
+              Popout
+            </Title>
+            <Caption level="1" style={{ marginBottom: 12 }}>
+              Во время блокировки можно программно прокручивать контент через useScroll.
+            </Caption>
+            <Flex gap="s">
+              <Button onClick={scrollDown}>Скролл вниз</Button>
+              <Button onClick={scrollUp}>Скролл вверх</Button>
+              <Button mode="secondary" onClick={() => setOpened(false)}>
+                Закрыть
+              </Button>
+            </Flex>
           </div>
         </PopoutWrapper>
       )}
-    </>
+    </div>
   );
-};
-
-const Example = () => (
-  <AppRoot>
-    {/* или scroll="contain" */}
-    <App />
-  </AppRoot>
-);
-
-<Example />;
-```
+  ```
+</Playground>
 
 ## Параметр `scroll` в `AppRoot`
 
@@ -74,21 +92,3 @@ const Example = () => (
 | `"contain"` | Управляет прокруткой внутреннего контейнера приложения. |
 | `"global"`  | Работает с глобальной полосой прокрутки окна браузера.  |
 
-## Использование с блокировкой прокрутки
-
-```jsx
-const Modal = () => {
-  const [opened, setOpened] = useState(false);
-
-  // Блокируем прокрутку при открытии
-  useScrollLock(opened);
-
-  // Получаем доступ к ручному управлению
-  const { scrollTo, getScroll } = useManualScroll();
-
-  // Пользовательская прокрутка фона
-  const handleScroll = () => scrollTo(0, getScroll() + 200);
-
-  return <>{/* Код компонента */}</>;
-};
-```
