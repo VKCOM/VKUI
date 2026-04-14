@@ -118,8 +118,10 @@ export interface ImageBaseProps
    */
   elementTiming?: string | undefined;
   /**
-   * Пользовательское значения стиля filter
+   * Пользовательское значения стиля filter.
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).
+   *
+   * При передаче этого свойства `<img />` будет обёрнут в дополнительный контейнер.
    */
   filter?: React.CSSProperties['filter'] | undefined;
   /**
@@ -341,6 +343,10 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     [mouseOutHandlers, mouseOverHandlers, size],
   );
 
+  const imgSlot = hasSrc && (
+    <img ref={imgRef} {...imgRest} {...getFetchPriorityProp(fetchPriority)} />
+  );
+
   return (
     <ImageBaseContext.Provider value={contextValue}>
       <Clickable
@@ -355,7 +361,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
         onMouseOut={onMouseOut}
         {...restProps}
       >
-        {hasSrc && <img ref={imgRef} {...imgRest} {...getFetchPriorityProp(fetchPriority)} />}
+        {filter ? <div className={styles.imgWithFilterContainer}>{imgSlot}</div> : imgSlot}
         {fallbackIcon && <div className={styles.fallback}>{fallbackIcon}</div>}
         {children && <div className={styles.children}>{children}</div>}
         {!noBorder && <div aria-hidden className={styles.border} />}
