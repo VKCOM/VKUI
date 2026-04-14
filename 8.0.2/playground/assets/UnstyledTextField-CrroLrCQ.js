@@ -1,0 +1,4 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{yo as t}from"./iframe-lhb8_BzR.js";import{c as n,i as r,l as i,n as a,u as o}from"./blocks-CWGJe60l.js";import{r as s}from"./react-CHmwA1KK.js";import{t as c}from"./mdx-react-shim-CinwR8zc.js";import{n as l,t as u}from"./UnstyledTextField-CNsAifOL.js";function d(e){return(0,p.jsxs)(p.Fragment,{children:[(0,p.jsx)(n,{title:`Utils/UnstyledTextField`,tags:[`Утилиты`]}),`
+`,(0,p.jsx)(i,{children:`UnstyledTextField`}),`
+`,(0,p.jsx)(r,{of:u}),`
+`,(0,p.jsx)(a,{of:u})]})}function f(e={}){let{wrapper:t}={...s(),...e.components};return t?(0,p.jsx)(t,{...e,children:(0,p.jsx)(d,{...e})}):d(e)}var p;e((()=>{p=t(),c(),o(),l()}))();export{f as default};

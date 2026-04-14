@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";function t(e,t,n=1){let r=e<t?1:-1,i=Math.abs(e-t)+1,a=Math.ceil(i/n),o=Array(a);for(let t=0;t<o.length;t++)o[t]=e+t*n*r;return o}function n(e,n,r=1){return e>n?[]:t(e,n,r)}function r(e,t,n){return e>=t&&e<=n}var i=e((()=>{}));export{i as n,n as r,r as t};
