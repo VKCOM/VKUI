@@ -20,7 +20,8 @@ type McpTabEntry = {
   content: React.ReactNode;
 };
 
-export function McpClientsTab(_props: McpClientsTabProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function McpClientsTab(_: McpClientsTabProps) {
   return null;
 }
 
