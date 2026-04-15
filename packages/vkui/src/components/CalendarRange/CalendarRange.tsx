@@ -80,7 +80,7 @@ export interface CalendarRangeProps
   /**
    * `aria-label` для изменения дня.
    *
-   * @deprecated Since 7.4.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.4.0. Будет удалено в **VKUI v9**.
    *
    * Использовалось для задания aria-label для контейнера дней в календаре.
    * Теперь этот контейнер является таблицей (с помощью role="grid") и
@@ -100,7 +100,7 @@ export interface CalendarRangeProps
    */
   shouldDisableDate?: ((value: Date) => boolean) | undefined;
   /**
-   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.3.0. Будет удалено в **VKUI v9**.
    */
   onClose?: (() => void) | undefined; // TODO [>=9]: удалить неиспользуемое свойство
 }
