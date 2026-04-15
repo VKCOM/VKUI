@@ -62,6 +62,23 @@ export default withBundleAnalyzer(
     },
     basePath,
     output: 'export',
+    async headers() {
+      return [
+        {
+          source: '/:path*\\.mdx',
+          headers: [
+            {
+              key: 'Content-Type',
+              value: 'text/plain; charset=utf-8',
+            },
+            {
+              key: 'Content-Disposition',
+              value: 'inline',
+            },
+          ],
+        },
+      ];
+    },
     images: {
       unoptimized: true,
     },

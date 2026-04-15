@@ -8,7 +8,7 @@
     "start": "next start",
     "pagefind": "pagefind --site out/ --output-path ./public/_pagefind && cp -r ./public/_pagefind ./out",
     "next-sitemap": "next-sitemap",
-    "generate": "node ./scripts/generate-props/generate-props.mjs",
+    "generate": "node ./scripts/generate-props/generate-props.mjs && node ./scripts/copy-mdx-to-public.mjs",
     "lint:types": "tsc"
   },
   "devDependencies": {

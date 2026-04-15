@@ -21,6 +21,11 @@ export function createStorybookUrl(componentName: string, group: string) {
   return `${VKUI_CONFIG.HOMEPAGE}/${VKUI_CONFIG.VERSION}/playground?path=${encodeURIComponent(storybookPath)}`;
 }
 
+export function createMdxUrl(fsRoute: string) {
+  const normalized = fsRoute.replace(/\/$/, '') || '/index';
+  return `${normalized}.mdx`;
+}
+
 export function getComponentName(metadata?: FrontMatter) {
   return metadata?.title.split(' ')[0];
 }

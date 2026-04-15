@@ -14,6 +14,7 @@ export interface OverviewHeaderLinksProps {
   type?: 'component' | 'hook' | undefined;
   forcedPath?: string | undefined;
   forcedName?: string | undefined;
+  showOnlyMdx?: boolean | undefined;
 }
 
 export interface OverviewHeaderLinkProps {

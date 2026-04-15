@@ -1,6 +1,7 @@
 import { Flex, Link, Subhead } from '@vkontakte/vkui';
 import { useConfig } from '@vkontakte/vkui-docs-theme';
-import { createSourceUrl, createStorybookUrl, getComponentName } from './helpers';
+import { useFSRoute } from 'nextra/hooks';
+import { createMdxUrl, createSourceUrl, createStorybookUrl, getComponentName } from './helpers';
 import type { OverviewHeaderLinkProps, OverviewHeaderLinksProps } from './types';
 import styles from '../Overview.module.css';
 
@@ -9,10 +10,23 @@ export function OverviewHeaderLinks({
   type = 'component',
   forcedPath,
   forcedName,
+  showOnlyMdx,
 }: OverviewHeaderLinksProps) {
   const {
     normalizePagesResult: { activeMetadata },
   } = useConfig();
+  const fsRoute = useFSRoute();
+  const mdxUrl = createMdxUrl(fsRoute);
+
+  if (showOnlyMdx) {
+    return (
+      <Subhead>
+        <Flex className={styles.header} gap="2xl">
+          <OverviewHeaderLink href={mdxUrl}>MDX</OverviewHeaderLink>
+        </Flex>
+      </Subhead>
+    );
+  }
 
   const componentName = getComponentName(activeMetadata);
 
@@ -28,6 +42,7 @@ export function OverviewHeaderLinks({
       <Flex className={styles.header} gap="2xl">
         <OverviewHeaderLink href={sourceUrl}>Исходник</OverviewHeaderLink>
         {storybookUrl && <OverviewHeaderLink href={storybookUrl}>Песочница</OverviewHeaderLink>}
+        <OverviewHeaderLink href={mdxUrl}>MDX</OverviewHeaderLink>
       </Flex>
     </Subhead>
   );
