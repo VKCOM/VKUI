@@ -517,7 +517,7 @@ export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useCSSKeyframesAnimationController as unstable_useCSSKeyframesAnimationController } from './lib/animation';
 export { useFocusVisible } from './hooks/useFocusVisible';
-export { useReducedMotion as unstable_useReducedMotion } from './lib/animation';
+export { useReducedMotion } from './lib/animation';
 
 /**
  * Utils
