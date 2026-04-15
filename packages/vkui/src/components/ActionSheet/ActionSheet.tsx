@@ -100,11 +100,11 @@ export interface ActionSheetProps
    */
   mode?: 'sheet' | 'menu' | undefined;
   /**
-   * @deprecated Since 7.3.0.  Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.3.0.  Будет удалено в **VKUI v9**.
    */
   mount?: boolean | undefined; // TODO [>=9]: удалить неиспользуемое свойство
   /**
-   * @deprecated Since 7.3.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.3.0. Будет удалено в **VKUI v9**.
    */
   disabled?: boolean | undefined; // TODO [>=9]: удалить неиспользуемое свойство
 }
