@@ -108,7 +108,7 @@
     "docs:storybook:build": "yarn workspace @vkontakte/vkui storybook:build",
     "docs:website": "yarn workspace @project-docs/website run dev",
     "docs:website:build": "yarn workspace @project-docs/website run build",
-    "build": "yarn workspaces foreach -A run build",
+    "build": "yarn workspaces foreach --all --topological-dev run build",
     "build:vkui": "yarn workspace @vkontakte/vkui run build",
     "size:vkui": "yarn workspace @vkontakte/vkui run size",
     "test": "yarn workspaces foreach -A run test",
@@ -147,7 +147,6 @@
   "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7",
   "workspaces": {
     "packages": [
-      "benchmark",
       "website",
       "packages/*",
       "tools/*"
