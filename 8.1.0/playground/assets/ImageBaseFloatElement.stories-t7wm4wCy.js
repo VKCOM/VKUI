@@ -1,0 +1,8 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{B as n,Q as r,n as i,on as a}from"./dist-JE-Gteso.js";import{a as o,n as s,o as c,t as l}from"./ImageBase-BqLgevpE.js";import{n as u,t as d}from"./Button-DwhufhYP.js";import{n as f,t as p}from"./CellButton-DW6yjeLQ.js";import{n as m,t as h}from"./Popover-Dcz4EoS2.js";import{i as g,n as _,t as v}from"./constants-Dj6vOzIh.js";import{n as y,o as b}from"./mock-D9mwry-3.js";var x,S,C,w,T,E=e((()=>{i(),g(),b(),u(),f(),m(),s(),c(),x=t(),S=()=>(0,x.jsx)(h,{noStyling:!0,trigger:`click`,role:`dialog`,content:({onClose:e})=>(0,x.jsxs)(`div`,{style:{backgroundColor:`var(--vkui--color_background_modal_inverse)`,borderRadius:8,boxShadow:`0 0 10px rgba(0, 0, 0, 0.3)`},children:[(0,x.jsx)(p,{role:`menuitem`,before:(0,x.jsx)(r,{}),onClick:e,children:`Добавить`}),(0,x.jsx)(p,{role:`menuitem`,before:(0,x.jsx)(n,{}),appearance:`negative`,onClick:e,children:`Удалить`})]}),children:(0,x.jsx)(d,{mode:`primary`,after:(0,x.jsx)(a,{})})}),C={title:`Data Display/ImageBase/ImageBaseFloatElement`,component:o,parameters:{...v,..._},decorators:[e=>(0,x.jsx)(l,{size:96,src:y(`app_shorm_online`),alt:`Приложение шторм онлайн`,children:(0,x.jsx)(e,{})})]},w={args:{placement:`top-start`,blockIndent:`5%`,inlineIndent:`5%`,children:(0,x.jsx)(S,{})}},w.parameters={...w.parameters,docs:{...w.parameters?.docs,source:{originalSource:`{
+  args: {
+    placement: 'top-start',
+    blockIndent: '5%',
+    inlineIndent: '5%',
+    children: <ContextMenu />
+  }
+}`,...w.parameters?.docs?.source}}},T=[`Playground`]}));export{C as i,T as n,E as r,w as t};

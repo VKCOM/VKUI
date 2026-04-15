@@ -1,0 +1,6 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{n,t as r}from"./Button-DwhufhYP.js";import{n as i,t as a}from"./Counter-Di_pJSia.js";import{i as o,t as s}from"./constants-Dj6vOzIh.js";import{n as c,t as l}from"./createStoryParameters-pz1UrWMe.js";import{r as u}from"./getFormFieldIconsPresets-Rpdnz0zC.js";import{t as d}from"./presets-VoE0j0xA.js";import{n as f,t as p}from"./src-13y77QG6.js";var m,h,g,_,v,y=e((()=>{p(),o(),d(),c(),i(),n(),m=t(),h=u({requiredIcons:[`Icon12Add`,`Icon16Add`,`Icon24Add`,`Icon12Tag`,`Icon24ChevronCompactRight`],additionalPresets:{Counter:(0,m.jsx)(a,{children:`16`})}}),g={title:`Buttons/Button`,component:r,parameters:l(`Button`,s),argTypes:{before:h,after:h},decorators:[f],tags:[`Кнопки`]},_={args:{children:`Button`,size:`s`}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`{
+  args: {
+    children: 'Button',
+    size: 's'
+  }
+}`,..._.parameters?.docs?.source}}},v=[`Playground`]}));export{g as i,v as n,y as r,_ as t};

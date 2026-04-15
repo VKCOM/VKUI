@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";var t,n,r=e((()=>{t=(e,t)=>typeof e[t]==`function`,n=(e,n)=>{let r={};for(let i in e)e.hasOwnProperty(i)&&n.hasOwnProperty(i)&&t(e,i)&&t(n,i)&&(r[i]=function(...t){n[i].apply(this,t),e[i].apply(this,t)});return r}}));export{r as n,n as t};

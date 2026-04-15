@@ -1,0 +1,3 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{n,t as r}from"./Paragraph-DUOjVV06.js";import{i,t as a}from"./constants-Dj6vOzIh.js";import{n as o,t as s}from"./createStoryParameters-pz1UrWMe.js";import{n as c,t as l}from"./src-13y77QG6.js";var u,d,f,p,m=e((()=>{l(),i(),o(),n(),u=t(),d={title:`Typography/Typography/Paragraph`,component:r,parameters:s(`Paragraph`,a),decorators:[c],tags:[`Типографика`]},f={render:e=>(0,u.jsx)(r,{...e,children:`Paragraph`})},f.parameters={...f.parameters,docs:{...f.parameters?.docs,source:{originalSource:`{
+  render: args => <Paragraph {...args}>Paragraph</Paragraph>
+}`,...f.parameters?.docs?.source}}},p=[`Playground`]}));export{d as i,p as n,m as r,f as t};

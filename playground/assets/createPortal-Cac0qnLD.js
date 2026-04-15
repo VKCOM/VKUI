@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{a as n,p as r}from"./dom-F71PlD4A.js";import{t as i}from"./react-dom-Cgzv--sO.js";var a,o,s=t((()=>{a=e(i(),1),r(),o=(e,t,r)=>{let i=t||n();return i&&a.createPortal(e,i,r)}}));export{s as n,o as t};
