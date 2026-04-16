@@ -37,7 +37,7 @@ export const AdaptivityProvider = ({
     if (process.env.NODE_ENV === 'development') {
       if (sizeXProp !== undefined) {
         warn(
-          'Свойство устарело начиная с 8.0.0 и будет удалено в **VKUI v10**. Для обратной совместимости, используйте `viewWidth={ViewWidth.MOBILE}` вместо `sizeX="compact"` и `viewWidth={ViewWidth.SMALL_TABLET}` вместо `sizeX="compact"` (см. https://github.com/VKCOM/VKUI/issues/9015).',
+          'Свойство устарело начиная с 8.0.0 и будет удалено в **VKUI v10**. Для обратной совместимости, используйте `viewWidth={ViewWidth.MOBILE}` вместо `sizeX="compact"` и `viewWidth={ViewWidth.SMALL_TABLET}` вместо `sizeX="regular"` (см. https://github.com/VKCOM/VKUI/issues/9015).',
         );
       }
       if (sizeYProp !== undefined) {
