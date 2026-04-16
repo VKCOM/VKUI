@@ -12,6 +12,7 @@ description: Компонент для визуализации прогресс
 
 import { BlockWrapper } from '@/components/wrappers';
 
+{/* @example-description: Базовый прогресс-бар `Progress` с текущим значением выполнения. */}
 <Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
   ```jsx
   <Progress value={25} />
@@ -20,6 +21,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ## Предустановленные цвета
 
+{/* @example-description: Предустановленные варианты `Progress` для обычного, негативного и позитивного состояний. */}
 <Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
   ```jsx
   <FormItem id="progresslabel" top="Прогресс">
@@ -40,6 +42,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ### HEX-коды
 
+{/* @example-description: Пользовательский цвет прогресса через HEX-значение в `appearance`. */}
 <Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
   ```jsx
   <Progress appearance="#FFA500" value={45} />
@@ -48,6 +51,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 ### CSS-переменные
 
+{/* @example-description: Пользовательский цвет прогресса через CSS-переменную в `appearance`. */}
 <Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
   ```jsx
   <div style={{ '--custom-progress': '#00FF00' }}>
@@ -60,6 +64,7 @@ import { BlockWrapper } from '@/components/wrappers';
 
 Для отключения фона можно использовать свойство `trackDisable`:
 
+{/* @example-description: Прогресс-бар без фона трека с включенным `trackDisable`. */}
 <Playground Wrapper={BlockWrapper} style={{ maxWidth: 270 }}>
   ```jsx
   <Progress appearance="#FFA500" trackDisable value={65} />

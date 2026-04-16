@@ -9,6 +9,7 @@ description: Компонент-обертка над Spinner.
 
 </Overview>
 
+{/* @example-description: Базовый `ScreenSpinner` с оверлеем и закрытием в состоянии `cancelable`. */}
 <Playground>
 
 ```jsx
@@ -33,6 +34,7 @@ return (
 Для возможности собрать компонент по частям доступны подкомпоненты. Это позволит более гибко влиять на эти части, а также
 отвязаться от логики порталов и всплывающих окон (например, при появлении компонента блокируется скролл).
 
+{/* @example-description: Сборка `ScreenSpinner` из подкомпонентов `Container`, `Loader` и `SwapIcon`. */}
 <Playground>
   ```jsx
   <ScreenSpinner.Container>
@@ -61,6 +63,7 @@ return (
 Помимо стандартного стиля компонента (`mode="shadow"`), есть возможность задать `mode="overlay"`,
 для использования индикатора загрузки поверх цветных элементов или фотографий.
 
+{/* @example-description: Вариант `ScreenSpinner` в режиме `overlay` для контрастного фона. */}
 <Playground>
   ```jsx
   <ScreenSpinner.Container mode="overlay">
@@ -83,6 +86,7 @@ return (
 Состояние отвечает за иконку, которая будет отрисована. Если вам не подходит ни одно из представленных состояний,
 то используйте `state="custom"`. Задать пользовательскую иконку в таком случае можно через свойство [`customIcon`](#custom-icon).
 
+{/* @example-description: Демонстрация состояний `ScreenSpinner`: loading, cancelable, done, error и custom. */}
 <Playground>
   ```jsx
   <ScreenSpinner.Container>
