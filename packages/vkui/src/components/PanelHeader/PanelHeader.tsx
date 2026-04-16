@@ -81,7 +81,7 @@ export interface PanelHeaderProps
    */
   transparent?: boolean | undefined;
   /**
-   * @deprecated Since 7.4.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.4.0. Будет удалено в **VKUI v9**.
    */
   shadow?: boolean | undefined; // TODO [>=9]: удалить неиспользуемое свойство свойство
   /**
