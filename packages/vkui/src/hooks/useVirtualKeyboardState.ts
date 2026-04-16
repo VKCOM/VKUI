@@ -120,15 +120,8 @@ export function useVirtualKeyboardState(enabled = true): VirtualKeyboardState {
   }, [window]);
 
   useWindowResizeObserver({
-    enabled: !!focusedEl && !!window?.visualViewport,
-    useVisualViewport: true,
-    rafBatch: false,
-    onResize: () => handleResizeRef.current(),
-  });
-
-  useWindowResizeObserver({
-    enabled: !!focusedEl && !window?.visualViewport,
-    useVisualViewport: false,
+    enabled: !!focusedEl,
+    useVisualViewport: !!window?.visualViewport,
     rafBatch: false,
     onResize: () => handleResizeRef.current(),
   });
