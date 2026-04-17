@@ -31,7 +31,7 @@ const displayClassNames = {
   'inline-grid': styles.displayInlineGrid,
 };
 
-export interface SimpleGridProps extends RootComponentProps<HTMLElement>, LayoutProps {
+export interface SimpleGridProps extends RootComponentProps<HTMLElement>, Omit<LayoutProps, 'margin'> {
   /**
    * Количество колонок.
    */

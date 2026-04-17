@@ -46,7 +46,7 @@ type FlexContentProps =
   | 'space-between'
   | 'space-evenly';
 
-export interface FlexProps extends RootComponentProps<HTMLElement>, LayoutProps {
+export interface FlexProps extends RootComponentProps<HTMLElement>, Omit<LayoutProps, 'margin'> {
   /**
    * Направление осей, эквивалентно `flex-direction`.
    */
