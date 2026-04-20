@@ -53,16 +53,21 @@ export const useDateInputValue = ({
   const lastUpdatedValueRef = React.useRef<Date | null>(
     getStateValue(null, value, defaultValue, timezone),
   );
+  const [prevValue, setPrevValue] = React.useState<Date | null | undefined>(value);
 
   const isControlled = value !== undefined;
 
+  if (prevValue !== value && isControlled) {
+    const newInternalValue = _convertDateToTimeZone(value, timezone);
+    setInternalValue(newInternalValue);
+    setPrevValue(value);
+  }
+
   React.useEffect(() => {
     if (isControlled) {
-      const newInternalValue = _convertDateToTimeZone(value, timezone);
-      setInternalValue(newInternalValue);
-      lastUpdatedValueRef.current = newInternalValue;
+      lastUpdatedValueRef.current = internalValue;
     }
-  }, [isControlled, timezone, value]);
+  }, [isControlled, internalValue]);
 
   const getLastUpdatedValue = React.useCallback(() => lastUpdatedValueRef.current, []);
 

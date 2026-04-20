@@ -414,8 +414,16 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
     return getOptionByValue(options, selectValue)?.value ?? null;
   }, [options, selectValue]);
 
-  const [isControlledOutside, setIsControlledOutside] = React.useState(selectValue !== undefined);
+  const isControlledOutside = propsValue !== undefined;
+  const isControlledOutsideRef = React.useRef(isControlledOutside);
   const [popperPlacement, setPopperPlacement] = React.useState<Placement>(popupDirection);
+
+  React.useEffect(() => {
+    if (isControlledOutsideRef.current !== isControlledOutside) {
+      checkMixControlledAndUncontrolledState(isControlledOutsideRef.current, isControlledOutside);
+      isControlledOutsideRef.current = isControlledOutside;
+    }
+  }, [isControlledOutside]);
 
   const {
     nativeSelectValue,
@@ -485,17 +493,6 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
       setFocusedOptionValue(value);
     },
     [propsValue, nativeSelectValue, setFocusedOptionValue, setSelectedOptionValue],
-  );
-
-  React.useEffect(
-    function syncIsControlledState() {
-      setIsControlledOutside((oldIsControlled) => {
-        const newIsControlled = propsValue !== undefined;
-        checkMixControlledAndUncontrolledState(oldIsControlled, newIsControlled);
-        return newIsControlled;
-      });
-    },
-    [propsValue],
   );
 
   useIsomorphicLayoutEffect(() => {

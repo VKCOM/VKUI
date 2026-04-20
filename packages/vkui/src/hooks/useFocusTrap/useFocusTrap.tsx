@@ -97,20 +97,25 @@ export const useFocusTrap = (
 ) => {
   const prevFocusableRef = useRef<HTMLElement[]>([]);
 
-  const createFocusFn = (getFocusElement: (root: HTMLElement | null) => HTMLElement | null) => {
-    return () => {
-      const node = getFocusElement(ref.current);
+  const focusBy = useStableCallback(
+    (getFocusElement: (root: HTMLElement) => HTMLElement | null) => {
+      const root = ref.current;
+      if (!root) {
+        return;
+      }
+
+      const node = getFocusElement(root);
       if (node) {
         node.focus({ preventScroll: true });
-      } else if (ref.current) {
-        ref.current.focus();
+        return;
       }
-    };
-  };
 
-  const focusFirst = useStableCallback(createFocusFn(getFirstFocusable));
+      root.focus();
+    },
+  );
 
-  const focusLast = useStableCallback(createFocusFn(getLastFocusable));
+  const focusFirst = useStableCallback(() => focusBy(getFirstFocusable));
+  const focusLast = useStableCallback(() => focusBy(getLastFocusable));
 
   useRestoreFocus({
     restoreFocus,
@@ -164,9 +169,14 @@ export const useFocusTrap = (
 
   useMutationObserver(ref, () => ref.current && onMutateParentHandler(ref.current));
 
-  const createGuardFocusHandler = (focusFn: () => void, focusFromOutside: () => void) => {
-    return (event: React.FocusEvent<HTMLSpanElement>) => {
-      if (!mount || disabled || !ref.current) {
+  const handleGuardFocus = useStableCallback(
+    (
+      event: React.FocusEvent<HTMLSpanElement>,
+      focusFromInside: () => void,
+      focusFromOutside: () => void,
+    ) => {
+      const root = ref.current;
+      if (!mount || disabled || !root) {
         return;
       }
 
@@ -174,17 +184,22 @@ export const useFocusTrap = (
       // Если нет, значит фокус пришёл извне, и нужно использовать focusFromOutside
       const relatedTarget = event.relatedTarget as HTMLElement | null;
 
-      if (relatedTarget === null || (relatedTarget && !ref.current.contains(relatedTarget))) {
+      if (relatedTarget === null || (relatedTarget && !root.contains(relatedTarget))) {
         focusFromOutside();
         return;
       }
 
-      focusFn();
-    };
-  };
+      focusFromInside();
+    },
+  );
 
-  const onBeforeGuardFocus = useStableCallback(createGuardFocusHandler(focusLast, focusFirst));
-  const onAfterGuardFocus = useStableCallback(createGuardFocusHandler(focusFirst, focusLast));
+  const onBeforeGuardFocus = useStableCallback((event: React.FocusEvent<HTMLSpanElement>) => {
+    handleGuardFocus(event, focusLast, focusFirst);
+  });
+
+  const onAfterGuardFocus = useStableCallback((event: React.FocusEvent<HTMLSpanElement>) => {
+    handleGuardFocus(event, focusFirst, focusLast);
+  });
 
   const shouldRenderGuards = mount && !disabled;
 

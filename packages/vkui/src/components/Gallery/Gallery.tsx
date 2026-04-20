@@ -45,41 +45,45 @@ export const Gallery = ({
   const rootRef = useExternRef(getRootRef);
   const [localSlideIndex, setSlideIndex] = React.useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
-  const slideIndex = isControlled ? (props.slideIndex ?? 0) : localSlideIndex;
   const slides = React.useMemo(
     () => React.Children.toArray(children).filter((item) => Boolean(item)),
     [children],
   );
   const childCount = slides.length;
+  const safeUncontrolledSlideIndex =
+    childCount > 0 ? clamp(localSlideIndex, 0, childCount - 1) : localSlideIndex;
+
+  if (!isControlled && localSlideIndex !== safeUncontrolledSlideIndex) {
+    setSlideIndex(safeUncontrolledSlideIndex);
+  }
+
+  const slideIndex = isControlled ? (props.slideIndex ?? 0) : safeUncontrolledSlideIndex;
+  const safeSlideIndex = childCount > 0 ? clamp(slideIndex, 0, childCount - 1) : slideIndex;
   const isClient = useIsClient();
   const focusWithin = useFocusWithin(rootRef);
 
   const handleChange: GalleryProps['onChange'] = React.useCallback(
     (current: number) => {
-      if (current === slideIndex) {
+      if (current === safeSlideIndex) {
         return;
       }
       !isControlled && setSlideIndex(current);
       onChange && onChange(current);
     },
-    [isControlled, onChange, slideIndex],
+    [isControlled, onChange, safeSlideIndex],
   );
 
   const [pause, resume] = useAutoPlay({
     timeout,
-    slideIndex,
-    onNext: () => handleChange((slideIndex + 1) % childCount),
+    slideIndex: safeSlideIndex,
+    onNext: () => handleChange((safeSlideIndex + 1) % childCount),
   });
 
-  // prevent invalid slideIndex
-  // any slide index is invalid with no slides, just keep it as is
-  const safeSlideIndex = childCount > 0 ? clamp(slideIndex, 0, childCount - 1) : slideIndex;
   // notify parent in controlled mode
   React.useEffect(() => {
     if (onChange && safeSlideIndex !== slideIndex) {
       onChange(safeSlideIndex);
     }
-    setSlideIndex(safeSlideIndex);
   }, [onChange, safeSlideIndex, slideIndex]);
 
   useIsomorphicLayoutEffect(() => (focusWithin ? pause() : resume()), [focusWithin, pause, resume]);

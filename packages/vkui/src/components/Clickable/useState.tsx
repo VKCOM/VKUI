@@ -93,14 +93,21 @@ export function useHover({
   setParentStateLock = noop,
 }: UseHoverProps = {}) {
   const [hoveredStateLocal, setHoveredStateLocal] = React.useState(false);
+  const [prevHasHover, setPrevHasHover] = React.useState(hasHover);
 
   const prevIsHoveredRef = React.useRef<boolean | undefined>(undefined);
 
-  React.useEffect(() => {
+  if (prevHasHover !== hasHover) {
     if (!hasHover) {
       setHoveredStateLocal(false);
-      prevIsHoveredRef.current = false;
       setParentStateLock(false);
+    }
+    setPrevHasHover(hasHover);
+  }
+
+  React.useEffect(() => {
+    if (!hasHover) {
+      prevIsHoveredRef.current = false;
     }
   }, [hasHover, setParentStateLock]);
 

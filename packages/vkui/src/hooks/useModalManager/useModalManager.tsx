@@ -7,15 +7,13 @@ import { useModalActions } from './helpers/useModalActions';
 import type { ModalManagerApi, UseModalManagerProps, UseModalManagerReturn } from './types';
 
 export const useModalManager = ({
-  saveHistory: saveHistoryProp = true,
+  saveHistory: saveHistoryProp,
   ...props
 }: UseModalManagerProps = {}): UseModalManagerReturn => {
   const [store] = React.useState(createModalStore);
-  const [saveHistory, setSaveHistory] = React.useState(saveHistoryProp);
-
-  React.useEffect(() => {
-    setSaveHistory(saveHistoryProp);
-  }, [saveHistoryProp]);
+  const isSaveHistoryControlled = saveHistoryProp !== undefined;
+  const [saveHistoryState, setSaveHistory] = React.useState(saveHistoryProp ?? true);
+  const saveHistory = isSaveHistoryControlled ? saveHistoryProp : saveHistoryState;
 
   const {
     openModalPage,
