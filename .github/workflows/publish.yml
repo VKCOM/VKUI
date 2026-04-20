@@ -13,6 +13,7 @@ on:
           - "@vkontakte/vkui-floating-ui"
           - "@vkontakte/vkui-date-fns-tz"
           - "@vkontakte/vkui-codemods"
+          - "@vkontakte/vkui-mcp"
       version_type:
         description: "[2] Version type (!!! CHOOSE THE RIGHT BRANCH BEFORE !!!):"
         required: true

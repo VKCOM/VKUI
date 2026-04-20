@@ -4,3 +4,4 @@ export { Typography } from './Typography/Typography';
 export { Overview } from './Overview/Overview';
 export { Blog } from './Blog/Blog';
 export { PropsTable } from './PropsTable/PropsTable';
+export { McpClientsTab, McpClientsTabs } from './McpClientsTabs/McpClientsTabs';

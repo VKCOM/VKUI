@@ -159,6 +159,7 @@ result.onClose().then(() => {
 
 ### Базовый пример
 
+{/* @example-description: Базовое использование `useModalManager` для открытия `ModalPage` и `ModalCard` через API. */}
 <Playground>
 
 ```jsx
@@ -245,6 +246,7 @@ return (
 
 Чтобы отключить это поведение, передайте `saveHistory: false` в хук или используйте метод `setSaveHistory(false)`. При отключённой истории предыдущая модалка будет закрываться при открытии новой.
 
+{/* @example-description: Пример управления историей модалок с переключением `saveHistory`. */}
 <Playground>
 
 ```jsx
@@ -398,6 +400,7 @@ api.openCustomModalCard(MyModalComponent);
 
 Когда нужно передать данные в модалку (например, функцию для открытия следующей модалки):
 
+{/* @example-description: Пользовательские модалки через `openCustomModalCard/openCustomModalPage` с дополнительными свойствами. */}
 <Playground>
 
 ```jsx
@@ -559,6 +562,7 @@ return (
 
 Если дополнительные свойства не нужны, можно передать компонент напрямую:
 
+{/* @example-description: Кастомные модалки без дополнительных свойств с передачей компонента напрямую. */}
 <Playground>
 
 ```jsx

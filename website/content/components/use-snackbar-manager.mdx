@@ -169,6 +169,7 @@ result.onClose().then(() => {
 
 ### Базовый пример
 
+{/* @example-description: Базовый пример `useSnackbarManager` для показа простого уведомления. */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
@@ -193,6 +194,7 @@ return (
 
 ### Управление конкретным снекбаром
 
+{/* @example-description: Управление конкретным снекбаром: открытие и программное закрытие. */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
@@ -232,6 +234,7 @@ return (
 
 ### Обновление снекбара
 
+{/* @example-description: Обновление содержимого уже открытого снекбара через `update`. */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
@@ -272,6 +275,7 @@ return (
 
 ### Настройка лимита и стратегии очереди
 
+{/* @example-description: Настройка лимита и стратегии очереди снекбаров (`limit` и `queueStrategy`). */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
@@ -373,6 +377,7 @@ snackbarApi.openCustom(MySnackbarComponent);
 
 Когда нужно передать данные в снекбар (например, имя пользователя):
 
+{/* @example-description: Кастомный снекбар через `openCustom` с дополнительными свойствами. */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
@@ -414,6 +419,7 @@ return (
 
 Если дополнительные свойства не нужны, можно передать компонент напрямую:
 
+{/* @example-description: Кастомный снекбар через `openCustom` без дополнительных свойств. */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
@@ -449,6 +455,7 @@ return (
 
 Внутри кастомного компонента можно использовать методы `close()` и `update()`:
 
+{/* @example-description: Использование `close` внутри кастомного компонента снекбара. */}
 <Playground Wrapper={BlockWrapper}>
 
 ```jsx
