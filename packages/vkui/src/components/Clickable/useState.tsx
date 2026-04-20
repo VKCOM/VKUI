@@ -100,7 +100,6 @@ export function useHover({
   if (prevHasHover !== hasHover) {
     if (!hasHover) {
       setHoveredStateLocal(false);
-      setParentStateLock(false);
     }
     setPrevHasHover(hasHover);
   }
@@ -108,6 +107,7 @@ export function useHover({
   React.useEffect(() => {
     if (!hasHover) {
       prevIsHoveredRef.current = false;
+      setParentStateLock(false);
     }
   }, [hasHover, setParentStateLock]);
 
