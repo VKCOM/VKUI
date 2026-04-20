@@ -7,7 +7,7 @@ import {
   resolveLayoutProps,
   rowGapClassNames,
 } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
+import type { LayoutProps, MarginProp } from '../../lib/layouts/types';
 import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
@@ -70,9 +70,12 @@ export interface FlexProps extends RootComponentProps<HTMLElement>, Omit<LayoutP
    */
   justify?: FlexContentProps | undefined;
   /**
-   * Значение `auto` позволяет задать платформенные отступы вокруг контейнера.
+   * Внешние отступы контейнера.
+   * Дополнительно поддерживаются специальные значения:
+   * `none` — отключает дополнительные отступы;
+   * `auto` — включает платформенные отступы вокруг контейнера.
    */
-  margin?: 'none' | 'auto' | undefined;
+  margin?: 'none' | 'auto' | MarginProp | undefined;
   /**
    * Для инвертирования направления, эквивалентно `row-reverse` `column-reverse`.
    */
@@ -104,7 +107,9 @@ export const Flex: React.FC<FlexProps> & {
   ...restProps
 }: FlexProps) => {
   const [rowGap, columnGap] = calculateGap(gap);
-  const resolvedProps = resolveLayoutProps(restProps);
+  const resolvedProps = resolveLayoutProps(
+    margin === 'none' || margin === 'auto' ? restProps : { ...restProps, margin },
+  );
 
   return (
     <RootComponent
@@ -113,7 +118,7 @@ export const Flex: React.FC<FlexProps> & {
         !noWrap && styles.wrap,
         reverse && styles.reverse,
         direction !== 'row' && styles.directionColumn,
-        margin !== 'none' && styles.marginAuto,
+        margin === 'auto' && styles.marginAuto,
         align && alignClassNames[align],
         justify && justifyClassNames[justify],
         getGapsPresets(rowGap, columnGap),

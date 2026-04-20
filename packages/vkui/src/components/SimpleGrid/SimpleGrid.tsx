@@ -6,17 +6,26 @@ import {
   resolveLayoutProps,
   rowGapClassNames,
 } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
+import type { LayoutProps, MarginProp } from '../../lib/layouts/types';
 import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
 import styles from './SimpleGrid.module.css';
 
-const marginClassNames = {
+type SpecificMargin = 'auto' | 'auto-inline' | 'auto-block' | 'none';
+
+const marginClassNames: Record<SpecificMargin, string | undefined> = {
+  'none': undefined,
   'auto': styles.marginAuto,
   'auto-inline': styles.marginAutoInline,
   'auto-block': styles.marginAutoBlock,
 };
+
+function isSpecialMargin(margin: SimpleGridProps['margin']): margin is SpecificMargin {
+  return (
+    margin === 'auto' || margin === 'auto-inline' || margin === 'auto-block' || margin === 'none'
+  );
+}
 
 const alignClassNames = {
   start: styles.alignStart,
@@ -45,13 +54,14 @@ export interface SimpleGridProps
    */
   gap?: GapsProp | undefined;
   /**
-   * Управляет отступами вокруг контейнера
-   * Значение `none` позволяет отключить отступы
-   * Значение `auto` позволяет задать платформенные отступы
-   * Значение `auto-inline` позволяет задать платформенные inline-отступы
-   * Значение `auto-block` позволяет задать платформенные block-отступы.
+   * Внешние отступы контейнера.
+   * Дополнительно поддерживаются специальные значения:
+   * `none` — отключает дополнительные отступы;
+   * `auto` — включает платформенные отступы вокруг контейнера;
+   * `auto-inline` — включает платформенные inline-отступы;
+   * `auto-block` — включает платформенные block-отступы.
    */
-  margin?: 'none' | 'auto' | 'auto-inline' | 'auto-block' | undefined;
+  margin?: 'none' | 'auto' | 'auto-inline' | 'auto-block' | MarginProp | undefined;
   /**
    * Вместо задания количества колонок, можно указать минимальную ширину элементов.
    */
@@ -78,7 +88,9 @@ export const SimpleGrid = ({
   display = 'grid',
   ...restProps
 }: SimpleGridProps) => {
-  const resolvedProps = resolveLayoutProps(restProps);
+  const resolvedProps = resolveLayoutProps(
+    isSpecialMargin(margin) ? restProps : { ...restProps, margin },
+  );
   const style: CSSCustomProperties = {};
   const [rowGap, columnGap] = calculateGap(gap);
   if (typeof rowGap === 'number') {
@@ -96,7 +108,7 @@ export const SimpleGrid = ({
     <RootComponent
       baseClassName={classNames(
         styles.host,
-        margin !== 'none' && marginClassNames[margin],
+        isSpecialMargin(margin) && marginClassNames[margin],
         alignClassNames[align],
         minColWidth && styles.withMinWidth,
         typeof columnGap === 'string' && columnGapClassNames[columnGap],
