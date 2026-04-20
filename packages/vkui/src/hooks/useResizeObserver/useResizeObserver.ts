@@ -45,23 +45,33 @@ function getResizePool(box: ResizeObserverBoxOptions = 'content-box'): ResizePoo
   return pool;
 }
 
-function getEntrySize(entry: ResizeObserverEntry) {
-  const borderBoxSize = entry.borderBoxSize;
-
-  if (borderBoxSize?.length) {
-    return {
-      width: borderBoxSize[0].inlineSize,
-      height: borderBoxSize[0].blockSize,
-    };
-  }
-
-  const contentBoxSize = entry.contentBoxSize;
-
-  if (contentBoxSize?.length) {
-    return {
-      width: contentBoxSize[0].inlineSize,
-      height: contentBoxSize[0].blockSize,
-    };
+function getEntrySize(entry: ResizeObserverEntry, box: ResizeObserverBoxOptions) {
+  switch (box) {
+    case 'border-box':
+      if (entry.borderBoxSize?.length) {
+        return {
+          width: entry.borderBoxSize[0].inlineSize,
+          height: entry.borderBoxSize[0].blockSize,
+        };
+      }
+      break;
+    case 'device-pixel-content-box':
+      if (entry.devicePixelContentBoxSize?.length) {
+        return {
+          width: entry.devicePixelContentBoxSize[0].inlineSize,
+          height: entry.devicePixelContentBoxSize[0].blockSize,
+        };
+      }
+      break;
+    case 'content-box':
+    default:
+      if (entry.contentBoxSize?.length) {
+        return {
+          width: entry.contentBoxSize[0].inlineSize,
+          height: entry.contentBoxSize[0].blockSize,
+        };
+      }
+      break;
   }
 
   return {
@@ -72,7 +82,7 @@ function getEntrySize(entry: ResizeObserverEntry) {
 
 export function useResizeObserver<T extends HTMLElement = HTMLElement>(
   options: ElementResizeOptions<T>,
-): React.RefCallback<T> {
+) {
   const {
     ref: externalRef,
     enabled = true,
@@ -81,28 +91,21 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
     onResize: onResizeProp,
   } = options;
 
-  const [node, setNode] = React.useState<T | null>(null);
-
   const onResize = useStableCallback<[ResizePayload<T>], void>(onResizeProp);
-  const rafIdRef = React.useRef<number | null>(null);
   const latestEntryRef = React.useRef<ResizeObserverEntry | null>(null);
 
   React.useEffect(() => {
-    const nextNode = externalRef?.current;
-    if (nextNode && nextNode !== node) {
-      setNode(nextNode);
-    }
-  }, [externalRef, node]);
-
-  React.useEffect(() => {
-    if (!node || !enabled) {
+    if (!externalRef || !externalRef.current || !enabled) {
       return;
     }
+    const node = externalRef.current;
 
     const pool = getResizePool(box);
 
+    let rafId: number | null = null;
+
     const emit = (entry: ResizeObserverEntry) => {
-      const { width, height } = getEntrySize(entry);
+      const { width, height } = getEntrySize(entry, box);
       onResize({
         target: node,
         width,
@@ -119,12 +122,12 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
 
       latestEntryRef.current = entry;
 
-      if (rafIdRef.current !== null) {
+      if (rafId !== null) {
         return;
       }
 
-      rafIdRef.current = requestAnimationFrame(() => {
-        rafIdRef.current = null;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
         const latest = latestEntryRef.current;
         if (latest) {
           emit(latest);
@@ -136,18 +139,14 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
     pool.observer.observe(node, { box });
 
     return () => {
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
       }
 
       latestEntryRef.current = null;
       pool.handlers.delete(node);
       pool.observer.unobserve(node);
     };
-  }, [node, enabled, box, rafBatch, onResize]);
-
-  return React.useCallback<React.RefCallback<T>>((el: T | null) => {
-    setNode(el);
-  }, []);
+  }, [externalRef, enabled, box, rafBatch, onResize]);
 }

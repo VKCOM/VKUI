@@ -16,11 +16,13 @@ function createEntry(
     height = 50,
     borderBoxSize,
     contentBoxSize,
+    devicePixelContentBoxSize,
   }: {
     width?: number;
     height?: number;
     borderBoxSize?: Array<{ inlineSize: number; blockSize: number }>;
     contentBoxSize?: Array<{ inlineSize: number; blockSize: number }>;
+    devicePixelContentBoxSize?: Array<{ inlineSize: number; blockSize: number }>;
   } = {},
 ): MockResizeObserverEntry {
   return {
@@ -28,6 +30,7 @@ function createEntry(
     contentRect: { width, height } as unknown as DOMRectReadOnly,
     borderBoxSize: borderBoxSize as ResizeObserverSize[],
     contentBoxSize: contentBoxSize as ResizeObserverSize[],
+    devicePixelContentBoxSize: devicePixelContentBoxSize as ResizeObserverSize[],
   };
 }
 
@@ -51,7 +54,8 @@ describe('useResizeObserver', () => {
     const { useResizeObserver } = await import('./useResizeObserver');
 
     const Fixture = () => {
-      const ref = useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize });
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize, ref });
       return <div data-testid="target" ref={ref} />;
     };
 
@@ -87,7 +91,8 @@ describe('useResizeObserver', () => {
     globalThis.cancelAnimationFrame = vi.fn();
 
     const Fixture = () => {
-      const ref = useResizeObserver<HTMLDivElement>({ onResize });
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ onResize, ref });
       return <div data-testid="target" ref={ref} />;
     };
 
@@ -122,7 +127,8 @@ describe('useResizeObserver', () => {
     globalThis.cancelAnimationFrame = vi.fn();
 
     const Fixture = () => {
-      const ref = useResizeObserver<HTMLDivElement>({ onResize });
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ onResize, ref });
       return <div data-testid="target" ref={ref} />;
     };
 
@@ -142,7 +148,8 @@ describe('useResizeObserver', () => {
     const { useResizeObserver } = await import('./useResizeObserver');
 
     const Fixture = () => {
-      const ref = useResizeObserver<HTMLDivElement>({ enabled: false, onResize });
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ enabled: false, onResize, ref });
       return <div data-testid="target" ref={ref} />;
     };
 
@@ -158,47 +165,103 @@ describe('useResizeObserver', () => {
     expect(onResize).not.toHaveBeenCalled();
   });
 
-  it('reads size from borderBox/contentBox before contentRect', async () => {
-    const onResize = vi.fn();
+  it('reads size according to selected box and falls back to contentRect', async () => {
+    const onResizeBorder = vi.fn();
+    const onResizeContent = vi.fn();
+    const onResizeDevicePixel = vi.fn();
     const { useResizeObserver } = await import('./useResizeObserver');
 
-    const Fixture = () => {
-      const ref = useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize });
-      return <div data-testid="target" ref={ref} />;
+    const Fixture = ({
+      box,
+      onResize,
+      testId,
+    }: {
+      box: ResizeObserverBoxOptions;
+      onResize: () => void;
+      testId: string;
+    }) => {
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ box, rafBatch: false, onResize, ref });
+      return <div data-testid={testId} ref={ref} />;
     };
 
-    const { getByTestId } = render(<Fixture />);
-    const target = getByTestId('target');
-    const observer = getObserverForTarget(target);
+    const { getByTestId } = render(
+      <>
+        <Fixture box="border-box" onResize={onResizeBorder} testId="border-target" />
+        <Fixture box="content-box" onResize={onResizeContent} testId="content-target" />
+        <Fixture
+          box="device-pixel-content-box"
+          onResize={onResizeDevicePixel}
+          testId="device-pixel-target"
+        />
+      </>,
+    );
 
-    observer.emit([
-      createEntry(target, {
+    const borderTarget = getByTestId('border-target');
+    const contentTarget = getByTestId('content-target');
+    const devicePixelTarget = getByTestId('device-pixel-target');
+    const borderObserver = getObserverForTarget(borderTarget);
+    const contentObserver = getObserverForTarget(contentTarget);
+    const devicePixelObserver = getObserverForTarget(devicePixelTarget);
+
+    borderObserver.emit([
+      createEntry(borderTarget, {
         width: 10,
         height: 20,
         borderBoxSize: [{ inlineSize: 300, blockSize: 150 }],
+        contentBoxSize: [{ inlineSize: 301, blockSize: 151 }],
       }),
     ]);
 
-    expect(onResize).toHaveBeenLastCalledWith(
+    expect(onResizeBorder).toHaveBeenLastCalledWith(
       expect.objectContaining({
         width: 300,
         height: 150,
       }),
     );
 
-    observer.emit([
-      createEntry(target, {
+    contentObserver.emit([
+      createEntry(contentTarget, {
         width: 11,
         height: 21,
-        borderBoxSize: [],
         contentBoxSize: [{ inlineSize: 400, blockSize: 220 }],
+        borderBoxSize: [{ inlineSize: 401, blockSize: 221 }],
       }),
     ]);
 
-    expect(onResize).toHaveBeenLastCalledWith(
+    expect(onResizeContent).toHaveBeenLastCalledWith(
       expect.objectContaining({
         width: 400,
         height: 220,
+      }),
+    );
+
+    devicePixelObserver.emit([
+      createEntry(devicePixelTarget, {
+        width: 12,
+        height: 22,
+        devicePixelContentBoxSize: [{ inlineSize: 500, blockSize: 260 }],
+      }),
+    ]);
+
+    expect(onResizeDevicePixel).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        width: 500,
+        height: 260,
+      }),
+    );
+
+    devicePixelObserver.emit([
+      createEntry(devicePixelTarget, {
+        width: 13,
+        height: 23,
+      }),
+    ]);
+
+    expect(onResizeDevicePixel).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        width: 13,
+        height: 23,
       }),
     );
   });
@@ -215,7 +278,8 @@ describe('useResizeObserver', () => {
       box: ResizeObserverBoxOptions;
       onResize: () => void;
     }) => {
-      const ref = useResizeObserver<HTMLDivElement>({ box, rafBatch: false, onResize });
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ box, rafBatch: false, onResize, ref });
       return <div ref={ref} />;
     };
 
@@ -238,7 +302,8 @@ describe('useResizeObserver', () => {
     const { useResizeObserver } = await import('./useResizeObserver');
 
     const Fixture = ({ testId, onResize }: { testId: string; onResize: () => void }) => {
-      const ref = useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize });
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize, ref });
       return <div data-testid={testId} ref={ref} />;
     };
 
@@ -256,32 +321,5 @@ describe('useResizeObserver', () => {
 
     expect(firstObserver).toBe(secondObserver);
     expect(firstObserver.observe).toHaveBeenCalledTimes(2);
-  });
-
-  it('supports external ref passed to hook', async () => {
-    const onResize = vi.fn();
-    const { useResizeObserver } = await import('./useResizeObserver');
-
-    const Fixture = () => {
-      const externalRef = React.useRef<HTMLDivElement>(null);
-      useResizeObserver<HTMLDivElement>({ ref: externalRef, rafBatch: false, onResize });
-      return <div data-testid="target" ref={externalRef} />;
-    };
-
-    const { getByTestId } = render(<Fixture />);
-    const target = getByTestId('target');
-    const observer = getObserverForTarget(target);
-
-    expect(observer.observe).toHaveBeenCalledWith(target, { box: 'content-box' });
-
-    observer.emit([createEntry(target, { width: 410, height: 210 })]);
-
-    expect(onResize).toHaveBeenCalledWith(
-      expect.objectContaining({
-        target,
-        width: 410,
-        height: 210,
-      }),
-    );
   });
 });
