@@ -91,7 +91,7 @@
     "swc-loader": "^0.2.7",
     "swc-plugin-css-modules": "8.0.0",
     "swc-plugin-transform-remove-imports": "8.3.0",
-    "typescript": "^6.0.0",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.4",
     "vitest-axe": "^0.1.0",
     "vitest-fail-on-console": "^0.10.1",
