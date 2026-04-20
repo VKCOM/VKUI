@@ -5403,7 +5403,7 @@ __metadata:
     cross-spawn: "npm:^7.0.5"
     jscodeshift: "npm:^17.3.0"
     prompts: "npm:^2.4.2"
-    typescript: "npm:^6.0.0"
+    typescript: "npm:^6.0.3"
   bin:
     vkui-codemods: ./dist/index.js
   languageName: unknown
@@ -5422,7 +5422,7 @@ __metadata:
   dependencies:
     "@date-fns/tz": "npm:1.4.1"
     "@swc/core": "npm:^1.15.24"
-    typescript: "npm:^6.0.0"
+    typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
 
@@ -5439,7 +5439,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     scroll-into-view-if-needed: "npm:^3.1.0"
-    typescript: "npm:^6.0.2"
+    typescript: "npm:^6.0.3"
   peerDependencies:
     next: ^15.5.15
     nextra: ^4.6.1
@@ -5481,7 +5481,7 @@ __metadata:
   resolution: "@vkontakte/vkui-mcp@workspace:packages/vkui-mcp"
   dependencies:
     "@modelcontextprotocol/sdk": "npm:^1.25.3"
-    typescript: "npm:^6.0.0"
+    typescript: "npm:^6.0.3"
     zod: "npm:^4.3.6"
   bin:
     vkui-mcp: ./dist/cli.js
@@ -5578,7 +5578,7 @@ __metadata:
     swc-loader: "npm:^0.2.7"
     swc-plugin-css-modules: "npm:8.0.0"
     swc-plugin-transform-remove-imports: "npm:8.3.0"
-    typescript: "npm:^6.0.0"
+    typescript: "npm:^6.0.3"
     vitest: "npm:^4.1.4"
     vitest-axe: "npm:^0.1.0"
     vitest-fail-on-console: "npm:^0.10.1"
@@ -5613,7 +5613,7 @@ __metadata:
     "@vkontakte/vkui-floating-ui": "npm:^0.2.8"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    typescript: "npm:^6.0.2"
+    typescript: "npm:^6.0.3"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
@@ -18544,7 +18544,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:*, typescript@npm:^6.0.0, typescript@npm:^6.0.2":
+"typescript@npm:*":
   version: 6.0.2
   resolution: "typescript@npm:6.0.2"
   bin:
@@ -18554,13 +18554,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A*#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^6.0.0#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^6.0.2#optional!builtin<compat/typescript>":
+"typescript@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "typescript@npm:6.0.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/0ef2357a4cffd916b52b683a021cdab0f81eea4e9aa35f2d254581c9a5106da02224e3392e1b0ed42b7a48f80c966e5f52b8e1a27941fa0523c1705a9c2e0330
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A*#optional!builtin<compat/typescript>":
   version: 6.0.2
   resolution: "typescript@patch:typescript@npm%3A6.0.2#optional!builtin<compat/typescript>::version=6.0.2&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/e5501dfcf8c5b6b9a61f6fa53decc40187cebe3a2b7b2bd51c615007ad4cf6d58298461fef63294f6be9d5f2f33019b2a2e2bf02d9cb7d7f6ec94372bf24ffa2
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^6.0.3#optional!builtin<compat/typescript>":
+  version: 6.0.3
+  resolution: "typescript@patch:typescript@npm%3A6.0.3#optional!builtin<compat/typescript>::version=6.0.3&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/22b67a18dafedf9b1468b64ca20d9aa02ea61d449b65413d8aa6552aeb63f52ef369e86beb25b6b4c91a803d9726ee5c196f391a9b64201263263410a4223ee6
   languageName: node
   linkType: hard
 
