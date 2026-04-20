@@ -1,32 +1,8 @@
 import { act, render } from '@testing-library/react';
 
-type VisualViewportMock = {
-  width: number;
-  height: number;
-  addEventListener: ReturnType<typeof vi.fn>;
-  removeEventListener: ReturnType<typeof vi.fn>;
-};
-
-function setupVisualViewport(width: number, height: number): VisualViewportMock {
-  const visualViewport: VisualViewportMock = {
-    width,
-    height,
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-  };
-
-  Object.defineProperty(globalThis.window, 'visualViewport', {
-    configurable: true,
-    value: visualViewport,
-  });
-
-  return visualViewport;
-}
-
 describe('useWindowResizeObserver', () => {
   const originalRequestAnimationFrame = globalThis.requestAnimationFrame;
   const originalCancelAnimationFrame = globalThis.cancelAnimationFrame;
-  const originalVisualViewport = globalThis.window.visualViewport;
   const originalInnerWidth = globalThis.window.innerWidth;
   const originalInnerHeight = globalThis.window.innerHeight;
 
@@ -36,10 +12,6 @@ describe('useWindowResizeObserver', () => {
     globalThis.cancelAnimationFrame = originalCancelAnimationFrame;
     Object.defineProperty(globalThis.window, 'innerWidth', { configurable: true, value: 1280 });
     Object.defineProperty(globalThis.window, 'innerHeight', { configurable: true, value: 720 });
-    Object.defineProperty(globalThis.window, 'visualViewport', {
-      configurable: true,
-      value: originalVisualViewport,
-    });
   });
 
   afterEach(() => {
@@ -53,10 +25,6 @@ describe('useWindowResizeObserver', () => {
     Object.defineProperty(globalThis.window, 'innerHeight', {
       configurable: true,
       value: originalInnerHeight,
-    });
-    Object.defineProperty(globalThis.window, 'visualViewport', {
-      configurable: true,
-      value: originalVisualViewport,
     });
   });
 
@@ -106,36 +74,6 @@ describe('useWindowResizeObserver', () => {
       expect.any(Function),
       expect.anything(),
     );
-  });
-
-  it('uses visualViewport sizes and listener when enabled', async () => {
-    const onResize = vi.fn();
-    const visualViewport = setupVisualViewport(400, 300);
-    const { useWindowResizeObserver } = await import('./useWindowResizeObserver');
-
-    const Fixture = () => {
-      useWindowResizeObserver({ useVisualViewport: true, rafBatch: false, onResize });
-      return null;
-    };
-
-    render(<Fixture />);
-
-    expect(onResize).not.toHaveBeenCalled();
-
-    const resizeHandler = visualViewport.addEventListener.mock.calls[0][1] as EventListener;
-    visualViewport.width = 360;
-    visualViewport.height = 280;
-
-    await act(async () => {
-      resizeHandler(new Event('resize'));
-    });
-
-    expect(onResize).toHaveBeenCalledTimes(1);
-    expect(onResize).toHaveBeenLastCalledWith({
-      target: globalThis.window,
-      width: 360,
-      height: 280,
-    });
   });
 
   it('batches window resize events and emits latest payload once per RAF', async () => {

@@ -11,58 +11,38 @@ export type WindowResizePayload = {
 export type WindowResizeOptions = {
   enabled?: boolean;
   rafBatch?: boolean;
-  useVisualViewport?: boolean;
   onResize: (payload: WindowResizePayload) => void;
 };
 
 type WindowSubscriber = {
   onResize: WindowResizeOptions['onResize'];
   rafBatch: boolean;
-  useVisualViewport: boolean;
   rafIdRef: React.RefObject<number | null>;
   pendingRef: React.RefObject<{ width: number; height: number } | null>;
 };
 
-const windowSubscribers = new Set<WindowSubscriber>();
-let windowListenerAttached = false;
-let visualViewportListenerAttached = false;
-let windowResizeHandler: (() => void) | null = null;
-let visualViewportResizeHandler: (() => void) | null = null;
+type HandlersMapValue = {
+  subscribers: Set<WindowSubscriber>;
+  resizeHandler: VoidFunction;
+};
 
-const windowSubscriberPredicate = (subscriber: WindowSubscriber) => !subscriber.useVisualViewport;
-const visualViewportSubscriberPredicate = (subscriber: WindowSubscriber) =>
-  subscriber.useVisualViewport;
+const handlersMap = new WeakMap<Window, HandlersMapValue>();
 
-const hasWindowSubscribers = () => [...windowSubscribers].some(windowSubscriberPredicate);
-const hasVisualViewportSubscribers = () =>
-  [...windowSubscribers].some(visualViewportSubscriberPredicate);
-
-function getWindowSize(window: Window, useVisualViewport: boolean) {
-  const visualViewport = useVisualViewport ? window.visualViewport : null;
-
-  if (visualViewport !== null) {
-    return {
-      width: visualViewport.width,
-      height: visualViewport.height,
-    };
-  }
-
+function getWindowSize(window: Window) {
   return {
     width: window.innerWidth,
     height: window.innerHeight,
   };
 }
 
-function notifySubscribers(
-  window: Window,
-  subscriberPredicate: (subscriber: WindowSubscriber) => boolean,
-) {
-  for (const sub of windowSubscribers) {
-    if (!subscriberPredicate(sub)) {
-      continue;
-    }
+function notifySubscribers(window: Window) {
+  const windowHandler = handlersMap.get(window);
+  if (!windowHandler) {
+    return;
+  }
 
-    const size = getWindowSize(window, sub.useVisualViewport);
+  for (const sub of windowHandler.subscribers) {
+    const size = getWindowSize(window);
     const emit = () => {
       sub.onResize({
         target: window,
@@ -99,70 +79,38 @@ function notifySubscribers(
   }
 }
 
-function notifyWindowSubscribers(window: Window) {
-  notifySubscribers(window, windowSubscriberPredicate);
-}
+function ensureWindowListener(window: Window): HandlersMapValue {
+  const handlersFromMap = handlersMap.get(window);
 
-function notifyVisualViewportSubscribers(window: Window) {
-  notifySubscribers(window, visualViewportSubscriberPredicate);
-}
-
-function ensureWindowListener(window: Window) {
-  if (windowListenerAttached || !hasWindowSubscribers()) {
-    return;
+  if (handlersFromMap) {
+    return handlersFromMap;
   }
 
-  windowResizeHandler = () => notifyWindowSubscribers(window);
+  const windowResizeHandler = () => notifySubscribers(window);
   window.addEventListener('resize', windowResizeHandler, { passive: true });
-  windowListenerAttached = true;
+
+  const handler: HandlersMapValue = {
+    subscribers: new Set<WindowSubscriber>(),
+    resizeHandler: windowResizeHandler,
+  };
+
+  handlersMap.set(window, handler);
+  return handler;
 }
 
-function ensureVisualViewportListener(window: Window) {
-  if (visualViewportListenerAttached || !hasVisualViewportSubscribers()) {
+function maybeDetachWindowListener(window: Window, handlersValue: HandlersMapValue) {
+  if (handlersValue.subscribers.size > 0) {
     return;
   }
-
-  visualViewportResizeHandler = () => notifyVisualViewportSubscribers(window);
-  window.visualViewport?.addEventListener('resize', visualViewportResizeHandler, {
-    passive: true,
-  });
-  visualViewportListenerAttached = true;
-}
-
-function maybeDetachWindowListener(window: Window) {
-  if (!windowListenerAttached || !windowResizeHandler || hasWindowSubscribers()) {
-    return;
-  }
-  window.removeEventListener('resize', windowResizeHandler);
-  windowListenerAttached = false;
-  windowResizeHandler = null;
-}
-
-function maybeDetachVisualViewportListener(window: Window) {
-  if (
-    !visualViewportListenerAttached ||
-    !visualViewportResizeHandler ||
-    hasVisualViewportSubscribers()
-  ) {
-    return;
-  }
-  window.visualViewport?.removeEventListener('resize', visualViewportResizeHandler);
-  visualViewportListenerAttached = false;
-  visualViewportResizeHandler = null;
+  window.removeEventListener('resize', handlersValue.resizeHandler);
+  handlersMap.delete(window);
 }
 
 export function useWindowResizeObserver(options: WindowResizeOptions) {
   const { window } = useDOM();
-  const {
-    enabled = true,
-    rafBatch = true,
-    useVisualViewport = false,
-    onResize: onResizeProp,
-  } = options;
+  const { enabled = true, rafBatch = true, onResize: onResizeProp } = options;
 
   const onResize = useStableCallback<[WindowResizePayload], void>(onResizeProp);
-  const rafIdRef = React.useRef<number | null>(null);
-  const pendingRef = React.useRef<{ width: number; height: number } | null>(null);
 
   React.useEffect(() => {
     if (!enabled || !window) {
@@ -171,20 +119,21 @@ export function useWindowResizeObserver(options: WindowResizeOptions) {
 
     const resolvedWindow = window;
 
+    const rafIdRef = React.createRef<number | null>();
+    const pendingRef = React.createRef<{ width: number; height: number } | null>();
+
+    rafIdRef.current = null;
+    pendingRef.current = null;
+
     const sub: WindowSubscriber = {
       onResize,
       rafBatch,
-      useVisualViewport,
       rafIdRef,
       pendingRef,
     };
 
-    windowSubscribers.add(sub);
-    if (useVisualViewport) {
-      ensureVisualViewportListener(resolvedWindow);
-    } else {
-      ensureWindowListener(resolvedWindow);
-    }
+    const handler = ensureWindowListener(window);
+    handler.subscribers.add(sub);
 
     return () => {
       if (rafIdRef.current !== null) {
@@ -193,9 +142,8 @@ export function useWindowResizeObserver(options: WindowResizeOptions) {
       }
 
       pendingRef.current = null;
-      windowSubscribers.delete(sub);
-      maybeDetachVisualViewportListener(resolvedWindow);
-      maybeDetachWindowListener(resolvedWindow);
+      handler.subscribers.delete(sub);
+      maybeDetachWindowListener(resolvedWindow, handler);
     };
-  }, [enabled, rafBatch, useVisualViewport, onResize, window]);
+  }, [enabled, rafBatch, onResize, window]);
 }
