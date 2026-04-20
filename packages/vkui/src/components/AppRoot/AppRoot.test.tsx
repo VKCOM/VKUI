@@ -87,7 +87,6 @@ describe('AppRoot', () => {
       mode: 'full',
       disablePortal: false,
       layout: undefined,
-      keyboardInput: false,
     });
   });
 
