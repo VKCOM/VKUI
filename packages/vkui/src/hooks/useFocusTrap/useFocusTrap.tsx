@@ -99,6 +99,7 @@ export const useFocusTrap = (
 
   const createFocusFn = (getFocusElement: (root: HTMLElement | null) => HTMLElement | null) => {
     return () => {
+      // eslint-disable-next-line react-hooks/refs
       const node = getFocusElement(ref.current);
       if (node) {
         node.focus({ preventScroll: true });
@@ -166,6 +167,7 @@ export const useFocusTrap = (
 
   const createGuardFocusHandler = (focusFn: () => void, focusFromOutside: () => void) => {
     return (event: React.FocusEvent<HTMLSpanElement>) => {
+      // eslint-disable-next-line react-hooks/refs
       if (!mount || disabled || !ref.current) {
         return;
       }

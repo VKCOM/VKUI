@@ -327,6 +327,10 @@ export const Search = ({
   const showControls = Boolean(
     iconProp || !hideClearButton || (adaptiveDensity.compact && onFindButtonClick),
   );
+  // eslint-disable-next-line react-hooks/refs
+  const onClearPointerDown = callMultiple(onIconCancelClickStart, onClearButtonPointerDown);
+  // eslint-disable-next-line react-hooks/refs
+  const onClearClick = callMultiple(onCancel, onClearButtonClick);
 
   return (
     <RootComponent
@@ -374,8 +378,8 @@ export const Search = ({
             {!hideClearButton && (
               <IconButton
                 hoverMode="opacity"
-                onPointerDown={callMultiple(onIconCancelClickStart, onClearButtonPointerDown)}
-                onClick={callMultiple(onCancel, onClearButtonClick)}
+                onPointerDown={onClearPointerDown}
+                onClick={onClearClick}
                 tabIndex={hasValue ? undefined : -1}
                 disabled={inputRest.disabled}
                 data-testid={clearButtonTestId}
