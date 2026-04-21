@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-BneVvdWh.js";var t,n,r=e((()=>{t=(e,t)=>{if(!t.hasOwnProperty(e))throw Error(`getRequiredValueByKey(${String(e)})`);return t[e]},n=(e,t,n)=>{if(!t.hasOwnProperty(e)){if(n)return n;throw Error(`getValueByKey(${String(e)})`)}return t[e]}}));export{n,r,t};

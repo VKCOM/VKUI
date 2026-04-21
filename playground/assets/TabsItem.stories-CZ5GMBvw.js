@@ -1,0 +1,1 @@
+import{a as e,c as t,i as n,n as r,o as i,r as a,s as o,t as s}from"./TabsItem.stories-TXreUDae.js";o();export{s as Playground,r as WithBadge,a as WithBeforeAfter,n as WithCounter,e as WithNumberStatus,i as __namedExportsOrder,t as default};

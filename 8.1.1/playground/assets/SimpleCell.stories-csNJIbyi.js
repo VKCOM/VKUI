@@ -1,0 +1,13 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{s as n,t as r}from"./lib-BRrbp21U.js";import{M as i,n as a}from"./dist-JE-Gteso.js";import{n as o,r as s,t as c}from"./VKUIDecorators-BYQp_QSp.js";import{n as l,t as u}from"./IconButton-Dy0WqEx-.js";import{n as d,t as f}from"./Badge-YKuHikVW.js";import{n as p,t as m}from"./Group-iqbU7m06.js";import{n as h,t as g}from"./SimpleCell-DV0Wx3tu.js";import{n as _,t as v}from"./Avatar-BPQNL3ed.js";import{n as y,t as b}from"./Switch-BYqhaxVv.js";import{i as x,n as S,r as C,t as w}from"./constants-Dj6vOzIh.js";import{n as T,t as E}from"./createStoryParameters-pz1UrWMe.js";import{r as D}from"./getFormFieldIconsPresets-Rpdnz0zC.js";import{t as O}from"./presets-VoE0j0xA.js";var k,A,j,M,N=e((()=>{a(),r(),c(),x(),O(),T(),_(),d(),p(),l(),y(),h(),k=t(),A={title:`Buttons/SimpleCell`,component:g,parameters:E(`SimpleCell`,w,S),argTypes:{overTitle:C,extraSubtitle:C,before:D({iconSizes:[`28`],sizeIconsCount:10,additionalPresets:{Avatar48:(0,k.jsx)(v,{size:48,src:`https://sun9-65.userapi.com/Jm47wQlR6z_R_rbAd_7LUf0NQg7QAv35MpvNhA/Ht8eYywub4o.jpg?ava=1`})}}),after:D({iconSizes:[`24`,`28`],sizeIconsCount:10,additionalPresets:{Switch:(0,k.jsx)(b,{}),MessageButton:(0,k.jsx)(u,{label:`Написать сообщение`,onClick:n,children:(0,k.jsx)(i,{})})}}),badgeAfterTitle:D({iconSizes:[`12`],sizeIconsCount:10,requiredIcons:[`Icon12Verified`],additionalPresets:{Badge:(0,k.jsx)(f,{children:`Badge`})}}),badgeBeforeTitle:D({iconSizes:[`12`],sizeIconsCount:10,additionalPresets:{Badge:(0,k.jsx)(f,{children:`Badge`})}}),badgeBeforeSubtitle:D({iconSizes:[`12`],sizeIconsCount:10,additionalPresets:{Badge:(0,k.jsx)(f,{children:`Badge`})}}),badgeAfterSubtitle:D({iconSizes:[`12`],sizeIconsCount:10,additionalPresets:{Badge:(0,k.jsx)(f,{children:`Badge`})}})},tags:[`Кнопки`]},j={args:{children:`Игорь Фёдоров`,before:`Avatar48`,badgeAfterTitle:`Icon12Verified`,after:`MessageButton`,subtitle:`Команда ВКонтакте`,onClick:n},decorators:[(e,t)=>(0,k.jsx)(m,{children:(0,k.jsx)(e,{...t.args})}),o,s]},j.parameters={...j.parameters,docs:{...j.parameters?.docs,source:{originalSource:`{
+  args: {
+    children: 'Игорь Фёдоров',
+    before: 'Avatar48',
+    badgeAfterTitle: 'Icon12Verified',
+    after: 'MessageButton',
+    subtitle: 'Команда ВКонтакте',
+    onClick: noop
+  },
+  decorators: [(Component, context) => <Group>
+        <Component {...context.args} />
+      </Group>, withSinglePanel, withVKUILayout]
+}`,...j.parameters?.docs?.source}}},M=[`Playground`]}));export{A as i,M as n,N as r,j as t};
