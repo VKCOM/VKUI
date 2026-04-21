@@ -4,38 +4,20 @@ type SetTrue = () => void;
 type SetFalse = () => void;
 type Toggle = () => void;
 
-export const useBooleanState = (
-  defaultValue = false,
-  onChange?: (v: boolean) => void,
-): [boolean, SetTrue, SetFalse, Toggle] => {
+export const useBooleanState = (defaultValue = false): [boolean, SetTrue, SetFalse, Toggle] => {
   const [value, setValue] = React.useState(defaultValue);
 
   const setTrue = React.useCallback(() => {
-    setValue((value) => {
-      if (!value) {
-        onChange?.(true);
-        return true;
-      }
-      return value;
-    });
-  }, [onChange]);
+    setValue(true);
+  }, []);
 
   const setFalse = React.useCallback(() => {
-    setValue((value) => {
-      if (value) {
-        onChange?.(false);
-        return false;
-      }
-      return value;
-    });
-  }, [onChange]);
+    setValue(false);
+  }, []);
 
   const toggle = React.useCallback(() => {
-    setValue((value) => {
-      onChange?.(!value);
-      return !value;
-    });
-  }, [onChange]);
+    setValue((value) => !value);
+  }, []);
 
   return [value, setTrue, setFalse, toggle];
 };

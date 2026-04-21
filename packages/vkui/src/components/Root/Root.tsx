@@ -87,10 +87,6 @@ export const Root = ({
     [activeView, isBack, prevView],
   );
 
-  if (transition && disableAnimation) {
-    _setState((prevState) => ({ ...prevState, transition: false }));
-  }
-
   useIsomorphicLayoutEffect(() => {
     (document!.activeElement as HTMLElement).blur();
   }, [activeView]);
@@ -109,6 +105,15 @@ export const Root = ({
         });
     }
   }, [transition, prevView]);
+
+  React.useEffect(
+    function onAnimationEndFallback() {
+      if (transition && disableAnimation) {
+        finishTransition();
+      }
+    },
+    [transition, disableAnimation, finishTransition],
+  );
 
   const onAnimationEnd: React.AnimationEventHandler<HTMLElement> = (e) => {
     if (e.target !== e.currentTarget) {

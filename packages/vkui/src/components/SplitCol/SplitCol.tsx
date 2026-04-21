@@ -20,19 +20,23 @@ const breakpointClassNames = {
 
 function useTransitionAnimate(animateProp?: boolean) {
   const { viewWidth } = useAdaptivity();
+  const [animate, setAnimate] = React.useState(Boolean(animateProp));
   const mediaQueries = useMediaQueries();
-  const [animateByMediaQuery, setAnimateByMediaQuery] = React.useState(() => {
-    // eslint-disable-next-line no-restricted-properties
-    return !mediaQueries.smallTabletPlus.matches;
-  });
 
   React.useEffect(() => {
-    if (animateProp !== undefined || viewWidth !== undefined) {
+    if (animateProp !== undefined) {
+      setAnimate(animateProp);
+      return;
+    }
+
+    if (viewWidth !== undefined) {
+      setAnimate(viewWidth < ViewWidth.TABLET);
       return;
     }
 
     // eslint-disable-next-line no-restricted-properties
-    const listener = () => setAnimateByMediaQuery(!mediaQueries.smallTabletPlus.matches);
+    const listener = () => setAnimate(!mediaQueries.smallTabletPlus.matches);
+    listener();
 
     mediaQueries.smallTabletPlus.addEventListener('change', listener);
     return () => {
@@ -40,15 +44,7 @@ function useTransitionAnimate(animateProp?: boolean) {
     };
   }, [animateProp, viewWidth, mediaQueries]);
 
-  if (animateProp !== undefined) {
-    return animateProp;
-  }
-
-  if (viewWidth !== undefined) {
-    return viewWidth < ViewWidth.TABLET;
-  }
-
-  return animateByMediaQuery;
+  return animate;
 }
 
 export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement> {

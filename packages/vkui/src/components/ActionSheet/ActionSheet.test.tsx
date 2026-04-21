@@ -23,7 +23,10 @@ const ActionSheetDesktop = ({
   onClosed = vi.fn(),
   ...restProps
 }: Partial<ActionSheetProps>) => {
-  const toggleRef = screen.getByTestId('target');
+  const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
+  React.useLayoutEffect(() => {
+    setToggleRef(screen.getByTestId('target'));
+  }, []);
   return (
     <ConfigProvider platform="vkcom">
       <AdaptivityProvider viewWidth={ViewWidth.DESKTOP} hasPointer>
@@ -44,7 +47,10 @@ const ActionSheetMobile = ({
   onClosed = vi.fn(),
   ...restProps
 }: Partial<ActionSheetProps>) => {
-  const toggleRef = screen.getByTestId('target');
+  const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
+  React.useLayoutEffect(() => {
+    setToggleRef(screen.getByTestId('target'));
+  }, []);
   return (
     <AdaptivityProvider viewWidth={ViewWidth.MOBILE} hasPointer={false}>
       <ActionSheet
@@ -63,7 +69,10 @@ const ActionSheetMenu = ({
   onClosed = vi.fn(),
   ...restProps
 }: Partial<ActionSheetProps>) => {
-  const toggleRef = screen.getByTestId('target');
+  const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
+  React.useLayoutEffect(() => {
+    setToggleRef(screen.getByTestId('target'));
+  }, []);
   return (
     <ActionSheet
       aria-label="menu list"
@@ -81,7 +90,10 @@ const ActionSheetSheet = ({
   onClosed = vi.fn(),
   ...restProps
 }: Partial<ActionSheetProps>) => {
-  const toggleRef = screen.getByTestId('target');
+  const [toggleRef, setToggleRef] = React.useState<HTMLElement | null>(null);
+  React.useLayoutEffect(() => {
+    setToggleRef(screen.getByTestId('target'));
+  }, []);
   return (
     <ActionSheet
       aria-label="menu list"

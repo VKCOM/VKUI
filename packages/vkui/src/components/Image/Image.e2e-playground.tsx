@@ -22,10 +22,7 @@ const base64ImageValue = withLabel(base64Image, 'base64');
 export const ImagePlayground = (props: ComponentPlaygroundProps) => {
   const [removeSrc, setRemoveSrc] = React.useState(base64Image);
 
-  React.useEffect(() => {
-    const timerId = setTimeout(() => setRemoveSrc(''));
-    return () => clearTimeout(timerId);
-  }, []);
+  React.useEffect(() => setRemoveSrc(''), []);
 
   return (
     <ComponentPlayground
