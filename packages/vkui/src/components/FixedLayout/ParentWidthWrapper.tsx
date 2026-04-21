@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
-import { defineComponentDisplayNames } from "../../lib/react/defineComponentDisplayNames";
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import { setRef } from '../../lib/utils';
 import type { HasComponent } from '../../types';
 
