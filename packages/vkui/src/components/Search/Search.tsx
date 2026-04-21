@@ -299,22 +299,6 @@ export const Search = ({
     [inputRef, onCancel],
   );
 
-  const onClearPointerDown: React.PointerEventHandler<HTMLElement> = React.useCallback(
-    (e) => {
-      onIconCancelClickStart(e);
-      onClearButtonPointerDown?.(e);
-    },
-    [onIconCancelClickStart, onClearButtonPointerDown],
-  );
-
-  const onClearClick: React.MouseEventHandler<HTMLElement> = React.useCallback(
-    (e) => {
-      onCancel();
-      onClearButtonClick?.(e);
-    },
-    [onCancel, onClearButtonClick],
-  );
-
   useIsomorphicLayoutEffect(() => {
     if (inputRest.value !== undefined) {
       setHasValue(Boolean(inputRest.value));
@@ -343,6 +327,10 @@ export const Search = ({
   const showControls = Boolean(
     iconProp || !hideClearButton || (adaptiveDensity.compact && onFindButtonClick),
   );
+  // eslint-disable-next-line react-hooks/refs
+  const onClearPointerDown = callMultiple(onIconCancelClickStart, onClearButtonPointerDown);
+  // eslint-disable-next-line react-hooks/refs
+  const onClearClick = callMultiple(onCancel, onClearButtonClick);
 
   return (
     <RootComponent

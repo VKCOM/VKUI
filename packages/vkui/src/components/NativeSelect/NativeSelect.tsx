@@ -6,6 +6,7 @@ import { classNames } from '@vkontakte/vkjs';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useMergeProps } from '../../hooks/useMergeProps';
+import { callMultiple } from '../../lib/callMultiple';
 import { getFormFieldModeFromSelectType } from '../../lib/select';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../../lib/warnOnce';
@@ -170,36 +171,27 @@ export const NativeSelect = ({
 
   const selectRef = useExternRef(getSelectRef);
 
-  const checkSelectedOption = React.useCallback(() => {
+  const checkSelectedOption = () => {
     const selectedOption = selectRef.current?.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);
       setEmpty(selectedOption.value === NOT_SELECTED.NATIVE && placeholder != null);
     }
-  }, [placeholder, selectRef]);
+  };
 
-  const _onChange: ChangeEventHandler<HTMLSelectElement> = React.useCallback(
-    (e) => {
-      const newValue = remapFromNativeValueToSelectValue(e.target.value);
-      if (e.target.value === NOT_SELECTED.NATIVE) {
-        e.target.value = '';
-      }
-      if (e.currentTarget.value === NOT_SELECTED.NATIVE) {
-        e.currentTarget.value = '';
-      }
-      onChange?.(e, newValue);
-    },
-    [onChange],
-  );
-
-  const onSelectChange: ChangeEventHandler<HTMLSelectElement> = React.useCallback(
-    (e) => {
-      _onChange(e);
-      checkSelectedOption();
-    },
-    [_onChange, checkSelectedOption],
-  );
+  const _onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const newValue = remapFromNativeValueToSelectValue(e.target.value);
+    if (e.target.value === NOT_SELECTED.NATIVE) {
+      e.target.value = '';
+    }
+    if (e.currentTarget.value === NOT_SELECTED.NATIVE) {
+      e.currentTarget.value = '';
+    }
+    onChange?.(e, newValue);
+  };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
+  // eslint-disable-next-line react-hooks/refs
+  const onSelectChange = callMultiple(_onChange, checkSelectedOption);
 
   return (
     <FormField
