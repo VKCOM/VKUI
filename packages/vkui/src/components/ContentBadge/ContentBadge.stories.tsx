@@ -70,6 +70,31 @@ export const Playground: DefaultStory = {
   },
 };
 
+const CUSTOM_APPEARANCES = ['#FF6699', 'var(--vkui--color_icon_tertiary)'] as const;
+const MODES = ['primary', 'secondary', 'outline'] as const;
+
+export const CustomAppearance: DefaultStory = {
+  decorators: [Container],
+  render({ children = 'Text', size }) {
+    return (
+      <Flex direction="column" gap={16}>
+        {CUSTOM_APPEARANCES.map((appearance) => (
+          <Flex key={appearance} align="center" gap={24}>
+            {MODES.map((mode) => (
+              <ContentBadge key={mode} appearance={appearance} mode={mode} size={size}>
+                <ContentBadge.IconSlot>
+                  {size === 'l' ? <Icon16Services /> : <Icon12Services />}
+                </ContentBadge.IconSlot>
+                {children}
+              </ContentBadge>
+            ))}
+          </Flex>
+        ))}
+      </Flex>
+    );
+  },
+};
+
 type SingleIconStory = StoryObj<ContentBadgeProps>;
 
 export const SingleIcon: SingleIconStory = {
