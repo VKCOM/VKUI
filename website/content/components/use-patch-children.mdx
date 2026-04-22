@@ -63,17 +63,9 @@ usePatchChildren(<MyCustomComponent />);
   const externalRef = React.useRef(null);
 
   const child = (
-    <button
-      onClick={() => setOriginClicks((value) => value + 1)}
-      style={{
-        padding: "10px 14px",
-        borderRadius: 8,
-        border: "1px solid var(--vkui--color_stroke_accent_themed)",
-        background: "var(--vkui--color_background_content)",
-      }}
-    >
+    <Button onClick={() => setOriginClicks((value) => value + 1)}>
       Кликни или сфокусируй меня
-    </button>
+    </Button>
   );
 
   const [, patchedChild] = usePatchChildren(
