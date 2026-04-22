@@ -1,5 +1,12 @@
 {
-  "include": ["vitest.config.ts", "playwright-ct.config.ts", "vite.config.ts", "scripts/**/*.ts"],
+  "include": [
+    "vitest.config.ts",
+    "playwright-ct.config.ts",
+    "vite.config.ts",
+    "rspack.styles.config.ts",
+    "cssm/*.ts",
+    "scripts/**/*.ts"
+  ],
   "exclude": [
     "**/node_modules",
     "**/dist",
