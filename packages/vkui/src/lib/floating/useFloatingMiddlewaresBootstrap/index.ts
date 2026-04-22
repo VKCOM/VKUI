@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { LockFloatingPositionContext } from '../LockFloatingPosition/LockFloatingPosition';
 import {
   arrowMiddleware,
   autoPlacementMiddleware,
@@ -97,6 +98,7 @@ export const useFloatingMiddlewaresBootstrap = ({
   middlewares: UseFloatingMiddleware[];
   strictPlacement: Placement | undefined;
 } => {
+  const lockFloatingPosition = React.useContext(LockFloatingPositionContext);
   return React.useMemo(() => {
     const isAutoPlacement = !checkIsNotAutoPlacement(placement);
     const middlewares: UseFloatingMiddleware[] = [
@@ -118,7 +120,7 @@ export const useFloatingMiddlewaresBootstrap = ({
       if (shift) {
         middlewares.push(shift);
       }
-    } else if (!disableFlipMiddleware) {
+    } else if (!disableFlipMiddleware && !lockFloatingPosition) {
       const flip = flipMiddleware({
         crossAxis: 'alignment',
         fallbackAxisSideDirection: flipMiddlewareFallbackAxisSideDirection,
@@ -187,5 +189,6 @@ export const useFloatingMiddlewaresBootstrap = ({
     arrowRef,
     arrowPadding,
     overflowPadding,
+    lockFloatingPosition,
   ]);
 };
