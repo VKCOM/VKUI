@@ -17,8 +17,8 @@ export type WindowResizeOptions = {
 type WindowSubscriber = {
   onResize: WindowResizeOptions['onResize'];
   rafBatch: boolean;
-  rafIdRef: React.RefObject<number | null>;
-  pendingRef: React.RefObject<{ width: number; height: number } | null>;
+  rafId: number | null;
+  pendingData: { width: number; height: number } | null;
 };
 
 type HandlersMapValue = {
@@ -56,20 +56,20 @@ function notifySubscribers(window: Window) {
       continue;
     }
 
-    sub.pendingRef.current = size;
+    sub.pendingData = size;
 
-    if (sub.rafIdRef.current !== null) {
+    if (sub.rafId !== null) {
       continue;
     }
 
-    sub.rafIdRef.current = requestAnimationFrame(() => {
-      sub.rafIdRef.current = null;
-      const pending = sub.pendingRef.current;
+    sub.rafId = window.requestAnimationFrame(() => {
+      sub.rafId = null;
+      const pending = sub.pendingData;
       if (!pending) {
         return;
       }
 
-      sub.pendingRef.current = null;
+      sub.pendingData = null;
       sub.onResize({
         target: window,
         width: pending.width,
@@ -106,6 +106,9 @@ function maybeDetachWindowListener(window: Window, handlersValue: HandlersMapVal
   handlersMap.delete(window);
 }
 
+/**
+ * @private
+ */
 export function useWindowResizeObserver(options: WindowResizeOptions) {
   const { window } = useDOM();
   const { enabled = true, rafBatch = true, onResize: onResizeProp } = options;
@@ -119,29 +122,23 @@ export function useWindowResizeObserver(options: WindowResizeOptions) {
 
     const resolvedWindow = window;
 
-    const rafIdRef = React.createRef<number | null>();
-    const pendingRef = React.createRef<{ width: number; height: number } | null>();
-
-    rafIdRef.current = null;
-    pendingRef.current = null;
-
     const sub: WindowSubscriber = {
       onResize,
       rafBatch,
-      rafIdRef,
-      pendingRef,
+      rafId: null,
+      pendingData: null,
     };
 
     const handler = ensureWindowListener(window);
     handler.subscribers.add(sub);
 
     return () => {
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
+      if (sub.rafId !== null) {
+        resolvedWindow.cancelAnimationFrame(sub.rafId);
+        sub.rafId = null;
       }
 
-      pendingRef.current = null;
+      sub.pendingData = null;
       handler.subscribers.delete(sub);
       maybeDetachWindowListener(resolvedWindow, handler);
     };

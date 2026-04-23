@@ -80,6 +80,9 @@ function getEntrySize(entry: ResizeObserverEntry, box: ResizeObserverBoxOptions)
   };
 }
 
+/**
+ * @private
+ */
 export function useResizeObserver<T extends HTMLElement = HTMLElement>(
   options: ElementResizeOptions<T>,
 ) {
@@ -92,13 +95,14 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
   } = options;
 
   const onResize = useStableCallback<[ResizePayload<T>], void>(onResizeProp);
-  const latestEntryRef = React.useRef<ResizeObserverEntry | null>(null);
 
   React.useEffect(() => {
-    if (!externalRef || !externalRef.current || !enabled) {
+    if (!enabled || !externalRef || !externalRef.current) {
       return;
     }
     const node = externalRef.current;
+
+    let latestEntry: ResizeObserverEntry | null = null;
 
     const pool = getResizePool(box);
 
@@ -120,7 +124,7 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
         return;
       }
 
-      latestEntryRef.current = entry;
+      latestEntry = entry;
 
       if (rafId !== null) {
         return;
@@ -128,9 +132,8 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
 
       rafId = requestAnimationFrame(() => {
         rafId = null;
-        const latest = latestEntryRef.current;
-        if (latest) {
-          emit(latest);
+        if (latestEntry) {
+          emit(latestEntry);
         }
       });
     };
@@ -144,7 +147,7 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
         rafId = null;
       }
 
-      latestEntryRef.current = null;
+      latestEntry = null;
       pool.handlers.delete(node);
       pool.observer.unobserve(node);
     };
