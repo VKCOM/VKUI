@@ -24,26 +24,26 @@ export function resolveLayoutProps<T extends ComponentProps>(
   let resolvedStyle: React.CSSProperties | undefined;
 
   for (const key in LAYOUT_PROPS) {
-    if (key in outProps && outProps[key] !== undefined) {
-      const propDef = LAYOUT_PROPS[key as LayoutPropKeys];
-      const value = outProps[key];
-      const cssProperty = key.replace(/([A-Z])/g, '-$1').toLowerCase();
-      if (typeof value === 'string' && (propDef as string[]).includes(value)) {
-        resolvedClassName = classNames(
-          resolvedClassName,
-          generateConstantClassName(cssProperty, value),
-        );
-      } else if (key !== 'position' && !key.startsWith('overflow')) {
-        resolvedClassName = classNames(resolvedClassName, generateVariableClassName(cssProperty));
-        resolvedStyle = mergeStyle(resolvedStyle, {
-          [generateVariable(cssProperty)]:
-            typeof value === 'number' && key !== 'flexGrow' && key !== 'flexShrink'
-              ? `${value}px`
-              : value,
-        });
-      }
-    }
     if (key in outProps) {
+      if (outProps[key] !== undefined) {
+        const propDef = LAYOUT_PROPS[key as LayoutPropKeys];
+        const value = outProps[key];
+        const cssProperty = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+        if (typeof value === 'string' && (propDef as string[]).includes(value)) {
+          resolvedClassName = classNames(
+            resolvedClassName,
+            generateConstantClassName(cssProperty, value),
+          );
+        } else if (key !== 'position' && !key.startsWith('overflow')) {
+          resolvedClassName = classNames(resolvedClassName, generateVariableClassName(cssProperty));
+          resolvedStyle = mergeStyle(resolvedStyle, {
+            [generateVariable(cssProperty)]:
+              typeof value === 'number' && key !== 'flexGrow' && key !== 'flexShrink'
+                ? `${value}px`
+                : value,
+          });
+        }
+      }
       delete outProps[key];
     }
   }
