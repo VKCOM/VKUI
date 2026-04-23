@@ -322,4 +322,42 @@ describe('useResizeObserver', () => {
     expect(firstObserver).toBe(secondObserver);
     expect(firstObserver.observe).toHaveBeenCalledTimes(2);
   });
+
+  it('calls all handlers subscribed to the same target node', async () => {
+    const onResizeA = vi.fn();
+    const onResizeB = vi.fn();
+    const { useResizeObserver } = await import('./useResizeObserver');
+
+    const Fixture = () => {
+      const ref = React.useRef<HTMLDivElement | null>(null);
+      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize: onResizeA, ref });
+      useResizeObserver<HTMLDivElement>({ rafBatch: false, onResize: onResizeB, ref });
+      return <div data-testid="target" ref={ref} />;
+    };
+
+    const { getByTestId } = render(<Fixture />);
+    const target = getByTestId('target');
+    const observer = getObserverForTarget(target);
+
+    expect(observer.observe).toHaveBeenCalledTimes(1);
+
+    observer.emit([createEntry(target, { width: 240, height: 120 })]);
+
+    expect(onResizeA).toHaveBeenCalledTimes(1);
+    expect(onResizeB).toHaveBeenCalledTimes(1);
+    expect(onResizeA).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target,
+        width: 240,
+        height: 120,
+      }),
+    );
+    expect(onResizeB).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target,
+        width: 240,
+        height: 120,
+      }),
+    );
+  });
 });

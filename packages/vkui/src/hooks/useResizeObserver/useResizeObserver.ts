@@ -20,7 +20,7 @@ type ResizeHandler = (entry: ResizeObserverEntry) => void;
 
 type ResizePool = {
   observer: ResizeObserver;
-  handlers: WeakMap<Element, ResizeHandler>;
+  handlers: WeakMap<Element, Set<ResizeHandler>>;
 };
 
 const resizePools = new Map<string, ResizePool>();
@@ -32,11 +32,17 @@ function getResizePool(box: ResizeObserverBoxOptions = 'content-box'): ResizePoo
     return existing;
   }
 
-  const handlers = new WeakMap<Element, ResizeHandler>();
+  const handlers = new WeakMap<Element, Set<ResizeHandler>>();
 
   const observer = new ResizeObserver((entries) => {
     for (const entry of entries) {
-      handlers.get(entry.target)?.(entry);
+      const targetHandlers = handlers.get(entry.target);
+      if (!targetHandlers) {
+        continue;
+      }
+      for (const handler of targetHandlers) {
+        handler(entry);
+      }
     }
   });
 
@@ -103,10 +109,9 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
     const node = externalRef.current;
 
     let latestEntry: ResizeObserverEntry | null = null;
+    let rafId: number | null = null;
 
     const pool = getResizePool(box);
-
-    let rafId: number | null = null;
 
     const emit = (entry: ResizeObserverEntry) => {
       const { width, height } = getEntrySize(entry, box);
@@ -138,8 +143,13 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
       });
     };
 
-    pool.handlers.set(node, scheduleEmit);
-    pool.observer.observe(node, { box });
+    const nodeHandlers = pool.handlers.get(node);
+    if (nodeHandlers) {
+      nodeHandlers.add(scheduleEmit);
+    } else {
+      pool.handlers.set(node, new Set([scheduleEmit]));
+      pool.observer.observe(node, { box });
+    }
 
     return () => {
       if (rafId !== null) {
@@ -148,8 +158,17 @@ export function useResizeObserver<T extends HTMLElement = HTMLElement>(
       }
 
       latestEntry = null;
-      pool.handlers.delete(node);
-      pool.observer.unobserve(node);
+
+      const currentNodeHandlers = pool.handlers.get(node);
+      if (!currentNodeHandlers) {
+        return;
+      }
+
+      currentNodeHandlers.delete(scheduleEmit);
+      if (currentNodeHandlers.size === 0) {
+        pool.handlers.delete(node);
+        pool.observer.unobserve(node);
+      }
     };
   }, [externalRef, enabled, box, rafBatch, onResize]);
 }
