@@ -42,6 +42,8 @@ export function resolveLayoutProps<T extends ComponentProps>(
               : value,
         });
       }
+    }
+    if (key in outProps) {
       delete outProps[key];
     }
   }
