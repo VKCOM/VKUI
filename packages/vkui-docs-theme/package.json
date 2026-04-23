@@ -29,7 +29,7 @@
     "@vkontakte/icons": "^3.0.0",
     "@vkontakte/vkjs": "^2.0.2",
     "@vkontakte/vkui": "workspace:^",
-    "@vkontakte/vkui-tokens": "4.76.0",
+    "@vkontakte/vkui-tokens": "4.76.1",
     "scroll-into-view-if-needed": "^3.1.0"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "nextra": "^4.6.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
     "next": "^15.5.15",

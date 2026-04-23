@@ -73,7 +73,7 @@ jobs:
 
       - name: Upload archive
         if: steps.zip-screenshots.outputs.needUpload == 'true'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
           path: packages/vkui/screenshots-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}.zip
@@ -91,7 +91,7 @@ jobs:
 
       - name: Download artifacts
         id: artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           path: packages/vkui/artifacts
 
@@ -117,7 +117,7 @@ jobs:
 
       - name: Create pull request with updated screenshots
         if: ${{ steps.unzip.outputs.found == 'true' && github.event_name == 'push' }}
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'ci(e2e): Update screenshots for ${{ github.ref_name }}'

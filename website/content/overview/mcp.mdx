@@ -1,0 +1,219 @@
+---
+description: MCP-сервер VKUI — подключение AI-ассистентов к документации компонентов, хуков, примеров кода и миграций.
+---
+
+<Overview type="doc">
+# MCP-сервер
+
+MCP-сервер VKUI даёт AI-ассистентам (Cursor, Claude Desktop и другим клиентам с поддержкой [Model Context Protocol](https://modelcontextprotocol.io/)) доступ к актуальной документации: списку компонентов и хуков, их свойствам, примерам и рекомендациям по миграции на новые мажорные версии.
+</Overview>
+
+## Зачем нужен [#why]
+
+- **Подсказки по API** — ассистент может подсказать свойства компонента, примеры использования и ссылку на документацию.
+- **Миграция на новые мажорные версии** — по имени компонента или хука можно получить рекомендации по обновлению кода.
+- **Примеры использования** — текстовые примеры по имени или slug компонента/хука.
+
+Данные подгружаются из CDN MCP-данных VKUI, поэтому контекст соответствует опубликованной документации выбранной версии.
+
+## Что такое MCP [#what-is-mcp]
+
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io/) — открытый протокол для подключения AI-приложений к внешним данным и инструментам. Сервер предоставляет **инструменты (tools)** — функции, которые клиент может вызывать, и **ресурсы (resources)** — URI, по которым можно читать контент без вызова инструментов. VKUI MCP реализует и то, и другое.
+
+## Подключение [#setup]
+
+### Подключение к MCP-клиенту [#setup-client]
+Для запуска MCP-сервера нужен установленный `Node.js`.
+
+<McpClientsTabs>
+  <McpClientsTab id="cursor" title="Cursor">
+    Добавьте сервер в `.cursor/mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "vkui": {
+          "command": "npx",
+          "args": ["-y", "@vkontakte/vkui-mcp"]
+        }
+      }
+    }
+    ```
+
+    Подробности: [документация Cursor по MCP](https://cursor.com/docs/context/mcp#installing-mcp-servers).
+  </McpClientsTab>
+
+  <McpClientsTab id="vscode" title="VS Code">
+    Добавьте сервер через CLI VS Code:
+
+    ```bash
+    code --add-mcp '{"name":"vkui","command":"npx","args":["-y","@vkontakte/vkui-mcp"]}'
+    ```
+
+    Или используйте конфиг:
+
+    ```json
+    {
+      "mcpServers": {
+        "vkui": {
+          "command": "npx",
+          "args": ["-y", "@vkontakte/vkui-mcp"]
+        }
+      }
+    }
+    ```
+
+    Подробности: [документация VS Code по MCP](https://code.visualstudio.com/docs/copilot/chat/mcp-servers#_add-an-mcp-server).
+  </McpClientsTab>
+
+  <McpClientsTab id="claude-code" title="Claude Code">
+    Добавьте сервер через CLI:
+
+    ```bash
+    claude mcp add vkui npx -y @vkontakte/vkui-mcp
+    ```
+
+    Подробности: [документация Claude Code по MCP](https://docs.claude.com/en/docs/claude-code/mcp).
+  </McpClientsTab>
+
+  <McpClientsTab id="codex" title="Codex">
+    Добавьте сервер в `~/.codex/config.toml`:
+
+    ```toml
+    [mcp_servers.vkui]
+    command = "npx"
+    args = ["-y", "@vkontakte/vkui-mcp"]
+    ```
+
+    Подробности: [документация Codex по MCP](https://github.com/openai/codex/blob/main/docs/config.md#mcp_servers).
+  </McpClientsTab>
+
+  <McpClientsTab id="gemini-cli" title="Gemini CLI">
+    Добавьте сервер через CLI:
+
+    ```bash
+    gemini mcp add vkui npx -y @vkontakte/vkui-mcp
+    ```
+
+    Подробности: [документация Gemini CLI по MCP](https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md#how-to-set-up-your-mcp-server).
+  </McpClientsTab>
+
+  <McpClientsTab id="other" title="Other">
+    Добавьте сервер в конфиг вашего MCP-клиента (файл и схема зависят от клиента):
+
+    ```json
+    {
+      "mcpServers": {
+        "vkui": {
+          "command": "npx",
+          "args": ["-y", "@vkontakte/vkui-mcp"]
+        }
+      }
+    }
+    ```
+  </McpClientsTab>
+</McpClientsTabs>
+
+Опция `-y` у `npx` разрешает автоматическую установку пакета при первом запуске.
+
+### Установка в проект [#setup-install]
+
+Если нужно зафиксировать версию в проекте:
+
+```bash
+npm install -D @vkontakte/vkui-mcp
+# или
+yarn add -D @vkontakte/vkui-mcp
+```
+
+После этого в конфиге MCP укажите локальный бинарник:
+
+```json
+{
+  "mcpServers": {
+    "vkui": {
+      "command": "node",
+      "args": ["node_modules/@vkontakte/vkui-mcp/dist/cli.js"]
+    }
+  }
+}
+```
+
+## Переменные окружения [#env]
+
+| Переменная | Описание |
+|------------|----------|
+| `DATA_URL` | Базовый URL MCP-данных. По умолчанию используется `https://vkui-mcp.cdn-vk.ru`. |
+| `VKUI_VERSION` | Версия библиотеки в MCP-данных. По умолчанию `latest`. Данные всегда запрашиваются по адресу `{DATA_URL}/{VKUI_VERSION}/...`. |
+
+Поддержка `VKUI_VERSION`:
+
+- Для v7 доступны: `7.5.4`, `7.6.4`, `7.7.2`, `7.8.2`, `7.9.2`, `7.10.2`, `7.11.7`.
+- Для v8 доступны: все версии начиная с `8.0.1`.
+
+В Cursor и других клиентах переменные окружения для MCP-сервера задаются в конфиге. Пример с версией vkui:
+
+```json
+{
+  "mcpServers": {
+    "vkui": {
+      "command": "npx",
+      "args": ["-y", "@vkontakte/vkui-mcp"],
+      "env": {
+        "VKUI_VERSION": "8.1.0"
+      }
+    }
+  }
+}
+```
+
+## Инструменты (Tools) [#tools]
+
+Инструменты вызываются клиентом по запросу пользователя или модели.
+
+### Компоненты
+
+| Инструмент | Описание |
+|------------|----------|
+| `list_components` | Список всех компонентов (имя, slug, описание, количество примеров). |
+| `get_component_metadata` | Карточка компонента: описание и пропсы. Параметры: `name` (например `Button`) или `slug` (например `button`). |
+
+### Хуки
+
+| Инструмент | Описание |
+|------------|----------|
+| `list_hooks` | Список всех хуков (имя, slug, описание, количество примеров). |
+| `get_hook_metadata` | Карточка хука: описание, пропсы, примеры. Параметры: `name` или `slug`. |
+
+### Примеры кода
+
+| Инструмент | Описание |
+|------------|----------|
+| `get_examples` | Текст с примерами использования компонента/хука. Параметры: `name` (например `Alert`) или `slug` (например `alert`). |
+
+### Миграция на новые мажорные версии
+
+| Инструмент | Описание |
+|------------|----------|
+| `list_migration_targets` | Список имён компонентов и хуков, для которых есть рекомендации по миграции на следующую мажорную версию (сейчас — v8). |
+| `get_migration_target` | Рекомендации по миграции для одного компонента/хука. Параметр `name` — имя из списка целей миграции. Возвращает фрагменты кода «до» и «после». |
+
+Пример миграции на конкретную версию и готовые промпты см. в документации: [Миграция с v7 на v8](/migrations/migration-v8).
+
+## Ресурсы (Resources) [#resources]
+
+Ресурсы позволяют подключать данные по URI без вызова инструментов — удобно подставлять контекст «как файл».
+
+| URI | Описание |
+|-----|----------|
+| `vkui://migration/v8` | Статический ресурс: обзор миграции на v8 и список всех целей миграции (JSON). |
+| `vkui://component/{slug}` | Карточка компонента по slug (например `vkui://component/button`). В списке ресурсов отображаются все компоненты; автодополнение по slug. |
+| `vkui://migration/{name}` | Рекомендации по миграции для одного компонента или хука по имени (например `vkui://migration/Button`). В списке — все цели миграции; автодополнение по имени. |
+
+Использование ресурсов зависит от клиента: например, в Cursor их можно добавлять в контекст через список ресурсов или по URI.
+
+## Итог [#summary]
+
+- В Cursor и других MCP-клиентах укажите команду запуска в конфиге MCP.
+- Используйте инструменты для списков, метаданных, примеров и миграции; ресурсы — для чтения контекста по URI.
+- При необходимости задайте `DATA_URL` и/или `VKUI_VERSION` в `env` MCP-конфига.

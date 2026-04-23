@@ -42,7 +42,7 @@ jobs:
       - name: Download artifact (if it is 'workflow_run')
         if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'workflow_dispatch' && github.event.workflow_run.conclusion == 'success' }}
         id: artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           github-token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           name: publish_workflow_payload
@@ -101,3 +101,48 @@ jobs:
           folder: website/out
           clean: false
           force: false
+
+  deploy_mcp_data:
+    needs: [payload]
+    if: ${{ success() && needs.payload.outputs.package_name == '@vkontakte/vkui' && needs.payload.outputs.next_version }}
+    runs-on: ubuntu-latest
+    name: Deploy MCP data
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ env.CHECKOUT_BRANCH }}
+
+      - name: Setting up the repository environment
+        uses: ./.github/actions/setup
+
+      - name: Build vkui package
+        run: yarn run build:vkui
+
+      - name: Generate docgen
+        run: yarn workspace @project-docs/website run generate
+
+      - name: Generate MCP data
+        run: node website/scripts/generate-mcp-data.mjs
+
+      - name: Upload MCP data to S3 in version folder
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_MCP }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: mcp-data/
+          commandUploadDist: ${{ needs.payload.outputs.next_version }}
+
+      - name: Upload MCP data to S3 in latest folder
+        uses: VKCOM/gh-actions/VKUI/s3@main
+        with:
+          awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          awsSecretAccessKey: ${{ secrets.AWS_SECRET_KEY }}
+          awsBucket: ${{ vars.AWS_BUCKET_MCP }}
+          awsEndpoint: https://${{ vars.AWS_ENDPOINT }}
+          command: upload
+          commandUploadSrc: mcp-data/
+          commandUploadDist: latest

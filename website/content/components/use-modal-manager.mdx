@@ -37,7 +37,9 @@ return (
 );
 ```
 
-## Параметры
+## API
+
+### Параметры
 
 Все параметры опциональны. Хук можно вызвать без аргументов: `useModalManager()`.
 
@@ -55,16 +57,16 @@ return (
 | `onClose`               | `(id: string) => void` | Колбэк, вызываемый при начале закрытия модалки.                                                                                                                                                   |
 | `onClosed`              | `(id: string) => void` | Колбэк, вызываемый при окончательном закрытии модалки.                                                                                                                                            |
 
-## Возвращаемое значение
+### Возвращаемое значение
 
 Хук возвращает массив из двух элементов:
 
 1. **`api`** — объект с методами для управления модальными окнами
 2. **`contextHolder`** — React-элемент, который нужно добавить в JSX вашего компонента
 
-## API методы
+### Методы
 
-### `openModalCard(props)` — открыть ModalCard
+#### `openModalCard(props)` — открыть ModalCard
 
 Показывает модальную карточку. Принимает те же свойства, что и компонент `ModalCard` (кроме `open` и `keepMounted`).
 
@@ -78,7 +80,7 @@ const result = api.openModalCard({
 });
 ```
 
-### `openModalPage(props)` — открыть ModalPage
+#### `openModalPage(props)` — открыть ModalPage
 
 Показывает модальную страницу. Принимает те же свойства, что и компонент `ModalPage` (кроме `open` и `keepMounted`).
 
@@ -91,11 +93,11 @@ const result = api.openModalPage({
 });
 ```
 
-### `openCustomModalCard(payload)` и `openCustomModalPage(payload)` — открыть кастомную модалку
+#### `openCustomModalCard(payload)` и `openCustomModalPage(payload)` — открыть кастомную модалку
 
 Позволяют создать модальное окно с собственной разметкой. Подробнее в разделе [Пользовательские модальные окна](#custom-modals).
 
-### `close(id)` — закрыть модалку
+#### `close(id)` — закрыть модалку
 
 Закрывает модальное окно по его идентификатору.
 
@@ -104,7 +106,7 @@ const result = api.openModalCard({ title: "Модалка" });
 api.close(result.id);
 ```
 
-### `closeAll()` — закрыть все модалки
+#### `closeAll()` — закрыть все модалки
 
 Закрывает все открытые модальные окна одновременно.
 
@@ -112,7 +114,7 @@ api.close(result.id);
 api.closeAll();
 ```
 
-### `update(id, type, props)` — обновить свойства модалки
+#### `update(id, type, props)` — обновить свойства модалки
 
 Изменяет свойства уже открытой модалки. Можно изменить любое свойство, кроме `id`.
 
@@ -125,7 +127,7 @@ api.update(result.id, "card", {
 });
 ```
 
-### `setSaveHistory(value)` — изменить сохранение истории
+#### `setSaveHistory(value)` — изменить сохранение истории
 
 Меняет поведение сохранения истории модалок.
 
@@ -133,7 +135,7 @@ api.update(result.id, "card", {
 api.setSaveHistory(false); // Предыдущие модалки будут закрываться
 ```
 
-## OpenModalReturn [#open-modal-return]
+### OpenModalReturn [#open-modal-return]
 
 Объект, который возвращают методы `openModalCard`, `openModalPage`, `openCustomModalCard` и `openCustomModalPage`. Содержит методы для управления конкретной модалкой.
 
@@ -159,6 +161,7 @@ result.onClose().then(() => {
 
 ### Базовый пример
 
+{/* @example-description: Базовое использование `useModalManager` для открытия `ModalPage` и `ModalCard` через API. */}
 <Playground>
 
 ```jsx
@@ -245,6 +248,7 @@ return (
 
 Чтобы отключить это поведение, передайте `saveHistory: false` в хук или используйте метод `setSaveHistory(false)`. При отключённой истории предыдущая модалка будет закрываться при открытии новой.
 
+{/* @example-description: Пример управления историей модалок с переключением `saveHistory`. */}
 <Playground>
 
 ```jsx
@@ -398,6 +402,7 @@ api.openCustomModalCard(MyModalComponent);
 
 Когда нужно передать данные в модалку (например, функцию для открытия следующей модалки):
 
+{/* @example-description: Пользовательские модалки через `openCustomModalCard/openCustomModalPage` с дополнительными свойствами. */}
 <Playground>
 
 ```jsx
@@ -559,6 +564,7 @@ return (
 
 Если дополнительные свойства не нужны, можно передать компонент напрямую:
 
+{/* @example-description: Кастомные модалки без дополнительных свойств с передачей компонента напрямую. */}
 <Playground>
 
 ```jsx
