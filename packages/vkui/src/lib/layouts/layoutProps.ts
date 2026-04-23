@@ -27,6 +27,7 @@ const CSS_GLOBAL_KEYWORDS: CSSGlobalValue[] = ['inherit', 'initial', 'unset'];
 
 const CSS_KEYWORDS = [...CSS_INTRINSIC_KEYWORDS, ...CSS_GLOBAL_KEYWORDS];
 const PADDING_VALUES = [...DESIGN_SYSTEM_SIZES, ...CSS_GLOBAL_KEYWORDS, 'system'];
+const MARGIN_VALUES = [...DESIGN_SYSTEM_SIZES, ...CSS_GLOBAL_KEYWORDS];
 const SIZE_VALUES = CSS_KEYWORDS;
 const MINMAX_SIZE_VALUES = [...CSS_KEYWORDS.filter((opt) => opt !== 'auto')];
 const FLEX_VALUES = CSS_GLOBAL_KEYWORDS;
@@ -49,6 +50,13 @@ export const SYSTEM_PADDING_VERTICAL = 'var(--vkui--size_base_padding_vertical--
 export const SYSTEM_PADDING_HORIZONTAL = 'var(--vkui--size_base_padding_horizontal--regular)';
 
 export const LAYOUT_PROPS = {
+  margin: MARGIN_VALUES,
+  marginInline: MARGIN_VALUES,
+  marginBlock: MARGIN_VALUES,
+  marginInlineStart: MARGIN_VALUES,
+  marginInlineEnd: MARGIN_VALUES,
+  marginBlockStart: MARGIN_VALUES,
+  marginBlockEnd: MARGIN_VALUES,
   padding: PADDING_VALUES,
   paddingInline: PADDING_VALUES,
   paddingBlock: PADDING_VALUES,
