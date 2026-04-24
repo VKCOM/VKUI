@@ -6,10 +6,12 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useGlobalOnClickOutside } from '../../hooks/useGlobalOnClickOutside';
 import { usePlatform } from '../../hooks/usePlatform';
 import { type SizeTypeValues, ViewWidth, type ViewWidthType } from '../../lib/adaptivity';
-import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import type { HTMLAttributesWithRootRef } from '../../types';
 import { useScrollLock } from '../AppRoot/ScrollContext';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { Box } from '../Box/Box';
+import { SplitColWidthWrapper } from '../FixedLayout/SplitColWidthWrapper';
+import { OnboardingTooltipFixedContainer } from '../OnboardingTooltip/OnboardingTooltipFixedContainer';
+import { Popover } from '../Popover/Popover';
 import styles from './PanelHeaderContext.module.css';
 
 function getViewWidthClassName(
@@ -43,6 +45,8 @@ export interface PanelHeaderContextProps extends HTMLAttributesWithRootRef<HTMLD
   onClose: VoidFunction;
 }
 
+const ComponentDecorators = [SplitColWidthWrapper, OnboardingTooltipFixedContainer];
+
 /**
  * @see https://vkui.io/components/panel-header-context
  */
@@ -55,15 +59,17 @@ export const PanelHeaderContext = ({
 }: PanelHeaderContextProps): React.ReactNode => {
   const platform = usePlatform();
   const { sizeX: legacySizeX, viewWidth = 'none' } = useAdaptivity();
-  const elementRef = React.useRef<HTMLDivElement>(null);
-  const [animationState, animationHandlers] = useCSSKeyframesAnimationController(
-    opened ? 'enter' : 'exit',
-    undefined,
-    true,
-  );
-  const visible = animationState !== 'exited';
+  const [visible, setVisible] = React.useState<boolean>(opened);
+  const [prevOpened, setPrevOpened] = React.useState<boolean>(opened);
+  const anchorRef = React.useRef<HTMLElement | null>(null);
+  const popoverRef = React.useRef<HTMLDivElement | null>(null);
 
-  useScrollLock(platform !== 'vkcom' && visible);
+  if (prevOpened !== opened) {
+    if (opened) {
+      setVisible(true);
+    }
+    setPrevOpened(opened);
+  }
 
   const handleGlobalOnClickOutside = React.useCallback(
     (event: MouseEvent) => {
@@ -75,15 +81,21 @@ export const PanelHeaderContext = ({
     [opened, onClose],
   );
 
-  useGlobalOnClickOutside(handleGlobalOnClickOutside, visible ? elementRef : null);
+  useScrollLock(platform !== 'vkcom' && visible);
+
+  useGlobalOnClickOutside(
+    handleGlobalOnClickOutside,
+    visible ? anchorRef : null,
+    visible ? popoverRef : null,
+  );
 
   if (!visible) {
     return null;
   }
 
   return (
-    <FixedLayout
-      {...restProps}
+    <Box
+      Component={ComponentDecorators}
       className={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
@@ -91,7 +103,10 @@ export const PanelHeaderContext = ({
         getViewWidthClassName(viewWidth, legacySizeX),
         className,
       )}
-      vertical="top"
+      position="fixed"
+      inlineSize="100%"
+      insetBlockStart={0}
+      {...restProps}
     >
       <div
         onClick={(event) => {
@@ -100,14 +115,31 @@ export const PanelHeaderContext = ({
         }}
         className={styles.fade}
       />
-      <div
-        data-testid={process.env.NODE_ENV === 'test' ? 'content' : undefined}
+      <Popover
+        shown={opened}
+        disableFlipMiddleware
+        disableShiftMiddleware
+        disableCloseOnClickOutside
+        disableCloseOnEscKey
+        strategy="absolute"
+        trigger="manual"
+        role="presentation"
+        content={<div className={styles.content}>{children}</div>}
+        sameWidth
+        usePortal={false}
+        zIndex={1}
+        noStyling
         className={styles.in}
-        ref={elementRef}
-        {...animationHandlers}
+        offsetByMainAxis={0}
+        onShownChanged={(shown) => {
+          if (!shown) {
+            setVisible(false);
+          }
+        }}
+        getRootRef={popoverRef}
       >
-        <div className={styles.content}>{children}</div>
-      </div>
-    </FixedLayout>
+        <Box getRootRef={anchorRef} inlineSize="100%" />
+      </Popover>
+    </Box>
   );
 };

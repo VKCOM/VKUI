@@ -2,8 +2,6 @@
   --vkui_internal--PanelHeaderContext__fade_display: none;
 
   z-index: var(--vkui_internal--z_index_panel_header_context);
-  inline-size: 100%;
-  block-size: auto;
 }
 
 .viewWidthSmallTabletMinus {
@@ -21,9 +19,6 @@
 }
 
 .in {
-  position: absolute;
-  inset-inline-start: 0;
-  z-index: 1;
   box-sizing: border-box;
   inline-size: 100%;
   padding: 8px;
@@ -171,3 +166,13 @@
     opacity: 0;
   }
 }
+
+/* stylelint-disable selector-max-universal, selector-pseudo-class-disallowed-list */
+:global(.vkuiInternalPanelHeader) ~ .host,
+:global(.vkuiInternalPanelHeader) ~ * .host {
+  inset-block-start: calc(
+    var(--vkui_internal--panel_header_height) +
+    var(--vkui_internal--safe_area_inset_top)
+  );
+}
+/* stylelint-enable selector-max-universal, selector-pseudo-class-disallowed-list */

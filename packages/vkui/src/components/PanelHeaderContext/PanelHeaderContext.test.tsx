@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
 import {
   baselineComponent,
-  userEvent,
-  waitCSSKeyframesAnimation,
+  waitForFloatingPosition,
   withFakeTimers,
 } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
@@ -32,7 +31,7 @@ describe('PanelHeaderContext', () => {
             <PanelHeaderContext opened onClose={onClose} />
           </AdaptivityProvider>,
         );
-        await userEvent.click(document.body);
+        fireEvent.click(document.body);
         expect(onClose).toHaveBeenCalledTimes(1);
       }),
     );
@@ -42,7 +41,7 @@ describe('PanelHeaderContext', () => {
       withFakeTimers(async () => {
         const onClose = vi.fn();
         render(<PanelHeaderContext opened onClose={onClose} />);
-        await userEvent.click(
+        fireEvent.click(
           document.querySelector(`.${panelHeaderContextStyles.fade}`) as Element,
         );
         expect(onClose).toHaveBeenCalledTimes(1);
@@ -58,7 +57,7 @@ describe('PanelHeaderContext', () => {
             <div data-testid="xxx" />
           </PanelHeaderContext>,
         );
-        await userEvent.click(screen.getByTestId('xxx'));
+        fireEvent.click(screen.getByTestId('xxx'));
         expect(onClose).not.toHaveBeenCalled();
       }),
     );
@@ -69,12 +68,14 @@ describe('PanelHeaderContext', () => {
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
+      expect(screen.queryByTestId('xxx')).not.toBeNull();
       result.rerender(
         <PanelHeaderContext opened={false} onClose={noop}>
           <div data-testid="xxx" />
         </PanelHeaderContext>,
       );
-      await waitCSSKeyframesAnimation(result.getByTestId('content'));
+
+      await waitForFloatingPosition();
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
   });

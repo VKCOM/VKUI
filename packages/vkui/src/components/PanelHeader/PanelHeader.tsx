@@ -16,8 +16,9 @@ import type {
   HasRef,
   HTMLAttributesWithRootRef,
 } from '../../types';
+import { Box } from '../Box/Box';
 import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { SplitColWidthWrapper } from '../FixedLayout/SplitColWidthWrapper';
 import { OnboardingTooltipContainer } from '../OnboardingTooltip/OnboardingTooltipContainer';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { Separator } from '../Separator/Separator';
@@ -201,15 +202,18 @@ export const PanelHeader = ({
       getRootRef={isFixed ? getRootRef : getRef}
     >
       {isFixed ? (
-        <FixedLayout
+        <Box
+          Component={SplitColWidthWrapper}
           className={classNames(styles.fixed, 'vkuiInternalPanelHeader__fixed')}
-          vertical="top"
+          position="fixed"
+          insetBlockStart={0}
+          inlineSize="100%"
           getRootRef={getRef}
         >
           <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
             {children}
           </PanelHeaderIn>
-        </FixedLayout>
+        </Box>
       ) : (
         <PanelHeaderIn before={before} after={after} typographyProps={typographyProps}>
           {children}
