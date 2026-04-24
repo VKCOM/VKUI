@@ -26,6 +26,7 @@ import {
   FloatingArrow,
   type FloatingArrowProps as FloatingArrowPropsPrivate,
 } from '../FloatingArrow/FloatingArrow';
+import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Popper.module.css';
 
@@ -138,6 +139,7 @@ export const Popper = ({
   style,
   ...restProps
 }: PopperProps): React.ReactNode => {
+  const { entering } = useNavTransition();
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const { strictPlacement, middlewares } = useFloatingMiddlewaresBootstrap({
@@ -228,6 +230,10 @@ export const Popper = ({
       {children}
     </RootComponent>
   );
+
+  if (entering) {
+    return null;
+  }
 
   return <AppRootPortal usePortal={usePortal}>{dropdown}</AppRootPortal>;
 };

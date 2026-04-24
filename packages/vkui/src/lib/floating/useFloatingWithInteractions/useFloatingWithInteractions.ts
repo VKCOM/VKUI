@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
+import { useNavTransition } from '../../../components/NavTransitionContext/NavTransitionContext';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
 import { useStableCallback } from '../../../hooks/useStableCallback';
@@ -57,6 +58,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     () => (shownProp !== undefined ? { shown: shownProp } : undefined),
     [shownProp],
   );
+  const { entering } = useNavTransition();
   const [shownLocalState, setShownLocalState] = useCustomEnsuredControl<LocalState>({
     value: memoizedValue,
     disabled,
@@ -376,7 +378,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   return {
     placement,
-    shown: shownFinalState,
+    shown: shownFinalState && !entering,
     willBeHide,
     refs,
     referenceProps,
