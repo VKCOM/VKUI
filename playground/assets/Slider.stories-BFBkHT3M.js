@@ -1,0 +1,12 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{n,r,t as i}from"./VKUIDecorators-BYQp_QSp.js";import{n as a,t as o}from"./Group-aYCj1f58.js";import{n as s,t as c}from"./FormItem-NNvOBQ6U.js";import{n as l,t as u}from"./Slider-BTgTCHOL.js";import{i as d,n as f,t as p}from"./constants-Dj6vOzIh.js";import{n as m,t as h}from"./createStoryParameters-pz1UrWMe.js";function g(e){return e===1?`Pineapple Maximum Count`:`Pineapple Minimum Count`}var _,v,y,b,x,S,C=e((()=>{i(),d(),m(),s(),a(),l(),_=t(),v={title:`Forms/Slider`,component:u,parameters:h(`Slider`,p,f),args:{getAriaLabel:g},argTypes:{defaultValue:{table:{defaultValue:{summary:`min | [min, max]`}}},multiple:{table:{defaultValue:{summary:`false`}}},getAriaLabel:{table:{defaultValue:{summary:`Для примера используется функция: ${g.toString()}`}}}},tags:[`Формы и поля ввода`]},y=e=>e?.multiple?`multiple`:`single`,b={decorators:[(e,t)=>(0,_.jsx)(o,{children:(0,_.jsx)(c,{top:`Pineapple Count`,children:(0,_.jsx)(e,{...t.args},y(t.args))})}),n,r]},x={...b,args:{withTooltip:!0}},b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
+  decorators: [(Component: typeof Slider, context: StoryContext<SliderProps | SliderMultipleProps>) => <Group>
+        <FormItem top="Pineapple Count">
+          <Component key={forceRemountKey(context.args)} {...context.args} />
+        </FormItem>
+      </Group>, withSinglePanel, withVKUILayout]
+}`,...b.parameters?.docs?.source}}},x.parameters={...x.parameters,docs:{...x.parameters?.docs,source:{originalSource:`{
+  ...Playground,
+  args: {
+    withTooltip: true
+  }
+}`,...x.parameters?.docs?.source}}},S=[`Playground`,`Tooltip`]}));export{v as a,C as i,x as n,S as r,b as t};

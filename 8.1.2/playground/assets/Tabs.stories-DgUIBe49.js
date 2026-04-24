@@ -1,0 +1,1 @@
+import{a as e,i as t,n,r,t as i}from"./Tabs.stories-ed2K58tJ.js";t();export{i as Playground,n as WithHorizontalScroll,r as __namedExportsOrder,e as default};

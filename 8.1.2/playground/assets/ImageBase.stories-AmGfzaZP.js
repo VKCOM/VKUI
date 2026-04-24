@@ -1,0 +1,7 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{n as t,t as n}from"./ImageBase-B46_iHF5.js";import{i as r,n as i,t as a}from"./constants-Dj6vOzIh.js";import{n as o,t as s}from"./createStoryParameters-pz1UrWMe.js";import{r as c}from"./getFormFieldIconsPresets-Rpdnz0zC.js";import{t as l}from"./presets-VoE0j0xA.js";import{n as u,o as d}from"./mock-D9mwry-3.js";var f,p,m;e((()=>{r(),d(),l(),o(),t(),f={title:`Data Display/ImageBase`,component:n,parameters:s(`Image`,a,i),argTypes:{filter:{control:{type:`select`},options:[`blur`,`contrast`,`grayscale`,`hue-rotate`,`drop-shadow`],mapping:{blur:`blur(5px)`,contrast:`contrast(200%)`,grayscale:`grayscale(80%)`,"hue-rotate":`hue-rotate(90deg)`,"drop-shadow":`drop-shadow(16px 16px 20px red) invert(75%)`}},fallbackIcon:c({iconSizes:[`12`,`16`,`20`,`24`,`28`,`36`]})},tags:[`Отображение данных`]},p={args:{src:u(`app_shorm_online`),alt:`Приложение шторм онлайн`,size:64}},p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
+  args: {
+    src: getAvatarUrl('app_shorm_online'),
+    alt: 'Приложение шторм онлайн',
+    size: 64
+  }
+}`,...p.parameters?.docs?.source}}},m=[`Playground`]}))();export{p as Playground,m as __namedExportsOrder,f as default};
