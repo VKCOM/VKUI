@@ -7,10 +7,12 @@
     "vitest.global-setup.ts",
     "vitest.setup.ts",
     "playwright-ct.config.ts",
+    "rspack.styles.config.ts",
     "playwright/**/*",
     "global.vitest.ts",
     "vite.config.ts",
-    "scripts/**/*.ts"
+    "scripts/**/*.ts",
+    "cssm/postcss.config.ts"
   ],
   "exclude": [
     "**/node_modules",

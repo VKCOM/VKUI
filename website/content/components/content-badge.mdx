@@ -132,6 +132,46 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
+## Пользовательские цвета
+
+Используйте свойство `appearance` для задания произвольного цвета `ContentBadge`. Поддерживаются:
+
+### HEX-коды
+
+{/* @example-description: Пользовательский цвет `ContentBadge` через HEX-значение в `appearance`. */}
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  ```
+</Playground>
+
+### CSS-переменные
+
+{/* @example-description: Пользовательский цвет `ContentBadge` через CSS-переменную в `appearance`. */}
+<Playground>
+  ```jsx
+  <div style={{ '--custom-badge-color': '#7B61FF' }}>
+    <ContentBadge mode="primary" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+    <ContentBadge mode="secondary" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+    <ContentBadge mode="outline" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+  </div>
+  ```
+</Playground>
+
 ### Скругление
 
 Свойство `capsule` включает приближение значения закругления к форме круга:

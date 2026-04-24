@@ -7,6 +7,7 @@ export {
 } from './gaps';
 
 export type {
+  MarginProp,
   PaddingProp,
   InsetProp,
   SizeProp,
