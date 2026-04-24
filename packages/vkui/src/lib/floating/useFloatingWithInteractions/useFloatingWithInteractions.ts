@@ -7,6 +7,7 @@ import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside'
 import { useStableCallback } from '../../../hooks/useStableCallback';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
+import { LockFloatingPositionContext } from '../LockFloatingPosition/LockFloatingPosition';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
 import { convertFloatingDataToReactCSSProperties } from '../functions';
 import type { UseFloatingOptions } from '../types/common';
@@ -85,12 +86,14 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const { triggerOnFocus, triggerOnClick, triggerOnHover } = useResolveTriggerType(trigger);
 
+  const isLock = React.useContext(LockFloatingPositionContext);
+
   // Библиотека `floating-ui`
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
     strategy: strategyProp,
     placement: placementProp,
     ...(middlewares !== undefined ? { middleware: middlewares } : {}),
-    whileElementsMounted,
+    ...(!isLock && { whileElementsMounted }),
   });
 
   const commitShownLocalState = React.useCallback(
