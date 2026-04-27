@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { debounce, noop } from '@vkontakte/vkjs';
 import { getWindow, isHTMLElement } from '@vkontakte/vkui-floating-ui/utils/dom';
+import { useNavTransition } from '../../../components/NavTransitionContext/NavTransitionContext';
 import { useCustomEnsuredControl } from '../../../hooks/useEnsuredControl';
 import { useGlobalOnClickOutside } from '../../../hooks/useGlobalOnClickOutside';
 import { useStableCallback } from '../../../hooks/useStableCallback';
 import { contains, getActiveElementByAnotherElement } from '../../dom';
 import { useIsomorphicLayoutEffect } from '../../useIsomorphicLayoutEffect';
-import { LockFloatingPositionContext } from '../LockFloatingPosition/LockFloatingPosition';
 import { autoUpdateFloatingElement, useFloating } from '../adapters';
 import { convertFloatingDataToReactCSSProperties } from '../functions';
 import type { UseFloatingOptions } from '../types/common';
@@ -57,6 +57,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
     () => (shownProp !== undefined ? { shown: shownProp } : undefined),
     [shownProp],
   );
+  const { entering, animating } = useNavTransition();
   const [shownLocalState, setShownLocalState] = useCustomEnsuredControl<LocalState>({
     value: memoizedValue,
     disabled,
@@ -84,14 +85,12 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   const { triggerOnFocus, triggerOnClick, triggerOnHover } = useResolveTriggerType(trigger);
 
-  const isLock = React.useContext(LockFloatingPositionContext);
-
   // Библиотека `floating-ui`
   const { placement, x, y, strategy, refs, middlewareData } = useFloating<T>({
     strategy: strategyProp,
     placement: placementProp,
     ...(middlewares !== undefined ? { middleware: middlewares } : {}),
-    ...(!isLock && { whileElementsMounted }),
+    ...(animating && { whileElementsMounted }),
   });
 
   const commitShownLocalState = React.useCallback(
@@ -376,7 +375,7 @@ export const useFloatingWithInteractions = <T extends HTMLElement = HTMLElement>
 
   return {
     placement,
-    shown: shownFinalState,
+    shown: shownFinalState && !entering,
     willBeHide,
     refs,
     referenceProps,
