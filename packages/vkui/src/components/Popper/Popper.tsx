@@ -172,14 +172,14 @@ export const Popper = ({
     ...(animating
       ? {}
       : {
-        whileElementsMounted: (...args) => {
-          /* istanbul ignore next: не знаю как проверить */
-          return autoUpdateFloatingElement(...args, {
-            elementResize: autoUpdateOnTargetResize,
-            animationFrame: autoUpdateOnAnimationFrame,
-          });
-        },
-      }),
+          whileElementsMounted: (...args) => {
+            /* istanbul ignore next: не знаю как проверить */
+            return autoUpdateFloatingElement(...args, {
+              elementResize: autoUpdateOnTargetResize,
+              animationFrame: autoUpdateOnAnimationFrame,
+            });
+          },
+        }),
   });
 
   usePlacementChangeCallback(placementProp, resolvedPlacement, onPlacementChange);
