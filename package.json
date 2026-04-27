@@ -67,7 +67,6 @@
     "postcss": "^8.5.10",
     "postcss-cli": "^11.0.1",
     "postcss-custom-media": "^12.0.1",
-    "postcss-gap-properties": "^7.0.0",
     "postcss-import": "^16.1.1",
     "postcss-loader": "^8.2.1",
     "postcss-logical": "^9.0.0",

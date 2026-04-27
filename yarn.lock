@@ -5244,7 +5244,6 @@ __metadata:
     postcss: "npm:^8.5.10"
     postcss-cli: "npm:^11.0.1"
     postcss-custom-media: "npm:^12.0.1"
-    postcss-gap-properties: "npm:^7.0.0"
     postcss-import: "npm:^16.1.1"
     postcss-loader: "npm:^8.2.1"
     postcss-logical: "npm:^9.0.0"
@@ -14208,15 +14207,6 @@ __metadata:
   peerDependencies:
     postcss: ^8.5.10
   checksum: 10/4b15dc21b35372cfb15c3375cffd81c370713869ccd1884c00d4f5094e50b556cf287f028122178ff7acf2e175d4b90b228cc079480a9286e8e6db31922edadf
-  languageName: node
-  linkType: hard
-
-"postcss-gap-properties@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "postcss-gap-properties@npm:7.0.0"
-  peerDependencies:
-    postcss: ^8.4
-  checksum: 10/b16633237beafc6e9561f9b7e14cdc02ea80ed37608e1d1bea1149c15ecd1dc8f00fcdc679b3c69d1f3b1cca0c198a1d645580c3933ec90c2c9d7953771802a6
   languageName: node
   linkType: hard
 
