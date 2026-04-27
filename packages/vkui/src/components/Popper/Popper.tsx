@@ -12,7 +12,6 @@ import {
   usePlacementChangeCallback,
   type VirtualElement,
 } from '../../lib/floating';
-import { LockFloatingPositionContext } from '../../lib/floating/LockFloatingPosition/LockFloatingPosition';
 import { useReferenceHiddenChangeCallback } from '../../lib/floating/useReferenceHiddenChangeCallback';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { HTMLAttributesWithRootRef } from '../../types';
@@ -26,6 +25,7 @@ import {
   FloatingArrow,
   type FloatingArrowProps as FloatingArrowPropsPrivate,
 } from '../FloatingArrow/FloatingArrow';
+import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { RootComponent } from '../RootComponent/RootComponent';
 import styles from './Popper.module.css';
 
@@ -138,6 +138,7 @@ export const Popper = ({
   style,
   ...restProps
 }: PopperProps): React.ReactNode => {
+  const { entering, animating } = useNavTransition();
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
 
   const { strictPlacement, middlewares } = useFloatingMiddlewaresBootstrap({
@@ -157,8 +158,6 @@ export const Popper = ({
     overflowPadding,
   });
 
-  const isLock = React.useContext(LockFloatingPositionContext);
-
   const {
     x: floatingDataX,
     y: floatingDataY,
@@ -170,7 +169,7 @@ export const Popper = ({
     ...(strictPlacement !== undefined && { placement: strictPlacement }),
     ...(strategyProp !== undefined && { strategy: strategyProp }),
     middleware: middlewares,
-    ...(isLock
+    ...(animating
       ? {}
       : {
           whileElementsMounted: (...args) => {
@@ -228,6 +227,10 @@ export const Popper = ({
       {children}
     </RootComponent>
   );
+
+  if (entering) {
+    return null;
+  }
 
   return <AppRootPortal usePortal={usePortal}>{dropdown}</AppRootPortal>;
 };

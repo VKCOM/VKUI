@@ -6,7 +6,6 @@ import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import type { AcceptedPlugin } from 'postcss';
 import postcssCustomMedia from 'postcss-custom-media';
-import postcssGapProperties from 'postcss-gap-properties';
 import cssImport from 'postcss-import';
 import postcssLogical from 'postcss-logical';
 import cssModules from 'postcss-modules';
@@ -111,13 +110,6 @@ function makePostcssPlugins({
         getJSON: () => void 0,
       }),
     );
-  }
-
-  // TODO [>=9]: Проверить браузерную поддержку
-  //
-  // https://caniuse.com/mdn-css_properties_gap_grid_context
-  if (!isESNext) {
-    plugins.push(postcssGapProperties());
   }
 
   // Уменьшение размера для продакшен сборки

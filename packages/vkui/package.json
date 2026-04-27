@@ -94,7 +94,7 @@
     "@vkontakte/vkui-floating-ui": "^0.2.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.12",
+    "@biomejs/biome": "^2.4.13",
     "@types/node": "*",
     "@types/postcss-import": "^14.0.3",
     "react": "^18.3.1",
