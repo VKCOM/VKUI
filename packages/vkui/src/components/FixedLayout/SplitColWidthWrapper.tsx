@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
+import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
 import type { HasComponent } from '../../types';
 import { SplitColContext } from '../SplitCol/SplitColContext';
 
@@ -10,6 +11,7 @@ type SplitColWidthWrapperProps = React.HTMLAttributes<HTMLElement> & HasComponen
 
 export const SplitColWidthWrapper: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<SplitColWidthWrapperProps> & React.RefAttributes<HTMLElement>
+  // eslint-disable-next-line react/display-name -- используется defineComponentDisplayNames
 > = React.forwardRef<HTMLElement, SplitColWidthWrapperProps>(
   ({ Component = 'div', style, ...restProps }, forwardedRef) => {
     const platform = usePlatform();
@@ -39,3 +41,7 @@ export const SplitColWidthWrapper: React.ForwardRefExoticComponent<
     return <Component {...restProps} ref={forwardedRef} style={{ width, ...style }} />;
   },
 );
+
+if (process.env.NODE_ENV !== 'production') {
+  defineComponentDisplayNames(SplitColWidthWrapper, 'SplitColWidthWrapper');
+}

@@ -1,11 +1,7 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { noop } from '@vkontakte/vkjs';
 import { ViewWidth } from '../../lib/adaptivity';
-import {
-  baselineComponent,
-  waitForFloatingPosition,
-  withFakeTimers,
-} from '../../testing/utils';
+import { baselineComponent, waitForFloatingPosition, withFakeTimers } from '../../testing/utils';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { PanelHeaderContext } from './PanelHeaderContext';
 import panelHeaderContextStyles from './PanelHeaderContext.module.css';
@@ -41,9 +37,7 @@ describe('PanelHeaderContext', () => {
       withFakeTimers(async () => {
         const onClose = vi.fn();
         render(<PanelHeaderContext opened onClose={onClose} />);
-        fireEvent.click(
-          document.querySelector(`.${panelHeaderContextStyles.fade}`) as Element,
-        );
+        fireEvent.click(document.querySelector(`.${panelHeaderContextStyles.fade}`) as Element);
         expect(onClose).toHaveBeenCalledTimes(1);
       }),
     );
