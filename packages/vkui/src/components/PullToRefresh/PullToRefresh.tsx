@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { clamp } from '../../helpers/math';
-import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { type DOMProps, initializeBrowserGesturePreventionEffect, useDOM } from '../../lib/dom';
@@ -11,6 +10,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { AnyFunction, HasChildren } from '../../types';
 import { type ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
 import { Box } from '../Box/Box';
+import { ParentWidthWrapper } from '../FixedLayout/ParentWidthWrapper';
 import { type CustomTouchEvent, Touch, type TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { PullToRefreshSpinner } from './PullToRefreshSpinner';
@@ -53,16 +53,11 @@ export const PullToRefresh = ({
   isFetching,
   onRefresh,
   className,
-  getRootRef,
   ...restProps
 }: PullToRefreshProps): React.ReactNode => {
   const platform = usePlatform();
   const scroll = useScroll();
-  const rootRef = useExternRef(getRootRef);
   const { window } = useDOM();
-  const [spinnerContainerWidth, setSpinnerContainerWidth] = React.useState<number | undefined>(
-    undefined,
-  );
 
   const prevIsFetchingRef = React.useRef<boolean | undefined>(undefined);
   React.useEffect(() => {
@@ -179,8 +174,6 @@ export const PullToRefresh = ({
     }
     setTouchDown(true);
     startYRef.current = event.startY;
-    // синхронизаци размеров контейнера спиннера с размером компонента
-    setSpinnerContainerWidth(rootRef?.current?.getBoundingClientRect().width ?? undefined);
   };
 
   const iosRefreshStartedRef = React.useRef(false);
@@ -241,7 +234,6 @@ export const PullToRefresh = ({
         aria-live="polite"
         aria-busy={!!isFetching}
         {...restProps}
-        getRootRef={rootRef}
         onStart={onTouchStart}
         onMove={onTouchMove}
         onEnd={onTouchEnd}
@@ -254,9 +246,9 @@ export const PullToRefresh = ({
         )}
       >
         <Box
+          Component={ParentWidthWrapper}
           className={styles.controls}
           inlineSize="100%"
-          maxInlineSize={spinnerContainerWidth}
           position="fixed"
         >
           <PullToRefreshSpinner
