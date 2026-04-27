@@ -1,6 +1,25 @@
 import * as React from 'react';
+import { MEDIA_QUERIES } from '../../../lib/adaptivity';
 import { useDOM } from '../../../lib/dom';
 import { useMediaQueries } from '../../useMediaQueries';
+
+/**
+ * Определяет desktop-режим по окну без хуков.
+ * Desktop: (smallTabletPlus and pointer: fine) or (smallTabletPlus and mediumHeight)
+ * Совпадает с логикой useIsDesktop().
+ */
+export function getIsDesktop(window: Window | null | undefined): boolean {
+  if (!window) {
+    return false;
+  }
+  // eslint-disable-next-line no-restricted-properties
+  const smallTabletPlus = window.matchMedia(MEDIA_QUERIES.SMALL_TABLET_PLUS).matches;
+  // eslint-disable-next-line no-restricted-properties
+  const mediumHeight = window.matchMedia(MEDIA_QUERIES.MEDIUM_HEIGHT).matches;
+  // eslint-disable-next-line no-restricted-properties
+  const pointerFine = window.matchMedia('(pointer: fine)').matches;
+  return smallTabletPlus && (pointerFine || mediumHeight);
+}
 
 /**
  * Хук для определения desktop режима.

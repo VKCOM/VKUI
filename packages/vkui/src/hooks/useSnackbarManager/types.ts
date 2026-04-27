@@ -129,5 +129,38 @@ export type CommonOnOpenPayload = Pick<SnackbarApi.OpenReturn, 'close' | 'update
   additionalProps?: any | undefined;
 };
 
+export namespace SnackbarManagerNS {
+  export type Options = UseSnackbar.Props;
+
+  /**
+   * Императивный менеджер снекбаров, позволяющий вызывать снекбары без хука.
+   * Создаётся через `createSnackbarManager()`.
+   */
+  export type Instance = SnackbarApi.Api & {
+    /**
+     * Устанавливает колбэк, который будет вызван для монтирования контейнера снекбаров.
+     * Переопределяет дефолтное поведение авто-монтирования в `document.body`.
+     * Передайте `null`, чтобы вернуть поведение по умолчанию.
+     */
+    setMountCallback: (callback: (() => void) | null) => void;
+    /**
+     * Устанавливает колбэк, который будет вызван для демонтирования контейнера снекбаров.
+     * Передайте `null`, чтобы вернуть поведение по умолчанию.
+     */
+    setUnmountCallback: (callback: (() => void) | null) => void;
+    /**
+     * Принудительно размонтирует контейнер снекбаров.
+     */
+    unmount: () => void;
+  };
+
+  export interface HolderProps extends UseSnackbar.Props {
+    /**
+     * Экземпляр менеджера. По умолчанию используется глобальный `snackbarManager`.
+     */
+    manager?: Instance;
+  }
+}
+
 export { type SnackbarPlacement } from '../../components/Snackbar/types';
 export { SnackbarProps };

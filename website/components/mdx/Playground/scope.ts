@@ -34,6 +34,7 @@ import {
   ContentBadge,
   ContentCard,
   Counter,
+  createSnackbarManager,
   CustomScrollView,
   CustomSelect,
   CustomSelectOption,
@@ -120,6 +121,8 @@ import {
   Skeleton,
   Slider,
   Snackbar,
+  snackbarManager,
+  SnackbarManagerHolder,
   Spacing,
   Spinner,
   SplitCol,
@@ -320,6 +323,9 @@ export const vkuiScope: Record<string, unknown> = {
   useTodayDate,
   useTooltip,
   useReducedMotion,
+  SnackbarManagerHolder,
+  snackbarManager,
+  createSnackbarManager,
 };
 
 export const scope: Record<string, unknown> = {
