@@ -117,7 +117,7 @@ export const OnboardingTooltip = ({
 }: OnboardingTooltipProps): React.ReactNode => {
   const generatedId = React.useId();
   const tooltipId = idProp || generatedId;
-  const { entering } = useNavTransition();
+  const { entering, animating } = useNavTransition();
 
   const [arrowRef, setArrowRef] = React.useState<HTMLDivElement | null>(null);
   const [tooltipContainer, setTooltipContainer] = React.useState<HTMLElement | null>(null);
@@ -137,8 +137,6 @@ export const OnboardingTooltip = ({
     overflowPadding,
   });
 
-  const { animating } = useNavTransition();
-
   const {
     x: floatingDataX,
     y: floatingDataY,
@@ -150,7 +148,7 @@ export const OnboardingTooltip = ({
     strategy: positionStrategy,
     ...(strictPlacement !== undefined && { placement: strictPlacement }),
     middleware: middlewares,
-    ...(animating && {
+    ...(!animating && {
       whileElementsMounted: (...args) =>
         autoUpdateFloatingElement(...args, { elementResize: true }),
     }),
