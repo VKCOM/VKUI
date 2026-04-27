@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
-import { useDOM } from '../../lib/dom';
 import type { HasComponent, HTMLAttributesWithRootRef } from '../../types';
 import { HorizontalScroll, type HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 import { RootComponent } from '../RootComponent/RootComponent';
@@ -49,11 +48,11 @@ export const CardScroll = ({
   const refContainer = React.useRef<HTMLDivElement>(null);
   const direction = useConfigDirection();
 
-  const { window } = useDOM();
-
   const getPadding = (container: HTMLElement) => {
+    const window = container.ownerDocument.defaultView!;
+
     return parseFloat(
-      window!
+      window
         .getComputedStyle(container)
         .getPropertyValue('--vkui_internal--CardScroll_horizontal_padding'),
     );
@@ -73,7 +72,9 @@ export const CardScroll = ({
     const containerWidth = refContainer.current.offsetWidth;
 
     const getMarginEnd = (el: HTMLElement) => {
-      const computedStyles = window!.getComputedStyle(el);
+      const window = el.ownerDocument.defaultView!;
+
+      const computedStyles = window.getComputedStyle(el);
       return (
         parseInt(computedStyles.marginInlineEnd) ||
         (direction === 'rtl'
