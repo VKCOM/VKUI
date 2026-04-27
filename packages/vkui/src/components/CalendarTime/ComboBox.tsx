@@ -43,11 +43,42 @@ type OptionProps = {
   onClickOption?: ((value: string) => void) | undefined;
 };
 
+function getScrollParent(node: Node | null): HTMLElement | null {
+  if (!(node instanceof HTMLElement)) {
+    return null;
+  }
+
+  if (node.scrollHeight > node.clientHeight) {
+    return node;
+  } else {
+    return getScrollParent(node.parentNode);
+  }
+}
+
 function Option({ option, onClickOption, selectedValue }: OptionProps) {
+  const ref = React.useRef<HTMLDivElement>(null);
   const selected = selectedValue === option.value;
+
+  React.useEffect(() => {
+    if (!selected) {
+      return;
+    }
+
+    const element = ref.current;
+    const scrollElement = getScrollParent(ref.current);
+
+    if (!element || !scrollElement) {
+      return;
+    }
+
+    scrollElement.scrollTo({
+      top: element.offsetTop - scrollElement.offsetHeight / 2 + element.offsetHeight / 2,
+    });
+  }, [selected]);
 
   return (
     <CustomSelectOption
+      getRootRef={ref}
       key={option.value}
       onMouseDown={(event) => {
         event.preventDefault();
