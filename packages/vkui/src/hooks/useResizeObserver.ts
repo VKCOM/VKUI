@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import type * as React from 'react';
+import { isWindow } from '../lib/dom';
 import { isRefObject } from '../lib/isRefObject';
 import { useStableCallback } from './useStableCallback';
 
@@ -18,7 +19,7 @@ export function useResizeObserver(
         return;
       }
 
-      if (ref instanceof Window) {
+      if (isWindow(ref)) {
         const onResize = () => stableCallback(ref);
         ref.addEventListener('resize', onResize);
         return () => ref.removeEventListener('resize', onResize);
