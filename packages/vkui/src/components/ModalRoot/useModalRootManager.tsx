@@ -12,33 +12,33 @@ import type { ModalRootCallbackFunction } from './types';
 
 const warn = warnOnce('useModalManager');
 export interface UseModalRootManager {
-  id?: string;
+  id?: string | undefined;
   open: boolean;
   keepMounted: boolean;
-  modalOverlayTestId?: string;
-  noFocusToDialog?: boolean;
-  disableModalOverlay?: boolean;
-  disableCloseAnimation?: boolean;
-  disableOpenAnimation?: boolean;
-  onOpen?: AnyFunction;
-  onOpened?: AnyFunction;
-  onClose?: AnyFunction;
-  onClosed?: AnyFunction;
+  modalOverlayTestId?: string | undefined;
+  noFocusToDialog?: boolean | undefined;
+  disableModalOverlay?: boolean | undefined;
+  disableCloseAnimation?: boolean | undefined;
+  disableOpenAnimation?: boolean | undefined;
+  onOpen?: AnyFunction | undefined;
+  onOpened?: AnyFunction | undefined;
+  onClose?: AnyFunction | undefined;
+  onClosed?: AnyFunction | undefined;
 }
 
 export interface UseModalRootManagerResolvedProps {
   id: string;
   open: boolean;
-  noFocusToDialog?: boolean;
-  disableModalOverlay?: boolean;
-  disableCloseAnimation?: boolean;
-  disableOpenAnimation?: boolean;
-  modalOverlayTestId?: string;
+  noFocusToDialog?: boolean | undefined;
+  disableModalOverlay?: boolean | undefined;
+  disableCloseAnimation?: boolean | undefined;
+  disableOpenAnimation?: boolean | undefined;
+  modalOverlayTestId?: string | undefined;
   ModalOverlay: React.ComponentType<ModalOverlayProps>;
-  onOpen?: AnyFunction;
-  onOpened?: AnyFunction;
-  onClose?: AnyFunction;
-  onClosed?: AnyFunction;
+  onOpen?: AnyFunction | undefined;
+  onOpened?: AnyFunction | undefined;
+  onClose?: AnyFunction | undefined;
+  onClosed?: AnyFunction | undefined;
 }
 
 export type UseModalRootManagerResult =

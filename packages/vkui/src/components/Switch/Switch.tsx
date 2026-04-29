@@ -46,18 +46,24 @@ export interface SwitchProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotProps?: {
-    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
-      HasRootRef<HTMLLabelElement> &
-      HasDataAttribute;
-    input?: React.InputHTMLAttributes<HTMLInputElement> &
-      HasRootRef<HTMLInputElement> &
-      HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+              HasRootRef<HTMLLabelElement> &
+              HasDataAttribute)
+          | undefined;
+        input?:
+          | (React.InputHTMLAttributes<HTMLInputElement> &
+              HasRootRef<HTMLInputElement> &
+              HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLInputElement>;
+  getRef?: React.Ref<HTMLInputElement> | undefined;
 }
 
 /**

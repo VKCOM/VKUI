@@ -41,30 +41,36 @@ export interface RadioProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в скрытый `input`.
    */
-  slotProps?: {
-    root?: Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
-      HasRootRef<HTMLLabelElement> &
-      HasDataAttribute;
-    input?: React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'children'> &
+              HasRootRef<HTMLLabelElement> &
+              HasDataAttribute)
+          | undefined;
+        input?:
+          | (React.ComponentProps<'input'> & HasRootRef<HTMLInputElement> & HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLInputElement>;
+  getRef?: React.Ref<HTMLInputElement> | undefined;
   /**
    * Дополнительное описание под основным текстом.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    * Элемент после основного текста.
    */
-  titleAfter?: React.ReactNode;
+  titleAfter?: React.ReactNode | undefined;
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ root: {...} }`.
    *
    * Позволяет передавать data-* аттрибуты элементу label.
    **/
-  labelProps?: HasDataAttribute;
+  labelProps?: HasDataAttribute | undefined;
 }
 
 /**
@@ -120,7 +126,7 @@ export const Radio = ({
       ...labelProps,
       ...restProps,
     },
-    slotProps?.root,
+    slotProps?.root ?? undefined,
   );
 
   const inputRest = useMergeProps(
@@ -140,7 +146,7 @@ export const Radio = ({
       onFocus,
       onBlur,
     },
-    slotProps?.input,
+    slotProps?.input ?? undefined,
   );
 
   return (

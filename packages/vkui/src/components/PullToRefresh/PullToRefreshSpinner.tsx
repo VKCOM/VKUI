@@ -12,10 +12,10 @@ function calcStrokeDashOffset(value: number, radius: number) {
 }
 
 export interface PullToRefreshSpinnerProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
-  size?: number;
-  strokeWidth?: number;
-  on?: boolean;
-  progress?: number;
+  size?: number | undefined;
+  strokeWidth?: number | undefined;
+  on?: boolean | undefined;
+  progress?: number | undefined;
 }
 
 export const PullToRefreshSpinner = ({

@@ -8,11 +8,11 @@ export interface AspectRatioProps extends Omit<RootComponentProps<HTMLElement>, 
   /**
    * `className` для компонента.
    */
-  className?: string;
+  className?: string | undefined;
   /**
    * По умолчанию, вложенный контент будет растягиваться и заполнять весь блок.
    */
-  mode?: 'stretch' | 'none';
+  mode?: 'stretch' | 'none' | undefined;
   /**
    * Например:
    * - в виде числа: 16 / 9, 4 / 3, 1920 / 1080,

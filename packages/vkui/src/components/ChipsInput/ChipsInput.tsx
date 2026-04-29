@@ -14,7 +14,7 @@ export interface ChipsInputProps<Option extends ChipOption>
   /**
    * Если `true`, то справа будет отображаться кнопка для очистки значения.
    */
-  allowClearButton?: boolean;
+  allowClearButton?: boolean | undefined;
 }
 
 /**

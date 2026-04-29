@@ -7,9 +7,9 @@ import styles from './Post.module.css';
 
 interface PostProps extends PostMetaProps {
   title: React.ReactNode;
-  description?: React.ReactNode;
-  route?: string;
-  image?: string;
+  description?: React.ReactNode | undefined;
+  route?: string | undefined;
+  image?: string | undefined;
 }
 
 export function Post({ title, description, tags, publishDate, route, image }: PostProps) {

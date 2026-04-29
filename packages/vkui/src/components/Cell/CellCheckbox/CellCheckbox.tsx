@@ -57,7 +57,7 @@ export interface CellCheckboxProps
   /**
    * Вид чекбокса. Если auto, то зависит от платформы.
    */
-  type?: 'auto' | 'circle' | 'square';
+  type?: 'auto' | 'circle' | 'square' | undefined;
 }
 
 export const CellCheckbox = ({

@@ -6,9 +6,9 @@ import styles from './ModalOutlet.module.css';
 
 export interface ModalOutletProps
   extends Omit<HTMLAttributesWithRootRef<HTMLDivElement>, 'hidden' | 'aria-hidden'> {
-  disableModalOverlay?: boolean;
-  hidden?: boolean;
-  isDesktop?: boolean;
+  disableModalOverlay?: boolean | undefined;
+  hidden?: boolean | undefined;
+  isDesktop?: boolean | undefined;
 }
 
 /**

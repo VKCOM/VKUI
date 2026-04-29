@@ -11,8 +11,8 @@ import styles from './NavLinks.module.css';
 interface NavLinkItemProps {
   route: string;
   children: React.ReactNode;
-  className?: string;
-  type?: 'prev' | 'next';
+  className?: string | undefined;
+  type?: 'prev' | 'next' | undefined;
 }
 
 function NavLinkItem({ type = 'prev', route, children, className }: NavLinkItemProps) {

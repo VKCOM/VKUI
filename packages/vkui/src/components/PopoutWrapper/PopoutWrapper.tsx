@@ -28,7 +28,7 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
   /**
    * Позволяет сделать прозрачную подложку.
    */
-  noBackground?: boolean;
+  noBackground?: boolean | undefined;
   /**
    * Стратегия позиционирования:
    *
@@ -38,23 +38,23 @@ export interface PopoutWrapperProps extends HTMLAttributesWithRootRef<HTMLDivEle
    *
    * @default 'fixed'
    */
-  strategy?: 'fixed' | 'absolute' | 'none';
+  strategy?: 'fixed' | 'absolute' | 'none' | undefined;
   /**
    * Выравнивает контент по горизонтали.
    */
-  alignX?: 'left' | 'center' | 'right';
+  alignX?: 'left' | 'center' | 'right' | undefined;
   /**
    * Выравнивает контент по вертикали.
    */
-  alignY?: 'top' | 'center' | 'bottom';
+  alignY?: 'top' | 'center' | 'bottom' | undefined;
   /**
    * Спрячет компонент через fade-out анимацию.
    */
-  closing?: boolean;
+  closing?: boolean | undefined;
   /**
    * Позволяет задать z-index через токен или числом.
    */
-  zIndex?: number | string;
+  zIndex?: number | string | undefined;
 }
 
 /**

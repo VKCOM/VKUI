@@ -6,7 +6,13 @@ import NextLink from 'next/link';
 
 type NextLinkProps = React.ComponentPropsWithoutRef<typeof NextLink>;
 
-type AnchorProps = Omit<LinkProps, 'href' | 'as'> & Partial<Pick<NextLinkProps, 'href' | 'as'>>;
+// С exactOptionalPropertyTypes типы React.DOMAttributes<HTMLElement> и React.DOMAttributes<HTMLAnchorElement>
+// становятся несовместимыми из-за разницы в обработке undefined.
+// Используем Omit для удаления конфликтующих свойств и переопределяем их с совместимыми типами.
+type AnchorProps = Omit<LinkProps, 'href' | 'as'> & {
+  href?: NextLinkProps['href'] | undefined;
+  as?: NextLinkProps['as'] | undefined;
+};
 
 const EXTERNAL_HREF_REGEX = /https?:\/\//;
 
@@ -39,5 +45,8 @@ export function Anchor({ href = '', as, children, ...props }: AnchorProps) {
     );
   }
 
-  return <NextLink href={href} as={as} {...props} />;
+  // Приводим props к типу, совместимому с NextLink
+  // Исключаем href и as из restProps чтобы избежать дублирования
+  const nextLinkProps = props as Omit<NextLinkProps, 'href' | 'as'>;
+  return <NextLink href={href} {...(as !== undefined && { as })} {...nextLinkProps} />;
 }

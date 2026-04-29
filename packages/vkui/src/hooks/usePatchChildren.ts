@@ -13,7 +13,7 @@ const warn = warnOnce('usePatchChildren');
 
 type InjectProps<T> = React.HTMLAttributes<T> &
   React.Attributes & {
-    ref?: React.Ref<T>;
+    ref?: React.Ref<T> | undefined;
   };
 
 type ExpectedReactElement<T> = React.ReactElement<HasRootRef<T> & React.DOMAttributes<T>>;

@@ -67,8 +67,7 @@
   color: var(--vkui--color_text_negative);
 }
 
-.statusValid .bottom,
-.verified .bottom {
+.statusValid .bottom {
   color: var(--vkui--color_text_positive);
 }
 

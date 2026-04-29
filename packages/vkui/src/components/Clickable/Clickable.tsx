@@ -158,7 +158,7 @@ export interface ClickableProps<T = HTMLElement>
   /**
    * Компонент который будет при передаче `onClick`. По умолчанию `"div"`.
    */
-  DefaultComponent?: React.ElementType;
+  DefaultComponent?: React.ElementType | undefined;
 }
 
 /**

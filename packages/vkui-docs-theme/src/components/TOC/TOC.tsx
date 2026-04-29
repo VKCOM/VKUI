@@ -13,7 +13,7 @@ export interface TOCItemProps {
   id: string;
   value: Heading['value'];
   depth: number;
-  isActive?: boolean;
+  isActive?: boolean | undefined;
 }
 
 function TOCItem({ id, value, depth, isActive }: TOCItemProps) {

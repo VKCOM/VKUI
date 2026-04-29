@@ -20,7 +20,7 @@ export interface TitleProps extends TypographyProps {
   /**
    * Уровень заголовка (от 1 до 3).
    */
-  level?: '1' | '2' | '3';
+  level?: '1' | '2' | '3' | undefined;
 }
 
 /**

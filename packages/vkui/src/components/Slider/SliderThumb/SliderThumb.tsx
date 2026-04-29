@@ -20,13 +20,15 @@ import { TooltipBase } from '../../TooltipBase/TooltipBase';
 import styles from './SliderThumb.module.css';
 
 interface SliderThumbProps extends HasRootRef<HTMLSpanElement>, HasDataAttribute {
-  className?: string;
-  style?: React.CSSProperties;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement> &
-    React.RefAttributes<HTMLInputElement> &
-    HasDataAttribute;
-  withTooltip?: boolean;
-  isActive?: boolean;
+  className?: string | undefined;
+  style?: React.CSSProperties | undefined;
+  inputProps?:
+    | (React.InputHTMLAttributes<HTMLInputElement> &
+        React.RefAttributes<HTMLInputElement> &
+        HasDataAttribute)
+    | undefined;
+  withTooltip?: boolean | undefined;
+  isActive?: boolean | undefined;
 }
 
 export const SliderThumb = ({

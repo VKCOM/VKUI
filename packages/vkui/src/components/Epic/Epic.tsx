@@ -13,7 +13,7 @@ export interface EpicProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Компонент Tabbar, который будет отображаться снизу.
    */
-  tabbar?: React.ReactNode;
+  tabbar?: React.ReactNode | undefined;
   /**
    * `id` активного окна.
    */

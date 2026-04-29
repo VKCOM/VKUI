@@ -20,15 +20,15 @@ export interface TabbarItemProps
   /**
    * Выбранное состояние компонента.
    */
-  selected?: boolean;
+  selected?: boolean | undefined;
   /**
    * Текст рядом с иконкой.
    */
-  label?: React.ReactNode;
+  label?: React.ReactNode | undefined;
   /**
    * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`.
    */
-  indicator?: React.ReactNode;
+  indicator?: React.ReactNode | undefined;
 }
 
 const warn = warnOnce('TabbarItem');

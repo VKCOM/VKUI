@@ -81,9 +81,7 @@
 }
 
 .animated .panel,
-.animated .header,
-.swipingBack .panel,
-.swipingBack .header {
+.swipingBack .panel {
   pointer-events: none;
 }
 

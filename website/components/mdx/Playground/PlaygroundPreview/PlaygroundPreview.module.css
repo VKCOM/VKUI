@@ -36,10 +36,3 @@
 .wrapper {
   inline-size: 100%;
 }
-
-.appRoot {
-  inline-size: 100%;
-  max-inline-size: inherit;
-  block-size: 100%;
-  max-block-size: inherit;
-}

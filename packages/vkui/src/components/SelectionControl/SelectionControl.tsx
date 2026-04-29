@@ -27,7 +27,7 @@ export interface SelectionControlProps
   /**
    * Отключает отступы. При использовании этого свойства, значение по умолчанию для свойств `hoverMode` и `activeMode` становится `"opacity"`.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
 }
 
 /**

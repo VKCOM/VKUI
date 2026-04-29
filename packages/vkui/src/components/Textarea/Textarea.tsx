@@ -53,30 +53,34 @@ export interface TextareaProps
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ textArea: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLTextAreaElement>;
+  getRef?: React.Ref<HTMLTextAreaElement> | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
    * - `textArea`: свойства для прокидывания в поле ввода.
    */
-  slotProps?: {
-    root?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
-    textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
-      HasRootRef<HTMLTextAreaElement> &
-      HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute)
+          | undefined;
+        textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
+          HasRootRef<HTMLTextAreaElement> &
+          HasDataAttribute;
+      }
+    | undefined;
   /**
    * Свойство управляющее автоматическим изменением высоты компонента.
    */
-  grow?: boolean;
+  grow?: boolean | undefined;
   /**
    * Обработчик, срабатывающий при изменении размера компонента.
    */
-  onResize?: (el: HTMLTextAreaElement) => void;
+  onResize?: ((el: HTMLTextAreaElement) => void) | undefined;
   /**
    * Значение по умолчанию.
    */
-  defaultValue?: string;
+  defaultValue?: string | undefined;
 }
 
 /**

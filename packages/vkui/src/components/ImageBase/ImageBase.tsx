@@ -66,19 +66,19 @@ export interface ImageBaseProps
    *
    * > ⚠️ Использование кастомного размера – это пограничный кейс.
    */
-  size?: LiteralUnion<ImageBaseSize, number>;
+  size?: LiteralUnion<ImageBaseSize, number> | undefined;
   /**
    * Ширина изображения.
    */
-  widthSize?: number | string;
+  widthSize?: number | string | undefined;
   /**
    * Высота изображения.
    */
-  heightSize?: number | string;
+  heightSize?: number | string | undefined;
   /**
    * Отключает обводку.
    */
-  noBorder?: boolean;
+  noBorder?: boolean | undefined;
   /**
    * Фолбек на случай, если картинка не прогрузилась.
    *
@@ -92,47 +92,53 @@ export interface ImageBaseProps
    *
    * > ⚠️ Может перекрывать `children`.
    */
-  fallbackIcon?: React.ReactElement<ImageBaseExpectedIconProps>;
+  fallbackIcon?: React.ReactElement<ImageBaseExpectedIconProps> | undefined;
   /**
    * Отключает фон, заданный по умолчанию. Полезен для отображения картинок с прозрачностью.
    * @since 5.10.0
    */
-  withTransparentBackground?: boolean;
+  withTransparentBackground?: boolean | undefined;
   /**
    * Пользовательское значения стиля object-fit
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
    */
-  objectFit?: React.CSSProperties['objectFit'];
+  objectFit?: React.CSSProperties['objectFit'] | undefined;
   /**
    * Пользовательское значения стиля object-position
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-position).
    */
-  objectPosition?: React.CSSProperties['objectPosition'];
+  objectPosition?: React.CSSProperties['objectPosition'] | undefined;
   /**
    * Флаг для сохранения пропорций картинки.
    * Для корректной работы необходимо задать размеры хотя бы одной стороны картинки.
    */
-  keepAspectRatio?: boolean;
+  keepAspectRatio?: boolean | undefined;
   /**
    * Смотри https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/elementtiming.
    */
-  elementTiming?: string;
+  elementTiming?: string | undefined;
   /**
-   * Пользовательское значения стиля filter
+   * Пользовательское значения стиля filter.
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/filter).
+   *
+   * При передаче этого свойства `<img />` будет обёрнут в дополнительный контейнер.
    */
-  filter?: React.CSSProperties['filter'];
+  filter?: React.CSSProperties['filter'] | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `img`: свойства для прокидывания в тег `<img>`;.
    */
-  slotProps?: {
-    img?: React.ComponentProps<'img'> & HasRootRef<HTMLImageElement> & HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        img?:
+          | (React.ComponentProps<'img'> & HasRootRef<HTMLImageElement> & HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * @deprecated Since 7.9.0. Будет удалено в v9. Используйте `slotProps={ img: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLImageElement>; // TODO [>=9] Удалить свойство
+  getRef?: React.Ref<HTMLImageElement> | undefined; // TODO [>=9] Удалить свойство
 }
 
 const getObjectFitClassName = (objectFit: React.CSSProperties['objectFit']) => {
@@ -337,6 +343,10 @@ export const ImageBase: React.FC<ImageBaseProps> & {
     [mouseOutHandlers, mouseOverHandlers, size],
   );
 
+  const imgSlot = hasSrc && (
+    <img ref={imgRef} {...imgRest} {...getFetchPriorityProp(fetchPriority)} />
+  );
+
   return (
     <ImageBaseContext.Provider value={contextValue}>
       <Clickable
@@ -351,7 +361,7 @@ export const ImageBase: React.FC<ImageBaseProps> & {
         onMouseOut={onMouseOut}
         {...restProps}
       >
-        {hasSrc && <img ref={imgRef} {...imgRest} {...getFetchPriorityProp(fetchPriority)} />}
+        {filter ? <div className={styles.imgWithFilterContainer}>{imgSlot}</div> : imgSlot}
         {fallbackIcon && <div className={styles.fallback}>{fallbackIcon}</div>}
         {children && <div className={styles.children}>{children}</div>}
         {!noBorder && <div aria-hidden className={styles.border} />}

@@ -22,7 +22,7 @@ export type ChipOption = {
   /**
    * Блокировка взаимодействия с оцией.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   [index: string]: any;
 };
 
@@ -58,31 +58,31 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Выбранные опции.
    */
-  value?: O[];
+  value?: O[] | undefined;
   /**
    * Выбранные опции по умолчанию.
    */
-  defaultValue?: O[];
+  defaultValue?: O[] | undefined;
   /**
    * Обработчик изменения выбранных опций.
    */
-  onChange?: OnChange<O>;
+  onChange?: OnChange<O> | undefined;
   /**
    * Значение поля ввода.
    */
-  inputValue?: string;
+  inputValue?: string | undefined;
   /**
    * Значение поля ввода по умолчанию.
    */
-  defaultInputValue?: string;
+  defaultInputValue?: string | undefined;
   /**
    * Обработчик изменения значения в поле ввода.
    */
-  onInputChange?: OnInputChange;
+  onInputChange?: OnInputChange | undefined;
   /**
    * Символ или строка, которая будет использоваться как разделитель для автоматического создания опций из текста, введенного в поле ввода.
    * Принимает:
@@ -99,7 +99,7 @@ export interface UseChipsInputBaseProps<O extends ChipOption = ChipOption> {
    *    Например, при `delimiter=","` вставка "опция1,опция2,опция3" создаст
    *    три отдельные опции: "опция1", "опция2" и "опция3".
    */
-  delimiter?: string | RegExp | string[];
+  delimiter?: string | RegExp | string[] | undefined;
 }
 
 /**
@@ -125,45 +125,51 @@ export interface ChipsInputBaseProps<O extends ChipOption = ChipOption>
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ input: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLInputElement>;
+  getRef?: React.Ref<HTMLInputElement> | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
    * - `input`: свойства для прокидывания в поле ввода.
    */
-  slotProps?: {
-    root?: React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute;
-    input?: React.InputHTMLAttributes<HTMLInputElement> &
-      HasRootRef<HTMLInputElement> &
-      HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (React.HTMLAttributes<HTMLDivElement> & HasRootRef<HTMLDivElement> & HasDataAttribute)
+          | undefined;
+        input?:
+          | (React.InputHTMLAttributes<HTMLInputElement> &
+              HasRootRef<HTMLInputElement> &
+              HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * Добавляет значение в список на событие `onBlur`.
    */
-  addOnBlur?: boolean;
+  addOnBlur?: boolean | undefined;
   /**
    * Render prop функция для возврата своего компонента.
    *
    * @default Используется [Chip](#/Chip)
    */
-  renderChip?: RenderChip<O>;
+  renderChip?: RenderChip<O> | undefined;
   /**
    * Показывать ли кнопку для очистки значения.
    */
-  clearButtonShown?: boolean;
+  clearButtonShown?: boolean | undefined;
   /**
    * (e2e) testId кнопки очистки.
    */
-  clearButtonTestId?: string;
+  clearButtonTestId?: string | undefined;
   /**
    * Кастомная кнопка для очистки значения.
    * Должна принимать обязательное свойство `onClick`.
    */
-  ClearButton?: React.ComponentType<FormFieldClearButtonProps>;
+  ClearButton?: React.ComponentType<FormFieldClearButtonProps> | undefined;
   /**
    * `aria-label` для списка выбранных опций.
    */
-  chipsListLabel?: string;
+  chipsListLabel?: string | undefined;
 }
 
 /**

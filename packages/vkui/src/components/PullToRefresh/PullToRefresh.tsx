@@ -9,7 +9,8 @@ import { type DOMProps, initializeBrowserGesturePreventionEffect, useDOM } from 
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import type { AnyFunction, HasChildren } from '../../types';
 import { type ScrollContextInterface, useScroll } from '../AppRoot/ScrollContext';
-import { FixedLayout } from '../FixedLayout/FixedLayout';
+import { Box } from '../Box/Box';
+import { ParentWidthWrapper } from '../FixedLayout/ParentWidthWrapper';
 import { type CustomTouchEvent, Touch, type TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { PullToRefreshSpinner } from './PullToRefreshSpinner';
@@ -39,9 +40,9 @@ export interface PullToRefreshProps extends DOMProps, TouchProps, HasChildren {
   /**
    * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`.
    */
-  isFetching?: boolean;
+  isFetching?: boolean | undefined;
   /** @ignore */
-  scroll?: ScrollContextInterface;
+  scroll?: ScrollContextInterface | undefined;
 }
 
 /**
@@ -244,7 +245,12 @@ export const PullToRefresh = ({
           className,
         )}
       >
-        <FixedLayout className={styles.controls} useParentWidth>
+        <Box
+          Component={ParentWidthWrapper}
+          className={styles.controls}
+          inlineSize="100%"
+          position="fixed"
+        >
           <PullToRefreshSpinner
             style={{
               transform: spinnerTransform,
@@ -253,7 +259,7 @@ export const PullToRefresh = ({
             on={refreshing}
             progress={refreshing ? undefined : spinnerProgress}
           />
-        </FixedLayout>
+        </Box>
 
         <div
           className={styles.content}

@@ -10,7 +10,7 @@ type OnboardingTooltipContainerProps = React.HTMLAttributes<HTMLDivElement> &
     /**
      * Фиксированное отображение тултипа.
      */
-    fixed?: boolean;
+    fixed?: boolean | undefined;
   };
 
 export const OnboardingTooltipContainer: React.ForwardRefExoticComponent<

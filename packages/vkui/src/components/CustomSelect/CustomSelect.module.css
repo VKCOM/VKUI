@@ -26,12 +26,6 @@
   text-align: center;
 }
 
-.fetching {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .dropdownIcon {
   margin-inline-end: 10px;
 }

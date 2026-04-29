@@ -24,29 +24,29 @@ export interface ModalCardBaseProps
    *
    * Может быть компонентом иконки, например, `<Icon56MoneyTransferOutline />`, или `<Avatar size={72} src="" />`.
    */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | undefined;
 
   /**
    * Заголовок карточки.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    * Позволяет поменять тег используемый для заголовка.
    */
-  titleComponent?: React.ElementType;
+  titleComponent?: React.ElementType | undefined;
   /**
    * Позволяет задать id для заголовка. Используется, чтобы связать модальное окно и title через aria-labelledby, тем самым задав модальному окну имя через title.
    */
-  titleId?: string;
+  titleId?: string | undefined;
 
   /**
    * Описание.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    * Позволяет поменять тег используемый для описания.
    */
-  descriptionComponent?: React.ElementType;
+  descriptionComponent?: React.ElementType | undefined;
 
   /**
    * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button) с параметрами:
@@ -59,26 +59,26 @@ export interface ModalCardBaseProps
    * - `gap="s" mode="horizontal" stretched`
    * - `gap="m" mode="vertical" stretched`.
    */
-  actions?: React.ReactNode;
+  actions?: React.ReactNode | undefined;
   /**
    * Обработчик закрытия модального окна.
    */
-  onClose?: VoidFunction;
+  onClose?: VoidFunction | undefined;
 
   /**
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
-  dismissLabel?: string;
+  dismissLabel?: string | undefined;
 
   /**
    * Задаёт контенту максимальную ширину для десктопной версии.
    */
-  size?: number;
+  size?: number | undefined;
 
   /**
    * Передает атрибут `data-testid` для кнопки закрытия.
    */
-  modalDismissButtonTestId?: string;
+  modalDismissButtonTestId?: string | undefined;
   /**
    * Расположение кнопки закрытия (внутри и вне `popout'a`).
    *
@@ -88,20 +88,20 @@ export interface ModalCardBaseProps
    *
    * ⚠️ ВНИМАНИЕ: использование `none` скрывает крестик, это негативно сказывается на пользовательском опыте.
    */
-  dismissButtonMode?: 'inside' | 'outside' | 'none';
+  dismissButtonMode?: 'inside' | 'outside' | 'none' | undefined;
   /**
    * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, нажатие на подложку).
    *
    * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте.
    */
-  preventClose?: boolean;
+  preventClose?: boolean | undefined;
   /**
    * Управляющие элементы под кнопкой закрытия.
    *
    * Доступно только в `compact`-режиме. Рекомендуется размещать иконки размера 20, обернутые в ModalOutsideButton.
    *
    */
-  outsideButtons?: React.ReactNode;
+  outsideButtons?: React.ReactNode | undefined;
 }
 
 /**

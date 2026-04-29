@@ -36,35 +36,35 @@ export interface SubnavigationButtonProps extends Omit<TappableOmitProps, 'size'
   /**
    * Стиль отображения кнопки.
    */
-  mode?: 'primary' | 'outline' | 'tertiary';
+  mode?: 'primary' | 'outline' | 'tertiary' | undefined;
   /**
    * Тип внешнего вида кнопки.
    */
-  appearance?: 'accent' | 'neutral';
+  appearance?: 'accent' | 'neutral' | undefined;
   /**
    * Размер кнопки.
    */
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | undefined;
   /**
    * Выбранное состояние.
    */
-  selected?: boolean;
+  selected?: boolean | undefined;
   /**
    * Размер шрифта. Этим свойством рекомендуется пользоваться, чтобы отрегулировать размер шрифта у кнопок в `<SubnavigationBar fixed />`.
    */
-  textLevel?: '1' | '2' | '3';
+  textLevel?: '1' | '2' | '3' | undefined;
   /**
    * Рекомендуется использовать только иконки с размером 24.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Нужно ли отображать иконку `"chevron"`.
    */
-  chevron?: boolean;
+  chevron?: boolean | undefined;
 }
 
 type SubnavigationButtonTypographyProps = Pick<

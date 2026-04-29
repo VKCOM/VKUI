@@ -31,7 +31,7 @@ export interface ImageBaseBadgeProps extends HTMLAttributesWithRootRef<HTMLDivEl
    * - `"stroke"` – имитирует вырез (⚠️ если фон под компонентом динамический, то ожидайте баг).
    * - `"shadow"` – добавляет небольшую тень (⚠️ если фон под компонентом динамический, то ожидайте баг).
    */
-  background?: 'stroke' | 'shadow';
+  background?: 'stroke' | 'shadow' | undefined;
   /**
    * Принимает иконку.
    *

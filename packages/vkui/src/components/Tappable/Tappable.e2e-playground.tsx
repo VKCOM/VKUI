@@ -27,7 +27,7 @@ export const TappablePlayground = (props: ComponentPlaygroundProps) => {
 };
 
 interface TappableFocusVisiblePlaygroundProps extends ComponentPlaygroundProps {
-  mode?: FocusVisibleMode;
+  mode?: FocusVisibleMode | undefined;
 }
 
 const TappableFocusVisible = (props: TappableProps) => (

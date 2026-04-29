@@ -12,7 +12,7 @@ export interface BadgeProps extends RootComponentProps<HTMLSpanElement> {
   /**
    * Режим отображения компонента.
    */
-  mode?: 'new' | 'prominent';
+  mode?: 'new' | 'prominent' | undefined;
 }
 
 /**

@@ -17,10 +17,10 @@
     "@vkontakte/vkui": "workspace:^",
     "@vkontakte/vkui-docs-theme": "workspace:^",
     "browserslist-vscode": "github:browserslist/browserslist-vscode",
-    "next": "^15.5.11",
+    "next": "^15.5.15",
     "next-sitemap": "^4.2.3",
     "nextra": "^4.6.1",
-    "pagefind": "^1.4.0",
+    "pagefind": "^1.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-live": "^4.1.8",
@@ -28,5 +28,9 @@
     "swr": "^2.4.1",
     "typescript": "*",
     "zustand": "^5.0.12"
+  },
+  "dependencies": {
+    "@stackblitz/sdk": "^1.11.0",
+    "lz-string": "^1.5.0"
   }
 }

@@ -183,7 +183,10 @@ export const isLastDay = (day: Date, dayOfWeek: number): boolean =>
 /**
  * Возвращает дату, ограниченную `min` и/или `max` значениями
  */
-export function clamp(day: Date, options: { min?: Date; max?: Date } = {}): Date {
+export function clamp(
+  day: Date,
+  options: { min?: Date | undefined; max?: Date | undefined } = {},
+): Date {
   const { min, max } = options;
   if (min && day < min) {
     return min;
@@ -199,7 +202,7 @@ export function clamp(day: Date, options: { min?: Date; max?: Date } = {}): Date
  */
 export function isDayMinMaxRestricted(
   day: Date,
-  options: { min?: Date; max?: Date; withTime?: boolean } = {},
+  options: { min?: Date | undefined; max?: Date | undefined; withTime?: boolean | undefined } = {},
 ): boolean {
   const { min, max, withTime = false } = options;
   if (!withTime && ((min && isSameDate(day, min)) || (max && isSameDate(day, max)))) {

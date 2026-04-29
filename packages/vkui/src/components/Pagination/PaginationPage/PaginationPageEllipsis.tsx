@@ -11,7 +11,7 @@ import styles from './PaginationPage.module.css';
 export interface PaginationPageEllipsisProps
   extends React.HTMLAttributes<HTMLSpanElement>,
     HasRootRef<HTMLSpanElement> {
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export const PaginationPageEllipsis = ({

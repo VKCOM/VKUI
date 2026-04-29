@@ -43,11 +43,11 @@ export type PanelHeaderBackProps = Omit<PanelHeaderButtonProps, 'children'> & {
   /**
    * Скрыть надпись на платформе `vkcom`.
    */
-  hideLabelOnVKCom?: boolean;
+  hideLabelOnVKCom?: boolean | undefined;
   /**
    * Скрыть надпись на платформе `ios`.
    */
-  hideLabelOnIOS?: boolean;
+  hideLabelOnIOS?: boolean | undefined;
 };
 
 const getBackIcon = (platform: PlatformType) => {

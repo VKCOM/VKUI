@@ -9,7 +9,7 @@ export interface ModalOutsideButtonProps extends TappableOmitProps {
   /**
    * Текст для скринридера.
    */
-  'aria-label'?: string;
+  'aria-label'?: string | undefined;
   /**
    * Рекомендуется использовать иконки размером `20px`.
    */

@@ -12,15 +12,15 @@ type StoryProps = FlexProps & {
   /**
    * Отступ между строками.
    */
-  rowGap?: number;
+  rowGap?: number | undefined;
   /**
    * Отступ между столбцами.
    */
-  columnGap?: number;
+  columnGap?: number | undefined;
   /**
    * Количество элементов.
    */
-  itemsCount?: number;
+  itemsCount?: number | undefined;
 };
 
 const story: Meta<StoryProps> = {

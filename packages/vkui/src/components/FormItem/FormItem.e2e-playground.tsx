@@ -87,8 +87,8 @@ export const FormItemPlayground = (props: ComponentPlaygroundProps) => {
 };
 
 interface FormItemTopAsideProps extends FormItemProps {
-  topLabel?: React.ReactNode;
-  topAside?: React.ReactNode;
+  topLabel?: React.ReactNode | undefined;
+  topAside?: React.ReactNode | undefined;
 }
 
 export const FormItemTopAsidePlayground = (props: ComponentPlaygroundProps) => {

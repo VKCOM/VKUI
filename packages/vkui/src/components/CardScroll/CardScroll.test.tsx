@@ -92,9 +92,9 @@ const mockCardScrollData = (cardsCount: number, defaultScrollLeft = 50, isRtl = 
 };
 
 type PrepareDataParams = {
-  defaultScrollLeft?: number;
-  cardsCount?: number;
-  isRtl?: boolean;
+  defaultScrollLeft?: number | undefined;
+  cardsCount?: number | undefined;
+  isRtl?: boolean | undefined;
 };
 
 const setup = ({ defaultScrollLeft = 50, cardsCount = 6, isRtl = false }: PrepareDataParams) => {

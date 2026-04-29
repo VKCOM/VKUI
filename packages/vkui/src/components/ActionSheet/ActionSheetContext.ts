@@ -28,15 +28,15 @@ export type ActionSheetContextType<T extends Element = Element> = {
   /**
    * Обработчик нажатия на элемент.
    */
-  onItemClick?: ItemClickHandler<T>;
+  onItemClick?: ItemClickHandler<T> | undefined;
   /**
    * Обработчик закрытия `ActionSheet`.
    */
-  onClose?: (onCloseReason: ActionSheetOnCloseReason) => void;
+  onClose?: ((onCloseReason: ActionSheetOnCloseReason) => void) | undefined;
   /**
    * Режим отображения `ActionSheet`.
    */
-  mode?: 'sheet' | 'menu';
+  mode?: 'sheet' | 'menu' | undefined;
 };
 
 export const ActionSheetContext: React.Context<ActionSheetContextType<any>> = React.createContext(

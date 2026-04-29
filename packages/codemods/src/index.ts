@@ -14,13 +14,13 @@ interface JSCodeShiftRunnerProps {
   transformsVersion: string;
   paths: string[];
   flags: CliOptions;
-  logStream?: WriteStream;
+  logStream?: WriteStream | undefined;
 }
 
 interface VerifyConfigurationProps {
   paths: string[];
-  inputFile?: string;
-  codemodNames?: string[];
+  inputFile?: string | undefined;
+  codemodNames?: string[] | undefined;
   transformsVersion: string;
 }
 

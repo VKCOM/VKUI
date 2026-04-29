@@ -20,33 +20,33 @@ export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLD
   /**
    * Добавляет описание под основным блоком.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    * Вставляет элемент в начало блока перед основным контентом.
    * Например, можно передать компонент `Avatar`, `Icon<Name>` или другие изображения.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Вставляет элемент в конец блока после основного контента.
    * Например, можно передать компонент `Avatar`, `Icon<Name>` или другие изображения.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Позволяет создавать вложенность.
    */
-  hierarchy?: number;
+  hierarchy?: number | undefined;
   /**
    * Включает состояние выбранного элемента списка.
    */
-  selected?: boolean;
+  selected?: boolean | undefined;
   /**
    * Включает состояние наведения.
    */
-  hovered?: boolean;
+  hovered?: boolean | undefined;
   /**
    * Включает состояние фокуса.
    */
-  focused?: boolean;
+  focused?: boolean | undefined;
   /**
    * Блокирует весь блок.
    *
@@ -54,11 +54,11 @@ export interface CustomSelectOptionProps extends HTMLAttributesWithRootRef<HTMLD
    * > Запрещается выставлять `disabled` проп опциям в обход `options`, иначе [CustomSelect](https://vkui.io/components/custom-select) и [ChipsSelect](https://vkui.io/components/chips-select) не будут знать об актуальном состоянии
    * опции.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Предотвращает перенос текста внутри опции.
    */
-  textNoWrap?: boolean;
+  textNoWrap?: boolean | undefined;
 }
 
 /**

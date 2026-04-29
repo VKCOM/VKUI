@@ -59,12 +59,18 @@ export interface SnackbarProps
    * - `root`: свойства для прокидывания в корень компонента;
    * - `action`: свойства для прокидывания в кнопку действия.
    */
-  slotProps?: {
-    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
-      HasRootRef<HTMLDivElement> &
-      HasDataAttribute;
-    action?: React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+              HasRootRef<HTMLDivElement> &
+              HasDataAttribute)
+          | undefined;
+        action?:
+          | (React.HTMLAttributes<HTMLElement> & HasRootRef<HTMLElement> & HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * Задаёт расположение компонента.
    *
@@ -76,24 +82,24 @@ export interface SnackbarProps
    * > - `"bottom-start"`/`"bottom-end"` закрываются смахиванием в любое из направлений
    * >   по горизонтальной оси.
    */
-  placement?: SnackbarPlacement;
+  placement?: SnackbarPlacement | undefined;
   /**
    * Название кнопки действия в уведомлении
    * Не может использоваться одновременно с `subtitle`.
    */
-  action?: React.ReactNode;
+  action?: React.ReactNode | undefined;
   /**
    * Будет вызвано при нажатии на кнопку действия.
    */
-  onActionClick?: (event: React.MouseEvent) => void;
+  onActionClick?: ((event: React.MouseEvent) => void) | undefined;
   /**
    * Время в миллисекундах, через которое плашка скроется.
    */
-  duration?: number | null;
+  duration?: number | null | undefined;
   /**
    * Обработчик закрытия уведомления.
    */
-  onClose?: (reason: SnackbarCloseReason) => void;
+  onClose?: ((reason: SnackbarCloseReason) => void) | undefined;
   /**
    * Обработчик закрытия уведомления, срабатывающий после окончания анимации.
    */
@@ -101,11 +107,11 @@ export interface SnackbarProps
   /**
    * Величина отступа снизу. Используется для позиционирования элемента в случае, когда нежелательно, чтобы Snackbar при появлении перекрывал важные элементы интерфейса.
    */
-  offsetY?: React.CSSProperties['bottom'];
+  offsetY?: React.CSSProperties['bottom'] | undefined;
   /**
    * Для контролируемого управления состоянием открытия снекбара.
    */
-  open?: boolean;
+  open?: boolean | undefined;
 }
 
 /**

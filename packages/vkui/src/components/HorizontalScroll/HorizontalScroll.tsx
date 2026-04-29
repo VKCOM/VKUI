@@ -6,10 +6,12 @@ import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { useMergeProps } from '../../hooks/useMergeProps';
 import { easeInOutSine } from '../../lib/fx';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import type { HasRef, HTMLAttributesWithRootRef } from '../../types';
+import { warnOnce } from '../../lib/warnOnce';
+import type { HasDataAttribute, HasRef, HTMLAttributesWithRootRef } from '../../types';
 import { useHover } from '../Clickable/useState';
 import { RootComponent } from '../RootComponent/RootComponent';
 import { ScrollArrow, type ScrollArrowProps } from '../ScrollArrow/ScrollArrow';
@@ -35,62 +37,79 @@ interface ScrollContext {
 
 export type ScrollPositionHandler = (currentPosition: number) => number;
 
+const warn = warnOnce('HorizontalScroll');
+
 export interface HorizontalScrollProps
   extends HTMLAttributesWithRootRef<HTMLDivElement>,
     HasRef<HTMLDivElement> {
   /**
    * Функция для расчета величины прокрутки при нажатии на левую стрелку.
    */
-  getScrollToLeft?: ScrollPositionHandler;
+  getScrollToLeft?: ScrollPositionHandler | undefined;
   /**
    * Функция для расчета величины прокрутки при нажатии на правую стрелку.
    */
-  getScrollToRight?: ScrollPositionHandler;
+  getScrollToRight?: ScrollPositionHandler | undefined;
   /**
    * Размер стрелок.
    */
-  arrowSize?: ScrollArrowProps['size'];
+  arrowSize?: ScrollArrowProps['size'] | undefined;
   /**
    * Смещает иконки кнопок навигации по вертикали.
    */
-  arrowOffsetY?: number | string;
+  arrowOffsetY?: number | string | undefined;
+  /**
+   * Смещает иконки кнопок навигации по горизонтали.
+   */
+  arrowOffsetX?: number | string;
   /**
    * Показывать ли стрелки.
    */
-  showArrows?: boolean | 'always';
+  showArrows?: boolean | 'always' | undefined;
+  /**
+   * Свойства, которые можно прокинуть внутрь компонента:
+   * - `prevArrow`: свойства для прокидывания в стрелку "назад";
+   * - `nextArrow`: свойства для прокидывания в стрелку "вперед".
+   */
+  slotProps?: {
+    prevArrow?: Partial<ScrollArrowProps> & HasDataAttribute;
+    nextArrow?: Partial<ScrollArrowProps> & HasDataAttribute;
+  };
   /**
    * Длительность анимации скролла.
    */
-  scrollAnimationDuration?: number;
+  scrollAnimationDuration?: number | undefined;
   /**
    * Добавляет возможность прокручивать контент на любое колесо мыши.
    * По умолчанию прокручивается как любой горизонтальный контент через shift.
    */
-  scrollOnAnyWheel?: boolean;
+  scrollOnAnyWheel?: boolean | undefined;
   /**
+   * @deprecated Since 8.0.0. Вместо этого используйте `slotProps={ prevArrow: { 'data-testid': ... } }`.
    * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении предыдущего элемента.
    */
-  prevButtonTestId?: string;
+  prevButtonTestId?: string | undefined;
   /**
+   * @deprecated Since 8.0.0. Вместо этого используйте `slotProps={ nextArrow: { 'data-testid': ... } }`.
    * Передает атрибут `data-testid` для кнопки прокрутки горизонтального скролла в направлении следующего элемента.
    */
-  nextButtonTestId?: string;
+  nextButtonTestId?: string | undefined;
   /**
    * Позволяет поменять тег используемый для обертки над контентом, прокинутым в `children`.
    */
-  ContentWrapperComponent?: React.ElementType;
+  ContentWrapperComponent?: React.ElementType | undefined;
   /**
    * `ref` для обертки над контентом, прокинутым в `children`.
    */
-  contentWrapperRef?: React.Ref<HTMLElement>;
+  contentWrapperRef?: React.Ref<HTMLElement> | undefined;
   /**
    * Специфичный `className` для обертки над контентом, прокинутым в `children`.
    */
-  contentWrapperClassName?: string;
+  contentWrapperClassName?: string | undefined;
   /**
    * Добавляет отступы для контента внутри.
    */
-  withPadding?: boolean;
+  withPadding?: boolean | undefined;
 }
 
 /**
@@ -210,6 +229,7 @@ export const HorizontalScroll = ({
   showArrows = true,
   arrowSize = 'm',
   arrowOffsetY,
+  arrowOffsetX,
   scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
   getRef,
   scrollOnAnyWheel = false,
@@ -223,8 +243,17 @@ export const HorizontalScroll = ({
   onPointerEnter,
   onPointerLeave,
   onMouseEnter,
+
+  slotProps,
   ...restProps
 }: HorizontalScrollProps): React.ReactNode => {
+  /* istanbul ignore if: не проверяем в тестах */
+  if (process.env.NODE_ENV === 'development' && (prevButtonTestId || nextButtonTestId)) {
+    warn(
+      "Свойства `prevButtonTestId` и `nextButtonTestId` устаревшие, используйте `slotProps={ prevArrow: { 'data-testid': ... }, nextArrow: { 'data-testid': ... } }`",
+    );
+  }
+
   const [canScrollStart, setCanScrollStart] = React.useState(false);
   const [canScrollEnd, setCanScrollEnd] = React.useState(false);
   const { focusVisible, ...focusEvents } = useFocusVisible();
@@ -329,6 +358,22 @@ export const HorizontalScroll = ({
 
   const handlers = mergeCalls(hoverHandlers, { onPointerEnter, onPointerLeave });
 
+  const prevArrowProps = useMergeProps(
+    {
+      className: classNames(styles.arrow, styles.arrowLeft),
+      onClick: scrollToStart,
+    },
+    slotProps?.prevArrow,
+  );
+
+  const nextArrowProps = useMergeProps(
+    {
+      className: classNames(styles.arrow, styles.arrowRight),
+      onClick: scrollToEnd,
+    },
+    slotProps?.nextArrow,
+  );
+
   return (
     <RootComponent
       {...restProps}
@@ -348,11 +393,11 @@ export const HorizontalScroll = ({
           data-testid={prevButtonTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
+          offsetX={arrowOffsetX}
           direction="left"
           aria-hidden
           tabIndex={-1}
-          className={classNames(styles.arrow, styles.arrowLeft)}
-          onClick={scrollToStart}
+          {...prevArrowProps}
         />
       )}
       {showArrows && canScrollEnd && (
@@ -360,11 +405,11 @@ export const HorizontalScroll = ({
           data-testid={nextButtonTestId}
           size={arrowSize}
           offsetY={arrowOffsetY}
+          offsetX={arrowOffsetX}
           direction="right"
           aria-hidden
           tabIndex={-1}
-          className={classNames(styles.arrow, styles.arrowRight)}
-          onClick={scrollToEnd}
+          {...nextArrowProps}
         />
       )}
       <div

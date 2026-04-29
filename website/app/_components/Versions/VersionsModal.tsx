@@ -5,8 +5,8 @@ import semverRcompare from 'semver/functions/rcompare';
 import useSWR, { preload } from 'swr';
 
 interface VersionsProps {
-  error?: boolean;
-  data?: string[];
+  error?: boolean | undefined;
+  data?: string[] | undefined;
 }
 
 interface PackageInfoProps {

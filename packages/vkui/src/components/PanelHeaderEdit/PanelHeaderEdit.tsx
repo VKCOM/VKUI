@@ -19,15 +19,15 @@ export interface PanelHeaderEditProps extends Omit<PanelHeaderButtonProps, 'labe
   /**
    * Включен ли режим редактирования.
    */
-  isActive?: boolean;
+  isActive?: boolean | undefined;
   /**
    * Текст кнопки, когда режим редактирования не активен. Визуально скрыт везде, кроме iOS.
    */
-  editLabel?: string;
+  editLabel?: string | undefined;
   /**
    * Текст кнопки при активном режиме редактирования для выхода из него. Визуально скрыт везде, кроме iOS.
    */
-  doneLabel?: string;
+  doneLabel?: string | undefined;
 }
 
 /**

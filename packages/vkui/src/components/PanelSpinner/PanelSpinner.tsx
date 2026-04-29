@@ -6,7 +6,7 @@ export interface PanelSpinnerProps extends SpinnerProps {
   /**
    * Высота компонента.
    */
-  height?: number;
+  height?: number | undefined;
 }
 
 /**

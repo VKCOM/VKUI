@@ -58,7 +58,7 @@ const TestAdaptiveProvider = React.forwardRef<AdaptivityResultsRef, AdaptivityPr
 
 interface TestSuite {
   inProps: AdaptivityProviderProps & {
-    runOnlyThisSuite?: boolean;
+    runOnlyThisSuite?: boolean | undefined;
   };
   outProps: AdaptivityProps;
 }

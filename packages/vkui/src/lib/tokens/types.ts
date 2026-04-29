@@ -12,8 +12,8 @@ import type { PlatformType } from '../platform';
  * ```
  */
 export type TokensClassNamesByAppearances = {
-  light?: string;
-  dark?: string;
+  light?: string | undefined;
+  dark?: string | undefined;
 };
 
 /**

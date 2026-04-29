@@ -40,34 +40,34 @@ export type UsersStackPhoto = {
   /**
    * Функция для рендера обертки над фотографией.
    */
-  renderWrapper?: (props: UsersStackRenderWrapperProps) => React.ReactElement;
+  renderWrapper?: ((props: UsersStackRenderWrapperProps) => React.ReactElement) | undefined;
 };
 
 export interface UsersStackProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Массив ссылок на фотографии либо массив структур типа `UsersStackPhoto`.
    */
-  photos?: string[] | UsersStackPhoto[];
+  photos?: string[] | UsersStackPhoto[] | undefined;
   /**
    * Размер аватарок.
    */
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | undefined;
   /**
    * Количество аватарок, которые будут показаны.
    * Если в массиве `photos` больше элементов и не используется размер `s`, то будет показано количество остальных элементов.
    */
-  visibleCount?: number;
+  visibleCount?: number | undefined;
   /**
    * Число, которое будет указано в счетчике.
    * По умолчанию высчитывается по формуле `photos.length - visibleCount`.
    * Если число больше 99, то счетчик скроется.
    */
-  count?: number;
+  count?: number | undefined;
   /**
    * Определяет положение аватаров
    * Режим `block-start` рекомендуется использовать с размером `m`.
    */
-  avatarsPosition?: 'inline-start' | 'block-start' | 'inline-end';
+  avatarsPosition?: 'inline-start' | 'block-start' | 'inline-end' | undefined;
 }
 
 interface PathElementProps extends React.SVGAttributes<SVGElement> {

@@ -47,19 +47,19 @@ export type CalendarHeaderTestsProps = {
   /**
    * Передает атрибут `data-testid` для дропдауна выбора месяца в заголовке календаря.
    */
-  monthDropdownTestId?: string | ((monthIndex: number) => string);
+  monthDropdownTestId?: string | ((monthIndex: number) => string) | undefined;
   /**
    * Передает атрибут `data-testid` для дропдауна выбора года в заголовке календаря.
    */
-  yearDropdownTestId?: string | ((year: number) => string);
+  yearDropdownTestId?: string | ((year: number) => string) | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки перехода к следующему месяцу в заголовке календаря.
    */
-  nextMonthButtonTestId?: string;
+  nextMonthButtonTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки перехода к предыдущему месяцу в заголовке календаря.
    */
-  prevMonthButtonTestId?: string;
+  prevMonthButtonTestId?: string | undefined;
 };
 
 export interface CalendarHeaderProps
@@ -72,55 +72,55 @@ export interface CalendarHeaderProps
   /**
    * Скрывает иконку для переключения на предыдущий месяц.
    */
-  prevMonthHidden?: boolean;
+  prevMonthHidden?: boolean | undefined;
   /**
    * Скрывает иконку для переключения на следующий месяц.
    */
-  nextMonthHidden?: boolean;
+  nextMonthHidden?: boolean | undefined;
   /**
    * Отключает селекторы выбора месяца/года.
    */
-  disablePickers?: boolean;
+  disablePickers?: boolean | undefined;
   /**
    * `aria-label` для кнопки предыдущего месяца.
    */
-  prevMonthLabel?: string;
+  prevMonthLabel?: string | undefined;
   /**
    * `aria-label` для кнопки следующего месяца.
    */
-  nextMonthLabel?: string;
+  nextMonthLabel?: string | undefined;
   /**
    * `aria-label` для селектора месяца.
    */
-  changeMonthLabel?: string;
+  changeMonthLabel?: string | undefined;
   /**
    * `aria-label` для селектора года.
    */
-  changeYearLabel?: string;
+  changeYearLabel?: string | undefined;
   /**
    * Кастомная иконка для кнопки предыдущего месяца.
    */
-  prevMonthIcon?: React.ReactNode;
+  prevMonthIcon?: React.ReactNode | undefined;
   /**
    * Кастомная иконка для кнопки следующего месяца.
    */
-  nextMonthIcon?: React.ReactNode;
+  nextMonthIcon?: React.ReactNode | undefined;
   /**
    * Дополнительные свойства для кнопки предыдущего месяца.
    */
-  prevMonthProps?: ArrowMonthProps;
+  prevMonthProps?: ArrowMonthProps | undefined;
   /**
    * Дополнительные свойства для кнопки следующего месяца.
    */
-  nextMonthProps?: ArrowMonthProps;
+  nextMonthProps?: ArrowMonthProps | undefined;
   /**
    * Функция для проверки блокировки месяца.
    */
-  isMonthDisabled?: (monthNumber: number, year?: number) => boolean;
+  isMonthDisabled?: ((monthNumber: number, year?: number) => boolean) | undefined;
   /**
    * Функция для проверки блокировки года.
    */
-  isYearDisabled?: (yearNumber: number) => boolean;
+  isYearDisabled?: ((yearNumber: number) => boolean) | undefined;
   /**
    * Обработчик изменения отображаемой даты.
    */
@@ -128,11 +128,11 @@ export interface CalendarHeaderProps
   /**
    * Нажатие на кнопку переключения на следующий месяц.
    */
-  onNextMonth?: () => void;
+  onNextMonth?: (() => void) | undefined;
   /**
    * Нажатие на кнопку переключения на предыдущий месяц.
    */
-  onPrevMonth?: () => void;
+  onPrevMonth?: (() => void) | undefined;
 }
 
 export const CalendarHeader = ({

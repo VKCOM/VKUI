@@ -34,11 +34,11 @@ const TestComponent = ({
   autoFocus = false, // for multiple trigger [click, focus]
   Content,
 }: {
-  restoreFocus?: boolean;
+  restoreFocus?: boolean | undefined;
   hookResult: ReturnType<typeof useFloatingWithInteractions<HTMLButtonElement>>;
-  keyboardInput?: boolean;
-  autoFocus?: boolean;
-  Content?: ComponentType<{ onClose: VoidFunction }>;
+  keyboardInput?: boolean | undefined;
+  autoFocus?: boolean | undefined;
+  Content?: ComponentType<{ onClose: VoidFunction }> | undefined;
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const {
@@ -485,7 +485,12 @@ describe(useFloatingWithInteractions, () => {
         expect(result.current.shown).toBeTruthy();
       });
 
-      const onAnimationStart = vi.spyOn(result.current.floatingProps, 'onAnimationStart');
+      const onAnimationStart = vi.spyOn(
+        result.current.floatingProps as unknown as {
+          onAnimationStart?: React.AnimationEventHandler<HTMLButtonElement>;
+        },
+        'onAnimationStart',
+      );
       render(<TestComponent hookResult={result.current} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationStart');
@@ -498,7 +503,12 @@ describe(useFloatingWithInteractions, () => {
         expect(result.current.shown).toBeTruthy();
       });
 
-      const onAnimationEnd = vi.spyOn(result.current.floatingProps, 'onAnimationEnd');
+      const onAnimationEnd = vi.spyOn(
+        result.current.floatingProps as unknown as {
+          onAnimationEnd?: React.AnimationEventHandler<HTMLButtonElement>;
+        },
+        'onAnimationEnd',
+      );
       render(<TestComponent hookResult={result.current} />);
 
       await fireEventPatch(result.current.refs.floating.current, 'animationEnd');

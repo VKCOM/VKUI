@@ -41,11 +41,11 @@ export type UseFloatingElementProps<
   ReferenceElement extends HTMLElement = HTMLElement,
 > = Omit<UseFloatingMiddlewaresBootstrapOptions, 'arrowRef'> &
   Omit<UseFloatingWithInteractionsProps, 'placement'> & {
-    onPlacementChange?: OnPlacementChange;
-    onReferenceHiddenChange?: (hidden: boolean) => void;
+    onPlacementChange?: OnPlacementChange | undefined;
+    onReferenceHiddenChange?: ((hidden: boolean) => void) | undefined;
     renderFloatingComponent: RenderFloatingComponentFn<FloatingElement>;
-    remapReferenceProps?: RemapReferencePropsFn<ReferenceElement>;
-    externalFloatingElementRef?: React.Ref<FloatingElement>;
+    remapReferenceProps?: RemapReferencePropsFn<ReferenceElement> | undefined;
+    externalFloatingElementRef?: React.Ref<FloatingElement> | undefined;
   };
 
 export type UseFloatingResult<ReferenceElement extends HTMLElement = HTMLElement> = {

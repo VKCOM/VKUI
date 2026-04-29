@@ -33,7 +33,7 @@ export interface CaptionProps extends TypographyProps, HasCaps {
   /**
    * Уровень заголовка (от 1 до 3).
    */
-  level?: '1' | '2' | '3';
+  level?: '1' | '2' | '3' | undefined;
 }
 
 /**

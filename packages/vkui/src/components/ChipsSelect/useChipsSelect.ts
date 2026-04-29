@@ -24,7 +24,7 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
   /**
    * Список опций в выпадающем списке.
    */
-  options?: O[];
+  options?: O[] | undefined;
   /**
    * Возможность создавать чипы которых нет в списке:
    * - `true` – добавление по кнопке Enter;
@@ -32,31 +32,31 @@ export interface UseChipsSelectProps<O extends ChipOption = ChipOption>
    * Текст для пункта, создающего чипы при нажатии, также отвечает за то, будет ли показан этот пункт
    * (показывается после того как в списке не останется опций).
    */
-  creatable?: boolean | string;
+  creatable?: boolean | string | undefined;
   /**
    * Текст, который показывается если список опций пуст.
    */
-  emptyText?: string;
+  emptyText?: string | undefined;
   /**
    * Показывать или скрывать уже выбранные опции.
    */
-  selectedBehavior?: 'hide' | 'highlight';
+  selectedBehavior?: 'hide' | 'highlight' | undefined;
   /**
    * Функция для фильтрации опций в списке.
    */
-  filterFn?: false | FilterFn<O>;
+  filterFn?: false | FilterFn<O> | undefined;
   /**
    * Функция для сортировки опций в списке.
    */
-  sortFn?: false | SortFn<O>;
+  sortFn?: false | SortFn<O> | undefined;
   /**
    * Будет вызвано в момент скрытия выпадающего списка.
    */
-  onClose?: VoidFunction;
+  onClose?: VoidFunction | undefined;
   /**
    * Будет вызвано в момент открытия выпадающего списка.
    */
-  onOpen?: VoidFunction;
+  onOpen?: VoidFunction | undefined;
 }
 
 export const useChipsSelect = <O extends ChipOption>({
@@ -245,19 +245,20 @@ function transformOptions<O extends ChipOption>({
   filterFn = defaultFilterFn,
   options: optionsProp = DEFAULT_VALUE,
   selectedBehavior = DEFAULT_SELECTED_BEHAVIOR,
-}: Required<Pick<UseChipsSelectProps<O>, 'value'>> &
-  Pick<
-    UseChipsSelectProps<O>,
-    | 'getOptionValue'
-    | 'getOptionLabel'
-    | 'inputValue'
-    | 'emptyText'
-    | 'creatable'
-    | 'filterFn'
-    | 'sortFn'
-    | 'options'
-    | 'selectedBehavior'
-  >) {
+}: {
+  value: O[];
+} & Pick<
+  UseChipsSelectProps<O>,
+  | 'getOptionValue'
+  | 'getOptionLabel'
+  | 'inputValue'
+  | 'emptyText'
+  | 'creatable'
+  | 'filterFn'
+  | 'sortFn'
+  | 'options'
+  | 'selectedBehavior'
+>) {
   const filteredOptionsProp = filterFn
     ? optionsProp.filter((option) => filterFn(inputValue, option, getOptionLabel))
     : optionsProp;

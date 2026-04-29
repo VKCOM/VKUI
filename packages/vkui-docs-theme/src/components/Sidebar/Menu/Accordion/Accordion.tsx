@@ -14,8 +14,8 @@ import styles from './Accordion.module.css';
 export interface AccordionProps extends Omit<TappableProps, 'onChange' | 'title'> {
   expanded: VKUIAccordionProps['expanded'];
   onClick: React.MouseEventHandler<HTMLElement>;
-  children?: React.ReactNode;
-  className?: string;
+  children?: React.ReactNode | undefined;
+  className?: string | undefined;
   title: React.ReactNode;
 }
 

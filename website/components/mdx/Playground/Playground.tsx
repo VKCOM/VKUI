@@ -21,7 +21,7 @@ const jetBrainsMono = JetBrains_Mono({
 
 export interface PlaygroundProps extends PlaygroundPreviewProps {
   code: string;
-  defaultExpanded?: boolean;
+  defaultExpanded?: boolean | undefined;
 }
 
 export function Playground({
@@ -31,20 +31,25 @@ export function Playground({
 }: PlaygroundProps) {
   const websiteColorScheme = useColorScheme();
   const [codeVisible, setCodeVisible] = React.useState(defaultExpanded);
+  const [currentCode, setCurrentCode] = React.useState(defaultCode);
 
   return (
     <div className={classNames(styles.root, jetBrainsMono.className)}>
       <LiveProvider
-        code={defaultCode}
+        code={currentCode}
         scope={scope}
         theme={websiteColorScheme === 'dark' ? darkTheme : lightTheme}
         transformCode={transformCode}
       >
         <PlaygroundPreview {...restProps} />
-        <PlaygroundToolbar setCodeVisible={setCodeVisible} codeVisible={codeVisible} />
+        <PlaygroundToolbar
+          setCodeVisible={setCodeVisible}
+          codeVisible={codeVisible}
+          code={currentCode}
+        />
         <Activity mode={codeVisible ? 'visible' : 'hidden'}>
           <div className={styles.codeBlock}>
-            <LiveEditor className={styles.code} />
+            <LiveEditor className={styles.code} onChange={setCurrentCode} />
           </div>
         </Activity>
       </LiveProvider>

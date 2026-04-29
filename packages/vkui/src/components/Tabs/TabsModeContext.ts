@@ -7,7 +7,7 @@ export interface TabsContextProps {
   withGaps: boolean;
   layoutFillMode: NonNullable<TabsProps['layoutFillMode']>;
   withScrollToSelectedTab: TabsProps['withScrollToSelectedTab'];
-  scrollBehaviorToSelectedTab: Required<TabsProps['scrollBehaviorToSelectedTab']>;
+  scrollBehaviorToSelectedTab: NonNullable<TabsProps['scrollBehaviorToSelectedTab']>;
 }
 /* eslint-enable jsdoc/require-jsdoc */
 

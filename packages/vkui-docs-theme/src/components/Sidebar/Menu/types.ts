@@ -6,15 +6,15 @@ export interface FolderProps {
 
 export interface FileProps {
   item: PageItem | Item;
-  itemIdPrefix?: string;
-  hovered?: boolean;
+  itemIdPrefix?: string | undefined;
+  hovered?: boolean | undefined;
 }
 
 export interface MenuProps {
   directories: PageItem[] | Item[];
-  className?: string;
-  mobileView?: boolean;
-  selectedName?: string | null;
-  id?: string;
-  label?: string;
+  className?: string | undefined;
+  mobileView?: boolean | undefined;
+  selectedName?: string | null | undefined;
+  id?: string | undefined;
+  label?: string | undefined;
 }

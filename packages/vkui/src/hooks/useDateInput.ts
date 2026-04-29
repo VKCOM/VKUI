@@ -6,9 +6,9 @@ import { useBooleanState } from './useBooleanState';
 export interface UseDateInputDependencies<T, D> {
   maxElement: number;
   refs: Array<React.RefObject<T | null>>;
-  autoFocus?: boolean;
-  disabled?: boolean;
-  value?: D | null;
+  autoFocus?: boolean | undefined;
+  disabled?: boolean | undefined;
+  value?: D | null | undefined;
   elementsConfig: (index: number) => {
     length: number;
     min: number;
@@ -17,8 +17,8 @@ export interface UseDateInputDependencies<T, D> {
   onInternalValueChange: (value: string[]) => void;
   getInternalValue: (value?: D | null | undefined) => string[];
   onClear: () => void;
-  onCalendarOpenChanged?: (opened: boolean) => void;
-  accessible?: boolean;
+  onCalendarOpenChanged?: ((opened: boolean) => void) | undefined;
+  accessible?: boolean | undefined;
 }
 
 export function useDateInput<T extends HTMLElement, D>({

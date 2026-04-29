@@ -45,44 +45,50 @@ export interface WriteBarProps
   /**
    * @deprecated Since 7.9.0. Вместо этого используйте `slotProps={ textArea: { getRootRef: ... } }`.
    */
-  getRef?: React.Ref<HTMLTextAreaElement>;
+  getRef?: React.Ref<HTMLTextAreaElement> | undefined;
   /**
    * Свойства, которые можно прокинуть внутрь компонента:
    * - `root`: свойства для прокидывания в корень компонента;
    * - `textArea`: свойства для прокидывания в поле ввода.
    */
-  slotProps?: {
-    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
-      HasRootRef<HTMLDivElement> &
-      HasDataAttribute;
-    textArea?: React.TextareaHTMLAttributes<HTMLTextAreaElement> &
-      HasRootRef<HTMLTextAreaElement> &
-      HasDataAttribute;
-  };
+  slotProps?:
+    | {
+        root?:
+          | (Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+              HasRootRef<HTMLDivElement> &
+              HasDataAttribute)
+          | undefined;
+        textArea?:
+          | (React.TextareaHTMLAttributes<HTMLTextAreaElement> &
+              HasRootRef<HTMLTextAreaElement> &
+              HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
   /**
    * Содержимое, отображаемое слева от поля ввода.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Содержимое, отображаемое поверх поля ввода (актуально для iOS).
    */
-  inlineAfter?: React.ReactNode;
+  inlineAfter?: React.ReactNode | undefined;
   /**
    * Содержимое, отображаемое справа от поля ввода.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Вызывается при смене высоты поля ввода.
    */
-  onHeightChange?: VoidFunction;
+  onHeightChange?: VoidFunction | undefined;
   /**
    * Добавляет тень вокруг поля ввода.
    */
-  shadow?: boolean;
+  shadow?: boolean | undefined;
   /**
    * @deprecated Неиспользуемое свойство.
    */
-  children?: never;
+  children?: never | undefined;
 }
 
 const WriteBarTypography = (props: TypographyProps) => {

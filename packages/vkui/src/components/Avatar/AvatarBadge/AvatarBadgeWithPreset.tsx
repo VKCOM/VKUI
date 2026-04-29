@@ -19,7 +19,7 @@ export interface AvatarBadgeWithPresetProps
    *
    * За каждым пресетом закреплена своя иконка и стили.
    */
-  preset?: 'online' | 'online-mobile';
+  preset?: 'online' | 'online-mobile' | undefined;
 }
 
 export const AvatarBadgeWithPreset = ({

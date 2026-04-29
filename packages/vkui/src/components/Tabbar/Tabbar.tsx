@@ -11,11 +11,11 @@ export interface TabbarProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
    * Флаг, который скрывает тень (Android) или границы (iOS).
    */
-  plain?: boolean;
+  plain?: boolean | undefined;
   /**
    * Задает расположение элементов (вертикальное/горизонтальное).
    */
-  mode?: 'vertical' | 'horizontal' | 'auto';
+  mode?: 'vertical' | 'horizontal' | 'auto' | undefined;
 }
 
 const getItemsLayoutClassName = (

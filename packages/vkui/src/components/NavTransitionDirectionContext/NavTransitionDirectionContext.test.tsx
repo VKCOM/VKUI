@@ -20,7 +20,7 @@ function setup({ withAnimationsMode }: { withAnimationsMode: boolean }) {
     activePanel = 'v2.1',
   }: {
     activeView: string;
-    activePanel?: string;
+    activePanel?: string | undefined;
   }) => {
     return (
       <ConfigProvider transitionMotionEnabled={withAnimationsMode}>

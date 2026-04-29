@@ -17,18 +17,18 @@ export interface EllipsisTextProps
    * Используйте в случаях, когда у контейнера ширина зависит от размера контента,
    * другими словами, когда ширина не ограничена.
    */
-  maxWidth?: number;
+  maxWidth?: number | undefined;
   /**
    * Максимальное количество видимых строк.
    *
    * > При `maxLines > 1` используется свойство line-clamp, которое поддерживается не всеми версиями браузеров. Используйте с осторожностью
    * > @see [line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp).
    */
-  maxLines?: number;
+  maxLines?: number | undefined;
   /**
    * Отключает отображение нативного тултипа с полным текстом.
    */
-  disableNativeTitle?: boolean;
+  disableNativeTitle?: boolean | undefined;
 }
 
 /** Компонент ограничивает текстовый контент, убирая его в многоточие.

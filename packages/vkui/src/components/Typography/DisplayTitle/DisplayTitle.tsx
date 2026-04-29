@@ -21,7 +21,7 @@ export interface DisplayTitleProps extends TypographyProps {
   /**
    * Уровень заголовка (от 1 до 4).
    */
-  level?: '1' | '2' | '3' | '4';
+  level?: '1' | '2' | '3' | '4' | undefined;
 }
 
 /**

@@ -19,36 +19,36 @@ export interface ContentCardProps
   /**
    Текст над заголовком.
    */
-  overTitle?: React.ReactNode;
+  overTitle?: React.ReactNode | undefined;
   /**
    Заголовок.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    Позволяет поменять тег используемый для заголовка.
    */
-  titleComponent?: React.ElementType;
+  titleComponent?: React.ElementType | undefined;
   /**
    Текст.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    Нижний текст.
    */
-  caption?: React.ReactNode;
+  caption?: React.ReactNode | undefined;
   /**
     Максимальная высота изображения.
    */
-  maxHeight?: number;
+  maxHeight?: number | undefined;
   /**
    * Внешний вид карточки.
    */
-  mode?: CardProps['mode'];
+  mode?: CardProps['mode'] | undefined;
   /**
    * Пользовательское значения стиля `object-fit` для картинки
    * Подробнее можно почитать в [документации](https://developer.mozilla.org/ru/docs/Web/CSS/object-fit).
    */
-  imageObjectFit?: React.CSSProperties['objectFit'];
+  imageObjectFit?: React.CSSProperties['objectFit'] | undefined;
 }
 
 /**

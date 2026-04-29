@@ -5,21 +5,21 @@ import { Icon24ChevronDown, Icon24ChevronUp } from '@vkontakte/icons';
 import { callMultiple } from '../../lib/callMultiple';
 import { SimpleCell, type SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { AccordionContext } from './AccordionContext';
-import styles from './Accordion.module.css';
+import { AccordionIcon } from './AccordionIcon';
 
 export interface AccordionSummaryProps extends Omit<SimpleCellProps, 'chevron'> {
   /**
    * Иконка для раскрытия контента.
    */
-  ExpandIcon?: React.ElementType;
+  ExpandIcon?: React.ElementType | undefined;
   /**
    * Иконка для сворачивания контента.
    */
-  CollapseIcon?: React.ElementType;
+  CollapseIcon?: React.ElementType | undefined;
   /**
    * Позиция иконки.
    */
-  iconPosition?: 'before' | 'after';
+  iconPosition?: 'before' | 'after' | 'none' | undefined;
 }
 
 export const AccordionSummary = ({
@@ -34,13 +34,9 @@ export const AccordionSummary = ({
 }: AccordionSummaryProps) => {
   const { expanded, labelId, contentId, onChange } = React.useContext(AccordionContext);
 
-  const Icon = expanded ? CollapseIcon : ExpandIcon;
-
   const icon = (
     // Обертка нужна для правильной работы с отступами в SimpleCell
-    <span className="vkuiIcon">
-      <Icon className={styles.icon} />
-    </span>
+    <AccordionIcon CollapseIcon={CollapseIcon} ExpandIcon={ExpandIcon} />
   );
 
   const toggle = () => onChange(!expanded);

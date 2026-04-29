@@ -15,6 +15,7 @@ description: Компонент, реализующий интерфейс с ц
 
 </Overview>
 
+{/* @example-description: Базовая навигация через `Epic` с двумя историями и нижним `Tabbar`. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ maxWidth: 320, height: 415 }}>
 
 ```jsx
@@ -92,6 +93,7 @@ Epic
 
 import { FixedLayoutWrapper } from '@/components/wrappers';
 
+{/* @example-description: Базовый `Tabbar` с двумя пунктами и активным разделом. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
   ```jsx
   <Tabbar>
@@ -115,6 +117,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 - `"vertical"` — задаёт всегда вертикальное расположение;
 - `"horizontal"` — задаёт всегда горизонтальное расположение.
 
+{/* @example-description: Принудительное вертикальное выравнивание элементов `Tabbar` через `mode="vertical"`. */}
 <Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
   ```jsx
   <Tabbar mode="vertical">
@@ -133,6 +136,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 Подкомпонент позволяет создать навигационный элемент. Чаще всего представлен иконкой размером `28px`. Допускается использовать текст
 рядом с иконкой. Иконку необходимо передавать в свойство `children`, текст — в свойство `label`.
 
+{/* @example-description: Пример `TabbarItem` с иконкой и текстовой подписью. */}
 <Playground>
   ```jsx
   <TabbarItem label="Профиль">
@@ -148,6 +152,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 
 Используйте свойство `selected`, чтобы показать текущий активный раздел.
 
+{/* @example-description: Выбранный `TabbarItem` с текстом для скринридера через `VisuallyHidden`. */}
 <Playground>
   ```jsx
   <TabbarItem selected>
@@ -163,6 +168,7 @@ import { FixedLayoutWrapper } from '@/components/wrappers';
 С помощью свойства `indicator` можно задать для компонента счётчик или индикатор уведомления.
 Передавайте компоненты `Counter` с `size="s"` или `Badge`.
 
+{/* @example-description: `TabbarItem` с индикатором уведомления, переданным в свойство `indicator`. */}
 <Playground>
   ```jsx
   <TabbarItem indicator={<Badge />}>

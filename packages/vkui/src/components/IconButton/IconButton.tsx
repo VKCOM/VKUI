@@ -18,7 +18,7 @@ export interface IconButtonProps extends TappableOmitProps {
   /**
    * Текст кнопки-иконки. Делает ее доступной для ассистивных технологий.
    */
-  label?: string;
+  label?: string | undefined;
 }
 
 const warn = warnOnce('IconButton');

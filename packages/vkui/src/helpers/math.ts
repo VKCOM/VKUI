@@ -1,6 +1,14 @@
 export const clamp = (value: number, min: number, max: number): number =>
   Math.max(min, Math.min(value, max));
 
+/**
+ * Переполнение для диапазона [min, max]
+ */
+export function overflow(value: number, min: number, max: number) {
+  const range = max - min + 1;
+  return ((((value - min) % range) + range) % range) + min;
+}
+
 export function precisionRound(number: number, precision = 1): number {
   let factor = Math.pow(10, precision);
   return Math.round(number * factor) / factor;
@@ -40,7 +48,7 @@ export function rescale(
   value: number,
   from: [number, number],
   to: [number, number],
-  options: { step?: number } = {},
+  options: { step?: number | undefined } = {},
 ): number {
   const scaled = ((value - from[0]) / (from[1] - from[0])) * (to[1] - to[0]) + to[0];
   return decimatedClamp(scaled, to[0], to[1], options.step);

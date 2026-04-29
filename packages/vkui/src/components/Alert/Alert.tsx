@@ -35,12 +35,12 @@ export interface AlertActionInterface
    * то в аргументы `action` передаётся объект с функцией close,
    * вызвав которую можно закрыть `action` вручную.
    */
-  action?: (args?: { close?: VoidFunction }) => void;
+  action?: ((args?: { close?: VoidFunction }) => void) | undefined;
   /**
    * По умолчанию нажатие на опцию вызывает переданную в `Alert` функцию `onClose`, данное свойство
    * позволяет отключить такое поведение.
    */
-  autoCloseDisabled?: boolean;
+  autoCloseDisabled?: boolean | undefined;
   /**
    * Режим отображения опции.
    */
@@ -54,31 +54,31 @@ export interface AlertProps
   /**
    * Расположение действий - вертикально или горизонтально.
    */
-  actionsLayout?: 'vertical' | 'horizontal';
+  actionsLayout?: 'vertical' | 'horizontal' | undefined;
   /**
    * Тип выравнивания действий.
    */
-  actionsAlign?: AlignType;
+  actionsAlign?: AlignType | undefined;
   /**
    * Список действий.
    */
-  actions?: AlertActionInterface[];
+  actions?: AlertActionInterface[] | undefined;
   /**
    * Функция для отрисовки действия.
    */
-  renderAction?: (props: AlertActionProps) => React.ReactNode;
+  renderAction?: ((props: AlertActionProps) => React.ReactNode) | undefined;
   /**
    * Заголовок модального окна.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    * Описание модального окна.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
   /**
    * Обработчик закрытия модального окна.
    */
-  onClose?: (reason: AlertCloseReason) => void;
+  onClose?: ((reason: AlertCloseReason) => void) | undefined;
   /**
    * Обработчик закрытия модального окна, срабатывающий после окончания анимации.
    */
@@ -86,42 +86,42 @@ export interface AlertProps
   /**
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
-  dismissLabel?: string;
+  dismissLabel?: string | undefined;
   /**
    * Расположение кнопки закрытия (внутри и вне `popout'a`)
    * Доступно только в `compact`-режиме, не отображается на `iOS`.
    *
    * ⚠️ ВНИМАНИЕ: использование `none` скрывает крестик, это негативно сказывается на пользовательском опыте.
    */
-  dismissButtonMode?: 'inside' | 'outside' | 'none';
+  dismissButtonMode?: 'inside' | 'outside' | 'none' | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки закрытия.
    */
-  dismissButtonTestId?: string;
+  dismissButtonTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для заголовка.
    */
-  titleTestId?: string;
+  titleTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для описания.
    */
-  descriptionTestId?: string;
+  descriptionTestId?: string | undefined;
   /**
    * По умолчанию событие onClick не всплывает.
    */
-  allowClickPropagation?: boolean;
+  allowClickPropagation?: boolean | undefined;
   /**
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
   /**
    * Управление поведением автофокуса при появлении всплывающего окна.
    * При прокидывании `true` фокус будет установлен на первый элемент.
    * При прокидывании `root` фокус будет установлен в корень.
    * @default true
    */
-  autoFocus?: boolean | 'root';
+  autoFocus?: boolean | 'root' | undefined;
 }
 
 const warn = warnOnce('Alert');

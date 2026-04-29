@@ -7,7 +7,7 @@ import type { HasChildren } from '../../types';
 import { ScrollContext } from '../AppRoot/ScrollContext';
 
 export interface ScrollSaverProps extends HasChildren {
-  initialScroll?: number;
+  initialScroll?: number | undefined;
   saveScroll: (this: void, scroll: number) => any;
 }
 

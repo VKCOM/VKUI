@@ -17,8 +17,8 @@ type SectionData<Section extends { id: string }> = {
 };
 
 type RemappedSection<Section extends { id: string }> = Section & {
-  minHeight?: number;
-  hidden?: boolean;
+  minHeight?: number | undefined;
+  hidden?: boolean | undefined;
 };
 
 type UseInfiniteListResult<Section extends { id: string }> = {

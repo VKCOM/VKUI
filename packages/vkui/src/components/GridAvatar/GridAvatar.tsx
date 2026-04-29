@@ -14,7 +14,7 @@ export interface GridAvatarProps extends Omit<ImageBaseProps, 'src' | 'fallbackI
   /**
    * Массив со ссылками. От 1 до 4 элементов.
    */
-  src?: string[];
+  src?: string[] | undefined;
 }
 
 const warn = warnOnce('GridAvatar');

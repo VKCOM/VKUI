@@ -38,15 +38,15 @@ export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButton
    * - `send` – иконка отправки, текст по умолчанию — "Отправить";
    * - `done` – иконка отправки в режиме редактирования, текст по умолчанию — "Готово".
    */
-  mode?: 'attach' | 'send' | 'done';
+  mode?: 'attach' | 'send' | 'done' | undefined;
   /**
    * Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
    */
-  count?: number;
+  count?: number | undefined;
   /**
    * Текст кнопки. Необходим для ассистивных технологий.
    */
-  label?: string;
+  label?: string | undefined;
 }
 
 const warn = warnOnce('WriteBarIcon');

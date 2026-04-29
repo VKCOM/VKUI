@@ -7,7 +7,7 @@ export interface CardProps extends HTMLAttributesWithRootRef<HTMLDivElement>, Ha
   /**
    * Внешний вид карточки.
    */
-  mode?: 'tint' | 'shadow' | 'outline' | 'outline-tint' | 'plain';
+  mode?: 'tint' | 'shadow' | 'outline' | 'outline-tint' | 'plain' | undefined;
 }
 
 /**

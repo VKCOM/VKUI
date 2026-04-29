@@ -10,8 +10,8 @@ type DocsContextType = {
         colorScheme?: ColorSchemeType;
         platform?: PlatformType;
         direction?: Direction;
-        hasCustomPanelHeaderAfter?: boolean;
-        hasPointer?: boolean;
+        hasCustomPanelHeaderAfter?: boolean | undefined;
+        hasPointer?: boolean | undefined;
       };
     };
   };

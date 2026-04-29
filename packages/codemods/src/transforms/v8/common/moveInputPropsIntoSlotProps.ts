@@ -50,8 +50,8 @@ type InputSpecificProp = (typeof INPUT_SPECIFIC_PROPS)[number];
 type MoveInputPropsOptions = {
   root: Collection;
   componentName: string;
-  slotName?: string;
-  excludedProps?: InputSpecificProp[];
+  slotName?: string | undefined;
+  excludedProps?: InputSpecificProp[] | undefined;
 };
 
 export function moveInputPropsIntoSlotProps(

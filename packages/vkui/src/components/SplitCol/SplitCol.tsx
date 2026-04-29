@@ -51,31 +51,31 @@ export interface SplitColProps extends HTMLAttributesWithRootRef<HTMLDivElement>
   /**
    * Ширина колонки.
    */
-  width?: number | string;
+  width?: number | string | undefined;
   /**
    * Максимальная ширина колонки.
    */
-  maxWidth?: number | string;
+  maxWidth?: number | string | undefined;
   /**
    * Минимальная ширина колонки.
    */
-  minWidth?: number | string;
+  minWidth?: number | string | undefined;
   /**
    * Если false, то переходы между Panel происходят без анимации.
    */
-  animate?: boolean;
+  animate?: boolean | undefined;
   /**
    * Если true, то добавляются боковые отступы фиксированной величины при ширине больше чем `smallTablet`.
    */
-  autoSpaced?: boolean;
+  autoSpaced?: boolean | undefined;
   /**
    * Фиксированное положение колонки.
    */
-  fixed?: boolean;
+  fixed?: boolean | undefined;
   /**
    * Если true, то ширина контейнера становится 100% при ширине меньше чем `tablet`.
    */
-  stretchedOnMobile?: boolean;
+  stretchedOnMobile?: boolean | undefined;
 }
 
 /**

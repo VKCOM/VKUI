@@ -106,68 +106,68 @@ export interface TouchProps
    * Использовать pointer-events для hover-состояний.
    * Работает на отключенных элементах (disabled inputs).
    */
-  usePointerHover?: boolean;
+  usePointerHover?: boolean | undefined;
   /**
    * Использовать фазу capture для событий.
    */
-  useCapture?: boolean;
+  useCapture?: boolean | undefined;
   /**
    * Порог расстояния в пикселях для активации свайпа.
    * @default 5
    */
-  slideThreshold?: number;
+  slideThreshold?: number | undefined;
   /**
    * Блокировать click-события после распознавания свайпа.
    */
-  noSlideClick?: boolean;
+  noSlideClick?: boolean | undefined;
   /**
    * Останавливать всплытие событий.
    */
-  stopPropagation?: boolean;
+  stopPropagation?: boolean | undefined;
   /**
    * Обработчик входа курсора в область.
    */
-  onEnter?: HoverHandler;
+  onEnter?: HoverHandler | undefined;
   /**
    * Обработчик выхода курсора из области.
    */
-  onLeave?: HoverHandler;
+  onLeave?: HoverHandler | undefined;
   /**
    * Общий обработчик начала взаимодействия.
    */
-  onStart?: CustomTouchEventHandler;
+  onStart?: CustomTouchEventHandler | undefined;
   /**
    * Обработчик начала горизонтального перемещения.
    */
-  onStartX?: CustomTouchEventHandler;
+  onStartX?: CustomTouchEventHandler | undefined;
   /**
    * Обработчик начала вертикального перемещения.
    */
-  onStartY?: CustomTouchEventHandler;
+  onStartY?: CustomTouchEventHandler | undefined;
   /**
    * Общий обработчик перемещения.
    */
-  onMove?: CustomTouchEventHandler;
+  onMove?: CustomTouchEventHandler | undefined;
   /**
    * Обработчик горизонтального перемещения.
    */
-  onMoveX?: CustomTouchEventHandler;
+  onMoveX?: CustomTouchEventHandler | undefined;
   /**
    * Обработчик вертикального перемещения.
    */
-  onMoveY?: CustomTouchEventHandler;
+  onMoveY?: CustomTouchEventHandler | undefined;
   /**
    * Общий обработчик завершения взаимодействия.
    */
-  onEnd?: CustomTouchEventHandler;
+  onEnd?: CustomTouchEventHandler | undefined;
   /**
    * Обработчик завершения горизонтального свайпа.
    */
-  onEndX?: CustomTouchEventHandler;
+  onEndX?: CustomTouchEventHandler | undefined;
   /**
    * Обработчик завершения вертикального свайпа.
    */
-  onEndY?: CustomTouchEventHandler;
+  onEndY?: CustomTouchEventHandler | undefined;
 }
 
 export interface Gesture {

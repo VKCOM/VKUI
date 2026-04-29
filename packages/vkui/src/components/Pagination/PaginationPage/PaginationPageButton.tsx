@@ -13,13 +13,13 @@ import styles from './PaginationPage.module.css';
 export interface PaginationPageButtonOpts
   extends Pick<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'disabled' | 'className'>,
     Pick<PaginationProps, 'getPageLabel'> {
-  isCurrent?: boolean;
-  density?: DensityTypeValues;
+  isCurrent?: boolean | undefined;
+  density?: DensityTypeValues | undefined;
   children: number;
 }
 
 export interface PaginationPageButtonProps extends PaginationPageButtonOpts {
-  renderPageButton?: (props: CustomPaginationPageButtonProps) => React.ReactNode;
+  renderPageButton?: ((props: CustomPaginationPageButtonProps) => React.ReactNode) | undefined;
 }
 
 const getTappablePropsFromPaginationPage = (

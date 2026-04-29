@@ -10,11 +10,11 @@ export interface GroupProps extends GroupContainerProps {
   /**
    * Элемент заголовка группы.
    */
-  header?: React.ReactNode;
+  header?: React.ReactNode | undefined;
   /**
    * Подпись под содержимым.
    */
-  description?: React.ReactNode;
+  description?: React.ReactNode | undefined;
 }
 
 /**

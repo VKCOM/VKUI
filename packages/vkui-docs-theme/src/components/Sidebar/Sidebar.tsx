@@ -9,7 +9,7 @@ import { MobileSidebar } from './MobileSidebar/MobileSidebar';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {
-  asPopover?: boolean;
+  asPopover?: boolean | undefined;
 }
 
 export function Sidebar({ asPopover = false }: SidebarProps): React.ReactElement {

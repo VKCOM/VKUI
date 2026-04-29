@@ -45,7 +45,7 @@ const CustomSelectControlled = ({
   onChange,
   ...restProps
 }: Omit<SelectProps, 'value'> & {
-  initialValue?: string;
+  initialValue?: string | undefined;
 }) => {
   const [value, setValue] = useState<SelectProps['value']>(initialValue);
   const handleChange: SelectProps['onChange'] = (e, newValue) => {
@@ -1306,7 +1306,7 @@ describe('CustomSelect', () => {
     );
 
     type PublisherFragmentData = {
-      __typename?: 'Publisher';
+      __typename?: 'Publisher' | undefined;
       id: string;
       title: string;
       logo: string;

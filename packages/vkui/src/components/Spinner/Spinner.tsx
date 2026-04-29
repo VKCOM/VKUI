@@ -21,19 +21,19 @@ export interface SpinnerProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
   /**
    * Размер спиннера.
    */
-  size?: 's' | 'm' | 'l' | 'xl';
+  size?: 's' | 'm' | 'l' | 'xl' | undefined;
   /**
    * Отключение анимации.
    */
-  disableAnimation?: boolean;
+  disableAnimation?: boolean | undefined;
   /**
    * Задать цвет можно будет через свойство color родителя.
    */
-  noColor?: boolean;
+  noColor?: boolean | undefined;
   /**
    * Задерживает отрисовку элемента на заданное количество миллисекунд.
    */
-  visibilityDelay?: number;
+  visibilityDelay?: number | undefined;
 }
 
 /**

@@ -10,60 +10,60 @@ type ModalRootBaseProps = {
   /**
    * Открывает модальное окно с переданным id.
    */
-  activeModal?: ModalRootActiveModal;
+  activeModal?: ModalRootActiveModal | undefined;
 
   /**
    * `data-testid` для маски.
    */
-  modalOverlayTestId?: string;
+  modalOverlayTestId?: string | undefined;
 
   /**
    * Отключает фокус на контейнер диалогового окна при открытии.
    *
    * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
-  noFocusToDialog?: boolean;
+  noFocusToDialog?: boolean | undefined;
 
-  usePortal?: AppRootPortalProps['usePortal'];
+  usePortal?: AppRootPortalProps['usePortal'] | undefined;
   /**
    * Будет вызвано при начале открытия активной модалки с её id.
    */
-  onOpen?: ModalRootCallbackFunction;
+  onOpen?: ModalRootCallbackFunction | undefined;
 
   /**
    * Будет вызвано при окончательном открытии активной модалки с её id.
    */
-  onOpened?: ModalRootCallbackFunction;
+  onOpened?: ModalRootCallbackFunction | undefined;
 
   /**
    * Будет вызвано при начале закрытия активной модалки с её id.
    */
-  onClose?: ModalRootCallbackFunction;
+  onClose?: ModalRootCallbackFunction | undefined;
 
   /**
    * Будет вызвано при окончательном закрытии активной модалки с её id.
    */
-  onClosed?: ModalRootCallbackFunction;
+  onClosed?: ModalRootCallbackFunction | undefined;
 
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
    */
-  disableModalOverlay?: boolean;
+  disableModalOverlay?: boolean | undefined;
 
   /**
    * Отключает анимацию появления .
    */
-  disableOpenAnimation?: boolean;
+  disableOpenAnimation?: boolean | undefined;
   /**
    * Отключает анимацию закрытия модалки.
    */
-  disableCloseAnimation?: boolean;
+  disableCloseAnimation?: boolean | undefined;
 };
 
 export interface ModalRootProps extends ModalRootBaseProps {
   children: React.ReactElement | Iterable<React.ReactElement>;
-  onOverlayClosed?: () => void;
-  onOverlayShowed?: () => void;
+  onOverlayClosed?: (() => void) | undefined;
+  onOverlayShowed?: (() => void) | undefined;
 }
 
 type ModalRootContextBaseInterface = {
@@ -78,6 +78,6 @@ export interface ModalRootContextInterface
     ModalRootBaseProps {}
 
 export interface UseModalRootContext extends ModalRootContextBaseInterface {
-  activeModal?: string | null;
-  onClose?: VoidFunction;
+  activeModal?: string | null | undefined;
+  onClose?: VoidFunction | undefined;
 }

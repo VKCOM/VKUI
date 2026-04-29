@@ -12,7 +12,7 @@ type OmittedStyleAttribute = {
   /**
    * Дополнительные стили.
    */
-  style?: Omit<CSSProperties, 'height' | 'maxWidth' | 'maxHeight'>;
+  style?: Omit<CSSProperties, 'height' | 'maxWidth' | 'maxHeight'> | undefined;
 };
 
 export interface ModalPageProps
@@ -24,21 +24,21 @@ export interface ModalPageProps
    *
    * @default false
    */
-  open?: boolean;
+  open?: boolean | undefined;
   /**
    * Сохранять ли компонент в DOM при `open={false}`.
    *
    * @default false
    */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`.
    */
-  header?: ReactNode;
+  header?: ReactNode | undefined;
   /**
    * Подвал модальной страницы, `<ModalPageFooter />`.
    */
-  footer?: ReactNode;
+  footer?: ReactNode | undefined;
   /**
    * Задаёт контенту максимальную ширину на десктопе.
    */
@@ -51,7 +51,7 @@ export interface ModalPageProps
    * Можно передать числовое значение в пикселях, а можно строкой, в том числе и в процентах "50%".
    * В мобильной версии 'settlingHeight' будет считаться относительно заданного height.
    */
-  height?: string | number;
+  height?: string | number | undefined;
   /**
    * Процент, на который изначально будет открыта модальная страница.
    *
@@ -60,95 +60,95 @@ export interface ModalPageProps
    *
    * Игнорируется при включении `dynamicContentHeight`.
    */
-  settlingHeight?: number;
+  settlingHeight?: number | undefined;
   /**
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство.
    */
-  dynamicContentHeight?: boolean;
+  dynamicContentHeight?: boolean | undefined;
   /**
    * Отключает фокус на интерактивный элемент после открытия модалки.
    *
    * > Важно установить фокус после открытия в любое место модалки используя событие `onOpened`, иначе не будет работать закрытие по нажатию `Esc`.
    */
-  noFocusToDialog?: boolean;
+  noFocusToDialog?: boolean | undefined;
   /**
    * Скрывает кнопку закрытия (актуально для iOS, так как можно отрисовать кнопку закрытия внутри модалки).
    */
-  hideCloseButton?: boolean;
+  hideCloseButton?: boolean | undefined;
   /**
    * `data-testid` для содержимого модального окна.
    */
-  modalContentTestId?: string;
+  modalContentTestId?: string | undefined;
   /**
    * Возвращает DOM-элемент содержимого модального окна.
    */
-  getModalContentRef?: Ref<HTMLDivElement>;
+  getModalContentRef?: Ref<HTMLDivElement> | undefined;
   /**
    * `data-testid` для оверлея.
    */
-  modalOverlayTestId?: string;
+  modalOverlayTestId?: string | undefined;
   /**
    * `data-testid` для кнопки закрытия.
    */
-  modalDismissButtonTestId?: string;
+  modalDismissButtonTestId?: string | undefined;
   /**
    * Текст для скринридера.
    */
-  modalDismissButtonLabel?: string;
+  modalDismissButtonLabel?: string | undefined;
   /**
    * Позволяет отключить возможность закрытия модальной страницы (смахивание, клавиша `ESC`, нажатие на подложку).
    *
    * ⚠️ ВНИМАНИЕ: использование этой опции негативно сказывается на пользовательском опыте.
    */
-  preventClose?: boolean;
+  preventClose?: boolean | undefined;
   /**
    * Отключает раскрытие и закрытие панели в мобильном виде.
    */
-  disableContentPanningGesture?: boolean;
+  disableContentPanningGesture?: boolean | undefined;
   /**
    * Будет вызвано при начале открытия модалки.
    */
-  onOpen?: VoidFunction;
+  onOpen?: VoidFunction | undefined;
   /**
    * Будет вызвано при окончательном открытии модалки.
    */
-  onOpened?: VoidFunction;
+  onOpened?: VoidFunction | undefined;
   /**
    * Будет вызвано при начале закрытия модалки.
    */
-  onClose?: (reason: ModalPageCloseReason, event?: UIEvent<HTMLElement>) => void;
+  onClose?: ((reason: ModalPageCloseReason, event?: UIEvent<HTMLElement>) => void) | undefined;
   /**
    * Будет вызвано при окончательном закрытии модалки.
    */
-  onClosed?: VoidFunction;
+  onClosed?: VoidFunction | undefined;
   /**
    * Управляющие элементы под кнопкой закрытия.
    *
    * Доступно только в `compact`-режиме. Рекомендуется размещать иконки размера 20, обернутые в ModalOutsideButton.
    *
    */
-  outsideButtons?: React.ReactNode;
+  outsideButtons?: React.ReactNode | undefined;
   /**
    * Управление поведением возврата фокуса при закрытии всплывающего окна.
    * @default true
    */
-  restoreFocus?: boolean | (() => boolean | HTMLElement);
+  restoreFocus?: boolean | (() => boolean | HTMLElement) | undefined;
   /**
    * Позволяет отключить захват фокуса.
    *
    * Нужно использовать, когда поверх одной модалки открывается другая, чтобы два `FocusTrap` не конфликтовали.
    */
-  disableFocusTrap?: boolean;
+  disableFocusTrap?: boolean | undefined;
   /**
    * Отключает отображение и взаимодействие с фоном модалки.
    */
-  disableModalOverlay?: boolean;
+  disableModalOverlay?: boolean | undefined;
   /**
    * Отключает анимацию открытия модалки.
    */
-  disableOpenAnimation?: boolean;
+  disableOpenAnimation?: boolean | undefined;
   /**
    * Отключает анимацию закрытия модалки.
    */
-  disableCloseAnimation?: boolean;
+  disableCloseAnimation?: boolean | undefined;
 }

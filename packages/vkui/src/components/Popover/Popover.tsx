@@ -88,11 +88,11 @@ export interface PopoverProps
    * Используется в случае, если необходимо стилизовать по своему. Для `arrow` _color_ можно
    * определить через в `arrowProps.iconClassName` или `arrowProps.iconStyle`.
    */
-  noStyling?: boolean;
+  noStyling?: boolean | undefined;
   /**
    * Позволяет набросить на стрелку пользовательские атрибуты.
    */
-  arrowProps?: PopoverArrowProps;
+  arrowProps?: PopoverArrowProps | undefined;
   /**
    * Пользовательская SVG иконка.
    *
@@ -106,15 +106,15 @@ export interface PopoverProps
    * 4. Убедитесь, что компонент принимает все валидные для SVG параметры.
    * 5. Убедитесь, что SVG и её элементы наследует цвет через `fill="currentColor"`.
    */
-  ArrowIcon?: FloatingArrowPropsPrivate['Icon'];
+  ArrowIcon?: FloatingArrowPropsPrivate['Icon'] | undefined;
   /**
    * Используется для того, чтобы не удалять всплывающий элемент из DOM дерева при скрытии.
    */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
   /**
    * Управление автоматическим фокусом при открытии всплывающего элемента.
    */
-  autoFocus?: boolean | 'root';
+  autoFocus?: boolean | 'root' | undefined;
 }
 
 /**

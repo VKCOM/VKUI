@@ -5,14 +5,14 @@ import type { AppRootUserSelectMode, SafeAreaInsets } from './types';
 
 export interface AppRootContextInterface {
   appRoot: React.RefObject<HTMLElement | null>;
-  portalRoot?: HTMLElement | React.RefObject<HTMLElement | null> | null;
-  safeAreaInsets?: SafeAreaInsets;
+  portalRoot?: HTMLElement | React.RefObject<HTMLElement | null> | null | undefined;
+  safeAreaInsets?: SafeAreaInsets | undefined;
   embedded: boolean;
   mode: 'partial' | 'embedded' | 'full';
   keyboardInput: boolean;
   disablePortal: boolean;
-  layout?: 'card' | 'plain';
-  userSelectMode?: AppRootUserSelectMode;
+  layout?: 'card' | 'plain' | undefined;
+  userSelectMode?: AppRootUserSelectMode | undefined;
 }
 
 /**

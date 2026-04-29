@@ -12,7 +12,7 @@ export function useSyncHTMLWithBaseVKUIClasses({
 }: {
   appRootRef: React.RefObject<HTMLElement | null>;
   mode: AppRootMode;
-  layout?: AppRootLayout;
+  layout?: AppRootLayout | undefined;
   enable: boolean;
 }) {
   useIsomorphicLayoutEffect(() => {

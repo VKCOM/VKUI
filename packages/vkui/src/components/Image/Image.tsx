@@ -17,23 +17,23 @@ export interface ImageProps extends Omit<ImageBaseProps, 'badge'> {
   /**
    * Размер закругления.
    */
-  borderRadius?: 's' | 'l' | 'm';
+  borderRadius?: 's' | 'l' | 'm' | undefined;
   /**
    * Размер закругления угла между сторонами начала блока и строки.
    */
-  borderStartStartRadius?: 's' | 'l' | 'm';
+  borderStartStartRadius?: 's' | 'l' | 'm' | undefined;
   /**
    * Размер закругления угла между стороной начала блока и стороной конца строки.
    */
-  borderStartEndRadius?: 's' | 'l' | 'm';
+  borderStartEndRadius?: 's' | 'l' | 'm' | undefined;
   /**
    * Размер закругления угла между стороной конца блока и стороной начала строки.
    */
-  borderEndStartRadius?: 's' | 'l' | 'm';
+  borderEndStartRadius?: 's' | 'l' | 'm' | undefined;
   /**
    * Размер закругления угла между сторонами конца блока и строки.
    */
-  borderEndEndRadius?: 's' | 'l' | 'm';
+  borderEndEndRadius?: 's' | 'l' | 'm' | undefined;
 }
 
 const getBorderRadiusBySize = (

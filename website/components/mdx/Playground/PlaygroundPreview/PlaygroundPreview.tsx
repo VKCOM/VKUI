@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   AppRoot,
+  type AppRootProps,
   classNames,
   ConfigProvider,
   Flex,
@@ -36,14 +37,17 @@ function DefaultWrapper({
   );
 }
 
-export interface PlaygroundPreviewProps extends Pick<FlexProps, 'direction' | 'align' | 'justify'> {
-  className?: string;
-  Wrapper?: React.ComponentType;
+export interface PlaygroundPreviewProps
+  extends Pick<FlexProps, 'direction' | 'align' | 'justify'>,
+    Pick<AppRootProps, 'scroll'> {
+  className?: string | undefined;
+  Wrapper?: React.ComponentType | undefined;
 }
 
 export function PlaygroundPreview({
   className,
   Wrapper = DefaultWrapper,
+  scroll = 'contain',
   ...restProps
 }: PlaygroundPreviewProps) {
   const { error } = React.useContext(LiveContext);
@@ -63,7 +67,7 @@ export function PlaygroundPreview({
       {error && <LiveError />}
       {playgroundLoading && <PanelSpinner visibilityDelay={250} />}
       {mounted && !playgroundLoading && (
-        <AppRoot style={{ height: '100%', width: '100%' }} mode="partial" scroll="contain">
+        <AppRoot style={{ height: '100%', width: '100%' }} mode="partial" scroll={scroll}>
           <ConfigProvider
             platform={platform}
             colorScheme={colorScheme}

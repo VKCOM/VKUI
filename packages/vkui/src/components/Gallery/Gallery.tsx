@@ -15,7 +15,7 @@ export interface GalleryProps extends BaseGalleryProps {
   /**
    * Индекс слайда по умолчанию.
    */
-  initialSlideIndex?: number;
+  initialSlideIndex?: number | undefined;
   /**
    * При передаче происходит автоматический переход к следующему слайду через переданное время в ms.
    * Автоматический переход будет ставиться на паузу при:
@@ -23,7 +23,7 @@ export interface GalleryProps extends BaseGalleryProps {
    * - фокусе на любой элемент внутри компонента;
    * - при наведении мыши на компонент.
    */
-  timeout?: number;
+  timeout?: number | undefined;
 }
 
 /**

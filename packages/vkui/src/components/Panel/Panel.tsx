@@ -41,7 +41,7 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
   /**
    * Центрирование содержимого.
    */
-  centered?: boolean;
+  centered?: boolean | undefined;
   /**
    * Тип оформления панели.
    *
@@ -53,11 +53,11 @@ export interface PanelProps extends HTMLAttributesWithRootRef<HTMLDivElement>, N
    * Позволяет компоненту [Group](https://vkui.io/components/group) со свойством mode='card' точечно выглядеть как карточка.
    * Тип `plain` — соответствует фону по умолчанию.
    */
-  mode?: 'plain' | 'card';
+  mode?: 'plain' | 'card' | undefined;
   /**
    * Отключает задний фон.
    */
-  disableBackground?: boolean;
+  disableBackground?: boolean | undefined;
 }
 
 /**

@@ -47,6 +47,10 @@ export async function screenshotWithClipToContent(
       width: Math.max(clip.width, viewportSize.width),
       height: Math.max(clip.height, viewportSize.height),
     });
+
+    // Viewport resize триггерит пересчёт позиций floating-элементов (через autoUpdate).
+    // Ждём, пока браузер выполнит reflow и React обработает обновления.
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
   }
 
   return page.screenshot({

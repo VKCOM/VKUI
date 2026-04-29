@@ -8,7 +8,7 @@ export type ListProps = HTMLAttributesWithRootRef<HTMLDivElement> & {
   /**
    * Задает отступ между элементами.
    */
-  gap?: number;
+  gap?: number | undefined;
 };
 
 /**

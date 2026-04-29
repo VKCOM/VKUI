@@ -28,20 +28,26 @@ export interface CustomSelectInputProps
     HasRootRef<HTMLDivElement>,
     HasAlign,
     Omit<FormFieldProps, 'mode' | 'type' | 'maxHeight'> {
-  slotProps?: {
-    input?: React.InputHTMLAttributes<HTMLInputElement> &
-      HasRootRef<HTMLInputElement> &
-      HasDataAttribute;
-    root?: Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
-      HasRootRef<HTMLDivElement> &
-      HasDataAttribute;
-  };
-  selectType?: SelectType;
-  multiline?: boolean;
-  labelTextTestId?: string;
-  fetching?: boolean;
-  searchable?: boolean;
-  accessible?: boolean;
+  slotProps?:
+    | {
+        input?:
+          | (React.InputHTMLAttributes<HTMLInputElement> &
+              HasRootRef<HTMLInputElement> &
+              HasDataAttribute)
+          | undefined;
+        root?:
+          | (Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> &
+              HasRootRef<HTMLDivElement> &
+              HasDataAttribute)
+          | undefined;
+      }
+    | undefined;
+  selectType?: SelectType | undefined;
+  multiline?: boolean | undefined;
+  labelTextTestId?: string | undefined;
+  fetching?: boolean | undefined;
+  searchable?: boolean | undefined;
+  accessible?: boolean | undefined;
 }
 
 /**

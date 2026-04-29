@@ -3,7 +3,7 @@
 import * as React from 'react';
 import type { SnackbarStore } from '../helpers/createSnackbarStore';
 import type { SnackbarPlacement, SnackbarsMap, UseSnackbar } from '../types';
-import { SnackbarsContainer } from './SnackbarsContainer';
+import { SnackbarsContainer } from './SnackbarsContainer/SnackbarsContainer';
 
 interface SnackbarHolderProps
   extends Pick<UseSnackbar.Props, 'offsetYStart' | 'offsetYEnd' | 'zIndex'> {
@@ -36,7 +36,11 @@ export const SnackbarHolder: React.FC<SnackbarHolderProps> = ({
       const placement = snackbar.snackbarProps.placement;
       const isClosing = state.snackbarsToClose.has(snackbar.id);
 
-      if (!map[placement]) {
+      if (placement === undefined) {
+        continue;
+      }
+
+      if (placement !== undefined && !map[placement]) {
         map[placement] = [];
         openedSnackbarsCountersByPlacement[placement] = 0;
         placements.push(placement);

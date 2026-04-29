@@ -17,42 +17,42 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
   /**
    * Тип баннера.
    */
-  mode?: 'tint' | 'image';
+  mode?: 'tint' | 'image' | undefined;
   /**
    * Размер баннера.
    */
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
   /**
    * Тип действия в правой части баннера.
    *
    * - `dismiss` – отображается иконка крестика, при нажатии на неё сработает свойство `onDismiss`.
    * - `chevron` – отображается иконка шеврона, которая подразумевает, что при нажатии на баннер можно куда-то перейти.
    */
-  after?: 'dismiss' | 'chevron' | React.ReactNode;
+  after?: 'dismiss' | 'chevron' | React.ReactNode | undefined;
   /**
    * Срабатывает при нажатии на иконку крестика при `after="dismiss"`.
    */
-  onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
+  onDismiss?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   /**
    * Текст кнопки закрытия. Делает ее доступной для ассистивных технологий.
    */
-  dismissLabel?: string;
+  dismissLabel?: string | undefined;
   /**
    * Содержимое, отображаемое в левой части баннера.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Заголовок.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
   /**
    * Подзаголовок.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
   /**
    * Дополнительный подзаголовок баннера.
    */
-  extraSubtitle?: React.ReactNode;
+  extraSubtitle?: React.ReactNode | undefined;
   /**
    * При использовании `mode="image"`.
    *
@@ -60,13 +60,13 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
    * - `dark` – в качестве фона используется тёмное изображение, цвет текста будет светлым.
    * - `auto` - цвет фона и текста будет зависеть от цветовой схемы приложения.
    */
-  imageTheme?: 'light' | 'dark' | 'auto';
+  imageTheme?: 'light' | 'dark' | 'auto' | undefined;
   /**
    * При использовании `mode="image"`.
    *
    * Элемент, который нужно стилизовать цветом и/или фоном. Этот элемент будет растянут на 100% ширины и высоты баннера.
    */
-  background?: React.ReactNode;
+  background?: React.ReactNode | undefined;
   /**
    * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button).
    *
@@ -81,7 +81,7 @@ export interface BannerProps extends Omit<TappableOmitProps, 'title' | 'size'> {
    * - `gap="m" mode="horizontal" stretched`
    * - `gap="m" mode="vertical" stretched`.
    */
-  actions?: React.ReactNode;
+  actions?: React.ReactNode | undefined;
 }
 
 /**

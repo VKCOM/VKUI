@@ -5,7 +5,7 @@ import type { ShiftData, SnackbarPlacement } from './types';
 
 export function resolveOffsetYCssStyle(
   placement: SnackbarPlacement,
-  offsetY?: React.CSSProperties['inset'],
+  offsetY?: React.CSSProperties['inset'] | undefined,
 ): React.CSSProperties | undefined {
   if (offsetY === undefined) {
     return undefined;

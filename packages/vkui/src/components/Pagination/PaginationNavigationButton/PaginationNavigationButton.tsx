@@ -10,14 +10,16 @@ export interface PaginationNavigationButtonOpts {
   'caption': React.ReactNode;
   'Icon': React.ComponentType;
   'a11yLabel': React.ReactNode;
-  'disabled'?: boolean;
+  'disabled'?: boolean | undefined;
   'onClick': (event: React.MouseEvent<HTMLElement>) => void;
   'data-page': number | undefined;
-  'data-testid': string | undefined;
+  'data-testid'?: string | undefined;
 }
 
 export interface PaginationNavigationButtonProps extends PaginationNavigationButtonOpts {
-  renderNavigationButton?: (props: CustomPaginationNavigationButton) => React.ReactNode;
+  renderNavigationButton?:
+    | ((props: CustomPaginationNavigationButton) => React.ReactNode)
+    | undefined;
 }
 
 /**

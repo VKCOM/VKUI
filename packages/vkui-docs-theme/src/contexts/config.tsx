@@ -7,7 +7,7 @@ import { normalizePages } from 'nextra/normalize-pages';
 
 type Config = {
   normalizePagesResult: ReturnType<typeof normalizePages>;
-  isBlog?: boolean;
+  isBlog?: boolean | undefined;
 };
 
 // @ts-expect-error: TS2740 No default value

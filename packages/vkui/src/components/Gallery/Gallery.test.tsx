@@ -13,7 +13,7 @@ import type { AlignType } from '../../types';
 import { revertRtlValue } from '../CarouselBase/helpers';
 import type { BaseGalleryProps } from '../CarouselBase/types';
 import { DirectionProvider } from '../DirectionProvider/DirectionProvider';
-import { Gallery, type GalleryProps } from './Gallery';
+import { Gallery } from './Gallery';
 
 const simulateDrag = (element: HTMLDivElement, points: number[]) => {
   fireEvent.mouseDown(element, {
@@ -33,7 +33,7 @@ const Slide = ({
   getRef,
 }: {
   children: React.ReactNode;
-  width?: number;
+  width?: number | undefined;
   getRef: React.Ref<HTMLDivElement>;
 }) => (
   <div style={{ fontSize: '72px', width }} ref={getRef}>
@@ -76,18 +76,18 @@ const setup = ({
   defaultSlideIndex: number;
   looped: boolean;
   slideWidth: number;
-  isCustomSlideWidth?: boolean;
+  isCustomSlideWidth?: boolean | undefined;
   containerWidth: number;
   viewPortWidth: number;
-  numberOfSlides?: number;
-  resizeSource?: BaseGalleryProps['resizeSource'];
-  align?: AlignType;
-  onChange?: VoidFunction;
-  onNext?: VoidFunction;
-  onPrev?: VoidFunction;
-  onDragStart?: VoidFunction;
-  onDragEnd?: VoidFunction;
-  isRtl?: boolean;
+  numberOfSlides?: number | undefined;
+  resizeSource?: BaseGalleryProps['resizeSource'] | undefined;
+  align?: AlignType | undefined;
+  onChange?: VoidFunction | undefined;
+  onNext?: VoidFunction | undefined;
+  onPrev?: VoidFunction | undefined;
+  onDragStart?: VoidFunction | undefined;
+  onDragEnd?: VoidFunction | undefined;
+  isRtl?: boolean | undefined;
 }) => {
   let slideDataByIndexMap: Record<number, any> = {};
   let layerTransform = '';
@@ -284,8 +284,7 @@ describe('Gallery', () => {
   describe('check a11y', () => {
     it('check slide labels', () => {
       const onChange = vi.fn();
-      const slideLabel: GalleryProps['slideLabel'] = (index, count) =>
-        `Слайд ${index + 1} из ${count}`;
+      const slideLabel = (index: number, count: number) => `Слайд ${index + 1} из ${count}`;
 
       render(
         <Gallery

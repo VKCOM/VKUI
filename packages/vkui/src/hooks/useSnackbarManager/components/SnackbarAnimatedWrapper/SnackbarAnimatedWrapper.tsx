@@ -3,9 +3,9 @@
 import { useEffect, useRef } from 'react';
 import type * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
-import { useCSSKeyframesAnimationController } from '../../../lib/animation';
-import { usePlatform } from '../../usePlatform';
-import type { SnackbarItem } from '../types';
+import { useCSSKeyframesAnimationController } from '../../../../lib/animation';
+import { usePlatform } from '../../../usePlatform';
+import type { SnackbarItem } from '../../types';
 import styles from './SnackbarAnimatedWrapper.module.css';
 
 const animationStateClassNames = {

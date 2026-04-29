@@ -6,12 +6,12 @@ import type { DensityTypeValues } from '../../../lib/adaptivity';
 import styles from './PaginationPage.module.css';
 
 export interface UsePaginationPageClassNamesProps {
-  isCurrent?: boolean;
-  disabled?: boolean;
+  isCurrent?: boolean | undefined;
+  disabled?: boolean | undefined;
 }
 
 export const getPaginationPageClassNames = (
-  opts: UsePaginationPageClassNamesProps & { density?: DensityTypeValues },
+  opts: UsePaginationPageClassNamesProps & { density?: DensityTypeValues | undefined },
 ): string => {
   return classNames(
     styles.host,

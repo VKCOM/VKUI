@@ -14,20 +14,20 @@ export interface CustomSelectDropdownProps
     Pick<CustomScrollViewProps, 'overscrollBehavior'>,
     HasDataAttribute {
   targetRef: React.RefObject<HTMLElement | null>;
-  placement?: Placement;
-  scrollBoxRef?: React.Ref<HTMLDivElement>;
-  fetching?: boolean;
-  offsetDistance?: number;
+  placement?: Placement | undefined;
+  scrollBoxRef?: React.Ref<HTMLDivElement> | undefined;
+  fetching?: boolean | undefined;
+  offsetDistance?: number | undefined;
   /**
    * Ширина раскрывающегося списка зависит от контента.
    */
-  autoWidth?: boolean;
-  forcePortal?: boolean;
-  onPlacementChange?: (placement: Placement) => void;
+  autoWidth?: boolean | undefined;
+  forcePortal?: boolean | undefined;
+  onPlacementChange?: ((placement: Placement) => void) | undefined;
   /**
    * Отключает максимальную высоту по умолчанию.
    */
-  noMaxHeight?: boolean;
+  noMaxHeight?: boolean | undefined;
 }
 
 export const CustomSelectDropdown = ({

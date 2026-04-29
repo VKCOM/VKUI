@@ -10,7 +10,7 @@ export interface ImageBaseOverlayCommonProps
    *
    * > По умолчанию берётся из параметра `appearance` в `ConfigProvider`.
    */
-  theme?: 'dark' | 'light';
+  theme?: 'dark' | 'light' | undefined;
   /**
    * Определяет каким образом должен показываться оверлей.
    *
@@ -23,11 +23,11 @@ export interface ImageBaseOverlayCommonProps
    * > Если это критично (например при SSR), то старайтесь явно указывать значение `visibility`, либо используйте
    * > [AdaptivityProvider](#/AdaptivityProvider) для того, чтобы явно определить `hasPointer`.
    */
-  visibility?: 'on-hover' | 'always';
+  visibility?: 'on-hover' | 'always' | undefined;
   /**
    * `className` для компонента.
    */
-  className?: string;
+  className?: string | undefined;
 }
 
 export interface ImageBaseOverlayInteractiveProps extends ImageBaseOverlayCommonProps {

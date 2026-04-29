@@ -18,12 +18,12 @@ export interface FocusVisibleModeProps {
   /**
    * Стиль аутлайна focus visible. Если передать произвольную строку, она добавится как css-класс при :focus-visible
    */
-  focusVisibleMode?: FocusVisibleMode;
+  focusVisibleMode?: FocusVisibleMode | undefined;
 }
 
 export interface UseFocusVisibleClassNameProps {
-  focusVisible?: boolean;
-  mode?: FocusVisibleMode;
+  focusVisible?: boolean | undefined;
+  mode?: FocusVisibleMode | undefined;
 }
 
 /**

@@ -19,7 +19,7 @@ const Unscrollable = ({
   status,
   children,
 }: HasChildren & {
-  status?: TabsItemProps['status'];
+  status?: TabsItemProps['status'] | undefined;
 }) => {
   const beforeIconByMode = useIconByMode();
 

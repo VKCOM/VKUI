@@ -50,12 +50,12 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download test artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: test-output
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           use_oidc: true
           flags: unittests

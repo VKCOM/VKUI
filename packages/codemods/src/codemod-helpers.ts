@@ -187,7 +187,7 @@ export const removeProps = (
         }
         return true;
       });
-      path.node.openingElement.attributes = newAttributes;
+      path.node.openingElement.attributes = newAttributes!;
     });
 
   if (needToShowReport) {

@@ -144,7 +144,7 @@ export const injectAriaExpandedPropByRole = (
 interface HasAccessibleNameProps
   extends Pick<React.AriaAttributes, 'aria-label' | 'aria-labelledby'>,
     HasChildren {
-  title?: string;
+  title?: string | undefined;
 }
 
 export function hasAccessibleName({

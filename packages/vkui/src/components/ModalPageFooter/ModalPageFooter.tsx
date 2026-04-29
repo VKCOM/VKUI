@@ -15,11 +15,11 @@ export interface ModalPageFooterProps extends HTMLAttributesWithRootRef<HTMLDivE
   /**
    * Отключение отображения разделителя.
    */
-  noSeparator?: boolean;
+  noSeparator?: boolean | undefined;
   /**
    * Отключение отступов сверху и снизу.
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
 }
 
 export const ModalPageFooter = ({

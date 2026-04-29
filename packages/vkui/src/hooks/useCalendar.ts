@@ -16,7 +16,7 @@ export interface UseCalendarDependencies
     | 'disableFuture'
     | 'disablePast'
   > {
-  value?: Array<Date | null> | Date | null;
+  value?: Array<Date | null> | Date | null | undefined;
 }
 
 export function useCalendar({
@@ -71,7 +71,7 @@ export function useCalendar({
   );
 
   const isDayDisabled = React.useCallback(
-    (day: Date, withTime?: boolean) => {
+    (day: Date, withTime?: boolean): boolean => {
       const now = new Date();
       if (shouldDisableDate) {
         return shouldDisableDate(day);

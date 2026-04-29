@@ -8,11 +8,11 @@ export interface FormStatusProps extends Omit<HTMLAttributesWithRootRef<HTMLDivE
   /**
    * Режим отображения компонента.
    */
-  mode?: 'default' | 'error';
+  mode?: 'default' | 'error' | undefined;
   /**
    * Основной текст.
    */
-  title?: React.ReactNode;
+  title?: React.ReactNode | undefined;
 }
 
 /**

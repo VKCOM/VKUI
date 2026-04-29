@@ -1,4 +1,11 @@
-import type { API, FileInfo, JSXAttribute, JSXElement, JSXExpressionContainer } from 'jscodeshift';
+import type {
+  API,
+  FileInfo,
+  JSXAttribute,
+  JSXElement,
+  JSXExpressionContainer,
+  JSXSpreadAttribute,
+} from 'jscodeshift';
 import { getImportInfo, renameProp } from '../../codemod-helpers';
 import type { JSCodeShiftOptions } from '../../types';
 
@@ -30,7 +37,7 @@ export default function transformer(file: FileInfo, api: API, options: JSCodeShi
           return false;
         }
         return true;
-      });
+      }) as (JSXAttribute | JSXSpreadAttribute)[];
       return multilineValue;
     }
     return undefined;

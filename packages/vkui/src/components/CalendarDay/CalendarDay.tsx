@@ -29,7 +29,7 @@ export type CalendarDayTestsProps = {
   /**
    * Передает атрибут `data-testid` для дня в календаре.
    */
-  testId?: string | ((day: Date) => string);
+  testId?: string | ((day: Date) => string) | undefined;
 };
 
 export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTestsProps {
@@ -40,55 +40,55 @@ export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTe
   /**
    * Является ли день сегодняшним.
    */
-  today?: boolean;
+  today?: boolean | undefined;
   /**
    * Выбран ли день (в режиме одиночного выбора или как часть диапазона).
    */
-  selected?: boolean;
+  selected?: boolean | undefined;
   /**
    * Является ли день началом выделенного диапазона.
    */
-  selectionStart?: boolean;
+  selectionStart?: boolean | undefined;
   /**
    * Является ли день концом выделенного диапазона.
    */
-  selectionEnd?: boolean;
+  selectionEnd?: boolean | undefined;
   /**
    * Подсветить день как начало предполагаемого диапазона (при наведении).
    */
-  hintedSelectionStart?: boolean;
+  hintedSelectionStart?: boolean | undefined;
   /**
    * Подсветить день как конец предполагаемого диапазона (при наведении).
    */
-  hintedSelectionEnd?: boolean;
+  hintedSelectionEnd?: boolean | undefined;
   /**
    * Активен ли день (текущая дата в календаре).
    */
-  active?: boolean;
+  active?: boolean | undefined;
   /**
    * Скрыть день (например, дни соседних месяцев).
    */
-  hidden?: boolean;
+  hidden?: boolean | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Находится ли день в фокусе (клавиатурная навигация).
    */
-  focused?: boolean;
+  focused?: boolean | undefined;
   /**
    * Подсвечен ли день (ховер).
    */
-  hinted?: boolean;
+  hinted?: boolean | undefined;
   /**
    * Принадлежит ли день текущему отображаемому месяцу.
    */
-  sameMonth?: boolean;
+  sameMonth?: boolean | undefined;
   /**
    * Размер компонента.
    */
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
   /**
    * Обработчик выбора/изменения дня.
    */
@@ -96,19 +96,19 @@ export interface CalendarDayProps extends CalendarDayElementProps, CalendarDayTe
   /**
    * Обработчик наведения на день.
    */
-  onEnter?: (value: Date) => void;
+  onEnter?: ((value: Date) => void) | undefined;
   /**
    * Обработчик снятия ховера с дня.
    */
-  onLeave?: (value: Date) => void;
+  onLeave?: ((value: Date) => void) | undefined;
   /**
    * Обработчик фокуса на дне.
    */
-  onFocus?: (value: Date) => void;
+  onFocus?: ((value: Date) => void) | undefined;
   /**
    * Кастомизация отображения содержимого дня.
    */
-  renderDayContent?: (day: Date) => React.ReactNode;
+  renderDayContent?: ((day: Date) => React.ReactNode) | undefined;
 }
 
 // eslint-disable-next-line react/display-name -- используется defineComponentDisplayNames

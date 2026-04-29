@@ -4,12 +4,12 @@ import { useStableCallback } from '../../hooks/useStableCallback';
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect';
 
 export type UseCSSAnimationControllerCallback = {
-  onEnter?: VoidFunction;
-  onEntering?: VoidFunction;
-  onEntered?: VoidFunction;
-  onExit?: VoidFunction;
-  onExiting?: VoidFunction;
-  onExited?: VoidFunction;
+  onEnter?: VoidFunction | undefined;
+  onEntering?: VoidFunction | undefined;
+  onEntered?: VoidFunction | undefined;
+  onExit?: VoidFunction | undefined;
+  onExiting?: VoidFunction | undefined;
+  onExited?: VoidFunction | undefined;
 };
 
 export type AnimationState = 'enter' | 'entering' | 'entered' | 'exit' | 'exiting' | 'exited';

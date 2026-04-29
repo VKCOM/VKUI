@@ -5,6 +5,8 @@
     "target": "ES2020",
     "module": "NodeNext",
     "moduleResolution": "nodenext",
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
     "skipLibCheck": true
   }
 }

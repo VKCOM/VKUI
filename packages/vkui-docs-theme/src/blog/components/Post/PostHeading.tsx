@@ -4,7 +4,7 @@ import { Heading, type HeadingProps } from '../Heading';
 import styles from './Post.module.css';
 
 export interface PostHeadingProps extends HeadingProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode | undefined;
 }
 
 export function PostHeading({ children, Tag }: PostHeadingProps) {

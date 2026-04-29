@@ -3,8 +3,8 @@
 import * as React from 'react';
 
 interface FormItemContextProps {
-  required?: boolean;
-  topMultiline?: boolean;
+  required?: boolean | undefined;
+  topMultiline?: boolean | undefined;
 }
 
 export const FormItemContext: React.Context<FormItemContextProps> =

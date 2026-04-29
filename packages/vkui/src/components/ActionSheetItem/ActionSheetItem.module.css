@@ -195,7 +195,6 @@
   color: var(--vkui--color_text_secondary);
 }
 
-.disabled .marker,
 .disabled .before {
   color: var(--vkui--color_icon_secondary);
 }

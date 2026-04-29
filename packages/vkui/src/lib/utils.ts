@@ -114,11 +114,16 @@ export function isForwardRefElement<
  */
 export function getFetchPriorityProp(value: React.ImgHTMLAttributes<HTMLElement>['fetchPriority']):
   | {
-      fetchPriority: 'high' | 'low' | 'auto' | undefined;
+      fetchPriority: 'high' | 'low' | 'auto';
     }
   | {
-      fetchpriority: 'high' | 'low' | 'auto' | undefined;
-    } {
+      fetchpriority: 'high' | 'low' | 'auto';
+    }
+  | object {
+  if (value === undefined) {
+    return {};
+  }
+
   if (React.version.startsWith('19')) {
     return { fetchPriority: value };
   }

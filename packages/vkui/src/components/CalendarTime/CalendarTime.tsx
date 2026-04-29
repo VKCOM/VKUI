@@ -7,45 +7,70 @@ import { Keys, pressedKey } from '../../lib/accessibility';
 import { setHours, setMinutes } from '../../lib/date';
 import { AdaptivityProvider } from '../AdaptivityProvider/AdaptivityProvider';
 import { Button, type ButtonProps } from '../Button/Button';
-import { CalendarTimePicker } from './CalendarTimePicker';
+import { CalendarTimePicker, padStartTimeValue } from './CalendarTimePicker';
 import styles from './CalendarTime.module.css';
+
+const MAX_HOURS = 23;
+const MAX_MINUTES = 59;
+
+function generateLabels(
+  min: number,
+  max: number,
+): Array<{
+  value: string;
+  label: string;
+}> {
+  const array = new Array(Math.ceil(max - min + 1));
+
+  for (let i = min; i <= max; i += 1) {
+    const value = padStartTimeValue(i);
+
+    array[i - min] = { value, label: value };
+  }
+
+  return array;
+}
+
+const hours = generateLabels(0, MAX_HOURS);
+
+const minutes = generateLabels(0, MAX_MINUTES);
 
 export type CalendarTimeTestsProps = {
   /**
    * Передает атрибут `data-testid` для дропдауна выбора часа в календаре.
    */
-  hoursTestId?: string;
+  hoursTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для дропдауна выбора минут в календаре.
    */
-  minutesTestId?: string;
+  minutesTestId?: string | undefined;
   /**
    * Передает атрибут `data-testid` для кнопки "Готово" в календаре.
    */
-  doneButtonTestId?: string;
+  doneButtonTestId?: string | undefined;
 };
 
 export type CalendarDoneButtonProps = {
   /**
    * Кастомное отображение кнопки `"Done"`.
    */
-  DoneButton?: React.ComponentType<ButtonProps>;
+  DoneButton?: React.ComponentType<ButtonProps> | undefined;
   /**
    * Текст отображаемый в кнопке `"Done"`.
    */
-  doneButtonText?: string;
+  doneButtonText?: string | undefined;
   /**
    * Управление отображением кнопки `"Done"`.
    */
-  doneButtonShow?: boolean;
+  doneButtonShow?: boolean | undefined;
   /**
    * Блокировка взаимодействия с кнопкой "Done".
    */
-  doneButtonDisabled?: boolean;
+  doneButtonDisabled?: boolean | undefined;
   /**
    * Обработки нажатия на кнопку `"Done"`.
    */
-  onDoneButtonClick?: () => void;
+  onDoneButtonClick?: (() => void) | undefined;
 };
 
 export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneButtonProps {
@@ -56,43 +81,27 @@ export interface CalendarTimeProps extends CalendarTimeTestsProps, CalendarDoneB
   /**
    * Текст выпадающего списка с выбором часов. Делает его доступным для ассистивных технологий.
    */
-  changeHoursLabel?: string;
+  changeHoursLabel?: string | undefined;
   /**
    * Текст выпадающего списка с выбором минут. Делает его доступным для ассистивных технологий.
    */
-  changeMinutesLabel?: string;
+  changeMinutesLabel?: string | undefined;
   /**
    * Обработчик изменения времени.
    */
-  onChange?: (value: Date) => void;
+  onChange?: ((value: Date) => void) | undefined;
   /**
    * Функция установки часа (для таймзонно-зависимого календаря).
    */
-  setHours?: (date: Date, hours: number) => Date;
+  setHours?: ((date: Date, hours: number) => Date) | undefined;
   /**
    * Функция установки минут (для таймзонно-зависимого календаря).
    */
-  setMinutes?: (date: Date, minutes: number) => Date;
+  setMinutes?: ((date: Date, minutes: number) => Date) | undefined;
   /**
    * Функция для проверки блокировки выбора даты и времени.
    */
-  isDayDisabled?: (day: Date, withTime?: boolean) => boolean;
-}
-
-const hours: Array<{
-  value: number;
-  label: string;
-}> = [];
-for (let i = 0; i < 24; i += 1) {
-  hours.push({ value: i, label: String(i).padStart(2, '0') });
-}
-
-const minutes: Array<{
-  value: number;
-  label: string;
-}> = [];
-for (let i = 0; i < 60; i += 1) {
-  minutes.push({ value: i, label: String(i).padStart(2, '0') });
+  isDayDisabled?: ((day: Date, withTime?: boolean) => boolean) | undefined;
 }
 
 export const CalendarTime = ({
@@ -103,7 +112,6 @@ export const CalendarTime = ({
   changeMinutesLabel,
   setHours: setHoursFn = setHours,
   setMinutes: setMinutesFn = setMinutes,
-  isDayDisabled,
   doneButtonText = 'Готово',
   doneButtonDisabled = false,
   doneButtonShow = true,
@@ -111,6 +119,7 @@ export const CalendarTime = ({
   hoursTestId,
   doneButtonTestId,
   DoneButton,
+  isDayDisabled,
 }: CalendarTimeProps): React.ReactNode => {
   const hoursInputRef = useRef<HTMLInputElement | null>(null);
   const minutesInputRef = useRef<HTMLInputElement | null>(null);
@@ -118,13 +127,16 @@ export const CalendarTime = ({
 
   const localHours = isDayDisabled
     ? hours.map((hour) => {
-        return { ...hour, disabled: isDayDisabled(setHoursFn(value, hour.value), true) };
+        return { ...hour, disabled: isDayDisabled(setHoursFn(value, Number(hour.value)), true) };
       })
     : hours;
 
   const localMinutes = isDayDisabled
     ? minutes.map((minute) => {
-        return { ...minute, disabled: isDayDisabled(setMinutesFn(value, minute.value), true) };
+        return {
+          ...minute,
+          disabled: isDayDisabled(setMinutesFn(value, Number(minute.value)), true),
+        };
       })
     : minutes;
 
@@ -152,6 +164,10 @@ export const CalendarTime = ({
     }
   };
 
+  const onHoursInputEnd = () => {
+    minutesInputRef.current?.focus();
+  };
+
   const renderDoneButton = () => {
     const ButtonComponent = DoneButton ?? Button;
     return (
@@ -171,29 +187,40 @@ export const CalendarTime = ({
 
   return (
     <div className={classNames(styles.host, !doneButtonShow && styles.host__withoutDone)}>
-      <CalendarTimePicker
-        value={value}
-        getNumericValue={(v) => v.getHours()}
-        onChange={onChange}
-        options={localHours}
-        setTime={setHoursFn}
-        onInputKeyDown={onPickerKeyDown}
-        inputRef={hoursInputRef}
-        inputLabel={changeHoursLabel}
-        inputTestId={hoursTestId}
-      />
-      <div className={styles.divider}>:</div>
-      <CalendarTimePicker
-        value={value}
-        getNumericValue={(v) => v.getMinutes()}
-        onChange={onChange}
-        options={localMinutes}
-        setTime={setMinutesFn}
-        onInputKeyDown={onPickerKeyDown}
-        inputRef={minutesInputRef}
-        inputLabel={changeMinutesLabel}
-        inputTestId={minutesTestId}
-      />
+      <AdaptivityProvider density="compact">
+        <div className={styles.picker}>
+          <CalendarTimePicker
+            valueDate={value}
+            value={value.getHours()}
+            onChange={onChange}
+            options={localHours}
+            setTime={setHoursFn}
+            onKeyDown={onPickerKeyDown}
+            inputRef={hoursInputRef}
+            inputLabel={changeHoursLabel}
+            inputTestId={hoursTestId}
+            maxValue={MAX_HOURS}
+            onInputEnd={onHoursInputEnd}
+            isDayDisabled={isDayDisabled}
+          />
+        </div>
+        <div className={styles.divider}>:</div>
+        <div className={styles.picker}>
+          <CalendarTimePicker
+            valueDate={value}
+            value={value.getMinutes()}
+            onChange={onChange}
+            options={localMinutes}
+            setTime={setMinutesFn}
+            onKeyDown={onPickerKeyDown}
+            inputRef={minutesInputRef}
+            inputLabel={changeMinutesLabel}
+            inputTestId={minutesTestId}
+            maxValue={MAX_MINUTES}
+            isDayDisabled={isDayDisabled}
+          />
+        </div>
+      </AdaptivityProvider>
       {doneButtonShow && (
         <div className={styles.button}>
           <AdaptivityProvider density="compact">{renderDoneButton()}</AdaptivityProvider>

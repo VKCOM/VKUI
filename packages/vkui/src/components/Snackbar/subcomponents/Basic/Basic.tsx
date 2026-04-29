@@ -25,19 +25,19 @@ export interface BasicProps {
    * Элемент действия.
    * Не может использоваться одновременно с `subtitle`.
    */
-  action?: React.ReactNode;
+  action?: React.ReactNode | undefined;
 
   /**
    * Контент в правой части, может быть иконкой 24x24.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
 
   /**
    * Варианты расположения кнопки действия
    * По умолчанию на десктопах, или при наличии элементов `after` или `subtitle`
    * имеет значение `vertical`, в остальных случаях `horizontal`.
    */
-  layout?: 'vertical' | 'horizontal';
+  layout?: 'vertical' | 'horizontal' | undefined;
 
   /**
    * Может быть следующими компонентами:
@@ -45,18 +45,18 @@ export interface BasicProps {
    *  - `<Avatar size={32} />`
    *  - `<Image size={40} />`.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
 
   /**
    * Задает стиль снекбара.
    */
-  mode?: 'default' | 'dark';
+  mode?: 'default' | 'dark' | undefined;
 
   /**
    * Дополнительная строка текста под `children`.
    * Не может использоваться одновременно с `action`.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
 }
 
 export interface SnackbarBasicProps extends HTMLAttributesWithRootRef<HTMLDivElement>, BasicProps {}

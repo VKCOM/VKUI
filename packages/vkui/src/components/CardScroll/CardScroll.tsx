@@ -22,15 +22,15 @@ export interface CardScrollProps
   /**
    * При `size=false` ширина `Card` будет регулироваться контентом внутри. В остальных случаях — будет явно задана в процентах.
    */
-  size?: 's' | 'm' | 'l' | false;
+  size?: 's' | 'm' | 'l' | false | undefined;
   /**
    * Добавляет отступы по краям слева и справа.
    */
-  padding?: boolean;
+  padding?: boolean | undefined;
   /**
    * Позволяет поменять тег используемый для обертки над карточками.
    */
-  CardsListComponent?: React.ElementType;
+  CardsListComponent?: React.ElementType | undefined;
 }
 
 /**

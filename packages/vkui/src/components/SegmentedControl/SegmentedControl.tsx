@@ -30,7 +30,7 @@ export interface SegmentedControlOptionInterface<
    * Вставляет элемент перед основным контентом.
    * Рекомендуется использовать только иконки с размером 20.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Текст или React-элемент, отображаемый в качестве метки опции.
    */
@@ -50,23 +50,23 @@ export interface SegmentedControlProps<T extends SegmentedControlValue = Segment
   /**
    * Размер компонента.
    */
-  size?: 'm' | 'l';
+  size?: 'm' | 'l' | undefined;
   /**
    * Имя для input-элементов внутри компонента.
    */
-  name?: string;
+  name?: string | undefined;
   /**
    * Обработчик изменения выбранного значения.
    */
-  onChange?: (value: T) => void;
+  onChange?: ((value: T) => void) | undefined;
   /**
    * Текущее выбранное значение (для контролируемого компонента).
    */
-  value?: T;
+  value?: T | undefined;
   /**
    * Значение по умолчанию (для неконтролируемого компонента).
    */
-  defaultValue?: T;
+  defaultValue?: T | undefined;
 }
 
 const warn = warnOnce('SegmentedControl');

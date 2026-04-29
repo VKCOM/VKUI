@@ -7,8 +7,8 @@ function TestComponent({
   appRootProps = {},
   usePortal,
 }: {
-  appRootProps?: AppRootProps;
-  usePortal?: AppRootPortalProps['usePortal'];
+  appRootProps?: AppRootProps | undefined;
+  usePortal?: AppRootPortalProps['usePortal'] | undefined;
 } = {}) {
   const portalRootRef = React.useRef<HTMLDivElement | null>(null);
 

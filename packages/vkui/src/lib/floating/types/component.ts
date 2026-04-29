@@ -29,7 +29,7 @@ export interface FloatingComponentProps
    * в аргументе функции можно получить метод `onClose`, с помощью которого можно программно закрывать
    * всплывающее окно.
    */
-  content?: React.ReactNode | FloatingContentRenderProp;
+  content?: React.ReactNode | FloatingContentRenderProp | undefined;
   /**
    * Целевой элемент. Всплывающее окно появится возле него.
    *
@@ -37,36 +37,36 @@ export interface FloatingComponentProps
    * > 1. предоставлять параметры либо `getRootRef`, либо `ref` (cм. `React.forwardRef()`) для получения ссылки на DOM-узел;
    * > 2. принимать DOM атрибуты и события.
    */
-  children?: React.ReactElement;
+  children?: React.ReactElement | undefined;
   /**
    * Нужно ли при навигации с клавиатуры авто-фокусироваться на всплывающий элемент.
    */
-  autoFocus?: boolean;
+  autoFocus?: boolean | undefined;
   /**
    * Нужно ли после закрытия всплывающего элемента возвращать фокус на предыдущий активный элемент.
    */
-  restoreFocus?: RestoreFocusType;
+  restoreFocus?: RestoreFocusType | undefined;
   /**
    * Перебивает zIndex заданный по умолчанию.
    */
-  zIndex?: number | string;
+  zIndex?: number | string | undefined;
   /**
    * По умолчанию используется document.body.
    */
-  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement>;
+  usePortal?: boolean | HTMLElement | React.RefObject<HTMLElement> | undefined;
   /**
    * В зависимости от области видимости, позиция может смениться на более оптимальную,
    * чтобы всплывающий элемент вместился в эту область видимости.
    */
-  onPlacementChange?: OnPlacementChange;
+  onPlacementChange?: OnPlacementChange | undefined;
   /**
    * Событие скрытия / раскрытия компонента при использовании свойства `hideWhenReferenceHidden`.
    *
    * > Стоит иметь ввиду, что событие также будет вызвано и при новом рендере компонента
    */
-  onReferenceHiddenChange?: (hidden: boolean) => void;
+  onReferenceHiddenChange?: ((hidden: boolean) => void) | undefined;
   /**
    * Позволяет отключить захват фокуса.
    */
-  disableFocusTrap?: boolean;
+  disableFocusTrap?: boolean | undefined;
 }

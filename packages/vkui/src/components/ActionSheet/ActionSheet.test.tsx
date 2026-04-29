@@ -344,11 +344,10 @@ describe(ActionSheet, () => {
 
     const testCancelItemDetection = async (
       ActionSheet: typeof ActionSheetDesktop,
-      {
-        isCancelItem,
-        isCancelItemAtContext = false,
-      }: { isCancelItem?: boolean; isCancelItemAtContext?: boolean },
+      args: { isCancelItem?: boolean | undefined; isCancelItemAtContext?: boolean } | undefined,
     ) => {
+      const isCancelItem = args?.isCancelItem;
+      const isCancelItemAtContext = args?.isCancelItemAtContext ?? false;
       const onClose = vi.fn();
       const onClosed = vi.fn();
       const result = render(
@@ -424,9 +423,10 @@ describe(ActionSheet, () => {
     it('can be customized via slotProps.iosCloseItem', async () => {
       renderIosActionSheet({
         slotProps: {
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           iosCloseItem: {
             children: 'Закрыть',
-          },
+          } as React.ComponentProps<typeof ActionSheetDefaultIosCloseItem>,
         },
       });
       await waitForFloatingPosition();

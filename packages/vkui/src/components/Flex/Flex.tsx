@@ -7,7 +7,7 @@ import {
   resolveLayoutProps,
   rowGapClassNames,
 } from '../../lib/layouts';
-import type { LayoutProps } from '../../lib/layouts/types';
+import type { LayoutProps, MarginProp } from '../../lib/layouts/types';
 import type { CSSCustomProperties } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
 import type { RootComponentProps } from '../RootComponent/RootComponent';
@@ -46,41 +46,44 @@ type FlexContentProps =
   | 'space-between'
   | 'space-evenly';
 
-export interface FlexProps extends RootComponentProps<HTMLElement>, LayoutProps {
+export interface FlexProps extends RootComponentProps<HTMLElement>, Omit<LayoutProps, 'margin'> {
   /**
    * Направление осей, эквивалентно `flex-direction`.
    */
-  direction?: 'row' | 'column';
+  direction?: 'row' | 'column' | undefined;
   /**
    * Отступы между элементами.
    * Значение из списка предопределённых пресетов или число, которое будет приведено к пикселям.
    * Через массив можно задать отступ между столбцами и строками [row, column], если они отличаются.
    */
-  gap?: GapsProp;
+  gap?: GapsProp | undefined;
   /**
    * Отключает перенос контента, эквивалентно `flex-wrap=nowrap`.
    */
-  noWrap?: boolean;
+  noWrap?: boolean | undefined;
   /**
    * Выравнивание элементов по вспомогательной оси, эквивалентно `align-items`.
    */
-  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
+  align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline' | undefined;
   /**
    * Выравнивание элементов по главной оси, эквивалентно `justify-content`.
    */
-  justify?: FlexContentProps;
+  justify?: FlexContentProps | undefined;
   /**
-   * Значение `auto` позволяет задать платформенные отступы вокруг контейнера.
+   * Внешние отступы контейнера.
+   * Дополнительно поддерживаются специальные значения:
+   * `none` — отключает дополнительные отступы;
+   * `auto` — включает платформенные отступы вокруг контейнера.
    */
-  margin?: 'none' | 'auto';
+  margin?: 'none' | 'auto' | MarginProp | undefined;
   /**
    * Для инвертирования направления, эквивалентно `row-reverse` `column-reverse`.
    */
-  reverse?: boolean;
+  reverse?: boolean | undefined;
   /**
    * Возможность задать css-свойство `display`.
    */
-  display?: 'none' | 'flex' | 'inline-flex';
+  display?: 'none' | 'flex' | 'inline-flex' | undefined;
 }
 
 /**
@@ -104,7 +107,9 @@ export const Flex: React.FC<FlexProps> & {
   ...restProps
 }: FlexProps) => {
   const [rowGap, columnGap] = calculateGap(gap);
-  const resolvedProps = resolveLayoutProps(restProps);
+  const resolvedProps = resolveLayoutProps(
+    margin === 'none' || margin === 'auto' ? restProps : { ...restProps, margin },
+  );
 
   return (
     <RootComponent
@@ -113,7 +118,7 @@ export const Flex: React.FC<FlexProps> & {
         !noWrap && styles.wrap,
         reverse && styles.reverse,
         direction !== 'row' && styles.directionColumn,
-        margin !== 'none' && styles.marginAuto,
+        margin === 'auto' && styles.marginAuto,
         align && alignClassNames[align],
         justify && justifyClassNames[justify],
         getGapsPresets(rowGap, columnGap),

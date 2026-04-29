@@ -25,11 +25,11 @@ export interface DOMContextInterface {
   /**
    * @ignore
    */
-  window?: Window;
+  window?: Window | undefined;
   /**
    * @ignore
    */
-  document?: Document;
+  document?: Document | undefined;
 }
 
 export type DOMProps = DOMContextInterface;
@@ -212,6 +212,10 @@ export const getDocumentBody = (node?: any): HTMLElement => getWindow(node).docu
 
 export const getActiveElementByAnotherElement = (el: Element | null): Element | null =>
   el ? el.ownerDocument.activeElement : null;
+
+export function isActiveElement(el: Element): boolean {
+  return el === el.ownerDocument.activeElement;
+}
 
 export const contains = (parent?: Element | null, child?: Element | null): boolean => {
   return parent && child ? parent.contains(child) : false;

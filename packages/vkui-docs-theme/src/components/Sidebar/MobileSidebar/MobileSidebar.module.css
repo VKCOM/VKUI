@@ -55,11 +55,6 @@
     animation-name: animationSidebarFadeOut;
   }
 }
-@media (--viewWidth-smallTabletPlus) {
-  .mobileHidden {
-    display: none;
-  }
-}
 
 .inner {
   flex-grow: 1;

@@ -6,7 +6,7 @@ export type AnyFunction = (...args: any[]) => any;
 export type AlignType = 'left' | 'center' | 'right';
 
 export interface HasChildren {
-  children?: React.ReactNode;
+  children?: React.ReactNode | undefined;
 }
 
 export type HasDataAttribute = Record<
@@ -15,32 +15,32 @@ export type HasDataAttribute = Record<
 >;
 
 export interface HasRootRef<T> {
-  getRootRef?: React.Ref<T>;
+  getRootRef?: React.Ref<T> | undefined;
 }
 
 export interface HasRef<T> {
-  getRef?: React.Ref<T>;
+  getRef?: React.Ref<T> | undefined;
 }
 
 export interface HasComponent {
-  Component?: React.ElementType;
+  Component?: React.ElementType | undefined;
 }
 
 export interface HasAlign {
-  align?: AlignType;
+  align?: AlignType | undefined;
 }
 
 export interface HasPlatform {
   /**
    * @ignore
    */
-  platform?: PlatformType;
+  platform?: PlatformType | undefined;
 }
 
 export interface Version {
   major: number;
-  minor?: number;
-  patch?: number;
+  minor?: number | undefined;
+  patch?: number | undefined;
 }
 
 /**
@@ -106,11 +106,11 @@ export type PickOnlyFunctionProps<T> = Pick<T, GetPropsWithFunctionKeys<T>>;
  * type SelectProps {
  *   mode: string,
  *   multiline: boolean;
- *   selectType?: SelectType;
+ *   selectType?: SelectType | undefined;
  * }
  *
  * type NativeSelectProps {
- *   selectType?: SelectType;
+ *   selectType?: SelectType | undefined;
  * }
  *
  * const selectProps: SelectProps = {
@@ -140,3 +140,11 @@ export type RequiredFields<TYPE, FIELDS extends keyof TYPE> = Omit<TYPE, FIELDS>
   Required<Pick<TYPE, FIELDS>>;
 
 export type Elevation = '1' | '2' | '3' | '4';
+
+/**
+ * Аналог Partial, но с явным | undefined для поддержки exactOptionalPropertyTypes.
+ * Используйте вместо Partial когда нужно поддержать exactOptionalPropertyTypes.
+ */
+export type PartialWithUndefined<T> = {
+  [P in keyof T]?: T[P] | undefined;
+};

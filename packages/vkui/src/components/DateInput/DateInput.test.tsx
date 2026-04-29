@@ -13,7 +13,7 @@ import { DateInput, type DateInputPropsTestsProps } from './DateInput';
 
 const date = new Date(2024, 6, 31, 11, 20, 0, 0);
 
-const testIds: Required<DateInputPropsTestsProps> = {
+const testIds = {
   dayFieldTestId: 'day-picker',
   monthFieldTestId: 'month-picker',
   yearFieldTestId: 'year-picker',
@@ -21,7 +21,7 @@ const testIds: Required<DateInputPropsTestsProps> = {
   minuteFieldTestId: 'minute-picker',
   clearButtonTestId: 'clear-button',
   showCalendarButtonTestId: 'show-calendar-button',
-};
+} as const satisfies DateInputPropsTestsProps;
 
 const getInputsLike = () => {
   return [
@@ -687,62 +687,5 @@ describe('DateInput', () => {
         expect(document.activeElement).toBe(inputPart);
       }
     }, 15_000);
-
-    it('does not close calendar when Escape is pressed to close inner dropdown (month, year, hour, minute)', async () => {
-      const onCalendarOpenChangedStub = vi.fn();
-      const { container } = render(
-        <DateInput
-          value={new Date()}
-          accessible
-          enableTime
-          onCalendarOpenChanged={onCalendarOpenChangedStub}
-          calendarTestsProps={{
-            monthDropdownTestId: 'month-dropdown',
-            yearDropdownTestId: 'year-dropdown',
-            hoursTestId: 'hours-dropdown',
-            minutesTestId: 'minutes-dropdown',
-          }}
-        />,
-      );
-
-      // проверяем, что календарь закрыт
-      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
-
-      const calendarIcon = screen.getByText('Показать календарь');
-      fireEvent.click(calendarIcon);
-
-      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
-      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
-
-      const calendarSelectsIds = [
-        'month-dropdown',
-        'year-dropdown',
-        'hours-dropdown',
-        'minutes-dropdown',
-      ];
-
-      for (const selectTestId of calendarSelectsIds) {
-        // dropdown закрыт
-        expect(screen.queryByRole('listbox')).toBeFalsy();
-        // открываем дропдаун одного из селектов
-        await userEvent.click(screen.getByTestId(selectTestId));
-        // dropdown открыт
-        expect(screen.queryByRole('listbox')).toBeTruthy();
-
-        // закрываем дропдаун с помощью Escape
-        fireEvent.keyDown(container, { key: 'Escape' });
-        expect(screen.queryByRole('listbox')).toBeFalsy();
-
-        // календарь всё ещё должен быть открыт
-        expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeTruthy();
-        expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(1);
-      }
-
-      // закрываем календарь с помощью Escape
-      fireEvent.keyDown(container, { key: 'Escape' });
-      // календарь закрыт
-      expect(screen.queryByRole('dialog', { name: 'Календарь' })).toBeFalsy();
-      expect(onCalendarOpenChangedStub).toHaveBeenCalledTimes(2);
-    });
   });
 });

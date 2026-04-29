@@ -42,8 +42,8 @@ const transitionStateClassNames: Partial<Record<UseCSSTransitionState, string>> 
 export interface ModalPageInternalProps
   extends Omit<ModalPageProps, 'nav' | 'keepMounted' | 'settlingHeight' | 'dynamicContentHeight'> {
   snapPoint: SnapPoint;
-  ModalOverlay?: ComponentType<ModalOverlayProps>;
-  onSnapPointChange?: SnapPointChange;
+  ModalOverlay?: ComponentType<ModalOverlayProps> | undefined;
+  onSnapPointChange?: SnapPointChange | undefined;
 }
 
 /**

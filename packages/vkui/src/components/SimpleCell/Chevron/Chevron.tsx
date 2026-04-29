@@ -9,7 +9,7 @@ const iconSize = {
 };
 
 export interface ChevronProps extends Omit<React.SVGProps<SVGSVGElement>, 'width' | 'height'> {
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
 }
 
 export const Chevron = ({ size = 'm', ...restProps }: ChevronProps): React.ReactNode => {

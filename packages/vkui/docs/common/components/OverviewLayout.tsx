@@ -35,7 +35,7 @@ interface OverviewLayoutProps<CONFIG, ITEM> {
   remapConfigToSections: (config: CONFIG) => Array<Section<ITEM>>;
   ItemsContainer: React.ComponentType<HasChildren>;
   renderSectionItem: (item: ITEM, section: Section<ITEM>) => React.ReactElement;
-  additionalHeaderItem?: React.ReactElement;
+  additionalHeaderItem?: React.ReactElement | undefined;
 }
 
 export const OverviewLayout = <CONFIG, ITEM>({
@@ -116,9 +116,9 @@ export const OverviewLayout = <CONFIG, ITEM>({
 };
 
 const Section = memo<{
-  style?: CSSProperties;
+  style?: CSSProperties | undefined;
   sectionData: Section<any>;
-  hidden?: boolean;
+  hidden?: boolean | undefined;
   onSectionRef: (element: HTMLElement | null, id: string) => void;
   ItemsRenderer: React.ComponentType<{ section: Section<any> }>;
 }>(

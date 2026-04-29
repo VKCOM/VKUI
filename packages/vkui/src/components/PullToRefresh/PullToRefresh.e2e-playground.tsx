@@ -3,7 +3,7 @@ import { Div } from '../Div/Div';
 import { PullToRefresh, type PullToRefreshProps } from './PullToRefresh';
 
 export const PullToRefreshPlayground = (
-  props: ComponentPlaygroundProps & { paddingLeft?: string },
+  props: ComponentPlaygroundProps & { paddingLeft?: string | undefined },
 ) => {
   const { paddingLeft, ...playgroundProps } = props;
   return (

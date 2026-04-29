@@ -32,12 +32,12 @@ export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
   /**
    * Режим отображения счетчика.
    */
-  mode?: 'primary' | 'contrast' | 'tertiary' | 'inherit';
+  mode?: 'primary' | 'contrast' | 'tertiary' | 'inherit' | undefined;
 
   /**
    * Внешний вид счетчика.
    */
-  appearance?: 'accent' | 'neutral' | 'accent-green' | 'accent-red' | 'custom';
+  appearance?: 'accent' | 'neutral' | 'accent-green' | 'accent-red' | 'custom' | undefined;
 
   /**
    * Пользовательский цвет (работает только при appearance="custom")
@@ -46,11 +46,11 @@ export interface CounterProps extends HTMLAttributesWithRootRef<HTMLSpanElement>
    * - При mode="tertiary" - изменяет цвет текста
    * - При mode="inherit" - не работает.
    */
-  color?: string;
+  color?: string | undefined;
   /**
    * Размер счетчика.
    */
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
 }
 
 /**

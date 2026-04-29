@@ -41,6 +41,10 @@ export const ContentBadgePlayground = (props: ComponentPlaygroundProps) => {
           appearance: ['neutral', 'accent-green', 'accent-red', 'overlay'],
           mode: ['primary', 'secondary', 'outline'],
         },
+        {
+          appearance: ['#FF6699', 'var(--vkui--color_icon_tertiary)'],
+          mode: ['primary', 'secondary', 'outline'],
+        },
       ]}
     >
       {({ size, capsule, children = 'Text', ...restProps }: ContentBadgeProps) => (

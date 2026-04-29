@@ -15,6 +15,7 @@ description: Кнопки, которые используются для выз
 
 </Overview>
 
+{/* @example-description: Базовая `ToolButton` с адаптивными иконками для `compact` и `regular` плотности. */}
 <Playground style={{ width: 'unset' }}>
   ```jsx
   <ToolButton IconCompact={Icon20Add} IconRegular={Icon24Add} aria-label="Добавить вложение" />
@@ -37,6 +38,7 @@ description: Кнопки, которые используются для выз
 - `row` — иконка и текст идут горизонтально, рядом (по умолчанию);
 - `column` — иконка над текстом, вертикально.
 
+{/* @example-description: Пример `ToolButton` с текстом и направлениями контента `row` и `column`. */}
 <Playground style={{ width: 'unset' }}>
   ```jsx
   <ToolButton IconCompact={Icon20Add} IconRegular={Icon24Add} direction="row">
@@ -67,6 +69,7 @@ description: Кнопки, которые используются для выз
 
 Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
 
+{/* @example-description: Сравнение режимов `ToolButton` в `appearance="accent"`. */}
 <Playground style={{ width: 'unset' }}>
   ```jsx
   <ToolButton appearance="accent" mode="primary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
@@ -88,6 +91,7 @@ description: Кнопки, которые используются для выз
 
 Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки.
 
+{/* @example-description: Сравнение режимов `ToolButton` в `appearance="neutral"`. */}
 <Playground style={{ width: 'unset' }}>
   ```jsx
   <ToolButton appearance="neutral" mode="primary" IconCompact={Icon20Add} IconRegular={Icon24Add}>
@@ -112,6 +116,7 @@ description: Кнопки, которые используются для выз
 - Если `true` — кнопка становится круглой (50% скругление);
 - Не работает, если `direction="column"` и есть дочерние элементы (`children`).
 
+{/* @example-description: Пример круглой `ToolButton` с `rounded`. */}
 <Playground style={{ width: 'unset' }}>
   ```jsx
   <ToolButton

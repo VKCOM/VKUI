@@ -20,23 +20,23 @@ export interface FormLayoutGroupProps
   /**
    * Направление отображения элементов формы.
    */
-  mode?: 'vertical' | 'horizontal';
+  mode?: 'vertical' | 'horizontal' | undefined;
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
    *
    * Режим `indent` предназначен для визуального отступа.
    */
-  removable?: boolean | 'indent';
+  removable?: boolean | 'indent' | undefined;
 
   /**
    * Дает возможность склеить несколько `FormItem`.
    */
-  segmented?: boolean;
+  segmented?: boolean | undefined;
   /**
    * Удаляет внешние отступы вокруг компонента.
    * @since 8.0.0
    */
-  noPadding?: boolean;
+  noPadding?: boolean | undefined;
 }
 
 /**

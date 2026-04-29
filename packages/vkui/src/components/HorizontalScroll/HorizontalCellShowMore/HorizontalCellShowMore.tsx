@@ -25,22 +25,22 @@ export interface HorizontalCellShowMoreProps
    *
    * Игнорируется, если `size='s'`.
    */
-  height?: LiteralUnion<ImageBaseSize, number>;
+  height?: LiteralUnion<ImageBaseSize | undefined, number> | undefined;
   /**
    * Задаёт размер компонента.
    *
    * Значение `s` применяется для `<HorizontalCell size="s"`, в остальных случаях рекомендуется `m`.
    */
-  size?: 's' | 'm';
+  size?: 's' | 'm' | undefined;
   /**
    * Предназначен для отрисовки текста.
    * По умолчанию для `size='s'` содержит текст `Все`, для `size='m'` - `Показать все`.
    * */
-  children?: SubheadProps['children'];
+  children?: SubheadProps['children'] | undefined;
   /**
    * Выравнивание по центру относительно родителя.
    */
-  centered?: boolean;
+  centered?: boolean | undefined;
 }
 
 /**

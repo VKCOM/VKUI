@@ -183,38 +183,47 @@ export function viewWidthToClassName<T extends Partial<CSSBreakpointsClassNames>
   viewWidth: ViewWidthType | 'none' = 'none',
 ): string | null {
   if (viewWidth === 'none') {
-    return breakpointClassNames.hasOwnProperty('none') ? breakpointClassNames['none']! : null;
+    return breakpointClassNames.hasOwnProperty('none')
+      ? // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        breakpointClassNames['none']!
+      : null;
   }
 
   const breakpoints: string[] = [];
   const breakpointName = VIEW_WIDTH_TO_CSS_BREAKPOINT_MAP[viewWidth];
 
   if (breakpointClassNames.hasOwnProperty(breakpointName)) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     breakpoints.push(breakpointClassNames[breakpointName]!);
   }
 
   if (viewWidth >= ViewWidth.MOBILE) {
     if (breakpointClassNames.hasOwnProperty('mobilePlus')) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       breakpoints.push(breakpointClassNames['mobilePlus']!);
     }
   }
 
   if (viewWidth >= ViewWidth.SMALL_TABLET) {
     if (breakpointClassNames.hasOwnProperty('smallTabletPlus')) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       breakpoints.push(breakpointClassNames['smallTabletPlus']!);
     }
   } else {
     if (breakpointClassNames.hasOwnProperty('smallTabletMinus')) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       breakpoints.push(breakpointClassNames['smallTabletMinus']!);
     }
   }
 
   if (viewWidth >= ViewWidth.TABLET) {
     if (breakpointClassNames.hasOwnProperty('tabletPlus')) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       breakpoints.push(breakpointClassNames['tabletPlus']!);
     }
   } else {
     if (breakpointClassNames.hasOwnProperty('tabletMinus')) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       breakpoints.push(breakpointClassNames['tabletMinus']!);
     }
   }

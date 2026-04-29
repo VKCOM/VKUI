@@ -40,19 +40,19 @@ export interface RichCellProps extends TappableOmitProps {
   /**
    * Контейнер для текста над `children`.
    */
-  overTitle?: React.ReactNode;
+  overTitle?: React.ReactNode | undefined;
   /**
    * Контейнер для текста под `children`.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
   /**
    * Контейнер для текста под `subtitle`.
    */
-  extraSubtitle?: React.ReactNode;
+  extraSubtitle?: React.ReactNode | undefined;
   /**
    * Контейнер для контента под `caption`. Например `<UsersStack size="m" />`.
    */
-  bottom?: React.ReactNode;
+  bottom?: React.ReactNode | undefined;
   /**
    * Кнопки-действия. Принимает [`Button`](https://vkui.io/components/button) с параметрами:
    *
@@ -63,52 +63,52 @@ export interface RichCellProps extends TappableOmitProps {
    *
    * - `mode="horizontal" gap="s" stretched`.
    */
-  actions?: React.ReactNode;
+  actions?: React.ReactNode | undefined;
   /**
    * `<Avatar size={40|48|72} />`.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Иконка 28 или текст после центрального контента.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Текст под `after`.
    *
    * @deprecated Since 8.0.0. Будет удален в **VKUI v10**.
    * Используйте вместо этого свойство `submeta`.
    */
-  afterCaption?: React.ReactNode;
+  afterCaption?: React.ReactNode | undefined;
   /**
    * Текст после основного контента.
    */
-  meta?: React.ReactNode;
+  meta?: React.ReactNode | undefined;
   /**
    * Текст под `meta`.
    */
-  submeta?: React.ReactNode;
+  submeta?: React.ReactNode | undefined;
   /**
    * Выравнивание before компонента по вертикали.
    */
-  beforeAlign?: Align;
+  beforeAlign?: Align | undefined;
   /**
    * Выравнивание центрального контента по вертикали.
    */
-  contentAlign?: Align;
+  contentAlign?: Align | undefined;
   /**
    * Выравнивание after компонента по вертикали.
    *
    * > Работает только для `after` и `afterCaption`.
    */
-  afterAlign?: Align;
+  afterAlign?: Align | undefined;
   /**
    * Блокировка взаимодействия с компонентом. Убирает анимацию нажатия.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /**
    * Включает многострочный режим для `subhead`, `children`, `text` и `caption`.
    */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
 }
 
 /**

@@ -51,7 +51,7 @@ export interface TabsItemProps
    * - Для `mode="default"` используйте иконки размером 24.
    * - Для всех остальных `mode` используйте иконки размером 20.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Добавляет элемент слева от `after`.
    *
@@ -59,21 +59,21 @@ export interface TabsItemProps
    *   Либо [`Counter`](https://vkui.io/components/counter) с параметрами `mode="prominent" size="s"`.
    * - `number` – для показа текстового блока с переданным числом.
    */
-  status?: React.ReactElement | number;
+  status?: React.ReactElement | number | undefined;
   /**
    * Добавляет иконку справа.
    *
    * Например, `<Icon16Dropdown />`.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Флаг для отображения выбранного состояния.
    */
-  selected?: boolean;
+  selected?: boolean | undefined;
   /**
    * Блокировка взаимодействия с компонентом.
    */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 const warn = warnOnce('TabsItem');

@@ -16,47 +16,47 @@ export interface HeaderProps extends HTMLAttributesWithRootRef<HTMLElement>, Has
   /**
    * Размер компонента.
    */
-  size?: 's' | 'm' | 'l' | 'xl';
+  size?: 's' | 'm' | 'l' | 'xl' | undefined;
   /**
    * Подпись под основным текстом.
    */
-  subtitle?: React.ReactNode;
+  subtitle?: React.ReactNode | undefined;
   /**
    * Позволяет задать тип элемента в который будет обёрнут subtitle.
    */
-  subtitleComponent?: React.ElementType;
+  subtitleComponent?: React.ElementType | undefined;
   /**
    * Допускаются иконки, текст, Link.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
   /**
    * Допускаются текст, Indicator.
    */
-  indicator?: React.ReactNode;
+  indicator?: React.ReactNode | undefined;
   /**
    * Возможность отображения текста в несколько строк.
    */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
   /**
    * Иконка слева (рекомендуется использовать размер 28px).
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
   /**
    * Иконка слева от title (рекомендуется использовать размер 16px).
    */
-  beforeTitle?: React.ReactNode;
+  beforeTitle?: React.ReactNode | undefined;
   /**
    * Иконка справа от title (рекомендуется использовать размер 16px).
    */
-  afterTitle?: React.ReactNode;
+  afterTitle?: React.ReactNode | undefined;
   /**
    * Иконка слева от subtitle (рекомендуется использовать размер 12px).
    */
-  beforeSubtitle?: React.ReactNode;
+  beforeSubtitle?: React.ReactNode | undefined;
   /**
    * Иконка справа от subtitle (рекомендуется использовать размер 12px).
    */
-  afterSubtitle?: React.ReactNode;
+  afterSubtitle?: React.ReactNode | undefined;
 }
 
 const sizeClassNames: Record<Exclude<HeaderProps['size'], undefined>, string> = {

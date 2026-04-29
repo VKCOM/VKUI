@@ -15,8 +15,8 @@ const densityClassNames = {
 };
 
 interface SelectionControlLabelProps extends React.ComponentProps<'div'> {
-  description?: React.ReactNode;
-  titleAfter?: React.ReactNode;
+  description?: React.ReactNode | undefined;
+  titleAfter?: React.ReactNode | undefined;
 }
 
 export function SelectionControlLabel({

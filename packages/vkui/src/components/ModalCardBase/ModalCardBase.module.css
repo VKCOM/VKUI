@@ -25,10 +25,6 @@
   );
 }
 
-.containerSoftwareKeyboardOpened {
-  margin-block-end: 0;
-}
-
 .title,
 .description {
   padding-block: 0;

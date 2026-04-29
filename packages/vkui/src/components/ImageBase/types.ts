@@ -6,15 +6,15 @@ export type ImageBaseExpectedIconProps = {
   /**
    * Ширина иконки.
    */
-  width?: number;
+  width?: number | undefined;
   /**
    * Высота иконки.
    */
-  height?: number;
+  height?: number | undefined;
   /**
    * ClassName для иконки.
    */
-  className?: string;
+  className?: string | undefined;
 };
 
 export interface ImageBaseContextProps {

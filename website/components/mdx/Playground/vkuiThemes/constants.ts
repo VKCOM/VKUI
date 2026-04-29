@@ -1,7 +1,6 @@
 import { Platform } from '@vkontakte/vkui';
 
-export const VKUI_TOKENS_THEMES_BASE_URL =
-  'https://cdn.jsdelivr.net/npm/@vkontakte/vkui-tokens@4/themes';
+export const VKUI_TOKENS_THEMES_BASE_URL = 'https://esm.cdn-vk.ru/@vkontakte/vkui-tokens@4/themes';
 export const VKUI_TOKENS_THEMES_META_URL =
   'https://data.jsdelivr.com/v1/packages/npm/@vkontakte/vkui-tokens';
 

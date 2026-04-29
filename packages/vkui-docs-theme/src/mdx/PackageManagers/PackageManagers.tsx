@@ -5,7 +5,7 @@ import { PackageManagersClient } from './PackageManagersClient';
 type PackageManagersType = 'npm' | 'yarn' | 'pnpm';
 
 type PackageManagersProps = {
-  [K in PackageManagersType]?: string;
+  [K in PackageManagersType]?: string | undefined;
 };
 
 function codeExampleString(command: string) {

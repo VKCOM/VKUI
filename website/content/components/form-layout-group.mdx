@@ -9,6 +9,7 @@ description: Компонент, помогающий сгруппировать
 
 </Overview>
 
+{/* @example-description: Горизонтальная группировка двух полей формы в `FormLayoutGroup`. */}
 <Playground>
   ```jsx
   <FormLayoutGroup mode="horizontal">
@@ -32,6 +33,7 @@ description: Компонент, помогающий сгруппировать
 Обратите внимание, что при недостатке места (например, на мобильных устройствах) поля формы сжимаются пропорционально,
 поэтому не рекомендуется в `mode="horizontal"` располагать более трёх `FormItem`.
 
+{/* @example-description: Вертикальная сегментированная группа связанных полей документа. */}
 <Playground>
   ```jsx
   <FormLayoutGroup mode="vertical" segmented>
@@ -67,6 +69,7 @@ description: Компонент, помогающий сгруппировать
   при взаимодействии с кнопкой удаления (по умолчанию "Удалить");
 - `onRemove` — функция-обработчик, которая будет вызвана при нажатии на кнопку удаления.
 
+{/* @example-description: Удаляемая горизонтальная группа дат с кнопкой удаления группы. */}
 <Playground>
   ```jsx
   <FormLayoutGroup mode="horizontal" removable onRemove={() => alert('Обработчик удаления')}>
@@ -87,6 +90,7 @@ description: Компонент, помогающий сгруппировать
 Используйте данное свойство, когда хотите показать, что элементы формы логически связаны между собой.
 Особое внимание уделите [`a11y`](#a11y) для `FormItem`, которые не определяют свойства `htmlFor` или `top`.
 
+{/* @example-description: Сегментированная горизонтальная группа из `Input` и `Select` для единого e-mail поля. */}
 <Playground>
   ```jsx
   <FormLayoutGroup mode="horizontal" segmented>

@@ -28,13 +28,13 @@ export interface MiniInfoCellProps
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
    */
-  before?: React.ReactNode;
+  before?: React.ReactNode | undefined;
 
   /**
    * Содержимое справа.<br />
    * `<UsersStack size="s" />` или `<Avatar size={24} />`.
    */
-  after?: React.ReactNode;
+  after?: React.ReactNode | undefined;
 
   /**
    * Тип ячейки:
@@ -44,7 +44,7 @@ export interface MiniInfoCellProps
    * - `add` – тип ячейки, который показывает, что взаимодействие с ней должно вызывать действие добавления чего-то.
    * - `more` – взаимодействие с такой ячейкой должно открывать какую-то подробную информацию.
    */
-  mode?: 'base' | 'accent' | 'add' | 'more';
+  mode?: 'base' | 'accent' | 'add' | 'more' | undefined;
 
   /**
    * Тип отображения текста:
@@ -53,12 +53,12 @@ export interface MiniInfoCellProps
    * - `short` – максимально отображается 3 строки, остальное обрезается.
    * - `full` – текст отображается полностью. В дизайне это свойство `multiline`.
    */
-  textWrap?: 'nowrap' | 'short' | 'full';
+  textWrap?: 'nowrap' | 'short' | 'full' | undefined;
 
   /**
    * Передавать `true`, если предполагается переход при нажатии на ячейку.
    */
-  chevron?: boolean;
+  chevron?: boolean | undefined;
 }
 
 /**

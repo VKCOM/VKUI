@@ -11,9 +11,9 @@ import styles from './InputLike.module.css';
 export interface InputLikeProps extends RootComponentProps<HTMLSpanElement> {
   length: number;
   index: number;
-  value?: string;
-  label?: string;
-  onElementSelect?: (index: number) => void;
+  value?: string | undefined;
+  label?: string | undefined;
+  onElementSelect?: ((index: number) => void) | undefined;
 }
 
 const MASK_SYMBOL = String.fromCharCode(0x2007);

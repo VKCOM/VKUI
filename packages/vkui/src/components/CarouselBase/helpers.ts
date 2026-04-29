@@ -181,8 +181,8 @@ export function getTargetIndex({
   currentShiftX: number;
   currentShiftXDelta: number;
   looped: boolean;
-  max?: number | null;
-  isRtl?: boolean;
+  max?: number | null | undefined;
+  isRtl?: boolean | undefined;
 }): number {
   max = max ?? 0;
   // Инвертируем значения смещения для RTL режима
@@ -225,7 +225,7 @@ export function getTargetIndex({
 }
 
 interface CalcMin extends Partial<LayoutState> {
-  isRtl?: boolean;
+  isRtl?: boolean | undefined;
   align: AlignType;
 }
 
@@ -253,7 +253,7 @@ export const calcMin = ({
 };
 
 interface CalcMax extends Partial<LayoutState> {
-  isRtl?: boolean;
+  isRtl?: boolean | undefined;
   isCenterAlign: boolean;
 }
 

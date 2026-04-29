@@ -1,4 +1,12 @@
-export { StorybookIcon, GithubIcon, FigmaIcon, LogoIcon, LogoIconUwu } from './src/icons';
+export {
+  StorybookIcon,
+  GithubIcon,
+  FigmaIcon,
+  LogoIcon,
+  LogoIconUwu,
+  CodeSandboxIcon,
+  StackBlitzIcon,
+} from './src/icons';
 
 export { getStaticPathsTags } from './src/blog/tags';
 

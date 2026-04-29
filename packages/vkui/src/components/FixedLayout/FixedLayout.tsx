@@ -24,17 +24,17 @@ export interface FixedLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
   /**
    * Положение по вертикали, либо сверху, либо снизу.
    */
-  vertical?: 'top' | 'bottom';
+  vertical?: 'top' | 'bottom' | undefined;
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
    * Это часто необходимо для фиксированных кнопок в нижней части экрана.
    */
-  filled?: boolean;
+  filled?: boolean | undefined;
   /**
    * Всегда соответствовать ширине родителя.
    * Ширина пересчитывается по событию `window` `resize`.
    */
-  useParentWidth?: boolean;
+  useParentWidth?: boolean | undefined;
 }
 
 /**

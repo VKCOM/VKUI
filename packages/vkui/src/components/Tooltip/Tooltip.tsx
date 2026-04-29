@@ -53,29 +53,29 @@ export interface TooltipProps extends AllowedFloatingComponentProps, AllowedTool
    *
    * > Если нужно разово инициировать показ тултипа при первом рендере, то используйте `defaultShown`.
    */
-  shown?: boolean;
+  shown?: boolean | undefined;
   /**
    * Добавляет возможность наводить на тултип.
    */
-  enableInteractive?: boolean;
+  enableInteractive?: boolean | undefined;
   /**
    * Добавляет возможность закрыть тултип через иконку-крестик.
    *
    * > Работает в сочетании с `enableInteractive` или при использовании `shown` и `onShownChange`.
    */
-  closable?: boolean;
+  closable?: boolean | undefined;
   /**
    * Скрывает стрелку, указывающую на якорный элемент.
    */
-  disableArrow?: boolean;
+  disableArrow?: boolean | undefined;
   /**
    * Отключает закрытие по нажатию.
    */
-  disableCloseAfterClick?: boolean;
+  disableCloseAfterClick?: boolean | undefined;
   /**
    * Отключает появление при фокусе.
    */
-  disableTriggerOnFocus?: boolean;
+  disableTriggerOnFocus?: boolean | undefined;
 }
 
 /**

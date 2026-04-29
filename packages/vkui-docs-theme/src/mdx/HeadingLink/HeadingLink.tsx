@@ -12,7 +12,7 @@ export function HeadingLink({
   ...props
 }: React.ComponentProps<'h2'> & {
   Tag: `h${2 | 3 | 4 | 5 | 6}`;
-  noMargin?: boolean;
+  noMargin?: boolean | undefined;
 }): React.ReactElement {
   return (
     <Tag

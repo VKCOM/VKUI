@@ -4,10 +4,10 @@ import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { warnOnce } from '../lib/warnOnce';
 
 export interface UseEnsuredControlProps<V, E extends React.ChangeEvent<any>> {
-  value?: V;
+  value?: V | undefined;
   defaultValue: V;
   disabled?: boolean | undefined;
-  onChange?: (this: void, e: E) => any;
+  onChange?: ((this: void, e: E) => any) | undefined;
 }
 
 export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
@@ -33,10 +33,10 @@ export function useEnsuredControl<V, E extends React.ChangeEvent<any>>({
 }
 
 export interface UseCustomEnsuredControlProps<V> {
-  value?: V;
+  value?: V | undefined;
   defaultValue: V;
   disabled?: boolean | undefined;
-  onChange?: (this: void, v: V) => any;
+  onChange?: ((this: void, v: V) => any) | undefined;
 }
 
 const warn = warnOnce('useCustomEnsuredControl');

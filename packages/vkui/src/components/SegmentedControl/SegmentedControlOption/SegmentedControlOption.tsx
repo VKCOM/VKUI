@@ -13,9 +13,9 @@ export interface SegmentedControlOptionProps
   extends HasRootRef<HTMLLabelElement>,
     HasRef<HTMLInputElement>,
     HasChildren {
-  rootProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  before?: React.ReactNode;
+  rootProps?: React.LabelHTMLAttributes<HTMLLabelElement> | undefined;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement> | undefined;
+  before?: React.ReactNode | undefined;
 }
 
 export const SegmentedControlOption = ({

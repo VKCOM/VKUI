@@ -1,16 +1,21 @@
+import * as React from 'react';
 import { Icon20ArrowRightLeftCornersOutline, Icon20BracketsSlashOutline } from '@vkontakte/icons';
 import { AdaptivityProvider, Button, Flex } from '@vkontakte/vkui';
+import { CodeSandboxIcon, StackBlitzIcon } from '@vkontakte/vkui-docs-theme';
+import { openInCodeSandbox } from '../externalSandbox/codesandbox';
+import { openInStackBlitz } from '../externalSandbox/stackblitz';
 import { ColorSchemePicker } from './ColorSchemePicker';
 import { PlatformPicker } from './PlatformPicker/PlatformPicker';
 import { ThemePicker } from './ThemePicker/ThemePicker';
 import styles from './PlaygroundToolbar.module.css';
 
 interface PlaygroundToolbarProps {
+  code: string;
   codeVisible: boolean;
   setCodeVisible: (codeVisible: boolean) => void;
 }
 
-export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToolbarProps) {
+export function PlaygroundToolbar({ code, codeVisible, setCodeVisible }: PlaygroundToolbarProps) {
   const CodeExpandedIcon = codeVisible
     ? Icon20ArrowRightLeftCornersOutline
     : Icon20BracketsSlashOutline;
@@ -23,6 +28,22 @@ export function PlaygroundToolbar({ codeVisible, setCodeVisible }: PlaygroundToo
       <AdaptivityProvider density="regular">
         <ThemePicker className={styles.themePicker} />
         <ColorSchemePicker />
+        <Button
+          size="s"
+          mode="secondary"
+          appearance="neutral"
+          onClick={() => void openInStackBlitz(code)}
+          before={<StackBlitzIcon />}
+          aria-label="Открыть в StackBlitz"
+        />
+        <Button
+          size="s"
+          mode="secondary"
+          appearance="neutral"
+          onClick={() => void openInCodeSandbox(code)}
+          before={<CodeSandboxIcon />}
+          aria-label="Открыть в CodeSandbox"
+        />
         <Button
           size="s"
           mode="secondary"

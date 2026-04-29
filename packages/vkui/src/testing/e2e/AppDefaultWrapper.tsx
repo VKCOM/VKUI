@@ -5,13 +5,15 @@ import { TEST_CLASS_NAMES } from './constants';
 
 export type AppDefaultWrapperProps = AppRootProps & {
   /* Убираем фон под скриншоты */
-  disableBackground?: boolean;
+  disableBackground?: boolean | undefined;
   /* Убираем декоративные элементы вокруг children: border */
-  disableDecorations?: boolean;
+  disableDecorations?: boolean | undefined;
   /* Для кастомизации внутренней обертки */
-  slotProps?: {
-    inner?: HTMLAttributes<HTMLDivElement>;
-  };
+  slotProps?:
+    | {
+        inner?: HTMLAttributes<HTMLDivElement> | undefined;
+      }
+    | undefined;
 };
 
 export const AppDefaultWrapper = ({

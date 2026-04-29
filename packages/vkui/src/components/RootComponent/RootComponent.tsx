@@ -13,11 +13,11 @@ export interface RootComponentExtendProps {
   /**
    * Базовый класс.
    */
-  baseClassName?: string | false;
+  baseClassName?: string | false | undefined;
   /**
    * Базовые стили.
    */
-  baseStyle?: React.CSSProperties;
+  baseStyle?: React.CSSProperties | undefined;
 }
 
 export interface RootComponentInternalProps<T>

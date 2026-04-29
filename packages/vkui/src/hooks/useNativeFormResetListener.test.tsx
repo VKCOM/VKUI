@@ -9,7 +9,7 @@ const CustomFormItemComponent = ({
   ...restProps
 }: {
   defaultValue: string;
-  disabledRef?: boolean;
+  disabledRef?: boolean | undefined;
   hookCallback: (event: Event) => void;
 }) => {
   const [value, setValue] = React.useState(defaultValue);

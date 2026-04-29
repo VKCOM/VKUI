@@ -23,9 +23,9 @@ export type UseBottomSheetOptions = {
   sheetCSSProperty: string;
   backdropCSSProperty: string;
   snapPoint: SnapPoint;
-  blocked?: boolean;
-  onSnapPointChange?: SnapPointChange;
-  onDismiss?: VoidFunction;
+  blocked?: boolean | undefined;
+  onSnapPointChange?: SnapPointChange | undefined;
+  onDismiss?: VoidFunction | undefined;
 };
 
 export type UseBottomSheetHandlers = {
@@ -41,7 +41,7 @@ export type UseBottomSheetHandlers = {
 
 export type UseBottomSheetResult = [
   {
-    initialStyle?: CSSProperties;
+    initialStyle?: CSSProperties | undefined;
     setSheetEl: Dispatch<SetStateAction<HTMLElement | null>>;
     setSheetScrollEl: Dispatch<SetStateAction<HTMLElement | null>>;
     setBackdropEl: Dispatch<SetStateAction<HTMLElement | null>>;

@@ -22,7 +22,11 @@ describe(PopoutWrapper, () => {
     });
 
     const strategyClassNames = [styles.fixed, styles.absolute];
-    it.each<{ strategy?: PopoutWrapperProps['strategy']; fixed?: boolean; className: string }>([
+    it.each<{
+      strategy?: PopoutWrapperProps['strategy'] | undefined;
+      fixed?: boolean | undefined;
+      className: string;
+    }>([
       {
         strategy: 'none',
         className: '',

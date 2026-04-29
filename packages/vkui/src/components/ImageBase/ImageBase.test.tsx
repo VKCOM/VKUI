@@ -133,7 +133,7 @@ describe(ImageBase, () => {
   });
 
   it("should have all attributes of 'img' tag", () => {
-    render(<ImageBaseTest {...imgOnlyAttributes} />);
+    render(<ImageBaseTest {...(imgOnlyAttributes as ImageBaseProps)} />);
 
     Object.keys(imgOnlyAttributes).forEach((attr) => {
       expect(getImageBaseImgEl()).toHaveAttribute(attr);
