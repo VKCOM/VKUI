@@ -260,11 +260,15 @@ describe('CalendarTime', () => {
       expect(document.activeElement).toBe(doneButton);
 
       // Shift+Tab к минутам
-      await userEvent.tab({ shift: true });
+      await act(async () => {
+        await userEvent.tab({ shift: true });
+      });
       expect(document.activeElement).toBe(minutesInput);
 
       // // Shift+Tab к часам
-      await userEvent.tab({ shift: true });
+      await act(async () => {
+        await userEvent.tab({ shift: true });
+      });
       expect(document.activeElement).toBe(hoursInput);
     });
   });
@@ -304,7 +308,7 @@ describe('CalendarTime', () => {
       await userEvent.type(hoursInput, '25'); // Невалидное значение часов
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 2));
+      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 23));
     });
 
     it('should not call onChange for invalid minutes input', async () => {
@@ -316,7 +320,7 @@ describe('CalendarTime', () => {
       await userEvent.type(minutesInput, '61'); // Невалидное значение минут
       await act(async () => vi.runOnlyPendingTimers());
 
-      expect(onChange).toHaveBeenLastCalledWith(setMinutes(dayDate, 6));
+      expect(onChange).toHaveBeenLastCalledWith(setMinutes(dayDate, 59));
     });
   });
 
@@ -337,6 +341,221 @@ describe('CalendarTime', () => {
       await act(async () => vi.runOnlyPendingTimers());
 
       expect(onDoneButtonClick).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Arrow Keys Navigation', () => {
+    fakeTimersForScope();
+    it('should increase hours with ArrowUp', async () => {
+      const onChange = vi.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      act(() => hoursInput.focus());
+
+      await act(() => userEvent.keyboard('{ArrowUp}'));
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 8));
+    });
+
+    it('should decrease hours with ArrowDown', async () => {
+      const onChange = vi.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      act(() => hoursInput.focus());
+
+      await act(() => userEvent.keyboard('{ArrowDown}'));
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 6));
+    });
+
+    it('should wrap hours from 0 to 23 with ArrowDown', async () => {
+      const onChange = vi.fn();
+      const midnightDate = new Date('2023-09-01T00:40:00.000Z');
+      render(<CalendarTime onChange={onChange} value={midnightDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      act(() => hoursInput.focus());
+
+      await act(() => userEvent.keyboard('{ArrowDown}'));
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenLastCalledWith(setHours(midnightDate, 23));
+    });
+
+    it('should wrap hours from 23 to 0 with ArrowUp', async () => {
+      const onChange = vi.fn();
+      const lateDate = new Date('2023-09-01T23:40:00.000Z');
+      render(<CalendarTime onChange={onChange} value={lateDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      act(() => hoursInput.focus());
+
+      await act(() => userEvent.keyboard('{ArrowUp}'));
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenLastCalledWith(setHours(lateDate, 0));
+    });
+
+    it('should not change value with ArrowUp when disabled', async () => {
+      const onChange = vi.fn();
+      render(
+        <CalendarTime
+          onChange={onChange}
+          value={dayDate}
+          isDayDisabled={() => true}
+          hoursTestId="hours-picker"
+        />,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      act(() => hoursInput.focus());
+
+      await act(() => userEvent.keyboard('{ArrowUp}'));
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('Input Validation Edge Cases', () => {
+    fakeTimersForScope();
+    it('should filter non-numeric input in hours field', async () => {
+      const onChange = vi.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      await userEvent.clear(hoursInput);
+      await userEvent.type(hoursInput, 'ab');
+      await act(async () => vi.runOnlyPendingTimers());
+
+      // Нечисловые символы отфильтрованы, значение остается пустым после clear
+      // onChange вызывается с пустым значением, которое конвертируется в 0
+      expect(onChange).toHaveBeenCalled();
+    });
+
+    it('should clamp hours to max value 23', async () => {
+      const onChange = vi.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      await userEvent.clear(hoursInput);
+      await userEvent.type(hoursInput, '99');
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenLastCalledWith(setHours(dayDate, 23));
+    });
+
+    it('should clamp minutes to max value 59', async () => {
+      const onChange = vi.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} minutesTestId="minutes-picker" />);
+
+      const minutesInput = screen.getByTestId('minutes-picker');
+      await userEvent.clear(minutesInput);
+      await userEvent.type(minutesInput, '99');
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(onChange).toHaveBeenLastCalledWith(setMinutes(dayDate, 59));
+    });
+  });
+
+  describe('Auto focus to minutes after hours input', () => {
+    fakeTimersForScope();
+    it('should focus minutes after entering two-digit hours', async () => {
+      render(
+        <CalendarTime value={dayDate} hoursTestId="hours-picker" minutesTestId="minutes-picker" />,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      const minutesInput = screen.getByTestId('minutes-picker');
+
+      act(() => hoursInput.focus());
+      expect(document.activeElement).toBe(hoursInput);
+
+      await userEvent.clear(hoursInput);
+      await userEvent.type(hoursInput, '15');
+      await act(async () => vi.runOnlyPendingTimers());
+
+      expect(document.activeElement).toBe(minutesInput);
+    });
+  });
+
+  describe('Custom setHours and setMinutes', () => {
+    fakeTimersForScope();
+    it('should use custom setHours function', async () => {
+      const onChange = vi.fn();
+      const customSetHours = vi.fn((date, hours) => {
+        const newDate = new Date(date);
+        newDate.setHours(hours);
+        return newDate;
+      });
+
+      render(
+        <CalendarTime
+          onChange={onChange}
+          value={dayDate}
+          setHours={customSetHours}
+          hoursTestId="hours-picker"
+        />,
+      );
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      fireEvent.click(hoursInput);
+
+      const option = screen.getByRole('option', { selected: false, name: '10' });
+      fireEvent.click(option);
+
+      expect(customSetHours).toHaveBeenCalled();
+    });
+
+    it('should use custom setMinutes function', async () => {
+      const onChange = vi.fn();
+      const customSetMinutes = vi.fn((date, minutes) => {
+        const newDate = new Date(date);
+        newDate.setMinutes(minutes);
+        return newDate;
+      });
+
+      render(
+        <CalendarTime
+          onChange={onChange}
+          value={dayDate}
+          setMinutes={customSetMinutes}
+          minutesTestId="minutes-picker"
+        />,
+      );
+
+      const minutesInput = screen.getByTestId('minutes-picker');
+      fireEvent.click(minutesInput);
+
+      const option = screen.getByRole('option', { selected: false, name: '30' });
+      fireEvent.click(option);
+
+      expect(customSetMinutes).toHaveBeenCalled();
+    });
+  });
+
+  describe('Option mouseDown behavior', () => {
+    it('should prevent default on option mouseDown', () => {
+      const onChange = vi.fn();
+      render(<CalendarTime onChange={onChange} value={dayDate} hoursTestId="hours-picker" />);
+
+      const hoursInput = screen.getByTestId('hours-picker');
+      fireEvent.click(hoursInput);
+
+      const option = screen.getByRole('option', { name: '10' });
+      const mouseDownEvent = new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+      });
+      const preventDefaultSpy = vi.spyOn(mouseDownEvent, 'preventDefault');
+
+      option.dispatchEvent(mouseDownEvent);
+
+      expect(preventDefaultSpy).toHaveBeenCalled();
     });
   });
 });

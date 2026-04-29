@@ -11,12 +11,12 @@ import type {
 export interface DensityProps {
   /**
    * Тип размера экрана по горизонтали.
-   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `sizeX="compact"` → `viewWidth={ViewWidth.MOBILE}` или `sizeX="compact"` → `viewWidth={ViewWidth.SMALL_TABLET}` (см. Https://github.com/VKCOM/VKUI/issues/9015).
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `sizeX="compact"` → `viewWidth={ViewWidth.MOBILE}` или `sizeX="compact"` → `viewWidth={ViewWidth.SMALL_TABLET}` (https://github.com/VKCOM/VKUI/issues/9015).
    */
   sizeX?: SizeTypeValues | undefined; // TODO [>=10]: #9015 удалить свойство
   /**
    * Тип размера экрана по вертикали.
-   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (см. Https://github.com/VKCOM/VKUI/issues/9015).
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (https://github.com/VKCOM/VKUI/issues/9015).
    */
   sizeY?: SizeTypeValues | undefined; // TODO [>=10]: #9015 удалить свойство
   /**
@@ -39,7 +39,7 @@ export interface AdaptivityProps extends DensityProps {
    */
   hasPointer?: boolean | undefined;
   /**
-   * @deprecated Since 7.3.0. Будет удалено в **VKUI v9** (см. Https://github.com/VKCOM/VKUI/pull/8490).
+   * @deprecated Since 7.3.0. Будет удалено в **VKUI v9** (https://github.com/VKCOM/VKUI/pull/8490).
    */
   hasHover?: boolean | undefined; // TODO [>=9]: удалить неиспользуемое свойство
 }

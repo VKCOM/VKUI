@@ -43,10 +43,6 @@
   align-self: flex-start;
 }
 
-.disabled {
-  opacity: var(--vkui--opacity_disable);
-}
-
 /**
  * iOS
  */

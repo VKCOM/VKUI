@@ -4,7 +4,6 @@ import layoutClasses from '@project-tools/postcss-layout-classes';
 import restructureVariable from '@project-tools/postcss-restructure-variable';
 import autoprefixer from 'autoprefixer';
 import postcssCustomMedia from 'postcss-custom-media';
-import postcssGapProperties from 'postcss-gap-properties';
 import cssImport from 'postcss-import';
 import type { InlineConfig } from 'vite';
 import tsconfig from './tsconfig.test.json' with { type: 'json' };
@@ -59,11 +58,6 @@ export default {
 
         // Обработка CustomMedia
         postcssCustomMedia(),
-
-        // TODO [>=9]: Проверить браузерную поддержку
-        //
-        // https://caniuse.com/mdn-css_properties_gap_grid_context
-        postcssGapProperties(),
       ],
     },
   },

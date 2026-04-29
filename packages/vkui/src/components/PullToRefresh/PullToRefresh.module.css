@@ -10,7 +10,7 @@
 }
 
 .controls {
-  inline-size: 100%;
+  z-index: var(--vkui_internal--z_index_fixed_layout);
   pointer-events: none;
 }
 

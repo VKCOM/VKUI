@@ -13,7 +13,7 @@ const warn = warnOnce('SplitLayout');
 
 export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivElement> {
   /**
-   * @deprecated Since 7.9.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.9.0. Будет удалено в **VKUI v9**.
    * Вместо этого используйте `slotProps={ content: { getRootRef: ... } }`.
    */
   getRef?: React.Ref<HTMLDivElement> | undefined;
@@ -35,7 +35,7 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
   /**
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
    *
-   * @deprecated Since 7.0.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.0.0. Будет удалено в **VKUI v9**.
    * Начиная с **VKUI v7** компоненты можно располагать в любом
    * месте приложения в пределах `AppRoot`.
    */
@@ -43,7 +43,7 @@ export interface SplitLayoutProps extends HTMLAttributesWithRootRef<HTMLDivEleme
   /**
    * Свойство для отрисовки `ModalRoot`.
    *
-   * @deprecated Since 7.0.0. Будет удалeно в **VKUI v9**.
+   * @deprecated Since 7.0.0. Будет удалено в **VKUI v9**.
    * Начиная с **VKUI v7**  `ModalRoot` можно располагать в любом
    * месте приложения в пределах `AppRoot`.
    */

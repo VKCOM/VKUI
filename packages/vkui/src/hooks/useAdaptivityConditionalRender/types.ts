@@ -36,11 +36,11 @@ export type AdaptiveDeviceType = Record<
 
 export interface UseAdaptivityConditionalRender {
   /**
-   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (см. Https://github.com/VKCOM/VKUI/issues/9015).
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (https://github.com/VKCOM/VKUI/issues/9015).
    */
   sizeX: AdaptiveDensityType; // TODO [>=10]: #9015 Удалить свойство.
   /**
-   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (см. Https://github.com/VKCOM/VKUI/issues/9015).
+   * @deprecated Since 8.0.0. Будет удалено в **VKUI v10** – используйте `density` (https://github.com/VKCOM/VKUI/issues/9015).
    */
   sizeY: AdaptiveDensityType; // TODO [>=10]: #9015 Удалить свойство.
   density: AdaptiveDensityType;

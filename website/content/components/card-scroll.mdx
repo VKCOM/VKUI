@@ -18,6 +18,7 @@ description: Компонент для создания горизонтальн
 
 import { BlockWrapper } from '@/components/wrappers';
 
+{/* @example-description: Горизонтальный скролл карточек размера `s` с единым соотношением сторон. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <CardScroll size="s">
@@ -63,6 +64,7 @@ import { BlockWrapper } from '@/components/wrappers';
 В реализации `CardScroll` используется компонент [`HorizontalScroll`](/components/horizontal-scroll).
 Поэтому для управления видимостью стрелок можно использовать свойство `showArrows` компонента `HorizontalScroll`:
 
+{/* @example-description: `CardScroll` c постоянно видимыми стрелками навигации через `showArrows="always"`. */}
 <Playground Wrapper={BlockWrapper}>
   ```jsx
   <CardScroll size="m" showArrows="always">

@@ -41,10 +41,19 @@
   transform-origin: left top;
 }
 
-.img {
-  display: block;
+.imgWithFilterContainer {
+  overflow: hidden; /* Обрезает сайд-эффекты свойства `filter`. */
+}
+
+.img,
+.imgWithFilterContainer {
   inline-size: 100%;
   block-size: 100%;
+  border-radius: inherit;
+}
+
+.img {
+  display: block;
   /* Скрывает текст из атрибута alt. */
   color: transparent;
   /*
@@ -53,7 +62,6 @@
   */
   text-indent: 10000px;
   border: 0;
-  border-radius: inherit;
 }
 
 .imgKeepRatio {

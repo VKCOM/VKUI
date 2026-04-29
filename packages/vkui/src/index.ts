@@ -135,7 +135,10 @@ export type {
 export { ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { ActionSheetDefaultIosCloseItem } from './components/ActionSheet/ActionSheetDefaultIosCloseItem';
-export { FocusTrap, type FocusTrapProps } from './components/FocusTrap/FocusTrap';
+export {
+  FocusTrap,
+  type FocusTrapProps,
+} from './components/FocusTrap/FocusTrap';
 export { ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export { ScreenSpinnerContext } from './components/ScreenSpinner/context';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
@@ -315,6 +318,7 @@ export {
 } from './components/Accordion/AccordionContext';
 export type { AccordionSummaryProps } from './components/Accordion/AccordionSummary';
 export type { AccordionContentProps } from './components/Accordion/AccordionContent';
+export type { AccordionIconProps } from './components/Accordion/AccordionIcon';
 
 /**
  * Forms
@@ -513,7 +517,7 @@ export { useNavId } from './components/NavIdContext/useNavId';
 export type { TransitionDirection } from './components/NavTransitionDirectionContext/NavTransitionDirectionContext';
 export { useCSSKeyframesAnimationController as unstable_useCSSKeyframesAnimationController } from './lib/animation';
 export { useFocusVisible } from './hooks/useFocusVisible';
-export { useReducedMotion as unstable_useReducedMotion } from './lib/animation';
+export { useReducedMotion } from './lib/animation';
 
 /**
  * Utils

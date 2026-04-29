@@ -16,6 +16,7 @@ description: Компонент для ввода и отображения мн
 
 </Overview>
 
+{/* @example-description: Базовый `ChipsInput` с начальными значениями и плейсхолдером. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <ChipsInput
@@ -66,6 +67,7 @@ const [colors, setColors] = React.useState([]);
 
 Пока поддерживаются только строковые символы.
 
+{/* @example-description: Добавление нескольких элементов за один ввод через разделитель `delimiter`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <ChipsInput placeholder="Используйте запятую" delimiter="," />
@@ -77,6 +79,7 @@ const [colors, setColors] = React.useState([]);
 По умолчанию при потере полем фокуса добавления в список опций не происходит.
 С помощью свойства `addOnBlur` можно включить поведение, при котором потеря фокуса будет приводить к добавлению нового элемента.
 
+{/* @example-description: Автодобавление значения при потере фокуса с включенным `addOnBlur`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <ChipsInput
@@ -98,6 +101,7 @@ const [colors, setColors] = React.useState([]);
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
+{/* @example-description: `ChipsInput` в состоянии `disabled` без возможности редактирования. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <ChipsInput defaultValue={[{ value: 'red', label: 'Красный' }]} disabled />
@@ -112,6 +116,7 @@ const [colors, setColors] = React.useState([]);
 > Если вы используете `ChipsInput` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
+{/* @example-description: Варианты валидации `ChipsInput` со статусами `error` и `valid`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <ChipsInput defaultValue={[{ value: 'red', label: 'Красный' }]} status="error" />
@@ -126,6 +131,7 @@ const [colors, setColors] = React.useState([]);
 С помощью свойства `renderChip` можно влиять на отображение конкретного значения. Вы можете изменить
 стандартный компонент `Chip` или использовать свой компонент:
 
+{/* @example-description: Кастомный рендер `Chip` с аватаром пользователя через `renderChip`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <ChipsInput
@@ -156,6 +162,7 @@ const [colors, setColors] = React.useState([]);
 Компонент поддерживает свойство `slotProps`, которое даёт возможность прокинуть свойство в некоторые внутренние элементы.
 Это удобно для добавления кастомных классов, data-атрибутов, aria-атрибутов, обработчиков событий, доступов к элементам через `getRootRef` и других расширений, не влияя на внешний API компонента.
 
+{/* @example-description: Настройка внутренних слотов `ChipsInput` через `slotProps` и `getRootRef`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   const inputRef = React.useRef();

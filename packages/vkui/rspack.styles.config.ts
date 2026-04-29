@@ -1,20 +1,15 @@
-// @ts-check
-
-import path from 'node:path';
-import rspack from '@rspack/core';
+import * as path from 'node:path';
+import * as rspack from '@rspack/core';
 import browserslist from 'browserslist';
 import { CleanOnDoneRspackPlugin } from './scripts/CleanOnDoneRspackPlugin.ts';
-import { makePostcssPlugins } from './scripts/postcss.cjs';
+import { makePostcssPlugins } from './scripts/postcss.ts';
 
 const rootDirectory = path.join(import.meta.dirname, '../../');
 const browser = browserslist.readConfig(path.join(rootDirectory, '.browserslistrc'));
 /**
  * Конфигурация для css
- *
- * @param {Object} [options={}]
- * @param {boolean} [options.isCssModulesFile=false] Флаг для определения сборки css модулей
  */
-function makeCssRuleUse({ isCssModulesFile = false } = {}) {
+function makeCssRuleUse({ isCssModulesFile = false }: { isCssModulesFile?: boolean } = {}) {
   return [
     {
       loader: 'postcss-loader',
@@ -27,8 +22,7 @@ function makeCssRuleUse({ isCssModulesFile = false } = {}) {
   ];
 }
 
-/** @type {import('@rspack/cli').Configuration} */
-const config = {
+const config: rspack.Configuration = {
   mode: 'production',
   entry: {
     vkui: ['./src/styles/themes.css', './src/index.ts'],
@@ -38,6 +32,7 @@ const config = {
     path: path.resolve(import.meta.dirname, 'dist'),
     filename: '[name].js.tmp',
     cssFilename: '[name].css',
+    module: true,
   },
   module: {
     rules: [
@@ -93,7 +88,6 @@ const config = {
     new CleanOnDoneRspackPlugin(['dist/*.tmp', 'dist/*.tmp.*']),
     new rspack.CircularDependencyRspackPlugin({
       failOnError: true,
-      allowAsyncCycles: false,
     }),
   ],
   stats: {
@@ -104,7 +98,6 @@ const config = {
   },
   experiments: {
     css: true,
-    outputModule: true,
   },
   performance: { maxAssetSize: 10_000_000, maxEntrypointSize: 10_000_000 },
 };

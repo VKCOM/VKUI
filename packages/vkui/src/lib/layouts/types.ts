@@ -18,6 +18,7 @@ export type PaddingProp = LiteralUnion<
   DesignSystemSize | CSSGlobalValue | 'system',
   number | string
 >;
+export type MarginProp = LiteralUnion<DesignSystemSize | CSSGlobalValue, number | string>;
 
 // Типы для параметров позиционирования
 export type InsetProp = LiteralUnion<DesignSystemSize | CSSGlobalValue | 'auto', number | string>;
@@ -39,6 +40,34 @@ type AlignSelfProp = SelfPositionProp | 'baseline' | 'stretch';
 type JustifySelfProp = SelfPositionProp | 'baseline' | 'stretch';
 
 export interface LayoutProps {
+  /**
+   * Внешние отступы со всех сторон.
+   */
+  margin?: MarginProp | undefined;
+  /**
+   * Внешние отступы по строчной оси.
+   */
+  marginInline?: MarginProp | undefined;
+  /**
+   * Внешние отступы по блочной оси.
+   */
+  marginBlock?: MarginProp | undefined;
+  /**
+   * Внешний начальный отступ по строчной оси.
+   */
+  marginInlineStart?: MarginProp | undefined;
+  /**
+   * Внешний конечный отступ по строчной оси.
+   */
+  marginInlineEnd?: MarginProp | undefined;
+  /**
+   * Внешний начальный отступ по блочной оси.
+   */
+  marginBlockStart?: MarginProp | undefined;
+  /**
+   * Внешний конечный отступ по блочной оси.
+   */
+  marginBlockEnd?: MarginProp | undefined;
   /**
    * Внутренние отступы со всех сторон.
    */

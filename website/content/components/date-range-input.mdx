@@ -12,6 +12,7 @@ description: Компонент для поля выбора диапазона 
 
 </Overview>
 
+{/* @example-description: Базовый `DateRangeInput` для выбора периода из двух дат. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <DateRangeInput />
@@ -54,6 +55,7 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 
 Свойство `disabled` блокирует взаимодействие с компонентом и добавляет визуальную индикацию недоступности.
 
+{/* @example-description: `DateRangeInput` в неактивном состоянии с заданным диапазоном дат. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <DateRangeInput
@@ -71,6 +73,7 @@ const [date, setDate] = React.useState([new Date(2024, 2, 1), new Date(2024, 2, 
 > Если вы используете `DateRangeInput` вместе с [`FormItem`](/components/form-item), вам достаточно указать свойство `status` только у
 > [`FormItem`](/components/form-item).
 
+{/* @example-description: Примеры валидации `DateRangeInput` со статусами `error` и `valid`. */}
 <Playground style={{ width: 'fit-content' }}>
   ```jsx
   <Flex direction="column" gap="m">
