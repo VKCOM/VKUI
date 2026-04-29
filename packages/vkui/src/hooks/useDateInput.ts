@@ -49,14 +49,13 @@ export function useDateInput<T extends HTMLElement, D>({
   removeFocusFromField: () => void;
   handleRestoreFocus: () => boolean;
 } {
-  const { document } = useDOM();
+  const { document, window } = useDOM();
   const [open, openCalendar, closeCalendar] = useBooleanState(false);
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const calendarRef = React.useRef<HTMLDivElement | null>(null);
   const [internalValue, setInternalValue] = React.useState<string[]>([]);
   const [focusedElement, setFocusedElement] = React.useState<number | null>(null);
   const isClickedOutsideRef = React.useRef(false);
-  const { window } = useDOM();
 
   const handleRestoreFocus = React.useCallback(() => {
     // если календарь был закрыт кликом вне календаря
