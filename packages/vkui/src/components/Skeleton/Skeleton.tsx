@@ -68,22 +68,23 @@ function useSkeletonSyncAnimation(disableAnimation: boolean, duration = 1.5) {
  * Вычисляет позицию скелетона.
  */
 function useSkeletonPosition(rootRef: React.RefObject<HTMLElement | null>) {
-  const { document } = useDOM();
   const [[skeletonGradientLeft, prevSkeletonGradientLeft], setSkeletonGradientLeft] =
     useStateWithPrev('0');
 
   const updatePosition = React.useCallback(() => {
     const el = rootRef.current;
-    if (!el || !document) {
+    if (!el) {
       return;
     }
 
-    const value = -(el.getBoundingClientRect().left - document.body.getBoundingClientRect().left);
+    const value = -(
+      el.getBoundingClientRect().left - el.ownerDocument.body.getBoundingClientRect().left
+    );
     const gradientValue = value === 0 ? '0' : `${value}px`;
     if (prevSkeletonGradientLeft !== gradientValue) {
       setSkeletonGradientLeft(gradientValue);
     }
-  }, [document, prevSkeletonGradientLeft, rootRef, setSkeletonGradientLeft]);
+  }, [prevSkeletonGradientLeft, rootRef, setSkeletonGradientLeft]);
 
   React.useEffect(updatePosition, [updatePosition]);
   useWindowResizeObserver({
