@@ -190,6 +190,8 @@ export const NativeSelect = ({
     onChange?.(e, newValue);
   };
   useIsomorphicLayoutEffect(checkSelectedOption, [children]);
+  // eslint-disable-next-line react-hooks/refs
+  const onSelectChange = callMultiple(_onChange, checkSelectedOption);
 
   return (
     <FormField
@@ -223,7 +225,7 @@ export const NativeSelect = ({
             ? remapFromSelectValueToNativeValue(defaultValue)
             : defaultValue
         }
-        onChange={callMultiple(_onChange, checkSelectedOption)}
+        onChange={onSelectChange}
         getRootRef={selectRef}
         {...selectRest}
       >

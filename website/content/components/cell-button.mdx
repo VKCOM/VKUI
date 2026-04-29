@@ -15,6 +15,7 @@ description: Компонент для создания кнопок в виде
 
 </Overview>
 
+{/* @example-description: Базовый пример `CellButton` для действия в списке. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CellButton onClick={() => {}}>Добавить родственника</CellButton>
@@ -31,6 +32,7 @@ description: Компонент для создания кнопок в виде
 
 Значение задаёт кнопке нейтральный цвет, который также может являться альтернативным акцентным цветом кнопки.
 
+{/* @example-description: `CellButton` с нейтральным оформлением `appearance="neutral"`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CellButton onClick={() => {}} appearance="neutral">
@@ -43,6 +45,7 @@ description: Компонент для создания кнопок в виде
 
 Значение задаёт кнопке акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
 
+{/* @example-description: `CellButton` с акцентным оформлением `appearance="accent"`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CellButton onClick={() => {}} appearance="accent">
@@ -55,6 +58,7 @@ description: Компонент для создания кнопок в виде
 
 Значение задаёт кнопке цвет критических действий (чаще всего красный).
 
+{/* @example-description: `CellButton` с критическим оформлением `appearance="negative"`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CellButton onClick={() => {}} appearance="negative">
@@ -67,6 +71,7 @@ description: Компонент для создания кнопок в виде
 
 Задается свойством `centered`.
 
+{/* @example-description: Центрированное содержимое кнопки с иконкой через `centered`. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CellButton onClick={() => {}} centered before={<Icon24Add />}>
@@ -79,6 +84,7 @@ description: Компонент для создания кнопок в виде
 
 Пример с дополнительным контентом:
 
+{/* @example-description: Кнопка с расширенным контентом: иконка, подзаголовок и счетчик. */}
 <Playground style={{ maxWidth: 270 }}>
   ```jsx
   <CellButton

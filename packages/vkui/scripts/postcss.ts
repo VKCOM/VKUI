@@ -1,18 +1,28 @@
-const path = require('node:path');
-const postcssGlobalData = require('@csstools/postcss-global-data');
-const layoutClasses = require('@project-tools/postcss-layout-classes');
-const restructureVariable = require('@project-tools/postcss-restructure-variable');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const postcssCustomMedia = require('postcss-custom-media');
-const postcssGapProperties = require('postcss-gap-properties');
-const cssImport = require('postcss-import');
-const postcssLogical = require('postcss-logical');
-const cssModules = require('postcss-modules');
+import * as path from 'node:path';
+import postcssGlobalData from '@csstools/postcss-global-data';
+import layoutClasses from '@project-tools/postcss-layout-classes';
+import restructureVariable from '@project-tools/postcss-restructure-variable';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+import type { AcceptedPlugin } from 'postcss';
+import postcssCustomMedia from 'postcss-custom-media';
+import cssImport from 'postcss-import';
+import postcssLogical from 'postcss-logical';
+import cssModules from 'postcss-modules';
 
-const rootDirectory = path.join(__dirname, '../../..');
+const rootDirectory = path.join(import.meta.dirname, '../../..');
 
-function getMinimizerOptions(isVKUIPackageBuild = false) {
+interface MinimizerOptions {
+  preset: [
+    'default',
+    {
+      calc: boolean;
+      discardEmpty: boolean;
+    },
+  ];
+}
+
+function getMinimizerOptions(isVKUIPackageBuild = false): MinimizerOptions {
   return {
     preset: [
       'default',
@@ -30,16 +40,17 @@ function getMinimizerOptions(isVKUIPackageBuild = false) {
   };
 }
 
+interface MakePostcssPluginsConfig {
+  isVKUIPackageBuild?: boolean;
+  isProduction?: boolean;
+  isCssModulesFile?: boolean;
+  isESNext?: boolean;
+  isStorybook?: boolean;
+  disableMinimizer?: boolean;
+}
+
 /**
  * Конфигурация postcss плагинов
- * @param {Object} config - Конфигурация.
- * @param {boolean} [config.isVKUIPackageBuild=false] Сборка пакета.
- * @param {boolean} [config.isProduction=process.env.NODE_ENV === 'production'] Продакшн сборка.
- * @param {boolean} [config.isCssModulesFile=false] Сборка module.css файлов.
- * @param {boolean} [config.isESNext=false] Отдельная сборка cssm.
- * @param {boolean} [config.isStorybook=process.env.SANDBOX === '.storybook'] Отдельная сборка cssm.
- * @param {boolean} [config.disableMinimizer=false] Отключает cssnano.
- * @returns {import('postcss').Plugin[]}
  */
 function makePostcssPlugins({
   isVKUIPackageBuild = false,
@@ -48,8 +59,8 @@ function makePostcssPlugins({
   isESNext = false,
   isStorybook = process.env.SANDBOX === '.storybook',
   disableMinimizer = false,
-} = {}) {
-  const plugins = [
+}: MakePostcssPluginsConfig = {}): AcceptedPlugin[] {
+  const plugins: AcceptedPlugin[] = [
     // Обработка css импортов
     cssImport(),
 
@@ -101,13 +112,6 @@ function makePostcssPlugins({
     );
   }
 
-  // TODO [>=9]: Проверить браузерную поддержку
-  //
-  // https://caniuse.com/mdn-css_properties_gap_grid_context
-  if (!isESNext) {
-    plugins.push(postcssGapProperties());
-  }
-
   // Уменьшение размера для продакшен сборки
   if (!disableMinimizer && isProduction && !isESNext) {
     plugins.push(cssnano(getMinimizerOptions(isVKUIPackageBuild)));
@@ -116,7 +120,5 @@ function makePostcssPlugins({
   return plugins;
 }
 
-module.exports = {
-  getMinimizerOptions,
-  makePostcssPlugins,
-};
+export { getMinimizerOptions, makePostcssPlugins };
+export type { MinimizerOptions, MakePostcssPluginsConfig };

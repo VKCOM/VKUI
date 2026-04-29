@@ -47,6 +47,7 @@ const config: StorybookConfig = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       tsconfigPath: fileURLToPath(new URL('../tsconfig.storybook.json', import.meta.url)),
+      shouldExtractLiteralValuesFromEnum: true,
       shouldRemoveUndefinedFromOptional: true,
     },
   },

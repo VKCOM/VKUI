@@ -35,6 +35,7 @@ module.exports = {
   rules: {
     'react-hooks/immutability': 'error',
     'react-hooks/refs': 'error',
+    'react-hooks/set-state-in-effect': 'off',
     'no-restricted-imports': [
       'error',
       {

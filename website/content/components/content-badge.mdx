@@ -11,6 +11,7 @@ description: Компонент для выделения статусов, ка
 
 </Overview>
 
+{/* @example-description: Базовый `ContentBadge` для короткой статусной метки. */}
 <Playground>
   ```jsx
   <ContentBadge>Новинка</ContentBadge>
@@ -38,6 +39,7 @@ description: Компонент для выделения статусов, ка
 
 Задаёт компоненту акцентный цвет, который может меняться в зависимости от светлой или тёмной схемы.
 
+{/* @example-description: Цветовая схема `accent` во всех режимах `ContentBadge`. */}
 <Playground>
   ```jsx
   <ContentBadge mode="primary" appearance="accent">
@@ -56,6 +58,7 @@ description: Компонент для выделения статусов, ка
 
 Задаёт компоненту нейтральный цвет, который также может являться альтернативным акцентным цветом компонента.
 
+{/* @example-description: Нейтральная цветовая схема `ContentBadge` для разных режимов отображения. */}
 <Playground>
   ```jsx
   <ContentBadge mode="primary" appearance="neutral">
@@ -74,6 +77,7 @@ description: Компонент для выделения статусов, ка
 
 Значение задаёт компоненту цвет для позитивных статусов (чаще всего зеленый).
 
+{/* @example-description: Позитивная цветовая схема `accent-green` для статусных бейджей. */}
 <Playground>
   ```jsx
   <ContentBadge mode="primary" appearance="accent-green">
@@ -92,6 +96,7 @@ description: Компонент для выделения статусов, ка
 
 Значение задаёт компоненту цвет для "горящих" статусов (чаще всего красных).
 
+{/* @example-description: Акцентная красная схема `accent-red` для приоритетных меток. */}
 <Playground>
   ```jsx
   <ContentBadge mode="primary" appearance="accent-red">
@@ -112,6 +117,7 @@ description: Компонент для выделения статусов, ка
 
 import { OverlayButtonWrapper } from '@/components/wrappers';
 
+{/* @example-description: Варианты `ContentBadge` поверх медиа-контента с `appearance="overlay"`. */}
 <Playground Wrapper={OverlayButtonWrapper}>
   ```jsx
   <ContentBadge mode="primary" appearance="overlay">
@@ -126,6 +132,46 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
   ```
 </Playground>
 
+## Пользовательские цвета
+
+Используйте свойство `appearance` для задания произвольного цвета `ContentBadge`. Поддерживаются:
+
+### HEX-коды
+
+{/* @example-description: Пользовательский цвет `ContentBadge` через HEX-значение в `appearance`. */}
+<Playground>
+  ```jsx
+  <ContentBadge mode="primary" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="secondary" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  <ContentBadge mode="outline" appearance="#FF6699">
+    Новинка
+  </ContentBadge>
+  ```
+</Playground>
+
+### CSS-переменные
+
+{/* @example-description: Пользовательский цвет `ContentBadge` через CSS-переменную в `appearance`. */}
+<Playground>
+  ```jsx
+  <div style={{ '--custom-badge-color': '#7B61FF' }}>
+    <ContentBadge mode="primary" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+    <ContentBadge mode="secondary" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+    <ContentBadge mode="outline" appearance="var(--custom-badge-color)">
+      Новинка
+    </ContentBadge>
+  </div>
+  ```
+</Playground>
+
 ### Скругление
 
 Свойство `capsule` включает приближение значения закругления к форме круга:
@@ -133,6 +179,7 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 - для `size="m"` и `size="l"` — приближает к овальной форме;
 - для `size="s"` - свойство не поддерживается.
 
+{/* @example-description: Скругленные бейджи с `capsule` для размеров `m` и `l`. */}
 <Playground>
   ```jsx
   <ContentBadge capsule size="m">
@@ -152,6 +199,7 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 - `m` — стандартный с поддержкой иконок `16px`;
 - `l` — крупный с иконками `20px`.
 
+{/* @example-description: Сравнение размеров `s`, `m` и `l` для `ContentBadge`. */}
 <Playground>
   ```jsx
   <ContentBadge size="s">Новинка</ContentBadge>
@@ -168,6 +216,7 @@ import { OverlayButtonWrapper } from '@/components/wrappers';
 - для `size="m"` — рекомендуемый размер `12px` при наличии текста, для одиночной иконки `16px`;
 - для `size="l"` — рекомендуемый размер `16px` при наличии текста, для одиночной иконки `20px`.
 
+{/* @example-description: Использование `ContentBadge.SlotIcon` с текстом и в формате иконки без текста. */}
 <Playground>
   ```jsx
   <ContentBadge size="m" appearance="accent-green">

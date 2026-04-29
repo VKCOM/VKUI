@@ -288,17 +288,6 @@ export const Search = ({
     [onIconClick],
   );
 
-  const onIconCancelClickStart: React.PointerEventHandler<HTMLElement> = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      inputRef.current?.focus();
-      if (touchEnabled()) {
-        onCancel();
-      }
-    },
-    [inputRef, onCancel],
-  );
-
   useIsomorphicLayoutEffect(() => {
     if (inputRest.value !== undefined) {
       setHasValue(Boolean(inputRest.value));
@@ -327,6 +316,31 @@ export const Search = ({
   const showControls = Boolean(
     iconProp || !hideClearButton || (adaptiveDensity.compact && onFindButtonClick),
   );
+
+  const onClearPointerDown: React.PointerEventHandler<HTMLElement> = (e) => {
+    // Сначала вызываем внешний обработчик, затем локальную логику, чтобы можно было предотвратить обработку фокуса на поле ввода.
+    onClearButtonPointerDown?.(e);
+
+    e.preventDefault();
+    inputRef.current?.focus();
+    if (touchEnabled()) {
+      onCancel();
+    }
+  };
+
+  const onClearClick: React.MouseEventHandler<HTMLElement> = (e) => {
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      HTMLInputElement.prototype,
+      'value',
+    )?.set;
+    nativeInputValueSetter?.call(inputRef.current, '');
+
+    const ev2 = new Event('input', { bubbles: true });
+    inputRef.current?.dispatchEvent(ev2);
+
+    onClearButtonClick?.(e);
+  };
 
   return (
     <RootComponent
@@ -374,8 +388,8 @@ export const Search = ({
             {!hideClearButton && (
               <IconButton
                 hoverMode="opacity"
-                onPointerDown={callMultiple(onIconCancelClickStart, onClearButtonPointerDown)}
-                onClick={callMultiple(onCancel, onClearButtonClick)}
+                onPointerDown={onClearPointerDown}
+                onClick={onClearClick}
                 tabIndex={hasValue ? undefined : -1}
                 disabled={inputRest.disabled}
                 data-testid={clearButtonTestId}
