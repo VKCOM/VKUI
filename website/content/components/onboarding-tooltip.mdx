@@ -15,6 +15,14 @@ description: Компонент для отрисовки подсказки, к
 
 import { OnboardingTooltipWrapper } from '@/components/wrappers';
 
+<Playground hide Wrapper={OnboardingTooltipWrapper}>
+  ```jsx
+  <OnboardingTooltip shown disableFlipMiddleware disableShiftMiddleware placement="bottom" description="Обновлённый раздел поможет найти друзей">
+    <Icon20UserCheckOutline />
+  </OnboardingTooltip>
+  ```
+</Playground>
+
 {/* @example-description: Базовый `OnboardingTooltip` для одноразового знакомства с новым функционалом. */}
 <Playground Wrapper={OnboardingTooltipWrapper}>
   ```jsx

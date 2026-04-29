@@ -1,0 +1,59 @@
+.root {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: transform 120ms ease;
+}
+
+.root:hover {
+  transform: translateY(-2px);
+}
+
+.stage {
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_color_background: #f7f7f7;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_pattern_color: rgb(0, 0, 0, 0.08);
+
+  background-color: var(--vkui_docs--playground_color_background);
+  background-image:
+    linear-gradient(120deg, transparent 32px, var(--vkui_docs--playground_pattern_color) 32px),
+    linear-gradient(240deg, transparent 32px, var(--vkui_docs--playground_pattern_color) 32px);
+  background-position:
+    10px 10px,
+    10px 10px;
+  background-size: 23px 28px;
+  border-block-end: 1px solid var(--vkui_docs--color_stroke_separator_secondary, rgb(0, 0, 0, 0.08));
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+.stageDark {
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_color_background: #0e0e0f;
+  /* stylelint-disable-next-line declaration-property-value-disallowed-list */
+  --vkui_docs--playground_pattern_color: rgb(255, 255, 255, 0.08);
+}
+
+.scene {
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(var(--showcase-scale, 1));
+  transform-origin: center center;
+  /* Изолируем layout-эффекты, чтобы transform не вызывал лишних reflow. */
+  will-change: transform;
+}
+
+.errorScene {
+  font-size: 12px;
+  color: var(--vkui--color_text_negative);
+  text-align: center;
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  color: var(--vkui--color_text_secondary);
+  -webkit-box-orient: vertical;
+}

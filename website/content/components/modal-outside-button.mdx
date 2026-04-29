@@ -18,14 +18,16 @@ description: Компонент для отрисовки кнопок в пра
 import { BlockWrapper } from '@/components/wrappers';
 
 {/* @example-description: Набор внешних кнопок `ModalOutsideButton` для правого верхнего угла модального окна. */}
-<Playground Wrapper={BlockWrapper} style={{ width: 1 }}>
+<Playground>
   ```jsx
-  <ModalOutsideButton aria-label="Больше" onClick={() => {}}>
-    <Icon20More />
-  </ModalOutsideButton>
-  <ModalOutsideButton aria-label="Нравится" onClick={() => {}}>
-    <Icon20Like />
-  </ModalOutsideButton>
+  <Flex direction="column" gap="m">
+    <ModalOutsideButton aria-label="Больше" onClick={() => {}}>
+      <Icon20More />
+    </ModalOutsideButton>
+    <ModalOutsideButton aria-label="Нравится" onClick={() => {}}>
+      <Icon20Like />
+    </ModalOutsideButton>
+  </Box>
   ```
 </Playground>
 

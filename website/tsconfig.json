@@ -59,6 +59,7 @@
       "@/components/*": ["./components/*"],
       "@/stores/*": ["./stores/*"],
       "@/providers/*": ["./providers/*"],
+      "@/generated/*": ["./generated/*"],
       "@vkontakte/vkui": ["../packages/vkui/src"]
     }
   }
