@@ -53,7 +53,8 @@
       "!packages/vkui-date-fns-tz/**/*.d.ts",
       "!packages/vkui-date-fns-tz/**/*.js",
       "!.yarn/*",
-      "!**/package.json"
+      "!**/package.json",
+      "!.devcontainer/devcontainer-lock.json"
     ]
   },
   "linter": { "enabled": false },
