@@ -210,6 +210,7 @@ export const useChipsSelect = <O extends ChipOption>({
       selectedBehavior,
       filterFn,
       sortFn,
+      emptyText,
     ],
   );
 

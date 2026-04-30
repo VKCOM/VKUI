@@ -24,7 +24,7 @@ export const useGlobalEscKeyDown = (
 
   useIsomorphicLayoutEffect(() => {
     options.current = optionsProp || EVENT_OPTIONS;
-  }, [options]);
+  }, [optionsProp]);
 
   useIsomorphicLayoutEffect(() => {
     if (!document || !init || !callback) {

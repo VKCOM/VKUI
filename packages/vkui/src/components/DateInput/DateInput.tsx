@@ -388,7 +388,7 @@ export const DateInput = ({
         setInternalValue(getLastUpdatedValue());
       }
     },
-    [open, getLastUpdatedValue],
+    [open, getLastUpdatedValue, setInternalValue],
   );
 
   const onCalendarChange = React.useCallback(

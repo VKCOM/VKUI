@@ -11,5 +11,5 @@ export function useAutoFocus(
     }
 
     ref.current.focus();
-  }, []);
+  }, [autoFocus, ref]);
 }

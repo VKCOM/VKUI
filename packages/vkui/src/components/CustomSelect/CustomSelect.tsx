@@ -106,7 +106,7 @@ const FetchingStatus = ({
         }
       }
     },
-    [fetching],
+    [fetching, status],
   );
 
   return <VisuallyHidden aria-live="polite">{content}</VisuallyHidden>;
@@ -506,7 +506,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
       selectElRef.current?.dispatchEvent(event);
     }
-  }, [nativeSelectValue]);
+  }, [nativeSelectValue, allowClearButton, filteredOptions, selectElRef]);
 
   const openedClassNames = React.useMemo(
     () =>

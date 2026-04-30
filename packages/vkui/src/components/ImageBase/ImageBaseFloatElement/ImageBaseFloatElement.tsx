@@ -126,7 +126,7 @@ export const ImageBaseFloatElement = ({
       }
       return;
     },
-    [visibility],
+    [visibility, onMouseOverHandlers, onMouseOutHandlers],
   );
 
   const [inlineIndentStyle, blockIndentStyle, inlineIndentClassName, blockIndentClassName] =

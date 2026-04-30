@@ -22,6 +22,6 @@ export const ScrollSaver = ({
       scrollTo(0, initialScroll);
     }
     return () => saveScroll(getScroll().y);
-  }, []);
+  }, [getScroll, initialScroll, saveScroll, scrollTo]);
   return <React.Fragment>{children}</React.Fragment>;
 };

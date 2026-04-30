@@ -45,6 +45,13 @@ export const Epic = ({
         getNavId((story as React.ReactElement<NavIdProps>).props, warn) === activeStory,
     ) as Array<React.ReactElement<NavIdProps>> | undefined) ?? null;
 
+  const saveScroll = React.useCallback(
+    (value: number) => {
+      scroll.set(activeStory, value);
+    },
+    [scroll, activeStory],
+  );
+
   return (
     <RootComponent
       {...restProps}
@@ -53,9 +60,7 @@ export const Epic = ({
       <ScrollSaver
         key={activeStory}
         initialScroll={scroll.get(activeStory) || 0}
-        saveScroll={(value) => {
-          scroll.set(activeStory, value);
-        }}
+        saveScroll={saveScroll}
       >
         {story}
       </ScrollSaver>
