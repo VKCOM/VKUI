@@ -91,3 +91,10 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
+
+  # Devcontainer
+
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: weekly
