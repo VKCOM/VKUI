@@ -5,34 +5,36 @@ import { createRoot, type Root } from 'react-dom/client';
 import {
   AppRoot,
   Box,
+  classNames,
   ConfigProvider,
   DOMContext,
   Flex,
   PanelSpinner,
   useColorScheme,
 } from '@vkontakte/vkui';
+import type { ColorSchemeType } from '@vkontakte/vkui';
+import { useMounted } from 'nextra/hooks';
 import { LiveContext, LiveError, LivePreview, LiveProvider } from 'react-live';
+import { useFitScale } from '@/components/Showcase/useFitScale';
 import { scope } from '@/components/mdx/Playground/scope';
-import { type PreviewRendererProps, resolveWrapper, transformCode } from './previewShared';
+import {
+  type PreviewRendererProps,
+  resolveWrapper,
+  STAGE_HEIGHT,
+  transformCode,
+} from './previewShared';
 import styles from './ShowcaseCard.module.css';
 
 const IFRAME_SIZE = 500;
 
-const STAGE_HEIGHT = 220;
-
 interface PreviewContentProps {
   code: string;
-  colorScheme: 'light' | 'dark';
+  colorScheme: ColorSchemeType;
   Wrapper: React.ComponentType<React.PropsWithChildren>;
   iframeWindow: Window;
   iframeDocument: Document;
 }
 
-/**
- * Рендерится внутри iframe. Компонент отображается нативно во всём
- * пространстве iframe (IFRAME_SIZE × IFRAME_SIZE). Никаких внутренних
- * трансформаций — масштабирование происходит снаружи на уровне iframe-элемента.
- */
 function PreviewContent({
   code,
   colorScheme,
@@ -84,51 +86,26 @@ function copyStylesInto(targetDoc: Document): void {
   });
 }
 
-/**
- * Изолированное превью внутри iframe.
- *
- * Iframe имеет фиксированный размер IFRAME_SIZE × IFRAME_SIZE и рендерит
- * компонент нативно (без внутренних трансформаций). Сам iframe-элемент
- * масштабируется через `transform: scale`, чтобы вписаться в окошко карточки.
- *
- * Используется для компонентов с порталами и `position: fixed` (см.
- * `ISOLATED_PREVIEW_SLUGS`).
- */
 export function IframePreview({ code, direction, wrapper }: PreviewRendererProps) {
   const stageRef = React.useRef<HTMLDivElement | null>(null);
   const iframeRef = React.useRef<HTMLIFrameElement | null>(null);
   const reactRootRef = React.useRef<Root | null>(null);
 
-  const [mounted, setMounted] = React.useState(false);
-  const [scale, setScale] = React.useState(1);
-  const [iframeDom, setIframeDom] = React.useState<{ win: Window; doc: Document } | null>(null);
+  const mounted = useMounted();
   const colorScheme = useColorScheme();
+
+  const scale = useFitScale(stageRef, iframeRef, {
+    minScale: 0.1,
+    maxScale: 1,
+    enabled: mounted,
+  });
 
   const Wrapper = React.useMemo(() => resolveWrapper(wrapper, direction), [wrapper, direction]);
 
   React.useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) {
-      return undefined;
+    if (!mounted) {
+      return;
     }
-
-    const update = () => {
-      const sw = stage.clientWidth;
-      const sh = stage.clientHeight;
-      if (!sw || !sh) {
-        return;
-      }
-      const next = Math.min(1, sw / IFRAME_SIZE, sh / IFRAME_SIZE);
-      setScale((prev) => (Math.abs(prev - next) < 0.001 ? prev : next));
-    };
-
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(stage);
-    return () => ro.disconnect();
-  }, []);
-
-  React.useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) {
       return;
@@ -160,16 +137,14 @@ export function IframePreview({ code, direction, wrapper }: PreviewRendererProps
     }
 
     reactRootRef.current = createRoot(rootEl);
-
-    if (doc.defaultView) {
-      setIframeDom({ win: doc.defaultView, doc });
-    }
-    setMounted(true);
-  }, []);
+  }, [mounted]);
 
   React.useEffect(() => {
     const root = reactRootRef.current;
-    if (!root || !iframeDom) {
+    const iframe = iframeRef.current;
+    const doc = iframeRef.current?.contentDocument;
+    const win = doc?.defaultView;
+    if (!mounted || !root || !iframe || !doc || !win) {
       return;
     }
 
@@ -178,11 +153,11 @@ export function IframePreview({ code, direction, wrapper }: PreviewRendererProps
         code={code}
         colorScheme={colorScheme}
         Wrapper={Wrapper}
-        iframeWindow={iframeDom.win}
-        iframeDocument={iframeDom.doc}
+        iframeWindow={win}
+        iframeDocument={doc}
       />,
     );
-  }, [code, colorScheme, Wrapper, mounted, iframeDom]);
+  }, [code, colorScheme, Wrapper, mounted]);
 
   React.useEffect(() => {
     return () => {
@@ -195,52 +170,46 @@ export function IframePreview({ code, direction, wrapper }: PreviewRendererProps
     };
   }, []);
 
+  const style: Record<`--${string}`, string> = { '--showcase-scale': String(scale) };
+
   return (
     <Box
       getRootRef={stageRef}
       position="relative"
-      inlineSize="calc(100% - 6px)"
       blockSize={STAGE_HEIGHT}
       marginInline={3}
       marginBlockStart={3}
       overflow="hidden"
-      className={colorScheme === 'dark' ? `${styles.stage} ${styles.stageDark}` : styles.stage}
+      className={classNames(
+        styles.stage,
+        styles.inheritBorderRadius,
+        colorScheme === 'dark' && styles.stageDark,
+      )}
       inert
     >
-      {!mounted && (
+      {!mounted ? (
         <Flex align="center" justify="center" inlineSize="100%" blockSize="100%">
           <PanelSpinner visibilityDelay={250} />
         </Flex>
+      ) : (
+        <Box
+          position="absolute"
+          insetInlineStart="50%"
+          insetBlockStart="50%"
+          className={styles.scene}
+          style={style}
+        >
+          <iframe
+            ref={iframeRef}
+            width={IFRAME_SIZE}
+            height={IFRAME_SIZE}
+            tabIndex={-1}
+            aria-hidden="true"
+            title="Превью компонента"
+            className={styles.iframe}
+          />
+        </Box>
       )}
-
-      {/* Iframe позиционируется по центру stage и масштабируется трансформом */}
-      <Box
-        position="absolute"
-        insetInlineStart="50%"
-        insetBlockStart="50%"
-        style={{
-          transform: `translate(-50%, -50%) scale(${scale})`,
-          transformOrigin: 'center center',
-          pointerEvents: 'none',
-          opacity: mounted ? 1 : 0,
-          transition: 'opacity 200ms ease',
-        }}
-      >
-        <iframe
-          ref={iframeRef}
-          width={IFRAME_SIZE}
-          height={IFRAME_SIZE}
-          tabIndex={-1}
-          aria-hidden="true"
-          title="Превью компонента"
-          style={{
-            display: 'block',
-            border: 'none',
-            background: 'transparent',
-            colorScheme: 'normal',
-          }}
-        />
-      </Box>
     </Box>
   );
 }

@@ -18,6 +18,8 @@ export const ISOLATED_PREVIEW_SLUGS = new Set<string>([
   'alert',
 ]);
 
+export const STAGE_HEIGHT = 220;
+
 export const wrapperMap: Record<string, React.ComponentType<React.PropsWithChildren>> = {
   BlockWrapper: BlockWrapper as React.ComponentType<React.PropsWithChildren>,
   FixedLayoutWrapper: FixedLayoutWrapper as React.ComponentType<React.PropsWithChildren>,
@@ -26,15 +28,11 @@ export const wrapperMap: Record<string, React.ComponentType<React.PropsWithChild
   OverlayButtonWrapper: OverlayButtonWrapper as React.ComponentType<React.PropsWithChildren>,
 };
 
-const IMPORT_REGEXP = /^import\s+(?:{[\s\S]*?}|\S+)\s+from\s+['"][^'"]+['"];?$\n?/gm;
-const JSX_START_REGEXP = /^</;
-
 export function transformCode(code: string): string {
-  const cleaned = code.replace(IMPORT_REGEXP, '');
-  if (cleaned.trim().match(JSX_START_REGEXP)) {
-    return `<React.Fragment>\n${cleaned}\n</React.Fragment>;`;
+  if (code.trim().startsWith('<')) {
+    return `<React.Fragment>\n${code}\n</React.Fragment>;`;
   }
-  return `() => { ${cleaned} }`;
+  return `() => { ${code} }`;
 }
 
 export function makeDefaultWrapper(direction: 'row' | 'column' = 'row') {

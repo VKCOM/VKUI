@@ -32,34 +32,35 @@ export interface ShowcaseCardProps {
 export const ShowcaseCard = React.memo(function ShowcaseCard({ item }: ShowcaseCardProps) {
   return (
     <Card
-      Component={(cardProps) => (
-        <Flex
-          Component={(tappableProps) => <Tappable {...tappableProps} />}
-          direction="column"
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={250}
-          minInlineSize={250}
-          maxInlineSize={300}
-          overflow="hidden"
-          {...cardProps}
-        />
-      )}
+      Component={Tappable}
       mode="outline-tint"
       className={styles.root}
       aria-label={`Перейти на страницу компонента ${item.name}`}
-      tabIndex={0}
-      onClickCapture={() => window.open(`/components/${item.slug}/`, '_blank')}
+      onClick={() => window.open(`/components/${item.slug}/`, '_self')}
     >
-      <ShowcaseCardPreview
-        slug={item.slug}
-        code={item.code}
-        direction={item.direction}
-        wrapper={item.wrapper}
-      />
-      <Flex direction="column" gap="m" paddingBlock="xl" paddingInline="2xl">
-        <Title level="3">{item.name}</Title>
-        {item.description && <Footnote className={styles.description}>{item.description}</Footnote>}
+      <Flex
+        direction="column"
+        flexGrow={0}
+        flexShrink={0}
+        flexBasis={250}
+        minInlineSize={250}
+        maxInlineSize={250}
+        padding="s"
+        overflow="hidden"
+        className={styles.inheritBorderRadius}
+      >
+        <ShowcaseCardPreview
+          slug={item.slug}
+          code={item.code}
+          direction={item.direction}
+          wrapper={item.wrapper}
+        />
+        <Flex direction="column" gap="m" paddingBlock="xl" paddingInline="m">
+          <Title level="3">{item.name}</Title>
+          {item.description && (
+            <Footnote className={styles.description}>{item.description}</Footnote>
+          )}
+        </Flex>
       </Flex>
     </Card>
   );

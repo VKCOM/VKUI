@@ -2,10 +2,16 @@
 
 import * as React from 'react';
 import { Box, classNames, Flex, PanelSpinner, useColorScheme } from '@vkontakte/vkui';
+import { useMounted } from 'nextra/hooks';
 import { LiveContext, LiveError, LivePreview, LiveProvider } from 'react-live';
 import { useFitScale } from '@/components/Showcase/useFitScale';
 import { scope } from '@/components/mdx/Playground/scope';
-import { type PreviewRendererProps, resolveWrapper, transformCode } from './previewShared';
+import {
+  type PreviewRendererProps,
+  resolveWrapper,
+  STAGE_HEIGHT,
+  transformCode,
+} from './previewShared';
 import styles from './ShowcaseCard.module.css';
 
 function PreviewBody({ Wrapper }: { Wrapper: React.ComponentType<React.PropsWithChildren> }) {
@@ -24,12 +30,8 @@ function PreviewBody({ Wrapper }: { Wrapper: React.ComponentType<React.PropsWith
 export function InlinePreview({ code, direction, wrapper }: PreviewRendererProps) {
   const stageRef = React.useRef<HTMLDivElement | null>(null);
   const measureRef = React.useRef<HTMLDivElement | null>(null);
-  const [mounted, setMounted] = React.useState(false);
+  const mounted = useMounted();
   const colorScheme = useColorScheme();
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const scale = useFitScale(stageRef, measureRef, {
     minScale: 0.1,
@@ -45,12 +47,13 @@ export function InlinePreview({ code, direction, wrapper }: PreviewRendererProps
     <Box
       getRootRef={stageRef}
       position="relative"
-      inlineSize="calc(100% - 6px)"
-      blockSize={220}
-      marginInline={3}
-      marginBlockStart={3}
+      blockSize={STAGE_HEIGHT}
       overflow="hidden"
-      className={classNames(styles.stage, colorScheme === 'dark' && styles.stageDark)}
+      className={classNames(
+        styles.stage,
+        styles.inheritBorderRadius,
+        colorScheme === 'dark' && styles.stageDark,
+      )}
       inert
     >
       {!mounted ? (

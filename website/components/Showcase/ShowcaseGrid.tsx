@@ -1,11 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { Flex, Text, Title } from '@vkontakte/vkui';
+import { Flex, Title } from '@vkontakte/vkui';
 import showcaseData from '@/generated/showcase-data.json';
 import { ShowcaseCard } from './ShowcaseCard';
 import type { ShowcaseData } from './types';
-import styles from './ShowcaseGrid.module.css';
 
 const data = showcaseData as ShowcaseData;
 
@@ -13,29 +12,16 @@ export function ShowcaseGrid() {
   return (
     <Flex direction="column" gap="4xl" paddingBlock="4xl">
       <Flex direction="column" gap="4xl">
-        {data.groups.length === 0 ? (
-          <Flex align="center" justify="center" className={styles.empty}>
-            <Text>По запросу ничего не найдено</Text>
-          </Flex>
-        ) : (
-          data.groups.map((group) => (
-            <Flex
-              key={group.key}
-              Component="section"
-              direction="column"
-              gap="2xl"
-              className={styles.section}
-              id={group.key}
-            >
-              <Title level="2">{group.title}</Title>
-              <Flex Component="ul" gap="3xl" margin="none" padding={0} className={styles.grid}>
-                {group.items.map((item) => (
-                  <ShowcaseCard key={item.slug} item={item} />
-                ))}
-              </Flex>
+        {data.groups.map((group) => (
+          <Flex key={group.key} Component="section" direction="column" gap="2xl" id={group.key}>
+            <Title level="2">{group.title}</Title>
+            <Flex Component="ul" gap="3xl" margin="none" padding={0} align="stretch">
+              {group.items.map((item) => (
+                <ShowcaseCard key={item.slug} item={item} />
+              ))}
             </Flex>
-          ))
-        )}
+          </Flex>
+        ))}
       </Flex>
     </Flex>
   );
