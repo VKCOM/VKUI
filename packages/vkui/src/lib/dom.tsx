@@ -52,10 +52,12 @@ export const useDOM = (): DOMContextInterface => {
  * В случае, если используется DOMContext, при проверке 'node instanceOf Window' – Window может быть
  * другим объектом.
  */
-export const isWindow = (
-  node: Element | Window | VisualViewport | undefined | null,
-): node is Window => {
-  return node !== null && node !== undefined && 'navigator' in node;
+export const isWindow = (value: unknown): value is Window => {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    (value as Record<string, unknown>).window === value
+  );
 };
 
 export const isBody = (

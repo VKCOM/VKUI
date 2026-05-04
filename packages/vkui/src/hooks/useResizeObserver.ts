@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type * as React from 'react';
-import { useDOM } from '../lib/dom';
+import { isWindow } from '../lib/dom';
 import { isRefObject } from '../lib/isRefObject';
 import { useStableCallback } from './useStableCallback';
 
@@ -12,15 +12,14 @@ export function useResizeObserver(
   callback: (element: HTMLElement | Window) => void,
 ): void {
   const stableCallback = useStableCallback(callback);
-  const { window } = useDOM();
 
   useEffect(
     function addResizeObserverHandler() {
-      if (!ref || !window) {
+      if (!ref) {
         return;
       }
 
-      if (ref === window) {
+      if (isWindow(ref)) {
         const onResize = () => stableCallback(ref);
         ref.addEventListener('resize', onResize);
         return () => ref.removeEventListener('resize', onResize);
@@ -40,6 +39,6 @@ export function useResizeObserver(
 
       return () => observer.disconnect();
     },
-    [ref, stableCallback, window],
+    [ref, stableCallback],
   );
 }
