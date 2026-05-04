@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-XedgCGTy.js";import{b as r}from"./lib-BRrbp21U.js";import{p as i}from"./dom-F71PlD4A.js";var a,o,s=t((()=>{a=e(n(),1),i(),o=r?a.useLayoutEffect:a.useEffect}));export{o as n,s as t};

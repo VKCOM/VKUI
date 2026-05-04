@@ -1,0 +1,6 @@
+import{n as e}from"./chunk-BneVvdWh.js";import{t}from"./jsx-runtime-B7sYxePN.js";import{n,t as r}from"./SelectMimicry-D21C8V_I.js";import{i,n as a,t as o}from"./constants-Dj6vOzIh.js";import{n as s,t as c}from"./createStoryParameters-pz1UrWMe.js";import{n as l,t as u}from"./getFormFieldIconsPresets-Rpdnz0zC.js";var d,f,p,m,h;e((()=>{i(),l(),s(),n(),d=t(),f=u(),p={title:`Forms/SelectMimicry`,component:r,parameters:c(`SelectMimicry`,o,a),argTypes:{selectValue:{description:`Для отображения выбранного значения`,table:{type:{summary:`string`}},defaultValue:`Россия`,control:{type:`select`},options:[`Россия`,`Италия`,`Англия`]},after:f,before:f},tags:[`Формы и поля ввода`]},m={render:({selectValue:e,...t})=>(0,d.jsx)(r,{...t,children:e})},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+  render: ({
+    selectValue,
+    ...args
+  }) => <SelectMimicry {...args}>{selectValue}</SelectMimicry>
+}`,...m.parameters?.docs?.source}}},h=[`Playground`]}))();export{m as Playground,h as __namedExportsOrder,p as default};
