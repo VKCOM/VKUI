@@ -70,3 +70,5 @@ __diff_output__
 
 *.css.d.ts
 *.d.ts.map
+
+.claude
