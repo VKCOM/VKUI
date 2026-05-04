@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Icon20ArrowRightLeftCornersOutline, Icon20BracketsSlashOutline } from '@vkontakte/icons';
 import { AdaptivityProvider, Button, Flex } from '@vkontakte/vkui';
 import { CodeSandboxIcon, StackBlitzIcon } from '@vkontakte/vkui-docs-theme';
