@@ -5207,7 +5207,7 @@ __metadata:
     dotenv: "npm:^17.4.2"
     eslint: "npm:^8.56.0"
     eslint-import-resolver-alias: "npm:^1.1.2"
-    eslint-plugin-compat: "npm:^7.0.1"
+    eslint-plugin-compat: "npm:^7.0.2"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-jsdoc: "npm:^62.9.0"
     eslint-plugin-react: "npm:^7.33.2"
@@ -8549,9 +8549,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-compat@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "eslint-plugin-compat@npm:7.0.1"
+"eslint-plugin-compat@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "eslint-plugin-compat@npm:7.0.2"
   dependencies:
     "@mdn/browser-compat-data": "npm:^6.1.1"
     ast-metadata-inferer: "npm:^0.8.1"
@@ -8562,7 +8562,7 @@ __metadata:
     semver: "npm:^7.6.2"
   peerDependencies:
     eslint: ^9.0.0 || ^10.0.0
-  checksum: 10/532884449b01c1b0f98bfd920d23a6e50cbfb17f99ccfb6edd1dccf77eaf1a22a8ae7fd35ac55b6246c179dbea86e3c420907d312d826d25730b9e8ca56f1021
+  checksum: 10/476155deaf34d3ca8bb26d1ae99f628927a04fd6727e852cc195845c02918c8876f71f82a45a21518c9e831e9facf4e242ad70f43968b1166eba4187cfd89e01
   languageName: node
   linkType: hard
 
