@@ -8,7 +8,6 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { useWindowResizeObserver } from '../../hooks/useResizeObserver/useWindowResizeObserver';
 import { useStateWithPrev } from '../../hooks/useStateWithPrev';
 import { millisecondsInSecond } from '../../lib/date';
-import { useDOM } from '../../lib/dom';
 import { animationVisibilityDelayStyles } from '../../styles/animationVisibilityDelay';
 import type { CSSCustomProperties, HTMLAttributesWithRootRef } from '../../types';
 import { RootComponent } from '../RootComponent/RootComponent';
