@@ -1,4 +1,4 @@
-import type * as React from 'react';
+import * as React from 'react';
 import { act } from 'react';
 import {
   type EventType,

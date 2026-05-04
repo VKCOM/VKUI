@@ -15,7 +15,7 @@ type WriteBarTextareaProps = RootComponentProps<HTMLTextAreaElement> & {
   /**
    * Вызывается при смене высоты поля ввода.
    */
-  onHeightChange?: VoidFunction;
+  onHeightChange?: VoidFunction | undefined;
 };
 
 export const WriteBarTextarea = ({
