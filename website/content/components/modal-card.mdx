@@ -15,26 +15,26 @@ description: Компонент реализующий модальную кар
 
 ```jsx
 <PlatformProvider value="vkcom">
-<ModalCard
-  open
-  onClose={() => {}}
-  icon={<Icon56NotificationOutline />}
-  disableModalOverlay
-  title="Приложение запрашивает разрешение на отправку Вам уведомлений"
-  actions={
-    <React.Fragment>
-      <Spacing size={16} />
-      <ButtonGroup gap="m" stretched>
-        <Button key="deny" size="l" mode="secondary" stretched>
-          Запретить
-        </Button>
-        <Button key="allow" size="l" mode="primary" stretched>
-          Разрешить
-        </Button>
-      </ButtonGroup>
-    </React.Fragment>
-  }
-/>
+  <ModalCard
+    open
+    onClose={() => {}}
+    icon={<Icon56NotificationOutline />}
+    disableModalOverlay
+    title="Приложение запрашивает разрешение на отправку Вам уведомлений"
+    actions={
+      <React.Fragment>
+        <Spacing size={16} />
+        <ButtonGroup gap="m" stretched>
+          <Button key="deny" size="l" mode="secondary" stretched>
+            Запретить
+          </Button>
+          <Button key="allow" size="l" mode="primary" stretched>
+            Разрешить
+          </Button>
+        </ButtonGroup>
+      </React.Fragment>
+    }
+  />
 </PlatformProvider>
 ```
 

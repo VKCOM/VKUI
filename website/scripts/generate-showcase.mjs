@@ -85,7 +85,6 @@ function extractHeading(body) {
   if (!match) {
     return null;
   }
-  // Убираем тег `[tag:...]` и markdown-обёртки (`~`, `**`, `*`, `_`).
   return match[1]
     .split('[')[0]
     .replace(/[~*_]+/g, '')
@@ -112,14 +111,6 @@ function slugFromPath(filePath) {
   return relative.replace(/\\/g, '/').replace(/\.mdx$/, '');
 }
 
-/**
- * Извлекает первый Playground-блок и его JSX-код.
- * Регулярка устроена так, чтобы:
- *  - захватить опциональное описание `{/* @example-description: ... *\/}` перед открывающим тегом;
- *  - корректно обработать теги с многострочными атрибутами (`<Playground\n  prop=...>`)
- *    через `[\\s\\S]*?` вместо `[^>]`;
- *  - вытащить только jsx-блок (`\`\`\`jsx ... \`\`\``).
- */
 function extractFirstPlayground(body) {
   const regex =
     /<Playground\b([\s\S]*?)>\s*```jsx[^\n]*\r?\n([\s\S]*?)\r?\n\s*```\s*<\/Playground>/;
@@ -186,9 +177,6 @@ export function generateShowcaseData() {
       continue;
     }
 
-    // Описание компонента берём из frontmatter — оно описывает компонент в целом.
-    // Описание из `@example-description` относится к конкретному примеру и менее
-    // полезно в карточке витрины.
     const description = (data.description || '').replace(/\s+/g, ' ').trim();
 
     items.push({
@@ -202,7 +190,6 @@ export function generateShowcaseData() {
     });
   }
 
-  // Сортируем по имени для стабильного вывода.
   items.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
 
   const groups = GROUP_ORDER.map((groupKey) => ({
