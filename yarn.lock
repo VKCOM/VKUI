@@ -5219,7 +5219,7 @@ __metadata:
     jsdom: "npm:^29.1.1"
     lint-staged: "npm:^16.4.0"
     mini-css-extract-plugin: "npm:^2.10.2"
-    postcss: "npm:^8.5.12"
+    postcss: "npm:^8.5.13"
     postcss-cli: "npm:^11.0.1"
     postcss-custom-media: "npm:^12.0.1"
     postcss-import: "npm:^16.1.1"
@@ -14835,7 +14835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.12, postcss@npm:^8.5.3, postcss@npm:^8.5.8":
+"postcss@npm:^8.0.0, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.3, postcss@npm:^8.5.8":
   version: 8.5.12
   resolution: "postcss@npm:8.5.12"
   dependencies:
