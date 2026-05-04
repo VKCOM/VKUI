@@ -506,7 +506,8 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
       selectElRef.current?.dispatchEvent(event);
     }
-  }, [nativeSelectValue, allowClearButton, filteredOptions, selectElRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nativeSelectValue]);
 
   const openedClassNames = React.useMemo(
     () =>

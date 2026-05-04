@@ -4,6 +4,7 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useLatestRef } from '../../hooks/useLatestRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
@@ -88,6 +89,7 @@ export const CarouselBase = ({
 
   const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
+  const childrenRef = useLatestRef(children);
   const layerRef = React.useRef<HTMLDivElement>(null);
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
   const shiftXCurrentRef = React.useRef<number>(0);
@@ -245,7 +247,7 @@ export const CarouselBase = ({
     };
 
     let localSlides =
-      React.Children.map(children, (_item, i): GallerySlidesState => {
+      React.Children.map(childrenRef.current, (_item, i): GallerySlidesState => {
         const elem = slidesStore.current[i];
         if (!elem) {
           return { coordX: 0, width: 0 };
@@ -362,7 +364,7 @@ export const CarouselBase = ({
     animationInQueue,
     calculateCanSlideLeft,
     calculateCanSlideRight,
-    children,
+    childrenRef,
     dragDisabled,
     isCenterAlign,
     isRtl,
