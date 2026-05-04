@@ -13,6 +13,7 @@ import {
   transformCode,
 } from './previewShared';
 import styles from './ShowcaseCard.module.css';
+import playgroundStyles from "@/components/mdx/Playground/PlaygroundPreview/PlaygroundPreview.module.css";
 
 function PreviewBody({ Wrapper }: { Wrapper: React.ComponentType<React.PropsWithChildren> }) {
   const { error } = React.useContext(LiveContext);
@@ -50,9 +51,9 @@ export function InlinePreview({ code, direction, wrapper }: PreviewRendererProps
       blockSize={STAGE_HEIGHT}
       overflow="hidden"
       className={classNames(
-        styles.stage,
+        playgroundStyles.previewBackground,
+        colorScheme === 'dark' && playgroundStyles.previewBackgroundDark,
         styles.inheritBorderRadius,
-        colorScheme === 'dark' && styles.stageDark,
       )}
       inert
     >

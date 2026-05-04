@@ -24,6 +24,7 @@ import {
   transformCode,
 } from './previewShared';
 import styles from './ShowcaseCard.module.css';
+import playgroundStyles from "@/components/mdx/Playground/PlaygroundPreview/PlaygroundPreview.module.css";
 
 const IFRAME_SIZE = 500;
 
@@ -181,9 +182,9 @@ export function IframePreview({ code, direction, wrapper }: PreviewRendererProps
       marginBlockStart={3}
       overflow="hidden"
       className={classNames(
-        styles.stage,
+        playgroundStyles.previewBackground,
+        colorScheme === 'dark' && playgroundStyles.previewBackgroundDark,
         styles.inheritBorderRadius,
-        colorScheme === 'dark' && styles.stageDark,
       )}
       inert
     >
