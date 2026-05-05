@@ -40,11 +40,8 @@ export const ShowcaseCard = React.memo(function ShowcaseCard({ item }: ShowcaseC
     >
       <Flex
         direction="column"
-        flexGrow={0}
-        flexShrink={0}
-        flexBasis={250}
-        minInlineSize={250}
-        maxInlineSize={250}
+        inlineSize="100%"
+        blockSize="100%"
         padding="s"
         overflow="hidden"
         className={styles.inheritBorderRadius}

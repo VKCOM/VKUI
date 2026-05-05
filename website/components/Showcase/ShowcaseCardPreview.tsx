@@ -4,15 +4,11 @@ import * as React from 'react';
 import { Box, classNames, Flex, PanelSpinner, useColorScheme } from '@vkontakte/vkui';
 import { useMounted } from 'nextra/hooks';
 import { useFitScale } from '@/components/Showcase/useFitScale';
-import {
-  ISOLATED_PREVIEW_SLUGS,
-  resolveWrapper,
-  STAGE_HEIGHT,
-} from './previewShared';
+import playgroundStyles from '@/components/mdx/Playground/PlaygroundPreview/PlaygroundPreview.module.css';
 import { IframePreviewContent } from './IframePreview';
 import { InlinePreviewContent } from './InlinePreview';
+import { ISOLATED_PREVIEW_SLUGS, resolveWrapper, STAGE_HEIGHT } from './previewShared';
 import styles from './ShowcaseCard.module.css';
-import playgroundStyles from '@/components/mdx/Playground/PlaygroundPreview/PlaygroundPreview.module.css';
 
 export interface ShowcaseCardPreviewProps {
   slug: string;
