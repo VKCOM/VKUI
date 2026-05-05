@@ -1,19 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { Box, classNames, Flex, PanelSpinner, useColorScheme } from '@vkontakte/vkui';
-import { useMounted } from 'nextra/hooks';
+import { Flex } from '@vkontakte/vkui';
 import { LiveContext, LiveError, LivePreview, LiveProvider } from 'react-live';
-import { useFitScale } from '@/components/Showcase/useFitScale';
 import { scope } from '@/components/mdx/Playground/scope';
-import {
-  type PreviewRendererProps,
-  resolveWrapper,
-  STAGE_HEIGHT,
-  transformCode,
-} from './previewShared';
-import styles from './ShowcaseCard.module.css';
-import playgroundStyles from "@/components/mdx/Playground/PlaygroundPreview/PlaygroundPreview.module.css";
+import { transformCode } from './previewShared';
 
 function PreviewBody({ Wrapper }: { Wrapper: React.ComponentType<React.PropsWithChildren> }) {
   const { error } = React.useContext(LiveContext);
@@ -28,55 +19,23 @@ function PreviewBody({ Wrapper }: { Wrapper: React.ComponentType<React.PropsWith
   );
 }
 
-export function InlinePreview({ code, direction, wrapper }: PreviewRendererProps) {
-  const stageRef = React.useRef<HTMLDivElement | null>(null);
-  const measureRef = React.useRef<HTMLDivElement | null>(null);
-  const mounted = useMounted();
-  const colorScheme = useColorScheme();
+export interface InlinePreviewContentProps {
+  contentRef: React.RefObject<HTMLElement | null>;
+  code: string;
+  Wrapper: React.ComponentType<React.PropsWithChildren>;
+}
 
-  const scale = useFitScale(stageRef, measureRef, {
-    minScale: 0.1,
-    maxScale: 1,
-    enabled: mounted,
-  });
-
-  const Wrapper = React.useMemo(() => resolveWrapper(wrapper, direction), [wrapper, direction]);
-
-  const style: Record<`--${string}`, string> = { '--showcase-scale': String(scale) };
-
+export function InlinePreviewContent({ contentRef, code, Wrapper }: InlinePreviewContentProps) {
   return (
-    <Box
-      getRootRef={stageRef}
-      position="relative"
-      blockSize={STAGE_HEIGHT}
-      overflow="hidden"
-      className={classNames(
-        playgroundStyles.previewBackground,
-        colorScheme === 'dark' && playgroundStyles.previewBackgroundDark,
-        styles.inheritBorderRadius,
-      )}
-      inert
+    <Flex
+      getRootRef={contentRef as React.RefObject<HTMLDivElement>}
+      direction="column"
+      justify="center"
+      minBlockSize={160}
     >
-      {!mounted ? (
-        <Flex align="center" justify="center">
-          <PanelSpinner visibilityDelay={250} />
-        </Flex>
-      ) : (
-        <Box
-          position="absolute"
-          insetBlockStart="50%"
-          insetInlineStart="50%"
-          minInlineSize="100%"
-          className={styles.scene}
-          style={style}
-        >
-          <Flex getRootRef={measureRef} direction="column" justify="center" minBlockSize={160}>
-            <LiveProvider code={code} scope={scope} transformCode={transformCode}>
-              <PreviewBody Wrapper={Wrapper} />
-            </LiveProvider>
-          </Flex>
-        </Box>
-      )}
-    </Box>
+      <LiveProvider code={code} scope={scope} transformCode={transformCode}>
+        <PreviewBody Wrapper={Wrapper} />
+      </LiveProvider>
+    </Flex>
   );
 }

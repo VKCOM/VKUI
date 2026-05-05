@@ -2,29 +2,12 @@
 
 import * as React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
-import {
-  AppRoot,
-  Box,
-  classNames,
-  ConfigProvider,
-  DOMContext,
-  Flex,
-  PanelSpinner,
-  useColorScheme,
-} from '@vkontakte/vkui';
+import { AppRoot, ConfigProvider, DOMContext } from '@vkontakte/vkui';
 import type { ColorSchemeType } from '@vkontakte/vkui';
-import { useMounted } from 'nextra/hooks';
 import { LiveContext, LiveError, LivePreview, LiveProvider } from 'react-live';
-import { useFitScale } from '@/components/Showcase/useFitScale';
 import { scope } from '@/components/mdx/Playground/scope';
-import {
-  type PreviewRendererProps,
-  resolveWrapper,
-  STAGE_HEIGHT,
-  transformCode,
-} from './previewShared';
+import { transformCode } from './previewShared';
 import styles from './ShowcaseCard.module.css';
-import playgroundStyles from "@/components/mdx/Playground/PlaygroundPreview/PlaygroundPreview.module.css";
 
 const IFRAME_SIZE = 500;
 
@@ -87,27 +70,28 @@ function copyStylesInto(targetDoc: Document): void {
   });
 }
 
-export function IframePreview({ code, direction, wrapper }: PreviewRendererProps) {
-  const stageRef = React.useRef<HTMLDivElement | null>(null);
-  const iframeRef = React.useRef<HTMLIFrameElement | null>(null);
+export interface IframePreviewContentProps {
+  contentRef: React.RefObject<HTMLElement | null>;
+  code: string;
+  colorScheme: ColorSchemeType;
+  Wrapper: React.ComponentType<React.PropsWithChildren>;
+  mounted: boolean;
+}
+
+export function IframePreviewContent({
+  contentRef,
+  code,
+  colorScheme,
+  Wrapper,
+  mounted,
+}: IframePreviewContentProps) {
   const reactRootRef = React.useRef<Root | null>(null);
-
-  const mounted = useMounted();
-  const colorScheme = useColorScheme();
-
-  const scale = useFitScale(stageRef, iframeRef, {
-    minScale: 0.1,
-    maxScale: 1,
-    enabled: mounted,
-  });
-
-  const Wrapper = React.useMemo(() => resolveWrapper(wrapper, direction), [wrapper, direction]);
 
   React.useEffect(() => {
     if (!mounted) {
       return;
     }
-    const iframe = iframeRef.current;
+    const iframe = contentRef.current as HTMLIFrameElement | null;
     if (!iframe) {
       return;
     }
@@ -142,8 +126,8 @@ export function IframePreview({ code, direction, wrapper }: PreviewRendererProps
 
   React.useEffect(() => {
     const root = reactRootRef.current;
-    const iframe = iframeRef.current;
-    const doc = iframeRef.current?.contentDocument;
+    const iframe = contentRef.current as HTMLIFrameElement | null;
+    const doc = iframe?.contentDocument;
     const win = doc?.defaultView;
     if (!mounted || !root || !iframe || !doc || !win) {
       return;
@@ -171,46 +155,15 @@ export function IframePreview({ code, direction, wrapper }: PreviewRendererProps
     };
   }, []);
 
-  const style: Record<`--${string}`, string> = { '--showcase-scale': String(scale) };
-
   return (
-    <Box
-      getRootRef={stageRef}
-      position="relative"
-      blockSize={STAGE_HEIGHT}
-      marginInline={3}
-      marginBlockStart={3}
-      overflow="hidden"
-      className={classNames(
-        playgroundStyles.previewBackground,
-        colorScheme === 'dark' && playgroundStyles.previewBackgroundDark,
-        styles.inheritBorderRadius,
-      )}
-      inert
-    >
-      {!mounted ? (
-        <Flex align="center" justify="center" inlineSize="100%" blockSize="100%">
-          <PanelSpinner visibilityDelay={250} />
-        </Flex>
-      ) : (
-        <Box
-          position="absolute"
-          insetInlineStart="50%"
-          insetBlockStart="50%"
-          className={styles.scene}
-          style={style}
-        >
-          <iframe
-            ref={iframeRef}
-            width={IFRAME_SIZE}
-            height={IFRAME_SIZE}
-            tabIndex={-1}
-            aria-hidden="true"
-            title="Превью компонента"
-            className={styles.iframe}
-          />
-        </Box>
-      )}
-    </Box>
+    <iframe
+      ref={contentRef as React.Ref<HTMLIFrameElement>}
+      width={IFRAME_SIZE}
+      height={IFRAME_SIZE}
+      tabIndex={-1}
+      aria-hidden="true"
+      title="Превью компонента"
+      className={styles.iframe}
+    />
   );
 }
