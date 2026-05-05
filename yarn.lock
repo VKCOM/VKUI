@@ -5280,6 +5280,7 @@ __metadata:
     "@vkontakte/vkui-floating-ui": "npm:^0.2.8"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    size-limit: "npm:^12.1.0"
     typescript: "npm:^6.0.3"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0

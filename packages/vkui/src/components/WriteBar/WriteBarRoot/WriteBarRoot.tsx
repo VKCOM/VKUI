@@ -2,26 +2,29 @@
 
 import { classNames } from '@vkontakte/vkjs';
 import { usePlatform } from '../../../hooks/usePlatform';
-import { RootComponent, type RootComponentProps } from '../../RootComponent/RootComponent';
+import { Flex, type FlexProps } from '../../Flex/Flex';
 import { WriteBarRootBeforeOrAfter } from './WriteBarRootBeforeOrAfter/WriteBarRootBeforeOrAfter';
 import styles from './WriteBarRoot.module.css';
 
-type WriteBarRootProps = RootComponentProps<HTMLDivElement> & {
+type WriteBarRootProps = FlexProps & {
   /**
    * Добавляет тень вокруг поля ввода.
    */
   shadow?: boolean;
 };
 
-export const WriteBarRoot = ({ shadow, ...restProps }: WriteBarRootProps) => {
+export const WriteBarRoot = ({ shadow, className, ...restProps }: WriteBarRootProps) => {
   const platform = usePlatform();
 
   return (
-    <RootComponent
-      baseClassName={classNames(
+    <Flex
+      align="end"
+      minBlockSize={52}
+      className={classNames(
         styles.host,
         platform === 'ios' && styles.ios,
         shadow && styles.shadow,
+        className,
       )}
       {...restProps}
     />

@@ -1,6 +1,5 @@
 .host {
   position: relative;
-  display: flex;
   flex: 1;
   min-inline-size: 0;
 }

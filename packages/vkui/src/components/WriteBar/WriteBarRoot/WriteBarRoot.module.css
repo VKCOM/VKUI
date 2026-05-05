@@ -1,7 +1,4 @@
 .host {
-  display: flex;
-  align-items: flex-end;
-  min-block-size: 52px;
   background: var(--vkui--color_background_contrast_themed);
 }
 

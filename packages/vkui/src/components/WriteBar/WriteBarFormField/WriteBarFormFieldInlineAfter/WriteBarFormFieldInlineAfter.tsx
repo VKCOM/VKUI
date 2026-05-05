@@ -1,18 +1,22 @@
 'use client';
 
 import { classNames } from '@vkontakte/vkjs';
+import { Flex, type FlexProps } from '../../../../components/Flex/Flex';
 import { usePlatform } from '../../../../hooks/usePlatform';
-import { RootComponent, type RootComponentProps } from '../../../RootComponent/RootComponent';
 import styles from './WriteBarFormFieldInlineAfter.module.css';
 
-type WriteBarFormFieldInlineAfterProps = RootComponentProps<HTMLDivElement>;
+type WriteBarFormFieldInlineAfterProps = FlexProps;
 
-export const WriteBarFormFieldInlineAfter = (restProps: WriteBarFormFieldInlineAfterProps) => {
+export const WriteBarFormFieldInlineAfter = ({
+  className,
+  ...restProps
+}: WriteBarFormFieldInlineAfterProps) => {
   const platform = usePlatform();
 
   return (
-    <RootComponent
-      baseClassName={classNames(styles.host, platform === 'ios' && styles.ios)}
+    <Flex
+      align="end"
+      className={classNames(platform === 'ios' && styles.ios, className)}
       {...restProps}
     />
   );

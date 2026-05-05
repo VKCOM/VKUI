@@ -1,18 +1,19 @@
 'use client';
 
 import { classNames } from '@vkontakte/vkjs';
+import { Flex, type FlexProps } from '../../../../components/Flex/Flex';
 import { usePlatform } from '../../../../hooks/usePlatform';
-import { RootComponent, type RootComponentProps } from '../../../RootComponent/RootComponent';
 import styles from './WriteBarRootBeforeOrAfter.module.css';
 
-type WriteBarRootBeforeProps = RootComponentProps<HTMLDivElement>;
+type WriteBarRootBeforeProps = FlexProps;
 
-export const WriteBarRootBeforeOrAfter = (restProps: WriteBarRootBeforeProps) => {
+export const WriteBarRootBeforeOrAfter = ({ className, ...restProps }: WriteBarRootBeforeProps) => {
   const platform = usePlatform();
 
   return (
-    <RootComponent
-      baseClassName={classNames(styles.host, platform === 'ios' && styles.ios)}
+    <Flex
+      align="end"
+      className={classNames(styles.host, platform === 'ios' && styles.ios, className)}
       {...restProps}
     />
   );
