@@ -73,6 +73,26 @@ tags: layout
 
 Компонент позволяет обрабатывать событие `scroll`, возникающее при прокрутке контента, через свойство `onScroll`.
 
+## CustomScrollView.Tint
+
+Подкомпонент, который добавляет тени к краям прокручиваемой области.
+
+<Playground style={{ height: 150 }}>
+  ```jsx
+  <CustomScrollView.Tint tintColor="var(--vkui--color_background)">
+    {(props) => (
+      <CustomScrollView {...props}>
+        {["Say", "Hello", "To", "My", "Little", "Friend"].map((item) => (
+          <Cell key={item} before={<Avatar />}>
+            {item}
+          </Cell>
+        ))}
+      </CustomScrollView>
+    )}
+  </CustomScrollView.Tint>
+  ```
+</Playground>
+
 ## Свойства и методы [#api]
 
 <PropsTable name="CustomScrollView" />
