@@ -1,7 +1,6 @@
 'use client';
 
 import { Flex, Title } from '@vkontakte/vkui';
-// @ts-expect-error: TS2307 до сборки сайта этого файлика нет
 import showcaseData from '@/generated/showcase-data.json';
 import { ShowcaseCard } from './ShowcaseCard';
 import type { ShowcaseData } from './types';
