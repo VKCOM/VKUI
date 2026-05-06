@@ -2,12 +2,13 @@
 
 import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
+import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useFocusVisible } from '../../hooks/useFocusVisible';
 import { useFocusVisibleClassName } from '../../hooks/useFocusVisibleClassName';
+import { useLocale } from '../../hooks/useLocale';
 import { cacheDateTimeFormat } from '../../lib/intlCache';
 import { mergeCalls } from '../../lib/mergeCalls';
 import { defineComponentDisplayNames } from '../../lib/react/defineComponentDisplayNames';
-import { useConfigProvider } from '../ConfigProvider/ConfigProviderContext';
 import { Tappable } from '../Tappable/Tappable';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';
 import styles from './CalendarDay.module.css';
@@ -140,7 +141,8 @@ export const CalendarDay = React.memo(
     'aria-colindex': colIndex,
     ...restProps
   }: CalendarDayProps) => {
-    const { locale, direction } = useConfigProvider();
+    const locale = useLocale();
+    const direction = useConfigDirection();
     const ref = React.useRef<HTMLElement>(null);
     const onClick = React.useCallback(() => onChange(day), [day, onChange]);
     const handleEnter = React.useCallback(() => onEnter?.(day), [day, onEnter]);

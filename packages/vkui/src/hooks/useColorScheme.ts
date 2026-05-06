@@ -1,8 +1,7 @@
-import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
+import * as React from 'react';
+import { ColorSchemeContext } from '../components/ConfigProvider/ConfigProviderSubContexts';
 import { type ColorSchemeType, DEFAULT_COLOR_SCHEME } from '../lib/colorScheme';
 
 export function useColorScheme(): ColorSchemeType {
-  const { colorScheme } = useConfigProvider();
-
-  return colorScheme ?? DEFAULT_COLOR_SCHEME;
+  return React.useContext(ColorSchemeContext) ?? DEFAULT_COLOR_SCHEME;
 }
