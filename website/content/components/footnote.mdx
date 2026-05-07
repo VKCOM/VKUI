@@ -1,0 +1,41 @@
+---
+description: Компонент для отображения подписей и вспомогательного текста — подсказок, пояснений к форме, мелких аннотаций под основным контентом.
+---
+
+<Overview group="typography" forcedName="Typography-Footnote" forcedPath="components/Typography/Footnote/Footnote.tsx">
+
+# Footnote [tag:component]
+
+Компонент для отображения подписей и вспомогательного текста — подсказок, пояснений к форме,
+мелких аннотаций под основным контентом.
+
+</Overview>
+
+{/* @example-description: Базовое использование компонента `Footnote`. */}
+<Playground>
+  ```jsx
+  <Footnote>Дополнительная подпись к элементу</Footnote>
+  ```
+</Playground>
+
+## Базовые свойства
+
+Компонент поддерживает все [базовые свойства типографики](/components/typography#base-props):
+`weight`, `useAccentWeight`, `normalize`, `Component`, `inline`, `align`.
+
+## Уникальные свойства
+
+### caps
+
+Трансформирует все буквы в заглавные (`text-transform: uppercase`). Удобно для меток и аббревиатур.
+
+{/* @example-description: Использование `caps` в `Footnote` для отображения текста в верхнем регистре. */}
+<Playground>
+  ```jsx
+  <Footnote caps>Подпись в верхнем регистре</Footnote>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Typography/Footnote/Footnote" />

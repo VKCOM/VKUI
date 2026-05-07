@@ -1,0 +1,47 @@
+---
+description: Компонент для отображения основного текста. В отличие от Text предназначен для более длинных текстовых блоков — абзацев и описаний.
+---
+
+<Overview group="typography" forcedName="Typography-Paragraph" forcedPath="components/Typography/Paragraph/Paragraph.tsx">
+
+# Paragraph [tag:component]
+
+Компонент для отображения основного текста. В отличие от [`Text`](/components/text-typography),
+предназначен для более длинных текстовых блоков — абзацев и описаний.
+
+</Overview>
+
+{/* @example-description: Базовое использование компонента `Paragraph`. */}
+<Playground>
+  ```jsx
+  <Paragraph>
+    Основной текст абзаца. Используйте этот компонент для длинных описаний и многострочного контента.
+  </Paragraph>
+  ```
+</Playground>
+
+## Базовые свойства
+
+Компонент поддерживает все [базовые свойства типографики](/components/typography#base-props):
+`weight`, `useAccentWeight`, `normalize`, `Component`, `inline`, `align`.
+
+## Особенности
+
+### normalize по умолчанию false
+
+В отличие от остальных типографических компонентов, у `Paragraph` свойство `normalize` по умолчанию
+равно `false`. Это означает, что браузерные отступы тега `<p>` сохраняются при использовании
+`Component="p"`. Для сброса отступов передайте `normalize` явно:
+
+{/* @example-description: Явное использование `normalize` в `Paragraph` для сброса браузерных отступов тега `p`. */}
+<Playground>
+  ```jsx
+  <Paragraph Component="p" normalize>
+    Текст без браузерных отступов тега &lt;p&gt;
+  </Paragraph>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Typography/Paragraph/Paragraph" />

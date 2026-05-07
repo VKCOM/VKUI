@@ -13,6 +13,8 @@ const OUT_COMPONENTS_DIR = path.join(OUT_DIR, 'components');
 const OUT_HOOKS_DIR = path.join(OUT_DIR, 'hooks');
 const OUT_EXAMPLES_DIR = path.join(OUT_DIR, 'examples');
 
+const IGNORED_FILES = new Set(['typography.mdx']);
+
 function isHook(slug) {
   const base = slug.split('/').pop() || slug;
   return base.startsWith('use-');
@@ -39,7 +41,7 @@ function collectMdxFiles(dirPath) {
       results.push(...collectMdxFiles(fullPath));
       continue;
     }
-    if (entry.isFile() && entry.name.endsWith('.mdx')) {
+    if (entry.isFile() && entry.name.endsWith('.mdx') && !IGNORED_FILES.has(entry.name)) {
       results.push(fullPath);
     }
   }

@@ -1,0 +1,47 @@
+---
+description: Компонент для отображения крупных заголовков. Используется для акцентных надписей на экране — обложек, вводных экранов и других сценариев, где требуется максимально крупный текст.
+---
+
+<Overview group="typography" forcedName="Typography-DisplayTitle" forcedPath="components/Typography/DisplayTitle/DisplayTitle.tsx">
+
+# DisplayTitle [tag:component]
+
+Компонент для отображения крупных заголовков. Используется для акцентных надписей на экране —
+обложек, вводных экранов и других сценариев, где требуется максимально крупный текст.
+
+</Overview>
+
+{/* @example-description: Крупный заголовок `DisplayTitle` уровня 1 по умолчанию. */}
+<Playground>
+  ```jsx
+  <DisplayTitle>Крупный заголовок</DisplayTitle>
+  ```
+</Playground>
+
+## Базовые свойства
+
+Компонент поддерживает все [базовые свойства типографики](/components/typography#base-props):
+`weight`, `useAccentWeight`, `normalize`, `Component`, `inline`, `align`.
+
+## Уникальные свойства
+
+### level
+
+Определяет иерархический уровень заголовка. Доступны значения `'1' | '2' | '3' | '4'`, где `'1'` — самый крупный вариант.
+По умолчанию `level="1"`.
+
+{/* @example-description: Все четыре уровня DisplayTitle для сравнения размеров. */}
+<Playground>
+  ```jsx
+  <Flex direction="column">
+    <DisplayTitle level="1">DisplayTitle уровень 1</DisplayTitle>
+    <DisplayTitle level="2">DisplayTitle уровень 2</DisplayTitle>
+    <DisplayTitle level="3">DisplayTitle уровень 3</DisplayTitle>
+    <DisplayTitle level="4">DisplayTitle уровень 4</DisplayTitle>
+  </Flex>
+  ```
+</Playground>
+
+## Свойства и методы [#api]
+
+<PropsTable name="Typography/DisplayTitle/DisplayTitle" />
