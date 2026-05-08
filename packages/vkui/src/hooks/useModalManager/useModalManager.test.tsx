@@ -21,7 +21,7 @@ const Fixture = ({
   const [api, contextHolder] = useModalManager({ saveHistory });
   useIsomorphicLayoutEffect(() => {
     setApi(api);
-  }, []);
+  }, [api, setApi]);
   return <>{contextHolder}</>;
 };
 

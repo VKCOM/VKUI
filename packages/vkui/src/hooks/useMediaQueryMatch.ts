@@ -28,7 +28,7 @@ export function useMediaQueryMatches(
     };
     match.addEventListener('change', handleMediaQueryChange);
     return () => match.removeEventListener('change', handleMediaQueryChange);
-  }, [media, window]);
+  }, [disable, media, window]);
 
   return matches;
 }
