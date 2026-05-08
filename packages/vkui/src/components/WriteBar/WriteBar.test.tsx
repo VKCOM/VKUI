@@ -8,14 +8,24 @@ import { WriteBar, type WriteBarProps } from './WriteBar';
 const getInput = () => screen.getByRole('textbox');
 
 describe('WriteBar', () => {
-  baselineComponent((props: WriteBarProps) => (
+  const RawComponent = (props: WriteBarProps) => (
     <>
       <VisuallyHidden id="writebar" Component="label">
         WriteBar
       </VisuallyHidden>
-      <WriteBar slotProps={{ textArea: { 'aria-labelledby': 'writebar' } }} {...props} />
+      <WriteBar
+        shadow
+        before="before"
+        inlineAfter="inlineAfter"
+        after="after"
+        slotProps={{ textArea: { 'aria-labelledby': 'writebar' } }}
+        {...props}
+      />
     </>
-  ));
+  );
+
+  baselineComponent(RawComponent);
+  baselineComponent(RawComponent, { platform: 'ios' }, 'baseline-ios');
 
   it('should work with slotProps', () => {
     const rootRef1 = createRef<HTMLDivElement>();
@@ -118,6 +128,31 @@ describe('WriteBar', () => {
       expect(getInput()).toHaveValue('defuser');
       screen.getByTestId<HTMLFormElement>('form').reset();
       expect(getInput()).toHaveValue('def');
+    });
+  });
+
+  describe('deprecation warnings', () => {
+    let warnSpy: ReturnType<typeof vi.spyOn>;
+
+    beforeEach(() => {
+      vi.stubEnv('NODE_ENV', 'development');
+      warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => void 0);
+    });
+
+    afterEach(() => {
+      warnSpy.mockClear();
+      vi.unstubAllEnvs();
+    });
+
+    afterAll(() => {
+      warnSpy.mockRestore();
+    });
+
+    it('warns when mode="cancel" is used', () => {
+      render(<WriteBar getRef={noop} />);
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+      const callArgs = warnSpy.mock.calls[0];
+      expect(callArgs[0]).toContain('getRef');
     });
   });
 });
