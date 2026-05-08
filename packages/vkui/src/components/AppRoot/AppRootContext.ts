@@ -9,7 +9,6 @@ export interface AppRootContextInterface {
   safeAreaInsets?: SafeAreaInsets | undefined;
   embedded: boolean;
   mode: 'partial' | 'embedded' | 'full';
-  keyboardInput: boolean;
   disablePortal: boolean;
   layout?: 'card' | 'plain' | undefined;
   userSelectMode?: AppRootUserSelectMode | undefined;
@@ -26,7 +25,6 @@ export const DEFAULT_APP_ROOT_CONTEXT_VALUE: AppRootContextInterface = {
   portalRoot: null,
   safeAreaInsets: undefined,
   embedded: false,
-  keyboardInput: false,
   disablePortal: false,
 };
 
