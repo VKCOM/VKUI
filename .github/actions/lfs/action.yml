@@ -1,6 +1,10 @@
 name: Workflow / Checkout LFS objects
 description: Get lfs from cache
 
+inputs:
+  apt_mirror:
+    description: apt mirror
+
 runs:
   using: composite
   steps:
@@ -8,6 +12,15 @@ runs:
     - name: Set safe directory
       shell: bash
       run: git config --global --add safe.directory /__w/VKUI/VKUI
+
+
+    - name: Configure apt mirror
+      if: ${{ inputs.apt_mirror }}
+      shell: bash
+      run: |
+        sed -i "s|http://archive.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        sed -i "s|http://security.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        apt-get update
 
     # см. https://github.com/microsoft/playwright/issues/21920
     - name: Install git lfs
