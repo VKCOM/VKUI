@@ -1,19 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { classNames, hasReactNode } from '@vkontakte/vkjs';
-import { useExternRef } from '../../hooks/useExternRef';
+import { hasReactNode } from '@vkontakte/vkjs';
 import { useMergeProps } from '../../hooks/useMergeProps';
-import { usePlatform } from '../../hooks/usePlatform';
-import { callMultiple } from '../../lib/callMultiple';
 import { warnOnce } from '../../lib/warnOnce';
 import type { HasDataAttribute, HasRootRef } from '../../types';
-import { RootComponent } from '../RootComponent/RootComponent';
-import { useResizeTextarea } from '../Textarea/useResizeTextarea';
-import { Headline } from '../Typography/Headline/Headline';
-import { Title } from '../Typography/Title/Title';
-import type { TypographyProps } from '../Typography/Typography';
-import styles from './WriteBar.module.css';
+import { WriteBarFormField } from './WriteBarFormField/WriteBarFormField';
+import { WriteBarFormFieldInlineAfter } from './WriteBarFormField/WriteBarFormFieldInlineAfter/WriteBarFormFieldInlineAfter';
+import { WriteBarRoot } from './WriteBarRoot/WriteBarRoot';
+import { WriteBarTextarea } from './WriteBarTextarea/WriteBarTextarea';
 
 const warn = warnOnce('WriteBar');
 
@@ -91,16 +86,6 @@ export interface WriteBarProps
   children?: never | undefined;
 }
 
-const WriteBarTypography = (props: TypographyProps) => {
-  const platform = usePlatform();
-
-  if (platform === 'ios') {
-    return <Title {...props} level="3" weight="3" />;
-  }
-
-  return <Headline weight="3" {...props} />;
-};
-
 /**
  * @see https://vkui.io/components/write-bar
  */
@@ -130,7 +115,7 @@ export const WriteBar = ({
   wrap,
   rows,
   form,
-  onChange: onChangeProp,
+  onChange,
   onFocus,
   onBlur,
   id,
@@ -148,17 +133,10 @@ export const WriteBar = ({
     warn('Свойство `getRef` устаревшее, используйте `slotProps={ textArea: { getRootRef: ... } }`');
   }
 
-  const platform = usePlatform();
-
   const rootProps = useMergeProps(restProps, slotProps?.root);
 
-  const {
-    onChange,
-    getRootRef: getTextAreaRef,
-    ...textAreaRest
-  } = useMergeProps(
+  const textAreaRest = useMergeProps(
     {
-      className: styles.textarea,
       getRootRef: getRef,
       autoComplete,
       autoCapitalize,
@@ -176,7 +154,7 @@ export const WriteBar = ({
       wrap,
       rows,
       form,
-      onChange: onChangeProp,
+      onChange,
       onFocus,
       onBlur,
       id,
@@ -189,35 +167,20 @@ export const WriteBar = ({
     slotProps?.textArea,
   );
 
-  const [refResizeTextarea, resize] = useResizeTextarea(onHeightChange, true);
-  const textareaRef = useExternRef(getTextAreaRef, refResizeTextarea);
-
-  React.useEffect(resize, [resize, platform]);
-
   return (
-    <RootComponent
-      baseClassName={classNames(
-        styles.host,
-        platform === 'ios' && styles.ios,
-        shadow && styles.shadow,
-      )}
-      {...rootProps}
-    >
-      <div className={styles.form}>
-        {hasReactNode(before) && <div className={styles.before}>{before}</div>}
-
-        <div className={styles.formIn}>
-          <WriteBarTypography
-            Component="textarea"
-            onChange={callMultiple(onChange, resize)}
-            getRootRef={textareaRef}
-            {...textAreaRest}
-          />
-          {hasReactNode(inlineAfter) && <div className={styles.inlineAfter}>{inlineAfter}</div>}
-        </div>
-
-        {hasReactNode(after) && <div className={styles.after}>{after}</div>}
-      </div>
-    </RootComponent>
+    <WriteBarRoot shadow={shadow} {...rootProps}>
+      {hasReactNode(before) && <WriteBarRoot.Before>{before}</WriteBarRoot.Before>}
+      <WriteBarFormField>
+        <WriteBarTextarea onHeightChange={onHeightChange} {...textAreaRest} />
+        {hasReactNode(inlineAfter) && (
+          <WriteBarFormFieldInlineAfter>{inlineAfter}</WriteBarFormFieldInlineAfter>
+        )}
+      </WriteBarFormField>
+      {hasReactNode(after) && <WriteBarRoot.After>{after}</WriteBarRoot.After>}
+    </WriteBarRoot>
   );
 };
+
+WriteBar.FormField = WriteBarFormField;
+WriteBar.Textarea = WriteBarTextarea;
+WriteBar.Root = WriteBarRoot;
