@@ -127,7 +127,6 @@ const meta: MetaRecord = {
     type: 'separator',
     title: 'Типографика',
   },
-  'typography': 'Типографика',
   'display-title': 'DisplayTitle',
   'title': 'Title',
   'headline': 'Headline',
