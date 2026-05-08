@@ -7,6 +7,7 @@ import {
   useConfigProvider,
   useConfigProviderContextMemo,
 } from './ConfigProviderContext';
+import { ConfigProviderSubContexts } from './ConfigProviderSubContexts';
 
 export interface ConfigProviderOverrideProps extends Partial<ConfigProviderContextInterface> {
   /**
@@ -28,7 +29,7 @@ export function ConfigProviderOverride({
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      {children}
+      <ConfigProviderSubContexts value={configContext}>{children}</ConfigProviderSubContexts>
     </ConfigProviderContext.Provider>
   );
 }
