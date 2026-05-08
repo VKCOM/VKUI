@@ -49,6 +49,7 @@ jobs:
         uses: ./.github/actions/lfs
         with:
           apt_mirror: ${{ vars.APT_MIRROR }}
+          sudo_cmd: ''
 
       - name: Install rsync && zip
         run: |

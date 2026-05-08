@@ -52,6 +52,7 @@ jobs:
         uses: ./.github/actions/lfs
         with:
           apt_mirror: ${{ vars.APT_MIRROR }}
+          sudo_cmd: ''
 
       - name: Node setup
         uses: ./.github/actions/node-setup

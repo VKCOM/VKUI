@@ -4,6 +4,9 @@ description: Get lfs from cache
 inputs:
   apt_mirror:
     description: apt mirror
+  sudo_cmd:
+    description: Command prefix for privileged operations
+    default: sudo
 
 runs:
   using: composite
@@ -18,9 +21,9 @@ runs:
       if: ${{ inputs.apt_mirror }}
       shell: bash
       run: |
-        sudo sed -i "s|http://archive.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
-        sudo sed -i "s|http://security.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
-        sudo apt-get update
+        ${{ inputs.sudo_cmd }} sed -i "s|http://archive.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        ${{ inputs.sudo_cmd }} sed -i "s|http://security.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        ${{ inputs.sudo_cmd }} apt-get update
 
     # см. https://github.com/microsoft/playwright/issues/21920
     - name: Install git lfs
@@ -29,8 +32,8 @@ runs:
         if git lfs > /dev/null ; then
             echo "git-lfs installed"
         else
-          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-          sudo apt-get install -y git-lfs
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | ${{ inputs.sudo_cmd }} bash
+          ${{ inputs.sudo_cmd }} apt-get install -y git-lfs
         fi
 
     # см. https://github.com/actions/cache/issues/1455
@@ -40,7 +43,7 @@ runs:
         if zstd > /dev/null ; then
             echo "zstd installed"
         else
-          sudo apt-get install -y zstd
+          ${{ inputs.sudo_cmd }} apt-get install -y zstd
         fi
 
     - name: Create LFS file list
