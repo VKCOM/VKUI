@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from 'react';
 import { isKeyboardFocusingStarted } from '../lib/accessibility';
 import { useDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
@@ -14,6 +14,12 @@ const EVENT_OPTIONS = {
 let keyboardInputState = false;
 let mountedTrackers = 0;
 let detachListeners: null | (() => void) = null;
+
+const keyboardFocusingStartedRef: React.RefObject<boolean> = {
+  get current() {
+    return keyboardInputState;
+  },
+};
 
 const setKeyboardInputState = (nextValue: boolean) => {
   if (keyboardInputState !== nextValue) {
@@ -69,13 +75,6 @@ const attachKeyboardInputListeners = (document: Document) => {
 
 export function useKeyboardInputTracker(): React.RefObject<boolean> {
   const { document } = useDOM();
-  const keyboardFocusingStartedRef = React.useMemo((): React.RefObject<boolean> => {
-    return {
-      get current() {
-        return keyboardInputState;
-      },
-    };
-  }, []);
 
   useIsomorphicLayoutEffect(() => {
     /* istanbul ignore if: невозможный кейс, т.к. в SSR эффекты не вызываются. Проверка на будущее, если вдруг эффект будет вызываться. */
