@@ -19,7 +19,7 @@
   padding-block: 8px;
   padding-inline: 0;
   overflow: hidden;
-  background: var(--vkui--color_background_modal);
+  background: var(--vkui--color_icon_accent);
   border-radius: 12px;
   box-shadow: var(--vkui--elevation3);
 }
