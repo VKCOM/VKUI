@@ -30,7 +30,7 @@ runs:
       shell: bash
       run: |
         if git lfs > /dev/null ; then
-            echo "git-lfs installed"
+          echo "git-lfs installed"
         else
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | ${{ inputs.sudo_cmd }} bash
           ${{ inputs.sudo_cmd }} apt-get install -y git-lfs
@@ -41,7 +41,7 @@ runs:
       shell: bash
       run: |
         if zstd > /dev/null ; then
-            echo "zstd installed"
+          echo "zstd installed"
         else
           ${{ inputs.sudo_cmd }} apt-get install -y zstd
         fi
