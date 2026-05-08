@@ -99,6 +99,7 @@ const FetchingStatus = ({
     function updateStatus() {
       if (fetching) {
         setStatus('fetching');
+        return;
       } else {
         let timeoutId: ReturnType<typeof setTimeout>;
         setStatus((prevStatus) => {

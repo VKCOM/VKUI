@@ -14,12 +14,7 @@ export const useGlobalEscKeyDown = (
 ): void => {
   const { document } = useDOM();
 
-  const {
-    capture = true,
-    passive = true,
-    once = false,
-    signal,
-  } = optionsProp;
+  const { capture = true, passive = true, once = false, signal } = optionsProp;
 
   useIsomorphicLayoutEffect(() => {
     if (!document || !init || !callback) {
@@ -34,7 +29,7 @@ export const useGlobalEscKeyDown = (
       capture,
       passive,
       once,
-      signal,
+      ...(signal !== undefined ? { signal } : {}),
     };
 
     document.addEventListener('keydown', handleKeyDown, options);
