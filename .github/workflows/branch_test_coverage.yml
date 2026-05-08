@@ -31,6 +31,8 @@ jobs:
 
       - name: Checkout LFS objects
         uses: ./.github/actions/lfs
+        with:
+          apt_mirror: ${{ vars.APT_MIRROR }}
 
   test:
     name: Call reusable unit tests workflow
