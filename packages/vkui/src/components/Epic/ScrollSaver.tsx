@@ -22,6 +22,7 @@ export const ScrollSaver = ({
       scrollTo(0, initialScroll);
     }
     return () => saveScroll(getScroll().y);
-  }, [getScroll, initialScroll, saveScroll, scrollTo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return <React.Fragment>{children}</React.Fragment>;
 };

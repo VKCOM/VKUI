@@ -71,22 +71,19 @@ export const Root = ({
     activeView: _activeView,
     transition: false,
   });
-  const transitionTo = React.useCallback(
-    (panel: string) => {
-      if (panel !== activeView) {
-        const viewIds = views.map((view) => getNavId(view.props, warn));
-        const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
-        scrolls.set(activeView, scroll.getScroll().y);
-        _setState({
-          activeView: panel,
-          prevView: activeView,
-          transition: !disableAnimation,
-          isBack,
-        });
-      }
-    },
-    [views, scrolls, activeView, disableAnimation, scroll],
-  );
+  const transitionTo = useStableCallback((panel: string) => {
+    if (panel !== activeView) {
+      const viewIds = views.map((view) => getNavId(view.props, warn));
+      const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
+      scrolls.set(activeView, scroll.getScroll().y);
+      _setState({
+        activeView: panel,
+        prevView: activeView,
+        transition: !disableAnimation,
+        isBack,
+      });
+    }
+  });
   const finishTransition = React.useCallback(
     () => _setState({ activeView, prevView, isBack, transition: false }),
     [activeView, isBack, prevView],

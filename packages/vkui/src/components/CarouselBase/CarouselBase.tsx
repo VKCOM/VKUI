@@ -4,7 +4,6 @@ import * as React from 'react';
 import { classNames } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useLatestRef } from '../../hooks/useLatestRef';
 import { useMutationObserver } from '../../hooks/useMutationObserver';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { useDOM } from '../../lib/dom';
@@ -89,7 +88,6 @@ export const CarouselBase = ({
 
   const rootRef = useExternRef(getRootRef);
   const viewportRef = useExternRef(getRef);
-  const childrenRef = useLatestRef(children);
   const layerRef = React.useRef<HTMLDivElement>(null);
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
   const shiftXCurrentRef = React.useRef<number>(0);
@@ -111,15 +109,15 @@ export const CarouselBase = ({
 
   const isCenterAlign = align === 'center';
 
-  const calculateCanSlideLeft = React.useCallback(() => {
+  const calculateCanSlideLeft = () => {
     if (looped) {
       return !slidesManager.current.isFullyVisible;
     }
     const isStartShiftX = isBiggerOrEqual(shiftXCurrentRef.current, 0, isRtl);
     return !slidesManager.current.isFullyVisible && !isStartShiftX;
-  }, [slidesManager, isRtl, looped]);
+  };
 
-  const calculateCanSlideRight = React.useCallback(() => {
+  const calculateCanSlideRight = () => {
     if (looped) {
       return !slidesManager.current.isFullyVisible;
     }
@@ -132,109 +130,92 @@ export const CarouselBase = ({
         // otherwise we need to check current slide index (align = right or align = center)
         (align !== 'left' && slideIndex < slidesManager.current.slides.length - 1))
     );
-  }, [slidesManager, align, slideIndex, isRtl, looped]);
+  };
 
-  const transformCssStyles = React.useCallback(
-    (shiftX: number, animation = false) => {
-      shiftX = Math.round(shiftX);
-      if (looped) {
-        slidesManager.current.loopPoints.forEach((loopPoint) => {
-          const { target, index } = loopPoint;
-          const slide = slidesStore.current[index];
-          if (slide) {
-            slide.style.transform = `translate3d(${target(shiftX)}px, 0, 0)`;
-          }
-        });
-      } else {
-        Object.values(slidesStore.current).forEach((slide) => {
-          if (slide) {
-            slide.style.transform = '';
-          }
-        });
-      }
-
-      if (layerRef.current) {
-        const indent =
-          isDragging.current && !looped
-            ? validateIndent(
-                slidesManager.current,
-                shiftXCurrentRef.current + shiftXDeltaRef.current,
-                isRtl,
-                false,
-              )
-            : shiftX;
-
-        layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
-        layerRef.current.style.transition = animation
-          ? `transform ${animationDuration}ms ${getAnimationEasing()}`
-          : '';
-      }
-    },
-    [animationDuration, getAnimationEasing, isRtl, looped],
-  );
-
-  const checkShiftOutOfBoundsFromStart = React.useCallback(
-    (shiftX: number, snaps: number[]) => isBigger(shiftX, snaps[0], isRtl),
-    [isRtl],
-  );
-
-  const checkShiftOutOfBoundsFromEnd = React.useCallback(
-    (shiftX: number, slides: GallerySlidesState[]) => {
-      /**
-       * Поскольку при `align="center"` слайды сдвинуты, прежде чем рассчитать крайнюю правую точку,
-       * нужно вычесть сдвиг слайдов.
-       */
-      const firstSlideShift =
-        align === 'center'
-          ? (slidesManager.current.containerWidth - slidesManager.current.slides[0].width) / 2
-          : 0;
-
-      const lastPoint =
-        slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
-      return isRtl ? shiftX >= lastPoint : shiftX <= -lastPoint;
-    },
-    [isRtl, align, slidesManager],
-  );
-
-  const requestTransform = React.useCallback(
-    (shiftX: number, animation = false) => {
-      const { snaps, contentSize, slides } = slidesManager.current;
-
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      animationFrameRef.current = requestAnimationFrame(() => {
-        /**
-         * Для бесконечной галереи проверяем, что при dnd мы прокрутили левее, чем первый слайд,
-         * чтобы сбросить `shiftXCurrentRef`.
-         */
-        if (looped && checkShiftOutOfBoundsFromStart(shiftX, snaps)) {
-          const firstSnap = revertRtlValue(snaps[0], isRtl);
-          shiftXCurrentRef.current = revertRtlValue(-contentSize + firstSnap, isRtl);
-          shiftX = shiftXCurrentRef.current + shiftXDeltaRef.current;
+  const transformCssStyles = (shiftX: number, animation = false) => {
+    shiftX = Math.round(shiftX);
+    if (looped) {
+      slidesManager.current.loopPoints.forEach((loopPoint) => {
+        const { target, index } = loopPoint;
+        const slide = slidesStore.current[index];
+        if (slide) {
+          slide.style.transform = `translate3d(${target(shiftX)}px, 0, 0)`;
         }
-
-        /**
-         * Для бесконечной галереи проверяем, что при dnd мы прокрутили правее, чем последний слайд,
-         * чтобы правильно пересчитать `shiftXCurrentRef`.
-         */
-        if (looped && checkShiftOutOfBoundsFromEnd(shiftX, slides)) {
-          shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
-        }
-        transformCssStyles(shiftX, animation);
-        animationFrameRef.current = null;
       });
-    },
-    [
-      checkShiftOutOfBoundsFromEnd,
-      checkShiftOutOfBoundsFromStart,
-      isRtl,
-      looped,
-      transformCssStyles,
-    ],
-  );
+    } else {
+      Object.values(slidesStore.current).forEach((slide) => {
+        if (slide) {
+          slide.style.transform = '';
+        }
+      });
+    }
 
-  const initializeSlides = React.useCallback(() => {
+    if (layerRef.current) {
+      const indent =
+        isDragging.current && !looped
+          ? validateIndent(
+              slidesManager.current,
+              shiftXCurrentRef.current + shiftXDeltaRef.current,
+              isRtl,
+              false,
+            )
+          : shiftX;
+
+      layerRef.current.style.transform = `translate3d(${indent}px, 0, 0)`;
+      layerRef.current.style.transition = animation
+        ? `transform ${animationDuration}ms ${getAnimationEasing()}`
+        : '';
+    }
+  };
+
+  const checkShiftOutOfBoundsFromStart = (shiftX: number, snaps: number[]) =>
+    isBigger(shiftX, snaps[0], isRtl);
+
+  const checkShiftOutOfBoundsFromEnd = (shiftX: number, slides: GallerySlidesState[]) => {
+    /**
+     * Поскольку при `align="center"` слайды сдвинуты, прежде чем рассчитать крайнюю правую точку,
+     * нужно вычесть сдвиг слайдов.
+     */
+    const firstSlideShift =
+      align === 'center'
+        ? (slidesManager.current.containerWidth - slidesManager.current.slides[0].width) / 2
+        : 0;
+
+    const lastPoint =
+      slides[slides.length - 1].width + slides[slides.length - 1].coordX - firstSlideShift;
+    return isRtl ? shiftX >= lastPoint : shiftX <= -lastPoint;
+  };
+
+  const requestTransform = (shiftX: number, animation = false) => {
+    const { snaps, contentSize, slides } = slidesManager.current;
+
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    animationFrameRef.current = requestAnimationFrame(() => {
+      /**
+       * Для бесконечной галереи проверяем, что при dnd мы прокрутили левее, чем первый слайд,
+       * чтобы сбросить `shiftXCurrentRef`.
+       */
+      if (looped && checkShiftOutOfBoundsFromStart(shiftX, snaps)) {
+        const firstSnap = revertRtlValue(snaps[0], isRtl);
+        shiftXCurrentRef.current = revertRtlValue(-contentSize + firstSnap, isRtl);
+        shiftX = shiftXCurrentRef.current + shiftXDeltaRef.current;
+      }
+
+      /**
+       * Для бесконечной галереи проверяем, что при dnd мы прокрутили правее, чем последний слайд,
+       * чтобы правильно пересчитать `shiftXCurrentRef`.
+       */
+      if (looped && checkShiftOutOfBoundsFromEnd(shiftX, slides)) {
+        shiftXCurrentRef.current = Math.abs(shiftXDeltaRef.current) + snaps[0];
+      }
+      transformCssStyles(shiftX, animation);
+      animationFrameRef.current = null;
+    });
+  };
+
+  const initializeSlides = () => {
     if (!rootRef.current || !viewportRef.current || !layerRef.current) {
       return;
     }
@@ -247,7 +228,7 @@ export const CarouselBase = ({
     };
 
     let localSlides =
-      React.Children.map(childrenRef.current, (_item, i): GallerySlidesState => {
+      React.Children.map(children, (_item, i): GallerySlidesState => {
         const elem = slidesStore.current[i];
         if (!elem) {
           return { coordX: 0, width: 0 };
@@ -359,31 +340,17 @@ export const CarouselBase = ({
       isDraggable: !(dragDisabled || slidesManager.current.isFullyVisible),
     });
     requestTransform(shiftXCurrentRef.current);
-  }, [
-    align,
-    animationInQueue,
-    calculateCanSlideLeft,
-    calculateCanSlideRight,
-    childrenRef,
-    dragDisabled,
-    isCenterAlign,
-    isRtl,
-    looped,
-    requestTransform,
-    rootRef,
-    slideIndex,
-    viewportRef,
-  ]);
+  };
 
-  const onResize = React.useCallback(() => {
+  const onResize = () => {
     if (initialized.current) {
       initializeSlides();
     }
-  }, [initializeSlides]);
+  };
   const { window } = useDOM();
   useResizeObserver(resizeSource === 'element' ? rootRef : window, onResize);
 
-  const loopedSlideChangePerform = React.useCallback(() => {
+  const loopedSlideChangePerform = () => {
     const { snaps, slides } = slidesManager.current;
     const indent = snaps[slideIndex];
     let startPoint = shiftXCurrentRef.current;
@@ -451,12 +418,12 @@ export const CarouselBase = ({
         })();
       });
     }
-  }, [addToAnimationQueue, getAnimateFunction, isRtl, slideIndex, transformCssStyles]);
+  };
 
-  const simpleSlideChangePerform = React.useCallback(() => {
+  const simpleSlideChangePerform = () => {
     const { snaps } = slidesManager.current;
     requestTransform(snaps[slideIndex], true);
-  }, [requestTransform, slideIndex]);
+  };
 
   useIsomorphicLayoutEffect(
     function performSlideChange() {
@@ -482,15 +449,8 @@ export const CarouselBase = ({
         canSlideRight: calculateCanSlideRight(),
       }));
     },
-    [
-      calculateCanSlideLeft,
-      calculateCanSlideRight,
-      looped,
-      loopedSlideChangePerform,
-      simpleSlideChangePerform,
-      slideIndex,
-      startAnimation,
-    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [slideIndex],
   );
 
   useIsomorphicLayoutEffect(
@@ -504,8 +464,8 @@ export const CarouselBase = ({
   );
 
   useMutationObserver(layerRef, initializeSlides);
-
-  useIsomorphicLayoutEffect(initializeSlides, [initializeSlides]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useIsomorphicLayoutEffect(initializeSlides, [align, slideWidth, looped, isRtl]);
 
   const calculateMinDeltaXToSlide = () => {
     return slidesManager.current.slides[slideIndex].width * SLIDE_THRESHOLD;

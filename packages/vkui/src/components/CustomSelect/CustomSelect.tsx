@@ -100,13 +100,20 @@ const FetchingStatus = ({
       if (fetching) {
         setStatus('fetching');
       } else {
-        if (status === 'fetching') {
-          setStatus('loaded');
-          setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
-        }
+        let timeoutId: ReturnType<typeof setTimeout>;
+        setStatus((prevStatus) => {
+          if (prevStatus === 'fetching') {
+            timeoutId = setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
+            return 'loaded';
+          }
+          return prevStatus;
+        });
+        return () => {
+          clearTimeout(timeoutId);
+        };
       }
     },
-    [fetching, status],
+    [fetching],
   );
 
   return <VisuallyHidden aria-live="polite">{content}</VisuallyHidden>;

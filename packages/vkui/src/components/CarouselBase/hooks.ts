@@ -22,39 +22,35 @@ export function useSlideAnimation(
   animationInQueue: () => boolean;
 } {
   const animationQueue = React.useRef<VoidFunction[]>([]);
-  const timing = React.useMemo(() => getAnimationTiming(animationEasing), [animationEasing]);
 
-  const getAnimateFunction = React.useCallback(
-    (drawFunction: DrawInterface) => {
-      return () => {
-        animate({
-          duration: animationDuration,
-          timing,
-          animationQueue: animationQueue.current,
-          draw: drawFunction,
-        });
-      };
-    },
-    [animationDuration, timing],
-  );
+  function getAnimateFunction(drawFunction: DrawInterface) {
+    return () => {
+      animate({
+        duration: animationDuration,
+        timing: getAnimationTiming(animationEasing),
+        animationQueue: animationQueue.current,
+        draw: drawFunction,
+      });
+    };
+  }
 
-  const addToAnimationQueue = React.useCallback((func: VoidFunction) => {
+  function addToAnimationQueue(func: VoidFunction) {
     animationQueue.current.push(func);
-  }, []);
+  }
 
-  const startAnimation = React.useCallback(() => {
+  function startAnimation() {
     if (animationQueue.current.length === 1) {
       animationQueue.current[0]();
     }
-  }, []);
+  }
 
-  const animationInQueue = React.useCallback(() => {
+  function animationInQueue() {
     return !!animationQueue.current.length;
-  }, []);
+  }
 
-  const getAnimationEasing = React.useCallback(() => {
+  function getAnimationEasing() {
     return `cubic-bezier(${(typeof animationEasing === 'string' ? PRESET_ANIMATION_EASING[animationEasing] : animationEasing).join(', ')})`;
-  }, [animationEasing]);
+  }
 
   return {
     animationInQueue,

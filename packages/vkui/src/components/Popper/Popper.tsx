@@ -192,7 +192,7 @@ export const Popper = ({
 
   useIsomorphicLayoutEffect(() => {
     refs.setReference('current' in targetRef ? targetRef.current : targetRef);
-  }, [refs, refs.setReference, targetRef]);
+  }, [refs, targetRef]);
 
   const dropdownStyle =
     typeof zIndex !== 'undefined'
