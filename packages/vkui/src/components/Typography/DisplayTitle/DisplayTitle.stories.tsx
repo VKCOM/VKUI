@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../../testing/storybook/createStoryPar
 import { DisplayTitle, type DisplayTitleProps } from './DisplayTitle';
 
 const story: Meta<DisplayTitleProps> = {
-  title: 'Typography/Typography/DisplayTitle',
+  title: 'Typography/DisplayTitle',
   component: DisplayTitle,
   parameters: createStoryParameters('DisplayTitle', CanvasFullLayout),
   decorators: [withCartesian],

@@ -23,6 +23,8 @@ jobs:
       # Создаем кэш для ветки один раз
       - name: Checkout LFS objects
         uses: ./.github/actions/lfs
+        with:
+          apt_mirror: ${{ vars.APT_MIRROR }}
 
       - uses: ./.github/actions/get-playwright-docker-image
         id: result
@@ -48,6 +50,8 @@ jobs:
 
       - name: Checkout LFS objects
         uses: ./.github/actions/lfs
+        with:
+          apt_mirror: ${{ vars.APT_MIRROR }}
 
       - name: Node setup
         uses: ./.github/actions/node-setup

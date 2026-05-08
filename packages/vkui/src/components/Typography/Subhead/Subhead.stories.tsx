@@ -5,7 +5,7 @@ import { createStoryParameters } from '../../../testing/storybook/createStoryPar
 import { Subhead, type SubheadProps } from './Subhead';
 
 const story: Meta<SubheadProps> = {
-  title: 'Typography/Typography/Subhead',
+  title: 'Typography/Subhead',
   component: Subhead,
   parameters: createStoryParameters('Subhead', CanvasFullLayout),
   decorators: [withCartesian],
