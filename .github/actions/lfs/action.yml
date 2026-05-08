@@ -18,9 +18,9 @@ runs:
       if: ${{ inputs.apt_mirror }}
       shell: bash
       run: |
-        sed -i "s|http://archive.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
-        sed -i "s|http://security.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
-        apt-get update
+        sudo sed -i "s|http://archive.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        sudo sed -i "s|http://security.ubuntu.com|${{ inputs.apt_mirror }}|g" /etc/apt/sources.list
+        sudo apt-get update
 
     # см. https://github.com/microsoft/playwright/issues/21920
     - name: Install git lfs
@@ -29,8 +29,8 @@ runs:
         if git lfs > /dev/null ; then
             echo "git-lfs installed"
         else
-          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-          apt-get install -y git-lfs
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+          sudo apt-get install -y git-lfs
         fi
 
     # см. https://github.com/actions/cache/issues/1455
@@ -40,7 +40,7 @@ runs:
         if zstd > /dev/null ; then
             echo "zstd installed"
         else
-          apt-get install -y zstd
+          sudo apt-get install -y zstd
         fi
 
     - name: Create LFS file list
