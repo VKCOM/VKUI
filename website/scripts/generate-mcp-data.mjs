@@ -67,15 +67,6 @@ function parseFrontmatter(content) {
   return { data, body };
 }
 
-function extractHeading(body) {
-  const match = body.match(/^#\s+(.+?)\s*$/m);
-  if (!match) {
-    return null;
-  }
-  const heading = match[1];
-  return heading.split('[')[0].trim();
-}
-
 function slugFromPath(filePath) {
   const relative = path.relative(COMPONENTS_DIR, filePath);
   return relative.replace(/\\/g, '/').replace(/\.mdx$/, '');
@@ -87,6 +78,21 @@ function componentNameFromSlug(slug) {
     .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join('');
+}
+
+function hookKeyFromSlug(slug) {
+  const base = slug.split('/').pop() || slug;
+  const parts = base.split('-').filter(Boolean);
+  if (parts.length < 2 || parts[0] !== 'use') {
+    return componentNameFromSlug(slug);
+  }
+  return (
+    'use' +
+    parts
+      .slice(1)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+      .join('')
+  );
 }
 
 function extractPlaygroundExamples(body) {
@@ -127,6 +133,28 @@ function extractPlaygroundExamples(body) {
   return examples;
 }
 
+const ENUM_VALUES_THRESHOLD = 10;
+
+function hasStringLiteralValues(values) {
+  return values.some(
+    (v) => typeof v.value === 'string' && (v.value.startsWith("'") || v.value.startsWith('"')),
+  );
+}
+
+function sanitizeProps(props) {
+  return props.map((prop) => {
+    const { type } = prop;
+    if (type && type.name === 'enum' && Array.isArray(type.value)) {
+      const tooLarge = type.value.length > ENUM_VALUES_THRESHOLD;
+      const noLiterals = !hasStringLiteralValues(type.value);
+      if (tooLarge || noLiterals) {
+        return { ...prop, type: { name: type.name, raw: type.raw } };
+      }
+    }
+    return prop;
+  });
+}
+
 function formatExamplesText(examples) {
   const SEPARATOR = '\n\n---------------------------------\n\n';
   return examples
@@ -158,8 +186,7 @@ export function generateMcpData() {
     const raw = fs.readFileSync(filePath, 'utf8');
     const { data, body } = parseFrontmatter(raw);
     const slug = slugFromPath(filePath);
-    const headingName = extractHeading(body);
-    const itemName = headingName || componentNameFromSlug(slug);
+    const itemName = isHook(slug) ? hookKeyFromSlug(slug) : componentNameFromSlug(slug);
     const description = data.description || '';
     const props = docgen[itemName] || [];
     const playgroundExamples = extractPlaygroundExamples(body);
@@ -174,7 +201,7 @@ export function generateMcpData() {
       name: itemName,
       slug,
       description,
-      props,
+      props: sanitizeProps(props),
     };
 
     if (isHook(slug)) {
