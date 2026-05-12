@@ -1,0 +1,41 @@
+import { FixedLayoutWrapper } from '@/components/wrappers';
+
+Подкомпонент прибивает элементы навигации ([`TabbarItem`](#tabbar-item)) к низу экрана. Передаётся в свойство `tabbar` компонента [`Epic`](/components/epic).
+
+{/* @example-description: Базовый `Tabbar` с двумя пунктами и активным разделом. */}
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
+  ```jsx
+  <Tabbar>
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>
+
+### Выравнивание [#tabbar-align]
+
+В случае, если в `Tabbar` передан один или два элемента [`TabbarItem`](#tabbar-item), контент внутри этих элементов располагается
+по горизонтали, в остальных случаях контент располагается вертикально.
+
+С помощью свойства `mode` у `Tabbar` можно переопределить это поведение.
+
+- `"vertical"` — задаёт всегда вертикальное расположение;
+- `"horizontal"` — задаёт всегда горизонтальное расположение.
+
+{/* @example-description: Принудительное вертикальное выравнивание элементов `Tabbar` через `mode="vertical"`. */}
+<Playground Wrapper={FixedLayoutWrapper} style={{ height: 60 }}>
+  ```jsx
+  <Tabbar mode="vertical">
+    <TabbarItem label="Новости">
+      <Icon28NewsfeedOutline />
+    </TabbarItem>
+    <TabbarItem label="Профиль" selected>
+      <Icon28UserCircleOutline />
+    </TabbarItem>
+  </Tabbar>
+  ```
+</Playground>

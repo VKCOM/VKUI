@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { resolvePartials } from './resolvePartials.mjs';
 
 const SCRIPT_FILE = fileURLToPath(import.meta.url);
 const SCRIPT_DIR = path.dirname(SCRIPT_FILE);
@@ -34,6 +35,7 @@ function collectMdxFiles(dirPath) {
   const results = [];
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
   for (const entry of entries) {
+    if (entry.name === '_partials') continue;
     const fullPath = path.join(dirPath, entry.name);
     if (entry.isDirectory()) {
       results.push(...collectMdxFiles(fullPath));
@@ -197,7 +199,8 @@ export function generateMcpData() {
     const itemName = isHook(slug) ? hookKeyFromSlug(slug) : componentNameFromSlug(slug);
     const description = data.description || '';
     const props = docgen[itemName] || [];
-    const playgroundExamples = extractPlaygroundExamples(body);
+    const resolvedBody = resolvePartials(body, filePath);
+    const playgroundExamples = extractPlaygroundExamples(resolvedBody);
 
     const listItem = {
       name: itemName,
