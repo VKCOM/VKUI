@@ -80,7 +80,15 @@ function componentNameFromSlug(slug) {
     .join('');
 }
 
+const SPECIFIC_HOOKS_SLUG_TO_NAME_MAP = {
+  'use-adaptivity-with-js-media-queries': 'useAdaptivityWithJSMediaQueries',
+};
+
 function hookKeyFromSlug(slug) {
+  if (SPECIFIC_HOOKS_SLUG_TO_NAME_MAP[slug]) {
+    return SPECIFIC_HOOKS_SLUG_TO_NAME_MAP[slug];
+  }
+
   const base = slug.split('/').pop() || slug;
   const parts = base.split('-').filter(Boolean);
   if (parts.length < 2 || parts[0] !== 'use') {
