@@ -4,9 +4,13 @@ import { useColorScheme, type ColorSchemeType } from '@vkontakte/vkui';
 
 export const useColorSchemeSwitcher = (): [ColorSchemeType, React.ReactNode] => {
   const defaultColorScheme = useColorScheme();
-  const [colorScheme, setColorScheme] = React.useState(defaultColorScheme);
+  const [override, setOverride] = React.useState<ColorSchemeType | null>(null);
 
-  React.useLayoutEffect(() => setColorScheme(defaultColorScheme), [defaultColorScheme]);
+  const colorScheme = override ?? defaultColorScheme;
+
+  const setColorScheme = React.useCallback((value: ColorSchemeType) => {
+    setOverride(value);
+  }, []);
 
   return [
     colorScheme,
