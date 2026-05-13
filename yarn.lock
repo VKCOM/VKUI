@@ -4432,12 +4432,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^25.6.0":
+"@types/node@npm:*":
   version: 25.6.0
   resolution: "@types/node@npm:25.6.0"
   dependencies:
     undici-types: "npm:~7.19.0"
   checksum: 10/99b18690a4be55904cbf8f6a6ac8eed5ec5b8d791fdd8ee2ae598b46c0fa9b83cda7b70dd7f00dbfb18189dcfc67648fdc7fdd3fcced2619a5a6453d9aec107d
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^25.7.0":
+  version: 25.7.0
+  resolution: "@types/node@npm:25.7.0"
+  dependencies:
+    undici-types: "npm:~7.21.0"
+  checksum: 10/1b11c865ea517ab90af870c2f58c100804e3dd8dc25a62b5e5af3aea12ad015f9faf513664babc7e0c755bb1c0744649b2ff19b7b434c1648ad8057f2dc6c71a
   languageName: node
   linkType: hard
 
@@ -5039,7 +5048,7 @@ __metadata:
     "@swc/core": "npm:^1.15.33"
     "@types/cross-spawn": "npm:^6.0.6"
     "@types/jscodeshift": "npm:^17.3.0"
-    "@types/node": "npm:^25.6.0"
+    "@types/node": "npm:^25.7.0"
     "@types/prompts": "npm:^2.4.9"
     chalk: "npm:^4.1.2"
     commander: "npm:^14.0.3"
@@ -5161,7 +5170,7 @@ __metadata:
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/react": "npm:^16.3.2"
     "@testing-library/user-event": "npm:^14.5.2"
-    "@types/node": "npm:^25.6.0"
+    "@types/node": "npm:^25.7.0"
     "@types/react": "npm:^19.0.1"
     "@types/react-dom": "npm:^19.0.1"
     "@types/semver": "npm:^7.7.1"
@@ -17821,6 +17830,13 @@ __metadata:
   version: 7.19.2
   resolution: "undici-types@npm:7.19.2"
   checksum: 10/05c34c63444c8caca7137f122b29ed50c1d7d05d1e0b2337f423575d3264054c4a0139e47e82e65723d09b97fcad6d8b0223b3550430a9006cc00e72a1e035bf
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.21.0":
+  version: 7.21.0
+  resolution: "undici-types@npm:7.21.0"
+  checksum: 10/e38c0efbeaeabeb84f5d8a49d127fcae1626af09785b04fde4915e8312b47c5f81106c61e655cb63c59e429522460a313183168913e55b485a36e06d67689798
   languageName: node
   linkType: hard
 
