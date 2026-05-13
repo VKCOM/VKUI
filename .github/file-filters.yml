@@ -35,3 +35,6 @@ docs_website:
   - *package_vkui
   - 'packages/vkui-docs-theme/**'
   - 'website/**'
+
+dot_github:
+  - '.github/**'
