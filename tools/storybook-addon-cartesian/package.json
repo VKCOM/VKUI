@@ -9,7 +9,7 @@
     "test:ci": "echo no test:ci"
   },
   "dependencies": {
-    "@storybook/icons": "^2.0.1",
+    "@storybook/icons": "^2.0.2",
     "@storybook/react": "10.3.6",
     "storybook": "10.3.6"
   },
