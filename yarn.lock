@@ -5213,7 +5213,7 @@ __metadata:
     jsdom: "npm:^29.1.1"
     lint-staged: "npm:^17.0.4"
     mini-css-extract-plugin: "npm:^2.10.2"
-    postcss: "npm:^8.5.13"
+    postcss: "npm:^8.5.14"
     postcss-cli: "npm:^11.0.1"
     postcss-custom-media: "npm:^12.0.1"
     postcss-import: "npm:^16.1.1"
@@ -14789,14 +14789,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.0.0, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.13, postcss@npm:^8.5.3, postcss@npm:^8.5.8":
-  version: 8.5.13
-  resolution: "postcss@npm:8.5.13"
+"postcss@npm:^8.0.0, postcss@npm:^8.4.38, postcss@npm:^8.4.40, postcss@npm:^8.5.13, postcss@npm:^8.5.14, postcss@npm:^8.5.3, postcss@npm:^8.5.8":
+  version: 8.5.14
+  resolution: "postcss@npm:8.5.14"
   dependencies:
     nanoid: "npm:^3.3.11"
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
-  checksum: 10/4763873c0a39a6f71fc552d0046fedb80dca889ed0b85e36217285f754a3bd003a906f6088feb266b1f53b0ad20483a475dce4cc1c756f05e27940c51e40ebd8
+  checksum: 10/2e3f4dea69692918fe9df5402beb0e54df84499995a094f2fbf63d1a9e38bc1b7a42854df47f09e02593213e01a5eb0627b1d1bd6d1b0ea90767b2e072f7167c
   languageName: node
   linkType: hard
 
