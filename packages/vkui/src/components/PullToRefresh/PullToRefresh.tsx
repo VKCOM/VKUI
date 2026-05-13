@@ -154,6 +154,7 @@ export const PullToRefresh = ({
     refreshing,
     canRefresh,
     runRefreshing,
+    resetRefreshingState,
   ]);
 
   useIsomorphicLayoutEffect(

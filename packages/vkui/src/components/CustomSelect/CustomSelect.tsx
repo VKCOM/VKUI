@@ -99,11 +99,19 @@ const FetchingStatus = ({
     function updateStatus() {
       if (fetching) {
         setStatus('fetching');
+        return;
       } else {
-        if (status === 'fetching') {
-          setStatus('loaded');
-          setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
-        }
+        let timeoutId: ReturnType<typeof setTimeout>;
+        setStatus((prevStatus) => {
+          if (prevStatus === 'fetching') {
+            timeoutId = setTimeout(() => setStatus('none'), FETCH_STATUS_RESET_DELAY);
+            return 'loaded';
+          }
+          return prevStatus;
+        });
+        return () => {
+          clearTimeout(timeoutId);
+        };
       }
     },
     [fetching],
@@ -506,6 +514,7 @@ export function CustomSelect<OptionInterfaceT extends CustomSelectOptionInterfac
 
       selectElRef.current?.dispatchEvent(event);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nativeSelectValue]);
 
   const openedClassNames = React.useMemo(

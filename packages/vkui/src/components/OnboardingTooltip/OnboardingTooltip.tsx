@@ -231,7 +231,7 @@ export const OnboardingTooltip = ({
         refs.setReference(referenceEl);
       }
     },
-    [childRef],
+    [childRef, refs],
   );
 
   if (process.env.NODE_ENV === 'development') {

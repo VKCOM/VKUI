@@ -1,7 +1,6 @@
-import { useConfigProvider } from '../components/ConfigProvider/ConfigProviderContext';
+import * as React from 'react';
+import { LocaleContext } from '../components/ConfigProvider/ConfigProviderSubContexts';
 
 export function useLocale(): string {
-  const { locale } = useConfigProvider();
-
-  return locale;
+  return React.useContext(LocaleContext);
 }

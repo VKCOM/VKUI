@@ -2,7 +2,7 @@
 
 import { useContext } from 'react';
 import * as React from 'react';
-import { classNames } from '@vkontakte/vkjs';
+import { classNames, noop } from '@vkontakte/vkjs';
 import { useConfigDirection } from '../../hooks/useConfigDirection';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useFocusWithin } from '../../hooks/useFocusWithin';
@@ -11,6 +11,7 @@ import { useMediaQueries } from '../../hooks/useMediaQueries';
 import { useMergeProps } from '../../hooks/useMergeProps';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SnackbarsContainerContext } from '../../hooks/useSnackbarManager/components/SnackbarsContainerContext';
+import { useStableCallback } from '../../hooks/useStableCallback';
 import { useCSSKeyframesAnimationController } from '../../lib/animation';
 import { callMultiple } from '../../lib/callMultiple';
 import { getRelativeBoundingClientRect } from '../../lib/dom';
@@ -127,7 +128,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
   duration = 4000,
   onActionClick: onActionClickProp,
   onClosed,
-  onClose,
+  onClose: onCloseProp,
   mode = 'default',
   subtitle,
   offsetY,
@@ -152,6 +153,8 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
     },
     slotProps?.action,
   );
+
+  const onClose = useStableCallback(onCloseProp || noop);
 
   const platform = usePlatform();
   const {
@@ -195,7 +198,7 @@ export const Snackbar: React.FC<SnackbarProps> & { Basic: typeof Basic } = ({
         setOpen(openProp);
       }
     },
-    [openProp],
+    [openProp, onClose],
   );
 
   const clearRAF = React.useCallback(() => {
