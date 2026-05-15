@@ -1,1 +1,0 @@
-import{r as c,f as n}from"./iframe-OAvG3iJ-.js";function u(e,r){const f=c.useRef(e?.referenceHidden);c.useEffect(()=>{f.current=e?.referenceHidden}),n(function(){r&&e?.referenceHidden!==f.current&&r(e?.referenceHidden||!1)},[e?.referenceHidden,r])}export{u};

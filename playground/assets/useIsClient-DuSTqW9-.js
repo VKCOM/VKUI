@@ -1,1 +1,0 @@
-import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-CX9URrKL.js";import{n as r,t as i}from"./useIsomorphicLayoutEffect-CW8TJUqQ.js";function a(e=!1){let[t,n]=o.useState(e);return r(()=>{n(!0)},[]),t}var o,s=t((()=>{o=e(n(),1),i()}));export{a as n,s as t};

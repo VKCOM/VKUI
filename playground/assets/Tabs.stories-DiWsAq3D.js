@@ -1,1 +1,0 @@
-import{a as e,i as t,n,r,t as i}from"./Tabs.stories-Vx6-cASz.js";t();export{i as Playground,n as WithHorizontalScroll,r as __namedExportsOrder,e as default};

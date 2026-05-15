@@ -1,1 +1,0 @@
-import{n as e}from"./chunk-BneVvdWh.js";var t,n,r,i=e((()=>{t={layout:`fullscreen`,centered:!0},n={cartesian:{disable:!0}},r={control:`text`}}));export{i,n,r,t};

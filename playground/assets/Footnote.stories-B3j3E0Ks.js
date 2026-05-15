@@ -1,1 +1,0 @@
-import{a as e,i as t,n,r,t as i}from"./Footnote.stories-BiB8JlOK.js";t();export{i as Playground,n as WithCaps,r as __namedExportsOrder,e as default};

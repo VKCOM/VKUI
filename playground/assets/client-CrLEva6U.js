@@ -1,1 +1,0 @@
-import{t as e}from"./chunk-BneVvdWh.js";import{C as t}from"./iframe-lhb8_BzR.js";var n=e((e=>{var n=t();e.createRoot=n.createRoot,e.hydrateRoot=n.hydrateRoot}));export{n as t};

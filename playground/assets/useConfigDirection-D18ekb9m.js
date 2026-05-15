@@ -1,1 +1,0 @@
-import{n as e}from"./chunk-BneVvdWh.js";import{Ea as t,Ta as n}from"./iframe-DYsbkMbM.js";function r(){let{direction:e}=t();return e||`ltr`}var i=e((()=>{n()}));export{r as n,i as t};

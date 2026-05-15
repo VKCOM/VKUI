@@ -1,1 +1,0 @@
-import{n as e}from"./chunk-BneVvdWh.js";import{n as t,r as n}from"./ConfigProviderContext-ALjDaJwv.js";import{r}from"./colorScheme-0ZUtqstB.js";function i(){let{colorScheme:e}=n();return e??`light`}var a=e((()=>{t(),r()}));export{i as n,a as t};

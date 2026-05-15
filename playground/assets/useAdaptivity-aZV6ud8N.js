@@ -1,1 +1,0 @@
-import{a as e,n as t}from"./chunk-BneVvdWh.js";import{t as n}from"./react-CX9URrKL.js";import{n as r,t as i}from"./AdaptivityContext-DMzFtcp-.js";var a,o,s=t((()=>{a=e(n(),1),r(),o=()=>a.useContext(i)}));export{o as n,s as t};

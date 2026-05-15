@@ -1,1 +1,0 @@
-import{n as e}from"./chunk-BneVvdWh.js";import{n as t,r as n}from"./ConfigProviderContext-ALjDaJwv.js";function r(){let{direction:e}=n();return e||`ltr`}var i=e((()=>{t()}));export{r as n,i as t};

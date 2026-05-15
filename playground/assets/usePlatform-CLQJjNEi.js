@@ -1,1 +1,0 @@
-import{n as e}from"./chunk-BneVvdWh.js";import{n as t,r as n}from"./ConfigProviderContext-2CWmpgrJ.js";function r(){let{platform:e}=n();return e}var i=e((()=>{t()}));export{r as n,i as t};

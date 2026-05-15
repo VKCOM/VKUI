@@ -1,1 +1,0 @@
-import{n as e}from"./chunk-BneVvdWh.js";var t,n=e((()=>{t=e=>{if(e)return t=>{t.target.tagName===`INPUT`&&e(t)}}}));export{t as n,n as t};
